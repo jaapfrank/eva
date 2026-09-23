@@ -179,3 +179,64 @@ def test_real_save_designate_new_conversation_list_resolve_and_revocation(people
         authority.stop(turn)
         with pytest.raises(ConversationConflict):run(later,ConversationActionCall('stopped','list_reusable_procedures',{}))
         assert len(handler.calls)==before
+
+
+def test_background_save_designate_and_later_resolve_preserve_execution_namespace(people_memory_engine, tmp_path):
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution, background_execution_namespace
+    from eva.adapters.postgres.procedure_reference_host import PostgresProcedureReferenceHost
+    from eva.application.procedure_references import ProcedureScope
+    engine = people_memory_engine
+    mandate = {'contract': 'OwnerConnectorMandate/v1', 'mandate_id': 'background-procedure-test',
+        'tenant_id': 'background-procedure-test', 'installation_id': 'home', 'owner_principal_id': 'owner',
+        'issued_at': '2020-01-01T00:00:00Z', 'authorization_source': 'explicit fixture owner grant',
+        'enabled': True, 'public_https': True, 'local_networks': []}
+    path = tmp_path / 'mandate.json'
+    path.write_text(json.dumps(mandate)); path.chmod(0o600)
+    authority = McpOwnerAuthority(engine, str(path))
+    turn = ConversationTurn.private('background-procedure-test', 'home', 'owner', 'first',
+        'background-source', 'Save a reusable method.', NOW)
+    journal = PostgresConversationJournal(engine, authority.scope)
+    journal.admit(turn)
+    scope = ProcedureScope(turn.tenant_id, turn.installation_id, turn.principal_id, turn.project_id)
+    with workspace_gateway() as (factory, handler):
+        gateway = factory(); asyncio.run(gateway.verify_catalog())
+        external = PostgresExternalConversationTools(engine, gateway.planner(), gateway, authorize_turn=authority.authorize_turn)
+        actions = ProcedureReferenceActions(engine, authority=authority, gateway_factory=factory, clock=lambda: NOW)
+        def save(call_id):
+            return external.execute(turn, ConversationActionCall(call_id, 'save_document',
+                {'path': 'procedure.md', 'content': 'Check evidence before conclusions.'}))
+        assert save('foreground-save').output['status'] == 'verified'
+        with background_execution(BackgroundExecutionScope(turn, 'job:other', lambda current: None)):
+            assert save('other-job-save').output['status'] == 'verified'
+        guarded = []
+        with background_execution(BackgroundExecutionScope(turn, 'job:selected', guarded.append)):
+            # Neither the foreground save nor another job's save may be designated.
+            host = actions._host(turn)
+            with pytest.raises(ProcedureReferenceRejected, match='absent'):
+                host.current_save_call_id(scope, 'procedure.md')
+            assert save('selected-job-save').output['status'] == 'verified'
+            source = host.load_save(scope, 'selected-job-save')
+            assert source.admission['execution_namespace'] == background_execution_namespace(turn)
+            assert host.current_save_call_id(scope, 'procedure.md') == 'selected-job-save'
+            ref = actions.execute(turn, ConversationActionCall('designation', 'designate_reusable_procedure',
+                {'document_path': 'procedure.md', 'use_when': 'Review evidence', 'retention_until': UNTIL}), step_index=1).output['reference']
+            # Durable replay uses the same namespaced identity and never repeats the save.
+            assert save('selected-job-save').output['status'] == 'verified'
+        assert guarded
+        later = replace(turn, conversation_id='second', message_id='later', text='Use the method')
+        journal.admit(later)
+        with background_execution(BackgroundExecutionScope(later, 'job:later', lambda current: None)):
+            resolved = actions.execute(later, ConversationActionCall('resolve', 'resolve_reusable_procedure',
+                {'document_id': ref['document_id']})).output
+        assert resolved['status'] == 'resolved'
+        assert resolved['references'][0]['untrusted_content'] == 'Check evidence before conclusions.'
+        foreground = replace(later, message_id='later-foreground')
+        journal.admit(foreground)
+        assert actions.execute(foreground, ConversationActionCall('foreground-resolve', 'resolve_reusable_procedure',
+            {'document_id': ref['document_id']})).output['status'] == 'resolved'
+        with background_execution(BackgroundExecutionScope(turn, 'job:selected', lambda current: None)):
+            external.execute(turn, ConversationActionCall('second-selected-save', 'save_document',
+                {'path': 'procedure.md', 'content': 'Check evidence before conclusions.'}), step_index=2)
+            with pytest.raises(ProcedureReferenceRejected, match='ambiguous'):
+                actions._host(turn).current_save_call_id(scope, 'procedure.md')
+        assert sum(call['params']['name'] == 'save' for call in handler.calls) == 4

@@ -189,6 +189,10 @@ class PostgresExternalConversationTools:
             ),
             "source_message_id": turn.message_id,
         }
+        from eva.application.background_execution import background_execution_namespace
+        namespace = background_execution_namespace(turn)
+        if namespace is not None:
+            admission["execution_namespace"] = namespace
         if step_index:
             admission["step_index"] = step_index
         if request.observation_tool_name is not None:

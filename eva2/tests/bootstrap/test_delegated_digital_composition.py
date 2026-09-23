@@ -145,20 +145,31 @@ def test_wrapper_keeps_existing_contracts_on_existing_runner():
     assert seen[0][1] is old and seen[1][1] is digital
 
 
-def test_procedure_reads_share_profile_but_designation_is_not_admitted():
+def test_procedure_learning_and_verified_writer_share_the_pinned_profile():
     settings, bundle = configuration()
     def descriptor(name):
         return ConversationToolDescriptor(name, name, {"type": "object", "properties": {}, "required": [], "additionalProperties": False})
-    names = ("list_reusable_procedures", "resolve_reusable_procedure", "designate_reusable_procedure")
+    names = ("list_reusable_procedures", "resolve_reusable_procedure", "designate_reusable_procedure", "save_workspace_document")
     route = SimpleNamespace(action_names=names)
     bundle = replace(bundle, conversation_tools=(*bundle.conversation_tools, *(descriptor(n) for n in names)),
                      external_tools=(*bundle.external_tools, route))
     settings.external_provider = ExternalProviderSettings((*settings.external_provider.providers,
         LoadedProvider("procedure_references", None, ("mandate-a", ProviderSettings()))))
     profile = build_digital_profile(settings, bundle)
-    assert set(profile.capability_ids) == {"use_connector_tool", *names[:2]}
+    assert set(profile.capability_ids) == {"use_connector_tool", *names}
     assert "providers/procedure_reference_actions.py" in dict(profile.execution_source_sha256)
     assert "adapters/postgres/procedure_reference_host.py" in dict(profile.execution_source_sha256)
     settings.external_provider = ExternalProviderSettings((settings.external_provider.providers[0],
         LoadedProvider("procedure_references", None, ("mandate-b", ProviderSettings()))))
     assert build_digital_profile(settings, bundle).release != profile.release
+
+
+def test_gateway_configuration_changes_the_digital_profile():
+    settings, bundle = configuration()
+    settings.external_provider = ExternalProviderSettings((*settings.external_provider.providers,
+        LoadedProvider("mcp_gateway", None, ProviderSettings("http://gateway-a.invalid"))))
+    first = build_digital_profile(settings, bundle)
+    settings.external_provider = ExternalProviderSettings((settings.external_provider.providers[0],
+        LoadedProvider("mcp_gateway", None, ProviderSettings("http://gateway-b.invalid"))))
+    assert build_digital_profile(settings, bundle).release != first.release
+    assert "adapters/postgres/external_conversation_tools.py" in dict(first.execution_source_sha256)

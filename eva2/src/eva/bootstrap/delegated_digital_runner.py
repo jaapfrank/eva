@@ -69,7 +69,7 @@ class BackgroundConnectorActions:
     def _receipt(receipt):
         # The existing loop continues only after a verified host step. Keep the
         # procedure status intact inside the result; discovery is not task success.
-        if receipt.call.name in {"list_reusable_procedures", "resolve_reusable_procedure"}:
+        if receipt.call.name in {"list_reusable_procedures", "resolve_reusable_procedure", "designate_reusable_procedure"}:
             return ConversationActionReceipt(receipt.call, {"status": "verified",
                 "operation_result": receipt.output})
         return receipt
@@ -114,7 +114,7 @@ def _has_completed_tool_evidence(receipts):
     completed = False
     for receipt in receipts:
         output = receipt.output
-        if receipt.call.name in {"list_reusable_procedures", "resolve_reusable_procedure"}:
+        if receipt.call.name in {"list_reusable_procedures", "resolve_reusable_procedure", "designate_reusable_procedure"}:
             if output.get("status") != "verified":
                 return False
             output = output.get("operation_result", {})
@@ -124,6 +124,10 @@ def _has_completed_tool_evidence(receipts):
             if receipt.call.name == "list_reusable_procedures":
                 if status != "candidates":
                     return False
+            elif receipt.call.name == "designate_reusable_procedure":
+                if status != "designated" or not output.get("reference"):
+                    return False
+                completed = True
             elif status == "resolved":
                 if not output.get("references"):
                     return False

@@ -1365,15 +1365,15 @@
           }
         ],
         "now": {
-          "title": "Nieuwe spraakvraag vóór ongehoord oud antwoord",
-          "state": "Afgerond · geïnstalleerd en gecontroleerd",
-          "detail": "33 verpakte controles per spraakversie geslaagd; bronreview GO. Beide diensten draaien met exact gecontroleerde code; website gereed. Fysieke luisteracceptatie blijft open.",
-          "doneWhen": "Gerichte volgordeproef slaagt, bron onafhankelijk beoordeeld, beide spraakdiensten bijgewerkt en live gecontroleerd."
+          "title": "Geleerde werkwijze tijdens achtergrondwerk bewaren",
+          "state": "Bron getest en beoordeeld · nog niet geïnstalleerd",
+          "detail": "Opslaan en aanwijzen van een werkwijze in achtergrondwerk is gebouwd. Gerichte broncontroles en twee echte PostgreSQL-ketenproeven slagen; onafhankelijke review GO. Geen runtime-installatie of modelgestuurde leerproef uitgevoerd. Geen volledige hoofdfunctie afgerond.",
+          "doneWhen": "Nieuwe werkwijze vanuit toegelaten achtergrondwerk bewaren en later terugvinden werkt, met gerichte controles, installatie en expliciete grenzen."
         },
         "next": {
-          "title": "Verder met dagelijks gesprek en stem",
-          "state": "Vervolg nog niet gestart",
-          "detail": "Inhoudelijke reactietijd en doorpraten via de echte ingangen blijven open. Werkende ontvangst behouden; fysieke Voice PE-proef zodra Jaap beschikbaar is."
+          "title": "Een zelf bewaarde werkwijze bij ander werk gebruiken",
+          "state": "Niet gestart",
+          "detail": "Eén begrensde echte leer-/hergebruikproef. Fysieke Voice PE-proef blijft afzonderlijk wachten op beschikbaarheid."
         },
         "ownerAction": {
           "title": "Voice PE: beschikbaarheid doorgeven",
@@ -1385,7 +1385,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T15:24:35.776044+00:00"
+        "reviewedAt": "2026-09-23T20:16:48.446011+00:00"
       }
     },
     "pendingTechnicalReview": {

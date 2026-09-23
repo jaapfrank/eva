@@ -292,3 +292,15 @@ def test_procedure_discovery_or_missing_source_is_not_completed_task_evidence():
     assert not _has_completed_tool_evidence([receipt("resolve_reusable_procedure", "unavailable")])
     assert not _has_completed_tool_evidence([receipt("resolve_reusable_procedure", "resolved", references=[])])
     assert _has_completed_tool_evidence([receipt("resolve_reusable_procedure", "resolved", references=[{"untrusted_content": "Read data"}])])
+
+
+def test_designation_requires_a_verified_reference_before_counting_completion():
+    from eva.bootstrap.delegated_digital_runner import BackgroundConnectorActions, _has_completed_tool_evidence
+    from eva.application.conversation import ConversationActionCall, ConversationActionReceipt
+    call = ConversationActionCall("save-reference", "designate_reusable_procedure", {})
+    def receipt(status, **fields):
+        return BackgroundConnectorActions._receipt(ConversationActionReceipt(call,
+            {"contract": "ProcedureReferenceAction/v1", "status": status, **fields}))
+    assert not _has_completed_tool_evidence([receipt("designated")])
+    assert not _has_completed_tool_evidence([receipt("unavailable")])
+    assert _has_completed_tool_evidence([receipt("designated", reference={"document_id": "verified-save-reference"})])

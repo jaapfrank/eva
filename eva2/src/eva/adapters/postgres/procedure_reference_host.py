@@ -6,7 +6,7 @@ from eva.adapters.postgres.conversation_journal import PostgresConversationJourn
 from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
 from eva.application.procedure_references import ProcedureScope, VerifiedSaveSource, ProcedureReferenceRejected
 from eva.application.conversation import ConversationConflict
-from eva.application.background_execution import authorize_background_dispatch
+from eva.application.background_execution import authorize_background_dispatch, background_execution_namespace
 
 
 class PostgresProcedureReferenceHost:
@@ -33,6 +33,7 @@ class PostgresProcedureReferenceHost:
         self.require_current()
         e = operational_events
         data = e.c.payload["data"]
+        namespace = background_execution_namespace(self.turn)
         with self.engine.connect() as connection:
             self.timeline._scope(connection)
             rows = connection.execute(sa.select(data["action_call_id"].astext.label("call_id")).where(
@@ -42,6 +43,8 @@ class PostgresProcedureReferenceHost:
                 data["principal_id"].astext == self.turn.principal_id,
                 data["conversation_id"].astext == self.turn.conversation_id,
                 data["source_message_id"].astext == self.turn.message_id,
+                data["execution_namespace"].astext == namespace if namespace is not None
+                    else ~data.has_key("execution_namespace"),
                 data["action_arguments"]["path"].astext == document_path,
                 data["action_arguments"].has_key("content"),
             ).limit(2)).all()
@@ -50,7 +53,8 @@ class PostgresProcedureReferenceHost:
         source = self.load_save(scope, rows[0].call_id)
         if (source.admission["conversation_id"] != self.turn.conversation_id
                 or source.admission["source_message_id"] != self.turn.message_id
-                or source.admission["action_arguments"].get("path") != document_path):
+                or source.admission["action_arguments"].get("path") != document_path
+                or source.admission.get("execution_namespace") != namespace):
             raise ProcedureReferenceRejected("current save binding differs")
         return rows[0].call_id
 

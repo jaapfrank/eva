@@ -10,8 +10,9 @@ from eva.contracts.canonical_json import canonical_sha256
 
 _CONNECTORS = frozenset({"connect_service", "discover_connector_tools",
                         "manage_connected_services", "use_connector_tool"})
-_PROCEDURES = frozenset({"list_reusable_procedures", "resolve_reusable_procedure"})
-_DIGITAL_PROVIDERS = frozenset({"mcp_autonomy", "procedure_references"})
+_PROCEDURES = frozenset({"list_reusable_procedures", "resolve_reusable_procedure",
+                         "designate_reusable_procedure", "save_workspace_document"})
+_DIGITAL_PROVIDERS = frozenset({"mcp_autonomy", "procedure_references", "mcp_gateway"})
 _ROOT = Path(__file__).resolve().parents[1]
 _EXECUTION_SOURCES = (
     "bootstrap/delegated_digital_composition.py",
@@ -26,6 +27,9 @@ _EXECUTION_SOURCES = (
     "adapters/postgres/procedure_reference_host.py",
     "application/procedure_references.py",
     "adapters/postgres/memory_outbox.py",
+    "adapters/postgres/external_conversation_tools.py",
+    "adapters/connectors/mcp_gateway.py",
+    "providers/mcp_gateway.py",
 )
 
 

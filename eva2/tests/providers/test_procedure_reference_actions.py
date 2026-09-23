@@ -99,14 +99,17 @@ def test_background_slots_separate_jobs_and_preserve_foreground_hash():
     assert actions._slot(turn, 0) == foreground
 
 
-def test_background_designation_rejected_before_host_or_journal(monkeypatch):
+def test_background_designation_still_requires_current_host_authority(monkeypatch):
     from eva.application.background_execution import BackgroundExecutionScope, background_execution
     from eva.application.conversation import ConversationActionCall, ConversationConflict
+    import eva.providers.procedure_reference_actions as module
     actions = ProcedureReferenceActions(None, authority=None, gateway_factory=None)
-    monkeypatch.setattr(actions, "_host", lambda *_: pytest.fail("No designation host access"))
+    def denied(*args): raise ConversationConflict("mandate revoked")
+    monkeypatch.setattr(actions, "_host", denied)
+    monkeypatch.setattr(module, "PostgresOperationalTimeline", lambda *args: pytest.fail("No denied journal access"))
     turn = _private_turn()
     with background_execution(BackgroundExecutionScope(turn, "execution:one")):
-        with pytest.raises(ConversationConflict, match="read-only"):
+        with pytest.raises(ConversationConflict, match="mandate revoked"):
             actions.execute(turn, ConversationActionCall("call", "designate_reusable_procedure", {}))
 
 
@@ -223,3 +226,62 @@ def test_historical_read_request_keeps_old_identity_inside_different_background_
     assert guarded == [current]
     with pytest.raises(ConversationConflict, match="namespace"):
         tools._request_from_admission(original, "save_document", dict(admission, execution_namespace="untrusted"), 1, historical=True)
+
+
+@pytest.mark.parametrize("denied", [False, True])
+def test_designation_write_rechecks_job_after_readback(denied):
+    from types import SimpleNamespace as NS
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+    from eva.application.conversation import ConversationConflict
+    from eva.providers.procedure_reference_actions import _AuthorizedProcedureSources
+    turn = _private_turn()
+    events = []
+    sources = _AuthorizedProcedureSources(NS(record_source=lambda doc: events.append("write")),
+        NS(require_current=lambda: events.append("authority")), turn)
+    def guard(actual):
+        assert actual == turn
+        events.append("job")
+        if denied: raise ConversationConflict("stopped after readback")
+    with background_execution(BackgroundExecutionScope(turn, "execution:one", guard)):
+        if denied:
+            with pytest.raises(ConversationConflict, match="stopped after readback"):
+                sources.record_source(object())
+        else:
+            sources.record_source(object())
+    assert events == (["authority", "job"] if denied else ["authority", "job", "write"])
+
+
+@pytest.mark.parametrize("matching", [False, True])
+def test_background_designation_requires_save_from_exact_job(monkeypatch, matching):
+    from dataclasses import dataclass
+    from types import SimpleNamespace as NS
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution, background_execution_namespace
+    from eva.application.conversation import ConversationActionCall, ConversationConflict
+    import eva.providers.procedure_reference_actions as module
+    turn = _private_turn()
+    admission = {"conversation_id": turn.conversation_id, "source_message_id": turn.message_id}
+    host = NS(current_save_call_id=lambda *args: "save", load_save=lambda *args: NS(admission=admission), require_current=lambda: None)
+    called = []
+    @dataclass
+    class Reference:
+        document_id: str = "reference"
+    class Service:
+        def __init__(self, *args): pass
+        def designate(self, *args, **kwargs):
+            called.append(kwargs)
+            return Reference()
+    monkeypatch.setattr(module, "ProcedureReferences", Service)
+    monkeypatch.setattr(module, "PostgresMemoryOutbox", lambda *args, **kwargs: object())
+    actions = ProcedureReferenceActions(None, authority=None, gateway_factory=None, clock=lambda: turn.occurred_at)
+    monkeypatch.setattr(actions, "_host", lambda _: host)
+    call = ConversationActionCall("designation", "designate_reusable_procedure", {
+        "document_path": "procedure.md", "use_when": "Compare", "retention_until": "2026-10-01T00:00:00Z"})
+    with background_execution(BackgroundExecutionScope(turn, "execution:one")):
+        if matching: admission["execution_namespace"] = background_execution_namespace(turn)
+        if matching:
+            assert actions._execute(turn, call).output["status"] == "designated"
+            assert len(called) == 1
+        else:
+            with pytest.raises(ConversationConflict, match="current turn"):
+                actions._execute(turn, call)
+            assert not called

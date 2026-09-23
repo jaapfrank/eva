@@ -7,13 +7,27 @@ from eva.application.procedure_references import ProcedureReferences, ProcedureS
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
 from eva.adapters.postgres.procedure_reference_host import PostgresProcedureReferenceHost
 from eva.application.schema_validation import validate_schema_value
-from eva.application.background_execution import background_execution_namespace
+from eva.application.background_execution import background_execution_namespace, authorize_background_dispatch
 from eva.providers.contracts import ProviderContribution
 from eva.providers.mcp_autonomy import _SourceTurnLoader
 from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline, CheckpointConflict
 from eva.contracts.canonical_json import canonical_sha256
 
 _NAMES = ("designate_reusable_procedure", "list_reusable_procedures", "resolve_reusable_procedure")
+
+class _AuthorizedProcedureSources:
+    """Recheck current authority immediately before persisting a designation."""
+    def __init__(self, store, host, turn):
+        self.store, self.host, self.turn = store, host, turn
+
+    def record_source(self, document):
+        self.host.require_current()
+        authorize_background_dispatch(self.turn)
+        return self.store.record_source(document)
+
+    def resolve_source(self, *args, **kwargs):
+        return self.store.resolve_source(*args, **kwargs)
+
 
 class ProcedureReferenceActions:
     action_names = _NAMES
@@ -124,9 +138,6 @@ class ProcedureReferenceActions:
         return ProviderContribution("procedure_references", self.conversation_tools(), (self,))
 
     def execute(self, turn, call, *, step_index=0):
-        if (background_execution_namespace(turn) is not None
-                and call.name not in _NAMES[1:]):
-            raise ConversationConflict("background procedure actions are read-only")
         self._host(turn)
         timeline = PostgresOperationalTimeline(self.engine, self.authority.scope)
         slot = self._slot(turn, step_index)
@@ -166,14 +177,15 @@ class ProcedureReferenceActions:
         validate_schema_value(call.arguments, descriptor.input_schema, "procedure_arguments")
         host = self._host(turn)
         store = PostgresMemoryOutbox(self.engine, tenant_id=turn.tenant_id, installation_id=turn.installation_id)
-        service = ProcedureReferences(store, host)
+        service = ProcedureReferences(_AuthorizedProcedureSources(store, host, turn), host)
         scope = ProcedureScope(turn.tenant_id, turn.installation_id, turn.principal_id, turn.project_id)
         args, now = call.arguments, self.clock()
         if call.name == _NAMES[0] and set(args) == {"document_path", "use_when", "retention_until"}:
             source_call_id = host.current_save_call_id(scope, args["document_path"])
             source = host.load_save(scope, source_call_id)
             if (source.admission["conversation_id"] != turn.conversation_id
-                    or source.admission["source_message_id"] != turn.message_id):
+                    or source.admission["source_message_id"] != turn.message_id
+                    or source.admission.get("execution_namespace") != background_execution_namespace(turn)):
                 raise ConversationConflict("designation requires the current turn's verified save")
             retention = _instant(args["retention_until"])
             if retention <= _instant(now):
