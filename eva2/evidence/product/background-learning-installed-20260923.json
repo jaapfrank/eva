@@ -1,0 +1,15 @@
+{
+  "installedAt": "2026-09-23T20:19:04.253176+00:00",
+  "sourceCommit": "4319412c",
+  "image": "eva2-background-learning:20260923",
+  "scope": "Existing verified workspace writer and procedure designation admitted to private digital background tasks; stored execution namespace binds later retrieval.",
+  "beforeOwnerPriorityChange": {
+    "sourceChecks": 81,
+    "postgresIntegrationChecks": 2,
+    "reviews": "Both halves independently reviewed GO"
+  },
+  "installation": "Core healthy; worker started; existing data/config/networks retained; baseline available",
+  "modelDrivenLearningTrial": "deferred by owner instruction",
+  "ownerAccepted": false,
+  "rollbackDirectory": "/var/lib/eva2/background-learning-20260923"
+}

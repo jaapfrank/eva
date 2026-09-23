@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Werkwijzen bewaren tijdens achtergrondwerk",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Bestaande gecontroleerde documentopslag en werkwijzeregistratie zijn aangesloten op de digitale achtergrondwerker. Dezelfde werkwijze kan later vanuit gesprek of een andere taak worden opgehaald.",
+            "remaining": "Echte modelgestuurde leeropdracht en gebruikersbeoordeling volgen later. Algemene zelfstandige leerkwaliteit is nog niet vastgesteld.",
+            "source": "eva2/evidence/product/background-learning-installed-20260923.json"
+          },
+          {
             "title": "Nieuwe spraakvraag krijgt voorrang op ongehoord oud antwoord",
             "date": "23 september",
             "state": "installed",
@@ -1366,14 +1374,14 @@
         ],
         "now": {
           "title": "Geleerde werkwijze tijdens achtergrondwerk bewaren",
-          "state": "Bron getest en beoordeeld · nog niet geïnstalleerd",
-          "detail": "Opslaan en aanwijzen van een werkwijze in achtergrondwerk is gebouwd. Gerichte broncontroles en twee echte PostgreSQL-ketenproeven slagen; onafhankelijke review GO. Geen runtime-installatie of modelgestuurde leerproef uitgevoerd. Geen volledige hoofdfunctie afgerond.",
+          "state": "Geïnstalleerd · praktijkbeproeving volgt later",
+          "detail": "De achtergrondwerker kan nu een document opslaan, als herbruikbare werkwijze bewaren en later ophalen. Kern gestart; geen nieuwe modelproef uitgevoerd. Functiebouw krijgt voorrang volgens het nieuwste eigenaarbesluit.",
           "doneWhen": "Nieuwe werkwijze vanuit toegelaten achtergrondwerk bewaren en later terugvinden werkt, met gerichte controles, installatie en expliciete grenzen."
         },
         "next": {
-          "title": "Een zelf bewaarde werkwijze bij ander werk gebruiken",
-          "state": "Niet gestart",
-          "detail": "Eén begrensde echte leer-/hergebruikproef. Fysieke Voice PE-proef blijft afzonderlijk wachten op beschikbaarheid."
+          "title": "Zelfstandig leren in gewone opdrachten",
+          "state": "Volgende functiestap",
+          "detail": "Bestaande leerroute bruikbaar maken vanuit een gewone vraag; geen afzonderlijke modelproef nu."
         },
         "ownerAction": {
           "title": "Voice PE: beschikbaarheid doorgeven",
@@ -1385,7 +1393,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T20:16:48.446011+00:00"
+        "reviewedAt": "2026-09-23T20:19:04.253176+00:00"
       }
     },
     "pendingTechnicalReview": {

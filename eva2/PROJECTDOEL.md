@@ -1,5 +1,14 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Aanvullend eigenaarbesluit 23 september 2026 — functies eerst
+
+Complete functies bouwen en installeren heeft voorrang. Uitgebreide tests,
+herhaalde reviews en gebruiksproeven volgen later op het samenhangende geheel.
+Bij installatie alleen noodzakelijke startcontrole en behoud van bestaande
+gegevens bewaken. Niet als getest of geaccepteerd presenteren wat nog niet is
+beproefd. Dit besluit vervangt de eerdere verplichting om iedere kleine wijziging
+vooraf door een afzonderlijke test- en reviewronde te halen.
+
 ## Functionele oplevering eerst — eigenaarbesluit 23 september 2026
 
 Eerst alle afgesproken functies werkend en geïnstalleerd opleveren. Verhuizing,
