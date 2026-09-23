@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-09-23T14:54:26.141623+00:00",
+  "sourceCommit": "2839f9e2",
+  "image": "eva2-background-procedures:20260923",
+  "result": "Private digital background tasks can list and resolve existing explicitly saved procedures through the same provider and continue with connector work.",
+  "preservation": [
+    "Foreground procedure journal identities unchanged",
+    "Background jobs use their existing execution identity; designation remains rejected",
+    "Procedure content remains untrusted data; existing owner mandate and source checks retained",
+    "Dispatch stop/budget guard runs immediately before procedure readback",
+    "No saved memories or documents changed by this deployment"
+  ],
+  "validation": {
+    "sourceTestsPassed": 30,
+    "packagedTestsPassed": 55,
+    "independentReview": "compact_contact_catalog reviewed coordinator integration/config; coordinator reviewed provider/host changes",
+    "preflight": "Both candidate services expose identical six capabilities and configuration/program hashes",
+    "preDeploymentJobs": {
+      "truncated": false,
+      "succeeded": 9,
+      "ambiguous": 2,
+      "stopped": 2,
+      "pendingOrRunning": 0
+    },
+    "installedSourceFilesMatched": 5,
+    "servicesHealthy": [
+      "core",
+      "delegated-work-worker"
+    ],
+    "workApiHttpStatus": 200
+  },
+  "limits": [
+    "Model/tool execution in integration tests is controlled; no real model-driven reuse trial in this deployment",
+    "Not general executable skill creation or complete learning capability",
+    "Owner acceptance remains open"
+  ],
+  "newModelCalls": 0,
+  "externalMessages": 0,
+  "rollbackCompose": "/var/lib/eva2/background-procedures-20260923/baseline.compose.private.json",
+  "stage": "/var/lib/eva2/background-procedures-20260923"
+}
