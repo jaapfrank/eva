@@ -1341,15 +1341,15 @@
           }
         ],
         "now": {
-          "title": "Projectoverzicht bijgewerkt",
-          "state": "Afgerond — vervolg nog niet gestart",
-          "detail": "Per onderdeel staat het concrete open werk direct in beeld. Laatste Telegram-installatie is geregistreerd; actuele en oude werkregistraties worden onderscheiden.",
-          "doneWhen": "Bronreview en negen bestaande controles geslaagd; de draaiende pagina en automatisch ophalen van de registratie gecontroleerd."
+          "title": "Spraakvertraging: directe tekstdoorvoer beoordeeld",
+          "state": "Onderzoek afgerond — geen snelheidswinst",
+          "detail": "Voorlopige tekst direct uitspreken zou later gecorrigeerde antwoorden hoorbaar maken. Bestaande bevestigde tussenreactie blijft behouden. Geen nieuwe modelcalls of runtimewijziging.",
+          "doneWhen": "Besluit en bronverwijzingen vastgelegd; inhoudelijke antwoordtijd blijft open."
         },
         "next": {
-          "title": "Sneller inhoudelijk antwoorden tijdens werk",
-          "state": "Open functionele prioriteit",
-          "detail": "De website geeft al vroege audio, maar een inhoudelijk antwoord op Hallo duurt nog ongeveer vijf seconden. Dat tekort blijft open; de fysieke Voice PE-proef staat apart."
+          "title": "Modelwachttijd gericht aanpakken",
+          "state": "Nog niet gestart",
+          "detail": "Eerdere vergelijking van low/none en catalogusverkleining leverde geen aangetoonde winst op. Alleen een nieuwe concrete oorzaak of andere toegestane kandidaat rechtvaardigt een nieuwe proef. Fysieke Voice PE-proef blijft apart open."
         },
         "ownerAction": {
           "title": "Voice PE: beschikbaarheid doorgeven",
@@ -1361,7 +1361,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T14:39:18.683005+00:00"
+        "reviewedAt": "2026-09-23T14:43:50.579106+00:00"
       }
     },
     "pendingTechnicalReview": {

@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-09-23T14:43:50.579106+00:00",
+  "scope": "Focused follow-up of foreground latency and shared-speaker continuity; no new model calls",
+  "findings": [
+    {
+      "topic": "Voice delta forwarding",
+      "sources": [
+        "src/eva/voice_service/agent.py:455",
+        "src/eva/application/conversation.py:92",
+        "tests/voice_service/test_agent.py:59",
+        "src/eva/adapters/model/pydantic_conversation.py:768"
+      ],
+      "decision": "Do not forward provisional deltas to speech. The final reply can differ or fail; speaking cannot be retracted. Existing confirmed spoken_update uses one interruptible handle."
+    },
+    {
+      "topic": "Shared-speaker private continuation",
+      "sources": [
+        "src/eva/bootstrap/native_voice.py:40",
+        "src/eva/bootstrap/household_voice.py:22",
+        "src/eva/adapters/api/household_voice_session.py:46",
+        "src/eva/application/telegram_ingress.py:104"
+      ],
+      "decision": "Keep household device scope. No verified speaker/listener handoff exists. Bound private Telegram is the existing private continuation route; a device-to-owner alias would not satisfy the requirement."
+    }
+  ],
+  "independentReview": "compact_contact_catalog confirmed both conclusions",
+  "runtimeChanges": false,
+  "newModelCalls": 0,
+  "testsRepeated": 0,
+  "speedImprovement": false,
+  "next": "Separate model processing latency from channel delivery. Existing low-versus-none and catalog comparisons are negative evidence; do not repeat unchanged trials. Physical Voice PE trial awaits owner presence; independent functional work remains available."
+}

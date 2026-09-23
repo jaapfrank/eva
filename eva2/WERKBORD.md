@@ -28,6 +28,8 @@ Stap 1: hergebruik de bestaande snelle ontvangst en maak doorpraten tijdens acht
 
 **Telegram-stopselectie geïnstalleerd (23 september):** vaste stopzinnen bereiken de gedeelde gespreksroute. Gerichte stop laat ander werk ongemoeid; benoemde en onduidelijke taakselectie geïsoleerd onderzocht. Bronreview en pakketcontroles geslaagd, kern/werker gezond en bronbytes gecontroleerd. Echte Telegram-proef blijft open. [Bewijs](evidence/product/shared-stop-selection-installed-20260923.json).
 
+**Gerichte vervolgcontrole (23 september):** voorlopige modeltekst direct uitspreken verworpen: het definitieve antwoord kan afwijken of falen. Eén spraakhandle lost onderbreking op, niet die inhoudelijke garantie. Gedeelde speaker heeft nog geen geverifieerde persoons-/toehoorderoverdracht; bestaande privé-Telegramroute blijft beschikbaar. Onafhankelijk bevestigd, nul nieuwe modelcalls, geen runtimewijziging of snelheidsclaim. [Bronnen en besluit](evidence/product/contact-streaming-and-person-handoff-20260923.json).
+
 ## Actuele dashboardafspraak
 
 **Laatste correctie (23 september):** korte concrete open punten zichtbaar op alle negen tegels; nieuwste Telegram-installatie toegevoegd. Eerste eigenaarhandeling direct zichtbaar. Verouderde werkregistratie toont geen bevestigde uitvoering. Deze dashboardtaak is afgerond; volgende functionele prioriteit is sneller inhoudelijk antwoorden. [Controle](evidence/product/dashboard-current-work-20260923.json).
