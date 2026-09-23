@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-09-23T14:17:07.762391+00:00",
+  "image": "eva2-web-selected-context:20260923",
+  "sourceCommit": "e8db4f7e",
+  "actualBrowser": true,
+  "actualCore": true,
+  "syntheticSpeechInput": true,
+  "microphoneUsed": false,
+  "speakerPlayback": false,
+  "recognizedUserText": [
+    "Hallo."
+  ],
+  "answer": "Hallo! Leuk je weer te spreken. Waar kan ik je mee helpen?",
+  "timing": {
+    "syntheticClipEndToReceiptMs": -8,
+    "syntheticClipEndToFirstDetectedAudioMs": 492,
+    "syntheticClipEndToFinalTextMs": 4723,
+    "audioEnergySamplingIntervalMs": 50,
+    "audioEnergyFrames": 75
+  },
+  "clockMeaning": "Input endpoint is AudioBufferSource.onended for the complete synthetic clip, not acoustic end of speech. Receipt preceded clip end; trailing silence may explain this ordering.",
+  "independentReview": "GO for early remote audio only",
+  "limitations": [
+    "Not physical microphone, speaker or Voice PE acceptance",
+    "Does not prove full final-answer audio playback",
+    "One greeting, no general latency guarantee",
+    "One live conversation turn; model calls/tokens and credit cost not captured"
+  ],
+  "probe": "/var/lib/eva2/voice-current-e2e-20260923/probe.py",
+  "cleanup": "Temporary browser tab closed; probe server and own voice session ended."
+}
