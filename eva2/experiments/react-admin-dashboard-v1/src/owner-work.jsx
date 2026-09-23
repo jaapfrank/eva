@@ -267,10 +267,10 @@ export default function OwnerWork() {
       <p>{labels[detail.state]} · poging {detail.generation}</p>
       <p>Aangemaakt: {timestamp(detail.created_at)}{detail.result?.completed_at && <> · Afgerond: {timestamp(detail.result.completed_at)}</>}</p>
       {typeof detail.parent_work_id === 'string' && detail.parent_work_id !== detail.work_id && <p>
-        Deze poging vervolgt een eerdere opdracht. <button disabled={busy} onClick={() => act('get', detail.parent_work_id)}>Vorige poging bekijken</button>
+        {detail.generation === 1 ? "Deze opdracht bouwt voort op eerder onderzoek." : "Deze poging vervolgt een eerdere opdracht."} <button disabled={busy} onClick={() => act('get', detail.parent_work_id)}>Vorige poging bekijken</button>
       </p>}
       {(page?.jobs || []).filter(job => job.parent_work_id === detail.work_id).map(job => <p key={job.work_id}>
-        Vervolgpoging {job.generation}: {labels[job.state]} <button disabled={busy} onClick={() => act('get', job.work_id)}>Vervolgpoging openen</button>
+        {job.generation === 1 ? "Vervolgonderzoek" : "Vervolgpoging " + job.generation}: {labels[job.state]} <button disabled={busy} onClick={() => act('get', job.work_id)}>Vervolgpoging openen</button>
       </p>)}
       <details><summary>Gemeten verbruik van deze poging</summary>
         <dl className="work-usage"><dt>Modelantwoorden</dt><dd>{measured(detail.usage?.completed_model_responses)}</dd>

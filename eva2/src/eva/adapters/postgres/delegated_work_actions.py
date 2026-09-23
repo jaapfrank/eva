@@ -119,6 +119,9 @@ class PostgresDelegatedWorkActions:
                         "properties": {"work_id": {"type": "string", "minLength": 1, "maxLength": 240},
                                        "instruction": {"type": "string", "minLength": 1, "maxLength": 2000}}
                     } if operation == "revise_digital" else {"type":"string"}),
+                        **({"prior_work_id": {"type": "string", "minLength": 1, "maxLength": 240,
+                            "description": "Bij een gevraagde aanvulling: work_id van het eerdere afgeronde of vastgelopen onderzoek. Lees eerst dat resultaat. Formuleer in research een zelfstandige openbare vervolgvraag over wat nog ontbreekt. Geen automatische herhaling; eerdere resultaten blijven behouden."}}
+                           if operation == "research" else {}),
                         **({"feedback": {"type": "string", "minLength": 1, "maxLength": 800}}
                            if operation == "initiative_feedback" else {}),
                         **({"acceptance_message": {
@@ -281,6 +284,12 @@ class PostgresDelegatedWorkActions:
             if not isinstance(feedback, str) or not 1 <= len(feedback.strip()) <= 800:
                 raise ConversationConflict("initiative feedback must contain 1..800 characters")
         optional = {"acceptance_message"} if operation in {"start", "research", "digital"} else set()
+        if operation == "research":
+            optional.add("prior_work_id")
+        if "prior_work_id" in call.arguments and (
+                not isinstance(call.arguments["prior_work_id"], str)
+                or not 1 <= len(call.arguments["prior_work_id"]) <= 240):
+            raise ConversationConflict("research predecessor is invalid")
         acceptance = call.arguments.get("acceptance_message")
         if (not required <= set(call.arguments) <= required | optional
                 or ("acceptance_message" in call.arguments and (
@@ -320,6 +329,7 @@ class PostgresDelegatedWorkActions:
             operation, turn, request_key=thread_id,
             **({} if key is None else {key: call.arguments[key]}),
             **({"feedback": call.arguments["feedback"]} if operation == "initiative_feedback" else {}),
+            **({"prior_work_id": call.arguments["prior_work_id"]} if "prior_work_id" in call.arguments else {}),
         )
         output = {"status": "verified", "operation_result": result}
         work = result.get("work")

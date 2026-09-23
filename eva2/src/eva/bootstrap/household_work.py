@@ -185,6 +185,7 @@ class HouseholdWorkService:
             title=work.title,
             question=work.spec.research.question,
             generation=work.spec.generation,
+            parent_work_id=work.spec.parent_task_id if work.spec.parent_task_id.startswith("work:") else None,
             state=work.state,
             error_code=work.error_code,
             failure_description=work_failure_description(work.error_code),
@@ -195,7 +196,7 @@ class HouseholdWorkService:
         )
 
     def execute(
-        self, operation, turn, *, request_key, research=None, work_id=None, task=None
+        self, operation, turn, *, request_key, research=None, work_id=None, task=None, prior_work_id=None
     ):
         self.validate_authority(turn)
         if task is not None or operation not in {
@@ -214,7 +215,7 @@ class HouseholdWorkService:
         ).admit_household_ingress(turn, validate_current=self.validate_authority)
         origin = self.origin(turn)
         if operation == "list":
-            if research is not None or work_id is not None:
+            if research is not None or work_id is not None or prior_work_id is not None:
                 raise ValueError("household listing cannot select another destination")
             rows = self.store.list_household(**self._owner, household_origin=origin, active_first=True,
                 now=self.server.authority.clock(), limit=21)
@@ -222,6 +223,12 @@ class HouseholdWorkService:
             return {"jobs": [{key: view[key] for key in
                     ("work_id", "title", "question", "state", "generation", "stop_requested")}
                     for view in (self.view(work) for work in rows[:20])], "truncated": len(rows) > 20}
+        if prior_work_id is not None:
+            if operation != "research" or not isinstance(prior_work_id, str) or not 1 <= len(prior_work_id) <= 240:
+                raise ValueError("prior work is only valid for research follow-up")
+            prior = self._load(prior_work_id, origin)
+            if prior.state in {"admitted", "call_started"}:
+                raise ValueError("research follow-up requires a finished attempt")
         created = parse_utc_timestamp(turn.occurred_at)
         previous = None
         if operation == "research":
@@ -232,7 +239,7 @@ class HouseholdWorkService:
                 dict(origin=origin.to_payload(), request_key=request_key)
             )
             work_id = "work:household:" + str(uuid5(NAMESPACE_URL, key))
-            generation, parent = 1, "household:" + key
+            generation, parent = 1, prior_work_id or "household:" + key
         else:
             if research is not None or not isinstance(work_id, str):
                 raise ValueError("household work identity required")

@@ -88,9 +88,9 @@ class DelegatedWorkOwnerService:
                 work_id: str | None = None, request_key: str, research: dict | None = None,
                 intent_id: str | None = None, feedback: str | None = None,
                 schedule: dict | None = None, schedule_id: str | None = None,
-                search: dict | None = None, revision: dict | None = None) -> dict:
+                search: dict | None = None, revision: dict | None = None, prior_work_id: str | None = None) -> dict:
         try:
-            return self._execute(operation, turn, task=task, work_id=work_id, request_key=request_key, research=research, intent_id=intent_id, feedback=feedback, schedule=schedule, schedule_id=schedule_id, search=search, revision=revision)
+            return self._execute(operation, turn, task=task, work_id=work_id, request_key=request_key, research=research, intent_id=intent_id, feedback=feedback, schedule=schedule, schedule_id=schedule_id, search=search, revision=revision, prior_work_id=prior_work_id)
         except DelegatedWorkNotFound:
             return {"contract": "EvaDelegatedWorkOwnerResult/v1", "operation": operation,
                     "status": "not_found", "work": None,
@@ -104,9 +104,19 @@ class DelegatedWorkOwnerService:
                  work_id: str | None, request_key: str, research: dict | None = None,
                  intent_id: str | None = None, feedback: str | None = None,
                  schedule: dict | None = None, schedule_id: str | None = None,
-                 admission_time: datetime | None = None, search: dict | None = None, revision: dict | None = None) -> dict:
+                 admission_time: datetime | None = None, search: dict | None = None, revision: dict | None = None, prior_work_id: str | None = None) -> dict:
         if not self.available_for(turn):
             raise DelegatedWorkConflict("delegated work requires its private owner scope")
+        prior_research = None
+        if prior_work_id is not None:
+            if operation != "research" or not isinstance(prior_work_id, str) or not 1 <= len(prior_work_id) <= 240:
+                raise ValueError("prior work is only valid for research follow-up")
+            self.validate_authority(turn)
+            prior_research = self.store.load(prior_work_id, **self._owner)
+            if (not isinstance(prior_research.spec, DelegatedResearchSpec)
+                    or prior_research.state in {"admitted", "call_started"}
+                    or prior_research.retention_until <= self.now()):
+                raise ValueError("research follow-up requires an available finished attempt")
         from eva.adapters.postgres.scheduled_work import ScheduledOwnerWork
         if operation == "revise_digital":
             if (any(value is not None for value in (task, work_id, research, intent_id, feedback, schedule, schedule_id, search))
@@ -270,7 +280,7 @@ class DelegatedWorkOwnerService:
                 episode_id=str(uuid5(NAMESPACE_URL, ":".join((
                     "delegated-private-context-v1", turn.tenant_id, turn.installation_id,
                     turn.principal_id, turn.conversation_id)))),
-                generation=1, parent_task_id="chat:" + str(identity),
+                generation=1, parent_task_id=prior_work_id or "chat:" + str(identity),
                 owner_principal_id=str(self.owner_principal_id),
                 principal_binding_id=str(self.principal_binding_id), task=task,
                 created_at=created, deadline=created + timedelta(
@@ -444,7 +454,7 @@ class DelegatedWorkOwnerService:
             from eva.adapters.postgres.background_work_progress import load_work_progress
             progress = load_work_progress(self.store._engine, work.spec)
         return {"work_id": work.spec.work_id, "generation": work.spec.generation,
-                "parent_work_id": work.spec.parent_task_id if work.spec.generation > 1 else None,
+                "parent_work_id": work.spec.parent_task_id if work.spec.parent_task_id.startswith("work:") else None,
                 "state": work.state, "title": work.title,
                 **({"task": work.spec.task} if include_result else {"task_preview": work.spec.task[:240]}),
                 "created_at": work.spec.created_at, "deadline": work.spec.deadline,
