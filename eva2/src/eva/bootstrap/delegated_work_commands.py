@@ -20,7 +20,6 @@ _SPAWN = re.compile(
 )
 _STATUS = frozenset({"hoe staat mijn onderzoek", "hoe staat mijn onderzoek ervoor",
                      "status van mijn onderzoek"})
-_STOP = frozenset({"stop mijn onderzoek", "stop het onderzoek"})
 _LIST = frozenset({"toon mijn onderzoeken", "toon mijn onderzoekstaken"})
 _RESULT = frozenset({"toon het resultaat van mijn onderzoek",
                      "wat is het resultaat van mijn onderzoek"})
@@ -69,8 +68,6 @@ class DelegatedWorkConversationCommands:
             return self._reply(turn, "\n".join(
                 f"{job['work_id']}: {job['state']} — {job['task_preview']}\n{job['delivery']['description']}" for job in jobs
             ) or "Er staat nog geen onderzoekstaak op je werkbord.")
-        if normalized in _STOP:
-            return self._stop(turn)
         work_id = self._service.latest_work_id(turn)
         if work_id is None:
             return self._reply(turn, "Er staat nog geen onderzoekstaak op je werkbord.")
@@ -89,7 +86,7 @@ class DelegatedWorkConversationCommands:
         text = turn.text.strip()
         normalized = text.casefold().rstrip(".?! ")
         return (_SPAWN.fullmatch(text) is not None
-                or normalized in _STATUS | _STOP | _LIST | _RESULT)
+                or normalized in _STATUS | _LIST | _RESULT)
 
     def validate_authority(self, turn: ConversationTurn) -> None:
         """Recheck current owner authority before releasing a saved command reply."""
@@ -123,18 +120,6 @@ class DelegatedWorkConversationCommands:
                            f"Taaknummer: {work['work_id']} (poging {work['generation']}).\n"
                            + work["delivery"]["description"]
                            + ("\n" + work["failure_description"] if work.get("failure_description") else ""))
-
-    def _stop(self, turn: ConversationTurn) -> GroundedReply:
-        work_id = self._service.latest_work_id(turn, stoppable=True)
-        if work_id is None:
-            return self._reply(turn, "Er loopt geen onderzoek dat ik kan stoppen.")
-        work = self._execute("stop", turn, work_id=work_id)["work"]
-        if work["state"] == "call_started" or (work["state"] == "stopped" and work["call_id"] is not None):
-            return self._reply(turn, "De stopopdracht is bewaard. Het resultaat van deze actieve modelcall "
-                               "wordt niet aan Eva geleverd en Eva start hem niet opnieuw.")
-        if work["state"] != "stopped":
-            return self._reply(turn, "Deze onderzoekstaak was al afgerond.")
-        return self._reply(turn, "Gestopt voordat een modelcall begon. Deze taak wordt niet alsnog uitgevoerd.")
 
     def _reply(self, turn: ConversationTurn, text: str) -> GroundedReply:
         return GroundedReply(conversation_id=turn.conversation_id, message_id=turn.message_id,

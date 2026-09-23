@@ -175,63 +175,33 @@ def test_owner_destination_failure_does_not_admit_unreturnable_work():
     assert store.admitted == []
 
 
-def test_owner_gets_latest_task_status_and_can_stop_work_before_call() -> None:
+def test_owner_gets_latest_task_status() -> None:
     store = FakeStore()
     store.owned_work = [store._work()]
-    store.active_work_id = "work:eva-chat:latest"
-    commands = _commands(store)
-
-    status = commands.handle(
+    status = _commands(store).handle(
         _turn("Hoe staat mijn onderzoek?", message_id="status"),
         principal_binding_id=BINDING,
     )
-    stopped = commands.handle(
-        _turn("Stop mijn onderzoek", message_id="stop"),
-        principal_binding_id=BINDING,
-    )
-
     assert status is not None
     assert status.text == (
         "Je laatste onderzoek is ingepland.\nOpdracht: Test\n"
         "Taaknummer: work:fake (poging 1).\n"
         "De status van de automatische terugmelding is onbekend."
     )
-    assert stopped is not None
-    assert stopped.text == (
-        "Gestopt voordat een modelcall begon. Deze taak wordt niet alsnog uitgevoerd."
-    )
-    assert store.stopped == [
-        {
-            "work_id": "work:eva-chat:latest",
-            "owner_principal_id": OWNER,
-            "principal_binding_id": BINDING,
-            "now": NOW,
-        }
-    ]
+    assert not store.stopped
 
 
-def test_started_call_gets_a_durable_honest_stop_request() -> None:
+@pytest.mark.parametrize("text", ["Stop mijn onderzoek", "Stop het onderzoek"])
+def test_stop_phrases_fall_through_to_shared_task_selection(text):
     store = FakeStore()
-    store.active_work_id = "work:eva-chat:started"
-    store.call_started = True
-
-    reply = _commands(store).handle(
-        _turn("Stop het onderzoek"), principal_binding_id=BINDING
-    )
-
-    assert reply is not None
-    assert reply.text == (
-        "De stopopdracht is bewaard. Het resultaat van deze actieve modelcall "
-        "wordt niet aan Eva geleverd en Eva start hem niet opnieuw."
-    )
-    assert store.stopped == [
-        {
-            "work_id": "work:eva-chat:started",
-            "owner_principal_id": OWNER,
-            "principal_binding_id": BINDING,
-            "now": NOW,
-        }
-    ]
+    store.owned_work = [store._work(), store._work(spec=SimpleNamespace(
+        **(vars(store._work().spec) | {"work_id": "work:other"})))]
+    store.active_work_id = "work:other"
+    commands = _commands(store)
+    turn = _turn(text)
+    assert commands.matches(turn, principal_binding_id=BINDING) is False
+    assert commands.handle(turn, principal_binding_id=BINDING) is None
+    assert not store.stopped and not store.admitted
 
 
 def test_commands_are_private_to_the_exact_owner_and_ignore_normal_chat() -> None:
@@ -477,3 +447,30 @@ def test_legacy_task_reply_includes_shared_failure_explanation(text):
     assert "Een benodigde dienst was niet bereikbaar." in reply.text
     assert "Controleer eerdere bestanden of acties voordat je hervat." in reply.text
     assert not store.admitted and not store.stopped
+
+
+@pytest.mark.parametrize("text", ["Stop mijn onderzoek", "Stop het onderzoek"])
+def test_telegram_stop_falls_through_without_command_journal_or_mutation(text):
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+    from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
+    from eva.application.telegram_ingress import TelegramPrincipalBinding, TelegramPrincipalBindings
+
+    bindings = TelegramPrincipalBindings((TelegramPrincipalBinding(
+        telegram_user_id=42, principal_id=str(OWNER), allowed_chat_ids=("42",),
+        principal_binding_id=str(BINDING),
+    ),))
+    store = FakeStore()
+    store.owned_work = [store._work()]
+    service = DelegatedWorkOwnerService(
+        store, owner_principal_id=OWNER, principal_binding_id=BINDING, clock=lambda: NOW,
+        private_bridge_principal_loader=lambda: bindings.private_bridge_principal(
+            principal_id=str(OWNER), principal_binding_id=BINDING),
+    )
+    runtime = PostgresHindsightMemoryRuntime.__new__(PostgresHindsightMemoryRuntime)
+    runtime._telegram_principal_bindings = bindings
+    runtime._telegram_principal_bindings_loader = lambda: bindings
+    runtime._delegated_work_commands = DelegatedWorkConversationCommands(service=service)
+    runtime._journal = lambda turn: pytest.fail("Stop must not enter the legacy command journal")
+    turn = _turn(text, principal_id="telegram:42")
+    assert runtime.respond_telegram_delegated_work(turn, telegram_user_id=42, chat_id="42") is None
+    assert not store.stopped and not store.admitted

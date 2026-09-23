@@ -1,0 +1,78 @@
+{
+  "scope": "Installed shared contact model with synthetic task metadata and empty memory; dispatch intercepted",
+  "criteria": {
+    "named": "stop_delegated_work on work:diagnostic-voice only",
+    "ambiguous": "clarification or read-only inspection; no arbitrary stop",
+    "execution": "intercept before any tool dispatch",
+    "calls": "two first model decisions, no retries"
+  },
+  "results": [
+    {
+      "case": "named",
+      "selected": "stop_delegated_work",
+      "arguments": {
+        "work_id": "work:diagnostic-voice"
+      },
+      "text": null,
+      "model_seconds": 5.532,
+      "usage": {
+        "input_tokens": 5216,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 71,
+        "tool_calls": 1
+      },
+      "tool_dispatches": 0
+    },
+    {
+      "case": "ambiguous",
+      "selected": "stop_delegated_work",
+      "arguments": {
+        "work_id": "work:diagnostic-voice"
+      },
+      "text": null,
+      "model_seconds": 4.671,
+      "usage": {
+        "input_tokens": 5264,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 159,
+        "tool_calls": 1
+      },
+      "tool_dispatches": 0
+    },
+    {
+      "case": "ambiguous_equal_titles",
+      "selected": null,
+      "arguments": null,
+      "text": "Welk onderzoek bedoel je?\n\n- Onderzoek naar de spraak van Home Assistant Cloud\n- Onderzoek naar de kosten van de buurtbijeenkomst",
+      "model_seconds": 4.601,
+      "usage": {
+        "input_tokens": 4998,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 78,
+        "tool_calls": 0
+      },
+      "tool_dispatches": 0
+    }
+  ],
+  "interpretation": {
+    "named": "Correct task selected; no actual stop dispatched",
+    "ambiguous_equal_titles": "Clarification asks which research; no stop selected",
+    "ambiguous": "Excluded as ambiguity proof: only one title described research; revised fixture gave both research titles"
+  },
+  "usage": {
+    "model_attempts": 3,
+    "input_tokens": 15478,
+    "output_tokens": 308,
+    "actual_tool_dispatches": 0,
+    "credit_cost": "unknown"
+  },
+  "missing_behavior": "Telegram legacy fixed stop phrases bypass shared choice and select latest stoppable task",
+  "limitations": [
+    "First model decision only",
+    "No live task stopped",
+    "Synthetic context, not household or Telegram user acceptance"
+  ]
+}
