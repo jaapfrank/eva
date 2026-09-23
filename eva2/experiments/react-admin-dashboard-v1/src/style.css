@@ -33,3 +33,17 @@ article h3 { text-transform: capitalize; }
 .memory-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
 .memory-source-control textarea { display: block; box-sizing: border-box; width: 100%; margin-top: .5rem; font: inherit; }
 .memory-source-control button { margin: .4rem .4rem .4rem 0; }
+
+/* Owner task operations use the same durable work API as conversation. */
+.owner-work { margin-block:2rem; }
+.work-toolbar { display:flex; flex-wrap:wrap; gap:1rem; align-items:center; margin-bottom:1rem; }
+.work-toolbar input { font:inherit; padding:.5rem; border:1px solid #879b91; border-radius:.4rem; max-width:100%; }
+.work-kanban { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.8rem; margin-top:1rem; }
+.work-lane { background:#e8eeeb; border-top:4px solid #718479; border-radius:.6rem; padding:.7rem; min-width:0; }
+.work-lane.active { border-color:#3675b7; }.work-lane.attention { border-color:#ba8420; color:inherit; font-weight:normal; }.work-lane.done { border-color:#34845b; }
+.work-lane h3 { font-size:1rem; display:flex; justify-content:space-between; gap:.5rem; }.work-lane h3 span { font-variant-numeric:tabular-nums; }
+.work-lane h4 { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; }.work-lane .card { min-height:0; }
+.owner-work button { font:inherit; cursor:pointer; padding:.45rem .7rem; margin:.2rem; border:1px solid #8b9d93; border-radius:.4rem; background:white; color:#183d2c; }.owner-work button:disabled { opacity:.5; cursor:wait; }
+.work-empty { color:#5a6c61; font-size:.9rem; }.work-detail:focus { outline:2px solid #3675b7; outline-offset:3px; }
+@media(max-width:1000px){.work-kanban{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.work-kanban{grid-template-columns:1fr}.work-toolbar label{display:grid;gap:.3rem}}

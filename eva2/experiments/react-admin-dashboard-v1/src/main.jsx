@@ -363,9 +363,9 @@ function Dashboard() {
         {status.data.runtime.ready ? 'Gereed' : 'Aandacht nodig'}
       </span>
     </header>
+    <OwnerWork />
     <OwnerInitiatives />
     <OwnerBrowser />
-    <OwnerWork />
     <MemorySources />
     <section>
       <h2>Werkbord</h2>

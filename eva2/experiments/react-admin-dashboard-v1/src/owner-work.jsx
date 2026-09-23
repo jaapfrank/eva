@@ -4,6 +4,12 @@ const endpoint = '/internal/v1/dashboard/work';
 const labels = { admitted: 'Ingepland', call_started: 'Bezig', stopped: 'Gestopt',
   succeeded: 'Resultaat klaar', verified: 'Resultaat gecontroleerd', failed: 'Mislukt',
   needs_help: 'Hulp nodig', ambiguous: 'Uitkomst onzeker', expired: 'Verlopen' };
+const lanes = [
+  ['active', 'Bezig & ingepland', ['admitted', 'call_started']],
+  ['attention', 'Aandacht nodig', ['failed', 'needs_help', 'ambiguous', 'expired']],
+  ['done', 'Resultaten', ['succeeded', 'verified']],
+  ['stopped', 'Gestopt', ['stopped']],
+];
 const resumable = new Set(['stopped', 'failed', 'needs_help', 'ambiguous', 'expired']);
 function validWork(work, detail = false) {
   return work && typeof work.work_id === 'string' && Object.hasOwn(labels, work.state)
@@ -42,12 +48,17 @@ async function request(operation, workId, signal) {
 }
 
 export default function OwnerWork() {
+  const [filter, setFilter] = React.useState('');
+  const detailRef = React.useRef(null);
   const [page, setPage] = React.useState(null);
   const [detail, setDetail] = React.useState(null);
   const [busy, setBusy] = React.useState(false);
   const [error, setError] = React.useState('');
   const [notice, setNotice] = React.useState('');
   const commands = React.useRef(() => {});
+  React.useEffect(() => {
+    if (detail) detailRef.current?.focus({ preventScroll: false });
+  }, [detail?.work_id]);
   React.useEffect(() => {
     let mounted = true, running = false, halted = false, pending = null;
     let selected = null, currentDetail = null, revision = 0, timer;
@@ -147,22 +158,39 @@ export default function OwnerWork() {
   }, []);
   const refresh = () => commands.current('list', undefined, true);
   const act = (operation, workId) => commands.current(operation, workId, true);
-  return <section aria-label="Mijn hulpopdrachten">
-    <h2>Mijn hulpopdrachten</h2>
-    <p>Opdrachten aan Eva's onderzoeker, met hun opgeslagen status en resultaat. Dit overzicht wordt automatisch bijgewerkt zolang dit tabblad zichtbaar is.</p>
+  const visible = (page?.jobs || []).filter(job => job.task_preview.toLocaleLowerCase('nl-NL').includes(filter.toLocaleLowerCase('nl-NL')));
+  function downloadResult() {
+    if (!detail?.result_available || !detail.result) return;
+    const url = URL.createObjectURL(new Blob([readable(detail.result.output)], { type: 'text/plain;charset=utf-8' }));
+    const link = document.createElement('a');
+    link.href = url; link.download = 'eva-resultaat.txt'; link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  return <section className="owner-work" aria-label="Mijn hulpopdrachten">
+    <h2>Mijn opdrachten</h2>
+    <p>Onderzoek, digitale taken en hulpwerk van Eva. De opgeslagen toestand wordt elke vijf seconden bijgewerkt.</p>
+    <div className="work-toolbar"><a href="/internal/v1/dashboard/conversation">Nieuwe opdracht aan Eva →</a><label>Zoek opdracht <input value={filter} onChange={event => setFilter(event.target.value)} type="search" /></label></div>
     <button disabled={busy} onClick={() => refresh()}>Werk vernieuwen</button>
     {error && <p role="alert">{error}</p>}
     {notice && <p role="status">{notice}</p>}
     {busy && <p role="status">Werk ophalen…</p>}
     {page && !page.jobs.length && <p>Nog geen hulpopdracht beschikbaar.</p>}
-    <div className="board">{page?.jobs.map(job => <article className="card" key={job.work_id}>
-      <h3>{job.task_preview}</h3><p>{labels[job.state]} · poging {job.generation}</p>
-      {typeof job.delivery?.description === 'string' && <p>{job.delivery.description}</p>}
-      {job.stop_requested && <p>Stopverzoek opgeslagen</p>}
-      <button onClick={() => act('get', job.work_id)}>Opdracht openen</button>
-    </article>)}</div>
+    {page && <div className="work-kanban">{lanes.map(([id, title, states]) => {
+      const jobs = visible.filter(job => states.includes(job.state));
+      return <section className={`work-lane ${id}`} key={id} aria-label={title}>
+        <h3>{title} <span>{jobs.length}</span></h3>
+        {!jobs.length && <p className="work-empty">{filter ? 'Geen match' : 'Geen opdrachten'}</p>}
+        {jobs.map(job => <article className="card" key={job.work_id}>
+          <h4>{job.task_preview}</h4><p>{labels[job.state]} · poging {job.generation}</p>
+          {typeof job.delivery?.description === 'string' && <p>{job.delivery.description}</p>}
+          {job.stop_requested && <p>Stopverzoek opgeslagen</p>}
+          <button disabled={busy} onClick={() => act('get', job.work_id)}>{job.result_available ? 'Resultaat bekijken' : 'Opdracht openen'}</button>
+          {id === 'active' && !job.stop_requested && <button disabled={busy} onClick={() => act('stop', job.work_id)}>Stoppen</button>}
+        </article>)}
+      </section>;
+    })}</div>}
     {page?.truncated && <p>Er worden maximaal twintig opdrachten getoond, met lopend werk eerst.</p>}
-    {detail && <article aria-label="Geopende hulpopdracht" className="card">
+    {detail && <article ref={detailRef} tabIndex={-1} aria-label="Geopende hulpopdracht" className="card work-detail">
       <h3>Opdracht</h3><p style={{ whiteSpace: 'pre-wrap' }}>{detail.task}</p>
       <p>{labels[detail.state]} · poging {detail.generation}</p>
       {typeof detail.failure_description === 'string' && <p role="status">{detail.failure_description}</p>}
@@ -174,6 +202,7 @@ export default function OwnerWork() {
         <button disabled={busy} onClick={() => act('resume', detail.work_id)}>Hervatten met nieuwe poging</button>
       </>}
       <h3>Opgeslagen resultaat</h3>
+      {detail.result_available && detail.result && <button onClick={downloadResult}>Resultaat downloaden</button>}
       {detail.result_available && detail.result
         ? <pre style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>{readable(detail.result.output)}</pre>
         : <p>Geen afgerond resultaat beschikbaar.</p>}
