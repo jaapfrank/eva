@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-09-23T14:09:03.410010+00:00",
+  "scope": "Installed private web voice backend and configured HA TTS measured separately",
+  "sourceRevision": "1b490db6",
+  "measurements": {
+    "coreFreshGreeting": {
+      "receiptSeconds": 0.0744,
+      "finalSeconds": 5.3245,
+      "syntheticText": "Hallo.",
+      "recentContext": false
+    },
+    "ttsReceipt": {
+      "text": "Een momentje.",
+      "firstChunkSeconds": 0.4294682159961667,
+      "completeSeconds": 0.457461209007306,
+      "audioBytes": 11733,
+      "speakerPlayback": false
+    }
+  },
+  "configuredProviders": {
+    "stt": "stt.home_assistant_cloud",
+    "tts": "tts.home_assistant_cloud"
+  },
+  "findings": [
+    "Receipt is present in both installed voice services and emitted after successful NDJSON headers",
+    "Final model response remains slow",
+    "Saved result reauthorization is sequential and precedes opening core stream, including results outside last four outbound slots"
+  ],
+  "limitations": [
+    "Separate measurements must not be summed into an end-to-end voice guarantee",
+    "No microphone, VAD, audible browser playback or physical Voice PE measured",
+    "One live synthetic conversation turn; actual model-call/token count and credit cost not captured",
+    "No production code changed"
+  ],
+  "next": "Select outbound saved result candidates before reauthorization, preserving access checks for every transmitted saved result."
+}

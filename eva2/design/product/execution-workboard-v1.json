@@ -1308,15 +1308,15 @@
           }
         ],
         "now": {
-          "title": "Foutuitleg geïnstalleerd",
-          "state": "Opgeleverd · geen lopende bouwclaim",
-          "detail": "Kern en werker gezond. Bestaande mislukte taak houdt haar status en toont uitleg; nieuwe webcode staat live.",
-          "doneWhen": "Gerichte pakketcontroles, onafhankelijke review en livecontrole afgerond."
+          "title": "Ontvangst en antwoordtijd apart gemeten",
+          "state": "Routecontrole afgerond · geen nieuwe functie",
+          "detail": "Op geïnstalleerde webspraakroute: ontvangst 0,074 s, modelantwoord 5,32 s. Losse stemgenerator: eerste audio 0,43 s. Geen volledige spraak- of Voice PE-meting.",
+          "doneWhen": "Bestaande ontvangst bevestigd; verdere vertraging niet als verdwenen ontvangstfunctie behandelen."
         },
         "next": {
-          "title": "Snelle hoorbare ontvangst herstellen",
-          "state": "Volgende functionele stap",
-          "detail": "Eerder gemeten snelle ontvangst vergelijken met de huidige gespreksroute. Bestaande audio gebruiken en het concrete ontbrekende gedrag herstellen."
+          "title": "Onnodige wachttijd vóór spraakbeurten wegnemen",
+          "state": "Concreet verbeterpunt gevonden",
+          "detail": "Controleer alleen de bewaarde taakresultaten die werkelijk worden meegestuurd, met behoud van hun toegangscontrole. Dit versnelt niet automatisch een verse begroeting."
         },
         "ownerAction": {
           "title": "Voice PE: beschikbaarheid doorgeven",
@@ -1328,7 +1328,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T14:05:30.534518+00:00"
+        "reviewedAt": "2026-09-23T14:09:03.410010+00:00"
       }
     },
     "pendingTechnicalReview": {

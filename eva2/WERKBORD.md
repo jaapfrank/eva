@@ -43,7 +43,7 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Actuele uitvoering:** begrijpelijke taakfouten geïnstalleerd. Eerstvolgende functionele stap: bestaande snelle hoorbare ontvangst vergelijken met de huidige route en het concrete gat herstellen.
+**Actuele uitvoering:** ontvangst is nog aanwezig in beide geïnstalleerde spraakdiensten. Eén actuele kernproef: ontvangst 0,074 s; modelantwoord 5,32 s. Losse HA Cloud-stemproef eerste audio 0,43 s. Dit zijn geen volledige spraakmetingen en mogen niet worden opgeteld tot een garantie. Eerstvolgende wijziging: overbodige hercontrole van niet-meegestuurde oude taakresultaten vóór spraakbeurten wegnemen. [Metingen en grenzen](evidence/product/voice-receipt-current-route-20260923.json).
 
 **Taakfouten (23 september):** elf gerichte pakketcontroles en onafhankelijke review GO. Kern/werker gezond, bronbytes en live foutuitleg gecontroleerd. Eerdere onzekere taakstatus blijft behouden; geen automatische herhaling. Geen modelcalls. [Bewijs](evidence/product/task-failure-explanation-installed-20260923.json).
 
