@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from contextlib import contextmanager, nullcontext
 from contextvars import ContextVar
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import datetime
 import hashlib
 import json
@@ -920,7 +920,10 @@ class LivingConversation:
                 "als die tool beschikbaar is en de taak zonder browser of externe tools kan. "
                 "Deze hulpagent kan geen actuele bronnen raadplegen of handelingen uitvoeren. "
                 "Neem zulk werk alleen met de daarvoor aangeboden echte tools aan. "
-                "Bevestig achtergrondwerk pas na de opgeslagen toelating; noem het work_id. "
+                "Bevestig achtergrondwerk pas na de opgeslagen toelating. Als de starttool "
+                "acceptance_message aanbiedt, schrijf daarin één korte natuurlijke ontvangstzin "
+                "voor deze opdracht, zonder afronding te claimen. Die zin wordt alleen na "
+                "werkelijke toelating getoond. Bewaar work_id voor vervolgvragen en stoppen. "
                 "Wacht daarna niet op voltooiing en poll niet: laat de gebruiker doorpraten. "
                 "Een nieuwe opdracht stopt eerder werk niet. Gebruik bij een expliciete stop "
                 "of onverenigbare correctie de aangeboden stoptool voor het juiste work_id; "
@@ -1062,6 +1065,19 @@ class LivingConversation:
             if voice is not None:
                 voice.event({"type": "action_finished", "name": call.name,
                              "status": completed.output.get("status", "unknown")})
+            acceptance = completed.output.get("acceptance_message")
+            if (model is contact_model and len(receipts) == 1
+                    and call.name in {"start_delegated_work", "start_background_research", "start_digital_work"}
+                    and completed.output.get("status") == "verified"
+                    and isinstance(acceptance, str) and acceptance.strip()
+                    and len(acceptance) <= 240 and callable(guard_factory)):
+                # The first model drafts a natural acceptance inside its tool
+                # arguments. Publish only after durable admission and the same
+                # stop/authority guard used by the ordinary second-model reply.
+                reply_guard = guard_factory(turn, tuple(receipts))
+                if reply_guard is not None:
+                    generated = replace(generated, text=acceptance, action_call=None)
+                    break
             available_names = continuation_names(completed)
             if voice is not None and voice.active_work:
                 available_names = (*available_names, STOP_VOICE_WORK)

@@ -193,3 +193,96 @@ def test_mixed_reply_names_only_stopped_helper_and_discloses_other_results(monke
     assert ("Deze melding trekt die handelingen niet in" in corrected) == with_other_result
     assert service.reads == ["work:stopped", "work:other"]
     assert other_output == {"status": "verified", "content": "Een afzonderlijk behouden bestandsresultaat."}
+
+
+@pytest.fixture
+def acceptance_actions(monkeypatch):
+    events, calls = {}, []
+    class Timeline:
+        def __init__(self, *_): pass
+        def events(self, key): return tuple(events.get(key, ()))
+        def create_thread(self, *, thread_id, data, event_type, **_):
+            events[thread_id] = [SimpleNamespace(event_type=event_type, payload={"data": data})]
+        def transition(self, *, thread_id, data, event_type, **_):
+            events[thread_id].append(SimpleNamespace(event_type=event_type, payload={"data": data}))
+    class Service:
+        research_profile = digital_profile = object()
+        result = None
+        def available_for(self, _): return True
+        def validate_authority(self, _): pass
+        def execute(self, operation, turn, **kwargs):
+            calls.append(kwargs)
+            return self.result or {"contract": "EvaDelegatedWorkOwnerResult/v1",
+                "operation": operation, "created": True,
+                "work": {"work_id": "work:one", "state": "admitted", "stop_requested": False}}
+    monkeypatch.setattr(module, "PostgresOperationalTimeline", Timeline)
+    service = Service()
+    turn = ConversationTurn.private("tenant:test", "install:test", "owner", "chat", "message",
+                                    "Please investigate", "2026-09-10T10:00:00Z")
+    return module.PostgresDelegatedWorkActions(object(), service), service, turn, calls
+
+
+def test_acceptance_is_optional_only_for_start_tools():
+    for tool in module.PostgresDelegatedWorkActions.conversation_tools(include_research=True, include_digital=True):
+        schema = tool.input_schema
+        assert ("acceptance_message" in schema["properties"]) == tool.name.startswith("start_")
+        assert "acceptance_message" not in schema["required"]
+
+
+@pytest.mark.parametrize("name,key,value", [
+    ("start_delegated_work", "task", "Write an outline"),
+    ("start_digital_work", "task", "List available workspace tools"),
+    ("start_background_research", "research", {
+        "contract": "PublicResearchRequest/v1", "schema_version": 1,
+        "question": "What does Home Assistant Cloud offer?", "title": "Cloud features",
+        "options": ["Home Assistant Cloud"], "research_mode": "topic", "public_review": "public_unlinked"}),
+])
+def test_acceptance_is_journaled_exactly_and_not_forwarded_to_service(acceptance_actions, name, key, value):
+    actions, service, turn, calls = acceptance_actions
+    message = "Ik zoek het voor je uit; we kunnen ondertussen doorpraten."
+    call = ConversationActionCall("call", name, {key: value, "acceptance_message": message})
+    receipt = actions.execute(turn, call)
+    assert receipt.output["acceptance_message"] == message
+    assert calls == [{key: value, "request_key": actions._thread_id(turn, 0)}]
+    assert actions.pending(turn) == receipt
+    assert actions.execute(turn, call) == receipt
+    assert len(calls) == 1
+    with pytest.raises(ConversationConflict, match="changed after admission"):
+        actions.execute(turn, replace(call, arguments={key: value, "acceptance_message": "Different"}))
+
+
+@pytest.mark.parametrize("message", [None, 42, "", "   ", "x" * 241])
+def test_invalid_acceptance_does_not_admit_work(acceptance_actions, message):
+    actions, _, turn, calls = acceptance_actions
+    with pytest.raises(ConversationConflict, match="arguments differ"):
+        actions.execute(turn, ConversationActionCall("call", "start_delegated_work",
+            {"task": "Outline", "acceptance_message": message}))
+    assert not calls
+
+
+@pytest.mark.parametrize("changes", [
+    {"status": "not_found"}, {"status": "not_resumable"}, {"status": "failed"},
+    {"work": None}, {"work": {"work_id": "work:one", "state": "stopped", "stop_requested": True}},
+    {"work": {"work_id": "work:one", "state": "failed", "stop_requested": False}},
+    {"work": {"work_id": "work:one", "state": "succeeded", "stop_requested": False}},
+    {"work": {"work_id": "work:one", "state": "admitted", "stop_requested": True}},
+])
+def test_terminal_or_rejected_admission_does_not_publish_acceptance(acceptance_actions, changes):
+    actions, service, turn, _ = acceptance_actions
+    service.result = {"contract": "EvaDelegatedWorkOwnerResult/v1", "operation": "start",
+        "created": False, "work": {"work_id": "work:one", "state": "admitted", "stop_requested": False}, **changes}
+    receipt = actions.execute(turn, ConversationActionCall("call", "start_delegated_work",
+        {"task": "Outline", "acceptance_message": "I will investigate."}))
+    assert "acceptance_message" not in receipt.output
+
+
+def test_household_admission_uses_same_acceptance_gate(acceptance_actions):
+    actions, service, turn, _ = acceptance_actions
+    service.result = {"created": True, "prior_outcome_unknown": False,
+        "work": {"work_id": "work:household:one", "state": "call_started", "stop_requested": False}}
+    receipt = actions.execute(turn, ConversationActionCall("call", "start_background_research",
+        {"research": {"contract": "PublicResearchRequest/v1", "schema_version": 1,
+            "question": "What does Home Assistant Cloud offer?", "title": "Cloud features",
+            "options": ["Home Assistant Cloud"], "research_mode": "topic",
+            "public_review": "public_unlinked"}, "acceptance_message": "I will investigate."}))
+    assert receipt.output["acceptance_message"] == "I will investigate."

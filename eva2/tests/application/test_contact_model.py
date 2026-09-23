@@ -212,3 +212,26 @@ def test_autonomous_work_keeps_existing_work_model():
         LivingConversation(_Memory(), work, IDENTITY, contact_model=contact).respond(
             replace(turn(), conversation_id="initiative-task:one"))
     assert len(work.calls) == 1
+
+
+@pytest.mark.parametrize("stopped", [False, True])
+def test_admitted_acceptance_uses_one_contact_call_and_current_reply_guard(stopped):
+    class Admitted(Actions):
+        def execute(self, turn, call):
+            assert call.arguments["acceptance_message"] == "Ik zoek het voor je uit."
+            return ConversationActionReceipt(call, {"status": "verified",
+                "acceptance_message": call.arguments["acceptance_message"]})
+
+        def reply_guard(self, turn, receipts):
+            if not receipts:
+                return None
+            assert len(receipts) == 1
+            return lambda text: "Je opdracht is gestopt." if stopped else text
+
+    contact = Model(lambda t, k: ConversationActionCall("start", "start_delegated_work",
+        {"task": "Onderzoek", "acceptance_message": "Ik zoek het voor je uit."}))
+    work = Model(lambda t, k: pytest.fail("work model must not run inline"))
+    reply = LivingConversation(_Memory(), work, IDENTITY, Admitted(), contact_model=contact).respond(turn())
+    assert len(contact.calls) == 1
+    assert reply.model_usage.model_attempts == 1
+    assert reply.text == ("Je opdracht is gestopt." if stopped else "Ik zoek het voor je uit.")

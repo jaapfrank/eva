@@ -78,7 +78,13 @@ class PostgresDelegatedWorkActions:
                             "research_mode": {"type":"string", "enum":["topic","comparison"]},
                             "public_review": {"type":"string", "const":"public_unlinked"}},
                         "required": ["contract","schema_version","question","title","options","research_mode","public_review"]
-                    } if operation == "research" else {"type":"string"})},
+                    } if operation == "research" else {"type":"string"}),
+                        **({"acceptance_message": {
+                            "type": "string", "minLength": 1, "maxLength": 240,
+                            "description": "Formuleer een korte, natuurlijke ontvangstzin voor deze opdracht. "
+                            "Deze zin wordt alleen na opgeslagen toelating uitgesproken. "
+                            "Zeg dat je ermee aan de slag gaat; beweer nog geen resultaat."
+                        }} if operation in {"start", "research", "digital"} else {})},
                     "required": [] if key is None else [key],
                 },
                 "Rapporteer de opgeslagen status eerlijk. Bewaar work_id voor een vervolg. "
@@ -191,7 +197,13 @@ class PostgresDelegatedWorkActions:
         if operation_and_key is None or call.name not in self.action_names:
             raise ConversationConflict("unknown delegated action")
         operation, key = operation_and_key
-        if set(call.arguments) != (set() if key is None else {key}) or (
+        required = set() if key is None else {key}
+        optional = {"acceptance_message"} if operation in {"start", "research", "digital"} else set()
+        acceptance = call.arguments.get("acceptance_message")
+        if (not required <= set(call.arguments) <= required | optional
+                or ("acceptance_message" in call.arguments and (
+                    not isinstance(acceptance, str) or not acceptance.strip()
+                    or len(acceptance) > 240))) or (
             key is not None and operation != "research" and (
                 not isinstance(call.arguments[key], str)
                 or not call.arguments[key].strip()
@@ -227,6 +239,16 @@ class PostgresDelegatedWorkActions:
             **({} if key is None else {key: call.arguments[key]}),
         )
         output = {"status": "verified", "operation_result": result}
+        work = result.get("work")
+        # Expose model-written contact only after durable, still-active admission.
+        # The publication guard rechecks current authority and concurrent stops.
+        if (acceptance is not None
+                and "status" not in result
+                and type(result.get("created")) is bool and isinstance(work, dict)
+                and isinstance(work.get("work_id"), str) and work["work_id"].strip()
+                and work.get("state") in {"admitted", "call_started"}
+                and work.get("stop_requested") is False):
+            output["acceptance_message"] = acceptance
         try:
             timeline.transition(
                 thread_id=thread_id, expected_revision=1,
