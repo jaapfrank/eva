@@ -1,6 +1,8 @@
 # Eva 2 — uitvoerbaar werkbord
 
-Laatst bijgewerkt: 2026-09-23.
+Laatst bijgewerkt: 2026-09-24.
+
+**Digitale opdrachten bijsturen geïnstalleerd (24 september):** de privégespreksroute kan een correctie bewaren, de oude poging stoppen en één begrensde hervatting inplannen nadat die poging stopt. De bestaande uitvoering, acties en voortgang blijven behouden; de hervatte werker krijgt de correcties mee. Het takenbord toont de correctiehistorie. Alleen digitale taken; afgerond werk wordt niet herschreven en reeds begonnen effecten kunnen nog afronden. Syntax/import/startcontrole, beide diensten gezond en vijftien bestaande taken zichtbaar. Geen modelproef, uitgebreide tests of review; die volgen later. [Installatie](evidence/product/work-corrections-installed-20260924.json). Volgende werk: resterende kanaalverschillen tussen gesprek en achtergrondwerk afmaken; nog niet gestart.
 
 **Oudere opdrachten doorzoeken geïnstalleerd (23 september):** gesprek en takenbord zoeken op tekst in bewaarde titels, opdrachten en resultaten met dezelfde tenant-/installatie-/eigenaarbinding. Twintig treffers per pagina, stabiele cursor naar oudere resultaten en bestaande taakbediening voor openen/stoppen/hervatten. De recente lijst blijft bestaan. Syntax/build/import/startcontrole; een alleen-lezen zoekaanvraag voor buurtplan gaf HTTP200 en twee bewaarde taken. Geen modelcall of bericht. Echte gespreks-/pagineringproef en review later. Geen semantisch zoeken of terughalen van verwijderde gegevens. [Installatie](evidence/product/owner-work-search-installed-20260923.json). Volgende functie: lopende opdrachten gericht bijsturen; nog niet gestart.
 

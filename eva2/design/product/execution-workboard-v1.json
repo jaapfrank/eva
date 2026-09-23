@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T13:51:06.082260+00:00",
+        "checkedAt": "2026-09-23T22:10:38.206442+00:00",
         "deliveries": [
+          {
+            "title": "Lopende digitale opdrachten bijsturen",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Eva kan een correctie bewaren, de oude poging stoppen en één hervatting met de correctie inplannen. Eerdere acties en voortgang blijven behouden; de correcties staan bij de taak.",
+            "remaining": "Geïnstalleerd met startcontrole; echte bijsturingsproef later. Alleen digitale taken. Al begonnen acties kunnen nog afronden.",
+            "source": "eva2/evidence/product/work-corrections-installed-20260924.json"
+          },
           {
             "title": "Oudere opdrachten op onderwerp terugvinden",
             "date": "23 september",
@@ -1493,15 +1501,15 @@
           }
         ],
         "now": {
-          "title": "Oudere opdrachten terugvinden",
-          "state": "Geïnstalleerd · gebruiksproef later",
-          "detail": "Nieuwe zoekactie en zoekknop gebruiken dezelfde eigenaargebonden opslag. De recente lijst blijft beschikbaar.",
-          "doneWhen": "Functie geïnstalleerd; volledige zoek-/pagineringproef en gebruikersbeoordeling blijven open."
+          "title": "Digitale bijsturing geïnstalleerd",
+          "state": "Geïnstalleerd",
+          "detail": "Eva kan een correctie bewaren, de oude poging stoppen en één hervatting met de correctie inplannen. Eerdere acties en voortgang blijven behouden; de correcties staan bij de taak.",
+          "doneWhen": "Technische installatie afgerond; uitgebreide tests, review en praktijkproef blijven open."
         },
         "next": {
-          "title": "Lopende opdrachten gericht bijsturen",
+          "title": "Gesprek tijdens achtergrondwerk per kanaal afmaken",
           "state": "Nog niet gestart",
-          "detail": "Een gewijzigde opdracht verbinden met de bestaande stop- en hervattingsroute, zodat oude uitvoering en resultaten zichtbaar blijven."
+          "detail": "Resterende aansluitingen van de gedeelde gespreks- en taakroute afmaken met behoud van bestaande snelle ontvangst en spraak."
         },
         "ownerAction": {
           "title": "Takenbord gebruiken",
@@ -1515,7 +1523,7 @@
           "expected": "Dezelfde opgeslagen taken als in Eva’s gesprek, met gerichte bediening per opdracht. Dit is gebruiksinformatie; geen nieuwe verplichte proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T21:58:06.819537+00:00"
+        "reviewedAt": "2026-09-23T22:10:38.206442+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11284,7 +11292,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Een gewijzigde opdracht verbinden met de bestaande stop- en hervattingsroute, zodat oude uitvoering en resultaten zichtbaar blijven.",
+      "nextAction": "Resterende aansluitingen van de gedeelde gespreks- en taakroute afmaken met behoud van bestaande snelle ontvangst en spraak.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

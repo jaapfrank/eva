@@ -1,0 +1,36 @@
+{
+  "contract": "EvaFeatureInstallation/v1",
+  "feature": "digital_work_corrections",
+  "recorded_at": "2026-09-23T22:10:38.206442+00:00",
+  "source_commit": "73fe8c92",
+  "image": "eva2-work-corrections:20260924",
+  "installed": true,
+  "checks": [
+    "Changed Python syntax",
+    "Existing source files matched running baseline",
+    "Dashboard build assets materialized",
+    "Packaged imports and correction descriptor constructed without network",
+    "Core and delegated worker healthy",
+    "Read-only owner work endpoint HTTP 200; 15 existing tasks visible",
+    "Active compose and dashboard metadata updated"
+  ],
+  "behavior": [
+    "Private conversation can stop a digital attempt, retain an owner correction and schedule one bounded resumption after it stops",
+    "Original execution identity, tool receipts and progress retained",
+    "Resumed model receives saved owner corrections",
+    "Task detail displays correction history"
+  ],
+  "limits": [
+    "Actual correction/resumption and concurrent-action trials deferred",
+    "Independent review deferred by owner instruction",
+    "Digital tasks only; research and tool-free jobs return explicit guidance",
+    "Finished tasks are not rewritten",
+    "External actions already started may complete",
+    "A persistence or schedule failure can leave the old task stopped without a queued restart; no automatic success claim",
+    "At most sixteen corrections per execution; existing scheduling and worker budgets unchanged"
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/work-corrections-20260924/baseline.compose.private.json"
+}
