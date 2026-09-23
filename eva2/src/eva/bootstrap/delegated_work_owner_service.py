@@ -116,7 +116,7 @@ class DelegatedWorkOwnerService:
         if operation == "list":
             if task is not None or work_id is not None:
                 raise ValueError("list does not accept task or work id")
-            rows = self.store.list_owned(**self._owner, limit=21)
+            rows = self.store.list_owned(**self._owner, limit=21, active_first=True)
             return {**response, "jobs": [self._view(row, include_result=False, turn=turn) for row in rows[:20]],
                     "truncated": len(rows) > 20}
         if operation in {"start", "research", "digital"}:
@@ -231,7 +231,7 @@ class DelegatedWorkOwnerService:
             raise DelegatedWorkConflict("delegated work requires its private owner scope")
         # As with the normal list operation, the store revalidates the current
         # owner binding and restricts results to private work in this scope.
-        rows = self.store.list_owned(**self._owner, limit=21)
+        rows = self.store.list_owned(**self._owner, limit=21, active_first=True)
         return {"jobs": [{"work_id": work.spec.work_id, "title": work.title,
                           "state": work.state,
                           "stop_requested": work.stop_requested_at is not None}

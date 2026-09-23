@@ -41,7 +41,7 @@ def test_metadata_has_only_selection_fields_without_delivery_or_result_reads():
         {"work_id": "work:2", "title": "Title 2", "state": "call_started", "stop_requested": True},
     ], "truncated": False}
     assert reads == [{"owner_principal_id": service.owner_principal_id,
-                      "principal_binding_id": service.principal_binding_id, "limit": 21}]
+                      "principal_binding_id": service.principal_binding_id, "limit": 21, "active_first": True}]
 
 
 def test_metadata_caps_twenty_and_reports_truncation():
@@ -76,3 +76,10 @@ def test_normal_owner_list_still_uses_full_presentation():
     result = service.execute("list", turn, request_key="normal-list")
     assert result["jobs"] == [{"delivery": "full-view"}]
     assert viewed[0][1] == {"include_result": False, "turn": turn}
+
+
+def test_latest_task_keeps_chronological_default():
+    service, turn, reads = setup([job(1)])
+    assert service.latest_work_id(turn) == "work:1"
+    assert "active_first" not in reads[0]
+    assert reads[0]["limit"] == 1

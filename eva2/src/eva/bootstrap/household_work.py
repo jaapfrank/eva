@@ -213,7 +213,7 @@ class HouseholdWorkService:
         if operation == "list":
             if research is not None or work_id is not None:
                 raise ValueError("household listing cannot select another destination")
-            rows = self.store.list_household(**self._owner, household_origin=origin,
+            rows = self.store.list_household(**self._owner, household_origin=origin, active_first=True,
                 now=self.server.authority.clock(), limit=21)
             # Listing supplies selection context, not all completed research text.
             return {"jobs": [{key: view[key] for key in

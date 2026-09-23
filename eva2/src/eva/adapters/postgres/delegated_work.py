@@ -985,11 +985,19 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
 
     def list_owned(
         self, *, owner_principal_id: UUID, principal_binding_id: UUID,
-        limit: int = 21,
+        limit: int = 21, active_first: bool = False,
     ) -> tuple[StoredDelegatedWork, ...]:
         """Return bounded private job identifiers/results from this exact binding."""
         if type(limit) is not int or not 1 <= limit <= 65:
             raise ValueError("delegated work listing limit is invalid")
+        if type(active_first) is not bool:
+            raise ValueError("delegated work active-first flag must be boolean")
+        ordering = (
+            [sa.case((sa.and_(
+                delegated_work_runs.c.state.in_(("admitted", "call_started")),
+                delegated_work_runs.c.stop_requested_at.is_(None),
+            ), 0), else_=1)] if active_first else []
+        ) + [delegated_work_runs.c.created_at.desc(), delegated_work_runs.c.work_id.desc()]
         with self._engine.connect() as connection:
             transaction = connection.begin()
             try:
@@ -1002,15 +1010,14 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     delegated_work_runs.c.spec_payload["audience"].astext == "private",
                     delegated_work_runs.c.owner_principal_id == owner_principal_id,
                     delegated_work_runs.c.principal_binding_id == principal_binding_id,
-                ).order_by(delegated_work_runs.c.created_at.desc(),
-                           delegated_work_runs.c.work_id.desc()).limit(limit)).mappings().all()
+                ).order_by(*ordering).limit(limit)).mappings().all()
                 return tuple(self._validated(connection, row) for row in rows)
             finally:
                 transaction.rollback()
 
     def list_household(
         self, *, owner_principal_id: UUID, principal_binding_id: UUID,
-        household_origin, now: datetime, limit: int = 21,
+        household_origin, now: datetime, limit: int = 21, active_first: bool = False,
     ) -> tuple[StoredDelegatedWork, ...]:
         """List only retained work in the caller's currently open household session."""
         from eva.adapters.postgres.household_work_sessions import verify_origin
@@ -1021,6 +1028,14 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         now = _whole_second(now, label="household listing time")
         if not isinstance(household_origin, HouseholdWorkOrigin) or self._household_authorizer is None:
             raise DelegatedWorkConflict("household work authority unavailable")
+        if type(active_first) is not bool:
+            raise ValueError("delegated work active-first flag must be boolean")
+        ordering = (
+            [sa.case((sa.and_(
+                delegated_work_runs.c.state.in_(("admitted", "call_started")),
+                delegated_work_runs.c.stop_requested_at.is_(None),
+            ), 0), else_=1)] if active_first else []
+        ) + [delegated_work_runs.c.created_at.desc(), delegated_work_runs.c.work_id.desc()]
         with self._engine.connect() as connection:
             transaction = connection.begin()
             try:
@@ -1037,8 +1052,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     delegated_work_runs.c.spec_payload["audience"].astext == "household",
                     delegated_work_runs.c.spec_payload["origin"].contains(household_origin.destination()),
                     delegated_work_runs.c.retention_until > now,
-                ).order_by(delegated_work_runs.c.created_at.desc(),
-                           delegated_work_runs.c.work_id.desc()).limit(limit)).mappings().all()
+                ).order_by(*ordering).limit(limit)).mappings().all()
                 result = []
                 for row in rows:
                     work = self._validated(connection, row)
