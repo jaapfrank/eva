@@ -27,7 +27,7 @@ class HouseholdConversationRuntime(Protocol):
 class NativeHouseholdResponder:
     def __init__(self, *, runtime: HouseholdConversationRuntime,
                  tenant_id: str, installation_id: str, household_id: str,
-                 devices: Mapping[str, str], consent: ActiveHouseholdConsentResolver):
+                 devices: Mapping[str, str], consent: ActiveHouseholdConsentResolver, work_server=None):
         if not tenant_id or not installation_id or not household_id or not devices:
             raise ValueError("Native household scope is required")
         self._runtime = runtime
@@ -36,6 +36,7 @@ class NativeHouseholdResponder:
         self._household = household_id
         self._devices = dict(devices)
         self._consent = consent
+        self._work_server = work_server
 
     def make_turn(self, request: VoiceRequest) -> ConversationTurn:
         if self._devices.get(request.satellite_id) != request.device_id:
@@ -47,6 +48,18 @@ class NativeHouseholdResponder:
         )
         if reference is None:
             raise ValueError("Native household mandate is not active")
+        if self._work_server is not None:
+            from uuid import UUID
+            server = self._work_server
+            binding = server.sessions.native(request.satellite_id, request.device_id,
+                                             request.conversation_id)
+            service = server.session(token=server.authority.voice.token,
+                satellite_id=request.satellite_id, device_id=request.device_id,
+                session_id=binding["session_id"])
+            turn = service.turn(str(UUID(request.request_id)), request.text)
+            self._runtime.admit_turn_audience(turn)
+            check_cancellation()
+            return turn
         audience = MemoryAudience.household(principal_id=actor, household_id=self._household,
                                             consent_ref=reference)
         # HA's conversation ID is continuity data, never an Eva principal or

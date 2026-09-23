@@ -100,7 +100,7 @@ class HouseholdVoiceAuthority:
         return HouseholdConsentReference(principal_id=principal_id, household_id=household_id,
                                          operation_id=self.policy.consent_operation_id)
 
-    def build_service(self, *, runtime, engine) -> NativeVoiceService:
+    def build_service(self, *, runtime, engine, work_server=None) -> NativeVoiceService:
         from eva.adapters.api.native_voice import NativeVoiceService
         from eva.adapters.postgres.voice_requests import PostgresVoiceRequests
         from eva.bootstrap.native_voice import NativeHouseholdResponder
@@ -112,7 +112,7 @@ class HouseholdVoiceAuthority:
                                          installation_id=policy.installation_id),
             respond=NativeHouseholdResponder(
                 runtime=runtime, tenant_id=policy.tenant_id, installation_id=policy.installation_id,
-                household_id=policy.household_id, devices=policy.devices, consent=self),
+                household_id=policy.household_id, devices=policy.devices, consent=self, work_server=work_server),
             validate_current=self.validate_current,
         )
 

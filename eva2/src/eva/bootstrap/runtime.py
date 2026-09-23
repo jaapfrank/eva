@@ -2216,7 +2216,7 @@ def create_runtime_app() -> FastAPI:
         memory_storage_budget=storage_budget,
     )
     native_voice = (None if household_voice is None else household_voice.build_service(
-        runtime=runtime, engine=engine,
+        runtime=runtime, engine=engine, work_server=household_work_server,
     ))
     app = create_app(
         runtime,

@@ -116,7 +116,7 @@ class HouseholdWorkSessions:
     def __init__(self, store, authority):
         self.store, self.authority = store, authority
 
-    def open(self, satellite_id, device_id):
+    def open(self, satellite_id, device_id, *, native_conversation_key=None):
         self.authority.validate_device(satellite_id, device_id)
         now = self.authority.clock()
         policy = self.authority.policy
@@ -163,10 +163,43 @@ class HouseholdWorkSessions:
                 event_type="HOUSEHOLD_WORK_SESSION_OPENED",
                 phase="open",
                 status="active",
-                deadline=min(expires, now + timedelta(seconds=15)),
-                data={"binding": binding, "expires_at": expires.isoformat()},
+                deadline=expires if native_conversation_key is not None else min(expires, now + timedelta(seconds=15)),
+                data={"binding": binding, "expires_at": expires.isoformat(),
+                      **({"native_conversation_key": native_conversation_key} if native_conversation_key is not None else {})},
             )
         return binding
+
+    def native(self, satellite_id, device_id, conversation_id):
+        """Reuse a bounded HTTP conversation session without a media heartbeat.
+
+        Native HA has no persistent audio connection. Its authenticated turns
+        may use the existing thirty-minute session lifetime; this is not proof
+        of an identified speaker or permission for unsolicited audio.
+        """
+        self.authority.validate_device(satellite_id, device_id)
+        key = canonical_sha256({"satellite": satellite_id, "device": device_id,
+                                "conversation": conversation_id,
+                                "authority": self.authority.sha256})
+        with self.store._engine.begin() as c:
+            self.store._scope(c)
+            c.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key,0))"),
+                      {"key": "native-household-work:" + key})
+            first = c.execute(sa.select(events.c.payload).where(
+                events.c.tenant_id == self.store.scope.tenant_id,
+                events.c.installation_id == self.store.scope.installation_id,
+                events.c.event_type == "HOUSEHOLD_WORK_SESSION_OPENED",
+                events.c.payload["data"]["native_conversation_key"].astext == key,
+            ).order_by(events.c.occurred_at.desc(), events.c.thread_id.desc()).limit(1)).scalar_one_or_none()
+            if first is not None:
+                session_id = first["data"]["binding"]["session_id"]
+                state = c.execute(sa.select(checkpoints.c.phase, checkpoints.c.deadline).where(
+                    checkpoints.c.tenant_id == self.store.scope.tenant_id,
+                    checkpoints.c.installation_id == self.store.scope.installation_id,
+                    checkpoints.c.thread_id == session_thread(session_id),
+                )).one()
+                if state.phase == "open" and self.authority.clock() < state.deadline:
+                    return self.read(session_id, satellite_id, device_id)
+            return self.open(satellite_id, device_id, native_conversation_key=key)
 
     def read(self, session_id, satellite_id, device_id, *, operation="read"):
         self.authority.validate_device(satellite_id, device_id)
@@ -234,7 +267,7 @@ class HouseholdWorkSessions:
                     event_type="HOUSEHOLD_WORK_SESSION_RENEWED",
                     phase="open",
                     status="active",
-                    deadline=min(expires, now + timedelta(seconds=15)),
+                    deadline=expires if first.get("native_conversation_key") else min(expires, now + timedelta(seconds=15)),
                     data={},
                 )
             elif operation != "read":
