@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T23:50:54.107284+00:00",
+        "checkedAt": "2026-09-23T23:59:08.433115+00:00",
         "deliveries": [
+          {
+            "title": "Stap 1: onderzoek via de achtergrondroute",
+            "date": "24 september",
+            "state": "installed",
+            "result": "De gedeelde snelle gespreksroute biedt nieuw onderzoek via de bestaande achtergrondtaak aan, zonder daarnaast de oude wachtende onderzoeksfunctie te laten kiezen.",
+            "remaining": "Stap 1 is niet klaar. Hoorbare snelheid, gelijktijdig gesprek en fysieke Voice PE-onderbreking blijven te bevestigen; de continue-firmwarefout is niet opgelost.",
+            "source": "eva2/evidence/product/contact-background-routing-installed-20260924.json"
+          },
           {
             "title": "Ook mislukt achtergrondwerk terugmelden",
             "date": "24 september",
@@ -1629,29 +1637,29 @@
           }
         ],
         "now": {
-          "title": "Ook mislukt achtergrondwerk terugmelden",
+          "title": "Stap 1: doorpraten tijdens onderzoek",
           "state": "Geïnstalleerd",
-          "detail": "Bestaande terugmeldroutes selecteren alleen succes. Gedeelde melding voor failed, needs_help en ambiguous toevoegen; oude mislukkingen niet alsnog uitsturen.",
-          "doneWhen": "Technische installatie afgerond; echte kanaalproeven later."
+          "detail": "De gedeelde snelle gespreksroute krijgt geen wachtende onderzoeksfunctie meer aangeboden als achtergrondonderzoek beschikbaar is. Stoppen van een gekoppelde opdracht blijft eveneens bij het gespreksmodel.",
+          "doneWhen": "Gedeelde kern geïnstalleerd; volledige projectstap 1 blijft open."
         },
         "next": {
-          "title": "Stap 1 afronden: één gesprek en stem",
-          "state": "Volgende projectoplevering",
-          "detail": "Begroeten, snelle ontvangst, doorpraten tijdens achtergrondwerk, onderbreken en stoppen via website, Telegram, Home Assistant en Voice PE. Alleen ontbrekende functies voor deze volledige stap; uitgebreide kanaalproeven later."
+          "title": "Stap 1: resterend spraakgedrag",
+          "state": "Open",
+          "detail": "Snelle begroeting en doorpraten moeten op de echte ingangen kloppen. De bestaande diagnose bevat geen wakeword-overgang van de falende continue-firmware; geen herinstallatie op vermoeden. Uitgebreide proeven blijven uitgesteld."
         },
         "ownerAction": {
-          "title": "Geen nieuwe proef nodig",
-          "url": "http://localhost:44711/internal/v1/dashboard",
-          "linkLabel": "Bekijk opgeslagen opdrachten",
+          "title": "Je hoeft nu geen nieuwe proef te doen",
+          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
+          "linkLabel": "Open gesprek met Eva",
           "steps": [
-            "Gebruik Eva zoals gebruikelijk.",
-            "Bij een nieuwe mislukte achtergrondtaak kan de bestaande retourroute nu ook de mislukking melden.",
-            "Vraag naar de taakstatus voor details; hervatten gebeurt niet automatisch."
+            "Gebruik de bestaande website, Telegram of gewone Voice PE-route.",
+            "De gedeelde wijziging is geïnstalleerd; je hoeft niets op je speaker te installeren.",
+            "De volledige gespreks-/spraakoplevering staat nog open."
           ],
-          "expected": "De functie is geïnstalleerd. Daadwerkelijke aflevering en hoorbaarheid blijven later te beproeven."
+          "expected": "Onderzoek heeft een achtergrondroute; werkelijke snelheid en fysieke bediening worden nog niet als bewezen gepresenteerd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T23:50:54.107284+00:00"
+        "reviewedAt": "2026-09-23T23:59:08.433115+00:00"
       }
     },
     "pendingTechnicalReview": {

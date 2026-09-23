@@ -1,0 +1,29 @@
+{
+  "recorded_at": "2026-09-23T23:59:08.433115+00:00",
+  "source_commit": "a741827d",
+  "image": "eva2-contact-background-routing:20260924",
+  "requirement": "Step 1: keep conversation available while research runs. Use the shared contact and background worker routes.",
+  "source_finding": "LivingConversation offered research_current_options alongside start_background_research. The former performs research in the foreground turn; there is no trace proving it caused the owner-observed delay.",
+  "change": "When the contact model and authorized background research tool are present, omit the synchronous research choice for a new turn. Preserve existing receipt replay, initiative execution and routes without a background worker. Keep stop_related_work acknowledgement on the contact model.",
+  "checks": [
+    "Python syntax",
+    "Installed previous conversation source matched HEAD before patch",
+    "Packaged import",
+    "Zero active stored tasks before installation"
+  ],
+  "deferred": [
+    "Model choice and actual simultaneous conversation",
+    "Latency measurements",
+    "Physical Voice PE interruption and continuous firmware fault diagnosis",
+    "Independent review and broad tests"
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/contact-background-routing-20260924/baseline.compose.private.json",
+  "not_claimed": [
+    "Step 1 complete",
+    "Subsecond greeting",
+    "Physical wakeword fault fixed"
+  ]
+}
