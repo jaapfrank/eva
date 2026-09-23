@@ -1,7 +1,7 @@
 {
-  "checkedAt": "2026-09-23T11:47:50.066547+00:00",
+  "checkedAt": "2026-09-23T11:54:31.623258+00:00",
   "sourceCommit": "b7090791",
-  "status": "source_tested_reviewed_runtime_rolled_back",
+  "status": "installed_single_model_acceptance_live_verified",
   "candidateImage": "sha256:8d0a388db672a7d5a6bf19b1ca19c995216c25763b47550516df0c5ffc3619cb",
   "baselineImage": "sha256:867e0568b42a107ae3a37a263448ebf468617958af8e5f6588c90cf1a167557b",
   "change": "Model drafts acceptance in first tool call; publish only after durable admission and existing current authority/stop guard",
@@ -32,7 +32,40 @@
     "changes": "none; no meaningful optimization established"
   },
   "privateEvidenceDirectory": "/var/lib/eva2/contact-acceptance-install-20260923",
-  "next": "Determine provider timeout cause before further live candidate trial; do not repeat unchanged proof",
+  "next": "Further reduce first-contact latency without discarding authorized memory; keep timeout visible",
   "rollbackVerification": "Both baseline core and worker healthy on867e0568; previous connector fix retained",
-  "schemaReview": "Independent no-network inspection confirms Pydantic transforms optional acceptance into valid strict outgoing schema for all three start tools; no malformed-schema evidence"
+  "schemaReview": "Independent no-network inspection confirms Pydantic transforms optional acceptance into valid strict outgoing schema for all three start tools; no malformed-schema evidence",
+  "isolatedProviderProbe": {
+    "outcome": "valid_response_with_acceptance_message",
+    "totalSeconds": 6.516,
+    "httpRequestStartSeconds": 1.546,
+    "httpHeadersSeconds": 2.166,
+    "status": 200,
+    "modelCalls": 1,
+    "inputTokens": 1705,
+    "outputTokens": 108,
+    "scope": "Synthetic prompt, no memory, no task execution; original timeout cause not established"
+  },
+  "secondLiveTrial": {
+    "messageId": "dashboard:e43bd126-1d0b-45fe-9d35-9cfbcde0e989",
+    "workId": "work:eva-chat:8762ad2f-1224-58bc-974a-79816ca059db",
+    "wallSeconds": 10.312,
+    "modelMilliseconds": 6820,
+    "modelCalls": 1,
+    "inputTokens": 8001,
+    "outputTokens": 153,
+    "receiptHasAcceptance": true,
+    "taskAdmitted": true,
+    "taskResult": "Exact read/write catalog names returned, no content read or changes",
+    "workerModelCalls": 3,
+    "workerInputTokens": 18182,
+    "workerOutputTokens": 201
+  },
+  "limitations": [
+    "Single before/after task pair, not a general speed benchmark",
+    "10.3 seconds is not natural/instant contact",
+    "Previous61second failure remains unexplained",
+    "Physical Voice PE and remaining channel trials still open",
+    "Credit costs unknown"
+  ]
 }

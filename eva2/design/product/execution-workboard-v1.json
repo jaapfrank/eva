@@ -1000,8 +1000,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T11:48:48.406034+00:00",
+        "checkedAt": "2026-09-23T11:54:31.623258+00:00",
         "deliveries": [
+          {
+            "title": "Taakontvangst gebruikt één modelaanroep",
+            "date": "23 september · 13:52",
+            "state": "installed",
+            "result": "De echte taak werd aangenomen met één modelaanroep in plaats van twee. Dezelfde proefvraag kreeg ontvangst na 10,3 seconden; eerder 13,8 seconden. Het achtergrondresultaat is opgeslagen.",
+            "remaining": "Nog te langzaam voor natuurlijk contact. Eén vergelijking bewijst geen algemene snelheid. De eerdere time-out van circa 61 seconden blijft onverklaard.",
+            "source": "eva2/evidence/product/contact-acceptance-candidate-20260923.json"
+          },
           {
             "title": "Ontvangst met één modelaanroep: echte proef mislukt",
             "date": "23 september · 13:45",
@@ -1164,9 +1172,9 @@
           }
         ],
         "now": {
-          "title": "Ontvangstvertraging: mislukte modelaanroep verklaren",
-          "detail": "De variant met één ontvangst-aanroep is getest, maar de echte modelaanroep liep na circa 61 seconden vast. De vorige werkende kern en werker zijn teruggezet en gezond. De tooldefinitie is gecontroleerd; geen schemafout gevonden. Snelheidswinst blijft onbewezen.",
-          "state": "Vorige versie hersteld · oorzaak open",
+          "title": "Eerste contact verder versnellen",
+          "detail": "De tweede modelaanroep voor taakontvangst is verwijderd en live gecontroleerd. De eerste modelaanroep kostte nog 6,8 seconden; totaal 10,3 seconden. Geheugen ophalen duurt circa 2 seconden. Deze wachttijd moet verder omlaag.",
+          "state": "Ontvangst nog te langzaam",
           "doneWhen": "Een digitale opdracht wordt aangenomen, via bestaande connectoren afgemaakt en met opgeslagen resultaat teruggebracht. De gewone gespreksroute blijft beschikbaar."
         },
         "next": {
@@ -10954,7 +10962,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "De variant met één ontvangst-aanroep is getest, maar de echte modelaanroep liep na circa 61 seconden vast. De vorige werkende kern en werker zijn teruggezet en gezond. De tooldefinitie is gecontroleerd; geen schemafout gevonden. Snelheidswinst blijft onbewezen.",
+      "nextAction": "De tweede modelaanroep voor taakontvangst is verwijderd en live gecontroleerd. De eerste modelaanroep kostte nog 6,8 seconden; totaal 10,3 seconden. Geheugen ophalen duurt circa 2 seconden. Deze wachttijd moet verder omlaag.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11712,7 +11720,7 @@
       }
     },
     "contactLatency20260923": {
-      "status": "source_tested_reviewed_runtime_rolled_back",
+      "status": "installed_single_model_acceptance_live_verified",
       "baseCommit": "89a5706e",
       "owners": {
         "root": [
@@ -11736,7 +11744,10 @@
       },
       "endCondition": "First-model natural acceptance only after durable admission and final guard; old calls retained; tests and review pass; installed core/worker actual trial uses one foreground model response",
       "estimate": "Two small shared modules and focused checks; one changed-cause model trial; credit cost unknown",
-      "evidencePath": "eva2/evidence/product/contact-acceptance-candidate-20260923.json"
+      "evidencePath": "eva2/evidence/product/contact-acceptance-candidate-20260923.json",
+      "latestWallSeconds": 10.312,
+      "latestModelCalls": 1,
+      "previousTimeoutCause": "unknown"
     }
   },
   "activeTaskId": "AU-008",
