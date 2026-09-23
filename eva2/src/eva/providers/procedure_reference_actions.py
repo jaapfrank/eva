@@ -175,10 +175,12 @@ class ProcedureReferenceActions:
             if (source.admission["conversation_id"] != turn.conversation_id
                     or source.admission["source_message_id"] != turn.message_id):
                 raise ConversationConflict("designation requires the current turn's verified save")
-            if _instant(args["retention_until"]) <= _instant(now):
+            retention = _instant(args["retention_until"])
+            if retention <= _instant(now):
                 raise ProcedureReferenceRejected("reference already expired")
             ref = service.designate(scope, source_call_id=source_call_id, use_when=args["use_when"],
-                                    now=turn.occurred_at, retention_until=args["retention_until"])
+                                    now=turn.occurred_at,
+                                    retention_until=retention.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"))
             result = {"status": "designated", "reference": asdict(ref)}
         elif call.name == _NAMES[1] and set(args) <= {"cursor"}:
             docs, cursor = store.list_sources(principal_id=turn.principal_id, project_id=turn.project_id,

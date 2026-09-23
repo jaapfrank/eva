@@ -149,3 +149,46 @@ def test_background_readback_checks_job_immediately_before_gateway(monkeypatch, 
             assert host.read_current(None, "procedure.md") == b"Checked procedure"
             assert events[events.index("observe") - 1] == "job-guard"
     assert events.count("job-guard") == 1
+
+
+@pytest.mark.parametrize("deadline, accepted", [
+    ("2026-09-24T14:00:00+02:00", True),
+    ("2026-09-23T14:00:00+02:00", False),
+    ("invalid", False),
+])
+def test_designation_normalizes_valid_offset_and_rejects_expired_deadlines(monkeypatch, deadline, accepted):
+    from dataclasses import dataclass
+    from types import SimpleNamespace as NS
+    from eva.application.conversation import ConversationActionCall
+    from eva.application.procedure_references import ProcedureReferenceRejected
+    import eva.providers.procedure_reference_actions as module
+    turn = _private_turn()
+    host = NS(current_save_call_id=lambda *args: "save-call",
+              load_save=lambda *args: NS(admission={"conversation_id": turn.conversation_id,
+                                                  "source_message_id": turn.message_id}),
+              require_current=lambda: None)
+    calls = []
+    @dataclass
+    class Reference:
+        document_id: str = "saved-reference"
+    class Service:
+        def __init__(self, *args): pass
+        def designate(self, scope, **kwargs):
+            calls.append(kwargs)
+            return Reference()
+    monkeypatch.setattr(module, "ProcedureReferences", Service)
+    monkeypatch.setattr(module, "PostgresMemoryOutbox", lambda *args, **kwargs: object())
+    actions = ProcedureReferenceActions(None, authority=None, gateway_factory=None,
+        clock=lambda: turn.occurred_at)
+    monkeypatch.setattr(actions, "_host", lambda actual: host)
+    args = {"document_path": "procedure.md", "use_when": "Compare costs", "retention_until": deadline}
+    call = ConversationActionCall("designation", "designate_reusable_procedure", args)
+    if accepted:
+        receipt = actions._execute(turn, call)
+        assert receipt.output["status"] == "designated"
+        assert calls[0]["retention_until"] == "2026-09-24T12:00:00Z"
+    else:
+        with pytest.raises((ValueError, ProcedureReferenceRejected)):
+            actions._execute(turn, call)
+        assert not calls
+    assert call.arguments["retention_until"] == deadline
