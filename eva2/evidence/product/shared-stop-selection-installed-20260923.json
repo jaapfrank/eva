@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-23",
+  "sourceCommit": "34785ebd",
+  "image": "eva2-shared-stop-selection:20260923",
+  "change": "Legacy Telegram stop phrases fall through to shared conversation task selection.",
+  "validation": {
+    "sourceTestsPassed": 39,
+    "packagedTestsPassed": 5,
+    "independentReview": "GO by coordinator",
+    "coreAndWorkerHealthy": true,
+    "installedSourceBytesMatched": true,
+    "workApiHttp": 200
+  },
+  "modelEvidence": "natural-task-selection-20260923.json",
+  "ownerAcceptance": false,
+  "limits": [
+    "No real Telegram stop trial",
+    "No speed improvement claimed"
+  ],
+  "rollbackCompose": "/var/lib/eva2/shared-stop-selection-20260923/baseline.compose.private.json"
+}

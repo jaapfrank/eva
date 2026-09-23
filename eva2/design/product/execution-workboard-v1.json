@@ -231,7 +231,8 @@
           "evidence": "eva2/evidence/product/telegram-pending-repair-2026-09-21.json",
           "outcomes": [],
           "works": "Telegramstream werkt na de reparatie en hernieuwde aanmelding; Jaap bevestigt dit op 21 september.",
-          "tryIt": "Stel Eva via /eva2 een vraag en volg het antwoord."
+          "tryIt": "Stel Eva via /eva2 een vraag en volg het antwoord.",
+          "ownerSummary": "Klaar: antwoorden stapsgewijs tonen in Telegram."
         },
         {
           "id": "conversation",
@@ -246,7 +247,8 @@
           "detail": "Privégesprekken werken; Jaap meldde dat de gesprekken echt beter zijn. De antwoordstream is nu afzonderlijk groen en live. Deze bredere kaart omvat ook menselijke warmte, eigen oordeel en langdurige continuïteit: daarom is de volledige acceptatie nog niet af.",
           "evidence": "RT-001 · CO-007 · eerdere positieve feedback Jaap; volledige gezinsacceptatie open",
           "outcomes": [],
-          "works": "Privégesprekken werken; Jaap meldde dat het gesprek prima loopt."
+          "works": "Privégesprekken werken; Jaap meldde dat het gesprek prima loopt.",
+          "ownerSummary": "Nog nodig: vlot antwoorden en tussendoor praten via alle ingangen."
         },
         {
           "id": "memory",
@@ -292,7 +294,8 @@
               "detail": "Jaap bevestigt: Dit lijkt perfect te werken. Screenshot toont voorkeur onthouden, wijziging verwerken en toepassen bij een andere adviesvraag. Langetermijn- en herstartbewijs zijn afzonderlijke technische proeven."
             }
           ],
-          "works": "Het gekozen geheugenonderdeel is afgesloten: automatisch onthouden, corrigeren en toepassen (GE-01), plus inzien, bewust corrigeren en vergeten (GE-02), door Jaap geaccepteerd."
+          "works": "Het gekozen geheugenonderdeel is afgesloten: automatisch onthouden, corrigeren en toepassen (GE-01), plus inzien, bewust corrigeren en vergeten (GE-02), door Jaap geaccepteerd.",
+          "ownerSummary": "Klaar: onthouden, corrigeren, inzien en vergeten. Sprekerherkenning nog open."
         },
         {
           "id": "initiative",
@@ -323,7 +326,8 @@
               "detail": "Technisch afgerond en onafhankelijk gecontroleerd. Jaap: op zich wel bruikbaar. Deze acceptatie betreft alleen de beoordelingskaart."
             }
           ],
-          "works": "Eva koos vanuit jouw bestaande huiswens zelfstandig een beoordelingskaart en leverde deze als privaat document op."
+          "works": "Eva koos vanuit jouw bestaande huiswens zelfstandig een beoordelingskaart en leverde deze als privaat document op.",
+          "ownerSummary": "Nog nodig: regelmatig nuttig initiatief nemen en passend stil blijven."
         },
         {
           "id": "tools",
@@ -369,7 +373,8 @@
               "detail": "Een onbekende openbare MCP-dienst aansluiten en gebruiken voor een opdracht."
             }
           ],
-          "works": "Documenten verwerken, openbare MCP-diensten aansluiten en browserbediening zijn afzonderlijk bewezen."
+          "works": "Documenten verwerken, openbare MCP-diensten aansluiten en browserbediening zijn afzonderlijk bewezen.",
+          "ownerSummary": "Nog nodig: onbekende diensten en combinatietaken zelfstandig afmaken."
         },
         {
           "id": "voice",
@@ -430,7 +435,8 @@
               "detail": "Klaar: op dezelfde onafhankelijke positieve en negatieve audioproeven minstens 50% minder valse activaties, minstens 90% herkenning en geen daling van meer dan 5 procentpunten per positief scenario. Gewone Nederlandse spraak, gelijkende woorden, achtergrondgeluid, afstand en speaker-echo afzonderlijk. Daarna één apparaat met rollback en Jaaps oordeel. Geen acceptatie uit alleen synthetische data."
             }
           ],
-          "works": "Verstaanbare woonkamer-audio en doorpraten na het antwoord zijn door Jaap bevestigd."
+          "works": "Verstaanbare woonkamer-audio en doorpraten na het antwoord zijn door Jaap bevestigd.",
+          "ownerSummary": "Nog nodig: natuurlijk doorpraten en fysieke Voice PE-proef."
         },
         {
           "id": "projects",
@@ -491,7 +497,8 @@
               "detail": "Op 22 september zijn de bestaande diensten hersteld en healthy; beide projectstatussen, alle 28 bestanden en het journaal zijn onafhankelijk gecontroleerd en behouden. Automatisch herstartbeleid is geïnstalleerd zonder de containers opnieuw te starten. Dit bewijst geen nieuw documentproject."
             }
           ],
-          "works": "Het voorbereide tweestapsproject blijft behouden. Beide documentdiensten draaien weer; automatisch herstartbeleid is geïnstalleerd. Eigen documentopdrachten zijn nog niet geïnstalleerd."
+          "works": "Het voorbereide tweestapsproject blijft behouden. Beide documentdiensten draaien weer; automatisch herstartbeleid is geïnstalleerd. Eigen documentopdrachten zijn nog niet geïnstalleerd.",
+          "ownerSummary": "Nog nodig: vaardigheden hergebruiken en langdurig werk afronden."
         },
         {
           "id": "browser",
@@ -508,7 +515,8 @@
           "outcomes": [],
           "works": "Browserbediening en herstel zijn historisch getest. De persoonlijke Chrome-route is momenteel niet verbonden.",
           "tryIt": "Open Browser in het eigenaarsdashboard; neem over en geef terug.",
-          "currentRouteEvidence": "eva2/evidence/product/browser-current-route-audit-2026-09-13.json"
+          "currentRouteEvidence": "eva2/evidence/product/browser-current-route-audit-2026-09-13.json",
+          "ownerSummary": "Nog nodig: werken in jouw Chrome en betrouwbaar overnemen."
         },
         {
           "id": "installation",
@@ -523,7 +531,8 @@
           "detail": "Bestaande gegevens zijn behouden bij herstart en slotwissels. Een consumentenwizard, volledige verhuizing naar een andere computer en zeven dagen eindpraktijk zijn niet afgerond.",
           "evidence": "IN-001, IN-002, IN-003 · FN-002, FN-003",
           "outcomes": [],
-          "works": "Gegevens blijven behouden bij gecontroleerde herstart en slotwissels."
+          "works": "Gegevens blijven behouden bij gecontroleerde herstart en slotwissels.",
+          "ownerSummary": "Later: volledige installatie, verhuizing en herstel afronden."
         }
       ],
       "competitorCheckedAt": "21 september 2026",
@@ -1003,6 +1012,14 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Telegram: gericht stoppen via dezelfde Eva",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Vaste stopzinnen gaan nu door de gezamenlijke taakselectie. De oude omleiding die steeds de laatste taak koos is verwijderd. Kern en werker zijn bijgewerkt.",
+            "remaining": "Geïsoleerde modelproeven: juiste benoemde taak en verduidelijking bij twee onderzoeken. Echte Telegram-proef en snelle modelantwoorden blijven open.",
+            "source": "eva2/evidence/product/shared-stop-selection-installed-20260923.json"
+          },
+          {
             "title": "Dezelfde taakfout en juiste laatste opdracht",
             "date": "23 september",
             "state": "installed",
@@ -1324,15 +1341,15 @@
           }
         ],
         "now": {
-          "title": "Gedeelde taakpresentatie geïnstalleerd",
-          "state": "Opgeleverd · geen lopende bouwclaim",
-          "detail": "Kern/werker gezond; bronbestanden en bestaande taakweergave gecontroleerd. Geen modelcalls of externe testberichten.",
-          "doneWhen": "Gerichte tests en onafhankelijke reviews geslaagd, installatie en terugweg vastgelegd."
+          "title": "Projectoverzicht bijgewerkt",
+          "state": "Afgerond — vervolg nog niet gestart",
+          "detail": "Per onderdeel staat het concrete open werk direct in beeld. Laatste Telegram-installatie is geregistreerd; actuele en oude werkregistraties worden onderscheiden.",
+          "doneWhen": "Bronreview en negen bestaande controles geslaagd; de draaiende pagina en automatisch ophalen van de registratie gecontroleerd."
         },
         "next": {
-          "title": "De bedoelde taak kiezen tijdens lopend werk",
-          "state": "Volgende functionele stap",
-          "detail": "Natuurlijke verwijzingen naar meerdere opdrachten vergelijken met de bestaande gedeelde selectie, stop en hervat. Alleen concreet ontbrekend gedrag aanvullen."
+          "title": "Sneller inhoudelijk antwoorden tijdens werk",
+          "state": "Open functionele prioriteit",
+          "detail": "De website geeft al vroege audio, maar een inhoudelijk antwoord op Hallo duurt nog ongeveer vijf seconden. Dat tekort blijft open; de fysieke Voice PE-proef staat apart."
         },
         "ownerAction": {
           "title": "Voice PE: beschikbaarheid doorgeven",
@@ -1343,8 +1360,8 @@
           ],
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
-        "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T14:25:26.607456+00:00"
+        "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
+        "reviewedAt": "2026-09-23T14:39:18.683005+00:00"
       }
     },
     "pendingTechnicalReview": {
