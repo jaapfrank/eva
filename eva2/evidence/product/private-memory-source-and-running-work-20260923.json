@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-09-23T13:12:41.062969+00:00",
+  "sourceCommit": "e56b02f1",
+  "installedImage": "eva2-private-memory-source:20260923",
+  "initialFailure": {
+    "httpStatus": 503,
+    "backgroundTaskCreated": false,
+    "cause": "HindsightMemoryScopeError private alias source authority differs; candidate had empty source metadata. Failure occurred before model admission."
+  },
+  "fix": "Exclude missing-principal candidates in linked private recall only when no explicit audience conflict; record missing_private_source_authority. Keep existing mismatched principal/audience rejection.",
+  "checks": {
+    "packagedTests": 15,
+    "review": "independent GO, including missing-principal shared-audience negatives",
+    "candidateRealRecall": {
+      "confirmedFacts": 5,
+      "excludedUnproven": 1,
+      "modelCalls": 0,
+      "reachedModelBoundary": true
+    },
+    "core": "healthy",
+    "worker": "healthy",
+    "sourceBytes": "match"
+  },
+  "liveOverlap": {
+    "workId": "work:eva-chat:a58aae28-5a5c-5a3e-9a63-dca446b0e8e8",
+    "workMessageId": "dashboard:ba970690-de9f-4548-aa9f-8b66828764cb",
+    "interjectionMessageId": "dashboard:e093b295-2edb-4dee-ae2d-53d1055b7cac",
+    "acceptanceSeconds": 12.585,
+    "stateBeforeInterjection": "call_started",
+    "interjectionSeconds": 4.202,
+    "answer": "Zeven.",
+    "stateAfterInterjection": "call_started",
+    "finalWorkState": "succeeded",
+    "savedResultAvailable": true,
+    "workerInputTokens": 303,
+    "workerOutputTokens": 373,
+    "workerModelResponses": 1,
+    "workerToolCalls": 0
+  },
+  "limits": [
+    "Actual website HTTP route; not physical audio or Telegram acceptance.",
+    "Reception12.6s/interjection4.2s still too slow.",
+    "No owner receipt/acceptance claimed.",
+    "Foreground usage not collected in this probe; account credit cost unknown."
+  ],
+  "rollback": "Previous compose baseline retained and active pointer updated."
+}
