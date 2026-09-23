@@ -1,0 +1,36 @@
+{
+  "contract": "EvaFeatureInstallation/v1",
+  "feature": "related_work_overview",
+  "source_commit": "9fbdb7fd",
+  "image": "eva2-related-work:20260924",
+  "installed": true,
+  "behavior": [
+    "Existing ancestry and descendants exposed via get_related_work in private and household conversation",
+    "Owner board shows statuses, result availability and links; refreshes every five seconds",
+    "Same owner binding or exact household session checks as existing task reads",
+    "Maximum 64 tasks and bounded ancestry/depth; clipping or missing ancestors explicitly marked",
+    "No tasks or model calls created by the overview"
+  ],
+  "limits": [
+    "Only stored parent links; scheduled dependency integration remains next work",
+    "Counts describe tasks and attempts, not product completion",
+    "Actual multi-branch, household and model interaction trials deferred",
+    "Owner board render and periodic update trial deferred"
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/related-work-20260924/baseline.compose.private.json",
+  "recorded_at": "2026-09-23T22:47:57.847562+00:00",
+  "checks": [
+    "Python syntax",
+    "Changed installed baselines matched source",
+    "Dashboard build and materialized assets",
+    "Packaged imports and household descriptor construction",
+    "Zero active stored tasks before restart",
+    "Initial read-only endpoint rejection corrected at owner operation gate",
+    "Read-only related endpoint HTTP 200; two linked tasks returned, not truncated",
+    "Core and delegated worker healthy",
+    "Active compose and dashboard assets recorded"
+  ]
+}
