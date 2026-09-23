@@ -24,6 +24,7 @@ from eva.contracts.canonical_json import canonical_json_bytes
 
 
 _OPERATIONS = {
+    "get_related_work": ("related", "work_id"),
     "revise_digital_work": ("revise_digital", "revision"),
     "search_delegated_work": ("search", "search"),
     "schedule_digital_work": ("schedule_digital", "schedule"),
@@ -44,6 +45,7 @@ _OPERATIONS = {
     "resume_delegated_work": ("resume", "work_id"),
 }
 _DESCRIPTIONS = {
+    "related": "Bekijk de oorspronkelijke opdracht en de gekoppelde hervattingen en vervolgonderzoeken bij een work_id. Geeft maximaal 64 opgeslagen taken met status, resultatenbeschikbaarheid en open eindtaken. Truncated betekent onvolledig; aantallen zijn geen productpercentage. Open gewenste resultaten met get_delegated_work. Niet-gekoppelde planning staat in list_delegated_work.",
     "revise_digital": "Stuur een concrete digitale achtergrondopdracht bij op verzoek van de eigenaar. Geef work_id en instruction met de wijziging, maximaal 2000 tekens. Stopt de huidige poging, bewaart de correctie en plant één begrensde hervatting na het stoppen; oorspronkelijke taak, acties en voortgang blijven behouden. Gebruik bij newer_attempt_exists het teruggegeven work_id. Bij ander werk of een al afgeronde taak volg je de teruggegeven uitleg; beweer dan geen toegepaste correctie.",
     "search": "Zoek een oudere eigen opdracht op een woord of zinsdeel in bewaarde titels, opdrachten en resultaten, ook buiten de recente twintig. Geef query; gebruik next_before_work_id als before_work_id om verder te zoeken. Neem een kenmerkend onderwerpwoord, geen lange hele vraag. Open het gevonden work_id via get_delegated_work. Alleen nog bewaarde taken zijn vindbaar; geen zoekhit betekent niet dat iets nooit is besproken.",
     "schedule_digital": "Plan op verzoek van de eigenaar één digitale opdracht voor een afgesproken toekomstig moment, maximaal 30 dagen vooruit. Geef task en run_at in UTC (YYYY-MM-DDTHH:MM:SSZ). Zet lokale tijden om naar UTC; vraag bij onduidelijkheid naar datum of tijdzone. Voor een vervolgstap mag je after_work_id of after_schedule_id opgeven uit een eerdere opgeslagen taak of afspraak: wacht dan op het resultaat en gebruik het in deze nieuwe opdracht. Zonder run_at start een afhankelijke stap zodra de vorige klaar is. Kies alleen door de eigenaar gevraagde stappen. Het werk is bewaard maar nog niet gestart. Geen terugkerende opdracht of budgetverhoging.",

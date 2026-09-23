@@ -55,7 +55,7 @@ async function request(operation, workId, signal, search) {
   if (data.contract !== 'EvaDelegatedWorkOwnerResult/v1' || data.operation !== operation
     || (operation === 'search' && (typeof data.query !== 'string'
       || (data.truncated && typeof data.next_before_work_id !== 'string')))
-    || (['list', 'search'].includes(operation) ? !Array.isArray(data.jobs) || data.jobs.length > 20
+    || (['list', 'search', 'related'].includes(operation) ? !Array.isArray(data.jobs) || data.jobs.length > (operation === 'related' ? 64 : 20)
       || !data.jobs.every(work => validWork(work)) || typeof data.truncated !== 'boolean'
       : ['schedule_cancel', 'schedule_cancel_chain', 'revise_digital'].includes(operation) ? typeof data.status !== 'string' : !validWork(data.work, true) || (operation !== 'resume' && data.work.work_id !== workId))) {
     throw new Error('Het werkantwoord kon niet worden gelezen. Vernieuw het overzicht.');
@@ -69,6 +69,7 @@ export default function OwnerWork() {
   const detailRef = React.useRef(null);
   const [page, setPage] = React.useState(null);
   const [detail, setDetail] = React.useState(null);
+  const [related, setRelated] = React.useState(null);
   const [busy, setBusy] = React.useState(false);
   const [error, setError] = React.useState('');
   const [notice, setNotice] = React.useState('');
@@ -79,7 +80,7 @@ export default function OwnerWork() {
   }, [detail?.work_id]);
   React.useEffect(() => {
     let mounted = true, running = false, halted = false, pending = null;
-    let selected = null, currentDetail = null, revision = 0, timer;
+    let selected = null, currentDetail = null, revision = 0, timer, relatedRoot = null;
     let searchQuery = '', searchBefore;
     const controller = new AbortController();
     const fingerprint = work => JSON.stringify([work.work_id, work.state,
@@ -87,7 +88,7 @@ export default function OwnerWork() {
       work.delivery?.state, work.delivery?.description, work.usage]);
     function clearPrivate() {
       selected = null; currentDetail = null; pending = null;
-      setPage(null); setDetail(null); setNotice('');
+      setPage(null); setDetail(null); setNotice(''); setRelated(null); relatedRoot = null;
     }
     function schedule() {
       clearTimeout(timer);
@@ -111,6 +112,12 @@ export default function OwnerWork() {
           if (version !== revision) continue;
           if (['list', 'search'].includes(operation)) {
             setPage(data);
+            if (relatedRoot) {
+              const family = await request('related', relatedRoot, controller.signal);
+              if (!mounted) return;
+              if (version !== revision) continue;
+              setRelated(family);
+            }
             const job = data.jobs.find(item => item.work_id === selected);
             if (selected && (!currentDetail || ['admitted', 'call_started'].includes(currentDetail.state) || (job
               ? fingerprint(job) !== fingerprint(currentDetail)
@@ -121,6 +128,9 @@ export default function OwnerWork() {
               currentDetail = result.work;
               setDetail(currentDetail);
             }
+          } else if (operation === 'related') {
+            relatedRoot = workId;
+            setRelated(data);
           } else if (operation === 'revise_digital') {
             setNotice(data.status === 'correction_saved'
               ? 'Bijsturing bewaard. Eva stopt de oude poging en hervat daarna met je wijziging.'
@@ -175,7 +185,7 @@ export default function OwnerWork() {
       if (foreground) {
         halted = false;
         ++revision;
-        if (!['list', 'search'].includes(operation)) {
+        if (!['list', 'search', 'related'].includes(operation)) {
           selected = workId; currentDetail = null;
           setDetail(null); setNotice('');
         }
@@ -254,7 +264,22 @@ export default function OwnerWork() {
     {page?.truncated && (page.operation === 'search'
       ? <button disabled={busy} onClick={() => act('search_next', page.next_before_work_id)}>Volgende zoekresultaten</button>
       : <p>Er worden maximaal twintig opdrachten getoond, met lopend werk eerst. Zoek op onderwerp om eerdere taken te vinden.</p>)}
+    {related && <section className="card" aria-label="Samenhangende opdrachten">
+      <h3>Samenhangende opdrachten</h3>
+      <p>{related.jobs.length} opgeslagen taken en pogingen · wordt elke vijf seconden bijgewerkt.</p>
+      <p>{Object.entries(related.counts || {}).map(([state, count]) => `${labels[state] || state}: ${count}`).join(' · ')}</p>
+      <p>Dit toont oorspronkelijke opdrachten, hervattingen en vervolgonderzoek. Los geplande afspraken staan hierboven; dit is geen voltooiingspercentage van een project.</p>
+      {related.truncated && <p role="status">Dit overzicht is onvolledig: een grens is bereikt of een eerdere opdracht is niet meer beschikbaar.</p>}
+      <ol style={{ maxHeight: 380, overflowY: 'auto' }}>
+        {related.jobs.map(job => <li key={job.work_id}>
+          <strong>{job.title || job.task_preview}</strong> · {labels[job.state]}
+          {job.result_available && ' · resultaat beschikbaar'}
+          <button disabled={busy} onClick={() => act('get', job.work_id)}>Open opdracht</button>
+        </li>)}
+      </ol>
+    </section>}
     {detail && <article ref={detailRef} tabIndex={-1} aria-label="Geopende hulpopdracht" className="card work-detail">
+      <button disabled={busy} onClick={() => act('related', detail.work_id)}>Bekijk samenhangende opdrachten</button>
       <h3>Opdracht</h3><p style={{ whiteSpace: 'pre-wrap' }}>{detail.task}</p>
       {Array.isArray(detail.corrections) && detail.corrections.length > 0 && <section aria-label="Bewaarde bijsturing">
         <h4>Bewaarde bijsturing</h4>

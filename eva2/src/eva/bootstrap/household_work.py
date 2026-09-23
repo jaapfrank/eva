@@ -202,6 +202,7 @@ class HouseholdWorkService:
         if task is not None or operation not in {
             "research",
             "list",
+            "related",
             "get",
             "result",
             "stop",
@@ -214,6 +215,18 @@ class HouseholdWorkService:
             self.store._engine, self.server.conversation_scope
         ).admit_household_ingress(turn, validate_current=self.validate_authority)
         origin = self.origin(turn)
+        if operation == "related":
+            if research is not None or prior_work_id is not None or not isinstance(work_id, str) or not work_id:
+                raise ValueError("related household work requires one work ID")
+            from eva.application.related_work import related_work
+            return related_work(work_id,
+                load=lambda identifier: self._load(identifier, origin),
+                children=lambda parents: self.store.list_household(**self._owner,
+                    household_origin=origin, now=self.server.authority.clock(),
+                    parent_ids=parents, limit=65),
+                render=lambda row: {key: value for key, value in self.view(row).items()
+                                    if key not in {"result", "question", "usage"}},
+                missing=DelegatedWorkNotFound)
         if operation == "list":
             if research is not None or work_id is not None or prior_work_id is not None:
                 raise ValueError("household listing cannot select another destination")
@@ -462,6 +475,7 @@ class HouseholdWorkActions(PostgresDelegatedWorkActions):
         return (
             "start_background_research",
             "list_delegated_work",
+            "get_related_work",
             "get_delegated_work",
             "stop_delegated_work",
             "resume_delegated_work",
@@ -472,6 +486,7 @@ class HouseholdWorkActions(PostgresDelegatedWorkActions):
         allowed = {
             "start_background_research",
             "list_delegated_work",
+            "get_related_work",
             "get_delegated_work",
             "stop_delegated_work",
             "resume_delegated_work",

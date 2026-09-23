@@ -986,7 +986,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
     def list_owned(
         self, *, owner_principal_id: UUID, principal_binding_id: UUID,
         limit: int = 21, active_first: bool = False,
-        query: str | None = None, before_work_id: str | None = None,
+        query: str | None = None, before_work_id: str | None = None, parent_ids: tuple[str, ...] | None = None,
     ) -> tuple[StoredDelegatedWork, ...]:
         """Return bounded private job identifiers/results from this exact binding."""
         if type(limit) is not int or not 1 <= limit <= 65:
@@ -999,6 +999,9 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 not isinstance(before_work_id, str) or not 1 <= len(before_work_id) <= 240
                 or active_first):
             raise ValueError("work search cursor is invalid")
+        if parent_ids is not None and (not isinstance(parent_ids, tuple) or not 1 <= len(parent_ids) <= 64
+                or any(not isinstance(value, str) or not 1 <= len(value) <= 240 for value in parent_ids)):
+            raise ValueError("work parent selection is invalid")
         ordering = (
             [sa.case((sa.and_(
                 delegated_work_runs.c.state.in_(("admitted", "call_started")),
@@ -1018,6 +1021,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     delegated_work_runs.c.owner_principal_id == owner_principal_id,
                     delegated_work_runs.c.principal_binding_id == principal_binding_id,
                 )
+                if parent_ids is not None:
+                    selection = selection.where(delegated_work_runs.c.parent_task_id.in_(parent_ids))
                 if before_work_id is not None:
                     anchor = connection.execute(selection.where(
                         delegated_work_runs.c.work_id == before_work_id)).mappings().one_or_none()
@@ -1044,6 +1049,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
     def list_household(
         self, *, owner_principal_id: UUID, principal_binding_id: UUID,
         household_origin, now: datetime, limit: int = 21, active_first: bool = False,
+        parent_ids: tuple[str, ...] | None = None,
     ) -> tuple[StoredDelegatedWork, ...]:
         """List only retained work in the caller's currently open household session."""
         from eva.adapters.postgres.household_work_sessions import verify_origin
@@ -1056,6 +1062,9 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             raise DelegatedWorkConflict("household work authority unavailable")
         if type(active_first) is not bool:
             raise ValueError("delegated work active-first flag must be boolean")
+        if parent_ids is not None and (not isinstance(parent_ids, tuple) or not 1 <= len(parent_ids) <= 64
+                or any(not isinstance(value, str) or not 1 <= len(value) <= 240 for value in parent_ids)):
+            raise ValueError("work parent selection is invalid")
         ordering = (
             [sa.case((sa.and_(
                 delegated_work_runs.c.state.in_(("admitted", "call_started")),
@@ -1078,6 +1087,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     delegated_work_runs.c.spec_payload["audience"].astext == "household",
                     delegated_work_runs.c.spec_payload["origin"].contains(household_origin.destination()),
                     delegated_work_runs.c.retention_until > now,
+                    sa.true() if parent_ids is None else delegated_work_runs.c.parent_task_id.in_(parent_ids),
                 ).order_by(*ordering).limit(limit)).mappings().all()
                 result = []
                 for row in rows:

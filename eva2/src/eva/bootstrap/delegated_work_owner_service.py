@@ -240,6 +240,16 @@ class DelegatedWorkOwnerService:
                     "next_before_work_id": rows[19].spec.work_id if len(rows) > 20 else None,
                     "planning": ScheduledOwnerWork(self).list(),
                     "search_scope": "stored_private_titles_tasks_results"}
+        if operation == "related":
+            if task is not None or not isinstance(work_id, str) or not work_id:
+                raise ValueError("related work requires one work ID")
+            self.validate_authority(turn)
+            from eva.application.related_work import related_work
+            return {**response, **related_work(work_id,
+                load=lambda identifier: self.store.load(identifier, **self._owner),
+                children=lambda parents: self.store.list_owned(**self._owner, parent_ids=parents, limit=65),
+                render=lambda row: self._view(row, include_result=False, turn=turn),
+                missing=DelegatedWorkNotFound)}
         if operation == "list":
             if task is not None or work_id is not None:
                 raise ValueError("list does not accept task or work id")
