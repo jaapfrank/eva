@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T22:55:49.941305+00:00",
+        "checkedAt": "2026-09-23T23:00:50.120281+00:00",
         "deliveries": [
+          {
+            "title": "Websiteantwoord zichtbaar tijdens het schrijven",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Tekst verschijnt tijdens het schrijven; ieder antwoord blijft bij zijn vraag. Afgebroken antwoorden blijven herkenbaar onbevestigd.",
+            "remaining": "Geen model- of snelheidsproef gedaan. Dit verkort niet automatisch de tijd tot het eerste modeltoken. Alleen de lokale tekstgesprekpagina is gewijzigd; geen Voice PE-aanpassing.",
+            "source": "eva2/evidence/product/website-text-stream-installed-20260924.json"
+          },
           {
             "title": "Planning en taken in één samenhangend overzicht",
             "date": "24 september",
@@ -1565,29 +1573,29 @@
           }
         ],
         "now": {
-          "title": "Planning bij samenhangende taken geïnstalleerd",
+          "title": "Antwoordopbouw in websitegesprek geïnstalleerd",
           "state": "Geïnstalleerd",
-          "detail": "Eva en het privé-takenbord kunnen geplande stappen, afhankelijkheden en gestarte vervolgopdrachten samen tonen. Wachten, blokkades en bestaande bediening blijven zichtbaar.",
-          "doneWhen": "Technische installatie afgerond. Uitgebreide tests en gebruikersproef later; geen eigenaaracceptatie geclaimd."
+          "detail": "Tekst verschijnt tijdens het schrijven; ieder antwoord blijft bij zijn vraag. Afgebroken antwoorden blijven herkenbaar onbevestigd.",
+          "doneWhen": "Installatie en startcontrole afgerond; model- en kanaalproef later."
         },
         "next": {
-          "title": "Digitale taakafronding verder afmaken",
+          "title": "Resterende functionele kanaalkoppelingen",
           "state": "Nog niet gestart",
-          "detail": "Verder met de resterende functionele koppelingen uit stap 3 van de bestaande uitvoervolgorde. Geen nieuwe audit of brede testronde."
+          "detail": "Verder met de open functies voor gedeeld gesprek en taakuitvoering. Uitgebreide kanaalproeven blijven uitgesteld."
         },
         "ownerAction": {
-          "title": "Takenbord gebruiken",
-          "url": "http://localhost:44711/internal/v1/dashboard",
-          "linkLabel": "Open Eva’s takenbord",
+          "title": "Gewoon verder praten",
+          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
+          "linkLabel": "Open het websitegesprek",
           "steps": [
-            "Open Eva’s takenbord.",
-            "Open een opdracht en kies Bekijk samenhangende opdrachten.",
-            "Open vanuit dat overzicht een taak om het resultaat te lezen of bestaande taakbediening te gebruiken."
+            "Ververs de gesprekpagina voor de nieuwe bediening.",
+            "Stuur je bericht; het antwoord verschijnt tijdens het schrijven.",
+            "Bij een onbevestigd antwoord eerst de taakstatus bekijken voordat je dezelfde opdracht opnieuw verstuurt."
           ],
-          "expected": "Bij gekoppeld werk staan ook geplande vervolgstappen en hun wachtstatus. Je hoeft nu geen proef uit te voeren."
+          "expected": "Antwoordopbouw met definitieve bevestiging aan het einde. Je hoeft nu geen gebruiksproef uit te voeren."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T22:55:49.941305+00:00"
+        "reviewedAt": "2026-09-23T23:00:50.120281+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11356,7 +11364,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Verder met de resterende functionele koppelingen uit stap 3 van de bestaande uitvoervolgorde. Geen nieuwe audit of brede testronde.",
+      "nextAction": "Verder met de open functies voor gedeeld gesprek en taakuitvoering. Uitgebreide kanaalproeven blijven uitgesteld.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

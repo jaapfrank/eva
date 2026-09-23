@@ -1,0 +1,24 @@
+{
+  "installed": true,
+  "installedAt": "2026-09-23T23:01:20.034953+00:00",
+  "sourceCommit": "86742b5e",
+  "image": "eva2-website-text-stream:20260924",
+  "behavior": "The owner text page negotiates NDJSON on its existing endpoint, shows provisional deltas per question and replaces them with the saved final response. Broken streams remain unconfirmed, without implicit retries.",
+  "checks": [
+    "Python syntax and packaged imports",
+    "Generated JavaScript node --check",
+    "No active stored tasks before restart",
+    "Core and delegated worker healthy",
+    "Installed page HTTP200 and streaming client present"
+  ],
+  "limitations": [
+    "No model calls or end-to-end stream/latency trial.",
+    "Does not reduce first-token model latency.",
+    "Voice PE and other voice routes unchanged.",
+    "Review and broader integration/user trials deferred by owner."
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/website-text-stream-20260924/baseline.compose.private.json"
+}
