@@ -2165,6 +2165,10 @@ def create_runtime_app() -> FastAPI:
             proactive_delivery, lambda: runtime._initiative_authority().policy(),
         )
         idle_tasks = (initiative_delivery.run_once, *idle_tasks)
+    if delegated_work_service is not None:
+        from eva.adapters.postgres.scheduled_work import ScheduledOwnerWork
+        scheduled_work = ScheduledOwnerWork(delegated_work_service)
+        idle_tasks = (scheduled_work.run_once, *idle_tasks)
     runtime = PostgresHindsightMemoryRuntime(
         engine,
         memory,

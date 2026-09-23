@@ -24,6 +24,10 @@ from eva.contracts.canonical_json import canonical_json_bytes
 
 
 _OPERATIONS = {
+    "schedule_digital_work": ("schedule_digital", "schedule"),
+    "schedule_work_resume": ("schedule_resume", "schedule"),
+    "list_scheduled_work": ("schedule_list", None),
+    "cancel_scheduled_work": ("schedule_cancel", "schedule_id"),
     "stop_own_initiative": ("initiative_stop", "intent_id"),
     "give_initiative_feedback": ("initiative_feedback", "intent_id"),
     "list_own_initiatives": ("initiative_list", None),
@@ -37,6 +41,10 @@ _OPERATIONS = {
     "resume_delegated_work": ("resume", "work_id"),
 }
 _DESCRIPTIONS = {
+    "schedule_digital": "Plan op verzoek van de eigenaar één digitale opdracht voor een afgesproken toekomstig moment, maximaal 30 dagen vooruit. Geef task en run_at in UTC (YYYY-MM-DDTHH:MM:SSZ). Zet lokale tijden om naar UTC; vraag bij onduidelijkheid naar datum of tijdzone. Het werk is dan bewaard maar nog niet gestart. Geen terugkerende opdracht of budgetverhoging.",
+    "schedule_resume": "Plan één hervatting van een gestopte of mislukte opdracht op een door de eigenaar gewenst moment, maximaal 30 dagen vooruit. Geef work_id en run_at in UTC. Bewaart bestaande uitvoering en werkplan; de nieuwe poging gebruikt de bestaande begrensde budgetten. Geen herhaalde automatische pogingen.",
+    "schedule_list": "Bekijk opgeslagen startmomenten, status en gekoppelde werk-ID. Gebruik dit voor wat je later gaat doen; beweer niet dat gepland werk al loopt.",
+    "schedule_cancel": "Annuleer de genoemde geplande start op verzoek van de eigenaar. Gebruik de echte schedule_id uit list_scheduled_work. Is de taak al gestart, dan wordt het bestaande stopverzoek gebruikt; effecten die al begonnen zijn worden niet teruggedraaid.",
     "initiative_stop": "Stop een eigen initiatief op verzoek van de eigenaar. Haal bij onduidelijkheid eerst de echte intent_id op via list_own_initiatives. Reeds begonnen effecten kunnen nog afronden; beloof geen terugdraaiing.",
     "initiative_feedback": "Bewaar feedback van de eigenaar bij een eigen initiatief. Gebruik de echte intent_id en de bedoeling van de eigenaar, maximaal 800 tekens. Bij nog lopend werk stopt deze bijsturing de huidige uitvoering; er wordt niet automatisch een nieuwe opdracht gestart. Feedback blijft beschikbaar voor latere initiatiefkeuzes.",
     "initiative_list": "Bekijk Eva’s eigen initiatieven voor deze geverifieerde eigenaar: titel, motivatie, status, feedback en of een opgeslagen resultaat bestaat. Toont ook de laatste initiatiefbeoordeling en eventuele budgetblokkade. Gebruik bij vragen naar wat je zelf hebt opgepakt; verzin geen nieuwe activiteit.",
@@ -64,7 +72,7 @@ class PostgresDelegatedWorkActions:
     def action_names(self) -> tuple[str, ...]:
         return tuple(name for name in _OPERATIONS
                      if (name != "start_background_research" or getattr(self._service, "research_profile", None) is not None)
-                     and (name != "start_digital_work" or getattr(self._service, "digital_profile", None) is not None))
+                     and (name not in {"start_digital_work", "schedule_digital_work"} or getattr(self._service, "digital_profile", None) is not None))
 
     @staticmethod
     def conversation_tools(*, include_research=False, include_digital=False) -> tuple[ConversationToolDescriptor, ...]:
@@ -86,7 +94,13 @@ class PostgresDelegatedWorkActions:
                             "research_mode": {"type":"string", "enum":["topic","comparison"]},
                             "public_review": {"type":"string", "const":"public_unlinked"}},
                         "required": ["contract","schema_version","question","title","options","research_mode","public_review"]
-                    } if operation == "research" else {"type":"string"}),
+                    } if operation == "research" else {
+                        "type": "object", "additionalProperties": False,
+                        "properties": {("task" if operation == "schedule_digital" else "work_id"):
+                            {"type": "string", "minLength": 1, "maxLength": 8192 if operation == "schedule_digital" else 240},
+                            "run_at": {"type": "string", "description": "Exact UTC start time, YYYY-MM-DDTHH:MM:SSZ"}},
+                        "required": ["task" if operation == "schedule_digital" else "work_id", "run_at"]
+                    } if operation in {"schedule_digital", "schedule_resume"} else {"type":"string"}),
                         **({"feedback": {"type": "string", "minLength": 1, "maxLength": 800}}
                            if operation == "initiative_feedback" else {}),
                         **({"acceptance_message": {
@@ -97,7 +111,10 @@ class PostgresDelegatedWorkActions:
                         }} if operation in {"start", "research", "digital"} else {})},
                     "required": [] if key is None else [key] + (["feedback"] if operation == "initiative_feedback" else []),
                 },
-                ("Gebruik de echte intent_id en opgeslagen inhoud. De lijst staat in operation_result.cards; "
+                ("Rapporteer het bewaarde startmoment en de schedule_id. Ingepland betekent nog niet uitgevoerd. "
+                 "Een geblokkeerde start vereist bijsturing; beloof geen automatische herhaling."
+                 if operation.startswith("schedule_") else
+                 "Gebruik de echte intent_id en opgeslagen inhoud. De lijst staat in operation_result.cards; "
                  "het resultaat staat in operation_result.artifact.content. Onbekend is niet voltooid. "
                  "Bij stoppen/feedback staat de uitkomst in operation_result.status en execution_stopped. "
                  "Status verified bevestigt alleen de databasehandeling, niet eigenaaracceptatie of directe beëindiging van alle effecten."
@@ -108,7 +125,7 @@ class PostgresDelegatedWorkActions:
                 "Wacht niet in een poll-lus op hulpwerk; geef de eigenaar de taak en laat het gesprek doorgaan."),
             )
             for name, (operation, key) in _OPERATIONS.items()
-            if (operation != "research" or include_research) and (operation != "digital" or include_digital)
+            if (operation != "research" or include_research) and (operation not in {"digital", "schedule_digital"} or include_digital)
         )
 
     def available_for(self, turn: ConversationTurn) -> bool:
@@ -245,7 +262,7 @@ class PostgresDelegatedWorkActions:
                 or ("acceptance_message" in call.arguments and (
                     not isinstance(acceptance, str) or not acceptance.strip()
                     or len(acceptance) > 240))) or (
-            key is not None and operation != "research" and (
+            key is not None and operation not in {"research", "schedule_digital", "schedule_resume"} and (
                 not isinstance(call.arguments[key], str)
                 or not call.arguments[key].strip()
                 or len(call.arguments[key].encode("utf-8")) > (8192 if key == "task" else 240)

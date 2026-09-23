@@ -983,6 +983,7 @@ class LivingConversation:
                 "stop_delegated_work", "resume_delegated_work",
                 "list_own_initiatives", "get_own_initiative_result",
                 "stop_own_initiative", "give_initiative_feedback",
+                "schedule_digital_work", "schedule_work_resume", "list_scheduled_work", "cancel_scheduled_work",
             }
             model = (contact_model
                      if contact_model is not None

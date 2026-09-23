@@ -12,4 +12,5 @@ class DelegatedWorkOwnerPort(Protocol):
     def execute(self, operation: str, turn: ConversationTurn, *,
                 task: str | None = None, work_id: str | None = None,
                 request_key: str, research: dict | None = None,
-                intent_id: str | None = None, feedback: str | None = None) -> dict: ...
+                intent_id: str | None = None, feedback: str | None = None,
+                schedule: dict | None = None, schedule_id: str | None = None) -> dict: ...

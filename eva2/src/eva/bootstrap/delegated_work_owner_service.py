@@ -86,9 +86,10 @@ class DelegatedWorkOwnerService:
 
     def execute(self, operation: str, turn: ConversationTurn, *, task: str | None = None,
                 work_id: str | None = None, request_key: str, research: dict | None = None,
-                intent_id: str | None = None, feedback: str | None = None) -> dict:
+                intent_id: str | None = None, feedback: str | None = None,
+                schedule: dict | None = None, schedule_id: str | None = None) -> dict:
         try:
-            return self._execute(operation, turn, task=task, work_id=work_id, request_key=request_key, research=research, intent_id=intent_id, feedback=feedback)
+            return self._execute(operation, turn, task=task, work_id=work_id, request_key=request_key, research=research, intent_id=intent_id, feedback=feedback, schedule=schedule, schedule_id=schedule_id)
         except DelegatedWorkNotFound:
             return {"contract": "EvaDelegatedWorkOwnerResult/v1", "operation": operation,
                     "status": "not_found", "work": None,
@@ -100,9 +101,31 @@ class DelegatedWorkOwnerService:
 
     def _execute(self, operation: str, turn: ConversationTurn, *, task: str | None,
                  work_id: str | None, request_key: str, research: dict | None = None,
-                 intent_id: str | None = None, feedback: str | None = None) -> dict:
+                 intent_id: str | None = None, feedback: str | None = None,
+                 schedule: dict | None = None, schedule_id: str | None = None,
+                 admission_time: datetime | None = None) -> dict:
         if not self.available_for(turn):
             raise DelegatedWorkConflict("delegated work requires its private owner scope")
+        from eva.adapters.postgres.scheduled_work import ScheduledOwnerWork
+        if operation in {"schedule_digital", "schedule_resume", "schedule_list", "schedule_cancel"}:
+            if any(value is not None for value in (task, work_id, research, intent_id, feedback)):
+                raise ValueError("schedule operation has unrelated arguments")
+            self.validate_authority(turn)
+            scheduler = ScheduledOwnerWork(self)
+            if operation in {"schedule_digital", "schedule_resume"}:
+                if schedule_id is not None:
+                    raise ValueError("new schedule cannot have an existing ID")
+                return scheduler.schedule(turn, request_key=request_key, request=schedule,
+                                          resume=operation == "schedule_resume")
+            if schedule is not None:
+                raise ValueError("schedule control does not accept a new task")
+            if operation == "schedule_cancel":
+                return scheduler.cancel(schedule_id)
+            if schedule_id is not None:
+                raise ValueError("schedule list does not accept an ID")
+            return scheduler.list()
+        if schedule is not None or schedule_id is not None:
+            raise ValueError("schedule arguments require a schedule operation")
         if operation not in {"start", "research", "digital", "list", "get", "result", "stop", "resume",
                              "initiative_list", "initiative_result", "initiative_stop", "initiative_feedback"}:
             raise ValueError("delegated work operation is invalid")
@@ -161,7 +184,8 @@ class DelegatedWorkOwnerService:
                 raise ValueError("list does not accept task or work id")
             rows = self.store.list_owned(**self._owner, limit=21, active_first=True)
             return {**response, "jobs": [self._view(row, include_result=False, turn=turn) for row in rows[:20]],
-                    "truncated": len(rows) > 20}
+                    "truncated": len(rows) > 20,
+                    "planning": ScheduledOwnerWork(self).list()}
         if operation in {"start", "research", "digital"}:
             if work_id is not None or not isinstance(task, str) or not task.strip():
                 raise ValueError("start requires one task")
@@ -177,7 +201,7 @@ class DelegatedWorkOwnerService:
                 "message": turn.message_id, "request": request_key,
             })
             identity = uuid5(NAMESPACE_URL, key)
-            created = parse_utc_timestamp(turn.occurred_at)
+            created = admission_time or parse_utc_timestamp(turn.occurred_at)
             builder = (self.digital_profile.build_spec if operation == "digital" else
                        build_unadmitted_delegated_work_spec if operation == "start"
                        else self.research_profile.build_spec)
@@ -228,7 +252,7 @@ class DelegatedWorkOwnerService:
         previous = self.store.load(work_id, **self._owner)
         if operation in {"get", "result"}:
             return {**response, "work": self._view(previous, turn=turn)}
-        created = parse_utc_timestamp(turn.occurred_at)
+        created = admission_time or parse_utc_timestamp(turn.occurred_at)
         next_id = "work:eva-resume:" + str(uuid5(
             self.store.scope.installation_id,
             f"{previous.spec.work_id}:{previous.spec.generation + 1}",
