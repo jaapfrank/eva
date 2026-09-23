@@ -1,0 +1,28 @@
+{
+  "installed": true,
+  "installedAt": "2026-09-23T22:55:49.941305+00:00",
+  "sourceCommit": "0fe45cd8",
+  "image": "eva2-related-planning:20260924",
+  "behavior": "Private related-work overview includes stored schedule dependencies and dispatched tasks. Existing household parent links unchanged.",
+  "checks": [
+    "Dashboard production build",
+    "Packaged Python imports",
+    "No active stored tasks before restart",
+    "Core and worker healthy",
+    {
+      "status": 200,
+      "tasks": 2,
+      "schedules": 0,
+      "truncated": false
+    }
+  ],
+  "limitations": [
+    "No saved schedules in the read-only observation; real dependency graph execution untested.",
+    "Maximum 64 schedules/tasks and bounded traversal; truncation explicit.",
+    "Broad tests, independent review and user trials deferred by owner."
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/related-planning-20260924/baseline.compose.private.json"
+}

@@ -1009,14 +1009,22 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T22:47:57.847562+00:00",
+        "checkedAt": "2026-09-23T22:55:49.941305+00:00",
         "deliveries": [
+          {
+            "title": "Planning en taken in één samenhangend overzicht",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Eva en het privé-takenbord kunnen geplande stappen, afhankelijkheden en gestarte vervolgopdrachten samen tonen. Wachten, blokkades en bestaande bediening blijven zichtbaar.",
+            "remaining": "Geïnstalleerd met build/import/start- en leescontrole. Er waren geen opgeslagen afspraken voor de leescontrole; echte meerstapsproef en review later.",
+            "source": "eva2/evidence/product/related-planning-installed-20260924.json"
+          },
           {
             "title": "Samenhangende opdrachten samen bekijken",
             "date": "24 september",
             "state": "installed",
             "result": "Gesprek en takenbord kunnen oorspronkelijke opdracht, hervattingen en vervolgonderzoek met hun status en resultaatlinks samen tonen. Het takenbord ververst dit overzicht iedere vijf seconden.",
-            "remaining": "Geïnstalleerd; leescontrole vond twee gekoppelde taken. Uitgebreide praktijkproef later. Nog niet gestarte geplande afhankelijkheden staan vooralsnog apart.",
+            "remaining": "Geïnstalleerd; leescontrole vond twee gekoppelde taken. Planning is in de opvolgende oplevering aangesloten. Uitgebreide praktijkproef later.",
             "source": "eva2/evidence/product/related-work-installed-20260924.json"
           },
           {
@@ -1557,15 +1565,15 @@
           }
         ],
         "now": {
-          "title": "Overzicht van samenhangende taken geïnstalleerd",
+          "title": "Planning bij samenhangende taken geïnstalleerd",
           "state": "Geïnstalleerd",
-          "detail": "Gesprek en takenbord kunnen oorspronkelijke opdracht, hervattingen en vervolgonderzoek met hun status en resultaatlinks samen tonen. Het takenbord ververst dit overzicht iedere vijf seconden.",
-          "doneWhen": "Installatie en leescontrole afgerond; gekoppelde toekomstige planning en praktijkproef blijven open."
+          "detail": "Eva en het privé-takenbord kunnen geplande stappen, afhankelijkheden en gestarte vervolgopdrachten samen tonen. Wachten, blokkades en bestaande bediening blijven zichtbaar.",
+          "doneWhen": "Technische installatie afgerond. Uitgebreide tests en gebruikersproef later; geen eigenaaracceptatie geclaimd."
         },
         "next": {
-          "title": "Geplande vervolgstappen in hetzelfde overzicht verbinden",
+          "title": "Digitale taakafronding verder afmaken",
           "state": "Nog niet gestart",
-          "detail": "De bestaande afspraken met after_work_id en after_schedule_id aan samenhangende taakvoortgang toevoegen, zodat ook nog niet gestarte stappen van langer werk zichtbaar worden."
+          "detail": "Verder met de resterende functionele koppelingen uit stap 3 van de bestaande uitvoervolgorde. Geen nieuwe audit of brede testronde."
         },
         "ownerAction": {
           "title": "Takenbord gebruiken",
@@ -1576,10 +1584,10 @@
             "Open een opdracht en kies Bekijk samenhangende opdrachten.",
             "Open vanuit dat overzicht een taak om het resultaat te lezen of bestaande taakbediening te gebruiken."
           ],
-          "expected": "Gekoppelde taken en pogingen met actuele status. Dit is gebruiksinformatie, geen verplichte proef nu."
+          "expected": "Bij gekoppeld werk staan ook geplande vervolgstappen en hun wachtstatus. Je hoeft nu geen proef uit te voeren."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T22:47:57.847562+00:00"
+        "reviewedAt": "2026-09-23T22:55:49.941305+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11348,7 +11356,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "De bestaande afspraken met after_work_id en after_schedule_id aan samenhangende taakvoortgang toevoegen, zodat ook nog niet gestarte stappen van langer werk zichtbaar worden.",
+      "nextAction": "Verder met de resterende functionele koppelingen uit stap 3 van de bestaande uitvoervolgorde. Geen nieuwe audit of brede testronde.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
