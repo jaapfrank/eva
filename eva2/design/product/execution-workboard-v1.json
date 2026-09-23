@@ -1000,8 +1000,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T12:59:27.588989+00:00",
+        "checkedAt": "2026-09-23T13:02:51.811306+00:00",
         "deliveries": [
+          {
+            "title": "Automatische taakresultaten als leesbare tekst",
+            "date": "23 september",
+            "state": "installed",
+            "result": "De gesprekspagina toont een samenvatting en punten in plaats van ruwe JSON. Live geserveerde code gecontroleerd met het echte opgeslagen picknickresultaat.",
+            "remaining": "Dit verandert de weergave, niet de reactiesnelheid. Ontvangst door Jaap en fysieke spraak zijn hiermee niet bewezen.",
+            "source": "eva2/evidence/product/readable-work-return-installed-20260923.json"
+          },
           {
             "title": "Minder onnodige opvragingen vóór het antwoord",
             "date": "23 september",
@@ -1228,15 +1236,15 @@
           }
         ],
         "now": {
-          "title": "Sneller contact en doorpraten tijdens werk",
-          "state": "Websiteproef afgerond · snelheid onvoldoende",
-          "detail": "Tussenvraag gaf Vier na 5,7 s, vóór de werkontvangst na 11,3 s. Het proefplan is afzonderlijk afgerond. Dit bewijst overlap, niet natuurlijk snelle spraak of alle kanalen.",
-          "doneWhen": "Snelle ontvangst en doorpraten via de echte ingangen; huidige wachttijd blijft open."
+          "title": "Doorpraten tijdens een al lopende taak",
+          "state": "Open · volgende functionele controle",
+          "detail": "Websitevragen kunnen overlappen; de laatste tussenvraag begon vóór toelating van het achtergrondwerk. Controle van een nieuwe vraag tijdens een aantoonbaar lopende taak blijft open.",
+          "doneWhen": "Een nieuwe vraag wordt beantwoord terwijl de eerdere taak nog loopt, met juiste vraagkoppeling en zonder dubbele acties."
         },
         "next": {
-          "title": "Teruggebracht taakresultaat leesbaar tonen",
-          "state": "Concreet weergaveverschil gevonden",
-          "detail": "Het eigenaarsoverzicht maakt een taakresultaat leesbaar, maar de automatische terugmelding op de gesprekspagina toont de ruwe structuur. Die presentatie gelijk trekken; opgeslagen resultaat behouden."
+          "title": "Snelle ontvangst en kanaalgelijkheid",
+          "state": "Nog niet afgerond",
+          "detail": "Dezelfde ervaring via Telegram, website, Home Assistant en fysiek Voice PE; de gemeten wachttijd blijft onvoldoende."
         },
         "ownerAction": {
           "title": "Voice PE: beschikbaarheid doorgeven",
@@ -1248,7 +1256,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T12:59:27.588989+00:00"
+        "reviewedAt": "2026-09-23T13:02:51.811306+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11017,7 +11025,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Het eigenaarsoverzicht maakt een taakresultaat leesbaar, maar de automatische terugmelding op de gesprekspagina toont de ruwe structuur. Die presentatie gelijk trekken; opgeslagen resultaat behouden.",
+      "nextAction": "Websitevragen kunnen overlappen; de laatste tussenvraag begon vóór toelating van het achtergrondwerk. Controle van een nieuwe vraag tijdens een aantoonbaar lopende taak blijft open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",

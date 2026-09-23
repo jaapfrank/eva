@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-09-23T13:02:51.811306+00:00",
+  "sourceCommit": "b20d0367",
+  "installedImage": "eva2-readable-work-return:20260923",
+  "change": "Render known summary/findings worker output in readable text on automatic website return, matching owner panel semantics. Unknown output stays verbatim.",
+  "checks": {
+    "existingTransportTest": "passed with added formatting assertions",
+    "packagedScript": "same harness passed",
+    "review": "independent GO",
+    "live": "Fetched actual conversation HTML; its formatter rendered prior actual picknick result as1238 readable characters. No poll/ack sent by this verification.",
+    "core": "healthy",
+    "worker": "healthy"
+  },
+  "invariants": [
+    "Raw stored bytes and SHA256 unchanged.",
+    "Checksum validated before rendering and acknowledgement.",
+    "Presentation uses textContent."
+  ],
+  "modelCalls": 0,
+  "limitations": [
+    "Not a physical voice trial or proof of browser receipt by owner.",
+    "Does not change model response latency."
+  ],
+  "rollback": "Baseline compose retained; active pointer updated."
+}
