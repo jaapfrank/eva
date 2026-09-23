@@ -1000,8 +1000,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T13:46:11.311077+00:00",
+        "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
+          {
+            "title": "Digitale opdracht direct naar de achtergrond",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Gespreksinstructie laat connectorcontrole bij de werker. Eén geïsoleerde modelproef koos direct de starttool, zonder voorafgaande statuscontrole. Kern en werker bijgewerkt.",
+            "remaining": "Modelkeuze duurde nog 9,9 s; snelle ontvangst is niet gehaald. Proef stopte vóór echte toelating, dus geen nieuwe volledige taak- of kanaalacceptatie.",
+            "source": "eva2/evidence/product/direct-digital-admission-20260923.json"
+          },
           {
             "title": "Digitale opdracht echt opgeslagen en gecontroleerd",
             "date": "23 september",
@@ -1284,10 +1292,10 @@
           }
         ],
         "now": {
-          "title": "Bestandstaak technisch opgeleverd",
-          "state": "Geïnstalleerd en live uitgevoerd",
-          "detail": "Werkernetwerk hersteld; dezelfde taak hervat en echte notitie onafhankelijk teruggelezen. De taak heeft niets geboekt, gekocht of verstuurd.",
-          "doneWhen": "Deze bestandsopdracht afgerond; snelheid en brede taakvaardigheid blijven open."
+          "title": "Omweg vóór achtergrondwerk verwijderd",
+          "state": "Technisch geïnstalleerd · snelheid blijft open",
+          "detail": "Directe startkeuze in één geïsoleerde modelcall; bestaande toelatingscontrole behouden. Geen nieuwe modelproeven nodig zonder nieuwe hypothese.",
+          "doneWhen": "Gerichte wijziging geïnstalleerd. Natuurlijke snelheid en fysieke kanaalproeven zijn nog niet afgerond."
         },
         "next": {
           "title": "Fysieke wakewordovergang vastleggen",
@@ -1304,7 +1312,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T13:46:11.311077+00:00"
+        "reviewedAt": "2026-09-23T13:51:06.082260+00:00"
       }
     },
     "pendingTechnicalReview": {

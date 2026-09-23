@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-09-23T13:51:06.082260+00:00",
+  "sourceCommit": "a8a6edba",
+  "installed": true,
+  "image": "eva2-direct-digital-admission:20260923",
+  "change": "Shared guidance delegates explicit digital background tasks directly; worker performs connector checks. Future-work guidance recognizes digital start.",
+  "tests": "16 packaged contact/background/catalog tests passed before final admission-wording correction",
+  "review": "Independent review GO after correcting availability versus durable-admission wording",
+  "probe": {
+    "type": "Isolated real-model first selection, stopped before tool dispatch",
+    "selected": "start_digital_work",
+    "modelSeconds": 9.862,
+    "inputTokens": 5799,
+    "outputTokens": 265,
+    "modelCalls": 1,
+    "toolDispatches": 0,
+    "realAdmission": false,
+    "scope": "Pre-final-wording candidate; no model probe repeated for clarification-only wording"
+  },
+  "liveChecks": [
+    "Both core and worker healthy",
+    "Installed changed files match source",
+    "Owner work API HTTP200",
+    "Worker connector network retained in active compose"
+  ],
+  "limitations": [
+    "One selected action does not prove reliable direct admission for every request",
+    "9.862 seconds still too slow; no instant contact claim",
+    "No new live task created or owner acceptance",
+    "Credit cost unknown"
+  ],
+  "rollbackStage": "/var/lib/eva2/direct-digital-admission-20260923"
+}
