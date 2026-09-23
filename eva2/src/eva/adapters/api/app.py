@@ -17,6 +17,7 @@ from eva.adapters.api.dashboard_assets import DASHBOARD_ASSETS, DASHBOARD_ENTRY
 from eva.adapters.api.dashboard_conversation import (
     DASHBOARD_CONVERSATION_HTML,
     conversation_stream_response,
+    dashboard_stream_response,
     grounded_reply_wire,
 )
 from eva.adapters.api.dashboard_initiatives import install_dashboard_initiatives
@@ -841,7 +842,7 @@ def create_app(
     @app.post("/internal/v1/dashboard/conversation/respond")
     def dashboard_conversation_respond(
         request: Request, payload: dict[str, Any], background_tasks: BackgroundTasks
-    ) -> JSONResponse:
+    ) -> Response:
         """Submit one bound owner turn; browser input never sets its scope."""
 
         dashboard_access.require(request)
@@ -852,6 +853,8 @@ def create_app(
             raise HTTPException(
                 status_code=503, detail="owner conversation unavailable"
             )
+        if "application/x-ndjson" in request.headers.get("accept", ""):
+            return dashboard_stream_response(runtime, payload["text"])
         try:
             turn, reply = respond_as_owner(payload["text"])
             if not isinstance(turn, ConversationTurn) or not isinstance(
