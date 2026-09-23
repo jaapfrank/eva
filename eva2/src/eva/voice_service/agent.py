@@ -297,13 +297,15 @@ class EvaAgent(Agent):
         except Exception:
             pass  # Cleanup must still interrupt speech if the UI transport failed.
 
-    async def refresh_saved_context(self):
-        for context_id, result in list(self.state.saved_result_context.items()):
+    async def refresh_saved_context(self, selected=None):
+        contexts = self.state.saved_result_context if selected is None else selected
+        for context_id, result in list(contexts.items()):
             try:
                 await authorize_saved_return(self.state.backend, self.state.session_id,
                                              result, lambda: None)
             except Exception:
-                self.discard_saved_result(context_id, result)
+                if self.state.saved_result_context.get(context_id) == result:
+                    self.discard_saved_result(context_id, result)
 
     async def return_saved_work(self, session, result, check):
         """One claimed result on its original authorized live session; no model call."""
@@ -411,12 +413,22 @@ class EvaAgent(Agent):
         try:
             # Connector context is not a lasting read grant. A result may have
             # expired or been revoked since its previous playback/acknowledgement.
-            await self.refresh_saved_context()
+            candidates = [(key, value, dict(state.saved_result_context[key])
+                           if key in state.saved_result_context else None)
+                          for key, value in list(state.results.items())[-4:]
+                          if key not in state.suppressed]
+            await self.refresh_saved_context({key: saved for key, _, saved in candidates
+                                              if saved is not None})
+            # Keep the pre-await selection. A concurrently arriving/replaced
+            # saved result requires its own authorization on a later turn.
+            work_results = [{"message_id": key, "text": value[:16000]}
+                            for key, value, saved in candidates
+                            if key not in state.suppressed and state.results.get(key) == value
+                            and state.saved_result_context.get(key) == saved]
             async for event in state.backend.events({
                 "session_id": state.session_id, "message_id": message_id, "text": text,
                 "recent": state.snapshots.pop(message_id, []), "active_work": active,
-                "work_results": [{"message_id": key, "text": value[:16000]}
-                                 for key, value in list(state.results.items())[-4:] if key not in state.suppressed],
+                "work_results": work_results,
             }):
                 kind = event.get("type")
                 if kind == "request_acknowledged":

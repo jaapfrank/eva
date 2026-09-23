@@ -184,3 +184,48 @@ async def test_saved_result_speech_is_readable_but_transport_keeps_original_byte
     assert ''.join(e['text'] for e in events if e['type']=='background_result_part') == output
     assert all(e['output_sha256']==result['output_sha256'] for e in events if e['type']=='background_result_part')
     assert backend.operations.count('ack') == 1
+
+
+@pytest.mark.asyncio
+async def test_outbound_context_authorizes_only_snapshot_without_backfill_or_concurrent_leak():
+    backend = Backend()
+    state = BridgeState(backend)
+    agent = EvaAgent(state)
+    payloads, authorized = [], []
+    for index in range(12):
+        key = f"saved-{index}"
+        state.results[key] = f"Saved text {index}"
+        state.saved_result_context[key] = dict(RESULT, work_id=key)
+    state.suppressed.add("saved-11")
+    async def work_return(operation, session_id, **identity):
+        assert operation == "authorize"
+        key = identity["work_id"]
+        authorized.append(key)
+        if key == "saved-8":
+            # A result can arrive while an earlier authority lookup is pending.
+            await asyncio.sleep(0)
+            state.results["concurrent"] = "Must not enter this request"
+            state.saved_result_context["concurrent"] = dict(RESULT, work_id="concurrent")
+        if key == "saved-9":
+            raise ValueError("revoked")
+        if key == "saved-10":
+            state.results[key] = "Unvalidated replacement"
+            state.saved_result_context[key] = dict(RESULT, work_id="replacement")
+        return {"status": "authorized", **{field: RESULT[field] for field in
+                ("operation_id", "output_sha256", "result_sha256")}}
+    async def events(payload):
+        payloads.append(payload)
+        yield {"type": "final", "reply": {"text": "Done."}}
+    backend.work_return = work_return
+    backend.events = events
+    class Context:
+        session = Session()
+        async def update(self, *args, **kwargs): pass
+    await agent.eva_turn(Context(), "new-turn", "Hello")
+    assert authorized == ["saved-8", "saved-9", "saved-10"]
+    assert payloads[0]["work_results"] == [{"message_id": "saved-8", "text": "Saved text 8"}]
+    assert "saved-9" not in state.results
+    assert "saved-0" in state.saved_result_context
+    assert state.results["saved-10"] == "Unvalidated replacement"
+    assert "concurrent" in state.results
+    await asyncio.sleep(0)
