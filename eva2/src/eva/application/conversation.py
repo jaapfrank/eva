@@ -76,13 +76,19 @@ _TEXT_DELTA_SINK: ContextVar[Callable[[str], None] | None] = ContextVar(
     "eva_conversation_text_delta_sink", default=None
 )
 
+_TEXT_DELTA_PARTS: ContextVar[list[str] | None] = ContextVar(
+    "eva_conversation_text_delta_parts", default=None
+)
+
 
 @contextmanager
 def stream_conversation_text(sink: Callable[[str], None]) -> Iterator[None]:
     token = _TEXT_DELTA_SINK.set(sink)
+    parts_token = _TEXT_DELTA_PARTS.set([])
     try:
         yield
     finally:
+        _TEXT_DELTA_PARTS.reset(parts_token)
         _TEXT_DELTA_SINK.reset(token)
 
 
@@ -96,7 +102,24 @@ def publish_conversation_text(
     """
     sink = _TEXT_DELTA_SINK.get()
     if sink is not None and (tools_disabled or final_answer) and delta:
+        parts = _TEXT_DELTA_PARTS.get()
+        if parts is not None:
+            parts.append(delta)
         sink(delta)
+
+
+def publish_committed_conversation_text(text: str) -> None:
+    """Offer a saved reply suffix without repeating provisional model text.
+
+    The caller must validate the committed reply and current audience first.
+    Diverging provisional text remains for the transport's final reconciliation.
+    """
+    parts = _TEXT_DELTA_PARTS.get()
+    if parts is None:
+        return
+    prefix = "".join(parts)
+    if text.startswith(prefix) and len(text) > len(prefix):
+        publish_conversation_text(text[len(prefix):], tools_disabled=False, final_answer=True)
 
 
 @dataclass(frozen=True, slots=True)

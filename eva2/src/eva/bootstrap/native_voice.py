@@ -13,7 +13,9 @@ from typing import Protocol
 from eva.adapters.api.native_voice import VoiceReply, VoiceRequest
 from eva.adapters.projection.hindsight import ActiveHouseholdConsentResolver
 from eva.application.cancellation import check_cancellation, run_in_cancellation_thread
-from eva.application.conversation import ConversationTurn, GroundedReply
+from eva.application.conversation import (
+    ConversationTurn, GroundedReply, publish_committed_conversation_text,
+)
 from eva.application.memory_audience import MemoryAudience
 from eva.contracts.canonical_json import canonical_json_bytes
 
@@ -86,6 +88,7 @@ class NativeHouseholdResponder:
                     or reply.message_id != turn.message_id):
                 raise ValueError("Native household reply crossed its request binding")
             self._runtime.admit_turn_audience(turn)
+            publish_committed_conversation_text(reply.text)
             self._runtime.after_response(turn, reply)
             check_cancellation()
             return VoiceReply(reply.text, True)
