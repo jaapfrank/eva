@@ -13,11 +13,13 @@ from collections.abc import Awaitable, Callable, Mapping
 from dataclasses import dataclass
 from datetime import UTC, datetime
 import hmac
+import json
 import hashlib
 import re
 from typing import Literal, Protocol
 
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, ConfigDict, Field
 
 from eva.application.audio_playback import AudioPlaybackResult, PlaybackConflict
@@ -290,6 +292,8 @@ def install_native_voice(app: FastAPI, service: NativeVoiceService | None) -> No
         authorize(request, payload.satellite_id, payload.device_id)
         if not payload.text.strip():
             raise HTTPException(422, "Voice text is empty")
+        if "application/x-ndjson" in request.headers.get("accept", ""):
+            return native_stream_response(service, payload)
         worker = asyncio.create_task(service.run(payload))
         try:
             # ASGI does not automatically cancel a handler on HTTP disconnect.
@@ -314,3 +318,57 @@ def install_native_voice(app: FastAPI, service: NativeVoiceService | None) -> No
             if not worker.done():
                 worker.cancel()
             await asyncio.gather(worker, return_exceptions=True)
+
+
+def native_stream_response(service, payload):
+    """Stream the existing admitted/cancellable request, preserving final fencing."""
+    async def events():
+        from eva.application.conversation import stream_conversation_text
+        loop = asyncio.get_running_loop()
+        queue = asyncio.Queue()
+        accepting = True
+        delivered = False
+        size = 0
+
+        def publish(text):
+            if accepting:
+                loop.call_soon_threadsafe(queue.put_nowait, text)
+
+        with stream_conversation_text(publish):
+            worker = asyncio.create_task(service.run(payload))
+        worker.add_done_callback(lambda _: queue.put_nowait(None))
+        try:
+            while True:
+                delta = await queue.get()
+                if delta is None:
+                    break
+                if worker.done() and (worker.cancelled() or worker.exception() is not None):
+                    break
+                service._validate_current()
+                size += len(delta)
+                if size > 16384:
+                    raise ValueError("voice stream exceeds bound")
+                yield (json.dumps({"request_id": payload.request_id,
+                    "type": "delta", "text": delta}, ensure_ascii=False) + "\n").encode()
+            reply = worker.result()
+            service._validate_current()
+            delivered = True
+            yield (json.dumps({"request_id": payload.request_id, "type": "final",
+                "reply": reply.text, "continue_conversation": reply.continue_conversation},
+                ensure_ascii=False) + "\n").encode()
+        except asyncio.CancelledError:
+            raise
+        except Exception:
+            yield (json.dumps({"request_id": payload.request_id, "type": "error"}) + "\n").encode()
+        finally:
+            accepting = False
+            if not delivered:
+                worker.cancel()
+                cleanup = asyncio.create_task(service._cleanup(payload.device_id, payload.request_id))
+                service._cleanups.add(cleanup)
+                cleanup.add_done_callback(service._cleanup_finished)
+                await asyncio.shield(cleanup)
+            await asyncio.gather(worker, return_exceptions=True)
+
+    return StreamingResponse(events(), media_type="application/x-ndjson",
+        headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"})

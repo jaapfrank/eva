@@ -58,7 +58,7 @@ class EvaVoiceClient:
         self._closed = False
 
     async def respond(self, *, satellite_id: str, device_id: str,
-                      conversation_id: str, text: str, language: str) -> EvaVoiceAnswer:
+                      conversation_id: str, text: str, language: str, on_delta=None) -> EvaVoiceAnswer:
         if (self._closed or satellite_id not in self._satellites
                 or not re.fullmatch(r"[0-9a-f]{32}", device_id)
                 or not conversation_id or len(conversation_id) > 200
@@ -79,7 +79,7 @@ class EvaVoiceClient:
         previous = self._active.get(satellite_id)
         if previous is not None:
             previous.cancel()
-        worker = asyncio.create_task(self._respond(payload))
+        worker = asyncio.create_task(self._respond(payload, on_delta=on_delta))
         self._active[satellite_id] = worker
         try:
             answer = await worker
@@ -90,21 +90,24 @@ class EvaVoiceClient:
             if self._active.get(satellite_id) is worker:
                 del self._active[satellite_id]
 
-    async def _respond(self, payload: dict[str, str]) -> EvaVoiceAnswer:
+    async def _respond(self, payload: dict[str, str], *, on_delta=None) -> EvaVoiceAnswer:
         try:
             async with asyncio.timeout(32):
                 async with self._session.post(
-                    self._url, json=payload, headers=self._headers,
+                    self._url, json=payload, headers={**self._headers, **({"Accept": "application/x-ndjson"} if on_delta else {})},
                     allow_redirects=False,
                 ) as response:
                     if response.status != 200:
                         raise EvaVoiceUnavailable("Eva voice response failed")
-                    raw = bytearray()
-                    async for chunk in response.content.iter_chunked(8192):
-                        raw.extend(chunk)
-                        if len(raw) > 131_072:
-                            raise EvaVoiceUnavailable("Eva voice response exceeds its bound")
-            data = json.loads(raw)
+                    if on_delta is not None and response.content_type == "application/x-ndjson":
+                        data = await self._stream_reply(response, payload, on_delta)
+                    else:
+                        raw = bytearray()
+                        async for chunk in response.content.iter_chunked(8192):
+                            raw.extend(chunk)
+                            if len(raw) > 131_072:
+                                raise EvaVoiceUnavailable("Eva voice response exceeds its bound")
+                        data = json.loads(raw)
             if (not isinstance(data, dict)
                     or set(data) != {"request_id", "reply", "continue_conversation"}
                     or data["request_id"] != payload["request_id"]
@@ -112,6 +115,9 @@ class EvaVoiceClient:
                     or len(data["reply"]) > 16_384
                     or type(data["continue_conversation"]) is not bool):
                 raise EvaVoiceUnavailable("Eva voice response binding differs")
+            if on_delta is not None and response.content_type != "application/x-ndjson":
+                # Compatibility after validating the same request; never retry a turn.
+                await on_delta(data["reply"])
             return EvaVoiceAnswer(data["reply"], data["continue_conversation"], data["request_id"])
         except BaseException as error:
             cancelled = isinstance(error, asyncio.CancelledError)
@@ -131,6 +137,38 @@ class EvaVoiceClient:
             if not isinstance(error, Exception):
                 raise
             raise EvaVoiceUnavailable("Eva voice response unavailable") from None
+
+    @staticmethod
+    async def _stream_reply(response, payload, on_delta):
+        buffer, streamed, size = b"", "", 0
+        async for chunk in response.content.iter_chunked(8192):
+            size += len(chunk)
+            if size > 262_144:
+                raise EvaVoiceUnavailable("Eva voice stream exceeds its bound")
+            buffer += chunk
+            while b"\n" in buffer:
+                line, buffer = buffer.split(b"\n", 1)
+                data = json.loads(line)
+                if not isinstance(data, dict) or data.get("request_id") != payload["request_id"]:
+                    raise EvaVoiceUnavailable("Eva voice stream binding differs")
+                if data.get("type") == "delta" and isinstance(data.get("text"), str):
+                    streamed += data["text"]
+                    if len(streamed) > 16384:
+                        raise EvaVoiceUnavailable("Eva voice text exceeds its bound")
+                    await on_delta(data["text"])
+                elif data.get("type") == "final":
+                    reply = data.get("reply")
+                    if (set(data) != {"type", "request_id", "reply", "continue_conversation"}
+                            or not isinstance(reply, str) or not reply.strip() or len(reply) > 16384
+                            or type(data.get("continue_conversation")) is not bool
+                            or not reply.startswith(streamed)):
+                        raise EvaVoiceUnavailable("Eva final voice text differs from its stream")
+                    if reply[len(streamed):]:
+                        await on_delta(reply[len(streamed):])
+                    return {key: data[key] for key in ("request_id", "reply", "continue_conversation")}
+                else:
+                    raise EvaVoiceUnavailable("Eva voice stream interrupted")
+        raise EvaVoiceUnavailable("Eva voice stream ended without a final reply")
 
     async def _interrupt(self, payload: dict[str, str]) -> None:
         try:
