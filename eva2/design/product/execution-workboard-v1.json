@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T23:43:26.537154+00:00",
+        "checkedAt": "2026-09-23T23:50:54.107284+00:00",
         "deliveries": [
+          {
+            "title": "Ook mislukt achtergrondwerk terugmelden",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Gedelegeerde taken melden nu ook mislukken, vastlopen en onzekere uitkomsten via de bestaande website-, Telegram- en spraakroutes. De melding noemt de opdracht.",
+            "remaining": "Geen echte afleverproef gedaan. Bestaande ontvanger-/sessiegrenzen blijven gelden; documentproject-fouten nog apart.",
+            "source": "eva2/evidence/product/work-failure-returns-installed-20260924.json"
+          },
           {
             "title": "Taakbrowser bedienen en herstellen",
             "date": "24 september",
@@ -1621,29 +1629,29 @@
           }
         ],
         "now": {
-          "title": "Beheerde browser bedienen en herstellen",
+          "title": "Ook mislukt achtergrondwerk terugmelden",
           "state": "Geïnstalleerd",
-          "detail": "De bestaande browsercontroller weer bereikbaar maken vanuit het eigenaarsoverzicht. Herstel bewaart het profiel en geeft eerst bediening aan de eigenaar; geen automatische herhaling van klikken.",
-          "doneWhen": "Technische installatie afgerond; echte herstel- en taakproef later."
+          "detail": "Bestaande terugmeldroutes selecteren alleen succes. Gedeelde melding voor failed, needs_help en ambiguous toevoegen; oude mislukkingen niet alsnog uitsturen.",
+          "doneWhen": "Technische installatie afgerond; echte kanaalproeven later."
         },
         "next": {
-          "title": "Browserwerk en taakvoortgang",
-          "state": "Nog niet gestart",
-          "detail": "Verder met concrete ontbrekende aansluiting op de bestaande digitale taakuitvoering; bestaande browserbediening behouden."
+          "title": "Stap 1 afronden: één gesprek en stem",
+          "state": "Volgende projectoplevering",
+          "detail": "Begroeten, snelle ontvangst, doorpraten tijdens achtergrondwerk, onderbreken en stoppen via website, Telegram, Home Assistant en Voice PE. Alleen ontbrekende functies voor deze volledige stap; uitgebreide kanaalproeven later."
         },
         "ownerAction": {
-          "title": "Eva’s taakbrowser bedienen",
+          "title": "Geen nieuwe proef nodig",
           "url": "http://localhost:44711/internal/v1/dashboard",
-          "linkLabel": "Open eigenaarsoverzicht",
+          "linkLabel": "Bekijk opgeslagen opdrachten",
           "steps": [
-            "Zoek Eva’s taakbrowser. De actuele status staat rechtsboven.",
-            "Bij Jij hebt de bediening: kies Bekijk en bedien browser.",
-            "Geef terug aan Eva als zij de browser weer mag bedienen. Een gestopte opdracht hervat je apart op het takenbord."
+            "Gebruik Eva zoals gebruikelijk.",
+            "Bij een nieuwe mislukte achtergrondtaak kan de bestaande retourroute nu ook de mislukking melden.",
+            "Vraag naar de taakstatus voor details; hervatten gebeurt niet automatisch."
           ],
-          "expected": "Bediening en status gebruiken de bestaande browsercontroller. Je hoeft nu geen herstelproef te doen."
+          "expected": "De functie is geïnstalleerd. Daadwerkelijke aflevering en hoorbaarheid blijven later te beproeven."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T23:43:26.537154+00:00"
+        "reviewedAt": "2026-09-23T23:50:54.107284+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11412,7 +11420,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Verder met concrete open functies uit stap 1. Fysieke proeven en brede tests volgen later op eigenaarverzoek.",
+      "nextAction": "Begroeten, snelle ontvangst, doorpraten tijdens achtergrondwerk, onderbreken en stoppen via website, Telegram, Home Assistant en Voice PE. Alleen ontbrekende functies voor deze volledige stap; uitgebreide kanaalproeven later.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
