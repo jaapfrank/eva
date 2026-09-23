@@ -7,6 +7,7 @@ from eva.application.procedure_references import ProcedureReferences, ProcedureS
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
 from eva.adapters.postgres.procedure_reference_host import PostgresProcedureReferenceHost
 from eva.application.schema_validation import validate_schema_value
+from eva.application.background_execution import background_execution_namespace
 from eva.providers.contracts import ProviderContribution
 from eva.providers.mcp_autonomy import _SourceTurnLoader
 from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline, CheckpointConflict
@@ -75,6 +76,9 @@ class ProcedureReferenceActions:
             raise ConversationConflict("invalid procedure step")
         identity = {"principal_id": turn.principal_id, "conversation_id": turn.conversation_id,
                     "message_id": turn.message_id, "step_index": step_index}
+        namespace = background_execution_namespace(turn)
+        if namespace is not None:
+            identity["execution_namespace"] = namespace
         return "procedure-action:" + canonical_sha256(identity)
 
     def pending(self, turn, *, step_index=0):
@@ -120,6 +124,9 @@ class ProcedureReferenceActions:
         return ProviderContribution("procedure_references", self.conversation_tools(), (self,))
 
     def execute(self, turn, call, *, step_index=0):
+        if (background_execution_namespace(turn) is not None
+                and call.name not in _NAMES[1:]):
+            raise ConversationConflict("background procedure actions are read-only")
         self._host(turn)
         timeline = PostgresOperationalTimeline(self.engine, self.authority.scope)
         slot = self._slot(turn, step_index)

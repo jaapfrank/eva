@@ -72,3 +72,80 @@ def test_only_existing_pending_procedure_requires_current_execution_authority(mo
             actions.pending(turn)
     else:
         assert actions.pending(turn) is None
+
+
+
+def _private_turn():
+    from eva.application.conversation import ConversationTurn
+    return ConversationTurn.private("tenant", "install", "owner", "chat", "message", "Use a procedure", "2026-09-23T12:00:00Z")
+
+
+def test_background_slots_separate_jobs_and_preserve_foreground_hash():
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+    from eva.contracts.canonical_json import canonical_sha256
+    actions = ProcedureReferenceActions(None, authority=None, gateway_factory=None)
+    turn = _private_turn()
+    foreground = actions._slot(turn, 0)
+    assert foreground == "procedure-action:" + canonical_sha256({
+        "principal_id": turn.principal_id, "conversation_id": turn.conversation_id,
+        "message_id": turn.message_id, "step_index": 0})
+    with background_execution(BackgroundExecutionScope(turn, "execution:one")):
+        first = actions._slot(turn, 0)
+        assert actions._slot(turn, 1) != first
+    with background_execution(BackgroundExecutionScope(turn, "execution:two")):
+        assert actions._slot(turn, 0) not in {first, foreground}
+    with background_execution(BackgroundExecutionScope(turn, "execution:one")):
+        assert actions._slot(turn, 0) == first != foreground
+    assert actions._slot(turn, 0) == foreground
+
+
+def test_background_designation_rejected_before_host_or_journal(monkeypatch):
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+    from eva.application.conversation import ConversationActionCall, ConversationConflict
+    actions = ProcedureReferenceActions(None, authority=None, gateway_factory=None)
+    monkeypatch.setattr(actions, "_host", lambda *_: pytest.fail("No designation host access"))
+    turn = _private_turn()
+    with background_execution(BackgroundExecutionScope(turn, "execution:one")):
+        with pytest.raises(ConversationConflict, match="read-only"):
+            actions.execute(turn, ConversationActionCall("call", "designate_reusable_procedure", {}))
+
+
+@pytest.mark.parametrize("denied", [False, True])
+def test_background_readback_checks_job_immediately_before_gateway(monkeypatch, denied):
+    from types import SimpleNamespace as NS
+    import eva.adapters.postgres.procedure_reference_host as module
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+    from eva.application.conversation import ConversationConflict
+    turn = _private_turn()
+    events = []
+    class Gateway:
+        async def verify_catalog(self): events.append("catalog")
+        def planner(self): return None
+        async def observe(self, command, dispatch):
+            events.append("observe")
+            return NS(disposition="verified", evidence={"source": "mcp_gateway_readback"}, observed={"content": "Checked procedure"})
+    class Wrapper:
+        def __init__(self, *args, **kwargs): pass
+        def _request_from_admission(self, *args): return "bound-request"
+    monkeypatch.setattr(module, "PostgresExternalConversationTools", Wrapper)
+    host = object.__new__(module.PostgresProcedureReferenceHost)
+    host.turn = turn
+    host.engine = None
+    host.authority = NS(authorize_turn=lambda _: None)
+    host.gateway_factory = Gateway
+    host.require_current = lambda: events.append("authority")
+    host._selected = (turn, {"action_arguments": {"path": "procedure.md"}, "action_name": "save_document"})
+    def guard(actual):
+        assert actual == turn
+        events.append("job-guard")
+        if denied:
+            raise ConversationConflict("work stopped or budget exhausted")
+    with background_execution(BackgroundExecutionScope(turn, "execution:one", guard)):
+        if denied:
+            with pytest.raises(ConversationConflict, match="stopped or budget"):
+                host.read_current(None, "procedure.md")
+            assert "observe" not in events
+        else:
+            assert host.read_current(None, "procedure.md") == b"Checked procedure"
+            assert events[events.index("observe") - 1] == "job-guard"
+    assert events.count("job-guard") == 1

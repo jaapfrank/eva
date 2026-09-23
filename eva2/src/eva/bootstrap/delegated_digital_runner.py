@@ -14,7 +14,7 @@ from eva.adapters.postgres.operational_timeline import external_timeline_scope
 from eva.adapters.subagents.tool_free_child import ToolFreeChildOutcome
 from eva.application.background_execution import BackgroundExecutionScope, background_execution
 from eva.application.cancellation import CancellationSignal, cancellation_scope
-from eva.application.conversation import ConversationConflict, LivingConversation
+from eva.application.conversation import ConversationActionReceipt, ConversationConflict, LivingConversation
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.delegated_work import DelegatedWorkUsage
 from eva.contracts.timestamps import parse_utc_timestamp
@@ -65,6 +65,15 @@ class BackgroundConnectorActions:
         return tuple(item for tool in self._tools if tool.available_for(turn)
                      for item in tool.active_context(turn))
 
+    @staticmethod
+    def _receipt(receipt):
+        # The existing loop continues only after a verified host step. Keep the
+        # procedure status intact inside the result; discovery is not task success.
+        if receipt.call.name in {"list_reusable_procedures", "resolve_reusable_procedure"}:
+            return ConversationActionReceipt(receipt.call, {"status": "verified",
+                "operation_result": receipt.output})
+        return receipt
+
     def pending(self, turn):
         return self.pending_step(turn, step_index=0)
 
@@ -78,7 +87,7 @@ class BackgroundConnectorActions:
             if receipt is not None:
                 if receipt.call.name not in self._allowed or found is not None:
                     raise ConversationConflict("background action admission differs")
-                found = receipt
+                found = self._receipt(receipt)
         if found is not None:
             self.calls += 1
             self.receipts.append(found)
@@ -94,10 +103,38 @@ class BackgroundConnectorActions:
         if self.calls >= self._maximum_calls:
             raise ConversationConflict("background connector call budget exhausted")
         self.calls += 1
-        receipt = self._by_name[call.name].execute(turn, call, step_index=step_index)
+        receipt = self._receipt(self._by_name[call.name].execute(turn, call, step_index=step_index))
         self.receipts.append(receipt)
         self._authorize(turn)
         return receipt
+
+
+def _has_completed_tool_evidence(receipts):
+    """Discovery is useful context, but cannot alone prove completed work."""
+    completed = False
+    for receipt in receipts:
+        output = receipt.output
+        if receipt.call.name in {"list_reusable_procedures", "resolve_reusable_procedure"}:
+            if output.get("status") != "verified":
+                return False
+            output = output.get("operation_result", {})
+            if output.get("contract") != "ProcedureReferenceAction/v1":
+                return False
+            status = output.get("status")
+            if receipt.call.name == "list_reusable_procedures":
+                if status != "candidates":
+                    return False
+            elif status == "resolved":
+                if not output.get("references"):
+                    return False
+                completed = True
+            elif status != "unavailable":
+                return False
+        elif output.get("status") == "verified":
+            completed = True
+        else:
+            return False
+    return completed
 
 
 class DelegatedDigitalRunner:
@@ -199,7 +236,7 @@ class DelegatedDigitalRunner:
             actual = journal.model_usage(source)
             checkpoint(source, actual)
             usage = self._usage(actual, actions.dispatches)
-            if not actions.receipts or any(item.output.get("status") != "verified" for item in actions.receipts):
+            if not _has_completed_tool_evidence(actions.receipts):
                 raise ConversationConflict("background task lacks verified connector results")
             if actual.measurement != "measured":
                 raise ConversationConflict("background model token usage is incomplete")

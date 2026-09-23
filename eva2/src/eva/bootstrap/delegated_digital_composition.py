@@ -10,6 +10,8 @@ from eva.contracts.canonical_json import canonical_sha256
 
 _CONNECTORS = frozenset({"connect_service", "discover_connector_tools",
                         "manage_connected_services", "use_connector_tool"})
+_PROCEDURES = frozenset({"list_reusable_procedures", "resolve_reusable_procedure"})
+_DIGITAL_PROVIDERS = frozenset({"mcp_autonomy", "procedure_references"})
 _ROOT = Path(__file__).resolve().parents[1]
 _EXECUTION_SOURCES = (
     "bootstrap/delegated_digital_composition.py",
@@ -20,16 +22,20 @@ _EXECUTION_SOURCES = (
     "providers/mcp_registration.py",
     "providers/mcp_owner_authority.py",
     "adapters/postgres/mcp_connector_registry.py",
+    "providers/procedure_reference_actions.py",
+    "adapters/postgres/procedure_reference_host.py",
+    "application/procedure_references.py",
+    "adapters/postgres/memory_outbox.py",
 )
 
 
 def digital_tools(bundle):
     if bundle is None:
         raise ValueError("digital work requires existing connector tools")
-    descriptors = tuple(tool for tool in bundle.conversation_tools if tool.name in _CONNECTORS)
-    routes = tuple(tool for tool in bundle.external_tools if set(tool.action_names) & _CONNECTORS)
+    descriptors = tuple(tool for tool in bundle.conversation_tools if tool.name in _CONNECTORS | _PROCEDURES)
+    routes = tuple(tool for tool in bundle.external_tools if set(tool.action_names) & (_CONNECTORS | _PROCEDURES))
     names = {tool.name for tool in descriptors}
-    if not names or names != {name for tool in routes for name in tool.action_names if name in _CONNECTORS}:
+    if not names or names != {name for tool in routes for name in tool.action_names if name in _CONNECTORS | _PROCEDURES}:
         raise ValueError("digital connector descriptions and routes differ")
     return descriptors, routes
 
@@ -59,13 +65,13 @@ def build_digital_profile(settings, provider_bundle):
     # provider authority still checks rotating credentials/mandates at execution.
     providers = []
     for loaded in settings.external_provider.providers:
-        if loaded.provider_id != "mcp_autonomy":
+        if loaded.provider_id not in _DIGITAL_PROVIDERS:
             continue
-        if not is_dataclass(loaded.settings):
+        if loaded.provider_id == "mcp_autonomy" and not is_dataclass(loaded.settings):
             raise ValueError("digital work requires serializable provider settings")
         providers.append({"provider": loaded.provider_id,
                           "configuration": _configuration_value(loaded.settings)})
-    if len(providers) != 1:
+    if sum(item["provider"] == "mcp_autonomy" for item in providers) != 1:
         raise ValueError("digital work requires the existing MCP connector provider")
     fingerprint = canonical_sha256({
         "contract": "EvaPrivateDigitalComposition/v1",
@@ -108,7 +114,7 @@ def build_digital_runner(settings, store, *, provider_bundle=None):
     engine = store._engine
     selected_providers = ExternalProviderSettings(tuple(loaded for loaded in
         (() if settings.external_provider is None else settings.external_provider.providers)
-        if loaded.provider_id == "mcp_autonomy"))
+        if loaded.provider_id in _DIGITAL_PROVIDERS))
     bundle = provider_bundle or build_external_provider_bundle(selected_providers, engine)
     profile = build_digital_profile(settings, bundle)
     descriptors, routes = digital_tools(bundle)

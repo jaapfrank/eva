@@ -1,7 +1,12 @@
 # Apply with mcp-gateway.compose.yml when digital background work is enabled.
 # Reuse the existing connector network; no ports, credentials or new grants.
 services:
+  core:
+    environment:
+      EVA_PROCEDURE_REFERENCES_ENABLED: ${EVA_PROCEDURE_REFERENCES_ENABLED:-false}
   delegated-work-worker:
+    environment:
+      EVA_PROCEDURE_REFERENCES_ENABLED: ${EVA_PROCEDURE_REFERENCES_ENABLED:-false}
     networks:
       default: {}
       mcp-gateway: {}

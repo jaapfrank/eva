@@ -47,7 +47,8 @@ class DelegatedDigitalWorkGrant(DelegatedWorkGrant):
             raise ValueError("digital work uses host tools, not ambient child access")
         # These are host connector meta-actions; discovered tools remain subject
         # to the existing connector mandate and current dispatch authorization.
-        allowed = {"connect_service", "discover_connector_tools", "manage_connected_services", "use_connector_tool"}
+        allowed = {"connect_service", "discover_connector_tools", "manage_connected_services", "use_connector_tool",
+                   "list_reusable_procedures", "resolve_reusable_procedure"}
         if (not self.capability_ids or len(set(self.capability_ids)) != len(self.capability_ids)
                 or not set(self.capability_ids).issubset(allowed)):
             raise ValueError("digital work capabilities must be explicit connector actions")

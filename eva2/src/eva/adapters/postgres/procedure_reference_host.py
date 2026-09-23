@@ -6,6 +6,7 @@ from eva.adapters.postgres.conversation_journal import PostgresConversationJourn
 from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
 from eva.application.procedure_references import ProcedureScope, VerifiedSaveSource, ProcedureReferenceRejected
 from eva.application.conversation import ConversationConflict
+from eva.application.background_execution import authorize_background_dispatch
 
 
 class PostgresProcedureReferenceHost:
@@ -121,6 +122,7 @@ class PostgresProcedureReferenceHost:
                                                        authorize_turn=self.authority.authorize_turn)
             command = wrapper._request_from_admission(original, admission["action_name"],
                                                        admission, admission.get("step_index", 0))
+            authorize_background_dispatch(self.turn)
             return await gateway.observe(command, None)
         observation = asyncio.run(observe())
         self.require_current()

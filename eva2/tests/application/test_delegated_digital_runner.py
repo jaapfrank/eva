@@ -240,3 +240,55 @@ def test_gateway_transport_failure_is_sanitized_without_retry(monkeypatch, inter
     assert outcome.error_fingerprint == hashlib.sha256(
         b"McpGatewayUnavailable:MCP gateway request failed"
     ).hexdigest()
+
+
+def test_saved_procedure_read_can_continue_to_a_verified_connector_action():
+    from dataclasses import replace
+    from eva.application.background_execution import authorize_background_dispatch
+    source, old_spec, store, _, journal, runner, _ = fixture()
+    calls = []
+    class ProcedureTools:
+        action_names = ("list_reusable_procedures", "resolve_reusable_procedure", "use_connector_tool")
+        def available_for(self, turn): return True
+        def active_context(self, turn): return ()
+        def pending(self, turn, *, step_index): return None
+        def execute(self, turn, call, *, step_index):
+            calls.append(call.name)
+            if call.name != "list_reusable_procedures": authorize_background_dispatch(turn)
+            if call.name == "list_reusable_procedures":
+                output = {"contract": "ProcedureReferenceAction/v1", "status": "candidates", "candidates": [{"document_id": "saved"}]}
+            elif call.name == "resolve_reusable_procedure":
+                output = {"contract": "ProcedureReferenceAction/v1", "status": "resolved", "references": [{"untrusted_content": "Compare both totals."}]}
+            else: output = {"status": "verified", "result": "Comparison saved and read back"}
+            return ConversationActionReceipt(call, output)
+    class ProcedureModel:
+        def generate(self, turn, identity, memory, recent_messages, **kwargs):
+            index = len(calls)
+            if index == 2:
+                assert kwargs['completed_action'].output['operation_result']['references'][0]['untrusted_content'] == "Compare both totals."
+            name = ProcedureTools.action_names[index] if index < 3 else None
+            if name: assert name in kwargs['available_actions']
+            return ConversationModelResult(None if name else "Comparison complete.", "controlled",
+                None if name is None else ConversationActionCall(str(index), name, {}),
+                usage=ConversationModelUsage.measured(tool_calls=int(name is not None), input_tokens=30, output_tokens=10))
+    profile = replace(runner.profile, capability_ids=ProcedureTools.action_names)
+    spec = profile.build_spec(source=old_spec.source.model_dump(mode="json"), source_ingress_sha256=old_spec.source_ingress_sha256,
+        work_id=old_spec.work_id, episode_id=old_spec.episode_id, generation=1, parent_task_id=old_spec.parent_task_id,
+        owner_principal_id=old_spec.owner_principal_id, principal_binding_id=old_spec.principal_binding_id,
+        task=old_spec.task, created_at=NOW, deadline=NOW+timedelta(seconds=300))
+    runner.profile, runner.connector_tools, runner.model = profile, (ProcedureTools(),), ProcedureModel()
+    outcome = asyncio.run(runner.run(spec, call_id="call:procedure"))
+    assert outcome.status == "succeeded", outcome
+    assert calls == list(ProcedureTools.action_names)
+    assert outcome.usage.tool_calls == 2
+
+
+def test_procedure_discovery_or_missing_source_is_not_completed_task_evidence():
+    from eva.bootstrap.delegated_digital_runner import BackgroundConnectorActions, _has_completed_tool_evidence
+    def receipt(name, status, **extra):
+        return BackgroundConnectorActions._receipt(ConversationActionReceipt(
+            ConversationActionCall("read", name, {}), {"contract": "ProcedureReferenceAction/v1", "status": status, **extra}))
+    assert not _has_completed_tool_evidence([receipt("list_reusable_procedures", "candidates")])
+    assert not _has_completed_tool_evidence([receipt("resolve_reusable_procedure", "unavailable")])
+    assert not _has_completed_tool_evidence([receipt("resolve_reusable_procedure", "resolved", references=[])])
+    assert _has_completed_tool_evidence([receipt("resolve_reusable_procedure", "resolved", references=[{"untrusted_content": "Read data"}])])
