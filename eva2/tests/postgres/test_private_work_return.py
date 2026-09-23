@@ -147,3 +147,54 @@ def test_voice_origin_never_becomes_a_dashboard_or_telegram_return(delegated_eng
         bindings_loader=lambda:TelegramPrincipalBindings(()), clock=lambda:at[0])
     assert telegram.authorize_delivery(spec.work_id, **service._owner) is None
     assert service.private_return(turn, 'poll')['result']['output'] == saved.output
+
+
+@pytest.mark.parametrize("research", [False, True])
+def test_admitted_task_title_reaches_private_result(delegated_engine, research):
+    from eva.bootstrap.delegated_research import DelegatedResearchProfile
+    from eva.bootstrap.delegated_work_provider import MODEL_PROFILE_ID
+
+    service, turn, at = setup(delegated_engine, "return-title-" + str(research), False)
+    service.research_profile = DelegatedResearchProfile(MODEL_PROFILE_ID, "a" * 64)
+    task = "  Compare   the available options\n" + "carefully " * 20
+    title = "Home Assistant speech options"
+    args = ({"research": {
+        "contract": "PublicResearchRequest/v1", "schema_version": 1,
+        "question": "What does Home Assistant Cloud provide for speech?",
+        "title": title, "options": ["Home Assistant Cloud"],
+        "research_mode": "topic", "public_review": "public_unlinked",
+    }} if research else {"task": task})
+    operation = "research" if research else "start"
+    admitted = service.execute(operation, turn, request_key="title", **args)
+    expected = title if research else " ".join(task.split())[:120]
+    assert admitted["work"]["title"] == expected
+    spec = service.store.load(admitted["work"]["work_id"], **service._owner).spec
+    saved = succeed(service.store, spec)
+    at[0] += timedelta(seconds=4)
+    result = service.private_return(turn, "poll")["result"]
+    assert (result["work_id"], result["title"], result["output"]) == (
+        spec.work_id, expected, saved.output)
+    replay = service.execute(operation, turn, request_key="title", **args)
+    assert replay["created"] is False and replay["work"]["title"] == expected
+
+
+def test_legacy_title_replay_preserves_metadata_and_rejects_changed_task(delegated_engine, monkeypatch):
+    from eva.adapters.postgres.delegated_work import DelegatedWorkConflict
+    service, turn, at = setup(delegated_engine, "return-legacy-title", False)
+    admit = service.store.admit
+
+    def legacy_admission(**kwargs):
+        return admit(**{**kwargs, "title": "Onderzoek vanuit Eva-chat"})
+
+    with monkeypatch.context() as patch:
+        patch.setattr(service.store, "admit", legacy_admission)
+        original = service.execute("start", turn, task="Write a picnic plan", request_key="legacy")
+    replay = service.execute("start", turn, task="Write a picnic plan", request_key="legacy")
+    assert replay["created"] is False
+    assert replay["work"]["work_id"] == original["work"]["work_id"]
+    assert replay["work"]["title"] == "Onderzoek vanuit Eva-chat"
+    with pytest.raises(DelegatedWorkConflict):
+        service.execute("start", turn, task="Write another task", request_key="legacy")
+    service.execute("stop", turn, work_id=original["work"]["work_id"], request_key="stop")
+    resumed = service.execute("resume", turn, work_id=original["work"]["work_id"], request_key="resume")
+    assert resumed["work"]["title"] == "Onderzoek vanuit Eva-chat"

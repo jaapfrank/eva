@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-23",
         "deliveries": [
           {
+            "title": "Tussenvragen op eigenaarspagina en herkenbare taaknamen",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Verzenden blijft beschikbaar tijdens een lopend antwoord, tot acht vragen tegelijk. Elk antwoord staat bij zijn eigen vraag. Nieuwe achtergrondopdrachten krijgen een eigen titel in plaats van één algemene naam. Gericht getest, onafhankelijk beoordeeld en geïnstalleerd.",
+            "remaining": "Echte gebruiksbeoordeling open; geen claim van snellere modelgeneratie. Bestaande taaknamen en hervattingen blijven behouden.",
+            "source": "eva2/evidence/product/conversation-overlap-installed-20260923.json"
+          },
+          {
             "title": "Woonkamer-Voice PE draadloos bijgewerkt",
             "date": "23 september",
             "state": "installed",
@@ -1124,21 +1132,22 @@
           }
         ],
         "now": {
-          "title": "Gespreksgedrag op woonkamer-Voice PE afronden",
-          "detail": "Firmware en spraakdienst geïnstalleerd; nieuwe build bereikbaar. De fysieke tweevragen- en onderbreekproef staat open. Geen USB-aansluiting nodig voor de uitgevoerde OTA-update.",
-          "state": "Geïnstalleerd · fysieke werking nog te bevestigen",
-          "doneWhen": "Na de eerste oproep doorpraten, onderbreken en een tussenvraag tijdens onderzoek werken op de fysieke speaker."
+          "title": "Algemene digitale taken op de achtergrond afmaken",
+          "detail": "Onderzoek en schrijfwerk kunnen al op de achtergrond; algemene digitale taken met tools nog niet. De bestaande werker en gesprekexecutor worden hergebruikt. Ontbrekend zijn de oorspronkelijke opdrachtbinding en een afzonderlijke uitvoering per taak.",
+          "state": "Concrete ontbrekende functie · nog niet gebouwd",
+          "doneWhen": "Een toegestane digitale taak met meerdere bestaande toolstappen wordt afgemaakt en teruggebracht terwijl het gesprek doorgaat; stoppen en afzonderlijke opdrachten blijven herkenbaar."
         },
         "next": {
-          "title": "Resterende functionele opleveringen afmaken",
-          "detail": "Bestaande implementaties gebruiken voor kanaalgelijkheid en meerdere taken. Geen verdere verhuis- of algemene herstelbouw voordat de functies gereed zijn.",
-          "state": "Uitvoervolgorde: functies eerst"
+          "title": "Dezelfde taakuitvoering via alle ingangen afronden",
+          "detail": "Nieuwe algemene achtergrondroute aansluiten op bestaande taakbediening en terugmelding. Woonkamer-Voice PE wacht alleen op fysieke gespreksbevestiging; Overkapping volgt daarna.",
+          "state": "Functioneel vervolg"
         },
         "ownerAction": {
           "title": "Probeer de woonkamer-Voice PE",
           "linkLabel": "Open Praten met Eva ter vergelijking",
           "url": "http://localhost:44716/",
           "steps": [
+            "Controleer de fysieke mute-schakelaar: de speaker meldde na installatie Mute aan. Zet die voor de proef uit.",
             "Roep Eva op de gebruikelijke manier op en stel een korte vraag.",
             "Geef daarna een onderzoeksopdracht en stel tijdens het wachten een tussenvraag, zonder opnieuw het wakeword te zeggen.",
             "Onderbreek een gesproken antwoord met een nieuwe vraag."
@@ -10914,7 +10923,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Woonkamer-Voice PE is via OTA geïnstalleerd; fysieke gespreksproef staat open. Overige functionele kanaaltekorten onafhankelijk vervolgen, Overkapping na bevestigde woonkamerwerking. Verhuizing en uitgebreide herstelbouw blijven achter de functies.",
+      "nextAction": "Algemene digitale achtergrondtaak bouwen op bestaande worker en gesprekexecutor, met originele opdrachtbinding en eigen uitvoeringsruimte. Tussenvragen op eigenaarspagina en onderscheidende taaknamen zijn geïnstalleerd. Fysieke Voice PE-bevestiging blijft apart open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11613,6 +11622,23 @@
         "evidence": "eva2/evidence/product/installation-recovery-materialization-20260923.json",
         "installed": false
       }
+    },
+    "generalDigitalBackgroundWork20260923": {
+      "status": "implementation_scope_selected",
+      "reuse": [
+        "DelegatedWorkWorker and runner.bind_store",
+        "LivingConversation.respond and existing model",
+        "PostgresConversationActions and ExternalConversationTools",
+        "Existing stop, result storage and private return"
+      ],
+      "missing": [
+        "Source ingress reference in admitted private work",
+        "Separate execution namespace without replacing original authorization turn",
+        "Runner/composition for existing authorized tool actions"
+      ],
+      "scope": "One private digital task using multiple existing connector actions; conversation remains available. No recursive delegation or new household private access.",
+      "estimate": "Implementation effort not yet established; no model calls for this diagnosis; development credit cost unknown.",
+      "next": "Implement original-source binding and separate task execution, then connect existing worker and result lifecycle."
     }
   },
   "activeTaskId": "AU-008",

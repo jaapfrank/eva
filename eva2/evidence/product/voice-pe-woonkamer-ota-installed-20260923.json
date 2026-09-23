@@ -37,5 +37,19 @@
   "physicalConversationProven": false,
   "ownerAccepted": false,
   "modelCalls": 0,
-  "limits": "OTA upload and authenticated device readback verified. No physical speech, interruption, microphone, end-to-end speaker session or recovery flash claim. USB is not a prerequisite for ordinary OTA; USB recovery remains possible physical fallback."
+  "limits": "OTA upload and authenticated device readback verified. No physical speech, interruption, microphone, end-to-end speaker session or recovery flash claim. USB is not a prerequisite for ordinary OTA; USB recovery remains possible physical fallback.",
+  "postInstallControls": {
+    "apiEntitiesAvailable": [
+      "LED Ring",
+      "Mute",
+      "Wake sound",
+      "Restart",
+      "Wake word sensitivity",
+      "Media Player",
+      "Button press"
+    ],
+    "observedMute": true,
+    "muteChangedByAgent": false,
+    "meaning": "Control availability and current mute state only; no physical audio acceptance."
+  }
 }

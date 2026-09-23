@@ -143,8 +143,17 @@ class DelegatedWorkOwnerService:
                 principal_binding_id=str(self.principal_binding_id), task=task,
                 created_at=created, deadline=created + timedelta(minutes=5),
             )
+            title = " ".join((public.title if operation == "research" else task).split())[:120]
+            try:
+                previous = self.store.load(spec.work_id, **self._owner)
+            except DelegatedWorkNotFound:
+                pass
+            else:
+                # Preserve immutable presentation metadata on legacy replay.
+                # Admission still checks the full incoming specification.
+                title = previous.title
             admission = self.store.admit(
-                spec=spec, title="Onderzoek vanuit Eva-chat",
+                spec=spec, title=title,
                 summary="Een afgeschermde onderzoeker werkt aan de gegeven opdracht.",
                 worker_role="Onderzoek", retention_policy_id="retention:delegated-work:v1",
                 retention_until=created + timedelta(days=7), occurred_at=created,

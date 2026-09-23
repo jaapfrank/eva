@@ -1,0 +1,21 @@
+{
+  "installed": true,
+  "checkedAt": "2026-09-23T08:55:32.397396+00:00",
+  "image": "sha256:7922b104cabaaa90c59117b695a7fafebf4390300f7cff57e47987348966415b",
+  "healthy": true,
+  "sourceHashes": {
+    "adapters/api/dashboard_conversation.py": "0f2818cd58ab17f7f02fc82c5d8cee2d4836868b0e8f59bca87297b711fe8fff",
+    "bootstrap/delegated_work_owner_service.py": "d553cbad50418776ba9d9ce440a71a3c8c03e0a995a381fedf60f5a54513ebb7"
+  },
+  "otherServicesUnchanged": true,
+  "tests": {
+    "browserOverlapPassed": 1,
+    "admissionAndLegacyReplayPostgresPassed": 3
+  },
+  "independentReview": true,
+  "ownerAccepted": false,
+  "modelCalls": 0,
+  "rollbackImage": "sha256:12dfc3baf7da682989fd10ad79608ac70d795f0808e490440667aa00ef53194a",
+  "scope": "Owner conversation page permits concurrent typed requests and groups each response with its own question. New private work admissions use distinct task/research titles; old replay/resume retains stored titles.",
+  "limits": "Controlled browser HTTP and packaged database tests; no faster-model claim, physical trial or historical Telegram mismatch resolution."
+}
