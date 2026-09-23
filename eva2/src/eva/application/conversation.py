@@ -938,6 +938,13 @@ class LivingConversation:
                 )
             else:
                 available_names = continuation_names(completed)
+        if contact_model is not None and completed is None and "start_background_research" in available_names:
+            # Public research belongs to the admitted background worker. Offering
+            # the legacy synchronous equivalent lets the model accidentally hold
+            # this conversation turn open until research finishes. Keep replay of
+            # an already completed legacy action and routes without a worker intact.
+            available_names = tuple(name for name in available_names
+                                    if name != "research_current_options")
         self_context = (
             () if self._actions is None else self._actions.active_context(turn)
         )
@@ -1003,7 +1010,7 @@ class LivingConversation:
             contact_receipts = {
                 MEMORY_SEARCH_ACTION, STOP_VOICE_WORK,
                 "start_delegated_work", "start_background_research", "start_digital_work", "list_delegated_work", "get_delegated_work", "get_related_work", "search_delegated_work", "revise_digital_work",
-                "stop_delegated_work", "resume_delegated_work",
+                "stop_delegated_work", "stop_related_work", "resume_delegated_work",
                 "list_own_initiatives", "get_own_initiative_result",
                 "stop_own_initiative", "give_initiative_feedback",
                 "schedule_digital_work", "schedule_work_resume", "list_scheduled_work", "cancel_scheduled_work", "cancel_work_chain",
