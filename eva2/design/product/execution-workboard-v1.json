@@ -1000,8 +1000,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T12:05:57.725264+00:00",
+        "checkedAt": "2026-09-23T12:12:23.767821+00:00",
         "deliveries": [
+          {
+            "title": "Minder modelinvoer; ontvangst nog niet sneller",
+            "date": "23 september · 14:09",
+            "state": "installed",
+            "result": "Werkopdracht correct aangenomen en afgemaakt. Invoer daalde van 8.001 naar 7.751 tokens; ontvangst duurde 11,0 seconden tegenover eerder 10,3.",
+            "remaining": "Snelle natuurlijke ontvangst is niet gehaald. Dit is één vergelijking, geen algemene snelheidsmeting.",
+            "source": "eva2/evidence/product/contact-catalog-installed-20260923.json"
+          },
           {
             "title": "Projectoverzicht met vier duidelijke kolommen",
             "date": "23 september",
@@ -1172,10 +1180,10 @@
           }
         ],
         "now": {
-          "title": "Sneller contact installeren",
-          "state": "Gebouwd en gericht getest · installatie volgt",
-          "detail": "Acht dubbele toolbeschrijvingen verdwijnen uit de eerste modelinvoer wanneer dezelfde tools opvraagbaar zijn. Geheugen en persoonlijkheid blijven behouden.",
-          "doneWhen": "Wijziging beoordeeld, geïnstalleerd en één echte proef gemeten. Alleen daarna wordt de nieuwe snelheid als resultaat vermeld."
+          "title": "Terugmelding van taken correct tonen",
+          "state": "Gerichte correctie in uitvoering",
+          "detail": "Het taakoverzicht zegt ten onrechte dat geen automatische terugmelding bestaat als alleen de Telegramkoppeling ontbreekt. De bestaande privéroute van de website werkt apart.",
+          "doneWhen": "Status benoemt de juiste terugmeldroute zonder verzonnen aflevering; gericht getest, beoordeeld en live gecontroleerd."
         },
         "next": {
           "title": "Doorpraten tijdens achtergrondwerk",
@@ -1192,7 +1200,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T12:05:57.725264+00:00"
+        "reviewedAt": "2026-09-23T12:12:23.767821+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -10961,7 +10969,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Sneller contact installeren: gerichte cataloguswijziging gebouwd en getest, nog niet geïnstalleerd. Daarna echte snelheidsmeting en gedeeld doorpraten afmaken; fysieke Voice PE-proef blijft apart open.",
+      "nextAction": "Route van taakresultaten correct tonen. Catalogusverkleining geïnstalleerd, taakproef geslaagd maar ontvangst niet sneller (11,0s). Snelle ontvangst en gedeeld doorpraten blijven open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11749,7 +11757,7 @@
       "previousTimeoutCause": "unknown"
     },
     "contactCatalog20260923": {
-      "status": "focused_tests_passed_installation_pending",
+      "status": "installed_task_completed_no_speed_improvement",
       "baseCommit": "d7aeae67",
       "duplicateDescriptors": 8,
       "descriptorBytes": 6572,
@@ -11766,7 +11774,8 @@
         ]
       },
       "endCondition": "Smaller first-contact schema catalog only when same authorized discovery path exists; continuations unchanged, targeted tests/review, installed core/worker, live measured request",
-      "effort": "Two small modules plus model option; one changed-cause live trial; credit cost unknown"
+      "effort": "Two small modules plus model option; one changed-cause live trial; credit cost unknown",
+      "evidence": "eva2/evidence/product/contact-catalog-installed-20260923.json"
     }
   },
   "activeTaskId": "AU-008",

@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-09-23T12:12:23.767821+00:00",
+  "status": "installed_task_completed_no_speed_improvement",
+  "sourceCommit": "f999b188",
+  "image": "sha256:c1faac11e9da718a018ea13095992b788677981b9a85c604d1939dadcb257c8b",
+  "baselineImage": "sha256:8d0a388db672a7d5a6bf19b1ca19c995216c25763b47550516df0c5ffc3619cb",
+  "change": "Only defer exact duplicate configured schemas on first contact when all discovery tools authorized; preserve memory/identity/continuations",
+  "checks": {
+    "packagedTestsPassed": 12,
+    "preflight": "core and worker: 8 configured tools accessible",
+    "independentReview": "agent reviewed root helper/runtime; root reviewed model change and tests",
+    "liveHealth": "core and worker healthy"
+  },
+  "trial": {
+    "messageId": "dashboard:c71f9047-6d3d-4560-a32c-15951aa3735f",
+    "workId": "work:eva-chat:ce7548ae-97a3-5417-803b-d410d14669aa",
+    "wallSeconds": 11.043,
+    "modelMilliseconds": 7943,
+    "modelCalls": 1,
+    "inputTokens": 7751,
+    "outputTokens": 175,
+    "taskState": "succeeded",
+    "result": "Correct existing read/write catalog names; no document content read or writes",
+    "workerModelCalls": 3,
+    "workerToolCalls": 2,
+    "workerInputTokens": 18155,
+    "workerOutputTokens": 182
+  },
+  "comparison": {
+    "previousWallSeconds": 10.312,
+    "previousInputTokens": 8001,
+    "inputReduction": 250,
+    "speedImprovementProven": false
+  },
+  "limits": [
+    "Single comparison; memory/history differ between turns",
+    "No subsecond contact achieved",
+    "Credit costs unknown",
+    "Website result return poll claims older undelivered task; current task not acknowledged or physically tested",
+    "Physical Voice PE evidence still open"
+  ],
+  "rollback": "/var/lib/eva2/contact-catalog-install-20260923/baseline.compose.private.json",
+  "privateEvidenceDirectory": "/var/lib/eva2/contact-catalog-install-20260923"
+}

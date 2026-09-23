@@ -25,7 +25,9 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Eerstvolgende handeling:** De gebouwde catalogusverkleining voor sneller contact integreren en installeren; gerichte tests zijn geslaagd, installatie en echte snelheidsmeting staan nog open. Huidig geïnstalleerde taakontvangst gebruikt één modelaanroep maar duurde nog 10,3 seconden. Daarna gedeeld doorpraten tijdens werk afronden; de fysieke Voice PE-wakewordproef blijft apart open.
+**Eerstvolgende handeling:** De taakstatus corrigeren die alleen Telegramterugmelding beschrijft en daardoor de website onterecht als ongekoppeld toont. Daarna snelle ontvangst en gedeeld doorpraten verder afmaken.
+
+**Contactinvoer geïnstalleerd (23 september):** catalogusverkleining door 12 verpakte tests en onafhankelijke controle; kern en werker gezond. Echte opdracht correct afgemaakt. 7.751 invoertokens tegenover 8.001, maar 11,0 seconden ontvangst tegenover 10,3: **geen snelheidsverbetering bewezen**. Geen herhaalde identieke proef. [Bewijs](evidence/product/contact-catalog-installed-20260923.json).
 
 **Projectoverzicht opgeleverd (23 september):** vier gekleurde kolommen, negen zichtbare onderdelen en afzonderlijke historie. Expliciete inhoudelijke controletijd; na één uur waarschuwing. Automatisch ophalen maakt de inhoud niet actueel. Bouw en 9 gerichte tests geslaagd, onafhankelijke review GO, live desktop- en smalle weergave bekeken. [Bewijs](evidence/product/dashboard-owner-board-20260923.json).
 
