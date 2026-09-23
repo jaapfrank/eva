@@ -175,7 +175,7 @@ class DelegatedWorkOwnerService:
             raise ValueError("schedule arguments require a schedule operation")
         if search is not None and operation != "search":
             raise ValueError("search arguments require their own operation")
-        if operation not in {"start", "research", "digital", "list", "search", "get", "result", "stop", "resume",
+        if operation not in {"related", "start", "research", "digital", "list", "search", "get", "result", "stop", "resume",
                              "initiative_list", "initiative_result", "initiative_stop", "initiative_feedback"}:
             raise ValueError("delegated work operation is invalid")
         if not isinstance(request_key, str) or not 1 <= len(request_key) <= 2048:
