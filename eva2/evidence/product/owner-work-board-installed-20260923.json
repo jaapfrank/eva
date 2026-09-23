@@ -1,0 +1,21 @@
+{
+  "installedAt": "2026-09-23T20:25:47.836319+00:00",
+  "sourceCommit": "d722095e",
+  "image": "eva2-owner-work-board:20260923",
+  "features": [
+    "Task state lanes with counts",
+    "Search visible tasks",
+    "Open result and download readable text",
+    "Stop active task directly",
+    "Resume existing failed/stopped attempt from detail",
+    "New task link to existing conversation"
+  ],
+  "checks": [
+    "Production build and asset packaging completed",
+    "Core starts; live dashboard serves new asset entry"
+  ],
+  "tests": "Interaction tests deferred by owner instruction",
+  "modelCalls": 0,
+  "ownerAccepted": false,
+  "rollbackDirectory": "/var/lib/eva2/owner-work-board-20260923"
+}

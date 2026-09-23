@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Bedienbaar takenbord in Eva’s eigen dashboard",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Vier toestandkolommen, zoeken, gericht stoppen en openen, hervatten via de detailkaart en resultaten downloaden. Nieuwe opdracht via de bestaande gesprekspagina.",
+            "remaining": "Gebruiksproef volgt later; het overzicht toont maximaal twintig taken met actief werk eerst.",
+            "source": "eva2/evidence/product/owner-work-board-installed-20260923.json"
+          },
+          {
             "title": "Leeropdrachten vanuit een gewoon gesprek",
             "date": "23 september",
             "state": "installed",
@@ -1381,10 +1389,10 @@
           }
         ],
         "now": {
-          "title": "Leeropdrachten via het gewone gesprek",
-          "state": "Geïnstalleerd · praktijkbeoordeling volgt later",
-          "detail": "Gezamenlijke gespreksinstructies sturen leeropdrachten naar de digitale werker. De werker krijgt de samenhangende aanpak voor documentatie, toepassing, bewaren en hergebruik. Kern gestart; geen modelproef uitgevoerd.",
-          "doneWhen": "Instructies in gezamenlijke kern en werker geïnstalleerd; diensten gestart. Praktijkbeoordeling volgt later."
+          "title": "Bedienbaar takenbord in Eva’s eigen dashboard",
+          "state": "Geïnstalleerd · interactieproef volgt later",
+          "detail": "Takenbord staat bovenaan Eva’s eigen dashboard: toestandkolommen, zoeken, gericht stoppen/openen/hervatten en downloaden. Nieuwe opdracht opent het bestaande gesprek. Geen model- of interactieproef uitgevoerd.",
+          "doneWhen": "Takenbord gebouwd en geïnstalleerd; uitgebreide gebruiksproef volgt later."
         },
         "next": {
           "title": "Volgende open gebruikersfunctie afmaken",
@@ -1392,16 +1400,18 @@
           "detail": "Door met de bestaande functielijst; uitgebreide tests en gebruikersproeven volgen later."
         },
         "ownerAction": {
-          "title": "Voice PE: beschikbaarheid doorgeven",
+          "title": "Takenbord gebruiken",
+          "url": "http://localhost:44711/internal/v1/dashboard",
+          "linkLabel": "Open Eva’s takenbord",
           "steps": [
-            "Geef in deze taak aan wanneer je bij de woonkamer-Voice PE bent.",
-            "Wacht op de melding dat de tijdelijke kandidaat en foutregistratie klaarstaan.",
-            "Zeg één keer Hey Eva, hallo en meld of je antwoord hoort of rood ziet."
+            "Open Eva’s takenbord via de knop hieronder.",
+            "Kies een opdracht in Bezig, Aandacht nodig, Resultaten of Gestopt.",
+            "Open het resultaat, download het, stop lopend werk of hervat een eerdere poging via de detailkaart."
           ],
-          "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
+          "expected": "Dezelfde opgeslagen taken als in Eva’s gesprek, met gerichte bediening per opdracht. Dit is gebruiksinformatie; geen nieuwe verplichte proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T20:22:01.516901+00:00"
+        "reviewedAt": "2026-09-23T20:25:47.836319+00:00"
       }
     },
     "pendingTechnicalReview": {
