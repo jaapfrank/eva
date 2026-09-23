@@ -92,7 +92,7 @@ class DelegatedWorkOwnerService:
                     "guidance": "Deze taak is niet gevonden binnen jouw eigen werkoverzicht."}
         except DelegatedWorkNotResumable as error:
             return {"contract": "EvaDelegatedWorkOwnerResult/v1", "operation": operation,
-                    "status": "not_resumable", "work": self._view(error.work),
+                    "status": "not_resumable", "work": self._view(error.work, turn=turn),
                     "guidance": "De taak is nog actief of al geslaagd. Er is geen nieuwe poging ingepland."}
 
     def _execute(self, operation: str, turn: ConversationTurn, *, task: str | None,
@@ -117,7 +117,7 @@ class DelegatedWorkOwnerService:
             if task is not None or work_id is not None:
                 raise ValueError("list does not accept task or work id")
             rows = self.store.list_owned(**self._owner, limit=21)
-            return {**response, "jobs": [self._view(row, include_result=False) for row in rows[:20]],
+            return {**response, "jobs": [self._view(row, include_result=False, turn=turn) for row in rows[:20]],
                     "truncated": len(rows) > 20}
         if operation in {"start", "research", "digital"}:
             if work_id is not None or not isinstance(task, str) or not task.strip():
@@ -176,15 +176,15 @@ class DelegatedWorkOwnerService:
                 retention_until=created + timedelta(days=7), occurred_at=created,
                 **self._delivery_arguments(turn),
             )
-            return {**response, "created": admission.disposition == "inserted", "work": self._view(admission.work)}
+            return {**response, "created": admission.disposition == "inserted", "work": self._view(admission.work, turn=turn)}
         if task is not None or not isinstance(work_id, str) or not work_id:
             raise ValueError("delegated work operation requires its work id")
         if operation == "stop":
             work = self.store.request_stop(work_id, **self._owner, now=self.now())
-            return {**response, "work": self._view(work)}
+            return {**response, "work": self._view(work, turn=turn)}
         previous = self.store.load(work_id, **self._owner)
         if operation in {"get", "result"}:
-            return {**response, "work": self._view(previous)}
+            return {**response, "work": self._view(previous, turn=turn)}
         created = parse_utc_timestamp(turn.occurred_at)
         next_id = "work:eva-resume:" + str(uuid5(
             self.store.scope.installation_id,
@@ -218,7 +218,7 @@ class DelegatedWorkOwnerService:
             **self._delivery_arguments(turn),
         )
         return {**response, "created": admission.disposition == "inserted",
-                "previous": self._view(previous), "work": self._view(admission.work),
+                "previous": self._view(previous, turn=turn), "work": self._view(admission.work, turn=turn),
                 "prior_outcome_unknown": (previous.state in {"call_started", "ambiguous"}
                     or (previous.state == "stopped" and previous.call_id is not None
                         and (previous.usage is None or previous.usage.measurement != "measured"
@@ -259,7 +259,7 @@ class DelegatedWorkOwnerService:
 
     def _delivery_view(self, work_id: str) -> dict:
         descriptions = {
-            "unbound": "Geen automatische terugmelding gekoppeld.",
+            "unbound": "Geen automatische Telegram-terugmelding gekoppeld.",
             "awaiting_result": "Automatische terugmelding wacht op een afgerond resultaat.",
             "ready": "Automatische terugmelding staat klaar; bezorging is nog niet bevestigd.",
             "delivery_claimed": "Automatische terugmelding is gestart; bezorging is nog niet bevestigd.",
@@ -280,7 +280,27 @@ class DelegatedWorkOwnerService:
                 state = "blocked"
         return {"state": state, "description": descriptions[state]}
 
-    def _view(self, work: StoredDelegatedWork, *, include_result=True) -> dict:
+    def _private_delivery_view(self, work, turn):
+        delivery = self._delivery_view(work.spec.work_id)
+        if turn is None or delivery["state"] != "unbound":
+            return delivery
+        from eva.adapters.postgres.private_work_return import private_episode
+        if (self.available_for(turn)
+                and turn.conversation_id == "dashboard:" + str(self.principal_binding_id)
+                and work.spec.audience == "private"
+                and work.spec.owner_principal_id == str(self.owner_principal_id)
+                and work.spec.principal_binding_id == str(self.principal_binding_id)
+                and work.spec.episode_id == private_episode(turn)
+                and work.retention_until > self.now()
+                and work.stop_requested_at is None
+                and work.state in {"admitted", "call_started", "succeeded", "verified"}):
+            return {"state": "private_route_available", "description":
+                    "Deze opdracht hoort bij de terugmeldroute van deze website. "
+                    "Een afgerond resultaat kan hier worden opgehaald zolang de pagina open is. "
+                    "Dit bevestigt geen aflevering."}
+        return delivery
+
+    def _view(self, work: StoredDelegatedWork, *, include_result=True, turn=None) -> dict:
         result = None
         if work.result is not None and work.state in {"succeeded", "verified"}:
             result = {"output": work.result.output, "output_sha256": work.result.output_sha256,
@@ -294,7 +314,7 @@ class DelegatedWorkOwnerService:
                 "usage": None if work.usage is None else work.usage.to_payload(),
                 "error_code": work.error_code, "error_fingerprint": work.error_fingerprint,
                 "result_available": result is not None,
-                "delivery": self._delivery_view(work.spec.work_id),
+                "delivery": self._private_delivery_view(work, turn),
                 **({"result": result} if include_result else {}),
                 "scope": ("private_digital_worker" if isinstance(work.spec, DelegatedDigitalWorkSpec) else
                           "private_public_research_worker" if isinstance(work.spec, DelegatedResearchSpec)
