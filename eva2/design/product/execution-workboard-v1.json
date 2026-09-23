@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Een gekoppelde reeks in één keer stoppen",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Gesprek en takenbord kunnen een afspraak met alle gekoppelde vervolgafspraken stoppen. Toekomstig werk wordt geannuleerd; gestarte taken gebruiken bestaande stopbediening. Resultaten blijven bewaard.",
+            "remaining": "Geïnstalleerd; echte gelijktijdige uitvoering en stopproef later. Al begonnen effecten kunnen nog afronden.",
+            "source": "eva2/evidence/product/work-chain-stop-installed-20260923.json"
+          },
+          {
             "title": "Vervolgwerk gebruikt het eerdere resultaat",
             "date": "23 september",
             "state": "installed",
@@ -1469,15 +1477,15 @@
           }
         ],
         "now": {
-          "title": "Afhankelijke vervolgstappen",
+          "title": "Een volledige geplande reeks stoppen",
           "state": "Geïnstalleerd · gebruiksproef later",
-          "detail": "De planning verbindt bestaande opdrachten en opgeslagen resultaten. Geen modelproef of echte takenreeks gestart.",
-          "doneWhen": "Koppeling geïnstalleerd; daadwerkelijke ketenuitvoering en gebruikersbeoordeling blijven open."
+          "detail": "Reeksstop is beschikbaar in privégesprek en als knop Stop deze stap en vervolg. Niet-afgehandelde stopverzoeken blijven bewaard.",
+          "doneWhen": "Functie geïnstalleerd; echte reeksstopproef en gebruikersbeoordeling blijven open."
         },
         "next": {
-          "title": "Een volledige geplande reeks stoppen",
+          "title": "Eigen verbeteringen in een aparte werkmap",
           "state": "Nog niet gestart",
-          "detail": "De bestaande stop- en annuleerbediening verbinden voor een hele gekoppelde reeks, inclusief een eventuele al gestarte vervolgstap."
+          "detail": "De bestaande route voor repositoryverbetering gebruiken voor de nog open zelfverbeteringsfunctie; geen automatische vervanging van de draaiende Eva."
         },
         "ownerAction": {
           "title": "Takenbord gebruiken",
@@ -1491,7 +1499,7 @@
           "expected": "Dezelfde opgeslagen taken als in Eva’s gesprek, met gerichte bediening per opdracht. Dit is gebruiksinformatie; geen nieuwe verplichte proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T21:36:15.833720+00:00"
+        "reviewedAt": "2026-09-23T21:42:19.166351+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11150,17 +11158,17 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 1,
+      "currentStep": 5,
       "steps": [
         {
           "number": 1,
           "title": "Eén gesprek en stem",
-          "state": "actief",
+          "state": "open",
           "existingCards": [
             "VB-001"
           ],
           "doneWhen": "Begroeten, snelle ontvangst, doorpraten tijdens werk, onderbreken en stoppen via website, Telegram, HA en fysiek Voice PE; gedeelde kern, afzonderlijk bewijs per ingang.",
-          "preserve": "Bestaande spraak en947ms ontvangst behouden; kanaalgelijkheid en begroetingsvertraging nog open.",
+          "preserve": "Bestaande spraak en snelle ontvangst behouden. Snelle inhoudelijke begroeting, kanaalgelijkheid en fysieke continue-spraakproef blijven open; uitgebreide proeven volgen later.",
           "planningEffortHours": "4–12"
         },
         {
@@ -11206,14 +11214,14 @@
         {
           "number": 5,
           "title": "Leren en langdurig werk",
-          "state": "open",
+          "state": "actief",
           "existingCards": [
             "AU-004",
             "AU-006",
             "AU-003"
           ],
           "doneWhen": "Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg.",
-          "preserve": "Bestaand procedure- en documentbewijs hergebruiken; algemene ongeziene uitkomst niet uit beperkte proef afleiden.",
+          "preserve": "Werkwijzeopslag en hergebruik, werkplannen, geplande start/hervatting, afhankelijke vervolgstappen en reeksstop zijn geïnstalleerd. Echte algemene leer-/meerdaagse proeven en gemeten zelfverbetering blijven open.",
           "planningEffortHours": "8–24"
         },
         {
@@ -11260,10 +11268,10 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "De huishoudelijke sessie- en resultaatkoppeling is al geïnstalleerd. Diagnose van de tijdelijke continue-spraakkandidaat vereist de echte wakewordovergang; gewone werkende firmware blijft staan.",
+      "nextAction": "De bestaande route voor repositoryverbetering gebruiken voor de nog open zelfverbeteringsfunctie; geen automatische vervanging van de draaiende Eva.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
-      "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
+      "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
       "stopRules": [
         "Geen ongewijzigde proefherhaling; eerst concrete gewijzigde oorzaak of ontbrekend bewijs.",
         "Nieuwe scope wordt vervolgwerk tenzij eigenaar of aantoonbare afhankelijkheid anders bepaalt.",
