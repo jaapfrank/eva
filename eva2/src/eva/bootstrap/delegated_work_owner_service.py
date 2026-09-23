@@ -393,10 +393,8 @@ class DelegatedWorkOwnerService:
         # As with the normal list operation, the store revalidates the current
         # owner binding and restricts results to private work in this scope.
         rows = self.store.list_owned(**self._owner, limit=21, active_first=True)
-        return {"jobs": [{"work_id": work.spec.work_id, "title": work.title,
-                          "state": work.state,
-                          "stop_requested": work.stop_requested_at is not None}
-                         for work in rows[:20]], "truncated": len(rows) > 20}
+        from eva.application.work_context import work_context_metadata
+        return work_context_metadata(rows, self.now())
 
     def private_return(self, turn, operation, **kwargs):
         from eva.adapters.postgres.private_work_return import PrivateWorkReturnStore

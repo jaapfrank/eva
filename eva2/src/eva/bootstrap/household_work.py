@@ -195,6 +195,15 @@ class HouseholdWorkService:
             usage=None if work.usage is None else work.usage.to_payload(),
         )
 
+    def active_work_metadata(self, turn):
+        """Use the same task context projection within this exact household session."""
+        self.validate_authority(turn)
+        from eva.application.work_context import work_context_metadata
+        now = self.server.authority.clock()
+        rows = self.store.list_household(**self._owner,
+            household_origin=self.origin(turn), active_first=True, now=now, limit=21)
+        return work_context_metadata(rows, now)
+
     def execute(
         self, operation, turn, *, request_key, research=None, work_id=None, task=None, prior_work_id=None
     ):
