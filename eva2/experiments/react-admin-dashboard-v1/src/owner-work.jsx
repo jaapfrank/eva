@@ -53,9 +53,10 @@ async function request(operation, workId, signal, search) {
   if (!response.ok) throw new Error('Werkoverzicht niet beschikbaar. Vernieuw om de opgeslagen toestand op te halen.');
   const data = await response.json();
   if (data.contract !== 'EvaDelegatedWorkOwnerResult/v1' || data.operation !== operation
+    || (operation === 'stop_related' && !['stop_recorded', 'partial_stop'].includes(data.status))
     || (operation === 'search' && (typeof data.query !== 'string'
       || (data.truncated && typeof data.next_before_work_id !== 'string')))
-    || (['list', 'search', 'related'].includes(operation) ? !Array.isArray(data.jobs) || data.jobs.length > (operation === 'related' ? 64 : 20)
+    || (['list', 'search', 'related', 'stop_related'].includes(operation) ? !Array.isArray(data.jobs) || data.jobs.length > (['related', 'stop_related'].includes(operation) ? 64 : 20)
       || !data.jobs.every(work => validWork(work)) || typeof data.truncated !== 'boolean'
       : ['schedule_cancel', 'schedule_cancel_chain', 'revise_digital'].includes(operation) ? typeof data.status !== 'string' : !validWork(data.work, true) || (operation !== 'resume' && data.work.work_id !== workId))) {
     throw new Error('Het werkantwoord kon niet worden gelezen. Vernieuw het overzicht.');
@@ -128,6 +129,14 @@ export default function OwnerWork() {
               currentDetail = result.work;
               setDetail(currentDetail);
             }
+          } else if (operation === 'stop_related') {
+            relatedRoot = workId;
+            setRelated(data);
+            setNotice(data.status === 'partial_stop'
+              ? 'Stopverzoeken verwerkt, maar niet de hele reeks is bevestigd. Bekijk de overgebleven taken en planning hieronder.'
+              : 'Stopverzoeken voor het gekoppelde werk zijn vastgelegd. Begonnen acties kunnen nog afronden; resultaten blijven bewaard.');
+            currentDetail = null;
+            pending = { operation: 'list', version: revision, foreground: true };
           } else if (operation === 'related') {
             relatedRoot = workId;
             setRelated(data);
@@ -284,6 +293,10 @@ export default function OwnerWork() {
           {item.can_cancel && <button disabled={busy} onClick={() => act('schedule_cancel_chain', item.schedule_id)}>Stop deze stap en vervolg</button>}
         </article>)}
       </section>}
+      <p>Deze bediening stopt de oorspronkelijke opdracht met haar gekoppelde hervattingen en planning. Resultaten blijven bewaard; begonnen acties kunnen nog afronden.</p>
+      <button disabled={busy} onClick={() => act('stop_related', related.selected_work_id)}>
+        Stop deze hele gekoppelde reeks
+      </button>
       <ol style={{ maxHeight: 380, overflowY: 'auto' }}>
         {related.jobs.map(job => <li key={job.work_id}>
           <strong>{job.title || job.task_preview}</strong> · {labels[job.state]}

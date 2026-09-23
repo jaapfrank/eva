@@ -69,7 +69,7 @@ def install_dashboard_work(app, *, access, runtime):
     def operation(request: Request, operation: str, payload: dict):
         access.require(request)
         key = "schedule_id" if operation in {"schedule_cancel", "schedule_cancel_chain"} else "work_id"
-        if (request.query_params or operation not in {"related", "get", "result", "stop", "resume", "schedule_cancel", "schedule_cancel_chain"}
+        if (request.query_params or operation not in {"stop_related", "related", "get", "result", "stop", "resume", "schedule_cancel", "schedule_cancel_chain"}
                 or set(payload) != {key}
                 or not isinstance(payload[key], str)
                 or not 1 <= len(payload[key]) <= 256):
