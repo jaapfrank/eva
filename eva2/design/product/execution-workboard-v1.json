@@ -1000,8 +1000,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23",
+        "checkedAt": "2026-09-23T11:22:50.121089+00:00",
         "deliveries": [
+          {
+            "title": "Achtergrondwerker aangesloten; gebruiksproef nog niet geslaagd",
+            "date": "23 september · 13:17",
+            "state": "installed",
+            "result": "Kern en werker draaien samen. Tijdens de echte opdracht kwam een tussenvraag eerder terug dan het taakresultaat.",
+            "remaining": "Opdracht niet afgemaakt: connector niet gevonden. Tussenantwoord 6,1 seconden; aannemen opdracht 24,8 seconden. Dit is nog niet de gewenste snelle Eva.",
+            "source": "eva2/evidence/product/digital-background-live-20260923.json"
+          },
           {
             "title": "Projectdashboard weer bereikbaar",
             "date": "23 september",
@@ -1140,15 +1148,15 @@
           }
         ],
         "now": {
-          "title": "Fout in nieuwe Voice PE-sessie oplossen",
-          "detail": "Gewone spraakroute werkt weer en is door jou bevestigd. Serverproef en apparaatverbinding met kandidaat slagen zonder audio; fout na wakeword nog niet gereproduceerd. Extra veilige foutregistratie geïnstalleerd. Werkende firmware blijft actief tot gerichte proef.",
-          "state": "Diagnose actief · fout nog niet opgelost",
-          "doneWhen": "Een toegestane digitale taak met meerdere bestaande toolstappen wordt afgemaakt en teruggebracht terwijl het gesprek doorgaat; stoppen en afzonderlijke opdrachten blijven herkenbaar."
+          "title": "Achtergrondtaken: connectoren vinden en opdracht afmaken",
+          "detail": "Kern en achtergrondwerker zijn geïnstalleerd. De echte proef liep vast: Eva vond de gekoppelde werkmapdienst niet. Dit moet worden opgelost voordat de functie klaar is. Een tussenvraag kwam wel eerder terug, maar pas na 6,1 seconden.",
+          "state": "Proef mislukt · oplossing nodig",
+          "doneWhen": "Een digitale opdracht wordt aangenomen, via bestaande connectoren afgemaakt en met opgeslagen resultaat teruggebracht. De gewone gespreksroute blijft beschikbaar."
         },
         "next": {
-          "title": "Dezelfde taakuitvoering via alle ingangen afronden",
-          "detail": "Nieuwe algemene achtergrondroute aansluiten op bestaande taakbediening en terugmelding. Woonkamer-Voice PE wacht alleen op fysieke gespreksbevestiging; Overkapping volgt daarna.",
-          "state": "Functioneel vervolg"
+          "title": "Nieuwe Voice PE-route herstellen",
+          "detail": "De gewone spraakroute werkt. Voor de fout in de nieuwe firmware ontbreekt nog de opname van één echte wakeword-overgang; de vraag naar jouw beschikbaarheid staat open.",
+          "state": "Fysieke proef wacht op beschikbaarheid"
         },
         "ownerAction": {
           "title": "Eén wakewordproef zodra de foutregistratie klaarstaat",
@@ -10930,7 +10938,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Fout bij het wakeword in de nieuwe Voice PE-route oplossen. Gewone spraak werkt weer en is door Jaap bevestigd. Eerst de echte wakeword-overgang vastleggen en de oorzaak corrigeren; continue spraak is nog niet opgeleverd. Algemene digitale achtergrondtaken blijven gebouwd maar nog niet aangesloten of geïnstalleerd.",
+      "nextAction": "Kern en achtergrondwerker zijn geïnstalleerd. De echte proef liep vast: Eva vond de gekoppelde werkmapdienst niet. Dit moet worden opgelost voordat de functie klaar is. Een tussenvraag kwam wel eerder terug, maar pas na 6,1 seconden.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11631,7 +11639,7 @@
       }
     },
     "generalDigitalBackgroundWork20260923": {
-      "status": "production_composition_built_not_installed",
+      "status": "installed_live_trial_blocked_connector_discovery",
       "reuse": [
         "DelegatedWorkWorker and runner.bind_store",
         "LivingConversation.respond and existing model",

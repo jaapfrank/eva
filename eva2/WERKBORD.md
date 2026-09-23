@@ -25,7 +25,7 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Eerstvolgende handeling:** Fout bij het wakeword in de nieuwe Voice PE-route oplossen. Gewone spraak werkt weer en is door Jaap bevestigd. Eerst de echte wakeword-overgang vastleggen en de oorzaak corrigeren; continue spraak is nog niet opgeleverd. Algemene digitale achtergrondtaken blijven gebouwd maar nog niet aangesloten of geïnstalleerd.
+**Eerstvolgende handeling:** Connectorvindbaarheid voor digitale achtergrondtaken herstellen. Kern en werker zijn geïnstalleerd; de echte proef maakte de opdracht niet af omdat de werkmapconnector niet gevonden werd. Een tussenvraag kwam eerder terug, maar duurde 6,1 seconden; aannemen duurde 24,8 seconden. Dit is geen afgeronde functie. De nieuwe Voice PE-fout blijft open; gewone spraak werkt. De fysieke wakewordproef wacht op Jaaps beschikbaarheid.
 
 Afgeronde deelresultaten en menselijke acceptaties blijven hieronder behouden. Een open gebruikersoordeel is geen algemene bouwstop.
 

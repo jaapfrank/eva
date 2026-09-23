@@ -160,7 +160,7 @@ def test_health_check_validates_dependencies_lease_database_and_schema(
 
         def scalar(self, statement):  # type: ignore[no-untyped-def]
             observed.append(str(statement))
-            return "4e_0009_restore_hold"
+            return service_module._SCHEMA_HEAD
 
     class Engine:
         def connect(self) -> Connection:

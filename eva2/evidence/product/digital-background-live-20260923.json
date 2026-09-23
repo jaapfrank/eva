@@ -1,0 +1,27 @@
+{
+  "date": "2026-09-23T11:22:50.121089+00:00",
+  "source_commit": "4c581ece",
+  "installation": "core and worker installed; healthy",
+  "image": "sha256:b5cad5b458f5242504e9a14602b794db339bcfeb885dbb459a993adb2bed75b3",
+  "trial": {
+    "outcome": "blocked: workspace connector not discovered",
+    "task_completed": false,
+    "smalltalk_seconds": 6.134,
+    "admission_seconds": 24.832,
+    "worker_usage": {
+      "model_responses": 2,
+      "tool_calls": 1,
+      "input_tokens": 7535,
+      "output_tokens": 168,
+      "cost": null
+    }
+  },
+  "acceptance": "open",
+  "private_evidence_directory": "/var/lib/eva2/digital-background-install-20260923",
+  "rollback": "baseline.compose.private.json in the private evidence directory; unchanged data volumes and live schema 7",
+  "nonclaims": [
+    "No fast-contact completion",
+    "No successful digital task completion",
+    "No physical Voice PE acceptance"
+  ]
+}

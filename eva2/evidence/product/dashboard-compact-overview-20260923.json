@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-09-23T11:23:26.004250+00:00",
+  "route": "http://localhost:44712/",
+  "changes": [
+    "Current and next work share the same source on overview and work tab",
+    "Latest installed and uninstalled results separately labelled",
+    "History and detailed evidence collapsed",
+    "Direct links to owner task board and conversation",
+    "Source update time separate from read time; refresh failures visible"
+  ],
+  "verification": {
+    "build": "passed; project assets served from project-dist",
+    "live_browser": "Actual page and screenshot verified; latest blocked digital trial visible",
+    "independent_review": "/root/dashboard_final_review: no blocking findings"
+  },
+  "limits": [
+    "Refreshing every five seconds reads stored status; it does not infer engineering progress",
+    "No Eva product acceptance changed"
+  ],
+  "rollback": "Restore previous dashboard source from 4c581ece and rebuild in project mode; data unaffected"
+}

@@ -8,6 +8,8 @@ import os
 import pytest
 import sqlalchemy as sa
 from sqlalchemy.engine import make_url
+from alembic.config import Config
+from alembic.script import ScriptDirectory
 from eva.operations.install_schema import install_schema
 from pathlib import Path
 from types import SimpleNamespace
@@ -46,7 +48,9 @@ def delegated_engine():
             assert not connection.scalar(sa.text(
                 "SELECT to_regclass('public.eva_alembic_version') IS NOT NULL"))
         receipt = install_schema(dsn, alembic_ini=Path(__file__).resolve().parents[2] / "alembic.ini")
-        assert receipt.final_revision == "4e_0009_restore_hold"
+        expected_head = ScriptDirectory.from_config(Config(str(
+            Path(__file__).resolve().parents[2] / "alembic.ini"))).get_current_head()
+        assert receipt.final_revision == expected_head
         yield engine
     finally:
         engine.dispose()
