@@ -1011,14 +1011,6 @@
             "source": "eva2/evidence/product/contact-acceptance-candidate-20260923.json"
           },
           {
-            "title": "Ontvangst met één modelaanroep: echte proef mislukt",
-            "date": "23 september · 13:45",
-            "state": "tested",
-            "result": "Gerichte tests en onafhankelijke bronreview geslaagd. De echte aanvraag kreeg geen modelantwoord binnen circa 61 seconden.",
-            "remaining": "Niet als werkende verbetering opgeleverd; terug naar vorige installatie. Oorzaak van de mislukte modelaanroep moet eerst vaststaan.",
-            "source": "eva2/evidence/product/contact-acceptance-candidate-20260923.json"
-          },
-          {
             "title": "Achtergrondwerker vindt bestaande werkmaptools",
             "date": "23 september · 13:33",
             "state": "installed",
