@@ -1,0 +1,34 @@
+{
+  "checkedAt": "2026-09-23T12:59:27.588989+00:00",
+  "sourceCommit": "a647ccbc",
+  "scope": "Actual local website HTTP conversation route; two requests one second apart, same owner conversation",
+  "workMessageId": "dashboard:cd175765-8dac-4b69-999b-7f0852f55948",
+  "interjectionMessageId": "dashboard:2982e425-a079-4e61-aaa8-f90b9d8eee0b",
+  "workId": "work:eva-chat:77127544-9968-5145-b97e-71f9eaf0b3e0",
+  "foreground": {
+    "workAcceptanceSeconds": 11.328,
+    "interjectionSeconds": 5.668,
+    "interjectionFinishedFirst": true,
+    "interjectionText": "Vier.",
+    "workText": "Ik zet het proefplan op de achtergrond voor je klaar; er wordt niets georganiseerd of verstuurd."
+  },
+  "background": {
+    "observedRunning": true,
+    "finalState": "succeeded",
+    "resultReadThroughOwnerEndpoint": true,
+    "wordLimit": 300,
+    "outputTokens": 360,
+    "inputTokens": 326,
+    "modelResponses": 1,
+    "toolCalls": 0,
+    "automaticallyReturnedToBrowser": false
+  },
+  "review": "Source inspected: page keeps each pending request and its userNode; result inserted after original node. Existing overlap test covers inverse arrival order. No browser automation or physical audio trial performed.",
+  "limits": [
+    "Shows overlapping foreground requests and separately completed worker; second turn started before worker admission, so not proof of a new turn started during an already-running worker.",
+    "Five-second interjection and eleven-second acceptance still too slow.",
+    "No physical Voice PE or Telegram acceptance.",
+    "Foreground tokens and account credit cost not measured here."
+  ],
+  "newFinding": "Owner work panel formats known summary/findings JSON, but website automatic-return client inserts raw output. Next concrete fix is readable returned worker text using existing format rules."
+}
