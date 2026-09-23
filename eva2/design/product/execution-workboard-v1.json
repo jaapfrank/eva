@@ -1000,8 +1000,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T13:36:52.657427+00:00",
+        "checkedAt": "2026-09-23T13:46:11.311077+00:00",
         "deliveries": [
+          {
+            "title": "Digitale opdracht echt opgeslagen en gecontroleerd",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Eva vergeleek twee fictieve buurtplannen, schreef een notitie en las die terug. Onafhankelijke bestandscontrole: €240 versus €220, plan B €20 goedkoper. Ontbrekende gatewayverbinding van werker hersteld.",
+            "remaining": "Eén begrensde bestandsopdracht; algemene digitale vaardigheid blijft open. Ontvangst duurde 28,8 s. Eerste poging mislukte en is bewaard.",
+            "source": "eva2/evidence/product/digital-plan-live-20260923.json"
+          },
           {
             "title": "Lopende taken blijven vindbaar",
             "date": "23 september",
@@ -1276,10 +1284,10 @@
           }
         ],
         "now": {
-          "title": "Taakselectie technisch afgerond",
-          "state": "Geïnstalleerd · gebruikerservaring apart",
-          "detail": "Tien verpakte controles, onafhankelijke review en live installatiecontrole geslaagd. Geen nieuwe Telegramberichten verstuurd; bestaande pollingcorrectie behouden.",
-          "doneWhen": "Technische oplevering afgerond. Natuurlijke selectie en stoppen via echte kanalen blijven onderdeel van de open kanaalproeven."
+          "title": "Bestandstaak technisch opgeleverd",
+          "state": "Geïnstalleerd en live uitgevoerd",
+          "detail": "Werkernetwerk hersteld; dezelfde taak hervat en echte notitie onafhankelijk teruggelezen. De taak heeft niets geboekt, gekocht of verstuurd.",
+          "doneWhen": "Deze bestandsopdracht afgerond; snelheid en brede taakvaardigheid blijven open."
         },
         "next": {
           "title": "Fysieke wakewordovergang vastleggen",
@@ -1296,7 +1304,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T13:36:52.657427+00:00"
+        "reviewedAt": "2026-09-23T13:46:11.311077+00:00"
       }
     },
     "pendingTechnicalReview": {

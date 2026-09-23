@@ -1,0 +1,61 @@
+{
+  "checkedAt": "2026-09-23T13:46:11.311077+00:00",
+  "configurationCommit": "45062189",
+  "installed": true,
+  "cause": "Digital worker lacked existing MCP connector network; local catalog discovery succeeded but gateway DNS failed. Error fingerprint matches RuntimeError MCP gateway request failed.",
+  "change": "Worker joins the same existing mcp-gateway network as core. No new network, port, credential or grant.",
+  "review": "Independent exact compose delta review GO; compose configuration validates",
+  "liveChecks": [
+    "Worker healthy",
+    "Gateway TCP reachable from worker",
+    "Active compose pointer includes network correction",
+    "Resumed exact original task succeeded",
+    "Independent direct read of actual workspace file confirms both totals, choice and uncertainty"
+  ],
+  "trial": {
+    "firstWorkId": "work:eva-chat:4b2a5704-6c32-536f-8e05-146cb0098f3e",
+    "firstState": "ambiguous",
+    "firstUsage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 2,
+      "tool_calls": 1,
+      "input_tokens": 8790,
+      "output_tokens": 292,
+      "total_tokens": 9082,
+      "cost_usd_micros": null
+    },
+    "resumedWorkId": "work:eva-resume:ad48d434-6c4d-5e26-8e5f-68073d7d163c",
+    "resumedState": "succeeded",
+    "resumedUsage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 3,
+      "tool_calls": 2,
+      "input_tokens": 19574,
+      "output_tokens": 498,
+      "total_tokens": 20072,
+      "cost_usd_micros": null
+    },
+    "admissionSeconds": 28.752,
+    "sourceFile": "/proof-state/eva2-buurtplan-proef-20260923.md",
+    "fileSha256": "30db7e35b3e518de868332007e2a77f6b6ed92603da9edf9cf195fca382a1a16",
+    "artifact": "eva2/evidence/product/eva2-buurtplan-proef-20260923.md",
+    "expectedTotals": {
+      "A": 240,
+      "B": 220
+    },
+    "independentFileRead": true
+  },
+  "limits": [
+    "One bounded file task, not general digital capability",
+    "No faster-contact claim: initial admission 28.752 seconds",
+    "Stored result verified flag remains false; independent artifact check recorded here",
+    "Usage partial where reported; unknown account credit cost not estimated",
+    "No physical Voice PE or Telegram acceptance"
+  ],
+  "rollbackStage": "/var/lib/eva2/digital-worker-network-20260923",
+  "ownerAccepted": false
+}
