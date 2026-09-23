@@ -1,0 +1,39 @@
+{
+  "contract": "EvaFeatureInstallation/v1",
+  "feature": "native_ha_research_return",
+  "source_commit": "7109e436",
+  "image": "eva2-native-ha-return:20260924",
+  "installed": true,
+  "behavior": [
+    "Saved public research offered through existing Home Assistant announce action to the original native-session satellite",
+    "Only newest native session per device within its existing lifetime; no private owner context",
+    "HA idle state checked before claim and again before dispatch",
+    "Existing durable household claim prevents automatic retransmission after uncertain delivery",
+    "Long answers announce the first part, bounded to approximately 4000 characters, with an explicit truncation notice; full stored result remains",
+    "HA service success recorded as offered, not audible completion"
+  ],
+  "limits": [
+    "Physical speech, interruption and simultaneous new wakeword trial deferred",
+    "A new listen event can occur between the last HA idle check and service processing; no atomic audio-priority guarantee",
+    "If a claimed offer becomes interrupted or uncertain it is not retried automatically; result remains available to ask for",
+    "Expired or superseded sessions do not announce results",
+    "Delivery runs in the existing idle loop; timing not measured",
+    "Independent review and broad tests deferred"
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "official_protocol_source": "https://www.home-assistant.io/actions/assist_satellite.announce/",
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/native-ha-return-20260924/baseline.compose.private.json",
+  "recorded_at": "2026-09-23T22:26:26.823791+00:00",
+  "checks": [
+    "Changed Python syntax",
+    "Packaged imports without network",
+    "Only intended installed runtime insertion; unrelated installed differences retained",
+    "Read-only database: zero active tasks before restart",
+    "Read-only HA service registry advertises assist_satellite.announce",
+    "Core and delegated worker healthy",
+    "Owner work endpoint HTTP 200; fifteen tasks visible",
+    "Active compose pointer updated"
+  ]
+}

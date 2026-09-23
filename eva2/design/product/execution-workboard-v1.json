@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T22:21:16.139811+00:00",
+        "checkedAt": "2026-09-23T22:26:26.823791+00:00",
         "deliveries": [
+          {
+            "title": "Afgerond onderzoek terugspreken via HA",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Opgeslagen openbaar onderzoek kan via HA worden uitgesproken op de oorspronkelijke vrije speaker, binnen de actieve native sessie. Geen extra modelcall voor de terugmelding.",
+            "remaining": "Geïnstalleerd; geen proefuitspraak gedaan. Hoorbaarheid, timing en gelijktijdig onderbreken blijven open. Onzekere verzending wordt niet automatisch herhaald.",
+            "source": "eva2/evidence/product/native-ha-return-installed-20260924.json"
+          },
           {
             "title": "Achtergrondonderzoek via gewone HA-spraak",
             "date": "24 september",
@@ -1517,15 +1525,15 @@
           }
         ],
         "now": {
-          "title": "HA-achtergrondwerksessie geïnstalleerd",
+          "title": "HA-terugmeldfunctie geïnstalleerd",
           "state": "Geïnstalleerd",
-          "detail": "De gewone HA-gesprekroute is aangesloten op dezelfde huishoudelijke taakroute: openbaar onderzoek aannemen, status en resultaat opvragen, stoppen en hervatten. De sessie blijft maximaal dertig minuten opgeslagen.",
-          "doneWhen": "Installatie afgerond; daadwerkelijke kanaalproef en automatische gesproken terugmelding blijven open."
+          "detail": "Opgeslagen openbaar onderzoek kan via HA worden uitgesproken op de oorspronkelijke vrije speaker, binnen de actieve native sessie. Geen extra modelcall voor de terugmelding.",
+          "doneWhen": "Technische installatie en startcontrole afgerond; fysieke spraakproef en audiovoorrang nog open."
         },
         "next": {
-          "title": "Onderzoeksresultaat terugbrengen via gewone HA-spraak",
+          "title": "Gesprekscontinuïteit bij kanaalwissel",
           "state": "Nog niet gestart",
-          "detail": "Aansluiten hoe afgerond openbaar onderzoek via de oorspronkelijke HA-gespreksroute wordt teruggebracht. Actief opvragen gebruikt nu de gedeelde taakroute; automatische gesproken terugmelding ontbreekt nog."
+          "detail": "Bestaande persoonsgebonden context benutten wanneer de geverifieerde eigenaar wisselt tussen Telegram en website; concrete resterende koppelingen afmaken. Gedeelde speakers blijven een aparte huishoudelijke ingang."
         },
         "ownerAction": {
           "title": "Takenbord gebruiken",
@@ -1539,7 +1547,7 @@
           "expected": "Bijsturing wordt bewaard en één hervatting ingepland. Dit is gebruiksinformatie; geen verplichte proef nu."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T22:21:16.139811+00:00"
+        "reviewedAt": "2026-09-23T22:26:26.823791+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11308,7 +11316,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Aansluiten hoe afgerond openbaar onderzoek via de oorspronkelijke HA-gespreksroute wordt teruggebracht. Actief opvragen gebruikt nu de gedeelde taakroute; automatische gesproken terugmelding ontbreekt nog.",
+      "nextAction": "Bestaande persoonsgebonden context benutten wanneer de geverifieerde eigenaar wisselt tussen Telegram en website; concrete resterende koppelingen afmaken. Gedeelde speakers blijven een aparte huishoudelijke ingang.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
