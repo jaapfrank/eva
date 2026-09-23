@@ -1,0 +1,33 @@
+{
+  "installed": true,
+  "installedAt": "2026-09-23T23:26:04.036673+00:00",
+  "sourceCommit": "804f6806",
+  "coreImage": "eva2-native-ha-stream:20260924",
+  "haVersion": "2026.9.2",
+  "behavior": "Native voice HTTP supports opt-in request-bound NDJSON deltas and a fenced final reply. Eva HA integration forwards text into the existing ChatLog TTS stream. JSON callers remain supported, with no second turn on fallback.",
+  "checks": [
+    "Python syntax and packaged native API import",
+    "No active stored tasks before core restart",
+    "Both satellites idle before HA restart",
+    "HA source uploads matched candidate hashes",
+    "HA restart completed; eva2_voice entry loaded; both satellites idle",
+    "Core and worker healthy"
+  ],
+  "haFiles": {
+    "client.py": "a3627aede83206ef16b214f76fab69828b25833dce3d4e99661fa7c6bf6be075",
+    "conversation.py": "c88ba40b82425803a98b496f0cbc33a4441bb4f0db6b6a5b74a094375e3ec240"
+  },
+  "limitations": [
+    "No model call, synthetic voice message, physical speech or latency measurement performed.",
+    "Streaming text may already have been spoken if final validation or transport later fails; failure interrupts the original request, without automatic retry.",
+    "This does not establish full duplex or resolve the separate continuous firmware wakeword issue.",
+    "Current private client playback-report helpers were present in repository but absent from the older HA copy; optional interface is now synchronized. Native HA still provides no audible-completion proof.",
+    "SSH host key recorded on first use in private stage after host/port discovery from authenticated HA Supervisor; no independent host-key verification."
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/native-ha-stream-20260924/baseline.compose.private.json",
+  "haRollback": "/home/administrator/project/.eva2-artifacts/native-ha-stream-20260924/restore-ha.py",
+  "sourceReference": "https://raw.githubusercontent.com/home-assistant/core/2026.9.2/homeassistant/components/conversation/chat_log.py"
+}

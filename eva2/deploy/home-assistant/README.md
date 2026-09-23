@@ -1,3 +1,12 @@
+> Update 24 September 2026: the installed native conversation route now supports
+> `Accept: application/x-ndjson`. Request-bound `delta` frames feed Home Assistant's
+> existing `ChatLog.async_add_delta_content_stream`; only a matching `final` frame
+> completes the client response. The JSON transport remains available for older
+> callers. Cancellation keeps the existing request-specific interrupt protocol.
+> HA 2026.9.2 source contract: https://raw.githubusercontent.com/home-assistant/core/2026.9.2/homeassistant/components/conversation/chat_log.py
+> Physical latency, audible completion and interruption trials remain deferred.
+> The older candidate descriptions below are historical, not current installation status.
+
 # Voice PE interruption candidate
 
 The `custom_components/eva2_voice` directory now contains a **native Home
