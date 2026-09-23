@@ -1,0 +1,29 @@
+{
+  "contract": "EvaFeatureInstallation/v1",
+  "feature": "research_rejection_usage",
+  "recorded_at": "2026-09-23T22:37:01.453424+00:00",
+  "source_commit": "295676ee",
+  "image": "eva2-research-rejection-usage:20260924",
+  "installed": true,
+  "checks": [
+    "Python syntax and packaged model import",
+    "Installed research method matched source before patch; unrelated installed differences retained",
+    "Zero active stored tasks before restart",
+    "Core and delegated worker healthy",
+    "Owner work API HTTP 200; fifteen stored tasks visible"
+  ],
+  "finding": "Existing research instructions already require checking essential missing facts and trying another primary source. No duplicate prompt or new research route added.",
+  "behavior": [
+    "Missing cited sources, missing named primary sources and rejected artifacts carry their measured provider usage into the existing failure journal"
+  ],
+  "limits": [
+    "No model trial or induced provider failure",
+    "End-to-end failure usage recovery still requires its deferred trial",
+    "This does not prove full semantic coverage or complete the requested research-follow-up behavior",
+    "No automatic retries or budget changes"
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/research-rejection-usage-20260924/baseline.compose.private.json"
+}

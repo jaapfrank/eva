@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T22:32:05.333558+00:00",
+        "checkedAt": "2026-09-23T22:37:01.453424+00:00",
         "deliveries": [
+          {
+            "title": "Verbruik bij afgekeurd onderzoek behouden",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Als broncontrole het onderzoeksantwoord afkeurt, wordt de ontvangen modelmeting meegegeven aan het bestaande foutenjournaal.",
+            "remaining": "Geïnstalleerd met startcontrole. Geen echte afkeuringsproef; inhoudelijke volledigheid en gericht vervolgonderzoek blijven open.",
+            "source": "eva2/evidence/product/research-rejection-usage-installed-20260924.json"
+          },
           {
             "title": "Recente privécontext meenemen bij kanaalwissel",
             "date": "24 september",
@@ -1533,15 +1541,15 @@
           }
         ],
         "now": {
-          "title": "Recente privécontinuïteit geïnstalleerd",
+          "title": "Onderzoeksafkeuring: verbruiksbehoud geïnstalleerd",
           "state": "Geïnstalleerd",
-          "detail": "Eva kan bij dezelfde geverifieerde eigenaar één recenter opgeslagen privégesprek uit Telegram of website meekrijgen. Maximaal één fragment uit de laatste 24 uur, zonder nieuwe geheugenopslag.",
-          "doneWhen": "Installatie en startcontrole afgerond; echte kanaalwissel en kwaliteit van gebruik nog open."
+          "detail": "Als broncontrole het onderzoeksantwoord afkeurt, wordt de ontvangen modelmeting meegegeven aan het bestaande foutenjournaal.",
+          "doneWhen": "Installatie en startcontrole afgerond; dit sluit de onderzoeksfunctie niet af."
         },
         "next": {
-          "title": "Onderzoek met ontbrekende onderbouwing vervolgen",
+          "title": "Gericht vervolgonderzoek aan eerdere taak verbinden",
           "state": "Nog niet gestart",
-          "detail": "De bestaande onderzoeksroute laten onderscheiden tussen een onderbouwd resultaat en nog ontbrekende verificatie, en het vervolg binnen de bestaande taak- en budgetgrenzen aansluiten."
+          "detail": "De bestaande onderzoeksactie uitbreiden met een verwijzing naar de eerdere opdracht, zodat een gevraagde aanvulling een zichtbare vervolgtaak wordt met behoud van resultaten en budgetgrenzen."
         },
         "ownerAction": {
           "title": "Takenbord gebruiken",
@@ -1555,7 +1563,7 @@
           "expected": "Bijsturing wordt bewaard en één hervatting ingepland. Dit is gebruiksinformatie; geen verplichte proef nu."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T22:32:05.333558+00:00"
+        "reviewedAt": "2026-09-23T22:37:01.453424+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11324,7 +11332,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "De bestaande onderzoeksroute laten onderscheiden tussen een onderbouwd resultaat en nog ontbrekende verificatie, en het vervolg binnen de bestaande taak- en budgetgrenzen aansluiten.",
+      "nextAction": "De bestaande onderzoeksactie uitbreiden met een verwijzing naar de eerdere opdracht, zodat een gevraagde aanvulling een zichtbare vervolgtaak wordt met behoud van resultaten en budgetgrenzen.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
