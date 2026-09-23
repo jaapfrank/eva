@@ -1,0 +1,7 @@
+# Apply with mcp-gateway.compose.yml when digital background work is enabled.
+# Reuse the existing connector network; no ports, credentials or new grants.
+services:
+  delegated-work-worker:
+    networks:
+      default: {}
+      mcp-gateway: {}
