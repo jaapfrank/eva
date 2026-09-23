@@ -60,6 +60,13 @@ class ScopedDelegatedWorkActions:
         except (ValueError, RuntimeError, OSError):
             return ()
 
+    def active_context(self, turn):
+        try:
+            actions = self._select(turn)
+        except (ValueError, RuntimeError, OSError):
+            return ()
+        return actions.active_context(turn)
+
     def pending(self, turn, *, step_index=0):
         if not self.available_for(turn):
             return None
