@@ -200,6 +200,11 @@ export default function OwnerWork() {
       {page.planning.schedules.map(item => <article className="card" key={item.schedule_id}>
         <h4>{item.task || 'Eerdere opdracht hervatten'}</h4>
         <p>{timestamp(item.run_at)} · {({ scheduled: 'Wacht op startmoment', launching: 'Wordt ingepland', dispatched: 'Overgedragen aan werker', cancelled: 'Geannuleerd', blocked: 'Start geblokkeerd; vraag Eva om bijsturing' })[item.state] || 'Onbekend'}</p>
+        {item.block_reason && <p role="status">{item.block_reason}</p>}
+        {item.dependency?.state === 'waiting' && <p>Wacht ook op het resultaat van de vorige stap.</p>}
+        {item.dependency?.state === 'ready' && <p>Het vorige resultaat is beschikbaar voor deze vervolgstap.</p>}
+        {item.dependency?.state === 'blocked' && <p role="status">{item.dependency.reason}</p>}
+        {item.after_work_id && <button disabled={busy} onClick={() => act('get', item.after_work_id)}>Vorige opdracht openen</button>}
         {item.can_cancel && <button disabled={busy} onClick={() => act('schedule_cancel', item.schedule_id)}>Annuleren</button>}
         {item.work_id && <button disabled={busy} onClick={() => act('get', item.work_id)}>Opdracht openen</button>}
       </article>)}

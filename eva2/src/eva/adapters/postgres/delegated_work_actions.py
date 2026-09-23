@@ -41,7 +41,7 @@ _OPERATIONS = {
     "resume_delegated_work": ("resume", "work_id"),
 }
 _DESCRIPTIONS = {
-    "schedule_digital": "Plan op verzoek van de eigenaar één digitale opdracht voor een afgesproken toekomstig moment, maximaal 30 dagen vooruit. Geef task en run_at in UTC (YYYY-MM-DDTHH:MM:SSZ). Zet lokale tijden om naar UTC; vraag bij onduidelijkheid naar datum of tijdzone. Het werk is dan bewaard maar nog niet gestart. Geen terugkerende opdracht of budgetverhoging.",
+    "schedule_digital": "Plan op verzoek van de eigenaar één digitale opdracht voor een afgesproken toekomstig moment, maximaal 30 dagen vooruit. Geef task en run_at in UTC (YYYY-MM-DDTHH:MM:SSZ). Zet lokale tijden om naar UTC; vraag bij onduidelijkheid naar datum of tijdzone. Voor een vervolgstap mag je after_work_id of after_schedule_id opgeven uit een eerdere opgeslagen taak of afspraak: wacht dan op het resultaat en gebruik het in deze nieuwe opdracht. Zonder run_at start een afhankelijke stap zodra de vorige klaar is. Kies alleen door de eigenaar gevraagde stappen. Het werk is bewaard maar nog niet gestart. Geen terugkerende opdracht of budgetverhoging.",
     "schedule_resume": "Plan één hervatting van een gestopte of mislukte opdracht op een door de eigenaar gewenst moment, maximaal 30 dagen vooruit. Geef work_id en run_at in UTC. Bewaart bestaande uitvoering en werkplan; de nieuwe poging gebruikt de bestaande begrensde budgetten. Geen herhaalde automatische pogingen.",
     "schedule_list": "Bekijk opgeslagen startmomenten, status en gekoppelde werk-ID. Gebruik dit voor wat je later gaat doen; beweer niet dat gepland werk al loopt.",
     "schedule_cancel": "Annuleer de genoemde geplande start op verzoek van de eigenaar. Gebruik de echte schedule_id uit list_scheduled_work. Is de taak al gestart, dan wordt het bestaande stopverzoek gebruikt; effecten die al begonnen zijn worden niet teruggedraaid.",
@@ -98,8 +98,11 @@ class PostgresDelegatedWorkActions:
                         "type": "object", "additionalProperties": False,
                         "properties": {("task" if operation == "schedule_digital" else "work_id"):
                             {"type": "string", "minLength": 1, "maxLength": 8192 if operation == "schedule_digital" else 240},
-                            "run_at": {"type": "string", "description": "Exact UTC start time, YYYY-MM-DDTHH:MM:SSZ"}},
-                        "required": ["task" if operation == "schedule_digital" else "work_id", "run_at"]
+                            "run_at": {"type": "string", "description": "Exact UTC start time, YYYY-MM-DDTHH:MM:SSZ"},
+                            **({"after_work_id": {"type": "string", "maxLength": 240},
+                                "after_schedule_id": {"type": "string", "maxLength": 240}}
+                               if operation == "schedule_digital" else {})},
+                        "required": ["task"] if operation == "schedule_digital" else ["work_id", "run_at"]
                     } if operation in {"schedule_digital", "schedule_resume"} else {"type":"string"}),
                         **({"feedback": {"type": "string", "minLength": 1, "maxLength": 800}}
                            if operation == "initiative_feedback" else {}),
