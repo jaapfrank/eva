@@ -505,6 +505,10 @@ class PostgresExternalConversationTools:
                 "principal_id": turn.principal_id,
                 "step_index": step_index,
             })
+        from eva.application.background_execution import background_execution_namespace
+        namespace = background_execution_namespace(turn)
+        if namespace is not None:
+            identity["execution_namespace"] = namespace
         return hashlib.sha256(canonical_json_bytes(identity)).hexdigest()[:32]
 
     @classmethod

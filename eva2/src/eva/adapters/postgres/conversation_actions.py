@@ -166,6 +166,10 @@ def _turn_id(
         "tenant_id": turn.tenant_id,
         **{field: getattr(turn, field) for field in _TURN_ID_FIELDS[scope]},
     }
+    from eva.application.background_execution import background_execution_namespace
+    namespace = background_execution_namespace(turn)
+    if namespace is not None:
+        identity["execution_namespace"] = namespace
     return prefix + hashlib.sha256(canonical_json_bytes(identity)).hexdigest()[:32]
 
 

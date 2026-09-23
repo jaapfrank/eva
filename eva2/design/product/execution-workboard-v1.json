@@ -1141,8 +1141,8 @@
         ],
         "now": {
           "title": "Algemene digitale taken op de achtergrond afmaken",
-          "detail": "Onderzoek en schrijfwerk kunnen al op de achtergrond; algemene digitale taken met tools nog niet. De bestaande werker en gesprekexecutor worden hergebruikt. Ontbrekend zijn de oorspronkelijke opdrachtbinding en een afzonderlijke uitvoering per taak.",
-          "state": "Concrete ontbrekende functie · nog niet gebouwd",
+          "detail": "Onderzoek en schrijfwerk kunnen al op de achtergrond. Afzonderlijke actie- en verbruiksregistratie per algemene taak is nu gebouwd en gericht gecontroleerd. De koppeling met taakaanname, werker, stoppen en terugmelding is nog in uitvoering.",
+          "state": "In uitvoering · nog niet geïnstalleerd",
           "doneWhen": "Een toegestane digitale taak met meerdere bestaande toolstappen wordt afgemaakt en teruggebracht terwijl het gesprek doorgaat; stoppen en afzonderlijke opdrachten blijven herkenbaar."
         },
         "next": {
@@ -11632,7 +11632,7 @@
       }
     },
     "generalDigitalBackgroundWork20260923": {
-      "status": "implementation_scope_selected",
+      "status": "execution_identity_built_not_integrated",
       "reuse": [
         "DelegatedWorkWorker and runner.bind_store",
         "LivingConversation.respond and existing model",
@@ -11641,12 +11641,29 @@
       ],
       "missing": [
         "Source ingress reference in admitted private work",
-        "Separate execution namespace without replacing original authorization turn",
-        "Runner/composition for existing authorized tool actions"
+        "Runner/composition and task admission for existing authorized connector actions",
+        "Integrated task cancellation, two-step connector completion and return proof"
       ],
       "scope": "One private digital task using multiple existing connector actions; conversation remains available. No recursive delegation or new household private access.",
       "estimate": "Implementation effort not yet established; no model calls for this diagnosis; development credit cost unknown.",
-      "next": "Implement original-source binding and separate task execution, then connect existing worker and result lifecycle."
+      "next": "Bind admitted source and worker profile, compose existing conversation tool loop under execution scope with delegated stop guard; run one integrated task proof before install.",
+      "built": [
+        "Host-bound private task namespace; original authorized source turn unchanged",
+        "Separate connector action identities per work item; unchanged foreground identities",
+        "Separate durable model accounting without synthetic user ingress or replaying foreground receipt"
+      ],
+      "checks": {
+        "identity_tests": "9 passed",
+        "accounting_adapter_test": "1 passed",
+        "review": "Independent GO for both changes; source only",
+        "installed": false,
+        "model_calls": 0
+      },
+      "limitations": [
+        "Builtin personal-intent linking and durable goal IDs not isolated; do not expose these in worker yet",
+        "Accounting test uses spy storage, not PostgreSQL; integrated proof still required",
+        "No generic-background capability enabled or installed"
+      ]
     }
   },
   "activeTaskId": "AU-008",

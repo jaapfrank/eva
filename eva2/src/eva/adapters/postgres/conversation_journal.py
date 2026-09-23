@@ -234,6 +234,10 @@ class PostgresConversationJournal(PostgresScopedRole):
         self.admit(turn)
         if self.committed_reply(turn) is not None:
             raise ConversationConflict("conversation already has a reply")
+        return self._begin_model_request(turn)
+
+    def _begin_model_request(self, turn: ConversationTurn) -> str:
+        """Record usage admission; callers establish their own execution origin."""
         identity = self._stop_identity(turn.principal_id, turn.conversation_id, turn.message_id)
         request_id = str(uuid4())
         thread_id = f"conversation-model:{request_id}"
