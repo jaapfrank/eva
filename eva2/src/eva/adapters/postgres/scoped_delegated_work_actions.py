@@ -11,13 +11,16 @@ class ScopedDelegatedWorkActions:
 
     def __init__(self, private_actions, household_server):
         self.private, self.household = private_actions, household_server
-        private_names = () if private_actions is None else private_actions.action_names
-        self.action_names = tuple(dict.fromkeys((*private_names,
+
+    @property
+    def action_names(self):
+        private_names = () if self.private is None else self.private.action_names
+        return tuple(dict.fromkeys((*private_names,
             *(tool.name for tool in HouseholdWorkActions.conversation_tools()))))
 
-    def conversation_tools(self, *, include_research=False):
+    def conversation_tools(self, *, include_research=False, include_digital=False):
         tools = (() if self.private is None else
-                 self.private.conversation_tools(include_research=include_research))
+                 self.private.conversation_tools(include_research=include_research, include_digital=include_digital))
         return tuple({tool.name: tool for tool in
                       (*tools, *HouseholdWorkActions.conversation_tools())}.values())
 

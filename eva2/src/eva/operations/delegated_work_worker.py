@@ -57,8 +57,8 @@ class DelegatedWorkWorker:
         self._runner = runner
         self._worker_id = worker_id
         self._releases = release if isinstance(release, tuple) else (release,)
-        if not 1 <= len(self._releases) <= 3:
-            raise ValueError("worker supports the tool-free and public research releases only")
+        if not 1 <= len(self._releases) <= 4:
+            raise ValueError("worker supports at most four configured releases")
         self._release_index = 0
         self._clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
 

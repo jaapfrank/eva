@@ -1,6 +1,6 @@
 {
   "date": "2026-09-23",
-  "status": "source_checkpoint_not_installed",
+  "status": "production_composition_built_not_installed",
   "test_result": "35 passed in2.12s",
   "test_files": [
     "tests/application/test_delegated_digital_runner.py",
@@ -20,8 +20,8 @@
   ],
   "limitations": [
     "Controlled model, connectors, model journal and task store; not real external work",
-    "Core/worker production composition not enabled",
-    "No new model requests or external messages sent"
+    "No new model requests or external messages sent",
+    "Production composition implemented and factory constructed against current settings; paired core/worker images not installed"
   ],
   "review": "Root reviewed agent contracts/admission; agent reviewed root runner/store/dispatch/contact changes; GO for source checkpoint",
   "postgresLifecycle": {
@@ -48,5 +48,30 @@
     "modelCalls": 0,
     "externalMessages": 0,
     "review": "GO background_execution_seam: fixture and bounded evidence reviewed; no live or external delivery claim."
+  },
+  "composition": {
+    "built": [
+      "Shared foreground/worker identity and memory factory",
+      "Explicit digital flag off by default",
+      "Same connector profile in core and worker",
+      "Fourth contract dispatched in existing scheduler",
+      "Dynamic private/household tool catalog preserves late profile assignment"
+    ],
+    "checks": [
+      "3 shared-resource tests passed",
+      "12 composition/service cases passed before final connector narrowing",
+      "62 final composition/runtime-setting cases passed in 2.32s",
+      "Factory constructed with actual core settings, read-only mounts and existing scoped store; no model request"
+    ],
+    "review": "background_execution_seam GO for bounded source wiring and narrowed MCP-only worker factory",
+    "modelCalls": 0,
+    "sourceRelease": "104e4baea504c4d9e75f31aaf3c2b50ff62b8d09d2f148484035fc5898256e26",
+    "installationRemaining": [
+      "Build both images from running schema7 parent with only reviewed feature delta",
+      "Preserve existing task contracts and align current core/worker profile hashes",
+      "Provide worker with same relevant settings and mounted authority files",
+      "Packaged check and bounded controlled lifecycle before installing"
+    ],
+    "preflightFinding": "Constructing all foreground providers from source failed on unrelated MCP catalog safety validation; digital worker now constructs only existing mcp_autonomy provider. Full-source core startup is not proven."
   }
 }

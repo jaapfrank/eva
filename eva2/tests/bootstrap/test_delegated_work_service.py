@@ -231,7 +231,7 @@ def test_provider_entrypoint_uses_one_async_lifecycle(
             observed["provider_open"] = False
 
     async def serve(  # type: ignore[no-untyped-def]
-        selected, *, release, settings, once
+        selected, *, release, settings, once, digital_settings=None
     ):
         assert observed["provider_open"] is True
         observed["runner"] = selected

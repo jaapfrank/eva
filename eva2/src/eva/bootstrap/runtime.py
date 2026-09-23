@@ -75,10 +75,7 @@ from eva.adapters.postgres.commerce import (
 )
 from eva.adapters.projection.hindsight import (
     ActiveHouseholdConsentResolver,
-    HindsightMemoryEngine,
-    HindsightProjectionConfig,
 )
-from eva.adapters.objects.identity_verifier import load_current_identity_pack
 
 if TYPE_CHECKING:
     from eva.adapters.model.pydantic_conversation import PydanticConversationModel
@@ -90,11 +87,9 @@ from eva.application.conversation import (
     ConversationExecutionLimitReached,
     ConversationModelUsage,
     GroundedReply,
-    IdentityProfile,
     LivingConversation,
     RecentConversationMessage,
 )
-from eva.application.identity_verifier import load_identity_pack_trust_binding
 from eva.providers.runtime import (
     ExternalProviderSettings,
     build_external_provider_bundle,
@@ -238,6 +233,7 @@ class RuntimeSettings:
     background_work_enabled: bool = True
     delegated_work_enabled: bool = False
     delegated_research_enabled: bool = False
+    delegated_digital_enabled: bool = False
     delegated_result_delivery_enabled: bool = False
     background_tenant_id: str | None = None
     background_installation_id: str | None = None
@@ -280,6 +276,12 @@ class RuntimeSettings:
             raise ValueError("delegated work switch must be a boolean")
         if type(self.delegated_research_enabled) is not bool:
             raise ValueError("delegated research switch must be a boolean")
+        if type(self.delegated_digital_enabled) is not bool:
+            raise ValueError("delegated digital work switch must be a boolean")
+        if self.delegated_digital_enabled and (
+            not self.delegated_work_enabled or self.runtime_resource_budget is None
+        ):
+            raise ValueError("delegated digital work requires delegated work and its runtime budget")
         if type(self.delegated_result_delivery_enabled) is not bool:
             raise ValueError("delegated result delivery switch must be a boolean")
         if self.delegated_result_delivery_enabled and (
@@ -571,6 +573,7 @@ class RuntimeSettings:
             background_work_enabled=_environment_bool("EVA_BACKGROUND_WORK_ENABLED", True),
             delegated_work_enabled=_environment_bool("EVA_DELEGATED_WORK_ENABLED", False),
             delegated_research_enabled=_environment_bool("EVA_DELEGATED_RESEARCH_ENABLED", False),
+            delegated_digital_enabled=_environment_bool("EVA_DELEGATED_DIGITAL_ENABLED", False),
             delegated_result_delivery_enabled=_environment_bool("EVA_DELEGATED_RESULT_DELIVERY_ENABLED", False),
             background_tenant_id=background_tenant_id,
             background_installation_id=background_installation_id,
@@ -1661,57 +1664,23 @@ def create_runtime_app() -> FastAPI:
         tenant_id=settings.background_tenant_id,
         installation_id=settings.background_installation_id,
     )
+    from eva.bootstrap.private_conversation_resources import (
+        build_private_conversation_resources, load_conversation_identity_pack,
+    )
+
     def current_identity_pack():
-        return load_current_identity_pack(
-            None if settings.identity_pack_file is None else Path(settings.identity_pack_file),
-            trust=(None if settings.identity_pack_trust_file is None
-                   else load_identity_pack_trust_binding(Path(settings.identity_pack_trust_file))),
-        )
+        return load_conversation_identity_pack(settings)
 
     identity_pack = current_identity_pack()
     household_voice = load_household_voice_authority(
         settings, runtime_identity=identity_pack, identity_loader=current_identity_pack,
     )
-    from eva.adapters.postgres.private_memory_aliases import PostgresPrivateMemoryAliases
-
-    private_memory_aliases = None
-    if (settings.dashboard_principal_binding_id is not None
-            and settings.telegram_principal_bindings_file is not None):
-        private_memory_aliases = PostgresPrivateMemoryAliases(
-            engine, tenant_id=settings.background_tenant_id,
-            installation_id=settings.background_installation_id,
-            owner=UUID(settings.background_principal_id),
-            binding=UUID(settings.dashboard_principal_binding_id),
-            authority_scope=TimelineScope(UUID(settings.dashboard_tenant_id),
-                                          UUID(settings.dashboard_installation_id)),
-            bindings_loader=lambda: load_principal_bindings(settings.telegram_principal_bindings_file),
-        )
-    memory = HindsightMemoryEngine(
-        HindsightProjectionConfig(
-            settings.hindsight_url,
-            bank_namespace=settings.hindsight_bank_namespace,
-            recall_budget=settings.hindsight_recall_budget,  # type: ignore[arg-type]
-            recall_max_tokens=settings.hindsight_recall_max_tokens,
-            recall_node_budget=settings.hindsight_recall_node_budget,
-        ),
-        active_group_consent_resolver=group_consent,
-        active_household_consent_resolver=household_voice,
-        private_alias_resolver=private_memory_aliases,
+    memory, identity = build_private_conversation_resources(
+        settings, engine, group_consent=group_consent,
+        household_voice=household_voice, identity_pack=identity_pack,
     )
     dashboard_voice = build_dashboard_voice(
         settings, runtime_identity=identity_pack, identity_loader=current_identity_pack,
-    )
-    identity = IdentityProfile(
-        name=settings.identity_name,
-        description=settings.identity_description,
-        principles=(
-            "Zeg eerlijk wat je wel en niet weet.",
-            "Reageer als één persoon, niet als een verzameling scripts.",
-            "Beweer een handeling pas na onafhankelijk bewijs.",
-            "Gebruik herinneringen om de persoon te begrijpen, niet om hem na te doen.",
-        ),
-        maximum_reply_words=110,
-        identity_pack=identity_pack,
     )
     delegated_work_store = None
     delegated_work_commands = None
@@ -1824,6 +1793,11 @@ def create_runtime_app() -> FastAPI:
         household_work_server = HouseholdWorkServer(engine, scope, work_authority)
         delegated_work_actions = ScopedDelegatedWorkActions(delegated_work_actions, household_work_server)
     provider_bundle = build_external_provider_bundle(settings.external_provider, engine)
+    if settings.delegated_digital_enabled:
+        from eva.bootstrap.delegated_digital_composition import build_digital_profile
+        if delegated_work_service is None:
+            raise ValueError("digital work requires the configured private owner service")
+        delegated_work_service.digital_profile = build_digital_profile(settings, provider_bundle)
     model = PydanticConversationModel(
         auth_file=Path(settings.conversation_auth_file),
         model=settings.conversation_model,
@@ -1832,7 +1806,8 @@ def create_runtime_app() -> FastAPI:
         conversation_tools=(
             (() if provider_bundle is None else provider_bundle.conversation_tools)
             + (() if delegated_work_actions is None else delegated_work_actions.conversation_tools(
-                include_research=delegated_research_profile is not None))
+                include_research=delegated_research_profile is not None,
+                include_digital=settings.delegated_digital_enabled))
         ),
     )
     stripe_publication = (
@@ -1914,7 +1889,8 @@ def create_runtime_app() -> FastAPI:
             conversation_tools=(
                 (() if provider_bundle is None else provider_bundle.conversation_tools)
                 + (() if delegated_work_actions is None else delegated_work_actions.conversation_tools(
-                    include_research=delegated_research_profile is not None))
+                    include_research=delegated_research_profile is not None,
+                    include_digital=settings.delegated_digital_enabled))
             ),
         ))
     conversation = LivingConversation(

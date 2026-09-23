@@ -11631,7 +11631,7 @@
       }
     },
     "generalDigitalBackgroundWork20260923": {
-      "status": "runner_and_admission_built_not_composed",
+      "status": "production_composition_built_not_installed",
       "reuse": [
         "DelegatedWorkWorker and runner.bind_store",
         "LivingConversation.respond and existing model",
@@ -11645,7 +11645,7 @@
       ],
       "scope": "One private digital task using multiple existing connector actions; conversation remains available. No recursive delegation or new household private access.",
       "estimate": "Implementation effort not yet established; no model calls for this diagnosis; development credit cost unknown.",
-      "next": "Compose the existing worker with the optional digital profile and shared runtime components, prove real database lifecycle/return, then install paired core and worker without unrelated restoration changes.",
+      "next": "Package reviewed feature delta for current schema7 core and worker together; preserve existing task releases and verify worker configuration before activation.",
       "built": [
         "Private v4 work and result contracts; optional start_digital_work admission with original source binding",
         "Existing LivingConversation loop executes allowed connector steps under durable dispatch authorization",
@@ -11668,7 +11668,8 @@
         "Legacy source hashes change when shared contracts change; pending work must stay executable at deployment"
       ],
       "evidence": "eva2/evidence/product/digital-background-source-20260923.json",
-      "postgresLifecycle": "Real PostgreSQL16.13/current-source schema9 lifecycle passed: stop/resume reuses first verified effect, counts only new dispatch, persists v4 result and acknowledges return idempotently. Controlled model/provider; no production composition or installation."
+      "postgresLifecycle": "Real PostgreSQL16.13/current-source schema9 lifecycle passed: stop/resume reuses first verified effect, counts only new dispatch, persists v4 result and acknowledges return idempotently. Controlled model/provider; no production composition or installation.",
+      "compositionEvidence": "eva2/evidence/product/digital-background-source-20260923.json"
     }
   },
   "activeTaskId": "AU-008",

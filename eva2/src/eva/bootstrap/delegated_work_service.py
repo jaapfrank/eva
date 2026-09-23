@@ -129,6 +129,7 @@ class OpenAIDelegatedWorkSettings:
     service: DelegatedWorkServiceSettings
     model_access_lease_file: Path
     research_enabled: bool = False
+    digital_enabled: bool = False
     research_budget_file: Path | None = None
     research_tenant_id: str | None = None
     research_installation_id: str | None = None
@@ -138,6 +139,8 @@ class OpenAIDelegatedWorkSettings:
         if self.household_work_config_file is not None and (
                 not self.household_work_config_file.is_absolute() or not self.research_enabled):
             raise ValueError("household work requires public research and an absolute configuration file")
+        if type(self.digital_enabled) is not bool:
+            raise ValueError("digital switch must be a boolean")
         if type(self.research_enabled) is not bool:
             raise ValueError("research switch must be a boolean")
         if self.research_enabled and (self.research_budget_file is None
@@ -166,6 +169,9 @@ class OpenAIDelegatedWorkSettings:
         enabled = values.get("EVA_DELEGATED_RESEARCH_ENABLED", "false")
         if enabled not in {"true", "false"}:
             raise RuntimeError("EVA_DELEGATED_RESEARCH_ENABLED must be true or false")
+        digital = values.get("EVA_DELEGATED_DIGITAL_ENABLED", "false")
+        if digital not in {"true", "false"}:
+            raise RuntimeError("EVA_DELEGATED_DIGITAL_ENABLED must be true or false")
         research = {}
         if enabled == "true":
             names = ("EVA_RUNTIME_RESOURCE_BUDGET_FILE", "EVA_RUNTIME_TENANT_ID", "EVA_RUNTIME_INSTALLATION_ID")
@@ -177,6 +183,7 @@ class OpenAIDelegatedWorkSettings:
                 research_installation_id=values[names[2]].strip())
         return cls(
             **research,
+            digital_enabled=digital == "true",
             household_work_config_file=(Path(values["EVA_HOUSEHOLD_WORK_CONFIG_FILE"])
                 if values.get("EVA_HOUSEHOLD_WORK_CONFIG_FILE") else None),
             service=DelegatedWorkServiceSettings.from_environment(values),
@@ -276,6 +283,7 @@ async def serve_delegated_work_service(
     settings: DelegatedWorkServiceSettings | None = None,
     once: bool = False,
     clock: Callable[[], datetime] | None = None,
+    digital_settings=None,
 ) -> Literal["stopped", "completed"]:
     """Run the service inside an existing async provider lifecycle."""
 
@@ -290,6 +298,16 @@ async def serve_delegated_work_service(
         store = PostgresDelegatedWorkStore(engine, selected.scope,
             household_authorizer=getattr(runner, "household_authorizer", None))
         bound_runner = runner.bind_store(store) if callable(getattr(runner, "bind_store", None)) else runner
+        if digital_settings is not None:
+            from eva.bootstrap.delegated_digital_composition import (
+                build_digital_runner, DigitalEnabledDelegatedRunner)
+            expected_scope = TimelineScope(UUID(digital_settings.dashboard_tenant_id),
+                                           UUID(digital_settings.dashboard_installation_id))
+            if expected_scope != store.scope:
+                raise ValueError("digital worker storage scope differs")
+            digital_runner = build_digital_runner(digital_settings, store)
+            bound_runner = DigitalEnabledDelegatedRunner(bound_runner, digital_runner)
+            release = (release if isinstance(release, tuple) else (release,)) + (digital_runner.profile.release,)
         worker = DelegatedWorkWorker(
             store,
             bound_runner,
@@ -313,6 +331,12 @@ async def serve_openai_delegated_work(
 ) -> Literal["stopped", "completed"]:
     """Run one worker loop; each admitted task opens its own provider session."""
 
+    digital_settings = None
+    if settings.digital_enabled:
+        from eva.bootstrap.runtime import RuntimeSettings
+        digital_settings = RuntimeSettings.from_environment()
+        if not digital_settings.delegated_digital_enabled:
+            raise ValueError("digital worker and runtime settings differ")
     if settings.research_enabled:
         from eva.bootstrap.delegated_research import serve_research_enabled_work
         research, profile = _research_composition(settings)
@@ -323,12 +347,13 @@ async def serve_openai_delegated_work(
                 scope=settings.service.scope, profile=profile,
                 model_lease_file=settings.model_access_lease_file)
         return await serve_research_enabled_work(settings, research, profile, once=once,
-                                                household_authority=authority)
+                                                household_authority=authority, digital_settings=digital_settings)
 
     async with _open_provider_runner(settings.model_access_lease_file) as runner:
         return await serve_delegated_work_service(
             runner,
             release=_provider_release(),
+            digital_settings=digital_settings,
             settings=settings.service,
             once=once,
         )
@@ -360,6 +385,17 @@ def check_openai_delegated_work(
     )
     engine = sa.create_engine(sqlalchemy_postgres_dsn(database_dsn), pool_pre_ping=True)
     try:
+        if selected.digital_enabled:
+            from eva.bootstrap.runtime import RuntimeSettings
+            from eva.bootstrap.delegated_digital_composition import build_digital_runner
+            runtime_settings = RuntimeSettings.from_environment()
+            if (not runtime_settings.delegated_digital_enabled or
+                    TimelineScope(UUID(runtime_settings.dashboard_tenant_id),
+                                  UUID(runtime_settings.dashboard_installation_id)) != selected.service.scope):
+                raise ValueError("digital worker runtime scope differs")
+            digital = build_digital_runner(runtime_settings,
+                PostgresDelegatedWorkStore(engine, selected.service.scope))
+            digital.profile.release  # Validate exact source pins without a model request.
         with engine.connect() as connection:
             revision = connection.scalar(
                 sa.text("SELECT version_num FROM public.eva_alembic_version")

@@ -312,11 +312,11 @@ class ResearchEnabledDelegatedRunner:
         return BoundRunner()
 
 
-async def serve_research_enabled_work(settings, research, profile, *, once=False, household_authority=None):
+async def serve_research_enabled_work(settings, research, profile, *, once=False, household_authority=None, digital_settings=None):
     """Opt-in composition inside the existing service loop; no separate scheduler."""
     from eva.bootstrap.delegated_work_service import (
         _open_provider_runner, _provider_release, serve_delegated_work_service)
     async with _open_provider_runner(settings.model_access_lease_file) as tool_free:
         return await serve_delegated_work_service(
             ResearchEnabledDelegatedRunner(tool_free, research, profile, household_authority=household_authority),
-            release=(_provider_release(), profile.release) + (() if household_authority is None else (household_authority.profile.release,)), settings=settings.service, once=once)
+            release=(_provider_release(), profile.release) + (() if household_authority is None else (household_authority.profile.release,)), settings=settings.service, once=once, digital_settings=digital_settings)

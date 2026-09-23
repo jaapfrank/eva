@@ -1499,3 +1499,25 @@ Deze aansluiting is begrensd tot één hostvoorbereid project. Het beheerplan vo
 een echte instantie en de nog open gewone gebruikersproef staat in
 [AU-006 activatieplan](../../evidence/living-core/au006-normal-command-activation-plan-20260913.md).
 Bronoplevering activeert geen worker of provider en is geen eigenaaracceptatie.
+
+
+### Private digital background composition — 23 September 2026
+
+The optional `EVA_DELEGATED_DIGITAL_ENABLED` flag registers `start_digital_work`
+with the existing private owner service. The current delegated worker dispatches
+its fourth contract through the same scheduler. Core and worker derive the same
+profile from the configured conversation model, budget and existing MCP autonomy
+provider. The worker exposes only the admitted connector meta-tools; it cannot
+recursively delegate. Existing task control and private result delivery are reused.
+
+`bootstrap/private_conversation_resources.py` owns the identity and memory
+composition shared with foreground conversation, including current private aliases
+and household/group consent resolvers. `bootstrap/delegated_digital_composition.py`
+constructs the worker without starting the HTTP application or loading unrelated
+foreground providers. Original ingress remains the source of authority; tool effect
+identity survives resume, while model accounting belongs to each distinct attempt.
+
+Source composition and a real PostgreSQL lifecycle are checked; this is not yet an
+installed feature. The source schema is newer than the running schema, so installation
+must use a reviewed feature overlay and coordinated core/worker profiles. See
+`../../evidence/product/digital-background-source-20260923.json` for scope and limits.
