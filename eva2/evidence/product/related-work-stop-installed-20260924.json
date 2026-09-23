@@ -1,0 +1,23 @@
+{
+  "installed": true,
+  "installedAt": "2026-09-23T23:11:19.197314+00:00",
+  "sourceCommit": "af4a076a",
+  "image": "eva2-related-work-stop:20260924",
+  "behavior": "Explicit linked-task stopping uses existing scoped task and schedule controls; retained results are not deleted.",
+  "checks": [
+    "Python syntax",
+    "Packaged imports and private/household tool registration",
+    "No active tasks before restart",
+    "Core and worker healthy"
+  ],
+  "limitations": [
+    "No actual stop or concurrent execution trial.",
+    "Bounded related overview; truncation reports partial_stop.",
+    "Previously started effects may finish; future owner admissions are not prohibited.",
+    "Review and broader trials deferred by owner."
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/related-work-stop-20260924/baseline.compose.private.json"
+}

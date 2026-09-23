@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T23:05:10.147766+00:00",
+        "checkedAt": "2026-09-23T23:11:19.197314+00:00",
         "deliveries": [
+          {
+            "title": "Samenhangende opdracht stoppen via het gesprek",
+            "date": "24 september",
+            "state": "installed",
+            "result": "De nieuwe gespreksactie stopt oorspronkelijke taak, hervattingen en toegankelijke planning via bestaande bediening. Resultaten blijven behouden.",
+            "remaining": "Geen echte stopproef gedaan. Afgekapt overzicht meldt partial_stop; begonnen acties kunnen nog afronden.",
+            "source": "eva2/evidence/product/related-work-stop-installed-20260924.json"
+          },
           {
             "title": "Afgerond werk blijft vindbaar in het vervolggesprek",
             "date": "24 september",
@@ -1581,15 +1589,15 @@
           }
         ],
         "now": {
-          "title": "Vervolggesprek over recente taakuitkomsten aangesloten",
+          "title": "Samenhangende opdracht in één keer stoppen",
           "state": "Geïnstalleerd",
-          "detail": "Maximaal drie recente uitkomsten blijven beschikbaar als taakverwijzing. Eva kan bij een vervolgvraag het opgeslagen resultaat ophalen, ook nadat de taak niet meer loopt.",
-          "doneWhen": "Technische installatie en startcontrole afgerond; werkelijke modelkeuze en gesprekskwaliteit later beproeven."
+          "detail": "Gesprek kan oorspronkelijke taak, hervattingen en gekoppelde planning via bestaande stopbediening stoppen. Resultaten blijven bewaard.",
+          "doneWhen": "Technische installatie en startcontrole afgerond; echte stopproef later."
         },
         "next": {
-          "title": "Overige open functionele kanaalkoppelingen",
+          "title": "Resterende gebruikersfuncties afronden",
           "state": "Nog niet gestart",
-          "detail": "Verder met de bestaande stappen voor gedeeld gesprek en taakuitvoering. Uitgebreide model- en gebruikersproeven volgen later."
+          "detail": "Verder vanuit de bestaande open productstappen; uitgebreide proeven later."
         },
         "ownerAction": {
           "title": "Gewoon verder praten",
@@ -1603,7 +1611,7 @@
           "expected": "Antwoordopbouw met definitieve bevestiging aan het einde. Je hoeft nu geen gebruiksproef uit te voeren."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T23:05:10.147766+00:00"
+        "reviewedAt": "2026-09-23T23:11:19.197314+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11372,7 +11380,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Verder met de bestaande stappen voor gedeeld gesprek en taakuitvoering. Uitgebreide model- en gebruikersproeven volgen later.",
+      "nextAction": "Verder vanuit de bestaande open productstappen; uitgebreide proeven later.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
