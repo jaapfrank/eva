@@ -134,14 +134,14 @@ def install_browser_session_routes(app: FastAPI, *, access: DashboardAccess,
         if (request.query_params or not isinstance(payload, dict)
                 or set(payload) != {"action", "revision"}
                 or not isinstance(payload["action"], str)
-                or payload["action"] not in {"start", "takeover", "resume", "stop"}
+                or payload["action"] not in {"start", "takeover", "resume", "stop", "recover"}
                 or type(payload["revision"]) is not int or payload["revision"] < 0):
             raise HTTPException(422, "invalid browser control")
         async with gate:
             current = await status()
             if payload["revision"] != current["revision"]:
                 raise HTTPException(409, "browser state changed; refresh status")
-            if payload["action"] in {"resume", "stop"}:
+            if payload["action"] in {"resume", "stop", "recover"}:
                 # Await closing upstream streams, not merely a UI flag or a queued
                 # disconnect. No owner input can overlap a subsequent MCP start.
                 await close_views()

@@ -237,7 +237,7 @@ class BrowserSessionHost:
         if revision != current["revision"]:
             raise BrowserSessionConflict("browser revision changed")
         allowed = {"start": {"stopped"}, "takeover": {"eva", "recovery_required"},
-                   "resume": {"owner"}, "stop": {"stopped", "eva", "owner", "recovery_required"}}
+                   "recover": {"recovery_required"}, "resume": {"owner"}, "stop": {"stopped", "eva", "owner", "recovery_required"}}
         if action not in allowed or current["state"] not in allowed[action]:
             raise BrowserSessionConflict("browser transition is not available")
         try:
@@ -246,6 +246,21 @@ class BrowserSessionHost:
                 self._stop("mcp")
                 self._stop("browser")
                 self._transition("stopped", self.driver.inspect())
+            elif action == "recover":
+                # Restore only the retained browser, never replay an uncertain tool call.
+                # Automation stays stopped until the owner explicitly returns control.
+                self._transition("taking_over")
+                self._stop("mcp")
+                observed = self.driver.inspect()
+                if not observed["browser_running"]:
+                    self.driver.start("browser")
+                elif not observed["browser_ready"]:
+                    self._stop("browser")
+                    self.driver.start("browser")
+                self._wait_ready("browser")
+                if self.viewer_control is not None:
+                    self.viewer_control(True)
+                self._transition("owner", self.driver.inspect())
             elif action == "takeover":
                 if not current["browser_ready"]:
                     raise BrowserSessionConflict("browser is unavailable for takeover")
@@ -273,7 +288,7 @@ class BrowserSessionHost:
             raise
         except Exception as error:
             # A timeout is an uncertain result, never permission to repeat a start
-            # or browser action. Recovery only permits takeover or explicit stop.
+            # or browser action. Recovery requires an explicit owner action.
             self._transition("recovery_required")
             raise BrowserSessionError("browser transition requires observation") from error
 
