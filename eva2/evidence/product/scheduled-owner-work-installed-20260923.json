@@ -1,0 +1,38 @@
+{
+  "contract": "EvaFeatureInstallation/v1",
+  "feature": "scheduled_owner_work",
+  "recorded_at": "2026-09-23T21:29:41.679570+00:00",
+  "source_commit": "e913153a",
+  "image": "eva2-scheduled-owner-work:20260923",
+  "installed": true,
+  "checks": [
+    "Changed Python syntax",
+    "Existing source files matched running baseline; installed runtime patched without replacing unrelated differences",
+    "Dashboard production build and asset materialization",
+    "Packaged imports and tool descriptor construction without network",
+    "Core healthy; work API HTTP 200 including planning; initiatives API HTTP 200",
+    "Delegated worker healthy",
+    "Active compose and dashboard asset metadata updated"
+  ],
+  "behavior": [
+    "One future digital task or resumption, up to 30 days ahead",
+    "Original authorized conversation source retained; admission time starts worker deadline at dispatch",
+    "Durable timeline and existing idle loop; existing worker executes tasks",
+    "Stable admission reservation survives restart; no model call while waiting",
+    "Schedule listing and cancellation available in private conversation and owner dashboard",
+    "Scheduled resumption uses existing linked attempts and saved work progress"
+  ],
+  "limits": [
+    "Real timed/model trial deferred",
+    "Independent review deferred by owner instruction",
+    "One-shot schedules; no recurring or unlimited budget extension",
+    "Existing failed or stopped tasks can be scheduled for resumption; successful tasks are not replayed",
+    "Autonomous multi-stage project completion remains open",
+    "Requested time is a not-before time: service availability and current authority still govern dispatch"
+  ],
+  "model_calls": 0,
+  "test_schedules_created": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/scheduled-owner-work-20260923/baseline.compose.private.json"
+}
