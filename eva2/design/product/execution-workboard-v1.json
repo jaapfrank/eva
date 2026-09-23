@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T22:10:38.206442+00:00",
+        "checkedAt": "2026-09-23T22:16:00.746768+00:00",
         "deliveries": [
+          {
+            "title": "Digitale taak rechtstreeks bijsturen",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Een formulier bij de digitale opdracht bewaart je wijziging via dezelfde functie als het gesprek. De oude poging stopt en één hervatting volgt.",
+            "remaining": "Geïnstalleerd met build- en startcontrole; echte bediening en uitvoering later. Hervatting gebruikt modelbudget.",
+            "source": "eva2/evidence/product/dashboard-corrections-installed-20260924.json"
+          },
           {
             "title": "Lopende digitale opdrachten bijsturen",
             "date": "24 september",
@@ -1501,29 +1509,29 @@
           }
         ],
         "now": {
-          "title": "Digitale bijsturing geïnstalleerd",
+          "title": "Bijsturen op het takenbord geïnstalleerd",
           "state": "Geïnstalleerd",
-          "detail": "Eva kan een correctie bewaren, de oude poging stoppen en één hervatting met de correctie inplannen. Eerdere acties en voortgang blijven behouden; de correcties staan bij de taak.",
-          "doneWhen": "Technische installatie afgerond; uitgebreide tests, review en praktijkproef blijven open."
+          "detail": "Een formulier bij de digitale opdracht bewaart je wijziging via dezelfde functie als het gesprek. De oude poging stopt en één hervatting volgt.",
+          "doneWhen": "Installatie afgerond. Echte uitvoerproef en review staan nog open."
         },
         "next": {
-          "title": "Gesprek tijdens achtergrondwerk per kanaal afmaken",
+          "title": "Achtergrondwerk via gewone Home Assistant-spraak",
           "state": "Nog niet gestart",
-          "detail": "Resterende aansluitingen van de gedeelde gespreks- en taakroute afmaken met behoud van bestaande snelle ontvangst en spraak."
+          "detail": "De gewone HA-ingang heeft nog geen servergebonden werksessie; de continue-spraakroute heeft die al. De bestaande sessie- en terugmeldroute hergebruiken zonder het gedeelde apparaat als persoonlijke identiteit te behandelen."
         },
         "ownerAction": {
           "title": "Takenbord gebruiken",
           "url": "http://localhost:44711/internal/v1/dashboard",
           "linkLabel": "Open Eva’s takenbord",
           "steps": [
-            "Open Eva’s takenbord via de knop hieronder.",
-            "Kies een opdracht in Bezig, Aandacht nodig, Resultaten of Gestopt.",
-            "Open het resultaat, download het, stop lopend werk of hervat een eerdere poging via de detailkaart."
+            "Open Eva’s takenbord.",
+            "Open een digitale opdracht die nog niet is afgerond.",
+            "Vul bij Opdracht bijsturen je wijziging in en kies Bewaar bijsturing en hervat."
           ],
-          "expected": "Dezelfde opgeslagen taken als in Eva’s gesprek, met gerichte bediening per opdracht. Dit is gebruiksinformatie; geen nieuwe verplichte proef."
+          "expected": "Bijsturing wordt bewaard en één hervatting ingepland. Dit is gebruiksinformatie; geen verplichte proef nu."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T22:10:38.206442+00:00"
+        "reviewedAt": "2026-09-23T22:16:00.746768+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11292,7 +11300,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Resterende aansluitingen van de gedeelde gespreks- en taakroute afmaken met behoud van bestaande snelle ontvangst en spraak.",
+      "nextAction": "De gewone HA-ingang heeft nog geen servergebonden werksessie; de continue-spraakroute heeft die al. De bestaande sessie- en terugmeldroute hergebruiken zonder het gedeelde apparaat als persoonlijke identiteit te behandelen.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

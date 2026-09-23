@@ -1,0 +1,35 @@
+{
+  "contract": "EvaFeatureInstallation/v1",
+  "feature": "dashboard_digital_corrections",
+  "recorded_at": "2026-09-23T22:16:00.746768+00:00",
+  "source_commit": "2b27452a",
+  "image": "eva2-dashboard-corrections:20260924",
+  "installed": true,
+  "checks": [
+    "Changed Python syntax",
+    "Dashboard build and materialized assets",
+    "Packaged imports without network",
+    "Installed runtime patched only at forwarding method; unrelated differences preserved",
+    "Core and delegated worker healthy",
+    "Read-only task endpoint HTTP 200, fifteen existing tasks visible"
+  ],
+  "behavior": [
+    "Correction form on digital task detail invokes the same owner service as conversation",
+    "Explicit saved, newer-attempt and finished-task responses; no optimistic completion claim",
+    "No model call to submit the correction; resumed worker still uses its existing budget"
+  ],
+  "limits": [
+    "Actual form submission and resumed task execution deferred",
+    "Independent review deferred",
+    "Only digital tasks; existing correction limitations remain"
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/dashboard-corrections-20260924/baseline.compose.private.json",
+  "next_gap_evidence": {
+    "native": "eva2/src/eva/bootstrap/native_voice.py: NativeHouseholdResponder creates a conversation without a work session",
+    "continuous": "eva2/src/eva/adapters/api/household_voice_session.py: session/respond binds an existing work server session",
+    "selection": "eva2/src/eva/adapters/postgres/scoped_delegated_work_actions.py: household work requires a matching stored session"
+  }
+}
