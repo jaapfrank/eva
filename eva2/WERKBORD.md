@@ -2,6 +2,8 @@
 
 Laatst bijgewerkt: 2026-09-23.
 
+**Initiatiefterugmelding geïnstalleerd (23 september):** nieuwe afgeronde eigen initiatieven zijn aangesloten op stille privébezorging via de bestaande Telegramroute. Eerste activering bewaart een grens zodat oude resultaten niet opnieuw worden verstuurd. Een bezorgpoging wordt duurzaam vastgelegd; onzekerheid leidt niet tot automatisch opnieuw sturen. Bestaand mandaat, persoonsbinding en initiatiefbudget blijven gelden. Alleen bouw/import/startcontrole gedaan: beide diensten gezond, werk- en initiatieven-API HTTP200. Echte bezorgproef en review volgen later; nul modelproeven of testberichten. [Installatie](evidence/product/initiative-result-delivery-installed-20260923.json). Volgende functionele stap: eigen initiatieven bijsturen en stoppen vanuit gesprek; nog niet gestart.
+
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
