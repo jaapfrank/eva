@@ -1,0 +1,36 @@
+{
+  "contract": "EvaFeatureInstallation/v1",
+  "feature": "component_improvement_drafts",
+  "recorded_at": "2026-09-23T21:51:02.019621+00:00",
+  "source_commit": "b2e5dbf1",
+  "image": "eva2-component-improvement-drafts:20260923",
+  "installed": true,
+  "checks": [
+    "Changed Python syntax",
+    "Installed source baselines matched",
+    "Packaged imports and source/draft descriptor construction without network",
+    "Core healthy and work API HTTP 200",
+    "Delegated worker healthy",
+    "Active compose metadata updated"
+  ],
+  "behavior": [
+    "Background worker can read packaged Python sources with pagination and source hash",
+    "Worker can draft one exact replacement in a Python component up to 32 KiB",
+    "Draft includes unified diff, candidate contents, problem, expected gain and verification plan",
+    "No code execution or live source mutation in new tools",
+    "Existing document tool must save a draft before a draft-bearing attempt can finish",
+    "Current worker authority, accounting, stop handling and pinned release sources apply",
+    "Legacy isolated repository text-check route retained"
+  ],
+  "limits": [
+    "No real model-generated improvement attempted",
+    "No functional, performance or regression gain measured",
+    "Drafts are not tested, independently reviewed, deployed or promoted",
+    "Model-led upstream comparison still requires an actual future task",
+    "Real self-improvement acceptance remains open"
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/component-improvement-drafts-20260923/baseline.compose.private.json"
+}

@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Eigen code lezen en een verbeteringsvoorstel bewaren",
+            "date": "23 september",
+            "state": "installed",
+            "result": "De bestaande achtergrondwerker kan geïnstalleerde Python-bron lezen en een brongebonden patch met kandidaattekst en meetplan voorbereiden. Bewaren gaat via bestaande documentopslag; de nieuwe tools wijzigen geen draaiende code.",
+            "remaining": "Tools geïnstalleerd; nog geen echte modelgestuurde verbetering of gemeten voordeel. Voorstellen zijn beperkt tot één component van maximaal 32 KiB.",
+            "source": "eva2/evidence/product/component-improvement-drafts-installed-20260923.json"
+          },
+          {
             "title": "Een gekoppelde reeks in één keer stoppen",
             "date": "23 september",
             "state": "installed",
@@ -1477,15 +1485,15 @@
           }
         ],
         "now": {
-          "title": "Een volledige geplande reeks stoppen",
-          "state": "Geïnstalleerd · gebruiksproef later",
-          "detail": "Reeksstop is beschikbaar in privégesprek en als knop Stop deze stap en vervolg. Niet-afgehandelde stopverzoeken blijven bewaard.",
-          "doneWhen": "Functie geïnstalleerd; echte reeksstopproef en gebruikersbeoordeling blijven open."
+          "title": "Eigen bron en verbeteringsvoorstellen",
+          "state": "Geïnstalleerd · echte verbetering later",
+          "detail": "Broninzage en voorstelvorming zitten in de bestaande digitale werker. Oude tekstcontrole-route blijft behouden; geen nieuwe kwaliteits- of prestatiewinst geclaimd.",
+          "doneWhen": "Tools geïnstalleerd; daadwerkelijke verbetering, meting en beoordeling blijven open."
         },
         "next": {
-          "title": "Eigen verbeteringen in een aparte werkmap",
+          "title": "Oudere opdrachten terugvinden op onderwerp",
           "state": "Nog niet gestart",
-          "detail": "De bestaande route voor repositoryverbetering gebruiken voor de nog open zelfverbeteringsfunctie; geen automatische vervanging van de draaiende Eva."
+          "detail": "De bestaande taakopslag doorzoekbaar maken voorbij het overzicht van twintig opdrachten, zodat een eerder resultaat gericht terug te vinden is."
         },
         "ownerAction": {
           "title": "Takenbord gebruiken",
@@ -1499,7 +1507,7 @@
           "expected": "Dezelfde opgeslagen taken als in Eva’s gesprek, met gerichte bediening per opdracht. Dit is gebruiksinformatie; geen nieuwe verplichte proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T21:42:19.166351+00:00"
+        "reviewedAt": "2026-09-23T21:51:02.019621+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11268,7 +11276,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "De bestaande route voor repositoryverbetering gebruiken voor de nog open zelfverbeteringsfunctie; geen automatische vervanging van de draaiende Eva.",
+      "nextAction": "De bestaande taakopslag doorzoekbaar maken voorbij het overzicht van twintig opdrachten, zodat een eerder resultaat gericht terug te vinden is.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
