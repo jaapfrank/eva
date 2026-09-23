@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Doorwerken wanneer het eigen plan nog niet af is",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Open planstappen leiden binnen dezelfde poging tot vervolgen. De bestaande budgetten en opgeslagen acties blijven leidend; een blokkade of stilstand geeft een begrijpelijke melding dat het werk niet af is.",
+            "remaining": "Functionele modelproef later. Geldt bij een opgeslagen plan; geen automatische nieuwe pogingen of meerdaagse planning.",
+            "source": "eva2/evidence/product/work-plan-continuation-installed-20260923.json"
+          },
+          {
             "title": "Een bewaard plan bij grotere digitale opdrachten",
             "date": "23 september",
             "state": "installed",
@@ -1405,15 +1413,15 @@
           }
         ],
         "now": {
-          "title": "Open planstappen werkelijk vervolgen",
-          "state": "In uitvoering",
-          "detail": "Dezelfde digitale werker gaat na een te vroeg slotantwoord verder met nog open planstappen, binnen het bestaande model-, tool- en tijdbudget.",
-          "doneWhen": "Voortzetten, stoppen bij blokkade of stilstand en begrijpelijke onvolledigheidsmelding geïnstalleerd; echte taakproef later."
+          "title": "Open planstappen vervolgen binnen het taakbudget",
+          "state": "Geïnstalleerd · gebruiksproef later",
+          "detail": "De werker vervolgt open planstappen na een te vroeg slotantwoord. Blokkades, stilstand en onvoldoende budget blijven zichtbaar als onvoltooide opdracht.",
+          "doneWhen": "Installatie afgerond; modelgedrag en volledige taakuitvoering nog te beproeven."
         },
         "next": {
-          "title": "Resterende gesprek- en taakfuncties aansluiten",
-          "state": "Hierna",
-          "detail": "Verder volgens het bestaande achtstappenplan; gebruikersproeven blijven uitgesteld."
+          "title": "Browserwerk op de achtergrond aansluiten",
+          "state": "Nog niet gestart",
+          "detail": "Bestaande browserbediening verbinden met digitale achtergrondtaken, zodat het gesprek beschikbaar blijft tijdens browserwerk."
         },
         "ownerAction": {
           "title": "Takenbord gebruiken",
@@ -1427,7 +1435,7 @@
           "expected": "Dezelfde opgeslagen taken als in Eva’s gesprek, met gerichte bediening per opdracht. Dit is gebruiksinformatie; geen nieuwe verplichte proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T20:45:44.496476+00:00"
+        "reviewedAt": "2026-09-23T20:48:26.664979+00:00"
       }
     },
     "pendingTechnicalReview": {

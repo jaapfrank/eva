@@ -1,0 +1,28 @@
+{
+  "contract": "EvaWorkPlanContinuationInstallation/v1",
+  "checked_at": "2026-09-23T20:48:26.664979+00:00",
+  "source_commit": "5e4bafd6",
+  "image": "eva2-work-plan-continuation:20260923",
+  "stage": "/home/administrator/project/.eva2-artifacts/work-plan-continuation-20260923",
+  "checks": {
+    "source_syntax": "passed",
+    "packaged_imports": "passed",
+    "core_health": "healthy",
+    "worker_health": "healthy",
+    "owner_work_http": 200,
+    "installation_registration": "updated"
+  },
+  "functional_trials": "deferred_by_owner",
+  "independent_review": "deferred_by_owner",
+  "owner_acceptance": false,
+  "model_calls": 0,
+  "credit_cost": "unknown",
+  "behavior": "An early final reply with pending plan steps re-enters the existing conversation loop using the same worker claim, journal and action receipts. Blockers, unchanged progress or exhausted budget produce incomplete_work. No new task is admitted automatically.",
+  "budget_increase": false,
+  "limits": [
+    "Only tasks with a saved progress plan use this continuation check.",
+    "No automatic new attempts or multi-day scheduling.",
+    "Real model behavior still needs a functional trial."
+  ],
+  "rollback": "Retained baseline.compose.private.json and eva2-work-progress:20260923 image"
+}
