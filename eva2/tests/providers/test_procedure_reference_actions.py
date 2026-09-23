@@ -126,7 +126,7 @@ def test_background_readback_checks_job_immediately_before_gateway(monkeypatch, 
             return NS(disposition="verified", evidence={"source": "mcp_gateway_readback"}, observed={"content": "Checked procedure"})
     class Wrapper:
         def __init__(self, *args, **kwargs): pass
-        def _request_from_admission(self, *args): return "bound-request"
+        def _request_from_admission(self, *args, **kwargs): return "bound-request"
     monkeypatch.setattr(module, "PostgresExternalConversationTools", Wrapper)
     host = object.__new__(module.PostgresProcedureReferenceHost)
     host.turn = turn
@@ -192,3 +192,34 @@ def test_designation_normalizes_valid_offset_and_rejects_expired_deadlines(monke
             actions._execute(turn, call)
         assert not calls
     assert call.arguments["retention_until"] == deadline
+
+
+
+def test_historical_read_request_keeps_old_identity_inside_different_background_turn():
+    from dataclasses import replace
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools as Tools
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution, authorize_background_dispatch
+    from eva.application.conversation import ConversationConflict
+    original = _private_turn()
+    current = replace(original, message_id="later-message", conversation_id="later-chat", text="Apply the saved procedure")
+    admission = {"action_name": "save_document", "step_index": 1,
+        "principal_id": original.principal_id, "conversation_id": original.conversation_id,
+        "source_message_id": original.message_id,
+        "request_tool_name": "save", "request_arguments": {"path": "procedure.md"},
+        "request_expected_proof": {}, "request_observation_tool_name": "read",
+        "request_observation_arguments": {"path": "procedure.md"}}
+    tools = object.__new__(Tools)
+    historical = tools._request_from_admission(original, "save_document", admission, 1)
+    guarded = []
+    with background_execution(BackgroundExecutionScope(current, "execution:later", guarded.append)):
+        rebuilt = tools._request_from_admission(original, "save_document", admission, 1, historical=True)
+        assert rebuilt == historical
+        assert "tool:" + Tools._historical_operation_id(original, "save_document", admission, 1) == historical.thread_id
+        with pytest.raises(ConversationConflict, match="source turn differs"):
+            tools._request_from_admission(original, "save_document", admission, 1)
+        with pytest.raises(ConversationConflict, match="source turn differs"):
+            authorize_background_dispatch(original)
+        authorize_background_dispatch(current)
+    assert guarded == [current]
+    with pytest.raises(ConversationConflict, match="namespace"):
+        tools._request_from_admission(original, "save_document", dict(admission, execution_namespace="untrusted"), 1, historical=True)

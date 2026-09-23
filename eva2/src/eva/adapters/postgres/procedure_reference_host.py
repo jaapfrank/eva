@@ -82,7 +82,8 @@ class PostgresProcedureReferenceHost:
         original = self.load_turn(source)
         step = admission.get("step_index", 0)
         if (original.project_id != scope.project_id or type(step) is not int or step < 0
-                or PostgresExternalConversationTools._thread_id(original, admission["action_name"], step) != thread_id):
+                or "tool:" + PostgresExternalConversationTools._historical_operation_id(
+                    original, admission["action_name"], admission, step) != thread_id):
             raise ProcedureReferenceRejected("save origin binding differs")
         proof = events[-1].payload.get("data", {}).get("proof")
         if events[-1].event_type != "STATE_VERIFIED" or not isinstance(proof, dict):
@@ -121,7 +122,7 @@ class PostgresProcedureReferenceHost:
             wrapper = PostgresExternalConversationTools(self.engine, gateway.planner(), gateway,
                                                        authorize_turn=self.authority.authorize_turn)
             command = wrapper._request_from_admission(original, admission["action_name"],
-                                                       admission, admission.get("step_index", 0))
+                                                       admission, admission.get("step_index", 0), historical=True)
             authorize_background_dispatch(self.turn)
             return await gateway.observe(command, None)
         observation = asyncio.run(observe())

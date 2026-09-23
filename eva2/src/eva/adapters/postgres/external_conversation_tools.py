@@ -323,6 +323,7 @@ class PostgresExternalConversationTools:
         action_name: str,
         admission: dict[str, JsonValue],
         step_index: int = 0,
+        *, historical: bool = False,
     ) -> ToolRequest:
         tool_name = admission.get("request_tool_name")
         arguments = admission.get("request_arguments")
@@ -377,10 +378,12 @@ class PostgresExternalConversationTools:
             or admission.get("source_message_id") != turn.message_id
         ):
             raise ConversationConflict("external tool resume command is malformed")
+        operation_id = (self._historical_operation_id(turn, action_name, admission, step_index)
+                        if historical else self._operation_id(turn, action_name, step_index))
         return ToolRequest(
-            thread_id=self._thread_id(turn, action_name, step_index),
-            operation_id=self._operation_id(turn, action_name, step_index),
-            checkpoint_prefix=self._checkpoint_prefix(turn, action_name, step_index),
+            thread_id=f"tool:{operation_id}",
+            operation_id=operation_id,
+            checkpoint_prefix=f"checkpoint:{operation_id}",
             tool_name=tool_name,
             arguments=arguments,
             expected_proof=expected_proof,
@@ -491,6 +494,22 @@ class PostgresExternalConversationTools:
     def _identity(
         cls, turn: ConversationTurn, action_name: str, step_index: int = 0
     ) -> str:
+        from eva.application.background_execution import background_execution_namespace
+        return cls._identity_in_namespace(turn, action_name, step_index,
+                                          background_execution_namespace(turn))
+
+    @classmethod
+    def _historical_operation_id(cls, turn, action_name, admission, step_index=0):
+        """Reconstruct a saved identity without borrowing the active job context."""
+        namespace = admission.get("execution_namespace")
+        if namespace is not None:
+            import re
+            if not isinstance(namespace, str) or not re.fullmatch(r"background-work:[0-9a-f]{64}", namespace):
+                raise ConversationConflict("historical execution namespace is invalid")
+        return "external-tool:" + cls._identity_in_namespace(turn, action_name, step_index, namespace)
+
+    @classmethod
+    def _identity_in_namespace(cls, turn, action_name, step_index, namespace):
         cls._validate_step_index(step_index)
         # Step zero retains the deployed single-action identity for old replays.
         # Later slots belong to the conversation, not to a tool: two competing
@@ -508,8 +527,6 @@ class PostgresExternalConversationTools:
                 "principal_id": turn.principal_id,
                 "step_index": step_index,
             })
-        from eva.application.background_execution import background_execution_namespace
-        namespace = background_execution_namespace(turn)
         if namespace is not None:
             identity["execution_namespace"] = namespace
         return hashlib.sha256(canonical_json_bytes(identity)).hexdigest()[:32]
