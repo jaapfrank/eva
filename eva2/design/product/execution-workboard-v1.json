@@ -1003,7 +1003,15 @@
         "checkedAt": "2026-09-23",
         "deliveries": [
           {
-            "title": "Tussenvragen op eigenaarspagina en herkenbare taaknamen",
+            "title": "Projectdashboard weer bereikbaar",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Ontbrekende webbuild hersteld. Projectdashboard en verpakte applicatie bouwen nu in aparte mappen, zodat een applicatiebuild het dashboard niet wist. Pagina, assets en projectstatus gecontroleerd; localhost:44712 geeft weer HTTP 200.",
+            "remaining": "Geen wijziging aan de gereedstatus van Eva-functies.",
+            "source": "eva2/evidence/product/dashboard-build-isolation-20260923.json"
+          },
+          {
+            "title": "Tussenvragen op de pagina Praten met Eva en herkenbare taaknamen",
             "date": "23 september",
             "state": "installed",
             "result": "Verzenden blijft beschikbaar tijdens een lopend antwoord, tot acht vragen tegelijk. Elk antwoord staat bij zijn eigen vraag. Nieuwe achtergrondopdrachten krijgen een eigen titel in plaats van één algemene naam. Gericht getest, onafhankelijk beoordeeld en geïnstalleerd.",

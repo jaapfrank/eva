@@ -57,3 +57,11 @@ taking over and reconnecting use the existing bridge page and explicit extension
 selection. The backend's legacy browser routes remain unchanged. To run only
 the synthetic entry-point checks, set `EVA_DASHBOARD_BROWSER_ONLY=1` alongside
 the two browser-test paths above; no live bridge or tab sharing is used.
+
+## Local project dashboard (port 44712)
+
+Build with `npm run build -- --mode project`, then restart the user service
+`systemctl --user restart eva2-project-dashboard.service`. Project output lives
+in `project-dist/`, separate from the packaged dashboard in `dist/`. A normal
+packaged build must not erase the running project dashboard. Check `/`, its
+referenced assets, and `/project-state` after installing.

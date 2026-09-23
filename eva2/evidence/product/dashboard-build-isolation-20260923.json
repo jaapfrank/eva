@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-23",
+  "cause": "project output dist/project nested inside default dist; directory absent while preview running; GET / returned404",
+  "change": "project output project-dist outside packaged dist",
+  "validation": {
+    "project_build": "passed",
+    "default_build": "passed; project file hashes unchanged",
+    "wsl_root_assets_state": "HTTP200",
+    "windows_localhost_root": "HTTP200 via curl.exe",
+    "independent_review": "dashboard_build_review: GO"
+  },
+  "installed": true,
+  "owner_acceptance": false
+}

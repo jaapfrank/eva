@@ -24,7 +24,7 @@ const server=createServer(async(req,res)=>{
  if(req.url==='/project-state'){res.setHeader('Content-Type','application/json');return res.end(JSON.stringify(await state()));}
  const asset=new URL(req.url,'http://localhost').pathname;
  if(asset!=='/' && !/^\/assets\/[a-zA-Z0-9_.-]+$/.test(asset)){res.writeHead(404);return res.end();}
- try{res.setHeader('Content-Type',asset.endsWith('.js')?'application/javascript':asset.endsWith('.css')?'text/css':'text/html');res.end(await readFile(new URL(`./dist/project${asset==='/'?'/index.html':asset}`,import.meta.url)));}catch{res.writeHead(404);res.end();}
+ try{res.setHeader('Content-Type',asset.endsWith('.js')?'application/javascript':asset.endsWith('.css')?'text/css':'text/html');res.end(await readFile(new URL(`./project-dist${asset==='/'?'/index.html':asset}`,import.meta.url)));}catch{res.writeHead(404);res.end();}
 });
 await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const origin=`http://127.0.0.1:${server.address().port}`;
 try {
