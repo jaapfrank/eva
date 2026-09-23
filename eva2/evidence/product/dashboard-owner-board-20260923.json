@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-09-23T12:05:57.725264+00:00",
+  "state": "installed",
+  "route": "http://localhost:44712/",
+  "scope": "Project overview presentation and explicit status review freshness; no Eva runtime changes",
+  "validation": {
+    "build": "passed",
+    "nodeTests": 9,
+    "independentReview": "compact_contact_catalog: GO; two minor label issues corrected",
+    "browser": "Live overview, nine component statuses, memory acceptance and separate history inspected; desktop 1440x1000 and narrow viewport"
+  },
+  "rollback": {
+    "sourceCommit": "d7aeae67",
+    "method": "Restore prior dashboard JSX/CSS, remove new freshness import and rebuild project assets; runtime data unchanged"
+  },
+  "limits": [
+    "Owner acceptance unchanged",
+    "Polling does not infer development progress",
+    "Source still requires coordinator updates; overdue review becomes visible"
+  ],
+  "modelCalls": 0
+}

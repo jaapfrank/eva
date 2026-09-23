@@ -25,7 +25,9 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Eerstvolgende handeling:** Eerste contact verder versnellen. De ontvangstvariant met één modelaanroep is nu geïnstalleerd en in de echte route geslaagd: 10,3 seconden, waarvan 6,8 seconden modeltijd. De eerdere proef duurde 13,8 seconden met twee modelaanroepen. Dit is nog geen natuurlijk snel gesprek; de eerdere 61-seconden-time-out blijft onverklaard. [Metingen en installatie](evidence/product/contact-acceptance-candidate-20260923.json). Gewone Voice PE-spraak werkt; de nieuwe route wacht op een fysieke wakewordproef.
+**Eerstvolgende handeling:** De gebouwde catalogusverkleining voor sneller contact integreren en installeren; gerichte tests zijn geslaagd, installatie en echte snelheidsmeting staan nog open. Huidig geïnstalleerde taakontvangst gebruikt één modelaanroep maar duurde nog 10,3 seconden. Daarna gedeeld doorpraten tijdens werk afronden; de fysieke Voice PE-wakewordproef blijft apart open.
+
+**Projectoverzicht opgeleverd (23 september):** vier gekleurde kolommen, negen zichtbare onderdelen en afzonderlijke historie. Expliciete inhoudelijke controletijd; na één uur waarschuwing. Automatisch ophalen maakt de inhoud niet actueel. Bouw en 9 gerichte tests geslaagd, onafhankelijke review GO, live desktop- en smalle weergave bekeken. [Bewijs](evidence/product/dashboard-owner-board-20260923.json).
 
 Afgeronde deelresultaten en menselijke acceptaties blijven hieronder behouden. Een open gebruikersoordeel is geen algemene bouwstop.
 

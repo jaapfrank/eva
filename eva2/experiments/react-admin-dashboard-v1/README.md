@@ -65,3 +65,22 @@ Build with `npm run build -- --mode project`, then restart the user service
 in `project-dist/`, separate from the packaged dashboard in `dist/`. A normal
 packaged build must not erase the running project dashboard. Check `/`, its
 referenced assets, and `/project-state` after installing.
+
+
+### Owner overview freshness
+
+The overview contains four lanes and visible component summaries. Historical
+proof lives on the separate Details & historie tab. Component acceptance is
+still derived by the existing completion projection, never by recent activity.
+
+At each meaningful start, result, blocker or installation, the coordinator updates
+`audit.projectDashboard.deliveryOverview` in the existing workboard JSON and the
+current paragraph in WERKBORD.md together. Set `reviewedAt` to the actual ISO UTC
+time of that content review. Never advance it from polling, builds, file mtime or
+an unrelated edit. Missing/invalid timestamps are unknown; after 60 minutes the
+UI requests rechecking. This is a freshness warning, not an automatic judgement
+of engineering progress. Polling still refreshes the stored source every 5 seconds.
+
+Validate with `node --test project-freshness.test.mjs project-completion.test.mjs`
+and `npm run build -- --mode project`. The existing preview serves project-dist;
+rollback the UI with its prior committed source and rebuild in project mode.

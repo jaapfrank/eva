@@ -1000,8 +1000,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T11:54:31.623258+00:00",
+        "checkedAt": "2026-09-23T12:05:57.725264+00:00",
         "deliveries": [
+          {
+            "title": "Projectoverzicht met vier duidelijke kolommen",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Opgeleverd, bezig, hierna en jouw actie staan naast elkaar. Alle negen onderdelen zijn direct zichtbaar; historie en bewijs hebben een eigen tab.",
+            "remaining": "Voortgang wordt vastgelegd door de coördinator. Na een uur zonder inhoudelijke controle waarschuwt het bord; verversen bewijst geen nieuwe voortgang.",
+            "source": "eva2/evidence/product/dashboard-owner-board-20260923.json"
+          },
           {
             "title": "Taakontvangst gebruikt één modelaanroep",
             "date": "23 september · 13:52",
@@ -1164,20 +1172,18 @@
           }
         ],
         "now": {
-          "title": "Eerste contact verder versnellen",
-          "detail": "De tweede modelaanroep voor taakontvangst is verwijderd en live gecontroleerd. De eerste modelaanroep kostte nog 6,8 seconden; totaal 10,3 seconden. Geheugen ophalen duurt circa 2 seconden. Deze wachttijd moet verder omlaag.",
-          "state": "Ontvangst nog te langzaam",
-          "doneWhen": "Een digitale opdracht wordt aangenomen, via bestaande connectoren afgemaakt en met opgeslagen resultaat teruggebracht. De gewone gespreksroute blijft beschikbaar."
+          "title": "Sneller contact installeren",
+          "state": "Gebouwd en gericht getest · installatie volgt",
+          "detail": "Acht dubbele toolbeschrijvingen verdwijnen uit de eerste modelinvoer wanneer dezelfde tools opvraagbaar zijn. Geheugen en persoonlijkheid blijven behouden.",
+          "doneWhen": "Wijziging beoordeeld, geïnstalleerd en één echte proef gemeten. Alleen daarna wordt de nieuwe snelheid als resultaat vermeld."
         },
         "next": {
-          "title": "Nieuwe Voice PE-route herstellen",
-          "detail": "De gewone spraakroute werkt. Voor de fout in de nieuwe firmware ontbreekt nog de opname van één echte wakeword-overgang; de vraag naar jouw beschikbaarheid staat open.",
-          "state": "Fysieke proef wacht op beschikbaarheid"
+          "title": "Doorpraten tijdens achtergrondwerk",
+          "state": "Volgende productuitkomst",
+          "detail": "Dezelfde gesprek-, correctie- en stoproute afmaken via website, Telegram, Home Assistant en Voice PE. De fysieke wakewordproef blijft apart open."
         },
         "ownerAction": {
-          "title": "Eén wakewordproef zodra de foutregistratie klaarstaat",
-          "linkLabel": "Open Praten met Eva ter vergelijking",
-          "url": "http://localhost:44716/",
+          "title": "Voice PE: beschikbaarheid doorgeven",
           "steps": [
             "Geef in deze taak aan wanneer je bij de woonkamer-Voice PE bent.",
             "Wacht op de melding dat de tijdelijke kandidaat en foutregistratie klaarstaan.",
@@ -1185,7 +1191,8 @@
           ],
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
-        "maintenance": "Bij een oplevering, gewijzigde opdracht of blokkade worden resultaat, huidig werk en volgende stap samen bijgewerkt. Technisch afgerond, geïnstalleerd en door jou geaccepteerd blijven apart."
+        "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
+        "reviewedAt": "2026-09-23T12:05:57.725264+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -10954,7 +10961,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "De tweede modelaanroep voor taakontvangst is verwijderd en live gecontroleerd. De eerste modelaanroep kostte nog 6,8 seconden; totaal 10,3 seconden. Geheugen ophalen duurt circa 2 seconden. Deze wachttijd moet verder omlaag.",
+      "nextAction": "Sneller contact installeren: gerichte cataloguswijziging gebouwd en getest, nog niet geïnstalleerd. Daarna echte snelheidsmeting en gedeeld doorpraten afmaken; fysieke Voice PE-proef blijft apart open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11740,6 +11747,26 @@
       "latestWallSeconds": 10.312,
       "latestModelCalls": 1,
       "previousTimeoutCause": "unknown"
+    },
+    "contactCatalog20260923": {
+      "status": "focused_tests_passed_installation_pending",
+      "baseCommit": "d7aeae67",
+      "duplicateDescriptors": 8,
+      "descriptorBytes": 6572,
+      "owners": {
+        "root": [
+          "bootstrap/contact_catalog.py",
+          "bootstrap/runtime.py",
+          "bootstrap/test_contact_catalog.py",
+          "installation"
+        ],
+        "compact_contact_catalog": [
+          "adapters/model/pydantic_conversation.py",
+          "focused model tests"
+        ]
+      },
+      "endCondition": "Smaller first-contact schema catalog only when same authorized discovery path exists; continuations unchanged, targeted tests/review, installed core/worker, live measured request",
+      "effort": "Two small modules plus model option; one changed-cause live trial; credit cost unknown"
     }
   },
   "activeTaskId": "AU-008",
