@@ -1,0 +1,33 @@
+{
+  "contract": "EvaFeatureInstallation/v1",
+  "feature": "initiative_conversation_controls",
+  "recorded_at": "2026-09-23T21:20:11.094166+00:00",
+  "source_commit": "17ecb383",
+  "image": "eva2-initiative-controls:20260923",
+  "installed": true,
+  "checks": [
+    "Syntax of changed source",
+    "All five source baselines matched running image before replacement",
+    "Packaged imports and tool descriptor construction without network",
+    "Core startup healthy; work and initiatives APIs HTTP 200",
+    "Delegated worker healthy",
+    "Active compose metadata updated"
+  ],
+  "behavior": [
+    "Private conversation can select stop_own_initiative and give_initiative_feedback",
+    "Existing stop and feedback storage reused",
+    "Feedback at most 800 characters; stops ongoing initiative using existing behavior",
+    "Durable request key prevents duplicate feedback on action replay",
+    "Shared household adapters retain their existing tool allowlist"
+  ],
+  "limitations": [
+    "Real model and channel behavior not exercised",
+    "Functional trial and independent review deferred by owner instruction",
+    "Stopping does not undo effects already started",
+    "Feedback does not itself create replacement work"
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/initiative-controls-20260923/baseline.compose.private.json"
+}

@@ -2,6 +2,8 @@
 
 Laatst bijgewerkt: 2026-09-23.
 
+**Initiatieven bijsturen vanuit gesprek geïnstalleerd (23 september):** de privégespreksroute kan bestaande initiatieven gericht stoppen en eigenaarfeedback bewaren via dezelfde bediening als het dashboard. Feedback op lopend werk stopt de huidige uitvoering; feedback blijft beschikbaar voor volgende initiatiefkeuzes. De gespreksactie bewaart een herhalingssleutel tegen dubbele feedback. Geen nieuwe taak of budgetverhoging. Bronbasis vergeleken met geïnstalleerde bestanden, syntax/import/beschrijvingen opgebouwd en startcontrole gedaan. Model- en gebruiksproeven/review later volgens eigenaarbesluit. [Installatie](evidence/product/initiative-controls-installed-20260923.json). Volgende functionele stap: planning en voortzetting van meerdaagse opdrachten; nog niet gestart.
+
 **Initiatiefterugmelding geïnstalleerd (23 september):** nieuwe afgeronde eigen initiatieven zijn aangesloten op stille privébezorging via de bestaande Telegramroute. Eerste activering bewaart een grens zodat oude resultaten niet opnieuw worden verstuurd. Een bezorgpoging wordt duurzaam vastgelegd; onzekerheid leidt niet tot automatisch opnieuw sturen. Bestaand mandaat, persoonsbinding en initiatiefbudget blijven gelden. Alleen bouw/import/startcontrole gedaan: beide diensten gezond, werk- en initiatieven-API HTTP200. Echte bezorgproef en review volgen later; nul modelproeven of testberichten. [Installatie](evidence/product/initiative-result-delivery-installed-20260923.json). Volgende functionele stap: eigen initiatieven bijsturen en stoppen vanuit gesprek; nog niet gestart.
 
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
