@@ -25,7 +25,9 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Eerstvolgende handeling:** Gespreksgedrag en kanaalbewijs afronden; natuurlijke taakselectie en snelle ontvangst blijven open. Fysieke Voice PE-proef blijft apart en blokkeert onafhankelijk vervolgwerk niet.
+**Eerstvolgende handeling:** de geteste en onafhankelijk beoordeelde taakcontext installeren en één gewijzigde modelproef uitvoeren. De eerdere natuurlijke taakselectie koos correct in twee modelrondes (10,7 seconden); de optimalisatie is nog niet geïnstalleerd. Fysieke Voice PE-acceptatie blijft open.
+
+**Projectoverzicht bijgewerkt (23 september):** scope en eerste open punt staan direct per onderdeel in beeld, net als jouw instructies. De oude actieve proefkaart is vervangen door de werkelijke stand. Negen bestaande status-/versheidscontroles en bouw geslaagd, onafhankelijke review GO; live desktop en smalle pagina bekeken. Dit is een dashboardoplevering, geen nieuwe Eva-functionaliteit. [Bewijs](evidence/product/dashboard-readable-status-20260923.json).
 
 **Huishoudtaakselectie geïnstalleerd (23 september):** bestaande lijstfunctie ontsloten voor exact dezelfde huishoudsessie; privétaken en andere sessies uitgesloten. Twee taken onderscheiden en één stoppen gecontroleerd. 21 verpakte tests direct geslaagd; één gecorrigeerde testassertie daarna gericht geslaagd (stop vóór uitvoering geeft `stopped`). Onafhankelijke review GO, kern/werker gezond, echte huishoudgereedheidsroute gecontroleerd. Geen modelcalls of nieuwe fysieke sessie. [Bewijs](evidence/product/household-task-selection-installed-20260923.json).
 
