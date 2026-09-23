@@ -49,3 +49,13 @@ article h3 { text-transform: capitalize; }
 @media(max-width:600px){.work-kanban{grid-template-columns:1fr}.work-toolbar label{display:grid;gap:.3rem}}
 
 .work-usage { display:grid; grid-template-columns:minmax(9rem,1fr) 1fr; max-width:36rem; gap:.5rem; }.work-usage dd { margin:0; font-variant-numeric:tabular-nums; }
+
+.work-progress { margin: 1.2rem 0; padding: 1rem; background: #f4f7f2; border-radius: 12px; }
+.work-progress ol { padding-left: 1.5rem; }
+.work-step { padding: .65rem .7rem; margin: .5rem 0; border-left: 4px solid #87928c; overflow-wrap: anywhere; }
+.work-step span { display: block; font-size: .85rem; }
+.work-step p { margin: .35rem 0 0; }
+.work-step.working { border-color: #2375ab; background: #e8f3fa; }
+.work-step.blocked { border-color: #bd791d; background: #fff3dd; }
+.work-step.done { border-color: #42815b; }
+.work-step.skipped { border-color: #9a9690; }

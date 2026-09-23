@@ -1397,15 +1397,15 @@
           }
         ],
         "now": {
-          "title": "Hervatte opdrachten met eerdere pogingen verbinden",
-          "state": "Geïnstalleerd · slotregistratie deels geblokkeerd",
-          "detail": "Taakdetail toont eerdere en zichtbare vervolgpogingen, tijdstippen en gemeten verbruik. Nieuwe webbundel wordt geserveerd; kern draait gezond. Alleen de centrale installatiepointer blijft nog oud na de beleidsblokkade.",
-          "doneWhen": "Pogingketen en gemeten verbruik in geïnstalleerd takenbord; gebruikstest later."
+          "title": "Uitvoerplan en voortgang bij achtergrondtaken bewaren",
+          "state": "In uitvoering",
+          "detail": "De bestaande werker krijgt een bewaard stappenplan, voortgang en overdrachtsnotitie die bij hervatten terugkomen. Geen nieuwe scheduler of tweede werkroute.",
+          "doneWhen": "Planopslag, hergebruik bij hervatten en zichtbare voortgang geïnstalleerd; uitgebreide proeven later."
         },
         "next": {
-          "title": "Volgende open gebruikersfunctie afmaken",
-          "state": "Nog niet gestart",
-          "detail": "Door met de bestaande functielijst; uitgebreide tests en gebruikersproeven volgen later."
+          "title": "Resterende gesprek- en taakfuncties aansluiten",
+          "state": "Hierna",
+          "detail": "Verder volgens het bestaande achtstappenplan; gebruikersproeven blijven uitgesteld."
         },
         "ownerAction": {
           "title": "Takenbord gebruiken",
@@ -1419,7 +1419,7 @@
           "expected": "Dezelfde opgeslagen taken als in Eva’s gesprek, met gerichte bediening per opdracht. Dit is gebruiksinformatie; geen nieuwe verplichte proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T20:33:52.671179+00:00"
+        "reviewedAt": "2026-09-23T20:35:12.811746+00:00"
       }
     },
     "pendingTechnicalReview": {

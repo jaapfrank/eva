@@ -7,6 +7,7 @@ from uuid import UUID
 
 from eva.bootstrap.delegated_digital_profile import DelegatedDigitalProfile
 from eva.contracts.canonical_json import canonical_sha256
+from eva.adapters.postgres.background_work_progress import progress_descriptor
 
 _CONNECTORS = frozenset({"connect_service", "discover_connector_tools",
                         "manage_connected_services", "use_connector_tool"})
@@ -17,6 +18,7 @@ _ROOT = Path(__file__).resolve().parents[1]
 _EXECUTION_SOURCES = (
     "bootstrap/delegated_digital_composition.py",
     "bootstrap/delegated_digital_runner.py",
+    "adapters/postgres/background_work_progress.py",
     "bootstrap/private_conversation_resources.py",
     "adapters/model/pydantic_conversation.py",
     "providers/mcp_autonomy.py",
@@ -41,7 +43,7 @@ def digital_tools(bundle):
     names = {tool.name for tool in descriptors}
     if not names or names != {name for tool in routes for name in tool.action_names if name in _CONNECTORS | _PROCEDURES}:
         raise ValueError("digital connector descriptions and routes differ")
-    return descriptors, routes
+    return (*descriptors, progress_descriptor()), routes
 
 
 def _configuration_value(value):

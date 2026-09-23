@@ -8,6 +8,7 @@ import hashlib
 
 from eva.adapters.connectors.mcp_gateway import McpGatewayUnavailable
 from eva.adapters.postgres.background_model_journal import BackgroundModelJournal
+from eva.adapters.postgres.background_work_progress import BackgroundWorkProgress, load_work_progress
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.delegated_work import DelegatedWorkCall, DelegatedWorkReleaseSelector
 from eva.adapters.postgres.operational_timeline import external_timeline_scope
@@ -32,6 +33,11 @@ class _TaskModel:
             "het resultaat terug. Het oorspronkelijke bericht is de context, geen nieuwe "
             "opdracht om opnieuw werk te delegeren. Beweer alleen wat toolresultaten bewijzen. "
             "Als iets ontbreekt, vermeld concreet wat niet is gelukt.",
+            "Bij grotere opdrachten: bewaar een beknopt uitvoerplan met save_work_progress, "
+            "werk de stappen bij na betekenisvolle voortgang en noteer de eerstvolgende actie "
+            "voor hervatten. Besteed geen plan-call aan een eenvoudige opdracht. Een opgeslagen "
+            "plan is nog geen resultaat; voer het werk daadwerkelijk uit. Bij een blokkade "
+            "bewaar je de stand en benoem je wat nodig is. Bestaande budgetten blijven gelden. ",
             "Bij een opdracht om een vaardigheid te leren: raadpleeg de relevante documentatie "
             "met beschikbare tools en pas de aanpak toe binnen de opdracht en het bestaande "
             "mandaat. Bewaar een bruikbare werkwijze met save_workspace_document en registreer "
@@ -101,7 +107,7 @@ class BackgroundConnectorActions:
                     raise ConversationConflict("background action admission differs")
                 found = self._receipt(receipt)
         if found is not None:
-            self.calls += 1
+            # Recovered receipts do not consume this attempt's new-call budget.
             self.receipts.append(found)
         return found
 
@@ -126,6 +132,9 @@ def _has_completed_tool_evidence(receipts):
     completed = False
     for receipt in receipts:
         output = receipt.output
+        if receipt.call.name == "save_work_progress":
+            # A planning checkpoint proves persistence, never completed work.
+            continue
         if receipt.call.name in {"list_reusable_procedures", "resolve_reusable_procedure", "designate_reusable_procedure"}:
             if output.get("status") != "verified":
                 return False
@@ -226,7 +235,9 @@ class DelegatedDigitalRunner:
                 signal.cancel()
             authorize(source)
             journal = self.journal_factory(source, spec)
-            actions = BackgroundConnectorActions(self.connector_tools, spec.grant.capability_ids,
+            progress = BackgroundWorkProgress(self.store._engine, spec, source, authorize,
+                                              dispatch_guard, self.clock)
+            actions = BackgroundConnectorActions((*self.connector_tools, progress), spec.grant.capability_ids,
                                                   authorize, spec.grant.maximum_tool_calls)
             conversation = LivingConversation(self.memory, _TaskModel(self.model, spec.task),
                                                self.identity, actions)
@@ -252,6 +263,10 @@ class DelegatedDigitalRunner:
             actual = journal.model_usage(source)
             checkpoint(source, actual)
             usage = self._usage(actual, actions.dispatches)
+            saved_progress = load_work_progress(self.store._engine, spec)
+            if saved_progress and any(step["state"] not in {"done", "skipped"}
+                                      for step in saved_progress["steps"]):
+                raise ConversationConflict("background task plan is unfinished")
             if not _has_completed_tool_evidence(actions.receipts):
                 raise ConversationConflict("background task lacks verified connector results")
             if actual.measurement != "measured":

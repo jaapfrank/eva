@@ -319,6 +319,10 @@ class DelegatedWorkOwnerService:
         if work.result is not None and work.state in {"succeeded", "verified"}:
             result = {"output": work.result.output, "output_sha256": work.result.output_sha256,
                       "completed_at": work.result.completed_at, "verified": work.state == "verified"}
+        progress = None
+        if include_result and isinstance(work.spec, DelegatedDigitalWorkSpec):
+            from eva.adapters.postgres.background_work_progress import load_work_progress
+            progress = load_work_progress(self.store._engine, work.spec)
         return {"work_id": work.spec.work_id, "generation": work.spec.generation,
                 "parent_work_id": work.spec.parent_task_id if work.spec.generation > 1 else None,
                 "state": work.state, "title": work.title,
@@ -330,7 +334,7 @@ class DelegatedWorkOwnerService:
                 "failure_description": work_failure_description(work.error_code),
                 "result_available": result is not None,
                 "delivery": self._private_delivery_view(work, turn),
-                **({"result": result} if include_result else {}),
+                **({"result": result, "progress": progress} if include_result else {}),
                 "scope": ("private_digital_worker" if isinstance(work.spec, DelegatedDigitalWorkSpec) else
                           "private_public_research_worker" if isinstance(work.spec, DelegatedResearchSpec)
                           else "private_tool_free_worker"), "new_model_run_on_resume": True}

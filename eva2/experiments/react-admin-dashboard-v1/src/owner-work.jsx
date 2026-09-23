@@ -10,6 +10,13 @@ const lanes = [
   ['done', 'Resultaten', ['succeeded', 'verified']],
   ['stopped', 'Gestopt', ['stopped']],
 ];
+const progressLabels = { pending: 'Nog te doen', working: 'Bezig', done: 'Gedaan volgens Eva', blocked: 'Geblokkeerd', skipped: 'Overgeslagen' };
+function validProgress(progress) {
+  return progress && progress.contract === 'EvaWorkProgress/v1' && Array.isArray(progress.steps)
+    && progress.steps.length <= 12 && typeof progress.handoff === 'string'
+    && progress.steps.every(step => typeof step.id === 'string' && typeof step.title === 'string'
+      && typeof step.evidence === 'string' && Object.hasOwn(progressLabels, step.state));
+}
 const resumable = new Set(['stopped', 'failed', 'needs_help', 'ambiguous', 'expired']);
 function validWork(work, detail = false) {
   return work && typeof work.work_id === 'string' && Object.hasOwn(labels, work.state)
@@ -100,7 +107,7 @@ export default function OwnerWork() {
           if (operation === 'list') {
             setPage(data);
             const job = data.jobs.find(item => item.work_id === selected);
-            if (selected && (!currentDetail || (job
+            if (selected && (!currentDetail || ['admitted', 'call_started'].includes(currentDetail.state) || (job
               ? fingerprint(job) !== fingerprint(currentDetail)
               : ['admitted', 'call_started'].includes(currentDetail.state)))) {
               const result = await request('get', selected, controller.signal);
@@ -225,6 +232,16 @@ export default function OwnerWork() {
         <p>Hervatten start een nieuwe begrensde poging en kan opnieuw modelverbruik opleveren. De eerdere poging blijft bewaard.</p>
         <button disabled={busy} onClick={() => act('resume', detail.work_id)}>Hervatten met nieuwe poging</button>
       </>}
+      {validProgress(detail.progress) && <section aria-label="Uitvoerplan en voortgang" className="work-progress">
+        <h3>Uitvoerplan</h3>
+        <p>Bijgewerkt: {timestamp(detail.progress.updated_at)}. Eva’s werknotities; de stappen zijn niet onafhankelijk gecontroleerd.</p>
+        <ol>{detail.progress.steps.map(step => <li key={step.id} className={`work-step ${step.state}`}>
+          <strong>{step.title}</strong> <span>{progressLabels[step.state]}</span>
+          {step.evidence && <p>{step.evidence}</p>}
+        </li>)}</ol>
+        {detail.progress.handoff && <><h4>Stand en volgende actie</h4><p style={{ whiteSpace: 'pre-wrap' }}>{detail.progress.handoff}</p></>}
+        <p>Bij hervatten blijft dit plan beschikbaar. Het plan zelf start geen nieuwe poging.</p>
+      </section>}
       <h3>Opgeslagen resultaat</h3>
       {detail.result_available && detail.result && <button onClick={downloadResult}>Resultaat downloaden</button>}
       {detail.result_available && detail.result
