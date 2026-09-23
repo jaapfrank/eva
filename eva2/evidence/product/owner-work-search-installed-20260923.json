@@ -1,0 +1,37 @@
+{
+  "contract": "EvaFeatureInstallation/v1",
+  "feature": "owner_work_search",
+  "recorded_at": "2026-09-23T21:58:06.819537+00:00",
+  "source_commit": "1c014472",
+  "image": "eva2-owner-work-search:20260923",
+  "installed": true,
+  "checks": [
+    "Changed Python syntax",
+    "Installed source baselines matched; runtime differences retained",
+    "Dashboard build and asset materialization",
+    "Packaged imports and tool descriptor construction without network",
+    "Core healthy",
+    "Read-only search endpoint HTTP 200; buurtplan returned two stored tasks",
+    "Delegated worker healthy",
+    "Active compose and dashboard asset metadata updated"
+  ],
+  "behavior": [
+    "Literal case-insensitive substring search over private stored titles, task instructions and result output",
+    "Same tenant, installation, owner and current binding filters as existing work listing",
+    "Stable descending time/work-ID cursor; twenty hits per page",
+    "Shared conversation action and owner dashboard search",
+    "Existing get/stop/resume controls open found tasks",
+    "No new model call required to query stored work"
+  ],
+  "limits": [
+    "Real conversation/model search and multi-page browser trial deferred",
+    "Independent review deferred by owner instruction",
+    "Text search, not semantic/vector search",
+    "Only retained tasks; no extension of retention and no reconstruction of deleted data",
+    "Read-only startup lookup does not prove all pagination and ownership cases"
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/owner-work-search-20260923/baseline.compose.private.json"
+}

@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Oudere opdrachten op onderwerp terugvinden",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Gesprek en takenbord kunnen op tekst zoeken in bewaarde titels, opdrachten en resultaten. Zoekresultaten zijn per twintig door te bladeren en openen via de bestaande taakbediening.",
+            "remaining": "Geïnstalleerd; leescontrole vond twee buurtplan-opdrachten. Echte gespreks- en meerpagina-proef later. Alleen bewaarde gegevens; geen semantische zoekclaim.",
+            "source": "eva2/evidence/product/owner-work-search-installed-20260923.json"
+          },
+          {
             "title": "Eigen code lezen en een verbeteringsvoorstel bewaren",
             "date": "23 september",
             "state": "installed",
@@ -1485,15 +1493,15 @@
           }
         ],
         "now": {
-          "title": "Eigen bron en verbeteringsvoorstellen",
-          "state": "Geïnstalleerd · echte verbetering later",
-          "detail": "Broninzage en voorstelvorming zitten in de bestaande digitale werker. Oude tekstcontrole-route blijft behouden; geen nieuwe kwaliteits- of prestatiewinst geclaimd.",
-          "doneWhen": "Tools geïnstalleerd; daadwerkelijke verbetering, meting en beoordeling blijven open."
+          "title": "Oudere opdrachten terugvinden",
+          "state": "Geïnstalleerd · gebruiksproef later",
+          "detail": "Nieuwe zoekactie en zoekknop gebruiken dezelfde eigenaargebonden opslag. De recente lijst blijft beschikbaar.",
+          "doneWhen": "Functie geïnstalleerd; volledige zoek-/pagineringproef en gebruikersbeoordeling blijven open."
         },
         "next": {
-          "title": "Oudere opdrachten terugvinden op onderwerp",
+          "title": "Lopende opdrachten gericht bijsturen",
           "state": "Nog niet gestart",
-          "detail": "De bestaande taakopslag doorzoekbaar maken voorbij het overzicht van twintig opdrachten, zodat een eerder resultaat gericht terug te vinden is."
+          "detail": "Een gewijzigde opdracht verbinden met de bestaande stop- en hervattingsroute, zodat oude uitvoering en resultaten zichtbaar blijven."
         },
         "ownerAction": {
           "title": "Takenbord gebruiken",
@@ -1507,7 +1515,7 @@
           "expected": "Dezelfde opgeslagen taken als in Eva’s gesprek, met gerichte bediening per opdracht. Dit is gebruiksinformatie; geen nieuwe verplichte proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T21:51:02.019621+00:00"
+        "reviewedAt": "2026-09-23T21:58:06.819537+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11166,7 +11174,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 5,
+      "currentStep": 3,
       "steps": [
         {
           "number": 1,
@@ -11195,7 +11203,7 @@
         {
           "number": 3,
           "title": "Taken afmaken en terugmelden",
-          "state": "open",
+          "state": "actief",
           "existingCards": [
             "AU-002",
             "VB-004",
@@ -11222,7 +11230,7 @@
         {
           "number": 5,
           "title": "Leren en langdurig werk",
-          "state": "actief",
+          "state": "open",
           "existingCards": [
             "AU-004",
             "AU-006",
@@ -11276,7 +11284,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "De bestaande taakopslag doorzoekbaar maken voorbij het overzicht van twintig opdrachten, zodat een eerder resultaat gericht terug te vinden is.",
+      "nextAction": "Een gewijzigde opdracht verbinden met de bestaande stop- en hervattingsroute, zodat oude uitvoering en resultaten zichtbaar blijven.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
