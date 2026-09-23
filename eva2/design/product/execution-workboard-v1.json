@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T23:30:24.713910+00:00",
+        "checkedAt": "2026-09-23T23:43:26.537154+00:00",
         "deliveries": [
+          {
+            "title": "Taakbrowser bedienen en herstellen",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Het eigenaarsoverzicht bedient nu ook Eva’s bestaande taakbrowser. Herstel brengt het bewaarde profiel terug onder jouw bediening; persoonlijke Chrome blijft beschikbaar.",
+            "remaining": "Geen echte herstel-/taakproef. Teruggeven hervat geen gestopte opdracht; die hervat je apart op het takenbord.",
+            "source": "eva2/evidence/product/browser-controls-installed-20260924.json"
+          },
           {
             "title": "Opgeslagen HA-antwoord vóór geheugenverwerking aanbieden",
             "date": "24 september",
@@ -1613,29 +1621,29 @@
           }
         ],
         "now": {
-          "title": "Ontvangstzin vóór geheugenverwerking doorgeven",
+          "title": "Beheerde browser bedienen en herstellen",
           "state": "Geïnstalleerd",
-          "detail": "Het gecontroleerde opgeslagen HA-antwoord aan de bestaande tekststream aanbieden voordat de geheugenverwerking wordt ingepland, zonder tekst te verdubbelen.",
-          "doneWhen": "Technische installatie afgerond; fysieke audiotiming later."
+          "detail": "De bestaande browsercontroller weer bereikbaar maken vanuit het eigenaarsoverzicht. Herstel bewaart het profiel en geeft eerst bediening aan de eigenaar; geen automatische herhaling van klikken.",
+          "doneWhen": "Technische installatie afgerond; echte herstel- en taakproef later."
         },
         "next": {
-          "title": "Resterende gespreks- en spraakfuncties",
+          "title": "Browserwerk en taakvoortgang",
           "state": "Nog niet gestart",
-          "detail": "Verder met concrete open functies uit stap 1. Fysieke proeven en brede tests volgen later op eigenaarverzoek."
+          "detail": "Verder met concrete ontbrekende aansluiting op de bestaande digitale taakuitvoering; bestaande browserbediening behouden."
         },
         "ownerAction": {
-          "title": "Gewone Voice PE-route blijft beschikbaar",
+          "title": "Eva’s taakbrowser bedienen",
           "url": "http://localhost:44711/internal/v1/dashboard",
-          "linkLabel": "Open Eva’s overzicht",
+          "linkLabel": "Open eigenaarsoverzicht",
           "steps": [
-            "Je hoeft niets op de Voice PE te installeren.",
-            "Gebruik het wakeword en stel je vraag zoals eerder.",
-            "Hoorbare snelheid en onderbreken zijn nog niet bevestigd; je hoeft nu geen proef te doen."
+            "Zoek Eva’s taakbrowser. De actuele status staat rechtsboven.",
+            "Bij Jij hebt de bediening: kies Bekijk en bedien browser.",
+            "Geef terug aan Eva als zij de browser weer mag bedienen. Een gestopte opdracht hervat je apart op het takenbord."
           ],
-          "expected": "De gewijzigde HA-koppeling is geladen. Werkelijk audiogedrag blijft afzonderlijk te beoordelen."
+          "expected": "Bediening en status gebruiken de bestaande browsercontroller. Je hoeft nu geen herstelproef te doen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T23:30:24.713910+00:00"
+        "reviewedAt": "2026-09-23T23:43:26.537154+00:00"
       }
     },
     "pendingTechnicalReview": {

@@ -1,0 +1,26 @@
+{
+  "recorded_at": "2026-09-23T23:43:26.537154+00:00",
+  "source_commit": "6d045e49",
+  "image": "eva2-browser-controls:20260924",
+  "scope": "Existing managed browser controls in owner dashboard, explicit retained-profile recovery to owner control, background guidance. Personal Chrome route preserved.",
+  "checks": [
+    "Python syntax",
+    "Packaged imports",
+    "Vite production build",
+    "Installed HTML and asset hashes match source build",
+    "Read-only browser status: owner, browser ready, MCP stopped"
+  ],
+  "deferred": [
+    "Browser control clicks and real crash/recovery",
+    "Digital task continuation after recovery",
+    "Independent review and broad integration tests"
+  ],
+  "model_calls": 0,
+  "credit_cost": "unknown",
+  "rollback": "/home/administrator/project/.eva2-artifacts/browser-controls-20260924/rollback.py",
+  "limitations": [
+    "Recovery does not resume a stopped task or replay actions.",
+    "Unpersisted tabs or form edits may be lost after an actual browser crash.",
+    "No end-to-end browser capability claim."
+  ]
+}
