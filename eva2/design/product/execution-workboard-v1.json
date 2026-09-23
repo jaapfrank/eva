@@ -1000,8 +1000,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T12:15:40.473669+00:00",
+        "checkedAt": "2026-09-23T12:24:20.999795+00:00",
         "deliveries": [
+          {
+            "title": "Overlappende antwoorden houden hun oorspronkelijke vraag",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Vraag en antwoord blijven gekoppeld in Eva’s recente context, ook bij omgekeerde antwoordvolgorde. Huishoudtaken behouden hun eigen titel en vraag bij hervatten.",
+            "remaining": "22 gerichte controles en live tijdlijncontrole geslaagd. Natuurlijke snelheid en echte proeven via alle vier ingangen zijn nog open.",
+            "source": "eva2/evidence/product/turn-correlation-installed-20260923.json"
+          },
           {
             "title": "Taakstatus benoemt terugmelding via de website",
             "date": "23 september",
@@ -1188,10 +1196,10 @@
           }
         ],
         "now": {
-          "title": "Gesprek tijdens werk afronden",
-          "state": "Volgende uitvoerbare productstap",
-          "detail": "Gesprek en taakresultaten moeten via alle ingangen samen werken. De website-taakproef slaagde, maar snel contact en de volledige kanaalproef zijn nog open.",
-          "doneWhen": "Tussenvraag, correctie en stoppen werken naast een lopende taak, met terugmelding bij de juiste opdracht. Bewijs per echte ingang blijft afzonderlijk."
+          "title": "Doorpraten en taken kiezen via alle ingangen",
+          "state": "Technische koppelingen verbeterd · kanaalafronding open",
+          "detail": "Vraagkoppeling en huishoudtitels zijn geïnstalleerd. Volgende controle: kan Eva bij meerdere taken de bedoelde taak kiezen en stoppen, zonder het gesprek vast te zetten?",
+          "doneWhen": "Gerichte correctie waar nodig en representatieve kanaalproeven. Fysiek Voice PE-bewijs en jouw acceptatie worden niet uit laptoptests afgeleid."
         },
         "next": {
           "title": "Persoonlijk gesprek later voortzetten",
@@ -1208,7 +1216,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T12:15:40.473669+00:00"
+        "reviewedAt": "2026-09-23T12:24:20.999795+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -10977,7 +10985,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Gesprek tijdens achtergrondwerk over de gedeelde routes afronden. Website-taakuitvoering en juiste terugmeldstatus live; 11,0s ontvangst blijft te traag. Geen identieke snelheidsproef zonder nieuwe oorzaak.",
+      "nextAction": "Meerdere lopende taken via het gewone gesprek onderscheiden en gericht stoppen. Vraagkoppeling en huishoudtitels geïnstalleerd; snelle ontvangst blijft open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",

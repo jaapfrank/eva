@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-09-23T12:24:20.999795+00:00",
+  "status": "installed_readback_verified",
+  "sourceCommit": "c19376f1",
+  "changes": [
+    "Existing durable question identity preserved into model context for out-of-order answers",
+    "Household public task title/question preserved in existing authorized views, replays and resumes"
+  ],
+  "verification": {
+    "packagedTests": 22,
+    "postgres": "Existing isolated16.13 test service, newly created disposable database; no production writes",
+    "independentReview": "compact_contact_catalog reviewed correlation; root reviewed household title/replay handling",
+    "liveReadback": {
+      "recentMessages": 12,
+      "allHaveSourceTurn": true,
+      "pairedExchanges": 5
+    },
+    "health": "core and worker healthy"
+  },
+  "modelCalls": 0,
+  "rollback": "/var/lib/eva2/turn-correlation-install-20260923/baseline.compose.private.json",
+  "privateEvidenceDirectory": "/var/lib/eva2/turn-correlation-install-20260923",
+  "limits": [
+    "Physical Voice PE and full channel acceptance remain open",
+    "Preserving correlation does not prove every semantic model answer is correct",
+    "Receipt latency unchanged; prior11s measurement remains open",
+    "Existing data and acceptances retained"
+  ]
+}

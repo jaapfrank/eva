@@ -25,7 +25,9 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Eerstvolgende handeling:** Gesprek tijdens achtergrondwerk over de gedeelde ingangen afronden. Website-taakuitvoering en terugmeldroute werken, maar volledige kanaalgelijkheid en snelle ontvangst blijven open. Geen herhaalde snelheidsproef zonder gewijzigde oorzaak.
+**Eerstvolgende handeling:** Meerdere lopende taken via het gewone gesprek onderscheiden en gericht stoppen; bestaande kanaalroutes gebruiken. Snelle ontvangst en fysieke Voice PE-proef blijven apart open.
+
+**Vraagkoppeling en huishoudtitels geïnstalleerd (23 september):** recente context bewaart de oorspronkelijke vraag bij later binnenkomende antwoorden. Huishoudelijke onderzoeken hebben eigen titel/vraag, inclusief replay en hervatten. 22 verpakte controles geslaagd, onafhankelijk beoordeeld; live 12 eerdere berichten met beurtkoppeling teruggelezen, kern en werker gezond. Geen modelcalls. [Bewijs](evidence/product/turn-correlation-installed-20260923.json).
 
 **Terugmeldstatus geïnstalleerd (23 september):** de bestaande privéroute van de website wordt correct benoemd, zonder aflevering te claimen. 17 gerichte verpakte tests, onafhankelijke broncontrole en live teruglezing geslaagd; kern en werker gezond. Geen modelcalls voor deze correctie. [Bewijs](evidence/product/private-return-presentation-installed-20260923.json).
 
