@@ -322,3 +322,98 @@ async def test_native_session_outputs_first_audio_while_backend_is_still_waiting
         await asyncio.sleep(.05)
         assert sink.frames == frames_after_interrupt
     await adapter.aclose()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("ending", ["final", "error"])
+async def test_new_answer_precedes_unheard_replay_and_keeps_exclusions(ending):
+    from types import SimpleNamespace as NS
+    from livekit.agents import llm
+    class CurrentBackend:
+        async def events(self, payload):
+            assert session.spoken == []
+            yield ({"type": "final", "reply": {"text": "Your new answer."}}
+                   if ending == "final" else {"type": "error"})
+    state = BridgeState(CurrentBackend())
+    session = SpeechCapture()
+    for key in ("unheard", "partly-heard", "durable", "stopped"):
+        state.delivery_text[key] = key
+        state.deliveries[key] = NS(interrupted=True, done=lambda: True,
+            chat_items=[llm.ChatMessage(role="assistant", content=["Already heard"])] if key == "partly-heard" else [])
+    state.background_returns.add("durable")
+    state.suppressed.add("stopped")
+    agent = EvaAgent(state)
+    await agent.on_user_turn_completed(None, NS(id="new-user"))
+    assert session.spoken == []
+    state.message_users["new"] = "new-user"
+    class Context:
+        async def update(self, *args, **kwargs): pass
+    ctx = Context(); ctx.session = session
+    await agent.eva_turn(ctx, "new", "How are you?")
+    assert len(session.spoken) == 2
+    assert session.spoken[0].startswith("Your new answer." if ending == "final" else "Het antwoord is niet bevestigd")
+    assert session.spoken[1] == "unheard"
+    agent.replay_unheard(session)
+    assert len(session.spoken) == 2
+
+
+@pytest.mark.asyncio
+async def test_older_completion_cannot_replay_before_newer_pending_turn():
+    from types import SimpleNamespace as NS
+    class CurrentBackend:
+        async def events(self, payload):
+            await agent.on_user_turn_completed(None, NS(id="newer-user"))
+            yield {"type": "final", "reply": {"text": "Older answer."}}
+    state = BridgeState(CurrentBackend())
+    state.delivery_text["unheard"] = "Unheard old result."
+    state.deliveries["unheard"] = NS(interrupted=True, done=lambda: True, chat_items=[])
+    agent = EvaAgent(state)
+    class Context:
+        session = SpeechCapture()
+        async def update(self, *args, **kwargs): pass
+    ctx = Context()
+    await agent.eva_turn(ctx, "older", "Old question")
+    assert ctx.session.spoken == ["Older answer."]
+    assert state.deliveries["unheard"].interrupted
+
+
+@pytest.mark.asyncio
+async def test_delayed_old_tool_does_not_overwrite_new_user_replay_priority():
+    from types import SimpleNamespace as NS
+    class CurrentBackend:
+        async def events(self, payload):
+            yield {"type": "final", "reply": {"text": "Older answer."}}
+    state = BridgeState(CurrentBackend())
+    state.message_users["old-tool"] = "old-user"
+    state.delivery_text["unheard"] = "Unheard old result."
+    state.deliveries["unheard"] = NS(interrupted=True, done=lambda: True, chat_items=[])
+    agent = EvaAgent(state)
+    await agent.on_user_turn_completed(None, NS(id="new-user"))
+    class Context:
+        session = SpeechCapture()
+        async def update(self, *args, **kwargs): pass
+    ctx = Context()
+    await agent.eva_turn(ctx, "old-tool", "Old question")
+    assert state.replay_priority == "new-user"
+    assert ctx.session.spoken == ["Older answer."]
+
+
+@pytest.mark.asyncio
+async def test_failed_new_speech_offer_does_not_release_unheard_replay():
+    from types import SimpleNamespace as NS
+    class CurrentBackend:
+        async def events(self, payload):
+            yield {"type": "final", "reply": {"text": "New answer."}}
+    state = BridgeState(CurrentBackend())
+    state.delivery_text["unheard"] = "Unheard old result."
+    state.deliveries["unheard"] = NS(interrupted=True, done=lambda: True, chat_items=[])
+    offered = []
+    class Session:
+        def say(self, text, **kwargs):
+            offered.append(text)
+            raise RuntimeError("session closed")
+    class Context:
+        session = Session()
+        async def update(self, *args, **kwargs): pass
+    await EvaAgent(state).eva_turn(Context(), "new", "New question")
+    assert offered == ["New answer."]

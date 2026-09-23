@@ -192,6 +192,7 @@ class BridgeState:
         self.spoken_streams: dict[str, object] = {}
         self.receipt_deliveries: dict[str, object] = {}
         self.receipts_offered: set[str] = set()
+        self.replay_priority: str | None = None
         self.background_returns: set[str] = set()
         self.invalid_background_returns: set[str] = set()
         self.saved_result_context: dict[str, dict] = {}
@@ -246,7 +247,7 @@ class EvaAgent(Agent):
             self.state.delivery_text[message_id] += " " + text
             if final:
                 stream.put_nowait(None)
-            return
+            return True
         self.state.delivery_text[message_id] = text
         try:
             if final:
@@ -267,15 +268,19 @@ class EvaAgent(Agent):
             # A first part and its continuation share one native speech handle:
             # barge-in cancels the entire spoken tail, not only the first sentence.
             self.state.deliveries[message_id] = session.say(source, allow_interruptions=True)
+            return True
         except RuntimeError:
             self.state.notify({"type": "voice_delivery_failed", "message_id": message_id})
+            return False
 
-    def replay_unheard(self, session):
+    def replay_unheard(self, session, *, exclude_message_id=None):
         if not self.state.replay_unheard:
             return  # A hardware STOPPED lower bound cannot prove silence.
         # Native interruption cancels queued handles too. Restore only a result
         # with no played text in its own handle, never the tail of a spoken reply.
         for message_id, handle in list(self.state.deliveries.items()):
+            if message_id == exclude_message_id:
+                continue
             if message_id in self.state.background_returns:
                 continue  # Durable return claims are never automatically replayed.
             if message_id in self.state.active and message_id in self.state.spoken_streams:
@@ -392,7 +397,8 @@ class EvaAgent(Agent):
             await asyncio.sleep(2)
 
     async def on_user_turn_completed(self, turn_ctx, new_message):
-        self.replay_unheard(self.session)
+        # Unheard older replies wait until this newer question has an answer.
+        self.state.replay_priority = new_message.id
 
     @function_tool
     async def eva_turn(self, ctx: RunContext, message_id: str, text: str) -> str:
@@ -403,6 +409,9 @@ class EvaAgent(Agent):
             if user_id in state.dispatched:
                 return json.dumps({"type": "done", "message_id": message_id})
             state.dispatched.add(user_id)
+        replay_priority = user_id or message_id
+        if user_id is None or state.replay_priority is None:
+            state.replay_priority = replay_priority
         active = [{"message_id": key, "text": value} for key, value in state.active.items()]
         state.active[message_id] = text
         state.notify({"type": "work_started", "message_id": message_id, "text": text})
@@ -471,7 +480,9 @@ class EvaAgent(Agent):
                     state.results[message_id] = final
                     if message_id not in state.suppressed:
                         state.notify({"type": "work_finished", "message_id": message_id, "text": final})
-                        self.deliver(ctx.session, message_id, final)
+                        offered = self.deliver(ctx.session, message_id, final)
+                        if offered and state.replay_priority == replay_priority:
+                            self.replay_unheard(ctx.session, exclude_message_id=message_id)
                 elif kind == "error":
                     raise RuntimeError("core response failed")
                 else:
@@ -484,8 +495,10 @@ class EvaAgent(Agent):
         except Exception:
             if message_id not in state.suppressed:
                 state.notify({"type": "work_failed", "message_id": message_id})
-                self.deliver(ctx.session, message_id,
+                offered = self.deliver(ctx.session, message_id,
                              "Het antwoord is niet bevestigd. Controleer de taak voordat je haar opnieuw start.")
+                if offered and state.replay_priority == replay_priority:
+                    self.replay_unheard(ctx.session, exclude_message_id=message_id)
         finally:
             stream = state.spoken_streams.get(message_id)
             if stream is not None and not stream.full():
