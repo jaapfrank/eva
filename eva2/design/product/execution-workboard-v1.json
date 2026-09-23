@@ -1140,9 +1140,9 @@
           }
         ],
         "now": {
-          "title": "Algemene digitale taken op de achtergrond afmaken",
-          "detail": "Voice PE-spraak is hersteld en door jou bevestigd. Afzonderlijke taakregistratie is gebouwd; koppeling van algemene tooltaken aan de bestaande werker is in uitvoering.",
-          "state": "In uitvoering · algemene achtergrondfunctie nog niet geïnstalleerd",
+          "title": "Fout in nieuwe Voice PE-sessie oplossen",
+          "detail": "Gewone spraakroute werkt weer en is door jou bevestigd. Serverproef en apparaatverbinding met kandidaat slagen zonder audio; fout na wakeword nog niet gereproduceerd. Extra veilige foutregistratie geïnstalleerd. Werkende firmware blijft actief tot gerichte proef.",
+          "state": "Diagnose actief · fout nog niet opgelost",
           "doneWhen": "Een toegestane digitale taak met meerdere bestaande toolstappen wordt afgemaakt en teruggebracht terwijl het gesprek doorgaat; stoppen en afzonderlijke opdrachten blijven herkenbaar."
         },
         "next": {
@@ -1151,16 +1151,15 @@
           "state": "Functioneel vervolg"
         },
         "ownerAction": {
-          "title": "Probeer de woonkamer-Voice PE",
+          "title": "Eén wakewordproef zodra de foutregistratie klaarstaat",
           "linkLabel": "Open Praten met Eva ter vergelijking",
           "url": "http://localhost:44716/",
           "steps": [
-            "Controleer de fysieke mute-schakelaar: de speaker meldde na installatie Mute aan. Zet die voor de proef uit.",
-            "Roep Eva op de gebruikelijke manier op en stel een korte vraag.",
-            "Geef daarna een onderzoeksopdracht en stel tijdens het wachten een tussenvraag, zonder opnieuw het wakeword te zeggen.",
-            "Onderbreek een gesproken antwoord met een nieuwe vraag."
+            "Geef in deze taak aan wanneer je bij de woonkamer-Voice PE bent.",
+            "Wacht op de melding dat de tijdelijke kandidaat en foutregistratie klaarstaan.",
+            "Zeg één keer Hey Eva, hallo en meld of je antwoord hoort of rood ziet."
           ],
-          "expected": "Je hoort snelle ontvangst; doorpraten en onderbreken werken terwijl onderzoek doorgaat. Geef het concrete afwijkende gedrag door; installatiebewijs is geen luisteracceptatie."
+          "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "Bij een oplevering, gewijzigde opdracht of blokkade worden resultaat, huidig werk en volgende stap samen bijgewerkt. Technisch afgerond, geïnstalleerd en door jou geaccepteerd blijven apart."
       }

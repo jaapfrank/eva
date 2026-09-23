@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-23",
+  "status": "diagnosis_incomplete",
+  "workingFirmwareRestored": true,
+  "ownerConfirmedOrdinarySpeech": true,
+  "hostProtocolProbe": "Authenticated TLS OPEN/OPENED and WAKE/CAPTURE accepted; no audio or model call",
+  "deviceProbe": "Candidate firmware websocket connected; no wakeword attempted during captured interval; restored recovery automatically",
+  "diagnosticImage": "sha256:e480d22825404af3504379d7ca469ac88d0cc9cebdd5443daa6335230be23e43",
+  "loggingCheck": "Executed modified endpoint in installed image dependencies; 12 sanitized records, bounded history8, private exception text absent",
+  "independentReview": "Root reviewed agent change; only pre-existing sanitized metadata emitted",
+  "next": "Capture actual wakeword transition with owner present; no diagnosed cause or fix claim",
+  "privateLogs": "/var/lib/eva2/voice-pe-ota-20260923",
+  "rollbackCompose": "/var/lib/eva2/voice-pe-ota-20260923/session-diagnostics/baseline.compose.private.json"
+}

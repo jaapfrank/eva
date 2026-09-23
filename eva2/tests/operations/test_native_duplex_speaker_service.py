@@ -253,7 +253,7 @@ def test_private_config_does_not_accept_public_files_or_leak_repr(tmp_path):
         replace(cfg, grants=cfg.grants * 2)
 
 
-def test_endpoint_diagnostics_are_bounded_and_omit_exception_text(tmp_path):
+def test_endpoint_diagnostics_are_bounded_and_omit_exception_text(tmp_path, capsys):
     cfg = config(tmp_path, "http://127.0.0.1:1")
     endpoint = service.SpeakerEndpoint(grants=cfg.grants, pcm=None, session=None)
     for _ in range(12):
@@ -265,6 +265,13 @@ def test_endpoint_diagnostics_are_bounded_and_omit_exception_text(tmp_path):
     assert len(status["recentFailures"]) == 8
     assert "private-provider-token-or-transcript" not in json.dumps(status)
     assert status["recentFailures"][0]["frames"][-1]["function"] == "test_endpoint_diagnostics_are_bounded_and_omit_exception_text"
+    output = capsys.readouterr().out
+    assert "private-provider-token-or-transcript" not in output
+    records = [json.loads(line) for line in output.splitlines()]
+    assert len(records) == 12
+    assert all(record["event"] == "speaker_session_failure" for record in records)
+    assert [{key: value for key, value in record.items() if key != "event"}
+            for record in records[-8:]] == status["recentFailures"]
 
 
 @run_async

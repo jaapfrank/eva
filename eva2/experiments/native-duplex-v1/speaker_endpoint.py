@@ -14,6 +14,7 @@ from dataclasses import dataclass, field
 import hashlib
 import hmac
 from http import HTTPStatus
+import json
 import math
 from pathlib import Path
 import re
@@ -86,10 +87,14 @@ class SpeakerEndpoint:
                 "recentFailures": list(self._failures)}
 
     def _record_failure(self, stage: str, error: Exception) -> None:
-        self._failures.append({"stage": stage, "type": type(error).__name__[:64],
+        failure = {"stage": stage, "type": type(error).__name__[:64],
             "frames": [{"file": Path(frame.filename).name, "function": frame.name,
                         "line": frame.lineno}
-                       for frame in traceback.extract_tb(error.__traceback__)[-5:]]})
+                       for frame in traceback.extract_tb(error.__traceback__)[-5:]]}
+        self._failures.append(failure)
+        # Emit only the already sanitized record: device-side failures must be
+        # diagnosable after the socket closes, without retaining audio or secrets.
+        print(json.dumps({"event": "speaker_session_failure", **failure}), flush=True)
 
     def _authenticate(self, connection, request):
         if self._closed:
