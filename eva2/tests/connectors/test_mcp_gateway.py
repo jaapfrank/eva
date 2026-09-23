@@ -1119,3 +1119,29 @@ def test_v3_read_rejects_output_schema_drift_and_revokes_failed_catalog() -> Non
         with pytest.raises(RuntimeError, match="catalog is not verified"):
             asyncio.run(adapter.observe(command, None))
         assert len(handler.calls) == 1
+
+
+@pytest.mark.parametrize("http_status", [None, 503])
+def test_transport_failure_keeps_private_cause_and_sanitized_message(monkeypatch, http_status):
+    from urllib.error import HTTPError, URLError
+    from eva.adapters.connectors.mcp_gateway import McpGatewayUnavailable
+
+    sensitive = "https://private-host.invalid/?token=private-secret"
+    original = (URLError(sensitive) if http_status is None else
+                HTTPError(sensitive, http_status, sensitive, {}, None))
+    calls = []
+    def fail(request, **kwargs):
+        calls.append(request)
+        raise original
+    monkeypatch.setattr(mcp_gateway_module.urllib_request, "urlopen", fail)
+    with pytest.raises(RuntimeError) as caught:
+        _adapter("http://gateway.invalid")._request_json("GET", "/tools", None)
+    assert caught.value.__cause__ is original
+    assert len(calls) == 1
+    assert sensitive not in str(caught.value)
+    if http_status is None:
+        assert type(caught.value) is McpGatewayUnavailable
+        assert str(caught.value) == "MCP gateway request failed"
+    else:
+        assert type(caught.value) is RuntimeError
+        assert str(caught.value) == "MCP gateway request failed (503)"

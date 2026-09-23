@@ -325,6 +325,11 @@ class DelegatedWorkOwnerService:
                 "call_id": work.call_id, "stop_requested": work.stop_requested_at is not None,
                 "usage": None if work.usage is None else work.usage.to_payload(),
                 "error_code": work.error_code, "error_fingerprint": work.error_fingerprint,
+                "failure_description": {
+                    "provider_unavailable": "Een benodigde dienst was niet bereikbaar. Er is geen afgerond resultaat bevestigd. Controleer eerdere bestanden of acties voordat je hervat.",
+                    "internal_error": "De uitvoering is technisch vastgelopen. Er is geen afgerond resultaat bevestigd. Controleer eerdere bestanden of acties voordat je hervat.",
+                    "timed_out": "De uitvoering heeft de tijdslimiet bereikt. Eerdere acties kunnen al uitgevoerd zijn; controleer die voordat je hervat.",
+                }.get(work.error_code),
                 "result_available": result is not None,
                 "delivery": self._private_delivery_view(work, turn),
                 **({"result": result} if include_result else {}),

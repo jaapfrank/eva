@@ -161,10 +161,11 @@ export default function OwnerWork() {
       {job.stop_requested && <p>Stopverzoek opgeslagen</p>}
       <button onClick={() => act('get', job.work_id)}>Opdracht openen</button>
     </article>)}</div>
-    {page?.truncated && <p>De twintig meest recente opdrachten worden getoond.</p>}
+    {page?.truncated && <p>Er worden maximaal twintig opdrachten getoond, met lopend werk eerst.</p>}
     {detail && <article aria-label="Geopende hulpopdracht" className="card">
       <h3>Opdracht</h3><p style={{ whiteSpace: 'pre-wrap' }}>{detail.task}</p>
       <p>{labels[detail.state]} · poging {detail.generation}</p>
+      {typeof detail.failure_description === 'string' && <p role="status">{detail.failure_description}</p>}
       {typeof detail.delivery?.description === 'string' && <p>{detail.delivery.description}</p>}
       {['admitted', 'call_started'].includes(detail.state) && !detail.stop_requested
         && <button disabled={busy} onClick={() => act('stop', detail.work_id)}>Stop deze hulpopdracht</button>}

@@ -199,3 +199,44 @@ def test_resume_reuses_verified_first_step_instead_of_repeating_effect():
         assert tools.calls[0][3]==tools.calls[1][3]
         assert result.usage.tool_calls == 1
     asyncio.run(run())
+
+
+@pytest.mark.parametrize("interruption, expected", [
+    (None, "provider_unavailable"),
+    ("cancel", "cancelled"),
+    ("deadline", "timed_out"),
+])
+def test_gateway_transport_failure_is_sanitized_without_retry(monkeypatch, interruption, expected):
+    from urllib.error import URLError
+    from eva.adapters.connectors import mcp_gateway as gateway
+    from eva.application.background_execution import authorize_background_dispatch
+
+    _, spec, _, tools, _, runner, _ = fixture()
+    cancellation = threading.Event()
+    original = URLError("https://private-host.invalid/?token=private-secret")
+    requests = []
+    def fail(request, **kwargs):
+        requests.append(request)
+        if interruption == "cancel":
+            cancellation.set()
+        if interruption == "deadline":
+            runner.clock = lambda: NOW + timedelta(days=1)
+        raise original
+    monkeypatch.setattr(gateway.urllib_request, "urlopen", fail)
+    adapter = gateway.McpGatewayToolAdapter.__new__(gateway.McpGatewayToolAdapter)
+    adapter._config = gateway.McpGatewayConfig("http://gateway.invalid", "secret", allow_plain_http=True)
+    def execute(turn, call, *, step_index):
+        authorize_background_dispatch(turn)
+        tools.calls.append((call.name, step_index))
+        return adapter._request_json("GET", "/tools", None)
+    tools.execute = execute
+    outcome = asyncio.run(runner.run(spec, call_id="call:unavailable", cancellation_event=cancellation))
+    assert outcome.status == expected
+    assert outcome.result is None
+    assert len(requests) == len(tools.calls) == 1
+    assert outcome.usage.completed_model_responses == 1
+    assert outcome.usage.tool_calls == 1
+    assert outcome.usage.input_tokens == 30
+    assert outcome.error_fingerprint == hashlib.sha256(
+        b"McpGatewayUnavailable:MCP gateway request failed"
+    ).hexdigest()

@@ -6,6 +6,7 @@ from contextlib import suppress
 from datetime import UTC, datetime, timedelta
 import hashlib
 
+from eva.adapters.connectors.mcp_gateway import McpGatewayUnavailable
 from eva.adapters.postgres.background_model_journal import BackgroundModelJournal
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.delegated_work import DelegatedWorkCall, DelegatedWorkReleaseSelector
@@ -212,7 +213,9 @@ class DelegatedDigitalRunner:
                 with suppress(Exception):
                     usage = self._usage(journal.model_usage(source), 0 if actions is None else actions.dispatches)
             return ToolFreeChildOutcome("cancelled" if cancellation_event is not None and cancellation_event.is_set()
-                else "timed_out" if self.clock() >= deadline else "internal_error", None, usage, False,
+                else "timed_out" if self.clock() >= deadline
+                else "provider_unavailable" if type(error) is McpGatewayUnavailable
+                else "internal_error", None, usage, False,
                 hashlib.sha256((type(error).__name__ + ":" + str(error)).encode()).hexdigest())
         finally:
             watcher.cancel()

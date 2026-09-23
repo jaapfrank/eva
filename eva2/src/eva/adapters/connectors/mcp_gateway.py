@@ -27,6 +27,13 @@ from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.canonical_json import canonical_sha256
 
 
+class McpGatewayUnavailable(RuntimeError):
+    """Gateway transport failed; private exception context is never its message."""
+
+    def __init__(self) -> None:
+        super().__init__("MCP gateway request failed")
+
+
 _GATEWAY_TOOL_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,239}")
 _ORCHESTRATOR_TIMEOUT_MARGIN_SECONDS = 5
 _READ_OBSERVATION_MAX_BYTES = 65_536
@@ -721,7 +728,7 @@ class McpGatewayToolAdapter:
         except error.HTTPError as exc:
             raise RuntimeError(f"MCP gateway request failed ({exc.code})") from exc
         except error.URLError as exc:
-            raise RuntimeError("MCP gateway request failed") from exc
+            raise McpGatewayUnavailable() from exc
         if len(raw) > 2_097_152:
             raise RuntimeError("MCP gateway response is too large")
         try:
