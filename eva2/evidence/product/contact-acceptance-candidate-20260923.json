@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-09-23T11:47:50.066547+00:00",
+  "sourceCommit": "b7090791",
+  "status": "source_tested_reviewed_runtime_rolled_back",
+  "candidateImage": "sha256:8d0a388db672a7d5a6bf19b1ca19c995216c25763b47550516df0c5ffc3619cb",
+  "baselineImage": "sha256:867e0568b42a107ae3a37a263448ebf468617958af8e5f6588c90cf1a167557b",
+  "change": "Model drafts acceptance in first tool call; publish only after durable admission and existing current authority/stop guard",
+  "sourceTests": "24 adapter tests passed; final household+contact12 passed",
+  "packagedTests": "29 passed,6 deselected",
+  "independentReview": "Agent reviewed root conversation shortcut; root reviewed adapter admission gate",
+  "preflight": "Both real core and worker profiles constructed; services healthy",
+  "liveTrial": {
+    "messageId": "dashboard:719ae33b-610c-4d77-bac2-f25d369c382a",
+    "outcome": "HTTP503; first provider attempt recorded failed and unmeasured after approximately61seconds",
+    "modelAdmittedAt": "2026-09-23T11:44:12Z",
+    "modelFailedAt": "2026-09-23T11:45:13Z",
+    "taskAdmitted": false,
+    "speedImprovementProven": false,
+    "tokens": null
+  },
+  "memoryReadOnlyReplay": {
+    "totalSeconds": 2.062,
+    "semanticSeconds": [
+      0.68,
+      2.034,
+      2.042,
+      2.044
+    ],
+    "styleSeconds": 0.005,
+    "aliasSeconds": 0.01,
+    "factsRetained": 9,
+    "changes": "none; no meaningful optimization established"
+  },
+  "privateEvidenceDirectory": "/var/lib/eva2/contact-acceptance-install-20260923",
+  "next": "Determine provider timeout cause before further live candidate trial; do not repeat unchanged proof",
+  "rollbackVerification": "Both baseline core and worker healthy on867e0568; previous connector fix retained",
+  "schemaReview": "Independent no-network inspection confirms Pydantic transforms optional acceptance into valid strict outgoing schema for all three start tools; no malformed-schema evidence"
+}
