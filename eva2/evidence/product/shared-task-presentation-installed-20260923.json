@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-09-23T14:25:26.607456+00:00",
+  "sourceCommit": "6068fadc",
+  "image": "eva2-shared-task-presentation:20260923",
+  "changes": [
+    "Private and household task views share safe failure descriptions",
+    "Legacy Telegram status and unfinished-result replies include same explanation",
+    "Latest status uses chronological newest task, independent of active-first list order"
+  ],
+  "validation": [
+    "Initial packaged run34passed6stale fixture failures; fixture corrections made and failed cases rerun successfully",
+    "Final changed reply paths14targeted tests passed",
+    "Independent source reviews GO",
+    "Core and worker healthy, all four intended source files match",
+    "Live existing ambiguous task retains state and explanation"
+  ],
+  "modelCalls": 0,
+  "externalMessages": 0,
+  "ownerAccepted": false,
+  "limitations": [
+    "No physical Voice PE or Telegram user trial",
+    "Does not establish natural model selection across multiple active tasks"
+  ],
+  "rollback": "/var/lib/eva2/shared-task-presentation-20260923/baseline.compose.private.json"
+}

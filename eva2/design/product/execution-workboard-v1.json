@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Dezelfde taakfout en juiste laatste opdracht",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Huishoudspraak en privébediening gebruiken dezelfde foutuitleg, ook in vaste Telegram-statusantwoorden. Laatste onderzoek verwijst weer naar de nieuwste opdracht in plaats van een oudere actieve taak.",
+            "remaining": "Natuurlijke selectie tussen meerdere lopende opdrachten en fysieke kanaalacceptatie zijn hiermee niet bewezen.",
+            "source": "eva2/evidence/product/shared-task-presentation-installed-20260923.json"
+          },
+          {
             "title": "Spraak wacht niet meer op ongebruikte oude taakresultaten",
             "date": "23 september",
             "state": "installed",
@@ -1316,15 +1324,15 @@
           }
         ],
         "now": {
-          "title": "Snelle webspraakontvangst bevestigd",
-          "state": "Praktijkcontrole afgerond · geen nieuwe installatie",
-          "detail": "Echte browser en kern: eerste ontvangen audio 0,49 s na einde synthetische Hallo-clip; eindtekst 4,72 s. Geen fysieke microfoon/luidspreker of Voice PE-acceptatie.",
-          "doneWhen": "Meetgrenzen onafhankelijk beoordeeld; bestaande snelle ontvangst behouden."
+          "title": "Gedeelde taakpresentatie geïnstalleerd",
+          "state": "Opgeleverd · geen lopende bouwclaim",
+          "detail": "Kern/werker gezond; bronbestanden en bestaande taakweergave gecontroleerd. Geen modelcalls of externe testberichten.",
+          "doneWhen": "Gerichte tests en onafhankelijke reviews geslaagd, installatie en terugweg vastgelegd."
         },
         "next": {
-          "title": "Taakbediening tijdens lopend werk afronden",
+          "title": "De bedoelde taak kiezen tijdens lopend werk",
           "state": "Volgende functionele stap",
-          "detail": "Bestaande gezamenlijke selectie, stop- en terugmeldroute gebruiken voor meerdere opdrachten. Open verschillen gericht afmaken; eerder werk en acceptaties behouden."
+          "detail": "Natuurlijke verwijzingen naar meerdere opdrachten vergelijken met de bestaande gedeelde selectie, stop en hervat. Alleen concreet ontbrekend gedrag aanvullen."
         },
         "ownerAction": {
           "title": "Voice PE: beschikbaarheid doorgeven",
@@ -1336,7 +1344,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T14:17:07.762391+00:00"
+        "reviewedAt": "2026-09-23T14:25:26.607456+00:00"
       }
     },
     "pendingTechnicalReview": {
