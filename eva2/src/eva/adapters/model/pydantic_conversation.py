@@ -1508,7 +1508,7 @@ class PydanticConversationModel:
         (content, cited, consulted), usage = self._request_research(body)
         selected: list[ResearchSource] = []
         if research_mode == "topic" and not cited:
-            raise ConversationModelError("topic research lacks cited sources")
+            raise ConversationModelError("topic research lacks cited sources", model_usage=usage)
         for option in options:
             if research_mode == "topic" and not re.search(r"https?://", option, re.IGNORECASE):
                 continue
@@ -1519,7 +1519,7 @@ class PydanticConversationModel:
             ]
             if not matches:
                 raise ConversationModelError(
-                    f"web research lacks a primary source for {option}"
+                    f"web research lacks a primary source for {option}", model_usage=usage
                 )
             selected.append(matches[0])
         for source in cited:
@@ -1542,7 +1542,7 @@ class PydanticConversationModel:
                 usage=usage,
             )
         except ValueError as error:
-            raise ConversationModelError("web research artifact is invalid") from error
+            raise ConversationModelError("web research artifact is invalid", model_usage=usage) from error
 
     def evaluate_sensory_event(
         self,
