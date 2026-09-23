@@ -1,0 +1,38 @@
+{
+  "contract": "EvaFeatureInstallation/v1",
+  "feature": "dependent_work_steps",
+  "recorded_at": "2026-09-23T21:36:15.833720+00:00",
+  "source_commit": "91eecb37",
+  "image": "eva2-dependent-work:20260923",
+  "installed": true,
+  "checks": [
+    "Changed Python syntax",
+    "Installed source baselines matched",
+    "Dashboard production build and asset materialization",
+    "Packaged imports and tool descriptor construction without network",
+    "Core healthy and work API HTTP 200 with planning",
+    "Delegated worker healthy",
+    "Active compose and dashboard asset metadata updated"
+  ],
+  "behavior": [
+    "Digital steps can depend on an existing owner task or an earlier scheduled step",
+    "A dependent step can start after its predecessor without another time argument",
+    "Pending predecessors do not block other ready schedules",
+    "Failed, stopped, unavailable or expired predecessors block dependent work",
+    "Saved result hash and up to 6000 UTF-8 bytes of result text accompany next instruction; truncation explicit",
+    "Selected context is frozen in durable launch reservation for replay",
+    "At most 64 open appointments; existing worker budgets unchanged"
+  ],
+  "limits": [
+    "Real multi-stage/model trial deferred",
+    "Independent review deferred by owner instruction",
+    "Long previous results are excerpts; full original remains in task storage",
+    "No claim of complete autonomous long-term project quality",
+    "A schedule is cancelled individually; cancelling a running entire chain is next work"
+  ],
+  "model_calls": 0,
+  "test_schedules_created": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/dependent-work-20260923/baseline.compose.private.json"
+}

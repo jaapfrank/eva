@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Vervolgwerk gebruikt het eerdere resultaat",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Een geplande digitale stap kan wachten op een eerdere opdracht of afspraak. Daarna krijgt de bestaande werker het opgeslagen resultaat mee; een mislukte of gestopte voorganger blokkeert het vervolg. Wachten en blokkades staan op het takenbord.",
+            "remaining": "Gebouwd en geïnstalleerd; echte meerstaps-/meerdaagse proef later. Lange resultaten gaan als herkenbaar fragment mee; het origineel blijft bewaard.",
+            "source": "eva2/evidence/product/dependent-work-installed-20260923.json"
+          },
+          {
             "title": "Op afgesproken moment starten of hervatten",
             "date": "23 september",
             "state": "installed",
@@ -1461,15 +1469,15 @@
           }
         ],
         "now": {
-          "title": "Geplande start en hervatting",
+          "title": "Afhankelijke vervolgstappen",
           "state": "Geïnstalleerd · gebruiksproef later",
-          "detail": "Planning staat apart van lopend werk op het takenbord. De start gebruikt de bestaande uitvoering en bewaarde voortgang. Geen proefopdracht gestart.",
-          "doneWhen": "Functie geïnstalleerd; daadwerkelijke geplande uitvoering en gebruiksproef blijven open."
+          "detail": "De planning verbindt bestaande opdrachten en opgeslagen resultaten. Geen modelproef of echte takenreeks gestart.",
+          "doneWhen": "Koppeling geïnstalleerd; daadwerkelijke ketenuitvoering en gebruikersbeoordeling blijven open."
         },
         "next": {
-          "title": "Vervolgstappen van langdurig werk verbinden",
+          "title": "Een volledige geplande reeks stoppen",
           "state": "Nog niet gestart",
-          "detail": "Bestaande werkplannen, overdracht en geplande hervatting verbinden met de nog ontbrekende voortzetting van een meerstapsopdracht; eerdere resultaten blijven behouden."
+          "detail": "De bestaande stop- en annuleerbediening verbinden voor een hele gekoppelde reeks, inclusief een eventuele al gestarte vervolgstap."
         },
         "ownerAction": {
           "title": "Takenbord gebruiken",
@@ -1483,7 +1491,7 @@
           "expected": "Dezelfde opgeslagen taken als in Eva’s gesprek, met gerichte bediening per opdracht. Dit is gebruiksinformatie; geen nieuwe verplichte proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T21:29:41.679570+00:00"
+        "reviewedAt": "2026-09-23T21:36:15.833720+00:00"
       }
     },
     "pendingTechnicalReview": {
