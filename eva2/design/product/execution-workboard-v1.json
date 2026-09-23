@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Leeropdrachten vanuit een gewoon gesprek",
+            "date": "23 september",
+            "state": "installed",
+            "result": "De gespreks- en werkinstructies verbinden een gewone leeropdracht met achtergrondwerk, documentopslag, werkwijzeregistratie en later hergebruik.",
+            "remaining": "Modelgedrag en kwaliteit zijn nog niet in een echte leeropdracht beoordeeld. Testen volgt later volgens eigenaarbesluit.",
+            "source": "eva2/evidence/product/learning-conversation-installed-20260923.json"
+          },
+          {
             "title": "Werkwijzen bewaren tijdens achtergrondwerk",
             "date": "23 september",
             "state": "installed",
@@ -1373,15 +1381,15 @@
           }
         ],
         "now": {
-          "title": "Geleerde werkwijze tijdens achtergrondwerk bewaren",
-          "state": "Geïnstalleerd · praktijkbeproeving volgt later",
-          "detail": "De achtergrondwerker kan nu een document opslaan, als herbruikbare werkwijze bewaren en later ophalen. Kern gestart; geen nieuwe modelproef uitgevoerd. Functiebouw krijgt voorrang volgens het nieuwste eigenaarbesluit.",
-          "doneWhen": "Nieuwe werkwijze vanuit toegelaten achtergrondwerk bewaren en later terugvinden werkt, met gerichte controles, installatie en expliciete grenzen."
+          "title": "Leeropdrachten via het gewone gesprek",
+          "state": "Geïnstalleerd · praktijkbeoordeling volgt later",
+          "detail": "Gezamenlijke gespreksinstructies sturen leeropdrachten naar de digitale werker. De werker krijgt de samenhangende aanpak voor documentatie, toepassing, bewaren en hergebruik. Kern gestart; geen modelproef uitgevoerd.",
+          "doneWhen": "Instructies in gezamenlijke kern en werker geïnstalleerd; diensten gestart. Praktijkbeoordeling volgt later."
         },
         "next": {
-          "title": "Zelfstandig leren in gewone opdrachten",
-          "state": "Volgende functiestap",
-          "detail": "Bestaande leerroute bruikbaar maken vanuit een gewone vraag; geen afzonderlijke modelproef nu."
+          "title": "Volgende open gebruikersfunctie afmaken",
+          "state": "Nog niet gestart",
+          "detail": "Door met de bestaande functielijst; uitgebreide tests en gebruikersproeven volgen later."
         },
         "ownerAction": {
           "title": "Voice PE: beschikbaarheid doorgeven",
@@ -1393,7 +1401,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T20:19:04.253176+00:00"
+        "reviewedAt": "2026-09-23T20:22:01.516901+00:00"
       }
     },
     "pendingTechnicalReview": {
