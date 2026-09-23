@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-09-23T15:08:02.531984+00:00",
+  "sourceCommit": "df52ab55",
+  "image": "eva2-procedure-history:20260923",
+  "cause": "Real background procedure resolution borrowed current job identity when validating the older foreground save; exact recorded error fingerprint matched background execution source turn differs.",
+  "fix": "Reconstruct historical request identity from saved admission. Actual readback still checks current job authorization.",
+  "validation": {
+    "sourceProviderTestsPassed": 15,
+    "packagedRelevantTestsPassed": 35,
+    "independentReview": "Coordinator reviewed agent implementation, including distinct historical/current source regression",
+    "coreAndWorkerHealthy": true,
+    "twoSourceFilesMatchedBoth": true
+  },
+  "modelCallsForFix": 0,
+  "rollbackCompose": "/var/lib/eva2/procedure-history-20260923/baseline.compose.private.json",
+  "trial": "Original ambiguous work retained; resumed explicitly after changed cause. Result recorded separately."
+}

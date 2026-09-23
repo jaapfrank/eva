@@ -498,7 +498,7 @@
             }
           ],
           "works": "Het voorbereide tweestapsproject blijft behouden. Beide documentdiensten draaien weer; automatisch herstartbeleid is geïnstalleerd. Eigen documentopdrachten zijn nog niet geïnstalleerd.",
-          "ownerSummary": "Nog nodig: vaardigheden hergebruiken en langdurig werk afronden."
+          "ownerSummary": "Werkwijze één keer hergebruikt; zelfstandig leren en langdurig werk nog afmaken."
         },
         {
           "id": "browser",
@@ -1012,11 +1012,19 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Bewaarde werkwijze toegepast op een nieuwe opdracht",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Eva haalde de klaargezette werkwijze op, berekende een nieuw hobbybudget en bewaarde het resultaat: A €211,20, B €198; alleen B past binnen €205. Bestand en uitvoering onafhankelijk gecontroleerd.",
+            "remaining": "Werkwijze en opdracht waren door de proef klaargezet. Dit bewijst toepassen tijdens echt achtergrondwerk; zelfstandig aanleren en jouw acceptatie blijven open. Twee aangetroffen fouten zijn hersteld en geïnstalleerd.",
+            "source": "eva2/evidence/product/background-procedure-live-20260923.json"
+          },
+          {
             "title": "Achtergrondtaken kunnen bewaarde werkwijzen lezen",
             "date": "23 september",
             "state": "installed",
             "result": "De digitale werker kan bestaande werkwijzen opvragen en lezen en vervolgens met de opdracht doorgaan. Dezelfde privégrenzen en stopbediening blijven gelden.",
-            "remaining": "Getest met gecontroleerde model/tooluitvoering; echte toepassing bij een nieuwe opdracht en algemene skillcreatie blijven open.",
+            "remaining": "Echte nieuwe toepassing inmiddels geslaagd; zie de nieuwere oplevering. Zelfstandig nieuwe vaardigheden leren blijft open.",
             "source": "eva2/evidence/product/background-procedures-installed-20260923.json"
           },
           {
@@ -1349,15 +1357,15 @@
           }
         ],
         "now": {
-          "title": "Hergebruik van werkwijzen aangesloten",
-          "state": "Geïnstalleerd — echte taakproef nog open",
-          "detail": "Kern en werker gezond; dezelfde zes mogelijkheden en bronbestanden gecontroleerd. Bestaande werkwijzen en oude taakresultaten behouden.",
-          "doneWhen": "Technische wijziging afgerond. Een echte modelgestuurde toepassing is de volgende aparte proef."
+          "title": "Projectoverzicht vereenvoudigen en bijwerken",
+          "state": "Afgerond · geïnstalleerd en gecontroleerd",
+          "detail": "Compact overzicht live. De laatste functionele oplevering is bijgewerkt, beide werkweergaven gebruiken dezelfde status en eindvoorwaarde. Desktop, mobiele breedte en automatische inhoudsverversing gecontroleerd. Vervolgwerk is nog niet gestart.",
+          "doneWhen": "Overzicht toont de juiste laatste oplevering, open functies en volgende handeling; browsercontrole en onafhankelijke review afgerond."
         },
         "next": {
-          "title": "Een bewaarde werkwijze op een nieuwe opdracht toepassen",
-          "state": "Volgende functionele proef",
-          "detail": "Gebruik één bestaande of synthetische expliciet bewaarde werkwijze via de nieuwe achtergrondroute; controleer het resultaat onafhankelijk. Geen herhaling van eerdere gesprekstests."
+          "title": "Verder met dagelijks gesprek en stem",
+          "state": "Vervolg nog niet gestart",
+          "detail": "Inhoudelijke reactietijd en doorpraten via de echte ingangen blijven open. Werkende ontvangst behouden; fysieke Voice PE-proef zodra Jaap beschikbaar is."
         },
         "ownerAction": {
           "title": "Voice PE: beschikbaarheid doorgeven",
@@ -1369,7 +1377,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T14:54:26.141623+00:00"
+        "reviewedAt": "2026-09-23T15:17:48.618465+00:00"
       }
     },
     "pendingTechnicalReview": {

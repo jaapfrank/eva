@@ -1,0 +1,95 @@
+{
+  "checkedAt": "2026-09-23T15:10:28.673490+00:00",
+  "sourceCommit": "df52ab55",
+  "image": "eva2-procedure-history:20260923",
+  "outcome": "Existing explicitly saved procedure resolved and applied by the real private digital worker to a new budget comparison; file independently read back.",
+  "criteria": {
+    "setupMessage": "dashboard:3a0bbb7c-300e-4cbb-89aa-04e6a1809c80",
+    "taskMessage": "dashboard:3568c576-3678-4003-adb8-b5877e1160d2",
+    "procedurePath": "/proof-state/eva2-hobbybudget-procedure-20260923.md",
+    "resultPath": "/proof-state/eva2-hobbybudget-result-20260923.md",
+    "requiredTotals": {
+      "A": 211.2,
+      "B": 198
+    },
+    "budget": 205,
+    "expectedChoice": "B",
+    "requiredSection": "Controle na keuze",
+    "maximumNewWorkerModelResponses": 8,
+    "setup": "Host-controlled fixture using real save/designation tools and source journal; not model learning",
+    "admission": "Host-controlled real start_digital_work; actual installed worker uses its model",
+    "expected": "Resolve retained procedure, produce and read back result file; independent file and journal check",
+    "creditCost": "unknown"
+  },
+  "firstAttempt": {
+    "workId": "work:eva-chat:e70127ce-c1ec-55ab-b60c-3c4fff89a084",
+    "state": "ambiguous",
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 1,
+      "tool_calls": 0,
+      "input_tokens": 4441,
+      "output_tokens": 86,
+      "total_tokens": 4527,
+      "cost_usd_micros": null
+    },
+    "failure": "Historical procedure save incorrectly borrowed current background identity; fingerprint matched exact conflict."
+  },
+  "resumedAttempt": {
+    "workId": "work:eva-resume:cfa760eb-3c5d-58ee-ad64-016bbff81d48",
+    "state": "succeeded",
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 5,
+      "tool_calls": 5,
+      "input_tokens": 43405,
+      "output_tokens": 739,
+      "total_tokens": 44144,
+      "cost_usd_micros": null
+    },
+    "storedResultVerified": false
+  },
+  "independentCheck": {
+    "procedureDocumentId": "procedure-reference:1f88bd16712b3fecab0c993d127363201799723b084beadc6277c714b20227db",
+    "resolvedContentResultSha256": "84f5a42af0ce6d9323f3b5adae0c8383369fa76c083ce3022c6e5997090318f4",
+    "journalMatched": true,
+    "artifactSha256": "25b26308d4a4ff195cb8b46324d419530809fa8fd09b9e897abf3498da086851",
+    "meaning": "Independent artifact verification; stored worker verified flag remains false"
+  },
+  "artifact": "eva2/evidence/product/eva2-hobbybudget-result-20260923.md",
+  "expectedAndObserved": {
+    "A": 211.2,
+    "B": 198,
+    "choice": "B",
+    "budget": 205,
+    "BRemaining": 7,
+    "savingsWithReserve": 13.2,
+    "requiredSectionPresent": true
+  },
+  "setupCorrections": [
+    "Harness used execute_step for step zero; corrected to execute before effects.",
+    "Replay harness initially regenerated ingress time; original timestamp retained.",
+    "Real designation rejected valid offset retention deadline; normalized in ff0f162e, original action arguments and identity retained."
+  ],
+  "totalMeasuredUsage": {
+    "completedModelResponses": 6,
+    "inputTokens": 47846,
+    "outputTokens": 825,
+    "toolDispatches": 5,
+    "costUsdMicros": null
+  },
+  "scope": [
+    "Fixture save/designation and task admission controlled by host through real authorized routes, not autonomous learning or foreground model selection",
+    "Actual installed worker model selected procedure resolution and completed the new task",
+    "First ambiguous attempt retained; exactly one explicit resume after changed cause",
+    "No payments, external messages, physical voice trial or owner acceptance"
+  ],
+  "generalLearningComplete": false,
+  "ownerAccepted": false,
+  "independentReview": "GO: journal hash, live artifact bytes, calculations and required section independently confirmed",
+  "privateStage": "/var/lib/eva2/background-procedure-trial-20260923"
+}

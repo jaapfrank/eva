@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-09-23T15:05:01.368679+00:00",
+  "sourceCommit": "ff0f162e",
+  "image": "eva2-procedure-deadline:20260923",
+  "cause": "Real fixture designation accepted a valid ISO offset but storage required canonical UTC Z.",
+  "fix": "Normalize valid retention deadlines before designation; preserve original journal arguments and reject invalid/expired deadlines.",
+  "validation": {
+    "sourceProviderTestsPassed": 14,
+    "packagedNewCasesPassed": 3,
+    "review": "Coordinator reviewed independent implementation and tests",
+    "coreAndWorkerHealthy": true,
+    "sourceBytesMatchedBoth": true,
+    "realOriginalDesignationRecovered": true
+  },
+  "modelCallsForFix": 0,
+  "rollbackCompose": "/var/lib/eva2/procedure-deadline-20260923/baseline.compose.private.json",
+  "separateOpenFailure": "Background retrieval then failed on historical source identity; tracked in current trial, not fixed by deadline normalization."
+}
