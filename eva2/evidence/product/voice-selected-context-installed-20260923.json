@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-09-23T14:13:21.002912+00:00",
+  "sourceCommit": "e8db4f7e",
+  "images": [
+    "eva2-web-selected-context:20260923",
+    "eva2-speaker-selected-context:20260923"
+  ],
+  "change": "Reauthorize only fixed outbound saved-result candidates before opening voice core request; preserve suppression and reject revoked or concurrently changed candidates.",
+  "validation": {
+    "webPackagedTests": 32,
+    "speakerPackagedRegression": 1,
+    "independentSourceReview": "GO by coordinator on agent implementation",
+    "installedImportedSourcesMatch": true,
+    "webReady": true,
+    "speakerProcess": "running"
+  },
+  "modelCalls": 0,
+  "ownerAccepted": false,
+  "limits": [
+    "Removes unnecessary checks after retained task history; no measured general latency gain",
+    "Fresh greeting model latency unchanged",
+    "No physical Voice PE or audible playback acceptance"
+  ],
+  "rollbackDirectory": "/var/lib/eva2/voice-selected-context-20260923",
+  "rollback": "Use web/speaker baseline.compose.private.json with their original project names; restore runtime.env.rollback for web startup image."
+}

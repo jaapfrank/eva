@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Spraak wacht niet meer op ongebruikte oude taakresultaten",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Alleen geselecteerde resultaten worden voor de spraakbeurt opnieuw gecontroleerd. Ingetrokken of ondertussen vervangen resultaten blijven uitgesloten. Web- en speakerdienst bijgewerkt.",
+            "remaining": "Geen algemene snelheidswinst gemeten. De modeltijd van een verse begroeting verandert hiermee niet; fysieke Voice PE-proef blijft open.",
+            "source": "eva2/evidence/product/voice-selected-context-installed-20260923.json"
+          },
+          {
             "title": "Begrijpelijke uitleg bij mislukte achtergrondtaak",
             "date": "23 september",
             "state": "installed",
@@ -1308,15 +1316,15 @@
           }
         ],
         "now": {
-          "title": "Ontvangst en antwoordtijd apart gemeten",
-          "state": "Routecontrole afgerond · geen nieuwe functie",
-          "detail": "Op geïnstalleerde webspraakroute: ontvangst 0,074 s, modelantwoord 5,32 s. Losse stemgenerator: eerste audio 0,43 s. Geen volledige spraak- of Voice PE-meting.",
-          "doneWhen": "Bestaande ontvangst bevestigd; verdere vertraging niet als verdwenen ontvangstfunctie behandelen."
+          "title": "Spraakwijziging geïnstalleerd",
+          "state": "Opgeleverd · geen lopende bouwclaim",
+          "detail": "32 webgevallen en één verpakte speakerregressie geslaagd; onafhankelijke bronreview GO. Werkelijk geladen bestanden gecontroleerd, webspraak gereed.",
+          "doneWhen": "Beide diensten bijgewerkt met bewaarde terugweg."
         },
         "next": {
-          "title": "Onnodige wachttijd vóór spraakbeurten wegnemen",
-          "state": "Concreet verbeterpunt gevonden",
-          "detail": "Controleer alleen de bewaarde taakresultaten die werkelijk worden meegestuurd, met behoud van hun toegangscontrole. Dit versnelt niet automatisch een verse begroeting."
+          "title": "Hoorbare ontvangst via de volledige webroute meten",
+          "state": "Volgende praktijkcontrole",
+          "detail": "Ontvangst na spraakinvoer en werkelijk audiobegin apart meten. De losse kern- en stemmetingen bewijzen nog niet de volledige ervaring."
         },
         "ownerAction": {
           "title": "Voice PE: beschikbaarheid doorgeven",
@@ -1328,7 +1336,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T14:09:03.410010+00:00"
+        "reviewedAt": "2026-09-23T14:13:21.002912+00:00"
       }
     },
     "pendingTechnicalReview": {
