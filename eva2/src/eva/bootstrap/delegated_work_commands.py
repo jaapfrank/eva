@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import json
 import re
+from eva.application.work_result_presentation import readable_work_result as _readable_result
 from collections.abc import Callable
 from datetime import datetime
 from uuid import UUID
@@ -141,19 +141,6 @@ class DelegatedWorkConversationCommands:
                              provider="eva-delegated-work-command")
 
 
-def _readable_result(output: str) -> str:
-    """Render the known tool-free output shape without hiding unknown fields."""
-    try:
-        value = json.loads(output)
-    except (ValueError, RecursionError):
-        return output
-    if (not isinstance(value, dict) or set(value) != {"summary", "findings"}
-            or not isinstance(value["summary"], str) or not value["summary"].strip()
-            or not isinstance(value["findings"], list)
-            or any(not isinstance(item, str) or not item.strip() for item in value["findings"])):
-        return output
-    findings = "\n".join(f"- {item}" for item in value["findings"])
-    return value["summary"] + ("\n\n" + findings if findings else "")
 
 
 __all__ = ["DelegatedWorkConversationCommands"]

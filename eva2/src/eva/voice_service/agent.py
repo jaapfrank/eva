@@ -11,6 +11,7 @@ import httpx
 from livekit.agents import Agent, RunContext, function_tool, llm
 from livekit.agents.types import DEFAULT_API_CONNECT_OPTIONS
 from eva.application.conversation_receipt import RECEIVED_INPUT_TEXT
+from eva.application.work_result_presentation import readable_work_result
 
 async def authorize_saved_return(backend, session_id, result, check):
     """Revalidate saved bytes at each context/output boundary, including after ack."""
@@ -340,10 +341,11 @@ class EvaAgent(Agent):
                 check()
                 state.notify({"type": "background_result_part", "message_id": key, "text": chunk,
                     "part": index, "total": len(chunks), **state.saved_result_context[context_id]})
+            spoken_text = readable_work_result(text)
             async def parts():
-                for offset in range(0, len(text), 1500):
+                for offset in range(0, len(spoken_text), 1500):
                     await authorize()
-                    yield text[offset:offset+1500]
+                    yield spoken_text[offset:offset+1500]
             # Saved result context has its own current read grant. Do not also
             # retain these bytes in LiveKit history, which feeds payload.recent.
             handle = session.say(parts(), allow_interruptions=True, add_to_chat_ctx=False)

@@ -162,3 +162,25 @@ def test_unicode_result_parts_stay_within_reliable_packet_bound():
         'work_id':'w'*240,'operation_id':'a'*64,'output_sha256':'b'*64,
         'result_sha256':'c'*64,'message_id':'background:'+'a'*64,'part':0,'total':33}
     assert len(json.dumps(value,ensure_ascii=False).encode())<12000
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("output, expected", [
+    ('{"summary":"Resultaat.","findings":["Eerste punt."]}', "Resultaat.\n\n- Eerste punt."),
+    ('{"summary":"Resultaat.","findings":[]}', "Resultaat."),
+    ('{"summary":"Resultaat.","findings":[],"extra":"Bewaren"}', None),
+])
+async def test_saved_result_speech_is_readable_but_transport_keeps_original_bytes(output, expected):
+    result = dict(RESULT, output=output, output_sha256=hashlib.sha256(output.encode()).hexdigest())
+    class StructuredBackend(Backend):
+        async def work_return(self, operation, session_id, **identity):
+            if operation == 'authorize':
+                return {'status':'authorized', **{k:result[k] for k in ('operation_id','output_sha256','result_sha256')}}
+            return await super().work_return(operation, session_id, **identity)
+    events=[]; backend=StructuredBackend(); state=BridgeState(backend, events.append)
+    session=Session()
+    await EvaAgent(state).return_saved_work(session, result, lambda:None)
+    assert ''.join(session.spoken) == (output if expected is None else expected)
+    assert ''.join(e['text'] for e in events if e['type']=='background_result_part') == output
+    assert all(e['output_sha256']==result['output_sha256'] for e in events if e['type']=='background_result_part')
+    assert backend.operations.count('ack') == 1
