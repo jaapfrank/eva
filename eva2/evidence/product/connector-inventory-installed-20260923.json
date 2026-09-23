@@ -1,0 +1,37 @@
+{
+  "checkedAt": "2026-09-23T11:34:49.295288+00:00",
+  "sourceCommit": "4ef4330a",
+  "status": "installed_targeted_live_trial_passed",
+  "image": "sha256:867e0568b42a107ae3a37a263448ebf468617958af8e5f6588c90cf1a167557b",
+  "problem": "Background metatools lacked inventory and existing configured workspace bindings",
+  "change": "Reuse existing static configured catalog through owner-scoped discover/use routes; preserve original static allowlist and dynamic owner grants",
+  "checks": {
+    "source_focused": "8 passed",
+    "packaged": "13 passed; one unrelated existing SQLite fixture failed because libsqlite3 is absent; one deselected",
+    "preflight": "Actual core and worker settings both expose 8 configured tools for original owner ingress, resolve all pinned bindings",
+    "health": "core and worker healthy",
+    "review": "Root reviewed agent implementation and caught/fixed dynamic-access regression and ambiguous hashes; agent independently reviewed root implementation source pins"
+  },
+  "trial": {
+    "work_id": "work:eva-chat:6fa9eee2-1ee8-5ad0-8296-cb126f1d8dd6",
+    "task": "Find exact read/write workspace tool names without accessing content or changing files",
+    "result": "read_workspace_document / eva-workspace-read-text-file; save_workspace_document / eva-workspace-write-file",
+    "task_completed": true,
+    "admission_seconds": 13.787,
+    "worker_usage": {
+      "model_responses": 3,
+      "tool_calls": 2,
+      "input_tokens": 18431,
+      "output_tokens": 223,
+      "cost": null
+    }
+  },
+  "limits": [
+    "Catalogue discovery only; read/write operations were not performed",
+    "No fast-contact completion",
+    "No general digital-task acceptance",
+    "Automatic return and physical voice not retested"
+  ],
+  "private_evidence_directory": "/var/lib/eva2/connector-inventory-install-20260923",
+  "rollback": "Use baseline.compose.private.json in private evidence directory for core and worker; no data/schema changes"
+}

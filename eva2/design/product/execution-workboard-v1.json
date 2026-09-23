@@ -1000,8 +1000,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T11:22:50.121089+00:00",
+        "checkedAt": "2026-09-23T11:34:49.295288+00:00",
         "deliveries": [
+          {
+            "title": "Achtergrondwerker vindt bestaande werkmaptools",
+            "date": "23 september · 13:33",
+            "state": "installed",
+            "result": "De eerder vastgelopen opdracht is nu geslaagd: Eva vond zelf de juiste lees- en schrijftools en sloeg het antwoord op. Kern en werker zijn bijgewerkt.",
+            "remaining": "Alleen de catalogus is onderzocht; geen bestanden gelezen of gewijzigd. Aannemen duurde 13,8 seconden. Snelle ontvangst en algemene taakuitvoering zijn nog niet klaar.",
+            "source": "eva2/evidence/product/connector-inventory-installed-20260923.json"
+          },
           {
             "title": "Achtergrondwerker aangesloten; gebruiksproef nog niet geslaagd",
             "date": "23 september · 13:17",
@@ -1148,9 +1156,9 @@
           }
         ],
         "now": {
-          "title": "Achtergrondtaken: connectoren vinden en opdracht afmaken",
-          "detail": "Kern en achtergrondwerker zijn geïnstalleerd. De echte proef liep vast: Eva vond de gekoppelde werkmapdienst niet. Dit moet worden opgelost voordat de functie klaar is. Een tussenvraag kwam wel eerder terug, maar pas na 6,1 seconden.",
-          "state": "Proef mislukt · oplossing nodig",
+          "title": "Sneller contact tijdens achtergrondwerk",
+          "detail": "De ontbrekende werkmapkoppeling is opgelost. Nu de wachttijd vóór de ontvangst verkorten: de laatste echte opdracht werd pas na 13,8 seconden aangenomen. Eerdere tussenvraag duurde 6,1 seconden.",
+          "state": "Vertraging onderzoeken",
           "doneWhen": "Een digitale opdracht wordt aangenomen, via bestaande connectoren afgemaakt en met opgeslagen resultaat teruggebracht. De gewone gespreksroute blijft beschikbaar."
         },
         "next": {
@@ -10938,7 +10946,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Kern en achtergrondwerker zijn geïnstalleerd. De echte proef liep vast: Eva vond de gekoppelde werkmapdienst niet. Dit moet worden opgelost voordat de functie klaar is. Een tussenvraag kwam wel eerder terug, maar pas na 6,1 seconden.",
+      "nextAction": "De ontbrekende werkmapkoppeling is opgelost. Nu de wachttijd vóór de ontvangst verkorten: de laatste echte opdracht werd pas na 13,8 seconden aangenomen. Eerdere tussenvraag duurde 6,1 seconden.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11639,7 +11647,7 @@
       }
     },
     "generalDigitalBackgroundWork20260923": {
-      "status": "installed_live_trial_blocked_connector_discovery",
+      "status": "installed_catalog_trial_passed_general_execution_open",
       "reuse": [
         "DelegatedWorkWorker and runner.bind_store",
         "LivingConversation.respond and existing model",
@@ -11647,13 +11655,13 @@
         "Existing stop, result storage and private return"
       ],
       "missing": [
-        "Production core/worker composition with current private source loader, memory, model and connector bundle",
-        "PostgreSQL lifecycle + current return-route integration proof",
-        "Preserve previously admitted release hashes and schema7 deployment when installing"
+        "Fast foreground receipt and response",
+        "Actual multi-step digital task completion beyond catalog discovery",
+        "Physical and remaining channel acceptance"
       ],
       "scope": "One private digital task using multiple existing connector actions; conversation remains available. No recursive delegation or new household private access.",
       "estimate": "Implementation effort not yet established; no model calls for this diagnosis; development credit cost unknown.",
-      "next": "Package reviewed feature delta for current schema7 core and worker together; preserve existing task releases and verify worker configuration before activation.",
+      "next": "Trace foreground admission latency and reuse existing fast contact path",
       "built": [
         "Private v4 work and result contracts; optional start_digital_work admission with original source binding",
         "Existing LivingConversation loop executes allowed connector steps under durable dispatch authorization",
@@ -11665,10 +11673,10 @@
       "checks": {
         "affected_tests": "35 passed in2.12s under installed core image dependencies with source overlay, network none",
         "identity_and_accounting": "Earlier targeted checks passed",
-        "review": "Independent GO for controlled source checkpoint, not installation",
-        "installed": false,
-        "external_model_calls": 0,
-        "database_lifecycle_proven": false
+        "review": "Source composition and installation manifest independently reviewed; live task remained blocked",
+        "installed": true,
+        "external_model_calls": 4,
+        "database_lifecycle_proven": true
       },
       "limitations": [
         "Controlled model/tool/store doubles in runner/admission test; no general real-task completion claim",
@@ -11676,8 +11684,24 @@
         "Legacy source hashes change when shared contracts change; pending work must stay executable at deployment"
       ],
       "evidence": "eva2/evidence/product/digital-background-source-20260923.json",
-      "postgresLifecycle": "Real PostgreSQL16.13/current-source schema9 lifecycle passed: stop/resume reuses first verified effect, counts only new dispatch, persists v4 result and acknowledges return idempotently. Controlled model/provider; no production composition or installation.",
-      "compositionEvidence": "eva2/evidence/product/digital-background-source-20260923.json"
+      "postgresLifecycle": "Actual PostgreSQL stop/resume/result/return lifecycle passed with controlled model/provider; packaged schema7 lifecycle passed separately.",
+      "compositionEvidence": "eva2/evidence/product/digital-background-source-20260923.json",
+      "installationEvidence": "eva2/evidence/product/connector-inventory-installed-20260923.json",
+      "activeAssignment": {
+        "owner": "/root/connector_discovery_fix",
+        "baseCommit": "e7a1a908",
+        "files": [
+          "providers/mcp_registration.py",
+          "adapters/postgres/mcp_connector_registry.py",
+          "providers/mcp_owner_authority.py",
+          "focused connector tests",
+          "providers/mcp_autonomy.py"
+        ],
+        "outcome": "Existing authorized services discoverable without knowing opaque connector IDs",
+        "endCondition": "Focused inventory and access tests, independent review, installed core and worker, actual previously blocked task succeeds",
+        "effort": "One bounded implementation/review; no model trial until cause changed; credit cost unknown",
+        "status": "completed_reviewed_installed"
+      }
     }
   },
   "activeTaskId": "AU-008",
