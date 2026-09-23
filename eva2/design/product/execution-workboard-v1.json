@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T22:26:26.823791+00:00",
+        "checkedAt": "2026-09-23T22:32:05.333558+00:00",
         "deliveries": [
+          {
+            "title": "Recente privécontext meenemen bij kanaalwissel",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Eva kan bij dezelfde geverifieerde eigenaar één recenter opgeslagen privégesprek uit Telegram of website meekrijgen. Maximaal één fragment uit de laatste 24 uur, zonder nieuwe geheugenopslag.",
+            "remaining": "Geïnstalleerd; echte kanaal- en modelproef later. Dit bewijst geen volledige langetermijnherinnering of sprekerherkenning.",
+            "source": "eva2/evidence/product/private-channel-continuity-installed-20260924.json"
+          },
           {
             "title": "Afgerond onderzoek terugspreken via HA",
             "date": "24 september",
@@ -1525,15 +1533,15 @@
           }
         ],
         "now": {
-          "title": "HA-terugmeldfunctie geïnstalleerd",
+          "title": "Recente privécontinuïteit geïnstalleerd",
           "state": "Geïnstalleerd",
-          "detail": "Opgeslagen openbaar onderzoek kan via HA worden uitgesproken op de oorspronkelijke vrije speaker, binnen de actieve native sessie. Geen extra modelcall voor de terugmelding.",
-          "doneWhen": "Technische installatie en startcontrole afgerond; fysieke spraakproef en audiovoorrang nog open."
+          "detail": "Eva kan bij dezelfde geverifieerde eigenaar één recenter opgeslagen privégesprek uit Telegram of website meekrijgen. Maximaal één fragment uit de laatste 24 uur, zonder nieuwe geheugenopslag.",
+          "doneWhen": "Installatie en startcontrole afgerond; echte kanaalwissel en kwaliteit van gebruik nog open."
         },
         "next": {
-          "title": "Gesprekscontinuïteit bij kanaalwissel",
+          "title": "Onderzoek met ontbrekende onderbouwing vervolgen",
           "state": "Nog niet gestart",
-          "detail": "Bestaande persoonsgebonden context benutten wanneer de geverifieerde eigenaar wisselt tussen Telegram en website; concrete resterende koppelingen afmaken. Gedeelde speakers blijven een aparte huishoudelijke ingang."
+          "detail": "De bestaande onderzoeksroute laten onderscheiden tussen een onderbouwd resultaat en nog ontbrekende verificatie, en het vervolg binnen de bestaande taak- en budgetgrenzen aansluiten."
         },
         "ownerAction": {
           "title": "Takenbord gebruiken",
@@ -1547,7 +1555,7 @@
           "expected": "Bijsturing wordt bewaard en één hervatting ingepland. Dit is gebruiksinformatie; geen verplichte proef nu."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T22:26:26.823791+00:00"
+        "reviewedAt": "2026-09-23T22:32:05.333558+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11316,7 +11324,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Bestaande persoonsgebonden context benutten wanneer de geverifieerde eigenaar wisselt tussen Telegram en website; concrete resterende koppelingen afmaken. Gedeelde speakers blijven een aparte huishoudelijke ingang.",
+      "nextAction": "De bestaande onderzoeksroute laten onderscheiden tussen een onderbouwd resultaat en nog ontbrekende verificatie, en het vervolg binnen de bestaande taak- en budgetgrenzen aansluiten.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

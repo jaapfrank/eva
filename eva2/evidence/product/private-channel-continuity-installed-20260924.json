@@ -1,0 +1,36 @@
+{
+  "contract": "EvaFeatureInstallation/v1",
+  "feature": "private_channel_continuity",
+  "source_commit": "5057cfea",
+  "image": "eva2-private-channel-continuity:20260924",
+  "installed": true,
+  "behavior": [
+    "Existing private memory-source projection supplies at most one newer exchange from another owner channel",
+    "Only the existing verified owner and Telegram private bridge; no group, household or project context",
+    "Source must be under 24 hours old and newer than current recent context",
+    "At most 1800 source characters plus explicit fragment label",
+    "Existing owner/source retention and erasure checks retained; no second store or extra retrieval model call"
+  ],
+  "limits": [
+    "Actual model/channel-switch and confidentiality trials deferred",
+    "This adds recent continuity, not a claim of complete long-term recall or speaker recognition",
+    "Only retained source documents; an exchange not yet queued as a memory source is unavailable",
+    "Full source is not inserted when truncated; relevant older topics still depend on existing memory recall",
+    "Runtime falls back to its existing conversation context when the source is unavailable",
+    "No measured latency or token-cost improvement"
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/private-channel-continuity-20260924/baseline.compose.private.json",
+  "recorded_at": "2026-09-23T22:32:05.333558+00:00",
+  "checks": [
+    "Changed Python syntax",
+    "Packaged imports and recent-source method available without network",
+    "Installed runtime and memory-source differences retained via bounded patches",
+    "Read-only task storage: zero active tasks before restart",
+    "Core and delegated worker healthy",
+    "Owner work endpoint HTTP 200; fifteen existing tasks visible",
+    "Active compose pointer updated"
+  ]
+}
