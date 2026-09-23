@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T23:11:19.197314+00:00",
+        "checkedAt": "2026-09-23T23:15:03.698092+00:00",
         "deliveries": [
+          {
+            "title": "Gekoppelde reeks stoppen op het takenbord",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Bij samenhangende opdrachten staat Stop deze hele gekoppelde reeks. De knop gebruikt dezelfde stopfunctie als het gesprek, zonder modelcall, en leest de status opnieuw uit.",
+            "remaining": "Geen echte stopproef gedaan. Begonnen acties kunnen afronden; een gedeeltelijke stop wordt gemeld.",
+            "source": "eva2/evidence/product/related-stop-board-installed-20260924.json"
+          },
           {
             "title": "Samenhangende opdracht stoppen via het gesprek",
             "date": "24 september",
@@ -1589,10 +1597,10 @@
           }
         ],
         "now": {
-          "title": "Samenhangende opdracht in één keer stoppen",
+          "title": "Samenhangend werk stoppen vanaf het takenbord",
           "state": "Geïnstalleerd",
-          "detail": "Gesprek kan oorspronkelijke taak, hervattingen en gekoppelde planning via bestaande stopbediening stoppen. Resultaten blijven bewaard.",
-          "doneWhen": "Technische installatie en startcontrole afgerond; echte stopproef later."
+          "detail": "De bestaande nieuwe stopfunctie rechtstreeks aansluiten op het overzicht van gekoppelde opdrachten, met teruggelezen status.",
+          "doneWhen": "Installatie en startcontrole afgerond; echte bedieningstest later."
         },
         "next": {
           "title": "Resterende gebruikersfuncties afronden",
@@ -1600,18 +1608,18 @@
           "detail": "Verder vanuit de bestaande open productstappen; uitgebreide proeven later."
         },
         "ownerAction": {
-          "title": "Gewoon verder praten",
-          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
-          "linkLabel": "Open het websitegesprek",
+          "title": "Gekoppelde reeks bedienen",
+          "url": "http://localhost:44711/internal/v1/dashboard",
+          "linkLabel": "Open Eva’s takenbord",
           "steps": [
-            "Ververs de gesprekpagina voor de nieuwe bediening.",
-            "Stuur je bericht; het antwoord verschijnt tijdens het schrijven.",
-            "Bij een onbevestigd antwoord eerst de taakstatus bekijken voordat je dezelfde opdracht opnieuw verstuurt."
+            "Ververs het takenbord en open de bedoelde opdracht.",
+            "Kies Bekijk samenhangende opdrachten.",
+            "Gebruik Stop deze hele gekoppelde reeks alleen wanneer je al dat werk wilt stoppen."
           ],
-          "expected": "Antwoordopbouw met definitieve bevestiging aan het einde. Je hoeft nu geen gebruiksproef uit te voeren."
+          "expected": "De opgeslagen status wordt opnieuw opgehaald; resultaten blijven bewaard. Geen verplichte gebruiksproef nu."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T23:11:19.197314+00:00"
+        "reviewedAt": "2026-09-23T23:15:03.698092+00:00"
       }
     },
     "pendingTechnicalReview": {

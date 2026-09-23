@@ -1,0 +1,23 @@
+{
+  "installed": true,
+  "installedAt": "2026-09-23T23:15:03.698092+00:00",
+  "sourceCommit": "7104933e",
+  "image": "eva2-related-stop-board:20260924",
+  "behavior": "Owner board invokes existing stop_related operation and reads task state back; partial stopping is visible.",
+  "checks": [
+    "Dashboard production build and materialized assets",
+    "Packaged Python imports",
+    "No active work before restart",
+    "Core and worker healthy",
+    "Dashboard and new button asset HTTP200"
+  ],
+  "limitations": [
+    "No actual task stopped as a trial.",
+    "Interactive end-to-end and independent review deferred.",
+    "Existing related-stop snapshot and in-flight limitations unchanged."
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/related-stop-board-20260924/baseline.compose.private.json"
+}
