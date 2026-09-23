@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Vragen wat Eva uit eigen initiatief heeft gedaan",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Eva kan in een privégesprek de eigen initiatieven, actuele status en werkelijk opgeslagen resultaat ophalen. Dezelfde informatie als het eigenaar-dashboard; maximaal acht initiatieven per gespreksoverzicht.",
+            "remaining": "Leesroute gebouwd en geïnstalleerd; echte modelproef later. Automatische initiatiefterugmelding is hiermee nog niet toegevoegd.",
+            "source": "eva2/evidence/product/initiative-conversation-installed-20260923.json"
+          },
+          {
             "title": "Eva krijgt browserbeschikbaarheid mee tijdens werk",
             "date": "23 september",
             "state": "installed",
@@ -1429,15 +1437,15 @@
           }
         ],
         "now": {
-          "title": "Eigen initiatieven en resultaten in het gesprek ophalen",
-          "state": "In uitvoering",
-          "detail": "Bestaande initiatiefkeuze en feedback blijven behouden. Voeg privéleestools toe aan dezelfde gespreksroute voor initiatiefstatus en werkelijk opgeslagen resultaten. Achtergrondbudget blijft ongewijzigd.",
-          "doneWhen": "Leesroute geïnstalleerd via de bestaande eigenaarservice; gebruiksproef later."
+          "title": "Eigen initiatieven in privégesprek ophalen",
+          "state": "Geïnstalleerd · modelproef later",
+          "detail": "Twee leesacties geven initiatiefstatus en opgeslagen resultaten uit dezelfde bron als het dashboard. Ze tonen ook een eventuele budgetblokkade; nieuwe initiatieven zijn niet geforceerd.",
+          "doneWhen": "Leesroute geïnstalleerd; werkelijk modelgedrag en gebruikersproef nog open."
         },
         "next": {
-          "title": "Initiatief en terugmelding voor dagelijks gebruik",
+          "title": "Initiatiefresultaten passend terugmelden",
           "state": "Nog niet gestart",
-          "detail": "Voortbouwen op bestaande initiatiefuitvoering en resultaatbezorging; alleen ontbrekende functionele aansluiting toevoegen."
+          "detail": "Bestaande resultaatbezorging beoordelen op de ontbrekende koppeling met afgeronde initiatieven, met behoud van rust en privégrenzen."
         },
         "ownerAction": {
           "title": "Takenbord gebruiken",
@@ -1451,7 +1459,7 @@
           "expected": "Dezelfde opgeslagen taken als in Eva’s gesprek, met gerichte bediening per opdracht. Dit is gebruiksinformatie; geen nieuwe verplichte proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T21:03:41.259937+00:00"
+        "reviewedAt": "2026-09-23T21:06:58.738493+00:00"
       }
     },
     "pendingTechnicalReview": {

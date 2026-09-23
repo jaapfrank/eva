@@ -1,0 +1,33 @@
+{
+  "contract": "EvaInitiativeConversationInstallation/v1",
+  "checked_at": "2026-09-23T21:06:58.738493+00:00",
+  "source_commit": "cdc62fef",
+  "image": "eva2-initiative-conversation:20260923",
+  "stage": "/home/administrator/project/.eva2-artifacts/initiative-conversation-20260923",
+  "checks": {
+    "syntax": "passed",
+    "packaged_descriptors": [
+      "list_own_initiatives",
+      "get_own_initiative_result"
+    ],
+    "core_health": "healthy",
+    "worker_health": "healthy",
+    "existing_owner_initiative_api": 200,
+    "installation_registration": "updated"
+  },
+  "scope": "Private conversation tools read the same owner-scoped initiative repository as the dashboard. Listing is bounded to eight entries; stored artifacts can be retrieved by exact intent ID. Read acknowledgements remain on the contact model.",
+  "functional_model_trials": "deferred_by_owner",
+  "independent_review": "deferred_by_owner",
+  "owner_acceptance": false,
+  "model_calls": 0,
+  "credit_cost": "unknown",
+  "background_budget_changed": false,
+  "messages_sent": 0,
+  "limits": [
+    "No automatic result notification added by this change.",
+    "No shared-speaker disclosure of private initiatives.",
+    "Stored model text is not independently verified content.",
+    "Model selection and conversational behavior have not been trialled."
+  ],
+  "rollback": "Retained baseline.compose.private.json and eva2-background-browser-context:20260923 image"
+}
