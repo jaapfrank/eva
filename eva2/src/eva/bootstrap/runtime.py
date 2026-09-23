@@ -848,7 +848,7 @@ class PostgresHindsightMemoryRuntime:
         )
 
     def dashboard_delegated_work(self, operation: str, work_id: str | None = None,
-                                 operation_id: str | None = None) -> dict:
+                                 operation_id: str | None = None, search: dict | None = None) -> dict:
         from eva.bootstrap.dashboard_work import dashboard_delegated_work
         return dashboard_delegated_work(
             self._delegated_work_owner_service,
@@ -856,7 +856,7 @@ class PostgresHindsightMemoryRuntime:
             installation_id=self._runtime_installation_id,
             owner_principal_id=self._dashboard_owner_principal_id,
             principal_binding_id=self._dashboard_principal_binding_id,
-            operation=operation, work_id=work_id, operation_id=operation_id,
+            operation=operation, work_id=work_id, operation_id=operation_id, search=search,
         )
 
     def private_work_return(self, turn, operation, **kwargs):

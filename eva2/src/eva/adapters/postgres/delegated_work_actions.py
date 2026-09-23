@@ -24,6 +24,7 @@ from eva.contracts.canonical_json import canonical_json_bytes
 
 
 _OPERATIONS = {
+    "search_delegated_work": ("search", "search"),
     "schedule_digital_work": ("schedule_digital", "schedule"),
     "schedule_work_resume": ("schedule_resume", "schedule"),
     "list_scheduled_work": ("schedule_list", None),
@@ -42,6 +43,7 @@ _OPERATIONS = {
     "resume_delegated_work": ("resume", "work_id"),
 }
 _DESCRIPTIONS = {
+    "search": "Zoek een oudere eigen opdracht op een woord of zinsdeel in bewaarde titels, opdrachten en resultaten, ook buiten de recente twintig. Geef query; gebruik next_before_work_id als before_work_id om verder te zoeken. Neem een kenmerkend onderwerpwoord, geen lange hele vraag. Open het gevonden work_id via get_delegated_work. Alleen nog bewaarde taken zijn vindbaar; geen zoekhit betekent niet dat iets nooit is besproken.",
     "schedule_digital": "Plan op verzoek van de eigenaar één digitale opdracht voor een afgesproken toekomstig moment, maximaal 30 dagen vooruit. Geef task en run_at in UTC (YYYY-MM-DDTHH:MM:SSZ). Zet lokale tijden om naar UTC; vraag bij onduidelijkheid naar datum of tijdzone. Voor een vervolgstap mag je after_work_id of after_schedule_id opgeven uit een eerdere opgeslagen taak of afspraak: wacht dan op het resultaat en gebruik het in deze nieuwe opdracht. Zonder run_at start een afhankelijke stap zodra de vorige klaar is. Kies alleen door de eigenaar gevraagde stappen. Het werk is bewaard maar nog niet gestart. Geen terugkerende opdracht of budgetverhoging.",
     "schedule_resume": "Plan één hervatting van een gestopte of mislukte opdracht op een door de eigenaar gewenst moment, maximaal 30 dagen vooruit. Geef work_id en run_at in UTC. Bewaart bestaande uitvoering en werkplan; de nieuwe poging gebruikt de bestaande begrensde budgetten. Geen herhaalde automatische pogingen.",
     "schedule_list": "Bekijk opgeslagen startmomenten, status en gekoppelde werk-ID. Gebruik dit voor wat je later gaat doen; beweer niet dat gepland werk al loopt.",
@@ -105,7 +107,11 @@ class PostgresDelegatedWorkActions:
                                 "after_schedule_id": {"type": "string", "maxLength": 240}}
                                if operation == "schedule_digital" else {})},
                         "required": ["task"] if operation == "schedule_digital" else ["work_id", "run_at"]
-                    } if operation in {"schedule_digital", "schedule_resume"} else {"type":"string"}),
+                    } if operation in {"schedule_digital", "schedule_resume"} else {
+                        "type": "object", "additionalProperties": False, "required": ["query"],
+                        "properties": {"query": {"type": "string", "minLength": 1, "maxLength": 200},
+                                       "before_work_id": {"type": "string", "maxLength": 240}}
+                    } if operation == "search" else {"type":"string"}),
                         **({"feedback": {"type": "string", "minLength": 1, "maxLength": 800}}
                            if operation == "initiative_feedback" else {}),
                         **({"acceptance_message": {
@@ -116,7 +122,10 @@ class PostgresDelegatedWorkActions:
                         }} if operation in {"start", "research", "digital"} else {})},
                     "required": [] if key is None else [key] + (["feedback"] if operation == "initiative_feedback" else []),
                 },
-                ("Rapporteer het bewaarde startmoment en de schedule_id. Ingepland betekent nog niet uitgevoerd. "
+                ("Zoekresultaten staan in operation_result.jobs. Open de passende work_id met get_delegated_work. "
+                 "Gebruik next_before_work_id alleen wanneer truncated waar is. Geen treffer bewijst geen afwezig verleden."
+                 if operation == "search" else
+                 "Rapporteer het bewaarde startmoment en de schedule_id. Ingepland betekent nog niet uitgevoerd. "
                  "Een geblokkeerde start vereist bijsturing; beloof geen automatische herhaling."
                  if operation.startswith("schedule_") else
                  "Gebruik de echte intent_id en opgeslagen inhoud. De lijst staat in operation_result.cards; "
@@ -267,7 +276,7 @@ class PostgresDelegatedWorkActions:
                 or ("acceptance_message" in call.arguments and (
                     not isinstance(acceptance, str) or not acceptance.strip()
                     or len(acceptance) > 240))) or (
-            key is not None and operation not in {"research", "schedule_digital", "schedule_resume"} and (
+            key is not None and operation not in {"research", "schedule_digital", "schedule_resume", "search"} and (
                 not isinstance(call.arguments[key], str)
                 or not call.arguments[key].strip()
                 or len(call.arguments[key].encode("utf-8")) > (8192 if key == "task" else 240)

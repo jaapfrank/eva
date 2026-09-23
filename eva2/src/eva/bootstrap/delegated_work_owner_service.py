@@ -87,9 +87,10 @@ class DelegatedWorkOwnerService:
     def execute(self, operation: str, turn: ConversationTurn, *, task: str | None = None,
                 work_id: str | None = None, request_key: str, research: dict | None = None,
                 intent_id: str | None = None, feedback: str | None = None,
-                schedule: dict | None = None, schedule_id: str | None = None) -> dict:
+                schedule: dict | None = None, schedule_id: str | None = None,
+                search: dict | None = None) -> dict:
         try:
-            return self._execute(operation, turn, task=task, work_id=work_id, request_key=request_key, research=research, intent_id=intent_id, feedback=feedback, schedule=schedule, schedule_id=schedule_id)
+            return self._execute(operation, turn, task=task, work_id=work_id, request_key=request_key, research=research, intent_id=intent_id, feedback=feedback, schedule=schedule, schedule_id=schedule_id, search=search)
         except DelegatedWorkNotFound:
             return {"contract": "EvaDelegatedWorkOwnerResult/v1", "operation": operation,
                     "status": "not_found", "work": None,
@@ -103,12 +104,12 @@ class DelegatedWorkOwnerService:
                  work_id: str | None, request_key: str, research: dict | None = None,
                  intent_id: str | None = None, feedback: str | None = None,
                  schedule: dict | None = None, schedule_id: str | None = None,
-                 admission_time: datetime | None = None) -> dict:
+                 admission_time: datetime | None = None, search: dict | None = None) -> dict:
         if not self.available_for(turn):
             raise DelegatedWorkConflict("delegated work requires its private owner scope")
         from eva.adapters.postgres.scheduled_work import ScheduledOwnerWork
         if operation in {"schedule_digital", "schedule_resume", "schedule_list", "schedule_cancel", "schedule_cancel_chain"}:
-            if any(value is not None for value in (task, work_id, research, intent_id, feedback)):
+            if any(value is not None for value in (task, work_id, research, intent_id, feedback, search)):
                 raise ValueError("schedule operation has unrelated arguments")
             self.validate_authority(turn)
             scheduler = ScheduledOwnerWork(self)
@@ -128,7 +129,9 @@ class DelegatedWorkOwnerService:
             return scheduler.list()
         if schedule is not None or schedule_id is not None:
             raise ValueError("schedule arguments require a schedule operation")
-        if operation not in {"start", "research", "digital", "list", "get", "result", "stop", "resume",
+        if search is not None and operation != "search":
+            raise ValueError("search arguments require their own operation")
+        if operation not in {"start", "research", "digital", "list", "search", "get", "result", "stop", "resume",
                              "initiative_list", "initiative_result", "initiative_stop", "initiative_feedback"}:
             raise ValueError("delegated work operation is invalid")
         if not isinstance(request_key, str) or not 1 <= len(request_key) <= 2048:
@@ -181,6 +184,18 @@ class DelegatedWorkOwnerService:
         if operation == "digital" and self.digital_profile is None:
             raise DelegatedWorkConflict("digital background work is not composed")
         response = {"contract": "EvaDelegatedWorkOwnerResult/v1", "operation": operation}
+        if operation == "search":
+            if (task is not None or work_id is not None or not isinstance(search, dict)
+                    or not {"query"} <= set(search) <= {"query", "before_work_id"}):
+                raise ValueError("work search fields differ")
+            rows = self.store.list_owned(**self._owner, limit=21, query=search["query"],
+                                         before_work_id=search.get("before_work_id"))
+            return {**response, "query": search["query"].strip(),
+                    "jobs": [self._view(row, include_result=False, turn=turn) for row in rows[:20]],
+                    "truncated": len(rows) > 20,
+                    "next_before_work_id": rows[19].spec.work_id if len(rows) > 20 else None,
+                    "planning": ScheduledOwnerWork(self).list(),
+                    "search_scope": "stored_private_titles_tasks_results"}
         if operation == "list":
             if task is not None or work_id is not None:
                 raise ValueError("list does not accept task or work id")

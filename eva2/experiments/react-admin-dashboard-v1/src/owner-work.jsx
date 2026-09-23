@@ -43,17 +43,19 @@ function readable(output) {
   } catch { /* Unknown output remains visible verbatim as text. */ }
   return output;
 }
-async function request(operation, workId, signal) {
+async function request(operation, workId, signal, search) {
   const response = await fetch(operation === 'list' ? endpoint : `${endpoint}/${operation}`, {
     method: operation === 'list' ? 'GET' : 'POST', credentials: 'same-origin',
     cache: 'no-store', redirect: 'error', signal,
     ...(operation === 'list' ? {} : { headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(['schedule_cancel', 'schedule_cancel_chain'].includes(operation) ? { schedule_id: workId } : { work_id: workId }) }),
+      body: JSON.stringify(operation === 'search' ? search : ['schedule_cancel', 'schedule_cancel_chain'].includes(operation) ? { schedule_id: workId } : { work_id: workId }) }),
   });
   if (!response.ok) throw new Error('Werkoverzicht niet beschikbaar. Vernieuw om de opgeslagen toestand op te halen.');
   const data = await response.json();
   if (data.contract !== 'EvaDelegatedWorkOwnerResult/v1' || data.operation !== operation
-    || (operation === 'list' ? !Array.isArray(data.jobs) || data.jobs.length > 20
+    || (operation === 'search' && (typeof data.query !== 'string'
+      || (data.truncated && typeof data.next_before_work_id !== 'string')))
+    || (['list', 'search'].includes(operation) ? !Array.isArray(data.jobs) || data.jobs.length > 20
       || !data.jobs.every(work => validWork(work)) || typeof data.truncated !== 'boolean'
       : ['schedule_cancel', 'schedule_cancel_chain'].includes(operation) ? typeof data.status !== 'string' : !validWork(data.work, true) || (operation !== 'resume' && data.work.work_id !== workId))) {
     throw new Error('Het werkantwoord kon niet worden gelezen. Vernieuw het overzicht.');
@@ -76,6 +78,7 @@ export default function OwnerWork() {
   React.useEffect(() => {
     let mounted = true, running = false, halted = false, pending = null;
     let selected = null, currentDetail = null, revision = 0, timer;
+    let searchQuery = '', searchBefore;
     const controller = new AbortController();
     const fingerprint = work => JSON.stringify([work.work_id, work.state,
       work.generation, work.stop_requested, work.result_available,
@@ -95,16 +98,16 @@ export default function OwnerWork() {
       running = true;
       clearTimeout(timer);
       while (pending && mounted) {
-        const { operation, workId, version, foreground } = pending;
+        const { operation, workId, version, foreground, search } = pending;
         pending = null;
         if (foreground) setBusy(true);
         setError('');
         try {
-          const data = await request(operation, workId, controller.signal);
+          const data = await request(operation, workId, controller.signal, search);
           if (!mounted) return;
           // Even superseded requests must enforce access failures in catch.
           if (version !== revision) continue;
-          if (operation === 'list') {
+          if (['list', 'search'].includes(operation)) {
             setPage(data);
             const job = data.jobs.find(item => item.work_id === selected);
             if (selected && (!currentDetail || ['admitted', 'call_started'].includes(currentDetail.state) || (job
@@ -153,15 +156,21 @@ export default function OwnerWork() {
     }
     function enqueue(operation, workId, foreground = false) {
       if (!mounted || (!foreground && (halted || running))) return;
+      if (operation === 'search') { searchQuery = workId.trim(); searchBefore = undefined; }
+      if (operation === 'search_next') { operation = 'search'; searchBefore = workId; }
+      if (operation === 'list' && foreground) { searchQuery = ''; searchBefore = undefined; }
+      if (operation === 'list' && searchQuery) operation = 'search';
       if (foreground) {
         halted = false;
         ++revision;
-        if (operation !== 'list') {
+        if (!['list', 'search'].includes(operation)) {
           selected = workId; currentDetail = null;
           setDetail(null); setNotice('');
         }
       }
-      pending = { operation, workId, version: revision, foreground };
+      pending = { operation, workId, version: revision, foreground,
+        search: operation === 'search' ? { query: searchQuery,
+          ...(searchBefore ? { before_work_id: searchBefore } : {}) } : undefined };
       void drain();
     }
     function visibilityChanged() {
@@ -180,7 +189,7 @@ export default function OwnerWork() {
   }, []);
   const refresh = () => commands.current('list', undefined, true);
   const act = (operation, workId) => commands.current(operation, workId, true);
-  const visible = (page?.jobs || []).filter(job => job.task_preview.toLocaleLowerCase('nl-NL').includes(filter.toLocaleLowerCase('nl-NL')));
+  const visible = page?.operation === 'search' ? page.jobs : (page?.jobs || []).filter(job => job.task_preview.toLocaleLowerCase('nl-NL').includes(filter.toLocaleLowerCase('nl-NL')));
   function downloadResult() {
     if (!detail?.result_available || !detail.result) return;
     const url = URL.createObjectURL(new Blob([readable(detail.result.output)], { type: 'text/plain;charset=utf-8' }));
@@ -191,8 +200,9 @@ export default function OwnerWork() {
   return <section className="owner-work" aria-label="Mijn hulpopdrachten">
     <h2>Mijn opdrachten</h2>
     <p>Onderzoek, digitale taken en hulpwerk van Eva. De opgeslagen toestand wordt elke vijf seconden bijgewerkt.</p>
-    <div className="work-toolbar"><a href="/internal/v1/dashboard/conversation">Nieuwe opdracht aan Eva →</a><label>Zoek opdracht <input value={filter} onChange={event => setFilter(event.target.value)} type="search" /></label></div>
-    <button disabled={busy} onClick={() => refresh()}>Werk vernieuwen</button>
+    <div className="work-toolbar"><a href="/internal/v1/dashboard/conversation">Nieuwe opdracht aan Eva →</a><label>Zoek opdracht <input value={filter} onChange={event => setFilter(event.target.value)} type="search" maxLength={200} /></label>
+      <button disabled={busy || !filter.trim()} onClick={() => act('search', filter)}>Zoek ook in oudere opdrachten</button></div>
+    <button disabled={busy} onClick={() => refresh()}>Recente opdrachten</button>
     {error && <p role="alert">{error}</p>}
     {notice && <p role="status">{notice}</p>}
     {busy && <p role="status">Werk ophalen…</p>}
@@ -213,7 +223,8 @@ export default function OwnerWork() {
       </article>)}
       {page.planning.truncated && <p>De twintig meest recente of open afspraken worden getoond.</p>}
     </section>}
-    {page && !page.jobs.length && <p>Nog geen hulpopdracht beschikbaar.</p>}
+    {page?.operation === 'search' && <p>Zoeken naar “{page.query}” in bewaarde titels, opdrachten en resultaten. Dit is zoeken op tekst, niet alleen in de zichtbare kaarten.</p>}
+    {page && !page.jobs.length && <p>{page.operation === 'search' ? 'Geen bewaarde opdracht gevonden met deze tekst.' : 'Nog geen hulpopdracht beschikbaar.'}</p>}
     {page && <div className="work-kanban">{lanes.map(([id, title, states]) => {
       const jobs = visible.filter(job => states.includes(job.state));
       return <section className={`work-lane ${id}`} key={id} aria-label={title}>
@@ -228,7 +239,9 @@ export default function OwnerWork() {
         </article>)}
       </section>;
     })}</div>}
-    {page?.truncated && <p>Er worden maximaal twintig opdrachten getoond, met lopend werk eerst.</p>}
+    {page?.truncated && (page.operation === 'search'
+      ? <button disabled={busy} onClick={() => act('search_next', page.next_before_work_id)}>Volgende zoekresultaten</button>
+      : <p>Er worden maximaal twintig opdrachten getoond, met lopend werk eerst. Zoek op onderwerp om eerdere taken te vinden.</p>)}
     {detail && <article ref={detailRef} tabIndex={-1} aria-label="Geopende hulpopdracht" className="card work-detail">
       <h3>Opdracht</h3><p style={{ whiteSpace: 'pre-wrap' }}>{detail.task}</p>
       <p>{labels[detail.state]} · poging {detail.generation}</p>

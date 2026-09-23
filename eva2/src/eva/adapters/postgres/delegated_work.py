@@ -986,12 +986,19 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
     def list_owned(
         self, *, owner_principal_id: UUID, principal_binding_id: UUID,
         limit: int = 21, active_first: bool = False,
+        query: str | None = None, before_work_id: str | None = None,
     ) -> tuple[StoredDelegatedWork, ...]:
         """Return bounded private job identifiers/results from this exact binding."""
         if type(limit) is not int or not 1 <= limit <= 65:
             raise ValueError("delegated work listing limit is invalid")
         if type(active_first) is not bool:
             raise ValueError("delegated work active-first flag must be boolean")
+        if query is not None and (not isinstance(query, str) or not 1 <= len(query.strip()) <= 200):
+            raise ValueError("work search requires 1..200 characters")
+        if before_work_id is not None and (
+                not isinstance(before_work_id, str) or not 1 <= len(before_work_id) <= 240
+                or active_first):
+            raise ValueError("work search cursor is invalid")
         ordering = (
             [sa.case((sa.and_(
                 delegated_work_runs.c.state.in_(("admitted", "call_started")),
@@ -1004,13 +1011,32 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 self._scope(connection)
                 self._validate_owner_binding(connection, owner_principal_id=owner_principal_id,
                                              principal_binding_id=principal_binding_id)
-                rows = connection.execute(sa.select(delegated_work_runs).where(
+                selection = sa.select(delegated_work_runs).where(
                     delegated_work_runs.c.tenant_id == self._scope_value.tenant_id,
                     delegated_work_runs.c.installation_id == self._scope_value.installation_id,
                     delegated_work_runs.c.spec_payload["audience"].astext == "private",
                     delegated_work_runs.c.owner_principal_id == owner_principal_id,
                     delegated_work_runs.c.principal_binding_id == principal_binding_id,
-                ).order_by(*ordering).limit(limit)).mappings().all()
+                )
+                if before_work_id is not None:
+                    anchor = connection.execute(selection.where(
+                        delegated_work_runs.c.work_id == before_work_id)).mappings().one_or_none()
+                    if anchor is None:
+                        raise ValueError("work search cursor is unavailable for this owner")
+                    self._validated(connection, anchor)
+                    selection = selection.where(sa.or_(
+                        delegated_work_runs.c.created_at < anchor["created_at"],
+                        sa.and_(delegated_work_runs.c.created_at == anchor["created_at"],
+                                delegated_work_runs.c.work_id < before_work_id)))
+                if query is not None:
+                    # Literal substring search: user wildcards never widen the predicate.
+                    escaped = query.strip().replace("!", "!!").replace("%", "!%").replace("_", "!_")
+                    pattern = "%" + escaped + "%"
+                    selection = selection.where(sa.or_(
+                        delegated_work_runs.c.title.ilike(pattern, escape="!"),
+                        delegated_work_runs.c.spec_payload["task"].astext.ilike(pattern, escape="!"),
+                        delegated_work_runs.c.result_payload["output"].astext.ilike(pattern, escape="!")))
+                rows = connection.execute(selection.order_by(*ordering).limit(limit)).mappings().all()
                 return tuple(self._validated(connection, row) for row in rows)
             finally:
                 transaction.rollback()
