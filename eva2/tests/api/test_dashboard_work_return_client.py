@@ -7,9 +7,14 @@ def test_conversation_return_transport_boundaries():
     script = DASHBOARD_WORK_RETURN_CLIENT_JS + r"""
 const assert=require('node:assert/strict');
 const {createHash}=require('node:crypto');
-const {EvaWorkReturns,workReturnHeading}=module.exports;
+const {EvaWorkReturns,workReturnHeading,readableWorkResult}=module.exports;
 const digest=async s=>createHash('sha256').update(s).digest('hex');
 const output='<img src=x onerror=alert(1)>\nBron: https://example.org';
+assert.equal(readableWorkResult(JSON.stringify({summary:'Plan',findings:['Water','Opruimen']})), 'Plan\n\n- Water\n- Opruimen');
+assert.equal(readableWorkResult(JSON.stringify({summary:'Plan',findings:[]})), 'Plan');
+for(const unknown of ['null','[1,2]', '{"summary":"Plan","findings":[],"extra":"keep"}', '{"summary":"Plan","findings":[7]}',output]) assert.equal(readableWorkResult(unknown),unknown);
+assert.equal(readableWorkResult(JSON.stringify({summary:output,findings:[]})),output);
+
 const result={work_id:'work-one',operation_id:'a'.repeat(64),output,
  output_sha256:createHash('sha256').update(output).digest('hex')};
 const reply=data=>({ok:true,json:async()=>({contract:'EvaPrivateWorkReturn/v1',...data})});

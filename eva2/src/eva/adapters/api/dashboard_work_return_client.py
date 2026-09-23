@@ -7,6 +7,20 @@ DASHBOARD_WORK_RETURN_CLIENT_JS = r"""
     const title=typeof result.title==='string'?result.title.trim().slice(0,240):'';
     return title?'Afgerond: '+title:'Je achtergrondopdracht is afgerond';
   }
+  function readableWorkResult(output) {
+    // Match the owner work panel's known tool-free result presentation.
+    // Unknown shapes remain intact; only presentation changes after integrity validation.
+    try {
+      const value=JSON.parse(output);
+      if(value && Object.keys(value).sort().join(',')==='findings,summary'
+          && typeof value.summary==='string' && Array.isArray(value.findings)
+          && value.findings.every(item=>typeof item==='string')) {
+        const findings=value.findings.map(item=>'- '+item).join('\n');
+        return value.summary+(findings?'\n\n'+findings:'');
+      }
+    } catch { /* Plain text and unknown output stay visible. */ }
+    return output;
+  }
   class EvaWorkReturns {
     constructor({fetch, visible, render, clear, failed, digest, recovered=()=>{}, schedule=(callback,delay)=>setTimeout(callback,delay), cancel=timer=>clearTimeout(timer)}) {
       Object.assign(this,{fetch,visible,render,clear,failed,digest,recovered,schedule,cancel});
@@ -60,7 +74,7 @@ DASHBOARD_WORK_RETURN_CLIENT_JS = r"""
       }
     }
   }
-  if(typeof module!=='undefined') module.exports={EvaWorkReturns,workReturnHeading};
+  if(typeof module!=='undefined') module.exports={EvaWorkReturns,workReturnHeading,readableWorkResult};
   if(typeof document==='undefined') return;
   const chat=document.getElementById('chat');
   if(!chat) return;
@@ -74,7 +88,7 @@ DASHBOARD_WORK_RETURN_CLIENT_JS = r"""
       warning.textContent='';
       const node=document.createElement('div'); node.className='message eva';
       const title=document.createElement('strong');title.textContent=workReturnHeading(result);
-      const body=document.createElement('div');body.textContent=result.output;
+      const body=document.createElement('div');body.textContent=readableWorkResult(result.output);
       const link=document.createElement('a');link.href='/internal/v1/dashboard';link.textContent='Opgeslagen opdrachten bekijken';
       node.append(title,body,link);chat.append(node);nodes.push(node);
       if(nodes.length>20) nodes.shift().remove();
