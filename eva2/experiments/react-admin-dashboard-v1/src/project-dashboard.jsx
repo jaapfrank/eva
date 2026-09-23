@@ -137,27 +137,40 @@ function Roadmap({ phases, tasks, searching }) {
 }
 
 const componentIcons = { 'answer-stream':'↗', conversation:'☏', memory:'◈', initiative:'✦', tools:'⚒', voice:'♪', projects:'▤', browser:'▣', installation:'⟳' };
-function DeliveryOverview({ project, stale, onWork }) {
+function DeliveryOverview({ project, runtime, stale, onWork }) {
   const overview = project.deliveryOverview;
   if (!overview) return <p role="alert">Het actuele opleveroverzicht ontbreekt.</p>;
   const latest = overview.deliveries.find(item => ['installed', 'accepted'].includes(item.state));
   const freshness = projectFreshness(overview.reviewedAt, Date.now());
-  return <div className="delivery-overview control-room">
+  const complete = project.capabilities.filter(item => item.product.complete);
+  const unfinished = project.capabilities.length - complete.length;
+  const runtimeKnown = !stale && Number.isFinite(Date.parse(runtime?.checkedAt));
+  const runtimeReady = runtimeKnown && runtime.state === 'ready';
+  return <div className="delivery-overview control-room owner-overview">
+    <section className="owner-summary" aria-label="Project en installatie">
+      <div className="owner-product-status"><span className="summary-kicker">PROJECT</span><h2>Eva is nog in ontwikkeling</h2>
+        <div className="scope-counts"><span><b>{complete.length}</b> onderdelen klaar</span><span><b>{unfinished}</b> nog af te maken</span></div>
+        <p>{complete.length ? `Afgebakend klaar: ${complete.map(item => item.title).join(' · ')}.` : 'Nog geen volledig onderdeel afgerond.'}</p>
+      </div>
+      <div className={`owner-runtime-status ${runtimeReady ? 'reachable' : 'attention'}`}><span className="summary-kicker">INSTALLATIE · LOS VAN PROJECTVOORTGANG</span>
+        <h2><span aria-hidden="true">{runtimeReady ? '●' : '○'}</span> {runtimeReady ? 'Eva-kern bereikbaar' : runtimeKnown && runtime.state === 'not_ready' ? 'Eva-kern vraagt aandacht' : runtimeKnown ? 'Eva-kern niet bereikbaar' : 'Bereikbaarheid onbekend'}</h2>
+        <p>{runtimeKnown ? `Controle: ${new Date(runtime.checkedAt).toLocaleString('nl-NL')}` : 'Geen actuele bereikbaarheidscontrole.'}</p><small>Dit bewijst geen werkend gesprek of afgerond product.</small>
+      </div>
+    </section>
     <div className={`board-freshness ${stale ? 'outdated' : freshness}`} role={stale || freshness !== 'current' ? 'status' : undefined}>
-      <strong>{stale ? 'Verbinding verloren' : freshness === 'current' ? 'Voortgang handmatig bijgewerkt' : 'Voortgang opnieuw controleren'}</strong>
+      <strong>{stale ? 'Verbinding verloren' : freshness === 'current' ? 'Voortgang handmatig bijgewerkt' : 'Let op: voortgang niet actueel bevestigd'}</strong>
       <span>{Number.isFinite(Date.parse(overview.reviewedAt)) ? `Inhoud gecontroleerd: ${new Date(overview.reviewedAt).toLocaleString('nl-NL')}` : 'Geen inhoudelijke controletijd beschikbaar'} · opgeslagen voortgang, geen live agentstatus</span>
       {(stale || freshness !== 'current') && <span>Dit is de laatst vastgelegde stand; huidig werk kan inmiddels veranderd zijn.</span>}
     </div>
     <section className="delivery-kanban" aria-label="Projectwerkbord">
       <article className="board-lane delivered"><h2><span aria-hidden="true">✓</span> Laatst opgeleverd</h2>{latest ? <><small>{latest.date} · {latest.state === 'accepted' ? 'door jou geaccepteerd' : 'geïnstalleerd'}</small><h3>{latest.title}</h3><details><summary>Resultaat en bewijs</summary><p>{latest.result}</p><p>{latest.remaining}</p><small>{latest.source}</small></details></> : <p>Geen geïnstalleerde oplevering vastgelegd.</p>}</article>
-      <article className="board-lane doing"><h2><span aria-hidden="true">●</span> Laatst gemeld werk</h2><small>{overview.now.state}</small><h3>{overview.now.title}</h3><details><summary>Wat gebeurt er?</summary><p>{overview.now.detail}</p></details><details><summary>Klaar wanneer</summary><p>{overview.now.doneWhen}</p></details></article>
-      <article className="board-lane upcoming"><h2><span aria-hidden="true">→</span> Hierna</h2><small>{overview.next.state}</small><h3>{overview.next.title}</h3><p>{overview.next.detail}</p><button className="board-link" onClick={onWork}>Hele uitvoervolgorde →</button></article>
+      <article className="board-lane doing"><h2><span aria-hidden="true">●</span> Laatst gemeld werk</h2><small>{overview.now.state}</small><h3>{overview.now.title}</h3><details><summary>Werk en eindvoorwaarde</summary><p>{overview.now.detail}</p><p><b>Klaar wanneer:</b> {overview.now.doneWhen}</p></details></article>
+      <article className="board-lane upcoming"><h2><span aria-hidden="true">→</span> Hierna</h2><small>{overview.next.state}</small><h3>{overview.next.title}</h3><details><summary>Volgende stap</summary><p>{overview.next.detail}</p><button className="board-link" onClick={onWork}>Hele uitvoervolgorde →</button></details></article>
       <article className="board-lane waiting"><h2><span aria-hidden="true">◷</span> Van jou nodig</h2><small>Blokkeert ander werk niet</small><h3>{overview.ownerAction.title}</h3><details className="owner-next-action"><summary>Zo doe je dat</summary><ol>{overview.ownerAction.steps.map(step => <li key={step}>{step}</li>)}</ol><p>{overview.ownerAction.expected}</p>{overview.ownerAction.url && <a href={overview.ownerAction.url}>{overview.ownerAction.linkLabel || 'Open de proef'} →</a>}</details></article>
     </section>
-    <section className="product-map" aria-label="Status per onderdeel"><div className="overview-section-title"><h2>Wat kun je al gebruiken?</h2><span>Volledige Eva nog niet af · groen geldt voor de genoemde functies</span></div>
-      <p className="component-count"><b>{project.capabilities.filter(item => item.product.complete).length} afgebakende onderdelen klaar</b> · {project.capabilities.filter(item => !item.product.complete).length} onderdelen nog open. Geen percentage voor het hele product.</p>
+    <section className="product-map" aria-label="Status per onderdeel"><div className="overview-section-title"><h2>De negen onderdelen</h2><span>Groen = genoemde scope klaar · amber = nog werk open</span></div>
       <div className="component-list">{project.capabilities.map(item => <details className={`component-row ${item.product.complete ? 'complete' : 'unfinished'}`} key={item.id}>
-        <summary><span aria-hidden="true" className="tile-icon">{componentIcons[item.id]}</span><strong>{item.title}</strong><span className="component-state">{item.product.complete ? '✓ Afgebakende functies klaar' : '◷ Nog af te maken'}</span><span className="component-description">{item.product.complete ? item.product.scope : item.product.remaining[0] || 'Resterend werk nog niet beschreven.'}</span><span aria-hidden="true">⌄</span></summary>
+        <summary><span aria-hidden="true" className="tile-icon">{componentIcons[item.id]}</span><strong>{item.title}</strong><span className="component-state">{item.product.complete ? '✓ Klaar binnen scope' : '◷ Nog af te maken'}</span>{item.product.complete && <span className="component-visible-scope">{item.product.scope}</span>}<span aria-hidden="true">⌄</span></summary>
         <div className="component-detail"><p><b>Omvang:</b> {item.product.scope}</p><p><b>Al geleverd:</b> {item.product.delivery.result}</p>{item.product.remaining.length > 0 && <ul>{item.product.remaining.map(text => <li key={text}>{text}</li>)}</ul>}<p><b>Technisch:</b> {item.product.tested.label}<br/><b>Door jou:</b> {item.product.jaap.label}</p></div>
       </details>)}</div>
     </section>
@@ -202,7 +215,7 @@ export default function ProjectDashboard() {
       {query.error && <div className="project-warning" role="alert">Verbinding met de projectbron verloren. Onderstaande gegevens zijn van de vorige controle.</div>}
       <section className="project-heading"><div><p className="eyebrow">VAN AMBITIE NAAR DAGELIJKS GEBRUIK</p><h1>{tab === 'overzicht' ? 'Waar staat Eva écht?' : tab === 'werk' ? 'Wat gebeurt hierna?' : tab === 'details' ? 'Resultaten en bewijs' : 'Leren van de besten.'}</h1><p>{tab === 'overzicht' ? 'Wat werkt, wat ontbreekt en wat je als volgende krijgt.' : tab === 'werk' ? 'De afgesproken volgorde naar een complete Eva.' : tab === 'details' ? 'Eerdere opleveringen, praktijktests en technische onderbouwing.' : 'Actuele bronnen, open keuzes en bewijs. Geen verzonnen voorsprong.'}</p></div><span className="phase-tag">In ontwikkeling</span></section>
       {tab === 'overzicht' && <>
-        <DeliveryOverview project={project} updatedAt={updatedAt} stale={Boolean(query.error)} onWork={() => setTab('werk')}/>
+        <DeliveryOverview project={project} runtime={runtime} stale={Boolean(query.error)} onWork={() => setTab('werk')}/>
       </>}
       {tab === 'details' && <>
         <DeliveryHistory project={project}/>

@@ -22,6 +22,8 @@ Stap 1: hergebruik de bestaande snelle ontvangst en maak doorpraten tijdens acht
 
 ## Actuele dashboardafspraak
 
+**23 september — compact hoofdscherm live:** projectstatus en kernbereikbaarheid apart, vier korte werkkaarten en negen gekleurde tegels. Groene tegels noemen de afgeronde functies. Details blijven opvraagbaar. Negen bestaande controles, bronreview en live desktop-/telefooncontrole geslaagd. Vijfsecondenverversing leest dezelfde JSON; taakwisselingen vereisen inhoudelijke registratie. [Bewijs](evidence/product/dashboard-one-screen-20260923.json).
+
 Het compacte projectoverzicht staat live op http://localhost:44712/: vier korte kaarten en negen uitklapbare statusregels. Bouw en negen bestaande statuscontroles geslaagd, onafhankelijk review GO; live smalle en desktopweergave gecontroleerd. Dit is uitsluitend een dashboardoplevering. Daarna is de webspraakpresentatie opgeleverd; de actuele volgende stap staat hierboven. [Bewijs](evidence/product/dashboard-compact-rows-20260923.json).
 
 De coördinator werkt de bestaande JSON-werkkaart bij bij taakstart, taakwissel, blokkade en oplevering, vóór de bijbehorende voortgangsmelding. Alleen een inhoudelijke controle vernieuwt `deliveryOverview.reviewedAt`; pollen doet dit niet. Bij afronding zonder actieve uitvoering vermeldt de kaart dat expliciet. Acceptaties blijven behouden.
@@ -41,7 +43,9 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Eerstvolgende handeling:** echte wakewordovergang van de continue-spraakkandidaat vastleggen wanneer Jaap bij het apparaat is. De huishoudelijke sessie- en resultaatkoppeling is al geïnstalleerd; normale firmware blijft behouden. Onafhankelijk functioneel vervolgwerk hoeft niet op deze proef te wachten.
+**Actuele uitvoering:** compact projectoverzicht opgeleverd. Eerstvolgende bouwstap: de voorbereide uitleg bij taakfouten beoordelen en installeren. Die wijziging staat nog niet live.
+
+**Afzonderlijke gebruikersproef:** echte wakewordovergang vastleggen wanneer Jaap bij het apparaat is. De huishoudelijke sessie- en resultaatkoppeling is al geïnstalleerd; normale firmware blijft behouden. Deze proef blokkeert het genoemde vervolgwerk niet.
 
 **Geheugenfout hersteld en doorpraten live bewezen (23 september):** nieuwe proef gaf eerst HTTP503 vóór modelaanroep: één geheugenkandidaat zonder persoonsmetadata blokkeerde gekoppeld privégeheugen. Alleen zulke onbewezen kandidaten worden nu uitgesloten met geregistreerde reden; verkeerde persoon/publiek blijft geweigerd. Vijftien verpakte tests, onafhankelijke review en echte recall met vijf geldige/één uitgesloten herinnering geslaagd. Geïnstalleerd, bronbytes gecontroleerd, kern/werker gezond, terugweg vastgelegd. Na gewijzigde oorzaak dezelfde webproef: ontvangst12,585 s; daarna Zeven in4,202 s terwijl worker zowel ervoor als erna `call_started` was. Resultaat daarna opgeslagen als succeeded; worker303 input/373 output, één modelantwoord, nul tools. Geen snelheids- of fysieke kanaalacceptatieclaim. [Bewijs](evidence/product/private-memory-source-and-running-work-20260923.json).
 

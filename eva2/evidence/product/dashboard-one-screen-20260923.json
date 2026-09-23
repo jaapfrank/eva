@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-09-23T14:00:48.916029+00:00",
+  "scope": "Project dashboard overview only",
+  "url": "http://localhost:44712/",
+  "checks": [
+    "Production project build passed",
+    "Nine existing completion and freshness tests passed",
+    "Independent source review of presentation and latest delivery evidence passed",
+    "Live desktop 1440x1000 overview inspected: summary, four work cards and nine tiles visible",
+    "Live 390x844 layout and expanded accepted memory scope inspected",
+    "Live API reflects shared JSON changes without service restart"
+  ],
+  "ownerAccepted": false,
+  "limitations": [
+    "Work progress remains manually recorded at task transitions; five-second polling does not create new progress",
+    "Runtime reachability is separate from feature completion",
+    "No Eva model calls or voice changes"
+  ],
+  "rollback": "Rebuild project assets from source commit 61601ac5, retaining the current workboard data."
+}

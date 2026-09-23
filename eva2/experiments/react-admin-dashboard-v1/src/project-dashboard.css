@@ -146,3 +146,47 @@
 .control-room .component-count{margin-bottom:10px}
 @media(max-width:1050px){.control-room .component-row>summary{grid-template-columns:24px 1fr 170px 16px}.control-room .component-description{grid-column:2/4;grid-row:2}.control-room .component-row>summary>span:last-child{grid-column:4;grid-row:1}}
 @media(max-width:600px){.control-room .component-row>summary{grid-template-columns:22px 1fr 16px}.control-room .component-state{grid-column:2;grid-row:2}.control-room .component-description{grid-column:2;grid-row:3}.control-room .component-row>summary>span:last-child{grid-column:3}.control-room .component-detail{padding-left:20px}}
+
+/* Compact project summary, separate from observed runtime health. */
+.owner-overview{gap:14px}
+.owner-summary{display:grid;grid-template-columns:1.35fr 1fr;gap:16px}
+.owner-summary>div{padding:18px 20px;border-radius:12px;min-width:0}
+.owner-product-status{background:#223f35;color:#fff}
+.owner-overview .owner-summary h2{font-size:21px;margin:7px 0 10px;color:inherit}
+.summary-kicker{font-size:10px;font-weight:700;letter-spacing:.09em}
+.owner-overview .owner-product-status p{color:#dbe7df;font-size:12px;margin:9px 0 0;line-height:1.5}
+.scope-counts{display:flex;gap:22px;flex-wrap:wrap;font-size:13px}
+.scope-counts b{font-size:28px;margin-right:4px}
+.owner-runtime-status{border:1px solid #d4e0dc;background:#eef4f0;color:#355c48}
+.owner-runtime-status.attention{background:#fff5df;border-color:#dfc38e;color:#805516}
+.owner-overview .owner-runtime-status p{font-size:13px;margin:6px 0;color:inherit}
+.owner-runtime-status small{font-size:12px;color:#56665d}
+.owner-overview .board-freshness.outdated,.owner-overview .board-freshness.unknown{border:1px solid #d39a2e;border-left:5px solid #b5720e}
+.owner-overview .board-freshness strong{font-size:13px}
+.owner-overview .delivery-kanban{gap:12px;align-items:stretch}
+.owner-overview .board-lane{padding:13px 14px}
+.owner-overview .board-lane h2{font-size:14px;margin-bottom:8px}
+.owner-overview .board-lane h3{font-size:15px;line-height:1.4;margin:8px 0;overflow-wrap:anywhere}
+.owner-overview .board-lane small{font-size:11px;line-height:1.4;display:block}
+.owner-overview .board-lane summary{padding:8px 0;font-size:12px}
+.owner-overview .product-map{padding-top:12px}
+.owner-overview .component-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;background:transparent;border:0;overflow:visible;align-items:start}
+.owner-overview .component-row{border:1px solid #dbe3de;border-left:4px solid #bd851b;background:white;border-radius:9px;min-width:0}
+.owner-overview .component-row:last-child{border-bottom:1px solid #dbe3de}
+.owner-overview .component-row.complete{border-left-color:#34845a}
+.owner-overview .component-row>summary{grid-template-columns:24px minmax(0,1fr) 14px;gap:4px 10px;padding:12px;font-size:13px;min-height:65px;box-sizing:border-box}
+.owner-overview .component-row>summary strong{grid-column:2;grid-row:1;line-height:1.4}
+.owner-overview .component-row>summary .tile-icon{grid-row:1/3;grid-column:1;font-size:21px;width:auto}
+.owner-overview .component-row>summary .component-state{grid-row:2;grid-column:2;font-size:11px}
+.owner-overview .component-row>summary>span:last-child{grid-column:3;grid-row:1/3}
+.owner-overview .component-row[open]>summary>span:last-child{transform:rotate(180deg)}
+.owner-overview .component-detail{padding:0 14px 12px}
+.project-app .owner-overview .component-detail p,.project-app .owner-overview .component-detail li{font-size:13px;line-height:1.5}
+.owner-overview .component-detail ul{padding-left:18px}
+.owner-overview .overview-section-title h2{font-size:19px}
+.project-app .owner-overview .board-footnote{font-size:12px;line-height:1.5}
+@media(min-width:1100px){.owner-overview .delivery-kanban{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:900px){.owner-summary{grid-template-columns:1fr}.owner-overview .component-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.owner-overview .component-list,.owner-overview .delivery-kanban{grid-template-columns:1fr}.owner-summary>div{padding:15px}.owner-overview .owner-summary h2{font-size:19px}}
+
+.owner-overview .component-row>summary .component-visible-scope{grid-column:2;grid-row:3;font-size:11px;line-height:1.45;color:#425b4b;font-weight:400}
