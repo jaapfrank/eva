@@ -17,5 +17,25 @@
   "startupConnected": true,
   "ownerAccepted": false,
   "proofBoundary": "Providerless server-behaviour regression and live process startup, not a live owner latency measurement.",
-  "replyMismatchFinding": "Stored ingress and archived reply reference for screenshot-matching answer both point to the original research request. Message edit question remains unanswered; no cause inferred."
+  "replyMismatchFinding": "Stored ingress and archived reply reference for screenshot-matching answer both point to the original research request. Message edit question remains unanswered; no cause inferred.",
+  "followup20260923": {
+    "actualAdapterTest": {
+      "path": "/home/administrator/project/Bottie/test/telegram-concurrent-ingress.test.js",
+      "sha256": "93a2dd6ae20adcb24bfd489c06abec1df7ec68af39529a9c01b3a301da8f5292",
+      "passed": 1,
+      "seconds": 2.718,
+      "review": "Root independently read test: actual grammY/archive/outbox, controlled core NDJSON and Telegram APIs; short answer completes before blocked research with original IDs. Not a live model/Telegram latency proof."
+    },
+    "readOnlyLiveCheck": {
+      "serviceActive": true,
+      "lastArchivedEva2UserMessageAt": "2026-09-22T18:59:46.000Z",
+      "lastSuccessfulEva2LatencyAt": "2026-09-22T19:01:15.838Z",
+      "pollCorrectionStartedAt": "2026-09-22T19:08:46.233373+00:00",
+      "finding": "Latest archived owner trial predates polling correction. No newer /eva2 user message in current archive. Screenshot mismatch remains unexplained."
+    },
+    "productChanged": false,
+    "modelCalls": 0,
+    "externalMessages": 0,
+    "ownerAccepted": false
+  }
 }

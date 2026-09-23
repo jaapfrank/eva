@@ -1,5 +1,15 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Functionele oplevering eerst — eigenaarbesluit 23 september 2026
+
+Eerst alle afgesproken functies werkend en geïnstalleerd opleveren. Verhuizing,
+uitgebreide herstelvoorzieningen en aanvullende rechtencontroles schuiven naar
+de afronding; zij blokkeren dagelijkse functionaliteit niet zonder concrete
+afhankelijkheid. Bestaande bescherming en gegevens blijven behouden. Per wijziging
+alleen noodzakelijke gerichte controles; brede integratie- en eindtests volgen
+op het functionele geheel. Dit wijzigt de uitvoervolgorde, niet de bestaande
+acceptaties of de nog open eindcriteria.
+
 ## Doorlopend opleverdoel — eigenaarbesluit 22 september 2026
 
 Lever één geïnstalleerde, samenhangende Eva op die het gezin dagelijks kan

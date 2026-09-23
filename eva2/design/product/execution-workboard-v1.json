@@ -1108,10 +1108,10 @@
           }
         ],
         "now": {
-          "title": "Gezamenlijke herstelroute en gecontroleerde vrijgave verbinden",
-          "detail": "Pakket, hersteltoestemming, gatewaykopie en terugzetting met juiste eigenaar/rechten zijn getest. De privé-kernproef loopt; gezamenlijke controller en vrijgave zijn nog niet aangesloten.",
-          "state": "Integratie open · niet geïnstalleerd",
-          "doneWhen": "Een hersteld project is leesbaar en kan alleen zijn ontbrekende stap uitvoeren, zonder oude uitvoeringsbewijzen te veranderen."
+          "title": "Doorpraten tijdens werk en juiste antwoordkoppeling",
+          "detail": "Actuele Telegramadapter slaagt in overlapproef: tussenvraag eerst, eigen antwoordverwijzingen behouden. Laatste opgeslagen eigenaarsproef was vóór de geïnstalleerde pollingcorrectie; nieuwe praktijkbevestiging ontbreekt. Screenshotafwijking blijft onverklaard. Geen herbouw van de werkende adapter.",
+          "state": "Praktijkfout open · oorzaak nog niet vastgesteld",
+          "doneWhen": "Een tussenvraag krijgt haar eigen antwoord terwijl onderzoek doorloopt; het onderzoeksresultaat blijft aan de oorspronkelijke opdracht gekoppeld. Technische proef en Jaaps acceptatie blijven apart."
         },
         "next": {
           "title": "Herstelde installatie gecontroleerd starten",
@@ -10898,7 +10898,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Native documentrelocatie afmaken en testen; daarna gezamenlijk kern-, bestands- en geheugenherstel met gecontroleerde operatorvrijgave.",
+      "nextAction": "Stap 1: overige functionele kanaaltekorten afmaken vanuit bestaande code; fysieke Voice PE-route en gedeelde gespreksbediening. Telegramcorrectie blijft geïnstalleerd; nieuwe praktijkbevestiging en screenshotverklaring staan apart open en blokkeren onafhankelijk werk niet.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10908,7 +10908,8 @@
         "Alleen afhankelijk werk wacht op ontbrekende toegang, hardware, rechten of menselijk besluit.",
         "Mislukte terugweg of gegevensrisico stopt de betreffende installatie; behoud bestaande versie/data.",
         "Geen gefingeerde acceptatie, benchmarkwinst of automatische heropening van geaccepteerd werk."
-      ]
+      ],
+      "ownerPriority20260923": "Eerst de afgesproken functies werkend en geïnstalleerd. Verhuizing, uitgebreide herstelvoorzieningen en aanvullende rechtencontroles naar de afronding. Bestaande bescherming en gegevens behouden; per wijziging alleen benodigde gerichte controles, brede integratiecontrole op het functionele geheel."
     },
     "dashboardClarityCorrection20260922": {
       "ownerFeedback": "Bewezen basis zegt niet of Eva2 als vaste huisgenoot bruikbaar is; toon concrete opgeleverde resultaten en open werk.",
