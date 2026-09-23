@@ -1180,6 +1180,8 @@ class PostgresHindsightMemoryRuntime:
             durable_recent = journal.recent(turn, exclude_message_id=turn.message_id)
             recent = (voice.recent if voice is not None
                       else tuple((*recent_messages, *durable_recent)[-12:]))
+            from eva.bootstrap.private_continuity import with_private_continuity
+            recent = with_private_continuity(self, turn, recent)
             latest_usage = ConversationModelUsage.unmeasured()
 
             def checkpoint(current, usage):

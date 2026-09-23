@@ -94,8 +94,27 @@ class PostgresOwnerMemorySources:
             raise LookupError("owner memory source unavailable")
         return found
 
+    def recent_other_channel(self, turn, *, now, after=None):
+        """Read one retained private exchange across the verified owner bridge."""
+        alias = None if self._bindings is None else self._bindings.private_bridge_principal(
+            principal_id=str(self._owner), principal_binding_id=self._binding)
+        owner = str(self._owner)
+        dashboard = f"dashboard:{self._binding}"
+        private = turn.audience.kind == "private_person"
+        admitted = ((turn.principal_id == owner and
+                     (turn.conversation_id == dashboard or turn.conversation_id.startswith("voice:")))
+                    or (alias is not None and turn.principal_id == alias
+                        and turn.conversation_id == alias))
+        if not private or not admitted or turn.project_id is not None:
+            return None
+        channels = tuple(value for value in (dashboard, alias)
+                         if value is not None and value != turn.conversation_id)
+        if not channels:
+            return None
+        return self._read(now=now, limit=1, context_conversations=channels, after=after)
+
     def _read(self, *, now: datetime, limit: int, before: str | None = None,
-              source_id: str | None = None):
+              source_id: str | None = None, context_conversations=None, after=None):
         cursor = memory_source_page_request(limit, before)
         if now.tzinfo is None or now.utcoffset() != timedelta(0) or now.microsecond:
             raise ValueError("memory source time must be whole-second UTC")
@@ -151,6 +170,11 @@ class PostgresOwnerMemorySources:
                     sa.or_(data["retention_until"].astext.is_(None),
                            data["retention_until"].astext > stamp),
                 )
+                if context_conversations is not None:
+                    query = query.where(data["conversation_id"].astext.in_(context_conversations),
+                                        data["project_id"].astext.is_(None))
+                    if after is not None:
+                        query = query.where(e.occurred_at > after)
                 if source_id is not None:
                     query = query.where(e.event_id == UUID(source_id))
                 if cursor:
@@ -170,12 +194,12 @@ class PostgresOwnerMemorySources:
                         raise PeopleMemoryOverviewError("memory source scope differs")
                     state = ("retained" if row.phase == "memory_retained" else
                              "needs_help" if row.phase == "memory_needs_help" else "pending")
-                    if source_id is not None:
+                    if source_id is not None or context_conversations is not None:
                         return doc, state
                     sources.append(MemorySource(str(row.event_id),
                         row.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
                         doc.content[:2048], len(doc.content) > 2048, state))
-                if source_id is not None:
+                if source_id is not None or context_conversations is not None:
                     return None
                 next_cursor = None
                 if len(rows) > limit:
