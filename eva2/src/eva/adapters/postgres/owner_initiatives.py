@@ -59,15 +59,17 @@ class PostgresOwnerInitiatives:
             raise ValueError("invalid initiative ID")
         return value
 
-    def page(self, *, now: datetime) -> dict:
+    def page(self, *, now: datetime, limit: int = 64) -> dict:
+        if type(limit) is not int or not 1 <= limit <= 64:
+            raise ValueError("initiative page limit must be between 1 and 64")
         with self._engine.begin() as conn:
             self._authorize(conn, now)
             rows = conn.execute(self._query().order_by(
                 operational_checkpoints.c.updated_at.desc(), operational_checkpoints.c.thread_id
-            ).limit(65)).all()
+            ).limit(limit + 1)).all()
             latest_review = self._latest_review(conn)
             cards = []
-            for row in rows[:64]:
+            for row in rows[:limit]:
                 data = row.adoption["data"]
                 phase = row.phase
                 status = ("stopped" if phase == "personal_stopped" else
@@ -80,7 +82,7 @@ class PostgresOwnerInitiatives:
                     "can_stop": status not in ("stopped", "done"),
                     "has_artifact": self._artifact(conn, row.thread_id) is not None,
                     "feedback": self._feedback(conn, row.thread_id)})
-        return {"contract": "EvaOwnerInitiatives/v1", "cards": cards, "truncated": len(rows) > 64,
+        return {"contract": "EvaOwnerInitiatives/v1", "cards": cards, "truncated": len(rows) > limit,
                 "latest_review": latest_review, "checked_at": now.isoformat()}
 
     def _latest_review(self, conn):

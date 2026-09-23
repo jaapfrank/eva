@@ -24,6 +24,8 @@ from eva.contracts.canonical_json import canonical_json_bytes
 
 
 _OPERATIONS = {
+    "list_own_initiatives": ("initiative_list", None),
+    "get_own_initiative_result": ("initiative_result", "intent_id"),
     "start_digital_work": ("digital", "task"),
     "start_background_research": ("research", "research"),
     "start_delegated_work": ("start", "task"),
@@ -33,6 +35,8 @@ _OPERATIONS = {
     "resume_delegated_work": ("resume", "work_id"),
 }
 _DESCRIPTIONS = {
+    "initiative_list": "Bekijk Eva’s eigen initiatieven voor deze geverifieerde eigenaar: titel, motivatie, status, feedback en of een opgeslagen resultaat bestaat. Toont ook de laatste initiatiefbeoordeling en eventuele budgetblokkade. Gebruik bij vragen naar wat je zelf hebt opgepakt; verzin geen nieuwe activiteit.",
+    "initiative_result": "Lees het werkelijk opgeslagen resultaat van een eigen initiatief. Gebruik de intent_id uit list_own_initiatives. Een opgeslagen tekst is geen bewijs dat alle inhoud onafhankelijk is geverifieerd; benoem onvoltooide uitvoering eerlijk.",
     "digital": "Neem een digitale opdracht aan voor uitvoering op de achtergrond met de bestaande toegestane connectoren. Geef de concrete opdracht mee. Geeft direct een work_id terug; het gesprek blijft beschikbaar. Gebruik get, stop en resume voor resultaat en bediening. Bevestig alleen werkelijk opgeslagen werk.",
     "research": "Start publiek bronnenonderzoek op de achtergrond. Geef uitsluitend een geanonimiseerde publieke vraag, titel en onderwerpen mee; geen privécontext, namen of geheugen. Geeft direct work_id terug. Blijf beschikbaar voor gesprek; gebruik bestaande get/stop/resume voor resultaat en bediening.",
     "start": "Besteed een concrete denk-, schrijf- of analysetaak uit aan een duurzame hulpagent. Geef alle benodigde context mee. De hulpagent heeft geen browser of tools. Geeft meteen een work_id terug; gebruik get om later het resultaat te lezen. Gebruik voor parallel hulpwerk op verzoek van de eigenaar.",
@@ -87,10 +91,14 @@ class PostgresDelegatedWorkActions:
                         }} if operation in {"start", "research", "digital"} else {})},
                     "required": [] if key is None else [key],
                 },
+                ("Gebruik de echte intent_id en opgeslagen inhoud. De lijst staat in operation_result.cards; "
+                 "het resultaat staat in operation_result.artifact.content. Onbekend is niet voltooid. "
+                 "Status verified bevestigt alleen het ophalen; beoordeel kwaliteit niet als eigenaaracceptatie."
+                 if operation.startswith("initiative_") else
                 "Rapporteer de opgeslagen status eerlijk. Bewaar work_id voor een vervolg. "
                 "status=verified bevestigt alleen deze databasehandeling; de taakstatus en "
                 "het resultaat staan in operation_result.work. "
-                "Wacht niet in een poll-lus op hulpwerk; geef de eigenaar de taak en laat het gesprek doorgaan.",
+                "Wacht niet in een poll-lus op hulpwerk; geef de eigenaar de taak en laat het gesprek doorgaan."),
             )
             for name, (operation, key) in _OPERATIONS.items()
             if (operation != "research" or include_research) and (operation != "digital" or include_digital)
