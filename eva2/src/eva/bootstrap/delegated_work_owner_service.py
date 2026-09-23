@@ -175,7 +175,7 @@ class DelegatedWorkOwnerService:
             raise ValueError("schedule arguments require a schedule operation")
         if search is not None and operation != "search":
             raise ValueError("search arguments require their own operation")
-        if operation not in {"related", "start", "research", "digital", "list", "search", "get", "result", "stop", "resume",
+        if operation not in {"stop_related", "related", "start", "research", "digital", "list", "search", "get", "result", "stop", "resume",
                              "initiative_list", "initiative_result", "initiative_stop", "initiative_feedback"}:
             raise ValueError("delegated work operation is invalid")
         if not isinstance(request_key, str) or not 1 <= len(request_key) <= 2048:
@@ -240,6 +240,18 @@ class DelegatedWorkOwnerService:
                     "next_before_work_id": rows[19].spec.work_id if len(rows) > 20 else None,
                     "planning": ScheduledOwnerWork(self).list(),
                     "search_scope": "stored_private_titles_tasks_results"}
+        if operation == "stop_related":
+            if task is not None or research is not None or not isinstance(work_id, str) or not work_id:
+                raise ValueError("related stop requires one work ID")
+            self.validate_authority(turn)
+            from eva.application.related_work import stop_related_work
+            result = stop_related_work(work_id,
+                inspect=lambda identifier: self.execute("related", turn,
+                    work_id=identifier, request_key=request_key),
+                stop=lambda identifier: self.execute("stop", turn,
+                    work_id=identifier, request_key=request_key),
+                cancel_schedule=ScheduledOwnerWork(self).cancel_chain)
+            return {**response, **result, "operation": operation}
         if operation == "related":
             if task is not None or not isinstance(work_id, str) or not work_id:
                 raise ValueError("related work requires one work ID")

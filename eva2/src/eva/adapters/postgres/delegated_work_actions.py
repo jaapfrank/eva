@@ -24,6 +24,7 @@ from eva.contracts.canonical_json import canonical_json_bytes
 
 
 _OPERATIONS = {
+    "stop_related_work": ("stop_related", "work_id"),
     "get_related_work": ("related", "work_id"),
     "revise_digital_work": ("revise_digital", "revision"),
     "search_delegated_work": ("search", "search"),
@@ -45,6 +46,7 @@ _OPERATIONS = {
     "resume_delegated_work": ("resume", "work_id"),
 }
 _DESCRIPTIONS = {
+    "stop_related": "Stop op expliciet verzoek de hele samenhangende opdracht: oorspronkelijke taak, gekoppelde hervattingen en vervolgwerk, plus toegankelijke geplande vervolgstappen. Gebruik een echte work_id uit get_related_work. Alleen voor de bedoelde volledige reeks; gebruik stop_delegated_work voor één taak. Resultaten blijven bewaard. Begonnen acties kunnen nog afronden. Bij partial_stop is de volledige reeks niet bevestigd gestopt; rapporteer dat en de overgebleven status.",
     "related": "Bekijk de oorspronkelijke opdracht en de gekoppelde hervattingen en vervolgonderzoeken bij een work_id. Geeft maximaal 64 opgeslagen taken met status, resultatenbeschikbaarheid en open eindtaken. Truncated betekent onvolledig; aantallen zijn geen productpercentage. Open gewenste resultaten met get_delegated_work. Bij privéwerk staat gekoppelde planning in planning.schedules, met wachtstatus en eerdere stappen. Niet-gekoppelde planning staat in list_delegated_work.",
     "revise_digital": "Stuur een concrete digitale achtergrondopdracht bij op verzoek van de eigenaar. Geef work_id en instruction met de wijziging, maximaal 2000 tekens. Stopt de huidige poging, bewaart de correctie en plant één begrensde hervatting na het stoppen; oorspronkelijke taak, acties en voortgang blijven behouden. Gebruik bij newer_attempt_exists het teruggegeven work_id. Bij ander werk of een al afgeronde taak volg je de teruggegeven uitleg; beweer dan geen toegepaste correctie.",
     "search": "Zoek een oudere eigen opdracht op een woord of zinsdeel in bewaarde titels, opdrachten en resultaten, ook buiten de recente twintig. Geef query; gebruik next_before_work_id als before_work_id om verder te zoeken. Neem een kenmerkend onderwerpwoord, geen lange hele vraag. Open het gevonden work_id via get_delegated_work. Alleen nog bewaarde taken zijn vindbaar; geen zoekhit betekent niet dat iets nooit is besproken.",
@@ -134,7 +136,10 @@ class PostgresDelegatedWorkActions:
                         }} if operation in {"start", "research", "digital"} else {})},
                     "required": [] if key is None else [key] + (["feedback"] if operation == "initiative_feedback" else []),
                 },
-                ("Rapporteer operation_result.status. Alleen correction_saved bevestigt bewaarde bijsturing en de vervolgafspraak. "
+                ("Rapporteer operation_result.status en de overgebleven jobs. stop_recorded bevestigt stopverzoeken, "
+                 "niet dat een lopende externe handeling al beëindigd is. partial_stop betekent onvolledig."
+                 if operation == "stop_related" else
+                 "Rapporteer operation_result.status. Alleen correction_saved bevestigt bewaarde bijsturing en de vervolgafspraak. "
                  "De oude poging moet eerst stoppen; begonnen effecten kunnen nog afronden."
                  if operation == "revise_digital" else
                  "Zoekresultaten staan in operation_result.jobs. Open de passende work_id met get_delegated_work. "

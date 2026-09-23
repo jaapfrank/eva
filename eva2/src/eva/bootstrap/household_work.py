@@ -212,6 +212,7 @@ class HouseholdWorkService:
             "research",
             "list",
             "related",
+            "stop_related",
             "get",
             "result",
             "stop",
@@ -224,6 +225,15 @@ class HouseholdWorkService:
             self.store._engine, self.server.conversation_scope
         ).admit_household_ingress(turn, validate_current=self.validate_authority)
         origin = self.origin(turn)
+        if operation == "stop_related":
+            if research is not None or prior_work_id is not None or not isinstance(work_id, str) or not work_id:
+                raise ValueError("related stop requires one work ID")
+            from eva.application.related_work import stop_related_work
+            return stop_related_work(work_id,
+                inspect=lambda identifier: self.execute("related", turn,
+                    work_id=identifier, request_key=request_key),
+                stop=lambda identifier: self.execute("stop", turn,
+                    work_id=identifier, request_key=request_key))
         if operation == "related":
             if research is not None or prior_work_id is not None or not isinstance(work_id, str) or not work_id:
                 raise ValueError("related household work requires one work ID")
@@ -485,6 +495,7 @@ class HouseholdWorkActions(PostgresDelegatedWorkActions):
             "start_background_research",
             "list_delegated_work",
             "get_related_work",
+            "stop_related_work",
             "get_delegated_work",
             "stop_delegated_work",
             "resume_delegated_work",
@@ -496,6 +507,7 @@ class HouseholdWorkActions(PostgresDelegatedWorkActions):
             "start_background_research",
             "list_delegated_work",
             "get_related_work",
+            "stop_related_work",
             "get_delegated_work",
             "stop_delegated_work",
             "resume_delegated_work",
