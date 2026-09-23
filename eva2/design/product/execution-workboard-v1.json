@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T23:00:50.120281+00:00",
+        "checkedAt": "2026-09-23T23:05:10.147766+00:00",
         "deliveries": [
+          {
+            "title": "Afgerond werk blijft vindbaar in het vervolggesprek",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Maximaal drie recente uitkomsten blijven beschikbaar als taakverwijzing. Eva kan bij een vervolgvraag het opgeslagen resultaat ophalen, ook nadat de taak niet meer loopt.",
+            "remaining": "Compacte metadata uit de laatste 24 uur, binnen de bestaande persoons- of huishoudsessie. Geen volledige resultaten automatisch meegestuurd. Echte model- en kanaalproef later.",
+            "source": "eva2/evidence/product/recent-work-context-installed-20260924.json"
+          },
           {
             "title": "Websiteantwoord zichtbaar tijdens het schrijven",
             "date": "24 september",
@@ -1573,15 +1581,15 @@
           }
         ],
         "now": {
-          "title": "Antwoordopbouw in websitegesprek geïnstalleerd",
+          "title": "Vervolggesprek over recente taakuitkomsten aangesloten",
           "state": "Geïnstalleerd",
-          "detail": "Tekst verschijnt tijdens het schrijven; ieder antwoord blijft bij zijn vraag. Afgebroken antwoorden blijven herkenbaar onbevestigd.",
-          "doneWhen": "Installatie en startcontrole afgerond; model- en kanaalproef later."
+          "detail": "Maximaal drie recente uitkomsten blijven beschikbaar als taakverwijzing. Eva kan bij een vervolgvraag het opgeslagen resultaat ophalen, ook nadat de taak niet meer loopt.",
+          "doneWhen": "Technische installatie en startcontrole afgerond; werkelijke modelkeuze en gesprekskwaliteit later beproeven."
         },
         "next": {
-          "title": "Resterende functionele kanaalkoppelingen",
+          "title": "Overige open functionele kanaalkoppelingen",
           "state": "Nog niet gestart",
-          "detail": "Verder met de open functies voor gedeeld gesprek en taakuitvoering. Uitgebreide kanaalproeven blijven uitgesteld."
+          "detail": "Verder met de bestaande stappen voor gedeeld gesprek en taakuitvoering. Uitgebreide model- en gebruikersproeven volgen later."
         },
         "ownerAction": {
           "title": "Gewoon verder praten",
@@ -1595,7 +1603,7 @@
           "expected": "Antwoordopbouw met definitieve bevestiging aan het einde. Je hoeft nu geen gebruiksproef uit te voeren."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T23:00:50.120281+00:00"
+        "reviewedAt": "2026-09-23T23:05:10.147766+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11364,7 +11372,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Verder met de open functies voor gedeeld gesprek en taakuitvoering. Uitgebreide kanaalproeven blijven uitgesteld.",
+      "nextAction": "Verder met de bestaande stappen voor gedeeld gesprek en taakuitvoering. Uitgebreide model- en gebruikersproeven volgen later.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

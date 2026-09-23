@@ -1,0 +1,23 @@
+{
+  "installed": true,
+  "installedAt": "2026-09-23T23:05:39.291589+00:00",
+  "sourceCommit": "18b54d7a",
+  "image": "eva2-recent-work-context:20260924",
+  "behavior": "Shared conversation actions include up to three recently updated non-active task references and result availability. Private and exact household-session services project the same metadata without inserting full outputs into the prompt.",
+  "checks": [
+    "Python syntax",
+    "Packaged imports",
+    "No active stored tasks before restart",
+    "Core and delegated worker healthy"
+  ],
+  "limitations": [
+    "Selected from existing bounded 20 task listing; updated within 24 hours. Truncation remains explicit.",
+    "No model, follow-up conversation, or channel trial performed.",
+    "Does not prove the model will always choose the correct result.",
+    "Household references remain limited to the current authorized session; no speaker identification."
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/recent-work-context-20260924/baseline.compose.private.json"
+}
