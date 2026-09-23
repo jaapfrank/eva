@@ -3,9 +3,12 @@
 The [readback](provisioning-readback-2026-09-22.md) records the current installation
 boundary; the [package receipt](package-receipt-2026-09-22.json) identifies the
 prepared artifacts. Nothing here installs firmware or changes a running service.
-Current installation: Woonkamer was installed via OTA on 23 September; authenticated
-readback confirms build 2026-09-09 19:26:51 +0200. Overkapping remains unchanged.
-The scoped firewall rule is active. Physical conversation acceptance remains open.
+Current installation: the Woonkamer continuous-session candidate was rolled back
+on 23 September after the owner reported white/blue/red LEDs and no answer after
+the wakeword. Prepared recovery firmware build 2026-09-09 09:46:28 +0200 is installed
+and the owner confirmed ordinary speech works again. The continuous-session
+candidate is not accepted or installed. Overkapping remains unchanged.
+The scoped firewall rule is active.
 See `../../evidence/product/voice-pe-woonkamer-ota-installed-20260923.json`.
 
 Keep private packages outside Git: firmware binaries embed credentials.

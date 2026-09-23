@@ -1,6 +1,6 @@
 {
   "date": "2026-09-23",
-  "installed": true,
+  "installed": false,
   "method": "ESPHome OTA over local network",
   "device": {
     "name": "home-assistant-voice-0a16e0",
@@ -51,5 +51,17 @@
     "observedMute": true,
     "muteChangedByAgent": false,
     "meaning": "Control availability and current mute state only; no physical audio acceptance."
+  },
+  "supersededByRollback": {
+    "date": "2026-09-23",
+    "ownerReport": "After wakeword white, then blue, then red; no response",
+    "uploadedRecoverySha256": "222b87eefca70de27af8db210c06156c0f2dd34c82558ff2614d7173a93040bc",
+    "uploadExitCode": 0,
+    "authenticatedReadbackBuild": "2026-09-09 09:46:28 +0200",
+    "physicalRecoveryConfirmed": true,
+    "limit": "Recovery binary rebuilt from previous configuration, not captured original device flash.",
+    "ownerConfirmation": "ja nu doet ze het weer.",
+    "scope": "Ordinary wakeword and spoken response restored; continuous-session candidate remains rejected.",
+    "observedPipeline": "Wakeword -> microphone -> STT -> intent -> response audio HTTP200; no error in observed restored run."
   }
 }

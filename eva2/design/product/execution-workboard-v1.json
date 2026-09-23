@@ -1019,11 +1019,11 @@
             "source": "eva2/evidence/product/conversation-overlap-installed-20260923.json"
           },
           {
-            "title": "Woonkamer-Voice PE draadloos bijgewerkt",
+            "title": "Woonkamer-Voice PE hersteld en door jou bevestigd",
             "date": "23 september",
             "state": "installed",
-            "result": "Voorbereide firmware via ESPHome OTA geïnstalleerd; apparaatidentiteit en nieuwe build beveiligd teruggelezen. Firewallverbinding naar de bestaande spraakdienst actief. Overkapping ongewijzigd.",
-            "remaining": "Echte spraak, onderbreken en doorpraten tijdens werk op het apparaat nog proberen; geen gezinsacceptatie geclaimd.",
+            "result": "Na de fout bij het wakeword is de voorbereide herstelfirmware geplaatst. Jij bevestigt: ja nu doet ze het weer. De gewone spraakroute werkt weer.",
+            "remaining": "Uitbreiding voor continue gesprekken is teruggezet en blijft open. Niet opnieuw installeren voordat de sessiestartfout is opgelost.",
             "source": "eva2/evidence/product/voice-pe-woonkamer-ota-installed-20260923.json"
           },
           {
@@ -1141,8 +1141,8 @@
         ],
         "now": {
           "title": "Algemene digitale taken op de achtergrond afmaken",
-          "detail": "Onderzoek en schrijfwerk kunnen al op de achtergrond. Afzonderlijke actie- en verbruiksregistratie per algemene taak is nu gebouwd en gericht gecontroleerd. De koppeling met taakaanname, werker, stoppen en terugmelding is nog in uitvoering.",
-          "state": "In uitvoering · nog niet geïnstalleerd",
+          "detail": "Voice PE-spraak is hersteld en door jou bevestigd. Afzonderlijke taakregistratie is gebouwd; koppeling van algemene tooltaken aan de bestaande werker is in uitvoering.",
+          "state": "In uitvoering · algemene achtergrondfunctie nog niet geïnstalleerd",
           "doneWhen": "Een toegestane digitale taak met meerdere bestaande toolstappen wordt afgemaakt en teruggebracht terwijl het gesprek doorgaat; stoppen en afzonderlijke opdrachten blijven herkenbaar."
         },
         "next": {

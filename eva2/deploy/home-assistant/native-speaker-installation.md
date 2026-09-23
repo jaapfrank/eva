@@ -1,3 +1,8 @@
+> Current status, 23 September: Woonkamer candidate rolled back after failure
+> following wakeword. Recovery firmware is installed; owner confirms ordinary
+> speech works again. Continuous-session installation below is historical and
+> must not be repeated before the session-start fault is resolved.
+
 # SP-03 installatiegrens: woonkamer
 
 > Actueel 23 september: de woonkamerfirmware is via ESPHome OTA geïnstalleerd.
