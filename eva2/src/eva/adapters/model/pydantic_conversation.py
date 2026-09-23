@@ -93,6 +93,12 @@ from eva.contracts.canonical_json import canonical_json_bytes
 from eva.contracts.runtime_budget import RuntimeResourceBudget
 
 
+_CONNECTOR_DISCOVERY_ACTIONS = frozenset({
+    "connect_service", "discover_connector_tools",
+    "manage_connected_services", "use_connector_tool",
+})
+
+
 _MAX_STREAM_BYTES = 8 * 1024 * 1024
 _MODEL_LEASE_OWNER_UID = 1000
 
@@ -564,6 +570,7 @@ class PydanticConversationModel:
         resource_budget: RuntimeResourceBudget | None = None,
         conversation_tools: tuple[ConversationToolDescriptor, ...] = (),
         model_backend: Model | None = None,
+        discoverable_action_names: tuple[str, ...] = (),
     ) -> None:
         if not model.strip():
             raise ValueError("conversation model is required")
@@ -590,6 +597,7 @@ class PydanticConversationModel:
         self._reasoning_effort = reasoning_effort
         self._resource_budget = resource_budget
         self._model_backend = model_backend
+        self._discoverable_action_names = frozenset(discoverable_action_names)
         self._conversation_tool_descriptors = {
             descriptor.name: descriptor for descriptor in conversation_tools
         }
@@ -1145,6 +1153,20 @@ class PydanticConversationModel:
         receipts = prior_actions + (() if completed_action is None else (completed_action,))
         if len({receipt.call.call_id for receipt in receipts}) != len(receipts):
             raise ValueError("conversation action history contains duplicate call IDs")
+        # The runtime identifies exact duplicate gateway descriptors that remain
+        # accessible through the authorized connector discovery route.
+        compact_catalog = (
+            completed_action is None
+            and not prior_actions
+            and _CONNECTOR_DISCOVERY_ACTIONS.issubset(available_actions)
+            and bool(self._discoverable_action_names.intersection(available_actions))
+        )
+        if compact_catalog:
+            available_actions = tuple(
+                name for name in available_actions
+                if name not in self._discoverable_action_names
+                or name in _CONNECTOR_DISCOVERY_ACTIONS
+            )
         offer_tools = completed_action is None or bool(available_actions)
         pydantic_catalog = (
             tuple(
@@ -1172,6 +1194,12 @@ class PydanticConversationModel:
                 available_actions=available_actions,
                 completed_action=completed_action, self_context=self_context,
             )
+            if compact_catalog:
+                instructions += (
+                    "\nUse manage_connected_services status and discover_connector_tools "
+                    "to find configured connector tools, then use_connector_tool to run "
+                    "them. Their full schemas are available through discovery."
+                )
             if completed_action is not None and available_actions:
                 instructions += (
                     "\nGebruik de toolresultaten als bewijs. Als de opdracht nog niet "

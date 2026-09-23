@@ -1251,3 +1251,101 @@ def test_owner_stop_during_provider_failure_prevents_retry(tmp_path):
     with cancellation_scope(signal), pytest.raises(WorkInterrupted):
         _generate(model)
     assert len(calls) == 1
+
+
+CONNECTOR_ACTION_NAMES = (
+    "connect_service", "discover_connector_tools",
+    "manage_connected_services", "use_connector_tool",
+)
+
+
+def _compact_adapter(tmp_path, scripted, *, enabled=True):
+    descriptors = tuple(ConversationToolDescriptor(
+        name=name, description="Connector operation.",
+        input_schema={"type": "object", "properties": {},
+                      "required": [], "additionalProperties": False},
+        completion_guidance="Use the receipt.",
+    ) for name in CONNECTOR_ACTION_NAMES)
+    model = _adapter_type()(
+        auth_file=tmp_path / "unused.json", model_backend=scripted.model,
+        conversation_tools=(TOOL, *descriptors),
+        discoverable_action_names=(TOOL.name,) if enabled else (),
+    )
+
+    scripted.phase_catalogs = []
+    run_phase = model._run_pydantic_phase
+
+    def capture_phase(**kwargs):
+        scripted.phase_catalogs.append(tuple(tool["name"] for tool in kwargs["tools"]))
+        return run_phase(**kwargs)
+
+    model._run_pydantic_phase = capture_phase
+    return model
+
+
+def test_contact_catalog_omits_only_discoverable_descriptors(tmp_path):
+    scripted = ScriptedPydanticConversation((ScriptedPhase.text("Hoi!"),))
+    _generate(_compact_adapter(tmp_path, scripted),
+              available_actions=(TOOL.name, *CONNECTOR_ACTION_NAMES))
+    request = scripted.captures[0]
+    assert TOOL.name not in scripted.phase_catalogs[0]
+    assert set(CONNECTOR_ACTION_NAMES).issubset(scripted.phase_catalogs[0])
+    assert "search_personal_memory" in scripted.phase_catalogs[0]
+    assert "full schemas are available through discovery" in request.instructions
+
+
+@pytest.mark.parametrize("missing", CONNECTOR_ACTION_NAMES)
+def test_contact_catalog_preserves_direct_tools_without_authorized_discovery(tmp_path, missing):
+    scripted = ScriptedPydanticConversation((ScriptedPhase.text("Hoi!"),))
+    _generate(_compact_adapter(tmp_path, scripted), available_actions=(
+        TOOL.name, *(name for name in CONNECTOR_ACTION_NAMES if name != missing)))
+    assert TOOL.name in scripted.phase_catalogs[0]
+
+
+@pytest.mark.parametrize("continuation", [False, True])
+def test_contact_catalog_default_and_continuation_keep_original_catalog(tmp_path, continuation):
+    scripted = ScriptedPydanticConversation((ScriptedPhase.text("Klaar."),))
+    _generate(_compact_adapter(tmp_path, scripted, enabled=continuation),
+              available_actions=(TOOL.name, *CONNECTOR_ACTION_NAMES),
+              completed_action=RECEIPT if continuation else None)
+    assert TOOL.name in scripted.phase_catalogs[0]
+
+
+def test_contact_catalog_still_rejects_unknown_authorized_names(tmp_path):
+    scripted = ScriptedPydanticConversation((ScriptedPhase.text("Hoi!"),))
+    with pytest.raises(ValueError, match="unknown conversation actions"):
+        _generate(_compact_adapter(tmp_path, scripted),
+                  available_actions=("unknown", TOOL.name, *CONNECTOR_ACTION_NAMES))
+    assert not scripted.captures
+
+
+def test_contact_catalog_rejects_omitted_action_return(tmp_path, monkeypatch):
+    scripted = ScriptedPydanticConversation((ScriptedPhase.text("Hoi!"),))
+    model = _compact_adapter(tmp_path, scripted)
+    from eva.application.conversation import ConversationModelTiming
+    monkeypatch.setattr(model, "_run_pydantic_phase", lambda **kwargs: (
+        "", CALL, ConversationModelUsage.measured(
+            model_attempts=1, tool_calls=1, input_tokens=10, output_tokens=5),
+        ConversationModelTiming(1, 2)))
+    with pytest.raises(ConversationModelError, match="unavailable action"):
+        _generate(model, available_actions=(TOOL.name, *CONNECTOR_ACTION_NAMES))
+
+
+def test_contact_catalog_preserves_identity_memory_recent_context(tmp_path):
+    from eva.application.conversation import RecentConversationMessage
+    identity, memory = _identity(), _memory()
+    recent = (RecentConversationMessage("user", "Keep this recent detail.", NOW),)
+    captures = []
+    for enabled in (False, True):
+        scripted = ScriptedPydanticConversation((ScriptedPhase.text("Hoi!"),))
+        model = _compact_adapter(tmp_path, scripted, enabled=enabled)
+        model.generate(_turn(), identity, memory, recent,
+                       available_actions=(TOOL.name, *CONNECTOR_ACTION_NAMES),
+                       self_context=("One task remains active.",))
+        captures.append(scripted.captures[0].instructions)
+    guidance = (
+        "\nUse manage_connected_services status and discover_connector_tools "
+        "to find configured connector tools, then use_connector_tool to run "
+        "them. Their full schemas are available through discovery."
+    )
+    assert captures[1] == captures[0] + guidance

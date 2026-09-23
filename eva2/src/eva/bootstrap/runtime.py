@@ -1880,10 +1880,13 @@ def create_runtime_app() -> FastAPI:
             + (() if delegated_work_actions is None else (delegated_work_actions,))
         ),
     )
+    from eva.bootstrap.contact_catalog import discoverable_contact_actions
+
     contact_model = (None if settings.conversation_contact_model is None else
         PydanticConversationModel(
             auth_file=Path(settings.conversation_auth_file),
             model=settings.conversation_contact_model,
+            discoverable_action_names=discoverable_contact_actions(settings.external_provider),
             reasoning_effort=settings.conversation_contact_reasoning_effort,
             resource_budget=settings.runtime_resource_budget,
             conversation_tools=(
