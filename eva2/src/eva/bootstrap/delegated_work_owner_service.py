@@ -86,9 +86,9 @@ class DelegatedWorkOwnerService:
 
     def execute(self, operation: str, turn: ConversationTurn, *, task: str | None = None,
                 work_id: str | None = None, request_key: str, research: dict | None = None,
-                intent_id: str | None = None) -> dict:
+                intent_id: str | None = None, feedback: str | None = None) -> dict:
         try:
-            return self._execute(operation, turn, task=task, work_id=work_id, request_key=request_key, research=research, intent_id=intent_id)
+            return self._execute(operation, turn, task=task, work_id=work_id, request_key=request_key, research=research, intent_id=intent_id, feedback=feedback)
         except DelegatedWorkNotFound:
             return {"contract": "EvaDelegatedWorkOwnerResult/v1", "operation": operation,
                     "status": "not_found", "work": None,
@@ -100,29 +100,40 @@ class DelegatedWorkOwnerService:
 
     def _execute(self, operation: str, turn: ConversationTurn, *, task: str | None,
                  work_id: str | None, request_key: str, research: dict | None = None,
-                 intent_id: str | None = None) -> dict:
+                 intent_id: str | None = None, feedback: str | None = None) -> dict:
         if not self.available_for(turn):
             raise DelegatedWorkConflict("delegated work requires its private owner scope")
         if operation not in {"start", "research", "digital", "list", "get", "result", "stop", "resume",
-                             "initiative_list", "initiative_result"}:
+                             "initiative_list", "initiative_result", "initiative_stop", "initiative_feedback"}:
             raise ValueError("delegated work operation is invalid")
         if not isinstance(request_key, str) or not 1 <= len(request_key) <= 2048:
             raise ValueError("delegated work request key is required")
-        if operation in {"initiative_list", "initiative_result"}:
+        if operation in {"initiative_list", "initiative_result", "initiative_stop", "initiative_feedback"}:
             if task is not None or work_id is not None or research is not None:
-                raise ValueError("initiative reading does not accept task arguments")
+                raise ValueError("initiative operations do not accept task arguments")
             self.validate_authority(turn)
             from eva.adapters.postgres.owner_initiatives import PostgresOwnerInitiatives
             initiatives = PostgresOwnerInitiatives(self.store._engine,
                 tenant_id=turn.tenant_id, installation_id=turn.installation_id,
                 owner=self.owner_principal_id, binding=self.principal_binding_id,
                 authority_scope=self.store.scope)
+            if operation != "initiative_feedback" and feedback is not None:
+                raise ValueError("feedback requires its explicit operation")
             if operation == "initiative_list":
                 if intent_id is not None:
                     raise ValueError("initiative listing does not accept an intent id")
                 return initiatives.page(now=self.now(), limit=8)
             if not isinstance(intent_id, str) or not intent_id:
                 raise ValueError("initiative result requires an intent id")
+            if operation in {"initiative_stop", "initiative_feedback"}:
+                try:
+                    return (initiatives.stop(intent_id, now=self.now())
+                            if operation == "initiative_stop" else
+                            initiatives.feedback(intent_id, feedback, now=self.now(),
+                                                 request_key=request_key))
+                except LookupError:
+                    return {"status": "unavailable", "intent_id": intent_id,
+                            "guidance": "Dit initiatief is niet beschikbaar; er is niets gewijzigd."}
             try:
                 artifact = initiatives.artifact(intent_id, now=self.now())
             except LookupError:
@@ -133,8 +144,8 @@ class DelegatedWorkOwnerService:
             return {"contract": "EvaOwnerInitiativeResult/v1", "intent_id": intent_id,
                     "status": "stored", "artifact": artifact,
                     "independently_verified": False}
-        if intent_id is not None:
-            raise ValueError("intent id requires an initiative operation")
+        if intent_id is not None or feedback is not None:
+            raise ValueError("initiative arguments require an initiative operation")
         if operation == "research":
             if self.research_profile is None or task is not None or work_id is not None:
                 raise DelegatedWorkConflict("public background research is not composed")

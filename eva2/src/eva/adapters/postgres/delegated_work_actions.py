@@ -24,6 +24,8 @@ from eva.contracts.canonical_json import canonical_json_bytes
 
 
 _OPERATIONS = {
+    "stop_own_initiative": ("initiative_stop", "intent_id"),
+    "give_initiative_feedback": ("initiative_feedback", "intent_id"),
     "list_own_initiatives": ("initiative_list", None),
     "get_own_initiative_result": ("initiative_result", "intent_id"),
     "start_digital_work": ("digital", "task"),
@@ -35,6 +37,8 @@ _OPERATIONS = {
     "resume_delegated_work": ("resume", "work_id"),
 }
 _DESCRIPTIONS = {
+    "initiative_stop": "Stop een eigen initiatief op verzoek van de eigenaar. Haal bij onduidelijkheid eerst de echte intent_id op via list_own_initiatives. Reeds begonnen effecten kunnen nog afronden; beloof geen terugdraaiing.",
+    "initiative_feedback": "Bewaar feedback van de eigenaar bij een eigen initiatief. Gebruik de echte intent_id en de bedoeling van de eigenaar, maximaal 800 tekens. Bij nog lopend werk stopt deze bijsturing de huidige uitvoering; er wordt niet automatisch een nieuwe opdracht gestart. Feedback blijft beschikbaar voor latere initiatiefkeuzes.",
     "initiative_list": "Bekijk Eva’s eigen initiatieven voor deze geverifieerde eigenaar: titel, motivatie, status, feedback en of een opgeslagen resultaat bestaat. Toont ook de laatste initiatiefbeoordeling en eventuele budgetblokkade. Gebruik bij vragen naar wat je zelf hebt opgepakt; verzin geen nieuwe activiteit.",
     "initiative_result": "Lees het werkelijk opgeslagen resultaat van een eigen initiatief. Gebruik de intent_id uit list_own_initiatives. Een opgeslagen tekst is geen bewijs dat alle inhoud onafhankelijk is geverifieerd; benoem onvoltooide uitvoering eerlijk.",
     "digital": "Neem een digitale opdracht aan voor uitvoering op de achtergrond met de bestaande toegestane connectoren. Geef de concrete opdracht mee. Geeft direct een work_id terug; het gesprek blijft beschikbaar. Gebruik get, stop en resume voor resultaat en bediening. Bevestig alleen werkelijk opgeslagen werk.",
@@ -83,17 +87,20 @@ class PostgresDelegatedWorkActions:
                             "public_review": {"type":"string", "const":"public_unlinked"}},
                         "required": ["contract","schema_version","question","title","options","research_mode","public_review"]
                     } if operation == "research" else {"type":"string"}),
+                        **({"feedback": {"type": "string", "minLength": 1, "maxLength": 800}}
+                           if operation == "initiative_feedback" else {}),
                         **({"acceptance_message": {
                             "type": "string", "minLength": 1, "maxLength": 240,
                             "description": "Formuleer een korte, natuurlijke ontvangstzin voor deze opdracht. "
                             "Deze zin wordt alleen na opgeslagen toelating uitgesproken. "
                             "Zeg dat je ermee aan de slag gaat; beweer nog geen resultaat."
                         }} if operation in {"start", "research", "digital"} else {})},
-                    "required": [] if key is None else [key],
+                    "required": [] if key is None else [key] + (["feedback"] if operation == "initiative_feedback" else []),
                 },
                 ("Gebruik de echte intent_id en opgeslagen inhoud. De lijst staat in operation_result.cards; "
                  "het resultaat staat in operation_result.artifact.content. Onbekend is niet voltooid. "
-                 "Status verified bevestigt alleen het ophalen; beoordeel kwaliteit niet als eigenaaracceptatie."
+                 "Bij stoppen/feedback staat de uitkomst in operation_result.status en execution_stopped. "
+                 "Status verified bevestigt alleen de databasehandeling, niet eigenaaracceptatie of directe beëindiging van alle effecten."
                  if operation.startswith("initiative_") else
                 "Rapporteer de opgeslagen status eerlijk. Bewaar work_id voor een vervolg. "
                 "status=verified bevestigt alleen deze databasehandeling; de taakstatus en "
@@ -227,6 +234,11 @@ class PostgresDelegatedWorkActions:
             raise ConversationConflict("unknown delegated action")
         operation, key = operation_and_key
         required = set() if key is None else {key}
+        if operation == "initiative_feedback":
+            required.add("feedback")
+            feedback = call.arguments.get("feedback")
+            if not isinstance(feedback, str) or not 1 <= len(feedback.strip()) <= 800:
+                raise ConversationConflict("initiative feedback must contain 1..800 characters")
         optional = {"acceptance_message"} if operation in {"start", "research", "digital"} else set()
         acceptance = call.arguments.get("acceptance_message")
         if (not required <= set(call.arguments) <= required | optional
@@ -266,6 +278,7 @@ class PostgresDelegatedWorkActions:
         result = self._service.execute(
             operation, turn, request_key=thread_id,
             **({} if key is None else {key: call.arguments[key]}),
+            **({"feedback": call.arguments["feedback"]} if operation == "initiative_feedback" else {}),
         )
         output = {"status": "verified", "operation_result": result}
         work = result.get("work")

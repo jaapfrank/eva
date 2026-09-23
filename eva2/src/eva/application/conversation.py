@@ -982,6 +982,7 @@ class LivingConversation:
                 "start_delegated_work", "start_background_research", "start_digital_work", "list_delegated_work", "get_delegated_work",
                 "stop_delegated_work", "resume_delegated_work",
                 "list_own_initiatives", "get_own_initiative_result",
+                "stop_own_initiative", "give_initiative_feedback",
             }
             model = (contact_model
                      if contact_model is not None

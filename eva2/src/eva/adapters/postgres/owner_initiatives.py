@@ -242,10 +242,13 @@ class PostgresOwnerInitiatives:
         ).order_by(e.sequence.desc()).limit(1)).scalar_one_or_none()
         return None if payload is None else payload["data"]["feedback"]
 
-    def feedback(self, intent_id, feedback, *, now):
+    def feedback(self, intent_id, feedback, *, now, request_key=None):
         intent_id = self._intent_id(intent_id)
         if not isinstance(feedback, str) or not 1 <= len(feedback.strip()) <= 800:
             raise ValueError("initiative feedback must contain 1..800 characters")
+        if request_key is not None and (
+                not isinstance(request_key, str) or not 1 <= len(request_key) <= 2048):
+            raise ValueError("initiative feedback request key is invalid")
         with self._engine.begin() as conn:
             self._authorize(conn, now)
             row = conn.execute(self._query().where(
@@ -253,21 +256,38 @@ class PostgresOwnerInitiatives:
             ).with_for_update(of=operational_checkpoints)).one_or_none()
             if row is None:
                 raise LookupError("initiative unavailable")
-            terminal = row.phase in {"release_ready", "initiative_completed", "personal_stopped", "initiative_blocked"}
-            transition_timeline_thread(conn, self._scope, thread_id=row.thread_id,
-                expected_revision=row.revision,
-                checkpoint_id=f"{row.thread_id}:feedback:{row.revision + 1}",
-                phase=row.phase if terminal else "personal_stopped",
-                status=row.status if terminal else "completed",
-                event_type="PERSONAL_INITIATIVE_FEEDBACK", occurred_at=now,
-                operation_id=intent_id,
-                data={"intent_id": intent_id, "owner_principal_id": str(self._owner),
-                      "principal_binding_id": str(self._binding), "feedback": feedback.strip(),
-                      "execution_stopped": not terminal})
-        if not terminal:
+            previous = None
+            if request_key is not None:
+                e = operational_events.c
+                previous = conn.execute(sa.select(e.payload).where(
+                    e.tenant_id == self._scope.tenant_id,
+                    e.installation_id == self._scope.installation_id,
+                    e.thread_id == row.thread_id,
+                    e.event_type == "PERSONAL_INITIATIVE_FEEDBACK",
+                    e.payload["data"]["request_key"].astext == request_key,
+                ).order_by(e.sequence.desc()).limit(1)).scalar_one_or_none()
+            if previous is not None:
+                if previous["data"]["feedback"] != feedback.strip():
+                    raise ValueError("initiative feedback changed during replay")
+                execution_stopped = previous["data"]["execution_stopped"]
+            else:
+                terminal = row.phase in {"release_ready", "initiative_completed", "personal_stopped", "initiative_blocked"}
+                execution_stopped = not terminal
+                transition_timeline_thread(conn, self._scope, thread_id=row.thread_id,
+                    expected_revision=row.revision,
+                    checkpoint_id=f"{row.thread_id}:feedback:{row.revision + 1}",
+                    phase=row.phase if terminal else "personal_stopped",
+                    status=row.status if terminal else "completed",
+                    event_type="PERSONAL_INITIATIVE_FEEDBACK", occurred_at=now,
+                    operation_id=intent_id,
+                    data={"intent_id": intent_id, "owner_principal_id": str(self._owner),
+                          "principal_binding_id": str(self._binding), "feedback": feedback.strip(),
+                          "execution_stopped": execution_stopped,
+                          **({"request_key": request_key} if request_key is not None else {})})
+        if execution_stopped:
             self._stop_execution(intent_id)
         return {"status": "recorded", "intent_id": intent_id,
-                "execution_stopped": not terminal}
+                "execution_stopped": execution_stopped}
 
     def _stop_execution(self, intent_id):
         from eva.adapters.postgres.conversation_actions import PostgresPersonalInterestStore
