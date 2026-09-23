@@ -108,3 +108,47 @@ def test_private_alias_resolver_failure_cannot_reuse_linked_cache(hindsight_serv
     engine._private_alias_resolver = unavailable
     state.group_recall_response = {"results": []}
     assert not engine.recall_for_presence_fast(query).confirmed_facts
+
+
+@pytest.mark.parametrize("include_metadata", [False, True])
+def test_private_alias_unproven_world_record_does_not_block_trusted_memory(hindsight_server, include_metadata):
+    url, state = hindsight_server
+    unproven = {"id": "unproven-world", "text": "Unproven content " * 900,
+                "type": "world", "scores": {"final": 0.99}, "mentioned_at": NOW}
+    if include_metadata:
+        unproven["metadata"] = {}
+    state.group_recall_response = {"results": [unproven, _fact(ALIAS)]}
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(url),
+        private_alias_resolver=lambda query: (PRINCIPAL, ALIAS))
+    result = engine.recall_for_presence(replace(_query(), query_text="Topic"))
+    assert [fact.fact_id for fact in result.confirmed_facts] == ["hindsight:private-topic"]
+    assert result.confirmed_facts[0].subject == ALIAS
+    assert result.recall.excluded_reasons["hindsight:unproven-world"] == "missing_private_source_authority"
+    assert all("Unproven content" not in str(fact.value) for fact in result.confirmed_facts)
+
+
+def test_private_alias_only_unproven_records_returns_explicit_exclusions(hindsight_server):
+    url, state = hindsight_server
+    state.group_recall_response = {"results": [
+        {"id": "unproven-world", "text": "Unproven content", "type": "world",
+         "scores": {"final": 0.9}, "mentioned_at": NOW}]}
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(url),
+        private_alias_resolver=lambda query: (PRINCIPAL, ALIAS))
+    result = engine.recall_for_presence(replace(_query(), query_text="Topic"))
+    assert result.confirmed_facts == ()
+    assert result.recall.selected == []
+    assert result.recall.excluded_reasons == {
+        "hindsight:unproven-world": "missing_private_source_authority"}
+
+
+@pytest.mark.parametrize("audience_kind", ["household", "telegram_group"])
+def test_missing_private_authority_does_not_hide_explicit_shared_audience(hindsight_server, audience_kind):
+    url, state = hindsight_server
+    fact = _fact(ALIAS)
+    del fact["metadata"]["principal_id"]
+    fact["metadata"]["audience_kind"] = audience_kind
+    state.group_recall_response = {"results": [fact]}
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(url),
+        private_alias_resolver=lambda query: (PRINCIPAL, ALIAS))
+    with pytest.raises(HindsightMemoryScopeError):
+        engine.recall_for_presence(replace(_query(), query_text="Topic"))

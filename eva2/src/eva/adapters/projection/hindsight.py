@@ -1207,6 +1207,7 @@ class HindsightMemoryEngine:
 
         selected: list[RecalledFact] = []
         confirmed: list[ConfirmedFact] = []
+        excluded_reasons: dict[str, str] = {}
         seen: set[str] = set()
         admitted_text_chars = 0
         admitted_text_char_limit = self._config.recall_max_tokens * 4
@@ -1260,6 +1261,16 @@ class HindsightMemoryEngine:
             ):
                 continue
             fact_id = f"hindsight:{memory_id}"
+            if (not group_recall and not household_recall
+                    and len(private_principals) > 1
+                    and not metadata.get("principal_id")
+                    and metadata.get("audience_kind") in {None, "private_person"}
+                    and metadata.get("audience_id") in {None, query.audience.audience_id}):
+                # Linked private banks require explicit source authority. An
+                # unproven legacy candidate is unavailable memory, not a reason
+                # to prevent the entire conversation. Never infer its owner.
+                excluded_reasons[fact_id] = "missing_private_source_authority"
+                continue
             if fact_id in seen:
                 continue
             if admitted_text_chars + len(text) > admitted_text_char_limit:
@@ -1473,7 +1484,7 @@ class HindsightMemoryEngine:
             requested_valid_at=query.requested_valid_at,
             admitted_fact_ids_sha256=canonical_sha256(sorted(fact_ids)),
             selected=[item.model_dump(mode="json") for item in selected],
-            excluded_reasons={},
+            excluded_reasons=excluded_reasons,
             projection_version=_PROJECTION_VERSION,
             scope_sha256=canonical_sha256(query.scope),
             created_at=query.requested_valid_at,
