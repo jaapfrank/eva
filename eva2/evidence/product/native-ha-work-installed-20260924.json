@@ -1,0 +1,35 @@
+{
+  "contract": "EvaFeatureInstallation/v1",
+  "feature": "native_ha_household_work",
+  "recorded_at": "2026-09-23T22:21:16.139811+00:00",
+  "source_commit": "f81d11b4",
+  "image": "eva2-native-ha-work:20260924",
+  "installed": true,
+  "checks": [
+    "Changed Python syntax",
+    "Packaged imports without network",
+    "Installed runtime and household voice differences preserved through bounded patches",
+    "Read-only task storage check: zero active tasks before installation",
+    "Core and delegated worker healthy",
+    "Owner task API HTTP 200; fifteen existing tasks visible"
+  ],
+  "behavior": [
+    "Native HA responder uses the existing household work server when configured",
+    "Server stores and reuses a household work session for the authenticated device, HA conversation and current policy",
+    "Native HTTP session uses the existing maximum thirty-minute lifetime without inventing an audio heartbeat",
+    "Existing shared research/list/get/stop/resume actions are available through the bound session",
+    "Continuous media session heartbeat unchanged; no private owner identity inferred from the speaker"
+  ],
+  "limits": [
+    "Physical HA and Voice PE conversation/overlap trial deferred",
+    "Automatic unsolicited spoken result return not added; result can be requested in the active bound conversation",
+    "Only existing authorized public household research, not unrestricted digital or private owner tasks",
+    "After thirty minutes or closure a new session is created; this is not personal long-term recognition",
+    "First use switches native conversation context to the server-issued session; earlier stored history is retained but is not automatically copied into it",
+    "Independent review and broader tests deferred by owner instruction"
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/native-ha-work-20260924/baseline.compose.private.json"
+}
