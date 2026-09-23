@@ -2169,6 +2169,17 @@ def create_runtime_app() -> FastAPI:
         from eva.adapters.postgres.scheduled_work import ScheduledOwnerWork
         scheduled_work = ScheduledOwnerWork(delegated_work_service)
         idle_tasks = (scheduled_work.run_once, *idle_tasks)
+    if settings.delegated_result_delivery_enabled and household_work_server is not None:
+        from eva.providers.home_assistant import HomeAssistantProviderSettings
+        from eva.bootstrap.native_work_delivery import NativeWorkDelivery
+        ha_providers = (() if settings.external_provider is None else
+                        settings.external_provider.providers)
+        native_media = [item.settings for item in ha_providers
+                        if item.provider_id == "home_assistant"
+                        and isinstance(item.settings, HomeAssistantProviderSettings)]
+        if len(native_media) == 1:
+            native_returns = NativeWorkDelivery(household_work_server, native_media[0])
+            idle_tasks = (native_returns.run_once, *idle_tasks)
     runtime = PostgresHindsightMemoryRuntime(
         engine,
         memory,
