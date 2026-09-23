@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-09-23T15:24:35.776044+00:00",
+  "sourceCommit": "c558f982",
+  "change": "Offer the latest voice reply before replaying older entirely unheard replies; preserve pending results and existing partial/durable/stopped exclusions.",
+  "installed": true,
+  "images": [
+    "eva2-web-reply-priority:20260923",
+    "eva2-speaker-reply-priority:20260923"
+  ],
+  "checks": {
+    "webPackaged": 33,
+    "speakerPackaged": 33,
+    "independentSourceReview": "GO: coordinator reviewed executor diff and ordering regressions",
+    "loadedSourcesMatchOverlay": true,
+    "servicesRunning": true,
+    "restartCounts": [
+      0,
+      0
+    ],
+    "webReady": true,
+    "independentDeploymentReview": "GO: image-only manifest deltas and exact committed patch confirmed by executor"
+  },
+  "limits": [
+    "Fixes replay ordering, not five-second model latency",
+    "Does not reprioritize newly arriving unrelated background results",
+    "No physical Voice PE or owner acceptance"
+  ],
+  "modelCalls": 0,
+  "rollbackDirectory": "/var/lib/eva2/voice-reply-priority-20260923",
+  "rollback": "Apply web/speaker baseline.compose.private.json under their existing compose projects and restore runtime.env.rollback for managed web startup."
+}

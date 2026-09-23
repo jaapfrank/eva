@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Nieuwe spraakvraag krijgt voorrang op ongehoord oud antwoord",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Website en speakerdienst zetten een eerder ongehoord antwoord pas na het antwoord op de nieuwe vraag in de afspeelrij. Onderbroken gesproken tekst wordt niet opnieuw afgespeeld.",
+            "remaining": "Dit verkort de modeltijd niet. Fysieke Voice PE-beoordeling blijft open; nieuw binnenkomende achtergrondresultaten vallen buiten deze replaycorrectie.",
+            "source": "eva2/evidence/product/voice-reply-priority-installed-20260923.json"
+          },
+          {
             "title": "Bewaarde werkwijze toegepast op een nieuwe opdracht",
             "date": "23 september",
             "state": "installed",
@@ -1357,10 +1365,10 @@
           }
         ],
         "now": {
-          "title": "Projectoverzicht vereenvoudigen en bijwerken",
+          "title": "Nieuwe spraakvraag vóór ongehoord oud antwoord",
           "state": "Afgerond · geïnstalleerd en gecontroleerd",
-          "detail": "Compact overzicht live. De laatste functionele oplevering is bijgewerkt, beide werkweergaven gebruiken dezelfde status en eindvoorwaarde. Desktop, mobiele breedte en automatische inhoudsverversing gecontroleerd. Vervolgwerk is nog niet gestart.",
-          "doneWhen": "Overzicht toont de juiste laatste oplevering, open functies en volgende handeling; browsercontrole en onafhankelijke review afgerond."
+          "detail": "33 verpakte controles per spraakversie geslaagd; bronreview GO. Beide diensten draaien met exact gecontroleerde code; website gereed. Fysieke luisteracceptatie blijft open.",
+          "doneWhen": "Gerichte volgordeproef slaagt, bron onafhankelijk beoordeeld, beide spraakdiensten bijgewerkt en live gecontroleerd."
         },
         "next": {
           "title": "Verder met dagelijks gesprek en stem",
@@ -1377,7 +1385,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T15:17:48.618465+00:00"
+        "reviewedAt": "2026-09-23T15:24:35.776044+00:00"
       }
     },
     "pendingTechnicalReview": {
