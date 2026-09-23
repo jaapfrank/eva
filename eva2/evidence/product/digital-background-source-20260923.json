@@ -1,0 +1,28 @@
+{
+  "date": "2026-09-23",
+  "status": "source_checkpoint_not_installed",
+  "test_result": "35 passed in2.12s",
+  "test_files": [
+    "tests/application/test_delegated_digital_runner.py",
+    "tests/bootstrap/test_delegated_digital_admission.py",
+    "tests/contract/test_delegated_digital_work.py"
+  ],
+  "environment": "Installed core image7922 dependencies, current source overlay, no network",
+  "coverage": [
+    "two connector steps with independent foreground conversation",
+    "foreground admission receipt does not poll or use slow model",
+    "outer cancellation drains active thread",
+    "durable stop checked at dispatch boundary",
+    "copied release cannot expand grant",
+    "resume retains verified effect identity and counts only new dispatches",
+    "original ingress binding and optional tool admission",
+    "versioned result supports multiple model responses with unknown price"
+  ],
+  "limitations": [
+    "Controlled model, connectors, model journal and task store; not real external work",
+    "No PostgreSQL lifecycle proof yet",
+    "Core/worker production composition not enabled",
+    "No new model requests or external messages sent"
+  ],
+  "review": "Root reviewed agent contracts/admission; agent reviewed root runner/store/dispatch/contact changes; GO for source checkpoint"
+}

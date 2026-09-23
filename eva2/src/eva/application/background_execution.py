@@ -6,6 +6,7 @@ from contextvars import ContextVar
 from dataclasses import dataclass
 import hashlib
 from typing import Iterator
+from collections.abc import Callable
 
 from eva.application.conversation import ConversationConflict, ConversationTurn
 
@@ -14,6 +15,7 @@ from eva.application.conversation import ConversationConflict, ConversationTurn
 class BackgroundExecutionScope:
     source_turn: ConversationTurn
     work_id: str
+    authorize_dispatch: Callable[[ConversationTurn], None] | None = None
 
     def __post_init__(self) -> None:
         if self.source_turn.audience.kind != "private_person":
@@ -54,3 +56,13 @@ def background_execution_namespace(turn: ConversationTurn) -> str | None:
     if turn != scope.source_turn:
         raise ConversationConflict("background execution source turn differs")
     return scope.namespace
+
+
+def authorize_background_dispatch(turn: ConversationTurn) -> None:
+    """Recheck the durable job immediately before a connector effect starts."""
+    scope = _current.get()
+    if scope is not None:
+        background_execution_namespace(turn)
+        if scope.authorize_dispatch is None:
+            raise ConversationConflict("background connector dispatch requires a job guard")
+        scope.authorize_dispatch(turn)

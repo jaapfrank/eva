@@ -230,6 +230,9 @@ class DelegatedHouseholdResearchSpec(DelegatedResearchSpec):
 
 
 def load_delegated_work_spec(raw: object) -> DelegatedWorkSpec:
+    if isinstance(raw, dict) and raw.get("contract") == "DelegatedDigitalWork/v4":
+        from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec
+        return DelegatedDigitalWorkSpec.model_validate(raw)
     if isinstance(raw, dict) and raw.get("contract") == "DelegatedHouseholdResearchWork/v3":
         return DelegatedHouseholdResearchSpec.model_validate(raw)
     if isinstance(raw, dict) and raw.get("contract") == "DelegatedResearchWork/v2":
@@ -311,10 +314,18 @@ class DelegatedWorkResult(_DelegatedContract):
         return self
 
 
+def load_delegated_work_result(raw: object) -> DelegatedWorkResult:
+    if isinstance(raw, dict) and raw.get("contract") == "DelegatedDigitalWorkResult/v4":
+        from eva.contracts.delegated_digital_work import DelegatedDigitalWorkResult
+        return DelegatedDigitalWorkResult.model_validate(raw)
+    return DelegatedWorkResult.model_validate(raw)
+
+
 __all__ = [
     "DelegatedWorkError",
     "DelegatedWorkGrant",
     "DelegatedWorkResult",
+    "load_delegated_work_result",
     "DelegatedWorkSpec",
     "DelegatedWorkUsage",
 ]

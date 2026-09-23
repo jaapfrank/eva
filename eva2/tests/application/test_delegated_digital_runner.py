@@ -1,0 +1,201 @@
+"""Real conversation loop with controlled model/tools; no external/model traffic."""
+import asyncio
+from datetime import UTC, datetime, timedelta
+import hashlib
+from pathlib import Path
+import threading
+import time
+
+import pytest
+
+from eva.application.cancellation import check_cancellation
+from eva.application.conversation import (
+    ConversationActionCall, ConversationActionReceipt, ConversationConflict,
+    ConversationModelResult, ConversationModelUsage, ConversationTurn, IdentityProfile, LivingConversation,
+)
+from eva.application.background_execution import background_execution_namespace
+from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+from eva.adapters.postgres.delegated_work import _validate_usage
+from eva.bootstrap.delegated_digital_profile import DelegatedDigitalProfile
+from eva.bootstrap.delegated_digital_runner import DelegatedDigitalRunner
+from eva.contracts.canonical_json import canonical_sha256
+from test_conversation import _Memory
+
+NOW = datetime(2026, 9, 23, 12, tzinfo=UTC)
+
+class Journal:
+    def __init__(self): self.usages = []
+    def begin_model_request(self, turn): return str(len(self.usages))
+    def complete_model_request(self, turn, request, usage): self.usages.append(usage)
+    def model_usage(self, turn): return ConversationModelUsage.aggregate(tuple(self.usages))
+
+class Store:
+    stopped = False
+    def authorize_tool_dispatch(self, call):
+        if self.stopped: raise ConversationConflict("work stopped")
+
+class Tools:
+    action_names = ("discover_connector_tools", "use_connector_tool")
+    def __init__(self):
+        self.started = threading.Event(); self.release = threading.Event(); self.calls = []
+    def available_for(self, turn): return True
+    def active_context(self, turn): return ()
+    def pending(self, turn, *, step_index): return None
+    def execute(self, turn, call, *, step_index):
+        from eva.application.background_execution import authorize_background_dispatch
+        authorize_background_dispatch(turn)
+        self.calls.append((turn, call.name, step_index, background_execution_namespace(turn)))
+        if step_index == 0:
+            self.started.set()
+            while not self.release.wait(.01): check_cancellation()
+        check_cancellation()
+        return ConversationActionReceipt(call, {"status":"verified", "result":"read back"})
+
+class Model:
+    def generate(self, turn, identity, memory, recent_messages, **kwargs):
+        assert any("Compare the documents" in x for x in kwargs['self_context'])
+        completed = kwargs.get('completed_action')
+        name = "discover_connector_tools" if completed is None else (
+            "use_connector_tool" if completed.call.name == "discover_connector_tools" else None)
+        return ConversationModelResult(None if name else "The comparison was stored and read back.",
+            "controlled", None if name is None else ConversationActionCall(name, name, {}),
+            usage=ConversationModelUsage.measured(tool_calls=0 if name is None else 1,
+                                                  input_tokens=30, output_tokens=10))
+
+def fixture():
+    source = ConversationTurn.private("tenant", "install", "owner", "chat", "message",
+                                      "Compare the documents", NOW.strftime("%Y-%m-%dT%H:%M:%SZ"))
+    root = Path(__file__).resolve().parents[2] / "src/eva"
+    name = "bootstrap/delegated_digital_runner.py"
+    profile = DelegatedDigitalProfile("model:test", "a"*64, "b"*64, Tools.action_names,
+        ((name, hashlib.sha256((root/name).read_bytes()).hexdigest()),))
+    spec = profile.build_spec(source={k:getattr(source,k) for k in (
+        "tenant_id","installation_id","principal_id","conversation_id","message_id")} |
+        {"audience":{"kind":"private_person","principal_id":"owner"}},
+        source_ingress_sha256=canonical_sha256(PostgresConversationJournal._ingress_data(source)),
+        work_id="work:one",episode_id="episode:one",generation=1,parent_task_id="task:one",
+        owner_principal_id="owner",principal_binding_id="binding:one",task="Compare the documents",
+        created_at=NOW,deadline=NOW+timedelta(seconds=300))
+    store,tools,journal=Store(),Tools(),Journal()
+    identity=IdentityProfile("Eva", "Helpful", ("Be honest",))
+    runner=DelegatedDigitalRunner(store, profile, source_loader=lambda _:source, memory=_Memory(),
+        model=Model(),identity=identity,connector_tools=(tools,),journal_factory=lambda *_:journal,clock=lambda:NOW)
+    return source,spec,store,tools,journal,runner,identity
+
+def test_two_tool_steps_finish_while_foreground_conversation_continues():
+    async def run():
+        source,spec,store,tools,journal,runner,identity=fixture()
+        task=asyncio.create_task(runner.run(spec,call_id="call:one"))
+        assert await asyncio.to_thread(tools.started.wait,2)
+        class Contact:
+            def generate(self,*args,**kwargs):return ConversationModelResult("Goed, dank je!", "controlled")
+        reply=await asyncio.wait_for(asyncio.to_thread(LivingConversation(_Memory(),Contact(),identity).respond,
+            ConversationTurn.private("tenant","install","owner","chat","other","Hoe gaat het?",source.occurred_at)),2)
+        assert reply.text=="Goed, dank je!" and not task.done()
+        tools.release.set();outcome=await asyncio.wait_for(task,3)
+        assert outcome.status=="succeeded",outcome
+        assert [c[2] for c in tools.calls]==[0,1]
+        assert all(c[0]==source and c[3] for c in tools.calls)
+        assert outcome.usage.completed_model_responses==3 and outcome.usage.tool_calls==2
+        assert outcome.usage.cost_usd_micros is None
+        _validate_usage(spec,outcome.usage,successful=True)
+    asyncio.run(run())
+
+def test_outer_cancel_waits_for_connector_cleanup_without_second_step():
+    async def run():
+        _,spec,_,tools,_,runner,_=fixture()
+        task=asyncio.create_task(runner.run(spec,call_id="call:cancel"))
+        assert await asyncio.to_thread(tools.started.wait,2)
+        task.cancel()
+        with pytest.raises(asyncio.CancelledError):await asyncio.wait_for(task,3)
+        assert len(tools.calls)==1
+    asyncio.run(run())
+
+
+def test_revoked_job_stops_between_tool_steps():
+    async def run():
+        _,spec,store,tools,_,runner,_=fixture()
+        task=asyncio.create_task(runner.run(spec,call_id="call:stop"))
+        assert await asyncio.to_thread(tools.started.wait,2)
+        store.stopped=True
+        tools.release.set()
+        outcome=await asyncio.wait_for(task,3)
+        assert outcome.result is None
+        assert len(tools.calls)==1
+    asyncio.run(run())
+
+
+def test_copied_release_hash_cannot_expand_grant():
+    _,spec,_,tools,_,runner,_=fixture()
+    forged=spec.model_copy(update={"grant":spec.grant.model_copy(update={"maximum_tool_calls":32})})
+    outcome=asyncio.run(runner.run(forged,call_id="call:forged"))
+    assert outcome.result is None and not tools.calls
+
+
+def test_stop_guard_is_checked_at_external_dispatch(monkeypatch):
+    from types import SimpleNamespace
+    import eva.adapters.postgres.external_conversation_tools as module
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+    source,_,_,_,_,_,_=fixture()
+    calls=[]
+    class Provider:
+        async def execute(self,request):calls.append(request)
+    monkeypatch.setattr(module,'PostgresConversationJournal',lambda *_:SimpleNamespace(admit_dispatch=lambda *_:None))
+    monkeypatch.setattr(module,'VerifiedToolOrchestrator',lambda timeline,provider:provider)
+    tool=module.PostgresExternalConversationTools(None,SimpleNamespace(action_names=('use_connector_tool',)),Provider())
+    def revoked(turn):raise ConversationConflict('stopped after prepare')
+    with background_execution(BackgroundExecutionScope(source,'work:stop',revoked)):
+        with pytest.raises(ConversationConflict,match='stopped after prepare'):
+            asyncio.run(tool._orchestrator(source,None).execute(SimpleNamespace(operation_id='operation:test')))
+    assert not calls
+
+
+def test_foreground_returns_receipt_without_polling_digital_work():
+    source,_,_,_,_,_,identity=fixture()
+    calls=[]
+    class Actions:
+        action_names=("start_digital_work","get_delegated_work")
+        def pending(self,turn):return None
+        def active_context(self,turn):return ()
+        def available_action_names(self,turn):return self.action_names
+        def continuation_action_names(self,turn):return self.action_names
+        def execute(self,turn,call):
+            calls.append(call.name)
+            return ConversationActionReceipt(call,{"status":"verified","work_id":"work:one"})
+    class Contact:
+        def generate(self,*args,**kwargs):
+            if kwargs['completed_action'] is None:
+                return ConversationModelResult(None,"contact",ConversationActionCall("admit","start_digital_work",{"task":"Compare the documents"}))
+            assert kwargs['available_actions']==()
+            return ConversationModelResult("Ik ga ermee aan de slag.","contact")
+    class Slow:
+        def generate(self,*args,**kwargs):raise AssertionError("receipt should stay on contact model")
+    reply=LivingConversation(_Memory(),Slow(),identity,Actions(),contact_model=Contact()).respond(source)
+    assert reply.text=="Ik ga ermee aan de slag."
+    assert calls==["start_digital_work"]
+
+
+def test_resume_reuses_verified_first_step_instead_of_repeating_effect():
+    async def run():
+        source,spec,store,tools,_,runner,_=fixture()
+        saved={}
+        execute=tools.execute
+        def persist(turn,call,*,step_index):
+            receipt=execute(turn,call,step_index=step_index)
+            saved[(background_execution_namespace(turn),step_index)]=receipt
+            if step_index==0:store.stopped=True
+            return receipt
+        tools.execute=persist
+        tools.pending=lambda turn,step_index: saved.get((background_execution_namespace(turn),step_index))
+        tools.release.set()
+        first=await runner.run(spec,call_id="call:first")
+        assert first.result is None and len(tools.calls)==1
+        store.stopped=False
+        runner.journal_factory=lambda *_:Journal()
+        resumed=spec.model_copy(update={"work_id":"work:second-attempt","generation":2,"parent_task_id":spec.work_id})
+        result=await runner.run(resumed,call_id="call:resume")
+        assert result.status=="succeeded",result
+        assert [call[2] for call in tools.calls]==[0,1]
+        assert tools.calls[0][3]==tools.calls[1][3]
+        assert result.usage.tool_calls == 1
+    asyncio.run(run())

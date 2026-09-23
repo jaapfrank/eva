@@ -24,6 +24,7 @@ from eva.contracts.canonical_json import canonical_json_bytes
 
 
 _OPERATIONS = {
+    "start_digital_work": ("digital", "task"),
     "start_background_research": ("research", "research"),
     "start_delegated_work": ("start", "task"),
     "list_delegated_work": ("list", None),
@@ -32,6 +33,7 @@ _OPERATIONS = {
     "resume_delegated_work": ("resume", "work_id"),
 }
 _DESCRIPTIONS = {
+    "digital": "Neem een digitale opdracht aan voor uitvoering op de achtergrond met de bestaande toegestane connectoren. Geef de concrete opdracht mee. Geeft direct een work_id terug; het gesprek blijft beschikbaar. Gebruik get, stop en resume voor resultaat en bediening. Bevestig alleen werkelijk opgeslagen werk.",
     "research": "Start publiek bronnenonderzoek op de achtergrond. Geef uitsluitend een geanonimiseerde publieke vraag, titel en onderwerpen mee; geen privécontext, namen of geheugen. Geeft direct work_id terug. Blijf beschikbaar voor gesprek; gebruik bestaande get/stop/resume voor resultaat en bediening.",
     "start": "Besteed een concrete denk-, schrijf- of analysetaak uit aan een duurzame hulpagent. Geef alle benodigde context mee. De hulpagent heeft geen browser of tools. Geeft meteen een work_id terug; gebruik get om later het resultaat te lezen. Gebruik voor parallel hulpwerk op verzoek van de eigenaar.",
     "list": "Bekijk de duurzame hulpopdrachten van deze eigenaar, met hun work_id en actuele status.",
@@ -52,11 +54,12 @@ class PostgresDelegatedWorkActions:
 
     @property
     def action_names(self) -> tuple[str, ...]:
-        return tuple(name for name in _OPERATIONS if name != "start_background_research"
-                     or getattr(self._service, "research_profile", None) is not None)
+        return tuple(name for name in _OPERATIONS
+                     if (name != "start_background_research" or getattr(self._service, "research_profile", None) is not None)
+                     and (name != "start_digital_work" or getattr(self._service, "digital_profile", None) is not None))
 
     @staticmethod
-    def conversation_tools(*, include_research=False) -> tuple[ConversationToolDescriptor, ...]:
+    def conversation_tools(*, include_research=False, include_digital=False) -> tuple[ConversationToolDescriptor, ...]:
         return tuple(
             ConversationToolDescriptor(
                 name,
@@ -84,7 +87,7 @@ class PostgresDelegatedWorkActions:
                 "Wacht niet in een poll-lus op hulpwerk; geef de eigenaar de taak en laat het gesprek doorgaan.",
             )
             for name, (operation, key) in _OPERATIONS.items()
-            if operation != "research" or include_research
+            if (operation != "research" or include_research) and (operation != "digital" or include_digital)
         )
 
     def available_for(self, turn: ConversationTurn) -> bool:
@@ -130,7 +133,7 @@ class PostgresDelegatedWorkActions:
 
     def reply_guard(self, turn, receipts):
         starts = tuple((index, receipt) for index, receipt in enumerate(receipts)
-                       if receipt.call.name in {"start_delegated_work", "start_background_research", "resume_delegated_work"}
+                       if receipt.call.name in {"start_delegated_work", "start_background_research", "start_digital_work", "resume_delegated_work"}
                        and receipt.output.get("status") == "verified"
                        and receipt.output.get("operation_result", {}).get("status")
                        not in {"not_found", "not_resumable"})

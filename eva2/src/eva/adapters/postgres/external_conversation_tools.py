@@ -442,6 +442,9 @@ class PostgresExternalConversationTools:
                 guard = require_initiative_context(turn)
                 if guard is not None:
                     await asyncio.to_thread(guard.authorize_request, request, phase="execute")
+                from eva.application.background_execution import authorize_background_dispatch
+                await asyncio.to_thread(authorize_background_dispatch, turn)
+                check_cancellation()
                 return await provider.execute(request)
 
             async def observe(

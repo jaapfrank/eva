@@ -20,7 +20,7 @@ from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.delegated_work import (
     DelegatedWorkResult,
-    DelegatedWorkSpec, DelegatedResearchSpec, DelegatedHouseholdResearchSpec, load_delegated_work_spec,
+    DelegatedWorkSpec, DelegatedResearchSpec, DelegatedHouseholdResearchSpec, load_delegated_work_spec, load_delegated_work_result,
     DelegatedWorkUsage,
 )
 from eva.contracts.workboard import WorkBoard
@@ -275,7 +275,10 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                         or spec.generation != previous.spec.generation + 1
                         or spec.episode_id != previous.spec.episode_id
                         or spec.task != previous.spec.task or spec.grant != previous.spec.grant
-                        or getattr(spec, "research", None) != getattr(previous.spec, "research", None)):
+                        or getattr(spec, "research", None) != getattr(previous.spec, "research", None)
+                        or getattr(spec, "source", None) != getattr(previous.spec, "source", None)
+                        or getattr(spec, "source_ingress_sha256", None) != getattr(previous.spec, "source_ingress_sha256", None)
+                        or getattr(spec, "execution_id", None) != getattr(previous.spec, "execution_id", None)):
                     raise DelegatedWorkConflict("resumed work differs from its bounded previous attempt")
             connection.execute(
                 sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
@@ -310,7 +313,10 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                               "principal_binding_id", "task", "grant")
                     if (any(getattr(loaded.spec, key) != getattr(spec, key) for key in fields)
                             or getattr(loaded.spec, "research", None) != getattr(spec, "research", None)
-                            or getattr(loaded.spec, "origin", None) != getattr(spec, "origin", None)):
+                            or getattr(loaded.spec, "origin", None) != getattr(spec, "origin", None)
+                            or getattr(loaded.spec, "source", None) != getattr(spec, "source", None)
+                            or getattr(loaded.spec, "source_ingress_sha256", None) != getattr(spec, "source_ingress_sha256", None)
+                            or getattr(loaded.spec, "execution_id", None) != getattr(spec, "execution_id", None)):
                         raise DelegatedWorkConflict("resumed work id owns another attempt")
                     return DelegatedWorkAdmission("already_present", loaded)
                 if (
@@ -604,6 +610,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             raise DelegatedWorkConflict("delegated result time differs from its commit")
         if now > _parse_timestamp(call.spec.deadline):
             raise DelegatedWorkConflict("delegated result arrived after its deadline")
+        _validate_result_version(call.spec, result)
         _validate_usage(call.spec, result.usage, successful=True)
         return self._record_terminal(
             call,
@@ -1261,8 +1268,10 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             result = (
                 None
                 if row.result_payload is None
-                else DelegatedWorkResult.model_validate(row.result_payload)
+                else load_delegated_work_result(row.result_payload)
             )
+            if result is not None:
+                _validate_result_version(spec, result)
             usage = (
                 None
                 if row.usage_payload is None
@@ -1448,6 +1457,14 @@ def _bounded_text(value: str, *, maximum: int, label: str) -> str:
     return value
 
 
+def _validate_result_version(spec, result):
+    from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec, DelegatedDigitalWorkResult
+    if isinstance(spec, DelegatedDigitalWorkSpec) != isinstance(result, DelegatedDigitalWorkResult):
+        raise DelegatedWorkConflict("delegated result version differs from its work")
+    if result.spec_sha256 != spec.sha256:
+        raise DelegatedWorkConflict("delegated result specification differs")
+
+
 def _validate_usage(
     spec: DelegatedWorkSpec,
     usage: DelegatedWorkUsage,
@@ -1455,22 +1472,33 @@ def _validate_usage(
     successful: bool,
 ) -> None:
     grant = spec.grant
+    from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec
+    digital = isinstance(spec, DelegatedDigitalWorkSpec)
     if successful and usage.measurement != "measured":
-        raise DelegatedWorkConflict("successful delegated usage must be measured")
+        # Existing model accounting measures token/action counters, not the
+        # owner's subscription credits. Unknown cost must remain unknown.
+        counters = (usage.completed_model_responses, usage.tool_calls,
+                    usage.input_tokens, usage.output_tokens, usage.total_tokens)
+        if not (digital and usage.measurement == "partial"
+                and all(value is not None for value in counters)
+                and usage.cost_usd_micros is None
+                and grant.maximum_cost_usd_micros is None):
+            raise DelegatedWorkConflict("successful delegated usage must be measured")
     limits = (
         (
             usage.completed_model_responses,
             grant.maximum_completed_model_responses,
             "model response",
         ),
-        (usage.tool_calls, grant.maximum_tool_calls if isinstance(spec, DelegatedResearchSpec) else 0, "tool call"),
+        (usage.tool_calls, grant.maximum_tool_calls if isinstance(spec, DelegatedResearchSpec) or digital else 0, "tool call"),
         (usage.input_tokens, grant.maximum_input_tokens, "input token"),
         (usage.output_tokens, grant.maximum_output_tokens, "output token"),
         (usage.total_tokens, grant.maximum_total_tokens, "total token"),
         (usage.cost_usd_micros, grant.maximum_cost_usd_micros, "cost"),
     )
     for actual, maximum, label in limits:
-        if actual is not None and actual > maximum and (successful or not isinstance(spec, DelegatedResearchSpec)):
+        if actual is not None and maximum is not None and actual > maximum and (
+                successful or not isinstance(spec, DelegatedResearchSpec) and not digital):
             raise DelegatedWorkConflict(f"delegated {label} budget exceeded")
 
 

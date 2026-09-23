@@ -11631,7 +11631,7 @@
       }
     },
     "generalDigitalBackgroundWork20260923": {
-      "status": "execution_identity_built_not_integrated",
+      "status": "runner_and_admission_built_not_composed",
       "reuse": [
         "DelegatedWorkWorker and runner.bind_store",
         "LivingConversation.respond and existing model",
@@ -11639,30 +11639,35 @@
         "Existing stop, result storage and private return"
       ],
       "missing": [
-        "Source ingress reference in admitted private work",
-        "Runner/composition and task admission for existing authorized connector actions",
-        "Integrated task cancellation, two-step connector completion and return proof"
+        "Production core/worker composition with current private source loader, memory, model and connector bundle",
+        "PostgreSQL lifecycle + current return-route integration proof",
+        "Preserve previously admitted release hashes and schema7 deployment when installing"
       ],
       "scope": "One private digital task using multiple existing connector actions; conversation remains available. No recursive delegation or new household private access.",
       "estimate": "Implementation effort not yet established; no model calls for this diagnosis; development credit cost unknown.",
-      "next": "Bind admitted source and worker profile, compose existing conversation tool loop under execution scope with delegated stop guard; run one integrated task proof before install.",
+      "next": "Compose the existing worker with the optional digital profile and shared runtime components, prove real database lifecycle/return, then install paired core and worker without unrelated restoration changes.",
       "built": [
-        "Host-bound private task namespace; original authorized source turn unchanged",
-        "Separate connector action identities per work item; unchanged foreground identities",
-        "Separate durable model accounting without synthetic user ingress or replaying foreground receipt"
+        "Private v4 work and result contracts; optional start_digital_work admission with original source binding",
+        "Existing LivingConversation loop executes allowed connector steps under durable dispatch authorization",
+        "Fast foreground receipt returns without polling; independent questions remain available in controlled test",
+        "Stop and outer cancellation prevent further steps and wait for active connector cleanup",
+        "Resume keeps effect execution identity and reuses verified steps; new model accounting remains per attempt",
+        "Actual new dispatch attempts counted separately from recovered receipts; unknown price remains unknown"
       ],
       "checks": {
-        "identity_tests": "9 passed",
-        "accounting_adapter_test": "1 passed",
-        "review": "Independent GO for both changes; source only",
+        "affected_tests": "35 passed in2.12s under installed core image dependencies with source overlay, network none",
+        "identity_and_accounting": "Earlier targeted checks passed",
+        "review": "Independent GO for controlled source checkpoint, not installation",
         "installed": false,
-        "model_calls": 0
+        "external_model_calls": 0,
+        "database_lifecycle_proven": false
       },
       "limitations": [
-        "Builtin personal-intent linking and durable goal IDs not isolated; do not expose these in worker yet",
-        "Accounting test uses spy storage, not PostgreSQL; integrated proof still required",
-        "No generic-background capability enabled or installed"
-      ]
+        "Controlled model/tool/store doubles in runner/admission test; no general real-task completion claim",
+        "No physical Voice PE acceptance for the reverted continuous-session candidate",
+        "Legacy source hashes change when shared contracts change; pending work must stay executable at deployment"
+      ],
+      "evidence": "eva2/evidence/product/digital-background-source-20260923.json"
     }
   },
   "activeTaskId": "AU-008",

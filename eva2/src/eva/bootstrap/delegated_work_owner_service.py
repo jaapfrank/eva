@@ -15,10 +15,12 @@ from eva.adapters.postgres.delegated_work import (
     StoredDelegatedWork,
 )
 from eva.adapters.postgres.operational_timeline import TimelineScope, external_timeline_scope
+from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.application.conversation import ConversationTurn
 from eva.bootstrap.delegated_work_provider import build_unadmitted_delegated_work_spec
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.delegated_work import DelegatedResearchSpec, PublicResearchRequest
+from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec
 from eva.contracts.timestamps import parse_utc_timestamp
 
 
@@ -29,9 +31,10 @@ class DelegatedWorkOwnerService:
                  private_bridge_principal_loader: Callable[[], str | None] | None = None,
                  delivery_destination_loader: Callable[[ConversationTurn], PrivateWorkDestination | None] | None = None,
                  delivery_status_loader: Callable[[str], str] | None = None,
-                 research_profile=None):
+                 research_profile=None, digital_profile=None):
         self.store = store
         self.research_profile = research_profile
+        self.digital_profile = digital_profile
         # Runtime binds the conversation namespace separately from storage authority.
         self.conversation_scope = conversation_scope or store.scope
         self.owner_principal_id = owner_principal_id
@@ -96,7 +99,7 @@ class DelegatedWorkOwnerService:
                  work_id: str | None, request_key: str, research: dict | None = None) -> dict:
         if not self.available_for(turn):
             raise DelegatedWorkConflict("delegated work requires its private owner scope")
-        if operation not in {"start", "research", "list", "get", "result", "stop", "resume"}:
+        if operation not in {"start", "research", "digital", "list", "get", "result", "stop", "resume"}:
             raise ValueError("delegated work operation is invalid")
         if not isinstance(request_key, str) or not 1 <= len(request_key) <= 2048:
             raise ValueError("delegated work request key is required")
@@ -107,6 +110,8 @@ class DelegatedWorkOwnerService:
             task = public.question
         elif research is not None:
             raise ValueError("research arguments require their explicit operation")
+        if operation == "digital" and self.digital_profile is None:
+            raise DelegatedWorkConflict("digital background work is not composed")
         response = {"contract": "EvaDelegatedWorkOwnerResult/v1", "operation": operation}
         if operation == "list":
             if task is not None or work_id is not None:
@@ -114,7 +119,7 @@ class DelegatedWorkOwnerService:
             rows = self.store.list_owned(**self._owner, limit=21)
             return {**response, "jobs": [self._view(row, include_result=False) for row in rows[:20]],
                     "truncated": len(rows) > 20}
-        if operation in {"start", "research"}:
+        if operation in {"start", "research", "digital"}:
             if work_id is not None or not isinstance(task, str) or not task.strip():
                 raise ValueError("start requires one task")
             task = task.strip()
@@ -130,10 +135,19 @@ class DelegatedWorkOwnerService:
             })
             identity = uuid5(NAMESPACE_URL, key)
             created = parse_utc_timestamp(turn.occurred_at)
-            builder = (build_unadmitted_delegated_work_spec if operation == "start"
+            builder = (self.digital_profile.build_spec if operation == "digital" else
+                       build_unadmitted_delegated_work_spec if operation == "start"
                        else self.research_profile.build_spec)
+            digital_source = ({"source": {
+                "tenant_id": turn.tenant_id, "installation_id": turn.installation_id,
+                "principal_id": turn.principal_id, "conversation_id": turn.conversation_id,
+                "message_id": turn.message_id,
+                "audience": {"kind": "private_person", "principal_id": turn.principal_id}},
+                "source_ingress_sha256": canonical_sha256(PostgresConversationJournal._ingress_data(turn))}
+                if operation == "digital" else {})
             spec = builder(
                 **({"research": public.to_payload()} if operation == "research" else {}),
+                **digital_source,
                 work_id="work:eva-chat:" + str(identity),
                 episode_id=str(uuid5(NAMESPACE_URL, ":".join((
                     "delegated-private-context-v1", turn.tenant_id, turn.installation_id,
@@ -141,7 +155,8 @@ class DelegatedWorkOwnerService:
                 generation=1, parent_task_id="chat:" + str(identity),
                 owner_principal_id=str(self.owner_principal_id),
                 principal_binding_id=str(self.principal_binding_id), task=task,
-                created_at=created, deadline=created + timedelta(minutes=5),
+                created_at=created, deadline=created + timedelta(
+                    seconds=self.digital_profile.timeout_seconds if operation == "digital" else 300),
             )
             title = " ".join((public.title if operation == "research" else task).split())[:120]
             try:
@@ -154,8 +169,10 @@ class DelegatedWorkOwnerService:
                 title = previous.title
             admission = self.store.admit(
                 spec=spec, title=title,
-                summary="Een afgeschermde onderzoeker werkt aan de gegeven opdracht.",
-                worker_role="Onderzoek", retention_policy_id="retention:delegated-work:v1",
+                summary=("Eva voert de digitale opdracht uit met de toegestane hulpmiddelen."
+                         if operation == "digital" else "Een afgeschermde onderzoeker werkt aan de gegeven opdracht."),
+                worker_role="Digitale taak" if operation == "digital" else "Onderzoek",
+                retention_policy_id="retention:delegated-work:v1",
                 retention_until=created + timedelta(days=7), occurred_at=created,
                 **self._delivery_arguments(turn),
             )
@@ -174,16 +191,24 @@ class DelegatedWorkOwnerService:
             f"{previous.spec.work_id}:{previous.spec.generation + 1}",
         ))
         is_research = isinstance(previous.spec, DelegatedResearchSpec)
+        is_digital = isinstance(previous.spec, DelegatedDigitalWorkSpec)
         if is_research and self.research_profile is None:
             raise DelegatedWorkConflict("research resume requires its configured profile")
-        builder = self.research_profile.build_spec if is_research else build_unadmitted_delegated_work_spec
+        if is_digital and self.digital_profile is None:
+            raise DelegatedWorkConflict("digital work resume requires its configured profile")
+        builder = (self.digital_profile.build_spec if is_digital else
+                   self.research_profile.build_spec if is_research else build_unadmitted_delegated_work_spec)
         spec = builder(
             **({"research": previous.spec.research.to_payload()} if is_research else {}),
+            **({"source": previous.spec.source.model_dump(mode="json"),
+                "source_ingress_sha256": previous.spec.source_ingress_sha256,
+                "execution_id": previous.spec.execution_id} if is_digital else {}),
             work_id=next_id, episode_id=previous.spec.episode_id,
             generation=previous.spec.generation + 1, parent_task_id=previous.spec.work_id,
             owner_principal_id=str(self.owner_principal_id),
             principal_binding_id=str(self.principal_binding_id), task=previous.spec.task,
-            created_at=created, deadline=created + timedelta(minutes=5),
+            created_at=created, deadline=created + timedelta(
+                seconds=self.digital_profile.timeout_seconds if is_digital else 300),
         )
         admission = self.store.admit(
             spec=spec, title=previous.title, summary=previous.summary,
@@ -271,7 +296,9 @@ class DelegatedWorkOwnerService:
                 "result_available": result is not None,
                 "delivery": self._delivery_view(work.spec.work_id),
                 **({"result": result} if include_result else {}),
-                "scope": "private_public_research_worker" if isinstance(work.spec, DelegatedResearchSpec) else "private_tool_free_worker", "new_model_run_on_resume": True}
+                "scope": ("private_digital_worker" if isinstance(work.spec, DelegatedDigitalWorkSpec) else
+                          "private_public_research_worker" if isinstance(work.spec, DelegatedResearchSpec)
+                          else "private_tool_free_worker"), "new_model_run_on_resume": True}
 
 
 __all__ = ["DelegatedWorkOwnerService"]
