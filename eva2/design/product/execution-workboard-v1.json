@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T23:26:04.036673+00:00",
+        "checkedAt": "2026-09-23T23:30:24.713910+00:00",
         "deliveries": [
+          {
+            "title": "Opgeslagen HA-antwoord vóór geheugenverwerking aanbieden",
+            "date": "24 september",
+            "state": "installed",
+            "result": "De bestaande ontvangstzin voor aangenomen werk kan naar de spraakstream voordat het geheugenwerk wordt ingepland. Al gestreamde tekst wordt niet herhaald.",
+            "remaining": "Geen fysieke proef of snelheidsmeting. De modelbeslissing en taaktoelating zelf worden hiermee niet sneller.",
+            "source": "eva2/evidence/product/native-ha-receipt-stream-installed-20260924.json"
+          },
           {
             "title": "Tekst tijdens genereren doorgeven aan HA-spraak",
             "date": "24 september",
@@ -1605,10 +1613,10 @@
           }
         ],
         "now": {
-          "title": "Antwoordstream via gewone HA-spraak geïnstalleerd",
+          "title": "Ontvangstzin vóór geheugenverwerking doorgeven",
           "state": "Geïnstalleerd",
-          "detail": "Eva geeft tekst tijdens het genereren door aan Home Assistants bestaande spraakstream. Kern en HA-integratie bijgewerkt; beide speakers weer idle. Geen firmwarewissel.",
-          "doneWhen": "Technische installatie afgerond. Fysieke timing, hoorbaarheid en onderbreken later beproeven."
+          "detail": "Het gecontroleerde opgeslagen HA-antwoord aan de bestaande tekststream aanbieden voordat de geheugenverwerking wordt ingepland, zonder tekst te verdubbelen.",
+          "doneWhen": "Technische installatie afgerond; fysieke audiotiming later."
         },
         "next": {
           "title": "Resterende gespreks- en spraakfuncties",
@@ -1627,7 +1635,7 @@
           "expected": "De gewijzigde HA-koppeling is geladen. Werkelijk audiogedrag blijft afzonderlijk te beoordelen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T23:26:04.036673+00:00"
+        "reviewedAt": "2026-09-23T23:30:24.713910+00:00"
       }
     },
     "pendingTechnicalReview": {

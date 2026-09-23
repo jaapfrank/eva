@@ -1,0 +1,23 @@
+{
+  "installed": true,
+  "installedAt": "2026-09-23T23:30:24.713910+00:00",
+  "sourceCommit": "92beea2e",
+  "image": "eva2-native-ha-receipt-stream:20260924",
+  "behavior": "After native reply persistence and audience revalidation, publish only its unstreamed suffix before after_response retention work. Includes existing admitted work acceptance replies.",
+  "checks": [
+    "Python syntax",
+    "Packaged conversation/native responder imports",
+    "No active stored tasks or active satellites before restart",
+    "Core and worker healthy"
+  ],
+  "limitations": [
+    "No model, physical speech, or latency trial.",
+    "Does not shorten the model decision/admission itself.",
+    "Divergent provisional text is left to final transport reconciliation, not silently repeated.",
+    "HA integration and firmware unchanged in this slice."
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/native-ha-receipt-stream-20260924/baseline.compose.private.json"
+}
