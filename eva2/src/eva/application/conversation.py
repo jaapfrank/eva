@@ -945,7 +945,13 @@ class LivingConversation:
                 "niet dat de uitvoering al lukt. "
                 "Geef de concrete opdracht en de relevante toegestane gegevens mee, "
                 "bevestig pas na opgeslagen toelating en wacht niet op het resultaat. "
-                "Laat de gebruiker verder praten; gebruik work_id voor volgen of stoppen.")
+                "Laat de gebruiker verder praten; gebruik work_id voor volgen of stoppen. "
+                "Een verzoek om een digitale vaardigheid of werkwijze te leren en later te "
+                "hergebruiken hoort ook bij start_digital_work, niet bij een toolvrije hulpagent "
+                "of alleen een publiek onderzoeksantwoord. Geef het leerdoel, de toepassing "
+                "en de wens om de werkwijze te bewaren mee. Bij later gebruik van een bewaarde "
+                "werkwijze laat je de werker de actuele inhoud ophalen en toepassen; vraag "
+                "de gebruiker niet om de werkwijze opnieuw uit te leggen.")
         if "start_background_research" in available_names:
             self_context = (*self_context,
                 "Gebruik start_background_research voor een expliciete opdracht om publieke "

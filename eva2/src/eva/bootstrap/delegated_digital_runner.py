@@ -31,7 +31,19 @@ class _TaskModel:
             "Maak deze opdracht af met de aangeboden tools, controleer de uitkomst en geef "
             "het resultaat terug. Het oorspronkelijke bericht is de context, geen nieuwe "
             "opdracht om opnieuw werk te delegeren. Beweer alleen wat toolresultaten bewijzen. "
-            "Als iets ontbreekt, vermeld concreet wat niet is gelukt."), **kwargs)
+            "Als iets ontbreekt, vermeld concreet wat niet is gelukt.",
+            "Bij een opdracht om een vaardigheid te leren: raadpleeg de relevante documentatie "
+            "met beschikbare tools en pas de aanpak toe binnen de opdracht en het bestaande "
+            "mandaat. Bewaar een bruikbare werkwijze met save_workspace_document en registreer "
+            "het zojuist opgeslagen document met designate_reusable_procedure als die tools "
+            "beschikbaar zijn. Vermeld wanneer de aanpak nuttig is, vereisten, concrete stappen, "
+            "controle van het resultaat en bekende beperkingen. Scheid daadwerkelijk uitgevoerde "
+            "stappen van onbeproefde suggesties; bewaar geen credentials of overbodige persoonsgegevens. "
+            "Kies een passende eindige bewaartermijn vanuit het bestaande mandaat. Een gewone "
+            "notitie is niet automatisch een werkwijze. Bij hergebruik haal je de passende "
+            "verwijzing eerst op met resolve_reusable_procedure en voer je de nieuwe opdracht "
+            "uit met de aangeboden tools. Meld alleen een bewaarde of toegepaste werkwijze "
+            "wanneer de bijbehorende toolresultaten dat bevestigen."), **kwargs)
 
 
 class BackgroundConnectorActions:
