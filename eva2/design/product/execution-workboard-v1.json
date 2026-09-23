@@ -1000,8 +1000,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T13:29:42.104733+00:00",
+        "checkedAt": "2026-09-23T13:36:52.657427+00:00",
         "deliveries": [
+          {
+            "title": "Lopende taken blijven vindbaar",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Ouder actief werk verdwijnt niet meer achter nieuwere afgeronde taken. Privé- en huishoudselectie gecontroleerd met 21 nieuwere gestopte taken; kern en werker gezond.",
+            "remaining": "Nog geen nieuwe Telegram-gebruiksproef. De lijst blijft begrensd op twintig taken; fysieke Voice PE-proef blijft open.",
+            "source": "eva2/evidence/product/active-work-selection-installed-20260923.json"
+          },
           {
             "title": "Speakerdienst: leesbare taakresultaten",
             "date": "23 september",
@@ -1268,10 +1276,10 @@
           }
         ],
         "now": {
-          "title": "Speakerdienst technisch bijgewerkt",
-          "state": "Geïnstalleerd · fysieke proef open",
-          "detail": "Leesbare resultaten op webspraak en speakerdienst gelijkgetrokken. Geen nieuwe huishoudkoppeling gebouwd: die was al actief. De eerdere onjuiste melding is gecorrigeerd.",
-          "doneWhen": "Technisch afgerond; fysieke continue-spraakproef vereist aanwezigheid bij het apparaat."
+          "title": "Taakselectie technisch afgerond",
+          "state": "Geïnstalleerd · gebruikerservaring apart",
+          "detail": "Tien verpakte controles, onafhankelijke review en live installatiecontrole geslaagd. Geen nieuwe Telegramberichten verstuurd; bestaande pollingcorrectie behouden.",
+          "doneWhen": "Technische oplevering afgerond. Natuurlijke selectie en stoppen via echte kanalen blijven onderdeel van de open kanaalproeven."
         },
         "next": {
           "title": "Fysieke wakewordovergang vastleggen",
@@ -1288,7 +1296,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T13:29:42.104733+00:00"
+        "reviewedAt": "2026-09-23T13:36:52.657427+00:00"
       }
     },
     "pendingTechnicalReview": {

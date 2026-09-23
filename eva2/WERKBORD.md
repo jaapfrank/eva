@@ -14,6 +14,8 @@ Stap 1: hergebruik de bestaande snelle ontvangst en maak doorpraten tijdens acht
 
 **Speakerdienst bijgewerkt (23 september):** alleen leesbare resultaatpresentatie toegevoegd aan de daadwerkelijk gebruikte /app/eva-code. 18 verpakte gevallen geslaagd (twee na herstel van testimportpad), onafhankelijke installatiereview GO, bronbytes en beide huishoudgereedheidsroutes gecontroleerd. Geen modelcalls of firmwarewijziging. Eerdere claim van ontbrekende installatie was onjuist door vergelijking met ongebruikte code. Fysieke proef blijft open. [Bewijs](evidence/product/household-readable-return-20260923.json).
 
+**Lopende taken vindbaar (23 september):** actieve niet-gestopte taken krijgen voorrang in gedeelde privé-/huishoudselectie, zodat twintig nieuwere afgeronde taken ze niet verdringen. Laatste-taakbetekenis blijft chronologisch. Tien verpakte controles inclusief echte PostgreSQL-regressie geslaagd; onafhankelijke reviews GO, geïnstalleerde bestanden gecontroleerd, kern/werker gezond en taakoverzicht HTTP200. Nul modelcalls/Telegramberichten. Telegram-archief bevat nog geen proef na de bestaande pollingcorrectie; geen reden voor herbouw daarvan. [Bewijs](evidence/product/active-work-selection-installed-20260923.json).
+
 ## Actuele dashboardafspraak
 
 Het compacte projectoverzicht staat live op http://localhost:44712/: vier korte kaarten en negen uitklapbare statusregels. Bouw en negen bestaande statuscontroles geslaagd, onafhankelijk review GO; live smalle en desktopweergave gecontroleerd. Dit is uitsluitend een dashboardoplevering. Daarna is de webspraakpresentatie opgeleverd; de actuele volgende stap staat hierboven. [Bewijs](evidence/product/dashboard-compact-rows-20260923.json).
