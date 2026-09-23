@@ -47,3 +47,5 @@ article h3 { text-transform: capitalize; }
 .work-empty { color:#5a6c61; font-size:.9rem; }.work-detail:focus { outline:2px solid #3675b7; outline-offset:3px; }
 @media(max-width:1000px){.work-kanban{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.work-kanban{grid-template-columns:1fr}.work-toolbar label{display:grid;gap:.3rem}}
+
+.work-usage { display:grid; grid-template-columns:minmax(9rem,1fr) 1fr; max-width:36rem; gap:.5rem; }.work-usage dd { margin:0; font-variant-numeric:tabular-nums; }

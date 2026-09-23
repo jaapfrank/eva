@@ -18,6 +18,13 @@ function validWork(work, detail = false) {
     && typeof work[detail ? 'task' : 'task_preview'] === 'string'
     && (!detail || work.result === null || typeof work.result?.output === 'string');
 }
+function measured(value) {
+  return Number.isSafeInteger(value) && value >= 0 ? value.toLocaleString('nl-NL') : 'Niet gemeten';
+}
+function timestamp(value) {
+  const time = typeof value === 'string' ? Date.parse(value) : NaN;
+  return Number.isFinite(time) ? new Date(time).toLocaleString('nl-NL') : 'Onbekend';
+}
 function readable(output) {
   try {
     const value = JSON.parse(output);
@@ -65,7 +72,7 @@ export default function OwnerWork() {
     const controller = new AbortController();
     const fingerprint = work => JSON.stringify([work.work_id, work.state,
       work.generation, work.stop_requested, work.result_available,
-      work.delivery?.state, work.delivery?.description]);
+      work.delivery?.state, work.delivery?.description, work.usage]);
     function clearPrivate() {
       selected = null; currentDetail = null; pending = null;
       setPage(null); setDetail(null); setNotice('');
@@ -193,6 +200,23 @@ export default function OwnerWork() {
     {detail && <article ref={detailRef} tabIndex={-1} aria-label="Geopende hulpopdracht" className="card work-detail">
       <h3>Opdracht</h3><p style={{ whiteSpace: 'pre-wrap' }}>{detail.task}</p>
       <p>{labels[detail.state]} · poging {detail.generation}</p>
+      <p>Aangemaakt: {timestamp(detail.created_at)}{detail.result?.completed_at && <> · Afgerond: {timestamp(detail.result.completed_at)}</>}</p>
+      {typeof detail.parent_work_id === 'string' && detail.parent_work_id !== detail.work_id && <p>
+        Deze poging vervolgt een eerdere opdracht. <button disabled={busy} onClick={() => act('get', detail.parent_work_id)}>Vorige poging bekijken</button>
+      </p>}
+      {(page?.jobs || []).filter(job => job.parent_work_id === detail.work_id).map(job => <p key={job.work_id}>
+        Vervolgpoging {job.generation}: {labels[job.state]} <button disabled={busy} onClick={() => act('get', job.work_id)}>Vervolgpoging openen</button>
+      </p>)}
+      <details><summary>Gemeten verbruik van deze poging</summary>
+        <dl className="work-usage"><dt>Modelantwoorden</dt><dd>{measured(detail.usage?.completed_model_responses)}</dd>
+          <dt>Toolaanroepen</dt><dd>{measured(detail.usage?.tool_calls)}</dd>
+          <dt>Inputtokens</dt><dd>{measured(detail.usage?.input_tokens)}</dd>
+          <dt>Outputtokens</dt><dd>{measured(detail.usage?.output_tokens)}</dd>
+          <dt>Kosten</dt><dd>{Number.isSafeInteger(detail.usage?.cost_usd_micros) && detail.usage.cost_usd_micros >= 0
+            ? new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'USD', maximumFractionDigits: 6 }).format(detail.usage.cost_usd_micros / 1000000)
+            : 'Onbekend'}</dd></dl>
+        <p>Dit betreft alleen deze poging, niet eerdere pogingen of het abonnementstegoed. Ontbrekende metingen zijn geen nulverbruik.</p>
+      </details>
       {typeof detail.failure_description === 'string' && <p role="status">{detail.failure_description}</p>}
       {typeof detail.delivery?.description === 'string' && <p>{detail.delivery.description}</p>}
       {['admitted', 'call_started'].includes(detail.state) && !detail.stop_requested
