@@ -2150,6 +2150,21 @@ def create_runtime_app() -> FastAPI:
         # Reuse the existing durable background loop. Reserves with background
         # work disabled never start it, and historical unbound tasks never send.
         idle_tasks = (result_delivery.run_once, *idle_tasks)
+    if (settings.delegated_result_delivery_enabled and proactive_delivery is not None
+            and dashboard_owner_principal_id is not None
+            and dashboard_principal_binding_id is not None
+            and dashboard_authority_scope is not None):
+        from eva.adapters.postgres.owner_initiatives import PostgresOwnerInitiatives
+        from eva.adapters.postgres.initiative_delivery import InitiativeCompletionDelivery
+        initiative_delivery = InitiativeCompletionDelivery(
+            PostgresOwnerInitiatives(engine,
+                tenant_id=settings.background_tenant_id,
+                installation_id=settings.background_installation_id,
+                owner=dashboard_owner_principal_id, binding=dashboard_principal_binding_id,
+                authority_scope=dashboard_authority_scope),
+            proactive_delivery, lambda: runtime._initiative_authority().policy(),
+        )
+        idle_tasks = (initiative_delivery.run_once, *idle_tasks)
     runtime = PostgresHindsightMemoryRuntime(
         engine,
         memory,
