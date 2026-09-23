@@ -53,8 +53,10 @@ class ScheduledOwnerWork:
         return ConversationTurn.private(**source, observation_binding=(
             None if binding is None else ConversationObservationBinding(**binding)))
 
-    def schedule(self, turn, *, request_key, request, resume=False):
+    def schedule(self, turn, *, request_key, request, resume=False, wait_for_stop=False):
         self.service.validate_authority(turn)
+        if wait_for_stop and not resume:
+            raise ValueError("waiting for stop requires resumption")
         if not isinstance(request_key, str) or not 1 <= len(request_key) <= 2048:
             raise ValueError("schedule request key is invalid")
         key = "work_id" if resume else "task"
@@ -76,7 +78,8 @@ class ScheduledOwnerWork:
         thread_id = self.prefix + hashlib.sha256(request_key.encode()).hexdigest()
         data = {"source": asdict(turn), "operation": "resume" if resume else "digital",
                 key: request[key], "run_at": run_at,
-                **{name: request[name] for name in dependency_keys}}
+                **{name: request[name] for name in dependency_keys},
+                **({"wait_for_stop": True} if wait_for_stop else {})}
         with self.engine.begin() as conn:
             self._authorize(conn, lock=True)
             conn.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
@@ -87,7 +90,7 @@ class ScheduledOwnerWork:
                 if self._request(conn, thread_id) != data:
                     raise ValueError("scheduled work changed during replay")
                 return self._view(conn, existing)
-            if due > now + timedelta(days=30) or ("run_at" in request and due <= now):
+            if due > now + timedelta(days=30) or ("run_at" in request and due <= now and not wait_for_stop):
                 raise ValueError("schedule time must be in the next 30 days")
             if conn.scalar(sa.select(sa.func.count()).select_from(self._rows().where(
                     operational_checkpoints.c.phase.in_(("scheduled", "launching"))).subquery())) >= 64:
@@ -98,7 +101,8 @@ class ScheduledOwnerWork:
                     raise ValueError("the selected predecessor cannot supply a successful result")
             if resume:
                 previous = self.service.store.load(request[key], **self.service._owner)
-                if previous.state not in {"failed", "ambiguous", "needs_help", "stopped"}:
+                if (previous.state not in {"failed", "ambiguous", "needs_help", "stopped"}
+                        and not (wait_for_stop and previous.stop_requested_at is not None)):
                     raise ValueError("only stopped or failed work can be scheduled for resumption")
             elif self.service.digital_profile is None:
                 raise ValueError("digital work is unavailable")
@@ -309,6 +313,12 @@ class ScheduledOwnerWork:
                     row = candidate
                     break
                 request = self._request(conn, candidate.thread_id)
+                if request.get("wait_for_stop"):
+                    previous = self.service.store.load(request["work_id"], **self.service._owner)
+                    if (previous.state in {"admitted", "call_started"}
+                            or (previous.lease_owner is not None and previous.lease_expires_at is not None
+                                and previous.lease_expires_at > now)):
+                        continue
                 try:
                     dependency = self._dependency(conn, request)
                 except (ValueError, LookupError):

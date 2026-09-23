@@ -27,15 +27,18 @@ class _UnfinishedWorkPlan(ConversationConflict):
 
 
 class _TaskModel:
-    def __init__(self, model, task, browser_context=None):
+    def __init__(self, model, task, browser_context=None, corrections=()):
         self.model, self.task = model, task
+        self.owner_corrections = tuple(
+            "Bewaarde bijsturing van de eigenaar, in volgorde; latere correcties vervangen eerdere alleen waar ze botsen: "
+            + item["instruction"] for item in corrections)
         self.continuation_feedback = ()
         self.browser_context = browser_context
         self.journals_provider_requests = getattr(model, "journals_provider_requests", False)
 
     def generate(self, *args, self_context=(), **kwargs):
         availability = () if self.browser_context is None else self.browser_context()
-        return self.model.generate(*args, self_context=(*self_context, *availability, *self.continuation_feedback,
+        return self.model.generate(*args, self_context=(*self_context, *availability, *self.owner_corrections, *self.continuation_feedback,
             "Je voert nu deze aangenomen achtergrondopdracht uit: " + self.task,
             "Maak deze opdracht af met de aangeboden tools, controleer de uitkomst en geef "
             "het resultaat terug. Het oorspronkelijke bericht is de context, geen nieuwe "
@@ -261,7 +264,9 @@ class DelegatedDigitalRunner:
                                                         dispatch_guard, self.clock)
             actions = BackgroundConnectorActions((*self.connector_tools, progress, improvements), spec.grant.capability_ids,
                                                   authorize, spec.grant.maximum_tool_calls)
-            task_model = _TaskModel(self.model, spec.task, self.browser_context)
+            from eva.adapters.postgres.work_corrections import work_corrections
+            task_model = _TaskModel(self.model, spec.task, self.browser_context,
+                                    corrections=work_corrections(self.store._engine, spec))
             conversation = LivingConversation(self.memory, task_model, self.identity, actions)
 
             def execute():

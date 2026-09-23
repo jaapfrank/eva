@@ -24,6 +24,7 @@ from eva.contracts.canonical_json import canonical_json_bytes
 
 
 _OPERATIONS = {
+    "revise_digital_work": ("revise_digital", "revision"),
     "search_delegated_work": ("search", "search"),
     "schedule_digital_work": ("schedule_digital", "schedule"),
     "schedule_work_resume": ("schedule_resume", "schedule"),
@@ -43,6 +44,7 @@ _OPERATIONS = {
     "resume_delegated_work": ("resume", "work_id"),
 }
 _DESCRIPTIONS = {
+    "revise_digital": "Stuur een concrete digitale achtergrondopdracht bij op verzoek van de eigenaar. Geef work_id en instruction met de wijziging, maximaal 2000 tekens. Stopt de huidige poging, bewaart de correctie en plant één begrensde hervatting na het stoppen; oorspronkelijke taak, acties en voortgang blijven behouden. Gebruik bij newer_attempt_exists het teruggegeven work_id. Bij ander werk of een al afgeronde taak volg je de teruggegeven uitleg; beweer dan geen toegepaste correctie.",
     "search": "Zoek een oudere eigen opdracht op een woord of zinsdeel in bewaarde titels, opdrachten en resultaten, ook buiten de recente twintig. Geef query; gebruik next_before_work_id als before_work_id om verder te zoeken. Neem een kenmerkend onderwerpwoord, geen lange hele vraag. Open het gevonden work_id via get_delegated_work. Alleen nog bewaarde taken zijn vindbaar; geen zoekhit betekent niet dat iets nooit is besproken.",
     "schedule_digital": "Plan op verzoek van de eigenaar één digitale opdracht voor een afgesproken toekomstig moment, maximaal 30 dagen vooruit. Geef task en run_at in UTC (YYYY-MM-DDTHH:MM:SSZ). Zet lokale tijden om naar UTC; vraag bij onduidelijkheid naar datum of tijdzone. Voor een vervolgstap mag je after_work_id of after_schedule_id opgeven uit een eerdere opgeslagen taak of afspraak: wacht dan op het resultaat en gebruik het in deze nieuwe opdracht. Zonder run_at start een afhankelijke stap zodra de vorige klaar is. Kies alleen door de eigenaar gevraagde stappen. Het werk is bewaard maar nog niet gestart. Geen terugkerende opdracht of budgetverhoging.",
     "schedule_resume": "Plan één hervatting van een gestopte of mislukte opdracht op een door de eigenaar gewenst moment, maximaal 30 dagen vooruit. Geef work_id en run_at in UTC. Bewaart bestaande uitvoering en werkplan; de nieuwe poging gebruikt de bestaande begrensde budgetten. Geen herhaalde automatische pogingen.",
@@ -111,7 +113,12 @@ class PostgresDelegatedWorkActions:
                         "type": "object", "additionalProperties": False, "required": ["query"],
                         "properties": {"query": {"type": "string", "minLength": 1, "maxLength": 200},
                                        "before_work_id": {"type": "string", "maxLength": 240}}
-                    } if operation == "search" else {"type":"string"}),
+                    } if operation == "search" else {
+                        "type": "object", "additionalProperties": False,
+                        "required": ["work_id", "instruction"],
+                        "properties": {"work_id": {"type": "string", "minLength": 1, "maxLength": 240},
+                                       "instruction": {"type": "string", "minLength": 1, "maxLength": 2000}}
+                    } if operation == "revise_digital" else {"type":"string"}),
                         **({"feedback": {"type": "string", "minLength": 1, "maxLength": 800}}
                            if operation == "initiative_feedback" else {}),
                         **({"acceptance_message": {
@@ -122,7 +129,10 @@ class PostgresDelegatedWorkActions:
                         }} if operation in {"start", "research", "digital"} else {})},
                     "required": [] if key is None else [key] + (["feedback"] if operation == "initiative_feedback" else []),
                 },
-                ("Zoekresultaten staan in operation_result.jobs. Open de passende work_id met get_delegated_work. "
+                ("Rapporteer operation_result.status. Alleen correction_saved bevestigt bewaarde bijsturing en de vervolgafspraak. "
+                 "De oude poging moet eerst stoppen; begonnen effecten kunnen nog afronden."
+                 if operation == "revise_digital" else
+                 "Zoekresultaten staan in operation_result.jobs. Open de passende work_id met get_delegated_work. "
                  "Gebruik next_before_work_id alleen wanneer truncated waar is. Geen treffer bewijst geen afwezig verleden."
                  if operation == "search" else
                  "Rapporteer het bewaarde startmoment en de schedule_id. Ingepland betekent nog niet uitgevoerd. "
@@ -276,7 +286,7 @@ class PostgresDelegatedWorkActions:
                 or ("acceptance_message" in call.arguments and (
                     not isinstance(acceptance, str) or not acceptance.strip()
                     or len(acceptance) > 240))) or (
-            key is not None and operation not in {"research", "schedule_digital", "schedule_resume", "search"} and (
+            key is not None and operation not in {"research", "schedule_digital", "schedule_resume", "search", "revise_digital"} and (
                 not isinstance(call.arguments[key], str)
                 or not call.arguments[key].strip()
                 or len(call.arguments[key].encode("utf-8")) > (8192 if key == "task" else 240)

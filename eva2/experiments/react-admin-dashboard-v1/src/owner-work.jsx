@@ -244,6 +244,14 @@ export default function OwnerWork() {
       : <p>Er worden maximaal twintig opdrachten getoond, met lopend werk eerst. Zoek op onderwerp om eerdere taken te vinden.</p>)}
     {detail && <article ref={detailRef} tabIndex={-1} aria-label="Geopende hulpopdracht" className="card work-detail">
       <h3>Opdracht</h3><p style={{ whiteSpace: 'pre-wrap' }}>{detail.task}</p>
+      {Array.isArray(detail.corrections) && detail.corrections.length > 0 && <section aria-label="Bewaarde bijsturing">
+        <h4>Bewaarde bijsturing</h4>
+        <p>Deze aanwijzingen gaan mee bij hervatting. Het oorspronkelijke werk en eerdere resultaten blijven bewaard.</p>
+        {detail.corrections.map((item, index) => <p key={index} style={{ whiteSpace: 'pre-wrap' }}>
+          <strong>{timestamp(item.recorded_at)}</strong><br />{item.instruction}
+        </p>)}
+      </section>}
+
       <p>{labels[detail.state]} · poging {detail.generation}</p>
       <p>Aangemaakt: {timestamp(detail.created_at)}{detail.result?.completed_at && <> · Afgerond: {timestamp(detail.result.completed_at)}</>}</p>
       {typeof detail.parent_work_id === 'string' && detail.parent_work_id !== detail.work_id && <p>

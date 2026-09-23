@@ -23,6 +23,7 @@ _EXECUTION_SOURCES = (
     "bootstrap/background_browser_context.py",
     "adapters/connectors/browser_session.py",
     "adapters/postgres/background_work_progress.py",
+    "adapters/postgres/work_corrections.py",
     "adapters/postgres/component_improvement_actions.py",
     "application/component_improvements.py",
     "bootstrap/private_conversation_resources.py",
