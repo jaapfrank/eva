@@ -295,7 +295,7 @@ def test_only_public_arguments_and_scoped_actions_are_accepted(delegated_engine)
                 request_key="private",
                 research=PUBLIC | {"question": question},
             )
-    for name in ("start_delegated_work", "list_delegated_work"):
+    for name in ("start_delegated_work",):
         with pytest.raises(ConversationConflict):
             actions.execute(x.turn, ConversationActionCall(name, name, {}))
     work_id = start(x)
@@ -428,6 +428,7 @@ def test_private_task_id_cannot_be_read_or_resumed(delegated_engine):
         deadline=NOW + timedelta(minutes=5),
     )
     _admit(x.server.store, spec)
+    assert x.service.execute("list", x.turn, request_key="list-private")["jobs"] == []
     for operation in ("get", "stop", "resume"):
         with pytest.raises(DelegatedWorkNotFound):
             x.service.execute(
@@ -659,3 +660,40 @@ def test_household_replay_preserves_legacy_title(delegated_engine, monkeypatch):
     assert replay["created"] is False
     assert replay["work"]["work_id"] == work_id
     assert replay["work"]["title"] == "Huishoudelijk bronnenonderzoek"
+
+
+def test_household_list_selects_and_stops_only_the_named_task(delegated_engine):
+    from eva.bootstrap.household_work import HouseholdWorkActions
+    from eva.application.conversation import ConversationActionCall
+    x = setup(delegated_engine, "household-list-target")
+    first = x.service.execute("research", x.turn, request_key="one", research=PUBLIC | {"title":"Solar panels"})["work"]["work_id"]
+    second_turn = x.service.turn(str(uuid4()), "Research heat pumps")
+    second = x.service.execute("research", second_turn, request_key="two", research=PUBLIC | {"title":"Heat pumps"})["work"]["work_id"]
+    control = x.service.turn(str(uuid4()), "Stop the solar panel research")
+    actions = HouseholdWorkActions(delegated_engine, x.service)
+    receipt = actions.execute(control, ConversationActionCall("list", "list_delegated_work", {}))
+    jobs = receipt.output["operation_result"]["jobs"]
+    assert {j["title"] for j in jobs} == {"Solar panels", "Heat pumps"}
+    assert all("result" not in j for j in jobs)
+    chosen = next(j["work_id"] for j in jobs if j["title"] == "Solar panels")
+    assert chosen == first
+    actions.execute(control, ConversationActionCall("stop", "stop_delegated_work", {"work_id":chosen}),step_index=1)
+    assert x.service.execute("get", control, request_key="first", work_id=first)["work"]["state"] == "stopped"
+    assert x.service.execute("get", control, request_key="second", work_id=second)["work"]["state"] == "admitted"
+    assert x.research.calls == 0
+
+
+def test_household_list_does_not_reveal_another_session_and_replay_expires(delegated_engine):
+    from eva.bootstrap.household_work import HouseholdWorkActions
+    from eva.application.conversation import ConversationActionCall
+    x = setup(delegated_engine, "household-list-isolation")
+    start(x)
+    other_binding = x.server.open_session(**x.args)
+    other = x.server.session(**x.args, session_id=other_binding["session_id"])
+    turn = other.turn(str(uuid4()), "What tasks are running?")
+    actions = HouseholdWorkActions(delegated_engine, other)
+    call = ConversationActionCall("list", "list_delegated_work", {})
+    assert actions.execute(turn, call).output["operation_result"]["jobs"] == []
+    x.server.sessions.read(other_binding["session_id"], SAT, DEVICE, operation="close")
+    with pytest.raises((ValueError, RuntimeError)):
+        actions.execute(turn, call)

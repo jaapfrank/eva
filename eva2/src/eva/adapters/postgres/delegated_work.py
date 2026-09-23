@@ -1008,6 +1008,48 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             finally:
                 transaction.rollback()
 
+    def list_household(
+        self, *, owner_principal_id: UUID, principal_binding_id: UUID,
+        household_origin, now: datetime, limit: int = 21,
+    ) -> tuple[StoredDelegatedWork, ...]:
+        """List only retained work in the caller's currently open household session."""
+        from eva.adapters.postgres.household_work_sessions import verify_origin
+        from eva.contracts.delegated_work import HouseholdWorkOrigin
+
+        if type(limit) is not int or not 1 <= limit <= 65:
+            raise ValueError("delegated work listing limit is invalid")
+        now = _whole_second(now, label="household listing time")
+        if not isinstance(household_origin, HouseholdWorkOrigin) or self._household_authorizer is None:
+            raise DelegatedWorkConflict("household work authority unavailable")
+        with self._engine.connect() as connection:
+            transaction = connection.begin()
+            try:
+                self._scope(connection)
+                self._validate_owner_binding(connection, owner_principal_id=owner_principal_id,
+                                             principal_binding_id=principal_binding_id)
+                # An empty list must not bypass canonical ingress/session checks.
+                verify_origin(connection, self.scope, household_origin, require_open=True, now=now)
+                rows = connection.execute(sa.select(delegated_work_runs).where(
+                    delegated_work_runs.c.tenant_id == self._scope_value.tenant_id,
+                    delegated_work_runs.c.installation_id == self._scope_value.installation_id,
+                    delegated_work_runs.c.owner_principal_id == owner_principal_id,
+                    delegated_work_runs.c.principal_binding_id == principal_binding_id,
+                    delegated_work_runs.c.spec_payload["audience"].astext == "household",
+                    delegated_work_runs.c.spec_payload["origin"].contains(household_origin.destination()),
+                    delegated_work_runs.c.retention_until > now,
+                ).order_by(delegated_work_runs.c.created_at.desc(),
+                           delegated_work_runs.c.work_id.desc()).limit(limit)).mappings().all()
+                result = []
+                for row in rows:
+                    work = self._validated(connection, row)
+                    # Contract validation checks the full per-work destination hash;
+                    # read authorization rechecks policy and the original open session.
+                    self._read_scope(work.spec, connection, household_origin)
+                    result.append(work)
+                return tuple(result)
+            finally:
+                transaction.rollback()
+
     def workboard(
         self,
         *,

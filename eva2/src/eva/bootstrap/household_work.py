@@ -197,6 +197,7 @@ class HouseholdWorkService:
         self.validate_authority(turn)
         if task is not None or operation not in {
             "research",
+            "list",
             "get",
             "result",
             "stop",
@@ -209,6 +210,15 @@ class HouseholdWorkService:
             self.store._engine, self.server.conversation_scope
         ).admit_household_ingress(turn, validate_current=self.validate_authority)
         origin = self.origin(turn)
+        if operation == "list":
+            if research is not None or work_id is not None:
+                raise ValueError("household listing cannot select another destination")
+            rows = self.store.list_household(**self._owner, household_origin=origin,
+                now=self.server.authority.clock(), limit=21)
+            # Listing supplies selection context, not all completed research text.
+            return {"jobs": [{key: view[key] for key in
+                    ("work_id", "title", "question", "state", "generation", "stop_requested")}
+                    for view in (self.view(work) for work in rows[:20])], "truncated": len(rows) > 20}
         created = parse_utc_timestamp(turn.occurred_at)
         previous = None
         if operation == "research":
@@ -441,6 +451,7 @@ class HouseholdWorkActions(PostgresDelegatedWorkActions):
     def action_names(self):
         return (
             "start_background_research",
+            "list_delegated_work",
             "get_delegated_work",
             "stop_delegated_work",
             "resume_delegated_work",
@@ -450,12 +461,16 @@ class HouseholdWorkActions(PostgresDelegatedWorkActions):
     def conversation_tools(**kwargs):
         allowed = {
             "start_background_research",
+            "list_delegated_work",
             "get_delegated_work",
             "stop_delegated_work",
             "resume_delegated_work",
         }
+        from dataclasses import replace
         return tuple(
-            tool
+            replace(tool, description="Bekijk de toegankelijke taken binnen de huidige persoons- "
+                    "of huishoudsessiegrenzen, met hun titel, work_id en status.")
+            if tool.name == "list_delegated_work" else tool
             for tool in PostgresDelegatedWorkActions.conversation_tools(
                 include_research=True
             )
@@ -465,8 +480,10 @@ class HouseholdWorkActions(PostgresDelegatedWorkActions):
     def _validate_saved(self, turn, receipt):
         if receipt is not None:
             result = receipt.output.get("operation_result", {})
-            for field in ("work", "previous"):
-                work = result.get(field)
+            self._service.validate_authority(turn)
+            saved_work = [result.get(field) for field in ("work", "previous")]
+            saved_work.extend(result.get("jobs", ()))
+            for work in saved_work:
                 if work is not None:
                     self._service._load(work["work_id"], self._service.origin(turn))
         return receipt
