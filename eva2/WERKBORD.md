@@ -25,7 +25,9 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Eerstvolgende handeling:** Meerdere lopende taken via het gewone gesprek onderscheiden en gericht stoppen; bestaande kanaalroutes gebruiken. Snelle ontvangst en fysieke Voice PE-proef blijven apart open.
+**Eerstvolgende handeling:** Gespreksgedrag en kanaalbewijs afronden; natuurlijke taakselectie en snelle ontvangst blijven open. Fysieke Voice PE-proef blijft apart en blokkeert onafhankelijk vervolgwerk niet.
+
+**Huishoudtaakselectie geïnstalleerd (23 september):** bestaande lijstfunctie ontsloten voor exact dezelfde huishoudsessie; privétaken en andere sessies uitgesloten. Twee taken onderscheiden en één stoppen gecontroleerd. 21 verpakte tests direct geslaagd; één gecorrigeerde testassertie daarna gericht geslaagd (stop vóór uitvoering geeft `stopped`). Onafhankelijke review GO, kern/werker gezond, echte huishoudgereedheidsroute gecontroleerd. Geen modelcalls of nieuwe fysieke sessie. [Bewijs](evidence/product/household-task-selection-installed-20260923.json).
 
 **Vraagkoppeling en huishoudtitels geïnstalleerd (23 september):** recente context bewaart de oorspronkelijke vraag bij later binnenkomende antwoorden. Huishoudelijke onderzoeken hebben eigen titel/vraag, inclusief replay en hervatten. 22 verpakte controles geslaagd, onafhankelijk beoordeeld; live 12 eerdere berichten met beurtkoppeling teruggelezen, kern en werker gezond. Geen modelcalls. [Bewijs](evidence/product/turn-correlation-installed-20260923.json).
 

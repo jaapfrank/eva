@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-09-23T12:31:19.542536+00:00",
+  "status": "installed_ready_verified",
+  "sourceCommit": "cd592097",
+  "change": "Existing list_delegated_work can list exact originating household session metadata; current turn uses existing get/stop/resume",
+  "tests": {
+    "initialPackagedRun": "21 passed,1 assertion failed: admitted stop becomes stopped rather than setting pending-stop flag",
+    "correctedTargetedRun": "1 passed; no production code change for test correction",
+    "scope": "two tasks distinguished and one stopped; same-owner private task excluded; other household session excluded; closed-session replay rejected",
+    "database": "Fresh disposable databases on isolated PostgreSQL16.13; no production DB test writes"
+  },
+  "independentReview": "Root reviewed bounded store query; compact_contact_catalog reviewed facade and cached receipt reauthorization",
+  "live": {
+    "coreAndWorker": "healthy",
+    "authenticatedHouseholdReady": true,
+    "installedListDescriptor": true,
+    "newSessionsCreated": 0
+  },
+  "modelCalls": 0,
+  "rollback": "/var/lib/eva2/household-task-selection-install-20260923/baseline.compose.private.json",
+  "limits": [
+    "Deterministic task selection/control evidence, not a real model semantic trial",
+    "Physical Voice PE and full channel acceptance remain open",
+    "Receipt latency unchanged; previous11s remains too slow"
+  ]
+}
