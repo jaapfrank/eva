@@ -80,7 +80,8 @@ class DelegatedWorkConversationCommands:
                 return self._reply(turn, _readable_result(work["result"]["output"])
                                    + "\n\n" + work["delivery"]["description"])
             return self._reply(turn, f"Er is nog geen afgerond resultaat. De status is {work['state']}.\n"
-                               + work["delivery"]["description"])
+                               + work["delivery"]["description"]
+                               + ("\n" + work["failure_description"] if work.get("failure_description") else ""))
     def matches(self, turn: ConversationTurn, *, principal_binding_id: UUID | None) -> bool:
         if (principal_binding_id != self._service.principal_binding_id
                 or not self._service.available_for(turn)):
@@ -99,10 +100,10 @@ class DelegatedWorkConversationCommands:
                                      request_key=self._service.command_key(turn), **values)
 
     def _status(self, turn: ConversationTurn) -> GroundedReply:
-        jobs = self._execute("list", turn)["jobs"]
-        if not jobs:
+        work_id = self._service.latest_work_id(turn)
+        if work_id is None:
             return self._reply(turn, "Er staat nog geen onderzoekstaak op je werkbord.")
-        work = jobs[0]
+        work = self._execute("get", turn, work_id=work_id)["work"]
         labels = {
             "admitted": "ingepland",
             "call_started": "gestart; er is nog geen bevestigde uitkomst",
@@ -118,9 +119,10 @@ class DelegatedWorkConversationCommands:
         if work["stop_requested"] and work["state"] == "call_started":
             state = "stopopdracht bewaard; het resultaat wordt niet geleverd"
         return self._reply(turn, f"Je laatste onderzoek is {state}.\n"
-                           f"Opdracht: {work['task_preview']}\n"
+                           f"Opdracht: {work['task'][:240]}\n"
                            f"Taaknummer: {work['work_id']} (poging {work['generation']}).\n"
-                           + work["delivery"]["description"])
+                           + work["delivery"]["description"]
+                           + ("\n" + work["failure_description"] if work.get("failure_description") else ""))
 
     def _stop(self, turn: ConversationTurn) -> GroundedReply:
         work_id = self._service.latest_work_id(turn, stoppable=True)

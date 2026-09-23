@@ -16,3 +16,12 @@ def readable_work_result(output: str) -> str:
     findings = "\n".join(f"- {item}" for item in value["findings"])
     return value["summary"] + ("\n\n" + findings if findings else "")
 
+
+
+def work_failure_description(error_code: str | None) -> str | None:
+    """Explain known task failures without inferring side effects or exposing errors."""
+    return {
+        "provider_unavailable": "Een benodigde dienst was niet bereikbaar. Er is geen afgerond resultaat bevestigd. Controleer eerdere bestanden of acties voordat je hervat.",
+        "internal_error": "De uitvoering is technisch vastgelopen. Er is geen afgerond resultaat bevestigd. Controleer eerdere bestanden of acties voordat je hervat.",
+        "timed_out": "De uitvoering heeft de tijdslimiet bereikt. Eerdere acties kunnen al uitgevoerd zijn; controleer die voordat je hervat.",
+    }.get(error_code)

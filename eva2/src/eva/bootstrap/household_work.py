@@ -22,6 +22,7 @@ from eva.adapters.postgres.operational_timeline import (
     transition_timeline_thread,
     operational_checkpoints,
 )
+from eva.application.work_result_presentation import work_failure_description
 from eva.application.conversation import ConversationTurn
 from eva.application.memory_audience import HouseholdConsentReference, MemoryAudience
 from eva.contracts.canonical_json import canonical_sha256
@@ -185,6 +186,8 @@ class HouseholdWorkService:
             question=work.spec.research.question,
             generation=work.spec.generation,
             state=work.state,
+            error_code=work.error_code,
+            failure_description=work_failure_description(work.error_code),
             stop_requested=work.stop_requested_at is not None,
             result=None if work.result is None else work.result.output,
             result_sha256=None if work.result is None else work.result.output_sha256,

@@ -47,7 +47,11 @@ class FakeStore:
         return tuple(self.owned_work)
 
     def load(self, work_id: str, **_values: object) -> SimpleNamespace:
-        return next(work for work in self.owned_work if work.spec.work_id == work_id)
+        from eva.adapters.postgres.delegated_work import DelegatedWorkNotFound
+        work = next((work for work in self.owned_work if work.spec.work_id == work_id), None)
+        if work is None:
+            raise DelegatedWorkNotFound("No work in this test scope")
+        return work
 
     def latest_stoppable_work_id(self, **_values: object) -> str | None:
         return self.active_work_id
@@ -127,7 +131,7 @@ def test_owner_can_spawn_one_sealed_replay_safe_research_task() -> None:
     assert spec.grant.capability_ids == []
     assert spec.grant.child_network_access is False
     assert spec.grant.maximum_model_runs == 1
-    assert first_values["title"] == "Onderzoek vanuit Eva-chat"
+    assert first_values["title"] == "uitzoeken welke trein morgen het snelst is"
     assert "trein" not in str(first_values["summary"])
     assert store.validated == [
         {
@@ -404,7 +408,7 @@ def test_status_does_not_infer_live_worker_activity_from_persisted_call(lease_ex
 @pytest.mark.parametrize("state,phrase", [
     ("delivery_acknowledged", "afgeleverd in je gekoppelde privéchat"),
     ("delivery_ambiguous", "onzeker; ik stuur niet automatisch opnieuw"),
-    ("unbound", "Geen automatische terugmelding gekoppeld"),
+    ("unbound", "Geen automatische Telegram-terugmelding gekoppeld"),
 ])
 def test_shared_owner_view_and_telegram_show_delivery_separately_from_result(state,phrase):
     from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
@@ -447,3 +451,29 @@ def test_delivery_lookup_failure_does_not_hide_valid_result_or_leak_details(unav
     assert work["result"]["output"]==result.output and work["result_available"]
     assert work["delivery"]["state"]==("blocked" if unavailable=="raises" else "unknown")
     assert "secret" not in json.dumps(work) and "credential" not in json.dumps(work)
+
+
+def test_latest_status_does_not_select_an_older_active_job_from_display_order():
+    store = FakeStore()
+    older = store._work()
+    newer = store._work(state="succeeded", spec=SimpleNamespace(
+        **(vars(older.spec) | {"work_id": "work:newer", "task": "Newer completed task"})))
+    store.owned_work = [newer, older]
+    store.list_owned = lambda **kwargs: tuple(
+        [older, newer] if kwargs.get("active_first") else [newer, older]
+    )[:kwargs.get("limit", 20)]
+    reply = _commands(store).handle(_turn("Hoe staat mijn onderzoek?"), principal_binding_id=BINDING)
+    assert "work:newer" in reply.text
+    assert "Newer completed task" in reply.text
+    assert "work:fake" not in reply.text
+    assert "klaar; je kunt het resultaat opvragen" in reply.text
+
+
+@pytest.mark.parametrize("text", ["Hoe staat mijn onderzoek?", "Toon het resultaat van mijn onderzoek"])
+def test_legacy_task_reply_includes_shared_failure_explanation(text):
+    store = FakeStore()
+    store.owned_work = [store._work(state="ambiguous", error_code="provider_unavailable")]
+    reply = _commands(store).handle(_turn(text), principal_binding_id=BINDING)
+    assert "Een benodigde dienst was niet bereikbaar." in reply.text
+    assert "Controleer eerdere bestanden of acties voordat je hervat." in reply.text
+    assert not store.admitted and not store.stopped
