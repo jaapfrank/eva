@@ -26,13 +26,15 @@ class _UnfinishedWorkPlan(ConversationConflict):
 
 
 class _TaskModel:
-    def __init__(self, model, task):
+    def __init__(self, model, task, browser_context=None):
         self.model, self.task = model, task
         self.continuation_feedback = ()
+        self.browser_context = browser_context
         self.journals_provider_requests = getattr(model, "journals_provider_requests", False)
 
     def generate(self, *args, self_context=(), **kwargs):
-        return self.model.generate(*args, self_context=(*self_context, *self.continuation_feedback,
+        availability = () if self.browser_context is None else self.browser_context()
+        return self.model.generate(*args, self_context=(*self_context, *availability, *self.continuation_feedback,
             "Je voert nu deze aangenomen achtergrondopdracht uit: " + self.task,
             "Maak deze opdracht af met de aangeboden tools, controleer de uitkomst en geef "
             "het resultaat terug. Het oorspronkelijke bericht is de context, geen nieuwe "
@@ -169,10 +171,11 @@ def _has_completed_tool_evidence(receipts):
 
 class DelegatedDigitalRunner:
     def __init__(self, store, profile, *, source_loader, memory, model, identity,
-                 connector_tools, journal_factory=None, clock=None):
+                 connector_tools, journal_factory=None, clock=None, browser_context=None):
         self.store, self.profile = store, profile
         self.source_loader, self.memory, self.model, self.identity = source_loader, memory, model, identity
         self.connector_tools = tuple(connector_tools)
+        self.browser_context = browser_context
         self.clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
         self.journal_factory = journal_factory or self._journal
 
@@ -244,7 +247,7 @@ class DelegatedDigitalRunner:
                                               dispatch_guard, self.clock)
             actions = BackgroundConnectorActions((*self.connector_tools, progress), spec.grant.capability_ids,
                                                   authorize, spec.grant.maximum_tool_calls)
-            task_model = _TaskModel(self.model, spec.task)
+            task_model = _TaskModel(self.model, spec.task, self.browser_context)
             conversation = LivingConversation(self.memory, task_model, self.identity, actions)
 
             def execute():

@@ -75,11 +75,11 @@ class BrowserSessionClient:
     def __post_init__(self):
         fixed_origin(self.origin)
 
-    async def _request(self, payload=None):
-        status, _headers, content = await asyncio.to_thread(
-            read_browser_http, self.origin + BROWSER_PATH +
+    def _request_sync(self, payload=None, *, timeout=120):
+        status, _headers, content = read_browser_http(
+            self.origin + BROWSER_PATH +
             ("/control" if payload is not None else "/status"),
-            token=self.token, payload=payload,
+            token=self.token, payload=payload, timeout=timeout,
         )
         if status == 409:
             raise BrowserSessionConflict("browser state changed; refresh status")
@@ -93,8 +93,12 @@ class BrowserSessionClient:
         except (ValueError, TypeError) as error:
             raise BrowserSessionError("invalid browser service response") from error
 
+    def status_snapshot(self, *, timeout=1):
+        """Bounded read for a synchronous worker; never changes browser control."""
+        return self._request_sync(timeout=timeout)
+
     async def status(self):
-        return await self._request()
+        return await asyncio.to_thread(self._request_sync)
 
     async def control(self, action: str, revision: int):
-        return await self._request({"action": action, "revision": revision})
+        return await asyncio.to_thread(self._request_sync, {"action": action, "revision": revision})

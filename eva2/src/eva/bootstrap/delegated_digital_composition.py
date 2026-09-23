@@ -6,6 +6,7 @@ from types import SimpleNamespace
 from uuid import UUID
 
 from eva.bootstrap.delegated_digital_profile import DelegatedDigitalProfile
+from eva.bootstrap.background_browser_context import configured_browser_client, BackgroundBrowserContext
 from eva.contracts.canonical_json import canonical_sha256
 from eva.adapters.postgres.background_work_progress import progress_descriptor
 
@@ -18,6 +19,8 @@ _ROOT = Path(__file__).resolve().parents[1]
 _EXECUTION_SOURCES = (
     "bootstrap/delegated_digital_composition.py",
     "bootstrap/delegated_digital_runner.py",
+    "bootstrap/background_browser_context.py",
+    "adapters/connectors/browser_session.py",
     "adapters/postgres/background_work_progress.py",
     "bootstrap/private_conversation_resources.py",
     "adapters/model/pydantic_conversation.py",
@@ -84,6 +87,7 @@ def build_digital_profile(settings, provider_bundle):
         "model": settings.conversation_model,
         "reasoning_effort": settings.conversation_reasoning_effort,
         "budget": asdict(budget), "providers": providers,
+        "browser_availability": _configuration_value(configured_browser_client()),
         "descriptors": [asdict(tool) for tool in descriptors],
         "memory": {"url": settings.hindsight_url, "namespace": settings.hindsight_bank_namespace,
                    "budget": settings.hindsight_recall_budget, "tokens": settings.hindsight_recall_max_tokens,
@@ -147,7 +151,8 @@ def build_digital_runner(settings, store, *, provider_bundle=None):
     source_loader = _SourceTurnLoader(engine, SimpleNamespace(
         scope=service.conversation_scope, authorize_turn=service.validate_authority))
     return DelegatedDigitalRunner(store, profile, source_loader=source_loader,
-        memory=memory, identity=identity, model=model, connector_tools=routes)
+        memory=memory, identity=identity, model=model, connector_tools=routes,
+        browser_context=BackgroundBrowserContext(configured_browser_client()))
 
 
 class DigitalEnabledDelegatedRunner:
