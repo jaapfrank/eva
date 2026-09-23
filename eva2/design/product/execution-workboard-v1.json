@@ -1012,11 +1012,19 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Een bewaard plan bij grotere digitale opdrachten",
+            "date": "23 september",
+            "state": "installed",
+            "result": "De achtergrondwerker kan stappen en overdrachtsnotities bewaren in bestaande taakopslag. Hervatten houdt het plan beschikbaar; actuele voortgang staat in het taakdetail.",
+            "remaining": "Echte grote opdracht nog niet beproefd. Geen automatisch meerdaags doorwerken; stapstatussen zijn Eva’s werknotities. Bestaande model- en toolbudgetten blijven gelden.",
+            "source": "eva2/evidence/product/work-progress-installed-20260923.json"
+          },
+          {
             "title": "Hervatte taken en verbruik terugzien",
             "date": "23 september",
             "state": "installed",
             "result": "Eerdere en zichtbare vervolgpogingen zijn gekoppeld. Tijdstippen en gemeten model-, tool- en tokengebruik per poging worden getoond.",
-            "remaining": "Gebruiksproef later. Nieuwe bundel live en kern gezond. Centrale installatiepointer nog open na beleidsblokkade; geen algemene meerdaagse projectafronding.",
+            "remaining": "Gebruiksproef later. Nieuwe bundel live, kern gezond en installatieregistratie inmiddels bijgewerkt. Geen algemene meerdaagse projectafronding.",
             "source": "Git 62fd1843; stage /var/lib/eva2/work-continuity-20260923"
           },
           {
@@ -1397,10 +1405,10 @@
           }
         ],
         "now": {
-          "title": "Uitvoerplan en voortgang bij achtergrondtaken bewaren",
-          "state": "In uitvoering",
-          "detail": "De bestaande werker krijgt een bewaard stappenplan, voortgang en overdrachtsnotitie die bij hervatten terugkomen. Geen nieuwe scheduler of tweede werkroute.",
-          "doneWhen": "Planopslag, hergebruik bij hervatten en zichtbare voortgang geïnstalleerd; uitgebreide proeven later."
+          "title": "Uitvoerplan en voortgang bewaren",
+          "state": "Geïnstalleerd · gebruiksproef later",
+          "detail": "Nieuwe digitale taken kunnen een stappenplan en hervatnotitie bewaren. Bij expliciet hervatten blijft die voortgang beschikbaar; taakdetail toont de laatste opgeslagen stand.",
+          "doneWhen": "Technische installatie afgerond; echte taakproef uitgesteld volgens eigenaarbesluit."
         },
         "next": {
           "title": "Resterende gesprek- en taakfuncties aansluiten",
@@ -1419,7 +1427,7 @@
           "expected": "Dezelfde opgeslagen taken als in Eva’s gesprek, met gerichte bediening per opdracht. Dit is gebruiksinformatie; geen nieuwe verplichte proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T20:35:12.811746+00:00"
+        "reviewedAt": "2026-09-23T20:42:46.708514+00:00"
       }
     },
     "pendingTechnicalReview": {

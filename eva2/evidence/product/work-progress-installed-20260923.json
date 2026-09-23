@@ -1,0 +1,30 @@
+{
+  "contract": "EvaWorkProgressInstallation/v1",
+  "checked_at": "2026-09-23T20:42:46.708514+00:00",
+  "source_commit": "6402c1bd",
+  "image": "eva2-work-progress:20260923",
+  "stage": "/home/administrator/project/.eva2-artifacts/work-progress-20260923",
+  "checks": {
+    "python_syntax": "passed",
+    "production_asset_build": "passed",
+    "packaged_imports": "passed",
+    "core_health": "healthy",
+    "worker_health": "healthy",
+    "new_bundle_served": "index-Dd14Ddmb.js",
+    "owner_detail_exposes_progress": true,
+    "active_installation_registration": "updated"
+  },
+  "database_migration": false,
+  "model_calls": 0,
+  "functional_trials": "deferred_by_owner",
+  "independent_review": "deferred_by_owner",
+  "owner_acceptance": false,
+  "credit_cost": "unknown",
+  "scope": "New digital tasks can persist worker-reported plans in the existing timeline; explicit resume retains execution identity and notes. Old action receipts do not consume the new-attempt action budget. Saved plans do not prove completed external work.",
+  "limits": [
+    "No automatic multi-day scheduler or broader autonomy completion claim.",
+    "Previous release profiles are not silently migrated.",
+    "Step completion is worker-reported, not independently verified."
+  ],
+  "rollback": "baseline.compose.private.json in installation stage; original core and worker images retained"
+}
