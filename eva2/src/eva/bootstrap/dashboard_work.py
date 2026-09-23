@@ -11,7 +11,7 @@ def dashboard_delegated_work(service, *, tenant_id, installation_id,
     if (service is None or tenant_id is None or installation_id is None
             or owner_principal_id is None or principal_binding_id is None):
         raise RuntimeError("owner work unavailable")
-    if operation not in {"list", "get", "result", "stop", "resume", "return_poll", "return_ack", "schedule_cancel"}:
+    if operation not in {"list", "get", "result", "stop", "resume", "return_poll", "return_ack", "schedule_cancel", "schedule_cancel_chain"}:
         raise ValueError("invalid dashboard work operation")
     # Same fixed principal and conversation namespace as Runtime.dashboard_turn.
     # No model call: this is a button invoking the existing owner service.
@@ -24,7 +24,7 @@ def dashboard_delegated_work(service, *, tenant_id, installation_id,
     if operation.startswith("return_"):
         result = {"contract": "EvaPrivateWorkReturn/v1", **service.private_return(
             turn, operation.removeprefix("return_"), work_id=work_id, operation_id=operation_id)}
-    elif operation == "schedule_cancel":
+    elif operation in {"schedule_cancel", "schedule_cancel_chain"}:
         result = {"contract": "EvaDelegatedWorkOwnerResult/v1", "operation": operation,
                   **service.execute(operation, turn, schedule_id=work_id, request_key=turn.message_id)}
     else:

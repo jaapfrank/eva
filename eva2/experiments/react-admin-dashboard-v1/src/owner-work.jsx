@@ -48,14 +48,14 @@ async function request(operation, workId, signal) {
     method: operation === 'list' ? 'GET' : 'POST', credentials: 'same-origin',
     cache: 'no-store', redirect: 'error', signal,
     ...(operation === 'list' ? {} : { headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(operation === 'schedule_cancel' ? { schedule_id: workId } : { work_id: workId }) }),
+      body: JSON.stringify(['schedule_cancel', 'schedule_cancel_chain'].includes(operation) ? { schedule_id: workId } : { work_id: workId }) }),
   });
   if (!response.ok) throw new Error('Werkoverzicht niet beschikbaar. Vernieuw om de opgeslagen toestand op te halen.');
   const data = await response.json();
   if (data.contract !== 'EvaDelegatedWorkOwnerResult/v1' || data.operation !== operation
     || (operation === 'list' ? !Array.isArray(data.jobs) || data.jobs.length > 20
       || !data.jobs.every(work => validWork(work)) || typeof data.truncated !== 'boolean'
-      : operation === 'schedule_cancel' ? typeof data.status !== 'string' : !validWork(data.work, true) || (operation !== 'resume' && data.work.work_id !== workId))) {
+      : ['schedule_cancel', 'schedule_cancel_chain'].includes(operation) ? typeof data.status !== 'string' : !validWork(data.work, true) || (operation !== 'resume' && data.work.work_id !== workId))) {
     throw new Error('Het werkantwoord kon niet worden gelezen. Vernieuw het overzicht.');
   }
   return data;
@@ -116,9 +116,11 @@ export default function OwnerWork() {
               currentDetail = result.work;
               setDetail(currentDetail);
             }
-          } else if (operation === 'schedule_cancel') {
+          } else if (['schedule_cancel', 'schedule_cancel_chain'].includes(operation)) {
             selected = null; currentDetail = null; setDetail(null);
-            setNotice(data.status === 'cancelled' ? 'Geplande start geannuleerd.'
+            setNotice(data.status === 'chain_stop_recorded' ? 'Stoppen van deze reeks is vastgelegd. Begonnen effecten kunnen nog afronden.'
+              : data.status === 'stop_pending' ? 'De reeks is geannuleerd; stopverzoeken voor gestarte taken worden nog verwerkt.'
+              : data.status === 'cancelled' ? 'Geplande start geannuleerd.'
               : data.status === 'stop_requested' ? 'De opdracht was al gestart; stopverzoek opgeslagen.'
               : 'Actuele planning opgehaald.');
             pending = { operation: 'list', version: revision, foreground: true };
@@ -199,13 +201,14 @@ export default function OwnerWork() {
       <p>Een bewaarde afspraak voor één start of hervatting. Tot dat moment draait hiervoor geen model.</p>
       {page.planning.schedules.map(item => <article className="card" key={item.schedule_id}>
         <h4>{item.task || 'Eerdere opdracht hervatten'}</h4>
-        <p>{timestamp(item.run_at)} · {({ scheduled: 'Wacht op startmoment', launching: 'Wordt ingepland', dispatched: 'Overgedragen aan werker', cancelled: 'Geannuleerd', blocked: 'Start geblokkeerd; vraag Eva om bijsturing' })[item.state] || 'Onbekend'}</p>
+        <p>{timestamp(item.run_at)} · {({ scheduled: 'Wacht op startmoment', launching: 'Wordt ingepland', dispatched: 'Overgedragen aan werker', cancelled: 'Geannuleerd', blocked: 'Start geblokkeerd; vraag Eva om bijsturing', stop_pending: 'Reeksstop wordt verwerkt', chain_stopped: 'Reeksstop vastgelegd' })[item.state] || 'Onbekend'}</p>
         {item.block_reason && <p role="status">{item.block_reason}</p>}
         {item.dependency?.state === 'waiting' && <p>Wacht ook op het resultaat van de vorige stap.</p>}
         {item.dependency?.state === 'ready' && <p>Het vorige resultaat is beschikbaar voor deze vervolgstap.</p>}
         {item.dependency?.state === 'blocked' && <p role="status">{item.dependency.reason}</p>}
         {item.after_work_id && <button disabled={busy} onClick={() => act('get', item.after_work_id)}>Vorige opdracht openen</button>}
         {item.can_cancel && <button disabled={busy} onClick={() => act('schedule_cancel', item.schedule_id)}>Annuleren</button>}
+        <button disabled={busy} onClick={() => act('schedule_cancel_chain', item.schedule_id)}>Stop deze stap en vervolg</button>
         {item.work_id && <button disabled={busy} onClick={() => act('get', item.work_id)}>Opdracht openen</button>}
       </article>)}
       {page.planning.truncated && <p>De twintig meest recente of open afspraken worden getoond.</p>}

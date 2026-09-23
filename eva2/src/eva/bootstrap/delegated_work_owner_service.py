@@ -107,7 +107,7 @@ class DelegatedWorkOwnerService:
         if not self.available_for(turn):
             raise DelegatedWorkConflict("delegated work requires its private owner scope")
         from eva.adapters.postgres.scheduled_work import ScheduledOwnerWork
-        if operation in {"schedule_digital", "schedule_resume", "schedule_list", "schedule_cancel"}:
+        if operation in {"schedule_digital", "schedule_resume", "schedule_list", "schedule_cancel", "schedule_cancel_chain"}:
             if any(value is not None for value in (task, work_id, research, intent_id, feedback)):
                 raise ValueError("schedule operation has unrelated arguments")
             self.validate_authority(turn)
@@ -119,6 +119,8 @@ class DelegatedWorkOwnerService:
                                           resume=operation == "schedule_resume")
             if schedule is not None:
                 raise ValueError("schedule control does not accept a new task")
+            if operation == "schedule_cancel_chain":
+                return scheduler.cancel_chain(schedule_id)
             if operation == "schedule_cancel":
                 return scheduler.cancel(schedule_id)
             if schedule_id is not None:

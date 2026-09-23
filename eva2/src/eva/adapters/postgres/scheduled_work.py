@@ -23,8 +23,11 @@ class ScheduledOwnerWork:
         self.timeline = PostgresOperationalTimeline(self.engine, self.scope)
         self.prefix = "scheduled-work:" + str(service.owner_principal_id) + ":"
 
-    def _authorize(self, conn):
+    def _authorize(self, conn, *, lock=False):
         self.timeline._scope(conn)
+        if lock:
+            conn.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
+                         {"key": str(self.scope) + self.prefix})
         self.service.store.validate_admission_authority(**self.service._owner)
 
     def _rows(self):
@@ -75,7 +78,7 @@ class ScheduledOwnerWork:
                 key: request[key], "run_at": run_at,
                 **{name: request[name] for name in dependency_keys}}
         with self.engine.begin() as conn:
-            self._authorize(conn)
+            self._authorize(conn, lock=True)
             conn.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
                          {"key": thread_id})
             existing = conn.execute(self._rows().where(
@@ -121,6 +124,14 @@ class ScheduledOwnerWork:
             work_id = row.operation_id
         if work_id is None:
             return {"state": "none"}
+        c = operational_checkpoints.c
+        cancelled_source = conn.execute(self._rows().where(
+            c.operation_id == work_id, c.phase.in_(("stop_pending", "chain_stopped")),
+            c.updated_at >= parse_utc_timestamp(request["source"]["occurred_at"]),
+        ).limit(1)).first()
+        if cancelled_source is not None:
+            return {"state": "blocked", "work_id": work_id,
+                    "reason": "Deze vervolgstap hoort bij een inmiddels gestopte reeks."}
         try:
             work = self.service.store.load(work_id, **self.service._owner)
         except DelegatedWorkNotFound:
@@ -173,7 +184,7 @@ class ScheduledOwnerWork:
                 "after_schedule_id": request.get("after_schedule_id"),
                 "run_at": request["run_at"], "task": request.get("task"),
                 "resume_work_id": request.get("work_id"),
-                "work_id": row.operation_id if row.phase == "dispatched" else None,
+                "work_id": row.operation_id if row.phase in {"dispatched", "stop_pending", "chain_stopped"} else None,
                 "can_cancel": row.phase in {"scheduled", "launching"}}
 
     def list(self):
@@ -189,7 +200,7 @@ class ScheduledOwnerWork:
         if not isinstance(schedule_id, str) or not schedule_id.startswith(self.prefix):
             raise ValueError("schedule is outside the owner scope")
         with self.engine.begin() as conn:
-            self._authorize(conn)
+            self._authorize(conn, lock=True)
             row = conn.execute(self._rows().where(
                 operational_checkpoints.c.thread_id == schedule_id).with_for_update()).one_or_none()
             if row is None:
@@ -207,11 +218,87 @@ class ScheduledOwnerWork:
                     "work_id": work_id, "work_state": work.state}
         return {"status": row.phase, "schedule_id": schedule_id}
 
+    def cancel_chain(self, schedule_id):
+        """Reserve every descendant stop atomically, then use existing task stops."""
+        if not isinstance(schedule_id, str) or not schedule_id.startswith(self.prefix):
+            raise ValueError("schedule is outside the owner scope")
+        c, e = operational_checkpoints.c, operational_events.c
+        with self.engine.begin() as conn:
+            self._authorize(conn, lock=True)
+            rows = conn.execute(self._rows().add_columns(e.payload.label("request"))
+                .join(operational_events, sa.and_(e.tenant_id == c.tenant_id,
+                    e.installation_id == c.installation_id, e.thread_id == c.thread_id,
+                    e.sequence == 1))).all()
+            by_id = {row.thread_id: row for row in rows}
+            if schedule_id not in by_id:
+                return {"status": "not_found"}
+            selected = {schedule_id}
+            while True:
+                work_ids = {by_id[key].operation_id for key in selected
+                            if by_id[key].operation_id is not None}
+                children = {row.thread_id for row in rows if (
+                    row.request["data"].get("after_schedule_id") in selected
+                    or row.request["data"].get("after_work_id") in work_ids
+                    or (row.request["data"].get("operation") == "resume"
+                        and row.request["data"].get("work_id") in work_ids))}
+                if children <= selected:
+                    break
+                selected.update(children)
+            for key in sorted(selected):
+                row = by_id[key]
+                if row.phase in {"cancelled", "chain_stopped", "stop_pending"}:
+                    continue
+                phase = "stop_pending" if row.operation_id is not None else "cancelled"
+                transition_timeline_thread(conn, self.scope, thread_id=key,
+                    expected_revision=row.revision, checkpoint_id=f"{key}:chain-stop:{row.revision + 1}",
+                    phase=phase, status="active" if phase == "stop_pending" else "completed",
+                    operation_id=row.operation_id, event_type="WORK_CHAIN_STOP_REQUESTED",
+                    occurred_at=self.service.now(), data={"root_schedule_id": schedule_id,
+                                                        "reason": "owner_cancelled_chain"})
+        self._finish_stops(limit=len(selected))
+        with self.engine.begin() as conn:
+            self._authorize(conn)
+            remaining = conn.scalar(sa.select(sa.func.count()).select_from(
+                self._rows().where(c.thread_id.in_(selected), c.phase == "stop_pending").subquery()))
+        return {"status": "stop_pending" if remaining else "chain_stop_recorded",
+                "schedule_id": schedule_id, "affected_schedules": len(selected),
+                "pending_task_stops": remaining, "in_flight_effects_may_complete": True}
+
+    def _finish_stops(self, *, limit=1):
+        """Finish durable stop reservations after a crash without new task execution."""
+        finished = 0
+        for _ in range(limit):
+            with self.engine.begin() as conn:
+                self._authorize(conn, lock=True)
+                row = conn.execute(self._rows().where(
+                    operational_checkpoints.c.phase == "stop_pending"
+                ).order_by(operational_checkpoints.c.updated_at)
+                  .with_for_update(skip_locked=True).limit(1)).one_or_none()
+                if row is None:
+                    break
+                try:
+                    work = self.service.store.request_stop(row.operation_id,
+                        **self.service._owner, now=self.service.now())
+                    state = work.state
+                except DelegatedWorkNotFound:
+                    state = "unavailable"
+                transition_timeline_thread(conn, self.scope, thread_id=row.thread_id,
+                    expected_revision=row.revision,
+                    checkpoint_id=f"{row.thread_id}:chain-stopped:{row.revision + 1}",
+                    phase="chain_stopped", status="completed", operation_id=row.operation_id,
+                    event_type="WORK_CHAIN_STOP_RECORDED", occurred_at=self.service.now(),
+                    data={"work_id": row.operation_id, "work_state": state,
+                          "in_flight_effects_may_complete": True})
+                finished += 1
+        return finished
+
     def run_once(self):
+        if self._finish_stops():
+            return "chain_stop_recorded"
         now = self.service.now()
         c = operational_checkpoints.c
         with self.engine.begin() as conn:
-            self._authorize(conn)
+            self._authorize(conn, lock=True)
             rows = conn.execute(self._rows().where(
                 c.phase.in_(("scheduled", "launching")), c.deadline <= now,
             ).order_by(c.deadline).with_for_update(skip_locked=True).limit(64)).all()
@@ -247,7 +334,7 @@ class ScheduledOwnerWork:
             thread_id = row.thread_id
         # Hold only the schedule lock during database admission. No model or tool runs here.
         with self.engine.begin() as conn:
-            self._authorize(conn)
+            self._authorize(conn, lock=True)
             row = conn.execute(self._rows().where(c.thread_id == thread_id).with_for_update()).one()
             if row.phase != "launching":
                 return row.phase
