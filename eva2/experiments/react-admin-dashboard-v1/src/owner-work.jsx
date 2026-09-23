@@ -48,7 +48,7 @@ async function request(operation, workId, signal, search) {
     method: operation === 'list' ? 'GET' : 'POST', credentials: 'same-origin',
     cache: 'no-store', redirect: 'error', signal,
     ...(operation === 'list' ? {} : { headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(operation === 'search' ? search : ['schedule_cancel', 'schedule_cancel_chain'].includes(operation) ? { schedule_id: workId } : { work_id: workId }) }),
+      body: JSON.stringify(['search', 'revise_digital'].includes(operation) ? search : ['schedule_cancel', 'schedule_cancel_chain'].includes(operation) ? { schedule_id: workId } : { work_id: workId }) }),
   });
   if (!response.ok) throw new Error('Werkoverzicht niet beschikbaar. Vernieuw om de opgeslagen toestand op te halen.');
   const data = await response.json();
@@ -57,7 +57,7 @@ async function request(operation, workId, signal, search) {
       || (data.truncated && typeof data.next_before_work_id !== 'string')))
     || (['list', 'search'].includes(operation) ? !Array.isArray(data.jobs) || data.jobs.length > 20
       || !data.jobs.every(work => validWork(work)) || typeof data.truncated !== 'boolean'
-      : ['schedule_cancel', 'schedule_cancel_chain'].includes(operation) ? typeof data.status !== 'string' : !validWork(data.work, true) || (operation !== 'resume' && data.work.work_id !== workId))) {
+      : ['schedule_cancel', 'schedule_cancel_chain', 'revise_digital'].includes(operation) ? typeof data.status !== 'string' : !validWork(data.work, true) || (operation !== 'resume' && data.work.work_id !== workId))) {
     throw new Error('Het werkantwoord kon niet worden gelezen. Vernieuw het overzicht.');
   }
   return data;
@@ -65,6 +65,7 @@ async function request(operation, workId, signal, search) {
 
 export default function OwnerWork() {
   const [filter, setFilter] = React.useState('');
+  const [correction, setCorrection] = React.useState('');
   const detailRef = React.useRef(null);
   const [page, setPage] = React.useState(null);
   const [detail, setDetail] = React.useState(null);
@@ -74,6 +75,7 @@ export default function OwnerWork() {
   const commands = React.useRef(() => {});
   React.useEffect(() => {
     if (detail) detailRef.current?.focus({ preventScroll: false });
+    setCorrection('');
   }, [detail?.work_id]);
   React.useEffect(() => {
     let mounted = true, running = false, halted = false, pending = null;
@@ -119,6 +121,16 @@ export default function OwnerWork() {
               currentDetail = result.work;
               setDetail(currentDetail);
             }
+          } else if (operation === 'revise_digital') {
+            setNotice(data.status === 'correction_saved'
+              ? 'Bijsturing bewaard. Eva stopt de oude poging en hervat daarna met je wijziging.'
+              : data.status === 'newer_attempt_exists'
+              ? 'Er bestaat al een vervolgpoging. Open die om haar bij te sturen; er is niets gewijzigd.'
+              : data.status === 'already_finished' ? 'Deze opdracht is al klaar. Geef Eva een nieuwe vervolgopdracht.'
+              : 'Geen bijsturing opgeslagen. Open de actuele opdracht of bespreek het vervolg met Eva.');
+            if (data.status === 'correction_saved') setCorrection('');
+            selected = data.work_id || workId; currentDetail = null;
+            pending = { operation: 'get', workId: selected, version: revision, foreground: true };
           } else if (['schedule_cancel', 'schedule_cancel_chain'].includes(operation)) {
             selected = null; currentDetail = null; setDetail(null);
             setNotice(data.status === 'chain_stop_recorded' ? 'Stoppen van deze reeks is vastgelegd. Begonnen effecten kunnen nog afronden.'
@@ -154,7 +166,7 @@ export default function OwnerWork() {
       running = false;
       if (mounted) { setBusy(false); schedule(); }
     }
-    function enqueue(operation, workId, foreground = false) {
+    function enqueue(operation, workId, foreground = false, correction) {
       if (!mounted || (!foreground && (halted || running))) return;
       if (operation === 'search') { searchQuery = workId.trim(); searchBefore = undefined; }
       if (operation === 'search_next') { operation = 'search'; searchBefore = workId; }
@@ -169,7 +181,7 @@ export default function OwnerWork() {
         }
       }
       pending = { operation, workId, version: revision, foreground,
-        search: operation === 'search' ? { query: searchQuery,
+        search: operation === 'revise_digital' ? { work_id: workId, instruction: correction } : operation === 'search' ? { query: searchQuery,
           ...(searchBefore ? { before_work_id: searchBefore } : {}) } : undefined };
       void drain();
     }
@@ -278,6 +290,16 @@ export default function OwnerWork() {
         <p>Hervatten start een nieuwe begrensde poging en kan opnieuw modelverbruik opleveren. De eerdere poging blijft bewaard.</p>
         <button disabled={busy} onClick={() => act('resume', detail.work_id)}>Hervatten met nieuwe poging</button>
       </>}
+      {detail.scope === 'private_digital_worker' && !['succeeded', 'verified'].includes(detail.state) && <form onSubmit={event => {
+        event.preventDefault();
+        if (!busy && correction.trim()) commands.current('revise_digital', detail.work_id, true, correction.trim());
+      }}>
+        <h3>Opdracht bijsturen</h3>
+        <label>Wat moet Eva anders doen?<br /><textarea value={correction} maxLength={2000} rows={3}
+          disabled={busy} onChange={event => setCorrection(event.target.value)} style={{ width: '100%' }} /></label>
+        <p>De oude poging stopt; daarna volgt één hervatting met je wijziging. Eerdere acties blijven bewaard. Een begonnen actie kan nog afronden.</p>
+        <button disabled={busy || !correction.trim()} type="submit">Bewaar bijsturing en hervat</button>
+      </form>}
       {validProgress(detail.progress) && <section aria-label="Uitvoerplan en voortgang" className="work-progress">
         <h3>Uitvoerplan</h3>
         <p>Bijgewerkt: {timestamp(detail.progress.updated_at)}. Eva’s werknotities; de stappen zijn niet onafhankelijk gecontroleerd.</p>

@@ -4,12 +4,13 @@ from fastapi.responses import JSONResponse
 
 
 def install_dashboard_work(app, *, access, runtime):
-    def invoke(operation, work_id=None, search=None):
+    def invoke(operation, work_id=None, search=None, revision=None):
         call = getattr(runtime, "dashboard_delegated_work", None)
         if not callable(call):
             raise HTTPException(503, "owner work unavailable")
         try:
-            result = call(operation, work_id, **({"search": search} if search is not None else {}))
+            result = call(operation, work_id, **({"search": search} if search is not None else {}),
+                          **({"revision": revision} if revision is not None else {}))
         except ValueError as error:
             raise HTTPException(422, "invalid owner work request") from error
         except Exception as error:
@@ -52,6 +53,17 @@ def install_dashboard_work(app, *, access, runtime):
                     or not 1 <= len(payload["before_work_id"]) <= 240))):
             raise HTTPException(422, "invalid owner work search")
         return invoke("search", search=payload)
+
+    @app.post("/internal/v1/dashboard/work/revise_digital")
+    def revise(request: Request, payload: dict):
+        access.require(request)
+        if (request.query_params or set(payload) != {"work_id", "instruction"}
+                or not isinstance(payload["work_id"], str)
+                or not 1 <= len(payload["work_id"]) <= 240
+                or not isinstance(payload["instruction"], str)
+                or not 1 <= len(payload["instruction"].strip()) <= 2000):
+            raise HTTPException(422, "invalid owner correction")
+        return invoke("revise_digital", revision=payload)
 
     @app.post("/internal/v1/dashboard/work/{operation}")
     def operation(request: Request, operation: str, payload: dict):
