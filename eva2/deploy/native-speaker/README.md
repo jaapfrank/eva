@@ -1,8 +1,13 @@
-# Prepared continuous Voice PE packages
+# Continuous Voice PE packages
 
 The [readback](provisioning-readback-2026-09-22.md) records the current installation
 boundary; the [package receipt](package-receipt-2026-09-22.json) identifies the
 prepared artifacts. Nothing here installs firmware or changes a running service.
+Current installation: Woonkamer was installed via OTA on 23 September; authenticated
+readback confirms build 2026-09-09 19:26:51 +0200. Overkapping remains unchanged.
+The scoped firewall rule is active. Physical conversation acceptance remains open.
+See `../../evidence/product/voice-pe-woonkamer-ota-installed-20260923.json`.
+
 Keep private packages outside Git: firmware binaries embed credentials.
 
 Woonkamer reuses its reviewed candidate and rebuilt recovery binaries. Overkapping
@@ -39,10 +44,13 @@ absence of the speaker service are the server rollback state. The current
 Woonkamer-only firewall script does not already permit Overkapping. No such
 activation or rule change occurred during preparation.
 
-## Physical recovery boundary
+## Historical USB-first preparation boundary (superseded for OTA)
 
-Before flashing, the owner must connect the intended Voice PE by USB and provide
-physical access to its boot/recovery controls. The operator must then:
+The earlier preparation required USB before every installation. The owner
+clarified on 23 September that normal ESPHome OTA should be used. Woonkamer
+was installed through authenticated network access after checking its identity,
+firmware hash and matching service grant. USB is a physical fallback, not a
+prerequisite for routine OTA. The following steps apply if USB recovery is needed:
 
 1. Identify the actual serial device, chip, MAC and flash size. Match its MAC to
    the intended HA device; a display name or assumed COM port is insufficient.

@@ -1,0 +1,41 @@
+{
+  "date": "2026-09-23",
+  "installed": true,
+  "method": "ESPHome OTA over local network",
+  "device": {
+    "name": "home-assistant-voice-0a16e0",
+    "mac": "20:F8:3B:0A:16:E0",
+    "esphomeVersion": "2026.6.2",
+    "compilationTime": "2026-09-09 19:26:51 +0200",
+    "entityCount": 7,
+    "serviceNames": []
+  },
+  "before": {
+    "name": "home-assistant-voice-0a16e0",
+    "mac": "20:F8:3B:0A:16:E0",
+    "esphomeVersion": "2026.6.2"
+  },
+  "upload": {
+    "exitCode": 0,
+    "completedAt": "2026-09-23T08:12:15.052685+00:00"
+  },
+  "candidateSha256": "336faf8b0ca4de6883217011d0c456f3738b6f8aeaf69b959a5eb8114f99e961",
+  "recoveryOtaSha256": "222b87eefca70de27af8db210c06156c0f2dd34c82558ff2614d7173a93040bc",
+  "deviceGrantMatchedRunningService": true,
+  "firewall": {
+    "rule": "Eva2-ContinuousSpeaker-Devices",
+    "enabled": true,
+    "port": 44715,
+    "sources": [
+      "10.0.20.202",
+      "10.0.20.53"
+    ],
+    "baseline": "C:/Users/jaapf/AppData/Local/Eva2/voice-install-20260923/firewall-before.json"
+  },
+  "speakerServiceRunning": true,
+  "overkappingFirmwareChanged": false,
+  "physicalConversationProven": false,
+  "ownerAccepted": false,
+  "modelCalls": 0,
+  "limits": "OTA upload and authenticated device readback verified. No physical speech, interruption, microphone, end-to-end speaker session or recovery flash claim. USB is not a prerequisite for ordinary OTA; USB recovery remains possible physical fallback."
+}

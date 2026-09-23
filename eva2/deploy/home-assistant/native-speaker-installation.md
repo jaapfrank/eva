@@ -1,5 +1,12 @@
 # SP-03 installatiegrens: woonkamer
 
+> Actueel 23 september: de woonkamerfirmware is via ESPHome OTA geïnstalleerd.
+> USB is geen voorafgaande eis voor deze draadloze route. De eerdere systemd-
+> en USB-installatiestappen hieronder zijn historisch; de Docker-spraakdienst
+> en beperkte firewallregel draaien. Fysieke gespreksacceptatie staat nog open.
+> Zie `../../evidence/product/voice-pe-woonkamer-ota-installed-20260923.json`.
+
+
 Dit pakket gebruikt de bestaande Home Assistant Cloud STT/TTS en de bestaande
 Eva2-huishoudbinding. Het vervangt op de woonkamer-speaker de gespreksafhandeling
 met de voorbereide native verbinding. SP-01 en SP-02 zijn geaccepteerd;

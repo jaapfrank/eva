@@ -25,7 +25,7 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Eerstvolgende handeling:** Resultaattitels geïnstalleerd. Volgende: fysieke Voice PE koppelen aan bestaande continue route zodra apparaattoegang beschikbaar is; overige functionele kanaaltekorten onafhankelijk vervolgen.
+**Eerstvolgende handeling:** Woonkamer-Voice PE is via OTA geïnstalleerd; fysieke gespreksproef staat open. Overige functionele kanaaltekorten onafhankelijk vervolgen, Overkapping na bevestigde woonkamerwerking. Verhuizing en uitgebreide herstelbouw blijven achter de functies.
 
 Afgeronde deelresultaten en menselijke acceptaties blijven hieronder behouden. Een open gebruikersoordeel is geen algemene bouwstop.
 
