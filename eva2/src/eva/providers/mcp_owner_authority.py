@@ -246,6 +246,15 @@ class McpOwnerAuthority:
         parse_mcp_gateway_catalog(json.dumps(catalog))
         return catalog
 
+    def managed_endpoints(self, turn: ConversationTurn) -> list[str]:
+        """Expose only host-admitted endpoint references to the verified owner."""
+        self.authorize_turn(turn)
+        self.authorize_current(phase="execute", operation_kind="read")
+        current = self._read_managed_endpoints()
+        if current != self._managed_endpoints:
+            raise ConversationConflict("managed connector endpoints changed after admission")
+        return sorted(current)
+
     def status(self, turn: ConversationTurn) -> dict:
         self.authorize_turn(turn)
         state = self._state()

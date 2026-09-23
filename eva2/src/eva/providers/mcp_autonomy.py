@@ -28,6 +28,7 @@ from eva.application.conversation import (
 from eva.providers.contracts import ProviderContribution
 from eva.providers.mcp_discovery import McpDiscoveryToolAdapter
 from eva.providers.mcp_registration import McpRegistrationToolAdapter
+from eva.providers.mcp_gateway import McpGatewayProviderFactory, McpGatewayProviderSettings
 
 
 @dataclass(frozen=True, slots=True)
@@ -36,6 +37,7 @@ class McpAutonomySettings:
     gateway: McpGatewayConfig
     registration: McpRegistrationConfig
     managed_endpoints_file: str | None = None
+    configured_catalog: McpGatewayProviderSettings | None = None
 
 
 def _value(name: str) -> str:
@@ -125,7 +127,8 @@ class McpAutonomyProviderFactory:
         registration = McpRegistrationConfig(base_url, read_runtime_secret_file(registration_file,
             setting_name="EVA_MCP_REGISTRATION_TOKEN_FILE"), allow_plain_http=plain == "true",
             visibility=visibility or "private", exclusive_owner_gateway=exclusive == "true")
-        return McpAutonomySettings(mandate, gateway, registration, managed or None)
+        return McpAutonomySettings(mandate, gateway, registration, managed or None,
+                                   McpGatewayProviderFactory.load_settings())
 
     @staticmethod
     def build(settings: McpAutonomySettings, engine: Engine) -> ProviderContribution:
@@ -141,7 +144,8 @@ class McpAutonomyProviderFactory:
         registry = PostgresMcpConnectorRegistry(engine, authority.scope,
             authority.owner_principal_id, settings.gateway,
             authority.authorize_turn, authority.authorize_current,
-            canonical_owner=authority.canonical_owner)
+            canonical_owner=authority.canonical_owner,
+            configured_catalog=settings.configured_catalog)
         registration = McpRegistrationToolAdapter(
             ContextForgeRegistrationClient(settings.registration), registry, authority,
             authority.owner_key, _SourceTurnLoader(engine, authority))

@@ -17,6 +17,9 @@ _EXECUTION_SOURCES = (
     "bootstrap/private_conversation_resources.py",
     "adapters/model/pydantic_conversation.py",
     "providers/mcp_autonomy.py",
+    "providers/mcp_registration.py",
+    "providers/mcp_owner_authority.py",
+    "adapters/postgres/mcp_connector_registry.py",
 )
 
 

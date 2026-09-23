@@ -30,11 +30,13 @@ class ConnectorRegistrationAuthority(Protocol):
     def authorize_endpoint(self, turn: ConversationTurn, endpoint: str) -> None: ...
     def admit_catalog(self, turn: ConversationTurn, endpoint: str,
                       rows: list[dict], provenance: dict) -> dict: ...
+    def managed_endpoints(self, turn: ConversationTurn) -> list[str]: ...
     def status(self, turn: ConversationTurn) -> dict: ...
     def stop(self, turn: ConversationTurn) -> dict: ...
 
 
 class ConnectorRegistrationStore(Protocol):
+    def inventory(self, turn: ConversationTurn) -> list[dict]: ...
     def register(self, turn: ConversationTurn, connector_id: str, endpoint: str,
                  gateway_id: str, catalog: dict, provenance: dict) -> dict: ...
     def discover(self, turn: ConversationTurn, connector_id: str) -> dict: ...
@@ -66,7 +68,7 @@ def registration_descriptors() -> tuple[ConversationToolDescriptor, ...]:
             {"type": "object", "properties": {"connector_id": {"type": "string", "maxLength": 2048}},
              "required": ["connector_id"], "additionalProperties": False}),
         ConversationToolDescriptor("manage_connected_services",
-            "Bekijk (status) of stop blijvend (stop) het eigenaarmandaat voor aangesloten MCP-diensten. Stop weigert nieuwe aanroepen; reeds begonnen werk kan nog worden teruggelezen. Opnieuw activeren vereist de eigenaarinstallatie.",
+            "Bekijk met status het eigenaarmandaat, aangesloten connectoren en ingestelde endpoints. Gebruik de teruggegeven connector_id met discover_connector_tools voor echte toolschema’s. Een ingesteld endpoint is niet automatisch aangesloten of bereikbaar. Stop blijvend met stop het eigenaarmandaat voor aangesloten MCP-diensten. Stop weigert nieuwe aanroepen; reeds begonnen werk kan nog worden teruggelezen. Opnieuw activeren vereist de eigenaarinstallatie.",
             {"type": "object", "properties": {"action": {"type": "string", "enum": ["status", "stop"]}},
              "required": ["action"], "additionalProperties": False}),
     )
@@ -219,6 +221,19 @@ class McpRegistrationToolAdapter:
             observed = {"connector_id": cid, "endpoint": endpoint}
         elif command.tool_name == "manage_connected_services":
             result = self.authority.status(turn)
+            if command.arguments["action"] == "status" and result["active"]:
+                connectors = self.registry.inventory(turn)
+                known_endpoints = {entry["endpoint"] for entry in connectors}
+                result = {**result, "connectors": connectors,
+                          "configured_endpoints": [
+                              {"endpoint": endpoint,
+                               "connection_status": "registration_not_recorded",
+                               "next_action": "connect_service",
+                               "guidance": "Use verified service documentation for registration; configuration alone does not prove a usable connection."}
+                              for endpoint in self.authority.managed_endpoints(turn)
+                              if endpoint not in known_endpoints],
+                          "inventory_scope": "owner_admitted_registry_and_managed_endpoints",
+                          "reachability_verified": False}
             observed = {"revoked": result["revoked"]} if command.arguments["action"] == "stop" else {}
             if command.arguments["action"] == "stop" and not result["revoked"]:
                 return ToolProofObservation("safe_to_execute" if dispatch is None else "pending", observed, {})

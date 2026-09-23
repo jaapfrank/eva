@@ -30,7 +30,7 @@ from eva.application.conversation import ConversationConflict, ConversationTurn
 from eva.contracts.base import validate_json_value
 from eva.contracts.canonical_json import canonical_sha256
 from eva.providers.mcp_discovery import McpConnectorNotFound, McpExecutionBinding
-from eva.providers.mcp_gateway import parse_mcp_gateway_catalog
+from eva.providers.mcp_gateway import McpGatewayProviderSettings, parse_mcp_gateway_catalog
 
 
 _CONTRACT = "EvaMcpConnectorRegistry/v1"
@@ -59,6 +59,7 @@ class PostgresMcpConnectorRegistry:
         authorize_turn: Callable[[ConversationTurn], object],
         authorize_current: Callable[..., object],
         *, canonical_owner: Callable[[ConversationTurn], str] | None = None,
+        configured_catalog: McpGatewayProviderSettings | None = None,
     ) -> None:
         if not isinstance(owner_principal_id, str) or not owner_principal_id.strip():
             raise ValueError("MCP registry owner is required")
@@ -66,6 +67,7 @@ class PostgresMcpConnectorRegistry:
             raise ValueError("MCP registry gateway configuration is invalid")
         if not callable(authorize_turn) or not callable(authorize_current):
             raise ValueError("MCP registry authorization callbacks are required")
+        self._configured_catalog = configured_catalog
         self._scope = scope
         self._owner = owner_principal_id
         self._canonical_owner = canonical_owner
@@ -144,9 +146,38 @@ class PostgresMcpConnectorRegistry:
                 continue
         raise ConversationConflict("MCP registry changed concurrently; retry registration")
 
+    def inventory(self, turn: ConversationTurn) -> list[dict[str, Any]]:
+        """List this owner's admitted bindings without schemas or provider calls."""
+        self._require_owner(turn)
+        self._require_current(phase="execute", operation_kind="read")
+        _, records = self._snapshot()
+        result = []
+        configured = self._configured_record(turn)
+        if configured is not None:
+            result.append({"connector_id": configured["connector_id"],
+                           "endpoint": configured["endpoint"],
+                           "connection_status": "configured_catalog",
+                           "tool_names": [spec.execute_catalog_name for spec in self._configured_catalog.specs],
+                           "next_action": "discover_connector_tools"})
+        for connector_id, record in sorted(records.items()):
+            if record["revoked"]:
+                continue
+            self._require_gateway(record)
+            result.append({
+                "connector_id": connector_id,
+                "endpoint": record["endpoint"],
+                "connection_status": "registered",
+                "tool_names": [spec.execute_catalog_name for spec in self._specs(record["catalog"])],
+                "next_action": "discover_connector_tools",
+            })
+        return result
+
     def discover(self, turn: ConversationTurn, connector_id: str) -> dict[str, Any]:
         self._require_owner(turn)
         self._require_current(phase="execute", operation_kind="read")
+        configured = self._configured_record(turn)
+        if configured is not None and connector_id == configured["connector_id"]:
+            return {"connector_id": connector_id, "tools": list(self._configured_tools())}
         record = self._record(connector_id)
         self._require_active(record)
         self._require_gateway(record)
@@ -157,6 +188,13 @@ class PostgresMcpConnectorRegistry:
         if not isinstance(tool_id, str) or ":" not in tool_id:
             raise ConversationConflict("MCP tool id is unknown")
         connector_id, digest = tool_id.rsplit(":", 1)
+        configured = self._configured_record(turn)
+        if configured is not None and connector_id == configured["connector_id"]:
+            for spec in self._configured_catalog.specs:
+                if spec.configuration_sha256 == digest:
+                    self._require_current(phase="execute", operation_kind=spec.operation_kind)
+                    return self._configured_binding(spec)
+            raise ConversationConflict("MCP tool id is unknown")
         record = self._record(connector_id)
         self._require_active(record)
         for spec in self._specs(record["catalog"]):
@@ -177,6 +215,15 @@ class PostgresMcpConnectorRegistry:
             for spec in self._specs(record["catalog"])
             if spec.configuration_sha256 == digest
         ]
+        configured_matches = ([] if self._configured_catalog is None else
+                              [spec for spec in self._configured_catalog.specs
+                               if spec.configuration_sha256 == digest])
+        if configured_matches:
+            if len(configured_matches) + len(matches) != 1:
+                raise ConversationConflict("MCP configuration has no unique immutable binding")
+            spec = configured_matches[0]
+            self._require_current(phase=phase, operation_kind=spec.operation_kind)
+            return self._configured_binding(spec)
         if len(matches) != 1:
             raise ConversationConflict("MCP configuration has no unique immutable binding")
         record, spec = matches[0]
@@ -184,6 +231,41 @@ class PostgresMcpConnectorRegistry:
             self._require_active(record)
         self._require_current(phase=phase, operation_kind=spec.operation_kind)
         return self._binding(record, spec)
+
+    def _configured_record(self, turn: ConversationTurn) -> dict[str, Any] | None:
+        settings = self._configured_catalog
+        if settings is None:
+            return None
+        try:
+            settings.authorize_turn(turn)
+        except ConversationConflict:
+            return None
+        return {"connector_id": self._configured_id(), "endpoint": settings.base_url}
+
+    def _configured_id(self) -> str:
+        settings = self._configured_catalog
+        return "configured-catalog-" + canonical_sha256({
+            "gateway": settings.base_url, "allow_plain_http": settings.allow_plain_http,
+            "specs": [spec.configuration_sha256 for spec in settings.specs],
+            "principals": list(settings.principal_sha256_allowlist)})[:32]
+
+    def _configured_binding(self, spec: McpGatewayToolSpec) -> McpExecutionBinding:
+        settings = self._configured_catalog
+        connector_id = self._configured_id()
+        return McpExecutionBinding(spec, McpGatewayConfig(
+            settings.base_url, settings.bearer_token, allow_plain_http=settings.allow_plain_http),
+            connector_id, f"{connector_id}:{spec.configuration_sha256}")
+
+    def _configured_tools(self) -> tuple[dict[str, Any], ...]:
+        return tuple({
+            "tool_id": self._configured_binding(spec).tool_id,
+            "name": spec.descriptor.name, "provider_tool_name": spec.execute_catalog_name,
+            "completion_guidance": spec.descriptor.completion_guidance,
+            "description": spec.descriptor.description,
+            "input_schema": spec.descriptor.input_schema,
+            "operation_kind": spec.operation_kind,
+            "configuration_sha256": spec.configuration_sha256,
+        } for spec in self._configured_catalog.specs)
 
     def revoke(self, turn: ConversationTurn, connector_id: str) -> dict[str, Any]:
         self._require_owner(turn)
