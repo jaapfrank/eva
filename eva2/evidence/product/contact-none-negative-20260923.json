@@ -1,0 +1,48 @@
+{
+  "checkedAt": "2026-09-23T12:49:28.408985+00:00",
+  "hypothesis": "gpt-5.6-luna none instead of low improves foreground latency without changing provider",
+  "officialSource": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+  "execution": "Isolated candidate on existing subscription route; production setting unchanged",
+  "decision": "Do not promote: no demonstrated latency benefit",
+  "calls": 3,
+  "rows": [
+    {
+      "case": "task_selection",
+      "effort": "none",
+      "seconds": 7.466,
+      "inputTokens": 1897,
+      "outputTokens": 53,
+      "correct": true
+    },
+    {
+      "case": "greeting",
+      "effort": "low",
+      "seconds": 4.063,
+      "firstContentMs": 3178,
+      "inputTokens": 1685,
+      "outputTokens": 20,
+      "text": "Hallo! Fijn je hier te zien. Waar kan ik je mee helpen?"
+    },
+    {
+      "case": "greeting",
+      "effort": "none",
+      "seconds": 4.785,
+      "firstContentMs": 4399,
+      "inputTokens": 1685,
+      "outputTokens": 12,
+      "text": "Hallo! Fijn je te zien."
+    }
+  ],
+  "baselineTaskSelection": {
+    "effort": "low",
+    "seconds": 7.706,
+    "source": "active-task-context-installed-20260923.json"
+  },
+  "validation": "Five providerless tests and independent source review passed; endpoint accepted none. Success of transport does not establish performance benefit.",
+  "actualActions": 0,
+  "externalMessages": 0,
+  "subscriptionCost": "unknown",
+  "limits": "Single samples; no statistical ranking or full-channel latency claim.",
+  "preservation": "Isolated candidate patch and tests retained in private stage; exact trial source changes removed. Running core and worker unchanged.",
+  "next": "Inspect the shared foreground prompt and request transport against existing greeting evidence before another model trial."
+}
