@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Begrijpelijke uitleg bij mislukte achtergrondtaak",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Gesprek en taakpaneel krijgen foutuitleg. Nieuwe gatewayverbindingsfouten worden onderscheiden van interne fouten; eerdere acties blijven mogelijk en worden niet automatisch herhaald.",
+            "remaining": "Geen snelheidsverbetering of eigenaaracceptatie. Eerdere foutcodes blijven behouden.",
+            "source": "eva2/evidence/product/task-failure-explanation-installed-20260923.json"
+          },
+          {
             "title": "Projectoverzicht: status in één oogopslag",
             "date": "23 september",
             "state": "installed",
@@ -1300,15 +1308,15 @@
           }
         ],
         "now": {
-          "title": "Dashboardwijziging afgerond",
+          "title": "Foutuitleg geïnstalleerd",
           "state": "Opgeleverd · geen lopende bouwclaim",
-          "detail": "Het compacte overzicht staat live. De volgende bronwijziging is voorbereid; review en installatie staan nog open.",
-          "doneWhen": "Bouw, bronreview en live weergavecontrole zijn afgerond."
+          "detail": "Kern en werker gezond. Bestaande mislukte taak houdt haar status en toont uitleg; nieuwe webcode staat live.",
+          "doneWhen": "Gerichte pakketcontroles, onafhankelijke review en livecontrole afgerond."
         },
         "next": {
-          "title": "Begrijpelijke melding bij een mislukte taak",
-          "state": "Bronwijziging klaar · nog niet geïnstalleerd",
-          "detail": "Verbindingsfouten krijgen een concrete uitleg in gesprek en taakpaneel. Gerichte controles zijn uitgevoerd; review en installatie volgen na dit dashboard."
+          "title": "Snelle hoorbare ontvangst herstellen",
+          "state": "Volgende functionele stap",
+          "detail": "Eerder gemeten snelle ontvangst vergelijken met de huidige gespreksroute. Bestaande audio gebruiken en het concrete ontbrekende gedrag herstellen."
         },
         "ownerAction": {
           "title": "Voice PE: beschikbaarheid doorgeven",
@@ -1320,7 +1328,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T14:00:48.916029+00:00"
+        "reviewedAt": "2026-09-23T14:05:30.534518+00:00"
       }
     },
     "pendingTechnicalReview": {

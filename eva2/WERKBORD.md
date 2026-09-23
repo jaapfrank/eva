@@ -43,7 +43,9 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Actuele uitvoering:** compact projectoverzicht opgeleverd. Eerstvolgende bouwstap: de voorbereide uitleg bij taakfouten beoordelen en installeren. Die wijziging staat nog niet live.
+**Actuele uitvoering:** begrijpelijke taakfouten geïnstalleerd. Eerstvolgende functionele stap: bestaande snelle hoorbare ontvangst vergelijken met de huidige route en het concrete gat herstellen.
+
+**Taakfouten (23 september):** elf gerichte pakketcontroles en onafhankelijke review GO. Kern/werker gezond, bronbytes en live foutuitleg gecontroleerd. Eerdere onzekere taakstatus blijft behouden; geen automatische herhaling. Geen modelcalls. [Bewijs](evidence/product/task-failure-explanation-installed-20260923.json).
 
 **Afzonderlijke gebruikersproef:** echte wakewordovergang vastleggen wanneer Jaap bij het apparaat is. De huishoudelijke sessie- en resultaatkoppeling is al geïnstalleerd; normale firmware blijft behouden. Deze proef blokkeert het genoemde vervolgwerk niet.
 
