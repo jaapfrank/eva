@@ -824,6 +824,10 @@ class PostgresConversationJournal(PostgresScopedRole):
                     text=text,
                     occurred_at=row.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
                     playback_status=playback_status,
+                    source_turn_sha256=(canonical_sha256({
+                        "conversation_id": turn.conversation_id,
+                        "message_id": value["message_id"],
+                    }) if isinstance(value.get("message_id"), str) and value["message_id"] else None),
                 )
             )
         return tuple(messages[-limit:])

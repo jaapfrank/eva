@@ -103,15 +103,17 @@ _MAX_STREAM_BYTES = 8 * 1024 * 1024
 _MODEL_LEASE_OWNER_UID = 1000
 
 
-def _recent_message_line(message: RecentConversationMessage) -> str:
+def _recent_message_line(message: RecentConversationMessage, source_label: int | None = None) -> str:
     descriptions = {
         "completed": "afspelen voltooid; dit bewijst niet dat iemand het hoorde",
         "interrupted": "afspelen onderbroken; neem niet aan dat de volledige tekst is gehoord; het gehoorde tekstdeel is onbekend",
         "unconfirmed": "afspelen niet bevestigd; neem niet aan dat deze tekst is gehoord",
     }
+    # Completion order may differ from question order; retain journal provenance.
+    source = "" if source_label is None else f" [beurt {source_label}]"
     if message.playback_status is None:
-        return f"{message.role}: {message.text}"
-    return (f"{message.role} [gegenereerd antwoord; {descriptions[message.playback_status]}]: "
+        return f"{message.role}{source}: {message.text}"
+    return (f"{message.role}{source} [gegenereerd antwoord; {descriptions[message.playback_status]}]: "
             f"{message.text}")
 
 
@@ -2498,7 +2500,12 @@ class PydanticConversationModel:
             if memory.style_mirror is not None and memory.style_mirror.strip()
             else "Geen afzonderlijke duurzame stijlspiegel beschikbaar."
         )
-        recent = "\n".join(_recent_message_line(message) for message in recent_messages[-12:])
+        labels = {}
+        for message in recent_messages[-12:]:
+            if message.source_turn_sha256 is not None:
+                labels.setdefault(message.source_turn_sha256, len(labels) + 1)
+        recent = "\n".join(_recent_message_line(message, labels.get(message.source_turn_sha256))
+                           for message in recent_messages[-12:])
         if not recent:
             recent = "Geen eerdere berichten in deze actieve context."
         durable_self = (
@@ -2685,6 +2692,9 @@ class PydanticConversationModel:
             "direct voorafgaande voorstel is een uitvoeringsverzoek. Vraag alleen door "
             "wanneer meerdere doelen openblijven. Verzin geen fysieke feiten. "
             f"{action_guidance} "
+            "Berichten met dezelfde beurtcode horen bij dezelfde oorspronkelijke vraag. "
+            "Antwoorden kunnen later dan een tussenvraag verschijnen; koppel ze niet "
+            "automatisch aan het direct voorafgaande bericht. "
             "De recente tijdlijn komt uit de duurzame gespreksgeschiedenis en kan een "
             "herstart van core of databasecontainer overleven. Dit is continuïteit binnen "
             "het gesprek; alleen onderstaande herinneringen zijn blijvend daarbuiten. Zeg "

@@ -181,6 +181,8 @@ class HouseholdWorkService:
         self.current()
         return dict(
             work_id=work.spec.work_id,
+            title=work.title,
+            question=work.spec.research.question,
             generation=work.spec.generation,
             state=work.state,
             stop_requested=work.stop_requested_at is not None,
@@ -267,9 +269,17 @@ class HouseholdWorkService:
             deadline=min(created + timedelta(minutes=5), expiry),
         )
         self.validate_authority(turn)
+        title = previous.title if previous is not None else " ".join(public.title.split())[:120]
+        try:
+            saved = self.store.load(work_id, **self._owner, household_origin=origin)
+        except DelegatedWorkNotFound:
+            pass
+        else:
+            # Replaying an older admission must keep its immutable stored title.
+            title = saved.title
         admitted = self.store.admit(
             spec=spec,
-            title="Huishoudelijk bronnenonderzoek",
+            title=title,
             summary="Publiek onderzoek voor de oorspronkelijke huishoudsessie.",
             worker_role="Onderzoek",
             retention_policy_id="retention:household-public-work:v1",

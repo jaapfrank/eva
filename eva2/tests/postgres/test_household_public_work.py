@@ -614,3 +614,48 @@ def test_http_rejects_scope_spoofing_and_revoked_result(delegated_engine):
     result = post("authorize", {**data, "work_id": work_id, "result_sha256": claim["result_sha256"]})
     assert result.status_code == 403
     assert claim["result"] not in result.text
+
+
+def test_distinct_household_task_titles_survive_actions_replay_and_resume(delegated_engine):
+    from eva.application.conversation import ConversationActionCall
+    x = setup(delegated_engine, "hh-distinct-titles")
+    actions = HouseholdWorkActions(delegated_engine, x.service)
+    first_request = PUBLIC | {"title": "First public topic", "question": "Explain HTTP status codes"}
+    second_request = PUBLIC | {"title": "Second public topic", "question": "Explain HTTP cache headers"}
+    first_call = ConversationActionCall("first", "start_background_research", {"research": first_request})
+    first = actions.execute(x.turn, first_call).output["operation_result"]["work"]
+    second_turn = x.service.turn(str(uuid4()), second_request["question"])
+    second_call = ConversationActionCall("second", "start_background_research", {"research": second_request})
+    second = actions.execute(second_turn, second_call).output["operation_result"]["work"]
+    assert (first["title"], first["question"]) == (first_request["title"], first_request["question"])
+    assert (second["title"], second["question"]) == (second_request["title"], second_request["question"])
+    assert first["work_id"] != second["work_id"]
+    assert actions.execute(x.turn, first_call).output["operation_result"]["work"] == first
+    for turn, work in ((x.turn, first), (second_turn, second)):
+        saved = x.server.store.load(work["work_id"], **x.service._owner,
+                                    household_origin=x.service.origin(turn))
+        assert saved.spec.origin.message_id == turn.message_id
+    x.service.execute("stop", second_turn, request_key="stop-first", work_id=first["work_id"])
+    resumed = x.service.execute("resume", second_turn, request_key="resume-first", work_id=first["work_id"])["work"]
+    assert resumed["title"] == first["title"] and resumed["question"] == first["question"]
+    saved = x.server.store.load(resumed["work_id"], **x.service._owner,
+                                household_origin=x.service.origin(x.turn))
+    assert saved.spec.origin.message_id == x.turn.message_id
+    assert x.service.execute("get", second_turn, request_key="second-state", work_id=second["work_id"])["work"]["state"] == "admitted"
+    assert x.research.calls == 0
+
+
+def test_household_replay_preserves_legacy_title(delegated_engine, monkeypatch):
+    x = setup(delegated_engine, "hh-legacy-title")
+    admit = x.server.store.admit
+
+    def legacy_admit(**kwargs):
+        return admit(**(kwargs | {"title": "Huishoudelijk bronnenonderzoek"}))
+
+    monkeypatch.setattr(x.server.store, "admit", legacy_admit)
+    work_id = start(x)
+    monkeypatch.setattr(x.server.store, "admit", admit)
+    replay = x.service.execute("research", x.turn, request_key="start", research=PUBLIC)
+    assert replay["created"] is False
+    assert replay["work"]["work_id"] == work_id
+    assert replay["work"]["title"] == "Huishoudelijk bronnenonderzoek"

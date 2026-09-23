@@ -618,8 +618,13 @@ class RecentConversationMessage:
     text: str
     occurred_at: str
     playback_status: Literal["completed", "interrupted", "unconfirmed"] | None = None
+    source_turn_sha256: str | None = None
 
     def __post_init__(self) -> None:
+        if self.source_turn_sha256 is not None and (
+                not isinstance(self.source_turn_sha256, str)
+                or re.fullmatch(r"[0-9a-f]{64}", self.source_turn_sha256) is None):
+            raise ValueError("recent conversation source turn is invalid")
         if self.playback_status not in (None, "completed", "interrupted", "unconfirmed"):
             raise ValueError("recent conversation playback status is invalid")
         if not self.role.strip() or len(self.role) > 64:
