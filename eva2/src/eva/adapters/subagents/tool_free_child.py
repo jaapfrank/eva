@@ -77,6 +77,7 @@ OutcomeStatus = Literal[
     "provider_transient",
     "provider_unavailable",
     "invalid_output",
+    "incomplete_work",
     "invalid_usage",
     "misconfigured",
     "internal_error",

@@ -1405,10 +1405,10 @@
           }
         ],
         "now": {
-          "title": "Uitvoerplan en voortgang bewaren",
-          "state": "Geïnstalleerd · gebruiksproef later",
-          "detail": "Nieuwe digitale taken kunnen een stappenplan en hervatnotitie bewaren. Bij expliciet hervatten blijft die voortgang beschikbaar; taakdetail toont de laatste opgeslagen stand.",
-          "doneWhen": "Technische installatie afgerond; echte taakproef uitgesteld volgens eigenaarbesluit."
+          "title": "Open planstappen werkelijk vervolgen",
+          "state": "In uitvoering",
+          "detail": "Dezelfde digitale werker gaat na een te vroeg slotantwoord verder met nog open planstappen, binnen het bestaande model-, tool- en tijdbudget.",
+          "doneWhen": "Voortzetten, stoppen bij blokkade of stilstand en begrijpelijke onvolledigheidsmelding geïnstalleerd; echte taakproef later."
         },
         "next": {
           "title": "Resterende gesprek- en taakfuncties aansluiten",
@@ -1427,7 +1427,7 @@
           "expected": "Dezelfde opgeslagen taken als in Eva’s gesprek, met gerichte bediening per opdracht. Dit is gebruiksinformatie; geen nieuwe verplichte proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T20:42:46.708514+00:00"
+        "reviewedAt": "2026-09-23T20:45:44.496476+00:00"
       }
     },
     "pendingTechnicalReview": {

@@ -21,13 +21,18 @@ from eva.contracts.delegated_work import DelegatedWorkUsage
 from eva.contracts.timestamps import parse_utc_timestamp
 
 
+class _UnfinishedWorkPlan(ConversationConflict):
+    """Preserved progress exists, but this bounded attempt cannot finish it."""
+
+
 class _TaskModel:
     def __init__(self, model, task):
         self.model, self.task = model, task
+        self.continuation_feedback = ()
         self.journals_provider_requests = getattr(model, "journals_provider_requests", False)
 
     def generate(self, *args, self_context=(), **kwargs):
-        return self.model.generate(*args, self_context=(*self_context,
+        return self.model.generate(*args, self_context=(*self_context, *self.continuation_feedback,
             "Je voert nu deze aangenomen achtergrondopdracht uit: " + self.task,
             "Maak deze opdracht af met de aangeboden tools, controleer de uitkomst en geef "
             "het resultaat terug. Het oorspronkelijke bericht is de context, geen nieuwe "
@@ -239,11 +244,47 @@ class DelegatedDigitalRunner:
                                               dispatch_guard, self.clock)
             actions = BackgroundConnectorActions((*self.connector_tools, progress), spec.grant.capability_ids,
                                                   authorize, spec.grant.maximum_tool_calls)
-            conversation = LivingConversation(self.memory, _TaskModel(self.model, spec.task),
-                                               self.identity, actions)
+            task_model = _TaskModel(self.model, spec.task)
+            conversation = LivingConversation(self.memory, task_model, self.identity, actions)
+
             def execute():
+                # Continue the same admitted attempt, accounting identity and
+                # budgets. Never admit another task or retry an uncertain effect.
+                prompted_states = set()
                 with cancellation_scope(signal), background_execution(BackgroundExecutionScope(source, spec.execution_id, dispatch_guard)):
-                    return conversation.respond(source, before_step=checkpoint, model_journal=journal)
+                    while True:
+                        reply = conversation.respond(source, before_step=checkpoint, model_journal=journal)
+                        authorize(source)
+                        progress_state = load_work_progress(self.store._engine, spec)
+                        if not progress_state:
+                            return reply
+                        remaining = [step for step in progress_state["steps"]
+                                     if step["state"] not in {"done", "skipped"}]
+                        if not remaining:
+                            return reply
+                        if any(step["state"] == "blocked" for step in remaining):
+                            raise _UnfinishedWorkPlan("task plan contains a recorded blocker")
+                        actual = journal.model_usage(source)
+                        checkpoint(source, actual)
+                        state_key = (progress_state["revision"], actions.calls)
+                        if state_key in prompted_states:
+                            raise _UnfinishedWorkPlan("task made no progress after continuation")
+                        if (actual.measurement != "measured"
+                                or actual.model_attempts >= spec.grant.maximum_model_runs
+                                or actual.input_tokens >= spec.grant.maximum_input_tokens
+                                or actual.output_tokens >= spec.grant.maximum_output_tokens
+                                or actions.calls >= spec.grant.maximum_tool_calls
+                                or actions.dispatches >= spec.grant.maximum_tool_calls):
+                            raise _UnfinishedWorkPlan("remaining attempt budget cannot continue the plan")
+                        prompted_states.add(state_key)
+                        task_model.continuation_feedback = (
+                            "Je gaf een slotantwoord, maar je opgeslagen uitvoerplan heeft nog open "
+                            "stappen. De opdracht is daarmee niet afgerond. Ga door met de eerstvolgende "
+                            "uitvoerbare stap binnen dezelfde opdracht en werk daarna de voortgang bij. "
+                            "Gebruik eerdere toolresultaten en herhaal geen al uitgevoerde actie. "
+                            "Markeer stappen alleen als gedaan als werkelijk resultaat dat onderbouwt. "
+                            "Bij een echte blokkade: bewaar die met state blocked, de reden en een "
+                            "bruikbare hervatnotitie; verzin geen succes en vergroot het mandaat niet.",)
             worker = asyncio.create_task(asyncio.to_thread(execute))
             try:
                 reply = await asyncio.shield(worker)
@@ -266,7 +307,7 @@ class DelegatedDigitalRunner:
             saved_progress = load_work_progress(self.store._engine, spec)
             if saved_progress and any(step["state"] not in {"done", "skipped"}
                                       for step in saved_progress["steps"]):
-                raise ConversationConflict("background task plan is unfinished")
+                raise _UnfinishedWorkPlan("background task plan is unfinished")
             if not _has_completed_tool_evidence(actions.receipts):
                 raise ConversationConflict("background task lacks verified connector results")
             if actual.measurement != "measured":
@@ -282,6 +323,7 @@ class DelegatedDigitalRunner:
                     usage = self._usage(journal.model_usage(source), 0 if actions is None else actions.dispatches)
             return ToolFreeChildOutcome("cancelled" if cancellation_event is not None and cancellation_event.is_set()
                 else "timed_out" if self.clock() >= deadline
+                else "incomplete_work" if isinstance(error, _UnfinishedWorkPlan)
                 else "provider_unavailable" if type(error) is McpGatewayUnavailable
                 else "internal_error", None, usage, False,
                 hashlib.sha256((type(error).__name__ + ":" + str(error)).encode()).hexdigest())
