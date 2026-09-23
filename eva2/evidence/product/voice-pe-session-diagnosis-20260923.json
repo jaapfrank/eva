@@ -10,5 +10,10 @@
   "independentReview": "Root reviewed agent change; only pre-existing sanitized metadata emitted",
   "next": "Capture actual wakeword transition with owner present; no diagnosed cause or fix claim",
   "privateLogs": "/var/lib/eva2/voice-pe-ota-20260923",
-  "rollbackCompose": "/var/lib/eva2/voice-pe-ota-20260923/session-diagnostics/baseline.compose.private.json"
+  "rollbackCompose": "/var/lib/eva2/voice-pe-ota-20260923/session-diagnostics/baseline.compose.private.json",
+  "candidateSourceReview": {
+    "reviewer": "background_execution_seam",
+    "result": "No native HA start action remains in generated candidate; wakeword/button invoke eva_local_wake. Shared microphone has reference-counted listeners. Retained HA error handler can set red phase; custom phase callback cannot. No root cause established.",
+    "deviceChanged": false
+  }
 }

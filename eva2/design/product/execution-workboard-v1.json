@@ -10930,7 +10930,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Algemene digitale achtergrondtaak bouwen op bestaande worker en gesprekexecutor, met originele opdrachtbinding en eigen uitvoeringsruimte. Tussenvragen op eigenaarspagina en onderscheidende taaknamen zijn geïnstalleerd. Fysieke Voice PE-bevestiging blijft apart open.",
+      "nextAction": "Fout bij het wakeword in de nieuwe Voice PE-route oplossen. Gewone spraak werkt weer en is door Jaap bevestigd. Eerst de echte wakeword-overgang vastleggen en de oorzaak corrigeren; continue spraak is nog niet opgeleverd. Algemene digitale achtergrondtaken blijven gebouwd maar nog niet aangesloten of geïnstalleerd.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11667,7 +11667,8 @@
         "No physical Voice PE acceptance for the reverted continuous-session candidate",
         "Legacy source hashes change when shared contracts change; pending work must stay executable at deployment"
       ],
-      "evidence": "eva2/evidence/product/digital-background-source-20260923.json"
+      "evidence": "eva2/evidence/product/digital-background-source-20260923.json",
+      "postgresLifecycle": "Real PostgreSQL16.13/current-source schema9 lifecycle passed: stop/resume reuses first verified effect, counts only new dispatch, persists v4 result and acknowledges return idempotently. Controlled model/provider; no production composition or installation."
     }
   },
   "activeTaskId": "AU-008",

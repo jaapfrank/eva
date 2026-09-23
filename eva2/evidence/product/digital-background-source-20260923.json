@@ -20,9 +20,33 @@
   ],
   "limitations": [
     "Controlled model, connectors, model journal and task store; not real external work",
-    "No PostgreSQL lifecycle proof yet",
     "Core/worker production composition not enabled",
     "No new model requests or external messages sent"
   ],
-  "review": "Root reviewed agent contracts/admission; agent reviewed root runner/store/dispatch/contact changes; GO for source checkpoint"
+  "review": "Root reviewed agent contracts/admission; agent reviewed root runner/store/dispatch/contact changes; GO for source checkpoint",
+  "postgresLifecycle": {
+    "test": "tests/postgres/test_delegated_digital_work.py",
+    "result": "1 passed in 3.59s",
+    "environment": "PostgreSQL16.13, current source schema9, image7922 dependencies; isolated database dropped afterward",
+    "coverage": [
+      "real admission and source ingress binding",
+      "real connector execution journals preserve verified first effect across stop/resume",
+      "separate model accounting and one new dispatch on resume",
+      "v4 result persisted and reloaded",
+      "poll, repeated acknowledgment, no second poll result",
+      "foreground receipt remains unchanged"
+    ],
+    "limitations": [
+      "controlled model and connector provider",
+      "not live schema7 installation proof",
+      "not crash-between-send-and-ack delivery proof"
+    ],
+    "setupFailures": [
+      "mixed source9 and packaged migrations7",
+      "inherited fixture expected schema7; replaced only new test fixture with explicit current-source schema9"
+    ],
+    "modelCalls": 0,
+    "externalMessages": 0,
+    "review": "GO background_execution_seam: fixture and bounded evidence reviewed; no live or external delivery claim."
+  }
 }
