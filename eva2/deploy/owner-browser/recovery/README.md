@@ -35,3 +35,18 @@ The deployment directory contains the existing `host-config.json`. Source/Python
 This proves service/firewall restoration for the current installation when actually executed. It is not a claim that a full host reboot was tested. Docker must be the existing system service and the network/container identities must remain the retained pair; absent or replaced containers fail closed and require explicit reprovisioning through the prior maintenance recipe.
 
 For supervision rollback, disable/stop only the host controller service, retain the firewall protection, and restore the prior verified standalone launch as UID 1000 against the same private state. Do not run the old firewall rollback while the pair can browse. Preserve recovery receipts and backups instead of resetting session state or owner revocation.
+
+## Installed availability checkpoint — 23 September 2026
+
+The retained pair now uses these system services. The previous standalone
+controller was absent and owner status returned HTTP 503. Before staging, the
+stopped browser's egress attachment had no retained static address; it was
+reattached to the same network at the documented `192.168.16.2` with gateway
+priority 1. Container IDs, profile and credentials were preserved. Staging is
+recorded in `/var/lib/eva2/browser-service-20260923`.
+
+Both services are enabled and active. The existing control API started the pair
+and restored the saved owner-control mode; the status and viewer HTML return
+HTTP 200. This establishes current availability, not a browser-task trial,
+visual acceptance or host-reboot proof. See
+`../../../evidence/product/browser-availability-installed-20260923.json`.

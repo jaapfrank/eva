@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-23T13:51:06.082260+00:00",
         "deliveries": [
           {
+            "title": "Browser weer beschikbaar in Eva’s dashboard",
+            "date": "23 september",
+            "state": "installed",
+            "result": "De uitgevallen bediening is bereikbaar. Browser en profiel zijn behouden, de viewer wordt geserveerd en de controller draait als blijvende dienst. Je hebt de bediening; teruggeven aan Eva gaat via het bestaande paneel.",
+            "remaining": "Geen nieuwe browsertaak, visuele proef of volledige computerherstart getest. Browsertools gebruiken al de bestaande MCP-route.",
+            "source": "eva2/evidence/product/browser-availability-installed-20260923.json"
+          },
+          {
             "title": "Doorwerken wanneer het eigen plan nog niet af is",
             "date": "23 september",
             "state": "installed",
@@ -1413,15 +1421,15 @@
           }
         ],
         "now": {
-          "title": "Open planstappen vervolgen binnen het taakbudget",
-          "state": "Geïnstalleerd · gebruiksproef later",
-          "detail": "De werker vervolgt open planstappen na een te vroeg slotantwoord. Blokkades, stilstand en onvoldoende budget blijven zichtbaar als onvoltooide opdracht.",
-          "doneWhen": "Installatie afgerond; modelgedrag en volledige taakuitvoering nog te beproeven."
+          "title": "Bestaande browserbediening beschikbaar",
+          "state": "Geïnstalleerd · eigenaar heeft bediening",
+          "detail": "Bediening en viewer geven HTTP200. De bewaarde browser draait met hetzelfde profiel; controller en firewall zijn als blijvende diensten geïnstalleerd.",
+          "doneWhen": "Beschikbaarheid hersteld; echte browseropdracht en visuele gebruikersproef volgen later."
         },
         "next": {
-          "title": "Browserwerk op de achtergrond aansluiten",
+          "title": "Browserwerk en gesprek inhoudelijk verbinden",
           "state": "Nog niet gestart",
-          "detail": "Bestaande browserbediening verbinden met digitale achtergrondtaken, zodat het gesprek beschikbaar blijft tijdens browserwerk."
+          "detail": "Controleer welke bestaande informatie de werker krijgt over browserbeschikbaarheid en overname; sluit alleen ontbrekende koppelingen aan."
         },
         "ownerAction": {
           "title": "Takenbord gebruiken",
@@ -1435,7 +1443,7 @@
           "expected": "Dezelfde opgeslagen taken als in Eva’s gesprek, met gerichte bediening per opdracht. Dit is gebruiksinformatie; geen nieuwe verplichte proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T20:48:26.664979+00:00"
+        "reviewedAt": "2026-09-23T20:54:51.554726+00:00"
       }
     },
     "pendingTechnicalReview": {

@@ -1,0 +1,59 @@
+{
+  "contract": "EvaOwnerBrowserAvailabilityInstallation/v1",
+  "checked_at": "2026-09-23T20:54:51.554726+00:00",
+  "source_commit": "8b60fd8b",
+  "stage": "/var/lib/eva2/browser-service-20260923",
+  "services": {
+    "eva-owner-browser.service": {
+      "active": "active",
+      "enabled": "enabled"
+    },
+    "eva-owner-browser-firewall.service": {
+      "active": "active",
+      "enabled": "enabled"
+    }
+  },
+  "before": {
+    "owner_status_http": 503,
+    "controller_listening": false,
+    "containers": "stopped",
+    "retained_mode": "owner",
+    "egress_static_address": ""
+  },
+  "after": {
+    "owner_status_http": 200,
+    "viewer_html_http": 200,
+    "session": {
+      "contract": "EvaBrowserSession/v1",
+      "revision": 38,
+      "state": "owner",
+      "owner_control": true,
+      "eva_control": false,
+      "browser_ready": true,
+      "mcp_ready": false,
+      "profile_preserved": true,
+      "fresh_observation_required": true,
+      "viewer_path": "/internal/v1/dashboard/browser/view/"
+    },
+    "egress_static_address": "192.168.16.2"
+  },
+  "changes": [
+    "Installed existing controller and firewall service materials.",
+    "Pinned documented egress address on the stopped retained browser container.",
+    "Started through existing control API and returned control to owner."
+  ],
+  "preserved": [
+    "container IDs",
+    "persistent browser profile",
+    "credentials",
+    "session ledger",
+    "existing MCP execution route"
+  ],
+  "model_calls": 0,
+  "browser_task_trials": "deferred_by_owner",
+  "visual_or_owner_acceptance": false,
+  "reboot_test": false,
+  "credit_cost": "unknown",
+  "rollback": "Stop/disable eva-owner-browser.service and retain firewall protection. Existing stage has previous-files; no prior controller service existed. Browser lifecycle remains available through the original controller and retained private configuration.",
+  "scope": "Owner browser management and viewer available again. Browser tools already use the digital worker MCP meta-actions; no new browser execution implementation."
+}
