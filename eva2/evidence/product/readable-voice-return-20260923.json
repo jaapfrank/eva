@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-09-23T13:25:28.454542+00:00",
+  "sourceCommit": "d322f262",
+  "scope": "Owner website voice saved-result presentation",
+  "image": "sha256:4ec324b8302c0843d760be1b4cf235d613b3683714fed06ac07def4429a084b0",
+  "installed": true,
+  "checks": [
+    "18 source voice return/client tests passed",
+    "14 packaged private voice return tests passed",
+    "Independent source review GO",
+    "Installed source bytes match surgical candidate",
+    "44716 page HTTP200 and session/ready ready=true"
+  ],
+  "rollbackStage": "/var/lib/eva2/readable-voice-return-20260923",
+  "limitations": [
+    "No physical listening acceptance",
+    "No latency improvement claimed",
+    "Household speaker still lacks source household work-return integration",
+    "Original validated bytes remain unchanged for browser transport and context"
+  ],
+  "modelCalls": 0,
+  "ownerAccepted": false
+}

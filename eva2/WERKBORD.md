@@ -10,9 +10,11 @@ Doorlopend projectgoal actief: acht stappen tot één afgeronde Eva. Nu stap1: g
 
 Stap 1: hergebruik de bestaande snelle ontvangst en maak doorpraten tijdens achtergrondwerk gelijk over de vier ingangen. Parallel: controleer en herstel alleen het concrete gat in persoons- en toehoordergrenzen uit stap 2. De volledige achtstappenroute blijft het actieve goal.
 
+**Webspraakresultaten geïnstalleerd (23 september):** bestaande leesbare resultaatpresentatie gedeeld met de voice-agent; alleen oorspronkelijke gecontroleerde bytes blijven voor context en browsertransport. 18 bron- en 14 verpakte controles geslaagd, onafhankelijk review GO. Webdienst HTTP200 en ready=true, bronbytes gecontroleerd, terugweg bewaard. Geen modelcalls, geen snelheidsclaim of luisteracceptatie. Live speakerdienst mist nog de gebouwde huishoudelijke terugmeldkoppeling; dat is de volgende stap. [Bewijs](evidence/product/readable-voice-return-20260923.json).
+
 ## Actuele dashboardafspraak
 
-Het compacte projectoverzicht staat live op http://localhost:44712/: vier korte kaarten en negen uitklapbare statusregels. Bouw en negen bestaande statuscontroles geslaagd, onafhankelijk review GO; live smalle en desktopweergave gecontroleerd. Dit is uitsluitend een dashboardoplevering. Spraakwerk is de volgende bouwtaak, nog niet hervat bij deze registratie. [Bewijs](evidence/product/dashboard-compact-rows-20260923.json).
+Het compacte projectoverzicht staat live op http://localhost:44712/: vier korte kaarten en negen uitklapbare statusregels. Bouw en negen bestaande statuscontroles geslaagd, onafhankelijk review GO; live smalle en desktopweergave gecontroleerd. Dit is uitsluitend een dashboardoplevering. Daarna is de webspraakpresentatie opgeleverd; de actuele volgende stap staat hierboven. [Bewijs](evidence/product/dashboard-compact-rows-20260923.json).
 
 De coördinator werkt de bestaande JSON-werkkaart bij bij taakstart, taakwissel, blokkade en oplevering, vóór de bijbehorende voortgangsmelding. Alleen een inhoudelijke controle vernieuwt `deliveryOverview.reviewedAt`; pollen doet dit niet. Bij afronding zonder actieve uitvoering vermeldt de kaart dat expliciet. Acceptaties blijven behouden.
 
@@ -31,7 +33,7 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Eerstvolgende handeling:** de bestaande snelle hoorbare ontvangst en taakresultaat-terugmelding via spraak verbinden met de gezamenlijke route. Website-doorpraten is nu echt bewezen; snelheid, Telegram en fysieke Voice PE blijven open.
+**Eerstvolgende handeling:** de reeds gebouwde huishoudelijke taakresultaatkoppeling gecontroleerd aansluiten en installeren. Live speakerdienst bevat die nog niet; gewone Voice PE-firmware behouden.
 
 **Geheugenfout hersteld en doorpraten live bewezen (23 september):** nieuwe proef gaf eerst HTTP503 vóór modelaanroep: één geheugenkandidaat zonder persoonsmetadata blokkeerde gekoppeld privégeheugen. Alleen zulke onbewezen kandidaten worden nu uitgesloten met geregistreerde reden; verkeerde persoon/publiek blijft geweigerd. Vijftien verpakte tests, onafhankelijke review en echte recall met vijf geldige/één uitgesloten herinnering geslaagd. Geïnstalleerd, bronbytes gecontroleerd, kern/werker gezond, terugweg vastgelegd. Na gewijzigde oorzaak dezelfde webproef: ontvangst12,585 s; daarna Zeven in4,202 s terwijl worker zowel ervoor als erna `call_started` was. Resultaat daarna opgeslagen als succeeded; worker303 input/373 output, één modelantwoord, nul tools. Geen snelheids- of fysieke kanaalacceptatieclaim. [Bewijs](evidence/product/private-memory-source-and-running-work-20260923.json).
 

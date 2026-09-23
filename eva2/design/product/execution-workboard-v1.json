@@ -1000,8 +1000,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T13:19:46.332515+00:00",
+        "checkedAt": "2026-09-23T13:25:28.454542+00:00",
         "deliveries": [
+          {
+            "title": "Webspraak leest taakresultaten als gewone tekst",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Bekende gestructureerde resultaten gaan als samenvatting en punten naar de spraakmotor. Resultaatcontrole en onderbreekbaarheid blijven behouden; dienst gereed.",
+            "remaining": "Nog geen luisteracceptatie of snelheidsverbetering. De huishoudelijke speakerdienst mist nog de al gebouwde terugmeldkoppeling.",
+            "source": "eva2/evidence/product/readable-voice-return-20260923.json"
+          },
           {
             "title": "Projectoverzicht ingekort",
             "date": "23 september",
@@ -1252,15 +1260,15 @@
           }
         ],
         "now": {
-          "title": "Spraakroute: ontvangst en taakresultaat",
-          "state": "Volgende bouwtaak · nog niet hervat",
-          "detail": "Dashboardwijziging afgerond. Hierna hervat de coördinator de controle van de bestaande spraakkoppelingen; er wordt nu geen actieve spraakbouw of extra uitvoerder geclaimd.",
-          "doneWhen": "Snelle hoorbare ontvangst en taakresultaat via de bestaande gezamenlijke route; fysieke Voice PE-acceptatie blijft afzonderlijk."
+          "title": "Webspraak-terugmelding geïnstalleerd",
+          "state": "Technisch afgerond · luisteren nog open",
+          "detail": "18 broncontroles, 14 verpakte controles en onafhankelijke review geslaagd. Alleen presentatie op de bestaande webspraakimage aangepast; Voice PE-firmware ongewijzigd.",
+          "doneWhen": "Technische installatie gereed; hoorbare ervaring nog door eigenaar te beoordelen."
         },
         "next": {
-          "title": "Ontvangst en terugmelding via de spraakroute",
-          "state": "Vervolg binnen stap 1",
-          "detail": "De bestaande snelle hoorbare ontvangst behouden en aan de gezamenlijke taakroute koppelen; fysieke Voice PE-proef blijft afzonderlijk nodig."
+          "title": "Gebouwde huishoudkoppeling installeren",
+          "state": "Volgende bouwtaak · nog niet gestart",
+          "detail": "De draaiende speakerdienst mist de huishoudelijke taakresultaatroute die wel in de bron bestaat. Controleer bijbehorende sessiebedrading en installeer als samenhangend geheel; gewone Voice PE blijft behouden."
         },
         "ownerAction": {
           "title": "Voice PE: beschikbaarheid doorgeven",
@@ -1272,7 +1280,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T13:19:46.332515+00:00"
+        "reviewedAt": "2026-09-23T13:25:28.454542+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11041,7 +11049,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "De bestaande snelle hoorbare ontvangst behouden en aan de gezamenlijke taakroute koppelen; fysieke Voice PE-proef blijft afzonderlijk nodig.",
+      "nextAction": "De draaiende speakerdienst mist de huishoudelijke taakresultaatroute die wel in de bron bestaat. Controleer bijbehorende sessiebedrading en installeer als samenhangend geheel; gewone Voice PE blijft behouden.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
