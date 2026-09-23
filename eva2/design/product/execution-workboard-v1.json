@@ -1016,7 +1016,7 @@
             "date": "23 september",
             "state": "installed",
             "result": "Eerdere en zichtbare vervolgpogingen zijn gekoppeld. Tijdstippen en gemeten model-, tool- en tokengebruik per poging worden getoond.",
-            "remaining": "Gebruiksproef later. Afsluitende livecontrole en centrale installatiepointer nog open na beleidsblokkade. Geen algemene meerdaagse projectafronding.",
+            "remaining": "Gebruiksproef later. Nieuwe bundel live en kern gezond. Centrale installatiepointer nog open na beleidsblokkade; geen algemene meerdaagse projectafronding.",
             "source": "Git 62fd1843; stage /var/lib/eva2/work-continuity-20260923"
           },
           {
@@ -1399,7 +1399,7 @@
         "now": {
           "title": "Hervatte opdrachten met eerdere pogingen verbinden",
           "state": "Geïnstalleerd · slotregistratie deels geblokkeerd",
-          "detail": "Taakdetail toont eerdere en zichtbare vervolgpogingen, tijdstippen en gemeten verbruik. Compose start afgerond; afsluitende livecontrole en centrale installatiepointer nog niet bijgewerkt door beleidsblokkade.",
+          "detail": "Taakdetail toont eerdere en zichtbare vervolgpogingen, tijdstippen en gemeten verbruik. Nieuwe webbundel wordt geserveerd; kern draait gezond. Alleen de centrale installatiepointer blijft nog oud na de beleidsblokkade.",
           "doneWhen": "Pogingketen en gemeten verbruik in geïnstalleerd takenbord; gebruikstest later."
         },
         "next": {
@@ -1419,7 +1419,7 @@
           "expected": "Dezelfde opgeslagen taken als in Eva’s gesprek, met gerichte bediening per opdracht. Dit is gebruiksinformatie; geen nieuwe verplichte proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T20:30:23.384462+00:00"
+        "reviewedAt": "2026-09-23T20:33:52.671179+00:00"
       }
     },
     "pendingTechnicalReview": {
