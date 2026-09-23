@@ -268,8 +268,22 @@ export default function OwnerWork() {
       <h3>Samenhangende opdrachten</h3>
       <p>{related.jobs.length} opgeslagen taken en pogingen · wordt elke vijf seconden bijgewerkt.</p>
       <p>{Object.entries(related.counts || {}).map(([state, count]) => `${labels[state] || state}: ${count}`).join(' · ')}</p>
-      <p>Dit toont oorspronkelijke opdrachten, hervattingen en vervolgonderzoek. Los geplande afspraken staan hierboven; dit is geen voltooiingspercentage van een project.</p>
+      <p>Dit toont oorspronkelijke opdrachten, hervattingen, vervolgonderzoek en gekoppelde planning. Losstaande afspraken staan hierboven; dit is geen voltooiingspercentage van een project.</p>
       {related.truncated && <p role="status">Dit overzicht is onvolledig: een grens is bereikt of een eerdere opdracht is niet meer beschikbaar.</p>}
+      {Array.isArray(related.planning?.schedules) && related.planning.schedules.length > 0 && <section aria-label="Gekoppelde vervolgstappen">
+        <h4>Geplande stappen in dit geheel</h4>
+        {related.planning.schedules.map(item => <article key={item.schedule_id}>
+          <strong>{item.task || 'Eerdere opdracht hervatten'}</strong>
+          <p>{timestamp(item.run_at)} · {({ scheduled: 'Wacht op startmoment of voorganger', launching: 'Wordt ingepland',
+            dispatched: 'Gestart', cancelled: 'Geannuleerd', blocked: 'Geblokkeerd',
+            stop_pending: 'Stoppen wordt verwerkt', chain_stopped: 'Gestopt' })[item.state] || 'Onbekend'}</p>
+          {item.dependency?.state === 'waiting' && <p>Wacht op het resultaat van de vorige stap.</p>}
+          {item.block_reason && <p role="status">{item.block_reason}</p>}
+          {item.after_work_id && <button disabled={busy} onClick={() => act('get', item.after_work_id)}>Voorganger openen</button>}
+          {item.work_id && <button disabled={busy} onClick={() => act('get', item.work_id)}>Gestarte opdracht openen</button>}
+          {item.can_cancel && <button disabled={busy} onClick={() => act('schedule_cancel_chain', item.schedule_id)}>Stop deze stap en vervolg</button>}
+        </article>)}
+      </section>}
       <ol style={{ maxHeight: 380, overflowY: 'auto' }}>
         {related.jobs.map(job => <li key={job.work_id}>
           <strong>{job.title || job.task_preview}</strong> · {labels[job.state]}

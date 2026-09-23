@@ -245,11 +245,34 @@ class DelegatedWorkOwnerService:
                 raise ValueError("related work requires one work ID")
             self.validate_authority(turn)
             from eva.application.related_work import related_work
-            return {**response, **related_work(work_id,
+            scheduled = ScheduledOwnerWork(self)
+            planning_limited = False
+            def connected(parents):
+                nonlocal planning_limited
+                rows = {row.spec.work_id: row for row in
+                        self.store.list_owned(**self._owner, parent_ids=parents, limit=65)}
+                planning = scheduled.related(parents)
+                planning_limited = planning_limited or planning["truncated"]
+                for identifier in planning["linked_work_ids"]:
+                    if identifier in parents or identifier in rows:
+                        continue
+                    if len(rows) >= 65:
+                        planning_limited = True
+                        break
+                    try:
+                        rows[identifier] = self.store.load(identifier, **self._owner)
+                    except DelegatedWorkNotFound:
+                        planning_limited = True
+                return tuple(rows.values())
+            result = related_work(work_id,
                 load=lambda identifier: self.store.load(identifier, **self._owner),
-                children=lambda parents: self.store.list_owned(**self._owner, parent_ids=parents, limit=65),
+                children=connected,
                 render=lambda row: self._view(row, include_result=False, turn=turn),
-                missing=DelegatedWorkNotFound)}
+                missing=DelegatedWorkNotFound)
+            planning = scheduled.related(tuple(job["work_id"] for job in result["jobs"]))
+            planning.pop("linked_work_ids")
+            result["truncated"] = result["truncated"] or planning_limited or planning["truncated"]
+            return {**response, **result, "planning": planning}
         if operation == "list":
             if task is not None or work_id is not None:
                 raise ValueError("list does not accept task or work id")

@@ -30,7 +30,6 @@ def related_work(work_id, *, load, children, render, missing):
         for row in rows:
             identifier = row.spec.work_id
             if identifier in found:
-                limited = True
                 continue
             if len(found) >= 64:
                 limited = True
@@ -58,5 +57,5 @@ def related_work(work_id, *, load, children, render, missing):
                                   if row.state not in {"succeeded", "verified", "stopped"}],
             "scope": "stored_parent_links",
             "guidance": "Dit overzicht telt opgeslagen gekoppelde taken, geen productvoltooiing. "
-                        "Niet-gekoppelde afspraken staan hier niet bij. "
+                        "Planning is alleen inbegrepen als die afzonderlijk in dit antwoord staat. "
                         "Bij truncated ontbreken mogelijk voorgangers of vervolgstappen."}

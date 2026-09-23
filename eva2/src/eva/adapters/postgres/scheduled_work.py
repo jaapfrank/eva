@@ -200,6 +200,55 @@ class ScheduledOwnerWork:
             return {"schedules": [self._view(conn, row) for row in rows[:20]],
                     "truncated": len(rows) > 20}
 
+    def related(self, work_ids):
+        """Read connected schedule dependencies without launching or changing work."""
+        if not isinstance(work_ids, tuple) or not 1 <= len(work_ids) <= 64:
+            raise ValueError("related planning requires 1..64 work IDs")
+        if any(not isinstance(value, str) or not 1 <= len(value) <= 240 for value in work_ids):
+            raise ValueError("related planning work ID is invalid")
+        selected, works, predecessors = {}, set(work_ids), set()
+        limited = False
+        c, e = operational_checkpoints.c, operational_events.c
+        data = e.payload["data"]
+        with self.engine.begin() as conn:
+            self._authorize(conn)
+            for _ in range(16):
+                rows = conn.execute(self._rows().join(operational_events, sa.and_(
+                    e.tenant_id == c.tenant_id, e.installation_id == c.installation_id,
+                    e.thread_id == c.thread_id, e.sequence == 1)).where(
+                    c.thread_id.not_in(tuple(selected)),
+                    sa.or_(c.operation_id.in_(tuple(works)),
+                           data["after_work_id"].astext.in_(tuple(works)),
+                           data["work_id"].astext.in_(tuple(works)),
+                           data["after_schedule_id"].astext.in_(tuple(selected)),
+                           c.thread_id.in_(tuple(predecessors))),
+                ).order_by(c.updated_at, c.thread_id).limit(65)).all()
+                if not rows:
+                    break
+                for row in rows:
+                    if len(selected) >= 64:
+                        limited = True
+                        break
+                    request = self._request(conn, row.thread_id)
+                    selected[row.thread_id] = row
+                    for identifier in (row.operation_id, request.get("after_work_id"), request.get("work_id")):
+                        if identifier is not None:
+                            if len(works) < 128 or identifier in works:
+                                works.add(identifier)
+                            else:
+                                limited = True
+                    if request.get("after_schedule_id"):
+                        predecessors.add(request["after_schedule_id"])
+                if len(selected) >= 64:
+                    limited = True
+                    break
+            else:
+                limited = True
+            missing = predecessors - set(selected)
+            return {"schedules": [self._view(conn, row) for row in selected.values()],
+                    "linked_work_ids": sorted(works), "truncated": limited or bool(missing),
+                    "missing_predecessors": bool(missing)}
+
     def cancel(self, schedule_id):
         if not isinstance(schedule_id, str) or not schedule_id.startswith(self.prefix):
             raise ValueError("schedule is outside the owner scope")
