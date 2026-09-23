@@ -1,0 +1,31 @@
+{
+  "contract": "EvaBackgroundBrowserContextInstallation/v1",
+  "checked_at": "2026-09-23T21:00:04.556134+00:00",
+  "source_commit": "dec5426c",
+  "image": "eva2-background-browser-context:20260923",
+  "stage": "/home/administrator/project/.eva2-artifacts/background-browser-context-20260923",
+  "checks": {
+    "syntax": "passed",
+    "packaged_imports": "passed",
+    "core_health": "healthy",
+    "worker_health": "healthy",
+    "worker_browser_read": {
+      "state": "owner",
+      "owner_control": true,
+      "context_present": true
+    },
+    "installation_registration": "updated"
+  },
+  "scope": "Read-only browser availability before background model calls, through the existing fixed controller and credential. No tab contents, lifecycle commands or new browser execution route.",
+  "functional_model_trials": "deferred_by_owner",
+  "independent_review": "deferred_by_owner",
+  "owner_acceptance": false,
+  "model_calls": 0,
+  "credit_cost": "unknown",
+  "limits": [
+    "The status read proves connectivity, not model adherence or successful browser work.",
+    "Unavailable status adds at most the configured one-second HTTP timeout per model call.",
+    "Private digital background work only; ordinary foreground greetings do not make this read."
+  ],
+  "rollback": "Retained baseline.compose.private.json and eva2-work-plan-continuation:20260923 image"
+}
