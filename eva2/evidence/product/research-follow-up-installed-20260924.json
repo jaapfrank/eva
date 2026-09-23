@@ -1,0 +1,37 @@
+{
+  "contract": "EvaFeatureInstallation/v1",
+  "feature": "linked_research_follow_up",
+  "recorded_at": "2026-09-23T22:41:26.031842+00:00",
+  "source_commit": "c7457048",
+  "image": "eva2-research-follow-up:20260924",
+  "installed": true,
+  "checks": [
+    "Changed Python syntax",
+    "Existing changed source files matched installed baseline",
+    "Dashboard build and materialized assets",
+    "Packaged imports and private/household research descriptor construction without network",
+    "Zero active stored tasks before restart",
+    "Core and delegated worker healthy",
+    "Owner task API HTTP 200; fifteen existing tasks visible",
+    "Active compose and asset metadata updated"
+  ],
+  "behavior": [
+    "Existing start_background_research action accepts optional prior_work_id",
+    "Only retained accessible research attempts that are no longer active may be predecessors",
+    "Private service checks owner binding; household service checks exact originating session",
+    "A fresh public research projection is required; previous private text is not automatically sent to the provider",
+    "New task keeps its predecessor reference; original result remains unchanged",
+    "Task board distinguishes follow-up research from a resumed attempt"
+  ],
+  "limits": [
+    "Actual model selection, result linkage and research trial deferred",
+    "No automatic retry loop and no increased per-task grant",
+    "A follow-up is a new bounded task and may consume model budget",
+    "A parent link does not prove that every missing fact has been verified",
+    "Older results remain subject to their original retention period"
+  ],
+  "model_calls": 0,
+  "test_messages_sent": 0,
+  "credit_cost": "unknown",
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/research-follow-up-20260924/baseline.compose.private.json"
+}
