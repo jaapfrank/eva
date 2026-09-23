@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     from eva.adapters.postgres.delegated_work_delivery import PostgresDelegatedWorkDeliveryStore
 
 
-def result_messages(work_id: str, output: str) -> tuple[str, ...]:
+def result_messages(work_id: str, output: str, outcome: str = "completed") -> tuple[str, ...]:
     """Keep the complete saved result, including sources, within transport bounds."""
     if not output.strip() or len(output.encode('utf-8')) > 65_536:
         raise ValueError('saved result is outside its contract')
@@ -31,7 +31,7 @@ def result_messages(work_id: str, output: str) -> tuple[str, ...]:
     if part:
         pieces.append(''.join(part))
     return tuple(
-        f'{"Documentproject afgerond" if work_id.startswith("document-task:") else "Onderzoek afgerond"} · {work_id}\nDeel {index}/{len(pieces)}\n\n{piece}'
+        f'{"Opdracht niet afgerond" if outcome in {"failed", "needs_help", "ambiguous"} else "Documentproject afgerond" if work_id.startswith("document-task:") else "Opdracht afgerond"} · {work_id}\nDeel {index}/{len(pieces)}\n\n{piece}'
         for index, piece in enumerate(pieces, 1)
     )
 
@@ -53,7 +53,7 @@ class DelegatedWorkDeliveryWorker:
             result = self._store.authorize_delivery(claim.work_id, **authority)
             if result is None or result.operation_id != claim.operation_id:
                 raise RuntimeError('delivery authorization changed')
-            messages = result_messages(claim.work_id, result.output)
+            messages = result_messages(claim.work_id, result.output, result.outcome)
             for message in messages:
                 # Every part rechecks authority; a changed pairing cannot receive
                 # the remainder of a result belonging to the previous person.

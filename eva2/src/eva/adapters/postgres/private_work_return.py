@@ -3,6 +3,9 @@
 Work specs already bind their episode to the originating private conversation.
 Reuse that binding: no second admission record, inferred destination, or task loop.
 """
+from eva.application.work_failure_notice import delivery_outcome, WorkFailureNotice
+from eva.adapters.postgres.work_failure_notice import failure_notice_cutoff, deliverable_states
+
 from datetime import timedelta
 from uuid import NAMESPACE_URL, uuid5
 
@@ -113,13 +116,15 @@ class PrivateWorkReturnStore:
                     checkpoints.c.tenant_id == runs.c.tenant_id,
                     checkpoints.c.installation_id == runs.c.installation_id,
                     checkpoints.c.thread_id == delivery_prefix + runs.c.work_id))
+                cutoff = failure_notice_cutoff(connection, self.work, now)
                 query = sa.select(runs).where(
                     runs.c.tenant_id == self.work.scope.tenant_id,
                     runs.c.installation_id == self.work.scope.installation_id,
                     runs.c.owner_principal_id == self.service.owner_principal_id,
                     runs.c.principal_binding_id == self.service.principal_binding_id,
                     runs.c.spec_payload['episode_id'].astext == route['episode'],
-                    runs.c.state.in_(('succeeded', 'verified')),
+                    deliverable_states(runs, cutoff),
+                    runs.c.stop_requested_at.is_(None),
                     runs.c.retention_until > now, ~claimed)
                 if voice:
                     query = query.where(runs.c.created_at >= datetime.fromisoformat(opened['opened_at']))
@@ -148,9 +153,9 @@ class PrivateWorkReturnStore:
                         or work.spec.principal_binding_id != route['binding']
                         or work.spec.episode_id != route['episode']
                         or work.retention_until <= now or work.stop_requested_at is not None
-                        or work.state not in {'succeeded', 'verified'} or work.result is None):
+                        or delivery_outcome(work) is None):
                     raise ValueError("private result unavailable")
-                result, returned_id, generation = work.result, work.spec.work_id, work.spec.generation
+                result, returned_id, generation = delivery_outcome(work), work.spec.work_id, work.spec.generation
             identity = canonical_sha256({'route': route, 'work_id': returned_id,
                 'generation': generation, 'result': canonical_sha256(result.to_payload())})
             thread = delivery_prefix + returned_id
@@ -190,7 +195,8 @@ class PrivateWorkReturnStore:
                 'title': document.title if document is not None else work.title,
                 'output': result.output, 'output_sha256': result.output_sha256,
                 'result_sha256': canonical_sha256(result.to_payload()),
-                'completed_at': result.completed_at}}
+                'completed_at': result.completed_at,
+                'outcome': result.state if isinstance(result, WorkFailureNotice) else 'completed'}}
 
     def _document(self, work_id, route):
         result = self.documents.load(work_id)

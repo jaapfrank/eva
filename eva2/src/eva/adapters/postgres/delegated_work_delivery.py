@@ -7,6 +7,8 @@ from uuid import UUID, uuid4
 import re
 
 import sqlalchemy as sa
+from eva.application.work_failure_notice import delivery_outcome, WorkFailureNotice
+from eva.adapters.postgres.work_failure_notice import failure_notice_cutoff, deliverable_states
 
 from eva.adapters.postgres.operational_timeline import (
     TimelineScope, insert_initial_timeline_thread, operational_events,
@@ -126,10 +128,12 @@ class PostgresDelegatedWorkDeliveryStore:
             return self._document_authorized(work_id, owner_principal_id, principal_binding_id)
         work, destination = self._current(work_id, owner_principal_id=owner_principal_id,
                                           principal_binding_id=principal_binding_id)
-        if destination is None or work.state not in {"succeeded", "verified"} or work.result is None:
+        result = delivery_outcome(work)
+        if destination is None or result is None:
             return None
         return AuthorizedWorkDelivery(destination, work.spec.work_id, work.spec.sha256,
-                                      canonical_sha256(work.result.to_payload()), work.result.output)
+            canonical_sha256(result.to_payload()), result.output,
+            result.state if isinstance(result, WorkFailureNotice) else "completed")
 
 
     @staticmethod
@@ -145,6 +149,7 @@ class PostgresDelegatedWorkDeliveryStore:
         for _ in range(16):
             with self._work._engine.begin() as connection:
                 self._work._scope(connection)
+                cutoff = failure_notice_cutoff(connection, self._work, now)
                 joined = delegated_work_runs.join(events, sa.and_(
                     events.c.tenant_id == delegated_work_runs.c.tenant_id,
                     events.c.installation_id == delegated_work_runs.c.installation_id,
@@ -159,7 +164,8 @@ class PostgresDelegatedWorkDeliveryStore:
                 row = connection.execute(sa.select(delegated_work_runs).select_from(joined).where(
                     delegated_work_runs.c.tenant_id == self._work.scope.tenant_id,
                     delegated_work_runs.c.installation_id == self._work.scope.installation_id,
-                    delegated_work_runs.c.state.in_(("succeeded", "verified")),
+                    deliverable_states(delegated_work_runs, cutoff),
+                    delegated_work_runs.c.stop_requested_at.is_(None),
                     delegated_work_runs.c.retention_until > now,
                     sa.or_(checkpoints.c.thread_id.is_(None), sa.and_(
                         checkpoints.c.phase == "delivery_claimed", checkpoints.c.deadline <= now)),
@@ -169,7 +175,8 @@ class PostgresDelegatedWorkDeliveryStore:
                     return self._claim_document_next(now=now, lease_seconds=lease_seconds)
                 work = self._work._validated(connection, row)
                 destination = _read(connection, self._work.scope, work.spec)
-                if destination is None or work.result is None:
+                result = delivery_outcome(work)
+                if destination is None or result is None:
                     raise ValueError("completion destination or result disappeared")
                 thread = self._delivery_thread(work.spec.work_id)
                 state = connection.execute(sa.select(checkpoints).where(
@@ -187,7 +194,8 @@ class PostgresDelegatedWorkDeliveryStore:
                         occurred_at=now, data={"error_code": "claim_expired"})
                     continue
                 authorized = AuthorizedWorkDelivery(destination, work.spec.work_id, work.spec.sha256,
-                                                   canonical_sha256(work.result.to_payload()), work.result.output)
+                    canonical_sha256(result.to_payload()), result.output,
+                    result.state if isinstance(result, WorkFailureNotice) else "completed")
                 claim = PrivateWorkDeliveryClaim(work.spec.work_id, UUID(work.spec.owner_principal_id),
                     UUID(work.spec.principal_binding_id), str(uuid4()), authorized.operation_id,
                     now + timedelta(seconds=lease_seconds))

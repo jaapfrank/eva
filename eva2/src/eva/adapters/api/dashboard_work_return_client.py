@@ -5,6 +5,9 @@ DASHBOARD_WORK_RETURN_CLIENT_JS = r"""
   'use strict';
   function workReturnHeading(result) {
     const title=typeof result.title==='string'?result.title.trim().slice(0,240):'';
+    if(['failed','needs_help','ambiguous'].includes(result.outcome)) {
+      return title?'Niet afgerond: '+title:'Je achtergrondopdracht heeft aandacht nodig';
+    }
     return title?'Afgerond: '+title:'Je achtergrondopdracht is afgerond';
   }
   function readableWorkResult(output) {

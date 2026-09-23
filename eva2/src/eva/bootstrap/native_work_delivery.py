@@ -8,6 +8,7 @@ import sqlalchemy as sa
 import httpx2 as httpx
 from eva.adapters.postgres.operational_timeline import operational_events, operational_checkpoints
 from eva.application.work_result_presentation import readable_work_result
+from eva.application.work_failure_notice import FAILURE_STATES
 
 _LOG = logging.getLogger(__name__)
 
@@ -74,7 +75,7 @@ class NativeWorkDelivery:
                     if len(text) > 4000:
                         text = text[:4000].rsplit(" ", 1)[0] + (
                             " Dit was het eerste deel. Vraag me naar het volledige resultaat.")
-                    message = "Over je opdracht " + work.title + ": " + text
+                    message = text if work.state in FAILURE_STATES else "Over je opdracht " + work.title + ": " + text
                     authorized = service.result_delivery(turn, "authorize", work_id=claim["work_id"],
                         result_sha256=claim["result_sha256"])
                     if authorized is None:

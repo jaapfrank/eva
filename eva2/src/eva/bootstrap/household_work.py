@@ -5,6 +5,9 @@ model arguments reach this facade. The sponsor never becomes the voice actor.
 """
 
 from datetime import timedelta
+from eva.application.work_failure_notice import delivery_outcome
+from eva.adapters.postgres.work_failure_notice import failure_notice_cutoff, deliverable_states
+
 import hmac
 from uuid import NAMESPACE_URL, UUID, uuid5
 import sqlalchemy as sa
@@ -361,6 +364,7 @@ class HouseholdWorkService:
                     == runs.c.work_id,
                 )
             )
+            cutoff = failure_notice_cutoff(c, self.store, self.server.authority.clock())
             candidate = c.scalar(
                 sa.select(runs.c.work_id)
                 .where(
@@ -369,7 +373,7 @@ class HouseholdWorkService:
                     runs.c.spec_payload["audience"].astext == "household",
                     runs.c.spec_payload["origin"]["session_id"].astext
                     == self.binding["session_id"],
-                    runs.c.state.in_(["succeeded", "verified"]),
+                    deliverable_states(runs, cutoff),
                     runs.c.stop_requested_at.is_(None),
                     runs.c.retention_until > self.server.authority.clock(),
                     ~claimed,
@@ -389,16 +393,13 @@ class HouseholdWorkService:
         """One durable claim; uncertain/interrupted output is never replayed."""
         self.validate_authority(turn)
         work = self._load(work_id, self.origin(turn))
-        if (
-            work.state not in {"succeeded", "verified"}
-            or work.result is None
-            or work.stop_requested_at is not None
-        ):
+        result = delivery_outcome(work)
+        if result is None:
             return None
         binding = dict(
             work_id=work_id,
             generation=work.spec.generation,
-            result_sha256=work.result.output_sha256,
+            result_sha256=result.output_sha256,
             origin_message_id=work.spec.origin.message_id,
             session_generation=work.spec.origin.session_generation,
             destination_sha256=work.spec.destination_sha256,
@@ -440,8 +441,8 @@ class HouseholdWorkService:
                     status="active",
                     data=binding,
                 )
-                return {**binding, "result": work.result.output}
-            if row is None or result_sha256 != work.result.output_sha256:
+                return {**binding, "result": result.output}
+            if row is None or result_sha256 != result.output_sha256:
                 raise ValueError("household result claim absent or stale")
             first = (
                 c.execute(

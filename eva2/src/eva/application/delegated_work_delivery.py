@@ -95,6 +95,7 @@ class AuthorizedWorkDelivery:
     spec_sha256: str
     result_sha256: str
     output: str
+    outcome: str = "completed"
 
     @property
     def operation_id(self) -> str:
