@@ -9,6 +9,7 @@ import hashlib
 from eva.adapters.connectors.mcp_gateway import McpGatewayUnavailable
 from eva.adapters.postgres.background_model_journal import BackgroundModelJournal
 from eva.adapters.postgres.background_work_progress import BackgroundWorkProgress, load_work_progress
+from eva.adapters.postgres.component_improvement_actions import ComponentImprovementActions, DRAFT
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.delegated_work import DelegatedWorkCall, DelegatedWorkReleaseSelector
 from eva.adapters.postgres.operational_timeline import external_timeline_scope
@@ -45,6 +46,13 @@ class _TaskModel:
             "voor hervatten. Besteed geen plan-call aan een eenvoudige opdracht. Een opgeslagen "
             "plan is nog geen resultaat; voer het werk daadwerkelijk uit. Bij een blokkade "
             "bewaar je de stand en benoem je wat nodig is. Bestaande budgetten blijven gelden. ",
+            "Bij een gevraagde verbetering van je eigen code: lees de echte component met "
+            "read_own_component_source, onderzoek de oorzaak en relevante bestaande oplossingen, "
+            "en maak alleen bij een concrete tekortkoming een draft_own_component_improvement. "
+            "Bewaar de kandidaat, patch en meetplan met save_workspace_document als afzonderlijk "
+            "voorstel. Wijzig of installeer geen draaiende component via andere tools. Beschrijf "
+            "verwachte winst als hypothese zolang er geen meting is; tekstcontroles bewijzen "
+            "geen algemene functionele kwaliteit. Geef de echte vindplaats en beperkingen terug.",
             "Bij een opdracht om een vaardigheid te leren: raadpleeg de relevante documentatie "
             "met beschikbare tools en pas de aanpak toe binnen de opdracht en het bestaande "
             "mandaat. Bewaar een bruikbare werkwijze met save_workspace_document en registreer "
@@ -136,6 +144,10 @@ class BackgroundConnectorActions:
 
 def _has_completed_tool_evidence(receipts):
     """Discovery is useful context, but cannot alone prove completed work."""
+    if any(receipt.call.name == DRAFT for receipt in receipts) and not any(
+            receipt.call.name == "save_workspace_document" and receipt.output.get("status") == "verified"
+            for receipt in receipts):
+        return False
     completed = False
     for receipt in receipts:
         output = receipt.output
@@ -245,7 +257,9 @@ class DelegatedDigitalRunner:
             journal = self.journal_factory(source, spec)
             progress = BackgroundWorkProgress(self.store._engine, spec, source, authorize,
                                               dispatch_guard, self.clock)
-            actions = BackgroundConnectorActions((*self.connector_tools, progress), spec.grant.capability_ids,
+            improvements = ComponentImprovementActions(self.store._engine, spec, source, authorize,
+                                                        dispatch_guard, self.clock)
+            actions = BackgroundConnectorActions((*self.connector_tools, progress, improvements), spec.grant.capability_ids,
                                                   authorize, spec.grant.maximum_tool_calls)
             task_model = _TaskModel(self.model, spec.task, self.browser_context)
             conversation = LivingConversation(self.memory, task_model, self.identity, actions)

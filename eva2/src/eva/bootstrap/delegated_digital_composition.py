@@ -9,6 +9,7 @@ from eva.bootstrap.delegated_digital_profile import DelegatedDigitalProfile
 from eva.bootstrap.background_browser_context import configured_browser_client, BackgroundBrowserContext
 from eva.contracts.canonical_json import canonical_sha256
 from eva.adapters.postgres.background_work_progress import progress_descriptor
+from eva.adapters.postgres.component_improvement_actions import component_descriptors
 
 _CONNECTORS = frozenset({"connect_service", "discover_connector_tools",
                         "manage_connected_services", "use_connector_tool"})
@@ -22,6 +23,8 @@ _EXECUTION_SOURCES = (
     "bootstrap/background_browser_context.py",
     "adapters/connectors/browser_session.py",
     "adapters/postgres/background_work_progress.py",
+    "adapters/postgres/component_improvement_actions.py",
+    "application/component_improvements.py",
     "bootstrap/private_conversation_resources.py",
     "adapters/model/pydantic_conversation.py",
     "providers/mcp_autonomy.py",
@@ -46,7 +49,7 @@ def digital_tools(bundle):
     names = {tool.name for tool in descriptors}
     if not names or names != {name for tool in routes for name in tool.action_names if name in _CONNECTORS | _PROCEDURES}:
         raise ValueError("digital connector descriptions and routes differ")
-    return (*descriptors, progress_descriptor()), routes
+    return (*descriptors, progress_descriptor(), *component_descriptors()), routes
 
 
 def _configuration_value(value):
