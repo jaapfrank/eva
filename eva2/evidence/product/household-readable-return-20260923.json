@@ -1,0 +1,21 @@
+{
+  "checkedAt": "2026-09-23T13:29:42.104733+00:00",
+  "sourceCommit": "d322f262",
+  "image": "sha256:bfc2ad2cdbcdb934ef0051da2aa1ebdb8bda211f19c76c6459e12078005d943b",
+  "scope": "Readable saved work output on existing household speaker service",
+  "installed": true,
+  "correction": "Previous missing-household-integration finding compared unused /opt/eva code. Actual import /app/eva already contained household work return and session wiring; only readable presentation was missing.",
+  "checks": [
+    "16 packaged cases passed initially; two failed because test mount omitted Python package path",
+    "The two import failures passed after correcting test mount, no product change",
+    "Independent deployment review GO: only two source files, compose only image changed",
+    "Installed source bytes match source",
+    "Actual imported module /app/eva/voice_service/agent.py",
+    "Both configured household ready checks true, household_work_returns true",
+    "Service running, restartCount zero"
+  ],
+  "modelCalls": 0,
+  "physicalAcceptance": false,
+  "firmwareChanged": false,
+  "rollback": "docker compose --project-name eva2-household-speaker -f /var/lib/eva2/household-return-install-20260923/baseline.compose.private.json up -d --no-deps speaker"
+}

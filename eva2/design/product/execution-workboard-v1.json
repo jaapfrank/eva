@@ -1000,14 +1000,22 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T13:25:28.454542+00:00",
+        "checkedAt": "2026-09-23T13:29:42.104733+00:00",
         "deliveries": [
+          {
+            "title": "Speakerdienst: leesbare taakresultaten",
+            "date": "23 september",
+            "state": "installed",
+            "result": "De bestaande huishoudelijke terugmeldroute gebruikt dezelfde leesbare tekstpresentatie als webspraak. Werkelijk geladen code gecontroleerd; beide huishoudroutes gereed.",
+            "remaining": "Fysieke luister- en wakewordproef blijft open. Correctie: de koppeling was al geïnstalleerd; eerdere vergelijking keek naar ongebruikte code. Geen firmwarewijziging of snelheidsclaim.",
+            "source": "eva2/evidence/product/household-readable-return-20260923.json"
+          },
           {
             "title": "Webspraak leest taakresultaten als gewone tekst",
             "date": "23 september",
             "state": "installed",
             "result": "Bekende gestructureerde resultaten gaan als samenvatting en punten naar de spraakmotor. Resultaatcontrole en onderbreekbaarheid blijven behouden; dienst gereed.",
-            "remaining": "Nog geen luisteracceptatie of snelheidsverbetering. De huishoudelijke speakerdienst mist nog de al gebouwde terugmeldkoppeling.",
+            "remaining": "Nog geen luisteracceptatie of snelheidsverbetering. Correctie: huishoudkoppeling was al geïnstalleerd; de leesbare presentatie is nu ook daar bijgewerkt.",
             "source": "eva2/evidence/product/readable-voice-return-20260923.json"
           },
           {
@@ -1260,15 +1268,15 @@
           }
         ],
         "now": {
-          "title": "Webspraak-terugmelding geïnstalleerd",
-          "state": "Technisch afgerond · luisteren nog open",
-          "detail": "18 broncontroles, 14 verpakte controles en onafhankelijke review geslaagd. Alleen presentatie op de bestaande webspraakimage aangepast; Voice PE-firmware ongewijzigd.",
-          "doneWhen": "Technische installatie gereed; hoorbare ervaring nog door eigenaar te beoordelen."
+          "title": "Speakerdienst technisch bijgewerkt",
+          "state": "Geïnstalleerd · fysieke proef open",
+          "detail": "Leesbare resultaten op webspraak en speakerdienst gelijkgetrokken. Geen nieuwe huishoudkoppeling gebouwd: die was al actief. De eerdere onjuiste melding is gecorrigeerd.",
+          "doneWhen": "Technisch afgerond; fysieke continue-spraakproef vereist aanwezigheid bij het apparaat."
         },
         "next": {
-          "title": "Gebouwde huishoudkoppeling installeren",
-          "state": "Volgende bouwtaak · nog niet gestart",
-          "detail": "De draaiende speakerdienst mist de huishoudelijke taakresultaatroute die wel in de bron bestaat. Controleer bijbehorende sessiebedrading en installeer als samenhangend geheel; gewone Voice PE blijft behouden."
+          "title": "Fysieke wakewordovergang vastleggen",
+          "state": "Eigenaar bij apparaat nodig",
+          "detail": "De huishoudelijke sessie- en resultaatkoppeling is al geïnstalleerd. Diagnose van de tijdelijke continue-spraakkandidaat vereist de echte wakewordovergang; gewone werkende firmware blijft staan."
         },
         "ownerAction": {
           "title": "Voice PE: beschikbaarheid doorgeven",
@@ -1280,7 +1288,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T13:25:28.454542+00:00"
+        "reviewedAt": "2026-09-23T13:29:42.104733+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11049,7 +11057,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "De draaiende speakerdienst mist de huishoudelijke taakresultaatroute die wel in de bron bestaat. Controleer bijbehorende sessiebedrading en installeer als samenhangend geheel; gewone Voice PE blijft behouden.",
+      "nextAction": "De huishoudelijke sessie- en resultaatkoppeling is al geïnstalleerd. Diagnose van de tijdelijke continue-spraakkandidaat vereist de echte wakewordovergang; gewone werkende firmware blijft staan.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
