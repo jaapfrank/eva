@@ -25,7 +25,9 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Eerstvolgende handeling:** De taakstatus corrigeren die alleen Telegramterugmelding beschrijft en daardoor de website onterecht als ongekoppeld toont. Daarna snelle ontvangst en gedeeld doorpraten verder afmaken.
+**Eerstvolgende handeling:** Gesprek tijdens achtergrondwerk over de gedeelde ingangen afronden. Website-taakuitvoering en terugmeldroute werken, maar volledige kanaalgelijkheid en snelle ontvangst blijven open. Geen herhaalde snelheidsproef zonder gewijzigde oorzaak.
+
+**Terugmeldstatus geïnstalleerd (23 september):** de bestaande privéroute van de website wordt correct benoemd, zonder aflevering te claimen. 17 gerichte verpakte tests, onafhankelijke broncontrole en live teruglezing geslaagd; kern en werker gezond. Geen modelcalls voor deze correctie. [Bewijs](evidence/product/private-return-presentation-installed-20260923.json).
 
 **Contactinvoer geïnstalleerd (23 september):** catalogusverkleining door 12 verpakte tests en onafhankelijke controle; kern en werker gezond. Echte opdracht correct afgemaakt. 7.751 invoertokens tegenover 8.001, maar 11,0 seconden ontvangst tegenover 10,3: **geen snelheidsverbetering bewezen**. Geen herhaalde identieke proef. [Bewijs](evidence/product/contact-catalog-installed-20260923.json).
 

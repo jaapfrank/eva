@@ -1000,8 +1000,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T12:12:23.767821+00:00",
+        "checkedAt": "2026-09-23T12:15:40.473669+00:00",
         "deliveries": [
+          {
+            "title": "Taakstatus benoemt terugmelding via de website",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Een afgeronde webopdracht meldt nu de bestaande privéroute, in plaats van onterecht “geen automatische terugmelding”. Live bij het echte taakresultaat gecontroleerd.",
+            "remaining": "Beschikbare terugmeldroute betekent nog niet dat jij het resultaat hebt ontvangen. Snelle ontvangst blijft open (laatste proef 11,0 seconden).",
+            "source": "eva2/evidence/product/private-return-presentation-installed-20260923.json"
+          },
           {
             "title": "Minder modelinvoer; ontvangst nog niet sneller",
             "date": "23 september · 14:09",
@@ -1180,15 +1188,15 @@
           }
         ],
         "now": {
-          "title": "Terugmelding van taken correct tonen",
-          "state": "Gerichte correctie in uitvoering",
-          "detail": "Het taakoverzicht zegt ten onrechte dat geen automatische terugmelding bestaat als alleen de Telegramkoppeling ontbreekt. De bestaande privéroute van de website werkt apart.",
-          "doneWhen": "Status benoemt de juiste terugmeldroute zonder verzonnen aflevering; gericht getest, beoordeeld en live gecontroleerd."
+          "title": "Gesprek tijdens werk afronden",
+          "state": "Volgende uitvoerbare productstap",
+          "detail": "Gesprek en taakresultaten moeten via alle ingangen samen werken. De website-taakproef slaagde, maar snel contact en de volledige kanaalproef zijn nog open.",
+          "doneWhen": "Tussenvraag, correctie en stoppen werken naast een lopende taak, met terugmelding bij de juiste opdracht. Bewijs per echte ingang blijft afzonderlijk."
         },
         "next": {
-          "title": "Doorpraten tijdens achtergrondwerk",
-          "state": "Volgende productuitkomst",
-          "detail": "Dezelfde gesprek-, correctie- en stoproute afmaken via website, Telegram, Home Assistant en Voice PE. De fysieke wakewordproef blijft apart open."
+          "title": "Persoonlijk gesprek later voortzetten",
+          "state": "Daarna · bestaand geheugen behouden",
+          "detail": "Dezelfde persoon kan een onderwerp later hervatten; gedeelde spraak mag geen privécontext van een ander gebruiken. Herkenning van de spreker blijft open."
         },
         "ownerAction": {
           "title": "Voice PE: beschikbaarheid doorgeven",
@@ -1200,7 +1208,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T12:12:23.767821+00:00"
+        "reviewedAt": "2026-09-23T12:15:40.473669+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -10969,7 +10977,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Route van taakresultaten correct tonen. Catalogusverkleining geïnstalleerd, taakproef geslaagd maar ontvangst niet sneller (11,0s). Snelle ontvangst en gedeeld doorpraten blijven open.",
+      "nextAction": "Gesprek tijdens achtergrondwerk over de gedeelde routes afronden. Website-taakuitvoering en juiste terugmeldstatus live; 11,0s ontvangst blijft te traag. Geen identieke snelheidsproef zonder nieuwe oorzaak.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",

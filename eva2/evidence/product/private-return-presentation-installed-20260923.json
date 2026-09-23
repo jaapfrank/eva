@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-09-23T12:15:40.473669+00:00",
+  "status": "installed_live_readback_verified",
+  "sourceCommit": "070e354b",
+  "image": "sha256:d09857e7cc6dbffdb389dd2784c7343cb73b48c086095cb71a369ed091fb07c4",
+  "change": "Website task return availability no longer described as missing Telegram delivery; no new delivery mechanism",
+  "packagedTests": 17,
+  "review": "Independent implementation reviewed by root against existing private return eligibility",
+  "live": "Both services healthy; existing completed task ce7548ae reports private_route_available, explicitly no confirmed delivery",
+  "modelCalls": 0,
+  "rollback": "/var/lib/eva2/private-return-label-install-20260923/baseline.compose.private.json",
+  "limits": [
+    "Status availability is not delivery or owner acceptance",
+    "Physical voice and channel acceptance remain open"
+  ]
+}
