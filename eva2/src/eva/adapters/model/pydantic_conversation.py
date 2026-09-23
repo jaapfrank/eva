@@ -2651,7 +2651,7 @@ class PydanticConversationModel:
             # This is capability guidance, not a second tool catalog. Only the
             # caller's authorized subset can start or resume future work.
             if not set(available_actions).intersection({
-                _DURABLE_GOAL_ACTION, "start_delegated_work", "start_background_research", "resume_delegated_work",
+                _DURABLE_GOAL_ACTION, "start_delegated_work", "start_background_research", "start_digital_work", "resume_delegated_work",
             }):
                 action_guidance_parts.append(
                     "Deze gespreksroute kan geen toekomstig werk inplannen."

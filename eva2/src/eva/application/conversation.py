@@ -937,7 +937,13 @@ class LivingConversation:
         if "start_digital_work" in available_names:
             self_context = (*self_context,
                 "Gebruik start_digital_work voor een digitale opdracht met bestaande toegestane "
-                "connectoren die op de achtergrond moet doorgaan. Geef de concrete opdracht mee, "
+                "connectoren die op de achtergrond moet doorgaan. Neem die opdracht rechtstreeks "
+                "met start_digital_work aan: voer niet eerst connectorstatus, toolontdekking of "
+                "een deel van de opdracht in dit gesprek uit. De werker zoekt en controleert "
+                "zelf de benodigde tools en bereikbaarheid binnen het bestaande mandaat. "
+                "Een opgeslagen toelating bevestigt alleen dat de opdracht is aangenomen, "
+                "niet dat de uitvoering al lukt. "
+                "Geef de concrete opdracht en de relevante toegestane gegevens mee, "
                 "bevestig pas na opgeslagen toelating en wacht niet op het resultaat. "
                 "Laat de gebruiker verder praten; gebruik work_id voor volgen of stoppen.")
         if "start_background_research" in available_names:
