@@ -25,7 +25,9 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Eerstvolgende handeling:** voorgrondprompt en requesttransport onderzoeken met de bestaande snellere begroetingsmeting. Geen herhaling van de `none`-proef zonder nieuwe oorzaak. Snelle ontvangst en echte kanaal-/Voice PE-acceptatie blijven open.
+**Eerstvolgende handeling:** de echte gedeelde gespreksroute tijdens lopend werk controleren: tussenvraag mag niet wachten op achtergrondwerk en antwoord moet bij de juiste vraag blijven. Modelvertraging en fysieke Voice PE-acceptatie blijven afzonderlijk open.
+
+**Voorbereiding vereenvoudigd en geïnstalleerd (23 september):** negen onnodige bezorgstatuscontroles vóór een gewone beurt verwijderd; huishoudelijke pending-route selecteert de sessie nog één keer. Vijftien verpakte tests en onafhankelijke review geslaagd; beide diensten gezond, bronbytes en terugweg gecontroleerd. Eén meting zonder modelcalls: voorbereiding 1,0452 → 0,8192 s, taakcontext 0,1903 → 0,1025 s. Geheugentiming varieert; geen algemene snelheidsclaim. [Bewijs](evidence/product/foreground-metadata-installed-20260923.json).
 
 **Contactinstelling zonder redeneerstap verworpen (23 september):** bestaande provider accepteert `none`, maar de begroeting werd niet sneller: 4,785 s tegenover 4,063 s met `low`; correcte taakkeuze 7,466 s tegenover eerdere 7,706 s. Drie geïsoleerde modelcalls, nul echte acties/berichten, kosten onbekend. Vijf gerichte tests en onafhankelijke bronreview slaagden; geen voldoende snelheidswinst. Proefcode bewaard buiten productbron, exacte proefwijzigingen verwijderd, productie ongewijzigd. [Bewijs](evidence/product/contact-none-negative-20260923.json).
 

@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-09-23T12:56:23.257918+00:00",
+  "sourceCommit": "8cae7144",
+  "installedImage": "eva2-foreground-metadata:20260923",
+  "changes": [
+    "Private active task context no longer creates full delivery views.",
+    "Household pending resolves the admitted scope once rather than twice."
+  ],
+  "verification": {
+    "packagedTests": 15,
+    "review": "Independent GO; coordinator reviewed owner projection",
+    "core": "healthy",
+    "worker": "healthy",
+    "sourceBytes": "match"
+  },
+  "preparationProbe": {
+    "modelCalls": 0,
+    "externalMessages": 0,
+    "before": {
+      "totalSeconds": 1.0452,
+      "contextSeconds": 0.1903,
+      "memorySeconds": 0.7093,
+      "deliveryStatusReads": 9
+    },
+    "after": {
+      "totalSeconds": 0.8192,
+      "contextSeconds": 0.1025,
+      "memorySeconds": 0.601,
+      "deliveryStatusReads": 0
+    }
+  },
+  "limits": [
+    "One pair; memory/network timing varies, so not all wall-time difference is attributable to the change.",
+    "No new model speed or subsecond complete reply claim.",
+    "No physical Voice PE or channel acceptance."
+  ],
+  "rollback": "Prior image/config saved in baseline compose; active pointer updated."
+}

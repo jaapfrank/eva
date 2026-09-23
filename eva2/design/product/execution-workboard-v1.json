@@ -1000,8 +1000,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T12:49:28.408985+00:00",
+        "checkedAt": "2026-09-23T12:56:23.257918+00:00",
         "deliveries": [
+          {
+            "title": "Minder onnodige opvragingen vóór het antwoord",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Negen overbodige bezorgstatuscontroles verwijderd. Voorbereiding in één vergelijking 0,82 seconde tegenover 1,05; kern en werker gezond.",
+            "remaining": "Kleine lokale verbetering. De meerdere seconden voor het modelantwoord blijven bestaan; snel natuurlijk contact is nog niet klaar.",
+            "source": "eva2/evidence/product/foreground-metadata-installed-20260923.json"
+          },
           {
             "title": "Lopende taak direct selecteren zonder extra modelronde",
             "date": "23 september",
@@ -1220,15 +1228,15 @@
           }
         ],
         "now": {
-          "title": "Sneller natuurlijk contact",
-          "state": "Proef afgerond · geen verbetering opgeleverd",
-          "detail": "Zonder redeneerstap werd hallo niet sneller: 4,8 seconden tegenover 4,1. Taakkeuze bleef rond 7,5 seconden. Huidige modelinstelling behouden; geen nieuwe versie geïnstalleerd.",
-          "doneWhen": "Snelle ontvangst via de bestaande gedeelde route aantonen. Deze instelling is geen bewezen oplossing."
+          "title": "Sneller contact en doorpraten tijdens werk",
+          "state": "Open · lokale voorbereiding verbeterd",
+          "detail": "Voorbereiding is gemeten en opgeschoond. De grootste resterende wachttijd zit tijdens de modelaanroep. Begroeting en tussenvragen via de echte ingangen blijven open.",
+          "doneWhen": "Snelle ontvangst en een tussenvraag vóór het onderzoeksantwoord via de gedeelde route bewezen."
         },
         "next": {
-          "title": "Resterende vertraging in de gespreksroute lokaliseren",
-          "state": "Volgende handeling · bestaande metingen eerst",
-          "detail": "Voorgrondprompt en requesttransport vergelijken met de eerdere snellere begroetingsproef. Pas een nieuwe proef doen bij een concrete gewijzigde oorzaak."
+          "title": "Echte gespreksroute tijdens lopend werk controleren",
+          "state": "Volgende functionele stap",
+          "detail": "Controleren dat een gewone tussenvraag niet op de achtergrondtaak wacht en bij de juiste vraag hoort; snelheid apart meten."
         },
         "ownerAction": {
           "title": "Voice PE: beschikbaarheid doorgeven",
@@ -1240,7 +1248,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T12:49:28.408985+00:00"
+        "reviewedAt": "2026-09-23T12:56:23.257918+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11009,7 +11017,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Voorgrondprompt en requesttransport vergelijken met de eerdere snellere begroetingsproef. Pas een nieuwe proef doen bij een concrete gewijzigde oorzaak.",
+      "nextAction": "Controleren dat een gewone tussenvraag niet op de achtergrondtaak wacht en bij de juiste vraag hoort; snelheid apart meten.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
