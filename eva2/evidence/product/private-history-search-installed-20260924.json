@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-09-24T03:12:27.911058+00:00",
+  "sourceCommit": "324cf693839b88329bcfe37523294b913265a91d",
+  "image": "eva2-private-history-search:20260924",
+  "status": "installed_start_checked",
+  "requirement": "Continue a personal topic days or weeks later, including what Eva previously answered, through currently verified private channels.",
+  "change": "Existing memory search can retrieve up to three newest matching retained private source exchanges with their exact prior journal reply, labelled as past model output. PostgreSQL lexical query applies before limiting; no24h cutoff.",
+  "boundaries": [
+    "Current owner and private bridge verification",
+    "Same tenant and installation",
+    "No household/group/project history",
+    "Existing retention, erasure and payload hash validation",
+    "No assistant answer promoted to a remembered fact",
+    "Historical source text search is lexical and bounded, not exhaustive",
+    "Unavailable history does not block semantic memory"
+  ],
+  "checks": [
+    "Python syntax",
+    "Configured runtime startup",
+    "No active delegated work before installation",
+    "Core and worker healthy"
+  ],
+  "deferred": [
+    "Real older-conversation retrieval",
+    "Cross-channel and person-boundary integration trial",
+    "Independent review"
+  ],
+  "newModelCalls": 0,
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/private-history-search-20260924/baseline.compose.private.json",
+  "notClaimed": [
+    "Speaker recognition",
+    "Private context through shared speakers",
+    "Subsecond greetings",
+    "Step2 complete"
+  ]
+}
