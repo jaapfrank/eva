@@ -1,0 +1,55 @@
+{
+  "installedAt": "2026-09-24T13:22:02.751226+00:00",
+  "sourceCommit": "e35216ec",
+  "status": "installed_start_checked",
+  "outcome": "New scheduled tasks that block before work admission return a needs-help notice through their original private completion route.",
+  "observed": {
+    "core": {
+      "image": "sha256:95d452b9cc4a7a603489c0110cb98146692a85ba7bfe46705b1bf224ee3a9646",
+      "health": "healthy",
+      "restartCount": 0,
+      "sourceHashes": {
+        "scheduled_work.py": "dac3c0275bd9ea61c4e51dd52fc006775569431945b5b99b307308595748a4e4",
+        "scheduled_work_failure.py": "99601e2c496148b0ec675dbdc2671be0ea19ed599f324bf1ddd6cf5ff219f1ba",
+        "private_work_return.py": "a2cedd5bd91c9ace742145f13e59d9ae6618bace03c953d9c59ea896e1080dd0",
+        "delegated_work_delivery.py": "9f45992eccaca65f7acafd06a41cedb0bee775c3c2549962b85860bac1a2387d"
+      }
+    },
+    "worker": {
+      "image": "sha256:d8b1bd2790f13ed897ad995944c2e39c1483ed28995fc5025054e2e573574ede",
+      "health": "healthy",
+      "restartCount": 0,
+      "sourceHashes": {
+        "scheduled_work.py": "dac3c0275bd9ea61c4e51dd52fc006775569431945b5b99b307308595748a4e4",
+        "scheduled_work_failure.py": "99601e2c496148b0ec675dbdc2671be0ea19ed599f324bf1ddd6cf5ff219f1ba",
+        "private_work_return.py": "a2cedd5bd91c9ace742145f13e59d9ae6618bace03c953d9c59ea896e1080dd0",
+        "delegated_work_delivery.py": "9f45992eccaca65f7acafd06a41cedb0bee775c3c2549962b85860bac1a2387d"
+      }
+    }
+  },
+  "http": {
+    "http://localhost:44711/internal/v1/dashboard": 200,
+    "http://localhost:44716/session/ready": 200
+  },
+  "checks": {
+    "focusedPostgresCasesPassed": 5,
+    "review": "Coordinator inspected changed source; executor checked shared delivery contracts.",
+    "fixtureCorrections": [
+      "principal binding table import",
+      "canonical UTC test timestamps",
+      "valid revocation fixture"
+    ],
+    "buildCorrection": "Tag exact local image IDs before Dockerfile FROM; no active service affected."
+  },
+  "modelCalls": 0,
+  "testMessagesSent": 0,
+  "ownerAccepted": false,
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/scheduled-failure-return-20260924/baseline.compose.private.json",
+  "candidateCompose": "/home/administrator/project/.eva2-artifacts/scheduled-failure-return-20260924/candidate.compose.private.json",
+  "limitations": [
+    "Existing historical schedules are not backfilled.",
+    "No real Telegram message or user scenario exercised.",
+    "Full scheduling and product acceptance remain open."
+  ],
+  "try": "Via private Telegram: Plan morgen om 10 uur [digitale opdracht]. If admission or predecessor fails, Eva should report that the planned step could not start. Do not intentionally damage a running task to test this."
+}
