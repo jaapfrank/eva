@@ -1,0 +1,28 @@
+{
+  "sourceCommit": "4226fbb0",
+  "installedInOperatorPackage": true,
+  "installationReceipt": "/home/administrator/project/.eva2-artifacts/installer-target-workflow-installed-20260925/installation-receipt.json",
+  "scope": "Durable target preparation callback and new runtime-owned copies, not complete enabled installer",
+  "verification": {
+    "workflowBehaviorTestsPassed": 5,
+    "runtimeAccessTestsPassedAsRoot": 8,
+    "effectiveReaderProof": "Updated shared lease case passed with child chroot into synthetic mount, cleared supplementary groups, UID/GID65532 reading exact bytes before/after atomic refresh",
+    "independentReview": "Workflow independently reviewed; executor runtime access source reviewed by coordinator",
+    "installedSmoke": "Exact module hashes/imports and unfinished receipt readback checked",
+    "fullComposedDockerRun": false
+  },
+  "behavior": [
+    "One exclusive durable attempt before materialization; uncertain attempts cannot automatically repeat after restart",
+    "Fresh confirmed inputs rebound before Docker resource preparation",
+    "Source files preserved; new reader-owned copies and shared refreshable directories",
+    "Runtime ownership requires actual OS privilege, no world-readable fallback"
+  ],
+  "remaining": [
+    "Assemble complete trusted release/identity/provider/source settings for actual installer bootstrap",
+    "Execute full composed preparation with maintained service configuration",
+    "Bind prepared target to existing restore authority/source selection and run full installer route",
+    "Ordinary wizard remains disabled until complete configured backend exists"
+  ],
+  "productionChanged": false,
+  "modelCalls": 0
+}

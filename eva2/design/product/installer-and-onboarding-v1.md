@@ -452,3 +452,30 @@ its runtime containers lacked complete DSN mounts; that fixture proves persisten
 storage preparation, not the complete maintained launch graph.
 
 Evidence: `evidence/product/installer-target-binding-installed-20260925.json`.
+
+
+## Durable preparation composition — 25 September 2026
+
+Installed source `4226fbb0` provides `InstallerTargetWorkflow(workspace, settings,
+plan_reader)` via keyword arguments. Bootstrap supplies the instance as
+`installation_preparer` and its `status` method as
+`installation_preparation_status`. Settings are trusted installer-owned release,
+provider, identity, render and target inputs; no raw browser configuration is
+accepted. A fresh private workspace receives an exclusive attempt receipt before
+any materialization. The sequence reuses input binding, file materialization,
+maintained graph binding, runtime access and target provisioning. Inputs are
+revalidated immediately before resource creation. Interrupted/failed attempts
+remain `needs_inspection` across restarts and are never automatically repeated.
+
+Runtime access creates new owner-specific copies and preserves source files.
+Shared producer/consumer lease mounts share one new directory using existing
+credential modes. Effective image users must account for entrypoint UID changes.
+The launcher needs OS ownership-setting privilege for different runtime users;
+there is no fallback that broadens world permissions. A completed access receipt
+proves metadata setup, not service readiness. An isolated effective-UID test read
+the shared model lease before and after refresh; no services started in that test.
+
+The complete bootstrap settings, composed Docker preparation and source/restore
+route integration still require execution. The ordinary wizard is not enabled
+by merely installing these modules. See
+`evidence/product/installer-target-workflow-installed-20260925.json`.

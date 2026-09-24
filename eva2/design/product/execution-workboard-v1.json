@@ -1012,12 +1012,12 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
-            "title": "Installerbestanden aan bestaande diensten gekoppeld — interne aansluiting",
+            "title": "Samengevoegde installer-voorbereiding — interne uitvoering",
             "date": "25 september",
             "state": "installed",
-            "result": "Installatiebestanden en bestaande dienstdefinities verbonden, inclusief databasekoppeling voor kern/werker. Exacte aangemaakte hersteldoelen kunnen automatisch worden vastgelegd. Modules geïnstalleerd en geladen; gerichte controles en review uitgevoerd.",
-            "remaining": "Complete voorbereidingsuitvoerder en runtime-leestoegang ontbreken nog. Knop blijft uitgeschakeld. Een echte controle op oudere proefcontainers strandde op hun onvolledige databasekoppeling; geen volledige installerproef geclaimd.",
-            "source": "eva2/evidence/product/installer-target-binding-installed-20260925.json"
+            "result": "Bestaande stappen verbonden met blijvende voortgang en bescherming tegen opnieuw uitvoeren na onderbreking. Nieuwe runtimebestanden met juiste leestoegang; UID65532 las modeltoegang vóór en na vernieuwing. Modules geïnstalleerd.",
+            "remaining": "Complete instellingen en één volledige uitvoeringsproef ontbreken nog. De gewone herstelknop blijft uitgeschakeld; dit is nog geen zelfstandig bruikbare herstelwizard.",
+            "source": "eva2/evidence/product/installer-target-workflow-installed-20260925.json"
           },
           {
             "title": "Blijvende opslag voor herstel voorbereiden — beheermodule",
@@ -2255,15 +2255,15 @@
           }
         ],
         "now": {
-          "title": "Bestanden aan diensten gekoppeld — complete herstelbediening nog open",
-          "state": "Technische aansluiting geïnstalleerd; uitvoeractie nog uitgeschakeld",
-          "detail": "Nieuwe database-, budget- en providerbestanden kunnen in de bestaande dienstconfiguratie worden aangesloten. Aangemaakte hersteldoelen worden automatisch vastgelegd en gecontroleerd. Runtime-leestoegang en de complete voorbereidingsuitvoerder ontbreken nog. Geen uitvoerder meer actief op deze deelopdracht.",
-          "doneWhen": "De gewone installer voert de complete doelvoorbereiding en bestaande herstelroute uit zonder handgeschreven configuratie."
+          "title": "Samengevoegde doelvoorbereiding geïnstalleerd — volledige proef nog open",
+          "state": "Interne uitvoering opgeleverd; gewone herstelbediening nog uit",
+          "detail": "Bestaande invoer-, bestands-, dienst- en opslagstappen zijn verbonden met bewaarde voortgang. Runtime-leestoegang en vernieuwde modelbestanden gecontroleerd. Volledige uitvoering met complete installatieconfiguratie nog niet gedaan. Geen uitvoerder meer op deze deelopdracht.",
+          "doneWhen": "Eén volledige voorbereidings- en herstelroute vanuit de gewone installer, met echte complete instellingen en behouden gegevens."
         },
         "next": {
-          "title": "Complete voorbereidingsuitvoering en runtime-leestoegang aansluiten",
+          "title": "Volledige samengestelde voorbereiding uitvoeren",
           "state": "Nog niet gestart",
-          "detail": "Combineer huidige installatiekeuzes, bestanden, bestaande diensten en doelresources in één uitvoerder met bewaarde toestand. Verbind bronkeuze/herstelautoriteit; voer daarna de echte route uit voordat de herstelbediening als bruikbaar geldt."
+          "detail": "Complete vertrouwde release-/identiteits-/providerinstellingen samenstellen, inclusief effectieve runtimegebruikers en bronkeuze. De geïnstalleerde uitvoering met het volledige dienstenmanifest beproeven en daarna op de bestaande herstelroute aansluiten."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2277,7 +2277,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T23:03:46.698063+00:00"
+        "reviewedAt": "2026-09-24T23:11:26.786672+00:00"
       }
     },
     "pendingTechnicalReview": {
