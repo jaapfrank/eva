@@ -2,6 +2,8 @@
 from dataclasses import dataclass
 from hashlib import sha256
 
+from eva.application.work_result_presentation import work_failure_description
+
 FAILURE_STATES = frozenset({"failed", "needs_help", "ambiguous"})
 DELIVERY_STATES = frozenset({"succeeded", "verified"}) | FAILURE_STATES
 
@@ -33,7 +35,10 @@ def delivery_outcome(work):
         return work.result
     if work.state not in FAILURE_STATES:
         return None
-    if work.state == "ambiguous":
+    report = getattr(work, "failure_report", None)
+    if work.state == "failed" and getattr(work, "error_code", None) == "budget_exceeded" and report is not None:
+        text = work_failure_description("budget_exceeded", report)
+    elif work.state == "ambiguous":
         text = ("Ik kan niet bevestigen hoe je opdracht is afgelopen. Een begonnen "
                 "handeling kan al uitgevoerd zijn. Ik herhaal die niet automatisch. "
                 "Vraag me naar de taakstatus voordat we verdergaan.")

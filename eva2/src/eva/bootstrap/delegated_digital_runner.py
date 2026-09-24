@@ -321,7 +321,7 @@ class DelegatedDigitalRunner:
         from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec, DelegatedDigitalWorkResult
         signal = CancellationSignal()
         usage = DelegatedWorkUsage.unmeasured()
-        journal = source = actions = None
+        journal = source = actions = reply = None
         deadline = parse_utc_timestamp(spec.deadline)
         call = DelegatedWorkCall(spec.work_id, "digital:" + spec.work_id, call_id, spec)
 
@@ -461,13 +461,19 @@ class DelegatedDigitalRunner:
             if journal is not None and source is not None:
                 with suppress(Exception):
                     usage = self._usage(journal.model_usage(source), 0 if actions is None else actions.dispatches)
-            return ToolFreeChildOutcome("cancelled" if cancellation_event is not None and cancellation_event.is_set()
+            status = ("cancelled" if cancellation_event is not None and cancellation_event.is_set()
                 else "timed_out" if self.clock() >= deadline
                 else "budget_exceeded" if isinstance(error, (_DigitalBudgetExceeded, ConversationExecutionLimitReached))
                 else "incomplete_work" if isinstance(error, _UnfinishedWorkPlan)
                 else "provider_unavailable" if type(error) is McpGatewayUnavailable
-                else "internal_error", None, usage, False,
-                hashlib.sha256((type(error).__name__ + ":" + str(error)).encode()).hexdigest())
+                else "internal_error")
+            # Preserve only a complete returned reply, never streamed fragments or
+            # an extra model attempt. Failure and measured usage remain unchanged.
+            report = (reply.text if status == "budget_exceeded" and reply is not None
+                      and len(reply.text.encode("utf-8")) <= 65_536 else None)
+            return ToolFreeChildOutcome(status, None, usage, False,
+                hashlib.sha256((type(error).__name__ + ":" + str(error)).encode()).hexdigest(),
+                failure_report=report)
         finally:
             watcher.cancel()
             with suppress(asyncio.CancelledError):

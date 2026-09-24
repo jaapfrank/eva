@@ -504,3 +504,43 @@ def test_partial_or_wrong_batch_row_does_not_discharge_write(change):
     row = _automation_batch().output["inventory"]["automations"][0]
     assert not _has_completed_tool_evidence([
         _automation_receipt("POST"), _automation_batch(rows=[{**row, **change}])])
+
+
+@pytest.mark.parametrize("overrun_on_final", [True, False])
+def test_budget_failure_keeps_only_a_returned_final_reply(overrun_on_final):
+    _, spec, _, tools, journal, runner, _ = fixture()
+    tools.release.set()
+    class OverrunModel(Model):
+        def generate(self, *args, **kwargs):
+            from dataclasses import replace
+            result = super().generate(*args, **kwargs)
+            if (result.action_call is None) == overrun_on_final:
+                return replace(result, usage=ConversationModelUsage.measured(
+                    tool_calls=int(result.action_call is not None),
+                    input_tokens=spec.grant.maximum_input_tokens + 1, output_tokens=10))
+            return result
+    runner.model = OverrunModel()
+    outcome = asyncio.run(runner.run(spec, call_id="call:budget-report"))
+    assert outcome.status == "budget_exceeded" and outcome.result is None
+    assert outcome.failure_report == ("The comparison was stored and read back."
+                                      if overrun_on_final else None)
+    assert len(journal.usages) == (3 if overrun_on_final else 1)
+    assert len(tools.calls) == (2 if overrun_on_final else 0)
+    assert outcome.usage.input_tokens > spec.grant.maximum_input_tokens
+
+
+def test_cancelled_final_reply_is_not_released_as_failure_report():
+    _, spec, store, tools, _, runner, _ = fixture()
+    tools.release.set()
+    stopped = threading.Event()
+    class CancelAtFinal(Model):
+        def generate(self, *args, **kwargs):
+            result = super().generate(*args, **kwargs)
+            if result.action_call is None:
+                store.stopped = True
+                stopped.set()
+            return result
+    runner.model = CancelAtFinal()
+    outcome = asyncio.run(runner.run(spec, call_id="call:cancel-report", cancellation_event=stopped))
+    assert outcome.status == "cancelled" and outcome.result is None
+    assert outcome.failure_report is None

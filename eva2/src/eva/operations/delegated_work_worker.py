@@ -142,6 +142,7 @@ class DelegatedWorkWorker:
                 error_fingerprint=outcome.error_fingerprint,
                 ambiguous=ambiguous,
                 now=self._now(),
+                **({"failure_report": outcome.failure_report} if outcome.failure_report is not None else {}),
             )
         except DelegatedWorkConflict:
             if not await asyncio.to_thread(self._store.stop_requested, call):

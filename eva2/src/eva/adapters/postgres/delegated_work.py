@@ -4,6 +4,7 @@ from __future__ import annotations
 from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
 
 import re
+import hashlib
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from typing import Literal
@@ -111,6 +112,7 @@ class StoredDelegatedWork:
     completed_at: datetime | None
     retention_policy_id: str
     retention_until: datetime
+    failure_report: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -147,10 +149,12 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
         household_authorizer=None,
         household_clock=None,
+        failure_report_clock=None,
     ) -> None:
         if engine.url.get_backend_name() != "postgresql":
             raise ValueError("delegated work requires PostgreSQL")
         self._engine = engine
+        self._failure_report_clock = failure_report_clock or (lambda: datetime.now(UTC))
         self._scope_value = scope
         self._role = role
         self._household_authorizer = household_authorizer
@@ -630,7 +634,14 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         error_fingerprint: str,
         ambiguous: bool,
         now: datetime,
+        failure_report: str | None = None,
     ) -> StoredDelegatedWork:
+        if failure_report is not None:
+            from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec
+            if (not isinstance(call.spec, DelegatedDigitalWorkSpec) or ambiguous
+                    or error_code != "budget_exceeded" or not isinstance(failure_report, str)
+                    or not failure_report.strip() or len(failure_report.encode("utf-8")) > 65_536):
+                raise ValueError("failure report requires private digital budget exhaustion")
         error_code = _bounded_text(error_code, maximum=80, label="error code")
         if re.fullmatch(r"[0-9a-f]{64}", error_fingerprint) is None:
             raise ValueError("error fingerprint is invalid")
@@ -643,6 +654,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             error_code=error_code,
             error_fingerprint=error_fingerprint,
             now=now,
+            failure_report=failure_report,
         )
 
     def verify_result(
@@ -1173,6 +1185,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         error_code: str | None,
         error_fingerprint: str | None,
         now: datetime,
+        failure_report: str | None = None,
     ) -> StoredDelegatedWork:
         now = _whole_second(now, label="result time")
         result_payload = None if result is None else result.model_dump(mode="json")
@@ -1192,6 +1205,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     and loaded.usage == usage
                     and loaded.error_code == error_code
                     and loaded.error_fingerprint == error_fingerprint
+                    and self._read_failure_report(connection, loaded) == failure_report
                 ):
                     return loaded
                 raise DelegatedWorkConflict(
@@ -1239,6 +1253,15 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             )
             if work_update.rowcount != 1:
                 raise DelegatedWorkConflict("delegated outcome commit raced")
+            if failure_report is not None:
+                thread = "work-failure-report:" + canonical_sha256({"work_id": call.work_id})
+                insert_initial_timeline_thread(connection, self.scope, thread_id=thread,
+                    checkpoint_id=thread + ":saved", occurred_at=now,
+                    event_type="WORK_FAILURE_REPORT_SAVED", phase="saved", status="completed",
+                    data={"work_id": call.work_id, "call_id": call.call_id,
+                          "spec_sha256": call.spec.sha256, "error_code": error_code,
+                          "report": failure_report,
+                          "report_sha256": hashlib.sha256(failure_report.encode()).hexdigest()})
             return self._load_locked(connection, call.work_id)
 
     def _mark_needs_help(
@@ -1346,12 +1369,36 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             raise DelegatedWorkNotFound(missing_message)
         return self._validated(connection, row)
 
+    def _read_failure_report(self, connection, work):
+        if work.state != "failed" or work.error_code != "budget_exceeded":
+            return None
+        thread = "work-failure-report:" + canonical_sha256({"work_id": work.spec.work_id})
+        row = connection.execute(sa.select(operational_events).where(
+            operational_events.c.tenant_id == self.scope.tenant_id,
+            operational_events.c.installation_id == self.scope.installation_id,
+            operational_events.c.thread_id == thread,
+            operational_events.c.sequence == 1)).mappings().one_or_none()
+        if row is None:
+            return None
+        from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec
+        data = row["payload"].get("data", {})
+        report = data.get("report")
+        if (not isinstance(work.spec, DelegatedDigitalWorkSpec)
+                or row["occurred_at"] != work.completed_at
+                or row["event_type"] != "WORK_FAILURE_REPORT_SAVED"
+                or bytes(row["payload_sha256"]).hex() != canonical_sha256(row["payload"])
+                or data.get("work_id") != work.spec.work_id or data.get("call_id") != work.call_id
+                or data.get("spec_sha256") != work.spec.sha256 or data.get("error_code") != work.error_code
+                or not isinstance(report, str) or not report.strip() or len(report.encode()) > 65_536
+                or data.get("report_sha256") != hashlib.sha256(report.encode()).hexdigest()):
+            raise DelegatedWorkStoreError("stored failure report binding differs")
+        return report
+
     def _validated(
         self,
         connection: sa.Connection,
         row: sa.RowMapping,
     ) -> StoredDelegatedWork:
-        del connection
         try:
             spec = load_delegated_work_spec(row.spec_payload)
             if bytes(row.spec_sha256).hex() != canonical_sha256(row.spec_payload):
@@ -1399,7 +1446,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 raise ValueError("delegated work bindings differ")
         except (KeyError, TypeError, ValueError, sa.exc.NoResultFound) as error:
             raise DelegatedWorkStoreError("stored delegated work is corrupt") from error
-        return StoredDelegatedWork(
+        work = StoredDelegatedWork(
             spec=spec,
             storage_episode_id=row.storage_episode_id,
             title=row.title,
@@ -1427,6 +1474,11 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             retention_policy_id=row.retention_policy_id,
             retention_until=row.retention_until,
         )
+        report = self._read_failure_report(connection, work)
+        if report is not None and self._failure_report_clock() < work.retention_until:
+            from dataclasses import replace
+            work = replace(work, failure_report=report)
+        return work
 
     def _card(
         self, connection: sa.Connection, work: StoredDelegatedWork, *, now: datetime
