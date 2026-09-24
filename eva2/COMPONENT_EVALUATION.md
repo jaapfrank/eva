@@ -29,8 +29,9 @@ JSON with `url`, `token_file`, `allowed_paths`, `suite_sha256`, and
 `timeout_seconds`. Mount the config and credential readonly. The suite binding is
 SHA-256 of compact JSON `[image_id, command_sha256]`; command SHA-256 is the hash
 of compact JSON argv. These settings and client source participate in the
-existing digital release fingerprint. Changing capabilities can prevent an older
-work grant from being resumed; no grant is expanded silently.
+existing digital release fingerprint. A resumed task preserves its original capability subset when those tools remain
+available and every other grant bound is unchanged. Removing an old tool or
+changing budgets remains incompatible; no grant is expanded silently.
 
 ## Installed initial suite
 

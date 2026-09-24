@@ -76,6 +76,15 @@ class DelegatedDigitalProfile:
             maximum_cost_usd_micros=self.maximum_cost_usd_micros, timeout_seconds=self.timeout_seconds,
         )
 
+    def accepts_grant(self, grant):
+        """Keep an older capability subset, with every other bound unchanged."""
+        if not isinstance(grant, DelegatedDigitalWorkGrant):
+            return False
+        requested, installed = grant.to_payload(), self.grant().to_payload()
+        capabilities = requested.pop("capability_ids")
+        available = installed.pop("capability_ids")
+        return requested == installed and set(capabilities).issubset(available)
+
     @property
     def release(self):
         sources = {name: hashlib.sha256((_ROOT / name).read_bytes()).hexdigest() for name in _SOURCES}
@@ -91,11 +100,14 @@ class DelegatedDigitalProfile:
             self.engine_release_sha256, DIGITAL_OUTPUT_SHA256,
         )
 
-    def build_spec(self, *, source, source_ingress_sha256, **identity):
+    def build_spec(self, *, source, source_ingress_sha256, grant=None, **identity):
         def stamp(value):
             if value.tzinfo is None or value.utcoffset() is None or value.microsecond:
                 raise ValueError("digital work timestamps require aware whole seconds")
             return value.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+        selected_grant = self.grant() if grant is None else grant
+        if not self.accepts_grant(selected_grant):
+            raise ValueError("digital work grant is incompatible with the installed profile")
         created, deadline = identity.pop("created_at"), identity.pop("deadline")
         release = self.release
         if "execution_id" not in identity:
@@ -109,6 +121,6 @@ class DelegatedDigitalProfile:
             model_profile_id=self.model_profile_id, model_profile_release_sha256=self.configuration_sha256,
             worker_program_sha256=release.worker_program_sha256,
             engine_release_sha256=self.engine_release_sha256, output_schema_sha256=DIGITAL_OUTPUT_SHA256,
-            grant=self.grant().to_payload(), source=source, source_ingress_sha256=source_ingress_sha256,
+            grant=selected_grant.to_payload(), source=source, source_ingress_sha256=source_ingress_sha256,
             created_at=stamp(created), deadline=stamp(deadline), **identity,
         )

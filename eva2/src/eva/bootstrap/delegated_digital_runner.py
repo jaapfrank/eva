@@ -248,7 +248,7 @@ class DelegatedDigitalRunner:
         try:
             if (not isinstance(spec, DelegatedDigitalWorkSpec)
                     or DelegatedWorkReleaseSelector.from_spec(spec) != self.profile.release
-                    or spec.grant != self.profile.grant()
+                    or not self.profile.accepts_grant(spec.grant)
                     or spec.model_profile_id != self.profile.model_profile_id):
                 raise ConversationConflict("background release differs")
             if spec.grant.maximum_cost_usd_micros is not None:
