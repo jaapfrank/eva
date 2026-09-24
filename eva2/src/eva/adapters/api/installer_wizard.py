@@ -292,6 +292,8 @@ def create_installer_wizard(
     secret_lifecycle: InstallerSecretLifecyclePort | None = None,
     budget_workflow: InstallerBudgetPort | None = None,
     installation_plan_builder: InstallerInstallationPlanBuilder | None = None,
+    installation_preparer: Callable[[dict[str, object]], None] | None = None,
+    installation_preparation_status: Callable[[], str] | None = None,
     restore_workflow: InstallerRestorePort | None = None,
 ) -> FastAPI:
     receipt = _safe_receipt(receipt)
@@ -513,6 +515,9 @@ def create_installer_wizard(
     register_installer_installation_plan_routes(
         app,
         build_plan=build_installation_plan,
+        prepare_target=installation_preparer,
+        read_preparation_status=installation_preparation_status,
+        require_write=require_installer_write,
         require_read=require_installer_read,
         security_headers=_SECURITY_HEADERS,
     )

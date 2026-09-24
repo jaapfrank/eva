@@ -6,6 +6,7 @@ import argparse
 import ipaddress
 import json
 from pathlib import Path
+from typing import Callable
 
 import uvicorn
 
@@ -74,7 +75,8 @@ def _private_workspace(path: Path) -> Path:
 
 
 def run_installer_wizard(
-    argv: list[str] | None = None, *, restore_workflow: InstallerRestorePort | None = None
+    argv: list[str] | None = None, *, restore_workflow: InstallerRestorePort | None = None,
+    installation_preparer: Callable[[dict[str, object]], None] | None = None
 ) -> int:
     from eva.adapters.api.installer_wizard import (
         InstallerBootstrap,
@@ -245,6 +247,8 @@ def run_installer_wizard(
             configured_probe_factory=configured_installer_probe,
             secret_lifecycle=secret_lifecycle,
             installation_plan_builder=build_installer_installation_plan,
+            installation_preparer=installation_preparer,
+            installation_preparation_status=installation_preparation_status,
         ),
         host=args.host,
         port=args.port,
