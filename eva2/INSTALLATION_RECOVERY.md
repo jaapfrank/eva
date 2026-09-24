@@ -90,11 +90,19 @@ The wizard starts the native provider with read-only document, journal, binding
 and snapshot mounts on the pinned internal network, with no published ports.
 It checks the actual container and obtains `tools/list` using the existing MCP
 SDK. The returned catalog must match the preserved canonical catalog hash.
-`provider_verified` covers that startup/catalog check only;
-`documents_verified` remains false. The receipt is `connected_read_only`, and
-the core stays held. This step neither registers or remaps the gateway nor
-enables document writes. Project readback, gateway mapping and writable runtime
-activation remain separate requirements before ordinary use.
+`provider_verified` covers that startup/catalog check only. The same read-only
+target then reruns the existing native relocation preparation against every
+preserved project. The native journal parser observes the actual retained files;
+generated binding and snapshot bytes must equal the mounted preparation exactly.
+Changed material, history, physical binding or ambiguous pending effects cause
+failure without replaying an operation. Only after this check does
+`documents_verified` become true, scoped to native retained material/history.
+It does not certify the quality of the original task or a full conversation.
+
+The receipt is `connected_read_only`, and the core stays held. This step neither
+registers or remaps the gateway nor enables document writes. Gateway mapping,
+writable runtime activation and the full restore trial remain requirements
+before ordinary use.
 
 ## Partial results and activation
 

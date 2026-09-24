@@ -149,6 +149,59 @@ asyncio.run(main())
 """
 
 
+_VERIFY_MATERIAL = r"""
+import fs from 'node:fs';
+import {createHash} from 'node:crypto';
+import {readPrivateFile, validateRelocationBinding, prepareRelocation} from '/opt/eva2/atomic/relocation.mjs';
+const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+const executable = '/opt/eva2/atomic/workspace-writer-broker';
+const flags = fs.constants.O_RDONLY | fs.constants.O_DIRECTORY | fs.constants.O_NOFOLLOW;
+const rootFd = fs.openSync('/workspace', flags);
+let journalFd;
+try {
+  journalFd = fs.openSync('/journal', flags);
+  const bindingBytes = readPrivateFile('/run/eva2/atomic-binding.json');
+  const {binding, originalBytes} = validateRelocationBinding(bindingBytes, {executable, rootFd, journalFd});
+  const projectKeys = Object.keys(binding.projects);
+  const regenerated = prepareRelocation({executable, rootFd, journalFd,
+    originalBindingBytes: originalBytes, logicalCatalogIdentity: binding.logical_catalog_identity, projectKeys});
+  if (!regenerated.bindingBytes.equals(bindingBytes)) throw Error('retained_binding_differs');
+  const projects = {};
+  for (const key of projectKeys) {
+    const mounted = readPrivateFile('/run/eva2/relocations/' + key + '.relocation');
+    const snapshot = regenerated.snapshots[key];
+    if (!snapshot || !snapshot.equals(mounted)) throw Error('retained_snapshot_differs');
+    projects[key] = {snapshot_sha256: hash(snapshot), snapshot_bytes: snapshot.length};
+  }
+  if (!readPrivateFile('/run/eva2/atomic-binding.json').equals(bindingBytes)) throw Error('retained_binding_changed');
+  console.log(JSON.stringify({contract: 'EvaDocumentMaterialVerification/v1',
+    binding_sha256: hash(bindingBytes), project_count: projectKeys.length, projects}));
+} finally {
+  if (journalFd !== undefined) fs.closeSync(journalFd);
+  fs.closeSync(rootFd);
+}
+"""
+
+
+def _validate_material_report(report, preparation, prepared_receipt):
+    if (not isinstance(report, dict)
+            or set(report) != {"contract", "binding_sha256", "project_count", "projects"}
+            or report["contract"] != "EvaDocumentMaterialVerification/v1"
+            or report["binding_sha256"] != prepared_receipt["files"]["binding.json"]["sha256"]
+            or type(report["project_count"]) is not int
+            or report["project_count"] != len(preparation["project_keys"])
+            or not isinstance(report["projects"], dict)
+            or set(report["projects"]) != set(preparation["project_keys"])):
+        raise ValueError("document material verification report differs")
+    for key, item in report["projects"].items():
+        expected = prepared_receipt["files"][key + ".relocation"]
+        if (not isinstance(item, dict) or set(item) != {"snapshot_sha256", "snapshot_bytes"}
+                or type(item["snapshot_bytes"]) is not int
+                or item["snapshot_sha256"] != expected["sha256"]
+                or item["snapshot_bytes"] != expected["size"]):
+            raise ValueError("verified document snapshot differs from preparation")
+
+
 def _verify_running(container_id, config, preparation, mounts):
     rows = json.loads(_command(["docker", "inspect", container_id]))
     if len(rows) != 1:
@@ -244,10 +297,18 @@ def connect_document_providers(package_root, *, preparation_configuration,
             guard()
             _inspect_network(config["network_id"])
             _verify_running(container_id, config, prep, mounts)
-            item.update(status="connected_read_only", provider_verified=True,
+            item.update(status="connected_read_only", provider_verified=True, documents_verified=False,
                         catalog_sha256=canonical_sha256(observed), verification_scope="MCP initialization and tools/list catalog only")
-        receipt.update(status="connected_read_only", provider_verified=True, services_started=True)
-        receipt["verification_scope"] = "Running image and read-only mounts; SDK initialization and exact catalog. No document observation, writes, resumption or core activation."
+            material = json.loads(_command(["docker", "exec", container_id, "node", "--input-type=module",
+                "-e", _VERIFY_MATERIAL], deadline=20 + 10 * len(prep["project_keys"])))
+            _validate_material_report(material, prep, receipts[config["preparation_index"]])
+            guard()
+            _inspect_network(config["network_id"])
+            _verify_running(container_id, config, prep, mounts)
+            item.update(documents_verified=True, material_verification=material,
+                        verification_scope="Native retained material/history matches prepared binding and snapshots; no writes or task resumption")
+        receipt.update(status="connected_read_only", provider_verified=True, documents_verified=True, services_started=True)
+        receipt["verification_scope"] = "Running image and read-only mounts; SDK initialization and exact catalog; native verification of retained document material/history. No writes, resumed task completion or core activation."
         return receipt
     except Exception as error:
         receipt["status"] = "inspection_required_no_retry"

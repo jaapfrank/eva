@@ -54,6 +54,23 @@ async function fixture(fn) {
   try {await fn({dir,bin,rootFd,journalFd,childFd,run,crash,copy,originalBindingBytes});}
   finally {held.forEach(fd=>fs.closeSync(fd));fs.rmSync(dir,{recursive:true,force:true});}
 }
+test('read-only preparation recheck preserves exact authority and detects changed project material',()=>fixture(async({dir,run,copy,bin,originalBindingBytes})=>{
+  const receipt=run(first);assert.equal(receipt.status,0,String(receipt.stderr));
+  const target=copy();
+  const journal=dir+'/target-journal/'+key+'/workspace-writer.journal';
+  const before=fs.readFileSync(journal), beforeStat=fs.statSync(journal);
+  const recheck=()=>prepareRelocation({executable:bin,rootFd:target.rootFd,journalFd:target.journalFd,
+    originalBindingBytes,logicalCatalogIdentity:'f'.repeat(64),projectKeys:[key]});
+  const verified=recheck();
+  assert.deepEqual(verified.bindingBytes,target.packageResult.bindingBytes);
+  assert.deepEqual(verified.snapshots[key],target.packageResult.snapshots[key]);
+  assert.deepEqual(fs.readFileSync(journal),before);
+  assert.equal(fs.statSync(journal).mtimeMs,beforeStat.mtimeMs);
+  assert.equal(fs.statSync(journal).ctimeMs,beforeStat.ctimeMs);
+  fs.writeFileSync(dir+'/target/'+first.path,'Changed retained result\n');
+  assert.throws(recheck,/relocation_snapshot_refused/);
+  assert.deepEqual(fs.readFileSync(journal),before);
+}));
 test('copied completed project keeps exact receipts and journal prefix; observe writes nothing; only missing step executes once',()=>fixture(async({dir,run,copy,bin,originalBindingBytes})=>{
   const receipt=run(first);assert.equal(receipt.status,0,String(receipt.stderr));
   const original=fs.readFileSync(dir+'/source-journal/'+key+'/workspace-writer.journal');

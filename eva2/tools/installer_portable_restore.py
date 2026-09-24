@@ -371,6 +371,7 @@ class InstallerPortableRestore:
                             or document_connection.get("contract") != "EvaDocumentConnection/v1"
                             or document_connection.get("status") != "connected_read_only"
                             or document_connection.get("services_started") is not True
+                            or document_connection.get("documents_verified") is not True
                             or document_connection.get("core_activated") is not False):
                         raise ValueError("document connection receipt differs")
                     guard()
@@ -383,7 +384,7 @@ class InstallerPortableRestore:
             **({"document_connection": document_connection, "document_components": "connected_read_only"}
                if document_connection is not None else {}),
             "materialization_destination": str(destination),
-            "notice": ("Documentproviders zijn aangesloten voor controle in alleen-lezen-modus. Eva en haar taakuitvoerders blijven uit. Controle van projectresultaten, schrijftoegang en vrijgave blijven afzonderlijke stappen."
+            "notice": ("Documentproviders zijn alleen-lezen aangesloten. De native controle bevestigt dat bewaarde projectbestanden en uitvoerbewijzen overeenkomen met de voorbereiding. Eva en haar taakuitvoerders blijven uit; gatewaykoppeling, schrijftoegang en vrijgave volgen afzonderlijk."
                 if document_connection is not None else
                 "Kern, geheugen en gateway zijn geïmporteerd. Documentproviders zijn voorbereid maar niet aangesloten of gecontroleerd. Alles blijft inactief; aansluiten, controleren en vrijgeven zijn afzonderlijke stappen."
                 if documents is not None else
