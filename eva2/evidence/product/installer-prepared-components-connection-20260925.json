@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-09-24T23:43:53.899774+00:00",
+  "scope": "installed_prepared_restore_configuration_join",
+  "files": [
+    {
+      "path": "tools/installer_prepared_components.py",
+      "sha256": "7736a202fde2a38f786732bccaa35e2987bc7ab7028bc154007ef51e7423dec8",
+      "rollback": null
+    },
+    {
+      "path": "tools/installer_prepared_restore.py",
+      "sha256": "6917a84730da4dc2c3417ad84b0ee9835075ca495cbf7f4e812074f2dcef0ec8",
+      "rollback": "/home/administrator/project/.eva2-artifacts/prepared-components-connection-20260925/rollback/e2088e0087a83f233fd1f518838a0f7e4e95fe3b71ebfdcc087e75b2e14810bf/tools/installer_prepared_restore.py"
+    },
+    {
+      "path": "tools/installer_prepared_restore_config.py",
+      "sha256": "56b1e893677e4bed09041c57f99e310a4dc471ffe2abf9774e16eac4488ada66",
+      "rollback": "/home/administrator/project/.eva2-artifacts/prepared-components-connection-20260925/rollback/52edf4870c2988ad299a651e6cd5e32472e1cdc3aa1126df52999e2e335ba5ba/tools/installer_prepared_restore_config.py"
+    }
+  ],
+  "tests": {
+    "prepared_configuration": 11,
+    "prepared_session_and_builder": 6,
+    "component_assembler": 5
+  },
+  "independentReview": "contact_overlap_review GO for coordinator changes; coordinator reviewed assembler and required correction for document output parent before installation.",
+  "actualRestoreExecuted": false,
+  "productionModified": false,
+  "modelCalls": 0,
+  "ownerAccepted": false,
+  "remaining": [
+    "Saved installer inputs still need to supply the trusted builder settings.",
+    "No end-to-end prepared restore/import/activation performed for this join.",
+    "Ordinary owner restore flow remains incomplete."
+  ]
+}

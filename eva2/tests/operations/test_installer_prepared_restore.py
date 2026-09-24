@@ -65,3 +65,56 @@ def test_bootstrap_connects_both_existing_actions_and_closes(monkeypatch):
     monkeypatch.setattr(module,"run_installer_wizard",wizard)
     assert module.run_prepared_installer_wizard(preparation=preparation,config_builder=lambda target:{})==7
     assert captured["restore_workflow"]._closed is True
+
+
+def test_configuration_builder_joins_components_once_and_checks_lineage_first(tmp_path, monkeypatch):
+    import sqlalchemy
+    from types import SimpleNamespace
+    from contextlib import contextmanager
+    from tools import installer_prepared_components, installer_prepared_restore_config
+    calls = []
+    @contextmanager
+    def connect():
+        yield object()
+    engine = SimpleNamespace(connect=connect, dispose=lambda: calls.append("dispose"))
+    monkeypatch.setattr(sqlalchemy, "create_engine", lambda dsn: engine)
+    def build(**kwargs):
+        calls.append("complete" if "component_configuration" in kwargs else "preflight")
+        return SimpleNamespace(pending=(), config={"joined": True})
+    monkeypatch.setattr(installer_prepared_restore_config, "build_prepared_restore_config", build)
+    def components(**kwargs):
+        calls.append("components")
+        return {"component_configuration": {"existing": True}}
+    monkeypatch.setattr(installer_prepared_components, "prepare_installer_components", components)
+    preparation = SimpleNamespace(workspace=tmp_path, status=lambda: "prepared")
+    builder = module.PreparedRestoreConfigurationBuilder(component_settings={"prepared_workspace": tmp_path},
+        restore_settings={"preparation_workspace": tmp_path, "target_dsn": "private", "runtime_identity": {}, "activation_settings": {}})
+    assert builder(preparation) == {"joined": True}
+    assert builder(preparation) == {"joined": True}
+    assert calls == ["preflight", "components", "complete", "dispose"]
+
+
+def test_configuration_failure_does_not_repeat_component_creation(tmp_path, monkeypatch):
+    import sqlalchemy
+    from types import SimpleNamespace
+    from contextlib import contextmanager
+    from tools import installer_prepared_components, installer_prepared_restore_config
+    @contextmanager
+    def connect():
+        yield object()
+    disposed = []
+    monkeypatch.setattr(sqlalchemy, "create_engine", lambda dsn: SimpleNamespace(connect=connect, dispose=lambda: disposed.append(True)))
+    monkeypatch.setattr(installer_prepared_restore_config, "build_prepared_restore_config", lambda **kwargs: None)
+    attempts = []
+    def fail(**kwargs):
+        attempts.append(True)
+        raise ValueError("partial target retained")
+    monkeypatch.setattr(installer_prepared_components, "prepare_installer_components", fail)
+    preparation = SimpleNamespace(workspace=tmp_path, status=lambda: "prepared")
+    builder = module.PreparedRestoreConfigurationBuilder(component_settings={"prepared_workspace": tmp_path},
+        restore_settings={"preparation_workspace": tmp_path, "target_dsn": "private", "runtime_identity": {}, "activation_settings": {}})
+    with pytest.raises(ValueError, match="partial"):
+        builder(preparation)
+    with pytest.raises(ValueError, match="inspect retained"):
+        builder(preparation)
+    assert attempts == [True] and disposed == [True]

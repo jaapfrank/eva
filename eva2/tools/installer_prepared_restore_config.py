@@ -61,7 +61,7 @@ def _database(pin, service):
 
 def build_prepared_restore_config(*, preparation_workspace, connection, target_dsn,
                                   approved_source, authority, workspace, objects, keyring,
-                                  runtime_identity=None, component_configuration=None,
+                                  runtime_identity=None, component_configuration=None, activation_settings=None,
                                   core_service="core",
                                   writer_services=("core","durable-goal-worker","telegram-ingress")):
     """Use explicit source approval and actual target identities, never archive pins.
@@ -120,6 +120,37 @@ def build_prepared_restore_config(*, preparation_workspace, connection, target_d
         if "memory" in external and external["memory"]!=memory:
             raise ValueError("external recovery contains stale memory target identities")
         external["memory"]=memory
+    if activation_settings is not None:
+        if "activation" in components:
+            raise ValueError("activation must have one configuration source")
+        settings = deepcopy(activation_settings)
+        if set(settings) != {"model_authority_file", "writers", "memory_profile_sha256", "source_memory_writers"}:
+            raise ValueError("prepared activation settings differ")
+        # Profiles and credential digests are independently approved installer
+        # inputs. Only new container identities come from target preparation.
+        if set(settings["writers"]) != set(writer_services):
+            raise ValueError("prepared activation writer service coverage differs")
+        writers = []
+        for service in writer_services:
+            approved = settings["writers"][service]
+            if set(approved) != {"profile_sha256", "model_lease_path", "credential_files"}:
+                raise ValueError("prepared writer authorization fields differ")
+            writers.append({"id": pin(service)["id"], **approved})
+        target_memory = {k: pin("hindsight")[k] for k in ("name", "id", "image")}
+        networks = prepared.get("networks", [])
+        if len(networks) != 1:
+            raise ValueError("one prepared network required for activation")
+        native = {"model_authority_file": str(_absolute(settings["model_authority_file"])), "writers": writers}
+        memory_api = {"container": target_memory, "network_id": networks[0]["id"],
+            "profile_sha256": settings["memory_profile_sha256"],
+            "model_authority_file": native["model_authority_file"],
+            "model_auth_path": "/home/hindsight/.codex/auth.json",
+            "source_memory_writers": settings["source_memory_writers"]}
+        from tools.installation_runtime_authorization import validate_runtime_authorization_configuration
+        from tools.installation_memory_start import validate_memory_start_configuration
+        validate_runtime_authorization_configuration(native)
+        validate_memory_start_configuration(memory_api, external_configuration=components.get("external_recovery"))
+        components["activation"] = {"native_authorization": native, "memory_api": memory_api}
     if "activation" in components:
         expected_api={k:pin("hindsight")[k] for k in ("name","id","image")}
         if components["activation"].get("memory_api",{}).get("container")!=expected_api:

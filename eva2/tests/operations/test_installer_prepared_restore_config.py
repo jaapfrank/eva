@@ -93,3 +93,40 @@ def test_changed_preparation_plan_cannot_mix_with_workflow_receipt(setup):
     path.write_text(json.dumps(prepared))
     with pytest.raises(ValueError,match="plan differs"):
         module.build_prepared_restore_config(**args)
+
+
+def activation_inputs(args):
+    path = args["preparation_workspace"] / "resources/preparation-receipt.json"
+    receipt = json.loads(path.read_text())
+    receipt["networks"] = [{"name": "new-network", "id": "a" * 64}]
+    path.write_text(json.dumps(receipt))
+    pin = lambda digit, name: {"name": name, "id": digit * 64, "image": "sha256:" + digit * 64}
+    source = pin("8", "old-memory")
+    args["component_configuration"] = {"external_recovery": {
+        "gateway": {"target_path": "/private/new.sqlite"},
+        "writers": [pin("6", "new-hindsight"), source]}}
+    args["activation_settings"] = {"model_authority_file": "/private/model-authority",
+        "writers": {name: {"profile_sha256": "b" * 64, "model_lease_path": "/run/model/auth.json", "credential_files": []}
+                    for name in ("core", "durable-goal-worker", "telegram-ingress")},
+        "memory_profile_sha256": "c" * 64, "source_memory_writers": [source]}
+
+
+def test_activation_resolves_new_ids_without_replacing_approved_profiles(setup):
+    args, _, _, _ = setup
+    activation_inputs(args)
+    original = deepcopy(args["activation_settings"])
+    result = module.build_prepared_restore_config(**args)
+    activation = result.config["activation"]
+    assert [x["id"] for x in activation["native_authorization"]["writers"]] == [str(i) * 64 for i in (1, 2, 3)]
+    assert activation["memory_api"]["container"]["id"] == "6" * 64
+    assert activation["memory_api"]["profile_sha256"] == "c" * 64
+    assert args["activation_settings"] == original
+    assert "activation" not in result.pending
+
+
+def test_activation_cannot_omit_a_prepared_writer(setup):
+    args, _, _, _ = setup
+    activation_inputs(args)
+    del args["activation_settings"]["writers"]["telegram-ingress"]
+    with pytest.raises(ValueError, match="coverage"):
+        module.build_prepared_restore_config(**args)

@@ -1,5 +1,6 @@
 """Connect the existing restore UI to a completed installer target, lazily."""
 from contextlib import ExitStack
+from copy import deepcopy
 from threading import Lock
 
 from eva.application.installer_restore import RestoreTargetNotReady
@@ -58,3 +59,53 @@ def run_prepared_installer_wizard(*, preparation, config_builder, argv=None):
             installation_preparation_status=preparation.status, restore_workflow=restore)
     finally:
         restore.close()
+
+
+class PreparedRestoreConfigurationBuilder:
+    """Join installed component preparation and database binding for the UI.
+
+    Both settings dictionaries are supplied by trusted installer bootstrap, not
+    HTTP. Existing component receipts retain failed resources; a failed build
+    cannot silently create a second target in the same session.
+    """
+    def __init__(self, *, component_settings, restore_settings):
+        self.component_settings = deepcopy(component_settings)
+        self.restore_settings = deepcopy(restore_settings)
+        self._attempted = False
+        self._configuration = None
+
+    def __call__(self, preparation):
+        from sqlalchemy import create_engine
+        from tools.installer_prepared_components import prepare_installer_components
+        from tools.installer_prepared_restore_config import build_prepared_restore_config
+        if preparation.status() != "prepared":
+            raise RestoreTargetNotReady("prepared installer target required")
+        if self._configuration is not None:
+            return self._configuration
+        if self._attempted:
+            raise ValueError("component preparation failed; inspect retained target before retry")
+        if "component_configuration" in self.restore_settings or "connection" in self.restore_settings:
+            raise ValueError("component configuration is derived from the prepared target")
+        if self.component_settings.get("prepared_workspace") != preparation.workspace:
+            raise ValueError("component settings select a different prepared workspace")
+        if self.restore_settings.get("preparation_workspace") != preparation.workspace:
+            raise ValueError("restore settings select a different prepared workspace")
+        if not {"runtime_identity", "activation_settings"} <= set(self.restore_settings):
+            raise ValueError("complete restore requires identity and activation settings")
+        self._attempted = True
+        engine = create_engine(self.restore_settings["target_dsn"])
+        try:
+            with engine.connect() as connection:
+                # Check actual source/target lineage before creating components.
+                preflight = {key: value for key, value in self.restore_settings.items()
+                             if key != "activation_settings"}
+                build_prepared_restore_config(connection=connection, **preflight)
+                components = prepare_installer_components(**self.component_settings)
+                result = build_prepared_restore_config(connection=connection,
+                    component_configuration=components["component_configuration"], **self.restore_settings)
+                if result.pending:
+                    raise ValueError("complete prepared restore configuration is still missing components")
+                self._configuration = result.config
+                return self._configuration
+        finally:
+            engine.dispose()

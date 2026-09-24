@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Herstelcomponenten en vrijgave in één configuratiestap",
+            "date": "25 september",
+            "state": "installed",
+            "result": "Bestaande componentvoorbereiding, doelidentiteiten en vrijgave gekoppeld aan dezelfde herstelsessie. Mislukte assemblage wordt niet opnieuw gestart bij een tweede klik. Geïnstalleerd met terugweg.",
+            "remaining": "Bewaarde installerinstellingen nog aansluiten; complete import/activatie en gewone gebruikersbediening niet bewezen.",
+            "source": "eva2/evidence/product/installer-prepared-components-connection-20260925.json"
+          },
+          {
             "title": "Gateway- en documentconfiguratie voor voorbereid herstel",
             "date": "25 september",
             "state": "installed",
@@ -2263,15 +2271,15 @@
           }
         ],
         "now": {
-          "title": "Gateway- en documentkoppelingen geïnstalleerd",
-          "state": "Beheermodules geïnstalleerd; volledige herstelbediening nog open",
-          "detail": "Documentconfiguratie behoudt bestaande project-/catalogus-/gatewaygegevens. Nieuwe gatewayvoorbereider maakt een gestopt doel met bestaande startdefinitie. Negen gerichte controles, onafhankelijke reviews en geïnstalleerde bron/import bevestigd. Geen nieuwe gateway gemaakt of gegevens geïmporteerd. Geen uitvoerders meer actief op dit deel.",
-          "doneWhen": "De bestaande gewone herstelactie gebruikt deze koppelingen, zet alle gegevens terug en geeft het voorbereide doel gecontroleerd vrij."
+          "title": "Herstelonderdelen samengevoegd in configuratiestap",
+          "state": "Aansluiting geïnstalleerd; gebruikersbediening nog open",
+          "detail": "Gateway/documenten/materiaal worden via één builder verbonden met bestaande herstelsessie en vrijgave-instellingen. 22 gerichte controles en onafhankelijke reviews; geïnstalleerde bron/import bevestigd. Geen volledige herstelactie uitgevoerd. Geen uitvoerders meer actief op dit deel.",
+          "doneWhen": "Bewaarde installerinstellingen voeden de aansluiting en één complete herstelactie slaagt via de gewone bediening."
         },
         "next": {
-          "title": "Pakketinventaris en vrijgave in gewone herstelactie aansluiten",
+          "title": "Bewaarde instellingen aansluiten en volledig herstel uitvoeren",
           "state": "Nog niet gestart",
-          "detail": "Opgeslagen providerindeling, goedgekeurde bron en vrijgaveconfiguratie verbinden met de bestaande voorbereide herstelroute. Daarna één complete uitvoering; geen nieuwe losse herstelengine."
+          "detail": "Werkelijke providerindeling, bronkeuze en goedgekeurde runtimeprofielen aan de samengestelde builder leveren. Daarna volledige afzonderlijke herstelproef; geen productiegegevens verplaatsen."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2285,7 +2293,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T23:37:47.753179+00:00"
+        "reviewedAt": "2026-09-24T23:44:30.767882+00:00"
       }
     },
     "pendingTechnicalReview": {

@@ -539,3 +539,23 @@ retained its project keys, catalog digest and gateway binding. The operator-stag
 module is installed with exact byte/import verification. The saved-layout inventory
 join and ordinary prepared restore bootstrap remain incomplete; this checkpoint
 is not a usable owner restore feature. See the installed document-components evidence.
+
+
+### Prepared restore composition — 25 September 2026
+
+`PreparedRestoreConfigurationBuilder` is the callable configuration builder for
+`run_prepared_installer_wizard`. Trusted bootstrap supplies `component_settings`
+for `prepare_installer_components` and `restore_settings` for
+`build_prepared_restore_config`, both selecting the same preparation workspace.
+The builder checks source/target lineage before creating components, derives the
+component configuration, and requires complete identity/activation settings.
+Failed attempts cannot silently create another gateway. Target receipt paths
+retain the partial attempt across process exits. Approved runtime profiles and
+credential digests are supplied independently; only new container IDs and the
+network are resolved from preparation. No target observation becomes approval.
+
+The assembler and session/configuration join are installed; 22 focused checks
+and independent reviews passed. Saved installer choices still need to supply the
+trusted settings; no complete prepared restore action has run for this join.
+See `installer-prepared-components-connection-20260925.json` for installed hashes
+and rollback paths. This does not claim ordinary owner restore completion.
