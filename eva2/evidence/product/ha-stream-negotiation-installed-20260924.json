@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-09-24T09:51:04.261106+00:00",
+  "source_commit": "567b174e448643b046db8d0ec2d4b9a0ee8b541e",
+  "installed": true,
+  "owner_requirement": "Earlier spoken response over existing HA and physical Voice PE route without firmware replacement.",
+  "defect": "Live nginx disabled request header forwarding and omitted Accept. Installed HA client requests NDJSON, but native core selected full JSON because stream negotiation was lost.",
+  "change": "Forward Accept only in existing native voice ingress. No new responder or channel behavior.",
+  "checks": {
+    "isolated_actual_nginx": "19 existing checks passed, including upstream Accept negotiation, stop/disconnect and retained boundaries. No model/audio.",
+    "independent_review": "bounded_contact_comparison: no findings; installed HA client/conversation source exact matches, server chooses route from Accept.",
+    "installed_renderer_matches_source": true,
+    "active_config_forwards_accept": true,
+    "ingress_service": "active",
+    "readiness_http": {
+      "http://localhost:44716/session/ready": 200,
+      "http://localhost:44712/project-state": 200
+    }
+  },
+  "rollback": {
+    "renderer": "/home/administrator/project/.eva2-artifacts/ha-stream-negotiation-20260924/baseline-renderer.py",
+    "configuration": "/home/administrator/project/.eva2-artifacts/ha-stream-negotiation-20260924/baseline-nginx.conf",
+    "method": "Restore renderer to /opt/eva2/voice-ingress/render_household_voice_ingress.py and restart only eva2-voice-ingress.service."
+  },
+  "extra_model_requests": 0,
+  "firmware_changed": false,
+  "home_assistant_restarted": false,
+  "limits": [
+    "Physical first audible response and total latency after correction remain unmeasured.",
+    "Does not prove continuous speaking or fix rejected alternate firmware.",
+    "Streaming still requires eligible final-answer text from the shared model; tool execution remains subject to existing acknowledgement policy."
+  ],
+  "next": "Use ordinary next Voice PE conversation to assess latency; no repeat synthetic model calls. Keep other open product functions moving."
+}

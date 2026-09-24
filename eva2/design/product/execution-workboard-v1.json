@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T03:16:25.114843+00:00",
         "deliveries": [
           {
+            "title": "Wachten op volledig antwoord in HA-proxy hersteld",
+            "date": "24 september",
+            "state": "installed",
+            "result": "De bestaande HA-streamaanvraag bereikt nu de kern; gecontroleerd met echte geïsoleerde nginx, onafhankelijk beoordeeld en geïnstalleerd.",
+            "remaining": "Hoorbare snelheidswinst en continue spraak nog niet bewezen. Firmware behouden; nul modelcalls.",
+            "source": "eva2/evidence/product/ha-stream-negotiation-installed-20260924.json"
+          },
+          {
             "title": "Sneller contactmodel met gedeelde geheugentools geïnstalleerd",
             "date": "24 september",
             "state": "installed",
@@ -1821,27 +1829,28 @@
           }
         ],
         "now": {
-          "title": "Nieuw contactmodel geïnstalleerd",
-          "state": "Technische installatie afgerond",
-          "detail": "Gpt-6-luna gebruikt nu dezelfde gedeelde toolzoekroute. Kern en werker gezond; websitebediening en spraakgereedheid bereikbaar. Geen nieuwe modelcalls. Werkelijke snelheidswinst via de kanalen is nog niet gemeten.",
-          "doneWhen": "Broncorrectie, offline toolcontrole, geconfigureerde start en installatie afgerond. Gesprek en stem als geheel blijven open."
+          "title": "HA ontvangt nu de bestaande antwoordstream",
+          "state": "Geïnstalleerd",
+          "detail": "Proxy gaf de streamaanvraag niet door en liet HA wachten op volledig antwoord. Headerdoorgifte hersteld, gericht gecontroleerd en onafhankelijk beoordeeld. Spraakproxy actief; firmware en HA ongewijzigd.",
+          "doneWhen": "Concrete streamblokkade technisch hersteld. Hoorbare snelheid en volledige doorlopende spraak blijven afzonderlijk open."
         },
         "next": {
-          "title": "HA-antwoord eerder laten spreken",
+          "title": "Doorpraten en terugmelden via huisapparaat",
           "state": "Nog niet gestart",
-          "detail": "Bestaande integratie gericht controleren op wachten tot het volledige Eva-antwoord. De fysieke meting toont 6,3–7,8s verwerking; oorzaak binnen die fase verder bepalen zonder brede audit of firmwarewisseling."
+          "detail": "Volgende open gesprek-/spraakuitkomst: tussenvraag en achtergrondresultaat blijven via dezelfde werkende HA-route beschikbaar. Bestaande koppelingen eerst behouden; geen automatische firmwarewisseling."
         },
         "ownerAction": {
-          "title": "Huidige meetronde uitgevoerd",
+          "title": "Bij je volgende gewone gesprek",
           "url": "http://localhost:44712/",
           "linkLabel": "Projectoverzicht",
           "steps": [
-            "Je hebt de fysieke vragen gesteld; opnieuw proberen is nu niet nodig."
+            "Gebruik de woonkamer-Voice PE zoals gewoonlijk.",
+            "Een technische streamcorrectie is geïnstalleerd; merkbare snelheid en natuurlijkheid staan nog open voor jouw beoordeling."
           ],
-          "expected": "Meetuitkomst is geregistreerd; geen nieuwe firmware geïnstalleerd en geen acceptatie afgeleid uit stilte."
+          "expected": "Eva kan al tijdens de antwoordvorming tekst doorgeven. Geen belofte van een antwoord binnen één seconde."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T09:46:01.021637+00:00"
+        "reviewedAt": "2026-09-24T09:51:04.261106+00:00"
       }
     },
     "pendingTechnicalReview": {
