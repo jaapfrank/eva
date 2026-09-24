@@ -74,7 +74,7 @@ const chat=document.getElementById('chat'),form=document.getElementById('form'),
 let activeRequests=0;
 function message(role,text,messageId=null,userNode=null){const node=document.createElement('div');node.className='message '+role;node.textContent=text;if(role==='eva'&&messageId){const forget=document.createElement('button');forget.type='button';forget.textContent='Vergeet deze beurt';forget.addEventListener('click',async()=>{forget.disabled=true;try{const response=await fetch('/internal/v1/dashboard/conversation/erase',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({message_id:messageId})});const data=await response.json();if(!response.ok||!data||data.contract!=='EvaDashboardConversationErasure/v1')throw new Error('unavailable');if(userNode)userNode.textContent='Deze beurt is verwijderd.';node.textContent='Deze beurt is verwijderd.';}catch(_error){forget.disabled=false;forget.textContent='Wissen lukte nog niet — probeer opnieuw';}});node.append(document.createElement('br'),forget);}if(userNode)userNode.after(node);else chat.append(node);node.scrollIntoView({block:'end'});return node;}
 function state(text,error=false){const node=document.createElement('div');node.className='state'+(error?' error':'');node.textContent=text;chat.append(node);node.scrollIntoView({block:'end'});return node;}
-stop.addEventListener('click',async()=>{stop.disabled=true;try{const response=await fetch('/internal/v1/dashboard/conversation/stop',{method:'POST',headers:{'content-type':'application/json'},body:'{}'});const data=await response.json();if(!response.ok||data.contract!=='EvaDashboardConversationStop/v1'||!Number.isInteger(data.requested_count)||data.requested_count<0)throw new Error('unavailable');state(data.requested_count?'Stopverzoek opgeslagen. Eva start geen vervolgstappen.':'Er is nu geen onafgeronde opdracht in dit gesprek gevonden.');}catch(_error){state('Het stopverzoek is niet bevestigd. Probeer opnieuw.',true);}finally{stop.disabled=false;}});
+
 async function readReplyStream(response, onDelta) {
   if(!response.ok || !response.body || !response.headers.get('content-type')?.includes('application/x-ndjson')) throw new Error('stream unavailable');
   const reader=response.body.getReader(), decoder=new TextDecoder();
@@ -97,9 +97,8 @@ async function readReplyStream(response, onDelta) {
     }
   } finally {await reader.cancel().catch(()=>{});reader.releaseLock();}
 }
-form.addEventListener('submit',async event=>{
-  event.preventDefault();const text=input.value.trim();if(!text||activeRequests>=8)return;
-  activeRequests++;const userNode=message('user',text);input.value='';input.focus();send.disabled=activeRequests>=8;
+async function submitMessage(text,clearInput=true){
+  activeRequests++;const userNode=message('user',text);if(clearInput){input.value='';input.focus();}send.disabled=activeRequests>=8;
   const pending=state('Eva denkt na…');userNode.after(pending);let draft='';
   try {
     const response=await fetch('/internal/v1/dashboard/conversation/respond',{
@@ -114,6 +113,15 @@ form.addEventListener('submit',async event=>{
     pending.textContent=(draft?draft+'\\n\\n':'')+'Dit antwoord is niet bevestigd. Bekijk de taakstatus voordat je een opdracht opnieuw verstuurt.';
     pending.classList.add('error');
   } finally {activeRequests--;send.disabled=activeRequests>=8;}
+}
+form.addEventListener('submit',async event=>{
+  event.preventDefault();const text=input.value.trim();if(!text||activeRequests>=8)return;
+  await submitMessage(text);
+});
+stop.addEventListener('click',async()=>{
+  stop.disabled=true;
+  try {await submitMessage('Stop deze opdracht.',false);}
+  finally {stop.disabled=false;}
 });
 </script>""" + "<script>" + DASHBOARD_WORK_RETURN_CLIENT_JS + "</script>" + """<script src="/internal/v1/dashboard/conversation/voice-client.js" defer></script></body></html>
 """
