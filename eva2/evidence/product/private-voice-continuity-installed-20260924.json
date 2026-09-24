@@ -1,0 +1,28 @@
+{
+  "recorded_at": "2026-09-24T00:06:18.108162+00:00",
+  "source_commit": "6d053b67",
+  "image": "eva2-private-voice-continuity:20260924",
+  "requirement": "Step 2: personal continuity across admitted private conversation channels.",
+  "source_finding": "recent_other_channel admitted a private voice destination but selected only dashboard/Telegram sources; earlier private voice sessions could not contribute recent cross-channel context.",
+  "change": "Include retained voice sources of the currently verified owner under existing tenant, installation, private audience, erasure and retention checks; exclude current conversation and projects. Preserve one-fragment, newer-than-current, 24-hour and 1800-character bounds. Label private speech provenance.",
+  "checks": [
+    "Python syntax",
+    "Packaged imports",
+    "Exact narrow patch against installed source; unrelated existing installed differences preserved",
+    "Zero active stored tasks before installation"
+  ],
+  "deferred": [
+    "Actual voice-to-text and new-session continuation",
+    "Independent review",
+    "Household and cross-person integration trials"
+  ],
+  "model_calls": 0,
+  "credit_cost": "unknown",
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/private-voice-continuity-20260924/baseline.compose.private.json",
+  "not_claimed": [
+    "Automatic speaker recognition",
+    "Private context on shared Voice PE",
+    "Step 2 complete",
+    "New long-term memory behavior"
+  ]
+}
