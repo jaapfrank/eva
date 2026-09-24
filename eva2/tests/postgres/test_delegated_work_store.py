@@ -2413,3 +2413,25 @@ def test_sigkill_after_call_start_is_visible_and_never_replayed(
     ).cards[0]
     assert card.worker_health == "contact_lost"
     assert card.result_status == "ambiguous"
+
+
+def test_expired_queued_work_releases_next_task_without_starting_a_call(delegated_engine):
+    label = "queued-deadline"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    store = _store(delegated_engine, scope)
+    expired = _spec(label, scope, episode, binding, work_suffix="expired")
+    valid = expired.model_copy(update={
+        "work_id": expired.work_id + "-valid", "deadline": "2026-08-26T12:30:00Z"})
+    _admit(store, expired)
+    _admit(store, valid)
+    now = datetime(2026, 8, 26, 12, 11, tzinfo=UTC)
+    release = DelegatedWorkReleaseSelector.from_spec(expired)
+    assert store.claim_next(worker_id="queue-test", release=release, now=now) is None
+    row = store.load(expired.work_id, owner_principal_id=UUID(expired.owner_principal_id),
+                     principal_binding_id=binding)
+    assert row.state == "needs_help"
+    assert row.error_code == "deadline_expired"
+    assert row.claim_count == 0
+    assert row.call_id is None
+    claim = store.claim_next(worker_id="queue-test", release=release, now=now)
+    assert claim is not None and claim.work_id == valid.work_id

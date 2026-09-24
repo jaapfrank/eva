@@ -1,0 +1,46 @@
+{
+  "verifiedAt": "2026-09-24T11:56:56.724282+00:00",
+  "sourceCommit": "4a5076794dc3dd73350be30fbe421510638b9eb5",
+  "workerImage": "eva2-queued-deadline:20260924",
+  "health": "healthy",
+  "restartCount": 0,
+  "concurrency": 2,
+  "coreHealth": "healthy",
+  "http": {
+    "http://localhost:44711/internal/v1/dashboard": 200,
+    "http://localhost:44716/session/ready": 200
+  },
+  "moduleSha256": "b47adfd1dbddfa88bbdaff8033fe42f3deae3e1bb1c00fef87813ed07000063e",
+  "modelRequests": 0,
+  "outcome": "Expired admitted work now transitions to needs_help through the existing expiry handling, making the established failure return available.",
+  "review": {
+    "reviewer": "bounded_contact_comparison",
+    "finding": "deadline >= now excluded exactly the queued rows handled by the existing deadline_expired branch. No other sweeper found. Exact release, scope and lease selection preserved."
+  },
+  "verification": {
+    "postgresScenario": "passed: expired admitted row becomes needs_help/deadline_expired with claim_count zero and no call_id; next valid task claimable",
+    "database": "isolated eva2_4b_disposable_deadline_20260924, not live data",
+    "harness": "/home/administrator/project/.eva2-artifacts/queued-deadline-20260924/check.py",
+    "result": "/home/administrator/project/.eva2-artifacts/queued-deadline-20260924/check-result.txt",
+    "harnessSetupCorrections": [
+      "mount permission fixed using root only in disposable test container",
+      "empty fixture database replaced with explicitly created disposable schema",
+      "claim assertion corrected to actual work_id field"
+    ],
+    "configuredWorkerCheck": "exit 0",
+    "liveChecks": "source hash exact, worker and core healthy, concurrency2 retained, dashboard/voice ready HTTP200"
+  },
+  "deployment": {
+    "rollbackCompose": "/home/administrator/project/.eva2-artifacts/queued-deadline-20260924/baseline.compose.private.json",
+    "candidateCompose": "/home/administrator/project/.eva2-artifacts/queued-deadline-20260924/candidate.compose.private.json",
+    "onlyRestarted": "delegated-work-worker",
+    "liveActiveTasksBeforeRestart": 0
+  },
+  "limitations": [
+    "Actual Telegram/website failure receipt not exercised",
+    "Exact worker release matching remains; this does not finalize jobs pinned to an obsolete release",
+    "No extra model requests and no new automatic retries"
+  ],
+  "regressionTest": "eva2/tests/postgres/test_delegated_work_store.py::test_expired_queued_work_releases_next_task_without_starting_a_call",
+  "regressionTestNote": "Equivalent real PostgreSQL scenario executed using existing seed/spec helpers; full fixture suite deferred."
+}

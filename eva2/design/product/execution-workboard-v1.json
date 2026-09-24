@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T11:47:32.814077+00:00",
+        "checkedAt": "2026-09-24T11:56:56.724282+00:00",
         "deliveries": [
+          {
+            "title": "Geen eindeloze wachtstatus na gemiste taakstart",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Een verlopen wachttaak krijgt Hulp nodig via de bestaande foutterugmelding. Volgende geldige opdracht blijft uitvoerbaar; geen automatische herstart.",
+            "remaining": "Gerichte PostgreSQL-controle geslaagd; echte ontvangstmelding niet beproefd. Taken van verouderde uitvoerversies vallen buiten deze wijziging.",
+            "source": "eva2/evidence/product/queued-deadline-installed-20260924.json"
+          },
           {
             "title": "Twee achtergrondopdrachten tegelijk",
             "date": "24 september",
@@ -1845,15 +1853,15 @@
           }
         ],
         "now": {
-          "title": "Twee achtergrondtaken tegelijk geïnstalleerd",
+          "title": "Verlopen wachttaken afgehandeld",
           "state": "Technisch opgeleverd",
-          "detail": "De worker wacht niet meer verplicht tot de vorige opdracht klaar is. Maximaal twee opdrachten tegelijk, met eigen taakbudgetten en bestaande stopbediening. Kern en worker gezond.",
-          "doneWhen": "Bouw, gerichte lokale controles en installatie afgerond; echte gebruiksproef apart open."
+          "detail": "Correctie geïnstalleerd in de achtergrondwerker. Twee uitvoerslots behouden; kern en worker gezond. Geen extra modelaanvragen.",
+          "doneWhen": "Code, gerichte databasecontrole en installatie afgerond. Echte terugmelding blijft apart te beproeven."
         },
         "next": {
-          "title": "Resterende dagelijkse functies afmaken",
+          "title": "Resterende functionele oplevering",
           "state": "In wachtrij",
-          "detail": "Volgende concrete ontbrekende functie uit de bestaande acht stappen oppakken. Geen brede herbouw; uitgestelde model- en gebruikersproeven blokkeren onafhankelijk bouwwerk niet."
+          "detail": "Verder met de open gebruikersuitkomsten van de acht stappen. Behouden wat al werkt; uitgestelde praktijkproeven blijven zichtbaar en blokkeren alleen afhankelijk werk."
         },
         "ownerAction": {
           "title": "Een bestaande lamp bedienen",
@@ -1867,7 +1875,7 @@
           "expected": "Bestaande toegestane lamp schakelt; fysieke werking nog niet bewezen. Geen nieuwe schakelaars toegevoegd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T11:47:32.814077+00:00"
+        "reviewedAt": "2026-09-24T11:56:56.724282+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11639,7 +11647,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Na installatie van twee achtergrondslots verder met de volgende aantoonbaar ontbrekende dagelijkse functie uit het bestaande werkbord. Echte overlap-/modelproef uitgesteld; geen projectblokkade.",
+      "nextAction": "Verlopen wachttaken en parallelle uitvoering geïnstalleerd; vervolg met resterende functionele oplevering. Echte model-/kanaalproeven blijven uitgesteld zonder onafhankelijk bouwen te blokkeren.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

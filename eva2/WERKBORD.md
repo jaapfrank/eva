@@ -2,6 +2,8 @@
 
 Laatst bijgewerkt: 2026-09-24.
 
+**Opgeleverd — verlopen wachttaken blijven niet eindeloos ingepland.** Het selectiefilter dat de bestaande deadline-afhandeling onbereikbaar maakte is verwijderd. Een verlopen taak krijgt nu Hulp nodig/deadline_expired zonder claim- of modelverbruik; de volgende geldige taak blijft claimbaar. Gerichte echte PostgreSQL-controle op aparte wegwerpdatabase geslaagd; onafhankelijk bronoordeel akkoord. Workerbron4a507679 geïnstalleerd, twee uitvoerslots behouden, kern/werker gezond en dashboard/spraakgereedheid HTTP200. [Bewijs en terugweg](evidence/product/queued-deadline-installed-20260924.json). Geen modelcalls. Echte aflevering en taken vastgepind op verouderde uitvoerversies blijven buiten dit bewijs. De volledige achtstappenoplevering blijft open; volgende functionele werkzaamheden staan in de bestaande uitvoervolgorde.
+
 **Opgeleverd — twee achtergrondtaken tegelijk (24 september).** De bestaande achtergrondwerker heeft nu twee afzonderlijke uitvoerslots; hij wacht niet meer verplicht op afronding van de vorige opdracht. Per-taak budgetten, duurzame claims en stoppen behouden. Gerichte offline overlap-/stopcontroles geslaagd, onafhankelijke broncontrole en geconfigureerde startcontrole akkoord. Alleen worker geïnstalleerd en herstart; kern en worker gezond, eigenaarbediening en spraakgereedheid HTTP200. Bron7831e692 naar GitHub. [Installatie en terugweg](evidence/product/background-concurrency-installed-20260924.json). Geen modelaanvragen; echte gelijktijdige taakproef en volledige gesprekssnelheid blijven open. Volgende: resterende concrete dagelijkse functie uit het bestaande werkbord oppakken; geen afhankelijkheid van uitgestelde proeven.
 
 ### Eerdere voortgang — chronologisch bewijs, geen actuele blokkades
