@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 from contextlib import contextmanager, nullcontext
-from contextvars import ContextVar
+from contextvars import ContextVar, copy_context
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field, replace
 from datetime import datetime
 import hashlib
@@ -955,9 +956,32 @@ class LivingConversation:
             # an already completed legacy action and routes without a worker intact.
             available_names = tuple(name for name in available_names
                                     if name != "research_current_options")
-        self_context = (
-            () if self._actions is None else self._actions.active_context(turn)
-        )
+        def initial_memory():
+            memory_started_at = monotonic()
+            memory_outcome = "failed"
+            try:
+                memory = recall(turn.text, fast=True)
+                memory_outcome = "succeeded"
+            finally:
+                _INITIAL_MEMORY_TIMING_LOG.info("conversation_initial_memory_timing %s", json.dumps({
+                    "message_id_sha256": hashlib.sha256(turn.message_id.encode()).hexdigest(),
+                    "elapsed_ms": max(0, round((monotonic() - memory_started_at) * 1000)),
+                    "outcome": memory_outcome,
+                }, separators=(",", ":")))
+            return memory
+
+        if self._actions is None:
+            self_context = ()
+            memory = initial_memory()
+        else:
+            # Both reads remain owned by this turn, including on failure. Carry
+            # cancellation, voice and background authority into the read lane.
+            with ThreadPoolExecutor(max_workers=1, thread_name_prefix="eva-context") as preparation:
+                context = preparation.submit(copy_context().run, self._actions.active_context, turn)
+                memory = initial_memory()
+                self_context = context.result()
+        from eva.application.cancellation import check_cancellation
+        check_cancellation()
         if contact_model is not None:
             self_context = (*self_context,
                 "Natuurlijk, kort contact; eenvoudige vragen direct beantwoorden. Gebruik aangeboden "
@@ -998,17 +1022,6 @@ class LivingConversation:
                 available_names = (*available_names, STOP_VOICE_WORK)
         if initiative is not None:
             self_context = (*self_context, initiative.instructions())
-        memory_started_at = monotonic()
-        memory_outcome = "failed"
-        try:
-            memory = recall(turn.text, fast=True)
-            memory_outcome = "succeeded"
-        finally:
-            _INITIAL_MEMORY_TIMING_LOG.info("conversation_initial_memory_timing %s", json.dumps({
-                "message_id_sha256": hashlib.sha256(turn.message_id.encode()).hexdigest(),
-                "elapsed_ms": max(0, round((monotonic() - memory_started_at) * 1000)),
-                "outcome": memory_outcome,
-            }, separators=(",", ":")))
         memory_searched = False
         seen_call_ids = {item.call.call_id for item in receipts}
         while True:
