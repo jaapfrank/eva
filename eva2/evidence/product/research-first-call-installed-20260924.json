@@ -1,0 +1,52 @@
+{
+  "checkedAt": "2026-09-24T20:40:28.916058+00:00",
+  "sourceCommit": "3119fc90691a49ae2d8766e3f57b417d93755e28",
+  "status": "installed",
+  "ownerRequirement": "Start background research and remain available for conversation; correct existing research through the same core.",
+  "finding": "The installed strict SDK made prior_work_id a required non-null string. New research has no valid predecessor.",
+  "change": "Allow explicit null in the shared tool schema and omit null only from service kwargs; preserve original durable call, real predecessor validation and linked correction route.",
+  "verification": {
+    "tests": "31 passed in 5.19s; strict SDK schema and real PostgreSQL null/absent/existing predecessor, pending/replay, changed call rejection",
+    "review": "Coordinator independent of implementing agent reviewed exact diff and tests",
+    "liveSchema": "Installed SDK accepts null predecessor in strict research schema",
+    "installed": {
+      "checkedAt": "2026-09-24T20:40:07.292872+00:00",
+      "services": {
+        "core": {
+          "image": "sha256:bda44603d01ee7967f13927d4d6c948d26d0c9cbecfcff6197ba4c370dbff2d7",
+          "health": "healthy",
+          "sourceHashes": {
+            "adapters/postgres/delegated_work_actions.py": "c5360ecfbffd61a72ad929b8a0411b1ff6c5016b28512944ad261199bd986de5"
+          }
+        },
+        "worker": {
+          "image": "sha256:9a95e49ca669856bc61050d6db9e4f0cd149b36758d6803212bca1e3219d71fe",
+          "health": "healthy",
+          "sourceHashes": {
+            "adapters/postgres/delegated_work_actions.py": "c5360ecfbffd61a72ad929b8a0411b1ff6c5016b28512944ad261199bd986de5"
+          }
+        }
+      },
+      "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/research-first-call-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44716/session/ready": 200
+    }
+  },
+  "usage": {
+    "modelCalls": 0,
+    "externalMessages": 0,
+    "creditCosts": "unknown"
+  },
+  "try": {
+    "instruction": "Vraag Eva via je gewone ingang om een nieuw publiek onderwerp met bronnen uit te zoeken; je hoeft geen bestaande taak te noemen.",
+    "expected": "Eva neemt de opdracht aan en blijft beschikbaar; een correctie verwijst naar de echte eerdere opdracht."
+  },
+  "limitations": [
+    "No new real model or physical voice trial",
+    "Does not prove all research content quality or response speed",
+    "Owner acceptance remains open"
+  ],
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/research-first-call-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+}

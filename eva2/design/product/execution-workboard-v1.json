@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T20:33:11.499147+00:00",
+        "checkedAt": "2026-09-24T20:40:28.916058+00:00",
         "deliveries": [
+          {
+            "title": "Nieuwe onderzoeksopdracht zonder fictieve eerdere taak",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Strikte modelkoppeling vereiste ten onrechte een eerdere taak. Een nieuwe opdracht kan nu expliciet zonder voorganger; echte koppeling bij bijsturen blijft behouden. Kern/werker gezond, live SDK-schema gecontroleerd.",
+            "remaining": "Echte kanaalproef open. Vraag om een nieuw publiek onderzoek zonder eerdere taak te noemen; geen snelheids- of inhoudelijke kwaliteitsclaim.",
+            "source": "eva2/evidence/product/research-first-call-installed-20260924.json"
+          },
           {
             "title": "Speakerresultaat bewaren bij doorpraten",
             "date": "24 september",
@@ -2223,15 +2231,15 @@
           }
         ],
         "now": {
-          "title": "Speakerresultaat blijft wachten tijdens nieuw gesprek",
-          "state": "Geïnstalleerd; fysieke proef open",
-          "detail": "Nog niet verstuurde terugmelding wordt duurzaam uitgesteld zodra de speaker opnieuw luistert. Kern en werker gezond; vijf adapter- en zeven databasecontroles geslaagd, onafhankelijk beoordeeld. Geen firmwarewijziging.",
-          "doneWhen": "Technische correctie geïnstalleerd. Werkelijke hoorbaarheid en volledige kanaalgelijkheid blijven apart open."
+          "title": "Nieuw onderzoek zonder eerdere taak starten",
+          "state": "Geïnstalleerd; gebruiksproef open",
+          "detail": "Gedeelde modelkoppeling ondersteunt nu expliciet een eerste onderzoeksopdracht. Bestaande taakbediening en gekoppelde correcties behouden.31 gerichte controles, onafhankelijke review en live schema/startcontrole geslaagd.",
+          "doneWhen": "Technische correctie geïnstalleerd met terugweg; echte kanaalervaring en inhoudelijke kwaliteit afzonderlijk open."
         },
         "next": {
-          "title": "Resterende kanaalbediening en terugmelding samenbrengen",
+          "title": "Langdurig werk en geplande vervolgstappen afronden",
           "state": "Volgende opdracht; nog niet gestart",
-          "detail": "Bestaande kanaalproeven en eigenaarresultaten hergebruiken; concrete ontbrekende aansluiting afronden. Geen herhaling van de afgewezen modelinstelling. Browserkeuze en fysieke spraakproef blijven afzonderlijk open."
+          "detail": "Bestaande planning en voortgang hergebruiken; ontbrekende functionele aansluiting afronden. Open fysieke kanaalproeven en browserkeuze blijven afzonderlijk zichtbaar."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2245,7 +2253,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T20:33:11.499147+00:00"
+        "reviewedAt": "2026-09-24T20:40:28.916058+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12017,7 +12025,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Resterende kanaalbediening samenbrengen; speakeruitstel geïnstalleerd, fysieke proef afzonderlijk open.",
+      "nextAction": "Bestaand langdurig werk en geplande vervolgstappen functioneel afronden; fysieke kanaalproeven apart open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
