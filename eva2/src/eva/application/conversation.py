@@ -969,7 +969,12 @@ class LivingConversation:
         if "start_digital_work" in available_names:
             self_context = (*self_context,
                 "Gebruik start_digital_work voor een digitale opdracht met bestaande toegestane "
-                "connectoren die op de achtergrond moet doorgaan. Neem die opdracht rechtstreeks "
+                "connectoren zodra de vraag meerdere ontdek-, lees-, vergelijkings- of "
+                "uitvoerstappen vraagt. Kies dit zelf; de gebruiker hoeft niet om achtergrondwerk "
+                "te vragen. Ook bestaande Home Assistant-automatiseringen opzoeken, hun volledige "
+                "configuraties analyseren en een verbetering onderbouwen hoort daarbij. "
+                "Een eenvoudige actuele toestand opvragen of een direct bekende huisactie "
+                "uitvoeren mag via de gewone directe tool. Neem meerstapswerk rechtstreeks "
                 "met start_digital_work aan: voer niet eerst connectorstatus, toolontdekking of "
                 "een deel van de opdracht in dit gesprek uit. De werker zoekt en controleert "
                 "zelf de benodigde tools en bereikbaarheid binnen het bestaande mandaat. "
