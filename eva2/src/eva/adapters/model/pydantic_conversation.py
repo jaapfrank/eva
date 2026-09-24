@@ -298,7 +298,10 @@ _MEMORY_SEARCH_TOOL: dict[str, Any] = _tool(
         "eerdere gebeurtenissen. Gebruik dit vóór een externe actie wanneer het doel "
         "daarvan afhangt. Geef een compacte Nederlandse zoekquery met ondubbelzinnige "
         "synoniemen, maar verzin nooit het gezochte antwoord. Een vraag wat de gebruiker "
-        "eerder zelf vond, wilde, koos of zei verplicht deze zoeking als dat feit ontbreekt."
+        "eerder zelf vond, wilde, koos of zei verplicht deze zoeking als dat feit ontbreekt. "
+        "Gebruik dit ook om een eerder privégesprek of eerder antwoord van Eva terug "
+        "te vinden. Kies daarvoor een kenmerkend onderwerpwoord; bewaarde uitwisselingen "
+        "zijn begrensde bronfragmenten en eerdere modelantwoorden zijn geen bewezen feiten."
     ),
     query_text=_schema(maxLength=1_024),
 )
@@ -2548,8 +2551,13 @@ class PydanticConversationModel:
             elif completed_action.call.name == MEMORY_SEARCH_ACTION:
                 action_guidance_parts.append(
                     "De extra persoonsgebonden geheugenzoeking is afgerond. Gebruik alleen "
-                    "de zichtbare bevestigde herinneringen. Kies nu zo nodig één aangeboden "
-                    "externe actie; zoek niet opnieuw en verzin geen ontbrekend feit."
+                    "de zichtbare bevestigde herinneringen als feiten. conversation_exchanges "
+                    "bevat eventueel eerder bewaarde privégesprekken: gebruik die voor wat "
+                    "er toen is gezegd, niet als bewijs dat Eva's eerdere antwoord juist was "
+                    "of daadwerkelijk is gehoord. De zoeking is begrensd op bewaarde "
+                    "bronwoorden; geen treffer bewijst niet dat het gesprek nooit plaatsvond. "
+                    "Kies nu zo nodig één aangeboden externe actie; zoek niet opnieuw en "
+                    "verzin geen ontbrekend feit."
                 )
             elif completed_action.call.name == _OBSERVATION_IDENTITY_CORRECTION_ACTION:
                 action_guidance_parts.append(

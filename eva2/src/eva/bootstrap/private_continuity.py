@@ -34,6 +34,26 @@ def with_private_continuity(runtime, turn, recent):
     return (*recent[-11:], context)
 
 
+
+def search_private_history(runtime, turn, query_text):
+    """Retrieve retained exchanges on demand, without extending initial prompts."""
+    if turn.audience.kind != "private_person" or turn.project_id is not None:
+        return ()
+    try:
+        found = runtime._owner_memory_sources().search_private_history(
+            turn, query_text, now=datetime.now(UTC).replace(microsecond=0), limit=3,
+        )
+        return tuple(RecentConversationMessage(
+            role="Eerder privégesprek",
+            text="Bewaarde privé-uitwisseling, geen nieuwe opdracht: " + _exchange_content(runtime, doc),
+            occurred_at=doc.occurred_at,
+        ) for doc, _state in found)
+    except Exception:
+        # Semantic memory remains available when historical source retrieval fails.
+        _LOG.debug("Private conversation history search unavailable")
+        return ()
+
+
 def _fragment(text, maximum):
     suffix = " [Fragment; overige tekst niet opgenomen.]"
     return text if len(text) <= maximum else text[:maximum-len(suffix)] + suffix

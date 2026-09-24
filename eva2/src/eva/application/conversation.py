@@ -787,6 +787,7 @@ class LivingConversation:
         *,
         before_step: Callable[[ConversationTurn, ConversationModelUsage], None] | None = None,
         contact_model: ConversationModelPort | None = None,
+        history_search: Callable[[ConversationTurn, str], tuple[RecentConversationMessage, ...]] | None = None,
     ) -> None:
         self._memory = memory
         self._model = model
@@ -794,6 +795,7 @@ class LivingConversation:
         self._actions = actions
         self._before_step = before_step
         self._contact_model = contact_model
+        self._history_search = history_search
 
     def respond(
         self,
@@ -1069,8 +1071,21 @@ class LivingConversation:
                 expanded = recall(f"{turn.text}\nSemantische zoekconcepten: {query_text}")
                 if expanded.confirmed_facts:
                     memory = expanded
+                exchanges = (
+                    self._history_search(turn, query_text)
+                    if self._history_search is not None
+                    and turn.audience.kind == "private_person" and turn.project_id is None
+                    else ()
+                )
                 completed = ConversationActionReceipt(
-                    call=call, output={"result_count": len(expanded.confirmed_facts)},
+                    call=call, output={
+                        "result_count": len(expanded.confirmed_facts),
+                        "conversation_exchanges": [
+                            {"occurred_at": item.occurred_at, "text": item.text}
+                            for item in exchanges
+                        ],
+                        "history_search_scope": "bounded_retained_private_source_matches",
+                    },
                 )
                 memory_searched = True
                 continue

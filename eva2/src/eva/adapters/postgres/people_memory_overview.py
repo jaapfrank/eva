@@ -28,7 +28,7 @@ from eva.application.people_memory_overview import (
     PeopleMemoryOverview,
     PeopleMemoryOverviewError,
 )
-from eva.application.memory import MemoryRetentionReceipt
+from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
 from eva.application.memory_audience import TelegramGroupConsentReference
 from eva.application.telegram_group_consent import TelegramGroupConsent
 from eva.application.telegram_pairing import TelegramDynamicBinding
@@ -112,9 +112,38 @@ class PostgresOwnerMemorySources:
         return self._read(now=now, limit=1, context_conversations=channels, after=after,
                           context_voice=True, exclude_conversation=turn.conversation_id)
 
+    def search_private_history(self, turn, query_text: str, *, now: datetime,
+                               limit: int = 3) -> tuple[tuple[ConversationMemoryDocument, str], ...]:
+        """Select at most three newest lexical matches across admitted private channels.
+
+        Search is applied in PostgreSQL before the result limit, so older retained
+        conversations are eligible. This does not rank semantic relevance or claim
+        an exhaustive history; current private owner authority is checked in _read.
+        """
+        owner = str(self._owner)
+        alias = None if self._bindings is None else self._bindings.private_bridge_principal(
+            principal_id=owner, principal_binding_id=self._binding)
+        dashboard = f"dashboard:{self._binding}"
+        admitted = ((turn.principal_id == owner and
+                     (turn.conversation_id == dashboard or turn.conversation_id.startswith("voice:")))
+                    or (alias is not None and turn.principal_id == alias
+                        and turn.conversation_id == alias))
+        if (turn.tenant_id != self._tenant or turn.installation_id != self._installation
+                or turn.audience.kind != "private_person"
+                or turn.audience.principal_id != turn.principal_id
+                or not admitted or turn.project_id is not None):
+            return ()
+        if (not isinstance(query_text, str) or not query_text.strip()
+                or len(query_text.encode("utf-8")) > 1024
+                or type(limit) is not int or not 1 <= limit <= 3):
+            raise ValueError("private history query or result limit is invalid")
+        channels = tuple(value for value in (dashboard, alias) if value is not None)
+        return self._read(now=now, limit=limit, context_conversations=channels,
+                          context_voice=True, history_query=query_text)
+
     def _read(self, *, now: datetime, limit: int, before: str | None = None,
               source_id: str | None = None, context_conversations=None, after=None,
-              context_voice=False, exclude_conversation=None):
+              context_voice=False, exclude_conversation=None, history_query=None):
         cursor = memory_source_page_request(limit, before)
         if now.tzinfo is None or now.utcoffset() != timedelta(0) or now.microsecond:
             raise ValueError("memory source time must be whole-second UTC")
@@ -183,6 +212,20 @@ class PostgresOwnerMemorySources:
                         query = query.where(data["conversation_id"].astext != exclude_conversation)
                     if after is not None:
                         query = query.where(e.occurred_at > after)
+                if history_query is not None:
+                    # A canonical private owner may use dashboard/voice; its
+                    # Telegram alias must remain bound to the exact private chat.
+                    history_channels = sa.and_(data["principal_id"].astext == str(self._owner),
+                        sa.or_(data["conversation_id"].astext == f"dashboard:{self._binding}",
+                               data["conversation_id"].astext.startswith("voice:")))
+                    if alias is not None:
+                        history_channels = sa.or_(history_channels, sa.and_(
+                            data["principal_id"].astext == alias,
+                            data["conversation_id"].astext == alias))
+                    dictionary = sa.literal_column("'dutch'::regconfig")
+                    query = query.where(history_channels,
+                        sa.func.to_tsvector(dictionary, sa.func.coalesce(data["content"].astext, "")).op("@@")(
+                            sa.func.plainto_tsquery(dictionary, history_query)))
                 if source_id is not None:
                     query = query.where(e.event_id == UUID(source_id))
                 if cursor:
@@ -202,11 +245,16 @@ class PostgresOwnerMemorySources:
                         raise PeopleMemoryOverviewError("memory source scope differs")
                     state = ("retained" if row.phase == "memory_retained" else
                              "needs_help" if row.phase == "memory_needs_help" else "pending")
+                    if history_query is not None:
+                        sources.append((doc, state))
+                        continue
                     if source_id is not None or context_conversations is not None:
                         return doc, state
                     sources.append(MemorySource(str(row.event_id),
                         row.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
                         doc.content[:2048], len(doc.content) > 2048, state))
+                if history_query is not None:
+                    return tuple(sources)
                 if source_id is not None or context_conversations is not None:
                     return None
                 next_cursor = None

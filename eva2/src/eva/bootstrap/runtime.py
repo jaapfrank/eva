@@ -1901,8 +1901,10 @@ def create_runtime_app() -> FastAPI:
                     include_digital=settings.delegated_digital_enabled))
             ),
         ))
+    from eva.bootstrap.private_continuity import search_private_history
     conversation = LivingConversation(
         memory, model, identity, conversation_actions, contact_model=contact_model,
+        history_search=lambda turn, query: search_private_history(runtime, turn, query),
     )
     sensory_store = (
         None
