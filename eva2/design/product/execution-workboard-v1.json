@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T00:24:08.011535+00:00",
+        "checkedAt": "2026-09-24T00:29:42.221673+00:00",
         "deliveries": [
+          {
+            "title": "Vastgelopen documentproject terugmelden",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Nieuwe vastgelopen of afgewezen documentprojecten kunnen via hun bestaande privéroute melden dat de opdracht niet af is. Geen automatische herstart; oude mislukkingen blijven uitgesloten.",
+            "remaining": "Echte aflevering en review later. Dit bewijst niet dat alle digitale opdrachten worden afgemaakt.",
+            "source": "eva2/evidence/product/document-failure-returns-installed-20260924.json"
+          },
           {
             "title": "Telegram-resultaat bij de oorspronkelijke vraag",
             "date": "24 september",
@@ -1661,15 +1669,15 @@
           }
         ],
         "now": {
-          "title": "Stap 1: gesprek tijdens achtergrondwerk",
-          "state": "Geïnstalleerd; praktijkgedrag nog open",
-          "detail": "Telegram-resultaatkoppeling geïnstalleerd. Gerichte broncontrole vindt geen aanvullende seriële blokkade in de gedeelde tekstkern. Dit bewijst nog geen snelle tussenvraag of werkende continue Voice PE.",
-          "doneWhen": "Ontvangen, doorpraten, terugmelden, onderbreken en stoppen werken via alle vier ingangen."
+          "title": "Stap 3: taken afronden en terugmelden",
+          "state": "Document-foutmelding geïnstalleerd",
+          "detail": "Het ontbrekende document-terugmeldpad is aangesloten. Kern en werker gezond; activatie vastgelegd. Gesprekssnelheid, fysieke Voice PE en persoonskeuze blijven apart open.",
+          "doneWhen": "Meerdere opdrachten werkelijk afronden, resultaat of mislukking juist terugbrengen en werk kunnen volgen, stoppen en hervatten."
         },
         "next": {
-          "title": "Open functionaliteit onderscheiden van uitgestelde proeven",
+          "title": "Algemene digitale taakuitvoering afronden",
           "state": "Vervolg nog niet gestart",
-          "detail": "Geen nieuwe gespreksombouw zonder aangetoond tekort. Antwoordtijd/overlap en Voice PE vereisen nog praktijkgegevens; onafhankelijk ontbrekend projectwerk kan doorgaan. Persoonskeuze blijft open."
+          "detail": "Resterende functionele aansluiting onderzoeken binnen de bestaande taakwerker. Geen nieuwe taakspecifieke kern of brede testronde."
         },
         "ownerAction": {
           "title": "Geen proef nodig tijdens deze bouwronde",
@@ -1683,7 +1691,7 @@
           "expected": "Koppeling geïnstalleerd; echte gesprekssnelheid en aflevering blijven afzonderlijk te beoordelen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T00:24:08.011535+00:00"
+        "reviewedAt": "2026-09-24T00:29:42.221673+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11342,7 +11350,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 1,
+      "currentStep": 3,
       "steps": [
         {
           "number": 1,
@@ -11452,7 +11460,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Gesprek: geen aanvullende seriële blokkade gevonden in de geïnstalleerde tekstkern; echte overlap/snelheid en fysieke Voice PE-overgang blijven te meten wanneer proeven hervatten. Onafhankelijke ontbrekende projectfunctionaliteit kan verder; persoonskeuze blijft open.",
+      "nextAction": "Resterende functionele aansluiting onderzoeken binnen de bestaande taakwerker. Geen nieuwe taakspecifieke kern of brede testronde.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

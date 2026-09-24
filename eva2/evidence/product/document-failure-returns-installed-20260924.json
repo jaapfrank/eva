@@ -1,0 +1,30 @@
+{
+  "sourceCommit": "9f46d51b",
+  "featureCommit": "46993abf",
+  "installedAt": "2026-09-24T00:29:42.221673+00:00",
+  "status": "installed_start_checked",
+  "requirement": "Accepted document projects report terminal failure through their existing private return channel.",
+  "change": "DocumentCompletionSource returns a distinct failure notice for needs_help or delivery_failed; existing Telegram and private-session return routes retain their binding and delivery claims. Cancelled projects stay silent. Successful artifact validation unchanged.",
+  "activation": "2026-09-24T00:28:48+00:00",
+  "historicalFailures": "Excluded by independent document-failure-notices:v1 watermark",
+  "checks": [
+    "Installed source baseline matched HEAD for four changed files",
+    "AST and candidate imports",
+    "Core and worker healthy after installation",
+    "Activation persisted in installation-scoped database"
+  ],
+  "installationCorrections": [
+    "Corrected nonexistent class name in the import-check command",
+    "Corrected new activation timestamp to required whole-second precision; rebuilt and installed r2"
+  ],
+  "notProven": [
+    "Real Telegram/private-session delivery",
+    "Complete document project capability or end-to-end task acceptance"
+  ],
+  "modelCalls": 0,
+  "testMessagesSent": 0,
+  "ownerAccepted": false,
+  "review": "deferred under functions-first owner instruction",
+  "image": "eva2-document-failure-returns:20260924-r2",
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/document-failure-returns-20260924/baseline.compose.private.json"
+}

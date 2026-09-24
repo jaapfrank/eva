@@ -2,6 +2,8 @@
 
 Laatst bijgewerkt: 2026-09-24.
 
+**Stap 3 — vastgelopen documentproject terugmelden geïnstalleerd (24 september).** De bestaande documentroute meldde uitsluitend geverifieerde voltooiing. Nu krijgen nieuwe eindstatussen needs_help en delivery_failed een afzonderlijke mislukkingsmelding via dezelfde privé-Telegram-/sessieroute. Gestopte projecten blijven stil; geen automatische herstart. Eigen activeringsgrens voorkomt oude foutmeldingen. Bron 9f46d51b; syntax/import/startcontrole en opgeslagen activatie, kern en werker gezond. Bij installatie is een tijdprecisiefout gecorrigeerd. [Installatie en grenzen](evidence/product/document-failure-returns-installed-20260924.json). Nul modelcalls of proefberichten; echte aflevering en review later. Dit sluit het concrete terugmeldgat, niet het volledige onderdeel Taken afmaken. Vervolg: resterende functionele aansluiting voor algemene digitale taken; nog niet gestart.
+
 **Stap 1 — geen extra seriële blokkade gevonden (24 september).** Geïnstalleerde gedeelde gespreksroute, berichtslot en Telegram-API zijn gelijk aan de bron. Het slot is per bericht; nieuw publiek onderzoek gebruikt de achtergrondroute. De actieve Bottie-dienst is na de installatie van zijn gelijktijdige poller gestart. Geen nieuwe bronwijziging gerechtvaardigd. [Gerichte broncontrole](evidence/product/contact-background-routing-installed-20260924.json). Dit bewijst geen antwoordtijd of echte gelijktijdige gespreksproef. De volgende diagnose daarvan is een representatieve meting wanneer proeven worden hervat; geen herbouw op vermoedens. Onafhankelijk functioneel vervolg blijft toegestaan.
 
 
