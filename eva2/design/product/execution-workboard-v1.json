@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T00:10:18.655967+00:00",
+        "checkedAt": "2026-09-24T00:13:54.552610+00:00",
         "deliveries": [
           {
             "title": "Stap 2: ook Eva’s eerdere antwoord bij kanaalwissel",
@@ -1653,15 +1653,15 @@
           }
         ],
         "now": {
-          "title": "Stap 2: een eerder gesprek inhoudelijk voortzetten",
-          "state": "Geïnstalleerd",
-          "detail": "Bij kanaalwissel niet alleen de bewaarde uitspraak, maar ook Eva’s exact bijbehorende opgeslagen antwoord meenemen. Beide binnen dezelfde huidige privébinding en contextlimiet.",
-          "doneWhen": "Koppeling geïnstalleerd; werkelijke persoonscontinuïteit en herkenning blijven open."
+          "title": "Stap 2: privéspraak op gedeelde apparaten",
+          "state": "Productkeuze gevraagd",
+          "detail": "De bestaande geverifieerde telefoonroute is aanwezig. Automatische sprekerherkenning en vaststelling van toehoorders zijn niet opgeleverd. Gevraagd: herkennen voor aanspreken met privé via telefoon/Telegram, of ook privé op speaker na verificatie van spreker én toehoorders.",
+          "doneWhen": "Keuze bepaalt de ontbrekende functie; een speaker of genoemde naam wordt niet stilzwijgend privé-identiteit."
         },
         "next": {
-          "title": "Persoonscontinuïteit verder afronden",
-          "state": "Open",
-          "detail": "Bestaande persoonlijke herinneringen behouden. De fysieke Voice PE-diagnose blijft open en blokkeert deze onafhankelijke aansluiting niet."
+          "title": "Persoonsfunctie volgens eigenaarkeuze afronden",
+          "state": "Keuze staat open",
+          "detail": "Geen nieuwe herkennings- of privétoegangsroute installeren voordat duidelijk is welk gedrag de eigenaar wil. Bestaande privégesprekken en gewone Voice PE blijven beschikbaar."
         },
         "ownerAction": {
           "title": "Privégesprek via stem en tekst",
@@ -1675,7 +1675,7 @@
           "expected": "De koppeling is geïnstalleerd; het werkelijke gespreksgedrag blijft te beproeven."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T00:10:18.655967+00:00"
+        "reviewedAt": "2026-09-24T00:13:54.552610+00:00"
       }
     },
     "pendingTechnicalReview": {
