@@ -1,0 +1,36 @@
+{
+  "verifiedAt": "2026-09-24T13:51:23.450585+00:00",
+  "sourceCommit": "e73ae8da",
+  "checks": [
+    {
+      "name": "eva2-managed-b-slot3-core",
+      "image": "sha256:d2bfdf472e01c374e329418b9c89d5f234e375424f010cae6e3d92bc86e9ee70",
+      "health": "healthy",
+      "restarts": 0
+    },
+    {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "image": "sha256:d8b1bd2790f13ed897ad995944c2e39c1483ed28995fc5025054e2e573574ede",
+      "health": "healthy",
+      "restarts": 0
+    }
+  ],
+  "moduleHashes": {
+    "bootstrap/runtime.py": "24f66338ddbdc7a00d2a3220861c484ceb2db6f1b64335524d3da40ead0b650d",
+    "application/memory_background.py": "7239107217649f513cd2cd09020723026e617351adafb9b22b94d7a6b373ebf8"
+  },
+  "http": {
+    "http://localhost:44711/internal/v1/dashboard": 200,
+    "http://localhost:44716/session/ready": 200
+  },
+  "tests": "3 passed in 0.61s",
+  "review": "Independent runtime wiring review; coordinator worker review",
+  "scope": "Scheduled starts and requested Telegram/native returns run independently of the 300-second memory idle gate. Memory and unsolicited initiative remain idle-gated.",
+  "limitations": [
+    "No model calls, physical actions or test messages performed",
+    "Real conversation and result reception acceptance remains open",
+    "Serial callbacks can delay following callbacks",
+    "Bounded overlay on existing runtime; full HEAD and schema not deployed"
+  ],
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/responsive-background-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core"
+}
