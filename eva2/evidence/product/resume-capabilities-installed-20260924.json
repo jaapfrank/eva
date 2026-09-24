@@ -1,0 +1,35 @@
+{
+  "recordedAt": "2026-09-24T01:15:01.326857+00:00",
+  "sourceCommit": "3067d244",
+  "state": "installed_start_checked",
+  "requirement": "Preserve admitted digital work, progress and authority across additive tool catalog changes.",
+  "finding": "Resume used the latest full grant, while storage requires equality to the earlier immutable grant. Adding a tool consequently blocked resumption.",
+  "change": "Resume passes the original grant to the current installed profile. Admission and worker accept its capability subset only when all other grant fields are equal. Storage still requires unchanged prior grant/source/execution identity. Existing action availability filters actual tools to admitted capabilities.",
+  "installedImage": "eva2-resume-capabilities:20260924",
+  "installedSourceSha256": {
+    "bootstrap/delegated_digital_profile.py": "55a0c91c3849182448a81188cc31448485d0bc66be7768b10f69931e76ec9b00",
+    "bootstrap/delegated_work_owner_service.py": "d84580766b558da298bac31ada69a7c7baa6c9d7840b1ce1bf565ff94f415df4",
+    "bootstrap/delegated_digital_runner.py": "bc517b040f4209e0e8c8d0c514ad606c6d6b4607eb8562a2beec0796f0c62cf4"
+  },
+  "checks": {
+    "syntax": true,
+    "configuredApplicationConstructedBeforeInstall": true,
+    "oldCapabilitySubsetAccepted": true,
+    "removedCapabilityRejected": true,
+    "changedBudgetRejected": true,
+    "activeWorkAtInstall": 0,
+    "coreHealthy": true,
+    "workerHealthy": true
+  },
+  "notProven": [
+    "Actual resumed digital execution after an upgrade",
+    "Full multiday and channel trials",
+    "Independent review and owner acceptance"
+  ],
+  "usage": {
+    "evaModelCalls": 0,
+    "messagesSent": 0,
+    "developmentCredits": "not measured/attributable"
+  },
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/resume-capabilities-20260924/baseline.compose.private.json"
+}

@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T01:08:29.506366+00:00",
+        "checkedAt": "2026-09-24T01:15:01.326857+00:00",
         "deliveries": [
+          {
+            "title": "Oude opdracht hervatten na toevoeging van tools",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Hervatten bewaart de oorspronkelijke tools en budgetten op de huidige uitvoering; toegevoegde tools blokkeren die oude opdracht niet meer.",
+            "remaining": "Echte hervatting nog te beproeven. Verwijderde tools of gewijzigde budgetten worden niet stilzwijgend toegestaan.",
+            "source": "eva2/evidence/product/resume-capabilities-installed-20260924.json"
+          },
           {
             "title": "Eigen codevoorstel uitvoeren en vergelijken",
             "date": "24 september",
@@ -1693,15 +1701,15 @@
           }
         ],
         "now": {
-          "title": "Stap 5: eigen voorstel vergelijken aangesloten",
-          "state": "Geïnstalleerd; onderdeel nog niet klaar",
-          "detail": "Eva’s digitale werker kan een bewaard voorstel vergelijken met het origineel in een vaste geïsoleerde controle. Eerste dekking: drie componenten. Startcontrole geslaagd; echte verbeterwinst niet aangetoond.",
-          "doneWhen": "Een echte eigen verbetering heeft aantoonbaar voordeel, beoordeling en een werkende terugweg."
+          "title": "Oude opdrachten hervatten na nieuwe tools",
+          "state": "Geïnstalleerd; echte hervatproef open",
+          "detail": "Een oude opdracht houdt haar oorspronkelijke tools en budgetten wanneer nieuwe mogelijkheden worden toegevoegd. Voortgang en uitvoeringsidentiteit blijven behouden.",
+          "doneWhen": "Werkelijke hervatting en resultaat nog beproeven; startcontrole is geslaagd."
         },
         "next": {
-          "title": "Bestaande opdrachten blijven kunnen hervatten",
-          "state": "Volgende concrete aansluiting",
-          "detail": "Bij toevoeging van tools wijkt de oude taaktoestemming af. Hervatten moet bestaande bevoegdheden behouden zonder ongevraagd nieuwe toe te voegen."
+          "title": "Lopend werk bijsturen via Home Assistant en Voice PE",
+          "state": "Volgende aansluiting",
+          "detail": "Vergelijk met de bestaande privéroute en maak alleen ontbrekende aansluiting af. Nog niet vastgesteld welk deel ontbreekt; geen herbouw van werkende spraak."
         },
         "ownerAction": {
           "title": "Kies wie huisbediening via speakers mag gebruiken",
@@ -11374,7 +11382,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 5,
+      "currentStep": 3,
       "steps": [
         {
           "number": 1,
@@ -11437,7 +11445,7 @@
             "AU-003"
           ],
           "doneWhen": "Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg.",
-          "preserve": "Werkwijzeopslag en hergebruik, werkplannen, geplande start/hervatting, afhankelijke vervolgstappen en reeksstop zijn geïnstalleerd. Echte algemene leer-/meerdaagse proeven en gemeten zelfverbetering blijven open.",
+          "preserve": "Werkwijzeopslag en hergebruik, plannen, geplande/afhankelijke taken, reeksstop, hervatten met oude toolsubset en geïsoleerde kandidaatvergelijking zijn aangesloten. Echte leer-/meerdaagse proeven, gemeten verbeterwinst en toepassing blijven open.",
           "planningEffortHours": "8–24"
         },
         {
@@ -11484,7 +11492,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Hergebruik de aanwezige repository-verbeterroute voor een geïsoleerde kandidaat. De huidige eigen-componenttool bewaart alleen een voorstel; uitvoering en gemeten voordeel ontbreken nog.",
+      "nextAction": "Vergelijk met de bestaande privéroute en maak alleen ontbrekende aansluiting af. Nog niet vastgesteld welk deel ontbreekt; geen herbouw van werkende spraak.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
