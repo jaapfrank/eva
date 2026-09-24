@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T00:06:18.108162+00:00",
+        "checkedAt": "2026-09-24T00:10:18.655967+00:00",
         "deliveries": [
+          {
+            "title": "Stap 2: ook Eva’s eerdere antwoord bij kanaalwissel",
+            "date": "24 september",
+            "state": "installed",
+            "result": "De recente privécontext bevat nu waar beschikbaar ook Eva’s exact bijbehorende opgeslagen antwoord. Dat ondersteunt verwijzingen zoals dat voorstel bij wisselen tussen stem en tekst.",
+            "remaining": "Echte voortzettings- en persoonsproeven later. Begrensde recente context, geen nieuwe langetermijnopslag of sprekerherkenning.",
+            "source": "eva2/evidence/product/private-exchange-continuity-installed-20260924.json"
+          },
           {
             "title": "Stap 2: privégesprek voortzetten na spraak",
             "date": "24 september",
@@ -1645,10 +1653,10 @@
           }
         ],
         "now": {
-          "title": "Stap 2: privégesprek voortzetten tussen stem en tekst",
+          "title": "Stap 2: een eerder gesprek inhoudelijk voortzetten",
           "state": "Geïnstalleerd",
-          "detail": "Bestaande recente persoonscontext uitbreiden met privéspraak van dezelfde geverifieerde eigenaar. Huishoudelijke speakers blijven uitgesloten.",
-          "doneWhen": "Koppeling geïnstalleerd. Volledige persoonscontinuïteit en spreker-/toehoorderherkenning blijven open."
+          "detail": "Bij kanaalwissel niet alleen de bewaarde uitspraak, maar ook Eva’s exact bijbehorende opgeslagen antwoord meenemen. Beide binnen dezelfde huidige privébinding en contextlimiet.",
+          "doneWhen": "Koppeling geïnstalleerd; werkelijke persoonscontinuïteit en herkenning blijven open."
         },
         "next": {
           "title": "Persoonscontinuïteit verder afronden",
@@ -1667,7 +1675,7 @@
           "expected": "De koppeling is geïnstalleerd; het werkelijke gespreksgedrag blijft te beproeven."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T00:06:18.108162+00:00"
+        "reviewedAt": "2026-09-24T00:10:18.655967+00:00"
       }
     },
     "pendingTechnicalReview": {

@@ -1,0 +1,28 @@
+{
+  "recorded_at": "2026-09-24T00:10:18.655967+00:00",
+  "source_commit": "c59cb360",
+  "image": "eva2-private-exchange-continuity:20260924",
+  "requirement": "Step 2: continue the same private conversation after a channel change, including references to Eva’s previous proposal.",
+  "source_finding": "Cross-channel context used only the retained direct-user source; after_response deliberately does not promote assistant output into semantic memory.",
+  "change": "Read the exact committed assistant reply using the admitted source principal, conversation, source message and project; combine with user source within 1800 characters. Keep 24-hour newer-than-current selection and current owner/audience/erasure checks. Missing, erased or invalid replies leave the user source only. Mark generated reply as neither verified fact nor proof of reading/hearing.",
+  "checks": [
+    "Syntax",
+    "Installed source matched previous Git baseline",
+    "Packaged import",
+    "Zero active stored tasks before installation"
+  ],
+  "deferred": [
+    "Actual continuation across channels",
+    "Erasure and cross-person integration trials",
+    "Independent review"
+  ],
+  "model_calls": 0,
+  "credit_cost": "unknown",
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/private-exchange-continuity-20260924/baseline.compose.private.json",
+  "not_claimed": [
+    "Long-term assistant memory added",
+    "Speaker recognition",
+    "Shared-speaker private access",
+    "Step 2 completed"
+  ]
+}
