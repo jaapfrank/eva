@@ -196,7 +196,8 @@ class PrivateWorkReturnStore:
                 'output': result.output, 'output_sha256': result.output_sha256,
                 'result_sha256': canonical_sha256(result.to_payload()),
                 'completed_at': result.completed_at,
-                'outcome': result.state if isinstance(result, WorkFailureNotice) else 'completed'}}
+                'outcome': (document.outcome if document is not None else
+                            result.state if isinstance(result, WorkFailureNotice) else 'completed')}}
 
     def _document(self, work_id, route):
         result = self.documents.load(work_id)

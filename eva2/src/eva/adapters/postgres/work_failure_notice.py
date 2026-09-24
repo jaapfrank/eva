@@ -6,8 +6,7 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.application.work_failure_notice import FAILURE_STATES
 
 
-def failure_notice_cutoff(connection, store, now):
-    thread = "work-failure-notices:v1"
+def failure_notice_cutoff(connection, store, now, *, thread="work-failure-notices:v1"):
     connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key,0))"),
                        {"key": str(store.scope.tenant_id) + ":" + str(store.scope.installation_id) + ":" + thread})
     row = connection.execute(sa.select(operational_checkpoints.c.deadline).where(

@@ -228,7 +228,7 @@ class PostgresDelegatedWorkDeliveryStore:
         if recipient.current_chat_id(now=self._clock()) != destination.chat_id:
             raise ValueError('document completion recipient changed')
         return AuthorizedWorkDelivery(destination, work_id, result.definition_sha256,
-                                      result.result_sha256, result.output)
+                                      result.result_sha256, result.output, result.outcome)
 
     def _claim_document_next(self, *, now, lease_seconds):
         if self._documents is None:

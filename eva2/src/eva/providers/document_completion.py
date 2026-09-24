@@ -1,6 +1,6 @@
 """Validated document completions for the existing private delivery routes."""
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import UTC, datetime
 import hashlib
 import json
 from uuid import UUID
@@ -50,6 +50,7 @@ class DocumentCompletion:
     created_at: datetime
     completed_at: str
     title: str = ""
+    outcome: str = "completed"
 
     def to_payload(self):
         return self.artifact_payload
@@ -68,7 +69,16 @@ class DocumentCompletionSource:
         self.store, self.authority = store, authority
         self.read_pool, self.load_source_turn = read_pool, load_source_turn
 
+    def _failure_cutoff(self):
+        from eva.adapters.postgres.work_failure_notice import failure_notice_cutoff
+        timeline = self.store._timeline
+        with timeline._engine.begin() as connection:
+            timeline._scope(connection)
+            return failure_notice_cutoff(connection, self.authority, datetime.now(UTC),
+                                         thread="document-failure-notices:v1")
+
     def candidates(self):
+        self._failure_cutoff()
         pool = DocumentTaskPool.from_json(self.read_pool())
         for _, claim in pool.claims(self.store):
             # Historical claims have no opt-in and are never backfilled.
@@ -94,7 +104,34 @@ class DocumentCompletionSource:
             read_definition=lambda: json.dumps(claim['definition']), load_source_turn=self.load_source_turn)
         adapter.authorize_turn(turn)
         state = adapter._state()
-        if state is None or state.status != 'completed':
+        if state is None:
+            return None
+        if state.status in {'needs_help', 'delivery_failed'}:
+            cutoff = self._failure_cutoff()
+            event_type = ('GOAL_NEEDS_HELP' if state.status == 'needs_help'
+                          else 'GOAL_DELIVERY_FAILED')
+            events = [event for event in self.store._events(state.spec)
+                      if event.event_type == event_type]
+            if len(events) != 1:
+                raise ValueError('document failure event differs')
+            event = events[0]
+            if event.occurred_at <= cutoff:
+                return None
+            outcome = 'needs_help' if state.status == 'needs_help' else 'failed'
+            completed_at = event.occurred_at.isoformat().replace('+00:00', 'Z')
+            output = (state.spec.description[:240] + '\n\n'
+                      + ('Het documentproject is vastgelopen en heeft hulp nodig.'
+                         if outcome == 'needs_help' else
+                         'Het documentproject is niet afgerond: de oplevering is afgewezen.')
+                      + ' Ik heb het project niet automatisch opnieuw gestart.')
+            payload = {'contract': 'EvaDocumentFailureNotice/v1', 'goal_id': goal_id,
+                       'definition_sha256': adapter.definition.sha256,
+                       'state': state.status, 'completed_at': completed_at,
+                       'output': output}
+            return DocumentCompletion(goal_id, adapter.definition.sha256,
+                claim['return_binding'], payload, output, state.spec.created_at,
+                completed_at, title=state.spec.description, outcome=outcome)
+        if state.status != 'completed':
             return None
         first, final, plan = state.first_artifact, state.artifact, adapter.plan
         if (first is None or final is None or state.delivery_status != 'accepted'
