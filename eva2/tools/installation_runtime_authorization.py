@@ -70,6 +70,10 @@ def runtime_profile_sha256(row):
         raise ValueError("runtime profile mount destinations are invalid or duplicated")
     # Docker serializes its mount map in unspecified order; command/env order stays exact.
     profile = {key: row.get(key) for key in ('Id', 'Image', 'Config', 'HostConfig')}
+    host = profile['HostConfig']
+    if isinstance(host, dict) and host.get('OomKillDisable') is None and 'OomKillDisable' in host:
+        # Docker may report its enabled OOM-killer default as null after first start.
+        profile['HostConfig'] = {**host, 'OomKillDisable': False}
     profile['Mounts'] = sorted(mounts, key=lambda mount: mount['Destination'])
     return canonical_sha256(profile)
 

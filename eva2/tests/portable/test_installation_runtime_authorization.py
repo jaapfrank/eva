@@ -110,3 +110,20 @@ def test_profile_ignores_only_mount_serialization_order():
 def test_profile_refuses_ambiguous_mount_inventory(mounts):
     with pytest.raises(ValueError, match='mount destinations'):
         module.runtime_profile_sha256({'Mounts': mounts})
+
+
+def test_profile_accepts_only_observed_null_false_oom_default_equivalence():
+    from copy import deepcopy
+    row = {'Mounts': [], 'HostConfig': {'OomKillDisable': False, 'Privileged': False}}
+    expected = module.runtime_profile_sha256(row)
+    row['HostConfig']['OomKillDisable'] = None
+    original = deepcopy(row)
+    assert module.runtime_profile_sha256(row) == expected
+    assert row == original
+    row['HostConfig']['OomKillDisable'] = True
+    assert module.runtime_profile_sha256(row) != expected
+    row['HostConfig']['OomKillDisable'] = False
+    row['HostConfig']['Privileged'] = None
+    assert module.runtime_profile_sha256(row) != expected
+    del row['HostConfig']['OomKillDisable']
+    assert module.runtime_profile_sha256(row) != expected
