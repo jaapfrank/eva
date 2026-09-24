@@ -1,8 +1,8 @@
 """One isolated registered-gateway relocation proof, without a private core.
 
 Uses retained immutable images and the existing gateway acceptance helpers.
-The provider is replaced behind its original DNS name; the gateway database,
-registration and selected tool IDs remain in place throughout the relocation.
+The provider and gateway are replaced behind their original DNS names. A stopped
+gateway SQLite snapshot preserves registrations and tool IDs in a new database.
 """
 
 import base64
@@ -23,6 +23,9 @@ import yaml
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "eva2/src"))
+sys.path.insert(0, str(REPO / "eva2"))
+from tools.installation_gateway_start import _READBACK, _inventory
+from tools.installation_gateway_snapshot import snapshot_gateway_database
 from eva.adapters.connectors.mcp_gateway import mcp_gateway_catalog_binding
 from eva.contracts.canonical_json import canonical_sha256
 
@@ -117,12 +120,15 @@ client_sha256:hash('/opt/eva2/atomic/broker-client.mjs'),resolver_sha256:hash('/
             config = yaml.safe_load(compose.read_text())["services"]["contextforge"]["environment"]
             config.update(environment, DATABASE_URL="sqlite:////data/contextforge.db",
                           SSRF_ALLOW_PRIVATE_NETWORKS="true", CACHE_TYPE="none")
-            args = base + ["--name", names["gateway"], "-v", f"{paths['source']['conf']}:/run/eva2:ro",
-                           "-v", f"{database}:/data", "-v", f"{start_script}:/run/start.sh:ro"]
-            for key, value in config.items():
-                args += ["--env", key + "=" + str(value)]
-            p.docker(*args, "--entrypoint", "/bin/sh", GATEWAY_IMAGE, "/run/start.sh")
-            h._wait_contextforge(names["gateway"])
+            def start_gateway(database_directory):
+                args = base + ["--name", names["gateway"], "-v", f"{paths['source']['conf']}:/run/eva2:ro",
+                               "-v", f"{database_directory}:/data", "-v", f"{start_script}:/run/start.sh:ro"]
+                for key, value in config.items():
+                    args += ["--env", key + "=" + str(value)]
+                p.docker(*args, "--entrypoint", "/bin/sh", GATEWAY_IMAGE, "/run/start.sh")
+                h._wait_contextforge(names["gateway"])
+
+            start_gateway(database)
             token = h._login_contextforge(names["gateway"], password)
             provider_url = f"http://{names['provider']}:9000/mcp"
             gateway_id = h._register_gateway(names["gateway"], token, name="relocation_" + nonce, url=provider_url)
@@ -151,6 +157,24 @@ client_sha256:hash('/opt/eva2/atomic/broker-client.mjs'),resolver_sha256:hash('/
             assert not created.get("isError"), created
             assert call("workspace_observe_bound", first) == created
             original_tools = source.rpc("tools/list", {})["tools"]
+            p.docker("stop", "--time", "30", names["gateway"])
+            assert p.docker("inspect", names["gateway"], "--format", "{{.State.Running}}") == "false"
+            restored_database = stage / "restored-gateway-database"
+            restored_database.mkdir(mode=0o700)
+            source_database_file = database / "contextforge.db"
+            restored_database_file = restored_database / "contextforge.db"
+            def verify_gateway_stopped():
+                assert p.docker("inspect", gateway_container_id, "--format", "{{.State.Running}}") == "false"
+
+            snapshot_receipt = snapshot_gateway_database(source_database_file, restored_database_file,
+                                                          verify_quiescence=verify_gateway_stopped)
+            restored_database_file.chmod(0o600)
+            assert source_database_file.stat().st_ino != restored_database_file.stat().st_ino
+            source_database_before = p.tree_state(database)
+            source_database_hash = p.sha(source_database_file.read_bytes())
+            restored_database_hash = p.sha(restored_database_file.read_bytes())
+            expected_inventory = _inventory(restored_database_file.read_bytes())
+            p.docker("rm", names["gateway"])
             p.docker("rm", "-f", names["provider"])
             source_before = {name: p.tree_state(paths["source"][name]) for name in ["work", "journal"]}
             for name in ["work", "journal"]:
@@ -186,6 +210,13 @@ try {
             before_observe = {name: p.tree_state(paths["target"][name]) for name in ["work", "journal"]}
             target = start_provider("target", TARGET_IMAGE, readonly=True)
             assert target.rpc("tools/list", {})["tools"] == original_tools
+            start_gateway(restored_database)
+            restored_gateway_container_id = p.docker("inspect", names["gateway"], "--format", "{{.Id}}")
+            assert restored_gateway_container_id != gateway_container_id
+            token = h._login_contextforge(names["gateway"], password)
+            p.write_private(paths["source"]["conf"] / "access", token.encode())
+            observed_inventory = json.loads(p.docker("exec", names["gateway"], "python3", "-c", _READBACK, "/run/eva2/access"))
+            assert observed_inventory == expected_inventory
 
             def existing_catalog():
                 rows = h._list_tools(names["gateway"], token, include_metrics=False)
@@ -200,8 +231,8 @@ try {
             observed = call("workspace_observe_bound", first)
             assert observed == created
             assert before_observe == {name: p.tree_state(paths["target"][name]) for name in ["work", "journal"]}
-            # Remount only the relocated provider writable. The gateway process,
-            # SQLite database, registration and stored tool names/IDs are kept.
+            # Remount only the relocated provider writable. Keep the restored gateway
+            # and its copied registrations and stored tool names/IDs for replay checks.
             p.docker("rm", "-f", names["provider"])
             target = start_provider("target", TARGET_IMAGE)
             assert existing_catalog() == saved_catalog
@@ -216,13 +247,21 @@ try {
             assert after == {name: p.tree_state(paths["target"][name]) for name in ["work", "journal"]}
             assert len(list(paths["target"]["work"].iterdir())) == 2
             assert existing_catalog() == saved_catalog
-            assert p.docker("inspect", names["gateway"], "--format", "{{.Id}}") == gateway_container_id
+            assert p.docker("inspect", names["gateway"], "--format", "{{.Id}}") == restored_gateway_container_id
+            assert source_database_before == p.tree_state(database)
             assert source_before == {name: p.tree_state(paths["source"][name]) for name in ["work", "journal"]}
             evidence = {
                 "passed": True, "transport": "registered ContextForge gateway /rpc -> provider HTTP -> SDK -> native",
                 "sourceImage": SOURCE_IMAGE, "targetImage": TARGET_IMAGE, "gatewayImage": GATEWAY_IMAGE,
                 "gatewayRegistrationId": gateway_id, "providerUrlUnchanged": provider_url,
-                "gatewayContainerUnchanged": True, "gatewayReregistered": False,
+                "gatewayContainerUnchanged": False, "gatewayReregistered": False,
+                "gatewayDatabaseSnapshot": snapshot_receipt,
+                "gatewayDatabaseRestored": True, "originalGatewayDatabaseUnchanged": True,
+                "sourceGatewayDatabaseSha256": source_database_hash,
+                "restoredGatewayDatabaseBeforeStartSha256": restored_database_hash,
+                "authenticatedRestoredInventoryVerified": True,
+                "restoredInventorySha256": canonical_sha256(observed_inventory),
+                "productionReadbackSha256": p.sha(_READBACK.encode()),
                 "selectedCatalog": saved_catalog, "selectedCatalogSha256": catalog_hash,
                 "originalBindingSha256": p.sha(original_bytes), "relocationBindingSha256": p.sha(binding_bytes),
                 "relocationSnapshotSha256": p.sha(snapshot_bytes), "originalJournalPrefixSha256": p.sha(prefix_bytes),
@@ -233,12 +272,13 @@ try {
                 "testSha256": p.sha(Path(__file__).read_bytes()),
                 "sourceCommit": p.command("git", "-C", str(REPO), "rev-parse", "HEAD"),
                 "tests": ["registered source first step has durable receipt", "source provider fenced before exact-byte relocation",
-                          "same provider address and untouched gateway registration/database", "stored tool IDs and v4 catalog bindings unchanged",
+                          "new gateway process with SQLite backup and retained credentials/address",
+                          "production authenticated readback equals copied SQLite inventory", "stored tool IDs and v4 catalog bindings unchanged",
                           "gateway observes exact old receipt against readonly target mounts without writes",
                           "only missing second step executes once through stored gateway tool name",
-                          "replay does not append or recreate material", "source data unchanged"],
+                          "replay does not append or recreate material", "original gateway database tree and source documents unchanged"],
                 "limits": ["isolated synthetic gateway only", "fixture tool visibility is public on a unique internal network",
-                           "no private core, person authority, model, owner mandate or restore-release proof", "no live installation"],
+                           "no private core, person authority, model, owner mandate or restore-release proof", "no live installation", "production _READBACK/_inventory only; full startup module and wizard not executed"],
             }
         finally:
             for name in [names["provider"], names["gateway"]]:

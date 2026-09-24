@@ -1,0 +1,188 @@
+{
+  "passed": true,
+  "transport": "registered ContextForge gateway /rpc -> provider HTTP -> SDK -> native",
+  "sourceImage": "sha256:81188c414ce5b20eb59f545f9651da5501576dcfbdd9edc3abd125d455f1cb6d",
+  "targetImage": "sha256:bf0cbf788561643bb25688cc0d1e6d99e13f6b7c7c8f4f4533f55b7969582179",
+  "gatewayImage": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+  "gatewayRegistrationId": "ea9f87dc6e66449b8ed4452924c81bf1",
+  "providerUrlUnchanged": "http://eva-relocation-gateway-81efcc4d05-provider:9000/mcp",
+  "gatewayContainerUnchanged": false,
+  "gatewayReregistered": false,
+  "gatewayDatabaseSnapshot": {
+    "status": "snapshot_collected",
+    "sha256": "a1d0f8771d03f3881f5b8f6b7a479415058e63084fa3537ae3d338f5929c0a99",
+    "logical_sha256": "8b1e359e3dd34269e7f08c50f0ef7c56416206176d431d87b8e90d9057dc6980",
+    "bytes": 2080768
+  },
+  "gatewayDatabaseRestored": true,
+  "originalGatewayDatabaseUnchanged": true,
+  "sourceGatewayDatabaseSha256": "8546bb0e4a38430d6e6ffc23958beff9b907785cf5e6c944b8dd8822c545898f",
+  "restoredGatewayDatabaseBeforeStartSha256": "a1d0f8771d03f3881f5b8f6b7a479415058e63084fa3537ae3d338f5929c0a99",
+  "authenticatedRestoredInventoryVerified": true,
+  "restoredInventorySha256": "326c5533ecaa26e2c01c6fd6d12bb12d9d6c9196bdec320253f969cf9e4f81e2",
+  "productionReadbackSha256": "af840fb96437b4218387d62cf2d9b3b611bc06e92a9183affa60d9a751d760b0",
+  "selectedCatalog": {
+    "workspace_create_bound": {
+      "tool_id": "4ba9794d4b154c41a0200112234af336",
+      "gateway_id": "ea9f87dc6e66449b8ed4452924c81bf1",
+      "runtime_name": "relocation-81efcc4d05-workspace-create-bound",
+      "binding": {
+        "annotations": {},
+        "deprecated": false,
+        "enabled": true,
+        "input_schema": {
+          "additionalProperties": false,
+          "description": "Provider binding SHA256 c57eb49eef1a803a42eaf305b80604aa6c32e838b14221504227a7b784dd8324",
+          "properties": {
+            "content": {
+              "maxLength": 1048576,
+              "type": "string"
+            },
+            "expected_generation": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "operation_id": {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            "path": {
+              "maxLength": 255,
+              "pattern": "^[A-Za-z0-9_-][A-Za-z0-9_.-]*$",
+              "type": "string"
+            },
+            "request_binding_sha256": {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "operation_id",
+            "request_binding_sha256",
+            "expected_generation",
+            "path",
+            "content"
+          ],
+          "type": "object"
+        },
+        "integration_type": "MCP",
+        "name": "relocation-81efcc4d05-workspace-create-bound",
+        "reachable": true,
+        "request_type": "STREAMABLEHTTP",
+        "visibility": "public"
+      },
+      "binding_sha256": "c058f9634ad5c49d526a6301815ed9750b487949485058cc3f4ac3e01cac59f6"
+    },
+    "workspace_observe_bound": {
+      "tool_id": "6289a12fd7504629a699159df5110b44",
+      "gateway_id": "ea9f87dc6e66449b8ed4452924c81bf1",
+      "runtime_name": "relocation-81efcc4d05-workspace-observe-bound",
+      "binding": {
+        "annotations": {},
+        "deprecated": false,
+        "enabled": true,
+        "input_schema": {
+          "additionalProperties": false,
+          "description": "Provider binding SHA256 c57eb49eef1a803a42eaf305b80604aa6c32e838b14221504227a7b784dd8324",
+          "properties": {
+            "content": {
+              "maxLength": 1048576,
+              "type": "string"
+            },
+            "expected_generation": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "operation_id": {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            "path": {
+              "maxLength": 255,
+              "pattern": "^[A-Za-z0-9_-][A-Za-z0-9_.-]*$",
+              "type": "string"
+            },
+            "request_binding_sha256": {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "operation_id",
+            "request_binding_sha256",
+            "expected_generation",
+            "path",
+            "content"
+          ],
+          "type": "object"
+        },
+        "integration_type": "MCP",
+        "name": "relocation-81efcc4d05-workspace-observe-bound",
+        "reachable": true,
+        "request_type": "STREAMABLEHTTP",
+        "visibility": "public"
+      },
+      "binding_sha256": "2c98650f91fb3baf37656405da3134ede253afa8ee213cbf500fa82dc4e06ab2"
+    }
+  },
+  "selectedCatalogSha256": "2b3a53deaa2f88dad3000b49f6233043e6871d2298d1c8864d4b864154809ca7",
+  "originalBindingSha256": "c57eb49eef1a803a42eaf305b80604aa6c32e838b14221504227a7b784dd8324",
+  "relocationBindingSha256": "a20596b423db1abc8a3f809e641f550ce3d9e9be15edd88344b32270449d3e4d",
+  "relocationSnapshotSha256": "89ad53a1ed4adfb806c4aec9de1101cd32f2597112674fe9c0fab6685505708f",
+  "originalJournalPrefixSha256": "b859dfad523ce9509ce7bf1eddd6ac89596c825045e484fcd9d6e407c61f33ac",
+  "firstReceiptResponseSha256": "308129239ecb899c80bd553f4575b38f36c4cf5e0a518323206343cb9fe8b413",
+  "secondReceiptResponseSha256": "af86d4710ebddc69b5b467dad9c69556ce631feccf24721cba8d6cb7af05225d",
+  "gatewayHelperSha256": "a8dc2a31ea327a54f70850669c0c2c3f3b40893a7bb80863df6bdeb09527d3be",
+  "mcpHelperSha256": "9f66b355bd8a6b5e5734997f502b57993f53de9995fbc4e232e8ca5999ba4516",
+  "catalogFunctionSha256": "49cf34109cd84366e6bdd59333ea2e266ec117e054466e2054cc6feaf9b06159",
+  "testSha256": "9dc852968d17e217a30731ca41f2f14deeb79a0f0ebcc5f8b00b9ceea2ac9ca7",
+  "sourceCommit": "668595b94ac978267ff17c0e39a07e829992b1c0",
+  "tests": [
+    "registered source first step has durable receipt",
+    "source provider fenced before exact-byte relocation",
+    "new gateway process with SQLite backup and retained credentials/address",
+    "production authenticated readback equals copied SQLite inventory",
+    "stored tool IDs and v4 catalog bindings unchanged",
+    "gateway observes exact old receipt against readonly target mounts without writes",
+    "only missing second step executes once through stored gateway tool name",
+    "replay does not append or recreate material",
+    "original gateway database tree and source documents unchanged"
+  ],
+  "limits": [
+    "isolated synthetic gateway only",
+    "fixture tool visibility is public on a unique internal network",
+    "no private core, person authority, model, owner mandate or restore-release proof",
+    "no live installation",
+    "production _READBACK/_inventory only; full startup module and wizard not executed"
+  ],
+  "fixtureResourcesRemoved": true,
+  "checkedAt": "2026-09-24T12:48:15.082888+00:00",
+  "installed": false,
+  "ownerAccepted": false,
+  "modelRequests": 0,
+  "actualRuns": 2,
+  "priorAttempt": {
+    "passed": false,
+    "phase": "stopped_source_gateway_snapshot",
+    "failure": "source SQLite WAL was not checkpointed at stop",
+    "actual_runs": 1,
+    "restoredGatewayStarted": false,
+    "fixtureResourcesRemoved": true,
+    "testSha256": "82f42e110933cb1099fa60b5db2ed74381bf5df9a99d1574178bf9dad5aeab9b",
+    "sourceCommit": "668595b94ac978267ff17c0e39a07e829992b1c0",
+    "limits": [
+      "No restored-gateway RPC proof obtained",
+      "Production readback not reached",
+      "No full startup module or wizard execution",
+      "No model calls or live data"
+    ],
+    "nextCorrection": "Use existing WAL-aware snapshot_gateway_database helper after stopping source gateway; no retry performed"
+  },
+  "independentReview": {
+    "reviewer": "root coordinator",
+    "result": "PASS bounded actual restored gateway route; source diff and raw evidence read, exact executed test hash verified",
+    "limits": "Synthetic pinned gateway/provider images, same host, no private core or full wizard activation. Source database unchanged claim begins after WAL-aware snapshot checkpoint."
+  }
+}

@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T12:40:24.130841+00:00",
+        "checkedAt": "2026-09-24T12:48:15.082888+00:00",
         "deliveries": [
+          {
+            "title": "Bewaard document via echt herstelde gateway teruggelezen",
+            "date": "24 september",
+            "state": "tested",
+            "result": "Nieuwe gateway met gekopieerde database gaf exact het oude documentresultaat terug. Tool-ID’s behouden; vervolgstap en herhaling zonder dubbele wijziging geslaagd.",
+            "remaining": "Geïsoleerde synthetische proef. Volledige wizard, privé-kern, activering en gezinsgebruik nog niet bewezen.",
+            "source": "eva2/evidence/product/native-document-restored-gateway-20260924.json"
+          },
           {
             "title": "Herstelde gateway starten vanuit de wizard",
             "date": "24 september",
@@ -1893,15 +1901,15 @@
           }
         ],
         "now": {
-          "title": "Gatewaystart in herstelwizard afgerond",
+          "title": "Echte herstelde documentroute gecontroleerd",
           "state": "Afgerond",
-          "detail": "Bron a832e9b3 op GitHub en lokale beheerlauncher beschikbaar. Gerichte controles en onafhankelijke bronreview geslaagd; actieve Eva ongewijzigd.",
-          "doneWhen": "Deze wizardstap afgerond. Volledig herstel, spraak en overige projectuitkomsten blijven open."
+          "detail": "Tweede poging geslaagd na concrete WAL-correctie in de proef. Oude gegevens behouden, tijdelijke containers opgeruimd; geen actieve Eva gewijzigd.",
+          "doneWhen": "Afgerond binnen deze routeproef; volledig herstel en project blijven open."
         },
         "next": {
-          "title": "Bewaard project via herstelde gateway teruglezen",
+          "title": "Herstelde installatie gecontroleerd vrijgeven",
           "state": "In wachtrij",
-          "detail": "Bestaande projectverwijzing en leesactie gebruiken om de herstelde route te controleren, vóór schrijftoegang en vrijgave. Nog niet gestart."
+          "detail": "Bestaande herstelblokkade koppelen aan expliciete vrijgave na componentcontrole; document-schrijftoegang en kern/werkers samenhangend activeren. Nog niet gestart."
         },
         "ownerAction": {
           "title": "Een bestaande lamp bedienen",
@@ -1915,7 +1923,7 @@
           "expected": "Bestaande toegestane lamp schakelt; fysieke werking nog niet bewezen. Geen nieuwe schakelaars toegevoegd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T12:40:24.130841+00:00"
+        "reviewedAt": "2026-09-24T12:48:15.082888+00:00"
       }
     },
     "pendingTechnicalReview": {

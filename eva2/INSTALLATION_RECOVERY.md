@@ -188,3 +188,15 @@ document connection and gateway start steps start only their explicitly pinned
 components; the core and task workers remain stopped. Required separate secrets,
 end-to-end component readback and deliberate activation remain required. This delivery does not claim a complete relocation, a successful
 restore trial, or a GUI-only fresh-machine installation.
+
+## Bounded restored-route evidence
+
+The 24 September isolated restored-gateway proof copies a stopped gateway with
+the existing WAL-aware snapshot helper, starts a new gateway process, and reads
+the identical retained native document receipt through the unchanged registered
+tool ID. The missing next operation and idempotent replay also pass. It exercises
+the production authenticated inventory reader, not the complete startup function
+or wizard. See `evidence/product/native-document-restored-gateway-20260924.json`,
+which retains the failed empty-WAL assumption and the corrected successful run.
+This is synthetic same-host evidence; private-core recovery and activation remain
+separate requirements.
