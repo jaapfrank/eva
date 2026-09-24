@@ -1,0 +1,26 @@
+{
+  "sourceCommit": "f6f895a3",
+  "installedAt": "2026-09-24T00:21:28.397817+00:00",
+  "status": "installed_start_checked",
+  "requirement": "Background results remain attached to their original question while other conversation turns continue.",
+  "gap": "Stored origin_message_id was not used by the asynchronous Telegram delivery transport.",
+  "change": "Every result part uses the recorded original chat/message as reply_parameters; provider receipt must name that original message. Missing/deleted origin never silently falls back to an unrelated reply. Existing ambiguous handling retains saved output without automatic repeat.",
+  "checks": [
+    "Source AST parsed",
+    "Candidate imports succeeded",
+    "Installed baseline matched HEAD for all three changed files",
+    "No active admitted/call_started task before restart",
+    "Core and worker healthy after installation"
+  ],
+  "notProven": [
+    "Real Telegram delivery and deleted-message behavior",
+    "Conversation latency or ordering",
+    "Whole step 1 completion"
+  ],
+  "modelCalls": 0,
+  "testMessagesSent": 0,
+  "ownerAccepted": false,
+  "independentReview": "deferred under functions-first owner instruction",
+  "image": "eva2-telegram-result-binding:20260924",
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/telegram-result-binding-20260924/baseline.compose.private.json"
+}

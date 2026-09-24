@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T00:13:54.552610+00:00",
+        "checkedAt": "2026-09-24T00:21:28.397817+00:00",
         "deliveries": [
+          {
+            "title": "Telegram-resultaat bij de oorspronkelijke vraag",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Alle delen van een achtergrondresultaat antwoorden op de opgeslagen oorspronkelijke vraag, ook wanneer intussen andere vragen zijn gesteld.",
+            "remaining": "Echte Telegram-proef later; geen bewezen snelheidsverbetering of volledige afronding van gesprek en stem.",
+            "source": "eva2/evidence/product/telegram-result-binding-installed-20260924.json"
+          },
           {
             "title": "Stap 2: ook Eva’s eerdere antwoord bij kanaalwissel",
             "date": "24 september",
@@ -1653,29 +1661,29 @@
           }
         ],
         "now": {
-          "title": "Stap 2: privéspraak op gedeelde apparaten",
-          "state": "Productkeuze gevraagd",
-          "detail": "De bestaande geverifieerde telefoonroute is aanwezig. Automatische sprekerherkenning en vaststelling van toehoorders zijn niet opgeleverd. Gevraagd: herkennen voor aanspreken met privé via telefoon/Telegram, of ook privé op speaker na verificatie van spreker én toehoorders.",
-          "doneWhen": "Keuze bepaalt de ontbrekende functie; een speaker of genoemde naam wordt niet stilzwijgend privé-identiteit."
+          "title": "Stap 1: gesprek tijdens achtergrondwerk",
+          "state": "Berichtkoppeling geïnstalleerd",
+          "detail": "Telegram gebruikt nu de oorspronkelijke vraag bij achtergrondresultaten. Kern en werker gezond gestart. Het volledige gesprek en de fysieke Voice PE-overgang blijven open.",
+          "doneWhen": "Ontvangen, doorpraten, terugmelden, onderbreken en stoppen werken via alle vier ingangen."
         },
         "next": {
-          "title": "Persoonsfunctie volgens eigenaarkeuze afronden",
-          "state": "Keuze staat open",
-          "detail": "Geen nieuwe herkennings- of privétoegangsroute installeren voordat duidelijk is welk gedrag de eigenaar wil. Bestaande privégesprekken en gewone Voice PE blijven beschikbaar."
+          "title": "Resterende kanaalblokkades afronden",
+          "state": "Vervolg nog niet gestart",
+          "detail": "Alleen ontbrekende functionaliteit binnen gesprek en stem. De Voice PE-fout vereist nog de falende fysieke overgang; de privésprekerkeuze blijft open. Geen nieuwe brede test- of auditronde."
         },
         "ownerAction": {
-          "title": "Privégesprek via stem en tekst",
+          "title": "Geen proef nodig tijdens deze bouwronde",
           "url": "http://localhost:44711/internal/v1/dashboard/conversation",
-          "linkLabel": "Open privégesprek",
+          "linkLabel": "Open Eva",
           "steps": [
-            "Gebruik de bestaande privéspraakroute op je lokale website.",
-            "Bij een latere wissel naar tekst of een nieuwe privésessie kan recente bewaarde context worden meegenomen.",
-            "Een gedeelde Voice PE blijft een huishoudroute, geen bewijs van jouw identiteit. Een nieuwe proef is nu niet nodig."
+            "Gebruik Eva zoals gewoonlijk; een nieuwe verplichte proef is nu niet nodig.",
+            "Bij latere Telegram-beoordeling: geef een onderzoeksopdracht en stel tussendoor een andere vraag.",
+            "Controleer dan of het onderzoeksresultaat de oorspronkelijke onderzoeksopdracht citeert."
           ],
-          "expected": "De koppeling is geïnstalleerd; het werkelijke gespreksgedrag blijft te beproeven."
+          "expected": "Koppeling geïnstalleerd; echte gesprekssnelheid en aflevering blijven afzonderlijk te beoordelen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T00:13:54.552610+00:00"
+        "reviewedAt": "2026-09-24T00:21:28.397817+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11334,7 +11342,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 2,
+      "currentStep": 1,
       "steps": [
         {
           "number": 1,
