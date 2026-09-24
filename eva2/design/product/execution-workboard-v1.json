@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T12:17:30.626333+00:00",
+        "checkedAt": "2026-09-24T12:25:00.824381+00:00",
         "deliveries": [
+          {
+            "title": "Bewaarde documentbestanden controleren bij herstel",
+            "date": "24 september",
+            "state": "built",
+            "result": "Native bestands- en geschiedeniscontrole aangesloten in lokale herstelwizard. Gewijzigd proefbestand wordt geweigerd; originele opdracht wordt niet herhaald.",
+            "remaining": "Geen echte herstelactie uitgevoerd. Gatewaykoppeling, schrijftoegang en volledige herstelproef nog open. Geen nieuwe spraakfunctie.",
+            "source": "eva2/evidence/product/installer-document-verification-20260924.json"
+          },
           {
             "title": "Herstelde documentprovider aansluiten voor controle",
             "date": "24 september",
@@ -1869,15 +1877,15 @@
           }
         ],
         "now": {
-          "title": "Documentaansluiting beschikbaar in beheerwizard",
-          "state": "Gebouwd en lokaal beschikbaar",
-          "detail": "Voorbereide bindings/projectmomentopnamen kunnen via dezelfde wizard met de bestaande native provider worden verbonden in alleen-lezen-modus. Geen actieve data gewijzigd.",
-          "doneWhen": "Koppeling, gerichte controles en start/importcontrole klaar. Volledige herstelproef apart open."
+          "title": "Documentcontrole technisch afgerond",
+          "state": "Afgerond",
+          "detail": "Bron b6d4d6e2 op GitHub en lokale beheerwizard beschikbaar. Gerichte native controle en wizardkoppeling geslaagd; actieve Eva ongewijzigd.",
+          "doneWhen": "Afgerond binnen deze scope; volledige herstelketen en achtstappengoal blijven open."
         },
         "next": {
-          "title": "Bewaarde projectresultaten teruglezen",
+          "title": "Herstelde documentproviders aan gateway koppelen",
           "state": "In wachtrij",
-          "detail": "Na de alleen-lezen-aansluiting de bestaande projectbewijzen controleren; daarna gatewaykoppeling en gerichte vrijgave afronden. Fysieke Voice PE-vraag blijft afzonderlijk open."
+          "detail": "Bestaande gatewayregistratie hergebruiken voor expliciete herstelde doelen; daarna schrijftoegang en gerichte vrijgave. Dit vervolg is nog niet gestart."
         },
         "ownerAction": {
           "title": "Een bestaande lamp bedienen",
@@ -1891,7 +1899,7 @@
           "expected": "Bestaande toegestane lamp schakelt; fysieke werking nog niet bewezen. Geen nieuwe schakelaars toegevoegd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T12:17:30.626333+00:00"
+        "reviewedAt": "2026-09-24T12:25:00.824381+00:00"
       }
     },
     "pendingTechnicalReview": {

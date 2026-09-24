@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-09-24T12:25:00.824381+00:00",
+  "sourceCommit": "b6d4d6e280da3e8d5273b2358758ee894c10ed12",
+  "kind": "operator_read_only_document_material_verification",
+  "availableCommand": "python3 /home/administrator/project/.eva2-artifacts/installer-document-verification-20260924/start-installer.py --restore-config /absolute/private/target.json",
+  "sourceHashes": {
+    "tools/installation_document_connection.py": "4066713453497deabc4fa1aa9df75cd4db0c8d2d660cf351b488eb056d556e85",
+    "tools/installer_portable_restore.py": "82d076c2a2df8a05cf9b7223ef23d2e49eae3ef715a4a5ca965783a3d98dc8ab",
+    "tools/installer_restore_wizard.py": "9824f3df7044e7902a78e375ed99bdb18817ddc721ab1a87acb4c9fe4376beed"
+  },
+  "behavior": [
+    "Existing native relocation parser re-observes retained files and original operation history in same read-only provider",
+    "Exact binding and snapshot comparison required before documents_verified=true",
+    "Report contains hashes and byte counts, no document contents; core activation remains closed"
+  ],
+  "checks": [
+    "Real native fixture: one targeted test passed; unchanged journal bytes/mtime/ctime; changed retained artifact refused",
+    "Implementation agent fake success and changed snapshot rejection passed",
+    "Coordinator source review completed",
+    "Staged launcher help passed",
+    "Real wizard methods with mocked side effects passed: order, partial receipt retention, no retry, core hold",
+    "git diff --check passed"
+  ],
+  "notPerformed": [
+    "No restored provider started or active data restored",
+    "No gateway remapping, writable activation or full restore trial",
+    "No owner acceptance"
+  ],
+  "remaining": [
+    "Connect restored gateway to explicitly selected document providers",
+    "Complete deliberate writable activation and isolated restore trial"
+  ],
+  "rollback": "Use installer-document-connection-20260924 before starting recovery. Retain and inspect any targets already involved in recovery; do not retry older workflows on them.",
+  "modelRequests": 0
+}
