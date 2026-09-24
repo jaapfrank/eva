@@ -11,6 +11,7 @@ from threading import Thread
 from typing import Any, Iterator
 
 from fastapi.responses import StreamingResponse
+from eva.application.conversation_receipt import RECEIVED_INPUT_TEXT
 
 from eva.adapters.api.dashboard_work_return_client import DASHBOARD_WORK_RETURN_CLIENT_JS
 
@@ -103,6 +104,8 @@ form.addEventListener('submit',async event=>{
   try {
     const response=await fetch('/internal/v1/dashboard/conversation/respond',{
       method:'POST',headers:{'content-type':'application/json','accept':'application/x-ndjson'},body:JSON.stringify({text})});
+    const receipt=response.ok ? response.headers.get('X-Eva-Input-Receipt') : null;
+    if(receipt && receipt.length<=120)pending.textContent=receipt;
     const data=await readReplyStream(response,delta=>{
       draft+=delta;pending.className='message eva';pending.textContent=draft+'\\n\\nEva schrijft…';
     });
@@ -158,7 +161,7 @@ def dashboard_stream_response(runtime: Any, text: str) -> StreamingResponse:
                 return
 
     return StreamingResponse(events(), media_type="application/x-ndjson",
-        headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"})
+        headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no", "X-Eva-Input-Receipt": RECEIVED_INPUT_TEXT})
 
 
 def conversation_stream_response(runtime: Any, turn: ConversationTurn,
@@ -193,7 +196,9 @@ def conversation_stream_response(runtime: Any, turn: ConversationTurn,
             if kind != "delta":
                 return
 
-    return StreamingResponse(events(), media_type="application/x-ndjson")
+    return StreamingResponse(events(), media_type="application/x-ndjson",
+        headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no",
+                 "X-Eva-Input-Receipt": RECEIVED_INPUT_TEXT})
 
 
 __all__ = [
