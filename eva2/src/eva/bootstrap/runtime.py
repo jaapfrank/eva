@@ -1931,6 +1931,7 @@ def create_runtime_app() -> FastAPI:
         )
     )
     idle_tasks = ()
+    service_tasks = ()
     memory_outbox = PostgresMemoryOutbox(
         engine,
         tenant_id=settings.background_tenant_id or "",
@@ -2154,9 +2155,9 @@ def create_runtime_app() -> FastAPI:
             delegated_work_store, proactive_delivery, document_source=document_results,
             bindings_loader=lambda: load_principal_bindings(settings.telegram_principal_bindings_file),
         )
-        # Reuse the existing durable background loop. Reserves with background
-        # work disabled never start it, and historical unbound tasks never send.
-        idle_tasks = (result_delivery.run_once, *idle_tasks)
+        # Requested work must return while conversation and memory retention
+        # remain active. Existing delivery claims still govern every send.
+        service_tasks = (*service_tasks, result_delivery.run_once)
     if (settings.delegated_result_delivery_enabled and proactive_delivery is not None
             and dashboard_owner_principal_id is not None
             and dashboard_principal_binding_id is not None
@@ -2175,7 +2176,7 @@ def create_runtime_app() -> FastAPI:
     if delegated_work_service is not None:
         from eva.adapters.postgres.scheduled_work import ScheduledOwnerWork
         scheduled_work = ScheduledOwnerWork(delegated_work_service)
-        idle_tasks = (scheduled_work.run_once, *idle_tasks)
+        service_tasks = (scheduled_work.run_once, *service_tasks)
     if settings.delegated_result_delivery_enabled and household_work_server is not None:
         from eva.providers.home_assistant import HomeAssistantProviderSettings
         from eva.bootstrap.native_work_delivery import NativeWorkDelivery
@@ -2186,7 +2187,7 @@ def create_runtime_app() -> FastAPI:
                         and isinstance(item.settings, HomeAssistantProviderSettings)]
         if len(native_media) == 1:
             native_returns = NativeWorkDelivery(household_work_server, native_media[0])
-            idle_tasks = (native_returns.run_once, *idle_tasks)
+            service_tasks = (*service_tasks, native_returns.run_once)
             if (settings.background_principal_id is not None and household_voice is not None
                     and reflection_budget is not None):
                 from eva.bootstrap.household_initiative import HouseholdInitiativeLoop
@@ -2204,6 +2205,7 @@ def create_runtime_app() -> FastAPI:
             memory,
             idle_seconds=settings.cold_path_idle_seconds,
             idle_tasks=idle_tasks,
+            service_tasks=service_tasks,
             outbox=memory_outbox,
             reflection_budget=reflection_budget,
             storage_budget=storage_budget,

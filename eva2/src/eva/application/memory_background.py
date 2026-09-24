@@ -7,7 +7,7 @@ from datetime import UTC, datetime
 import hashlib
 from queue import Empty, Queue
 import re
-from threading import Event, Lock, Thread
+from threading import Event, Lock, Thread, current_thread
 import time
 from typing import Callable, Protocol
 
@@ -116,7 +116,8 @@ class SemanticMemoryColdPathWorker:
 
     Retain is offered to the selected provider outside the response path.
     Provider maintenance starts only after the configured idle period. A poison
-    job is tried at most three times.
+    job is tried at most three times. Admitted-work service callbacks use one
+    separate serial thread, independent of the conversation idle timer.
     """
 
     def __init__(
@@ -126,6 +127,7 @@ class SemanticMemoryColdPathWorker:
         idle_seconds: float = 300.0,
         retry_delay_seconds: float = 2.0,
         idle_tasks: tuple[Callable[[], object], ...] = (),
+        service_tasks: tuple[Callable[[], object], ...] = (),
         outbox: DurableMemoryOutboxPort | None = None,
         reflection_budget: BackgroundReflectionBudgetPort | None = None,
         storage_budget: MemoryStorageBudgetPort | None = None,
@@ -138,6 +140,7 @@ class SemanticMemoryColdPathWorker:
         self._idle_seconds = idle_seconds
         self._retry_delay_seconds = retry_delay_seconds
         self._idle_tasks = idle_tasks
+        self._service_tasks = service_tasks
         self._outbox = outbox
         self._reflection_budget = reflection_budget
         self._storage_budget = storage_budget
@@ -146,6 +149,8 @@ class SemanticMemoryColdPathWorker:
         self._queue: Queue[_RetainJob | None] = Queue()
         self._stop = Event()
         self._thread: Thread | None = None
+        self._service_thread: Thread | None = None
+        self._stopping = False
         self._lock = Lock()
         self._last_activity = time.monotonic()
         self._reflection_scopes: set[tuple[str, str, str]] = set()
@@ -159,7 +164,8 @@ class SemanticMemoryColdPathWorker:
     def start(self) -> None:
         pending_jobs = () if self._outbox is None else self._outbox.pending()
         with self._lock:
-            if self._thread is not None and self._thread.is_alive():
+            if self._stopping or any(thread is not None and thread.is_alive()
+                                     for thread in (self._thread, self._service_thread)):
                 return
             self._stop.clear()
             self._thread = Thread(
@@ -168,6 +174,10 @@ class SemanticMemoryColdPathWorker:
                 daemon=True,
             )
             self._thread.start()
+            if self._service_tasks:
+                self._service_thread = Thread(target=self._run_services,
+                    name="eva-background-services", daemon=True)
+                self._service_thread.start()
         if self._outbox is not None:
             for durable_job in pending_jobs:
                 document = getattr(durable_job, "document", None)
@@ -176,11 +186,37 @@ class SemanticMemoryColdPathWorker:
                 self._queue.put_nowait(_RetainJob(document, durable_job=durable_job))
 
     def stop(self, timeout_seconds: float = 5.0) -> None:
-        self._stop.set()
-        self._queue.put(None)
-        thread = self._thread
-        if thread is not None:
-            thread.join(timeout_seconds)
+        deadline = time.monotonic() + max(0.0, timeout_seconds)
+        with self._lock:
+            self._stopping = True
+            self._stop.set()
+            self._queue.put(None)
+            threads = (self._thread, self._service_thread)
+        try:
+            for thread in threads:
+                if thread is not None and thread is not current_thread():
+                    thread.join(max(0.0, deadline - time.monotonic()))
+        finally:
+            with self._lock:
+                self._stopping = False
+
+    def _run_services(self) -> None:
+        """Advance admitted work and returns independently of memory maintenance.
+
+        Each callback owns durable claims and its bounded operation. There is
+        one serial lane: a slow callback is never overlapped or forcibly retried.
+        """
+        while not self._stop.is_set():
+            for task in self._service_tasks:
+                if self._stop.is_set():
+                    return
+                try:
+                    task()
+                except Exception as error:
+                    with self._lock:
+                        self._last_error = f"{type(error).__name__}: {error}"
+            if self._stop.wait(1.0):
+                return
 
     def submit(self, document: ConversationMemoryDocument) -> object | None:
         with self._lock:
@@ -397,7 +433,10 @@ class SemanticMemoryColdPathWorker:
                 self._schedule_reflection_if_idle()
                 continue
             if job is None:
-                return
+                self._queue.task_done()
+                if self._stop.is_set():
+                    return
+                continue  # A completed previous stop may have left its sentinel queued.
             active_job = job
             if self._outbox is not None:
                 try:
