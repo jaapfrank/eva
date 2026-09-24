@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — volledige herstelproef afronden.** Geheugengegevens op de bestaande PostgreSQL18.6-image komen overeen:23 tabellen en2 nummerreeksen. Correctie23dfee8e geïnstalleerd met terugweg;13 gerichte controles en onafhankelijke review geslaagd. Nieuw volledig hersteldoel wordt voorbereid voor geheugen-API en kernstart. Volledige route nog niet geslaagd; productie ongewijzigd.
+**Nu — volledige herstelproef afronden.** Geheugengegevens op de bestaande PostgreSQL18.6-image komen overeen:23 tabellen en2 nummerreeksen. Correctie23dfee8e geïnstalleerd met terugweg;13 gerichte controles en onafhankelijke review geslaagd. Nieuw volledig hersteldoel is voorbereid; de wizarduitvoering met geheugen-API en kernstart loopt. Volledige route nog niet geslaagd; productie ongewijzigd.
 
 **Nog niet als volledige functie opgeleverd.** De volledige reservekopie-tot-draaiende-Eva-proef en gewone doelvoorbereiding zonder handgeschreven JSON staan open. [Beschikbaarheid, bewijs en terugweg](evidence/product/restore-operator-updated-20260924.json). De gevonden archieffout is gecorrigeerd en de echte export slaagt: [bewijs](evidence/product/restore-export-correction-20260924.json). Dagelijkse kanaal-/gezinsproeven blijven afzonderlijk open.
 

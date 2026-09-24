@@ -2240,8 +2240,8 @@
         ],
         "now": {
           "title": "Volledige herstelproef afronden",
-          "state": "Geheugengegevens vergeleken; correctie geïnstalleerd",
-          "detail": "Bron23dfee8e ondersteunt de werkelijk gebruikte PostgreSQL18.6-dump. Echte bron-/doelvergelijking geslaagd voor23 tabellen en2 nummerreeksen;13 gerichte controles en onafhankelijke review geslaagd. Helper geïnstalleerd met terugweg. Nieuw volledig hersteldoel wordt voorbereid voor geheugen-API en kernstart. Productie blijft ongewijzigd.",
+          "state": "Volledige wizardproef loopt",
+          "detail": "De volledige wizarduitvoering loopt op een nieuw afzonderlijk doel met geïnstalleerde bron23dfee8e. Eerdere netwerk-, profiel- en versieproblemen zijn gecorrigeerd; de echte PostgreSQL18.6-gegevensvergelijking is geslaagd. Geheugen-API, kernstart en teruglezen na start bepalen de uitkomst. Productie blijft draaien.",
           "doneWhen": "Volledige reservekopie via de wizard terugzetten en echte herstelde kern starten met behouden gegevens. Gebruikersacceptatie blijft apart."
         },
         "next": {
@@ -2261,7 +2261,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T22:01:36.418075+00:00"
+        "reviewedAt": "2026-09-24T22:03:15.306871+00:00"
       }
     },
     "pendingTechnicalReview": {
