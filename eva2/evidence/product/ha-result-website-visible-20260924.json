@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-09-24T15:17:41.882132+00:00",
+  "baseCommit": "8f3ae3cc",
+  "workId": "work:eva-chat:b159cc1f-ef67-5fe5-bffc-10cf6a9575d0",
+  "resultSha256": "06f96388b1ae496405f1f2e25640afc59e9e78a476b3484d32e1773c9a7868c1",
+  "observations": {
+    "ownerWorkPanel": "Opened the actual local website, selected Resultaat bekijken for the matching Home Assistant task; the complete saved advice was visibly rendered.",
+    "returnJournal": {
+      "claimedAt": "2026-09-24T15:13:01Z",
+      "acknowledgedAt": "2026-09-24T15:13:01Z",
+      "phase": "acknowledged"
+    },
+    "conversationReopen": "No pending result displayed on reopening after acknowledgement. Existing browser transport renders then acknowledges; acknowledged results are not replayed automatically.",
+    "oldQueue": "Earlier poll returned an older queued result. That alone was not a defect; the target was subsequently acknowledged."
+  },
+  "limitations": [
+    "Automatic target rendering was not captured before the previous browser tab closed; journal acknowledgement is transport evidence, not proof that Jaap saw it.",
+    "Saved result display was observed directly; owner acceptance and physical voice delivery remain open."
+  ],
+  "changes": "No product code or runtime changes required.",
+  "additionalModelCalls": 0,
+  "homeAssistantMutations": 0
+}

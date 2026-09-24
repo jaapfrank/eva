@@ -1009,14 +1009,22 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T15:11:40.530097+00:00",
+        "checkedAt": "2026-09-24T15:18:59.256795+00:00",
         "deliveries": [
+          {
+            "title": "Afgerond HA-advies zichtbaar in de website",
+            "date": "24 september",
+            "state": "tested",
+            "result": "Het bestaande advies via Resultaat bekijken geopend en volledig gelezen in de echte website. Afleverregistratie bevestigt eerdere automatische overdracht; geen nieuwe bouw of modelaanvragen nodig.",
+            "remaining": "Eigenaaracceptatie en hoorbare aflevering blijven open. Een geregistreerde browseroverdracht is geen bewijs dat Jaap het heeft gelezen.",
+            "source": "eva2/evidence/product/ha-result-website-visible-20260924.json"
+          },
           {
             "title": "Volledige HA-configuraties analyseren en advies opleveren",
             "date": "24 september",
             "state": "installed",
             "result": "Echte achtergrondopdracht geslaagd: vier volledige configuraties gelezen en één onderbouwd verbeteradvies opgeslagen. Drie modelrondes, twee leesacties,27.684 inputtokens. Niets gewijzigd. Inhoud onafhankelijk gecontroleerd.",
-            "remaining": "Resultaat in taakoverzicht opvraagbaar. Automatische aflevering nog niet bewezen; terugmeldroute gaf eerst ouder resultaat. Ontvangst9,7 s blijft te traag. Aanmaken/wijzigen en Voice PE-proef staan apart open.",
+            "remaining": "Volledig advies zichtbaar via Resultaat bekijken in de echte website. Automatische overdracht geregistreerd op 24 september 17:13; dit bewijst niet dat Jaap het heeft gelezen. Ontvangst9,7 s blijft te traag. Aanmaken/wijzigen en Voice PE-proef staan apart open.",
             "source": "eva2/evidence/product/full-ha-configurations-installed-20260924.json"
           },
           {
@@ -2015,15 +2023,15 @@
           }
         ],
         "now": {
-          "title": "HA-configuratieanalyse daadwerkelijk opgeleverd",
-          "state": "Technisch afgerond voor deze leesopdracht",
-          "detail": "Nieuwe batchlezer live; echte taak afgerond binnen ongewijzigd budget en resultaat inhoudelijk gecontroleerd. Geen actieve proef meer.",
-          "doneWhen": "Deze begrensde leesanalyse is opgeleverd; algemene huisbediening, snelle ontvangst en kanaalaflevering blijven afzonderlijk open."
+          "title": "Geheugenwachttijd afzonderlijk meetbaar maken",
+          "state": "In uitvoering",
+          "detail": "Ook de gemeten korte tussenvraag haalde geheugen op vóór het model. De bestaande meting splitst die tijden niet. Eén begrensde timingregistratie wordt toegevoegd; geheugen en antwoorden blijven hetzelfde.",
+          "doneWhen": "Timingregistratie geïnstalleerd; een volgende echte beurt kan geheugenwachttijd van modeltijd onderscheiden. Dit is nog geen snelheidsverbetering."
         },
         "next": {
-          "title": "Actuele taakresultaten zichtbaar terugmelden op website",
+          "title": "Ontvangstverbetering installeren bij aangetoonde oorzaak",
           "state": "Nog niet gestart",
-          "detail": "Controleren hoe de bestaande terugmeldroute oudere wachtrijresultaten en actuele taken toont, zonder oude resultaten te verliezen. Daarna de resterende ontvangstvertraging gericht aanpakken."
+          "detail": "Bestaande contactroute behouden; geen ontvangstscriptjes of herhaalde modelvergelijking."
         },
         "ownerAction": {
           "title": "Gebruik een eigen Home Assistant-opdracht",
@@ -2037,7 +2045,7 @@
           "expected": "Eva zoekt zelf de bestaande configuratie/services op en gebruikt de passende API. Een wijziging moet ze teruglezen en eerlijk toelichten; API-bevestiging alleen bewijst geen fysieke werking."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T15:11:40.530097+00:00"
+        "reviewedAt": "2026-09-24T15:18:59.256795+00:00"
       }
     },
     "pendingTechnicalReview": {
