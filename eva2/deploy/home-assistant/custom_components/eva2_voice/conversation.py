@@ -36,13 +36,18 @@ class EvaConversation(conversation.ConversationEntity):
             )
         try:
             queue = asyncio.Queue()
+            receipt_text = ""
+            async def receipt(text):
+                nonlocal receipt_text
+                receipt_text = text + " "
+                await queue.put(receipt_text)
             async def delta(text):
                 await queue.put(text)
             worker = asyncio.create_task(self._client.respond(
                 satellite_id=satellite_id, device_id=satellite.device_id,
                 conversation_id=chat_log.conversation_id, text=user_input.text,
                 language=user_input.language or self.hass.config.language,
-                on_delta=delta,
+                on_delta=delta, on_receipt=receipt,
             ))
             worker.add_done_callback(lambda _: queue.put_nowait(None))
             async def content():
@@ -69,7 +74,7 @@ class EvaConversation(conversation.ConversationEntity):
             )
         # CancelledError deliberately propagates to the HA pipeline: an
         # interrupted request must never become speech or an error utterance.
-        response.async_set_speech(answer.text)
+        response.async_set_speech(receipt_text + answer.text)
         return conversation.ConversationResult(
             response=response, conversation_id=chat_log.conversation_id,
             continue_conversation=answer.continue_conversation,

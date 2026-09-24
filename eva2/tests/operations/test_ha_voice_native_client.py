@@ -246,3 +246,45 @@ def test_failed_playback_report_does_not_fabricate_receipt_or_block_new_question
                 await report
             assert (await ask(client, "opnieuw")).text == "antwoord"
     asyncio.run(run())
+
+
+@pytest.mark.parametrize("advertise_receipt", [True, False])
+def test_input_receipt_precedes_delayed_answer_without_changing_canonical_reply(advertise_receipt):
+    import json
+    async def run():
+        headers_sent, release, receipt_seen = asyncio.Event(), asyncio.Event(), asyncio.Event()
+        receipts, deltas = [], []
+        async def handler(request):
+            data = await request.json()
+            headers = {"Content-Type": "application/x-ndjson"}
+            if advertise_receipt:
+                headers["X-Eva-Input-Receipt"] = "Een momentje."
+            response = web.StreamResponse(headers=headers)
+            await response.prepare(request)
+            headers_sent.set()
+            await release.wait()
+            await response.write((json.dumps({"type": "final", "request_id": data["request_id"],
+                "reply": "Het antwoord.", "continue_conversation": True}) + "\n").encode())
+            await response.write_eof()
+            return response
+        async def interrupt(request):
+            release.set()
+            return web.Response(status=204)
+        async def receipt(text):
+            receipts.append(text)
+            receipt_seen.set()
+        async def delta(text):
+            deltas.append(text)
+        async with server(handler, interrupt) as client:
+            task = asyncio.create_task(client.respond(satellite_id="assist_satellite.room", device_id="a" * 32,
+                conversation_id="ha-conversation", text="Vraag", language="nl", on_delta=delta, on_receipt=receipt))
+            await asyncio.wait_for(headers_sent.wait(), 2)
+            if advertise_receipt:
+                await asyncio.wait_for(receipt_seen.wait(), 2)
+                assert receipts == ["Een momentje."] and not task.done() and deltas == []
+            release.set()
+            answer = await task
+            assert answer.text == "Het antwoord."
+            assert deltas == ["Het antwoord."]
+            assert receipts == (["Een momentje."] if advertise_receipt else [])
+    asyncio.run(run())

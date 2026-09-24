@@ -399,3 +399,24 @@ def test_revocation_blocks_capabilities_but_allows_audit_of_existing_answer():
             assert (await client.post("/internal/v1/ha-voice/turns/" + request["request_id"] + "/playback", json=report)).status_code == 200
         await service.close()
     asyncio.run(run())
+
+
+def test_stream_advertises_shared_input_receipt_without_changing_reply_or_digest():
+    import hashlib
+    import json
+    from eva.application.conversation_receipt import RECEIVED_INPUT_TEXT
+    async def run():
+        service, ledger, client = setup(answer)
+        async with client:
+            response = await client.post("/internal/v1/ha-voice/turns", json=payload(),
+                headers={"Accept": "application/x-ndjson"})
+            assert response.status_code == 200
+            assert response.headers["X-Eva-Input-Receipt"] == RECEIVED_INPUT_TEXT
+            final = json.loads(response.text.splitlines()[-1])
+            assert final["reply"] == "Dag!"
+            assert ledger.digests["a" * 32, "b" * 32] == hashlib.sha256(b"Dag!").hexdigest()
+            denied = await client.post("/internal/v1/ha-voice/turns", json=payload(),
+                headers={"Accept": "application/x-ndjson", "Authorization": "Bearer wrong"})
+            assert denied.status_code == 401 and "X-Eva-Input-Receipt" not in denied.headers
+        await service.close()
+    asyncio.run(run())

@@ -58,7 +58,7 @@ class EvaVoiceClient:
         self._closed = False
 
     async def respond(self, *, satellite_id: str, device_id: str,
-                      conversation_id: str, text: str, language: str, on_delta=None) -> EvaVoiceAnswer:
+                      conversation_id: str, text: str, language: str, on_delta=None, on_receipt=None) -> EvaVoiceAnswer:
         if (self._closed or satellite_id not in self._satellites
                 or not re.fullmatch(r"[0-9a-f]{32}", device_id)
                 or not conversation_id or len(conversation_id) > 200
@@ -79,7 +79,7 @@ class EvaVoiceClient:
         previous = self._active.get(satellite_id)
         if previous is not None:
             previous.cancel()
-        worker = asyncio.create_task(self._respond(payload, on_delta=on_delta))
+        worker = asyncio.create_task(self._respond(payload, on_delta=on_delta, on_receipt=on_receipt))
         self._active[satellite_id] = worker
         try:
             answer = await worker
@@ -90,7 +90,7 @@ class EvaVoiceClient:
             if self._active.get(satellite_id) is worker:
                 del self._active[satellite_id]
 
-    async def _respond(self, payload: dict[str, str], *, on_delta=None) -> EvaVoiceAnswer:
+    async def _respond(self, payload: dict[str, str], *, on_delta=None, on_receipt=None) -> EvaVoiceAnswer:
         try:
             async with asyncio.timeout(32):
                 async with self._session.post(
@@ -100,6 +100,12 @@ class EvaVoiceClient:
                     if response.status != 200:
                         raise EvaVoiceUnavailable("Eva voice response failed")
                     if on_delta is not None and response.content_type == "application/x-ndjson":
+                        receipt = response.headers.get("X-Eva-Input-Receipt", "")
+                        if on_receipt is not None and receipt:
+                            if len(receipt) > 160 or not receipt.strip():
+                                raise EvaVoiceUnavailable("Eva input receipt is invalid")
+                            # Transport receipt only; canonical reply and playback hash stay unchanged.
+                            await on_receipt(receipt)
                         data = await self._stream_reply(response, payload, on_delta)
                     else:
                         raw = bytearray()

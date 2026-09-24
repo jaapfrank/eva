@@ -370,5 +370,7 @@ def native_stream_response(service, payload):
                 await asyncio.shield(cleanup)
             await asyncio.gather(worker, return_exceptions=True)
 
+    from eva.application.conversation_receipt import RECEIVED_INPUT_TEXT
     return StreamingResponse(events(), media_type="application/x-ndjson",
-        headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"})
+        headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no",
+                 "X-Eva-Input-Receipt": RECEIVED_INPUT_TEXT})
