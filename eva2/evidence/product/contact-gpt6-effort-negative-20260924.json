@@ -1,0 +1,88 @@
+{
+  "checkedAt": "2026-09-24T20:14:39.802237+00:00",
+  "kind": "bounded_current_model_effort_comparison",
+  "model": "gpt-6-luna",
+  "officialSource": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+  "reasonForNewTrial": "Prior negative tests usedgpt-5.6-luna; actual runtime now usesgpt-6-luna.",
+  "screen": [
+    {
+      "effort": "low",
+      "model": "gpt-6-luna",
+      "firstSeconds": 2.2640165470074862,
+      "totalSeconds": 2.6235802809824236,
+      "text": "Hallo! Het gaat goed, dank je 😊 Hoe gaat het met jou?",
+      "usage": {
+        "input_tokens": 61,
+        "output_tokens": 19,
+        "total_tokens": 80
+      }
+    },
+    {
+      "effort": "none",
+      "model": "gpt-6-luna",
+      "firstSeconds": 1.3872612850391306,
+      "totalSeconds": 1.6799125490360893,
+      "text": "Hallo! Goed, dank je 😊 Hoe gaat het met jou?",
+      "usage": {
+        "input_tokens": 61,
+        "output_tokens": 17,
+        "total_tokens": 78
+      }
+    }
+  ],
+  "actualRuntimeRows": [
+    {
+      "effort": "low",
+      "firstSeconds": 4.09172230301192,
+      "totalSeconds": 4.895274184003938,
+      "text": "Hoi Jaap, goed — ik ben er en klaar voor. Hoe gaat het met jou?",
+      "messageId": "dashboard:197ab7e6-b97d-4506-bac0-95ed5c550aaf",
+      "usage": [
+        {
+          "tool_calls": 0,
+          "measurement": "measured",
+          "input_tokens": 10285,
+          "output_tokens": 23,
+          "model_attempts": 1
+        }
+      ]
+    },
+    {
+      "effort": "none",
+      "firstSeconds": 3.870791163004469,
+      "totalSeconds": 4.508715562988073,
+      "text": "Hoi Jaap! Goed, dank je — fijn je weer te spreken. Hoe gaat het met jou?",
+      "messageId": "dashboard:8f0146f1-5805-42a6-9129-4b14c15cb8de",
+      "usage": [
+        {
+          "tool_calls": 0,
+          "measurement": "measured",
+          "input_tokens": 10052,
+          "output_tokens": 25,
+          "model_attempts": 1
+        }
+      ]
+    }
+  ],
+  "scope": "Actual initialized dashboard_turn with owner-bound memory/history/tools; no HTTP/browser/microphone/VAD/playback measurement. Same phrase; sequential calls alter recent history, inputs differ233tokens.",
+  "decision": "Do not promote. Synthetic screen passed its predeclared25%/500ms threshold, but actual route improvement221ms/5.4% is insufficient evidence for a material product gain. One pair cannot establish a general performance ranking.",
+  "candidateBranch": "codex/contact-gpt6-none-20260924",
+  "candidateCommit": "da84c4d8",
+  "checks": "16 focused validation/SDK MockTransport tests passed. Coordinator reviewed diff; independent result review agreed no promotion.",
+  "productionChanged": false,
+  "productionEffort": "low",
+  "usage": {
+    "modelCalls": 4,
+    "inputTokens": 20459,
+    "outputTokens": 84,
+    "toolCalls": 0,
+    "creditCost": null
+  },
+  "limits": [
+    "No subsecond response",
+    "No changed provider/subscription",
+    "No owner acceptance",
+    "No further unchanged trial"
+  ],
+  "next": "Check shared immediate receipt delivery through real text channels; retain working voice receipt and common core policy."
+}

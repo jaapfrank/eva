@@ -2207,15 +2207,15 @@
           }
         ],
         "now": {
-          "title": "Tussenvraag vóór een binnenkomend onderzoeksresultaat",
-          "state": "Browserspraak gecorrigeerd en geïnstalleerd",
-          "detail": "Nieuw opgeslagen achtergrondresultaat wacht met spreken zolang een gewone vraag nog wordt verwerkt. Negen gerichte controles en onafhankelijke review geslaagd; live bron en gereedheid bevestigd. Modelwachttijd en fysieke kanaalproeven blijven open.",
-          "doneWhen": "Deze volgordecorrectie technisch opgeleverd; stap1 als geheel blijft open."
+          "title": "Luna-instelling vergeleken; geen voldoende versnelling",
+          "state": "Vergelijking afgerond; productie behouden",
+          "detail": "Echte gedeelde gespreksroute:low4,09s tegenovernone3,87s eerste tekst. Kleine winst in één paar bewijst geen bruikbare versnelling. Instelling blijftlow; kandidaat en negatieve vergelijking op GitHub bewaard. Vier modelcalls20.459input/84outputtokens; creditkosten onbekend.",
+          "doneWhen": "Deze hypothese afgesloten; snelle ontvangst en inhoudelijke reactietijd blijven open."
         },
         "next": {
-          "title": "Merkbare reactietijd van gewone gesprekken",
+          "title": "Directe ontvangst via de bestaande tekstingangen",
           "state": "Volgende opdracht; nog niet gestart",
-          "detail": "Bestaande metingen tonen circa5s voor Hallo. Onderzoek alleen een concrete resterende wachttijd in de gedeelde modelroute; geen nieuwe transportbouw of ongewijzigde herproef."
+          "detail": "Controleer of dezelfde al werkende ontvangstmelding op website en Telegram direct doorkomt zonder extra modelaanroep. Geen nieuwe kanaalpersoonlijkheid of claim dat onderzoek al klaar is."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2229,7 +2229,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T20:06:12.430262+00:00"
+        "reviewedAt": "2026-09-24T20:14:39.802237+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12001,7 +12001,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Snelle ontvangst en doorpraten via dezelfde Eva afronden; bestaande routes en bewijs hergebruiken.",
+      "nextAction": "Directe ontvangst via bestaande tekstingangen controleren; snelle voice-ontvangst behouden. Inhoudelijke modelwachttijd blijft apart open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
