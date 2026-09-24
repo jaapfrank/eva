@@ -1,0 +1,24 @@
+{
+  "sourceCommit": "db84881d",
+  "installedAt": "2026-09-24T00:33:11.112958+00:00",
+  "status": "installed_start_checked",
+  "requirement": "Stop accepted background work after its admission response has completed.",
+  "gap": "The fixed stop branch examined only active conversation turns and returned no active work even when accepted background work existed.",
+  "change": "Retain direct stop when foreground targets exist. Otherwise continue through shared conversation task context and existing authorized stop tools; ambiguous task selection remains conversational.",
+  "checks": [
+    "Repository and installed runtime exact stop branch matched before patch",
+    "Applied only that fragment to installed runtime, preserving other source differences",
+    "AST and runtime import succeeded",
+    "No active admitted/call_started tasks before restart",
+    "Core and worker healthy after restart; active installation pointer updated"
+  ],
+  "notProven": [
+    "Real background stop via each channel",
+    "Latency and correct model choice with multiple tasks"
+  ],
+  "modelCalls": 0,
+  "testMessagesSent": 0,
+  "ownerAccepted": false,
+  "image": "eva2-background-stop-routing:20260924",
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/background-stop-routing-20260924/baseline.compose.private.json"
+}

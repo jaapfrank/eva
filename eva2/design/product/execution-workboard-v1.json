@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T00:29:42.221673+00:00",
+        "checkedAt": "2026-09-24T00:33:54.593109+00:00",
         "deliveries": [
+          {
+            "title": "Stoppen na het aannemen van achtergrondwerk",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Als het ontvangstgesprek al klaar is, wordt een stopverzoek nu doorgegeven aan de bestaande taakbediening. Geen vaste onjuiste melding dat er niets loopt.",
+            "remaining": "Werkelijke stop en juiste taakselectie via de kanalen nog te beproeven. Dit maakt het inhoudelijke modelantwoord niet sneller.",
+            "source": "eva2/evidence/product/background-stop-routing-installed-20260924.json"
+          },
           {
             "title": "Vastgelopen documentproject terugmelden",
             "date": "24 september",
@@ -1669,15 +1677,15 @@
           }
         ],
         "now": {
-          "title": "Stap 3: taken afronden en terugmelden",
-          "state": "Document-foutmelding geïnstalleerd",
-          "detail": "Het ontbrekende document-terugmeldpad is aangesloten. Kern en werker gezond; activatie vastgelegd. Gesprekssnelheid, fysieke Voice PE en persoonskeuze blijven apart open.",
-          "doneWhen": "Meerdere opdrachten werkelijk afronden, resultaat of mislukking juist terugbrengen en werk kunnen volgen, stoppen en hervatten."
+          "title": "Stap 3: digitale taken bedienen",
+          "state": "Stopkoppeling geïnstalleerd",
+          "detail": "Stop na een afgeronde ontvangst gaat naar de gezamenlijke taakbediening. Direct stoppen van een nog lopend antwoord behouden. Kern en werker gezond gestart.",
+          "doneWhen": "Werk uitvoeren, correct terugmelden, volgen, stoppen en hervatten functioneren als geheel."
         },
         "next": {
-          "title": "Algemene digitale taakuitvoering afronden",
+          "title": "Resterende algemene taakuitvoering",
           "state": "Vervolg nog niet gestart",
-          "detail": "Resterende functionele aansluiting onderzoeken binnen de bestaande taakwerker. Geen nieuwe taakspecifieke kern of brede testronde."
+          "detail": "Bestaande uitvoerroute afmaken waar een concreet functioneel gat resteert. Praktijkproeven blijven uitgesteld; geen afgeronde productclaim."
         },
         "ownerAction": {
           "title": "Geen proef nodig tijdens deze bouwronde",
@@ -1691,7 +1699,7 @@
           "expected": "Koppeling geïnstalleerd; echte gesprekssnelheid en aflevering blijven afzonderlijk te beoordelen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T00:29:42.221673+00:00"
+        "reviewedAt": "2026-09-24T00:33:54.593109+00:00"
       }
     },
     "pendingTechnicalReview": {
