@@ -200,3 +200,22 @@ or wizard. See `evidence/product/native-document-restored-gateway-20260924.json`
 which retains the failed empty-WAL assumption and the corrected successful run.
 This is synthetic same-host evidence; private-core recovery and activation remain
 separate requirements.
+
+## Core release transaction
+
+`eva.operations.restore_activation.release_restored_database` supplies the
+missing database release boundary. Trusted operator composition must call it
+inside a root transaction and roll back the entire transaction on any exception.
+It locks the exact restore hold, verifies archive/target identity and current
+restore authority, invokes fresh runtime and component verification, closes copied
+voice sessions, and updates the hold in that same transaction. Its result is
+`released_pending_commit`; it never starts services or commits for the caller.
+
+The component callback is internal trusted code, not an HTTP request or uploaded
+JSON receipt. It must actually verify writable document targets and retained
+history, semantic memory banks, current credentials/provider bindings, source
+fencing and closed target traffic. Matching package hashes alone is insufficient.
+This primitive is not yet wired to a wizard release button: production component
+reconciliation, writable document promotion and coordinated runtime startup must
+be connected first. The targeted PostgreSQL checks mock those external checks
+and prove only the database transaction boundary.
