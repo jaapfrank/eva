@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T19:18:51.111600+00:00",
+        "checkedAt": "2026-09-24T19:23:26.601867+00:00",
         "deliveries": [
           {
             "title": "Lange opdrachten blokkeren geheugenzoeking niet meer",
@@ -2167,10 +2167,10 @@
           }
         ],
         "now": {
-          "title": "Leeropdracht vervolgen na geheugenreparatie",
-          "state": "Eén echte opdracht wordt gestart",
-          "detail": "Zelfde vooraf vastgelegde FLUXNOTE/1-criteria; eerdere fout en verbruik blijven bewaard. Geen ongewijzigde herhaling: HTTP400 is opgelost en live gecontroleerd.",
-          "doneWhen": "Werkelijke procedure en uitvoer gecontroleerd, uitkomst en gemeten verbruik geregistreerd."
+          "title": "Leeropdracht afmaken binnen passend werkbudget",
+          "state": "Uitvoering gestopt; budgetoorzaak vastgesteld",
+          "detail": "Parser opgeslagen en onafhankelijk inhoudelijk correct bevonden. Echte Eva-uitvoering ontbreekt:1262 gegenereerde tokens overschrijden het gedeelde taakmaximum1200. Geen blinde herstart of budgetverhoging.",
+          "doneWhen": "De opgeslagen werkwijze door Eva zelf uitvoeren en resultaat opleveren; actuele taakbudgettoekenning eerst passend maken binnen eigenaarafspraken."
         },
         "next": {
           "title": "Leren uit documentatie en meerdaags werk afronden",
@@ -2189,7 +2189,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T19:18:51.111600+00:00"
+        "reviewedAt": "2026-09-24T19:23:26.601867+00:00"
       }
     },
     "pendingTechnicalReview": {

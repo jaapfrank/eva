@@ -1,0 +1,46 @@
+{
+  "checkedAt": "2026-09-24T19:23:26.601867+00:00",
+  "workId": "work:eva-chat:60f42c8f-3a24-5fd0-b746-a665ea2a2c7d",
+  "state": "failed",
+  "errorCode": "budget_exceeded",
+  "receptionSeconds": 12.233,
+  "workerUsage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 5,
+    "tool_calls": 4,
+    "input_tokens": 42599,
+    "output_tokens": 1262,
+    "total_tokens": 43861,
+    "cost_usd_micros": null
+  },
+  "conversationUsage": {
+    "measurement": "measured",
+    "model_attempts": 1,
+    "input_tokens": 11250,
+    "output_tokens": 240,
+    "tool_calls": 1
+  },
+  "confirmedGrant": {
+    "maximum_output_tokens": 1200,
+    "maximum_input_tokens": 65536,
+    "maximum_model_runs": 8,
+    "maximum_tool_calls": 6
+  },
+  "cause": "Measured worker output1262 exceeded admitted1200 output-token budget. Code generation consumes this same cumulative output allowance.",
+  "actualEvidence": [
+    "workspace source write/readback recorded",
+    "registration and resolution actions recorded",
+    "no actual run_reusable_procedure execution recorded before budget stop"
+  ],
+  "sourceSha256": "bba3dfea7ab7966a514c41be42b6c13c40011523db752d6832f7fc3f7025fc63",
+  "independentReview": {
+    "agent": "/root/recall_query_review",
+    "result": "generic parser meets frozen specification; local isolated reviewer run matched exact valid result and rejected12 invalid cases",
+    "limit": "reviewer execution is not actual Eva execution or task completion"
+  },
+  "artifacts": "/home/administrator/project/.eva2-artifacts/documentation-learning-after-recall-20260924",
+  "next": "Resolve mismatch between code-generating task requirements and shared cumulative output allowance without blindly repeating or silently enlarging grants.",
+  "creditCost": "unknown"
+}
