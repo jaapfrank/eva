@@ -7,6 +7,7 @@ from contextlib import contextmanager
 from datetime import UTC, datetime
 import json
 import hashlib
+import math
 from typing import Any
 from urllib.parse import urlsplit, urlunsplit
 from urllib.error import URLError
@@ -167,7 +168,23 @@ class HomeAssistantAdminAdapter:
                 "registered": entity_id in entity_rows,
                 "has_state": entity_id in state_rows,
                 "disabled": registry.get("disabled_by") is not None,
+                "entity_category": registry.get("entity_category"),
+                "device_class": attributes.get("device_class"),
             }
+            # Share ordinary device and comfort state, never person/tracker state
+            # or arbitrary attributes from private integrations.
+            if domain in {"light", "switch", "climate"} or (
+                domain == "sensor" and attributes.get("device_class") in {"temperature", "humidity"}
+            ):
+                projected["state"] = state.get("state")
+                projected["attributes"] = {
+                    key: value for key, value in attributes.items()
+                    if key in {"current_temperature", "temperature", "target_temp_high",
+                               "target_temp_low", "current_humidity", "hvac_action",
+                               "unit_of_measurement"}
+                    and ((isinstance(value, str) and len(value) <= 80)
+                         or (type(value) in {int, float} and math.isfinite(value)))
+                }
             projected_entities.append(projected)
             domains[domain] = domains.get(domain, 0) + 1
             if domain == "automation":
@@ -482,7 +499,7 @@ class HomeAssistantHouseholdTool:
         }
         return (ConversationToolDescriptor(
             name="read_home_assistant_inventory",
-            description="Lees zelf het huisoverzicht, ruimtes, apparaten, entiteiten en bestaande automatiseringen. Begin bij overview, lees daarna de automation-index en relevante automation_details. Vraag geen YAML aan de gebruiker voor gegevens die je hiermee kunt ophalen.",
+            description="Lees zelf ruimtes, apparaten en actuele lamp-, schakelaar- en temperatuurgegevens om gewone huisvragen te begrijpen. Koppel ruimten en comfortwensen aan bestaande apparaten; vraag geen technische apparaatnaam die je zelf kunt vinden. Gebruik passende bestaande bediening wanneer de bedoeling duidelijk is; vraag alleen bij echte twijfel door. Begin bij overview en lees de relevante entiteiten per ruimte. Lees automation_details alleen voor vragen over automatiseringen. Vraag geen YAML aan de gebruiker voor gegevens die je hiermee kunt ophalen.",
             input_schema={"type": "object", "additionalProperties": False, "properties": properties, "required": list(properties)},
             completion_guidance="Gebruik actuele resultaten. has_more vereist vervolgpagina's voor volledige dekking. Een automation-index is geen analyse van de logica: lees automation_details. Benoem ontbrekende configuraties en weggelaten templates/servicegegevens; claim daarover geen volledige analyse. Dit gereedschap verandert niets.",
         ),)
@@ -504,7 +521,9 @@ class HomeAssistantHouseholdTool:
             raise ConversationConflict("household automation selection is invalid")
 
     async def prepare(self, turn, call):
-        del turn
+        if (getattr(getattr(turn, "audience", None), "kind", None) == "household"
+                and call.arguments.get("section") in {"automations", "automation_details"}):
+            raise ConversationConflict("shared household inventory is limited to rooms and devices")
         if call.name not in self.action_names:
             raise ConversationConflict("household inventory tool is unavailable")
         self._validate(call.arguments)

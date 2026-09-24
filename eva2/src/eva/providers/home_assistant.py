@@ -143,8 +143,12 @@ class HomeAssistantProviderFactory:
     def build(
         settings: HomeAssistantProviderSettings, engine: sa.Engine
     ) -> ProviderContribution:
+        inventory_reader = HomeAssistantAdminAdapter(
+            base_url=settings.endpoint_url, token=settings.credential,
+        )
         provider = HomeAssistantToolAdapter(
-            HomeAssistantConfig(settings.endpoint_url, settings.credential)
+            HomeAssistantConfig(settings.endpoint_url, settings.credential),
+            household_inventory=inventory_reader.household_inventory,
         )
         management_reader = (
             HomeAssistantAdminAdapter(
@@ -194,9 +198,7 @@ class HomeAssistantProviderFactory:
                 configuration_sha256=home_assistant_read_configuration_sha256(settings.endpoint_url),
             )
         ]
-        household = HomeAssistantHouseholdTool(HomeAssistantAdminAdapter(
-            base_url=settings.endpoint_url, token=settings.credential,
-        ))
+        household = HomeAssistantHouseholdTool(inventory_reader)
 
         def authorize_household(turn):
             from eva.application.initiative_execution import require_initiative_context
@@ -207,7 +209,7 @@ class HomeAssistantProviderFactory:
                 # It does not add the owner to the ordinary HA effect allowlist.
                 return
             if (
-                turn.audience.kind != "private_person"
+                turn.audience.kind not in {"private_person", "household"}
                 or turn.audience.principal_id != turn.principal_id
                 or hashlib.sha256(turn.principal_id.encode()).hexdigest() not in effect_principals
             ):

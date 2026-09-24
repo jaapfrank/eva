@@ -89,7 +89,7 @@ _CONVERSATION_TOOLS = (
     _conversation_tool(
         "set_home_assistant_light",
         (
-            "Zet precies één bestaand licht in huis aan of uit. Gebruik de naam "
+            "Zet een bestaande lamp of de lampen in een genoemde ruimte/groep aan of uit. Gebruik de naam "
             "die de gebruiker noemt; de provideradapter resolveert die fail-closed "
             "en geeft pas een resultaat na onafhankelijke statuscontrole."
         ),
@@ -102,7 +102,8 @@ _CONVERSATION_TOOLS = (
         (
             "Het toolresultaat bevat de onafhankelijk gecontroleerde eindtoestand. "
             "Meld succes alleen bij status verified en formuleer anders kort en "
-            "eerlijk wat er misging. Noem geen interne ID, statuscode, receipt of "
+            "eerlijk wat er misging. Herhaal een gedeeltelijke of onzekere groepsactie niet automatisch. "
+            "Noem geen interne ID, statuscode, receipt of "
             "techniek tenzij daar expliciet om wordt gevraagd."
         ),
     ),
@@ -230,19 +231,24 @@ class HomeAssistantConversationEffectPlanner:
         resolver = (
             self._provider.resolve_switch
             if domain == "switch"
-            else self._provider.resolve_light
+            else self._provider.resolve_light_targets
         )
         try:
-            resolved = await resolver(target.strip())
+            selected = await resolver(target.strip())
+            targets = (selected,) if domain == "switch" else selected
+            resolved = targets[0]
         except ValueError as error:
             subject = "lamp" if domain == "light" else "apparaat"
             raise ConversationClarificationRequired(
-                f"Welke {subject} bedoel je precies? Noem de naam zoals die in de tool staat."
+                f"Welke {subject} of ruimte bedoel je? Ik kan deze naam nog niet eenduidig aan je huis koppelen."
             ) from error
         service = "turn_on" if state == "on" else "turn_off"
         entity_id = resolved["entity_id"]
         friendly_name = resolved["friendly_name"]
-        if self._allowlist is not None and (entity_id, service) not in self._allowlist:
+        denied = next((item for item in targets if self._allowlist is not None
+                       and (item["entity_id"], service) not in self._allowlist), None)
+        if denied is not None:
+            entity_id, friendly_name = denied["entity_id"], denied["friendly_name"]
             allowed_services = {
                 admitted_service
                 for admitted_entity, admitted_service in self._allowlist
@@ -259,6 +265,16 @@ class HomeAssistantConversationEffectPlanner:
                 )
             raise ConversationClarificationRequired(message)
         expected_state = "on" if service == "turn_on" else "off"
+        if len(targets) > 1:
+            identifiers = [item["entity_id"] for item in targets]
+            return ConversationToolPreparation(
+                tool_name=f"home_assistant.light_group.{service}",
+                arguments={"domain": "light", "entity_ids": identifiers, "service": service},
+                expected_proof={"entity_ids": identifiers, "state": expected_state},
+                receipt_output={"entity_ids": identifiers,
+                    "friendly_names": [item["friendly_name"] for item in targets], "requested_state": state},
+                execution_timeout_seconds=45,
+            )
         return ConversationToolPreparation(
             tool_name=f"home_assistant.{domain}.{service}",
             arguments={
@@ -382,8 +398,9 @@ class HomeAssistantConfig:
 
 
 class HomeAssistantToolAdapter:
-    def __init__(self, config: HomeAssistantConfig) -> None:
+    def __init__(self, config: HomeAssistantConfig, *, household_inventory=None) -> None:
         self._config = config
+        self._household_inventory = household_inventory
 
     @staticmethod
     def conversation_tools() -> tuple[ConversationToolDescriptor, ...]:
@@ -415,6 +432,56 @@ class HomeAssistantToolAdapter:
 
         payload = await asyncio.to_thread(self._light_catalog_sync)
         return _resolve_binary_target(target, "light", payload)
+
+    async def resolve_light_targets(self, target: str) -> tuple[dict[str, str], ...]:
+        """Prefer an existing light/group, otherwise resolve an actual room snapshot."""
+        payload = await asyncio.to_thread(self._light_catalog_sync)
+        wanted = _target_tokens(target) - _GENERIC_ENTITY_WORDS
+        if not wanted:
+            raise ValueError("light target must name a lamp or room")
+        inventory = None if self._household_inventory is None else await self._household_inventory()
+        if inventory is not None:
+            eligible = {row["entity_id"] for row in inventory["entities"]
+                        if row.get("domain") == "light" and not row.get("disabled")
+                        and row.get("entity_category") not in {"config", "diagnostic"}}
+        # An actual named HA group takes precedence over its room members.
+        exact_names = {_normalized_target(target), _normalized_target(" ".join(sorted(wanted)))}
+        exact = [row for row in payload if row.get("entity_id", "").startswith("light.")
+                 and exact_names & {_normalized_target(row["entity_id"]),
+                     _normalized_target(row["entity_id"].removeprefix("light.")),
+                     _normalized_target(row.get("attributes", {}).get("friendly_name", ""))}]
+        if len(exact) > 1:
+            raise ValueError("named light group is ambiguous")
+        if exact:
+            direct = _resolve_binary_target_or_none(exact[0]["entity_id"], "light", exact)
+            if direct is None:
+                raise ValueError("named light state is unavailable")
+            return (direct,)
+        matches = []
+        if inventory is not None:
+            payload = [row for row in payload if row.get("entity_id") in eligible]
+            areas = [row["area_id"] for row in inventory["areas"]
+                     if wanted == _target_tokens(row.get("name", ""))
+                     or wanted == _target_tokens(row["area_id"])]
+            if len(areas) > 1:
+                raise ValueError("light area is ambiguous")
+            if areas:
+                members = {row["entity_id"] for row in inventory["entities"]
+                           if row.get("area_id") == areas[0] and row["entity_id"] in eligible}
+                matches = [_resolve_binary_target_or_none(row["entity_id"], "light", payload)
+                           for row in payload if row.get("entity_id") in members]
+                if len(matches) != len(members) or any(item is None for item in matches):
+                    raise ValueError("room light states are unavailable")
+        if not matches:
+            candidates = [row for row in payload if row.get("entity_id", "").startswith("light.")
+                and wanted <= (_target_tokens(row["entity_id"] + " " +
+                    row.get("attributes", {}).get("friendly_name", "")) - _GENERIC_ENTITY_WORDS)]
+            if any(row.get("state") not in {"on", "off"} for row in candidates):
+                raise ValueError("named light group contains unavailable states")
+            matches = _binary_semantic_candidates(wanted, "light", candidates)
+        if not 1 <= len(matches) <= 32:
+            raise ValueError("light group is absent, ambiguous or exceeds the bounded target count")
+        return tuple(sorted(matches, key=lambda item: item["entity_id"]))
 
     async def resolve_switch(self, target: str) -> dict[str, str]:
         """Resolve one available on/off switch from the user's natural name."""
@@ -666,6 +733,22 @@ class HomeAssistantToolAdapter:
                 provider_ref=None,
                 details={"observation": observation},
             )
+        if command.tool_name.startswith("home_assistant.light_group."):
+            service, identifiers = _light_group_fields(command)
+            semaphore = asyncio.Semaphore(8)
+            async def dispatch_one(identifier):
+                try:
+                    async with semaphore:
+                        await asyncio.to_thread(call_assist_effect, base_url=self._config.base_url,
+                        token=self._config.token, timeout=self._config.request_timeout_seconds,
+                        domain="light", service=service, entity_id=identifier)
+                    return identifier
+                except Exception:
+                    return None  # Partial/uncertain effects remain visible, never retried.
+            completed = await asyncio.gather(*(dispatch_one(identifier) for identifier in identifiers))
+            return ToolDispatchResult(accepted=True, provider_ref=None,
+                details={"completed_entity_ids": [item for item in completed if item is not None],
+                         "dispatch_complete": all(item is not None for item in completed)})
         domain, service, entity_id, _service_data = _command_fields(command)
         try:
             details = await asyncio.to_thread(
@@ -722,6 +805,18 @@ class HomeAssistantToolAdapter:
                 expected,
                 {"observation": observation, "source": "home_assistant_read"},
             )
+        if command.tool_name.startswith("home_assistant.light_group."):
+            _, identifiers = _light_group_fields(command)
+            states = await asyncio.gather(*(self.state(entity_id=identifier) for identifier in identifiers))
+            complete = (dispatch is not None and dispatch.accepted
+                and dispatch.details.get("dispatch_complete") is True
+                and dispatch.details.get("completed_entity_ids") == identifiers)
+            expected = command.expected_proof
+            matched = all(item["state"] == expected["state"] for item in states)
+            return ToolProofObservation("verified" if complete and matched else "conflict",
+                expected if complete and matched else {"entity_ids": identifiers,
+                    "states": {item["entity_id"]: item["state"] for item in states}},
+                {"source": "home_assistant", "dispatch_complete": complete, "states": states})
         _, _, entity_id, _ = _command_fields(command)
         expected = command.expected_proof
         if expected.get("entity_id") != entity_id:
@@ -798,6 +893,22 @@ class HomeAssistantToolAdapter:
         safe = _json_safe(decoded)
         validate_json_value(safe)
         return safe
+
+
+def _light_group_fields(command):
+    arguments = command.arguments
+    if set(arguments) != {"domain", "entity_ids", "service"}:
+        raise ValueError("light group command fields differ")
+    service, identifiers = arguments["service"], arguments["entity_ids"]
+    if (arguments["domain"] != "light" or service not in {"turn_on", "turn_off"}
+            or command.tool_name != "home_assistant.light_group." + service
+            or not isinstance(identifiers, list) or not 2 <= len(identifiers) <= 32
+            or any(not isinstance(item, str) or not item.startswith("light.")
+                   or _ENTITY.fullmatch(item) is None for item in identifiers)
+            or len(set(identifiers)) != len(identifiers)
+            or command.expected_proof != {"entity_ids": identifiers, "state": "on" if service == "turn_on" else "off"}):
+        raise ValueError("light group command target binding differs")
+    return service, identifiers
 
 
 def _command_fields(
