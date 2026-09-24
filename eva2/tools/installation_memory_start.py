@@ -11,7 +11,7 @@ from eva.operations.model_credentials import build_codex_consumer_auth
 from eva.adapters.credentials.runtime_files import read_private_runtime_file_bytes
 from tools.installation_external_restore import _pin, _pins_current, validate_external_configuration
 from tools.installation_document_connection import _command, _inspect_network
-from tools.installation_gateway_start import _host_file
+from tools.installation_gateway_start import _host_file, _configured_network
 from tools.installation_runtime_authorization import runtime_profile_sha256, _path, _digest
 from tools.installation_recovery_package import read_installation_package
 
@@ -66,9 +66,7 @@ def _target(root, configuration, external_configuration, *, running):
             or runtime_profile_sha256(row) != configuration["profile_sha256"]
             or config.get("User") != "1000:1000"):
         raise ValueError("memory API state or approved profile differs")
-    networks = row.get("NetworkSettings", {}).get("Networks", {})
-    if len(networks) != 1 or next(iter(networks.values())).get("NetworkID") != configuration["network_id"]:
-        raise ValueError("memory API network differs")
+    _configured_network(row, configuration["network_id"])
     _inspect_network(configuration["network_id"])
     environment = dict(item.split("=", 1) for item in config.get("Env", []))
     if (environment.get("HINDSIGHT_API_DATABASE_URL") or
@@ -122,12 +120,9 @@ def _core_route(configuration, runtime_configuration):
     if not valid:
         raise ValueError("target core memory URL differs")
     network_id = configuration["network_id"]
-    core_networks = [item for item in core.get("NetworkSettings", {}).get("Networks", {}).values()
-                     if item.get("NetworkID") == network_id]
-    api_networks = [item for item in api.get("NetworkSettings", {}).get("Networks", {}).values()
-                    if item.get("NetworkID") == network_id]
-    if (len(core_networks) != 1 or len(api_networks) != 1
-            or url.hostname not in {configuration["container"]["name"], *(api_networks[0].get("Aliases") or [])}
+    _configured_network(core, network_id)
+    api_network = _configured_network(api, network_id)
+    if (url.hostname not in {configuration["container"]["name"], *(api_network.get("Aliases") or [])}
             or core.get("HostConfig", {}).get("ExtraHosts")):
         raise ValueError("target core does not use the restored memory API network route")
 

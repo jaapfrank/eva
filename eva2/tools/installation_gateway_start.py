@@ -75,20 +75,40 @@ def _private_file(path, *, minimum, maximum):
         raise ValueError("gateway credential contains a line break")
 
 
+def _configured_network(row, network_id):
+    """Resolve a never-started Docker network without inventing an endpoint."""
+    networks = row.get("NetworkSettings", {}).get("Networks", {})
+    if len(networks) != 1:
+        raise ValueError("restore target network count differs")
+    name, endpoint = next(iter(networks.items()))
+    if endpoint.get("NetworkID") == network_id:
+        return endpoint
+    state = row.get("State", {})
+    if (endpoint.get("NetworkID") != "" or endpoint.get("EndpointID") not in (None, "")
+            or state.get("Running") is not False or state.get("Status") != "created"
+            or state.get("Pid") != 0 or state.get("Paused") or state.get("Restarting")
+            or row.get("HostConfig", {}).get("NetworkMode") not in {name, network_id}):
+        raise ValueError("restore target network identity differs")
+    actual = json.loads(_command(["docker", "network", "inspect", name]))
+    if (len(actual) != 1 or actual[0].get("Id") != network_id
+            or actual[0].get("Name") != name or actual[0].get("Internal") is not True):
+        raise ValueError("restore configured network was replaced or is not internal")
+    return endpoint
+
+
 def _target(configuration, target_path, root, *, running):
     pin = configuration["container"]
     rows = json.loads(_command(["docker", "inspect", pin["id"]]))
     if len(rows) != 1:
         raise ValueError("gateway target is absent")
     row = rows[0]; host = row["HostConfig"]; config = row["Config"]; state = row["State"]
-    networks = row.get("NetworkSettings", {}).get("Networks", {})
+    _configured_network(row, configuration["network_id"])
     if (row.get("Id") != pin["id"] or row.get("Name") != "/" + pin["name"] or row.get("Image") != pin["image"]
             or state.get("Running") is not running or state.get("Paused") or state.get("Restarting")
             or (not running and (state.get("Status") not in {"created", "exited"} or state.get("Pid") != 0))
             or host.get("RestartPolicy", {}).get("Name") != "no"
             or not host.get("ReadonlyRootfs") or host.get("Privileged")
             or host.get("PortBindings") or host.get("PublishAllPorts")
-            or len(networks) != 1 or next(iter(networks.values())).get("NetworkID") != configuration["network_id"]
             or config.get("User") != f"{os.geteuid()}:{os.getegid()}"):
         raise ValueError("gateway target identity, isolation or operator ownership differs")
     if not ((config.get("Entrypoint") == ["/bin/sh"] and config.get("Cmd") == [_SCRIPT])
