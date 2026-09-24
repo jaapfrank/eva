@@ -114,9 +114,10 @@ class DelegatedWorkOwnerService:
             self.validate_authority(turn)
             prior_research = self.store.load(prior_work_id, **self._owner)
             if (not isinstance(prior_research.spec, DelegatedResearchSpec)
-                    or prior_research.state in {"admitted", "call_started"}
+                    or (prior_research.state in {"admitted", "call_started"}
+                        and prior_research.stop_requested_at is None)
                     or prior_research.retention_until <= self.now()):
-                raise ValueError("research follow-up requires an available finished attempt")
+                raise ValueError("research follow-up requires a finished attempt or a recorded stop")
         from eva.adapters.postgres.scheduled_work import ScheduledOwnerWork
         if operation == "revise_digital":
             if (any(value is not None for value in (task, work_id, research, intent_id, feedback, schedule, schedule_id, search))

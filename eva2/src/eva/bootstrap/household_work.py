@@ -262,8 +262,9 @@ class HouseholdWorkService:
             if operation != "research" or not isinstance(prior_work_id, str) or not 1 <= len(prior_work_id) <= 240:
                 raise ValueError("prior work is only valid for research follow-up")
             prior = self._load(prior_work_id, origin)
-            if prior.state in {"admitted", "call_started"}:
-                raise ValueError("research follow-up requires a finished attempt")
+            if (prior.state in {"admitted", "call_started"}
+                    and prior.stop_requested_at is None):
+                raise ValueError("research follow-up requires a finished attempt or a recorded stop")
         created = parse_utc_timestamp(turn.occurred_at)
         previous = None
         if operation == "research":
