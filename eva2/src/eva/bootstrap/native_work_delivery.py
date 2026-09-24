@@ -30,16 +30,15 @@ class NativeWorkDelivery:
                 operational_events.c.tenant_id == store.scope.tenant_id,
                 operational_events.c.installation_id == store.scope.installation_id,
                 operational_events.c.event_type == "HOUSEHOLD_WORK_SESSION_OPENED",
+                operational_checkpoints.c.phase == "open",
+                operational_checkpoints.c.deadline > self.server.authority.clock(),
                 operational_events.c.payload["data"]["native_conversation_key"].astext.is_not(None),
             ).order_by(operational_events.c.occurred_at.desc(), operational_events.c.thread_id.desc())
                 .limit(128)).all()
-        seen = set()
+        # A later wakeword conversation does not cancel already admitted public
+        # work. Keep its original session/device authority until it closes/expires.
         for row in rows:
             binding = row.payload["data"]["binding"]
-            device = binding["device_id"]
-            if device in seen:
-                continue
-            seen.add(device)
             if row.phase == "open" and self.server.authority.clock() < row.deadline:
                 yield binding
 
@@ -52,6 +51,7 @@ class NativeWorkDelivery:
 
     def run_once(self):
         self.server.authority.validate_current()
+        idle_satellites = {}
         for binding in self._sessions():
             claim = None
             service = None
@@ -65,7 +65,10 @@ class NativeWorkDelivery:
                 with httpx.Client(base_url=self.provider.endpoint_url.rstrip("/"),
                         headers={"Authorization": "Bearer " + self.provider.credential},
                         timeout=4, follow_redirects=False) as client:
-                    if not self._idle(client, binding["satellite_id"]):
+                    satellite = binding["satellite_id"]
+                    if satellite not in idle_satellites:
+                        idle_satellites[satellite] = self._idle(client, satellite)
+                    if not idle_satellites[satellite]:
                         continue
                     claim = service.poll(turn)
                     if claim is None:
