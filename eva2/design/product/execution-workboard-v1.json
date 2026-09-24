@@ -2239,9 +2239,9 @@
           }
         ],
         "now": {
-          "title": "Volledige herstelproef afronden",
-          "state": "Geheugendienst gecontroleerd; startcorrectie geïnstalleerd",
-          "detail": "Bronf1a827bf is geïnstalleerd met terugweg; Docker-standaard false/null wordt correct vergeleken. Echte draaiende herstelde geheugendienst en bank gecontroleerd. Nieuw afzonderlijk hersteldoel wordt voorbereid voor volledige kern-/werkerstart en gegevenscontrole. Productie blijft draaien; geen volledige herstelclaim.",
+          "title": "Werkeropdracht in herstelproef corrigeren",
+          "state": "Herstelde kern gezond; werkerproef nog niet geslaagd",
+          "detail": "De wizard heeft de gegevens vrijgegeven en de echte kern gestart: gezond. Gateway, documenten en geheugen werken in de proef. De proefopstelling miste de bestaande werkeropdracht en gebruikte de imagestandaard; die fixture wordt gecorrigeerd. Gedeeltelijke uitkomst wordt eerlijk gemeld, proefdoel bewaard. Geen wijziging aan productie.",
           "doneWhen": "Volledige reservekopie via de wizard terugzetten en echte herstelde kern starten met behouden gegevens. Gebruikersacceptatie blijft apart."
         },
         "next": {
@@ -2261,7 +2261,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T22:07:15.022923+00:00"
+        "reviewedAt": "2026-09-24T22:12:27.908791+00:00"
       }
     },
     "pendingTechnicalReview": {

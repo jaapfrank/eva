@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — volledige herstelproef afronden.** Bronf1a827bf geïnstalleerd met terugweg; Docker-standaard false/null correct vergeleken. Echte draaiende herstelde geheugendienst en bank gecontroleerd. Nieuw afzonderlijk doel wordt voorbereid voor volledige kern-/werkerstart en gegevenscontrole. Productie blijft draaien; volledige herstelroute nog niet bewezen.
+**Nu — werkeropdracht in herstelproef corrigeren.** De wizard heeft vrijgegeven en de echte herstelde kern gestart: gezond. Gateway, documenten en geheugen werken in de proef. De fixture miste de bestaande werkeropdracht en gebruikte de imagestandaard; uitvoerder corrigeert alleen de proefopstelling. De gedeeltelijke uitkomst is eerlijk gemeld; proefdoel blijft bewaard. Productie ongewijzigd, volledige route nog open.
 
 **Nog niet als volledige functie opgeleverd.** De volledige reservekopie-tot-draaiende-Eva-proef en gewone doelvoorbereiding zonder handgeschreven JSON staan open. [Beschikbaarheid, bewijs en terugweg](evidence/product/restore-operator-updated-20260924.json). De gevonden archieffout is gecorrigeerd en de echte export slaagt: [bewijs](evidence/product/restore-export-correction-20260924.json). Dagelijkse kanaal-/gezinsproeven blijven afzonderlijk open.
 

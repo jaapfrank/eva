@@ -41,7 +41,7 @@
   "restoreInvoked": false,
   "ownerAccepted": false,
   "modelCalls": 0,
-  "next": "Execute fresh full wizard restore after installed OOM default correction; confirm committed release, core/worker startup and retained data. Normal no-terminal target preparation remains open.",
+  "next": "Correct fixture to maintained worker compose command, then complete full restore/readbacks. Do not auto-retry partially started target.",
   "additionalRollbackFile": "/home/administrator/project/.eva2-artifacts/runtime-public-ca-20260924/previous-installed-runtime-authorization.py",
   "networkCorrectionInstallation": "/home/administrator/project/.eva2-artifacts/restore-created-network-3b3bd272/installation-receipt.json",
   "fullWizardAttempt": {
@@ -77,5 +77,20 @@
     "status": "failed_after_memory_api_start_before_core_start",
     "retained": true,
     "cause": "Docker represented default OomKillDisable as null after first start instead of false; exact default equivalence corrected in f1a827bf."
+  },
+  "fullWizardPartialStart": {
+    "status": "core_healthy_worker_fixture_failed",
+    "source_commit": "f1a827bf",
+    "prepare_http_status": 200,
+    "execute_http_status": 409,
+    "release_committed": true,
+    "core_healthy": true,
+    "memory_running": true,
+    "gateway_healthy": true,
+    "worker_running": false,
+    "ui_recovery_state": "activation_unconfirmed",
+    "cause": "Fixture omitted maintained delegated worker entrypoint/command and healthcheck; image default attempted core startup instead. Fixture correction required, no product change.",
+    "retained": true,
+    "production_modified": false
   }
 }
