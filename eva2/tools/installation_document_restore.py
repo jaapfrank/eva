@@ -1,0 +1,211 @@
+"""Prepare existing native document relocation authority without activation.
+
+Trusted launcher configuration chooses only pinned images and inactive package
+paths. The native prepareRelocation implementation remains the journal parser;
+this wrapper neither translates journals nor starts a provider. Partial new
+output is preserved on failure for inspection, never retried or overwritten.
+"""
+from __future__ import annotations
+
+import base64
+import hashlib
+import json
+import os
+from pathlib import Path, PurePosixPath
+import re
+import stat
+import uuid
+
+from eva.contracts.canonical_json import canonical_sha256
+from eva.operations.component_evaluation import _capture
+from tools.installation_recovery_package import read_installation_package
+from tools.read_eva_portable_archive import _root_descriptor, _read_regular
+
+_FIELDS = {"original_binding", "catalog_path", "document_directory", "journal_directory",
+           "logical_catalog_sha256", "project_keys", "runtime_uid", "runtime_gid", "image", "output_directory"}
+_HEX = re.compile(r"[a-f0-9]{64}")
+
+
+class DocumentRelocationPreparationError(RuntimeError):
+    def __init__(self, receipt):
+        super().__init__("document relocation preparation stopped; preserve partial inactive outputs for inspection")
+        self.receipt = receipt
+
+
+def _relative(value, prefix):
+    if (not isinstance(value, str) or len(value) > 1024 or not value.startswith(prefix + "/")
+            or PurePosixPath(value).is_absolute() or str(PurePosixPath(value)) != value
+            or any(part in {"", ".", ".."} for part in value.split("/"))
+            or any(c in value for c in ("\x00", ",", "\\"))):
+        raise ValueError("document relocation package path is invalid")
+
+
+def validate_document_configuration(configuration):
+    if (not isinstance(configuration, dict) or set(configuration) != {"providers"}
+            or not isinstance(configuration["providers"], list)
+            or not 1 <= len(configuration["providers"]) <= 16):
+        raise ValueError("document relocation configuration differs")
+    outputs, source_pairs = set(), set()
+    for config in configuration["providers"]:
+        if not isinstance(config, dict) or set(config) != _FIELDS:
+            raise ValueError("document relocation provider fields differ")
+        for key in ("original_binding", "catalog_path"):
+            _relative(config[key], "config")
+        for key in ("document_directory", "journal_directory"):
+            _relative(config[key], "documents")
+        a, b = config["document_directory"], config["journal_directory"]
+        if a == b or a.startswith(b + "/") or b.startswith(a + "/"):
+            raise ValueError("document and journal directory scopes overlap")
+        if (not isinstance(config["logical_catalog_sha256"], str)
+                or not _HEX.fullmatch(config["logical_catalog_sha256"])
+                or not isinstance(config["image"], str)
+                or not re.fullmatch(r"sha256:[a-f0-9]{64}", config["image"])
+                or not isinstance(config["project_keys"], list) or not 1 <= len(config["project_keys"]) <= 16
+                or any(not isinstance(key, str) or not _HEX.fullmatch(key) for key in config["project_keys"])
+                or len(set(config["project_keys"])) != len(config["project_keys"])):
+            raise ValueError("document relocation image/catalog/project pin differs")
+        for key in ("runtime_uid", "runtime_gid"):
+            if type(config[key]) is not int or not 0 <= config[key] < 4294967295:
+                raise ValueError("document relocation runtime owner is invalid")
+        value = config["output_directory"]
+        if not isinstance(value, str) or not Path(value).is_absolute() or Path(value).resolve() != Path(value):
+            raise ValueError("document relocation output must be absolute without links")
+        if value in outputs or (a, b) in source_pairs:
+            raise ValueError("document relocation configuration duplicates a target")
+        outputs.add(value)
+        source_pairs.add((a, b))
+
+
+_PREPARE = """
+import fs from 'node:fs';
+import {prepareRelocation} from '/opt/eva2/atomic/relocation.mjs';
+const flags=fs.constants.O_RDONLY|fs.constants.O_DIRECTORY|fs.constants.O_NOFOLLOW;
+const rootFd=fs.openSync('/workspace',flags),journalFd=fs.openSync('/journal',flags);
+try {
+ const result=prepareRelocation({executable:'/opt/eva2/atomic/workspace-writer-broker',rootFd,journalFd,
+  originalBindingBytes:fs.readFileSync('/run/original-binding.json'),
+  logicalCatalogIdentity:process.argv[1],projectKeys:JSON.parse(process.argv[2])});
+ console.log(JSON.stringify({binding:result.bindingBytes.toString('base64'),
+  snapshots:Object.fromEntries(Object.entries(result.snapshots).map(([k,v])=>[k,v.toString('base64')]))}));
+} finally {fs.closeSync(rootFd);fs.closeSync(journalFd);}
+"""
+
+
+def _validate_sources(root, package, config):
+    entries = package["manifest"]["files"]
+    for key, role in (("original_binding", "provider_binding"), ("catalog_path", "provider_catalog")):
+        if entries.get(config[key], {}).get("role") != role:
+            raise ValueError("document relocation authority file role differs")
+    for key, roles in (("document_directory", {"document_artifact"}),
+                       ("journal_directory", {"document_journal", "document_marker"})):
+        prefix = config[key] + "/"
+        names = [name for name in entries if name.startswith(prefix)]
+        if not names or any(entries[name]["role"] not in roles for name in names):
+            raise ValueError("document relocation directory roles differ")
+        directory = root / config[key]
+        info = directory.stat()
+        if (directory.resolve() != directory or info.st_uid != config["runtime_uid"]
+                or info.st_gid != config["runtime_gid"] or stat.S_IMODE(info.st_mode) != 0o700):
+            raise ValueError("document relocation source directory owner differs")
+    journal = config["journal_directory"] + "/"
+    actual_projects = {name[len(journal):].split("/")[0] for name in entries if name.startswith(journal)}
+    if actual_projects != set(config["project_keys"]):
+        raise ValueError("document relocation project coverage differs")
+    with _root_descriptor(root) as fd:
+        original = _read_regular(fd, config["original_binding"])
+        catalog = _read_regular(fd, config["catalog_path"])
+    for name, raw in ((config["original_binding"], original), (config["catalog_path"], catalog)):
+        if len(raw) != entries[name]["size"] or hashlib.sha256(raw).hexdigest() != entries[name]["sha256"]:
+            raise ValueError("document authority source bytes changed")
+    if canonical_sha256(json.loads(catalog)) != config["logical_catalog_sha256"]:
+        raise ValueError("document relocation logical catalog pin differs")
+    return original
+
+
+def prepare_document_relocations(package_root: Path, *, configuration: dict, guard: callable) -> dict:
+    receipt = {"contract": "EvaDocumentRelocationPreparation/v1", "providers": [],
+               "connected": False, "provider_verified": False, "services_started": False}
+    try:
+        validate_document_configuration(configuration)
+        if not callable(guard):
+            raise ValueError("document relocation requires a current restore guard")
+        root = package_root.resolve()
+        package = read_installation_package(root)
+        receipt["archive_sha256"] = package["archive_sha256"]
+        for config in configuration["providers"]:
+            original = _validate_sources(root, package, config)
+            output = Path(config["output_directory"])
+            if output == root or root in output.parents or output in root.parents:
+                raise ValueError("relocation output overlaps the installation package")
+            parent = output.parent.stat()
+            if parent.st_uid != os.geteuid() or stat.S_IMODE(parent.st_mode) != 0o700 or output.exists():
+                raise ValueError("relocation output parent is not private or target already exists")
+            guard()
+            current = read_installation_package(root)
+            if current["archive_sha256"] != package["archive_sha256"]:
+                raise ValueError("document source package changed")
+            name = "eva-document-relocation-" + uuid.uuid4().hex
+            command = ["docker", "run", "--rm", "--name", name, "--pull", "never", "--network", "none",
+                "--read-only", "--no-healthcheck", "--log-driver", "none", "--cap-drop", "ALL",
+                "--security-opt", "no-new-privileges", "--memory", "256m", "--memory-swap", "256m",
+                "--cpus", "1", "--pids-limit", "32", "--user", f"{config['runtime_uid']}:{config['runtime_gid']}",
+                "--mount", f"type=bind,src={root / config['document_directory']},dst=/workspace,readonly",
+                "--mount", f"type=bind,src={root / config['journal_directory']},dst=/journal,readonly",
+                "--mount", f"type=bind,src={root / config['original_binding']},dst=/run/original-binding.json,readonly",
+                "--entrypoint", "node", config["image"], "--input-type=module", "-e", _PREPARE,
+                config["logical_catalog_sha256"], json.dumps(config["project_keys"])]
+            try:
+                result = _capture(command, deadline=20 + 10 * len(config["project_keys"]), limit=96 * 1024 * 1024)
+                if result["exit_code"] != 0 or result["timed_out"] or result["stdout_truncated"]:
+                    raise RuntimeError("native document relocation preparation failed")
+            finally:
+                cleanup = _capture(["docker", "rm", "--force", name], deadline=10, limit=2048)
+                if cleanup["timed_out"] or (cleanup["exit_code"] != 0 and "No such container" not in cleanup["stderr"]):
+                    raise RuntimeError("native relocation preparation cleanup uncertain")
+            wire = json.loads(result["stdout"])
+            if set(wire) != {"binding", "snapshots"} or set(wire["snapshots"]) != set(config["project_keys"]):
+                raise ValueError("native relocation output inventory differs")
+            files = {"binding.json": base64.b64decode(wire["binding"], validate=True)}
+            files.update({key + ".relocation": base64.b64decode(value, validate=True)
+                          for key, value in wire["snapshots"].items()})
+            binding = json.loads(files["binding.json"])
+            if (binding.get("version") != 3 or binding.get("kind") != "host_authorized_relocation_v1"
+                    or binding.get("logical_provider_identity") != hashlib.sha256(original).hexdigest()
+                    or binding.get("logical_catalog_identity") != config["logical_catalog_sha256"]):
+                raise ValueError("native relocation authority binding differs")
+            if (base64.b64decode(binding.get("original_binding_base64", ""), validate=True) != original
+                    or set(binding.get("projects", {})) != set(config["project_keys"])):
+                raise ValueError("native relocation original authority or projects differ")
+            for key in config["project_keys"]:
+                if hashlib.sha256(files[key + ".relocation"]).hexdigest() != binding["projects"][key].get("snapshot_sha256"):
+                    raise ValueError("native relocation snapshot bytes differ")
+            guard()
+            if read_installation_package(root)["archive_sha256"] != package["archive_sha256"]:
+                raise ValueError("document source package changed during preparation")
+            item = {"status": "preparation_partial", "image_id": config["image"],
+                    "output_binding_sha256": hashlib.sha256(str(output).encode()).hexdigest(), "files": {}}
+            receipt["providers"].append(item)
+            with _root_descriptor(output.parent) as parent_fd:
+                guard()
+                os.mkdir(output.name, mode=0o700, dir_fd=parent_fd)
+                out_fd = os.open(output.name, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=parent_fd)
+                try:
+                    for filename, raw in files.items():
+                        guard()
+                        fd = os.open(filename, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600, dir_fd=out_fd)
+                        with os.fdopen(fd, "wb") as stream:
+                            stream.write(raw); stream.flush()
+                            os.fchown(stream.fileno(), config["runtime_uid"], config["runtime_gid"])
+                            os.fchmod(stream.fileno(), 0o400); os.fsync(stream.fileno())
+                        item["files"][filename] = {"sha256": hashlib.sha256(raw).hexdigest(), "size": len(raw)}
+                    os.fchown(out_fd, config["runtime_uid"], config["runtime_gid"])
+                    os.fsync(out_fd); os.fsync(parent_fd)
+                finally:
+                    os.close(out_fd)
+            guard()
+            item["status"] = "prepared_not_connected"
+        receipt["status"] = "prepared_not_connected"
+        return receipt
+    except Exception as error:
+        receipt["status"] = "inspection_required_no_retry"
+        raise DocumentRelocationPreparationError(receipt) from error

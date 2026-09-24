@@ -64,6 +64,7 @@ class InstallerPortableRestore:
         runtime_guard: Callable[[Any], None] | None = None,
         recovery_materialization: dict | None = None,
         external_restore: Callable[..., dict] | None = None,
+        document_prepare: Callable[..., dict] | None = None,
     ):
         # The composition root must provide an isolated, traffic-closed target.
         if (
@@ -89,6 +90,10 @@ class InstallerPortableRestore:
             _owners(recovery_materialization["owners"])
         if external_restore is not None and (not callable(external_restore) or recovery_materialization is None):
             raise ValueError("external restoration requires configured materialization")
+        if document_prepare is not None and (not callable(document_prepare)
+                or external_restore is None or recovery_materialization is None):
+            raise ValueError("document preparation requires external restoration and materialization")
+        self.document_prepare = document_prepare
         self.external_restore = external_restore
         self.recovery_materialization = deepcopy(recovery_materialization)
         self._lock = Lock()
@@ -165,6 +170,11 @@ class InstallerPortableRestore:
                     external_components="not_materialized",
                     object_recovery_notice="Een mislukte poging kan een volledige inactieve bestandskopie achterlaten. Deze wordt niet verwijderd of overschreven; de operator moet de kopie beoordelen en een nieuw leeg hersteldoel configureren voor een nieuwe poging.",
                 )
+                if self.document_prepare is not None:
+                    summary.update(
+                        document_components="preparation_planned",
+                        notice="Deze herstelactie importeert de kern, het geheugen en de gateway in aparte doelen en bereidt daarna documentproviders inactief voor. Voorbereiden sluit geen documentprovider aan en start Eva niet. Aansluiten, controleren en activeren volgen afzonderlijk.",
+                    )
                 return records, package["manifest_raw"], summary
             return records, raw, summary
         outputs, proof = validated
@@ -310,6 +320,7 @@ class InstallerPortableRestore:
             core_manifest_raw=package["core_archive"]["manifest_raw"],
             restore_authority_raw=self.authority_reader())
         external = None
+        documents = None
         if self.external_restore is not None:
             def guard():
                 if self.runtime_guard is not None:
@@ -320,12 +331,34 @@ class InstallerPortableRestore:
             materialization_state["external_import_attempted"] = True
             external = self.external_restore(destination, guard=guard)
             guard()
+            if self.document_prepare is not None:
+                materialization_state["document_preparation_attempted"] = True
+                try:
+                    documents = self.document_prepare(destination, guard=guard)
+                except Exception as error:
+                    # The native preparer retains partial inactive output and
+                    # supplies its sanitized receipt; never retry it here.
+                    materialization_state["document_preparation"] = deepcopy(
+                        getattr(error, "receipt", {"status": "inspection_required_no_retry"}))
+                    raise
+                materialization_state["document_preparation"] = deepcopy(documents)
+                if (not isinstance(documents, dict)
+                        or documents.get("contract") != "EvaDocumentRelocationPreparation/v1"
+                        or documents.get("status") != "prepared_not_connected"
+                        or any(documents.get(key) is not False for key in
+                               ("connected", "provider_verified", "services_started"))):
+                    raise ValueError("document preparation receipt differs")
+                guard()
         return {**summary, **result, "archive_sha256": package["archive_sha256"],
             "core_archive_sha256": package["core_archive"]["archive_sha256"],
             "external_components": "imported_inactive" if external is not None else "materialized_inactive",
             "external_restore": external,
+            **({"document_preparation": documents, "document_components": "prepared_not_connected"}
+               if documents is not None else {}),
             "materialization_destination": str(destination),
-            "notice": ("Kern, geheugen en gateway zijn geïmporteerd maar blijven inactief. Koppel en controleer de documentproviders vóór vrijgave."
+            "notice": ("Kern, geheugen en gateway zijn geïmporteerd. Documentproviders zijn voorbereid maar niet aangesloten of gecontroleerd. Alles blijft inactief; aansluiten, controleren en vrijgeven zijn afzonderlijke stappen."
+                if documents is not None else
+                "Kern, geheugen en gateway zijn geïmporteerd maar blijven inactief. Koppel en controleer de documentproviders vóór vrijgave."
                 if external is not None else
                 "De kern is hersteld en de bestanden staan inactief klaar. Eva blijft uit. Importeer eerst geheugen- en gatewaydatabases, koppel en controleer documentproviders en laat de operator daarna afzonderlijk vrijgeven.")}
 
@@ -390,7 +423,9 @@ class InstallerPortableRestore:
             except Exception as error:
                 if "materialization_state" in locals() and materialization_state["published"]:
                     raise InactiveRecoveryMaterialRetained(str(destination),
-                        external_import_attempted=materialization_state.get("external_import_attempted", False)) from error
+                        external_import_attempted=materialization_state.get("external_import_attempted", False),
+                        document_preparation_attempted=materialization_state.get("document_preparation_attempted", False),
+                        document_preparation=deepcopy(materialization_state.get("document_preparation"))) from error
                 raise
             finally:
                 self._discard()
