@@ -271,7 +271,7 @@ class ProcedureReferenceActions:
         elif call.name == _NAMES[1] and set(args) <= {"cursor", "query"}:
             query = args.get("query")
             if query is not None:
-                if not query.strip() or "cursor" in args:
+                if not query.strip() or args.get("cursor", "") != "":
                     raise ConversationConflict("procedure search requires a query without a page cursor")
                 scopes = self._scopes(turn)
                 documents = ((source_scope, doc) for source_scope in scopes

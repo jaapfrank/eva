@@ -119,7 +119,9 @@ def test_background_readback_checks_job_immediately_before_gateway(monkeypatch, 
     import eva.adapters.postgres.procedure_reference_host as module
     from eva.application.background_execution import BackgroundExecutionScope, background_execution
     from eva.application.conversation import ConversationConflict
+    from eva.application.procedure_references import ProcedureScope
     turn = _private_turn()
+    scope = ProcedureScope(turn.tenant_id, turn.installation_id, turn.principal_id, turn.project_id)
     events = []
     class Gateway:
         async def verify_catalog(self): events.append("catalog")
@@ -134,6 +136,9 @@ def test_background_readback_checks_job_immediately_before_gateway(monkeypatch, 
     host = object.__new__(module.PostgresProcedureReferenceHost)
     host.turn = turn
     host.engine = None
+    host.private_owner_resolver = None
+    host.load_turn = lambda source: turn
+    host.timeline = None
     host.authority = NS(authorize_turn=lambda _: None)
     host.gateway_factory = Gateway
     host.require_current = lambda: events.append("authority")
@@ -146,10 +151,10 @@ def test_background_readback_checks_job_immediately_before_gateway(monkeypatch, 
     with background_execution(BackgroundExecutionScope(turn, "execution:one", guard)):
         if denied:
             with pytest.raises(ConversationConflict, match="stopped or budget"):
-                host.read_current(None, "procedure.md")
+                host.read_current(scope, "procedure.md")
             assert "observe" not in events
         else:
-            assert host.read_current(None, "procedure.md") == b"Checked procedure"
+            assert host.read_current(scope, "procedure.md") == b"Checked procedure"
             assert events[events.index("observe") - 1] == "job-guard"
     assert events.count("job-guard") == 1
 
@@ -285,3 +290,40 @@ def test_background_designation_requires_save_from_exact_job(monkeypatch, matchi
             with pytest.raises(ConversationConflict, match="current turn"):
                 actions._execute(turn, call)
             assert not called
+
+
+@pytest.mark.parametrize("cursor", [None, "", "next-page"])
+def test_procedure_query_accepts_empty_optional_cursor_but_not_pagination(monkeypatch, cursor):
+    import json
+    from types import SimpleNamespace as NS
+    from eva.application.conversation import ConversationActionCall, ConversationConflict
+    from eva.application.procedure_references import ProcedureScope
+    import eva.providers.procedure_reference_actions as module
+    turn = _private_turn()
+    scope = ProcedureScope(turn.tenant_id, turn.installation_id, turn.principal_id, turn.project_id)
+    calls = []
+    document = NS(retention_until="2027-09-24T00:00:00Z", source_ref="saved:procedure",
+        document_id="procedure:csv", content=json.dumps({"contract": "ProcedureReference/v1",
+            "document_id": "procedure:csv", "use_when": "Nederlandse CSV bedragen optellen", "path": "csv.py"}))
+    def matching_sources(**kwargs):
+        calls.append(kwargs)
+        return (document,)
+    monkeypatch.setattr(module, "PostgresMemoryOutbox", lambda *args, **kwargs: NS(matching_sources=matching_sources))
+    actions = ProcedureReferenceActions(None, authority=None, gateway_factory=None, clock=lambda: turn.occurred_at)
+    host = NS(source_active=lambda *args: True, require_scope=lambda *args: None, require_current=lambda: None)
+    monkeypatch.setattr(actions, "_host", lambda value: host)
+    monkeypatch.setattr(actions, "_scopes", lambda value: (scope,))
+    args = {"query": "Nederlandse CSV bedragen"}
+    if cursor is not None:
+        args["cursor"] = cursor
+    call = ConversationActionCall("search", "list_reusable_procedures", args)
+    if cursor == "next-page":
+        with pytest.raises(ConversationConflict, match="without a page cursor"):
+            actions._execute(turn, call)
+        assert not calls
+    else:
+        receipt = actions._execute(turn, call)
+        assert receipt.output["candidates"][0]["document_id"] == "procedure:csv"
+        assert receipt.output["next_cursor"] is None
+        assert calls[0]["query"] == args["query"]
+    assert call.arguments == args
