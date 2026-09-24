@@ -36,6 +36,7 @@ class PrivateWorkSource(BaseModel):
 class DelegatedDigitalWorkGrant(DelegatedWorkGrant):
     contract: Literal["DelegatedDigitalWorkGrant/v4"]
     schema_version: Literal[4]
+    capability_ids: list[Identifier] = Field(min_length=1, max_length=32)
     maximum_model_runs: int = Field(ge=1, le=32)
     maximum_completed_model_responses: int = Field(ge=1, le=32)
     maximum_tool_calls: int = Field(ge=1, le=32)

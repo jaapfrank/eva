@@ -178,3 +178,18 @@ def test_gateway_configuration_changes_the_digital_profile():
         LoadedProvider("mcp_gateway", None, ProviderSettings("http://gateway-b.invalid"))))
     assert build_digital_profile(settings, bundle).release != first.release
     assert "adapters/postgres/external_conversation_tools.py" in dict(first.execution_source_sha256)
+
+
+def test_digital_grant_accepts_configured_catalog_beyond_legacy_sixteen_tools():
+    settings, bundle = configuration()
+    profile = build_digital_profile(settings, bundle)
+    names = ("connect_service", "discover_connector_tools", "manage_connected_services", "use_connector_tool",
+             "list_reusable_procedures", "resolve_reusable_procedure", "designate_reusable_procedure",
+             "save_workspace_document", "save_work_progress", "read_own_component_source",
+             "draft_own_component_improvement", "evaluate_own_component_improvement",
+             "prepare_own_component_release", "run_reusable_procedure", "home_assistant_request",
+             "read_home_assistant_inventory", "get_delegated_work")
+    expanded = replace(profile, capability_ids=names)
+    assert expanded.grant().capability_ids == list(names)
+    with pytest.raises(ValueError, match="explicit connector actions"):
+        replace(profile, capability_ids=(*names, "start_digital_work"))
