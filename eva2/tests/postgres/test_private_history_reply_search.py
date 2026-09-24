@@ -80,6 +80,10 @@ def test_reply_only_match_respects_exact_binding_erasure_retention_and_private_s
         occurred_at=(NOW - timedelta(seconds=1)).strftime("%Y-%m-%dT%H:%M:%SZ")))
     assert [doc.document_id for doc, _ in reader.search_private_history(
         caller, "warmtepomp", now=NOW, limit=3)] == [matching.document_id]
+    # Both terms belong to one exchange, but neither side contains both.
+    assert "option" in matching.content and "warmtepomp" not in matching.content
+    assert [doc.document_id for doc, _ in reader.search_private_history(
+        caller, "option warmtepomp", now=NOW, limit=3)] == [matching.document_id]
     found = reader.search_private_history(caller, "warmtepomp", now=NOW, limit=1)
     assert [doc.document_id for doc, _ in found] == [matching.document_id]
     assert "warmtepomp" in _exchange_content(SimpleNamespace(_journal=lambda turn: journal), found[0][0])

@@ -240,7 +240,9 @@ class PostgresOwnerMemorySources:
                         reply_data["message_id"].astext == data["source_ref"].astext,
                         reply_data["project_id"].astext.is_not_distinct_from(data["project_id"].astext),
                         sa.not_(reply_data.has_key("content_erasure")),
-                        sa.func.to_tsvector(dictionary, sa.func.coalesce(reply_data["text"].astext, "")).op("@@")(terms),
+                        sa.func.to_tsvector(dictionary,
+                            sa.func.coalesce(data["content"].astext, "") + sa.literal(" ")
+                            + sa.func.coalesce(reply_data["text"].astext, "")).op("@@")(terms),
                     ).correlate(operational_events))
                     query = query.where(history_channels, sa.or_(
                         sa.func.to_tsvector(dictionary, sa.func.coalesce(data["content"].astext, "")).op("@@")(terms),
