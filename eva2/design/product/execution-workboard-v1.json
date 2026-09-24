@@ -1009,14 +1009,14 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T16:53:33.237334+00:00",
+        "checkedAt": "2026-09-24T16:55:47.830300+00:00",
         "deliveries": [
           {
             "title": "Geheugen en taakcontext tegelijk voorbereiden",
             "date": "24 september",
             "state": "installed",
             "result": "De twee onafhankelijke leesacties wachten niet meer op elkaar. Beide blijven volledig beschikbaar vóór het model; fouten en stoppen worden doorgegeven. Kern en werker bijgewerkt en gezond.",
-            "remaining": "Gerichte overlap-/gesprekscontroles en onafhankelijke bronreview geslaagd. Werkelijke snelheidswinst nog niet gemeten; modeltijd en onder-één-seconde blijven open.",
+            "remaining": "Echte begroeting na installatie:5,2s tot eerste tekst (model3,525s),8.257 inputtokens. Geen snelheidswinst aangetoond; snelle ontvangst blijft open.",
             "source": "eva2/evidence/product/conversation-preparation-installed-20260924.json"
           },
           {
@@ -2087,15 +2087,15 @@
           }
         ],
         "now": {
-          "title": "Invoermeting gedeeltelijk; geen productwijziging",
-          "state": "Onderzoek beëindigd",
-          "detail": "Huidige12berichten bevatten1,7kB tekst. Statische catalogus apart geteld; dit zijn geen providertokens en geen volledige aanvraag. Geen modelcalls.",
-          "doneWhen": "Geen onderbouwde verkleiningswijziging gevonden. Niet verder diagnosticeren op basis van deze gedeeltelijke telling."
+          "title": "Snelle begroeting nog niet gehaald",
+          "state": "Echte proef onvoldoende",
+          "detail": "Hallo na5,2s; model eerste tekst3,525s. Eén aanvraag8.257 input/10outputtokens, geen tools. Geen ongewijzigde herproef.",
+          "doneWhen": "Parallelle voorbereiding geïnstalleerd, maar geen gemeten snelheidswinst. Geen acceptatie of afronding van gesprek/stem."
         },
         "next": {
-          "title": "Werkelijke reactie na parallelle voorbereiding meten",
+          "title": "Algemene HA-automatiseringen afmaken",
           "state": "Nog niet gestart",
-          "detail": "Eén begroeting op de geïnstalleerde websiteversie vergelijken met eerdere4,409s; voorbereiding is sindsdien gewijzigd. Snelle ontvangst en inhoudelijk antwoord apart houden."
+          "detail": "Voortbouwen op geïnstalleerde algemene API: aanmaken en wijzigen via Eva afronden. Geen nieuwe lampenscripts; snelle ontvangst blijft afzonderlijk open."
         },
         "ownerAction": {
           "title": "Een eerdere speakertaak gericht stoppen",
@@ -2109,7 +2109,7 @@
           "expected": "Eva vindt de eerdere opdracht via dezelfde speaker en stopt alleen de gekozen taak. Deze fysieke proef is nog niet door jou bevestigd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T16:53:33.237334+00:00"
+        "reviewedAt": "2026-09-24T16:55:47.830300+00:00"
       }
     },
     "pendingTechnicalReview": {

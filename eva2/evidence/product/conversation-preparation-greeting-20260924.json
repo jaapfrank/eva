@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-09-24T16:55:47.830300+00:00",
+  "installedSource": "41928966",
+  "route": "local owner website /conversation/respond",
+  "prompt": "Hallo.",
+  "reply": "Hoi Jaap! 👋",
+  "messageId": "dashboard:6fb6d093-571b-479a-aa74-dfff3bf93e8a",
+  "timing": {
+    "firstVisibleTextSeconds": 5.2,
+    "savedReplySeconds": 5.637,
+    "modelFirstContentMs": 3525,
+    "modelCompletedMs": 3850
+  },
+  "usage": {
+    "modelAttempts": 1,
+    "toolCalls": 0,
+    "inputTokens": 8257,
+    "outputTokens": 10,
+    "costUnknown": true
+  },
+  "comparison": {
+    "previousFirstVisibleTextSeconds": 4.409,
+    "previousModelFirstContentMs": 2597,
+    "interpretation": "One sample per state; history and provider latency vary. No measured speedup. Parallel preparation is installed but subsecond contact is not achieved. Model first-content latency is dominant in this sample."
+  },
+  "unchangedRetestPlanned": false,
+  "ownerAcceptance": false
+}
