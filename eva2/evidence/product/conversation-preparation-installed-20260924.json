@@ -1,0 +1,51 @@
+{
+  "checkedAt": "2026-09-24T16:39:27.128867+00:00",
+  "sourceCommit": "4192896692bc061b22f1796a4a231c492d690cd6",
+  "status": "installed",
+  "change": "Read active action context and initial memory concurrently after sequential pending recovery and tool selection. Both complete before model input; full memory/context retained. One request-owned copied-context lane, joined on success/error/cancellation.",
+  "review": {
+    "verdict": "GO",
+    "reviewer": "coordinator independent of implementation agent",
+    "scope": "Pending recovery/tool selection remain serial; only two independent reads overlap; copied context and turn-owned join, explicit post-join cancellation, unchanged full memory and context before model, original timing log retained.",
+    "tests": "55 passed in3.16s, including event-based overlap and failure/stop cleanup, existing conversation/contact/voice cancellation checks",
+    "limits": "No measured actual greeting speedup; model first-content time remains separately dominant."
+  },
+  "tests": "55 passed in3.16s; event-driven overlap, full inputs, inherited context/cancellation, cleanup/no partial answer; existing contact, conversation and voice-context checks.",
+  "installation": {
+    "checkedAt": "2026-09-24T16:38:55.579404+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:c2482544dcd63c584842463acfbc1012d98ca33d051fdd93a0fe0381463be0af",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "3dac0f803655ad161773777b48c285e60a5446c89d041f04a28ffe6da83179a9"
+        }
+      },
+      "worker": {
+        "image": "sha256:3d75653203651d37b09e69808a331729886dbeef5592acd53cb2433d0dd7bca3",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "3dac0f803655ad161773777b48c285e60a5446c89d041f04a28ffe6da83179a9"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/conversation-preparation-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "readiness": {
+    "owner": 200,
+    "voice": 200
+  },
+  "priorMeasurement": {
+    "firstTextSeconds": 4.409,
+    "recallMs": 810,
+    "modelFirstContentMs": 2597
+  },
+  "runtimeModelCalls": 0,
+  "creditCost": "Unknown",
+  "ownerAccepted": false,
+  "remaining": [
+    "No new live latency measurement or physical voice trial",
+    "Subsecond response remains unachieved/unproven",
+    "Actual active-context duration and speedup not measured; model time unchanged"
+  ]
+}
