@@ -30,6 +30,7 @@ export function createLocalOwner({ token, port = 44711, upstreamPort = 44710 }) 
       delete headers['www-authenticate'];
       delete headers['set-cookie'];
       res.writeHead(response.statusCode, headers);
+      res.flushHeaders();
       response.pipe(res);
     });
     upstream.on('error', () => { if (!res.headersSent) res.writeHead(502); res.end('Eva is tijdelijk niet bereikbaar.'); });
