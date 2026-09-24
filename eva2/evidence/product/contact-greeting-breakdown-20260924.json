@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-09-24T15:25:59.073091+00:00",
+  "installedSource": "7eabd740",
+  "route": "local owner website /conversation/respond",
+  "prompt": "Hallo.",
+  "reply": "Hoi Jaap! 👋",
+  "messageId": "dashboard:7d894819-e3ef-4b05-93ba-43b392dc07e8",
+  "timing": {
+    "firstVisibleTextSeconds": 4.548,
+    "savedReplySeconds": 4.977,
+    "initialRecallMs": 691,
+    "modelFirstContentMs": 2877,
+    "modelCompletedMs": 3223
+  },
+  "usage": {
+    "modelAttempts": 1,
+    "toolCalls": 0,
+    "inputTokens": 8602,
+    "outputTokens": 10,
+    "costUnknown": true
+  },
+  "interpretation": "Initial recall is a measured serial cost but not the dominant measured wait. Model timing starts later than request start; remaining overhead is not separately measured. One sample is not a latency distribution or a speedup claim.",
+  "next": "Inspect existing fixed contact context for avoidable duplication without another paid request.",
+  "ownerAcceptance": false
+}

@@ -1,0 +1,63 @@
+{
+  "checkedAt": "2026-09-24T15:30:23.507668+00:00",
+  "sourceCommit": "103c7cd2664a8efd42a3b885275ecca60389e6c5",
+  "change": "Shorten three fixed shared work instruction blocks, keeping all decision rules. No capability, identity, memory or provider change.",
+  "review": {
+    "scope": "Three shared work-guidance strings only",
+    "charactersBefore": [
+      1038,
+      1507,
+      370
+    ],
+    "charactersAfter": [
+      809,
+      960,
+      305
+    ],
+    "charactersSaved": 841,
+    "preserved": [
+      "Natural concise contact and direct simple replies",
+      "Tool-free work versus digital execution versus public research",
+      "Self-selected multistep delegation including full Home Assistant analysis",
+      "No foreground discovery before delegation",
+      "Authorized context for person and audience",
+      "Acceptance only after durable admission, never completion claim",
+      "No polling or waiting for completion; concurrent conversation",
+      "New tasks do not cancel old tasks; targeted explicit stop and incompatible correction",
+      "Digital learning, saving and later fetching and applying current procedures",
+      "Public research excludes private information and recalled memory"
+    ],
+    "review": "Coordinator read complete diff against old guidance; all listed requirements retained. Existing 11 contact routing, stop, privacy and acceptance tests passed. Model interpretation of shortened prose not newly measured.",
+    "speedClaim": false
+  },
+  "tests": {
+    "existingContactTests": 11,
+    "result": "passed",
+    "durationSeconds": 0.64,
+    "configuredCoreWorkerFullRelease": "equal",
+    "websiteHttpStatus": 200
+  },
+  "services": {
+    "core": {
+      "image": "sha256:0208ca5db30b2b1a291c13b7ac80270222dff13ace4bf2342e2e672aba94d883",
+      "health": "healthy",
+      "sourceHashes": {
+        "application/conversation.py": "fe6d22d8ef92581184201f858377c542023c470d483a396073a67f78010da2bc"
+      }
+    },
+    "worker": {
+      "image": "sha256:40d665f482f2d4c9ca5b301c0a08e18c631328c648e5ac4e7cd91e2f88e8109e",
+      "health": "healthy",
+      "sourceHashes": {
+        "application/conversation.py": "fe6d22d8ef92581184201f858377c542023c470d483a396073a67f78010da2bc"
+      }
+    }
+  },
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/compact-work-guidance-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker",
+  "additionalModelCallsForThisChange": 0,
+  "limitations": [
+    "No live model generation after shortening; runtime token saving and latency improvement are unmeasured.",
+    "One preceding greeting diagnostic is recorded separately; it consumed 8602 input and 10 output tokens.",
+    "Complete channel behavior and owner acceptance remain open."
+  ]
+}
