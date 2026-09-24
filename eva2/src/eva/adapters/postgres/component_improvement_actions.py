@@ -3,7 +3,7 @@ from pathlib import Path
 
 from eva.adapters.connectors.component_evaluation import configured_component_evaluator
 
-from eva.application.component_improvements import read_component, draft_component
+from eva.application.component_improvements import read_component, draft_component, prepare_component_release
 from eva.application.conversation import ConversationActionCall, ConversationActionReceipt, ConversationConflict, ConversationToolDescriptor
 from eva.application.schema_validation import validate_schema_value
 from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline, external_timeline_scope
@@ -12,7 +12,11 @@ from eva.contracts.canonical_json import canonical_sha256
 READ = "read_own_component_source"
 DRAFT = "draft_own_component_improvement"
 EVALUATE = "evaluate_own_component_improvement"
+PREPARE = "prepare_own_component_release"
 _SCHEMAS = {
+    PREPARE: {"type": "object", "additionalProperties": False,
+        "required": ["evaluation_step"], "properties": {
+            "evaluation_step": {"type": "integer", "minimum": 0}}},
     EVALUATE: {"type": "object", "additionalProperties": False, "required": ["draft_step"],
                "properties": {"draft_step": {"type": "integer", "minimum": 0}}},
     READ: {"type": "object", "additionalProperties": False, "required": ["path"],
@@ -37,7 +41,13 @@ def component_descriptors():
         "Bewaar het meetrapport met save_workspace_document. Een geslaagde controle is geen bewijs "
         "van algemene verbetering; tijd omvat ook opstartkosten.", _SCHEMAS[EVALUATE],
         "Meld werkelijk gemeten uitkomsten en grenzen. De kandidaat wordt niet automatisch toegepast."),)
-    return (*evaluation,
+    preparation = () if evaluator is None else (ConversationToolDescriptor(PREPARE,
+        "Maak van een eerder geslaagde geïsoleerde vergelijking in deze taak één exact "
+        "installatiekandidaatpakket. Gebruik evaluation_step uit het meetrapport. Bron, patch "
+        "en rapport blijven aan elkaar gebonden. Bewaar het pakket met save_workspace_document. "
+        "Dit installeert niets: gemeten voordeel, onafhankelijke beoordeling en terugweg blijven nodig.",
+        _SCHEMAS[PREPARE], "Meld pakketvindplaats en resterende beoordeling; claim geen toepassing."),)
+    return (*evaluation, *preparation,
         ConversationToolDescriptor(READ,
             "Lees de werkelijk geïnstalleerde Eva-broncode. Leeg path toont de mappen; "
             "een Python-pad geeft maximaal 160 regels en een bronhash. Gebruik next_line voor vervolg. "
@@ -59,7 +69,7 @@ class ComponentImprovementActions:
 
     def __init__(self, engine, spec, source, authorize, dispatch, clock):
         self.evaluator = configured_component_evaluator()
-        self.action_names = (READ, DRAFT) + (() if self.evaluator is None else (EVALUATE,))
+        self.action_names = (READ, DRAFT) + (() if self.evaluator is None else (EVALUATE, PREPARE))
         self.spec, self.source = spec, source
         self.authorize, self.dispatch, self.clock = authorize, dispatch, clock
         self.root = Path(__file__).resolve().parents[2]
@@ -96,7 +106,22 @@ class ComponentImprovementActions:
                 raise ConversationConflict("component action changed during replay")
             return replay
         self.dispatch(turn)
-        if call.name == EVALUATE:
+        if call.name == PREPARE:
+            evaluation_step = call.arguments["evaluation_step"]
+            if evaluation_step >= step_index:
+                raise ConversationConflict("release preparation requires an earlier evaluation")
+            evaluation = self.pending(turn, step_index=evaluation_step)
+            if evaluation is None or evaluation.call.name != EVALUATE:
+                raise ConversationConflict("component evaluation does not exist in this task")
+            draft_receipt = self.pending(turn, step_index=evaluation.call.arguments["draft_step"])
+            if draft_receipt is None or draft_receipt.call.name != DRAFT:
+                raise ConversationConflict("evaluated component draft is unavailable")
+            draft = draft_receipt.output["operation_result"]
+            if read_component(self.root, draft["path"])["source_sha256"] != draft["source_sha256"]:
+                raise ConversationConflict("installed component changed after evaluation")
+            value = prepare_component_release(draft, evaluation.output["operation_result"])
+            scope = "installation_candidate_pending_review"
+        elif call.name == EVALUATE:
             draft_step = call.arguments["draft_step"]
             if draft_step >= step_index:
                 raise ConversationConflict("evaluation requires an earlier recorded draft")
@@ -109,6 +134,7 @@ class ComponentImprovementActions:
             if current["source_sha256"] != draft["source_sha256"]:
                 raise ConversationConflict("installed component changed after draft")
             value = self.evaluator.evaluate(draft)
+            value["evaluation_step"] = step_index
             scope = "isolated_measurement"
         else:
             value = (read_component(self.root, **call.arguments) if call.name == READ

@@ -78,3 +78,39 @@ def draft_component(root, arguments):
             "installed": False, "checks_executed": False, "measured_gain": None,
             "guidance": "Bewaar patch, kandidaat en meetplan met de bestaande documenttool. "
                         "Dit voorstel is niet uitgevoerd of geïnstalleerd; verwachte winst is geen meting."}
+
+
+def prepare_component_release(draft, report):
+    """Bind a reviewable installation input; process success is not measured gain."""
+    from eva.contracts.canonical_json import canonical_sha256
+    if (draft.get("contract") != "EvaComponentImprovementDraft/v1"
+            or report.get("contract") != "EvaIsolatedComponentEvaluation/v1"
+            or report.get("relative_path") != draft.get("path")
+            or report.get("baseline_sha256") != draft.get("source_sha256")
+            or report.get("candidate_sha256") != draft.get("candidate_sha256")
+            or hashlib.sha256(draft["candidate_content"].encode()).hexdigest() != draft["candidate_sha256"]
+            or report.get("installed") is not False
+            or report.get("semantic_improvement_verified") is not False):
+        raise ValueError("component release source and measurement bindings differ")
+    for name in ("baseline", "candidate"):
+        outcome = report.get(name, {})
+        if (type(outcome.get("exit_code")) is not int or outcome["exit_code"] != 0
+                or outcome.get("timed_out") is not False
+                or outcome.get("stdout_truncated") is not False
+                or outcome.get("stderr_truncated") is not False):
+            raise ValueError("component release requires complete successful comparison output")
+    payload = {"contract": "EvaComponentReleaseCandidate/v1",
+        "path": draft["path"], "baseline_sha256": draft["source_sha256"],
+        "candidate_sha256": draft["candidate_sha256"],
+        "candidate_content": draft["candidate_content"], "patch": draft["patch"],
+        "problem": draft["problem"], "expected_gain": draft["expected_gain"],
+        "verification_plan": draft["verification_plan"],
+        "evaluation": report, "evaluation_sha256": canonical_sha256(report),
+        "state": "awaiting_measured_gain_review", "installed": False,
+        "required_before_installation": ["independent evidence of the stated benefit",
+            "review of this exact candidate and evaluation",
+            "unchanged production baseline and a recorded rollback",
+            "installation through the existing managed release process"],
+        "guidance": "Bewaar dit exacte pakket met de documenttool. Verwachte winst is geen meting; "
+            "een nul-exitcode is geen installatiebesluit. Noem de resterende beoordeling expliciet."}
+    return {**payload, "candidate_package_sha256": canonical_sha256(payload)}

@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T01:59:48.782968+00:00",
+        "checkedAt": "2026-09-24T02:03:33.729435+00:00",
         "deliveries": [
           {
             "title": "Zelfgemaakte Python-werkwijze opnieuw uitvoeren",
@@ -1733,15 +1733,15 @@
           }
         ],
         "now": {
-          "title": "Eigen Python-hulpmiddelen uitvoeren geïnstalleerd",
-          "state": "Geïnstalleerd; leerproef open",
-          "detail": "Eva kan een opgeslagen eigen Python-werkwijze op nieuwe JSON-invoer uitvoeren en de uitkomst bij de taak bewaren. Kern, werker en geïsoleerde host draaien; echte invoer/uitvoer is bij opstart gecontroleerd.",
-          "doneWhen": "Eva leert een onbekende taak, maakt zelf de werkwijze en gebruikt die bij een tweede taak; deze proef blijft open."
+          "title": "Eigen codevoorstel overdraagbaar naar installatie maken",
+          "state": "In bouw; toepassing nog open",
+          "detail": "Verbind het opgeslagen voorstel en het echte vergelijkingsrapport in één exact pakket. Een geslaagde controle bewijst nog geen verbeterwinst.",
+          "doneWhen": "Voorstel, bron en rapport zijn gebonden beschikbaar voor beoordeling en de bestaande installatieprocedure."
         },
         "next": {
-          "title": "Eigen verbetering gecontroleerd toepassen",
-          "state": "Volgende functie; nog niet gestart",
-          "detail": "Bestaande voorstellen en geïsoleerde vergelijking behouden; de ontbrekende stap naar toepassing met bewezen voordeel en terugweg afronden binnen het bestaande mandaat."
+          "title": "Gemeten voordeel en toepassing",
+          "state": "Open; vergelijking/beoordeling uitgesteld",
+          "detail": "Een echte eigen verbetering moet eerst aantoonbaar voordeel hebben. Geen automatische installatie op basis van alleen een nul-exitcode."
         },
         "ownerAction": {
           "title": "Kies wie huisbediening via speakers mag gebruiken",
@@ -11527,7 +11527,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Bestaande voorstellen en geïsoleerde vergelijking behouden; de ontbrekende stap naar toepassing met bewezen voordeel en terugweg afronden binnen het bestaande mandaat. Nog niet gestart.",
+      "nextAction": "Een echte eigen verbetering moet eerst aantoonbaar voordeel hebben. Geen automatische installatie op basis van alleen een nul-exitcode.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

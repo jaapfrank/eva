@@ -9,7 +9,7 @@ import hashlib
 from eva.adapters.connectors.mcp_gateway import McpGatewayUnavailable
 from eva.adapters.postgres.background_model_journal import BackgroundModelJournal
 from eva.adapters.postgres.background_work_progress import BackgroundWorkProgress, load_work_progress
-from eva.adapters.postgres.component_improvement_actions import ComponentImprovementActions, DRAFT, EVALUATE
+from eva.adapters.postgres.component_improvement_actions import ComponentImprovementActions, DRAFT, EVALUATE, PREPARE
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.delegated_work import DelegatedWorkCall, DelegatedWorkReleaseSelector
 from eva.adapters.postgres.operational_timeline import external_timeline_scope
@@ -56,6 +56,9 @@ class _TaskModel:
             "voorstel. Gebruik evaluate_own_component_improvement indien aangeboden voor die component, "
             "met de draft_step uit het voorstel. Bewaar ook het echte meetrapport en beoordeel "
             "of dat de vooraf beschreven winst daadwerkelijk bewijst. Een gelijke uitkomst is geen winst. "
+            "Gebruik prepare_own_component_release bij een geslaagde vergelijking om het exacte "
+            "voorstel met zijn rapport als installatiekandidaat te bewaren. Gebruik evaluation_step "
+            "uit het meetrapport. Dit pakket wacht nog op gemeten voordeel en beoordeling. "
             "Wijzig of installeer geen draaiende component via andere tools. Beschrijf "
             "verwachte winst als hypothese zolang er geen meting is; tekstcontroles bewijzen "
             "geen algemene functionele kwaliteit. Geef de echte vindplaats en beperkingen terug.",
@@ -159,7 +162,7 @@ class BackgroundConnectorActions:
 
 def _has_completed_tool_evidence(receipts):
     """Discovery is useful context, but cannot alone prove completed work."""
-    if any(receipt.call.name in {DRAFT, EVALUATE} for receipt in receipts) and not any(
+    if any(receipt.call.name in {DRAFT, EVALUATE, PREPARE} for receipt in receipts) and not any(
             receipt.call.name == "save_workspace_document" and receipt.output.get("status") == "verified"
             for receipt in receipts):
         return False
