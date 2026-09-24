@@ -1009,14 +1009,14 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T17:55:34.122356+00:00",
+        "checkedAt": "2026-09-24T18:04:43.807259+00:00",
         "deliveries": [
           {
-            "title": "Werkwijze gemaakt en uitgevoerd; hergebruik nog niet af",
+            "title": "Zelfgemaakte werkwijze op nieuwe gegevens hergebruikt",
             "date": "24 september",
             "state": "installed",
-            "result": "Eva heeft zelf Python opgeslagen en geregistreerd. Echte uitvoering klopt: totaal13,70, categorieën10,50/3,20 en1dubbel. Zoekfout met leeg paginaveld hersteld en geïnstalleerd.",
-            "remaining": "Nieuwe invoer vindt de registratie maar wordt niet uitgevoerd. Apart eerste resultaatbestand ontbreekt. Volledig leren/hergebruik is nog niet opgeleverd; geen eigenaaracceptatie.",
+            "result": "Eva schreef en registreerde een Python-werkwijze en voerde haar uit. Een nieuwe opdracht gebruikte exact dezelfde code:1.002,50 totaal en1dubbel. Resultaat opgeslagen en teruggelezen; inhoud onafhankelijk gecontroleerd.",
+            "remaining": "Concrete leer-/hergebruikproef geslaagd; geen algemene leeracceptatie. Eerste afzonderlijke resultaatbestand ontbreekt. Ontvangst41,3s blijft te traag.",
             "source": "eva2/evidence/product/procedure-learning-trial-20260924.json"
           },
           {
@@ -2119,29 +2119,28 @@
           }
         ],
         "now": {
-          "title": "Leerproef: eerste uitvoering gelukt, hergebruik geblokkeerd",
-          "state": "Proef afgerond met open fout",
-          "detail": "Geen modelproef meer gestart. Code en eerste uitvoer blijven behouden. Zoekcorrectie live; vervolgmodel zegt geen achtergrondtaak te kunnen starten. Oorzaak nog niet vastgesteld.",
-          "doneWhen": "Dezelfde opgeslagen code op nieuwe invoer uitvoeren en het resultaat bewaren; nog niet gehaald."
+          "title": "Leer- en hergebruikproef geslaagd",
+          "state": "Geïnstalleerd en functioneel gecontroleerd",
+          "detail": "Dezelfde opgeslagen code werkelijk uitgevoerd op twee verschillende datasets. Tweede resultaatbestand opgeslagen en teruggelezen. Geen nieuwe taak of modelproef loopt.",
+          "doneWhen": "Deze begrensde proef afgerond; snelheid, algemene vaardigheden en eigenaaracceptatie blijven open."
         },
         "next": {
-          "title": "Uitvoer na werkwijzezoeking aansluiten",
+          "title": "Sneller aannemen van achtergrondopdrachten",
           "state": "Nog niet gestart",
-          "detail": "Werkelijke beschikbare vervolgtools na zoeken controleren. Hergebruik bestaande overdracht; geen nieuwe promptproef zonder concrete oorzaak."
+          "detail": "De ontvangst duurde41,3s en gebruikte4modelaanvragen vóór werkstart. Bestaande contact-/overdrachtsroute gericht controleren; geen ongewijzigde modelproeven."
         },
         "ownerAction": {
-          "title": "Een eerdere speakertaak gericht stoppen",
-          "url": "http://localhost:44712/",
-          "linkLabel": "Projectoverzicht",
+          "title": "Het echte hergebruikresultaat lezen",
+          "url": "http://localhost:44711/internal/v1/dashboard",
+          "linkLabel": "Open Eva",
           "steps": [
-            "Vraag op een Voice PE om een openbare onderzoeksopdracht.",
-            "Gebruik opnieuw het wakeword: Welke opdrachten lopen er nog?",
-            "Zeg: Stop het onderzoek over [onderwerp]. Een eventuele andere opdracht moet blijven lopen."
+            "Zoek in het taakoverzicht de opdracht die begint met Voer de eerder geregistreerde Nederlandse CSV-totalenwerkwijze uit.",
+            "Kies Resultaat bekijken. Er hoeft geen nieuwe opdracht gestart te worden."
           ],
-          "expected": "Eva vindt de eerdere opdracht via dezelfde speaker en stopt alleen de gekozen taak. Deze fysieke proef is nog niet door jou bevestigd."
+          "expected": "Je ziet totaal1.002,50, inkomen1.000,00, overig2,50,1dubbel en het opgeslagen pad /proof-state/nederlandse-csv-totalen-resultaat-xyz.txt. Dit resultaat is gecontroleerd; jouw beoordeling staat apart."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T17:55:34.122356+00:00"
+        "reviewedAt": "2026-09-24T18:04:43.807259+00:00"
       }
     },
     "pendingTechnicalReview": {

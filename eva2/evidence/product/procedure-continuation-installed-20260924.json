@@ -1,0 +1,46 @@
+{
+  "recordedAt": "2026-09-24T18:03:48.936236+00:00",
+  "sourceCommit": "9d91985af00001dc6beae29729f88a930f0bc333",
+  "cause": "LivingConversation treated every non-verified receipt as terminal; successful procedure candidates/designated/resolved/execution_completed have native statuses.",
+  "change": "Registered provider may explicitly permit its own successful receipt to continue; current action availability rechecked. Existing verified path and post-admission stop unchanged.",
+  "tests": {
+    "passed": 45,
+    "seconds": 1.63,
+    "coverage": "Lookup to background handoff; denied and revoked continuation; registered owner dispatch; correct provider contract and success statuses."
+  },
+  "review": "Mutual independent coordinator/executor source review GO",
+  "installation": {
+    "checkedAt": "2026-09-24T18:01:06.643063+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:b5d0fb92b94a808753c7918b555a022a3b4d673226ed2e99d1c906a3dae0875b",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "a639035fb4f8919b119f9da95a2209317052398ba4567ff0bad0cafb4b0abd19",
+          "adapters/postgres/conversation_actions.py": "b47d9286cc26e202d1cd9b161da5d3ecfb0826658648413b55269f0180f49a7c",
+          "providers/procedure_reference_actions.py": "33461c2b20e33d277da37aac3985930489f3222a62cd41f63589fa643ecb67d5"
+        }
+      },
+      "worker": {
+        "image": "sha256:5f198b066da20120ee4ad90513b792a43f540d20f32793882733edf0eaebdfe2",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "a639035fb4f8919b119f9da95a2209317052398ba4567ff0bad0cafb4b0abd19",
+          "adapters/postgres/conversation_actions.py": "b47d9286cc26e202d1cd9b161da5d3ecfb0826658648413b55269f0180f49a7c",
+          "providers/procedure_reference_actions.py": "33461c2b20e33d277da37aac3985930489f3222a62cd41f63589fa643ecb67d5"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/procedure-continuation-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "fullCoreWorkerProfileEquality": true,
+  "httpChecks": {
+    "http://localhost:44711/internal/v1/dashboard": 200,
+    "http://localhost:44716/session/ready": 200
+  },
+  "realResult": "Reuse task335e478a-c57b-5f1b-ac32-20c5308ec804 succeeded with same source hash, new input and saved/read-back result",
+  "limitations": [
+    "Receipt41.34s remains too slow.",
+    "One synthetic learning/reuse scenario is not general learning ability or owner acceptance."
+  ]
+}

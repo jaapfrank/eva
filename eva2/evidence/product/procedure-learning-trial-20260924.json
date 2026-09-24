@@ -47,7 +47,7 @@
     "completedSeconds": 32.005,
     "backgroundTaskStarted": false
   },
-  "status": "first_learning_execution_verified_full_reuse_incomplete",
+  "status": "same_source_reused_on_new_input_with_verified_result_document",
   "next": "One changed-cause retrial after shared handoff guidance is installed. Reuse stage not started.",
   "creditCost": "unknown",
   "changedCauseRetry": {
@@ -118,10 +118,10 @@
     "next": "Fix empty optional cursor normalization before a changed-cause retry."
   },
   "totalRuntimeUsageSoFar": {
-    "modelResponsesOrAttempts": 11,
-    "inputTokens": 99350,
-    "outputTokens": 2348,
-    "toolCalls": 10,
+    "modelResponsesOrAttempts": 19,
+    "inputTokens": 167626,
+    "outputTokens": 3764,
+    "toolCalls": 18,
     "cost": "unknown"
   },
   "reuseChangedCauseRetry": {
@@ -134,5 +134,69 @@
     "toolCalls": 1,
     "result": "Stored registration found; model declines execution/delegation. No second run or result file.",
     "next": "Inspect actual continuation capability exposure after procedure lookup without another model trial."
-  }
+  },
+  "continuationFixRetry": {
+    "workId": "work:eva-chat:335e478a-c57b-5f1b-ac32-20c5308ec804",
+    "state": "succeeded",
+    "workerUsage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 4,
+      "tool_calls": 5,
+      "input_tokens": 29826,
+      "output_tokens": 654,
+      "total_tokens": 30480,
+      "cost_usd_micros": null
+    },
+    "result": {
+      "output": "Dezelfde opgeslagen code uitgevoerd, zonder wijzigingen. De echte uitvoer klopt met de onafhankelijke controle in gehele centen: totaal 1.002,50; inkomen 1.000,00; overig 2,50. Aantal dubbelen: 1 — de tweede rij met id z is niet meegeteld.\n\nHet resultaat, de invoer en de controle zijn opgeslagen en teruggelezen op:\n/proof-state/nederlandse-csv-totalen-resultaat-xyz.txt",
+      "output_sha256": "3a0f9c935e0cc6b7ce02cb788469eeebb78148f82ff27aafa00bed9f14cedec5",
+      "completed_at": "2026-09-24T18:02:28Z",
+      "verified": false
+    },
+    "foreground": {
+      "messageId": "dashboard:c2f5e1fb-2811-4894-afc5-c51c3b31e0b8",
+      "modelAttempts": 4,
+      "inputTokens": 38450,
+      "outputTokens": 762,
+      "toolCalls": 3,
+      "receiptSeconds": 41.34
+    },
+    "execution": {
+      "limits": {
+        "pids": 64,
+        "memory_mb": 256,
+        "cpu_millicores": 1000,
+        "deadline_seconds": 30,
+        "output_bytes_per_stream": 4096
+      },
+      "result": {
+        "stderr": "",
+        "stdout": "{\"totaal\": \"1002,50\", \"categorietotalen\": {\"inkomen\": \"1000,00\", \"overig\": \"2,50\"}, \"aantal_dubbelen\": 1}\n",
+        "cancelled": false,
+        "exit_code": 0,
+        "timed_out": false,
+        "elapsed_ms": 803,
+        "stderr_truncated": false,
+        "stdout_truncated": false
+      },
+      "contract": "EvaIsolatedProcedureExecution/v1",
+      "image_id": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+      "installed": false,
+      "input_sha256": "dd32a1075f589600e53f9a0029235475504b6cc1b7cd3a618b88565080b6f5f0",
+      "source_sha256": "ac1deb9135ac2fbf37828523451b0806b245f8f394acf99b074db5b7ecde5887",
+      "input_convention": "one_json_value_on_stdin",
+      "semantic_success_verified": false
+    },
+    "sourceMatchesFirstExecution": true,
+    "savedResultPath": "/proof-state/nederlandse-csv-totalen-resultaat-xyz.txt",
+    "savedResultReadbackMatches": true,
+    "independentReview": "bounded_contact_comparison verified same source hash, matching input (one added terminal newline), exact amounts, no Python rewrite, matching saved/read-back report."
+  },
+  "remaining": [
+    "No general unseen-skill or owner acceptance claim.",
+    "First-stage separate result document absent; durable execution and task report retained.",
+    "Foreground latency and unnecessary pre-delegation steps remain open."
+  ]
 }
