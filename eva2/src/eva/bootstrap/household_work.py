@@ -387,14 +387,18 @@ class HouseholdWorkService:
         )
 
     def poll(self, turn):
-        """Select only an unclaimed result in this exact session, independent of owner lists."""
+        """Select unsent results in this exact session, including native busy deferrals."""
         self.validate_authority(turn)
         from eva.adapters.postgres.current_catalog import delegated_work_runs as runs
 
         with self.store._engine.begin() as c:
             self.store._scope(c)
             claimed = sa.exists(
-                sa.select(1).where(
+                sa.select(1).select_from(operational_events.outerjoin(operational_checkpoints,
+                    (operational_events.c.tenant_id == operational_checkpoints.c.tenant_id)
+                    & (operational_events.c.installation_id == operational_checkpoints.c.installation_id)
+                    & (operational_events.c.thread_id == operational_checkpoints.c.thread_id))).where(
+                    sa.or_(operational_checkpoints.c.phase.is_(None), operational_checkpoints.c.phase != "deferred"),
                     operational_events.c.tenant_id == runs.c.tenant_id,
                     operational_events.c.installation_id == runs.c.installation_id,
                     operational_events.c.event_type == "HOUSEHOLD_WORK_RESULT_CLAIMED",
@@ -465,9 +469,9 @@ class HouseholdWorkService:
                 .mappings()
                 .one_or_none()
             )
-            if operation == "claim":
-                if row is not None:
-                    return None
+            if operation == "claim" and row is not None and row["phase"] != "deferred":
+                return None
+            if operation == "claim" and row is None:
                 insert_initial_timeline_thread(
                     c,
                     self.store.scope,
@@ -480,7 +484,7 @@ class HouseholdWorkService:
                     data=binding,
                 )
                 return {**binding, "result": result.output}
-            if row is None or result_sha256 != result.output_sha256:
+            if row is None or (operation != "claim" and result_sha256 != result.output_sha256):
                 raise ValueError("household result claim absent or stale")
             first = (
                 c.execute(
@@ -499,6 +503,21 @@ class HouseholdWorkService:
                 first["payload_sha256"]
             ).hex() != canonical_sha256(first["payload"]):
                 raise ValueError("household result claim corrupt")
+            if operation in {"claim", "defer"}:
+                # Only the native adapter may defer before any announce request.
+                # Revisions make repeated busy cycles distinct durable transitions.
+                expected_phase = "deferred" if operation == "claim" else "claimed"
+                if row["phase"] != expected_phase:
+                    raise ValueError("household result cannot be deferred or reclaimed")
+                phase = "claimed" if operation == "claim" else "deferred"
+                transition_timeline_thread(c, self.store.scope, thread_id=thread,
+                    expected_revision=row["revision"],
+                    checkpoint_id=thread + ":" + phase + ":" + str(row["revision"] + 1),
+                    occurred_at=self.server.authority.clock(),
+                    event_type="HOUSEHOLD_WORK_RESULT_RECLAIMED" if operation == "claim"
+                        else "HOUSEHOLD_WORK_RESULT_DEFERRED",
+                    phase=phase, status="active", data=binding)
+                return {**binding, "result": result.output} if operation == "claim" else binding
             if operation == "authorize":
                 return binding
             if operation != "ack" or disposition not in {

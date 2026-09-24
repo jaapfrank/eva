@@ -37,6 +37,7 @@ def fixture(monkeypatch, idle_states):
             return N(state="completed", title="earlier research")
         def result_delivery(self, turn, action, **kwargs):
             acknowledgments.append((turn, action, kwargs))
+            if action == "defer": offered.remove(turn)
             return {"authorized": True}
         def current(self): pass
     def session(**kwargs):
@@ -77,13 +78,40 @@ def test_new_session_does_not_hide_earlier_public_result(monkeypatch):
     assert len(announcements) == 1
 
 
-@pytest.mark.parametrize("states, expected", [(["listening"], None), (["idle", "listening"], "interrupted")])
+@pytest.mark.parametrize("states, expected", [(["listening"], None), (["idle", "listening"], "defer")])
 def test_active_speech_still_blocks_announcements(monkeypatch, states, expected):
     delivery, announcements, acknowledgments, polls, gets = fixture(monkeypatch, states)
     delivery.run_once()
     assert not announcements
     if expected:
-        assert acknowledgments[-1][2]["disposition"] == expected
+        assert acknowledgments[-1][1] == expected
     else:
         assert not polls and not acknowledgments
         assert len(gets) == 1
+
+
+def test_busy_after_claim_retries_only_when_idle_without_losing_result(monkeypatch):
+    delivery, announcements, acknowledgments, polls, gets = fixture(
+        monkeypatch, ["idle", "listening", "idle", "idle", "idle"])
+    delivery.run_once()
+    assert not announcements and acknowledgments[-1][1] == "defer"
+    delivery.run_once()
+    assert len(announcements) == 1
+    assert acknowledgments[-1][2]["disposition"] == "offered"
+    delivery.run_once()
+    assert len(announcements) == 1
+
+
+def test_announce_transport_failure_is_ambiguous_and_never_deferred(monkeypatch):
+    delivery, announcements, acknowledgments, polls, gets = fixture(
+        monkeypatch, ["idle", "idle", "idle"])
+    def failed_post(self, path, json):
+        announcements.append((path, json))
+        raise TimeoutError("response unknown")
+    monkeypatch.setattr("eva.bootstrap.native_work_delivery.httpx.Client.post", failed_post)
+    delivery.run_once()
+    assert len(announcements) == 1
+    assert acknowledgments[-1][2]["disposition"] == "ambiguous"
+    assert all(action != "defer" for _, action, _ in acknowledgments)
+    delivery.run_once()
+    assert len(announcements) == 1

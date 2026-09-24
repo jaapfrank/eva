@@ -84,8 +84,8 @@ class NativeWorkDelivery:
                     if authorized is None:
                         return
                     if not self._idle(client, binding["satellite_id"]):
-                        service.result_delivery(turn, "ack", work_id=claim["work_id"],
-                            result_sha256=claim["result_sha256"], disposition="interrupted")
+                        service.result_delivery(turn, "defer", work_id=claim["work_id"],
+                            result_sha256=claim["result_sha256"])
                         return
                     service.current()
                     response = client.post("/api/services/assist_satellite/announce",
