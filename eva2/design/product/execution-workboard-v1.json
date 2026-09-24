@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T14:51:25.554924+00:00",
+        "checkedAt": "2026-09-24T15:02:01.697419+00:00",
         "deliveries": [
+          {
+            "title": "Compacte HA-ontdekking en duidelijke budgetmelding",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Werker gebruikt in de echte proef de bestaande compacte inventaris. Budgetuitputting wordt herkenbaar teruggegeven met behoud van verbruik. Geen budgetverhoging.",
+            "remaining": "Taak opnieuw niet af:65.874 inputtokens na6 modelrondes. Inventaris laat voorwaarden weg, waarna volledige configuraties opnieuw gelezen worden. Geen eindresultaat.",
+            "source": "eva2/evidence/product/compact-ha-worker-installed-20260924.json"
+          },
           {
             "title": "HA-analyse aannemen en tussendoor praten",
             "date": "24 september",
@@ -1999,15 +2007,15 @@
           }
         ],
         "now": {
-          "title": "Achtergrondgesprek werkt; HA-taak nog niet afgerond",
-          "state": "Proef beëindigd · taak mislukt",
-          "detail": "De echte taak startte maar leverde geen eindresultaat. Gebruik van66.910 inputtokens overschrijdt ingesteld budget. Kern en werker zijn nu volledig gelijk; geen taak loopt voor deze proef.",
-          "doneWhen": "Volledige HA-analyse binnen bestaande grenzen afronden en terugmelden; snelle reactie blijft afzonderlijk open."
+          "title": "Compacte ontdekking live; volledige HA-analyse nog niet af",
+          "state": "Proef beëindigd · budget bereikt",
+          "detail": "Echte proef bevestigt gebruik van compacte inventaris en correcte budgetmelding. Dubbele detail-/API-lezingen kosten nog te veel rondes; geen actieve proef meer.",
+          "doneWhen": "Volledige geselecteerde configuraties zonder dubbele rondes lezen, analyseren en resultaat terugbrengen binnen bestaande grenzen."
         },
         "next": {
-          "title": "Compacte HA-ontdekking voor de achtergrondwerker",
+          "title": "Volledige geselecteerde configuraties in één leesstap",
           "state": "Nog niet gestart",
-          "detail": "Bestaande compacte inventarisroute hergebruiken en budgetuitputting correct classificeren; daarna alleen herproeven na concrete wijziging."
+          "detail": "Bestaande batchlezer hergebruiken voor bevoegde privé-analyse; ontbrekende templatevoorwaarden niet nogmaals apart ophalen. Geen ongewijzigde herproef."
         },
         "ownerAction": {
           "title": "Gebruik een eigen Home Assistant-opdracht",
@@ -2021,7 +2029,7 @@
           "expected": "Eva zoekt zelf de bestaande configuratie/services op en gebruikt de passende API. Een wijziging moet ze teruglezen en eerlijk toelichten; API-bevestiging alleen bewijst geen fysieke werking."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T14:51:25.554924+00:00"
+        "reviewedAt": "2026-09-24T15:02:01.697419+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11793,7 +11801,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Compacte HA-ontdekking voor de achtergrondwerker",
+      "nextAction": "Volledige geselecteerde configuraties in één leesstap",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

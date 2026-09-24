@@ -1,0 +1,75 @@
+{
+  "checkedAt": "2026-09-24T15:02:01.697419+00:00",
+  "state": "installed",
+  "sourceCommits": [
+    "7fa52c16",
+    "2d3f220f"
+  ],
+  "installation": {
+    "checkedAt": "2026-09-24T14:59:02.030678+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:f4fc86730414ea12198d34afcd2afd36ac43b3891b140f79812be38ab31d2a6d",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_composition.py": "abba4a086f90fd1350282397e949716596963bcced54fba99ea1d2ed6f5ef29c",
+          "contracts/delegated_digital_work.py": "2ece5692de342f60f2b72415aec2a3878e71c2a6df826bfa6549c60f1767acd8",
+          "adapters/connectors/home_assistant_api.py": "b72c8a9c60891dd4676fb38ee0e39820462cbd499a5f23224b08a9c4de8b45ea",
+          "bootstrap/delegated_digital_runner.py": "07c4e353a75b1a655e818c4245cf289364e4118116fc03781cbc81f90246f89b"
+        }
+      },
+      "worker": {
+        "image": "sha256:8ab6487a9eb6379d5ab794b77c4168563516ce57ba42579e7ddd1512c076bb4e",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_composition.py": "abba4a086f90fd1350282397e949716596963bcced54fba99ea1d2ed6f5ef29c",
+          "contracts/delegated_digital_work.py": "2ece5692de342f60f2b72415aec2a3878e71c2a6df826bfa6549c60f1767acd8",
+          "adapters/connectors/home_assistant_api.py": "b72c8a9c60891dd4676fb38ee0e39820462cbd499a5f23224b08a9c4de8b45ea",
+          "bootstrap/delegated_digital_runner.py": "07c4e353a75b1a655e818c4245cf289364e4118116fc03781cbc81f90246f89b"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/compact-ha-worker-20260924/presentation-baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core"
+  },
+  "checks": [
+    "18 targeted HA/composition tests passed1.98s",
+    "4 budget classification cases passed2.00s",
+    "Independent review of composition and mapping; coordinator review of runner",
+    "Full digital release fields match core and worker",
+    "Installed readable budget message verified"
+  ],
+  "actualTrial": {
+    "workId": "work:eva-chat:fd934f0d-fb88-5168-86e4-e882d9f66f4a",
+    "state": "failed",
+    "errorCode": "budget_exceeded",
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 6,
+      "tool_calls": 5,
+      "input_tokens": 65874,
+      "output_tokens": 600,
+      "total_tokens": 66474,
+      "cost_usd_micros": null
+    },
+    "admissionSeconds": 11.777,
+    "resultAvailable": false,
+    "toolSequence": [
+      "compact inventory overview",
+      "compact automations list",
+      "compact selected automation details",
+      "full configuration GET",
+      "full configuration GET"
+    ]
+  },
+  "finding": "Compact discovery is actually used, but selected automation details omit template conditions and require separate full API reads. Task still exhausts budget before final output.",
+  "limits": [
+    "No HA configuration changes or device actions",
+    "No completed HA analysis in this attempt",
+    "No subsecond response or Voice PE proof",
+    "Existing budgets unchanged; cost unknown"
+  ],
+  "nextAction": "Reuse existing batched configuration reader to return complete selected configurations for authorized private analysis without redundant discovery/detail/full-read rounds",
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/compact-ha-worker-20260924"
+}
