@@ -1327,9 +1327,9 @@
             "title": "Herstelwizard",
             "date": "24 september",
             "state": "built",
-            "result": "Nog niet opgeleverd als bruikbare herstelfunctie. De acht onderliggende vermeldingen zijn gebouwde of afzonderlijk geteste onderdelen, geen acht afgeronde functies. De beheerlauncher sluit volledige controle, vrijgave en kernstart nog niet op elkaar aan.",
-            "remaining": "In uitvoering: gezamenlijke componentcontrole en actuele doel-aanmeldgegevens afronden; launcher aangesloten in werkcode. Daarna volledige geïsoleerde herstelproef en beschikbaar maken. Broncheckpoint e7874df1 gepubliceerd; geen nieuwe geïnstalleerde functie. Geen actie van Jaap nodig.",
-            "source": "eva2/WERKBORD.md",
+            "result": "Controles, vrijgave en start zijn aangesloten. Het bestaande lokale beheercommando is bijgewerkt naar bron 227adb2f met terugweg; imports en startinstructie gecontroleerd. Nog geen volledige herstelfunctie opgeleverd.",
+            "remaining": "Nu: volledige geisoleerde herstelproef van reservekopie tot draaiende herstelde Eva. Afzonderlijke geheugen- en gatewayproeven geslaagd; het geheel nog niet. Huidige Eva blijft draaien; geen actie van Jaap nodig.",
+            "source": "eva2/evidence/product/restore-operator-updated-20260924.json",
             "children": [
               {
                 "title": "Document-schrijftoegang in herstelwizard aangesloten",
@@ -2239,10 +2239,10 @@
           }
         ],
         "now": {
-          "title": "Bestaande herstelwizard functioneel afmaken",
-          "state": "Ontbrekende vrijgave en start aansluiten",
-          "detail": "Broncheckpoint e7874df1 staat op GitHub: vrijgave en starten na commit, geheugenvergelijking en gatewaycontrole. De beheerlauncher wordt aangesloten op de gezamenlijke componentcontrole en actuele doel-aanmeldgegevens. Nog geen volledige herstelproef of installatie; huidige Eva draait door.",
-          "doneWhen": "Bestaande wizard kan gecontroleerde herstelde onderdelen vrijgeven en starten, met heldere gedeeltelijke status en terugweg. Geen vervanging van de huidige installatie tijdens proeven."
+          "title": "Volledige herstelroute uitvoeren",
+          "state": "Geisoleerde proef voorbereiden",
+          "detail": "Beheercommando bijgewerkt naar 227adb2f. Een uitvoerder verbindt bestaande kern-, geheugen-, document- en gatewayproeven tot de volledige wizardroute; coordinator bewaakt installatie en bewijs. Geen productieherstel.",
+          "doneWhen": "Volledige reservekopie via de wizard terugzetten en echte herstelde kern starten met behouden gegevens. Gebruikersacceptatie blijft apart."
         },
         "next": {
           "title": "Installatie- en herstelroute samenhangend opleveren",
@@ -2261,7 +2261,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T21:09:48.393147+00:00"
+        "reviewedAt": "2026-09-24T21:16:39.601255+00:00"
       }
     },
     "pendingTechnicalReview": {

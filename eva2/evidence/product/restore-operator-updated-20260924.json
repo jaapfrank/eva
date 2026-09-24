@@ -1,0 +1,20 @@
+{
+  "sourceCommit": "227adb2f",
+  "state": "operator_command_updated_full_restore_unproven",
+  "availableCommand": "python3 /home/administrator/project/.eva2-artifacts/installer-document-write-20260924/start-installer.py --restore-config /absolute/private/target.json",
+  "checks": {
+    "launcher_help": true,
+    "actual_module_imports": true,
+    "exact_source_hashes": true,
+    "composition_controlled_cases": 19,
+    "native_authorization_controlled_cases": 17,
+    "isolated_gateway_discovery": "Passed once; tool IDs and schemas preserved, persisted freshness advanced. Synthetic provider; no private upstream credential proof."
+  },
+  "rollbackDirectory": "/home/administrator/project/.eva2-artifacts/restore-launcher-227adb2f",
+  "rollback": "Previous files and an exact manifest are retained. After any restore attempt inspect retained target state before further action.",
+  "productionServicesChanged": false,
+  "restoreInvoked": false,
+  "ownerAccepted": false,
+  "modelCalls": 0,
+  "next": "Execute the complete isolated wizard restore through real target runtime readiness. No production restore."
+}
