@@ -74,7 +74,11 @@ class _TaskModel:
             "Geen resultaat bewijst niet dat er geen werkwijze bestaat: bladeren blijft beschikbaar. "
             "Bij hergebruik haal je de passende "
             "verwijzing eerst op met resolve_reusable_procedure en voer je de nieuwe opdracht "
-            "uit met de aangeboden tools. Meld alleen een bewaarde of toegepaste werkwijze "
+            "uit met de aangeboden tools. Voor een zelfgemaakte Python-werkwijze kun je "
+            "run_reusable_procedure gebruiken: geverifieerd .py-document registreren, JSON via stdin, "
+            "resultaat via stdout. Geen netwerk of hostbestanden; controleer de uitvoer en bewaar "
+            "het resultaat via de documenttool. Een exitcode is geen inhoudelijk bewijs. "
+            "Meld alleen een bewaarde of toegepaste werkwijze "
             "wanneer de bijbehorende toolresultaten dat bevestigen."), **kwargs)
 
 
@@ -113,7 +117,7 @@ class BackgroundConnectorActions:
     def _receipt(receipt):
         # The existing loop continues only after a verified host step. Keep the
         # procedure status intact inside the result; discovery is not task success.
-        if receipt.call.name in {"list_reusable_procedures", "resolve_reusable_procedure", "designate_reusable_procedure"}:
+        if receipt.call.name in {"list_reusable_procedures", "resolve_reusable_procedure", "designate_reusable_procedure", "run_reusable_procedure"}:
             return ConversationActionReceipt(receipt.call, {"status": "verified",
                 "operation_result": receipt.output})
         return receipt
@@ -165,7 +169,7 @@ def _has_completed_tool_evidence(receipts):
         if receipt.call.name == "save_work_progress":
             # A planning checkpoint proves persistence, never completed work.
             continue
-        if receipt.call.name in {"list_reusable_procedures", "resolve_reusable_procedure", "designate_reusable_procedure"}:
+        if receipt.call.name in {"list_reusable_procedures", "resolve_reusable_procedure", "designate_reusable_procedure", "run_reusable_procedure"}:
             if output.get("status") != "verified":
                 return False
             output = output.get("operation_result", {})
@@ -179,6 +183,11 @@ def _has_completed_tool_evidence(receipts):
                 if status != "designated" or not output.get("reference"):
                     return False
                 completed = True
+            elif receipt.call.name == "run_reusable_procedure":
+                if status == "execution_completed":
+                    completed = True
+                elif status != "execution_failed":
+                    return False
             elif status == "resolved":
                 if not output.get("references"):
                     return False

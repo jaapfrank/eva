@@ -33,7 +33,7 @@ def load_config(path):
     config = json.loads(raw, object_pairs_hook=_object)
     required = {"image", "command", "token_file", "bind_host", "port", "allowed_paths"}
     limits = {field.name for field in fields(EvaluationConfig)} - {"image", "command"}
-    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits:
+    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled"}:
         raise ValueError("invalid evaluation service configuration fields")
     if (not isinstance(config["command"], list)
             or not isinstance(config["token_file"], str)
@@ -51,6 +51,8 @@ def load_config(path):
         raise ValueError("invalid evaluation service path allowlist")
     for item in paths:
         CandidateRequest(item, "0" * 64, "pass")
+    if type(config.get("procedure_execution_enabled", False)) is not bool:
+        raise ValueError("invalid procedure execution switch")
     settings = EvaluationConfig(image=config["image"], command=tuple(config["command"]),
         **{key: config[key] for key in limits if key in config})
     with Path(config["token_file"]).open("rb") as stream:
@@ -65,8 +67,9 @@ class EvaluationServer(ThreadingHTTPServer):
     daemon_threads = False
     request_queue_size = 8
 
-    def __init__(self, address, *, evaluator, token, allowed_paths):
+    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None):
         self.evaluator = evaluator
+        self.procedure_executor = procedure_executor
         self.token = token
         self.allowed_paths = allowed_paths
         self.execution_lock = threading.Lock()
@@ -119,7 +122,8 @@ class EvaluationHandler(BaseHTTPRequestHandler):
         self._reply(200, {"status": "ready"})
 
     def do_POST(self):
-        if self.path != "/evaluate":
+        procedure = self.path == "/run-procedure" and self.server.procedure_executor is not None
+        if self.path != "/evaluate" and not procedure:
             self._reply(404, {"error": "not_found"})
             return
         if not self._authenticated():
@@ -144,16 +148,22 @@ class EvaluationHandler(BaseHTTPRequestHandler):
                 if len(raw) != length:
                     raise ValueError()
                 payload = json.loads(raw, object_pairs_hook=_object)
-                if not isinstance(payload, dict) or set(payload) != {"relative_path", "baseline_sha256", "source"}:
-                    raise ValueError()
-                request = CandidateRequest(**payload)
-                if request.relative_path not in self.server.allowed_paths:
-                    raise ValueError()
+                if procedure:
+                    if not isinstance(payload, dict) or set(payload) != {"source", "input_data"}:
+                        raise ValueError()
+                    request = payload
+                else:
+                    if not isinstance(payload, dict) or set(payload) != {"relative_path", "baseline_sha256", "source"}:
+                        raise ValueError()
+                    request = CandidateRequest(**payload)
+                    if request.relative_path not in self.server.allowed_paths:
+                        raise ValueError()
             except (ValueError, TypeError, UnicodeError, OSError, OverflowError, RecursionError):
                 self._reply(400, {"error": "invalid_request"})
                 return
             try:
-                report = self.server.evaluator.evaluate(request)
+                report = (self.server.procedure_executor.execute(**request) if procedure
+                          else self.server.evaluator.evaluate(request))
             except ValueError:
                 self._reply(400, {"error": "candidate_rejected"})
                 return
@@ -170,8 +180,15 @@ def main():
     parser.add_argument("--config", required=True)
     args = parser.parse_args()
     settings, token, allowed_paths, address = load_config(args.config)
+    executor = None
+    if json.loads(Path(args.config).read_text()).get("procedure_execution_enabled", False):
+        from eva.operations.procedure_execution import ProcedureExecutor, ProcedureExecutionConfig
+        executor = ProcedureExecutor(ProcedureExecutionConfig(image=settings.image,
+            deadline_seconds=min(settings.deadline_seconds, 30),
+            output_bytes=min(settings.output_bytes, 16384), memory_mb=settings.memory_mb,
+            cpus=settings.cpus, pids=settings.pids))
     with EvaluationServer(address, evaluator=ComponentEvaluator(settings), token=token,
-                          allowed_paths=allowed_paths) as server:
+                          allowed_paths=allowed_paths, procedure_executor=executor) as server:
         def stop(signum, frame):
             threading.Thread(target=server.shutdown, daemon=True).start()
         signal.signal(signal.SIGTERM, stop)

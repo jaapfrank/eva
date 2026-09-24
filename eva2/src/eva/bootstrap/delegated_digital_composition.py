@@ -11,11 +11,12 @@ from eva.contracts.canonical_json import canonical_sha256
 from eva.adapters.postgres.background_work_progress import progress_descriptor
 from eva.adapters.postgres.component_improvement_actions import component_descriptors
 from eva.adapters.connectors.component_evaluation import configured_component_evaluator
+from eva.adapters.connectors.procedure_execution import configured_procedure_executor
 
 _CONNECTORS = frozenset({"connect_service", "discover_connector_tools",
                         "manage_connected_services", "use_connector_tool"})
 _PROCEDURES = frozenset({"list_reusable_procedures", "resolve_reusable_procedure",
-                         "designate_reusable_procedure", "save_workspace_document"})
+                         "designate_reusable_procedure", "save_workspace_document", "run_reusable_procedure"})
 _DIGITAL_PROVIDERS = frozenset({"mcp_autonomy", "procedure_references", "mcp_gateway"})
 _ROOT = Path(__file__).resolve().parents[1]
 _EXECUTION_SOURCES = (
@@ -28,6 +29,7 @@ _EXECUTION_SOURCES = (
     "adapters/postgres/component_improvement_actions.py",
     "application/component_improvements.py",
     "adapters/connectors/component_evaluation.py",
+    "adapters/connectors/procedure_execution.py",
     "bootstrap/private_conversation_resources.py",
     "adapters/model/pydantic_conversation.py",
     "providers/mcp_autonomy.py",
@@ -95,6 +97,7 @@ def build_digital_profile(settings, provider_bundle):
         "budget": asdict(budget), "providers": providers,
         "browser_availability": _configuration_value(configured_browser_client()),
         "component_evaluator": _configuration_value(configured_component_evaluator()),
+        "procedure_executor": _configuration_value(configured_procedure_executor()),
         "descriptors": [asdict(tool) for tool in descriptors],
         "memory": {"url": settings.hindsight_url, "namespace": settings.hindsight_bank_namespace,
                    "budget": settings.hindsight_recall_budget, "tokens": settings.hindsight_recall_max_tokens,
