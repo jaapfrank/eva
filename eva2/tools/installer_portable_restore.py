@@ -68,6 +68,8 @@ class InstallerPortableRestore:
         document_connect: Callable[..., dict] | None = None,
         gateway_start: Callable[..., dict] | None = None,
         document_promote: Callable[..., dict] | None = None,
+        verify_components: Callable[..., dict] | None = None,
+        start_runtime: Callable[..., dict] | None = None,
     ):
         # The composition root must provide an isolated, traffic-closed target.
         if (
@@ -106,6 +108,13 @@ class InstallerPortableRestore:
         if document_promote is not None and (not callable(document_promote) or gateway_start is None):
             raise ValueError("document write promotion requires verified gateway startup")
         self.document_promote = document_promote
+        if (verify_components is None) != (start_runtime is None):
+            raise ValueError("restore activation requires component verification and runtime startup together")
+        if verify_components is not None and (
+                not callable(verify_components) or not callable(start_runtime)
+                or document_promote is None or runtime_guard is None):
+            raise ValueError("restore activation requires complete trusted component and runtime composition")
+        self.verify_components, self.start_runtime = verify_components, start_runtime
         self.external_restore = external_restore
         self.recovery_materialization = deepcopy(recovery_materialization)
         self._lock = Lock()
@@ -194,6 +203,9 @@ class InstallerPortableRestore:
                     summary.update(gateway_component="start_planned", notice="Na import en documentcontrole start de ingestelde herstelde gateway voor controle van bewaarde registraties. Eva en haar taakuitvoerders blijven uit. Schrijftoegang en volledige vrijgave volgen afzonderlijk.")
                 if self.document_promote is not None:
                     summary.update(document_write_access="planned", notice="Na import, documentcontrole en gatewaystart worden nieuwe documentproviders met schrijftoegang voorbereid. Oude controlecontainers blijven bewaard. Eva en haar taakuitvoerders blijven uit tot afzonderlijke vrijgave.")
+                if self.verify_components is not None:
+                    summary.update(target_activation="release_and_start_planned",
+                        notice="De gegevens worden hersteld en de gekoppelde onderdelen opnieuw gecontroleerd. Pas na bevestigde vrijgave worden de vooraf ingestelde Eva-kern en taakuitvoerders gestart. Bij gedeeltelijke uitkomst blijven alle doelen bewaard voor controle.")
                 return records, package["manifest_raw"], summary
             return records, raw, summary
         outputs, proof = validated
@@ -425,7 +437,24 @@ class InstallerPortableRestore:
                     or document_promotion.get("core_activated") is not False):
                 raise ValueError("document write promotion receipt differs")
             guard()
-        return {**summary, **result, "archive_sha256": package["archive_sha256"],
+        activation = {}
+        if self.verify_components is not None:
+            from datetime import UTC, datetime
+            from eva.operations.restore_activation import release_restored_database
+            materialization_state["activation_attempted"] = True
+            release = release_restored_database(connection, restore_id=result["restore_id"],
+                package_manifest_raw=manifest, core_manifest_raw=package["core_archive"]["manifest_raw"],
+                authority_reader=self.authority_reader, runtime_identity=self.runtime_identity,
+                runtime_guard=self.runtime_guard,
+                verify_components=lambda conn: self.verify_components(conn,
+                    package_root=destination, restore_id=result["restore_id"],
+                    preparation_receipt=deepcopy(documents),
+                    connection_receipt=deepcopy(document_connection),
+                    gateway_receipt=deepcopy(gateway_connection),
+                    promotion_receipt=deepcopy(document_promotion), guard=guard),
+                now=datetime.now(UTC).replace(microsecond=0))
+            activation = {"activation_release": release, "target_activation": "released_pending_commit"}
+        return {**summary, **result, **activation, "archive_sha256": package["archive_sha256"],
             "core_archive_sha256": package["core_archive"]["archive_sha256"],
             "external_components": ("memory_imported_gateway_started" if gateway_connection is not None
                                     else "imported_inactive" if external is not None else "materialized_inactive"),
@@ -474,8 +503,8 @@ class InstallerPortableRestore:
                         if self.runtime_guard is not None:
                             self.runtime_guard(connection)
                         if json.loads(manifest).get("contract") == "EvaInstallationRecovery/v1":
-                            return self._execute_installation(connection, directory, manifest, summary, materialization_state)
-                        if json.loads(manifest).get("schema_version") == 2:
+                            installation_result = self._execute_installation(connection, directory, manifest, summary, materialization_state)
+                        elif json.loads(manifest).get("schema_version") == 2:
                             from tools.portable_v2_restore import restore_current_archive
                             result = restore_current_archive(connection, directory,
                                 authority_reader=self.authority_reader,
@@ -484,34 +513,52 @@ class InstallerPortableRestore:
                             if self.runtime_guard is not None:
                                 self.runtime_guard(connection)
                             return {**result, **summary}
-                        verify_empty_restore_target(
-                            connection, table_specs=CANONICAL_EXPORT_SPECS
-                        )
-                        # Cross-table references are checked together at commit.
-                        connection.exec_driver_sql("SET CONSTRAINTS ALL DEFERRED")
-                        materialized = ()
-                        if records.get("eva_evidence.object_refs"):
-                            materialized = materialize_verified_portable_objects(
-                                source_object_root=directory / "objects",
-                                target_object_root=self.object_store_root,
-                                records_by_table=records,
-                                key_resolver=self.key_resolver,
+                        else:
+                            verify_empty_restore_target(
+                                connection, table_specs=CANONICAL_EXPORT_SPECS
                             )
-                        inserted = restore_column_preserving_records(
-                            connection,
-                            records,
-                            archive_manifest_raw=manifest,
-                            restore_authority_raw=self.authority_reader(),
-                            table_specs=_restore_specs(),
-                            materialized_objects=materialized,
-                            object_store_root=self.object_store_root,
-                        )
-                        if self.runtime_guard is not None:
-                            self.runtime_guard(connection)
+                            # Cross-table references are checked together at commit.
+                            connection.exec_driver_sql("SET CONSTRAINTS ALL DEFERRED")
+                            materialized = ()
+                            if records.get("eva_evidence.object_refs"):
+                                materialized = materialize_verified_portable_objects(
+                                    source_object_root=directory / "objects",
+                                    target_object_root=self.object_store_root,
+                                    records_by_table=records,
+                                    key_resolver=self.key_resolver,
+                                )
+                            inserted = restore_column_preserving_records(
+                                connection,
+                                records,
+                                archive_manifest_raw=manifest,
+                                restore_authority_raw=self.authority_reader(),
+                                table_specs=_restore_specs(),
+                                materialized_objects=materialized,
+                                object_store_root=self.object_store_root,
+                            )
+                            if self.runtime_guard is not None:
+                                self.runtime_guard(connection)
+                if "installation_result" in locals():
+                    if self.start_runtime is not None:
+                        materialization_state["runtime_start_attempted"] = True
+                        startup = self.start_runtime(restore_id=installation_result["restore_id"],
+                            archive_sha256=installation_result["archive_sha256"],
+                            release_receipt=installation_result["activation_release"],
+                            runtime_identity=self.runtime_identity)
+                        if (not isinstance(startup, dict)
+                                or startup.get("contract") != "EvaRestoredRuntimeStart/v1"
+                                or startup.get("status") != "runtime_started_verified"
+                                or startup.get("runtime_started") is not True):
+                            raise ValueError("restored runtime readiness not confirmed")
+                        installation_result.update(runtime_start=startup, target_activation="runtime_started",
+                            notice="De herstelde Eva-kern en taakuitvoerders zijn gestart en hun gereedheid is bevestigd. Controleer nu de gesprekken, geheugen en aansluitingen; dit is nog geen volledige gebruikersacceptatie.")
+                    return installation_result
                 return {"status": "restored", "inserted_records": inserted, **summary}
             except Exception as error:
                 if "materialization_state" in locals() and materialization_state["published"]:
                     raise InactiveRecoveryMaterialRetained(str(destination),
+                        activation_attempted=materialization_state.get("activation_attempted", False),
+                        runtime_start_attempted=materialization_state.get("runtime_start_attempted", False),
                         external_import_attempted=materialization_state.get("external_import_attempted", False),
                         document_preparation_attempted=materialization_state.get("document_preparation_attempted", False),
                         document_preparation=deepcopy(materialization_state.get("document_preparation")),

@@ -43,7 +43,7 @@ INSTALLER_RESTORE_SCRIPT = r"""
    const state=value.target_activation==='closed' ? 'Eva is nog niet gebruiksklaar en blijft uit totdat de overige herstelstappen zijn afgerond. ' : '';
    result.textContent=value.inserted_records+' gegevens teruggezet. '+state+(value.notice || '')+' Opnieuw aanmelden: '+(value.reauthorization_required.join(', ') || 'geen verbindingen in deze reservekopie')+'.';
   }
-  catch(error){result.textContent=error.message+(error.recoveryState==='materialized_inactive' ? '' : ' Controleer opnieuw voordat je nogmaals herstelt.');}
+  catch(error){result.textContent=error.message+(['materialized_inactive','activation_unconfirmed'].includes(error.recoveryState) ? '' : ' Controleer opnieuw voordat je nogmaals herstelt.');}
   finally{check.disabled=false;}
  };
 })();
@@ -90,6 +90,11 @@ def register_installer_restore_routes(
                     raise ValueError()
                 result = await run_in_threadpool(workflow.execute, raw["confirmation"])
         except InactiveRecoveryMaterialRetained as error:
+            if error.activation_attempted or error.runtime_start_attempted:
+                return JSONResponse({
+                    "detail": "Vrijgave of opstarten is niet volledig bevestigd. De herstelde doelen kunnen vrijgegeven of gedeeltelijk gestart zijn. Alle gegevens blijven bewaard; laat de werkelijke toestand controleren en herhaal de herstelactie niet automatisch.",
+                    "recovery_state": "activation_unconfirmed",
+                }, status_code=409, headers=security_headers)
             return JSONResponse({
                 "detail": ("Herstel is niet bevestigd. De inactieve bestandskopie is bewaard; Eva blijft uit. "
                     + ("Documentproviders kunnen gedeeltelijk zijn omgezet naar schrijftoegang. Oude en nieuwe containers zijn bewaard. Laat de doelen inspecteren; start niet opnieuw op dezelfde doelen."

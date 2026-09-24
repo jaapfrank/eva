@@ -11,7 +11,8 @@ class InstallerRestorePort(Protocol):
 class InactiveRecoveryMaterialRetained(ValueError):
     """An inactive copy may exist; the operator must reconcile before retry."""
 
-    def __init__(self, destination: str, *, external_import_attempted: bool = False,
+    def __init__(self, destination: str, *, activation_attempted: bool = False,
+                 runtime_start_attempted: bool = False, external_import_attempted: bool = False,
                  document_preparation_attempted: bool = False,
                  document_preparation: dict | None = None,
                  document_connection_attempted: bool = False,
@@ -21,6 +22,8 @@ class InactiveRecoveryMaterialRetained(ValueError):
                  document_promotion_attempted: bool = False,
                  document_promotion: dict | None = None):
         self.destination = destination
+        self.activation_attempted = activation_attempted
+        self.runtime_start_attempted = runtime_start_attempted
         self.external_import_attempted = external_import_attempted
         self.document_preparation_attempted = document_preparation_attempted
         self.document_preparation = document_preparation
