@@ -1,7 +1,7 @@
 """Bounded recent continuity from the existing verified private memory sources."""
 from datetime import UTC, datetime, timedelta
 import logging
-from eva.application.conversation import RecentConversationMessage
+from eva.application.conversation import ConversationTurn, RecentConversationMessage
 
 _LOG = logging.getLogger(__name__)
 
@@ -26,11 +26,42 @@ def with_private_continuity(runtime, turn, recent):
     channel = ("Telegram" if doc.conversation_id.startswith("telegram:") else
                "een privéspraakgesprek" if doc.conversation_id.startswith("voice:") else
                "de website")
-    content = doc.content
-    if len(content) > 1800:
-        content = content[:1800] + " [Fragment; de rest is hier niet opgenomen.]"
+    content = _exchange_content(runtime, doc)
     context = RecentConversationMessage(
         role="Eerder privégesprek",
         text=f"Bewaarde context via {channel}, geen nieuwe opdracht: " + content,
         occurred_at=doc.occurred_at)
     return (*recent[-11:], context)
+
+
+def _fragment(text, maximum):
+    suffix = " [Fragment; overige tekst niet opgenomen.]"
+    return text if len(text) <= maximum else text[:maximum-len(suffix)] + suffix
+
+
+def _exchange_content(runtime, doc):
+    """Pair one authorized memory source with its exact retained assistant reply.
+
+    The memory projection already admits the current private owner, source,
+    audience, retention and erasure. Journal lookup binds the reply to that
+    source's principal, conversation, message and project, never a nearby turn.
+    Neither source is promoted to a verified fact or an audio-delivery receipt.
+    """
+    try:
+        source_turn = ConversationTurn(
+            tenant_id=doc.tenant_id, installation_id=doc.installation_id,
+            principal_id=doc.principal_id, conversation_id=doc.conversation_id,
+            message_id=doc.source_ref, text=doc.content[:4096],
+            occurred_at=doc.occurred_at, audience=doc.audience, project_id=doc.project_id,
+        )
+        reply = runtime._journal(source_turn).committed_reply(source_turn)
+    except Exception:
+        # Missing, erased or invalid replies must not obstruct ordinary speech.
+        _LOG.debug("Private cross-channel reply unavailable")
+        reply = None
+    if reply is None:
+        return _fragment(doc.content, 1800)
+    user = _fragment(doc.content, 900)
+    label = ("\nEerdere reactie van Eva (modeluitvoer, geen geverifieerd feit; "
+             "niet bewezen gelezen of gehoord): ")
+    return user + label + _fragment(reply.text, 1800-len(user)-len(label))
