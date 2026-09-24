@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "3b3bd272",
+  "sourceCommit": "23dfee8e",
   "state": "operator_command_updated_full_restore_unproven",
   "availableCommand": "python3 /home/administrator/project/.eva2-artifacts/installer-document-write-20260924/start-installer.py --restore-config /absolute/private/target.json",
   "checks": {
@@ -14,7 +14,20 @@
     "public_image_ca_cases": 6,
     "public_image_ca_scope": "Standard immutable image CA file is not a private credential; mounted overrides still require verification. Existing TLS settings retained.",
     "precreated_network_cases": 29,
-    "precreated_network_review": "Independent coordinator review passed; created containers resolve exact configured internal network, running containers require allocated pinned endpoint."
+    "precreated_network_review": "Independent coordinator review passed; created containers resolve exact configured internal network, running containers require allocated pinned endpoint.",
+    "runtime_authorization_cases": 30,
+    "mount_order_review": "Independent review passed; only Mounts sorted by unique absolute Destination, all fields preserved; command/environment ordering unchanged. Installed hash and rollback bytes confirmed.",
+    "postgres18_cases": 13,
+    "postgres18_actual_inventory": {
+      "passed": true,
+      "database_version": "18.6",
+      "tool_version": "18.6",
+      "table_count": 23,
+      "sequence_count": 2,
+      "source_target_equal": true,
+      "source": "/home/administrator/project/.eva2-artifacts/restore-full-route-20260924/pg18-verification-result.json",
+      "scope": "Synthetic bank metadata and exact data inventory; no private memory recall or model call."
+    }
   },
   "rollbackDirectory": "/home/administrator/project/.eva2-artifacts/restore-memory-api-683e3780",
   "rollback": "Previous files and an exact manifest are retained. After any restore attempt inspect retained target state before further action.",
@@ -22,7 +35,7 @@
   "restoreInvoked": false,
   "ownerAccepted": false,
   "modelCalls": 0,
-  "next": "Complete a fresh isolated full wizard restore using installed network correction, then read retained task states, memory bank and document history. Ordinary target preparation without handwritten configuration remains open.",
+  "next": "Execute the fresh full isolated wizard target with installed fixes and actual post-start readback. Normal target preparation without handwritten JSON remains open.",
   "additionalRollbackFile": "/home/administrator/project/.eva2-artifacts/runtime-public-ca-20260924/previous-installed-runtime-authorization.py",
   "networkCorrectionInstallation": "/home/administrator/project/.eva2-artifacts/restore-created-network-3b3bd272/installation-receipt.json",
   "fullWizardAttempt": {
@@ -36,5 +49,21 @@
     ],
     "cause": "Docker created endpoint NetworkID is empty before initial startup; corrected in installed operator3b3bd272.",
     "production_changed": false
+  },
+  "profileCorrectionInstallation": "/home/administrator/project/.eva2-artifacts/restore-profile-mounts-aeb353fa/installation-receipt.json",
+  "fullWizardProfileAttempt": {
+    "status": "failed_before_memory_and_core_start",
+    "retained": true,
+    "reached": [
+      "gateway_healthy",
+      "documents_promoted_writable"
+    ],
+    "cause": "Unchanged Docker mount entries returned in differing serialization order; profile check falsely treated this as configuration change. Corrected in installed aeb353fa."
+  },
+  "postgres18CorrectionInstallation": "/home/administrator/project/.eva2-artifacts/restore-memory-pg18-23dfee8e/installation-receipt.json",
+  "fullWizardPostgresAttempt": {
+    "status": "failed_before_memory_and_core_start",
+    "retained": true,
+    "cause": "Version gate supported16 only; actual maintained memory image uses18.6. Corrected in23dfee8e without upgrading any database."
   }
 }

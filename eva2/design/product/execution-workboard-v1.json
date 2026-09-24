@@ -2240,8 +2240,8 @@
         ],
         "now": {
           "title": "Volledige herstelproef afronden",
-          "state": "Startcorrectie geïnstalleerd; volledige proef open",
-          "detail": "Bron3b3bd272 is geïnstalleerd in het herstelprogramma; beide bronhashes en terugweg gecontroleerd.29 gerichte controles en onafhankelijke review geslaagd. Uitvoerder bereidt een nieuw geïsoleerd hersteldoel voor na de concrete netwerkcorrectie. De volledige herstelactie is nog niet geslaagd; huidige Eva blijft draaien.",
+          "state": "Geheugengegevens vergeleken; correctie geïnstalleerd",
+          "detail": "Bron23dfee8e ondersteunt de werkelijk gebruikte PostgreSQL18.6-dump. Echte bron-/doelvergelijking geslaagd voor23 tabellen en2 nummerreeksen;13 gerichte controles en onafhankelijke review geslaagd. Helper geïnstalleerd met terugweg. Nieuw volledig hersteldoel wordt voorbereid voor geheugen-API en kernstart. Productie blijft ongewijzigd.",
           "doneWhen": "Volledige reservekopie via de wizard terugzetten en echte herstelde kern starten met behouden gegevens. Gebruikersacceptatie blijft apart."
         },
         "next": {
@@ -2261,7 +2261,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T21:50:44.942280+00:00"
+        "reviewedAt": "2026-09-24T22:01:36.418075+00:00"
       }
     },
     "pendingTechnicalReview": {

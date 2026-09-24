@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — volledige herstelproef afronden.** Startcorrectie3b3bd272 is geïnstalleerd in het herstelprogramma; beide bronhashes en terugweg gecontroleerd.29 gerichte controles en onafhankelijke review geslaagd. Uitvoerder bereidt een nieuw geïsoleerd hersteldoel voor. De vorige mislukte proef blijft bewaard; volledige herstelactie nog niet geslaagd. Huidige Eva blijft draaien; geen actie van Jaap nodig.
+**Nu — volledige herstelproef afronden.** Geheugengegevens op de bestaande PostgreSQL18.6-image komen overeen:23 tabellen en2 nummerreeksen. Correctie23dfee8e geïnstalleerd met terugweg;13 gerichte controles en onafhankelijke review geslaagd. Nieuw volledig hersteldoel wordt voorbereid voor geheugen-API en kernstart. Volledige route nog niet geslaagd; productie ongewijzigd.
 
 **Nog niet als volledige functie opgeleverd.** De volledige reservekopie-tot-draaiende-Eva-proef en gewone doelvoorbereiding zonder handgeschreven JSON staan open. [Beschikbaarheid, bewijs en terugweg](evidence/product/restore-operator-updated-20260924.json). De gevonden archieffout is gecorrigeerd en de echte export slaagt: [bewijs](evidence/product/restore-export-correction-20260924.json). Dagelijkse kanaal-/gezinsproeven blijven afzonderlijk open.
 
