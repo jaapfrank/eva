@@ -2,6 +2,8 @@
 
 Laatst bijgewerkt: 2026-09-24.
 
+**Stap 1 — geen extra seriële blokkade gevonden (24 september).** Geïnstalleerde gedeelde gespreksroute, berichtslot en Telegram-API zijn gelijk aan de bron. Het slot is per bericht; nieuw publiek onderzoek gebruikt de achtergrondroute. De actieve Bottie-dienst is na de installatie van zijn gelijktijdige poller gestart. Geen nieuwe bronwijziging gerechtvaardigd. [Gerichte broncontrole](evidence/product/contact-background-routing-installed-20260924.json). Dit bewijst geen antwoordtijd of echte gelijktijdige gespreksproef. De volgende diagnose daarvan is een representatieve meting wanneer proeven worden hervat; geen herbouw op vermoedens. Onafhankelijk functioneel vervolg blijft toegestaan.
+
 
 **Stap 1 — Telegram-resultaat bij de oorspronkelijke vraag geïnstalleerd (24 september).** Achtergrondwerk bewaarde de oorspronkelijke berichtidentiteit, maar bezorgde het resultaat zonder antwoordkoppeling. Ieder resultaatdeel verwijst nu naar die opgeslagen vraag; een verdwenen vraag of onzekere ontvangst veroorzaakt geen automatische losse verzending/herhaling. Opgeslagen resultaat blijft behouden. Bron f6f895a3; syntax/import/startcontrole, kern en werker gezond. Geen modelcall of proefbericht. [Installatie en grenzen](evidence/product/telegram-result-binding-installed-20260924.json). Echte Telegram-proef later; doorpraatsnelheid en volledige stap 1 niet als afgevinkt. Volgende werk: resterende functionele blokkade in het gelijktijdige gesprek over de bestaande kanalen; Voice PE-overgang en persoonskeuze blijven expliciet open.
 

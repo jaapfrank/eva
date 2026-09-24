@@ -25,5 +25,22 @@
     "Step 1 complete",
     "Subsecond greeting",
     "Physical wakeword fault fixed"
-  ]
+  ],
+  "concurrencySourceCheck": {
+    "checkedAt": "2026-09-24T00:24:08.011535+00:00",
+    "findings": [
+      "Installed conversation.py, conversation_journal.py and app.py equal current repository source.",
+      "Conversation execution lock keys the individual message thread, not the entire conversation.",
+      "Fast contact route excludes synchronous public research when background research admission exists.",
+      "Telegram canary endpoint delegates to the shared runtime; no conversation-wide wait found in this path.",
+      "Active eva.service PID 939 uses Bottie; its imported concurrent Telegram poller and adapter predate the current service start. Poller admits up to eight explicit Eva2 turns."
+    ],
+    "notProven": [
+      "Provider latency and actual overlapping user turns",
+      "Physical Voice PE wake transition"
+    ],
+    "decision": "No new serialization fix justified by inspected source. Preserve these routes; actual remaining latency needs a later representative conversation measurement, not speculative rebuilding.",
+    "modelCalls": 0,
+    "sourceEdits": 0
+  }
 }

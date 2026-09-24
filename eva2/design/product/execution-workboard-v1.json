@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T00:21:28.397817+00:00",
+        "checkedAt": "2026-09-24T00:24:08.011535+00:00",
         "deliveries": [
           {
             "title": "Telegram-resultaat bij de oorspronkelijke vraag",
@@ -1662,14 +1662,14 @@
         ],
         "now": {
           "title": "Stap 1: gesprek tijdens achtergrondwerk",
-          "state": "Berichtkoppeling geïnstalleerd",
-          "detail": "Telegram gebruikt nu de oorspronkelijke vraag bij achtergrondresultaten. Kern en werker gezond gestart. Het volledige gesprek en de fysieke Voice PE-overgang blijven open.",
+          "state": "Geïnstalleerd; praktijkgedrag nog open",
+          "detail": "Telegram-resultaatkoppeling geïnstalleerd. Gerichte broncontrole vindt geen aanvullende seriële blokkade in de gedeelde tekstkern. Dit bewijst nog geen snelle tussenvraag of werkende continue Voice PE.",
           "doneWhen": "Ontvangen, doorpraten, terugmelden, onderbreken en stoppen werken via alle vier ingangen."
         },
         "next": {
-          "title": "Resterende kanaalblokkades afronden",
+          "title": "Open functionaliteit onderscheiden van uitgestelde proeven",
           "state": "Vervolg nog niet gestart",
-          "detail": "Alleen ontbrekende functionaliteit binnen gesprek en stem. De Voice PE-fout vereist nog de falende fysieke overgang; de privésprekerkeuze blijft open. Geen nieuwe brede test- of auditronde."
+          "detail": "Geen nieuwe gespreksombouw zonder aangetoond tekort. Antwoordtijd/overlap en Voice PE vereisen nog praktijkgegevens; onafhankelijk ontbrekend projectwerk kan doorgaan. Persoonskeuze blijft open."
         },
         "ownerAction": {
           "title": "Geen proef nodig tijdens deze bouwronde",
@@ -1683,7 +1683,7 @@
           "expected": "Koppeling geïnstalleerd; echte gesprekssnelheid en aflevering blijven afzonderlijk te beoordelen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T00:21:28.397817+00:00"
+        "reviewedAt": "2026-09-24T00:24:08.011535+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11358,7 +11358,7 @@
         {
           "number": 2,
           "title": "Personen en continuïteit",
-          "state": "actief",
+          "state": "open",
           "existingCards": [
             "CO-008",
             "CO-004",
@@ -11452,7 +11452,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Onafhankelijke functies voor persoonscontinuïteit afronden; stap 1 blijft open voor de fysieke Voice PE-diagnose. Uitgestelde proeven gelden niet als geslaagd.",
+      "nextAction": "Gesprek: geen aanvullende seriële blokkade gevonden in de geïnstalleerde tekstkern; echte overlap/snelheid en fysieke Voice PE-overgang blijven te meten wanneer proeven hervatten. Onafhankelijke ontbrekende projectfunctionaliteit kan verder; persoonskeuze blijft open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
