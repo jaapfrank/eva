@@ -96,6 +96,7 @@ def verify(binary: Path) -> dict:
                 try:
                     connection.request(method, path, body=body, headers={
                         'Authorization': 'Bearer verifier-only',
+                        'Accept': 'application/x-ndjson',
                         'Cookie': 'private=must-not-forward',
                         'X-Eva-Principal': 'must-not-forward',
                     })
@@ -108,6 +109,8 @@ def verify(binary: Path) -> dict:
             route = '/internal/v1/ha-voice/turns'
             check('allowed_turn_reaches_upstream', request(route) == 200)
             headers = {key.lower(): value for key, value in observations[-1][1].items()}
+            check('stream_negotiation_reaches_upstream',
+                  headers.get('accept') == 'application/x-ndjson')
             check('only_voice_credential_forwarded', headers.get('authorization') ==
                   'Bearer verifier-only' and 'cookie' not in headers and
                   'x-eva-principal' not in headers)

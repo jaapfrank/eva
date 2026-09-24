@@ -98,6 +98,7 @@ http {{
             proxy_pass_request_headers off;
             proxy_set_header Host 127.0.0.1;
             proxy_set_header Authorization $http_authorization;
+            proxy_set_header Accept $http_accept;
             proxy_set_header Content-Type application/json;
             proxy_set_header Connection "";
             proxy_buffering off;

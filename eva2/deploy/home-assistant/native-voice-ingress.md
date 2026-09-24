@@ -2,8 +2,8 @@
 
 The HA integration uses `http://10.0.20.46:44714`. The gateway accepts only the
 configured Home Assistant address and the two native voice POST endpoints. It
-forwards the voice credential to Eva2; it does not have or mint a credential.
-Other headers, including cookies and caller identity, are not forwarded. There
+forwards the voice credential and `Accept` stream negotiation to Eva2; it does
+not have or mint a credential. Cookies and caller identity are not forwarded. There
 are no retries, response caches, access logs or transcript temporary files.
 Client disconnect closes the upstream connection. This is transport behavior,
 not proof of acoustic interruption on the speakers.
