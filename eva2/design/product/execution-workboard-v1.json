@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T03:16:25.114843+00:00",
         "deliveries": [
           {
+            "title": "Woonkamer-spraakvertraging daadwerkelijk gemeten",
+            "date": "24 september",
+            "state": "tested",
+            "result": "Vier vragen bereiken Eva en TTS; verwerking door Eva duurt 6,3–7,8 seconden. Eén poging zonder herkende tekst. Huidige firmware behouden.",
+            "remaining": "Geen exact wakeword-/afspeelmoment; oude continue-spraakfout niet gereproduceerd. Snellere modelkandidaat vereist eerst correcte toolondersteuning.",
+            "source": "eva2/evidence/product/wakeword-measurement-20260924.json"
+          },
+          {
             "title": "Een eerder privégesprek en antwoord terugvinden",
             "date": "24 september",
             "state": "installed",
@@ -1805,28 +1813,27 @@
           }
         ],
         "now": {
-          "title": "Geen nieuwe bouwtaak actief",
-          "state": "Wacht op openstaande keuzes",
-          "detail": "Oudere privégesprekken zoeken is geïnstalleerd. Oude taken en resultaten zoeken/openen bestond al en is behouden; er wordt niets opnieuw gebouwd. Snelle begroeting en fysieke continue spraak zijn nog niet afgerond.",
-          "doneWhen": "Antwoord over de kleine modelvergelijking en het fysieke wakeword-meetmoment maakt het afhankelijke vervolg uitvoerbaar. Geen acceptatie of volledige afronding geclaimd."
+          "title": "Spraakvertraging gemeten; modelwissel nog niet veilig toepasbaar",
+          "state": "Meting afgerond",
+          "detail": "Vier woonkamer-vragen bereiken Eva en TTS; Eva-verwerking duurt 6,3–7,8 seconden. Eén poging herkent geen tekst. Zes modelaanvragen tonen een snellere kandidaat, maar de huidige adapter gebruikt daarvoor een afwijkende toolroute. Er wordt nu niet blind omgeschakeld.",
+          "doneWhen": "Meetresultaten vastgelegd. Geen herstel van continue spraak, volledige kanaalgelijkheid of gebruikersacceptatie geclaimd."
         },
         "next": {
-          "title": "Sneller contactmodel en fysieke spraak",
-          "state": "Wacht op gerichte eigenaarantwoorden",
-          "detail": "Kleine modelvergelijking (maximaal zes aanvragen) en later wakeword-meetmoment zijn gevraagd. Geen proeven zonder antwoord. Onafhankelijk functioneel vervolg blijft mogelijk bij een concreet ontbrekend onderdeel."
+          "title": "Snellere contactroute correct aansluiten",
+          "state": "Nog niet gestart",
+          "detail": "Beperkte modelprofielcorrectie voor native tool search nodig vóór gpt-6-luna bruikbaar vervangt. Zes toegestane vergelijkingsaanvragen zijn verbruikt; geen extra modelproeven gestart. Oude continue-firmwarefout blijft afzonderlijk open."
         },
         "ownerAction": {
-          "title": "Beantwoord de twee openstaande vragen in deze taak",
+          "title": "Huidige meetronde uitgevoerd",
           "url": "http://localhost:44712/",
           "linkLabel": "Projectoverzicht",
           "steps": [
-            "Kies bij de openstaande vraag: maximaal zes korte modelaanvragen toestaan of de vergelijking uitstellen.",
-            "Kies bij de Voice PE-vraag: een kort wakeword-meetmoment of voorlopig uitstellen. Bestaande werkende firmware blijft staan."
+            "Je hebt de fysieke vragen gesteld; opnieuw proberen is nu niet nodig."
           ],
-          "expected": "Duidelijke uitvoerruimte voor snelle ontvangst en de fysieke spraakfout. Een antwoord geldt niet als productacceptatie."
+          "expected": "Meetuitkomst is geregistreerd; geen nieuwe firmware geïnstalleerd en geen acceptatie afgeleid uit stilte."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T03:16:25.114843+00:00"
+        "reviewedAt": "2026-09-24T09:39:58.918474+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11488,7 +11495,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 2,
+      "currentStep": 1,
       "steps": [
         {
           "number": 1,

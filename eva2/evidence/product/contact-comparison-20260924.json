@@ -1,0 +1,156 @@
+{
+  "scope": "Synthetic model-only, current identity pack and delegated-work schemas. Not full runtime catalog, STT/TTS, private memory, actual work admission or channel latency.",
+  "hypothesis": "GPT-6 Luna low may improve short contact latency and quality over GPT-5.6 Luna low on the unchanged provider route.",
+  "criteria_before_run": {
+    "greeting": "Warm concise Dutch greeting, no unnecessary tool or claims",
+    "small_talk_during_work": "Answer current small talk, do not answer unfinished research or claim it complete",
+    "accepted_work": "Briefly acknowledge admitted task without claiming completed result",
+    "selection": "Quality must pass all three; prefer lower first-content latency across most cases, with no unsupported availability/latency claim"
+  },
+  "official_candidate_source": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+  "maximum_actual_provider_attempts": 6,
+  "actual_provider_attempts": 6,
+  "subscription_cost_eur": null,
+  "rows": [
+    {
+      "case": "greeting",
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "timing": {
+        "completed_ms": 4040,
+        "first_content_ms": 3346
+      },
+      "usage": {
+        "input_tokens": 1856,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 21,
+        "tool_calls": 0
+      },
+      "text": "Hallo Jaap, fijn je weer te spreken. Waar kan ik je mee helpen?",
+      "action": null,
+      "wall_ms": 4041,
+      "actual_provider_attempts": 1
+    },
+    {
+      "case": "greeting",
+      "model": "gpt-6-luna",
+      "effort": "low",
+      "timing": {
+        "completed_ms": 1598,
+        "first_content_ms": 1173
+      },
+      "usage": {
+        "input_tokens": 1539,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 15,
+        "tool_calls": 0
+      },
+      "text": "Hallo Jaap! Fijn dat je er bent.",
+      "action": null,
+      "wall_ms": 1600,
+      "actual_provider_attempts": 1
+    },
+    {
+      "case": "small_talk_during_work",
+      "model": "gpt-6-luna",
+      "effort": "low",
+      "timing": {
+        "completed_ms": 1707,
+        "first_content_ms": 1212
+      },
+      "usage": {
+        "input_tokens": 1379,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 13,
+        "tool_calls": 0
+      },
+      "text": "Goed, dank je. En met jou?",
+      "action": null,
+      "wall_ms": 1709,
+      "actual_provider_attempts": 1
+    },
+    {
+      "case": "small_talk_during_work",
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "timing": {
+        "completed_ms": 1793,
+        "first_content_ms": 1119
+      },
+      "usage": {
+        "input_tokens": 1696,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 26,
+        "tool_calls": 0
+      },
+      "text": "Goed, dank je. Ik ben er en houd Home Assistant Cloud voor spraak voor je in de gaten.",
+      "action": null,
+      "wall_ms": 1794,
+      "actual_provider_attempts": 1
+    },
+    {
+      "case": "accepted_work",
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "timing": {
+        "completed_ms": 2100,
+        "first_content_ms": 1290
+      },
+      "usage": {
+        "input_tokens": 1373,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 25,
+        "tool_calls": 0
+      },
+      "text": "Ik pak dit op en zet de werking van Home Assistant Cloud voor spraak met bronnen voor je uit.",
+      "action": null,
+      "wall_ms": 2101,
+      "actual_provider_attempts": 1
+    },
+    {
+      "case": "accepted_work",
+      "model": "gpt-6-luna",
+      "effort": "low",
+      "timing": {
+        "completed_ms": 1342,
+        "first_content_ms": 800
+      },
+      "usage": {
+        "input_tokens": 1373,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 23,
+        "tool_calls": 0
+      },
+      "text": "Ik zoek uit wat Home Assistant Cloud voor spraak biedt en koppel de bronnen erbij terug.",
+      "action": null,
+      "wall_ms": 1343,
+      "actual_provider_attempts": 1
+    }
+  ],
+  "assessment": {
+    "quality": "Both pass the predefined three synthetic response criteria. GPT-6 Luna is warmer/shorter in this sample and answers small talk without drifting to research. Neither executed tools or live work.",
+    "recommendation": "Provisional speed candidate only; do not install a config-only switch. Installed Pydantic profile does not recognize GPT-6 Luna native tool search. Correct the bounded compatibility profile before rollout; existing latency comparisons do not establish performance with that correction.",
+    "latency": "GPT-6 Luna first content wins greeting and admitted work; loses small talk by 93 ms. Completion wins all three. One sample per case, not a statistical benchmark; full runtime catalog and speech unmeasured.",
+    "actual_provider_attempts": 6,
+    "human_acceptance": false,
+    "input_tokens_total": 9216,
+    "output_tokens_total": 123
+  },
+  "compatibility_review": {
+    "extra_actual_provider_attempts": 0,
+    "method": "Inspected installed profiles and captured serialized request bodies with transport replaced by immediate exception before any network operation. Only synthetic probe input used.",
+    "current_profile": "gpt-5.6-luna has native tool_search; gpt-6-luna falls back to generic profile without native tool_search or phase support.",
+    "reasoning_effort": "Both serialized requests explicitly include reasoning.effort=low and summary=auto; generic profile did not omit the configured effort.",
+    "token_difference": "Identical instructions, different wire tool catalogs: baseline sends native tool_search and deferred search_personal_memory; candidate sends only local search_tools function. This explains the structural source of 317-token difference. No tokenizer-level reproduction attempted.",
+    "request_limit_conflict": "The local search_tools fallback needs a follow-up request to use discovered actions. Eva phase sets UsageLimits(request_limit=1) and provider attestation requires exactly one request. Thus candidate conversation-only success does not establish functional tool use.",
+    "tool_free_case": "Accepted-work case sends no tools with identical instructions; input tokens equal1373; candidate first content800ms versus1290ms. It does not test actual action selection/admission.",
+    "official_support": "https://developers.openai.com/api/docs/models/gpt-6-luna documents reasoning.low and native tool_search support. Existing Astra compatibility override provides a precedent; no shared files modified.",
+    "required_before_switch": "Bounded profile compatibility correction and offline serialized-request review. Further paid measurements would exceed this completed six-request authorization."
+  }
+}
