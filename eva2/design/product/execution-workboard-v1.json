@@ -1845,7 +1845,7 @@
         "next": {
           "title": "Eén digitale opdracht van begin tot resultaat",
           "state": "Wacht op proefbesluit",
-          "detail": "Voorstel: synthetisch document met gegevens laten verwerken, resultaat opslaan en teruglezen via bestaande tools. Maximaal zes daadwerkelijke modelaanvragen; geen nieuwe accounts of abonnementen."
+          "detail": "Vooraf vastgelegd: vijf synthetische uitgavenregels verwerken, categorietotalen en totaal opslaan, exact bestand teruglezen en vindplaats terugmelden. Maximaal zes providerpogingen inclusief retries. Proef wacht op eigenaarantwoord."
         },
         "ownerAction": {
           "title": "Een bestaande lamp bedienen",

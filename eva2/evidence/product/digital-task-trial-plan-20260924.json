@@ -1,0 +1,48 @@
+{
+  "status": "planned_not_executed",
+  "owner_approval": "pending",
+  "requirement": "Complete a digital task using existing document tools, verify saved result and return its usable location.",
+  "source_commit": "41448ad498092b42bcfc4dfad1ba8e82601f940c",
+  "synthetic_input": {
+    "name": "expenses-trial.csv",
+    "content": "category,item,amount_eur\nfood,lunch,18.50\ntravel,train,12.40\nfood,dinner,26.10\ntravel,bus,3.00\nother,notebook,7.25\n",
+    "sha256": "b0cd2751bed4ad148cc065fd3a6d7bdee7ab4f9a554f318ba711cfa6ceb29d26"
+  },
+  "task": "Lees expenses-trial.csv. Maak een Nederlands Markdown-overzicht met bedrag per categorie en totaal. Bewaar het resultaat als expenses-summary.md, lees het opgeslagen bestand terug en geef mij de vindplaats met de samenvatting.",
+  "expected": {
+    "currency": "EUR",
+    "category_totals": {
+      "food": "44.60",
+      "travel": "15.40",
+      "other": "7.25"
+    },
+    "total": "67.25",
+    "source_rows": 5
+  },
+  "pass_criteria": [
+    "Use actual source-document read receipt, not copied expected answer",
+    "Persist result using the existing authorized document provider",
+    "Read back the exact saved document",
+    "All three category totals and grand total match the sealed expectation",
+    "Return original task correlation and a resolvable result location",
+    "Report incomplete status rather than success if request cap prevents completion"
+  ],
+  "budget": {
+    "maximum_actual_provider_attempts": 6,
+    "scope": "Entire trial, including admission/contact if used, retries, worker calls and repair calls",
+    "new_paid_routes": false,
+    "credit_cost": "unknown"
+  },
+  "execution_requirements": [
+    "Use existing authorized provider/document route; no new accounts",
+    "Enforce request cap before actual model transport, not just after returned usage",
+    "Synthetic dedicated files only; preserve existing user documents",
+    "No Telegram message or speaker announcement for the test",
+    "No execution until owner answers pending question"
+  ],
+  "limits": [
+    "One bounded functional task, not general digital competence or family acceptance",
+    "No performance or competitor win inferred",
+    "The plan itself is not implementation or successful execution evidence"
+  ]
+}
