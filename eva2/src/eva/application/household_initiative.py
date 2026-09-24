@@ -1,0 +1,129 @@
+"""Explicit household-only context for initiative decisions.
+
+Bindings identify an authorized device/audience, never a recognized person.
+Current consent is checked by the host callback and the existing memory port.
+"""
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import datetime, timedelta
+import hashlib
+import json
+import re
+from typing import Callable, Protocol
+
+from eva.application.memory import PresenceMemory, RecallCurrentFacts
+from eva.application.memory_audience import HouseholdConsentReference, MemoryAudience
+from eva.application.sensory import SensoryEvent
+from eva.contracts.canonical_json import canonical_sha256
+
+
+_SHARED_QUERY = (
+    "Gebruik uitsluitend informatie die expliciet met dit huishouden is gedeeld "
+    "voor een passende, nuttige bijdrage aan het gezamenlijke dagelijks leven. "
+    "Privégesprekken, persoonlijke herinneringen en privétaken horen hier niet bij. "
+    "Noem of suggereer ook niet dat zulke privé-informatie of privétaken bestaan."
+)
+
+
+@dataclass(frozen=True, slots=True)
+class HouseholdInitiativeBinding:
+    tenant_id: str
+    installation_id: str
+    household_id: str
+    actor_id: str
+    satellite_id: str
+    device_id: str
+    consent_operation_id: str
+    policy_sha256: str
+
+    def __post_init__(self) -> None:
+        for value in (self.tenant_id, self.installation_id):
+            if not isinstance(value, str) or not value.strip() or len(value) > 200:
+                raise ValueError("household initiative scope is invalid")
+        if (not isinstance(self.device_id, str) or not re.fullmatch(r"[0-9a-f]{32}", self.device_id)
+                or self.actor_id != "household-device:" + self.device_id
+                or not isinstance(self.satellite_id, str)
+                or not re.fullmatch(r"assist_satellite\.[a-z0-9_]{1,183}", self.satellite_id)
+                or not isinstance(self.policy_sha256, str)
+                or not re.fullmatch(r"[0-9a-f]{64}", self.policy_sha256)):
+            raise ValueError("household initiative device or policy binding is invalid")
+        self._consent_reference()
+
+    def _consent_reference(self) -> HouseholdConsentReference:
+        return HouseholdConsentReference(principal_id=self.actor_id,
+            household_id=self.household_id, operation_id=self.consent_operation_id)
+
+    def to_payload(self) -> dict[str, str]:
+        return {"tenant_id": self.tenant_id, "installation_id": self.installation_id,
+                "household_id": self.household_id, "actor_id": self.actor_id,
+                "satellite_id": self.satellite_id, "device_id": self.device_id,
+                "consent_operation_id": self.consent_operation_id,
+                "policy_sha256": self.policy_sha256}
+
+    def event(self, now: datetime) -> SensoryEvent:
+        if (not isinstance(now, datetime) or now.tzinfo is None
+                or now.utcoffset() != timedelta(0) or now.microsecond or now.timestamp() < 0):
+            raise ValueError("household initiative event requires whole-second UTC")
+        window = int(now.timestamp()) // 3600
+        encoded = json.dumps(self.to_payload(), sort_keys=True, separators=(",", ":"))
+        identity = "household-initiative:" + hashlib.sha256(encoded.encode()).hexdigest() + ":" + str(window)
+        return SensoryEvent(source="household-initiative", source_event_id=identity,
+            event_type="household_opportunity_review", occurred_at=now,
+            payload={"household_binding": self.to_payload(), "review_window": window})
+
+    def recall_request(self, *, recall_id: str, now: datetime) -> RecallCurrentFacts:
+        if (not isinstance(now, datetime) or now.tzinfo is None
+                or now.utcoffset() != timedelta(0) or now.microsecond
+                or not isinstance(recall_id, str) or not recall_id.strip() or len(recall_id) > 256):
+            raise ValueError("household initiative recall requires an identity and whole-second UTC")
+        return RecallCurrentFacts(
+            recall_id=recall_id, tenant_id=self.tenant_id, installation_id=self.installation_id,
+            principal_id=self.actor_id,
+            audience=MemoryAudience.household(principal_id=self.actor_id,
+                household_id=self.household_id, consent_ref=self._consent_reference()),
+            conversation_id=(f"household:{self.household_id}:conversation:initiative:"
+                             f"{self.policy_sha256}:{self.device_id}"),
+            project_id=None, query_purpose="household_initiative_review",
+            requested_valid_at=now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            scope={"kind": "household", "household_id": self.household_id},
+            subject_ids=(self.actor_id,), query_text=_SHARED_QUERY, maximum_facts=8,
+        )
+
+
+class HouseholdInitiativeMemoryPort(Protocol):
+    def recall_for_presence(self, query: RecallCurrentFacts) -> PresenceMemory: ...
+
+
+class HouseholdInitiativeContext:
+    def __init__(self, binding: HouseholdInitiativeBinding, authorize: Callable[[], None]):
+        if not isinstance(binding, HouseholdInitiativeBinding) or not callable(authorize):
+            raise ValueError("household initiative context requires a binding and current authority")
+        self.binding = binding
+        self._authorize = authorize
+
+    def __call__(self, event: SensoryEvent, now: datetime,
+                 memory: HouseholdInitiativeMemoryPort) -> tuple[PresenceMemory, dict[str, str]]:
+        if (not isinstance(event, SensoryEvent)
+                or type(event.payload.get("review_window")) is not int
+                or event != self.binding.event(event.occurred_at)):
+            raise ValueError("household initiative event binding differs")
+        recall_id = "household-initiative:" + hashlib.sha256(event.source_event_id.encode()).hexdigest()
+        query = self.binding.recall_request(recall_id=recall_id, now=now)
+        self._authorize()
+        result = memory.recall_for_presence(query)
+        self._authorize()
+        if not isinstance(result, PresenceMemory):
+            raise ValueError("household initiative memory response is invalid")
+        recall = result.recall
+        fields = ("recall_id", "tenant_id", "principal_id", "conversation_id", "project_id",
+                  "query_purpose", "requested_valid_at", "projection_version")
+        if (any(getattr(recall, name) != getattr(query, name) for name in fields)
+                or recall.scope_sha256 != canonical_sha256(query.scope)
+                or len(result.confirmed_facts) > query.maximum_facts
+                or len(recall.selected) > query.maximum_facts
+                or {fact.fact_id for fact in result.confirmed_facts}
+                   != {fact.fact_id for fact in recall.selected}
+                or result.style_mirror is not None):
+            raise ValueError("household initiative memory response scope differs")
+        return result, self.binding.to_payload()

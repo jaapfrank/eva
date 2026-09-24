@@ -250,6 +250,7 @@ class SensoryDecisionWorker:
         clock: Callable[[], datetime] | None = None,
         context_review_budget=None,
         context_review_authorizer=None,
+        household_context=None,
     ) -> None:
         self._store = store
         self._model = model
@@ -267,6 +268,7 @@ class SensoryDecisionWorker:
         self._clock = clock
         self._context_review_budget = context_review_budget
         self._context_review_authorizer = context_review_authorizer
+        self._household_context = household_context
         self._prefer_revalidation = False
 
     def _current_time(self, previous: datetime) -> datetime:
@@ -296,8 +298,11 @@ class SensoryDecisionWorker:
         blocker: AutonomousAdmissionBlocker | None,
     ) -> str:
         event = claim.event
-        context_review = event.source == "initiative-review"
+        household_review = event.source == "household-initiative"
+        context_review = event.source in {"initiative-review", "household-initiative"}
         try:
+            if household_review != (self._household_context is not None):
+                raise RuntimeError("initiative context audience differs from configured worker")
             if context_review:
                 if self._context_review_authorizer is None:
                     raise RuntimeError("private review authority is unavailable")
@@ -348,43 +353,50 @@ class SensoryDecisionWorker:
                 else f"{event.payload.get('old_state', '')} naar "
                 f"{event.payload.get('new_state', '')}"
             )
-            # Resolve the trusted owner alias afresh so revocation takes effect
-            # without rewriting existing private memories or widening their audience.
-            memory_principal = (self._principal_id if self._memory_principal_resolver is None
-                                else self._memory_principal_resolver())
-            memory = self._memory.recall_for_presence(
-                RecallCurrentFacts(
-                    recall_id=f"free-will:{event.source_event_id}",
-                    installation_id=self._installation_id,
-                    tenant_id=self._tenant_id,
-                    principal_id=memory_principal,
-                    audience=MemoryAudience.private_person(
-                        principal_id=memory_principal
-                    ),
-                    conversation_id="sensory:" + event.source,
-                    project_id=None,
-                    query_purpose="private_opportunity_review" if event.source == "initiative-review" else "passive_event_decision",
-                    requested_valid_at=now.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                    scope={
-                        "event_type": event.event_type,
-                        "kind": "private_opportunity" if event.source == "initiative-review" else "household_event",
-                        "source": event.source,
-                    },
-                    subject_ids=(memory_principal,),
-                    query_text=(
-                        "Persoonlijke plannen, dagelijkse behoeften, interesses en voorkeuren "
-                        "voor een nuttige eigen bijdrage. Context bij deze waarneming: "
-                        f"{event.source} {event.event_type} "
-                        f"{event.payload.get('entity_id', '')} "
-                        f"{state_description}"
-                    ),
-                    maximum_facts=8,
+            if household_review:
+                memory, binding = self._household_context(event, now, self._memory)
+                if binding != event.payload.get("household_binding"):
+                    raise RuntimeError("household initiative provenance changed")
+                # Never load owner history or owner capabilities for a shared expression.
+                history, capabilities, capability_reader = (), (), None
+            else:
+                # Resolve the trusted owner alias afresh so revocation takes effect
+                # without rewriting existing private memories or widening their audience.
+                memory_principal = (self._principal_id if self._memory_principal_resolver is None
+                                    else self._memory_principal_resolver())
+                memory = self._memory.recall_for_presence(
+                    RecallCurrentFacts(
+                        recall_id=f"free-will:{event.source_event_id}",
+                        installation_id=self._installation_id,
+                        tenant_id=self._tenant_id,
+                        principal_id=memory_principal,
+                        audience=MemoryAudience.private_person(
+                            principal_id=memory_principal
+                        ),
+                        conversation_id="sensory:" + event.source,
+                        project_id=None,
+                        query_purpose="private_opportunity_review" if event.source == "initiative-review" else "passive_event_decision",
+                        requested_valid_at=now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                        scope={
+                            "event_type": event.event_type,
+                            "kind": "private_opportunity" if event.source == "initiative-review" else "household_event",
+                            "source": event.source,
+                        },
+                        subject_ids=(memory_principal,),
+                        query_text=(
+                            "Persoonlijke plannen, dagelijkse behoeften, interesses en voorkeuren "
+                            "voor een nuttige eigen bijdrage. Context bij deze waarneming: "
+                            f"{event.source} {event.event_type} "
+                            f"{event.payload.get('entity_id', '')} "
+                            f"{state_description}"
+                        ),
+                        maximum_facts=8,
+                    )
                 )
-            )
-            history_reader = getattr(self._store, "recent_initiatives", None)
-            history = () if not callable(history_reader) else history_reader()
-            capability_reader = getattr(self._store, "native_capabilities", None)
-            capabilities = () if not callable(capability_reader) else capability_reader()
+                history_reader = getattr(self._store, "recent_initiatives", None)
+                history = () if not callable(history_reader) else history_reader()
+                capability_reader = getattr(self._store, "native_capabilities", None)
+                capabilities = () if not callable(capability_reader) else capability_reader()
             # Persist the ambiguity boundary before entering the model adapter.
             # A process can die without calling fail(), including after the
             # provider response but before complete() records the decision.
@@ -406,6 +418,8 @@ class SensoryDecisionWorker:
                 **({"initiative_history": history} if history else {}),
                 **({"initiative_capabilities": capabilities} if callable(capability_reader) else {}),
             )
+            if household_review and decision.initiative is not None:
+                raise RuntimeError("household expression cannot adopt a private initiative")
             if attention is not None and (
                 decision.disposition != "respond"
                 or decision.urgency < attention.urgency_floor

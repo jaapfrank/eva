@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T01:26:58.134899+00:00",
+        "checkedAt": "2026-09-24T01:31:50.110584+00:00",
         "deliveries": [
           {
             "title": "Onderzoek bijsturen terwijl de oude poging stopt",
@@ -1709,15 +1709,15 @@
           }
         ],
         "now": {
-          "title": "Ontbrekende huisaanwezigheid vastgesteld",
-          "state": "Nog te bouwen",
-          "detail": "Spontaan contact gebruikt momenteel privécontext en privé-Telegram. Voor de huisspeakers ontbreekt een afzonderlijke route met uitsluitend gedeelde gezinscontext.",
-          "doneWhen": "Passend spontaan contact uit gedeelde context via de toegestane huisspeaker, met stiltemomenten en stoppen. Geen privé-informatie of hints daarover."
+          "title": "Huisaanwezigheid: gedeelde context gebouwd",
+          "state": "In bouw; nog niet geïnstalleerd",
+          "detail": "De initiatiefbeslissing krijgt een afzonderlijke huishoudcontext zonder privégeschiedenis. De opslag van die herkomst en de gesproken aflevering zijn nog niet aangesloten.",
+          "doneWhen": "Bruikbaar spontaan huiscontact uit gedeelde context, met rustmomenten, juiste speaker en stoppen; bestaande privéroute behouden."
         },
         "next": {
-          "title": "Gedeelde initiatiefcontext aansluiten op HA-spraak",
-          "state": "Bouwopdracht bepaald",
-          "detail": "Hergebruik waarnemingsopslag, actuele huishoudtoestemming en bestaande HA-uitvoer. Geen doorsturen van privé-initiatieven."
+          "title": "Duurzame herkomst en gesproken aflevering aansluiten",
+          "state": "Volgende bouwstap binnen huisaanwezigheid",
+          "detail": "Bewaar huishoud-/apparaatbinding bij de beslissing en gebruik die bij de bestaande HA-uitvoer. Privé-uitingen mogen niet door de speakerroute worden opgehaald."
         },
         "ownerAction": {
           "title": "Kies wie huisbediening via speakers mag gebruiken",
@@ -11503,7 +11503,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Hergebruik waarnemingsopslag, actuele huishoudtoestemming en bestaande HA-uitvoer. Geen doorsturen van privé-initiatieven.",
+      "nextAction": "Bewaar huishoud-/apparaatbinding bij de beslissing en gebruik die bij de bestaande HA-uitvoer. Privé-uitingen mogen niet door de speakerroute worden opgehaald.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
