@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T02:15:38.889654+00:00",
+        "checkedAt": "2026-09-24T02:20:32.190390+00:00",
         "deliveries": [
+          {
+            "title": "Achtergrondresultaat na onderbroken website-overdracht",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Niet-bevestigde tekst opnieuw ophalen zonder taakherhaling.",
+            "remaining": "Netwerkonderbrekingsproef later. Geen blijvende chatgeschiedenis.",
+            "source": "eva2/evidence/product/website-result-retry-installed-20260924.json"
+          },
           {
             "title": "Gewijzigde tools van een aangesloten dienst vernieuwen",
             "date": "24 september",
@@ -1749,15 +1757,15 @@
           }
         ],
         "now": {
-          "title": "Gewijzigde diensttools kunnen opnieuw worden opgenomen",
+          "title": "Website-resultaat na onderbroken overdracht opnieuw ophalen",
           "state": "Geïnstalleerd · start gecontroleerd",
-          "detail": "De bestaande aansluiting kan haar toegestane gatewaycatalogus vernieuwen; oude uitvoer blijft leesbaar. Kern en werker draaien gezond.",
-          "doneWhen": "Deze bouwstap is geïnstalleerd. Echte dienstwijziging en taakuitvoering nog niet beproefd."
+          "detail": "Niet-bevestigde resultaattekst opnieuw ophalen zonder taakherhaling. Kern en werker gezond.",
+          "doneWhen": "Geïnstalleerd; echte netwerkonderbrekingsproef blijft open."
         },
         "next": {
-          "title": "Achtergrondresultaten via de website terugbrengen",
+          "title": "Meerdaags werk zelfstandig vervolgen",
           "state": "Nog niet gestart",
-          "detail": "Controleer de bestaande taak- en gespreksroute en sluit alleen de ontbrekende terugmelding aan. Geen nieuwe taakuitvoerder."
+          "detail": "Bestaande planning en budgetten behouden; alleen een aantoonbaar ontbrekende aansluiting aanvullen."
         },
         "ownerAction": {
           "title": "Kies wie huisbediening via speakers mag gebruiken",
@@ -1771,7 +1779,7 @@
           "expected": "Na je keuze kan de voorbereide configuratie gericht worden geïnstalleerd of de privébeperking behouden blijven."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T02:15:38.889654+00:00"
+        "reviewedAt": "2026-09-24T02:20:32.190390+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11543,7 +11551,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Stap 3: achtergrondresultaten via de website terugbrengen waar de bestaande route nog tekortschiet. Catalogusvernieuwing geïnstalleerd; uitgebreide proeven later.",
+      "nextAction": "Meerdaags werk zelfstandig vervolgen binnen bestaande planning en budgetten; ontbrekende aansluiting nog te bepalen.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

@@ -1,0 +1,31 @@
+{
+  "contract": "EvaFeatureInstallation/v1",
+  "installedAt": "2026-09-24T02:19:39.787069+00:00",
+  "sourceCommit": "3959c71cec600c460e1949d7ca18c5b288427011",
+  "image": "eva2-website-result-retry:20260924",
+  "feature": "Retry unacknowledged website background result transfers",
+  "checks": [
+    "Source baseline equals installed files",
+    "Python syntax",
+    "Configured application startup",
+    "No active background tasks at cutover",
+    "Core and worker healthy"
+  ],
+  "runtime": {
+    "eva2-managed-b-slot3-core": "healthy",
+    "eva2-managed-b-slot3-delegated-work-worker-1": "healthy"
+  },
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/website-result-retry-20260924/baseline.compose.private.json",
+  "behavior": [
+    "Same private result and operation identity are returned until acknowledged",
+    "Expired text-transfer claims can be renewed",
+    "A discarded client result can render again on retry",
+    "Voice delivery policy unchanged; no task replay"
+  ],
+  "limits": [
+    "No live interrupted-transfer trial; owner deferred functional trials",
+    "Acknowledged results remain available in the task overview; this is not persistent chat history",
+    "Not a full task-execution or channel-parity acceptance"
+  ],
+  "paidModelCalls": 0
+}
