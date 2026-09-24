@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-09-24T19:55:46.410933+00:00",
+  "sourceCommit": "4a0593caa72bf11246a0fe34c7c7e38f2c3d6bc4",
+  "state": "installed",
+  "problem": "Strict model schema required both non-null document source fields, conflicting with exclusive source validation.",
+  "change": "Nullable unused source fields; normalize only null alternative fields before planning and completion checks. Empty document content remains valid.",
+  "checks": [
+    "23 focused checks passed, including installed SDK strict schema transformation and real PostgreSQL replay",
+    "Coordinator independently reviewed exact implementation and tests",
+    "Full core and worker release equality",
+    "Live exact source hashes and healthy services; owner page and voice readiness HTTP200"
+  ],
+  "installation": {
+    "checkedAt": "2026-09-24T19:54:48.391230+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:7df669e6f81b9361fb6c24f8ce7372095d43470c4aa0987138f4b88250c7ad46",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/external_conversation_tools.py": "65b327bf5af2a976bff39b4a7f9f8b7fb8deb76db525067bfdd81f2d7d1e6798",
+          "adapters/postgres/component_improvement_actions.py": "15cf280f6dda09722c3aa04b93a9efcec79aef6cfc5405e9da6ffcad7f1cb027",
+          "bootstrap/delegated_digital_runner.py": "abda0f0f24528a36e5618ac3834f12de2baa350df9a3dc2bc0a85c6779f45451",
+          "bootstrap/delegated_digital_composition.py": "2bda52fb3562e570c61420c97bdf96f31e631ed847b115c8045aa660da8a3c2b"
+        }
+      },
+      "worker": {
+        "image": "sha256:e0caa91209f53b32a4e97dca31fd3a92af5465d36fa1915c463791a4ae3deb57",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/external_conversation_tools.py": "65b327bf5af2a976bff39b4a7f9f8b7fb8deb76db525067bfdd81f2d7d1e6798",
+          "adapters/postgres/component_improvement_actions.py": "15cf280f6dda09722c3aa04b93a9efcec79aef6cfc5405e9da6ffcad7f1cb027",
+          "bootstrap/delegated_digital_runner.py": "abda0f0f24528a36e5618ac3834f12de2baa350df9a3dc2bc0a85c6779f45451",
+          "bootstrap/delegated_digital_composition.py": "2bda52fb3562e570c61420c97bdf96f31e631ed847b115c8045aa660da8a3c2b"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/component-strict-save-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "usage": {
+    "modelRequestsForInstallation": 0
+  },
+  "remaining": [
+    "Actual previously ambiguous task resumed once with explicit final-save correction; outcome pending",
+    "Self-improvement candidate not installed yet",
+    "No owner acceptance"
+  ]
+}

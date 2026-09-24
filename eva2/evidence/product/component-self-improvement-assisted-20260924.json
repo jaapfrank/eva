@@ -1,0 +1,190 @@
+{
+  "kind": "assisted_component_self_improvement",
+  "state": "installed",
+  "component": "contracts/canonical_json.py",
+  "ownerRequirement": "Isolated own improvement with measured benefit, independent review and rollback",
+  "originalWorkId": "work:eva-chat:9054839c-8159-5641-991d-3f11638930af",
+  "resumedWorkId": "work:eva-resume:ad4a2112-d1e9-5093-8171-00fbf31055bf",
+  "outcome": "Eva generated exact minimal change; final save initially failed on strict schema, coordinator corrected schema and requested save-only resume. Package then saved and independently read back. Coordinator reviewed/imported candidate through existing release tool.",
+  "scope": "One bounded defect in SHA256 validation; not general autonomous improvement or owner acceptance.",
+  "measuredGain": {
+    "baseline": {
+      "total": 90,
+      "passed": 71,
+      "failed": [
+        {
+          "case": "short_digest_with_spaces",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_32_0",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_32_30",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_32_62",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_9_0",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_9_30",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_9_62",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_13_0",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_13_30",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_13_62",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_10_0",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_10_30",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_10_62",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_11_0",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_11_30",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_11_62",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_12_0",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_12_30",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "case": "whitespace_12_62",
+          "expected": false,
+          "actual": true
+        }
+      ]
+    },
+    "candidate": {
+      "total": 90,
+      "passed": 90,
+      "failed": []
+    }
+  },
+  "review": "GO for the exact model-generated canonical_json.py candidate. Independent source review: the existing type and 64-character checks remain; requiring bytes.fromhex(value) to decode to exactly 32 bytes excludes ignored whitespace while preserving upper/lower/mixed-case valid hexadecimal. No unrelated function changes. The two current callers validate action-chain cancellation/stop hashes; no intentional whitespace compatibility is documented. Existing malformed historical hashes may now be rejected, which is the intended correction. Coordinator measured-gain.json inspected separately; reviewer did not re-execute candidate or model. Candidate review does not claim the failed model task saved its package or installed anything.",
+  "savedPackage": {
+    "savedPath": "/proof-state/canonical-json-improvement.json",
+    "bytes": 8403,
+    "sha256": "848cbcbc1110da693c10f7d4ab769ba7a6d4e7145ceb5cb505abf8ba2d34c5bc",
+    "proofSource": "mcp_gateway_readback",
+    "exactPackageMatch": true
+  },
+  "sourceImport": {
+    "contract": "EvaComponentSourceImport/v1",
+    "state": "source_imported_not_installed",
+    "candidate_package_sha256": "cbee1f1163ec56a039013bf067a1d57717ed27689c838143069e93944cce9b90",
+    "evaluation_sha256": "7d33785d7f29006efb7681e71349b8a872052df884d9ba09659c0744a19148ce",
+    "baseline_commit": "fdb03bfa7cd150e9df551f2e535db70105a62410",
+    "path": "eva2/src/eva/contracts/canonical_json.py",
+    "baseline_sha256": "2de741f7dc4fa2b2126eda6e10b622f089ea8343e7a00addaee30bb5da20c7b8",
+    "candidate_sha256": "ac3f8e1fa2e1ca130b5a7aa116eac9b3fdbc6ff3da265953d7ad65f230f18822",
+    "review_sha256": "da9dd416012f353417fb9a768e2444d88773500f6b46d58f61fe7df22fb8b301",
+    "reviewer": "independent /root/recall_query_review; coordinator gain comparison",
+    "evidence": {
+      "measured_gain_evidence": {
+        "path": "/home/administrator/project/.eva2-artifacts/component-self-improvement-20260924/measured-gain.json",
+        "sha256": "199ddcfe61ed3d0a49e134d4b0a25ca503d7a435661029cee43f1532bf079c22"
+      },
+      "independent_review_evidence": {
+        "path": "/home/administrator/project/.eva2-artifacts/component-self-improvement-20260924/independent-review.txt",
+        "sha256": "f4e85da2e1523564e401d0161dd7f90d0be23bb4e69227260b68a051bba46702"
+      }
+    },
+    "installed": false,
+    "next": "Commit the exact source and review evidence, then use the existing managed build and installation with runtime baseline verification and rollback."
+  },
+  "checks": [
+    "Existing isolated suite:24 baseline and24 candidate passed",
+    "Independent frozen functional comparison:71/90 baseline,90/90 candidate",
+    "Persisted whitespace/case regression:22 passed",
+    "Exact installed hashes and defect/valid-case behavior checked in both healthy services; full release equality and website/voice readiness"
+  ],
+  "reportedUsage": {
+    "inputTokens": 89786,
+    "outputTokens": 1127,
+    "completedModelResponses": 8,
+    "measurement": "Worker usage partial; combined recorded admission and both attempts, not account credit usage",
+    "creditCost": null
+  },
+  "remaining": [
+    "No owner acceptance",
+    "One assisted proposal, not general autonomous improvement",
+    "General learning, multi-day practice and full product remain open"
+  ],
+  "checkedAt": "2026-09-24T19:59:47.136190+00:00",
+  "sourceCommit": "9a639c97a4d4aecdbe62d48bae1c81b175356ab8",
+  "installation": {
+    "checkedAt": "2026-09-24T19:58:49.803773+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:71686e19d70179c0041be15e6d6e2f1f12465996269ac250c64b48a67d81babe",
+        "health": "healthy",
+        "sourceHashes": {
+          "contracts/canonical_json.py": "ac3f8e1fa2e1ca130b5a7aa116eac9b3fdbc6ff3da265953d7ad65f230f18822"
+        }
+      },
+      "worker": {
+        "image": "sha256:dcebcf2ffe543bc0fafa1fda576fd7b040f727d3740f00919a8767a2a6e1e2f3",
+        "health": "healthy",
+        "sourceHashes": {
+          "contracts/canonical_json.py": "ac3f8e1fa2e1ca130b5a7aa116eac9b3fdbc6ff3da265953d7ad65f230f18822"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/component-digest-install-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  }
+}

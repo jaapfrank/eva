@@ -1009,8 +1009,24 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T19:40:06.637847+00:00",
+        "checkedAt": "2026-09-24T19:45:38.510341+00:00",
         "deliveries": [
+          {
+            "title": "Eerste eigen codeverbetering gecontroleerd toegepast",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Eva maakte een correctie voor een foutieve SHA256-controle. Exact pakket opgeslagen en teruggelezen na één gerichte hervatting; onafhankelijke vergelijking71/90→90/90. Beoordeeld, geïnstalleerd en in beide draaiende diensten gecontroleerd.",
+            "remaining": "Coördinatorhulp nodig bij opslag en installatie; geen algemene autonome zelfverbetering of eigenaaracceptatie. Overige stap5-functies blijven open.",
+            "source": "eva2/evidence/product/component-self-improvement-assisted-20260924.json"
+          },
+          {
+            "title": "Verbeterpakket opslaan met strikt modelschema",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Ongebruikte inhoudsbron mag null zijn;23 gerichte controles en onafhankelijke bronreview geslaagd. Geïnstalleerd in gezonde kern en werker, website en spraakroute bereikbaar.",
+            "remaining": "Werkelijke hervatte pakketopslag loopt; geen algemene zelfverbetering of eigenaaracceptatie bewezen.",
+            "source": "eva2/evidence/product/component-strict-save-installed-20260924.json"
+          },
           {
             "title": "Eigen verbeterpakket bewaren zonder code opnieuw uit te schrijven",
             "date": "24 september",
@@ -2183,15 +2199,15 @@
           }
         ],
         "now": {
-          "title": "Verbeterpakketopslag geïnstalleerd",
-          "state": "Technisch opgeleverd; volgende proef nog niet gestart",
-          "detail": "Exacte modulehashes en gelijke uitvoerversies bevestigd; website/spraakroute bereikbaar. Geen modelcalls voor deze wijziging.",
-          "doneWhen": "Deze koppeling is geïnstalleerd; een echte eigen verbetering vereist nog gemeten voordeel, onafhankelijke beoordeling en toepassing."
+          "title": "Eigen verbeterpakket toegepast",
+          "state": "Geïnstalleerd; deze begrensde opdracht afgerond",
+          "detail": "Eva maakte de bronwijziging; na herstel en één gerichte hervatting is exact het pakket bewaard en teruggelezen. Onafhankelijke vergelijking71/90→90/90; voorstel beoordeeld en als9a639c97 geïnstalleerd in gezonde kern en werker. Dit bewijst één verbetering met coördinatorhulp, geen algemene zelfstandigheid.",
+          "doneWhen": "Technische deeloplevering afgerond; volledige stap5 en eigenaaracceptatie blijven open."
         },
         "next": {
-          "title": "Eén eigen codeverbetering maken en gecontroleerd toepassen",
-          "state": "Criteria voorbereid; nog niet gestart",
-          "detail": "Concrete geïnstalleerde fout: SHA256-controle accepteert31bytes plus spaties. Bestaande ondersteunde component en isolatie gebruiken, correcte gevallen behouden, exacte kandidaat vergelijken vóór toepassing."
+          "title": "Snelle ontvangst en doorpraten via dezelfde Eva",
+          "state": "Volgende opdracht; nog niet gestart",
+          "detail": "Terug naar stap1: de bestaande snelle ontvangst, achtergronduitvoering en echte kanaalroutes samenbrengen waar nog een concreet verschil zit. Laatste inhoudelijke begroeting5,2s blijft onvoldoende; geen ongewijzigde herproef."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2205,7 +2221,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T19:40:06.637847+00:00"
+        "reviewedAt": "2026-09-24T19:59:47.136190+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11930,7 +11946,7 @@
             "AU-003"
           ],
           "doneWhen": "Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg.",
-          "preserve": "Bestaande CSV-leer-/hergebruikproef behouden. Nieuwe aangeleverde FLUXNOTE-documentatie verwerkt tot algemene opgeslagen parser en werkelijk uitgevoerd na één coördinatorcorrectie; geldige/ongeldige uitvoer en eindantwoord onafhankelijk gecontroleerd. Zelfstandige eerste poging faalde op uitvoerbudget. Externe documentatie, meerdaagse praktijk en eigen verbetering met gemeten winst blijven open.",
+          "preserve": "Bestaande CSV- en FLUXNOTE-leer-/hergebruikproeven behouden. Eén eigen bronverbetering door Eva gemaakt, pakket na opslagcorrectie en één gerichte hervatting opgeslagen; onafhankelijk gemeten71/90→90/90, beoordeeld en geïnstalleerd met terugweg. Coördinatorhulp blijft zichtbaar. Externe documentatie, algemene zelfstandigheid en meerdaagse praktijk blijven open.",
           "planningEffortHours": "8–24"
         },
         {
@@ -11977,7 +11993,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Langdurig werk en eigen verbetering afronden",
+      "nextAction": "Snelle ontvangst en doorpraten via dezelfde Eva afronden; bestaande routes en bewijs hergebruiken.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
