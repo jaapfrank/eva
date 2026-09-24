@@ -18,7 +18,7 @@ from eva.adapters.postgres.operational_timeline import external_timeline_scope
 from eva.adapters.subagents.tool_free_child import ToolFreeChildOutcome
 from eva.application.background_execution import BackgroundExecutionScope, background_execution
 from eva.application.cancellation import CancellationSignal, cancellation_scope
-from eva.application.conversation import ConversationActionReceipt, ConversationConflict, ConversationExecutionLimitReached, LivingConversation
+from eva.application.conversation import ConversationActionReceipt, ConversationConflict, ConversationExecutionLimitReached, ConversationModelUsage, LivingConversation
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.delegated_work import DelegatedWorkUsage
 from eva.contracts.timestamps import parse_utc_timestamp
@@ -32,19 +32,39 @@ class _UnfinishedWorkPlan(ConversationConflict):
     """Preserved progress exists, but this bounded attempt cannot finish it."""
 
 
+def _remaining_budget_context(grant, actual, *, calls, dispatches):
+    """Report known counters; incomplete measurement cannot imply free capacity."""
+    limits = {"model_runs": grant.maximum_model_runs, "input_tokens": grant.maximum_input_tokens,
+              "output_tokens": grant.maximum_output_tokens, "tool_calls": grant.maximum_tool_calls}
+    used = {"model_runs": actual.model_attempts, "input_tokens": actual.input_tokens,
+            "output_tokens": actual.output_tokens, "tool_calls": calls, "tool_dispatches": dispatches}
+    remaining = {name: (max(0, limits[name] - used[name]) if actual.measurement == "measured" else None)
+                 for name in ("model_runs", "input_tokens", "output_tokens")}
+    remaining["tool_calls"] = max(0, grant.maximum_tool_calls - max(calls, dispatches))
+    return ("Resterend budget van deze poging (null = onbekend; gemelde deelmetingen zijn geen volledige meting): "
+            + json.dumps({"measurement": actual.measurement, "limits": limits,
+                          "used": used, "remaining": remaining}, separators=(",", ":"))
+            + " Input telt opnieuw mee bij elke modelcall, inclusief eerdere context en toolresultaten. "
+              "Ook een eindantwoord verbruikt een modelcall. Houd daarvoor ruimte naast uitvoering en controle; haal alleen relevante gegevens op. "
+              "Sla geen vereiste controle over en claim geen afronding om budget te sparen. "
+              "Bewaar bij een echte blokkade de voortgang; verruim het mandaat of budget niet.")
+
+
 class _TaskModel:
-    def __init__(self, model, task, browser_context=None, corrections=()):
+    def __init__(self, model, task, browser_context=None, corrections=(), budget_context=None):
         self.model, self.task = model, task
         self.owner_corrections = tuple(
             "Bewaarde bijsturing van de eigenaar, in volgorde; latere correcties vervangen eerdere alleen waar ze botsen: "
             + item["instruction"] for item in corrections)
         self.continuation_feedback = ()
         self.browser_context = browser_context
+        self.budget_context = budget_context
         self.journals_provider_requests = getattr(model, "journals_provider_requests", False)
 
     def generate(self, *args, self_context=(), **kwargs):
         availability = () if self.browser_context is None else self.browser_context()
-        return self.model.generate(*args, self_context=(*self_context, *availability, *self.owner_corrections, *self.continuation_feedback,
+        budget = () if self.budget_context is None else (self.budget_context(),)
+        return self.model.generate(*args, self_context=(*self_context, *availability, *budget, *self.owner_corrections, *self.continuation_feedback,
             "Je voert nu deze aangenomen achtergrondopdracht uit: " + self.task,
             "Maak deze opdracht af met de aangeboden tools, controleer de uitkomst en geef "
             "het resultaat terug. Het oorspronkelijke bericht is de context, geen nieuwe "
@@ -322,6 +342,7 @@ class DelegatedDigitalRunner:
         signal = CancellationSignal()
         usage = DelegatedWorkUsage.unmeasured()
         journal = source = actions = reply = None
+        latest_usage = ConversationModelUsage.unmeasured()
         deadline = parse_utc_timestamp(spec.deadline)
         call = DelegatedWorkCall(spec.work_id, "digital:" + spec.work_id, call_id, spec)
 
@@ -341,7 +362,9 @@ class DelegatedDigitalRunner:
             actions.dispatches += 1
 
         def checkpoint(turn, actual):
+            nonlocal latest_usage
             authorize(turn)
+            latest_usage = actual
             for value, maximum in ((actual.model_attempts, spec.grant.maximum_model_runs),
                     (actual.input_tokens, spec.grant.maximum_input_tokens),
                     (actual.output_tokens, spec.grant.maximum_output_tokens)):
@@ -383,7 +406,9 @@ class DelegatedDigitalRunner:
                                                   authorize, spec.grant.maximum_tool_calls)
             from eva.adapters.postgres.work_corrections import work_corrections
             task_model = _TaskModel(self.model, spec.task, self.browser_context,
-                                    corrections=work_corrections(self.store._engine, spec))
+                                    corrections=work_corrections(self.store._engine, spec),
+                                    budget_context=lambda: _remaining_budget_context(spec.grant, latest_usage,
+                                        calls=actions.calls, dispatches=actions.dispatches))
             conversation = LivingConversation(self.memory, task_model, self.identity, actions)
 
             def execute():

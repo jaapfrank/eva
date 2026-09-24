@@ -544,3 +544,47 @@ def test_cancelled_final_reply_is_not_released_as_failure_report():
     outcome = asyncio.run(runner.run(spec, call_id="call:cancel-report", cancellation_event=stopped))
     assert outcome.status == "cancelled" and outcome.result is None
     assert outcome.failure_report is None
+
+
+def _budget_snapshot(context):
+    import json
+    item = next(value for value in context if value.startswith("Resterend budget van deze poging"))
+    return json.JSONDecoder().raw_decode(item[item.index("{"):])[0]
+
+
+def test_model_sees_updated_budget_without_extra_requests():
+    _, spec, _, tools, journal, runner, _ = fixture()
+    tools.release.set()
+    snapshots = []
+    class ObservingModel(Model):
+        def generate(self, *args, **kwargs):
+            snapshots.append(_budget_snapshot(kwargs["self_context"]))
+            return super().generate(*args, **kwargs)
+    runner.model = ObservingModel()
+    outcome = asyncio.run(runner.run(spec, call_id="call:budget-guidance"))
+    assert outcome.status == "succeeded"
+    assert len(snapshots) == len(journal.usages) == 3
+    assert snapshots[0]["measurement"] == "unmeasured"
+    assert snapshots[0]["remaining"]["input_tokens"] is None
+    for index in (1, 2):
+        snapshot = snapshots[index]
+        assert snapshot["used"]["model_runs"] == index
+        assert snapshot["used"]["input_tokens"] == index * 30
+        assert snapshot["used"]["output_tokens"] == index * 10
+        assert snapshot["used"]["tool_calls"] == index
+        assert snapshot["used"]["tool_dispatches"] == index
+        assert snapshot["remaining"]["model_runs"] == spec.grant.maximum_model_runs - index
+        assert snapshot["remaining"]["input_tokens"] == spec.grant.maximum_input_tokens - index * 30
+        assert snapshot["remaining"]["tool_calls"] == spec.grant.maximum_tool_calls - index
+
+
+def test_partial_measurement_does_not_invent_remaining_token_capacity():
+    from eva.bootstrap.delegated_digital_runner import _remaining_budget_context
+    _, spec, *_ = fixture()
+    actual = ConversationModelUsage.partial(model_attempts=2, tool_calls=1, input_tokens=30, output_tokens=10)
+    snapshot = _budget_snapshot((_remaining_budget_context(spec.grant, actual, calls=1, dispatches=3),))
+    assert snapshot["used"]["input_tokens"] == 30
+    assert snapshot["remaining"]["input_tokens"] is None
+    assert snapshot["remaining"]["output_tokens"] is None
+    assert snapshot["remaining"]["model_runs"] is None
+    assert snapshot["remaining"]["tool_calls"] == max(0, spec.grant.maximum_tool_calls - 3)
