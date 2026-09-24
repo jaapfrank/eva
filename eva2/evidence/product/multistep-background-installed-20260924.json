@@ -1,0 +1,74 @@
+{
+  "checkedAt": "2026-09-24T14:51:25.554924+00:00",
+  "state": "installed",
+  "sourceCommit": "0685f0a5",
+  "installation": {
+    "checkedAt": "2026-09-24T14:48:44.719963+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:20d9d8eb1dcaf1fa1dc54678cd07d319f70ed3ccac0bcfe995c2c6d7f3d30822",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "a6058251e10413e476713c7bb05e3201d12a5efcec7ee404c826c8bb235c7bb8",
+          "adapters/postgres/delegated_work_actions.py": "7221fd27152a141d1cbed1d8fbd3ea7124d696bfc50078704b95998b6868389a",
+          "adapters/postgres/delegated_work.py": "b47adfd1dbddfa88bbdaff8033fe42f3deae3e1bb1c00fef87813ed07000063e"
+        }
+      },
+      "worker": {
+        "image": "sha256:070a1e47e6842f40c3e7292d2cf6b3de4cff050493d7153dc8fdcf1aa562e314",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "a6058251e10413e476713c7bb05e3201d12a5efcec7ee404c826c8bb235c7bb8",
+          "adapters/postgres/delegated_work_actions.py": "7221fd27152a141d1cbed1d8fbd3ea7124d696bfc50078704b95998b6868389a",
+          "adapters/postgres/delegated_work.py": "b47adfd1dbddfa88bbdaff8033fe42f3deae3e1bb1c00fef87813ed07000063e"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/multistep-background-20260924/parity-baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core"
+  },
+  "changes": [
+    "Shared multistep analysis admission guidance; direct simple operations retained",
+    "Core delegated_work.py synchronized with existing worker and repository source; complete digital release fields verified equal"
+  ],
+  "checks": [
+    "11 contact routing checks passed in0.89s",
+    "Independent source review passed",
+    "Exact installed module hashes and healthy core/worker",
+    "Complete core/worker release equality"
+  ],
+  "actualTrial": {
+    "firstAdmissionSeconds": 12.462,
+    "firstConcurrentChatSecondsFromSend": 12.241,
+    "originalTask": "work:eva-chat:13f4c68e-366c-5e3b-a7be-c9e608fc6330",
+    "originalOutcome": "Unclaimed because installed core/worker program differed; stopped without tool execution",
+    "resumedTask": "work:eva-resume:214e8cd5-ae30-5a1a-a116-2bd919b10b34",
+    "resumedState": "ambiguous",
+    "errorCode": "internal_error",
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 5,
+      "tool_calls": 4,
+      "input_tokens": 66910,
+      "output_tokens": 521,
+      "total_tokens": 67431,
+      "cost_usd_micros": null
+    },
+    "activeWorkerChat": {
+      "question": "3 + 4",
+      "answer": "Zeven.",
+      "firstTextSeconds": 5.386,
+      "savedAnswerSeconds": 5.727
+    },
+    "resultAvailable": false
+  },
+  "limitations": [
+    "Actual website background admission and concurrent reply proven only for this case",
+    "HA task failed; no completed task result or physical action proven",
+    "Runtime cumulative input exceeded configured65536; technical error remains to diagnose/classify",
+    "Subsecond response not achieved; no Voice PE trial or owner acceptance"
+  ],
+  "nextAction": "Reuse existing compact HA discovery in worker and classify budget exhaustion; do not increase budget or repeat unchanged trial",
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/multistep-background-20260924"
+}

@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T14:38:57.408932+00:00",
+        "checkedAt": "2026-09-24T14:51:25.554924+00:00",
         "deliveries": [
+          {
+            "title": "HA-analyse aannemen en tussendoor praten",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Echte websiteproef: opdracht als achtergrondwerk aangenomen. Na herstel van verschillend kern-/werkerbestand startte de werker; tijdens uitvoering kreeg een tussenvraag correct antwoord in 5,7 s.",
+            "remaining": "HA-analyse mislukt: vijf modelrondes, 66.910 inputtokens, technische fout en geen eindresultaat. Ontvangst12,5 s; snelheid en taakafronding nog onvoldoende.",
+            "source": "eva2/evidence/product/multistep-background-installed-20260924.json"
+          },
           {
             "title": "Bestaande HA-automatiseringen zelfstandig lezen en uitleggen",
             "date": "24 september",
@@ -1991,15 +1999,15 @@
           }
         ],
         "now": {
-          "title": "HA-analyse uitgevoerd; snelle ontvangst nog niet goed",
-          "state": "Proef afgerond",
-          "detail": "Zelfstandig vinden en uitleggen werkt voor deze echte opdracht. Zeven modelrondes en zes leesacties vóór oplevering; geen snelle ontvangst. Vervolg nog niet gestart.",
-          "doneWhen": "Bestaande achtergrondtaakroute gebruiken voor meerstapsanalyse, met werkelijk aangenomen werk en beschikbaar gesprek."
+          "title": "Achtergrondgesprek werkt; HA-taak nog niet afgerond",
+          "state": "Proef beëindigd · taak mislukt",
+          "detail": "De echte taak startte maar leverde geen eindresultaat. Gebruik van66.910 inputtokens overschrijdt ingesteld budget. Kern en werker zijn nu volledig gelijk; geen taak loopt voor deze proef.",
+          "doneWhen": "Volledige HA-analyse binnen bestaande grenzen afronden en terugmelden; snelle reactie blijft afzonderlijk open."
         },
         "next": {
-          "title": "Lange HA-analyse tijdig naar achtergrondwerk",
+          "title": "Compacte HA-ontdekking voor de achtergrondwerker",
           "state": "Nog niet gestart",
-          "detail": "Uitzoeken waarom de bestaande taaktoelating niet gekozen werd. Werkende API-ontdekking behouden; geen vaste ontvangstscriptjes toevoegen."
+          "detail": "Bestaande compacte inventarisroute hergebruiken en budgetuitputting correct classificeren; daarna alleen herproeven na concrete wijziging."
         },
         "ownerAction": {
           "title": "Gebruik een eigen Home Assistant-opdracht",
@@ -2013,7 +2021,7 @@
           "expected": "Eva zoekt zelf de bestaande configuratie/services op en gebruikt de passende API. Een wijziging moet ze teruglezen en eerlijk toelichten; API-bevestiging alleen bewijst geen fysieke werking."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T14:38:57.408932+00:00"
+        "reviewedAt": "2026-09-24T14:51:25.554924+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11785,7 +11793,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Lange HA-analyse tijdig naar achtergrondwerk",
+      "nextAction": "Compacte HA-ontdekking voor de achtergrondwerker",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
