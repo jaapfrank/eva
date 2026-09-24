@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T03:16:25.114843+00:00",
         "deliveries": [
           {
+            "title": "Sneller contactmodel met gedeelde geheugentools geïnstalleerd",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Gpt-6-luna/low via bestaande provider; native tool_search aangesloten, kern/werker gezond en eigenaarbediening bereikbaar.",
+            "remaining": "Eerdere zes proefaanvragen waren voorlopig; snelheid en echte tooluitvoering met gecorrigeerde catalogus niet gemeten. Geen volledige spraakafronding.",
+            "source": "eva2/evidence/product/contact-luna6-installed-20260924.json"
+          },
+          {
             "title": "Woonkamer-spraakvertraging daadwerkelijk gemeten",
             "date": "24 september",
             "state": "tested",
@@ -1813,15 +1821,15 @@
           }
         ],
         "now": {
-          "title": "Spraakvertraging gemeten; modelwissel nog niet veilig toepasbaar",
-          "state": "Meting afgerond",
-          "detail": "Vier woonkamer-vragen bereiken Eva en TTS; Eva-verwerking duurt 6,3–7,8 seconden. Eén poging herkent geen tekst. Zes modelaanvragen tonen een snellere kandidaat, maar de huidige adapter gebruikt daarvoor een afwijkende toolroute. Er wordt nu niet blind omgeschakeld.",
-          "doneWhen": "Meetresultaten vastgelegd. Geen herstel van continue spraak, volledige kanaalgelijkheid of gebruikersacceptatie geclaimd."
+          "title": "Nieuw contactmodel geïnstalleerd",
+          "state": "Technische installatie afgerond",
+          "detail": "Gpt-6-luna gebruikt nu dezelfde gedeelde toolzoekroute. Kern en werker gezond; websitebediening en spraakgereedheid bereikbaar. Geen nieuwe modelcalls. Werkelijke snelheidswinst via de kanalen is nog niet gemeten.",
+          "doneWhen": "Broncorrectie, offline toolcontrole, geconfigureerde start en installatie afgerond. Gesprek en stem als geheel blijven open."
         },
         "next": {
-          "title": "Snellere contactroute correct aansluiten",
+          "title": "HA-antwoord eerder laten spreken",
           "state": "Nog niet gestart",
-          "detail": "Beperkte modelprofielcorrectie voor native tool search nodig vóór gpt-6-luna bruikbaar vervangt. Zes toegestane vergelijkingsaanvragen zijn verbruikt; geen extra modelproeven gestart. Oude continue-firmwarefout blijft afzonderlijk open."
+          "detail": "Bestaande integratie gericht controleren op wachten tot het volledige Eva-antwoord. De fysieke meting toont 6,3–7,8s verwerking; oorzaak binnen die fase verder bepalen zonder brede audit of firmwarewisseling."
         },
         "ownerAction": {
           "title": "Huidige meetronde uitgevoerd",
@@ -1833,7 +1841,7 @@
           "expected": "Meetuitkomst is geregistreerd; geen nieuwe firmware geïnstalleerd en geen acceptatie afgeleid uit stilte."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T09:39:58.918474+00:00"
+        "reviewedAt": "2026-09-24T09:46:01.021637+00:00"
       }
     },
     "pendingTechnicalReview": {

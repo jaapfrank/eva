@@ -1,0 +1,45 @@
+{
+  "checked_at": "2026-09-24T09:46:01.021637+00:00",
+  "source_commit": "932aaebf685f6ad4a4c62c966cf4b12751707cde",
+  "installed": true,
+  "image": "eva2-contact-luna6:20260924",
+  "contact_model": "gpt-6-luna",
+  "contact_reasoning_effort": "low",
+  "work_model_changed": false,
+  "provider_route_changed": false,
+  "profile_change": "Add documented native tool_search to existing compatibility override; preserve other profile fields.",
+  "independent_review": "Coordinator inspected worker diff and offline serialized request evidence: same18 deferred functions and reasoning.low; optional encrypted reasoning response field differs.",
+  "checks": {
+    "configured_start": "FastAPI created",
+    "source_matches_running_container": true,
+    "services": [
+      {
+        "name": "eva2-managed-b-slot3-core",
+        "image": "eva2-contact-luna6:20260924",
+        "status": "running",
+        "health": "healthy",
+        "contact_model": "gpt-6-luna"
+      },
+      {
+        "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "image": "eva2-contact-luna6:20260924",
+        "status": "running",
+        "health": "healthy",
+        "contact_model": "gpt-6-luna"
+      }
+    ],
+    "owner_dashboard_http": 200,
+    "voice_ready_http": 200,
+    "project_state_http": 200
+  },
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/contact-luna6-20260924/baseline.compose.private.json",
+  "previous_pointer": "/home/administrator/project/.eva2-artifacts/contact-luna6-20260924/pointer-before.private.json",
+  "additional_provider_requests": 0,
+  "limits": [
+    "Six earlier comparison requests remain the complete paid model comparison:9216 input/123 output; credit cost unknown.",
+    "Speed measurements precede catalog correction and do not prove installed channel latency.",
+    "No firmware change, physical continuity claim or owner acceptance.",
+    "Native tool execution with corrected model has not been exercised against provider."
+  ],
+  "next": "Inspect existing HA streaming handoff against measured6.3–7.8s intent delay; no repeated model benchmark."
+}
