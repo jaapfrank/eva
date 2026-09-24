@@ -65,6 +65,17 @@ def runtime_profile_sha256(row):
     return canonical_sha256({key: row.get(key) for key in ('Id', 'Image', 'Config', 'HostConfig', 'Mounts')})
 
 
+def _image_public_trust_file(row, key, value):
+    """The standard CA bundle is image-pinned public data, unless overridden."""
+    if (key != 'SSL_CERT_FILE' or value != '/etc/ssl/certs/ca-certificates.crt'
+            or row.get('HostConfig', {}).get('ReadonlyRootfs') is not True):
+        return False
+    destinations = [mount.get('Destination', '') for mount in row.get('Mounts', [])]
+    destinations.extend(row.get('HostConfig', {}).get('Tmpfs', {}).keys())
+    return not any(destination and (value == destination or value.startswith(destination.rstrip('/') + '/'))
+                   for destination in destinations)
+
+
 def _read_credential(path):
     if path.resolve() != path:
         raise ValueError("runtime credential path contains links")
@@ -149,7 +160,8 @@ def _verify_targets(configuration, runtime_configuration, root, authority, expec
         approved = {item['path']: item['sha256'] for item in writer['credential_files']}
         covered = set(approved) | {writer['model_lease_path']}
         for key, value in env.items():
-            if value and key.endswith('_FILE') and value not in covered:
+            if (value and key.endswith('_FILE') and value not in covered
+                    and not _image_public_trust_file(row, key, value)):
                 raise ValueError("runtime credential route lacks current authorization")
         for container_path in covered:
             host, _ = _host_file(container_path, row.get('Mounts', []), readonly=True)

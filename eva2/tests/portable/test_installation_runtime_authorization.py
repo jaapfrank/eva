@@ -70,3 +70,16 @@ def test_fresh_target_bindings_and_disabled_restored_connectors(monkeypatch, tmp
         assert result['upstream_response_verified'] is False
         assert result['pending_connector_reauthorizations'] == 1
         assert result['target_database_oid'] == 42 and len(guards) == 2
+
+
+@pytest.mark.parametrize('override', [None, 'bind', 'volume', 'tmpfs', 'writable_root', 'other_path'])
+def test_standard_image_ca_is_public_only_without_mutable_override(override):
+    row = {'HostConfig': {'ReadonlyRootfs': True}, 'Mounts': []}
+    path = '/etc/ssl/certs/ca-certificates.crt'
+    if override in {'bind', 'volume'}:
+        row['Mounts'] = [{'Type': override, 'Destination': '/etc/ssl', 'RW': False}]
+    elif override == 'tmpfs': row['HostConfig']['Tmpfs'] = {'/etc': 'rw'}
+    elif override == 'writable_root': row['HostConfig']['ReadonlyRootfs'] = False
+    elif override == 'other_path': path = '/run/custom-ca.crt'
+    assert module._image_public_trust_file(row, 'SSL_CERT_FILE', path) is (override is None)
+    assert not module._image_public_trust_file(row, 'OTHER_FILE', path)
