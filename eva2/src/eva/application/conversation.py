@@ -8,7 +8,9 @@ from dataclasses import dataclass, field, replace
 from datetime import datetime
 import hashlib
 import json
+import logging
 import re
+from time import monotonic
 from typing import Callable, Iterator, Literal, Protocol
 
 from eva.application.memory import PresenceMemory, RecallCurrentFacts
@@ -17,6 +19,12 @@ from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.identity import IdentityPack
 
 MEMORY_SEARCH_ACTION = "search_personal_memory"
+
+_INITIAL_MEMORY_TIMING_LOG = logging.getLogger(__name__ + ".initial_memory_timing")
+_INITIAL_MEMORY_TIMING_LOG.setLevel(logging.INFO)
+_INITIAL_MEMORY_TIMING_LOG.propagate = False
+if not _INITIAL_MEMORY_TIMING_LOG.handlers:
+    _INITIAL_MEMORY_TIMING_LOG.addHandler(logging.StreamHandler())
 
 
 def _bounded_reply_text(text: str, maximum_words: int) -> str:
@@ -1005,7 +1013,17 @@ class LivingConversation:
                 available_names = (*available_names, STOP_VOICE_WORK)
         if initiative is not None:
             self_context = (*self_context, initiative.instructions())
-        memory = recall(turn.text, fast=True)
+        memory_started_at = monotonic()
+        memory_outcome = "failed"
+        try:
+            memory = recall(turn.text, fast=True)
+            memory_outcome = "succeeded"
+        finally:
+            _INITIAL_MEMORY_TIMING_LOG.info("conversation_initial_memory_timing %s", json.dumps({
+                "message_id_sha256": hashlib.sha256(turn.message_id.encode()).hexdigest(),
+                "elapsed_ms": max(0, round((monotonic() - memory_started_at) * 1000)),
+                "outcome": memory_outcome,
+            }, separators=(",", ":")))
         memory_searched = False
         seen_call_ids = {item.call.call_id for item in receipts}
         while True:
