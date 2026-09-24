@@ -109,12 +109,12 @@ class PostgresOwnerMemorySources:
             return None
         channels = tuple(value for value in (dashboard, alias)
                          if value is not None and value != turn.conversation_id)
-        if not channels:
-            return None
-        return self._read(now=now, limit=1, context_conversations=channels, after=after)
+        return self._read(now=now, limit=1, context_conversations=channels, after=after,
+                          context_voice=True, exclude_conversation=turn.conversation_id)
 
     def _read(self, *, now: datetime, limit: int, before: str | None = None,
-              source_id: str | None = None, context_conversations=None, after=None):
+              source_id: str | None = None, context_conversations=None, after=None,
+              context_voice=False, exclude_conversation=None):
         cursor = memory_source_page_request(limit, before)
         if now.tzinfo is None or now.utcoffset() != timedelta(0) or now.microsecond:
             raise ValueError("memory source time must be whole-second UTC")
@@ -171,8 +171,16 @@ class PostgresOwnerMemorySources:
                            data["retention_until"].astext > stamp),
                 )
                 if context_conversations is not None:
-                    query = query.where(data["conversation_id"].astext.in_(context_conversations),
-                                        data["project_id"].astext.is_(None))
+                    channel_scope = data["conversation_id"].astext.in_(context_conversations)
+                    if context_voice:
+                        # Only the already verified owner and private audience above
+                        # can contribute speech context. A household device cannot.
+                        channel_scope = sa.or_(channel_scope, sa.and_(
+                            data["principal_id"].astext == str(self._owner),
+                            data["conversation_id"].astext.startswith("voice:")))
+                    query = query.where(channel_scope, data["project_id"].astext.is_(None))
+                    if exclude_conversation is not None:
+                        query = query.where(data["conversation_id"].astext != exclude_conversation)
                     if after is not None:
                         query = query.where(e.occurred_at > after)
                 if source_id is not None:

@@ -23,7 +23,9 @@ def with_private_continuity(runtime, turn, recent):
     if found is None:
         return recent
     doc, _ = found
-    channel = "Telegram" if doc.conversation_id.startswith("telegram:") else "de website"
+    channel = ("Telegram" if doc.conversation_id.startswith("telegram:") else
+               "een privéspraakgesprek" if doc.conversation_id.startswith("voice:") else
+               "de website")
     content = doc.content
     if len(content) > 1800:
         content = content[:1800] + " [Fragment; de rest is hier niet opgenomen.]"
