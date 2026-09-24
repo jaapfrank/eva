@@ -1,0 +1,31 @@
+{
+  "sourceCommits": [
+    "eb2b6d47",
+    "b101b48e"
+  ],
+  "installed": true,
+  "installationReceipt": "/home/administrator/project/.eva2-artifacts/installer-target-binding-installed-20260925/installation-receipt.json",
+  "scope": "Map installer materialization to maintained service mounts and derive exact prepared restore targets",
+  "verification": {
+    "bindingTestsPassed": 6,
+    "runtimeGuardTestsPassed": 27,
+    "runtimeGuardOptionalDatabaseTestSkipped": 1,
+    "reviews": "Coordinator reviewed executor binding module; independent reviewer approved capture helper",
+    "installedSmoke": "Two exact installed module hashes and imports verified",
+    "mappingScope": "Actual maintained YAML definitions with controlled substitutions; not complete rendered or running graph"
+  },
+  "actualReadOnlyAttempt": {
+    "passed": false,
+    "receipt": "/home/administrator/project/.eva2-artifacts/restore-target-provisioning-20260925/runtime-binding-result.json",
+    "result": "Real PostgreSQL lineage read succeeded; prior provisioning fixture lacks complete runtime DSN mounts and existing guard rejected it",
+    "changedResources": false,
+    "followUp": "Use complete maintained launch configuration; do not weaken guard"
+  },
+  "remaining": [
+    "Runtime reader ownership and startup readiness",
+    "Complete preparation callback and persistent status composition",
+    "Restore source selection/authority and full installer execution"
+  ],
+  "productionChanged": false,
+  "modelCalls": 0
+}

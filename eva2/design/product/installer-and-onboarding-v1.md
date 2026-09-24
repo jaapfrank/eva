@@ -432,3 +432,23 @@ Complete launch configuration, runtime reader ownership, restore authority and
 source fencing still need composition with the actual target provisioner. These
 internal installed pieces do not yet provide the ordinary complete installer.
 Evidence: `evidence/product/installer-preparation-connection-installed-20260925.json`.
+
+
+## Maintained service binding checkpoint — 25 September 2026
+
+Installed `bind_installer_target_graph` maps materialization receipts onto the
+existing managed-B graph. Database host/user/name/password relations are checked;
+core/schema/worker DSNs, memory DSN, budget and selected provider files use the
+maintained mount destinations. Model consumer directories keep their existing
+layout. Commands and healthchecks are preserved. Missing binds return no graph;
+a fully bound candidate still explicitly requires runtime reader ownership and
+readiness. Additional bindings are trusted installer inputs, not browser data.
+
+`capture_prepared_restore_runtime` derives target container pins from a completed
+preparation receipt and database lineage from the supplied target connection,
+then reuses the existing restore guard. The approved source remains explicit.
+A read-only attempt against the earlier resource fixture was rejected because
+its runtime containers lacked complete DSN mounts; that fixture proves persistent
+storage preparation, not the complete maintained launch graph.
+
+Evidence: `evidence/product/installer-target-binding-installed-20260925.json`.
