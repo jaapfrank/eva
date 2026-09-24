@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T01:31:50.110584+00:00",
+        "checkedAt": "2026-09-24T01:44:03.636238+00:00",
         "deliveries": [
+          {
+            "title": "Eigen bijdrage via de huisspeaker",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Gedeelde gezinscontext, opgeslagen herkomst en HA-aflevering zijn aangesloten. Eén recent gebruikte speaker, stille uren en maximaal twee aangeboden bijdragen per dag.",
+            "remaining": "Hoorbare werking en gezinsbeoordeling nog open. Geen persoonherkenning of privéberichten via gedeelde speakers.",
+            "source": "eva2/evidence/product/household-initiative-installed-20260924.json"
+          },
           {
             "title": "Onderzoek bijsturen terwijl de oude poging stopt",
             "date": "24 september",
@@ -1709,15 +1717,15 @@
           }
         ],
         "now": {
-          "title": "Huisaanwezigheid: gedeelde context gebouwd",
-          "state": "In bouw; nog niet geïnstalleerd",
-          "detail": "De initiatiefbeslissing krijgt een afzonderlijke huishoudcontext zonder privégeschiedenis. De opslag van die herkomst en de gesproken aflevering zijn nog niet aangesloten.",
-          "doneWhen": "Bruikbaar spontaan huiscontact uit gedeelde context, met rustmomenten, juiste speaker en stoppen; bestaande privéroute behouden."
+          "title": "Huisinitiatieven via gedeelde context geïnstalleerd",
+          "state": "Geïnstalleerd; praktijkproef open",
+          "detail": "Eva kan op een recent gebruikte huisspeaker een eigen bijdrage aanbieden uit gedeelde gezinscontext. Stille uren, daglimiet en bestaande sessiestop gelden. Kern en werker zijn gezond gestart; hoorbaarheid en nut zijn nog niet beoordeeld.",
+          "doneWhen": "Hoorbaar en passend huiscontact in de gezinsproef; stap 4 blijft daarvoor open."
         },
         "next": {
-          "title": "Duurzame herkomst en gesproken aflevering aansluiten",
-          "state": "Volgende bouwstap binnen huisaanwezigheid",
-          "detail": "Bewaar huishoud-/apparaatbinding bij de beslissing en gebruik die bij de bestaande HA-uitvoer. Privé-uitingen mogen niet door de speakerroute worden opgehaald."
+          "title": "Onderzoek vervolgen bij ontbrekende gegevens",
+          "state": "Volgende functie; nog niet gestart",
+          "detail": "De bestaande onderzoeksroute moet noodzakelijke ontbrekende gegevens gericht verder onderzoeken en daarna een onderbouwd resultaat terugbrengen, binnen het bestaande taakbudget."
         },
         "ownerAction": {
           "title": "Kies wie huisbediening via speakers mag gebruiken",
@@ -11443,7 +11451,7 @@
             "VB-002"
           ],
           "doneWhen": "Passend initiatief met werkelijk resultaat, terecht stil blijven en bestaande huisfuncties behouden; gezin beoordeelt eigenheid, plezier en hinder.",
-          "preserve": "AU-008 technisch klaar; IN-02 menselijk oordeel blijft open zonder verdere bouw te blokkeren.",
+          "preserve": "Privé-initiatief en gedeelde huisbijdragen zijn aangesloten en geïnstalleerd. Gedeelde bijdrage gebruikt één recente spraaksessie, rustmomenten en daglimiet. Hoorbaarheid, nut, hinder en IN-02 blijven open; huisbediening wacht nog op de eigenaarkeuze.",
           "planningEffortHours": "4–12"
         },
         {
@@ -11503,7 +11511,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Bewaar huishoud-/apparaatbinding bij de beslissing en gebruik die bij de bestaande HA-uitvoer. Privé-uitingen mogen niet door de speakerroute worden opgehaald.",
+      "nextAction": "De bestaande onderzoeksroute moet noodzakelijke ontbrekende gegevens gericht verder onderzoeken en daarna een onderbouwd resultaat terugbrengen, binnen het bestaande taakbudget. Nog niet gestart; uitgebreide proeven blijven uitgesteld.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

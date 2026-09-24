@@ -1,0 +1,51 @@
+{
+  "recordedAt": "2026-09-24T01:43:25.878025+00:00",
+  "sourceCommit": "74f62ab4376c050003fdbe4f6b065944b64b4397",
+  "status": "installed_start_checked",
+  "image": "eva2-household-initiative:20260924",
+  "services": {
+    "eva2-managed-b-slot3-core": {
+      "image": "eva2-household-initiative:20260924",
+      "imageId": "sha256:3cd5ae320967ec48b92614261f3bc4e06f878daeef80da75fb723cb0ed0435ae",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "image": "eva2-household-initiative:20260924",
+      "imageId": "sha256:3cd5ae320967ec48b92614261f3bc4e06f878daeef80da75fb723cb0ed0435ae",
+      "state": "running",
+      "health": "healthy"
+    }
+  },
+  "checks": [
+    "syntax of changed modules",
+    "configured app construction",
+    "current initiative and household authority",
+    "component construction for two configured devices",
+    "zero admitted/call_started delegated work before cutover",
+    "core and worker healthy after installation"
+  ],
+  "scope": "Shared household context, durable provenance, one recent live native-session destination, quiet hours and bounded HA announcements. Existing private route preserved.",
+  "limits": {
+    "quietHours": "22:00-08:00 Europe/Amsterdam",
+    "maxOfferedPerDay": 2,
+    "minimumReviewIntervalMinutes": 60,
+    "pendingExpressionExpiresMinutes": 15,
+    "budgets": "existing reflection/model budgets; no new allowance"
+  },
+  "notProven": [
+    "physical audible delivery",
+    "usefulness and household experience",
+    "end-to-end initiative/model trial",
+    "person recognition",
+    "complete step 4 or complete product"
+  ],
+  "developmentModelTrials": 0,
+  "developmentTestMessages": 0,
+  "creditCost": "unknown",
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/household-initiative-20260924/baseline.compose.private.json",
+  "runtimeOverlayPreserved": [
+    "bootstrap/runtime.py",
+    "adapters/model/pydantic_conversation.py"
+  ]
+}
