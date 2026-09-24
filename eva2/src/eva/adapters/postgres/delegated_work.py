@@ -417,7 +417,6 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                         delegated_work_runs.c.installation_id
                         == self._scope_value.installation_id,
                         delegated_work_runs.c.state == "admitted",
-                        delegated_work_runs.c.deadline >= now,
                         delegated_work_runs.c.spec_payload[
                             "worker_profile_release_sha256"
                         ].as_string()
