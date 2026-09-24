@@ -62,7 +62,16 @@ def validate_runtime_authorization_configuration(configuration):
 
 def runtime_profile_sha256(row):
     """Exact native runtime launch and mount configuration approved by operator."""
-    return canonical_sha256({key: row.get(key) for key in ('Id', 'Image', 'Config', 'HostConfig', 'Mounts')})
+    mounts = row.get('Mounts')
+    if (not isinstance(mounts, list)
+            or any(not isinstance(mount, dict) or not isinstance(mount.get('Destination'), str)
+                   or not mount['Destination'].startswith('/') for mount in mounts)
+            or len({mount['Destination'] for mount in mounts}) != len(mounts)):
+        raise ValueError("runtime profile mount destinations are invalid or duplicated")
+    # Docker serializes its mount map in unspecified order; command/env order stays exact.
+    profile = {key: row.get(key) for key in ('Id', 'Image', 'Config', 'HostConfig')}
+    profile['Mounts'] = sorted(mounts, key=lambda mount: mount['Destination'])
+    return canonical_sha256(profile)
 
 
 def _image_public_trust_file(row, key, value):

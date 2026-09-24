@@ -83,3 +83,30 @@ def test_standard_image_ca_is_public_only_without_mutable_override(override):
     elif override == 'other_path': path = '/run/custom-ca.crt'
     assert module._image_public_trust_file(row, 'SSL_CERT_FILE', path) is (override is None)
     assert not module._image_public_trust_file(row, 'OTHER_FILE', path)
+
+
+def test_profile_ignores_only_mount_serialization_order():
+    import copy
+    row = {'Id': 'a'*64, 'Image': 'sha256:'+'b'*64,
+           'Config': {'Cmd': ['first', 'second'], 'Env': ['A=1', 'B=2']},
+           'HostConfig': {}, 'Mounts': [
+               {'Destination': '/run/z', 'Source': '/private/z', 'RW': False, 'Type': 'bind'},
+               {'Destination': '/run/a', 'Source': '/private/a', 'RW': False, 'Type': 'bind'}]}
+    original = copy.deepcopy(row)
+    expected = module.runtime_profile_sha256(row)
+    row['Mounts'].reverse()
+    assert module.runtime_profile_sha256(row) == expected
+    assert original['Mounts'][0]['Destination'] == '/run/z'
+    for section, key in [('Config', 'Cmd'), ('Config', 'Env')]:
+        changed = copy.deepcopy(row); changed[section][key].reverse()
+        assert module.runtime_profile_sha256(changed) != expected
+    for key, value in [('Source', '/other'), ('RW', True), ('Type', 'volume'), ('Propagation', 'shared')]:
+        changed = copy.deepcopy(row); changed['Mounts'][0][key] = value
+        assert module.runtime_profile_sha256(changed) != expected
+
+
+@pytest.mark.parametrize('mounts', [None, {}, [None], [{}], [{'Destination': 'relative'}],
+                                  [{'Destination': '/run'}, {'Destination': '/run'}]])
+def test_profile_refuses_ambiguous_mount_inventory(mounts):
+    with pytest.raises(ValueError, match='mount destinations'):
+        module.runtime_profile_sha256({'Mounts': mounts})
