@@ -63,6 +63,7 @@ class InstallerPortableRestore:
         runtime_identity: dict[str, str] | None = None,
         runtime_guard: Callable[[Any], None] | None = None,
         recovery_materialization: dict | None = None,
+        external_restore: Callable[..., dict] | None = None,
     ):
         # The composition root must provide an isolated, traffic-closed target.
         if (
@@ -86,6 +87,9 @@ class InstallerPortableRestore:
                     or not Path(recovery_materialization["destination"]).is_absolute()):
                 raise ValueError("recovery materialization requires a trusted absolute destination and owners")
             _owners(recovery_materialization["owners"])
+        if external_restore is not None and (not callable(external_restore) or recovery_materialization is None):
+            raise ValueError("external restoration requires configured materialization")
+        self.external_restore = external_restore
         self.recovery_materialization = deepcopy(recovery_materialization)
         self._lock = Lock()
         self._pending: tuple[TemporaryDirectory, str, float, str] | None = None
@@ -155,7 +159,9 @@ class InstallerPortableRestore:
                 summary.update(
                     archive_sha256=package["archive_sha256"],
                     core_archive_sha256=validated["archive_sha256"],
-                    notice="Eva blijft uit. De kern wordt hersteld en pakketbestanden worden inactief klaargezet. Geheugen- en gatewaydatabases moeten daarna worden geïmporteerd; documentproviders moeten worden gekoppeld en gecontroleerd vóór afzonderlijke operatorvrijgave.",
+                    notice=("Deze herstelactie importeert de kern, het geheugen en de gateway in de ingestelde aparte doelen. Eva blijft uit totdat documentproviders zijn gekoppeld en de installatie is vrijgegeven."
+                        if self.external_restore is not None else
+                        "Eva blijft uit. De kern wordt hersteld en pakketbestanden worden inactief klaargezet. Geheugen- en gatewaydatabases moeten daarna worden geïmporteerd; documentproviders moeten worden gekoppeld en gecontroleerd vóór afzonderlijke operatorvrijgave."),
                     external_components="not_materialized",
                     object_recovery_notice="Een mislukte poging kan een volledige inactieve bestandskopie achterlaten. Deze wordt niet verwijderd of overschreven; de operator moet de kopie beoordelen en een nieuw leeg hersteldoel configureren voor een nieuwe poging.",
                 )
@@ -303,11 +309,25 @@ class InstallerPortableRestore:
         authorize_installation_recovery(package_manifest_raw=manifest,
             core_manifest_raw=package["core_archive"]["manifest_raw"],
             restore_authority_raw=self.authority_reader())
+        external = None
+        if self.external_restore is not None:
+            def guard():
+                if self.runtime_guard is not None:
+                    self.runtime_guard(connection)
+                authorize_installation_recovery(package_manifest_raw=manifest,
+                    core_manifest_raw=package["core_archive"]["manifest_raw"],
+                    restore_authority_raw=self.authority_reader())
+            materialization_state["external_import_attempted"] = True
+            external = self.external_restore(destination, guard=guard)
+            guard()
         return {**summary, **result, "archive_sha256": package["archive_sha256"],
             "core_archive_sha256": package["core_archive"]["archive_sha256"],
-            "external_components": "materialized_inactive",
+            "external_components": "imported_inactive" if external is not None else "materialized_inactive",
+            "external_restore": external,
             "materialization_destination": str(destination),
-            "notice": "De kern is hersteld en de bestanden staan inactief klaar. Eva blijft uit. Importeer eerst geheugen- en gatewaydatabases, koppel en controleer documentproviders en laat de operator daarna afzonderlijk vrijgeven."}
+            "notice": ("Kern, geheugen en gateway zijn geïmporteerd maar blijven inactief. Koppel en controleer de documentproviders vóór vrijgave."
+                if external is not None else
+                "De kern is hersteld en de bestanden staan inactief klaar. Eva blijft uit. Importeer eerst geheugen- en gatewaydatabases, koppel en controleer documentproviders en laat de operator daarna afzonderlijk vrijgeven.")}
 
     def execute(self, confirmation: str) -> dict[str, object]:
         with self._lock:
@@ -369,7 +389,8 @@ class InstallerPortableRestore:
                 return {"status": "restored", "inserted_records": inserted, **summary}
             except Exception as error:
                 if "materialization_state" in locals() and materialization_state["published"]:
-                    raise InactiveRecoveryMaterialRetained(str(destination)) from error
+                    raise InactiveRecoveryMaterialRetained(str(destination),
+                        external_import_attempted=materialization_state.get("external_import_attempted", False)) from error
                 raise
             finally:
                 self._discard()

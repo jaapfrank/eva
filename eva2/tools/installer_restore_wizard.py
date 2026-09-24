@@ -25,7 +25,7 @@ def main(argv=None):
     )
     required = {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed", "runtime_guard"}
     if (not isinstance(config, dict) or not required <= set(config)
-            or not set(config) <= required | {"runtime_identity", "recovery_materialization"}
+            or not set(config) <= required | {"runtime_identity", "recovery_materialization", "external_recovery"}
             or config["traffic_closed"] is not True):
         raise ValueError("restore configuration requires pinned runtime_guard identities and closed traffic")
     paths = {key: Path(config[key]) for key in ("authority", "workspace", "objects")}
@@ -36,6 +36,11 @@ def main(argv=None):
         raise ValueError("object keyring path must be absolute")
     resolver = FileObjectKeyResolver(keyring_path) if keyring_path else None
     engine = create_engine(config["dsn"])
+    external_restore = None
+    if "external_recovery" in config:
+        from tools.installation_external_restore import restore_external_components, validate_external_configuration
+        validate_external_configuration(config["external_recovery"])
+        external_restore = partial(restore_external_components, configuration=config["external_recovery"])
     workflow = InstallerPortableRestore(
         engine=engine,
         authority_reader=partial(read_private_restore_authority, paths["authority"]),
@@ -45,6 +50,7 @@ def main(argv=None):
         runtime_identity=config.get("runtime_identity"),
         runtime_guard=partial(verify_restore_runtime, expected=config["runtime_guard"]),
         recovery_materialization=config.get("recovery_materialization"),
+        external_restore=external_restore,
     )
     try:
         return run_installer_wizard(remaining, restore_workflow=workflow)

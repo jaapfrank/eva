@@ -89,9 +89,12 @@ def register_installer_restore_routes(
                 ):
                     raise ValueError()
                 result = await run_in_threadpool(workflow.execute, raw["confirmation"])
-        except InactiveRecoveryMaterialRetained:
+        except InactiveRecoveryMaterialRetained as error:
             return JSONResponse({
-                "detail": "Herstel is niet bevestigd. De inactieve bestandskopie is bewaard; Eva blijft uit. Controle van de bewaarde kopie is nodig voordat je opnieuw kunt herstellen.",
+                "detail": ("Herstel is niet bevestigd. De inactieve bestandskopie is bewaard; Eva blijft uit. "
+                    + ("Geheugen of gateway kan al gedeeltelijk zijn geïmporteerd. Laat de hersteldoelen controleren; start niet opnieuw op dezelfde doelen."
+                       if error.external_import_attempted else
+                       "Controle van de bewaarde kopie is nodig voordat je opnieuw kunt herstellen.")),
                 "recovery_state": "materialized_inactive",
             }, status_code=409, headers=security_headers)
         except (ValueError, binascii.Error):
