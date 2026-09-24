@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T03:13:16.168481+00:00",
+        "checkedAt": "2026-09-24T03:16:25.114843+00:00",
         "deliveries": [
           {
             "title": "Een eerder privégesprek en antwoord terugvinden",
@@ -1805,10 +1805,10 @@
           }
         ],
         "now": {
-          "title": "Ouder privégesprek op verzoek terugzoeken",
-          "state": "Geïnstalleerd",
-          "detail": "De geheugenzoekactie kan maximaal drie bewaarde privé-uitwisselingen met het eerdere antwoord ophalen, ook ouder dan24 uur. Eigenaarwebsite en gekoppelde privéchat delen deze route; huisapparaten krijgen geen privécontext.",
-          "doneWhen": "Bron geïnstalleerd, kern en werker gezond. Echte terugzoek- en kanaalproef later; stap2 nog open."
+          "title": "Geen nieuwe bouwtaak actief",
+          "state": "Wacht op openstaande keuzes",
+          "detail": "Oudere privégesprekken zoeken is geïnstalleerd. Oude taken en resultaten zoeken/openen bestond al en is behouden; er wordt niets opnieuw gebouwd. Snelle begroeting en fysieke continue spraak zijn nog niet afgerond.",
+          "doneWhen": "Antwoord over de kleine modelvergelijking en het fysieke wakeword-meetmoment maakt het afhankelijke vervolg uitvoerbaar. Geen acceptatie of volledige afronding geclaimd."
         },
         "next": {
           "title": "Sneller contactmodel en fysieke spraak",
@@ -1816,17 +1816,17 @@
           "detail": "Kleine modelvergelijking (maximaal zes aanvragen) en later wakeword-meetmoment zijn gevraagd. Geen proeven zonder antwoord. Onafhankelijk functioneel vervolg blijft mogelijk bij een concreet ontbrekend onderdeel."
         },
         "ownerAction": {
-          "title": "Kies wanneer de Voice PE-diagnose kan",
+          "title": "Beantwoord de twee openstaande vragen in deze taak",
           "url": "http://localhost:44712/",
           "linkLabel": "Projectoverzicht",
           "steps": [
-            "Beantwoord de vraag in deze Codex-taak: voorlopig uitstellen of één kort wakeword-meetmoment afspreken.",
-            "Zonder afgesproken meetmoment blijft de werkende firmware staan."
+            "Kies bij de openstaande vraag: maximaal zes korte modelaanvragen toestaan of de vergelijking uitstellen.",
+            "Kies bij de Voice PE-vraag: een kort wakeword-meetmoment of voorlopig uitstellen. Bestaande werkende firmware blijft staan."
           ],
-          "expected": "Een vastgelegde falende wakeword-overgang; geen herhaling van een blinde firmwareproef."
+          "expected": "Duidelijke uitvoerruimte voor snelle ontvangst en de fysieke spraakfout. Een antwoord geldt niet als productacceptatie."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T03:13:16.168481+00:00"
+        "reviewedAt": "2026-09-24T03:16:25.114843+00:00"
       }
     },
     "pendingTechnicalReview": {

@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-09-24T03:16:25.114843+00:00",
+  "kind": "existing_implementation_preserved",
+  "sourceCommit": "72985a06",
+  "runtimeFilesMatchSource": [
+    "bootstrap/delegated_work_owner_service.py",
+    "adapters/api/dashboard_work.py"
+  ],
+  "observedEndpoint": {
+    "path": "/internal/v1/dashboard/work",
+    "httpStatus": 200,
+    "contract": "EvaDelegatedWorkOwnerResult/v1",
+    "operation": "list",
+    "storedJobCount": 15,
+    "truncated": false
+  },
+  "existingCapabilities": [
+    "Search retained titles, tasks and results",
+    "Paginate older search results",
+    "Open exact stored result without restarting work"
+  ],
+  "limits": [
+    "No search or result execution trial repeated",
+    "No claim all stored jobs succeeded or returned correct results",
+    "No new feature built",
+    "Contact model comparison and physical Voice PE diagnosis await owner answers"
+  ],
+  "newModelCalls": 0
+}
