@@ -1,0 +1,45 @@
+{
+  "checkedAt": "2026-09-24T19:18:51.104373+00:00",
+  "sourceCommit": "befaf473656672d8dc0eb04404f2223ab48339a6",
+  "status": "installed",
+  "change": "Bound outgoing Hindsight recall queries to500 cl100k tokens, preserving original task and full-query anchor selection; no added request fanout.",
+  "tests": {
+    "first": "74passed;1test fixture exceeded its assumed limit",
+    "correctedFixture": "3passed,72deselected",
+    "independentReview": "/root/recall_query_review GO on concrete source and local vocabulary packaging"
+  },
+  "liveRecall": {
+    "beforeStatus": 400,
+    "afterStatus": 200,
+    "originalTokens": 676,
+    "sentTokens": 494,
+    "results": 12
+  },
+  "deployment": {
+    "checkedAt": "2026-09-24T19:18:06.577573+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:73d7e27a6443dc303aa1f61599e1e910d60abbf98c9bf517796c6818a85aacd1",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/projection/hindsight.py": "40424a247669d742f819869b1caf9f73c5c7a773103f3de91bd13690d57cb4c3",
+          "adapters/model/tokenizer_data/9b5ad71b2ce5302211f9c61530b329a4922fc6a4": "223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7"
+        }
+      },
+      "worker": {
+        "image": "sha256:5927e1a54a8694a07b23b41ebdd832e93b24ed097b6501dc7e4223d7b77ceaad",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/projection/hindsight.py": "40424a247669d742f819869b1caf9f73c5c7a773103f3de91bd13690d57cb4c3",
+          "adapters/model/tokenizer_data/9b5ad71b2ce5302211f9c61530b329a4922fc6a4": "223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/recall-query-limit-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "limitations": [
+    "Head/tail query is a retrieval approximation, not lossless semantic recall.",
+    "No task completion, latency improvement or owner acceptance demonstrated."
+  ],
+  "artifacts": "/home/administrator/project/.eva2-artifacts/recall-query-limit-20260924"
+}

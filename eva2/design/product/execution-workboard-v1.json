@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T19:10:12.849852+00:00",
+        "checkedAt": "2026-09-24T19:18:51.111600+00:00",
         "deliveries": [
+          {
+            "title": "Lange opdrachten blokkeren geheugenzoeking niet meer",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Geheugenzoekvraag begrensd zonder de volledige opdracht te wijzigen. Geïnstalleerde opvraag geeft nu HTTP200 en12 resultaten waar dezelfde invoer eerder werd geweigerd. Kern/werker gezond.",
+            "remaining": "Gerichte controles en onafhankelijke review geslaagd. Geen snelheids- of algemene leeracceptatie; lange zoektekst blijft een benadering.",
+            "source": "eva2/evidence/product/recall-query-limit-installed-20260924.json"
+          },
           {
             "title": "Bijsturen toont wat werkelijk is gestopt en hervat",
             "date": "24 september",
@@ -2159,10 +2167,10 @@
           }
         ],
         "now": {
-          "title": "Gespreksfout bij ophalen geheugen oplossen",
-          "state": "Oorzaak vastgesteld; correctie nog niet gebouwd",
-          "detail": "Oorzaak bevestigd met één rechtstreekse geheugenopvraag, zonder gespreksmodel: volledige opdracht telt676 tokens; geïnstalleerde Hindsight weigert boven500 (HTTP400). Geheugenzoekvraag begrenzen zonder de originele opdracht te verliezen. Geen herhaling van de leeropdracht.",
-          "doneWhen": "Concrete oorzaak vastgesteld en noodzakelijke correctie geïnstalleerd; daarna de leeropdracht gericht voortzetten."
+          "title": "Leeropdracht vervolgen na geheugenreparatie",
+          "state": "Eén echte opdracht wordt gestart",
+          "detail": "Zelfde vooraf vastgelegde FLUXNOTE/1-criteria; eerdere fout en verbruik blijven bewaard. Geen ongewijzigde herhaling: HTTP400 is opgelost en live gecontroleerd.",
+          "doneWhen": "Werkelijke procedure en uitvoer gecontroleerd, uitkomst en gemeten verbruik geregistreerd."
         },
         "next": {
           "title": "Leren uit documentatie en meerdaags werk afronden",
@@ -2181,7 +2189,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T19:10:12.849852+00:00"
+        "reviewedAt": "2026-09-24T19:18:51.111600+00:00"
       }
     },
     "pendingTechnicalReview": {
