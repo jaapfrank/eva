@@ -1,0 +1,46 @@
+{
+  "checkedAt": "2026-09-24T16:18:27.030173+00:00",
+  "sourceCommit": "6265fe6476f149347e53b9165a60c9740c31d1b7",
+  "status": "installed",
+  "gap": "A failed last reusable Python execution could be hidden by prior successful preparation or a subsequently saved failure report.",
+  "change": "Completion requires last procedure execution not failed. Missing completed tool evidence uses existing incomplete_work state, with no success result and no automatic retry. A later successful execution can recover.",
+  "tests": {
+    "result": "22 passed in 2.63 seconds",
+    "scope": "Controlled conversation loop, task lifecycle and outcome predicates; not PostgreSQL or live model execution.",
+    "initialFailure": "9 failed,13 passed: stale controlled Store lacked new persistence interface. Added explicit isolated persistence fixture and reran; initial log retained."
+  },
+  "review": {
+    "verdict": "GO",
+    "reviewer": "bounded_contact_comparison",
+    "scope": "Product diff and final fixture reviewed independently",
+    "limitation": "Last execution outcome is not proof that every semantic task requirement succeeded; existing unfinished-plan check remains."
+  },
+  "installation": {
+    "checkedAt": "2026-09-24T16:18:05.172227+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:f6fce9ec99222e999389b3bc06002c5309ee3ee751fb06d10326fe5f1df84130",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_runner.py": "4b7677896f115e49a27089349fb8cf3205b68c0657a7705d4d6c6b233a594660"
+        }
+      },
+      "worker": {
+        "image": "sha256:a326964070d9eb3d772fb49cff08f4a8cac9fbeb0bcb25e929be60783b6b719a",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_runner.py": "4b7677896f115e49a27089349fb8cf3205b68c0657a7705d4d6c6b233a594660"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/procedure-completion-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "readiness": {
+    "owner": 200,
+    "voice": 200
+  },
+  "runtimeModelCalls": 0,
+  "creditCost": "Unknown",
+  "ownerAccepted": false,
+  "remaining": "Real model-authored learning and procedure reuse trial remains deferred; no broad task-completion claim."
+}

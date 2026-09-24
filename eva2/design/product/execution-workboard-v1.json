@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T16:10:02.843179+00:00",
+        "checkedAt": "2026-09-24T16:18:53.743512+00:00",
         "deliveries": [
+          {
+            "title": "Mislukte Python-uitvoering telt niet meer als afgeronde taak",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Eerder geslaagde voorbereiding of een bewaard foutrapport maskeert een mislukte laatste uitvoering niet meer. Taak blijft onafgerond; latere geslaagde uitvoering kan herstellen. Kern en werker gezond.",
+            "remaining": "22 gerichte controles met gecontroleerde model/toolreacties en onafhankelijke review geslaagd. Echte modelgestuurde leer-/hergebruikproef blijft open.",
+            "source": "eva2/evidence/product/procedure-completion-installed-20260924.json"
+          },
           {
             "title": "Openbare speakertaak blijft bedienbaar na nieuw wakeword",
             "date": "24 september",
@@ -2063,15 +2071,15 @@
           }
         ],
         "now": {
-          "title": "Speaker-taakcontinuiteit geinstalleerd",
+          "title": "Resultaatbeoordeling van procedurewerk geïnstalleerd",
           "state": "Technisch opgeleverd",
-          "detail": "Bron ec80c7d8 in kern en werker geinstalleerd. Website en spraakgereedheid HTTP 200; fysieke gebruikersproef apart open.",
-          "doneWhen": "Deze begrensde technische wijziging is afgerond. Het volledige projectgoal blijft open."
+          "detail": "Bron 6265fe64 draait in kern en werker. Website en spraakgereedheid HTTP 200. Geen Eva-modelaanvragen.",
+          "doneWhen": "Dit concrete tekort is hersteld; volledige digitale taakuitvoering en gezinsacceptatie blijven open."
         },
         "next": {
-          "title": "Algemene taakuitvoering en terugmelding verder afronden",
+          "title": "Vervolgwerk met eerdere taakresultaten afronden",
           "state": "Nog niet gestart",
-          "detail": "Na installatie van speaker-taakcontinuïteit volgt het eerstvolgende concrete tekort uit stap 3. Herstelwizard blijft uitgesteld."
+          "detail": "Bestaande hervatting werkt. Onderzoeken of expliciete overdracht van een eerder resultaat nodig is voor nieuwe vervolgopdrachten; geen algemene herbouw of herstelwizard."
         },
         "ownerAction": {
           "title": "Een eerdere speakertaak gericht stoppen",
@@ -2085,7 +2093,7 @@
           "expected": "Eva vindt de eerdere opdracht via dezelfde speaker en stopt alleen de gekozen taak. Deze fysieke proef is nog niet door jou bevestigd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T16:10:02.843179+00:00"
+        "reviewedAt": "2026-09-24T16:18:53.743512+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11857,7 +11865,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Algemene taakuitvoering en terugmelding verder afronden; volgende concrete wijziging nog niet gestart.",
+      "nextAction": "Vervolgwerk met eerdere taakresultaten afronden",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
