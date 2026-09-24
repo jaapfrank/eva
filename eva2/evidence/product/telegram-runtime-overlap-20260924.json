@@ -1,0 +1,53 @@
+{
+  "checkedAt": "2026-09-24T18:41:08.800542+00:00",
+  "kind": "existing_telegram_concurrency_verified_without_rebuild",
+  "sourceBase": "22fa188854c781bc2be79f60c1dfc043ccbc39a2",
+  "finding": "No same-conversation serial queue found in live Bottie ingress or the shared core execution path. Different message IDs hold different journal execution locks.",
+  "newProof": {
+    "test": "test_distinct_telegram_messages_overlap_in_runtime_and_postgres",
+    "result": "6 passed in 3.66s",
+    "behavior": "Same shared runtime and Telegram conversation; first controlled model waits, second completes and commits before release; both stored replies bound to distinct original messages. Existing duplicate-message exclusion/replay remains covered.",
+    "database": "Disposable PostgreSQL, real conversation journal and runtime.respond; model, memory and external tools controlled.",
+    "artifact": "/home/administrator/project/.eva2-artifacts/telegram-runtime-overlap-20260924/test-result.txt",
+    "review": "Coordinator reviewed fixture, actual runtime method binding, real journal, Event gate and independent committed replies; no production change needed."
+  },
+  "existingEvidence": [
+    "eva2/evidence/product/telegram-concurrent-installed-20260922.json",
+    "eva2/evidence/product/telegram-poll-throttle-installed-20260922.json",
+    "eva2/evidence/product/website-overlap-live-20260923.json",
+    "eva2/evidence/product/multistep-background-installed-20260924.json"
+  ],
+  "liveSource": {
+    "bootstrap/runtime.py": {
+      "liveMatchesRepository": false,
+      "sha256": "24f66338ddbdc7a00d2a3220861c484ceb2db6f1b64335524d3da40ead0b650d"
+    },
+    "adapters/postgres/conversation_journal.py": {
+      "liveMatchesRepository": true,
+      "sha256": "1012e0b868cb830dc07616bd3b65ddea6473997c3ed9f3d5fa97f898dae82b10"
+    },
+    "adapters/model/pydantic_conversation.py": {
+      "liveMatchesRepository": true,
+      "sha256": "a0ac8ebe794d3a657e75c487552134fc675cdbef051f5a78349fa2ad0ddc013b"
+    }
+  },
+  "runtimeDifference": "Only deferred restore_activation import and startup guard differ from repository; respond method unchanged. Do not install deferred recovery as part of this check.",
+  "transport": {
+    "service": "eva.service",
+    "stateObserved": "active",
+    "directory": "/home/administrator/project/Bottie",
+    "existingTest": "test/telegram-concurrent-ingress.test.js",
+    "existingTestBoundary": "Actual middleware with controlled API/NDJSON; not rerun without changed source."
+  },
+  "limitations": [
+    "Not a new real Telegram/model/physical voice trial.",
+    "Does not establish fast model answers or full cross-channel acceptance.",
+    "Production metadata query of latest40 Telegram events showed latest event dated2026-09-22; historical user failure is not retested by this controlled proof.",
+    "No broader foreground/background model concurrency claim from the controlled model."
+  ],
+  "productionChanged": false,
+  "modelCalls": 0,
+  "telegramMessagesSent": 0,
+  "developmentCredits": "unknown; not estimated",
+  "nextDecision": "Preserve existing concurrency code. Current-version Telegram owner trial remains open; continue independent task-completion functionality instead of rebuilding polling."
+}

@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T18:35:48.502027+00:00",
+        "checkedAt": "2026-09-24T18:41:08.800542+00:00",
         "deliveries": [
+          {
+            "title": "Telegram-kern verwerkt tussenvraag naast wachtend bericht",
+            "date": "24 september",
+            "state": "tested",
+            "result": "Nieuwe proef met echte database/runtime: tweede vraag antwoordt en wordt opgeslagen terwijl de eerste modelaanroep wacht. Bestaande gelijktijdige verwerking behouden; geen nieuwe productcode nodig.",
+            "remaining": "Gecontroleerd model; echte Telegram-reactietijd en jouw gebruikservaring blijven open.6 controles geslaagd, onafhankelijk beoordeeld.",
+            "source": "eva2/evidence/product/telegram-runtime-overlap-20260924.json"
+          },
           {
             "title": "Privécontext aan juiste bestemming gebonden; antwoordkoppeling gecontroleerd",
             "date": "24 september",
@@ -2143,29 +2151,29 @@
           }
         ],
         "now": {
-          "title": "Privécontinuïteit bijgewerkt; Telegram-antwoordkoppeling gecontroleerd",
-          "state": "Geïnstalleerd; praktijkproeven open",
-          "detail": "Bron4f154992 in gezonde kern/werker; gelijke uitvoerprofielen en website/spraakroute bereikbaar. Geen modelcalls of Telegramberichten.",
-          "doneWhen": "Gerichte technische wijziging afgerond; volledige kanaalgelijkheid en gebruikersacceptatie blijven open."
+          "title": "Bestaande Telegram-gelijktijdigheid gericht gecontroleerd",
+          "state": "Technische proef geslaagd; gebruiksproef open",
+          "detail": "Geen wachtrijdefect aangetoond. De kern kan twee verschillende berichten in hetzelfde gesprek naast elkaar verwerken. Geen herbouw, installatie of modelcalls nodig.",
+          "doneWhen": "Gerichte runtime-/databaseproef afgerond. Snelle echte tussenantwoorden blijven afzonderlijk te beoordelen."
         },
         "next": {
-          "title": "Telegram-tussenvraag tijdens onderzoek afronden",
+          "title": "Lopende taken volgen, stoppen en hervatten afronden",
           "state": "Nog niet gestart",
-          "detail": "Bestaande ingang en taakoverdracht controleren op de nog gemelde wachtrij; de geslaagde antwoordkoppeling is geen bewijs van een snel tussengesprek."
+          "detail": "Bestaande taakbediening en terugmelding uit stap3 als samenhangende gebruikersfunctie afronden; Telegram-gebruikersproef blokkeert dat niet."
         },
         "ownerAction": {
-          "title": "Ontvangst op beide Voice PE-speakers horen",
+          "title": "Tussenvraag op de bijgewerkte Telegramroute",
           "url": "http://localhost:44712/",
           "linkLabel": "Projectoverzicht",
           "steps": [
-            "Gebruik op de speaker in de woonkamer het normale wakeword en zeg Hallo Eva.",
-            "Let op of je eerst Een momentje hoort en daarna het antwoord.",
-            "Doe hetzelfde op de tweede speaker en meld bij welke speaker het wel of niet gebeurt."
+            "Stuur in je gewone privéchat met Eva: /eva2 Zoek uit wat Home Assistant Cloud doet voor spraak, met bronnen.",
+            "Stuur direct daarna: /eva2 Hoe gaat het met jou?",
+            "Meld of de tussenvraag vóór het onderzoeksresultaat beantwoord wordt en ongeveer hoe lang dat duurt."
           ],
-          "expected": "Een korte ontvangstmelding vóór het inhoudelijke modelantwoord. Exacte tijd en natuurlijke beleving zijn nog niet bevestigd. De firmware is niet gewijzigd."
+          "expected": "De tussenvraag hoeft niet op het onderzoeksresultaat te wachten. De technische proef bewijst nog niet dat het model snel genoeg antwoordt. De eerder gevraagde hoorproef op beide speakers blijft ook open."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T18:35:48.502027+00:00"
+        "reviewedAt": "2026-09-24T18:41:08.800542+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11937,7 +11945,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Telegram-tussenvraag tijdens onderzoek afronden",
+      "nextAction": "Lopende taken volgen, stoppen en hervatten afronden",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

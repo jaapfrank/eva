@@ -161,3 +161,47 @@ def test_parallel_voice_execution_and_reconstructed_runtime_do_not_repeat_model(
         assert len(calls) == 1
     finally:
         new_engine.dispose()
+
+
+def test_distinct_telegram_messages_overlap_in_runtime_and_postgres(people_memory_engine, monkeypatch):
+    """A waiting model turn must not lock a different question in the same chat."""
+    from eva.application.conversation import ConversationModelResult
+    from tests.api.test_telegram_helper_stop_race import helper_race_runtime
+
+    entered, release = Event(), Event()
+    calls = []
+
+    class Model:
+        def generate(self, received, *_args, **_kwargs):
+            calls.append(received.message_id)
+            if received.message_id == "telegram:7:101":
+                entered.set()
+                assert release.wait(5)
+            return ConversationModelResult("Answer to " + received.text, "controlled")
+
+    runtime, _, _, unused_release = helper_race_runtime(monkeypatch)
+    unused_release.set()
+    runtime._journal = lambda received: journal(people_memory_engine)
+    runtime._conversation._model = Model()
+    first_turn = ConversationTurn.private("family", "home", "telegram:7", "telegram:7",
+        "telegram:7:101", "Research question", "2026-09-12T12:00:00Z")
+    second_turn = replace(first_turn, message_id="telegram:7:102", text="How are you?")
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        first = pool.submit(runtime.respond, first_turn)
+        try:
+            assert entered.wait(5)
+            second = pool.submit(runtime.respond, second_turn)
+            second_reply = second.result(timeout=5)
+            assert not first.done()
+            assert second_reply.message_id == second_turn.message_id
+            assert second_reply.text == "Answer to How are you?"
+            assert journal(people_memory_engine).committed_reply(second_turn) == second_reply
+            assert journal(people_memory_engine).committed_reply(first_turn) is None
+        finally:
+            release.set()
+        first_reply = first.result(timeout=5)
+    assert first_reply.message_id == first_turn.message_id
+    assert first_reply.text == "Answer to Research question"
+    assert journal(people_memory_engine).committed_reply(first_turn) == first_reply
+    assert journal(people_memory_engine).committed_reply(second_turn) == second_reply
+    assert calls == [first_turn.message_id, second_turn.message_id]
