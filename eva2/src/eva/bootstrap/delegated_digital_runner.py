@@ -67,7 +67,12 @@ class _TaskModel:
             "controle van het resultaat en bekende beperkingen. Scheid daadwerkelijk uitgevoerde "
             "stappen van onbeproefde suggesties; bewaar geen credentials of overbodige persoonsgegevens. "
             "Kies een passende eindige bewaartermijn vanuit het bestaande mandaat. Een gewone "
-            "notitie is niet automatisch een werkwijze. Bij hergebruik haal je de passende "
+            "notitie is niet automatisch een werkwijze. Zoek bij een nieuwe opdracht eerst naar "
+            "een relevante bestaande aanpak met list_reusable_procedures(query=gerichte trefwoorden), "
+            "als die tool beschikbaar is en een aangeleerde aanpak nuttig kan zijn. Kies zo nodig "
+            "andere trefwoorden dan de vraag; beoordeel zelf of de gevonden aanpak werkelijk past. "
+            "Geen resultaat bewijst niet dat er geen werkwijze bestaat: bladeren blijft beschikbaar. "
+            "Bij hergebruik haal je de passende "
             "verwijzing eerst op met resolve_reusable_procedure en voer je de nieuwe opdracht "
             "uit met de aangeboden tools. Meld alleen een bewaarde of toegepaste werkwijze "
             "wanneer de bijbehorende toolresultaten dat bevestigen."), **kwargs)

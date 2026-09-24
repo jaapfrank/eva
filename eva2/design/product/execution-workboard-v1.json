@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T01:44:03.636238+00:00",
+        "checkedAt": "2026-09-24T01:46:41.063503+00:00",
         "deliveries": [
           {
             "title": "Eigen bijdrage via de huisspeaker",
@@ -1717,15 +1717,15 @@
           }
         ],
         "now": {
-          "title": "Huisinitiatieven via gedeelde context geïnstalleerd",
-          "state": "Geïnstalleerd; praktijkproef open",
-          "detail": "Eva kan op een recent gebruikte huisspeaker een eigen bijdrage aanbieden uit gedeelde gezinscontext. Stille uren, daglimiet en bestaande sessiestop gelden. Kern en werker zijn gezond gestart; hoorbaarheid en nut zijn nog niet beoordeeld.",
-          "doneWhen": "Hoorbaar en passend huiscontact in de gezinsproef; stap 4 blijft daarvoor open."
+          "title": "Aangeleerde werkwijzen gericht terugvinden",
+          "state": "In bouw",
+          "detail": "Eva kan nu alleen kandidaten uit de oorspronkelijke vraag krijgen of door lijsten bladeren. Ik voeg gericht zoeken toe aan dezelfde werkwijzeactie, voor gesprek en achtergrondwerk.",
+          "doneWhen": "Eva kan eigen trefwoorden gebruiken, een passende werkwijze ophalen en met bestaande tools toepassen."
         },
         "next": {
-          "title": "Onderzoek vervolgen bij ontbrekende gegevens",
-          "state": "Volgende functie; nog niet gestart",
-          "detail": "De bestaande onderzoeksroute moet noodzakelijke ontbrekende gegevens gericht verder onderzoeken en daarna een onderbouwd resultaat terugbrengen, binnen het bestaande taakbudget."
+          "title": "Gerichte werkwijzezoekactie installeren",
+          "state": "Volgende stap",
+          "detail": "Bestaande broncontrole en privécontinuïteit behouden; de echte leer- en hergebruikproef volgt later."
         },
         "ownerAction": {
           "title": "Kies wie huisbediening via speakers mag gebruiken",
@@ -11401,7 +11401,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 4,
+      "currentStep": 5,
       "steps": [
         {
           "number": 1,
@@ -11511,7 +11511,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "De bestaande onderzoeksroute moet noodzakelijke ontbrekende gegevens gericht verder onderzoeken en daarna een onderbouwd resultaat terugbrengen, binnen het bestaande taakbudget. Nog niet gestart; uitgebreide proeven blijven uitgesteld.",
+      "nextAction": "Bestaande broncontrole en privécontinuïteit behouden; de echte leer- en hergebruikproef volgt later.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
