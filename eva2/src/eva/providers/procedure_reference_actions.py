@@ -93,6 +93,19 @@ class ProcedureReferenceActions:
         except (ConversationConflict, ProcedureReferenceRejected):
             return False
 
+    def can_continue_after(self, turn, receipt):
+        """Successful native procedure receipts may continue under current authority."""
+        statuses = {"list_reusable_procedures": "candidates",
+                    "designate_reusable_procedure": "designated",
+                    "resolve_reusable_procedure": "resolved",
+                    "run_reusable_procedure": "execution_completed"}
+        if (receipt.call.name not in self.action_names
+                or receipt.output.get("contract") != "ProcedureReferenceAction/v1"
+                or receipt.output.get("status") != statuses.get(receipt.call.name)):
+            return False
+        self._host(turn)
+        return True
+
     def active_context(self, turn):
         """Offer actual matching source metadata before normal model planning."""
         try:

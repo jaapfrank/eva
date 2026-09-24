@@ -235,3 +235,38 @@ def test_admitted_acceptance_uses_one_contact_call_and_current_reply_guard(stopp
     assert len(contact.calls) == 1
     assert reply.model_usage.model_attempts == 1
     assert reply.text == ("Je opdracht is gestopt." if stopped else "Ik zoek het voor je uit.")
+
+
+@pytest.mark.parametrize("permitted, revoked", [(True, False), (False, False), (True, True)])
+def test_provider_lookup_can_handoff_only_with_current_continuation_permission(permitted, revoked):
+    class LookupActions(Actions):
+        action_names = ("list_reusable_procedures", "start_digital_work")
+        def __init__(self):
+            super().__init__()
+            self.looked_up = False
+        def available_action_names(self, turn):
+            return (("list_reusable_procedures",) if self.looked_up and revoked else self.action_names)
+        def can_continue_after(self, turn, receipt):
+            assert receipt.output["status"] == "candidates"
+            return permitted
+        def execute(self, turn, call):
+            assert call.name == "list_reusable_procedures"
+            self.looked_up = True
+            return ConversationActionReceipt(call, {"status": "candidates", "candidates": ["saved-source"]})
+        def execute_step(self, turn, call, *, step_index):
+            assert call.name == "start_digital_work" and step_index == 1
+            self.jobs[turn.message_id] = "admitted"
+            return ConversationActionReceipt(call, {"status": "verified", "work_id": turn.message_id})
+    actions = LookupActions()
+    contact = Model(lambda t, k: ConversationActionCall("lookup", "list_reusable_procedures", {}))
+    def next_step(t, k):
+        if k["completed_action"].call.name == "start_digital_work":
+            assert k["available_actions"] == ()
+            return "De opdracht is aangenomen."
+        if "start_digital_work" in k["available_actions"]:
+            return ConversationActionCall("handoff", "start_digital_work", {"task": "Use saved-source"})
+        return "Geen uitvoer gestart."
+    work = Model(next_step)
+    LivingConversation(_Memory(), work, IDENTITY, actions, contact_model=contact).respond(turn())
+    assert bool(actions.jobs) is (permitted and not revoked)
+    assert len(contact.calls) == 1

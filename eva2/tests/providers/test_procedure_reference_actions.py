@@ -327,3 +327,53 @@ def test_procedure_query_accepts_empty_optional_cursor_but_not_pagination(monkey
         assert receipt.output["next_cursor"] is None
         assert calls[0]["query"] == args["query"]
     assert call.arguments == args
+
+
+@pytest.mark.parametrize("name,status,accepted", [
+    ("list_reusable_procedures", "candidates", True),
+    ("designate_reusable_procedure", "designated", True),
+    ("resolve_reusable_procedure", "resolved", True),
+    ("run_reusable_procedure", "execution_completed", True),
+    ("run_reusable_procedure", "execution_failed", False),
+    ("resolve_reusable_procedure", "unavailable", False),
+    ("list_reusable_procedures", "resolved", False),
+    ("unregistered_action", "candidates", False),
+])
+def test_native_procedure_continuation_requires_matching_success_and_current_host(monkeypatch, name, status, accepted):
+    from eva.application.conversation import ConversationActionCall, ConversationActionReceipt, ConversationConflict
+    actions = ProcedureReferenceActions(None, authority=None, gateway_factory=None, executor=object())
+    checks = []
+    monkeypatch.setattr(actions, "_host", lambda turn: checks.append(turn))
+    turn = _private_turn()
+    receipt = ConversationActionReceipt(ConversationActionCall("call", name, {}),
+        {"contract": "ProcedureReferenceAction/v1", "status": status})
+    assert actions.can_continue_after(turn, receipt) is accepted
+    assert len(checks) == int(accepted)
+    wrong = ConversationActionReceipt(receipt.call, {"contract": "other", "status": status})
+    assert actions.can_continue_after(turn, wrong) is False
+    if accepted:
+        def revoked(turn): raise ConversationConflict("revoked")
+        monkeypatch.setattr(actions, "_host", revoked)
+        with pytest.raises(ConversationConflict): actions.can_continue_after(turn, receipt)
+
+
+def test_conversation_dispatches_native_eligibility_only_to_registered_receipt_owner():
+    from types import SimpleNamespace as NS
+    from eva.adapters.postgres.conversation_actions import PostgresConversationActions
+    from eva.application.conversation import ConversationActionCall, ConversationActionReceipt
+    calls = []
+    def eligible(turn, receipt):
+        calls.append(receipt.call.name)
+        return receipt.output.get("status") == "candidates"
+    owner = NS(action_names=("list_reusable_procedures",), can_continue_after=eligible)
+    unrelated = NS(action_names=("another_action",), can_continue_after=lambda *args: True)
+    without_hook = NS(action_names=("legacy_action",))
+    actions = PostgresConversationActions(None, external_tools=(owner, unrelated, without_hook))
+    turn = _private_turn()
+    def receipt(name, status):
+        return ConversationActionReceipt(ConversationActionCall("call", name, {}), {"status": status})
+    assert actions.can_continue_after(turn, receipt("list_reusable_procedures", "candidates"))
+    assert not actions.can_continue_after(turn, receipt("list_reusable_procedures", "unavailable"))
+    assert not actions.can_continue_after(turn, receipt("absent", "candidates"))
+    assert not actions.can_continue_after(turn, receipt("legacy_action", "candidates"))
+    assert calls == ["list_reusable_procedures", "list_reusable_procedures"]

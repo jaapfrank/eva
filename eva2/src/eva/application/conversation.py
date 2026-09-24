@@ -918,8 +918,12 @@ class LivingConversation:
                 # an invitation to poll the worker until its result is ready.
                 return ()
             selector = getattr(self._actions, "continuation_action_names", None)
-            if receipt.output.get("status") != "verified" or not callable(selector):
+            if not callable(selector):
                 return ()
+            if receipt.output.get("status") != "verified":
+                permits = getattr(self._actions, "can_continue_after", None)
+                if not callable(permits) or permits(turn, receipt) is not True:
+                    return ()
             return selector(turn)
 
         checkpoint()

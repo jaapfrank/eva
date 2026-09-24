@@ -285,6 +285,12 @@ class PostgresConversationActions:
         research_steps = self._native_research if native is not None else self._owner_research_steps
         return self._external_tools + ((research_steps,) if research_steps is not None else ())
 
+    def can_continue_after(self, turn, receipt):
+        """Only the registered receipt owner can admit its native continuation."""
+        provider = self._external_tool_by_action.get(receipt.call.name)
+        eligible = None if provider is None else getattr(provider, "can_continue_after", None)
+        return callable(eligible) and eligible(turn, receipt) is True
+
     def continuation_action_names(self, turn: ConversationTurn) -> tuple[str, ...]:
         allowed = set(self.available_action_names(turn))
         return tuple(
