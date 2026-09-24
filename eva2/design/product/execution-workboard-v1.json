@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T00:43:50.600949+00:00",
+        "checkedAt": "2026-09-24T00:46:39.571920+00:00",
         "deliveries": [
           {
             "title": "Bewaarde werkwijze via andere privé-ingang gebruiken",
@@ -1685,15 +1685,15 @@
           }
         ],
         "now": {
-          "title": "Stap 5: leren en werk voortzetten",
-          "state": "Privéwerkwijze-koppeling geïnstalleerd",
-          "detail": "Twee bestaande procedurebestanden aangepast, broncontrole en startcontrole afgerond. Kern en werker gezond. Uitvoerder klaar; echte hergebruikproef blijft open.",
-          "doneWhen": "Werkwijzen daadwerkelijk leren en hergebruiken, meerdaags werk hervatten en een eigen verbetering met gemeten voordeel opleveren."
+          "title": "Stap 5: voortgang bij hervatten behouden",
+          "state": "Bestaande aansluiting bevestigd",
+          "detail": "De geïnstalleerde hervatroute behoudt bron, uitvoeringsidentiteit en voortgang bij een nieuwe poging op de huidige versie. Geen nieuwe functie gebouwd; echte hervatproef blijft open. Veranderde mogelijkheden/budgetten zijn een aparte beperking.",
+          "doneWhen": "Werkelijk meerdaags hervatten en hergebruik beproefd; eigen verbetering heeft gemeten voordeel."
         },
         "next": {
-          "title": "Meerdaags werk hervatten bij een nieuwe versie",
+          "title": "Gecontroleerde eigen verbetering",
           "state": "Vervolg nog niet gestart",
-          "detail": "Bestaande hervatroute controleren op functionele blokkades na een versie-update; bewaarde voortgang en uitgevoerde acties behouden. Geen nieuwe brede herstelronde."
+          "detail": "Hergebruik de aanwezige repository-verbeterroute voor een geïsoleerde kandidaat. De huidige eigen-componenttool bewaart alleen een voorstel; uitvoering en gemeten voordeel ontbreken nog."
         },
         "ownerAction": {
           "title": "Kies wie huisbediening via speakers mag gebruiken",
@@ -1707,7 +1707,7 @@
           "expected": "Na je keuze kan de voorbereide configuratie gericht worden geïnstalleerd of de privébeperking behouden blijven."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T00:43:50.600949+00:00"
+        "reviewedAt": "2026-09-24T00:46:39.571920+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11476,7 +11476,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Bestaande hervatroute controleren op functionele blokkades na een versie-update; bewaarde voortgang en uitgevoerde acties behouden. Geen nieuwe brede herstelronde.",
+      "nextAction": "Hergebruik de aanwezige repository-verbeterroute voor een geïsoleerde kandidaat. De huidige eigen-componenttool bewaart alleen een voorstel; uitvoering en gemeten voordeel ontbreken nog.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

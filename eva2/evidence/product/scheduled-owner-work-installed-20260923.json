@@ -34,5 +34,23 @@
   "test_schedules_created": 0,
   "test_messages_sent": 0,
   "credit_cost": "unknown",
-  "rollback_compose": "/home/administrator/project/.eva2-artifacts/scheduled-owner-work-20260923/baseline.compose.private.json"
+  "rollback_compose": "/home/administrator/project/.eva2-artifacts/scheduled-owner-work-20260923/baseline.compose.private.json",
+  "resumeVersionSourceCheck20260924": {
+    "checkedAt": "2026-09-24T00:46:39.571920+00:00",
+    "installedSourceMatches": [
+      "bootstrap/delegated_work_owner_service.py",
+      "adapters/postgres/delegated_work.py",
+      "adapters/postgres/background_work_progress.py",
+      "adapters/postgres/background_model_journal.py"
+    ],
+    "findings": [
+      "Explicit resume uses the current digital profile to build a new bounded successor.",
+      "Original source, source ingress hash, execution_id, task and episode remain unchanged; work progress and action recovery use the retained execution identity.",
+      "The store requires the same grant, rejecting changed capabilities or budgets.",
+      "Model accounting uses the new work_id; existing attempts and usage remain retained."
+    ],
+    "decision": "No new implementation needed for code-only version changes with unchanged grants. A real cross-version resume trial is still deferred. Grant changes need an explicit compatible migration decision; do not silently expand them.",
+    "modelCalls": 0,
+    "executedTaskResumes": 0
+  }
 }
