@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T02:27:18.831829+00:00",
+        "checkedAt": "2026-09-24T02:29:48.253237+00:00",
         "deliveries": [
           {
             "title": "Eigen verbeterpakket naar releasebron overnemen",
@@ -1765,15 +1765,15 @@
           }
         ],
         "now": {
-          "title": "Verbeterpakket overdragen naar de bestaande releasebron",
-          "state": "Beheercommando beschikbaar",
-          "detail": "Exact kandidaatpakket en gekozen meet-/reviewbewijs kunnen naar een schone releasebranch worden overgenomen. De bestaande installatieprocedure blijft leidend.",
-          "doneWhen": "Commandostart gecontroleerd. Een echte verbetering importeren, beoordelen en toepassen is nog niet uitgevoerd."
+          "title": "Snelle begroeting nog niet gehaald",
+          "state": "Open · geen nieuwe snelheidswinst",
+          "detail": "Het snelle contactmodel is al actief. Eerdere optimalisaties maakten de totale reactie niet sneller; geen nieuwe betaalde proef of herhaalde wijziging.",
+          "doneWhen": "Korte natuurlijke reactie via de echte route aantoonbaar snel. Dat bewijs ontbreekt nog."
         },
         "next": {
-          "title": "Snelle begroeting via de gedeelde gesprekroute",
+          "title": "Continue Voice PE-sessie bij wakeword herstellen",
           "state": "Nog niet gestart",
-          "detail": "Bestaande configuratie en opgeslagen timing gebruiken om het resterende tekort te bepalen; geen nieuwe betaalde modelproef."
+          "detail": "Kandidaatconfiguratie en bestaande diagnose gericht bekijken. Gewone werkende spraak behouden; geen blinde firmwarewissel."
         },
         "ownerAction": {
           "title": "Kies wie huisbediening via speakers mag gebruiken",
@@ -1787,7 +1787,7 @@
           "expected": "Na je keuze kan de voorbereide configuratie gericht worden geïnstalleerd of de privébeperking behouden blijven."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T02:27:18.831829+00:00"
+        "reviewedAt": "2026-09-24T02:29:48.253237+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11449,7 +11449,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 5,
+      "currentStep": 1,
       "steps": [
         {
           "number": 1,
@@ -11559,7 +11559,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Snelle begroeting via de gedeelde gesprekroute. Bestaande timing en configuratie eerst gebruiken.",
+      "nextAction": "Continue Voice PE-sessie bij wakeword herstellen. Begin met bestaande bron/configuratie; snelle begroeting blijft open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

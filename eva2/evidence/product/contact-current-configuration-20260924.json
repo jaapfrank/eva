@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-09-24T02:29:48.253237+00:00",
+  "kind": "existing_latency_evidence_and_active_configuration",
+  "activeContactModel": "gpt-5.6-luna",
+  "activeContactReasoningEffort": "low",
+  "activeWorkModel": "gpt-6-astra",
+  "activeWorkReasoningEffort": "medium",
+  "configurationReadFrom": "running core environment; only model/effort values inspected",
+  "existingEvidence": [
+    "eva2/evidence/product/contact-latency-decision-2026-09-22.json",
+    "eva2/evidence/product/fast-contact-model-timing-2026-09-22.json",
+    "eva2/evidence/product/contact-catalog-installed-20260923.json"
+  ],
+  "findings": [
+    "Baseline first route text measured at 4216 ms in prior bounded experiment",
+    "Prepared low and prepared none did not improve measured total latency",
+    "Synthetic model-only Luna greeting first content was 1597 ms; not evidence of real-route subsecond performance",
+    "Catalog reduction was already installed without demonstrated total speed gain"
+  ],
+  "decision": "No configuration change or repetition of disproven preparation/reasoning hypotheses. Fast meaningful greeting remains incomplete. Continue the known Voice PE continuous-session defect with source/config evidence first.",
+  "newPaidModelCalls": 0,
+  "limits": [
+    "No new timing sample",
+    "No new model comparison",
+    "No claim that current latency equals historical measurements"
+  ]
+}
