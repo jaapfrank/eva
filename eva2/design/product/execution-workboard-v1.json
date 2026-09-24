@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T18:41:08.800542+00:00",
+        "checkedAt": "2026-09-24T18:53:56.746976+00:00",
         "deliveries": [
+          {
+            "title": "Bijsturen toont wat werkelijk is gestopt en hervat",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Als na stoppen het bewaren of hervatten niet bevestigd kan worden, toont Eva de gedeeltelijke uitkomst. De website houdt die melding zichtbaar en hervat niet automatisch opnieuw.",
+            "remaining": "Gerichte backend-/browserproeven en onafhankelijke review geslaagd. Geen echte storingsproef of eigenaaracceptatie; volledige taakuitvoering blijft apart open.",
+            "source": "eva2/evidence/product/work-correction-outcome-installed-20260924.json"
+          },
           {
             "title": "Geïnstalleerde Telegram-kern op gelijktijdigheid gecontroleerd",
             "date": "24 september",
@@ -2151,15 +2159,15 @@
           }
         ],
         "now": {
-          "title": "Bestaande Telegram-gelijktijdigheid gericht gecontroleerd",
-          "state": "Technische proef geslaagd; gebruiksproef open",
-          "detail": "Geen wachtrijdefect aangetoond. De kern kan twee verschillende berichten in hetzelfde gesprek naast elkaar verwerken. Geen herbouw, installatie of modelcalls nodig.",
-          "doneWhen": "Gerichte runtime-/databaseproef afgerond. Snelle echte tussenantwoorden blijven afzonderlijk te beoordelen."
+          "title": "Duidelijke uitkomst bij gedeeltelijk mislukte bijsturing",
+          "state": "Geïnstalleerd",
+          "detail": "Bron0c3ddf14 in kern/werker en eigenaarwebsite. Gezonde diensten, gelijke uitvoerprofielen, actuele websitebestanden gecontroleerd. Geen modelcalls.",
+          "doneWhen": "Deze gerichte bediening is technisch afgerond; volledige taak-/kanaalacceptatie blijft open."
         },
         "next": {
-          "title": "Lopende taken volgen, stoppen en hervatten afronden",
+          "title": "Browseropdrachten afmaken en overnemen",
           "state": "Nog niet gestart",
-          "detail": "Bestaande taakbediening en terugmelding uit stap3 als samenhangende gebruikersfunctie afronden; Telegram-gebruikersproef blokkeert dat niet."
+          "detail": "Bestaande browserroute gebruiken en het concrete resterende tekort bij uitvoering/overname/hervatting aanpakken; geen nieuwe browserinfrastructuur."
         },
         "ownerAction": {
           "title": "Tussenvraag op de bijgewerkte Telegramroute",
@@ -2173,7 +2181,7 @@
           "expected": "De tussenvraag hoeft niet op het onderzoeksresultaat te wachten. De technische proef bewijst nog niet dat het model snel genoeg antwoordt. De eerder gevraagde hoorproef op beide speakers blijft ook open."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T18:41:08.800542+00:00"
+        "reviewedAt": "2026-09-24T18:53:56.746976+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11945,7 +11953,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Lopende taken volgen, stoppen en hervatten afronden",
+      "nextAction": "Browseropdrachten afmaken en overnemen",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

@@ -1,0 +1,59 @@
+{
+  "checkedAt": "2026-09-24T18:53:56.746976+00:00",
+  "sourceCommit": "0c3ddf142197c31866341a968574b83da4665b68",
+  "state": "installed",
+  "requirement": "Task correction must report what happened after stopping, including partial persistence or scheduling outcomes.",
+  "finding": "revise_digital committed a stop before saving correction/scheduling resumption; later rejection became a generic invalid request despite the recorded stop.",
+  "change": [
+    "Return stop_recorded_correction_unconfirmed when correction acknowledgement fails.",
+    "Return correction_saved_resume_unconfirmed when resumption acknowledgement fails.",
+    "No automatic retry and no claim that an uncertain write did not commit.",
+    "Owner UI shows distinct outcomes and pauses polling after uncertain status until explicit read, so a subsequent read failure does not immediately erase the operation receipt.",
+    "Successful correction flow preserved."
+  ],
+  "checks": {
+    "backend": "5 targeted cases passed in1.94s: success, each persistence stage failing before or after simulated commit.",
+    "browser": "3 outcome cases passed; one explicit submission per action, no automatic resumption, no reads during5.2s pause, explicit task reopen.",
+    "review": "Coordinator reviewed backend/tests independently; implementation agent independently reviewed final UI/browser proof: GO.",
+    "profiles": "Core/worker complete execution releases and configuration match; dashboard sealed assets import verified.",
+    "live": "Healthy core/worker, exact module/manifest hashes, actual HTTP-served JS matches sealed build and contains new outcomes; owner dashboard and voice readiness200."
+  },
+  "setupFailures": [
+    "Initial browser route pattern also intercepted workboard; narrowed to exact work path and reran changed fixture.",
+    "Initial backend test fixture lacked engine URL; corrected. Existing owner_active_metadata tests had stale fixture dependencies; not modified or claimed passed. Initial results retained."
+  ],
+  "limitations": [
+    "Controlled failure injection, not a real production persistence failure.",
+    "No user acceptance or full task/browser/channel completion claimed.",
+    "Errors do not automatically reconstruct whether uncertain operations committed; owner checks saved task/planning."
+  ],
+  "deployment": {
+    "checkedAt": "2026-09-24T18:52:41.165201+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:f8032bf0d10d7319f415ee99f22feafeba3f6fd02775125d637dc4df3412928e",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_work_owner_service.py": "acd65f2dd2453a1d2aec8862e12d79f1170b64e896785f601d5a0c0d4049f664",
+          "adapters/api/dashboard_static/eva-dashboard-assets.json": "503f3cb13eb5c09566962cece66c9065c7e0000bd2f91abff6c615f4272889e9"
+        }
+      },
+      "worker": {
+        "image": "sha256:0e15355ac949c2487986e86b14e8f44c658d97b38bd23201b48638d044532a3c",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_work_owner_service.py": "acd65f2dd2453a1d2aec8862e12d79f1170b64e896785f601d5a0c0d4049f664",
+          "adapters/api/dashboard_static/eva-dashboard-assets.json": "503f3cb13eb5c09566962cece66c9065c7e0000bd2f91abff6c615f4272889e9"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/work-correction-outcome-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/work-correction-outcome-20260924/baseline.compose.private.json",
+  "artifacts": [
+    "/home/administrator/project/.eva2-artifacts/work-correction-outcome-20260924",
+    "/home/administrator/project/.eva2-artifacts/owner-correction-outcomes-20260924"
+  ],
+  "modelCalls": 0,
+  "developmentCredits": "unknown; not estimated"
+}
