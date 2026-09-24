@@ -1181,11 +1181,14 @@ class PydanticConversationModel:
         selected_recent = recent_messages[-12:]
         # Unanswered retries can follow the latest assistant proposal. Keep that
         # proposal, its preceding user message and every subsequent message.
+        # Runtime history uses display labels (Eva/Jaap/unknown speaker); API
+        # histories may use assistant/user. Preserve both representations.
         last_assistant = next((i for i in range(len(selected_recent) - 1, -1, -1)
-                               if selected_recent[i].role == "assistant"), None)
+                               if selected_recent[i].role.casefold() in {"assistant", "eva"}), None)
         protected_start = last_assistant
         if protected_start is not None:
-            while protected_start > 0 and selected_recent[protected_start].role != "user":
+            while (protected_start > 0
+                   and selected_recent[protected_start].role.casefold() in {"assistant", "eva"}):
                 protected_start -= 1
         minimum_recent = (2 if protected_start is None else
                           max(2, len(selected_recent) - protected_start))
@@ -1231,7 +1234,7 @@ class PydanticConversationModel:
                     raise
                 selected_recent = selected_recent[1:]
                 while (len(selected_recent) > minimum_recent
-                       and selected_recent[0].role == "assistant"):
+                       and selected_recent[0].role.casefold() in {"assistant", "eva"}):
                     selected_recent = selected_recent[1:]
                 omitted = True
         usages: list[ConversationModelUsage] = []

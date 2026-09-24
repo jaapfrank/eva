@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T02:50:26.286674+00:00",
+        "checkedAt": "2026-09-24T02:55:48.751066+00:00",
         "deliveries": [
           {
             "title": "Geheugen en gateway in dezelfde herstelactie",
@@ -1781,10 +1781,10 @@
           }
         ],
         "now": {
-          "title": "Dagelijkse functies eerst afmaken",
-          "state": "Uitvoervolgorde gecorrigeerd",
-          "detail": "Herstel en verhuizing zijn uit de actieve bouwvolgorde gehaald. Snelle begroeting en doorpraten tijdens werk blijven open; geïnstalleerde deelwijzigingen betekenen niet dat deze functies af zijn.",
-          "doneWhen": "Eén gedeeld gesprek via website, Telegram, Home Assistant en Voice PE; snelle ontvangst, tussendoor praten, onderbreken en stoppen. Uitgebreide gebruiksproeven volgen later."
+          "title": "Vervolgvraag houdt de eerdere gesprekcontext",
+          "state": "In uitvoering",
+          "detail": "Gedeelde contextinkorting herkent echte rollen Eva/Jaap nog niet. Daardoor kan bij invoergrenzen een voorstel verdwijnen waar de gebruiker op terugkomt. Herstel in bestaande modeladapter; geen nieuw gesprekssysteem.",
+          "doneWhen": "De echte rollabels behouden de laatste uitwisseling en vervolgvraag bij contextinkorting; bron geïnstalleerd met startcontrole. Gebruiksproef later; snelheid blijft open."
         },
         "next": {
           "title": "Snelle begroeting en doorpraten via de gedeelde kern",
@@ -1802,7 +1802,7 @@
           "expected": "Een vastgelegde falende wakeword-overgang; geen herhaling van een blinde firmwareproef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T02:50:26.286674+00:00"
+        "reviewedAt": "2026-09-24T02:55:48.751066+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11574,7 +11574,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Gebruik bestaande timing en code om de resterende wachttijd of blokkering gericht weg te nemen. Geen herbouw of herhaling van verloren modelproeven. Fysieke Voice PE-diagnose blijft afzonderlijk uitgesteld.",
+      "nextAction": "Contextbehoud bij vervolgvraag in gedeelde route herstellen en installeren; daarna resterende gespreksfuncties. Geen herstel/verhuizing.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
