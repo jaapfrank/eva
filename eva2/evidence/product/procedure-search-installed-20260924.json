@@ -1,0 +1,44 @@
+{
+  "recordedAt": "2026-09-24T01:50:06.242293+00:00",
+  "sourceCommit": "3ed3b403155d857f4a3acc90695bf860b75cea0b",
+  "status": "installed_start_checked",
+  "image": "eva2-procedure-search:20260924",
+  "services": {
+    "eva2-managed-b-slot3-core": {
+      "image": "eva2-procedure-search:20260924",
+      "imageId": "sha256:642b75521ded50ca2d35d055017b7e64a384d7e57953217db260d1b23929558d",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "image": "eva2-procedure-search:20260924",
+      "imageId": "sha256:642b75521ded50ca2d35d055017b7e64a384d7e57953217db260d1b23929558d",
+      "state": "running",
+      "health": "healthy"
+    }
+  },
+  "outcome": "The existing list_reusable_procedures action accepts an optional task query. Eva can choose lookup terms independently of the original user wording; current source resolution and execution remain unchanged.",
+  "checks": [
+    "syntax",
+    "configured startup",
+    "query/cursor schema available",
+    "zero active delegated tasks before cutover",
+    "healthy core and worker"
+  ],
+  "bounds": [
+    "at most eight returned candidates",
+    "existing verified private aliases and project scope",
+    "query and cursor are mutually exclusive",
+    "bounded lexical lookup, not guaranteed semantic or exhaustive matching"
+  ],
+  "notProven": [
+    "actual model-led learning and reuse",
+    "quality of alternative keyword selection",
+    "complete AU-004"
+  ],
+  "developmentModelTrials": 0,
+  "developmentTestMessages": 0,
+  "creditCost": "unknown",
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/procedure-search-20260924/baseline.compose.private.json",
+  "researchDecision": "Current source already instructs targeted primary-source follow-up for essential gaps; preserved instead of implementing duplicate prompt changes."
+}

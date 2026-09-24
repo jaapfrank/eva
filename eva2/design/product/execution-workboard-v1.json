@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T01:46:41.063503+00:00",
+        "checkedAt": "2026-09-24T01:50:07.040666+00:00",
         "deliveries": [
+          {
+            "title": "Een passende aangeleerde werkwijze zoeken",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Eva kan eigen trefwoorden gebruiken en daarna een gekozen werkwijze gecontroleerd ophalen, in gesprek en achtergrondwerk.",
+            "remaining": "Lexicale kandidaten; echte leer-/hergebruikproef en algemene skillselectie nog open.",
+            "source": "eva2/evidence/product/procedure-search-installed-20260924.json"
+          },
           {
             "title": "Eigen bijdrage via de huisspeaker",
             "date": "24 september",
@@ -1717,15 +1725,15 @@
           }
         ],
         "now": {
-          "title": "Aangeleerde werkwijzen gericht terugvinden",
-          "state": "In bouw",
-          "detail": "Eva kan nu alleen kandidaten uit de oorspronkelijke vraag krijgen of door lijsten bladeren. Ik voeg gericht zoeken toe aan dezelfde werkwijzeactie, voor gesprek en achtergrondwerk.",
-          "doneWhen": "Eva kan eigen trefwoorden gebruiken, een passende werkwijze ophalen en met bestaande tools toepassen."
+          "title": "Werkwijzen gericht terugvinden geïnstalleerd",
+          "state": "Geïnstalleerd; leerproef open",
+          "detail": "Eva kan eigen zoekwoorden gebruiken om een opgeslagen aanpak te vinden. Dit werkt via dezelfde tool in gesprek en achtergrondtaken. Gekozen inhoud wordt opnieuw opgehaald en gecontroleerd.",
+          "doneWhen": "Echte ongeziene opdracht leren en de aanpak bij een andere opdracht aantoonbaar hergebruiken; die proef blijft open."
         },
         "next": {
-          "title": "Gerichte werkwijzezoekactie installeren",
-          "state": "Volgende stap",
-          "detail": "Bestaande broncontrole en privécontinuïteit behouden; de echte leer- en hergebruikproef volgt later."
+          "title": "Zelfgemaakte tools en skills gebruiken",
+          "state": "Volgende functie; nog niet gestart",
+          "detail": "Bestaande uitvoering hergebruiken en alleen de ontbrekende aansluiting voor door Eva gemaakte uitvoerbare hulpmiddelen bouwen. Geen nieuwe taakspecifieke kernfunctie."
         },
         "ownerAction": {
           "title": "Kies wie huisbediening via speakers mag gebruiken",
@@ -11511,7 +11519,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Bestaande broncontrole en privécontinuïteit behouden; de echte leer- en hergebruikproef volgt later.",
+      "nextAction": "Bestaande uitvoering hergebruiken en alleen de ontbrekende aansluiting voor door Eva gemaakte uitvoerbare hulpmiddelen bouwen. Geen nieuwe taakspecifieke kernfunctie. Nog niet gestart.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
