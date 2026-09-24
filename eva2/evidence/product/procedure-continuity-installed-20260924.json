@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "43226f1b",
+  "installedAt": "2026-09-24T00:43:50.600949+00:00",
+  "status": "installed_start_checked",
+  "requirement": "Reuse a saved procedure through another currently verified private channel of the same owner.",
+  "gap": "Provider admission lacked the existing owner resolver; lookup/list/resolve used only the current raw principal.",
+  "change": "Use existing owner resolver and canonical owner gateway allowlist; read matching references in their original authorized owner/alias scope. Stored sources and receipt identities unchanged. No household access or migration.",
+  "checks": [
+    "Before integration both changed files matched installed baseline",
+    "Implementer syntax check",
+    "Coordinator source review: original source loader, project/retention/erasure and current alias checks retained",
+    "Candidate imports",
+    "Core and worker healthy after installation"
+  ],
+  "limitations": [
+    "Listing remains eight records per page; an empty page can carry next_cursor for the other authorized alias",
+    "Lexical candidates, not general semantic skill selection",
+    "Real cross-channel learning/reuse/revocation trials deferred"
+  ],
+  "modelCalls": 0,
+  "testMessagesSent": 0,
+  "ownerAccepted": false,
+  "image": "eva2-procedure-continuity:20260924",
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/procedure-continuity-20260924/baseline.compose.private.json"
+}

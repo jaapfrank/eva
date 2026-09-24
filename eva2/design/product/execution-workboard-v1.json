@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T00:37:45.049243+00:00",
+        "checkedAt": "2026-09-24T00:43:50.600949+00:00",
         "deliveries": [
+          {
+            "title": "Bewaarde werkwijze via andere privé-ingang gebruiken",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Dezelfde actueel geverifieerde eigenaar kan procedureverwijzingen onder zijn andere privé-kanaalidentiteit vinden en ophalen. Bestaande documenten blijven behouden.",
+            "remaining": "Echte leer- en hergebruikproef later. Geen sprekerherkenning, gezinsdeling of algemene semantische vaardigheidsselectie.",
+            "source": "eva2/evidence/product/procedure-continuity-installed-20260924.json"
+          },
           {
             "title": "Stoppen na het aannemen van achtergrondwerk",
             "date": "24 september",
@@ -1677,15 +1685,15 @@
           }
         ],
         "now": {
-          "title": "Stap 4: huisbediening via Voice PE",
-          "state": "Voorbereid — keuze nodig",
-          "detail": "Beide gedeelde speakers ontbreken in de bestaande HA-bedieningslijst. Beperkte configuratie staat klaar voor dezelfde 118 bestaande combinaties. Nog niet geïnstalleerd.",
-          "doneWhen": "De gekozen gedeelde huisbediening is geïnstalleerd; echte bediening blijft apart te beproeven."
+          "title": "Stap 5: leren en werk voortzetten",
+          "state": "Privéwerkwijze-koppeling geïnstalleerd",
+          "detail": "Twee bestaande procedurebestanden aangepast, broncontrole en startcontrole afgerond. Kern en werker gezond. Uitvoerder klaar; echte hergebruikproef blijft open.",
+          "doneWhen": "Werkwijzen daadwerkelijk leren en hergebruiken, meerdaags werk hervatten en een eigen verbetering met gemeten voordeel opleveren."
         },
         "next": {
-          "title": "Huisbediening volgens jouw keuze aansluiten",
-          "state": "Wacht alleen voor deze wijziging",
-          "detail": "Gevraagd of iedereen bij beide speakers de al toegestane lampen/schakelaars mag bedienen. Onafhankelijk werk aan overige projectfuncties kan doorgaan."
+          "title": "Meerdaags werk hervatten bij een nieuwe versie",
+          "state": "Vervolg nog niet gestart",
+          "detail": "Bestaande hervatroute controleren op functionele blokkades na een versie-update; bewaarde voortgang en uitgevoerde acties behouden. Geen nieuwe brede herstelronde."
         },
         "ownerAction": {
           "title": "Kies wie huisbediening via speakers mag gebruiken",
@@ -1699,7 +1707,7 @@
           "expected": "Na je keuze kan de voorbereide configuratie gericht worden geïnstalleerd of de privébeperking behouden blijven."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T00:37:45.049243+00:00"
+        "reviewedAt": "2026-09-24T00:43:50.600949+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11358,7 +11366,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 4,
+      "currentStep": 5,
       "steps": [
         {
           "number": 1,
@@ -11468,7 +11476,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Resterende functionele aansluiting onderzoeken binnen de bestaande taakwerker. Geen nieuwe taakspecifieke kern of brede testronde.",
+      "nextAction": "Bestaande hervatroute controleren op functionele blokkades na een versie-update; bewaarde voortgang en uitgevoerde acties behouden. Geen nieuwe brede herstelronde.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
