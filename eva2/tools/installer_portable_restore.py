@@ -7,6 +7,8 @@ never by HTTP. A preview token refers to authenticated local staged bytes only.
 from __future__ import annotations
 
 import json
+from copy import deepcopy
+import sqlalchemy as sa
 from graphlib import TopologicalSorter
 from eva.adapters.postgres.catalog import metadata
 import secrets
@@ -17,7 +19,8 @@ from time import monotonic
 from collections.abc import Callable
 from typing import Any
 
-from eva.operations.portable_restore_authority import authorize_portable_restore
+from eva.operations.portable_restore_authority import authorize_portable_restore, authorize_installation_recovery
+from eva.application.installer_restore import InactiveRecoveryMaterialRetained
 from tools.portable_transport import open_portable_transport
 from tools.read_eva_portable_archive import validate_and_derive
 from tools.postgres_portable_export import CANONICAL_EXPORT_SPECS
@@ -59,6 +62,7 @@ class InstallerPortableRestore:
         key_resolver: Any = None,
         runtime_identity: dict[str, str] | None = None,
         runtime_guard: Callable[[Any], None] | None = None,
+        recovery_materialization: dict | None = None,
     ):
         # The composition root must provide an isolated, traffic-closed target.
         if (
@@ -74,6 +78,15 @@ class InstallerPortableRestore:
         self.key_resolver = key_resolver
         self.runtime_identity = runtime_identity
         self.runtime_guard = runtime_guard
+        if recovery_materialization is not None:
+            from tools.installation_recovery_materializer import _owners
+            if (not isinstance(recovery_materialization, dict)
+                    or set(recovery_materialization) != {"destination", "owners"}
+                    or not isinstance(recovery_materialization["destination"], str)
+                    or not Path(recovery_materialization["destination"]).is_absolute()):
+                raise ValueError("recovery materialization requires a trusted absolute destination and owners")
+            _owners(recovery_materialization["owners"])
+        self.recovery_materialization = deepcopy(recovery_materialization)
         self._lock = Lock()
         self._pending: tuple[TemporaryDirectory, str, float, str] | None = None
 
@@ -91,6 +104,9 @@ class InstallerPortableRestore:
         from tools.read_eva_portable_archive import _root_descriptor, _read_regular, _load_canonical_object
         with _root_descriptor(directory) as descriptor:
             header = _load_canonical_object(_read_regular(descriptor, "archive.json"), label="archive manifest")
+        if header.get("contract") == "EvaInstallationRecovery/v1":
+            from tools.installation_recovery_package import read_installation_package
+            return read_installation_package(directory)
         if header.get("contract") == "EvaPortableArchive/v2":
             from tools.portable_v2_reader import read_current_archive
             return read_current_archive(directory)
@@ -98,17 +114,30 @@ class InstallerPortableRestore:
 
     @staticmethod
     def _object_source(directory: Path, manifest: bytes) -> Path:
-        return directory / "canonical" / "objects" if json.loads(manifest).get("schema_version") == 2 else directory / "objects"
+        header = json.loads(manifest)
+        if header.get("contract") == "EvaInstallationRecovery/v1":
+            return directory / "core" / "canonical" / "objects"
+        return directory / "canonical" / "objects" if header.get("schema_version") == 2 else directory / "objects"
 
     def _read(self, directory: Path) -> tuple[dict, bytes, dict]:
         validated = self._validate_archive(directory)
         if isinstance(validated, dict):
             from tools.portable_v2_profile import ALL_SPECS
+            installation = validated["manifest"]["contract"] == "EvaInstallationRecovery/v1"
+            package = validated if installation else None
+            if installation:
+                if self.recovery_materialization is None:
+                    raise ValueError("installation package needs trusted recovery materialization configuration")
+                validated = package["core_archive"]
             current = validated["manifest"]
             if self.runtime_identity is None or current["runtime_identity"] != self.runtime_identity:
                 raise ValueError("current archive needs matching trusted runtime configuration")
             raw = validated["manifest_raw"]
-            authorize_portable_restore(archive_manifest_raw=raw, restore_authority_raw=self.authority_reader())
+            if installation:
+                authorize_installation_recovery(package_manifest_raw=package["manifest_raw"],
+                    core_manifest_raw=raw, restore_authority_raw=self.authority_reader())
+            else:
+                authorize_portable_restore(archive_manifest_raw=raw, restore_authority_raw=self.authority_reader())
             records = validated["records"]
             summary = {"archive_sha256": validated["archive_sha256"],
                 "installation": current["source_installation_id"], "records": sum(map(len, records.values())),
@@ -120,8 +149,17 @@ class InstallerPortableRestore:
             if records["eva_evidence.object_refs"]:
                 if self.key_resolver is None:
                     raise ValueError("separately provisioned object keyring is required")
-                verify_portable_object_candidates(object_root=directory / "canonical" / "objects",
+                verify_portable_object_candidates(object_root=self._object_source(directory, package["manifest_raw"] if installation else raw),
                     records_by_table=records, key_resolver=self.key_resolver)
+            if installation:
+                summary.update(
+                    archive_sha256=package["archive_sha256"],
+                    core_archive_sha256=validated["archive_sha256"],
+                    notice="Eva blijft uit. De kern wordt hersteld en pakketbestanden worden inactief klaargezet. Geheugen- en gatewaydatabases moeten daarna worden geïmporteerd; documentproviders moeten worden gekoppeld en gecontroleerd vóór afzonderlijke operatorvrijgave.",
+                    external_components="not_materialized",
+                    object_recovery_notice="Een mislukte poging kan een volledige inactieve bestandskopie achterlaten. Deze wordt niet verwijderd of overschreven; de operator moet de kopie beoordelen en een nieuw leeg hersteldoel configureren voor een nieuwe poging.",
+                )
+                return records, package["manifest_raw"], summary
             return records, raw, summary
         outputs, proof = validated
         manifest = (directory / "archive.json").read_bytes()
@@ -180,7 +218,7 @@ class InstallerPortableRestore:
                     validator=self._validate_archive,
                 )
                 records, manifest, summary = self._read(directory)
-                current = json.loads(manifest).get("schema_version") == 2
+                current = json.loads(manifest).get("contract") in {"EvaPortableArchive/v2", "EvaInstallationRecovery/v1"}
                 if current:
                     from tools.portable_v2_profile import ALL_SPECS
                     from tools.portable_v2_restore import verify_current_target
@@ -218,6 +256,59 @@ class InstallerPortableRestore:
                 staging.cleanup()
                 raise
 
+    def _execute_installation(self, connection, directory, manifest, summary, materialization_state):
+        from tools.installation_recovery_materializer import materialize_installation_package
+        from tools.installation_recovery_package import read_installation_package
+        from tools.portable_v2_restore import restore_current_archive, verify_current_target
+        config = self.recovery_materialization
+        if config is None:
+            raise ValueError("installation materialization configuration is absent")
+        destination = Path(config["destination"])
+        verify_current_target(connection)
+        package = read_installation_package(directory)
+        if package["manifest_raw"] != manifest:
+            raise ValueError("installation package changed after preview")
+        authorize_installation_recovery(package_manifest_raw=manifest,
+            core_manifest_raw=package["core_archive"]["manifest_raw"],
+            restore_authority_raw=self.authority_reader())
+        try:
+            materialize_installation_package(directory, destination, owners=config["owners"])
+            materialization_state["published"] = True
+        except Exception:
+            # A directory fsync failure can occur after exclusive publication.
+            # Report only an exact matching package, never an unrelated path.
+            if not materialization_state["preexisted"]:
+                try:
+                    retained = read_installation_package(destination)
+                    materialization_state["published"] = retained["manifest_raw"] == manifest
+                except Exception:
+                    pass
+            raise
+        result = restore_current_archive(connection, directory / "core",
+            authority_reader=self.authority_reader,
+            expected_runtime_identity=self.runtime_identity,
+            object_store_root=self.object_store_root, key_resolver=self.key_resolver)
+        # The inner restore remains independently authorized. Only its newly
+        # created held row is bound to the outer package, in this transaction.
+        changed = connection.execute(sa.text("""
+            UPDATE eva_core.restore_activation SET archive_sha256=:outer
+            WHERE restore_id=:restore_id AND held=true AND archive_sha256=:inner
+        """), {"outer": package["archive_sha256"],
+               "inner": package["core_archive"]["archive_sha256"],
+               "restore_id": result["restore_id"]})
+        if changed.rowcount != 1:
+            raise ValueError("installation restore hold binding differs")
+        if self.runtime_guard is not None:
+            self.runtime_guard(connection)
+        authorize_installation_recovery(package_manifest_raw=manifest,
+            core_manifest_raw=package["core_archive"]["manifest_raw"],
+            restore_authority_raw=self.authority_reader())
+        return {**summary, **result, "archive_sha256": package["archive_sha256"],
+            "core_archive_sha256": package["core_archive"]["archive_sha256"],
+            "external_components": "materialized_inactive",
+            "materialization_destination": str(destination),
+            "notice": "De kern is hersteld en de bestanden staan inactief klaar. Eva blijft uit. Importeer eerst geheugen- en gatewaydatabases, koppel en controleer documentproviders en laat de operator daarna afzonderlijk vrijgeven."}
+
     def execute(self, confirmation: str) -> dict[str, object]:
         with self._lock:
             pending = self._pending
@@ -230,12 +321,18 @@ class InstallerPortableRestore:
                 records, manifest, summary = self._read(directory)
                 if summary["archive_sha256"] != pending[3]:
                     raise ValueError("restore preview changed")
+                materialization_state = {"preexisted": False, "published": False}
+                if self.recovery_materialization is not None:
+                    destination = Path(self.recovery_materialization["destination"])
+                    materialization_state["preexisted"] = destination.exists() or destination.is_symlink()
                 with self.engine.connect().execution_options(
                     isolation_level="SERIALIZABLE"
                 ) as connection:
                     with connection.begin():
                         if self.runtime_guard is not None:
                             self.runtime_guard(connection)
+                        if json.loads(manifest).get("contract") == "EvaInstallationRecovery/v1":
+                            return self._execute_installation(connection, directory, manifest, summary, materialization_state)
                         if json.loads(manifest).get("schema_version") == 2:
                             from tools.portable_v2_restore import restore_current_archive
                             result = restore_current_archive(connection, directory,
@@ -270,5 +367,9 @@ class InstallerPortableRestore:
                         if self.runtime_guard is not None:
                             self.runtime_guard(connection)
                 return {"status": "restored", "inserted_records": inserted, **summary}
+            except Exception as error:
+                if "materialization_state" in locals() and materialization_state["published"]:
+                    raise InactiveRecoveryMaterialRetained(str(destination)) from error
+                raise
             finally:
                 self._discard()

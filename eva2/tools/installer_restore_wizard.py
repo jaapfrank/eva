@@ -23,13 +23,10 @@ def main(argv=None):
             args.restore_config, setting_name="installer restore target"
         )
     )
-    if (
-        set(config) not in (
-            {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed", "runtime_guard"},
-            {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed", "runtime_identity", "runtime_guard"},
-        )
-        or config["traffic_closed"] is not True
-    ):
+    required = {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed", "runtime_guard"}
+    if (not isinstance(config, dict) or not required <= set(config)
+            or not set(config) <= required | {"runtime_identity", "recovery_materialization"}
+            or config["traffic_closed"] is not True):
         raise ValueError("restore configuration requires pinned runtime_guard identities and closed traffic")
     paths = {key: Path(config[key]) for key in ("authority", "workspace", "objects")}
     if not all(path.is_absolute() for path in paths.values()):
@@ -47,6 +44,7 @@ def main(argv=None):
         key_resolver=resolver,
         runtime_identity=config.get("runtime_identity"),
         runtime_guard=partial(verify_restore_runtime, expected=config["runtime_guard"]),
+        recovery_materialization=config.get("recovery_materialization"),
     )
     try:
         return run_installer_wizard(remaining, restore_workflow=workflow)

@@ -1,0 +1,48 @@
+{
+  "checkedAt": "2026-09-24T02:36:23.960801+00:00",
+  "kind": "existing_installation_restore_wizard_integration",
+  "files": [
+    {
+      "path": "eva2/src/eva/adapters/api/installer_restore_api.py",
+      "sha256": "9e2f834021534c10af9f349d9ee44de5f1667ac68110754eb9e8bc8890d9687b"
+    },
+    {
+      "path": "eva2/src/eva/application/installer_restore.py",
+      "sha256": "403ac2164897a4073dea632e6f22c67165dca2780a9e76c1d672c619d13ef844"
+    },
+    {
+      "path": "eva2/tools/installer_portable_restore.py",
+      "sha256": "ed8af49bb7ec2e91c155035b4b326dbf4a558c9a4a21b01621e81db6a614b3e6"
+    },
+    {
+      "path": "eva2/tools/installer_restore_wizard.py",
+      "sha256": "4eef9066deaee5096a29d81d48a96ea5833988e8dd90d62dfa284507147ecb84"
+    },
+    {
+      "path": "eva2/tests/portable/test_installer_installation_recovery.py",
+      "sha256": "37e3dd5e9ae3a4670e75dae3578a2739efb14b200f9153f8ffe817c2c3885e74"
+    }
+  ],
+  "checks": [
+    "Python source syntax",
+    "Staged host command imports and --help succeed"
+  ],
+  "availableCommand": "python3 /home/administrator/project/.eva2-artifacts/installer-recovery-20260924/start-installer.py --restore-config /absolute/private/target.json",
+  "dependencyReuse": {
+    "PyNaCl": "1.6.2 copied with distribution metadata/licenses from existing runtime; no download",
+    "hostDependencies": "Existing administrator Python user environment; no full dependency certification"
+  },
+  "failedPackagingAttempt": "Minimal core image cannot serve as host restore environment; missing SQLite library and host control executables. Do not use eva2-installer-recovery:20260924 as installer runtime. The unused candidate image was removed; the host launcher is the available entry point.",
+  "behavior": [
+    "Installation recovery archive can be previewed through existing restore wizard",
+    "Core restore and inactive file materialization remain one controlled operation",
+    "Retained inactive files get explicit UI notice rather than claiming completion"
+  ],
+  "limits": [
+    "No restore executed",
+    "No active installation or data moved",
+    "No full web workflow or database recovery test executed",
+    "Memory/gateway import, document provider reconnection and target activation remain separate open steps"
+  ],
+  "paidModelCalls": 0
+}

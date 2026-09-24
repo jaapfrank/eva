@@ -8,7 +8,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from fastapi.concurrency import run_in_threadpool
 
-from eva.application.installer_restore import InstallerRestorePort
+from eva.application.installer_restore import InstallerRestorePort, InactiveRecoveryMaterialRetained
 from eva.adapters.api.installer_request_json import read_small_json_request
 
 MAX_ARCHIVE_BYTES = 64 * 1024 * 1024
@@ -22,7 +22,7 @@ INSTALLER_RESTORE_SCRIPT = r"""
  file.addEventListener('change',invalidate); password.addEventListener('input',invalidate);
  async function post(path, body){
   const response=await fetch('/internal/v1/onboarding/restore/'+path,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),cache:'no-store'});
-  const value=await response.json(); if(!response.ok) throw new Error(value.detail || 'Herstel niet beschikbaar'); return value;
+  const value=await response.json(); if(!response.ok){const error=new Error(value.detail || 'Herstel niet beschikbaar');error.recoveryState=value.recovery_state;throw error;} return value;
  }
  check.onclick=async()=>{
   invalidate(); check.disabled=true;
@@ -33,13 +33,17 @@ INSTALLER_RESTORE_SCRIPT = r"""
    const passphrase=password.value; password.value='';
    const value=await post('prepare',{archive: btoa(binary),passphrase});
    confirmation=value.confirmation; execute.disabled=false;
-   result.textContent='Gecontroleerd: '+value.summary.records+' gegevens. Nog niets hersteld. Opnieuw aanmelden: '+(value.summary.reauthorization_required.join(', ') || 'geen verbindingen in deze reservekopie')+'.';
+   result.textContent='Gecontroleerd: '+value.summary.records+' gegevens. Nog niets hersteld. '+(value.summary.notice || '')+' Opnieuw aanmelden: '+(value.summary.reauthorization_required.join(', ') || 'geen verbindingen in deze reservekopie')+'.';
   } catch(error){result.textContent=error.message;} finally{check.disabled=false;}
  };
  execute.onclick=async()=>{
   const token=confirmation; invalidate();check.disabled=true;
-  try{const value=await post('execute',{confirmation:token});result.textContent='Herstel voltooid: '+value.inserted_records+' gegevens teruggezet. Opnieuw aanmelden: '+(value.reauthorization_required.join(', ') || 'geen verbindingen in deze reservekopie')+'.';}
-  catch(error){result.textContent=error.message+' Controleer opnieuw voordat je nogmaals herstelt.';}
+  try{
+   const value=await post('execute',{confirmation:token});
+   const state=value.target_activation==='closed' ? 'Eva is nog niet gebruiksklaar en blijft uit totdat de overige herstelstappen zijn afgerond. ' : '';
+   result.textContent=value.inserted_records+' gegevens teruggezet. '+state+(value.notice || '')+' Opnieuw aanmelden: '+(value.reauthorization_required.join(', ') || 'geen verbindingen in deze reservekopie')+'.';
+  }
+  catch(error){result.textContent=error.message+(error.recoveryState==='materialized_inactive' ? '' : ' Controleer opnieuw voordat je nogmaals herstelt.');}
   finally{check.disabled=false;}
  };
 })();
@@ -85,6 +89,11 @@ def register_installer_restore_routes(
                 ):
                     raise ValueError()
                 result = await run_in_threadpool(workflow.execute, raw["confirmation"])
+        except InactiveRecoveryMaterialRetained:
+            return JSONResponse({
+                "detail": "Herstel is niet bevestigd. De inactieve bestandskopie is bewaard; Eva blijft uit. Controle van de bewaarde kopie is nodig voordat je opnieuw kunt herstellen.",
+                "recovery_state": "materialized_inactive",
+            }, status_code=409, headers=security_headers)
         except (ValueError, binascii.Error):
             raise HTTPException(
                 409,
