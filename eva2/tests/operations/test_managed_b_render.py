@@ -495,3 +495,31 @@ def test_provisioning_receives_exact_verified_graph_without_extra_commands(monke
     ).hexdigest()
     assert len(calls) == 2
     assert calls[-1][0][-3:] == ["config", "--format", "json"]
+
+
+def test_restore_projection_keeps_commands_and_uses_only_new_named_storage():
+    from copy import deepcopy
+    from tools.managed_b_render import RenderedBManifest, isolated_restore_graph
+    graph = {"name": "existing", "networks": {"default": {"name": "old-network"}},
+             "volumes": {"data": {"name": "old-data", "labels": {"purpose": "database"}}},
+             "services": {"core": {"container_name": "old-core", "restart": "unless-stopped",
+                 "networks": {"default": None}, "ports": [{"published": "8080", "target": 8080}],
+                 "entrypoint": ["python"], "command": ["-m", "existing.service"],
+                 "healthcheck": {"test": ["CMD", "existing-check"]},
+                 "volumes": [{"type": "volume", "source": "data", "target": "/data"}]}}}
+    original = deepcopy(graph)
+    digest = hashlib.sha256(json.dumps(graph, ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    receipt = RenderedBManifest("a"*64, "test", "b"*64, "existing", digest, ("core",))
+    target = isolated_restore_graph(receipt, graph, namespace="eva-new-target")
+    assert graph == original
+    assert target["volumes"]["data"]["name"] == "eva-new-target-data"
+    assert target["networks"]["default"] == {"name": "eva-new-target-network", "internal": True}
+    service = target["services"]["core"]
+    assert service["container_name"] == "eva-new-target-core"
+    assert service["restart"] == "no" and "ports" not in service
+    assert service["networks"]["default"]["aliases"] == ["old-core"]
+    for key in ("entrypoint", "command", "healthcheck", "volumes"):
+        assert service[key] == original["services"]["core"][key]
+    graph["services"]["core"]["command"] = ["changed"]
+    with pytest.raises(ValueError, match="receipt"):
+        isolated_restore_graph(receipt, graph, namespace="eva-new-target")

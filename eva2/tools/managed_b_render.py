@@ -425,6 +425,48 @@ def render_managed_b(plan: CoreBPlan) -> RenderedBManifest:
     return receipt
 
 
+def isolated_restore_graph(receipt: RenderedBManifest, graph: dict[str, Any], *, namespace: str) -> dict[str, Any]:
+    """Project the verified services onto fresh storage with traffic still closed.
+
+    Private bind inputs must already be materialized for the new target. This
+    keeps service commands and probes, but neither creates nor starts resources.
+    """
+    import re
+    if not re.fullmatch(r"[a-z][a-z0-9-]{2,63}", namespace):
+        raise ValueError("invalid restore namespace")
+    if _sha256(_canonical_json(graph)) != receipt.rendered_sha256:
+        raise ValueError("rendered graph differs from its receipt")
+    if set(graph) - {"name", "services", "volumes", "networks"}:
+        raise ValueError("unsupported rendered graph sections")
+    result = copy.deepcopy(graph)
+    result["name"] = namespace
+    networks = result.get("networks", {})
+    if len(networks) != 1:
+        raise ValueError("restore projection requires one maintained network")
+    network = next(iter(networks))
+    result["networks"] = {network: {"name": namespace + "-network", "internal": True}}
+    for key, volume in result.get("volumes", {}).items():
+        if set(volume) - {"name", "labels", "external"}:
+            raise ValueError("restore storage must be local named volumes")
+        result["volumes"][key] = {"name": namespace + "-" + key,
+                                   "labels": dict(volume.get("labels", {}))}
+    for name, service in result["services"].items():
+        if service.get("network_mode") or set(service.get("networks", {})) != {network}:
+            raise ValueError("restore service network differs")
+        endpoint = service["networks"][network] or {}
+        if set(endpoint) - {"aliases"}:
+            raise ValueError("restore projection does not retain fixed endpoint addresses")
+        aliases = list(endpoint.get("aliases", []))
+        prior_name = service.get("container_name")
+        if prior_name and prior_name not in aliases:
+            aliases.append(prior_name)
+        service["container_name"] = namespace + "-" + name
+        service["restart"] = "no"
+        service.pop("ports", None)
+        service["networks"] = {network: {"aliases": aliases}}
+    return result
+
+
 def main(argv: list[str] | None = None) -> int:
     """Run the non-mutating sealed render and print only its receipt."""
 
