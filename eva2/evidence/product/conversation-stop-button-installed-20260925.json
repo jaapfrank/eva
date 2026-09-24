@@ -1,0 +1,37 @@
+{
+  "sourceCommit": "93494fd1",
+  "defect": "The conversation page stop button targeted unfinished turns only and could report no work after a background task acceptance had completed.",
+  "change": "Button submits the existing shared text stop request and renders its actual streamed reply, preserving draft input.",
+  "checks": {
+    "javascriptHarness": "Passed: NDJSON reply handling, overlapping turns, reversed completion order, eight ordinary requests plus one stop, draft preserved, clarification displayed.",
+    "independentReview": "contact_overlap_review GO",
+    "liveBaselineMatchesSource": true,
+    "servedPageUsesSharedStop": true,
+    "voicePageHttpStatus": 200
+  },
+  "modelCalls": 0,
+  "ownerAccepted": false,
+  "remaining": "Actual owner stop interaction remains to be tried; no new latency or full four-channel acceptance claim.",
+  "installation": {
+    "checkedAt": "2026-09-24T23:50:12.887358+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:9ab6d3f29d2e52955cc42c678e81a1c3f2deac070f7faf12a12836779987f4f4",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/api/dashboard_conversation.py": "1b1079e84bb1d85c6d258970402862bc30896b53416780a9bc6ab63465d78690"
+        }
+      },
+      "worker": {
+        "image": "sha256:54a3b65b2c2f49e5b0c140f1ff92557690d9f3a31e2133016355e17f1a92635d",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/api/dashboard_conversation.py": "1b1079e84bb1d85c6d258970402862bc30896b53416780a9bc6ab63465d78690"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/conversation-stop-button-20260925/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "checkedAt": "2026-09-24T23:51:07.792903+00:00",
+  "state": "installed"
+}

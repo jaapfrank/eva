@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Stopknop gebruikt echte taakbediening",
+            "date": "25 september",
+            "state": "installed",
+            "result": "De gesprekspagina stuurt het bestaande stopverzoek via dezelfde route als getypte tekst; concept behouden en echte reactie zichtbaar. Kern/werker gezond, geserveerde pagina gecontroleerd.",
+            "remaining": "Echte gebruikersproef open. Geen gemeten snelheidswinst of volledige kanaalacceptatie geclaimd.",
+            "source": "eva2/evidence/product/conversation-stop-button-installed-20260925.json"
+          },
+          {
             "title": "Herstelcomponenten en vrijgave in één configuratiestap",
             "date": "25 september",
             "state": "installed",
@@ -2271,29 +2279,29 @@
           }
         ],
         "now": {
-          "title": "Herstelonderdelen samengevoegd in configuratiestap",
-          "state": "Aansluiting geïnstalleerd; gebruikersbediening nog open",
-          "detail": "Gateway/documenten/materiaal worden via één builder verbonden met bestaande herstelsessie en vrijgave-instellingen. 22 gerichte controles en onafhankelijke reviews; geïnstalleerde bron/import bevestigd. Geen volledige herstelactie uitgevoerd. Geen uitvoerders meer actief op dit deel.",
-          "doneWhen": "Bewaarde installerinstellingen voeden de aansluiting en één complete herstelactie slaagt via de gewone bediening."
+          "title": "Stopknop voor achtergrondopdrachten aangesloten",
+          "state": "Geïnstalleerd — door jou te proberen",
+          "detail": "De stopknop gebruikt nu hetzelfde stopverzoek als getypte tekst en toont Eva’s echte terugkoppeling. Concepttekst blijft staan; stoppen blijft beschikbaar tijdens andere vragen. Kern en achtergrondwerker gezond, geserveerde pagina gecontroleerd. Geen uitvoerder meer actief op dit deel.",
+          "doneWhen": "Technische aansluiting geïnstalleerd; eigenaarproef controleert stoppen van een aangenomen achtergrondopdracht."
         },
         "next": {
-          "title": "Bewaarde instellingen aansluiten en volledig herstel uitvoeren",
+          "title": "Snelle gespreksreactie en kanaalgelijkheid afronden",
           "state": "Nog niet gestart",
-          "detail": "Werkelijke providerindeling, bronkeuze en goedgekeurde runtimeprofielen aan de samengestelde builder leveren. Daarna volledige afzonderlijke herstelproef; geen productiegegevens verplaatsen."
+          "detail": "Bestaande ontvangst/overlap behouden. Laatste echte begroeting blijft circa vijf seconden; niet als opgelost markeren. Alleen concrete ontbrekende oorzaak of kanaalaansluiting aanpakken; herstelbouw blijft stap6."
         },
         "ownerAction": {
-          "title": "Kies browser voor de echte overnameproef",
-          "url": "http://localhost:44718/",
-          "linkLabel": "Chrome-tabblad delen",
+          "title": "Probeer stoppen na de ontvangstbevestiging",
+          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
+          "linkLabel": "Praat met Eva",
           "steps": [
-            "Open de Chrome-bediening via deze link op je computer.",
-            "Kies Deel een bestaand tabblad en selecteer zelf een onschuldig tabblad in de extensie.",
-            "Meld hier gedeeld. Of kies in de open vraag om voorlopig Eva’s eigen browser te gebruiken."
+            "Open de gesprekspagina opnieuw zodat de aangepaste knop geladen is.",
+            "Geef Eva een onderzoeksopdracht en wacht tot ze die heeft aangenomen.",
+            "Klik Stop deze opdracht terwijl het onderzoek loopt."
           ],
-          "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
+          "expected": "Eva behandelt dit als een gewoon stopverzoek. Ze bevestigt het stoppen of vraagt welke opdracht je bedoelt; de knop meldt niet meer ten onrechte dat er geen werk is omdat de ontvangstzin al klaar is. Een al begonnen stap kan nog afronden."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T23:44:30.767882+00:00"
+        "reviewedAt": "2026-09-24T23:51:07.792903+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12065,7 +12073,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Bestaande bevestigde installerkeuzes aansluiten op echte doelvoorbereiding en herstelconfiguratie; technische volledige herstelroute is al geïnstalleerd en afzonderlijk bewezen.",
+      "nextAction": "Stap1: resterende gewone reactietijd en kanaalgelijkheid afmaken; geïnstalleerde stopknop kan door eigenaar worden geprobeerd. Herstelbouw blijft stap6.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
