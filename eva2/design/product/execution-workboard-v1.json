@@ -2287,29 +2287,29 @@
           }
         ],
         "now": {
-          "title": "Website ontvangstmelding direct — 36ms gemeten",
-          "state": "Geïnstalleerd en via echte website-HTTP-route gemeten",
-          "detail": "Lokale proxy hield headers vast tot modeltekst. Correctie geïnstalleerd zonder kernherstart: ontvangst4,85s→0,036s. Eerste inhoudelijke tekst nameting2,09s; geen algemene modelsnelheidsclaim. Geen uitvoerder meer actief op deze wijziging.",
-          "doneWhen": "Deze proxycorrectie technisch afgerond; echte gezinsbeleving en overige spraakkanalen blijven apart."
+          "title": "Spraakontvangst aangesloten; hoorbaarheid nog te beoordelen",
+          "state": "Bron- en runtimecontrole afgerond; fysieke proef open",
+          "detail": "HA leest ontvangst vóór antwoordtekst; proxybuffering staat uit. Draaiende mediacode bevat directe ontvangst. Geen dezelfde websiteproxyfout aangetoond; geen nieuwe modelcall/firmwarewijziging. Vraag aan Jaap staat open. Geen uitvoerder actief op deze controle.",
+          "doneWhen": "Jaap kan aangeven of de nieuwe ontvangst hoorbaar direct komt; technische vervolgwerkzaamheden wachten daar niet op."
         },
         "next": {
-          "title": "Resterende gespreks- en spraaksamenhang afronden",
+          "title": "Resterende taakuitvoering en terugmelding afronden",
           "state": "Nog niet gestart",
-          "detail": "Nieuwe ontvangstmeting behouden. Inhoudelijke reactietijd en fysieke spraaklatentie zijn niet opgelost verklaard; bestaande kanaalbewijs en open gebruikersproeven volgen."
+          "detail": "Bestaande taakbediening en stopfix behouden. Alleen aantoonbaar ontbrekende afhandeling afmaken terwijl fysieke spraakproef openstaat; geen ongewijzigde modelmeting."
         },
         "ownerAction": {
-          "title": "Probeer de snelle ontvangst op de website",
-          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
-          "linkLabel": "Praat met Eva",
+          "title": "Controleer ontvangst op de Voice PE",
+          "url": "http://localhost:44716/",
+          "linkLabel": "Bestaande spraakpagina",
           "steps": [
-            "Open of herlaad de gesprekspagina.",
-            "Stuur Hallo of een nieuwe vraag.",
-            "Let op Een momentje: dat hoort meteen zichtbaar te zijn; de inhoudelijke reactie volgt daarna."
+            "Gebruik op de Voice PE het gewone wakeword.",
+            "Zeg Hallo Eva.",
+            "Laat hier weten of Een momentje direct klinkt of dat het eerst meerdere seconden stil blijft."
           ],
-          "expected": "Snelle zichtbare ontvangst zonder op het modelantwoord te wachten. Dit bewijst nog geen snellere hoorbare reactie via Voice PE."
+          "expected": "Een korte ontvangstmelding vóór het inhoudelijke antwoord. Dit is de fysieke speakerproef; de websiteknop vervangt die niet."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T23:56:32.107572+00:00"
+        "reviewedAt": "2026-09-24T23:59:18.758364+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12081,7 +12081,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Stap1: resterende gewone reactietijd en kanaalgelijkheid afmaken; geïnstalleerde stopknop kan door eigenaar worden geprobeerd. Herstelbouw blijft stap6.",
+      "nextAction": "Fysieke ontvangstobservatie staat open. Ga onafhankelijk verder met resterende taakuitvoering/terugmelding; herhaal geen ongewijzigde snelheidsproef.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

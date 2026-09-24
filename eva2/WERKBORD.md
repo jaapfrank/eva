@@ -1,5 +1,7 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Afgerond — spraakontvangstroute gericht bekeken.** HA-proxy zonder buffering; client levert ontvangst vóór antwoordbody; draaiende media heeft request_acknowledged. Geen aanvullende ontvangstwijziging gerechtvaardigd. Oude fysieke meting was vóór ontvangstinstallatie; nieuwe hoorbaarheid is open aan Jaap gevraagd, zonder firmwarewijziging.0modelcalls. Geen uitvoerder meer op deze controle. **Volgende, nog niet gestart:** resterende taakuitvoering/terugmelding onafhankelijk afronden. [Bevinding en grenzen](evidence/product/voice-receipt-route-inspection-20260925.json).
+
 **Opgeleverd — directe website-ontvangst, bron d2c8f88d.** Proxy hield ontvangstheader vast tot eerste modeltekst; flushHeaders geïnstalleerd in lokale eigenaarproxy zonder kernherstart. Zelfde gecontroleerde netwerkproef faalt vóór en slaagt na fix; onafhankelijke review. Echte HTTP-begroeting vóór4,85s ontvangst, na0,036s; eerste tekst na2,09s, geen algemene modelsnelheidsclaim. Twee modelcalls19.023input/24output,0tools; creditkosten onbekend. Geen uitvoerder meer actief. Volgende: resterende gesprek-/spraaksamenhang; fysieke beleving blijft open. [Bewijs en terugweg](evidence/product/local-owner-receipt-flush-installed-20260925.json).
 
 **Nu — één echte website-ontvangstmeting.** Directe ontvangst geïnstalleerd na oude circa5s-begroetingsmeting; bewijs van echte HTTP-ontvangst versus eerste antwoord ontbreekt. Maximaal één Hallo via bestaande route; geen gewijzigde provider/modelinstelling. Creditkosten onbekend. Uitvoerder: coördinator.

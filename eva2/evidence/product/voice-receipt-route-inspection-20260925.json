@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-09-24T23:59:18.758364+00:00",
+  "scope": "voice receipt path inspection after actual local website proxy defect",
+  "findings": {
+    "haProxy": "render_household_voice_ingress.py uses proxy_buffering off for native voice; no analogous Node writeHead buffering found.",
+    "haClient": "client.py reads X-Eva-Input-Receipt and awaits on_receipt before reading streamed reply. conversation.py queues receipt before deltas.",
+    "liveMedia": "Current live agent.py contains request_acknowledged emitted after successful streamed headers and before response body.",
+    "liveMediaSha256": "b77050d809440386b0357037bafef26000dda3a7e8cde6f005cf18aafe259259",
+    "sourceDifference": "Live media differs from current source in household work-return support. Existing receipt is present; do not replace whole module to fix a nonexistent missing receipt."
+  },
+  "priorPhysicalEvidence": "eva2/evidence/product/wakeword-measurement-20260924.json",
+  "priorPhysicalEvidenceLimit": "Measurement preceded ha-input-receipt installation; cannot establish present first audible receipt latency.",
+  "decision": "No additional receipt code change justified. Request one physical observation; continue independent task work while waiting.",
+  "modelCalls": 0,
+  "firmwareChanged": false,
+  "ownerAccepted": false
+}
