@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T12:09:36.292316+00:00",
+        "checkedAt": "2026-09-24T12:17:30.626333+00:00",
         "deliveries": [
+          {
+            "title": "Herstelde documentprovider aansluiten voor controle",
+            "date": "24 september",
+            "state": "built",
+            "result": "Bestaande wizard kan voorbereide providers alleen-lezen starten en hun toolcatalogus controleren; lokale beheerroute beschikbaar.",
+            "remaining": "Geen herstelde provider gestart. Projectresultaten teruglezen, gateway verbinden, schrijftoegang en vrijgave blijven open.",
+            "source": "eva2/evidence/product/installer-document-connection-20260924.json"
+          },
           {
             "title": "Documentprojecten voorbereiden via herstelwizard",
             "date": "24 september",
@@ -1861,15 +1869,15 @@
           }
         ],
         "now": {
-          "title": "Documentvoorbereiding in beheerwizard beschikbaar",
+          "title": "Documentaansluiting beschikbaar in beheerwizard",
           "state": "Gebouwd en lokaal beschikbaar",
-          "detail": "Voorbereide documentbindingen en projectmomentopnamen worden meegenomen in de bestaande herstelactie. Actieve installatie en gegevens ongewijzigd.",
-          "doneWhen": "Koppeling, startcontrole en gerichte foutafhandeling afgerond. Geen volledige herstelclaim."
+          "detail": "Voorbereide bindings/projectmomentopnamen kunnen via dezelfde wizard met de bestaande native provider worden verbonden in alleen-lezen-modus. Geen actieve data gewijzigd.",
+          "doneWhen": "Koppeling, gerichte controles en start/importcontrole klaar. Volledige herstelproef apart open."
         },
         "next": {
-          "title": "Voorbereide documentproviders aansluiten",
+          "title": "Bewaarde projectresultaten teruglezen",
           "state": "In wachtrij",
-          "detail": "Resterende stap in dezelfde installatieketen: providers verbinden en bewaarde resultaten controleren vóór vrijgave. Voice PE-foutmeting wacht afzonderlijk op antwoord."
+          "detail": "Na de alleen-lezen-aansluiting de bestaande projectbewijzen controleren; daarna gatewaykoppeling en gerichte vrijgave afronden. Fysieke Voice PE-vraag blijft afzonderlijk open."
         },
         "ownerAction": {
           "title": "Een bestaande lamp bedienen",
@@ -1883,7 +1891,7 @@
           "expected": "Bestaande toegestane lamp schakelt; fysieke werking nog niet bewezen. Geen nieuwe schakelaars toegevoegd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T12:09:36.292316+00:00"
+        "reviewedAt": "2026-09-24T12:17:30.626333+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11655,7 +11663,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Documentvoorbereiding beschikbaar in bestaande beheerwizard. Vervolgens voorbereide documentproviders aansluiten en benodigde componentcontrole koppelen vóór vrijgave; actieve installatie blijft behouden.",
+      "nextAction": "Documentvoorbereiding en read-only providerverbinding beschikbaar in dezelfde wizard. Vervolgens bewaarde projectresultaten controleren, gatewaykoppeling en gerichte vrijgave aansluiten; actieve installatie behouden.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

@@ -1,0 +1,53 @@
+{
+  "checkedAt": "2026-09-24T12:17:30.626333+00:00",
+  "sourceCommit": "d0fae9c0095a8cfc5e969c08797c39ab42ab5b9c",
+  "kind": "operator_read_only_document_connection",
+  "availableCommand": "python3 /home/administrator/project/.eva2-artifacts/installer-document-connection-20260924/start-installer.py --restore-config /absolute/private/target.json",
+  "sourceHashes": {
+    "tools/installation_document_connection.py": "ed3d93402d3d92607cb1d49d821afcea515c5a3b9c64975b4ff10af9f56eecdd",
+    "tools/installer_portable_restore.py": "35f40706608824f81373f58f40af873d604624e2c5d6b9d43439978e7a081a46",
+    "tools/installer_restore_wizard.py": "9824f3df7044e7902a78e375ed99bdb18817ddc721ab1a87acb4c9fe4376beed",
+    "src/eva/application/installer_restore.py": "9278ffb1ec101066d2a38d77472910f5d28d1ecf45019d51e41f2ff6134fd8ee",
+    "src/eva/adapters/api/installer_restore_api.py": "7bb9584c8a76a409cbf6ec3b34c8b7e96dd4d702a01dae5c1617df4141bdfe9f"
+  },
+  "behavior": [
+    "Optional document_connection follows complete document preparation",
+    "Only new explicit target names on a pinned internal network; exact image/UID/GID and read-only mounts",
+    "Separately provisioned secret files; no host ports or gateway re-registration",
+    "Actual running container and MCP tools/list catalog checked before connected_read_only",
+    "Partial connection receipts and targets retained; no automatic retry or deletion",
+    "Core activation remains false; project contents not claimed verified"
+  ],
+  "checks": [
+    "Python syntax and exact staged source hashes",
+    "Host launcher --help and module imports passed",
+    "Implementation agent fake command tests: success, catalog mismatch retention, writable mount rejection",
+    "Root review of configuration, mounts, catalog scope and exception wiring",
+    "Real wizard methods with mocked side effects: preparation before connection, failure receipt retained, no retry, core hold preserved",
+    "Real FastAPI error response includes connection warning without private receipt/path exposure"
+  ],
+  "existingProviderReadOnlyProbe": {
+    "container": "eva2-document-workspace-au006",
+    "imageId": "sha256:ba9eda41299033a19e25c483e07e973b40545b226b062da6a29ccb70482f1b5e",
+    "operation": "Existing MCP SDK initialize and tools/list from loopback inside the existing container",
+    "exitCode": 0,
+    "toolNames": [
+      "workspace_create_bound",
+      "workspace_observe_bound"
+    ],
+    "meaning": "SDK catalog reader works on existing provider. No restored target or archived-catalog comparison exercised."
+  },
+  "notPerformed": [
+    "No restored provider started",
+    "No restore or active data movement",
+    "No project content readback, gateway remapping, writes or core activation",
+    "No owner acceptance"
+  ],
+  "remaining": [
+    "Read back preserved project results against archive receipts",
+    "Connect restored gateway identities/endpoints",
+    "Deliberate writable activation and complete isolated restore trial"
+  ],
+  "rollback": "Use previous installer-documents-20260924 launcher before recovery. If a connection was attempted, retain and inspect all named targets; do not retry an older workflow on them.",
+  "modelRequests": 0
+}
