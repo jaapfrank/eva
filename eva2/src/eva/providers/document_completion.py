@@ -74,7 +74,7 @@ class DocumentCompletionSource:
         timeline = self.store._timeline
         with timeline._engine.begin() as connection:
             timeline._scope(connection)
-            return failure_notice_cutoff(connection, self.authority, datetime.now(UTC),
+            return failure_notice_cutoff(connection, self.authority, datetime.now(UTC).replace(microsecond=0),
                                          thread="document-failure-notices:v1")
 
     def candidates(self):
