@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Blijvende opslag voor herstel voorbereiden — beheermodule",
+            "date": "25 september",
+            "state": "installed",
+            "result": "Nieuwe opslag, netwerk en gestopte diensten worden voorbereid; bestaande schema-installer uitgevoerd. Database bleef behouden na stop/start. Module geïnstalleerd en gecontroleerd.",
+            "remaining": "Nog niet vanuit de gewone installer aangesloten; dit is geen complete gebruikersfunctie. Bestaande Eva is niet verhuisd of vervangen.",
+            "source": "eva2/evidence/product/installer-target-provisioning-installed-20260925.json"
+          },
+          {
             "title": "Planning met één of geen voorganger aangesloten op het model",
             "date": "24 september",
             "state": "installed",
@@ -2239,15 +2247,15 @@
           }
         ],
         "now": {
-          "title": "Automatische doelvoorbereiding bouwen",
-          "state": "Invoerkoppeling geïnstalleerd; services nog niet aangemaakt",
-          "detail": "Bron0db7a485 koppelt bevestigde installerkeuzes aan bestaande releasecontrole en actuele secretopslag.8 gerichte controles, onafhankelijke review en installatie/import geslaagd. Uitvoerderopdracht afgerond; coördinator vervolgt de echte resourcevoorbereiding. De normale installer is nog niet klaar.",
-          "doneWhen": "Volledige reservekopie via de wizard terugzetten en echte herstelde kern starten met behouden gegevens. Gebruikersacceptatie blijft apart."
+          "title": "Technische herstelroute en doelvoorbereiding geïnstalleerd",
+          "state": "Technisch deel opgeleverd; gewone bediening nog niet af",
+          "detail": "Volledige afzonderlijke herstelproef geslaagd. Nieuwe doelvoorbereider maakt blijvende opslag en installeert het schema; behoud na databasestop/start bewezen. Geïnstalleerde bron gecontroleerd. Geen uitvoerder meer actief op deze deelopdracht. Bestaande Eva ongewijzigd.",
+          "doneWhen": "De gewone installer verbindt bestaande keuzes, installatiebestanden en doelvoorbereiding met de herstelroute zonder handgeschreven configuratie. Dat vervolg is nog niet uitgevoerd."
         },
         "next": {
-          "title": "Duurzame doelservices automatisch voorbereiden",
-          "state": "Nog niet geïmplementeerd",
-          "detail": "Werkelijke opslag/databases/netwerk en gestopte runtimes maken uit bestaande installerkeuzes en releasegegevens, daarna dezelfde herstelroute gebruiken. Geen handgeschreven doelconfiguratie als eindoplossing."
+          "title": "Doelvoorbereiding verbinden met gewone installerbediening",
+          "state": "Vervolgwerk — nog niet gestart",
+          "detail": "Bestaande installatiekeuzes en geverifieerde releasebestanden aansluiten op de geïnstalleerde doelvoorbereider en herstelroute. Volledige gebruikersfunctie, productieschema/updatepad en eigenaarproef blijven open."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2261,7 +2269,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T22:34:50.178918+00:00"
+        "reviewedAt": "2026-09-24T22:51:13.831728+00:00"
       }
     },
     "pendingTechnicalReview": {

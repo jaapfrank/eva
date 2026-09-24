@@ -1,0 +1,19 @@
+{
+  "sourceCommit": "c6ce1b4a",
+  "installed": true,
+  "scope": "Operator target preparation module; ordinary installer UI wiring remains incomplete",
+  "installationReceipt": "/home/administrator/project/.eva2-artifacts/installer-target-provisioning-installed-20260925/installation-receipt.json",
+  "proof": "/home/administrator/project/.eva2-artifacts/restore-target-provisioning-20260925/result.json",
+  "proofSha256": "224dfee30ceaed6ea14aa9d7117093f2b04ce9e96c9d578ca156910fbdc951c6",
+  "testsPassed": 16,
+  "independentReview": "Bounded source review passed; coordinator verified installed hash/import and actual retained container states",
+  "actualResult": "New persistent database volume; maintained schema CLI completed; revision 4e_0009_restore_hold retained after database stop/start. Core and worker remain created/stopped.",
+  "limitations": [
+    "Controlled test release receipt, not signed production release",
+    "Initial isolated image lacked current migrations; corrected fixture image and preserved failed target",
+    "Normal installer materialization and UI wiring not implemented",
+    "Production schema/update and owner acceptance remain open"
+  ],
+  "productionChanged": false,
+  "modelCalls": 0
+}

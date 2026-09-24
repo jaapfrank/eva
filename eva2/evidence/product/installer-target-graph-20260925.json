@@ -1,0 +1,12 @@
+{
+  "sourceCommit": "d2d3093d",
+  "scope": "Expose verified managed service definitions and project them onto fresh isolated target names",
+  "installed": true,
+  "receipt": "/home/administrator/project/.eva2-artifacts/installer-isolated-graph-20260925/installation-receipt.json",
+  "tests": 60,
+  "review": "Independent projection review passed; preserves source graph, commands, healthchecks and mounts, fresh named volumes/network, no restart/published ports.",
+  "resourcesCreated": false,
+  "productionChanged": false,
+  "modelCalls": 0,
+  "remaining": "Actual resource preparation and trusted target file materialization must enforce new writable storage and new schema DB; no complete installer claim."
+}
