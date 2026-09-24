@@ -524,3 +524,18 @@ prepared target. Core and memory database identities matched; restore authority
 was deliberately pending and no import/activation occurred. The full ordinary
 restoration remains open. Evidence:
 `evidence/product/installer-prepared-restore-installed-20260925.json`.
+
+
+### Prepared document component settings — 25 September 2026
+
+`tools/installer_document_components.py` builds the four existing document restore
+callback configurations from a saved provider layout and separately trusted
+runtime image, owners, credentials, network and target directory. It preserves
+gateway IDs/aliases and derives project coverage and catalog identity from the
+validated package. It rejects overlapping or omitted retained document files.
+It performs no resource creation, import or activation. Four focused checks and
+an independent review passed; comparison with the existing real restored package
+retained its project keys, catalog digest and gateway binding. The operator-stage
+module is installed with exact byte/import verification. The saved-layout inventory
+join and ordinary prepared restore bootstrap remain incomplete; this checkpoint
+is not a usable owner restore feature. See the installed document-components evidence.

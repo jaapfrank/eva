@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-09-24T23:36:46.311929+00:00",
+  "scope": "installed_document_configuration_builder",
+  "module": "tools/installer_document_components.py",
+  "sha256": "0847f722c38ed86ac4592164f08f48e07ce4de404c9eb67921a79c7387326f58",
+  "installedPath": "/home/administrator/project/.eva2-artifacts/installer-document-write-20260924/tools/installer_document_components.py",
+  "rollback": "New module only; existing installer entrypoints unchanged. Remove module to revert before integration.",
+  "tests": "4 focused cases passed",
+  "independentReview": "contact_overlap_review GO within builder scope",
+  "realPackageCheck": "Existing full restore package retained project keys, catalog SHA256 and exact gateway bindings; four existing callback validators passed. No import or container operations.",
+  "productionModified": false,
+  "modelCalls": 0,
+  "ownerAccepted": false,
+  "remaining": [
+    "Saved provider layout inventory must still be connected to bootstrap.",
+    "Gateway/document components and activation must be joined to the ordinary prepared restore workflow.",
+    "No complete owner restore action claimed."
+  ],
+  "gateway": {
+    "sourceCommit": "bcf69154",
+    "installed": true,
+    "installationReceipt": "/home/administrator/project/.eva2-artifacts/installer-gateway-target-bcf69154/installation-receipt.json",
+    "receiptSha256": "678fc66d7e80f92f37b9c153bd9979cb6e11b63f744e9bbbb334030ab5c56cc0",
+    "tests": "5 controlled-backend cases passed; coordinator reviewed source against maintained compose and existing target validator.",
+    "actualTargetCreated": false
+  }
+}

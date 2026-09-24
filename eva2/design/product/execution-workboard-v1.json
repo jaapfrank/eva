@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Gateway- en documentconfiguratie voor voorbereid herstel",
+            "date": "25 september",
+            "state": "installed",
+            "result": "Twee beheermodules geïnstalleerd: documentconfiguratie uit pakketindeling en een nieuwe gestopte gateway voorbereiden. Negen gerichte controles en onafhankelijke reviews; bestaande echte documentgegevens exact gekoppeld.",
+            "remaining": "Nog niet aan gewone herstelbediening gekoppeld. Geen nieuwe gateway gestart, geen herstelimport en geen eigenaaracceptatie.",
+            "source": "eva2/evidence/product/installer-document-components-installed-20260925.json"
+          },
+          {
             "title": "Voorbereiding verbonden met bestaande herstelsessie",
             "date": "25 september",
             "state": "installed",
@@ -2255,15 +2263,15 @@
           }
         ],
         "now": {
-          "title": "Voorbereid doel aan bestaande herstelsessie gekoppeld",
-          "state": "Aansluiting geïnstalleerd; volledige herstelactie nog open",
-          "detail": "Herstel wacht op voorbereide status en gebruikt één sessie voor controleren/uitvoeren. Werkelijke kern-/geheugendatabase van het doel teruggevonden. Gateway-, document- en vrijgaveconfiguratie ontbreken nog; geen gegevens teruggezet. Geen uitvoerder meer actief op deze deelopdracht.",
-          "doneWhen": "Alle pakketcomponenten worden via dezelfde gewone herstelactie teruggezet en de voorbereide Eva wordt gecontroleerd vrijgegeven."
+          "title": "Gateway- en documentkoppelingen geïnstalleerd",
+          "state": "Beheermodules geïnstalleerd; volledige herstelbediening nog open",
+          "detail": "Documentconfiguratie behoudt bestaande project-/catalogus-/gatewaygegevens. Nieuwe gatewayvoorbereider maakt een gestopt doel met bestaande startdefinitie. Negen gerichte controles, onafhankelijke reviews en geïnstalleerde bron/import bevestigd. Geen nieuwe gateway gemaakt of gegevens geïmporteerd. Geen uitvoerders meer actief op dit deel.",
+          "doneWhen": "De bestaande gewone herstelactie gebruikt deze koppelingen, zet alle gegevens terug en geeft het voorbereide doel gecontroleerd vrij."
         },
         "next": {
-          "title": "Pakketcomponenten aan voorbereid hersteldoel verbinden",
+          "title": "Pakketinventaris en vrijgave in gewone herstelactie aansluiten",
           "state": "Nog niet gestart",
-          "detail": "Bestaande herstelbestanden, gateway en documentproviders verbinden met de afgeleide doelconfiguratie en goedgekeurde bron. Daarna volledige herstelimport en vrijgave beproeven; geen herbouw van de al werkende doelvoorbereiding."
+          "detail": "Opgeslagen providerindeling, goedgekeurde bron en vrijgaveconfiguratie verbinden met de bestaande voorbereide herstelroute. Daarna één complete uitvoering; geen nieuwe losse herstelengine."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2277,7 +2285,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T23:27:55.989649+00:00"
+        "reviewedAt": "2026-09-24T23:37:47.753179+00:00"
       }
     },
     "pendingTechnicalReview": {
