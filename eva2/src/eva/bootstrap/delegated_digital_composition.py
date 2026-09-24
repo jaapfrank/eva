@@ -17,7 +17,8 @@ _CONNECTORS = frozenset({"connect_service", "discover_connector_tools",
                         "manage_connected_services", "use_connector_tool"})
 _PROCEDURES = frozenset({"list_reusable_procedures", "resolve_reusable_procedure",
                          "designate_reusable_procedure", "save_workspace_document", "run_reusable_procedure"})
-_DIGITAL_PROVIDERS = frozenset({"mcp_autonomy", "procedure_references", "mcp_gateway"})
+_HOME_ASSISTANT = frozenset({"home_assistant_request"})
+_DIGITAL_PROVIDERS = frozenset({"mcp_autonomy", "procedure_references", "mcp_gateway", "home_assistant"})
 _ROOT = Path(__file__).resolve().parents[1]
 _EXECUTION_SOURCES = (
     "bootstrap/delegated_digital_composition.py",
@@ -43,16 +44,20 @@ _EXECUTION_SOURCES = (
     "adapters/postgres/external_conversation_tools.py",
     "adapters/connectors/mcp_gateway.py",
     "providers/mcp_gateway.py",
+    "providers/home_assistant.py",
+    "adapters/connectors/home_assistant_api.py",
+    "adapters/connectors/home_assistant_admin.py",
 )
 
 
 def digital_tools(bundle):
     if bundle is None:
         raise ValueError("digital work requires existing connector tools")
-    descriptors = tuple(tool for tool in bundle.conversation_tools if tool.name in _CONNECTORS | _PROCEDURES)
-    routes = tuple(tool for tool in bundle.external_tools if set(tool.action_names) & (_CONNECTORS | _PROCEDURES))
+    admitted = _CONNECTORS | _PROCEDURES | _HOME_ASSISTANT
+    descriptors = tuple(tool for tool in bundle.conversation_tools if tool.name in admitted)
+    routes = tuple(tool for tool in bundle.external_tools if set(tool.action_names) & admitted)
     names = {tool.name for tool in descriptors}
-    if not names or names != {name for tool in routes for name in tool.action_names if name in _CONNECTORS | _PROCEDURES}:
+    if not names or names != {name for tool in routes for name in tool.action_names if name in admitted}:
         raise ValueError("digital connector descriptions and routes differ")
     return (*descriptors, progress_descriptor(), *component_descriptors()), routes
 

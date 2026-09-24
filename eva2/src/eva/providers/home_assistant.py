@@ -33,6 +33,7 @@ from eva.adapters.postgres.external_conversation_tools import (
 from eva.application.conversation import ConversationExternalToolPort, ConversationConflict
 from eva.providers.home_assistant_advanced_store import PostgresAdvancedTaskStore
 from eva.providers.contracts import ProviderContribution
+from eva.adapters.connectors.home_assistant_api import HomeAssistantApiTool
 from eva.contracts.canonical_json import canonical_sha256
 
 
@@ -61,6 +62,7 @@ class HomeAssistantProviderSettings:
     effect_allowlist: tuple[str, ...]
     effect_principal_sha256_allowlist: tuple[str, ...]
     event_domains: tuple[str, ...]
+    api_enabled: bool = False
 
 
 def home_assistant_read_configuration_sha256(endpoint_url: str) -> str:
@@ -137,6 +139,7 @@ class HomeAssistantProviderFactory:
             effect_allowlist=effect_allowlist,
             effect_principal_sha256_allowlist=principals,
             event_domains=event_domains,
+            api_enabled=_boolean("EVA_HOME_ASSISTANT_API_ENABLED"),
         )
 
     @staticmethod
@@ -260,10 +263,24 @@ class HomeAssistantProviderFactory:
                     ),
                 )
             )
+        if settings.api_enabled:
+            api = HomeAssistantApiTool(base_url=settings.endpoint_url, token=settings.credential)
+
+            def authorize_api(turn):
+                if (turn.audience.kind != "private_person"
+                    or turn.audience.principal_id != turn.principal_id
+                    or hashlib.sha256(turn.principal_id.encode()).hexdigest() not in effect_principals):
+                    raise ConversationConflict("General Home Assistant API requires the authorized owner route")
+
+            external_tools.append(PostgresExternalConversationTools(
+                engine, api, api, authorize_turn=authorize_api,
+                configuration_sha256=home_assistant_read_configuration_sha256(settings.endpoint_url),
+            ))
         available_actions = {
             name for external_tool in external_tools for name in external_tool.action_names
         }
         all_descriptors = (
+            *HomeAssistantApiTool.conversation_tools(),
             *HomeAssistantHouseholdTool.conversation_tools(),
             *HomeAssistantToolAdapter.conversation_tools(),
             *HomeAssistantConversationAutomationPlanner.conversation_tools(),
