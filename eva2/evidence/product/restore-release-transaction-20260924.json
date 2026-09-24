@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-09-24T12:57:20.243759+00:00",
+  "sourceCommit": "3e45e0256a48b9425dc7e50ecb42da0fc1b408ae",
+  "kind": "internal_restore_release_transaction",
+  "state": "built",
+  "stagedModule": "/home/administrator/project/.eva2-artifacts/installer-release-transaction-20260924/src/eva/operations/restore_activation.py",
+  "sourceSha256": "18dd8f26bd4a6f2774b53978301712b6be2eb7df7e122e3a7852f4083100f000",
+  "behavior": [
+    "Exact restore hold locked and matched to archive/runtime/database",
+    "Fresh trusted component callback and unchanged archive authorization required",
+    "Existing voice-session closure and hold release in caller-owned root transaction",
+    "No commit or runtime start performed; caller must roll back on any exception"
+  ],
+  "checks": {
+    "postgresql": "3 passed in 22.00s on generated disposable databases in existing test PostgreSQL",
+    "cases": [
+      "Successful guarded release permits existing activation reader",
+      "Component verification failure leaves hold intact",
+      "Authority revocation during verification leaves hold intact"
+    ],
+    "externalChecks": "Component callback and runtime process guard mocked; no real component activation",
+    "review": "Coordinator reviewed implementation; implementation agent reviewed test/API compatibility",
+    "stage": "Source and staged module byte-identical; syntax and git diff check passed"
+  },
+  "setupFailures": [
+    "Initial host collection missing pydantic_ai",
+    "Existing runtime image required mounted pytest and Pygments dependencies",
+    "Test PostgreSQL has no bridge IP; corrected runner to its container network namespace after verifying loopback access"
+  ],
+  "remaining": [
+    "Production component reconciliation callback",
+    "Writable document provider promotion",
+    "Wizard release action and coordinated runtime startup",
+    "Full isolated restoration and owner acceptance"
+  ],
+  "runtimeChanged": false,
+  "modelRequests": 0,
+  "modelRequestScope": "Eva provider calls only; development usage not measured",
+  "rollback": "Previous installer-gateway-start-20260924 stage remains available. No active restore was released."
+}

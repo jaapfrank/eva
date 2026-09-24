@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T12:48:15.082888+00:00",
+        "checkedAt": "2026-09-24T12:57:20.243759+00:00",
         "deliveries": [
+          {
+            "title": "Vrijgavetransactie voor herstelde kern gebouwd",
+            "date": "24 september",
+            "state": "built",
+            "result": "Ontbrekende databasevrijgave toegevoegd; drie echte PostgreSQL-transactieproeven geslaagd. Beschikbaar als interne beheerfunctie.",
+            "remaining": "Nog geen wizardknop of volledige activering: echte componentcontrole, document-schrijftoegang en runtime-start ontbreken.",
+            "source": "eva2/evidence/product/restore-release-transaction-20260924.json"
+          },
           {
             "title": "Bewaard document via echt herstelde gateway teruggelezen",
             "date": "24 september",
@@ -1901,15 +1909,15 @@
           }
         ],
         "now": {
-          "title": "Echte herstelde documentroute gecontroleerd",
+          "title": "Vrijgavetransactie technisch afgerond",
           "state": "Afgerond",
-          "detail": "Tweede poging geslaagd na concrete WAL-correctie in de proef. Oude gegevens behouden, tijdelijke containers opgeruimd; geen actieve Eva gewijzigd.",
-          "doneWhen": "Afgerond binnen deze routeproef; volledig herstel en project blijven open."
+          "detail": "Bron 3e45e025 op GitHub en lokale beheerbron bijgewerkt. Drie gerichte databaseproeven geslaagd; actieve Eva ongewijzigd.",
+          "doneWhen": "Databasefunctie afgerond; complete herstelvrijgave blijft open."
         },
         "next": {
-          "title": "Herstelde installatie gecontroleerd vrijgeven",
+          "title": "Document-schrijftoegang en componentcontrole koppelen",
           "state": "In wachtrij",
-          "detail": "Bestaande herstelblokkade koppelen aan expliciete vrijgave na componentcontrole; document-schrijftoegang en kern/werkers samenhangend activeren. Nog niet gestart."
+          "detail": "Gecontroleerde overgang van alleen-lezen documentdoelen naar gebruik, en echte externe componentcontrole vóór wizardvrijgave. Nog niet gestart."
         },
         "ownerAction": {
           "title": "Een bestaande lamp bedienen",
@@ -1923,7 +1931,7 @@
           "expected": "Bestaande toegestane lamp schakelt; fysieke werking nog niet bewezen. Geen nieuwe schakelaars toegevoegd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T12:48:15.082888+00:00"
+        "reviewedAt": "2026-09-24T12:57:20.243759+00:00"
       }
     },
     "pendingTechnicalReview": {
