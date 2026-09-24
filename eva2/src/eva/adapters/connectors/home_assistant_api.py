@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import hashlib
 from urllib.parse import unquote, urlsplit
 
 import httpx2 as httpx
@@ -63,7 +64,7 @@ class HomeAssistantApiTool:
                 "required": ["transport", "method", "path", "body_json", "response_pointer", "offset", "limit"]},
             completion_guidance=(
                 "result is the persisted API response, not independent physical-state proof. "
-                "Check http_status/success and response before claiming success. Read changes "
+                "Check http_status/success and response_json before claiming success. Read changes "
                 "back with another request. Never repeat an uncertain write automatically. "
                 "Use ordinary Dutch names in your reply, not API implementation details."
             ),
@@ -139,8 +140,9 @@ class HomeAssistantApiTool:
                     raise RuntimeError("Home Assistant WebSocket response does not match request")
                 status = {"success": frame.get("success") is True}
                 value = frame.get("result") if status["success"] else frame.get("error")
-        # Selection is presentation only; the full response hash retains its origin.
-        result = {**status, "response_sha256": canonical_sha256(value), "external_state_verified": False}
+        # Selection is presentation only; preserve HA numeric types in JSON text.
+        # Durable contract JSON deliberately excludes floating-point numbers.
+        result = {**status, "response_sha256": hashlib.sha256(json.dumps(value, ensure_ascii=False, allow_nan=False).encode()).hexdigest(), "external_state_verified": False}
         try:
             selected = value
             for segment in a["response_pointer"].split("/")[1:]:
@@ -156,7 +158,7 @@ class HomeAssistantApiTool:
                 result.update(response_preview=encoded[:40_000], truncated=True,
                     guidance="Use a narrower response_pointer or smaller page; preview is incomplete.")
             else:
-                result.update(response=selected, truncated=False)
+                result.update(response_json=encoded, truncated=False)
         except (KeyError, IndexError, TypeError, ValueError):
             result.update(selection_error="Response pointer does not exist; API call already completed. Do not repeat a write to change the selection.")
         return result

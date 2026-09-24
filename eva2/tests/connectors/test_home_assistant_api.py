@@ -20,7 +20,7 @@ def test_arbitrary_service_and_full_automation_config_use_same_transport(monkeyp
     class Response:
         status_code = 200
         def iter_bytes(self):
-            yield json.dumps({"saved": True}).encode()
+            yield json.dumps({"saved": True, "temperature": 21.5}).encode()
     class Client:
         def __init__(self, **kwargs):
             assert kwargs["follow_redirects"] is False
@@ -40,6 +40,7 @@ def test_arbitrary_service_and_full_automation_config_use_same_transport(monkeyp
         dispatch = asyncio.run(tool.execute(request))
         receipt = asyncio.run(tool.observe(request, dispatch))
         assert receipt.disposition == "verified"
+        assert json.loads(receipt.evidence["observation"]["response_json"])["temperature"] == 21.5
         assert receipt.evidence["observation"]["external_state_verified"] is False
         assert calls[-1][0:2] == ("POST", "http://ha.local:8123" + path)
         assert calls[-1][2]["json"] == body
@@ -60,7 +61,7 @@ def test_discovery_websocket_and_response_projection():
     tool.admin._session = session
     result = tool._request(args(transport="websocket", path="", body_json='{"type":"get_services"}', response_pointer="/new_domain"))
     assert sent == [{"type": "get_services", "id": 1}]
-    assert result["response"] == {"new_service": {"fields": {"level": {}}}}
+    assert json.loads(result["response_json"]) == {"new_service": {"fields": {"level": {}}}}
     assert result["success"] is True
 
 

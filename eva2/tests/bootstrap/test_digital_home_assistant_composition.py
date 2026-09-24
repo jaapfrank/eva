@@ -62,3 +62,20 @@ def test_background_dispatch_preserves_route_authorization():
     assert authorization
     assert not calls
     assert actions.calls == 0
+
+
+def test_general_home_assistant_profile_grant_accepts_only_explicit_action():
+    from dataclasses import replace
+    from eva.bootstrap.delegated_digital_profile import DelegatedDigitalProfile
+
+    profile = DelegatedDigitalProfile(
+        model_profile_id="model:configured", configuration_sha256="a" * 64,
+        engine_release_sha256="b" * 64,
+        capability_ids=("home_assistant_request",),
+        execution_source_sha256=(("providers/home_assistant.py", "c" * 64),))
+    grant = profile.grant()
+    assert grant.capability_ids == ["home_assistant_request"]
+    assert grant.child_network_access is False
+    assert grant.context_refs == []
+    with pytest.raises(ValueError, match="explicit connector actions"):
+        replace(profile, capability_ids=("home_assistant_unreviewed",))
