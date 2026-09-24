@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T19:23:26.601867+00:00",
+        "checkedAt": "2026-09-24T19:28:06.506837+00:00",
         "deliveries": [
+          {
+            "title": "Nieuwe werkwijze uit documentatie gemaakt en uitgevoerd — na hulp",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Eva maakte en registreerde een algemene parser voor aangeleverde FLUXNOTE-documentatie. Na één gerichte hervatting heeft Eva dezelfde code uitgevoerd: exacte geldige uitkomst5,00 en ongeldige invoer afgewezen. Eindantwoord bewaard; onafhankelijk gecontroleerd.",
+            "remaining": "Eerste poging overschreed uitvoerbudget; coördinator gaf bestaande procedure-ID en vervolginstructie. Geen algemene zelfstandigheids- of eigenaaracceptatie. Ontvangst12,2s blijft te traag.",
+            "source": "eva2/evidence/product/documentation-learning-assisted-complete-20260924.json"
+          },
           {
             "title": "Lange opdrachten blokkeren geheugenzoeking niet meer",
             "date": "24 september",
@@ -2167,15 +2175,15 @@
           }
         ],
         "now": {
-          "title": "Leeropdracht afmaken binnen passend werkbudget",
-          "state": "Uitvoering gestopt; budgetoorzaak vastgesteld",
-          "detail": "Parser opgeslagen en onafhankelijk inhoudelijk correct bevonden. Echte Eva-uitvoering ontbreekt:1262 gegenereerde tokens overschrijden het gedeelde taakmaximum1200. Geen blinde herstart of budgetverhoging.",
-          "doneWhen": "De opgeslagen werkwijze door Eva zelf uitvoeren en resultaat opleveren; actuele taakbudgettoekenning eerst passend maken binnen eigenaarafspraken."
+          "title": "Documentatieleerproef afgerond na gerichte hulp",
+          "state": "Resultaat opgeslagen en onafhankelijk gecontroleerd",
+          "detail": "Werkelijke parseruitvoering en eindantwoord kloppen. Eerste mislukking, coördinatorhulp en gerapporteerd verbruik blijven zichtbaar. Geen nieuwe bouwtaak of proef actief.",
+          "doneWhen": "Deze begrensde proef is technisch afgerond; algemene leerfunctie, snelheid en eigenaaracceptatie blijven open."
         },
         "next": {
-          "title": "Leren uit documentatie en meerdaags werk afronden",
+          "title": "Langdurig werk en eigen verbetering afronden",
           "state": "Nog niet gestart",
-          "detail": "Bestaande geslaagde CSV-hergebruikproef behouden; resterende documentatie-/projectcontinuïteit uit stap5 gericht oppakken terwijl browserkeuze openstaat."
+          "detail": "Bestaande projecthervatting en geïnstalleerde eigen-verbeterroute hergebruiken. Alleen het concrete ontbrekende gebruikersresultaat oppakken; geen herhaling van bestaande proeven."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2189,7 +2197,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T19:23:26.601867+00:00"
+        "reviewedAt": "2026-09-24T19:28:06.506837+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11914,7 +11922,7 @@
             "AU-003"
           ],
           "doneWhen": "Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg.",
-          "preserve": "Eva heeft een Python-werkwijze geschreven, geregistreerd en op twee verschillende CSV-invoeren uitgevoerd; tweede taak gebruikte exact dezelfde code en bewaarde het gecontroleerde resultaat. Concrete hergebruikproef geslaagd. Leren uit externe documentatie, meerdaagse praktijk en eigen verbetering met gemeten winst blijven open; bestaande planning/hervatting behouden.",
+          "preserve": "Bestaande CSV-leer-/hergebruikproef behouden. Nieuwe aangeleverde FLUXNOTE-documentatie verwerkt tot algemene opgeslagen parser en werkelijk uitgevoerd na één coördinatorcorrectie; geldige/ongeldige uitvoer en eindantwoord onafhankelijk gecontroleerd. Zelfstandige eerste poging faalde op uitvoerbudget. Externe documentatie, meerdaagse praktijk en eigen verbetering met gemeten winst blijven open.",
           "planningEffortHours": "8–24"
         },
         {
@@ -11961,7 +11969,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Leren uit documentatie en meerdaags werk afronden",
+      "nextAction": "Langdurig werk en eigen verbetering afronden",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

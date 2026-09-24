@@ -1,0 +1,77 @@
+{
+  "checkedAt": "2026-09-24T19:28:06.506837+00:00",
+  "outcome": "completed_after_one_coordinator_correction",
+  "workId": "work:eva-resume:9ea43909-04f2-5eec-bda6-9a50acf1d32a",
+  "previousWorkId": "work:eva-chat:60f42c8f-3a24-5fd0-b746-a665ea2a2c7d",
+  "state": "succeeded",
+  "resultSha256": "5d74ca0e705506c49f0a0a2a514737101f1cc9f53140582e827de6819c721814",
+  "procedureId": "procedure-reference:34cd292f1b2a157ea5c599b3d2c5a2331be099ae2ba21fa31f1716440627aee5",
+  "sourceSha256": "bba3dfea7ab7966a514c41be42b6c13c40011523db752d6832f7fc3f7025fc63",
+  "executionReceipt": {
+    "result": {
+      "report": {
+        "limits": {
+          "pids": 64,
+          "memory_mb": 256,
+          "cpu_millicores": 1000,
+          "deadline_seconds": 30,
+          "output_bytes_per_stream": 4096
+        },
+        "result": {
+          "stderr": "",
+          "stdout": "[{\"meters\": {\"woonkamer\": {\"verbruik\": \"3,75\", \"resets\": 1}, \"garage\": {\"verbruik\": \"1,25\", \"resets\": 0}}, \"totaal\": \"5,00\"}, {\"error\": \"Regel 3: afname zonder Z\"}]\n",
+          "cancelled": false,
+          "exit_code": 0,
+          "timed_out": false,
+          "elapsed_ms": 904,
+          "stderr_truncated": false,
+          "stdout_truncated": false
+        },
+        "contract": "EvaIsolatedProcedureExecution/v1",
+        "image_id": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "installed": false,
+        "input_sha256": "524dd6cf83cfafef889a709fee263e684274d23a29758e2ae3fe5a2566727ebb",
+        "source_sha256": "bba3dfea7ab7966a514c41be42b6c13c40011523db752d6832f7fc3f7025fc63",
+        "input_convention": "one_json_value_on_stdin",
+        "semantic_success_verified": false
+      },
+      "status": "execution_completed",
+      "contract": "ProcedureReferenceAction/v1",
+      "document_id": "procedure-reference:34cd292f1b2a157ea5c599b3d2c5a2331be099ae2ba21fa31f1716440627aee5",
+      "content_sha256": "bba3dfea7ab7966a514c41be42b6c13c40011523db752d6832f7fc3f7025fc63",
+      "semantic_success_verified": false
+    },
+    "result_sha256": "2a1a1609487a8e536315e11715b4482afc3ca2caeba07e5b037cd0f9ca22d793"
+  },
+  "review": {
+    "reviewer": "/root/recall_query_review",
+    "result": "Exact frozen valid output, invalid error-only object, identical source hash and stored final answer verified; actual execution exit0, no timeout/truncation.",
+    "rawRuntimeVerifiedFlagUnchanged": false
+  },
+  "assistance": "Coordinator supplied existing procedure ID and requested only remaining execution via revise_digital; code was not rewritten or registered again.",
+  "workerUsage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 2,
+    "tool_calls": 6,
+    "input_tokens": 21507,
+    "output_tokens": 426,
+    "total_tokens": 21933,
+    "cost_usd_micros": null
+  },
+  "reportedCombinedUsage": {
+    "input_tokens": 75356,
+    "output_tokens": 1928,
+    "completed_model_responses": 8,
+    "measurement": "sum of reported conversation and partial worker usage; tool counters may overlap across resume and are not summed",
+    "credit_cost": "unknown"
+  },
+  "limits": [
+    "First attempt failed at1200 output-token cumulative limit; limit remains unchanged.",
+    "Supplied synthetic format documentation, not external website research.",
+    "Specific learning/execution proof with assistance, not general autonomous learning or owner acceptance.",
+    "Reception12.233s remains slow."
+  ],
+  "artifacts": "/home/administrator/project/.eva2-artifacts/documentation-learning-resumed-20260924"
+}
