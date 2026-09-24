@@ -409,3 +409,26 @@ IN01-IN08 zijn productgates. De bestaande schema- en deploymentproeven leveren
 bruikbare operatorcomponenten, maar vormen samen nog geen ondersteunde volledige
 installatie en bewijzen niet dat een gewone gebruiker Eva al gemakkelijk op een
 andere computer kan installeren.
+
+
+## Preparation integration checkpoint — 25 September 2026
+
+Installed source `d6424aa2` adds target preparation to the existing installer page.
+The composition root must supply both `installation_preparer(current_server_plan)`
+and `installation_preparation_status()`. The browser sends only the displayed
+plan hash. The server rebuilds the plan, rejects stale or blocked choices, and
+serializes preparation. Stored running, prepared or uncertain state prevents a
+second attempt after restart. The backend owns durable receipts; HTTP state alone
+is not authority to retry. Without both bindings the button remains disabled.
+
+`tools.installer_runtime_materialization.materialize_installer_runtime_files`
+creates a fresh private directory with approved provider contents, the existing
+confirmed budget policy, and fresh database passwords/DSNs for explicit new-target
+descriptors. Optional model authority uses the existing credential conversion
+functions and must match the approved access lease. It does not change source
+credentials or start services. Partial writes remain recorded and retained.
+
+Complete launch configuration, runtime reader ownership, restore authority and
+source fencing still need composition with the actual target provisioner. These
+internal installed pieces do not yet provide the ordinary complete installer.
+Evidence: `evidence/product/installer-preparation-connection-installed-20260925.json`.

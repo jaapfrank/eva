@@ -1,0 +1,26 @@
+{
+  "sourceCommit": "d6424aa2",
+  "installedInOperatorPackage": true,
+  "installationReceipt": "/home/administrator/project/.eva2-artifacts/installer-preparation-connection-20260925/installation-receipt.json",
+  "changes": [
+    "Existing installer page exposes a trusted preparation action with fresh server plan confirmation",
+    "Durable preparation status reader required before enabling action; concurrent and uncertain attempts are not repeated",
+    "New private target database credentials and DSNs derived from explicit new-target descriptors",
+    "Existing confirmed budget policy and approved provider content reused; source files unchanged"
+  ],
+  "verification": {
+    "targetedTestsPassed": 32,
+    "independentReview": "Preparation API reviewed independently; materialization source reviewed by coordinator",
+    "installedSmoke": "Exact four module hashes verified; installed imports and HTTP unavailable state verified",
+    "browserInteraction": "Not performed",
+    "actualNewDockerResources": "Not created in this change; prior persistent resource proof retained"
+  },
+  "remaining": [
+    "Complete launch graph and explicit runtime reader ownership",
+    "Bind actual restore authority and source fencing",
+    "Compose real backend from release inputs, materialization, provisioner and existing restore workflow",
+    "Ordinary installer end-to-end operation remains disabled until this composition exists"
+  ],
+  "productionChanged": false,
+  "modelCalls": 0
+}
