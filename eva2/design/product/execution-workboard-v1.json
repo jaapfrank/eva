@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T00:46:39.571920+00:00",
+        "checkedAt": "2026-09-24T01:08:29.506366+00:00",
         "deliveries": [
+          {
+            "title": "Eigen codevoorstel uitvoeren en vergelijken",
+            "date": "24 september",
+            "state": "installed",
+            "result": "De bestaande achtergrondopdracht kan een vast meetrapport voor origineel en kandidaat laten maken en bewaren, zonder draaiende code te wijzigen.",
+            "remaining": "Drie aangesloten componenten; echte modelgestuurde verbetering, gemeten winst en toepassing nog open.",
+            "source": "eva2/evidence/product/component-evaluation-installed-20260924.json"
+          },
           {
             "title": "Bewaarde werkwijze via andere privé-ingang gebruiken",
             "date": "24 september",
@@ -1685,15 +1693,15 @@
           }
         ],
         "now": {
-          "title": "Stap 5: voortgang bij hervatten behouden",
-          "state": "Bestaande aansluiting bevestigd",
-          "detail": "De geïnstalleerde hervatroute behoudt bron, uitvoeringsidentiteit en voortgang bij een nieuwe poging op de huidige versie. Geen nieuwe functie gebouwd; echte hervatproef blijft open. Veranderde mogelijkheden/budgetten zijn een aparte beperking.",
-          "doneWhen": "Werkelijk meerdaags hervatten en hergebruik beproefd; eigen verbetering heeft gemeten voordeel."
+          "title": "Stap 5: eigen voorstel vergelijken aangesloten",
+          "state": "Geïnstalleerd; onderdeel nog niet klaar",
+          "detail": "Eva’s digitale werker kan een bewaard voorstel vergelijken met het origineel in een vaste geïsoleerde controle. Eerste dekking: drie componenten. Startcontrole geslaagd; echte verbeterwinst niet aangetoond.",
+          "doneWhen": "Een echte eigen verbetering heeft aantoonbaar voordeel, beoordeling en een werkende terugweg."
         },
         "next": {
-          "title": "Gecontroleerde eigen verbetering",
-          "state": "Vervolg nog niet gestart",
-          "detail": "Hergebruik de aanwezige repository-verbeterroute voor een geïsoleerde kandidaat. De huidige eigen-componenttool bewaart alleen een voorstel; uitvoering en gemeten voordeel ontbreken nog."
+          "title": "Bestaande opdrachten blijven kunnen hervatten",
+          "state": "Volgende concrete aansluiting",
+          "detail": "Bij toevoeging van tools wijkt de oude taaktoestemming af. Hervatten moet bestaande bevoegdheden behouden zonder ongevraagd nieuwe toe te voegen."
         },
         "ownerAction": {
           "title": "Kies wie huisbediening via speakers mag gebruiken",

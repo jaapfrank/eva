@@ -1,0 +1,109 @@
+{
+  "recordedAt": "2026-09-24T01:08:29.506366+00:00",
+  "sourceCommit": "ecb23614d4218994689908da96492bde2a1ca60f",
+  "state": "installed_start_checked",
+  "ownerRequirement": "PROJECTDOEL.md step 5: isolated own improvement with measurable result and rollback",
+  "delivered": "Existing digital task can evaluate its recorded source draft in a fixed isolated suite and persist the measurement report. No live source changes.",
+  "coreImage": "eva2-component-evaluation:20260924-r2",
+  "workerImage": "eva2-component-evaluation:20260924-r2",
+  "service": "eva-component-evaluation.service",
+  "serviceActive": "active",
+  "allowedComponents": [
+    "contracts/timestamps.py",
+    "contracts/canonical_json.py",
+    "application/cancellation.py"
+  ],
+  "installedSourceSha256": {
+    "adapters/connectors/component_evaluation.py": "4eb1f42a6865977b4f1af95825ee4c8497fa45c453858a1b01fbb527a14cc1f4",
+    "adapters/postgres/component_improvement_actions.py": "c8a4efe1854aba8fbe80a5335dc7c9d1139143f5793a0f2b37bfc0554d0b5fe6",
+    "bootstrap/delegated_digital_composition.py": "8fd4d564fb83c7bf86b86e2571f0b6cee51bdb3186f5190d38ec62f95aa7b3ce",
+    "bootstrap/delegated_digital_runner.py": "5e7203df33ed944eddd4d2b0c8d0632458450708c95c5d60be4ef76b5277c8f6",
+    "operations/component_evaluation.py": "c2050dea6a02ddf587ea1f82dbabac05191499704ffbd7c1ed3b1858ef0c69a3",
+    "operations/component_evaluation_service.py": "f02f2cf445f3b91d3a4c7202b42fdc1dc544ad0ab137c071d2d785c95e51d832",
+    "contracts/delegated_digital_work.py": "7dc22a691a7e0c3a559efff352437a780846c618835211511fbc2fd8db1c8b8c"
+  },
+  "startup": {
+    "configuredApplicationConstructedBeforeFinalInstall": true,
+    "coreHealthy": true,
+    "workerHealthy": true,
+    "serviceReachableFromCore": true,
+    "toolListedWithConfiguration": true,
+    "activeWorkBeforeEachInstall": 0,
+    "sameSourceComparison": {
+      "contract": "EvaIsolatedComponentEvaluation/v1",
+      "configured_image": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+      "image_id": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+      "relative_path": "contracts/timestamps.py",
+      "baseline_sha256": "dbf596830f37530f3e3e121740bcc0af15c9c69bad458e5b3c27e765680ad8ca",
+      "candidate_sha256": "dbf596830f37530f3e3e121740bcc0af15c9c69bad458e5b3c27e765680ad8ca",
+      "command": [
+        "/usr/local/bin/python",
+        "-B",
+        "-c",
+        "import sys;sys.path.insert(0,'/opt/eva-evaluation/support');import pytest;raise SystemExit(pytest.main(['-q','-p','no:cacheprovider','/opt/eva-evaluation/checks']))"
+      ],
+      "command_sha256": "4f35aefad983e13aa2f006ab86ee9496ec5499ddea2e7bd159c227ce98e05901",
+      "limits": {
+        "deadline_seconds_per_container": 30,
+        "output_bytes_per_stream": 4096,
+        "memory_mb": 256,
+        "cpu_millicores": 1000,
+        "pids": 64
+      },
+      "baseline": {
+        "exit_code": 0,
+        "timed_out": false,
+        "elapsed_ms": 1969,
+        "stdout": "........................                                                 [100%]\n24 passed in 0.54s\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false
+      },
+      "candidate": {
+        "exit_code": 0,
+        "timed_out": false,
+        "elapsed_ms": 2019,
+        "stdout": "........................                                                 [100%]\n24 passed in 0.59s\n",
+        "stderr": "",
+        "stdout_truncated": false,
+        "stderr_truncated": false
+      },
+      "semantic_improvement_verified": false,
+      "installed": false
+    },
+    "meaning": "Same source on both sides; verifies runner startup, not improvement. Existing fixed suite: 24 checks on each side."
+  },
+  "installationCorrections": [
+    "Initial suite lacked pytest py.py compatibility shim; included existing installed shim, rebuilt and reran startup check.",
+    "First core installation rejected the unregistered evaluation action; restored previous healthy core/worker, added action to existing digital grant validator, constructed configured application before reinstall."
+  ],
+  "rollback": {
+    "compose": "/home/administrator/project/.eva2-artifacts/component-evaluation-20260924/baseline.compose.private.json",
+    "serviceStop": [
+      "sudo",
+      "systemctl",
+      "disable",
+      "--now",
+      "eva-component-evaluation.service"
+    ],
+    "previousCoreWorkerRestorationObserved": true
+  },
+  "usage": {
+    "evaModelCalls": 0,
+    "testMessagesSent": 0,
+    "developmentCredits": "not attributable/measured"
+  },
+  "notProven": [
+    "Actual model-led draft/evaluate/save workflow",
+    "Any semantic or performance improvement",
+    "Other components beyond configured initial suite",
+    "Full independent review and owner acceptance",
+    "Own improvement applied to production with demonstrated benefit"
+  ],
+  "limitations": [
+    "Elapsed time includes container startup.",
+    "Candidate code influences its process; successful checks are not an independent semantic verdict.",
+    "Previously admitted digital grants with different capabilities remain subject to existing resume rejection; no silent rights expansion.",
+    "An already running isolated check can continue until its bounded deadline after task cancellation."
+  ]
+}
