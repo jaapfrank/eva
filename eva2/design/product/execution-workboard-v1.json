@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T14:09:26.615955+00:00",
+        "checkedAt": "2026-09-24T14:13:30.510369+00:00",
         "deliveries": [
           {
             "title": "Algemene Home Assistant-API voor jouw opdrachten",
@@ -1044,68 +1044,78 @@
             "source": "eva2/evidence/product/scheduled-failure-return-installed-20260924.json"
           },
           {
-            "title": "Document-schrijftoegang in herstelwizard aangesloten",
+            "title": "Herstelwizard",
             "date": "24 september",
             "state": "built",
-            "result": "Optionele overgang naar nieuwe schrijfdoelen gebouwd; oude controlecontainers blijven bewaard. Lokale beheerwizard bijgewerkt.",
-            "remaining": "Gerichte controles met gesimuleerde Docker-acties. Geen echte promotie, complete componentcontrole of kernvrijgave uitgevoerd.",
-            "source": "eva2/evidence/product/installer-document-write-20260924.json"
-          },
-          {
-            "title": "Vrijgavetransactie voor herstelde kern gebouwd",
-            "date": "24 september",
-            "state": "built",
-            "result": "Ontbrekende databasevrijgave toegevoegd; drie echte PostgreSQL-transactieproeven geslaagd. Beschikbaar als interne beheerfunctie.",
-            "remaining": "Nog geen wizardknop of volledige activering: echte componentcontrole, document-schrijftoegang en runtime-start ontbreken.",
-            "source": "eva2/evidence/product/restore-release-transaction-20260924.json"
-          },
-          {
-            "title": "Bewaard document via echt herstelde gateway teruggelezen",
-            "date": "24 september",
-            "state": "tested",
-            "result": "Nieuwe gateway met gekopieerde database gaf exact het oude documentresultaat terug. Tool-ID’s behouden; vervolgstap en herhaling zonder dubbele wijziging geslaagd.",
-            "remaining": "Geïsoleerde synthetische proef. Volledige wizard, privé-kern, activering en gezinsgebruik nog niet bewezen.",
-            "source": "eva2/evidence/product/native-document-restored-gateway-20260924.json"
-          },
-          {
-            "title": "Herstelde gateway starten vanuit de wizard",
-            "date": "24 september",
-            "state": "built",
-            "result": "Optionele gatewaystart na documentcontrole aangesloten, met teruglezen van registraties en behoud van gedeeltelijke foutuitkomsten. Lokaal beschikbaar.",
-            "remaining": "Geen echte gatewaystart of herstelactie uitgevoerd. Documentaanroep, schrijftoegang en volledige vrijgave nog open.",
-            "source": "eva2/evidence/product/installer-gateway-start-20260924.json"
-          },
-          {
-            "title": "Bestaande documentadressen behouden bij herstel",
-            "date": "24 september",
-            "state": "built",
-            "result": "Lokale herstelwizard koppelt gecontroleerde bestaande gatewayadressen aan de nieuwe documentdoelen, zonder herregistratie of gewijzigde tool-ID’s.",
-            "remaining": "Geen echte herstelactie of gatewaystart. Aanroep via herstelde gateway, schrijftoegang en vrijgave nog open.",
-            "source": "eva2/evidence/product/installer-gateway-binding-20260924.json"
-          },
-          {
-            "title": "Bewaarde documentbestanden controleren bij herstel",
-            "date": "24 september",
-            "state": "built",
-            "result": "Native bestands- en geschiedeniscontrole aangesloten in lokale herstelwizard. Gewijzigd proefbestand wordt geweigerd; originele opdracht wordt niet herhaald.",
-            "remaining": "Geen echte herstelactie uitgevoerd. Gatewaykoppeling, schrijftoegang en volledige herstelproef nog open. Geen nieuwe spraakfunctie.",
-            "source": "eva2/evidence/product/installer-document-verification-20260924.json"
-          },
-          {
-            "title": "Herstelde documentprovider aansluiten voor controle",
-            "date": "24 september",
-            "state": "built",
-            "result": "Bestaande wizard kan voorbereide providers alleen-lezen starten en hun toolcatalogus controleren; lokale beheerroute beschikbaar.",
-            "remaining": "Geen herstelde provider gestart. Projectresultaten teruglezen, gateway verbinden, schrijftoegang en vrijgave blijven open.",
-            "source": "eva2/evidence/product/installer-document-connection-20260924.json"
-          },
-          {
-            "title": "Documentprojecten voorbereiden via herstelwizard",
-            "date": "24 september",
-            "state": "built",
-            "result": "Bestaande native documentvoorbereiding aangesloten na kern/geheugen/gateway; beschikbaar in lokale beheerwizard. Start en foutmelding gecontroleerd.",
-            "remaining": "Geen herstel uitgevoerd. Providers aansluiten, activeren en volledige herstelproef blijven open. Geen nieuwe dagelijkse gespreksfunctie.",
-            "source": "eva2/evidence/product/installer-document-preparation-20260924.json"
+            "result": "Gedeeltelijk gebouwd; nog niet bruikbaar als volledige herstelfunctie. De acht registraties hieronder zijn technische tussenstappen, geen acht afgeronde functies.",
+            "remaining": "De laatste controles, vrijgave en het opstarten van de herstelde Eva moeten nog worden aangesloten. Daarna volgt één volledige herstelproef. Uitgesteld: dagelijkse Eva-functies gaan voor.",
+            "source": "eva2/WERKBORD.md",
+            "children": [
+              {
+                "title": "Document-schrijftoegang in herstelwizard aangesloten",
+                "date": "24 september",
+                "state": "built",
+                "result": "Optionele overgang naar nieuwe schrijfdoelen gebouwd; oude controlecontainers blijven bewaard. Lokale beheerwizard bijgewerkt.",
+                "remaining": "Gerichte controles met gesimuleerde Docker-acties. Geen echte promotie, complete componentcontrole of kernvrijgave uitgevoerd.",
+                "source": "eva2/evidence/product/installer-document-write-20260924.json"
+              },
+              {
+                "title": "Vrijgavetransactie voor herstelde kern gebouwd",
+                "date": "24 september",
+                "state": "built",
+                "result": "Ontbrekende databasevrijgave toegevoegd; drie echte PostgreSQL-transactieproeven geslaagd. Beschikbaar als interne beheerfunctie.",
+                "remaining": "Nog geen wizardknop of volledige activering: echte componentcontrole, document-schrijftoegang en runtime-start ontbreken.",
+                "source": "eva2/evidence/product/restore-release-transaction-20260924.json"
+              },
+              {
+                "title": "Bewaard document via echt herstelde gateway teruggelezen",
+                "date": "24 september",
+                "state": "tested",
+                "result": "Nieuwe gateway met gekopieerde database gaf exact het oude documentresultaat terug. Tool-ID’s behouden; vervolgstap en herhaling zonder dubbele wijziging geslaagd.",
+                "remaining": "Geïsoleerde synthetische proef. Volledige wizard, privé-kern, activering en gezinsgebruik nog niet bewezen.",
+                "source": "eva2/evidence/product/native-document-restored-gateway-20260924.json"
+              },
+              {
+                "title": "Herstelde gateway starten vanuit de wizard",
+                "date": "24 september",
+                "state": "built",
+                "result": "Optionele gatewaystart na documentcontrole aangesloten, met teruglezen van registraties en behoud van gedeeltelijke foutuitkomsten. Lokaal beschikbaar.",
+                "remaining": "Geen echte gatewaystart of herstelactie uitgevoerd. Documentaanroep, schrijftoegang en volledige vrijgave nog open.",
+                "source": "eva2/evidence/product/installer-gateway-start-20260924.json"
+              },
+              {
+                "title": "Bestaande documentadressen behouden bij herstel",
+                "date": "24 september",
+                "state": "built",
+                "result": "Lokale herstelwizard koppelt gecontroleerde bestaande gatewayadressen aan de nieuwe documentdoelen, zonder herregistratie of gewijzigde tool-ID’s.",
+                "remaining": "Geen echte herstelactie of gatewaystart. Aanroep via herstelde gateway, schrijftoegang en vrijgave nog open.",
+                "source": "eva2/evidence/product/installer-gateway-binding-20260924.json"
+              },
+              {
+                "title": "Bewaarde documentbestanden controleren bij herstel",
+                "date": "24 september",
+                "state": "built",
+                "result": "Native bestands- en geschiedeniscontrole aangesloten in lokale herstelwizard. Gewijzigd proefbestand wordt geweigerd; originele opdracht wordt niet herhaald.",
+                "remaining": "Geen echte herstelactie uitgevoerd. Gatewaykoppeling, schrijftoegang en volledige herstelproef nog open. Geen nieuwe spraakfunctie.",
+                "source": "eva2/evidence/product/installer-document-verification-20260924.json"
+              },
+              {
+                "title": "Herstelde documentprovider aansluiten voor controle",
+                "date": "24 september",
+                "state": "built",
+                "result": "Bestaande wizard kan voorbereide providers alleen-lezen starten en hun toolcatalogus controleren; lokale beheerroute beschikbaar.",
+                "remaining": "Geen herstelde provider gestart. Projectresultaten teruglezen, gateway verbinden, schrijftoegang en vrijgave blijven open.",
+                "source": "eva2/evidence/product/installer-document-connection-20260924.json"
+              },
+              {
+                "title": "Documentprojecten voorbereiden via herstelwizard",
+                "date": "24 september",
+                "state": "built",
+                "result": "Bestaande native documentvoorbereiding aangesloten na kern/geheugen/gateway; beschikbaar in lokale beheerwizard. Start en foutmelding gecontroleerd.",
+                "remaining": "Geen herstel uitgevoerd. Providers aansluiten, activeren en volledige herstelproef blijven open. Geen nieuwe dagelijkse gespreksfunctie.",
+                "source": "eva2/evidence/product/installer-document-preparation-20260924.json"
+              }
+            ]
           },
           {
             "title": "Geen eindeloze wachtstatus na gemiste taakstart",
@@ -1949,10 +1959,10 @@
           }
         ],
         "now": {
-          "title": "Algemene Home Assistant-vaardigheid",
-          "state": "Geïnstalleerd voor jouw eigenaarroute",
-          "detail": "Algemene API-tool aangesloten op gesprek én achtergrondwerk; dezelfde configuratie, echte discovery en gezonde installatie gecontroleerd. Geen beperking tot vooraf gekozen apparaten of automatiseringssjablonen.",
-          "doneWhen": "Technische aansluiting geïnstalleerd; echte modeluitvoering nog open. Breed beheer via gedeelde speakers wacht op de expliciet gevraagde keuze."
+          "title": "Herstelvoortgang begrijpelijk getoond",
+          "state": "Afgerond · projectdashboard",
+          "detail": "Acht technische tussenstappen staan onder één onvoltooide herstelwizard. Dagelijkse Eva-functies blijven vooraan. Dit is een dashboardverbetering, geen afgeronde herstelfunctie.",
+          "doneWhen": "Live op 44712; uitgeklapte details en alle acht registraties in de browser gecontroleerd."
         },
         "next": {
           "title": "Algemene HA-bediening via gedeelde speakers",
@@ -1971,7 +1981,7 @@
           "expected": "Eva zoekt zelf de bestaande configuratie/services op en gebruikt de passende API. Een wijziging moet ze teruglezen en eerlijk toelichten; API-bevestiging alleen bewijst geen fysieke werking."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T14:09:26.615955+00:00"
+        "reviewedAt": "2026-09-24T14:13:30.510369+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12555,6 +12565,19 @@
       "endCondition": "Smaller first-contact schema catalog only when same authorized discovery path exists; continuations unchanged, targeted tests/review, installed core/worker, live measured request",
       "effort": "Two small modules plus model option; one changed-cause live trial; credit cost unknown",
       "evidence": "eva2/evidence/product/contact-catalog-installed-20260923.json"
+    },
+    "dashboardRecoverySummary20260924": {
+      "checkedAt": "2026-09-24T14:13:30.510369+00:00",
+      "state": "installed",
+      "component": "project_dashboard_only",
+      "preservedRecords": 8,
+      "checks": [
+        "Vite project build passed",
+        "User project service restarted",
+        "Live browser shows one incomplete workflow and eight expandable preserved records"
+      ],
+      "rollbackAssets": "/home/administrator/project/.eva2-artifacts/dashboard-recovery-summary-20260924/project-dist-before",
+      "modelCalls": 0
     }
   },
   "activeTaskId": "AU-008",

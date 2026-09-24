@@ -178,8 +178,23 @@ function DeliveryOverview({ project, runtime, stale, onWork, onHistory }) {
   </div>;
 }
 
+function DeliveryRecord({ item, technical = false }) {
+  const grouped = Array.isArray(item.children) && item.children.length > 0;
+  const label = grouped ? 'Onvoltooid · uitgesteld' : technical
+    ? ({ installed: 'Geïnstalleerde deelstap', tested: 'Deelproef geslaagd', built: 'Deelstap gebouwd', accepted: 'Geaccepteerd' })[item.state]
+    : ({ installed: 'Geïnstalleerd', tested: 'Getest · niet geïnstalleerd', built: 'Gebouwd · niet geïnstalleerd', accepted: 'Geaccepteerd' })[item.state];
+  return <details>
+    <summary><span className={`overview-badge ${item.state}`}>{label || 'Onbekend'}</span> {item.title} · {item.date}</summary>
+    <p>{item.result}</p><p><b>Nog open:</b> {item.remaining}</p>
+    {grouped && <section aria-label="Technische tussenstappen"><h3>{item.children.length} technische tussenstappen — geen afzonderlijke opleveringen</h3>
+      {item.children.map((child, index) => <DeliveryRecord key={`${child.source}-${index}`} item={child} technical />)}
+    </section>}
+    <small>{item.source}</small>
+  </details>;
+}
+
 function DeliveryHistory({ project }) {
-  return <section className="delivery-history"><h2>Opleveringen</h2>{project.deliveryOverview?.deliveries.map((item, index) => <details key={`${item.source}-${index}`}><summary><span className={`overview-badge ${item.state}`}>{({installed:'Geïnstalleerd',tested:'Getest · niet geïnstalleerd',built:'Gebouwd · niet geïnstalleerd',accepted:'Geaccepteerd'})[item.state] || 'Onbekend'}</span> {item.title} · {item.date}</summary><p>{item.result}</p><p><b>Nog open:</b> {item.remaining}</p><small>{item.source}</small></details>)}</section>;
+  return <section className="delivery-history"><h2>Opleveringen en onvoltooid werk</h2>{project.deliveryOverview?.deliveries.map((item, index) => <DeliveryRecord key={`${item.source}-${index}`} item={item} />)}</section>;
 }
 
 export default function ProjectDashboard() {
