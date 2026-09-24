@@ -40,3 +40,8 @@ Protocol references checked 24 September 2026:
 The built-in Assist MCP tools expose their configured capabilities; their presence
 alone does not establish arbitrary automation administration. This transport uses
 the already configured HA API directly for that gap.
+
+Installed owner-route parity on 24 September: both the server-bound local owner
+identity and its verified Telegram bridge are admitted. Core and worker retain
+identical provider configuration. This does not grant shared speakers general
+API administration. See ha-owner-channel-parity-installed-20260924.json.

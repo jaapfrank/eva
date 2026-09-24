@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T14:18:11.212105+00:00",
+        "checkedAt": "2026-09-24T14:23:35.888431+00:00",
         "deliveries": [
+          {
+            "title": "Algemene HA-toegang ook via jouw lokale eigenaarwebsite",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Bestaande eigenaaridentiteit toegevoegd; website, Telegram en achtergrondwerker hebben dezelfde algemene HA-toegang. Geen rechten voor andere personen toegevoegd.",
+            "remaining": "Modelgestuurde uitvoering via de website nog open. Brede gedeelde speakerbediening blijft wachten op jouw keuze.",
+            "source": "eva2/evidence/product/ha-owner-channel-parity-installed-20260924.json"
+          },
           {
             "title": "Een nieuwe speakervraag verbergt eerder onderzoeksresultaat niet meer",
             "date": "24 september",
@@ -1967,10 +1975,10 @@
           }
         ],
         "now": {
-          "title": "Speakerresultaat na een nieuwe vraag",
+          "title": "Dezelfde HA-toegang via website en Telegram",
           "state": "Geïnstalleerd",
-          "detail": "Selectiefout hersteld: een nieuw HA-gesprek verbergt oudere nog geldige openbare resultaten niet meer. Gerichte controle, onafhankelijke review en livecontrole afgerond.",
-          "doneWhen": "Technische correctie geleverd; fysieke ontvangst blijft afzonderlijk te beoordelen."
+          "detail": "De servergebonden eigenaarwebsite en jouw Telegramroute krijgen nu dezelfde algemene HA-API. Kern en taakwerker gebruiken gelijke configuratie en zijn gezond.",
+          "doneWhen": "Configuratieverschil opgelost en live gecontroleerd. Echte modeluitvoering blijft apart; brede speakerrechten wachten op jouw keuze."
         },
         "next": {
           "title": "Algemene HA-bediening via gedeelde speakers",
@@ -1989,7 +1997,7 @@
           "expected": "Eva zoekt zelf de bestaande configuratie/services op en gebruikt de passende API. Een wijziging moet ze teruglezen en eerlijk toelichten; API-bevestiging alleen bewijst geen fysieke werking."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T14:18:11.212105+00:00"
+        "reviewedAt": "2026-09-24T14:23:35.888431+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11651,7 +11659,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 3,
+      "currentStep": 4,
       "steps": [
         {
           "number": 1,

@@ -1,0 +1,37 @@
+{
+  "verifiedAt": "2026-09-24T14:23:35.888431+00:00",
+  "sourceBaseline": "3e38736f",
+  "change": "Only existing canonical runtime owner added to HA principal list in core and worker; images and shared API access unchanged",
+  "checks": [
+    {
+      "name": "eva2-managed-b-slot3-core",
+      "image": "sha256:ea24dfe7837e4400a8dedbef9d66225e2f8bd49a0f23101a43d01555cf471d19",
+      "health": "healthy",
+      "restarts": 0
+    },
+    {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "image": "sha256:56c350e949c97c01614f4a090fc0f12897c190326479376643aaabd346aa1893",
+      "health": "healthy",
+      "restarts": 0
+    }
+  ],
+  "http": {
+    "http://localhost:44711/internal/v1/dashboard": 200,
+    "http://localhost:44716/session/ready": 200
+  },
+  "candidateChecks": [
+    "Actual configured owner website identity admitted",
+    "Actual Telegram private bridge identity admitted",
+    "Household API still denied",
+    "Core and worker digital profile/configuration/source hashes match"
+  ],
+  "independentReview": "Exact private config diff: one existing owner addition per service, no removals or other changes; private audience guard preserved",
+  "modelCalls": 0,
+  "deviceActions": 0,
+  "notProven": [
+    "Model-driven website HA task completion",
+    "Physical actuation and automation edits"
+  ],
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/ha-owner-channel-parity-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+}
