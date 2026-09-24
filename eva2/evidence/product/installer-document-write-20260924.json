@@ -1,0 +1,45 @@
+{
+  "checkedAt": "2026-09-24T13:03:40.533823+00:00",
+  "sourceCommit": "747e448a1d28dbe220122484a910376cb6918112",
+  "kind": "operator_document_write_promotion",
+  "state": "built",
+  "availableCommand": "python3 /home/administrator/project/.eva2-artifacts/installer-document-write-20260924/start-installer.py --restore-config /absolute/private/target.json",
+  "sourceHashes": {
+    "tools/installation_document_promotion.py": "c2febff1987bf89fc21d3d21843d3c018c435e149073ee1217a89aa029ff331e",
+    "tools/installation_document_connection.py": "b03227836c2ec9b2620004c2b9b14ae339e5f8cf54ac82e8d9c8967b079e5492",
+    "tools/installer_portable_restore.py": "157cb456c235e1972438e4f7fc6cd5827a535db35f4d6bc6af019f3002759e96",
+    "tools/installer_restore_wizard.py": "bac79027f629e9618b1ce1d21583cec3df2451201801fad89de47f10b09ebf23",
+    "src/eva/application/installer_restore.py": "fb9280ab7a36d4e3fb5bdac8b16f53e448a3a702c142bbafaa225c0841a3786c",
+    "src/eva/adapters/api/installer_restore_api.py": "d1f18522fab72a653c934a9074b8dc092a95f14d7f86c0fc8df603e839a118d1"
+  },
+  "behavior": [
+    "Optional wizard step after verified gateway startup",
+    "Exact old read-only targets stopped and disconnected but retained",
+    "New distinct targets preserve files/history and gateway aliases; only workspace/journal writable",
+    "Existing catalog/native material checks reused; no tool write submitted",
+    "Partial errors retain old/new targets, no retry/delete/core release"
+  ],
+  "checks": [
+    "Coordinator reviewed promoter/shared command extraction; DNS-name collision correction included",
+    "Implementation agent mock-command success and post-start failure passed: exactly one start, retained identities, no delete or retry",
+    "Mock mount checks passed: read-only default, only workspace/journal writable, writable secret refused",
+    "Real wizard methods with mocked effects passed: prepare/connect/gateway/promote order, retained partial failure, core closed",
+    "Two targeted API tests passed in 0.92s: accurate partial-start/write message, no private receipt leakage",
+    "Agent independent review of wizard/API integration passed",
+    "Staged launcher help/imports and exact source hashes verified"
+  ],
+  "notPerformed": [
+    "No real document promotion or restore invocation",
+    "No full external component reconciliation or core release",
+    "No active Eva service or data change",
+    "No owner acceptance"
+  ],
+  "remaining": [
+    "Fresh production component reconciliation for restore release",
+    "Wizard release action and coordinated runtime startup",
+    "Full isolated restore trial"
+  ],
+  "rollback": "Use installer-release-transaction-20260924 before beginning recovery. After promotion is attempted, inspect retained old/new targets and data; do not restart both writers or automatically repeat imports.",
+  "modelRequests": 0,
+  "modelRequestScope": "Eva provider requests; development usage not measured"
+}
