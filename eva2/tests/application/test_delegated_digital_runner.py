@@ -411,3 +411,96 @@ def test_reading_previous_result_does_not_complete_the_new_assignment():
     new_result = ConversationActionReceipt(ConversationActionCall("save", "save_workspace_document", {}),
         {"status": "verified", "result": "New task result saved and verified"})
     assert _has_completed_tool_evidence([read, new_result])
+
+
+def _automation_receipt(method, identifier="first", *, arguments=None, result=None):
+    args = {"transport": "rest", "method": method,
+            "path": "/api/config/automation/config/" + identifier,
+            "body_json": "", "response_pointer": "", "offset": 0, "limit": 50}
+    args.update(arguments or {})
+    response = {"success": True, "truncated": False, "response_json": '{"alias":"Example"}',
+                "total": 1, "next_offset": None, "external_state_verified": False}
+    response.update(result or {})
+    return ConversationActionReceipt(ConversationActionCall(method+":"+identifier,
+        "home_assistant_request", args), {"status": "verified", "result": response})
+
+
+@pytest.mark.parametrize("method", ["POST", "PUT", "PATCH"])
+def test_automation_write_requires_later_full_matching_readback(method):
+    from eva.bootstrap.delegated_digital_runner import _has_completed_tool_evidence as completed
+    write, read = _automation_receipt(method), _automation_receipt("GET")
+    assert not completed([write])
+    assert not completed([read, write])
+    assert not completed([write, _automation_receipt("GET", "other")])
+    assert completed([write, read])
+    assert not completed([write, read, write])
+    assert completed([write, read, write, read])
+    saved = ConversationActionReceipt(ConversationActionCall("save", "save_workspace_document", {}), {"status": "verified"})
+    assert not completed([write, saved])
+
+
+@pytest.mark.parametrize("arguments,result", [
+    ({}, {"success": False}),
+    ({}, {"truncated": True}),
+    ({}, {"selection_error": "missing"}),
+    ({"response_pointer": "/alias"}, {}),
+    ({"offset": 1}, {}),
+    ({}, {"next_offset": 1}),
+    ({}, {"total": 2}),
+    ({}, {"response_json": '"partial text"'}),
+    ({}, {"response_json": "invalid"}),
+    ({"path": "/api/config/automation/config/first?view=partial"}, {}),
+])
+def test_incomplete_automation_read_is_not_configuration_verification(arguments, result):
+    from eva.bootstrap.delegated_digital_runner import _has_completed_tool_evidence
+    assert not _has_completed_tool_evidence([
+        _automation_receipt("POST"), _automation_receipt("GET", arguments=arguments, result=result)])
+
+
+def test_multiple_automation_targets_require_their_own_readbacks():
+    from eva.bootstrap.delegated_digital_runner import _has_completed_tool_evidence as completed
+    writes = [_automation_receipt("POST"), _automation_receipt("POST", "second")]
+    assert not completed([*writes, _automation_receipt("GET")])
+    assert completed([*writes, _automation_receipt("GET"), _automation_receipt("GET", "second")])
+    assert completed([_automation_receipt("POST", "%66irst"), _automation_receipt("GET")])
+    # Other endpoint protocols and DELETE are outside this readback guarantee.
+    assert completed([_automation_receipt("POST", arguments={"path": "/api/services/light/turn_on"})])
+    assert completed([_automation_receipt("DELETE")])
+    assert not completed([*writes, _automation_receipt("POST", arguments={"path": "/api/services/light/turn_on"})])
+
+
+def _automation_batch(*, requested=None, rows=None, section="automation_configurations"):
+    return ConversationActionReceipt(ConversationActionCall("batch", "read_home_assistant_inventory",
+        {"section": section, "offset": 0, "automation_ids": requested or ["first"],
+         "area_id": "", "snapshot_sha256": ""}),
+        {"status": "verified", "inventory": {"automations": rows if rows is not None else [
+            {"automation_id": "first", "configuration_read": True,
+             "configuration_json": '{"alias":"Example"}', "coverage": {"complete": True}}]}})
+
+
+def test_preferred_full_batch_readback_discharges_only_matching_writes():
+    from eva.bootstrap.delegated_digital_runner import _has_completed_tool_evidence as completed
+    write, batch = _automation_receipt("POST"), _automation_batch()
+    assert completed([write, batch])
+    assert not completed([batch, write])
+    assert not completed([write, batch, write])
+    assert not completed([write, _automation_batch(section="automation_details")])
+    assert not completed([write, _automation_batch(requested=["other"])])
+    full = batch.output["inventory"]["automations"][0]
+    partial = {"automation_id": "second", "configuration_read": False, "coverage": {"complete": False}}
+    mixed = _automation_batch(requested=["first", "second"], rows=[full, partial])
+    assert completed([write, mixed])
+    assert not completed([write, _automation_receipt("POST", "second"), mixed])
+    assert completed([_automation_receipt("POST", "%66irst"), batch])
+
+
+@pytest.mark.parametrize("change", [
+    {"automation_id": "other"}, {"configuration_read": False},
+    {"coverage": {"complete": False}}, {"configuration_json": None},
+    {"configuration_json": '"projection"'}, {"truncated": True},
+])
+def test_partial_or_wrong_batch_row_does_not_discharge_write(change):
+    from eva.bootstrap.delegated_digital_runner import _has_completed_tool_evidence
+    row = _automation_batch().output["inventory"]["automations"][0]
+    assert not _has_completed_tool_evidence([
+        _automation_receipt("POST"), _automation_batch(rows=[{**row, **change}])])

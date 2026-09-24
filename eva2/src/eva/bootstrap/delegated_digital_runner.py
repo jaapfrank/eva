@@ -5,6 +5,8 @@ import asyncio
 from contextlib import suppress
 from datetime import UTC, datetime, timedelta
 import hashlib
+import json
+from urllib.parse import unquote, urlsplit
 
 from eva.adapters.connectors.mcp_gateway import McpGatewayUnavailable
 from eva.adapters.postgres.background_model_journal import BackgroundModelJournal
@@ -170,6 +172,68 @@ class BackgroundConnectorActions:
         return receipt
 
 
+def _automation_config_target(arguments):
+    """Recognize one existing REST configuration resource, not a device rule."""
+    if arguments.get("transport") != "rest" or not isinstance(arguments.get("path"), str):
+        return None
+    parsed = urlsplit(arguments["path"])
+    path = unquote(parsed.path)
+    prefix = "/api/config/automation/config/"
+    identifier = path[len(prefix):] if path.startswith(prefix) else ""
+    if (parsed.scheme or parsed.netloc or parsed.fragment or not identifier
+            or "/" in identifier or identifier in {".", ".."}):
+        return None
+    return path
+
+
+def _full_automation_readback(arguments, result):
+    """A full configuration read is evidence of readback, not semantic equality."""
+    if (arguments.get("method") != "GET" or arguments.get("response_pointer") != ""
+            or arguments.get("offset") != 0 or urlsplit(arguments["path"]).query
+            or result.get("truncated") is not False or "selection_error" in result
+            or result.get("next_offset") is not None):
+        return False
+    try:
+        value = json.loads(result["response_json"])
+    except (KeyError, TypeError, ValueError):
+        return False
+    return isinstance(value, dict) and type(result.get("total")) is int and result["total"] == len(value)
+
+
+def _automation_batch_readbacks(receipt):
+    """Accept only full requested configuration rows from the existing reader."""
+    arguments, output = receipt.call.arguments, receipt.output
+    if (output.get("status") != "verified"
+            or arguments.get("section") != "automation_configurations"
+            or arguments.get("offset") != 0):
+        return set()
+    requested = arguments.get("automation_ids")
+    inventory = output.get("inventory")
+    if not isinstance(requested, list) or not isinstance(inventory, dict):
+        return set()
+    rows = inventory.get("automations")
+    if not isinstance(rows, list):
+        return set()
+    targets = set()
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        identifier = row.get("automation_id")
+        if (not isinstance(identifier, str) or identifier not in requested
+                or row.get("configuration_read") is not True
+                or not isinstance(row.get("coverage"), dict)
+                or row["coverage"].get("complete") is not True
+                or row.get("truncated", False) is not False):
+            continue
+        try:
+            configuration = json.loads(row["configuration_json"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        if isinstance(configuration, dict):
+            targets.add("/api/config/automation/config/" + identifier)
+    return targets
+
+
 def _has_completed_tool_evidence(receipts):
     """Discovery is useful context, but cannot alone prove completed work."""
     if any(receipt.call.name in {DRAFT, EVALUATE, PREPARE} for receipt in receipts) and not any(
@@ -179,12 +243,18 @@ def _has_completed_tool_evidence(receipts):
     completed = False
     last_home_assistant_success = None
     last_procedure_success = None
+    pending_automation_readbacks = set()
     for receipt in receipts:
         output = receipt.output
         if receipt.call.name in {"save_work_progress", "get_delegated_work"}:
             # Planning and reading a predecessor are context, not new completed work.
             continue
-        if receipt.call.name == "home_assistant_request":
+        if receipt.call.name == "read_home_assistant_inventory":
+            if output.get("status") != "verified":
+                return False
+            pending_automation_readbacks.difference_update(_automation_batch_readbacks(receipt))
+            completed = True
+        elif receipt.call.name == "home_assistant_request":
             if output.get("status") != "verified":
                 return False
             result = output.get("result")
@@ -192,6 +262,12 @@ def _has_completed_tool_evidence(receipts):
                 return False
             last_home_assistant_success = result["success"]
             completed = completed or last_home_assistant_success
+            target = _automation_config_target(receipt.call.arguments)
+            if target is not None and last_home_assistant_success:
+                if receipt.call.arguments.get("method") in {"POST", "PUT", "PATCH"}:
+                    pending_automation_readbacks.add(target)
+                elif _full_automation_readback(receipt.call.arguments, result):
+                    pending_automation_readbacks.discard(target)
         elif receipt.call.name in {"list_reusable_procedures", "resolve_reusable_procedure", "designate_reusable_procedure", "run_reusable_procedure"}:
             if output.get("status") != "verified":
                 return False
@@ -222,7 +298,7 @@ def _has_completed_tool_evidence(receipts):
         else:
             return False
     return (completed and last_home_assistant_success is not False
-            and last_procedure_success is not False)
+            and last_procedure_success is not False and not pending_automation_readbacks)
 
 
 class DelegatedDigitalRunner:
