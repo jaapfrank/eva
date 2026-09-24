@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T12:31:14.903266+00:00",
+        "checkedAt": "2026-09-24T12:40:24.130841+00:00",
         "deliveries": [
+          {
+            "title": "Herstelde gateway starten vanuit de wizard",
+            "date": "24 september",
+            "state": "built",
+            "result": "Optionele gatewaystart na documentcontrole aangesloten, met teruglezen van registraties en behoud van gedeeltelijke foutuitkomsten. Lokaal beschikbaar.",
+            "remaining": "Geen echte gatewaystart of herstelactie uitgevoerd. Documentaanroep, schrijftoegang en volledige vrijgave nog open.",
+            "source": "eva2/evidence/product/installer-gateway-start-20260924.json"
+          },
           {
             "title": "Bestaande documentadressen behouden bij herstel",
             "date": "24 september",
@@ -1885,15 +1893,15 @@
           }
         ],
         "now": {
-          "title": "Gatewayadressen in herstelwizard aangesloten",
+          "title": "Gatewaystart in herstelwizard afgerond",
           "state": "Afgerond",
-          "detail": "Bron e85668ee op GitHub en lokale beheerlauncher beschikbaar. Vier gerichte aliascontroles en synthetische SQLite-controles geslaagd; actieve Eva ongewijzigd.",
-          "doneWhen": "Deze aansluiting afgerond. Volledig herstel en achtstappengoal blijven open."
+          "detail": "Bron a832e9b3 op GitHub en lokale beheerlauncher beschikbaar. Gerichte controles en onafhankelijke bronreview geslaagd; actieve Eva ongewijzigd.",
+          "doneWhen": "Deze wizardstap afgerond. Volledig herstel, spraak en overige projectuitkomsten blijven open."
         },
         "next": {
-          "title": "Herstelde gateway starten en documentroute controleren",
+          "title": "Bewaard project via herstelde gateway teruglezen",
           "state": "In wachtrij",
-          "detail": "Bestaande gatewaylauncher, geïmporteerde database en afzonderlijke credentials gebruiken; bewaarde tools en projectresultaat via gateway lezen vóór schrijftoegang. Nog niet gestart."
+          "detail": "Bestaande projectverwijzing en leesactie gebruiken om de herstelde route te controleren, vóór schrijftoegang en vrijgave. Nog niet gestart."
         },
         "ownerAction": {
           "title": "Een bestaande lamp bedienen",
@@ -1907,7 +1915,7 @@
           "expected": "Bestaande toegestane lamp schakelt; fysieke werking nog niet bewezen. Geen nieuwe schakelaars toegevoegd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T12:31:14.903266+00:00"
+        "reviewedAt": "2026-09-24T12:40:24.130841+00:00"
       }
     },
     "pendingTechnicalReview": {

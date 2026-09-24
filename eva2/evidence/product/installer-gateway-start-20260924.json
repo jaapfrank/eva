@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-09-24T12:40:24.130841+00:00",
+  "sourceCommit": "a832e9b32cc5adeaab2c9da31c732ce488123d5c",
+  "kind": "operator_restored_gateway_start",
+  "availableCommand": "python3 /home/administrator/project/.eva2-artifacts/installer-gateway-start-20260924/start-installer.py --restore-config /absolute/private/target.json",
+  "sourceHashes": {
+    "tools/installation_gateway_start.py": "5e6c383cb9a03dc8245065889509c6e06f417e3eebba335d94aee94898938124",
+    "tools/installer_portable_restore.py": "63438ed7f12494d497f08646def09c0ea5cb807e8a18f6bd30e196837d90579f",
+    "tools/installer_restore_wizard.py": "7ff3db3ea7199a5039184e945e70bafc116e71139ae6c0ef32939e77e442cc83",
+    "src/eva/application/installer_restore.py": "71151d124a49e32dda1b814b6661fb90b4f9f5bcee53824beff764dd6a343c4f",
+    "src/eva/adapters/api/installer_restore_api.py": "da81621f8cabc64d7c1e6a74b2342cedbed5a6048d4b4ab41787fccf42b52125",
+    "experiments/contextforge-gateway-v1/start-contextforge.sh": "f3fdcd8c3e4c6c512e2bbcfdacaa620bf028803dbb1c8ed738c5e0dbd2e305d9"
+  },
+  "behavior": [
+    "Starts one exact precreated stopped external writer after verified document connection",
+    "Preserves gateway image, database and authenticated registration/tool inventory",
+    "Document providers remain read-only; core and task workers remain stopped",
+    "Failure retains potentially running gateway and sanitized partial receipt; no retry or deletion"
+  ],
+  "checks": [
+    "Real wizard methods with mocked side effects: ordered gateway startup, strict success receipt, partial failure retention and closed core passed",
+    "One targeted API test passed: accurate partial-start message, no private receipt leakage",
+    "Implementation agent real synthetic SQLite inventory plus mock Docker success/failure passed: one start only, mismatched inventory retained",
+    "Coordinator reviewed start module; agent independently reviewed wizard and API integration",
+    "Staged help, imports and embedded readback syntax passed; exact staged hashes verified",
+    "git diff --check passed"
+  ],
+  "notPerformed": [
+    "No real restored gateway started",
+    "No end-to-end restored document RPC or decrypted upstream credential use",
+    "No writes enabled or core activation",
+    "No full restore trial or owner acceptance",
+    "No active Eva service or data changes"
+  ],
+  "remaining": [
+    "Read a retained project result through the restored gateway",
+    "Deliberate writable activation and complete isolated recovery trial"
+  ],
+  "rollback": "Use installer-gateway-binding-20260924 before starting recovery. If startup was attempted, retain and inspect the named targets; never retry older workflows over them.",
+  "modelRequests": 0
+}
