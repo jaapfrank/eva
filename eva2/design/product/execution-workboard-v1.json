@@ -980,8 +980,8 @@
           "Onderwerpen later en via een andere toegestane ingang voortzetten; gezinsbeleving beoordelen."
         ],
         "memory": [
-          "Geen herbouw van de geaccepteerde geheugenfuncties.",
-          "Persoonsherkenning en bescherming tegen onbevoegde toehoorders op gedeelde speakers vallen onder stap2; die zijn nog niet af."
+          "Geaccepteerde geheugenfuncties blijven behouden. Oudere privé-uitwisselingen zoeken is geïnstalleerd; daadwerkelijke voortzetting nog beoordelen.",
+          "Eigenaar kiest privé-inhoud via Telegram, buiten gedeelde speakers. Geen stemverificatie bouwen als toegang tot privégeheugen."
         ],
         "initiative": [
           "Het bestaande resultaat kan door Jaap beoordeeld worden; daarvoor geen nieuwe bouw nodig.",
@@ -992,12 +992,12 @@
           "Resultaten onafhankelijk controleren en begrijpelijk terugbrengen zonder ontwikkelhulp."
         ],
         "voice": [
-          "Snelle ontvangst en doorpraten tijdens werk gelijk trekken op website, Telegram, HA en Voice PE.",
-          "Echte Voice PE-/telefoonproef, herstel en natuurlijke spraak afronden; laptoponderbreken blijft geaccepteerd."
+          "Luna6-contactmodel en HA-streamdoorgifte geïnstalleerd. Hoorbare snelheid, doorpraten tijdens werk en stoppen per ingang nog beoordelen.",
+          "Werkende Voice PE-firmware behouden. Continue-spraakkandidaat niet hersteld; laptoponderbreken blijft geaccepteerd."
         ],
         "projects": [
-          "Private Telegram-terugmelding is geïnstalleerd; echte kanaalacceptatie blijft open. Terugmelden via website/HA/Voice PE en meerdere opdrachten als geheel afronden.",
-          "Ongeziene werkwijze hergebruiken, meerdaags werk na herstart en gecontroleerde zelfverbetering afronden."
+          "Taakbediening en terugmelding via Telegram, website en publieke HA-spraak zijn aangesloten. Meerdere opdrachten, juiste terugmelding en echte resultaten als geheel nog bewijzen.",
+          "Werkwijzen zoeken/uitvoeren, planning en verbeterkandidaten zijn gebouwd; ongezien hergebruik, meerdaagse praktijk en bewezen toegepaste verbetering nog open."
         ],
         "browser": [
           "Jouw bestaande Chrome-route met zichtbaar meekijken en overnemen werkend bevestigen.",
@@ -1837,15 +1837,15 @@
           }
         ],
         "now": {
-          "title": "Lampbediening via beide speakers geactiveerd",
-          "state": "Geïnstalleerd",
-          "detail": "Iedereen thuis mag de bestaande toegestane lampen via beide Voice PE’s aan/uit zetten. Kern en werker gezond. Privé-inhoud blijft buiten gedeelde spraak.",
-          "doneWhen": "Toegang geïnstalleerd; fysieke gesproken bediening nog niet beproefd. Geen switches in de huidige lijst."
+          "title": "Taakuitvoering gebouwd; functionele proef voorgesteld",
+          "state": "Geen nieuwe bouwtaak actief",
+          "detail": "Bestaande digitale taakroute en terugmelding behouden. Eén concrete proef met maximaal zes extra modelaanvragen is voorgelegd omdat de eigenaar proeven eerder uitstelde. Er zijn nog geen extra aanvragen gedaan.",
+          "doneWhen": "Na antwoord een begrensde proef uitvoeren en concrete functionele tekorten herstellen. Geen volledige productafronding geclaimd."
         },
         "next": {
-          "title": "Dagelijks gesprek en huisbediening gebruiken",
-          "state": "Gebruiksbewijs open",
-          "detail": "Model, HA-stream en lampbediening aangesloten. Snelheid, doorpraten en hoorbare terugmelding blijven te beoordelen."
+          "title": "Eén digitale opdracht van begin tot resultaat",
+          "state": "Wacht op proefbesluit",
+          "detail": "Voorstel: synthetisch document met gegevens laten verwerken, resultaat opslaan en teruglezen via bestaande tools. Maximaal zes daadwerkelijke modelaanvragen; geen nieuwe accounts of abonnementen."
         },
         "ownerAction": {
           "title": "Een bestaande lamp bedienen",
@@ -1859,7 +1859,7 @@
           "expected": "Bestaande toegestane lamp schakelt; fysieke werking nog niet bewezen. Geen nieuwe schakelaars toegevoegd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T11:06:53.211414+00:00"
+        "reviewedAt": "2026-09-24T11:10:10.641243+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11521,7 +11521,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 4,
+      "currentStep": 3,
       "steps": [
         {
           "number": 1,
@@ -11631,7 +11631,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Gedeelde lampbediening geïnstalleerd; privé-inhoud buiten gedeelde spraak. Dagelijkse spraak-/overlapproef en overige functies blijven open.",
+      "nextAction": "Eén begrensde digitale gebruiksproef voorgesteld (maximaal zes extra modelaanvragen), wacht op expliciete uitzondering op uitgestelde proeven. Nog geen aanvragen uitgevoerd.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
