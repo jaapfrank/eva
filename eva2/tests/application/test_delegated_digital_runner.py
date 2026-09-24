@@ -401,3 +401,13 @@ def test_unfinished_tool_execution_returns_actionable_incomplete_state(monkeypat
     assert outcome.status == "incomplete_work"
     assert outcome.result is None and outcome.retryable is False
     assert outcome.usage.measurement == "unmeasured"
+
+
+def test_reading_previous_result_does_not_complete_the_new_assignment():
+    from eva.bootstrap.delegated_digital_runner import _has_completed_tool_evidence
+    read = ConversationActionReceipt(ConversationActionCall("prior", "get_delegated_work", {"work_id": "work:prior"}),
+        {"status": "verified", "operation_result": {"work": {"state": "succeeded", "result": {"output": "Old result"}}}})
+    assert not _has_completed_tool_evidence([read])
+    new_result = ConversationActionReceipt(ConversationActionCall("save", "save_workspace_document", {}),
+        {"status": "verified", "result": "New task result saved and verified"})
+    assert _has_completed_tool_evidence([read, new_result])

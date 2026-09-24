@@ -40,7 +40,8 @@ def test_profile_uses_same_configuration_and_changes_when_model_or_provider_chan
     first = build_digital_profile(settings, bundle)
     assert first.release == build_digital_profile(settings, bundle).release
     assert first.grant().maximum_input_tokens == 12000
-    assert first.capability_ids == ("use_connector_tool",)
+    assert "get_delegated_work" in first.capability_ids
+    assert "use_connector_tool" in first.capability_ids
     assert first.maximum_model_runs == 8
     settings.conversation_model = "another-model"
     assert first.release != build_digital_profile(settings, bundle).release
@@ -56,7 +57,9 @@ def test_connector_composition_rejects_missing_route_and_excludes_task_delegatio
     expanded = replace(bundle, conversation_tools=(*bundle.conversation_tools, recursive),
         external_tools=(*bundle.external_tools, SimpleNamespace(action_names=(recursive.name,))))
     descriptors, routes = digital_tools(expanded)
-    assert descriptors == bundle.conversation_tools and routes == bundle.external_tools
+    assert {"use_connector_tool", "get_delegated_work"} <= {tool.name for tool in descriptors}
+    assert "start_digital_work" not in {tool.name for tool in descriptors}
+    assert routes == bundle.external_tools
     with pytest.raises(ValueError, match="differ"):
         digital_tools(replace(bundle, external_tools=()))
 
@@ -108,9 +111,10 @@ def test_runner_factory_reuses_resource_factory_and_exposes_only_connector_tools
     store = SimpleNamespace(_engine=object())
     runner = composition.build_digital_runner(settings, store, provider_bundle=bundle)
     assert runner.memory is memory and runner.identity is identity
-    assert runner.connector_tools == bundle.external_tools
+    assert runner.connector_tools[:-1] == bundle.external_tools
+    assert runner.connector_tools[-1].action_names == ("get_delegated_work",)
     assert observed["model"]["model"] == settings.conversation_model
-    assert observed["model"]["conversation_tools"] == bundle.conversation_tools
+    assert observed["model"]["conversation_tools"] == composition.digital_tools(bundle)[0]
     assert observed["owner"]["owner_principal_id"] == UUID(settings.background_principal_id)
     assert observed["resources"]["identity_pack"] == "signed-identity"
     assert observed["resources"]["household_voice"] == "household-consent"
@@ -156,7 +160,8 @@ def test_procedure_learning_and_verified_writer_share_the_pinned_profile():
     settings.external_provider = ExternalProviderSettings((*settings.external_provider.providers,
         LoadedProvider("procedure_references", None, ("mandate-a", ProviderSettings()))))
     profile = build_digital_profile(settings, bundle)
-    assert set(profile.capability_ids) == {"use_connector_tool", *names}
+    assert set(profile.capability_ids) == {"use_connector_tool", "get_delegated_work",
+        "save_work_progress", "read_own_component_source", "draft_own_component_improvement", *names}
     assert "providers/procedure_reference_actions.py" in dict(profile.execution_source_sha256)
     assert "adapters/postgres/procedure_reference_host.py" in dict(profile.execution_source_sha256)
     settings.external_provider = ExternalProviderSettings((settings.external_provider.providers[0],

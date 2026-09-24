@@ -6,6 +6,7 @@ from types import SimpleNamespace
 from uuid import UUID
 
 from eva.bootstrap.delegated_digital_profile import DelegatedDigitalProfile
+from eva.bootstrap.delegated_work_result_reader import DelegatedWorkResultReader
 from eva.bootstrap.background_browser_context import configured_browser_client, BackgroundBrowserContext
 from eva.contracts.canonical_json import canonical_sha256
 from eva.adapters.postgres.background_work_progress import progress_descriptor
@@ -22,6 +23,9 @@ _DIGITAL_PROVIDERS = frozenset({"mcp_autonomy", "procedure_references", "mcp_gat
 _ROOT = Path(__file__).resolve().parents[1]
 _EXECUTION_SOURCES = (
     "bootstrap/delegated_digital_composition.py",
+    "bootstrap/delegated_work_result_reader.py",
+    "bootstrap/delegated_work_owner_service.py",
+    "adapters/postgres/delegated_work_actions.py",
     "bootstrap/delegated_digital_runner.py",
     "bootstrap/background_browser_context.py",
     "adapters/connectors/browser_session.py",
@@ -60,7 +64,8 @@ def digital_tools(bundle):
     names = {tool.name for tool in descriptors}
     if not names or names != {name for tool in routes for name in tool.action_names if name in admitted}:
         raise ValueError("digital connector descriptions and routes differ")
-    return (*descriptors, progress_descriptor(), *component_descriptors()), routes
+    return (*descriptors, *DelegatedWorkResultReader.conversation_tools(),
+            progress_descriptor(), *component_descriptors()), routes
 
 
 def _configuration_value(value):
@@ -167,7 +172,7 @@ def build_digital_runner(settings, store, *, provider_bundle=None):
     source_loader = _SourceTurnLoader(engine, SimpleNamespace(
         scope=service.conversation_scope, authorize_turn=service.validate_authority))
     return DelegatedDigitalRunner(store, profile, source_loader=source_loader,
-        memory=memory, identity=identity, model=model, connector_tools=routes,
+        memory=memory, identity=identity, model=model, connector_tools=(*routes, DelegatedWorkResultReader(service)),
         browser_context=BackgroundBrowserContext(configured_browser_client()))
 
 

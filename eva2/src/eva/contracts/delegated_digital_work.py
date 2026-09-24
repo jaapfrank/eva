@@ -47,7 +47,7 @@ class DelegatedDigitalWorkGrant(DelegatedWorkGrant):
             raise ValueError("digital work uses host tools, not ambient child access")
         # These are host connector meta-actions; discovered tools remain subject
         # to the existing connector mandate and current dispatch authorization.
-        allowed = {"connect_service", "discover_connector_tools", "manage_connected_services", "use_connector_tool",
+        allowed = {"get_delegated_work", "connect_service", "discover_connector_tools", "manage_connected_services", "use_connector_tool",
                    "list_reusable_procedures", "resolve_reusable_procedure",
                    "designate_reusable_procedure", "save_workspace_document", "save_work_progress",
                    "read_own_component_source", "draft_own_component_improvement",
