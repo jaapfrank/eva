@@ -202,7 +202,7 @@ def _validate_material_report(report, preparation, prepared_receipt):
             raise ValueError("verified document snapshot differs from preparation")
 
 
-def _verify_running(container_id, config, preparation, mounts):
+def _verify_running(container_id, config, preparation, mounts, *, alias=None):
     rows = json.loads(_command(["docker", "inspect", container_id]))
     if len(rows) != 1:
         raise ValueError("document target inspect differs")
@@ -221,14 +221,27 @@ def _verify_running(container_id, config, preparation, mounts):
             or len(networks) != 1 or next(iter(networks.values())).get("NetworkID") != config["network_id"]
             or set(bound) != set(mounts)):
         raise ValueError("running document target identity or confinement differs")
+    if alias is not None and alias not in (next(iter(networks.values())).get("Aliases") or []):
+        raise ValueError("running document target lacks preserved gateway alias")
     for destination, source in mounts.items():
         item = bound[destination]
         if item.get("Type") != "bind" or item.get("Source") != source or item.get("RW") is not False:
             raise ValueError("running document target mount differs")
 
 
+def _require_free_alias(network_id, alias):
+    network = json.loads(_command(["docker", "network", "inspect", network_id]))[0]
+    for container_id in network.get("Containers", {}):
+        actual = json.loads(_command(["docker", "inspect", container_id]))[0]
+        for endpoint in actual.get("NetworkSettings", {}).get("Networks", {}).values():
+            if (endpoint.get("NetworkID") == network_id
+                    and (alias in {value.casefold() for value in (endpoint.get("Aliases") or [])}
+                         or actual.get("Name", "").lstrip("/").casefold() == alias)):
+                raise ValueError("preserved gateway alias already belongs to another target")
+
+
 def connect_document_providers(package_root, *, preparation_configuration,
-                               preparation_receipt, configuration, guard):
+                               preparation_receipt, configuration, guard, gateway_binding=None):
     receipt = {"contract": "EvaDocumentConnection/v1", "providers": [],
                "provider_verified": False, "documents_verified": False, "services_started": False, "core_activated": False}
     try:
@@ -249,6 +262,14 @@ def connect_document_providers(package_root, *, preparation_configuration,
                 or {item["preparation_index"] for item in configuration["providers"]} != set(range(len(prepared)))):
             raise ValueError("document connection needs complete matching preparation")
         receipt["archive_sha256"] = package["archive_sha256"]
+        aliases = {}
+        if gateway_binding is not None:
+            from tools.installation_gateway_binding import validate_gateway_bindings
+            validated_binding = validate_gateway_bindings(root,
+                configuration=gateway_binding, connections=configuration,
+                preparations=preparation_configuration, guard=guard)
+            aliases = validated_binding["aliases"]
+            receipt["gateway_binding"] = validated_binding["receipt"]
         plans = []
         # Validate every target before starting any of them.
         existing = set(_command(["docker", "ps", "--all", "--format", "{{.Names}}"]).splitlines())
@@ -261,9 +282,15 @@ def connect_document_providers(package_root, *, preparation_configuration,
             images = json.loads(_command(["docker", "image", "inspect", prep["image"]]))
             if len(images) != 1 or images[0].get("Id") != prep["image"]:
                 raise ValueError("document connection image pin differs")
+            alias = aliases.get(config["preparation_index"])
+            if alias is not None:
+                _require_free_alias(config["network_id"], alias)
             plans.append((config, prep, mounts))
         for config, prep, mounts in plans:
+            alias = aliases.get(config["preparation_index"])
             guard()
+            if alias is not None:
+                _require_free_alias(config["network_id"], alias)
             _inspect_network(config["network_id"])
             if read_installation_package(root)["archive_sha256"] != package["archive_sha256"]:
                 raise ValueError("document connection source package changed")
@@ -277,6 +304,9 @@ def connect_document_providers(package_root, *, preparation_configuration,
                 "--memory", "512m", "--memory-swap", "512m", "--cpus", "1", "--pids-limit", "64",
                 "--user", f"{prep['runtime_uid']}:{prep['runtime_gid']}",
                 "--tmpfs", "/tmp:rw,nosuid,nodev,size=128m,mode=1777", "--entrypoint", _ENTRYPOINT]
+            if alias is not None:
+                command.extend(["--network-alias", alias])
+                item["gateway_alias"] = alias
             for target, source in sorted(mounts.items()):
                 command.extend(["--mount", f"type=bind,src={source},dst={target},readonly"])
             for name, target in (("JWT_SECRET", "jwt"), ("ENCRYPTION_SECRET", "encryption"), ("ADMIN_PASSWORD", "admin")):
@@ -289,14 +319,14 @@ def connect_document_providers(package_root, *, preparation_configuration,
                 raise ValueError("document target creation acknowledgement differs")
             item["container_id"] = container_id
             guard()
-            _verify_running(container_id, config, prep, mounts)
+            _verify_running(container_id, config, prep, mounts, alias=alias)
             receipt["services_started"] = True
             observed = json.loads(_command(["docker", "exec", container_id, "python3", "-c", _CATALOG], deadline=40))
             if not isinstance(observed, list) or canonical_sha256(observed) != prep["logical_catalog_sha256"]:
                 raise ValueError("running document provider catalog differs from preserved catalog")
             guard()
             _inspect_network(config["network_id"])
-            _verify_running(container_id, config, prep, mounts)
+            _verify_running(container_id, config, prep, mounts, alias=alias)
             item.update(status="connected_read_only", provider_verified=True, documents_verified=False,
                         catalog_sha256=canonical_sha256(observed), verification_scope="MCP initialization and tools/list catalog only")
             material = json.loads(_command(["docker", "exec", container_id, "node", "--input-type=module",
@@ -304,9 +334,16 @@ def connect_document_providers(package_root, *, preparation_configuration,
             _validate_material_report(material, prep, receipts[config["preparation_index"]])
             guard()
             _inspect_network(config["network_id"])
-            _verify_running(container_id, config, prep, mounts)
+            _verify_running(container_id, config, prep, mounts, alias=alias)
             item.update(documents_verified=True, material_verification=material,
                         verification_scope="Native retained material/history matches prepared binding and snapshots; no writes or task resumption")
+        if gateway_binding is not None:
+            final_binding = validate_gateway_bindings(root, configuration=gateway_binding,
+                connections=configuration, preparations=preparation_configuration, guard=guard)
+            if final_binding != validated_binding:
+                raise ValueError("restored gateway binding changed during connection")
+            receipt["gateway_binding"]["aliases_attached"] = True
+            receipt["gateway_binding"]["gateway_started"] = False
         receipt.update(status="connected_read_only", provider_verified=True, documents_verified=True, services_started=True)
         receipt["verification_scope"] = "Running image and read-only mounts; SDK initialization and exact catalog; native verification of retained document material/history. No writes, resumed task completion or core activation."
         return receipt

@@ -104,6 +104,37 @@ registers or remaps the gateway nor enables document writes. Gateway mapping,
 writable runtime activation and the full restore trial remain requirements
 before ordinary use.
 
+## Preserving gateway addresses
+
+The optional `document_gateway_binding` launcher setting preserves existing
+provider routes without creating registrations or changing stored tool IDs:
+
+```json
+{
+  "target_path": "/absolute/new-target/contextforge.sqlite",
+  "providers": [{
+    "preparation_index": 0,
+    "gateway_id": "<existing gateway registration ID>",
+    "provider_alias": "original-document-provider"
+  }]
+}
+```
+
+The target path must be the same as `external_recovery.gateway.target_path`.
+The copied gateway database must still equal the validated package bytes.
+Every selected registration must contain exactly
+`http://<provider_alias>:9000/mcp` with `STREAMABLEHTTP` transport. Include every
+prepared provider exactly once. The connection step checks for conflicting
+aliases on its pinned internal network, assigns the preserved alias to the new
+read-only provider and verifies it in the running container.
+
+This keeps existing registrations and tool identities intact. It does not start
+the restored gateway, prove an end-to-end gateway call, enable writes or release
+the core. Other host operators must keep the recovery targets isolated; these
+checks do not lock Docker against concurrent changes. A later gateway startup
+must use the same network and retained database with the required separate
+credentials. A failed alias assignment retains the new target for inspection.
+
 ## Partial results and activation
 
 The core PostgreSQL transaction, external PostgreSQL transaction and gateway file

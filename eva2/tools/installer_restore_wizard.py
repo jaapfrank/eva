@@ -25,13 +25,19 @@ def main(argv=None):
     )
     required = {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed", "runtime_guard"}
     if (not isinstance(config, dict) or not required <= set(config)
-            or not set(config) <= required | {"runtime_identity", "recovery_materialization", "external_recovery", "document_recovery", "document_connection"}
+            or not set(config) <= required | {"runtime_identity", "recovery_materialization", "external_recovery", "document_recovery", "document_connection", "document_gateway_binding"}
             or config["traffic_closed"] is not True):
         raise ValueError("restore configuration requires pinned runtime_guard identities and closed traffic")
     if "document_recovery" in config and not {"external_recovery", "recovery_materialization"} <= set(config):
         raise ValueError("document recovery requires external recovery and materialization")
     if "document_connection" in config and "document_recovery" not in config:
         raise ValueError("document connection requires document preparation")
+    if "document_gateway_binding" in config:
+        if "document_connection" not in config:
+            raise ValueError("gateway binding requires document connection")
+        if (not isinstance(config["document_gateway_binding"], dict)
+                or config["document_gateway_binding"].get("target_path") != config["external_recovery"]["gateway"]["target_path"]):
+            raise ValueError("document gateway binding must use the restored gateway target")
     paths = {key: Path(config[key]) for key in ("authority", "workspace", "objects")}
     if not all(path.is_absolute() for path in paths.values()):
         raise ValueError("restore target paths must be absolute")
@@ -54,8 +60,13 @@ def main(argv=None):
     if "document_connection" in config:
         from tools.installation_document_connection import connect_document_providers, validate_document_connection_configuration
         validate_document_connection_configuration(config["document_connection"])
+        if "document_gateway_binding" in config:
+            from tools.installation_gateway_binding import validate_gateway_binding_configuration
+            validate_gateway_binding_configuration(config["document_gateway_binding"],
+                connections=config["document_connection"], preparations=config["document_recovery"])
         document_connect = partial(connect_document_providers,
-            preparation_configuration=config["document_recovery"], configuration=config["document_connection"])
+            preparation_configuration=config["document_recovery"], configuration=config["document_connection"],
+            gateway_binding=config.get("document_gateway_binding"))
     workflow = InstallerPortableRestore(
         engine=engine,
         authority_reader=partial(read_private_restore_authority, paths["authority"]),
