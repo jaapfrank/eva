@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — volledig proefpakket samenstellen en via de wizard herstellen.** Beheercommando 683e3780 bevat ook start van de geheugendienst en controle van de verbinding kern naar API naar herstelde database. Gerichte controles en onafhankelijke review geslaagd; lokale installatie bijgewerkt met terugweg. Echte kernreservekopie, document-/gatewaymateriaal en Hindsight-bankdump zijn voorbereid. Volledige wizardproef volgt. De huidige Eva blijft draaien; geen actie van Jaap nodig.
+**Nu — volledig proefpakket samenstellen en via de wizard herstellen.** Beheercommando cfb27e4b bevat ook start van de geheugendienst en controle van de verbinding kern naar API naar herstelde database. Gerichte controles en onafhankelijke review geslaagd; lokale installatie bijgewerkt met terugweg. Echte kernreservekopie, document-/gatewaymateriaal en Hindsight-bankdump zijn voorbereid. Volledige wizardproef volgt. De huidige Eva blijft draaien; geen actie van Jaap nodig.
 
 **Nog niet als volledige functie opgeleverd.** De volledige reservekopie-tot-draaiende-Eva-proef en gewone doelvoorbereiding zonder handgeschreven JSON staan open. [Beschikbaarheid, bewijs en terugweg](evidence/product/restore-operator-updated-20260924.json). De gevonden archieffout is gecorrigeerd en de echte export slaagt: [bewijs](evidence/product/restore-export-correction-20260924.json). Dagelijkse kanaal-/gezinsproeven blijven afzonderlijk open.
 

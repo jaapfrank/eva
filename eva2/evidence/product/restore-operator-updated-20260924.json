@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "683e3780",
+  "sourceCommit": "cfb27e4b",
   "state": "operator_command_updated_full_restore_unproven",
   "availableCommand": "python3 /home/administrator/project/.eva2-artifacts/installer-document-write-20260924/start-installer.py --restore-config /absolute/private/target.json",
   "checks": {
@@ -10,7 +10,9 @@
     "native_authorization_controlled_cases": 17,
     "isolated_gateway_discovery": "Passed once; tool IDs and schemas preserved, persisted freshness advanced. Synthetic provider; no private upstream credential proof.",
     "memory_api_controlled_cases": 14,
-    "memory_api_scope": "Pinned source writers stopped, API bound to restored PostgreSQL, current local model authorization, core bound to this API, health and bank listing. No upstream model-success claim."
+    "memory_api_scope": "Pinned source writers stopped, API bound to restored PostgreSQL, current local model authorization, core bound to this API, health and bank listing. No upstream model-success claim.",
+    "public_image_ca_cases": 6,
+    "public_image_ca_scope": "Standard immutable image CA file is not a private credential; mounted overrides still require verification. Existing TLS settings retained."
   },
   "rollbackDirectory": "/home/administrator/project/.eva2-artifacts/restore-memory-api-683e3780",
   "rollback": "Previous files and an exact manifest are retained. After any restore attempt inspect retained target state before further action.",
@@ -18,5 +20,6 @@
   "restoreInvoked": false,
   "ownerAccepted": false,
   "modelCalls": 0,
-  "next": "Assemble the prepared real core archive, native document/gateway snapshot and Hindsight dump into one package; execute the complete isolated wizard restore."
+  "next": "Assemble the prepared real core archive, native document/gateway snapshot and Hindsight dump into one package; execute the complete isolated wizard restore.",
+  "additionalRollbackFile": "/home/administrator/project/.eva2-artifacts/runtime-public-ca-20260924/previous-installed-runtime-authorization.py"
 }

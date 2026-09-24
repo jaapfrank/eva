@@ -4,7 +4,7 @@ Bijgewerkt: 27 augustus 2026.
 
 ## Restore operator integration — 24 September 2026
 
-Source `683e3780` connects the existing restore wizard to component verification,
+Source `cfb27e4b` connects the existing restore wizard to component verification,
 database release and runtime startup after commit. The installed operator entry is
 `/home/administrator/project/.eva2-artifacts/installer-document-write-20260924/start-installer.py`.
 Run it with `--restore-config /absolute/private/target.json`; the existing wizard
