@@ -1,0 +1,40 @@
+{
+  "recordedAt": "2026-09-24T01:21:33.348016+00:00",
+  "sourceCommit": "56cf101a",
+  "state": "installed_start_checked",
+  "requirement": "Same task correction behavior through private and household conversation routes.",
+  "finding": "Research follow-up rejected admitted/call_started predecessors even after their stop request was durably recorded.",
+  "change": "Both routes allow follow-up after recorded stop, using existing stop and start_background_research tools. Shared descriptions explain selecting the right task and sending the complete corrected public question as linked follow-up.",
+  "installedImage": "eva2-research-corrections:20260924",
+  "installedSourceSha256": {
+    "bootstrap/household_work.py": "b77593ab254a344a24836dfe37d851466e9083b44f19e825f26fca73b1c88124",
+    "bootstrap/delegated_work_owner_service.py": "4b507b41d0b13a46b6e5512798697a7dbdf8f9e00395da5e1db453ad2b29bcfe",
+    "adapters/postgres/delegated_work_actions.py": "27e6eef462dcacb959544b02b532d6fcfb8ce969835c3c7ee02b9b83b69c2991"
+  },
+  "checks": {
+    "syntax": true,
+    "configuredApplicationConstructed": true,
+    "privateAndHouseholdResearchDescriptorIdentical": true,
+    "activeWorkAtInstall": 0,
+    "coreHealthy": true,
+    "workerHealthy": true
+  },
+  "usage": {
+    "evaModelCalls": 0,
+    "messagesSent": 0,
+    "developmentCredits": "not measured/attributable"
+  },
+  "notProven": [
+    "Model selection of stop plus corrected follow-up",
+    "Real Telegram, website, Home Assistant and physical Voice PE correction workflow",
+    "Speech latency or continuous voice",
+    "Independent review and owner acceptance"
+  ],
+  "limitations": [
+    "Public research only; digital task corrections retain their existing private route.",
+    "Stop request is not proof that an external model call has already finished.",
+    "Correction starts a linked bounded follow-up, not mutation of an in-flight request.",
+    "Household scope remains the current authorized session; no private identity or memory added."
+  ],
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/research-corrections-20260924/baseline.compose.private.json"
+}
