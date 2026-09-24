@@ -82,3 +82,38 @@ claimed benefit, review, an unchanged baseline and a rollback remain required by
 the existing managed installation process. There is no automatic promotion based
 on exit codes or whole-container timing. Actual beneficial application remains
 open until a real reviewed candidate exists.
+
+## Importing an independently reviewed candidate
+
+The operator entry point is `python3 eva2/tools/import_component_release.py`.
+It uses the Python standard library and runs on the existing development host;
+no runtime service or model tool receives source-write or Docker access.
+
+Provide the saved candidate JSON, an operator review JSON, and the root of an
+existing clean `codex/` release checkout. This step is restricted to the three
+components covered by the installed evaluation suite. It verifies package,
+report, candidate, patch, review-evidence hashes and the current source baseline.
+The default command only describes the validated import:
+
+```sh
+python3 eva2/tools/import_component_release.py --package /path/candidate.json --review /path/review.json --checkout /path/release-checkout
+```
+
+After review, add `--apply --receipt /path/new-import-receipt.json` to write the
+exact candidate into that checkout. The receipt must be new and outside the
+checkout. The command neither commits nor runs the candidate. Commit the source
+and retain the receipt/evidence with the ordinary release inputs. Continue through
+the existing managed build and installation, checking the actual runtime baseline
+again and retaining the previous image/configuration for rollback. A source import
+is not a runtime release, measured gain, or owner acceptance.
+
+The review JSON uses contract `EvaComponentReleaseReview/v1`, the exact
+`candidate_package_sha256`, a nonempty `reviewer`, and `decision: "accept"`.
+Both `measured_gain_evidence` and `independent_review_evidence` contain an existing
+`path` and its exact `sha256`. Relative evidence paths resolve beside the review
+file. The operator is responsible for the evidence's relevance and independence;
+these file hashes preserve the selected evidence but cannot judge its conclusions.
+Do not construct an accepting review merely because process exit codes are zero.
+
+No real accepted candidate has been imported by this delivery. Only source syntax
+and the command entry point were checked; import/application trials remain deferred.

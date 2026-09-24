@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-09-24T02:27:18.831829+00:00",
+  "kind": "operator_entry_point_delivery",
+  "feature": "Import reviewed Eva component candidate into existing release checkout",
+  "path": "eva2/tools/import_component_release.py",
+  "sha256": "106030d90bdc447be0f28e0cfe087a2b30e2169c7caae2aaac9cfd57e367d781",
+  "checks": [
+    "Python AST parsing",
+    "Local command --help succeeds",
+    "Git diff whitespace check"
+  ],
+  "installation": "Available directly on the existing WSL development host; standard library only; no runtime restart required",
+  "scope": [
+    "Exact package, report, patch and source baseline",
+    "Operator-selected gain and independent-review evidence",
+    "Clean codex branch and explicit apply with new external receipt",
+    "Existing Git, build and managed installation continue after import"
+  ],
+  "notProven": [
+    "No actual candidate imported",
+    "No own improvement applied",
+    "No measured gain or review acceptance claimed"
+  ],
+  "paidModelCalls": 0
+}
