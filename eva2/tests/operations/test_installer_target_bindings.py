@@ -50,7 +50,8 @@ def test_actual_maintained_mounts_bound_without_changing_commands(setup):
     original=deepcopy(setup["rendered_graph"])
     first=bind_installer_target_graph(**setup)
     assert first.graph is None
-    assert "core:/var/lib/eva/restore-authority" in first.pending
+    assert "core:/var/lib/eva/restore-authority" not in first.pending
+    assert not list((setup["materialized_bind_root"] / "restore-authority").iterdir())
     assert "model-access-lease:/run/eva/codex-owner" in first.pending
     completed=bind_installer_target_graph(**setup,additional_bindings=fill_remaining(setup,first.pending))
     assert completed.graph is not None and completed.pending==()

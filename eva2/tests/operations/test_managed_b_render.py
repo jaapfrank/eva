@@ -520,6 +520,12 @@ def test_restore_projection_keeps_commands_and_uses_only_new_named_storage():
     assert service["networks"]["default"]["aliases"] == ["old-core"]
     for key in ("entrypoint", "command", "healthcheck", "volumes"):
         assert service[key] == original["services"]["core"][key]
+    explicit = isolated_restore_graph(receipt, graph, namespace="eva-new-target",
+                                      network_subnet="172.16.243.0/24")
+    assert explicit["networks"]["default"]["ipam"] == {"config": [{"subnet": "172.16.243.0/24"}]}
+    for invalid in ("8.8.8.0/24", "172.16.243.1/24", "::1/128"):
+        with pytest.raises(ValueError):
+            isolated_restore_graph(receipt, graph, namespace="eva-new-target", network_subnet=invalid)
     graph["services"]["core"]["command"] = ["changed"]
     with pytest.raises(ValueError, match="receipt"):
         isolated_restore_graph(receipt, graph, namespace="eva-new-target")

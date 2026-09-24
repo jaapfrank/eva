@@ -425,7 +425,7 @@ def render_managed_b(plan: CoreBPlan) -> RenderedBManifest:
     return receipt
 
 
-def isolated_restore_graph(receipt: RenderedBManifest, graph: dict[str, Any], *, namespace: str) -> dict[str, Any]:
+def isolated_restore_graph(receipt: RenderedBManifest, graph: dict[str, Any], *, namespace: str, network_subnet: str | None = None) -> dict[str, Any]:
     """Project the verified services onto fresh storage with traffic still closed.
 
     Private bind inputs must already be materialized for the new target. This
@@ -438,6 +438,13 @@ def isolated_restore_graph(receipt: RenderedBManifest, graph: dict[str, Any], *,
         raise ValueError("rendered graph differs from its receipt")
     if set(graph) - {"name", "services", "volumes", "networks"}:
         raise ValueError("unsupported rendered graph sections")
+    subnet = None
+    if network_subnet is not None:
+        from ipaddress import IPv4Network
+        subnet = IPv4Network(network_subnet, strict=True)
+        if not any(subnet.subnet_of(IPv4Network(block)) for block in
+                   ("10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16")):
+            raise ValueError("isolated target subnet must be a private IPv4 network")
     result = copy.deepcopy(graph)
     result["name"] = namespace
     networks = result.get("networks", {})
@@ -445,6 +452,8 @@ def isolated_restore_graph(receipt: RenderedBManifest, graph: dict[str, Any], *,
         raise ValueError("restore projection requires one maintained network")
     network = next(iter(networks))
     result["networks"] = {network: {"name": namespace + "-network", "internal": True}}
+    if subnet is not None:
+        result["networks"][network]["ipam"] = {"config": [{"subnet": str(subnet)}]}
     for key, volume in result.get("volumes", {}).items():
         if set(volume) - {"name", "labels", "external"}:
             raise ValueError("restore storage must be local named volumes")

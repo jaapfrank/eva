@@ -42,7 +42,7 @@ def _private_root(root):
 
 def bind_installer_target_graph(*, render_receipt, rendered_graph, namespace,
                                 materialization_receipt, expected_plan_sha256,
-                                materialized_bind_root, additional_bindings=None):
+                                materialized_bind_root, additional_bindings=None, network_subnet=None):
     """Return no candidate graph until every existing bind has an explicit target.
 
     A non-None graph proves file selection only. It is not a runtime-readable or
@@ -60,7 +60,7 @@ def bind_installer_target_graph(*, render_receipt, rendered_graph, namespace,
         raise ValueError("materialization receipt differs from confirmed plan")
     root = Path(materialized_bind_root)
     _private_root(root)
-    graph = isolated_restore_graph(render_receipt, rendered_graph, namespace=namespace)
+    graph = isolated_restore_graph(render_receipt, rendered_graph, namespace=namespace, network_subnet=network_subnet)
     roles, evidence = {}, []
     for item in material["files"]:
         path = Path(item["path"])
@@ -128,6 +128,14 @@ def bind_installer_target_graph(*, render_receipt, rendered_graph, namespace,
             if selected is None and (name,destination) in extras:
                 selected = Path(extras[(name,destination)])
                 used.add((name,destination))
+            if selected is None and destination == "/var/lib/eva/restore-authority":
+                # New empty target storage, not a fabricated restore authority.
+                selected = root / "restore-authority"
+                if not selected.exists():
+                    selected.mkdir(mode=0o700)
+                _private_root(selected)
+                if any(selected.iterdir()):
+                    raise ValueError("new restore authority storage must be empty")
             if selected is None:
                 pending.append(name+":"+destination)
                 continue

@@ -32,6 +32,7 @@ class InstallerTargetSettings:
     database_services: tuple = ("postgres", "hindsight-postgres")
     schema_service: str = "schema-installer"
     model_authority_file: Path | None = None
+    network_subnet: str | None = None
 
 
 class InstallerTargetWorkflow:
@@ -108,7 +109,8 @@ class InstallerTargetWorkflow:
                 rendered_graph=settings.rendered_graph, namespace=settings.namespace,
                 materialization_receipt=material, expected_plan_sha256=plan["plan_sha256"],
                 materialized_bind_root=self.material_root,
-                additional_bindings=settings.additional_bindings)
+                additional_bindings=settings.additional_bindings,
+                network_subnet=settings.network_subnet)
             if binding.graph is None or binding.pending:
                 receipt["missing_bindings"] = list(binding.pending)
                 raise ValueError("complete target service bindings required")
