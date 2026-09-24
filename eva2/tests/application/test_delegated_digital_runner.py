@@ -30,6 +30,7 @@ class Journal:
     def model_usage(self, turn): return ConversationModelUsage.aggregate(tuple(self.usages))
 
 class Store:
+    _engine = None
     stopped = False
     def authorize_tool_dispatch(self, call):
         if self.stopped: raise ConversationConflict("work stopped")
@@ -61,6 +62,19 @@ class Model:
             "controlled", None if name is None else ConversationActionCall(name, name, {}),
             usage=ConversationModelUsage.measured(tool_calls=0 if name is None else 1,
                                                   input_tokens=30, output_tokens=10))
+
+@pytest.fixture(autouse=True)
+def controlled_persistence(monkeypatch):
+    """Keep these loop tests independent of PostgreSQL-only optional features."""
+    from types import SimpleNamespace
+    import eva.bootstrap.delegated_digital_runner as module
+    import eva.adapters.postgres.work_corrections as corrections
+    empty = lambda *args: SimpleNamespace(action_names=(), available_for=lambda turn: False)
+    monkeypatch.setattr(module, "BackgroundWorkProgress", empty)
+    monkeypatch.setattr(module, "ComponentImprovementActions", empty)
+    monkeypatch.setattr(module, "load_work_progress", lambda *args: None)
+    monkeypatch.setattr(corrections, "work_corrections", lambda *args: ())
+
 
 def fixture():
     source = ConversationTurn.private("tenant", "install", "owner", "chat", "message",
@@ -341,3 +355,49 @@ def test_exhausted_attempt_is_budget_failure_with_preserved_usage(monkeypatch, l
     assert outcome.usage.output_tokens == actual.output_tokens
     assert outcome.usage.cost_usd_micros is None
     assert not tools.calls
+
+
+@pytest.mark.parametrize("statuses, expected", [
+    (["execution_failed"], False),
+    (["execution_completed", "execution_failed"], False),
+    (["execution_failed", "execution_completed"], True),
+    (["execution_completed"], True),
+])
+def test_failed_procedure_is_not_hidden_by_preparation_or_saved_report(statuses, expected):
+    from eva.bootstrap.delegated_digital_runner import BackgroundConnectorActions, _has_completed_tool_evidence
+    def saved(identifier):
+        return ConversationActionReceipt(ConversationActionCall(identifier, "save_workspace_document", {}),
+                                         {"status": "verified"})
+    receipts = [saved("prepare")]
+    for index, status in enumerate(statuses):
+        receipts.append(BackgroundConnectorActions._receipt(ConversationActionReceipt(
+            ConversationActionCall(str(index), "run_reusable_procedure", {}),
+            {"contract": "ProcedureReferenceAction/v1", "status": status})))
+    receipts.append(saved("report"))
+    assert _has_completed_tool_evidence(receipts) is expected
+
+
+def test_unfinished_tool_execution_returns_actionable_incomplete_state(monkeypatch):
+    from types import SimpleNamespace
+    import eva.bootstrap.delegated_digital_runner as module
+    import eva.adapters.postgres.work_corrections as corrections
+    source, spec, store, tools, journal, runner, _ = fixture()
+    monkeypatch.setattr(module, "BackgroundWorkProgress", lambda *a: SimpleNamespace(action_names=()))
+    monkeypatch.setattr(module, "ComponentImprovementActions", lambda *a: SimpleNamespace(action_names=()))
+    monkeypatch.setattr(module, "load_work_progress", lambda *a: None)
+    monkeypatch.setattr(corrections, "work_corrections", lambda *a: ())
+    class ControlledConversation:
+        def __init__(self, memory, model, identity, actions): self.actions = actions
+        def respond(self, turn, *, before_step, model_journal):
+            self.actions.receipts.extend([
+                ConversationActionReceipt(ConversationActionCall("save", "save_workspace_document", {}),
+                                          {"status": "verified"}),
+                module.BackgroundConnectorActions._receipt(ConversationActionReceipt(
+                    ConversationActionCall("run", "run_reusable_procedure", {}),
+                    {"contract": "ProcedureReferenceAction/v1", "status": "execution_failed"}))])
+            return SimpleNamespace(text="The procedure failed.")
+    monkeypatch.setattr(module, "LivingConversation", ControlledConversation)
+    outcome = asyncio.run(runner.run(spec, call_id="call:failed-procedure"))
+    assert outcome.status == "incomplete_work"
+    assert outcome.result is None and outcome.retryable is False
+    assert outcome.usage.measurement == "unmeasured"

@@ -172,6 +172,7 @@ def _has_completed_tool_evidence(receipts):
         return False
     completed = False
     last_home_assistant_success = None
+    last_procedure_success = None
     for receipt in receipts:
         output = receipt.output
         if receipt.call.name == "save_work_progress":
@@ -200,10 +201,10 @@ def _has_completed_tool_evidence(receipts):
                     return False
                 completed = True
             elif receipt.call.name == "run_reusable_procedure":
-                if status == "execution_completed":
-                    completed = True
-                elif status != "execution_failed":
+                if status not in {"execution_completed", "execution_failed"}:
                     return False
+                last_procedure_success = status == "execution_completed"
+                completed = completed or last_procedure_success
             elif status == "resolved":
                 if not output.get("references"):
                     return False
@@ -214,7 +215,8 @@ def _has_completed_tool_evidence(receipts):
             completed = True
         else:
             return False
-    return completed and last_home_assistant_success is not False
+    return (completed and last_home_assistant_success is not False
+            and last_procedure_success is not False)
 
 
 class DelegatedDigitalRunner:
@@ -365,7 +367,7 @@ class DelegatedDigitalRunner:
                                       for step in saved_progress["steps"]):
                 raise _UnfinishedWorkPlan("background task plan is unfinished")
             if not _has_completed_tool_evidence(actions.receipts):
-                raise ConversationConflict("background task lacks verified connector results")
+                raise _UnfinishedWorkPlan("background task lacks verified completed tool results")
             if actual.measurement != "measured":
                 raise ConversationConflict("background model token usage is incomplete")
             result = DelegatedDigitalWorkResult(contract="DelegatedDigitalWorkResult/v4", schema_version=4,
