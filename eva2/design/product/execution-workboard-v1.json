@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T20:40:28.916058+00:00",
+        "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
+          {
+            "title": "Planning met één of geen voorganger aangesloten op het model",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Modelkoppeling verplicht niet langer twee voorgangers tegelijk. Een nieuwe afspraak kan voor later worden bewaard; een vervolgstap kan wachten op de gekozen voorganger. Bestaande planner en bescherming tegen dubbel inplannen behouden.",
+            "remaining": "Vraag via privé-Telegram of website om morgen om 10 uur onderzoek te doen. Controleer de afspraak onder Later aan het werk. Echte tijd-/meerdaagse proef en acceptatie open.",
+            "source": "eva2/evidence/product/scheduled-tool-nullability-installed-20260924.json"
+          },
           {
             "title": "Nieuwe onderzoeksopdracht zonder fictieve eerdere taak",
             "date": "24 september",
@@ -2231,15 +2239,15 @@
           }
         ],
         "now": {
-          "title": "Nieuw onderzoek zonder eerdere taak starten",
-          "state": "Geïnstalleerd; gebruiksproef open",
-          "detail": "Gedeelde modelkoppeling ondersteunt nu expliciet een eerste onderzoeksopdracht. Bestaande taakbediening en gekoppelde correcties behouden.31 gerichte controles, onafhankelijke review en live schema/startcontrole geslaagd.",
-          "doneWhen": "Technische correctie geïnstalleerd met terugweg; echte kanaalervaring en inhoudelijke kwaliteit afzonderlijk open."
+          "title": "Later werk en vervolgstappen kunnen inplannen",
+          "state": "Geïnstalleerd; praktijkproef open",
+          "detail": "Tegenstrijdige modelinvoer hersteld: één of geen voorganger, tijdstip optioneel bij afhankelijk vervolg. Bestaande planner/replay behouden. Vier databasegevallen, onafhankelijke review en live schema/startcontrole geslaagd.",
+          "doneWhen": "Technische koppeling geïnstalleerd met terugweg. Echte meerdaagse uitvoering en gezinsacceptatie blijven open."
         },
         "next": {
-          "title": "Langdurig werk en geplande vervolgstappen afronden",
+          "title": "Eigen initiatief en huisaanwezigheid afronden",
           "state": "Volgende opdracht; nog niet gestart",
-          "detail": "Bestaande planning en voortgang hergebruiken; ontbrekende functionele aansluiting afronden. Open fysieke kanaalproeven en browserkeuze blijven afzonderlijk zichtbaar."
+          "detail": "Bestaande initiatiefuitvoering, terugmelding en eigenaarfeedback hergebruiken; concreet ontbrekende functie afronden. Fysieke kanaalproeven en browserkeuze blijven afzonderlijk open."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2253,7 +2261,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T20:40:28.916058+00:00"
+        "reviewedAt": "2026-09-24T20:47:01.434669+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12025,7 +12033,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Bestaand langdurig werk en geplande vervolgstappen functioneel afronden; fysieke kanaalproeven apart open.",
+      "nextAction": "Bestaand eigen initiatief en huisaanwezigheid functioneel afronden; nieuwe planningskoppeling geïnstalleerd, echte meerdaagse proef open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

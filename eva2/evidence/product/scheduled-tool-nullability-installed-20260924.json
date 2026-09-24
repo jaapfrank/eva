@@ -1,0 +1,60 @@
+{
+  "checkedAt": "2026-09-24T20:47:01.434669+00:00",
+  "sourceCommit": "bd0a5c16eb08a6d13f4532ab010c158c0c6d8d01",
+  "status": "installed",
+  "requirement": "Plan future work and dependent steps using the same durable work service.",
+  "finding": "Strict SDK required both predecessor IDs, while scheduler permits at most one. A new independent or one-predecessor model request could not satisfy both contracts.",
+  "change": "Nullable unused time/predecessor fields for new digital schedules; copy-normalize only scheduler input. Original durable action and replay unchanged. Resumption time remains required.",
+  "preserved": [
+    "Existing durable scheduler and stable launch identity",
+    "Stored prior results passed to later steps",
+    "Stop-chain reservations",
+    "30 day horizon and existing authority/budgets"
+  ],
+  "checks": {
+    "postgres": "4 passed in 3.31 seconds: standalone future, dependent no-time, replay and invalid combinations",
+    "review": "contact_overlap_review independent from coordinator implementation: GO",
+    "liveSchema": "Installed strict scheduling schema accepts unused optional fields; resumption time remains required",
+    "live": {
+      "checkedAt": "2026-09-24T20:46:12.863130+00:00",
+      "services": {
+        "core": {
+          "image": "sha256:c1d62035388a1638c099cfcaa63f4d72d9c1767e05514b0fcb018de5c667575d",
+          "health": "healthy",
+          "sourceHashes": {
+            "adapters/postgres/delegated_work_actions.py": "459a10eb45ab9167c44737d1db43e4cc09d6028e31f63290b65740e51eaa29c6"
+          }
+        },
+        "worker": {
+          "image": "sha256:c0ec71c627c37aff2f8d77506827a0405087efa97fead125d94ce7da8d3fde84",
+          "health": "healthy",
+          "sourceHashes": {
+            "adapters/postgres/delegated_work_actions.py": "459a10eb45ab9167c44737d1db43e4cc09d6028e31f63290b65740e51eaa29c6"
+          }
+        }
+      },
+      "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/scheduled-tool-nullability-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44716/session/ready": 200
+    }
+  },
+  "usage": {
+    "modelCalls": 0,
+    "productionSchedulesCreated": 0,
+    "externalMessages": 0,
+    "creditCosts": "unknown"
+  },
+  "try": {
+    "where": "Privé-Telegram of eigenaarwebsite",
+    "instruction": "Plan morgen om 10 uur een kort bronnenonderzoek over Home Assistant Cloud.",
+    "expected": "Eva bevestigt een bewaarde afspraak met tijdstip; de afspraak is zichtbaar onder Later aan het werk en kan worden geannuleerd. Er wordt niet beweerd dat het onderzoek al klaar is."
+  },
+  "limitations": [
+    "No real timed model or multi-day user trial",
+    "Source/evidence preservation is not general project autonomy",
+    "Owner acceptance remains open"
+  ],
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/scheduled-tool-nullability-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+}
