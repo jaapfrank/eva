@@ -1,0 +1,75 @@
+{
+  "recordedAt": "2026-09-24T01:59:48.063463+00:00",
+  "sourceCommit": "e1331a9e018eddba70c66d60ec675b724c9bb2b7",
+  "status": "installed_start_checked",
+  "image": "eva2-procedure-execution:20260924",
+  "services": {
+    "eva2-managed-b-slot3-core": {
+      "image": "eva2-procedure-execution:20260924",
+      "imageId": "sha256:1f564658806a0275ad9e2e244daf7ccc9e33bbba89a553eb675a7f2313aabfa6",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "image": "eva2-procedure-execution:20260924",
+      "imageId": "sha256:1f564658806a0275ad9e2e244daf7ccc9e33bbba89a553eb675a7f2313aabfa6",
+      "state": "running",
+      "health": "healthy"
+    }
+  },
+  "hostService": "eva-component-evaluation.service",
+  "hostState": "active",
+  "outcome": "Existing verified saved Python procedures can run on new JSON input through shared conversation and digital background actions. Output is durably bound to that procedure step.",
+  "checks": [
+    "syntax",
+    "configured runtime construction",
+    "executable procedure descriptor available",
+    "existing save tool admits .py paths within /proof-state",
+    "isolated JSON echo startup via installed authenticated host",
+    "zero active delegated tasks before cutover",
+    "healthy core and worker"
+  ],
+  "startupReport": {
+    "contract": "EvaIsolatedProcedureExecution/v1",
+    "image_id": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+    "source_sha256": "63dbe68fb76ddc7b089192594c064b1d9914e1b652c3c5182b68fb87267d19bf",
+    "input_sha256": "8cfa74c734bd05be5a4e825f23aa8d0104e31d3b5bd6234ea6fe579937ea87ed",
+    "input_convention": "one_json_value_on_stdin",
+    "result": {
+      "exit_code": 0,
+      "timed_out": false,
+      "cancelled": false,
+      "elapsed_ms": 702,
+      "stdout": "{\"startup\": \"ready\"}\n",
+      "stderr": "",
+      "stdout_truncated": false,
+      "stderr_truncated": false
+    },
+    "limits": {
+      "deadline_seconds": 30,
+      "output_bytes_per_stream": 4096,
+      "memory_mb": 256,
+      "cpu_millicores": 1000,
+      "pids": 64
+    },
+    "semantic_success_verified": false,
+    "installed": false
+  },
+  "limits": [
+    "source at most 16 KiB; JSON input at most 32 KiB",
+    "no network, credentials, host data or Docker socket in execution container",
+    "nonroot readonly image, scratch only, bounded CPU/memory/process/output/deadline",
+    "no automatic replay after uncertain execution",
+    "already dispatched code can run up to its 30-second bound after task stop"
+  ],
+  "notProven": [
+    "Eva-authored unseen task and second-task reuse",
+    "semantic correctness of generated procedures",
+    "full AU-004 completion"
+  ],
+  "developmentModelTrials": 0,
+  "developmentTestMessages": 0,
+  "creditCost": "unknown",
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/procedure-execution-20260924/baseline.compose.private.json",
+  "hostRollbackScript": "/home/administrator/project/.eva2-artifacts/procedure-execution-20260924/rollback-host.py"
+}
