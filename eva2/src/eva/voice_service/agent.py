@@ -366,6 +366,12 @@ class EvaAgent(Agent):
                     yield spoken_text[offset:offset+1500]
             # Saved result context has its own current read grant. Do not also
             # retain these bytes in LiveKit history, which feeds payload.recent.
+            # A completed background task must not get ahead of a foreground
+            # question whose response is still being formed. Recheck authority
+            # while waiting; the durable result is not acknowledged as delivered.
+            while state.active:
+                await asyncio.sleep(.5)
+                await authorize()
             handle = session.say(parts(), allow_interruptions=True, add_to_chat_ctx=False)
             state.deliveries[key] = handle
             household = getattr(state.backend, "household_work_returns", False)

@@ -229,3 +229,41 @@ async def test_outbound_context_authorizes_only_snapshot_without_backfill_or_con
     assert state.results["saved-10"] == "Unvalidated replacement"
     assert "concurrent" in state.results
     await asyncio.sleep(0)
+
+
+@pytest.mark.asyncio
+async def test_saved_result_waits_for_in_flight_question_without_blocking_it():
+    backend = Backend(); state = BridgeState(backend); agent = EvaAgent(state)
+    session = Session(); entered = asyncio.Event(); release = asyncio.Event()
+    async def events(payload):
+        entered.set()
+        await release.wait()
+        yield {"type": "final", "reply": {"text": "Met mij gaat het goed."}}
+    backend.events = events
+    class Context:
+        async def update(self, *args, **kwargs): pass
+    ctx = Context(); ctx.session = session
+    question = asyncio.create_task(agent.eva_turn(ctx, "question", "Hoe gaat het?"))
+    await entered.wait()
+    returned = asyncio.create_task(agent.return_saved_work(session, RESULT, lambda: None))
+    await asyncio.sleep(.15)
+    assert not session.handles and "ack" not in backend.operations
+    release.set()
+    await asyncio.wait_for(question, 2)
+    await asyncio.wait_for(returned, 2)
+    assert session.spoken[0] == "Met mij gaat het goed."
+    assert "".join(session.spoken[1:]) == TEXT
+    assert backend.operations.count("ack") == 1
+
+
+@pytest.mark.asyncio
+async def test_waiting_result_revocation_never_starts_speech():
+    backend = Backend(); state = BridgeState(backend); agent = EvaAgent(state)
+    session = Session(); state.active["question"] = "Hoe gaat het?"
+    returned = asyncio.create_task(agent.return_saved_work(session, RESULT, lambda: None))
+    await asyncio.sleep(.05)
+    backend.denied = True
+    with pytest.raises(ValueError):
+        await asyncio.wait_for(returned, 2)
+    assert not session.handles and "ack" not in backend.operations
+    assert not state.saved_result_context
