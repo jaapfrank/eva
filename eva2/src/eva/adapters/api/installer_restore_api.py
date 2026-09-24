@@ -8,7 +8,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from fastapi.concurrency import run_in_threadpool
 
-from eva.application.installer_restore import InstallerRestorePort, InactiveRecoveryMaterialRetained
+from eva.application.installer_restore import InstallerRestorePort, InactiveRecoveryMaterialRetained, RestoreTargetNotReady
 from eva.adapters.api.installer_request_json import read_small_json_request
 
 MAX_ARCHIVE_BYTES = 64 * 1024 * 1024
@@ -89,6 +89,8 @@ def register_installer_restore_routes(
                 ):
                     raise ValueError()
                 result = await run_in_threadpool(workflow.execute, raw["confirmation"])
+        except RestoreTargetNotReady:
+            raise HTTPException(409, "Bereid eerst de doelinstallatie voor. Bij een onderbroken voorbereiding moet de bewaarde toestand worden gecontroleerd.") from None
         except InactiveRecoveryMaterialRetained as error:
             if error.activation_attempted or error.runtime_start_attempted:
                 return JSONResponse({

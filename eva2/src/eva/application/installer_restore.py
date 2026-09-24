@@ -8,6 +8,10 @@ class InstallerRestorePort(Protocol):
     def execute(self, confirmation: str) -> dict[str, object]: ...
 
 
+class RestoreTargetNotReady(ValueError):
+    """The installer has not completed target preparation for restore yet."""
+
+
 class InactiveRecoveryMaterialRetained(ValueError):
     """An inactive copy may exist; the operator must reconcile before retry."""
 
