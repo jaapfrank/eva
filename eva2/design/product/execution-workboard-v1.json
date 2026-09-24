@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T16:46:13.017598+00:00",
+        "checkedAt": "2026-09-24T16:53:33.237334+00:00",
         "deliveries": [
           {
             "title": "Geheugen en taakcontext tegelijk voorbereiden",
@@ -2087,15 +2087,15 @@
           }
         ],
         "now": {
-          "title": "Controle op dubbele gespreksinvoer afgerond",
-          "state": "Geen productwijziging",
-          "detail": "Geen dubbele verzending gevonden. Catalogus wordt al uitgesteld geladen; identiteit/geheugen/tijdlijn elk eenmaal. Geen modelcalls of nieuwe snelheidsclaim.",
-          "doneWhen": "Broncontrole afgerond en onafhankelijk bevestigd; reactietijd blijft open."
+          "title": "Invoermeting gedeeltelijk; geen productwijziging",
+          "state": "Onderzoek beëindigd",
+          "detail": "Huidige12berichten bevatten1,7kB tekst. Statische catalogus apart geteld; dit zijn geen providertokens en geen volledige aanvraag. Geen modelcalls.",
+          "doneWhen": "Geen onderbouwde verkleiningswijziging gevonden. Niet verder diagnosticeren op basis van deze gedeeltelijke telling."
         },
         "next": {
-          "title": "Aanvraagomvang uitsplitsen zonder modelaanvraag",
+          "title": "Werkelijke reactie na parallelle voorbereiding meten",
           "state": "Nog niet gestart",
-          "detail": "Een lokaal onderschepte aanvraag per onderdeel tellen, zonder privétekst te publiceren of model aan te roepen. Aantallen bytes niet presenteren als providertokens. Alleen bij concrete oorzaak wijzigen."
+          "detail": "Eén begroeting op de geïnstalleerde websiteversie vergelijken met eerdere4,409s; voorbereiding is sindsdien gewijzigd. Snelle ontvangst en inhoudelijk antwoord apart houden."
         },
         "ownerAction": {
           "title": "Een eerdere speakertaak gericht stoppen",
@@ -2109,7 +2109,7 @@
           "expected": "Eva vindt de eerdere opdracht via dezelfde speaker en stopt alleen de gekozen taak. Deze fysieke proef is nog niet door jou bevestigd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T16:46:13.017598+00:00"
+        "reviewedAt": "2026-09-24T16:53:33.237334+00:00"
       }
     },
     "pendingTechnicalReview": {

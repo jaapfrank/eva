@@ -1,5 +1,7 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Afgesloten — gedeeltelijke offline invoermeting.** De huidige12berichten in hetzelfde websitegesprek bevatten1.688UTF8bytes tekst. Geconfigureerde toolbeschrijvingen/schema’s afzonderlijk geteld, maar werkelijke autorisatie/selectie en providertokens ontbreken; dit verklaart de eerdere8.194tokens niet volledig. Geen productwijziging of modelcalls. [Bewijs en beperkingen](evidence/product/contact-input-breakdown-20260924.json). Deze diagnosetak stopt: geen gerechtvaardigde verkleiningswijziging aangetoond. Volgende nog niet gestart: één echte reactiemeting na de reeds geïnstalleerde parallelle voorbereiding, ten opzichte van de eerdere4,409s.
+
 **Afgerond — gerichte broncontrole modelinvoer.** Geen dubbele verzending van instructies of volledige toolcatalogus aangetoond; bestaande uitgestelde tooldefinities en duplicaatfilter zijn aanwezig. Onafhankelijke lezing bevestigt dit. Geen productwijziging of modelcalls; laatste begroeting blijft 4,409 s/8.194 inputtokens. [Bevinding](evidence/product/contact-input-source-inspection-20260924.json). Volgende, nog niet gestart: lokaal onderschepte aanvraag per onderdeel tellen zonder modelaanvraag, zodat verdere verkleining op werkelijk bewijs berust. Herstelwizard blijft uitgesteld.
 
 Laatst bijgewerkt: 2026-09-24.

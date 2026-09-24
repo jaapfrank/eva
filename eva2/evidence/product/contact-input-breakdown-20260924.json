@@ -1,0 +1,475 @@
+{
+  "checkedAt": "2026-09-24T16:53:33.237334+00:00",
+  "sourceCommit": "4b43ceed",
+  "kind": "partial-offline-input-size-measurement",
+  "staticCatalog": {
+    "scope": "PARTIAL static configured catalog only; no actual admitted initial request or historical token attribution",
+    "configured_identity_pack_json": {
+      "characters": 1635,
+      "utf8_bytes": 1635
+    },
+    "configured_gateway_and_work_descriptors": [
+      {
+        "name": "save_workspace_document",
+        "description": {
+          "characters": 192,
+          "utf8_bytes": 192
+        },
+        "schema": {
+          "characters": 214,
+          "utf8_bytes": 214
+        }
+      },
+      {
+        "name": "read_workspace_document",
+        "description": {
+          "characters": 216,
+          "utf8_bytes": 216
+        },
+        "schema": {
+          "characters": 218,
+          "utf8_bytes": 218
+        }
+      },
+      {
+        "name": "list_workspace_directory",
+        "description": {
+          "characters": 149,
+          "utf8_bytes": 149
+        },
+        "schema": {
+          "characters": 158,
+          "utf8_bytes": 158
+        }
+      },
+      {
+        "name": "find_workspace_files",
+        "description": {
+          "characters": 154,
+          "utf8_bytes": 154
+        },
+        "schema": {
+          "characters": 226,
+          "utf8_bytes": 226
+        }
+      },
+      {
+        "name": "inspect_workspace_file",
+        "description": {
+          "characters": 124,
+          "utf8_bytes": 124
+        },
+        "schema": {
+          "characters": 158,
+          "utf8_bytes": 158
+        }
+      },
+      {
+        "name": "workspace_create_document_project_1",
+        "description": {
+          "characters": 61,
+          "utf8_bytes": 61
+        },
+        "schema": {
+          "characters": 600,
+          "utf8_bytes": 600
+        }
+      },
+      {
+        "name": "workspace_create_document_project_2",
+        "description": {
+          "characters": 61,
+          "utf8_bytes": 61
+        },
+        "schema": {
+          "characters": 600,
+          "utf8_bytes": 600
+        }
+      },
+      {
+        "name": "workspace_create_document_project_dynamic",
+        "description": {
+          "characters": 71,
+          "utf8_bytes": 71
+        },
+        "schema": {
+          "characters": 600,
+          "utf8_bytes": 600
+        }
+      },
+      {
+        "name": "stop_related_work",
+        "description": {
+          "characters": 465,
+          "utf8_bytes": 467
+        },
+        "schema": {
+          "characters": 112,
+          "utf8_bytes": 112
+        }
+      },
+      {
+        "name": "get_related_work",
+        "description": {
+          "characters": 468,
+          "utf8_bytes": 469
+        },
+        "schema": {
+          "characters": 112,
+          "utf8_bytes": 112
+        }
+      },
+      {
+        "name": "revise_digital_work",
+        "description": {
+          "characters": 472,
+          "utf8_bytes": 474
+        },
+        "schema": {
+          "characters": 316,
+          "utf8_bytes": 316
+        }
+      },
+      {
+        "name": "search_delegated_work",
+        "description": {
+          "characters": 418,
+          "utf8_bytes": 418
+        },
+        "schema": {
+          "characters": 282,
+          "utf8_bytes": 282
+        }
+      },
+      {
+        "name": "schedule_digital_work",
+        "description": {
+          "characters": 641,
+          "utf8_bytes": 643
+        },
+        "schema": {
+          "characters": 424,
+          "utf8_bytes": 424
+        }
+      },
+      {
+        "name": "schedule_work_resume",
+        "description": {
+          "characters": 295,
+          "utf8_bytes": 297
+        },
+        "schema": {
+          "characters": 334,
+          "utf8_bytes": 334
+        }
+      },
+      {
+        "name": "list_scheduled_work",
+        "description": {
+          "characters": 142,
+          "utf8_bytes": 142
+        },
+        "schema": {
+          "characters": 76,
+          "utf8_bytes": 76
+        }
+      },
+      {
+        "name": "cancel_work_chain",
+        "description": {
+          "characters": 423,
+          "utf8_bytes": 425
+        },
+        "schema": {
+          "characters": 120,
+          "utf8_bytes": 120
+        }
+      },
+      {
+        "name": "cancel_scheduled_work",
+        "description": {
+          "characters": 243,
+          "utf8_bytes": 243
+        },
+        "schema": {
+          "characters": 120,
+          "utf8_bytes": 120
+        }
+      },
+      {
+        "name": "stop_own_initiative",
+        "description": {
+          "characters": 204,
+          "utf8_bytes": 204
+        },
+        "schema": {
+          "characters": 116,
+          "utf8_bytes": 116
+        }
+      },
+      {
+        "name": "give_initiative_feedback",
+        "description": {
+          "characters": 316,
+          "utf8_bytes": 316
+        },
+        "schema": {
+          "characters": 186,
+          "utf8_bytes": 186
+        }
+      },
+      {
+        "name": "list_own_initiatives",
+        "description": {
+          "characters": 294,
+          "utf8_bytes": 296
+        },
+        "schema": {
+          "characters": 76,
+          "utf8_bytes": 76
+        }
+      },
+      {
+        "name": "get_own_initiative_result",
+        "description": {
+          "characters": 234,
+          "utf8_bytes": 234
+        },
+        "schema": {
+          "characters": 116,
+          "utf8_bytes": 116
+        }
+      },
+      {
+        "name": "start_digital_work",
+        "description": {
+          "characters": 874,
+          "utf8_bytes": 877
+        },
+        "schema": {
+          "characters": 379,
+          "utf8_bytes": 379
+        }
+      },
+      {
+        "name": "start_background_research",
+        "description": {
+          "characters": 606,
+          "utf8_bytes": 607
+        },
+        "schema": {
+          "characters": 1376,
+          "utf8_bytes": 1376
+        }
+      },
+      {
+        "name": "start_delegated_work",
+        "description": {
+          "characters": 294,
+          "utf8_bytes": 294
+        },
+        "schema": {
+          "characters": 379,
+          "utf8_bytes": 379
+        }
+      },
+      {
+        "name": "list_delegated_work",
+        "description": {
+          "characters": 87,
+          "utf8_bytes": 87
+        },
+        "schema": {
+          "characters": 76,
+          "utf8_bytes": 76
+        }
+      },
+      {
+        "name": "get_delegated_work",
+        "description": {
+          "characters": 169,
+          "utf8_bytes": 171
+        },
+        "schema": {
+          "characters": 112,
+          "utf8_bytes": 112
+        }
+      },
+      {
+        "name": "stop_delegated_work",
+        "description": {
+          "characters": 150,
+          "utf8_bytes": 151
+        },
+        "schema": {
+          "characters": 112,
+          "utf8_bytes": 112
+        }
+      },
+      {
+        "name": "resume_delegated_work",
+        "description": {
+          "characters": 226,
+          "utf8_bytes": 228
+        },
+        "schema": {
+          "characters": 112,
+          "utf8_bytes": 112
+        }
+      }
+    ],
+    "builtin_tools": [
+      {
+        "name": "record_observation_identity_correction",
+        "description": {
+          "characters": 269,
+          "utf8_bytes": 269
+        },
+        "schema": {
+          "characters": 197,
+          "utf8_bytes": 197
+        }
+      },
+      {
+        "name": "adopt_personal_interest",
+        "description": {
+          "characters": 232,
+          "utf8_bytes": 232
+        },
+        "schema": {
+          "characters": 406,
+          "utf8_bytes": 406
+        }
+      },
+      {
+        "name": "deliver_test_message_fanout",
+        "description": {
+          "characters": 215,
+          "utf8_bytes": 217
+        },
+        "schema": {
+          "characters": 207,
+          "utf8_bytes": 207
+        }
+      },
+      {
+        "name": "create_bounded_durable_goal",
+        "description": {
+          "characters": 254,
+          "utf8_bytes": 264
+        },
+        "schema": {
+          "characters": 981,
+          "utf8_bytes": 981
+        }
+      },
+      {
+        "name": "cancel_active_durable_goal",
+        "description": {
+          "characters": 135,
+          "utf8_bytes": 135
+        },
+        "schema": {
+          "characters": 110,
+          "utf8_bytes": 110
+        }
+      },
+      {
+        "name": "research_current_options",
+        "description": {
+          "characters": 208,
+          "utf8_bytes": 208
+        },
+        "schema": {
+          "characters": 1343,
+          "utf8_bytes": 1345
+        }
+      },
+      {
+        "name": "checkpoint_document_task",
+        "description": {
+          "characters": 279,
+          "utf8_bytes": 279
+        },
+        "schema": {
+          "characters": 586,
+          "utf8_bytes": 586
+        }
+      },
+      {
+        "name": "convert_text_batch_to_markdown",
+        "description": {
+          "characters": 208,
+          "utf8_bytes": 210
+        },
+        "schema": {
+          "characters": 196,
+          "utf8_bytes": 196
+        }
+      },
+      {
+        "name": "edit_text_file_with_focused_validation",
+        "description": {
+          "characters": 276,
+          "utf8_bytes": 280
+        },
+        "schema": {
+          "characters": 510,
+          "utf8_bytes": 512
+        }
+      },
+      {
+        "name": "improve_isolated_repository",
+        "description": {
+          "characters": 211,
+          "utf8_bytes": 214
+        },
+        "schema": {
+          "characters": 200,
+          "utf8_bytes": 200
+        }
+      }
+    ],
+    "limitations": [
+      "not filtered by actual turn authorization or compact contact catalog",
+      "other provider descriptors omitted",
+      "memory history active context omitted",
+      "identity JSON size not rendered prompt size"
+    ],
+    "model_calls": 0,
+    "memory_calls": 0,
+    "database_calls": 0,
+    "persistent_writes": 0
+  },
+  "currentHistory": {
+    "scope": "current retained history for same owner conversation as measured greeting, not historical replay",
+    "messageCount": 12,
+    "textUtf8Bytes": 1688,
+    "textCharacters": 1668,
+    "perMessageUtf8Bytes": [
+      357,
+      104,
+      357,
+      85,
+      6,
+      14,
+      6,
+      14,
+      141,
+      169,
+      141,
+      294
+    ],
+    "modelCalls": 0,
+    "writes": false
+  },
+  "failedAttempts": [
+    "Full runtime prefix stopped on PostgreSQL read-only SELECT FOR SHARE; no mutation.",
+    "Adjusted SELECT/SET guard allowed read locks; HTTP audit stopped gateway catalog verification before request completed."
+  ],
+  "decision": "Stop this diagnostic branch. Partial catalog byte counts do not prove a token or latency defect, and deferred loading prevents treating all catalog bytes as model input. No product change justified by these counts. Do not repeat this instrumentation without a new actionable question.",
+  "next": "One actual response timing after the already installed parallel preparation, compared with the prior 4.409-second greeting; this tests a changed implementation, not unchanged repetition.",
+  "runtimeChanged": false,
+  "evaModelCalls": 0,
+  "ownerAcceptance": false
+}
