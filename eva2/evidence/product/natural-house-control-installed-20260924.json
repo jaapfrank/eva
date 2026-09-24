@@ -1,0 +1,98 @@
+{
+  "installedAt": "2026-09-24T13:40:59.117892+00:00",
+  "sourceCommit": "f14d9f6a",
+  "image": "sha256:2f5c04ef030c140a774190d6e20efb5885070225aad0b73aef767207f4464f8c",
+  "status": "installed_start_checked",
+  "requirement": "Understand natural room light commands and existing household comfort context without requiring exact technical lamp names.",
+  "sourceFindings": [
+    "The old resolver accepted woonkamer but rejected lampen in de woonkamer.",
+    "Inventory did not expose current device/comfort state and denied configured shared-speaker inventory.",
+    "Existing overkapping heater switch was absent from effect allowlist."
+  ],
+  "changes": [
+    "Resolve existing named light groups, actual rooms and bounded named groups.",
+    "Preserve explicit diagnostic light control; omit diagnostic/config entities from group expansion.",
+    "Freeze exact group targets; verify all states, no automatic retry of partial or uncertain dispatch.",
+    "Expose bounded device and comfort state through existing inventory; no private person/tracker state or shared automation details.",
+    "Add exact existing heater switch turn_on/turn_off to core allowlist; no climate operations."
+  ],
+  "checks": {
+    "offlineCasesPassed": 8,
+    "independentReview": true,
+    "realHomeAssistantReadOnlySelections": {
+      "core_configured": true,
+      "selections": [
+        {
+          "target": "lampen in de woonkamer",
+          "command": "home_assistant.light.turn_on",
+          "selected": {
+            "entity_id": "light.woonkamer",
+            "friendly_name": "Woonkamer",
+            "requested_state": "on"
+          },
+          "prepared_only": true
+        },
+        {
+          "target": "lampen in de overkapping",
+          "command": "home_assistant.light_group.turn_on",
+          "selected": {
+            "entity_ids": [
+              "light.dimmable_light_1",
+              "light.hue_flux_strip_light_1",
+              "light.hue_resonate_outdoor_wall_1",
+              "light.hue_resonate_outdoor_wall_1_2"
+            ],
+            "friendly_names": [
+              "Spotjes overkapping",
+              "Hue Flux strip overkapping",
+              "Overkapping wand achter",
+              "Overkapping midden balk"
+            ],
+            "requested_state": "on"
+          },
+          "prepared_only": true
+        },
+        {
+          "target": "verwarming overkapping",
+          "command": "home_assistant.switch.turn_on",
+          "selected": {
+            "entity_id": "switch.antela_smart_plug_eu_matter_2_socket_1",
+            "friendly_name": "Heater overkapping Socket 1",
+            "requested_state": "on"
+          },
+          "prepared_only": true
+        }
+      ],
+      "physical_actions": 0
+    },
+    "healthyServices": [
+      "core",
+      "worker"
+    ],
+    "coreRestartCount": 0,
+    "sourceHashes": {
+      "adapters/connectors/home_assistant.py": "22f370cd76498925e636d5a9f7207dd74258aee396f23431288fe723d3c2db2a",
+      "adapters/connectors/home_assistant_admin.py": "13899de62cacdd89fb6ec252edf2d25bc8f41165e11202d256b2d5eb3d4a3c6a",
+      "providers/home_assistant.py": "226b352eecf59955de24025b0cedd74b6d759be7c20b6f7ae3f9d5a08c57b3e7"
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard": 200,
+      "http://localhost:44716/session/ready": 200
+    }
+  },
+  "modelCalls": 0,
+  "physicalActions": 0,
+  "ownerAccepted": false,
+  "limitations": [
+    "No physical actuation or spoken/model-driven test.",
+    "Understanding an implicit cold complaint is not proven by resolver checks.",
+    "No new thermostat/set-temperature action added."
+  ],
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/natural-house-control-20260924/baseline.compose.private.json",
+  "candidateCompose": "/home/administrator/project/.eva2-artifacts/natural-house-control-20260924/candidate.compose.private.json",
+  "checkSetupCorrections": [
+    "Test used actual disposition field rather than status.",
+    "Test engine changed to installed PostgreSQL driver without opening a connection.",
+    "Pre-install count command syntax corrected before any service change."
+  ]
+}

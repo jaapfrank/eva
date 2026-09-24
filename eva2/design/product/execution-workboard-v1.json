@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T13:22:36.357799+00:00",
+        "checkedAt": "2026-09-24T13:41:48.939816+00:00",
         "deliveries": [
+          {
+            "title": "Gewone ruimtenamen en bestaande verwarming aangesloten",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Woonkamerlichtgroep en vier overkappinglampen met echte gegevens geselecteerd. Huis-/temperatuurcontext beschikbaar en bestaande heater aan/uit toegelaten.",
+            "remaining": "Alleen selectie met echte HA-gegevens; geen fysieke schakeling of modelgestuurde comfortproef.",
+            "source": "eva2/evidence/product/natural-house-control-installed-20260924.json"
+          },
           {
             "title": "Geplande opdracht die niet kan starten meldt dat terug",
             "date": "24 september",
@@ -1925,29 +1933,29 @@
           }
         ],
         "now": {
-          "title": "Mislukte geplande opdracht meldt zich terug",
+          "title": "Huisbediening met gewone ruimtenamen geïnstalleerd",
           "state": "Afgerond",
-          "detail": "Bron e35216ec geïnstalleerd in kern en werker; beide gezond. Nieuwe planningen krijgen ook bij een mislukte start een privéterugmelding. Vijf gerichte databasegevallen geslaagd.",
-          "doneWhen": "Deze ontbrekende terugmelding is aangesloten en geïnstalleerd. Echte ontvangst en volledige geplande taakuitvoering blijven apart open."
+          "detail": "Echte HA-inventaris vindt nu woonkamerlichtgroep, vier overkappinglampen en bestaande overkappingverwarming. Kern gezond; geen apparaten geschakeld tijdens controle.",
+          "doneWhen": "Bron en configuratie geïnstalleerd. Natuurlijk gesproken gebruik en werkelijk schakelen blijven door Jaap te proberen."
         },
         "next": {
-          "title": "Resterende dagelijkse taakuitvoering afmaken",
+          "title": "Planning en terugmelden tijdens gesprek",
           "state": "In wachtrij",
-          "detail": "Verder met de open functies in stappen 1–5 op basis van bestaande code en bewijs; herstelwizard naar de afronding. Geen nieuwe bouwopdracht actief na deze installatie."
+          "detail": "Geplande starts en terugmeldingen losmaken van de aangetoonde vijfminuten-rustwacht voor geheugenreflectie. Nog niet aangepast."
         },
         "ownerAction": {
-          "title": "Een bestaande lamp bedienen",
+          "title": "Praat tegen Eva zoals tegen Eva1",
           "url": "http://localhost:44712/",
           "linkLabel": "Projectoverzicht",
           "steps": [
-            "Gebruik het gewone wakeword op een van beide speakers.",
-            "Zeg: Zet [lampnaam] aan, met de naam uit Home Assistant.",
-            "Controleer of de bedoelde lamp reageert. Privégesprekken voer je via Telegram."
+            "Zeg via je gewone speaker: Doe de lampen in de woonkamer aan.",
+            "Voor de overkapping kun je gewoon zeggen: Doe de lampen in de overkapping aan.",
+            "Een comfortvraag zoals Het is koud in de overkapping mag Eva met de beschikbare verwarming/context interpreteren; dit modelgedrag is nog niet in een echte spraakproef bevestigd."
           ],
-          "expected": "Bestaande toegestane lamp schakelt; fysieke werking nog niet bewezen. Geen nieuwe schakelaars toegevoegd."
+          "expected": "Geen technische lampnamen nodig. De bedoelde lampen schakelen; Eva mag geen succes claimen als controle ontbreekt. De heater is nu ook beschikbaar voor aan/uit-bediening."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T13:22:36.357799+00:00"
+        "reviewedAt": "2026-09-24T13:41:48.939816+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11609,7 +11617,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 3,
+      "currentStep": 4,
       "steps": [
         {
           "number": 1,
@@ -11659,7 +11667,7 @@
             "VB-002"
           ],
           "doneWhen": "Passend initiatief met werkelijk resultaat, terecht stil blijven en bestaande huisfuncties behouden; gezin beoordeelt eigenheid, plezier en hinder.",
-          "preserve": "Initiatief behouden. Beide speakers mogen bestaande118 light aan/uit-combinaties gebruiken. Geen switches in huidige lijst. Hoorbare bediening, nut, hinder en IN-02 blijven open.",
+          "preserve": "Initiatief behouden. Beide speakers kunnen de bestaande toegestane lampen en de overkapping-heater aan/uit bedienen. Natuurlijke ruimteselectie geïnstalleerd; fysieke bediening, comfortinterpretatie, nut/hinder en IN-02 nog open.",
           "planningEffortHours": "4–12"
         },
         {
@@ -11719,7 +11727,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Verder met de open functies in stappen 1–5 op basis van bestaande code en bewijs; herstelwizard naar de afronding. Geen nieuwe bouwopdracht actief na deze installatie.",
+      "nextAction": "Geplande starts en terugmeldingen losmaken van de aangetoonde vijfminuten-rustwacht voor geheugenreflectie. Nog niet aangepast.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
