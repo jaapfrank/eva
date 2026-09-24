@@ -67,6 +67,7 @@ class InstallerPortableRestore:
         document_prepare: Callable[..., dict] | None = None,
         document_connect: Callable[..., dict] | None = None,
         gateway_start: Callable[..., dict] | None = None,
+        document_promote: Callable[..., dict] | None = None,
     ):
         # The composition root must provide an isolated, traffic-closed target.
         if (
@@ -102,6 +103,9 @@ class InstallerPortableRestore:
         if gateway_start is not None and (not callable(gateway_start) or document_connect is None):
             raise ValueError("gateway start requires document connection")
         self.gateway_start = gateway_start
+        if document_promote is not None and (not callable(document_promote) or gateway_start is None):
+            raise ValueError("document write promotion requires verified gateway startup")
+        self.document_promote = document_promote
         self.external_restore = external_restore
         self.recovery_materialization = deepcopy(recovery_materialization)
         self._lock = Lock()
@@ -188,6 +192,8 @@ class InstallerPortableRestore:
                         notice="Deze herstelactie zet de gegevens terug, bereidt documentprojecten voor en start de ingestelde documentproviders alleen-lezen voor controle. Eva en haar taakuitvoerders blijven uit; schrijven en vrijgeven volgen afzonderlijk.")
                 if self.gateway_start is not None:
                     summary.update(gateway_component="start_planned", notice="Na import en documentcontrole start de ingestelde herstelde gateway voor controle van bewaarde registraties. Eva en haar taakuitvoerders blijven uit. Schrijftoegang en volledige vrijgave volgen afzonderlijk.")
+                if self.document_promote is not None:
+                    summary.update(document_write_access="planned", notice="Na import, documentcontrole en gatewaystart worden nieuwe documentproviders met schrijftoegang voorbereid. Oude controlecontainers blijven bewaard. Eva en haar taakuitvoerders blijven uit tot afzonderlijke vrijgave.")
                 return records, package["manifest_raw"], summary
             return records, raw, summary
         outputs, proof = validated
@@ -336,6 +342,7 @@ class InstallerPortableRestore:
         documents = None
         document_connection = None
         gateway_connection = None
+        document_promotion = None
         if self.external_restore is not None:
             def guard():
                 if self.runtime_guard is not None:
@@ -400,6 +407,24 @@ class InstallerPortableRestore:
                     or gateway_connection.get("core_activated") is not False):
                 raise ValueError("gateway startup receipt differs")
             guard()
+        if self.document_promote is not None:
+            materialization_state["document_promotion_attempted"] = True
+            try:
+                document_promotion = self.document_promote(destination,
+                    preparation_receipt=documents, connection_receipt=document_connection,
+                    gateway_receipt=gateway_connection, guard=guard)
+            except Exception as error:
+                materialization_state["document_promotion"] = deepcopy(
+                    getattr(error, "receipt", {"status": "inspection_required_no_retry"}))
+                raise
+            materialization_state["document_promotion"] = deepcopy(document_promotion)
+            if (not isinstance(document_promotion, dict)
+                    or document_promotion.get("contract") != "EvaDocumentWritePromotion/v1"
+                    or document_promotion.get("status") != "writable_verified"
+                    or document_promotion.get("providers_verified") is not True
+                    or document_promotion.get("core_activated") is not False):
+                raise ValueError("document write promotion receipt differs")
+            guard()
         return {**summary, **result, "archive_sha256": package["archive_sha256"],
             "core_archive_sha256": package["core_archive"]["archive_sha256"],
             "external_components": ("memory_imported_gateway_started" if gateway_connection is not None
@@ -411,8 +436,12 @@ class InstallerPortableRestore:
                if document_connection is not None else {}),
             **({"gateway_connection": gateway_connection, "gateway_component": "started_verified"}
                if gateway_connection is not None else {}),
+            **({"document_write_promotion": document_promotion, "document_components": "writable_verified"}
+               if document_promotion is not None else {}),
             "materialization_destination": str(destination),
-            "notice": ("De herstelde gateway is gestart en de bewaarde registraties zijn teruggelezen. Documentproviders blijven alleen-lezen; Eva en haar taakuitvoerders blijven uit. Een volledige documentaanroep, schrijftoegang en vrijgave volgen afzonderlijk."
+            "notice": ("Nieuwe documentproviders met schrijftoegang zijn voorbereid en gecontroleerd. De oude alleen-lezen-containers zijn bewaard. Er is geen documentopdracht uitgevoerd; Eva en haar taakuitvoerders blijven uit tot componentcontrole en vrijgave."
+                if document_promotion is not None else
+                "De herstelde gateway is gestart en de bewaarde registraties zijn teruggelezen. Documentproviders blijven alleen-lezen; Eva en haar taakuitvoerders blijven uit. Een volledige documentaanroep, schrijftoegang en vrijgave volgen afzonderlijk."
                 if gateway_connection is not None else
                 "Documentproviders zijn alleen-lezen aangesloten. De native controle bevestigt dat bewaarde projectbestanden en uitvoerbewijzen overeenkomen met de voorbereiding. Eva en haar taakuitvoerders blijven uit; gatewaykoppeling, schrijftoegang en vrijgave volgen afzonderlijk."
                 if document_connection is not None else
@@ -489,7 +518,9 @@ class InstallerPortableRestore:
                         document_connection_attempted=materialization_state.get("document_connection_attempted", False),
                         document_connection=deepcopy(materialization_state.get("document_connection")),
                         gateway_start_attempted=materialization_state.get("gateway_start_attempted", False),
-                        gateway_connection=deepcopy(materialization_state.get("gateway_connection"))) from error
+                        gateway_connection=deepcopy(materialization_state.get("gateway_connection")),
+                        document_promotion_attempted=materialization_state.get("document_promotion_attempted", False),
+                        document_promotion=deepcopy(materialization_state.get("document_promotion"))) from error
                 raise
             finally:
                 self._discard()

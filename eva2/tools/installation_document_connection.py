@@ -202,7 +202,7 @@ def _validate_material_report(report, preparation, prepared_receipt):
             raise ValueError("verified document snapshot differs from preparation")
 
 
-def _verify_running(container_id, config, preparation, mounts, *, alias=None):
+def _verify_running(container_id, config, preparation, mounts, *, alias=None, writable=False):
     rows = json.loads(_command(["docker", "inspect", container_id]))
     if len(rows) != 1:
         raise ValueError("document target inspect differs")
@@ -225,8 +225,26 @@ def _verify_running(container_id, config, preparation, mounts, *, alias=None):
         raise ValueError("running document target lacks preserved gateway alias")
     for destination, source in mounts.items():
         item = bound[destination]
-        if item.get("Type") != "bind" or item.get("Source") != source or item.get("RW") is not False:
+        if item.get("Type") != "bind" or item.get("Source") != source or item.get("RW") is not (writable and destination in {"/workspace", "/journal"}):
             raise ValueError("running document target mount differs")
+
+
+def _provider_command(config, prep, mounts, *, alias=None, writable=False):
+    command = ["docker", "run", "--detach", "--name", config["container_name"], "--pull", "never",
+        "--network", config["network_id"], "--read-only", "--restart", "no", "--no-healthcheck",
+        "--log-driver", "none", "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
+        "--memory", "512m", "--memory-swap", "512m", "--cpus", "1", "--pids-limit", "64",
+        "--user", f"{prep['runtime_uid']}:{prep['runtime_gid']}",
+        "--tmpfs", "/tmp:rw,nosuid,nodev,size=128m,mode=1777", "--entrypoint", _ENTRYPOINT]
+    if alias is not None:
+        command.extend(["--network-alias", alias])
+    for target, source in sorted(mounts.items()):
+        mode = "" if writable and target in {"/workspace", "/journal"} else ",readonly"
+        command.extend(["--mount", f"type=bind,src={source},dst={target}{mode}"])
+    for name, target in (("JWT_SECRET", "jwt"), ("ENCRYPTION_SECRET", "encryption"), ("ADMIN_PASSWORD", "admin")):
+        command.extend(["--env", f"EVA_CONTEXTFORGE_{name}_FILE=/run/eva2/{target}"])
+    command.append(prep["image"])
+    return command
 
 
 def _require_free_alias(network_id, alias):
@@ -298,20 +316,9 @@ def connect_document_providers(package_root, *, preparation_configuration,
             item = {"container_name": config["container_name"], "image_id": prep["image"],
                     "status": "connection_attempted", "provider_verified": False}
             receipt["providers"].append(item)
-            command = ["docker", "run", "--detach", "--name", config["container_name"], "--pull", "never",
-                "--network", config["network_id"], "--read-only", "--restart", "no", "--no-healthcheck",
-                "--log-driver", "none", "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
-                "--memory", "512m", "--memory-swap", "512m", "--cpus", "1", "--pids-limit", "64",
-                "--user", f"{prep['runtime_uid']}:{prep['runtime_gid']}",
-                "--tmpfs", "/tmp:rw,nosuid,nodev,size=128m,mode=1777", "--entrypoint", _ENTRYPOINT]
+            command = _provider_command(config, prep, mounts, alias=alias)
             if alias is not None:
-                command.extend(["--network-alias", alias])
                 item["gateway_alias"] = alias
-            for target, source in sorted(mounts.items()):
-                command.extend(["--mount", f"type=bind,src={source},dst={target},readonly"])
-            for name, target in (("JWT_SECRET", "jwt"), ("ENCRYPTION_SECRET", "encryption"), ("ADMIN_PASSWORD", "admin")):
-                command.extend(["--env", f"EVA_CONTEXTFORGE_{name}_FILE=/run/eva2/{target}"])
-            command.append(prep["image"])
             receipt["services_start_attempted"] = True
             receipt["services_started"] = None  # A lost start acknowledgement is not proof of absence.
             container_id = _command(command, deadline=30, limit=4096).strip()

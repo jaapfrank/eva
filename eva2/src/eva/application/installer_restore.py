@@ -17,7 +17,9 @@ class InactiveRecoveryMaterialRetained(ValueError):
                  document_connection_attempted: bool = False,
                  document_connection: dict | None = None,
                  gateway_start_attempted: bool = False,
-                 gateway_connection: dict | None = None):
+                 gateway_connection: dict | None = None,
+                 document_promotion_attempted: bool = False,
+                 document_promotion: dict | None = None):
         self.destination = destination
         self.external_import_attempted = external_import_attempted
         self.document_preparation_attempted = document_preparation_attempted
@@ -26,4 +28,6 @@ class InactiveRecoveryMaterialRetained(ValueError):
         self.document_connection = document_connection
         self.gateway_start_attempted = gateway_start_attempted
         self.gateway_connection = gateway_connection
+        self.document_promotion_attempted = document_promotion_attempted
+        self.document_promotion = document_promotion
         super().__init__("Recovery was not confirmed; inactive material is retained for operator inspection")

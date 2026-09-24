@@ -1,3 +1,4 @@
+import pytest
 from base64 import b64encode
 from fastapi.testclient import TestClient
 from eva.adapters.api.installer_wizard import (
@@ -90,7 +91,8 @@ def test_restore_rejects_target_override_and_oversized_input():
     assert not w.calls
 
 
-def test_partial_gateway_start_reports_retained_target_without_private_receipt():
+@pytest.mark.parametrize("promotion", [False, True])
+def test_partial_service_start_reports_retained_target_without_private_receipt(promotion):
     from fastapi import FastAPI
     from eva.adapters.api.installer_restore_api import register_installer_restore_routes
     from eva.application.installer_restore import InactiveRecoveryMaterialRetained
@@ -98,7 +100,7 @@ def test_partial_gateway_start_reports_retained_target_without_private_receipt()
     class FailedGateway:
         def execute(self, confirmation):
             raise InactiveRecoveryMaterialRetained(
-                "/PRIVATE/target", gateway_start_attempted=True,
+                "/PRIVATE/target", gateway_start_attempted=True, document_promotion_attempted=promotion,
                 gateway_connection={"private": "PRIVATE_TOKEN"})
 
     app = FastAPI()
@@ -108,6 +110,6 @@ def test_partial_gateway_start_reports_retained_target_without_private_receipt()
                                    json={"confirmation": "fixture"})
     assert response.status_code == 409
     assert response.json()["recovery_state"] == "materialized_inactive"
-    assert "gateway en documentproviders kunnen al gestart" in response.json()["detail"]
+    assert ("omgezet naar schrijftoegang" if promotion else "gateway en documentproviders kunnen al gestart") in response.json()["detail"]
     assert "start niet opnieuw" in response.json()["detail"]
     assert "PRIVATE" not in response.text

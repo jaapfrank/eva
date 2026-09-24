@@ -25,7 +25,7 @@ def main(argv=None):
     )
     required = {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed", "runtime_guard"}
     if (not isinstance(config, dict) or not required <= set(config)
-            or not set(config) <= required | {"runtime_identity", "recovery_materialization", "external_recovery", "document_recovery", "document_connection", "document_gateway_binding", "gateway_start"}
+            or not set(config) <= required | {"runtime_identity", "recovery_materialization", "external_recovery", "document_recovery", "document_connection", "document_gateway_binding", "gateway_start", "document_write_access"}
             or config["traffic_closed"] is not True):
         raise ValueError("restore configuration requires pinned runtime_guard identities and closed traffic")
     if "document_recovery" in config and not {"external_recovery", "recovery_materialization"} <= set(config):
@@ -40,6 +40,8 @@ def main(argv=None):
             raise ValueError("document gateway binding must use the restored gateway target")
     if "gateway_start" in config and "document_gateway_binding" not in config:
         raise ValueError("gateway start requires preserved document gateway bindings")
+    if "document_write_access" in config and "gateway_start" not in config:
+        raise ValueError("document write access requires gateway startup")
     paths = {key: Path(config[key]) for key in ("authority", "workspace", "objects")}
     if not all(path.is_absolute() for path in paths.values()):
         raise ValueError("restore target paths must be absolute")
@@ -82,6 +84,16 @@ def main(argv=None):
         gateway_start = partial(start_restored_gateway, configuration=config["gateway_start"],
             external_configuration=config["external_recovery"],
             binding_configuration=config["document_gateway_binding"])
+    document_promote = None
+    if "document_write_access" in config:
+        from tools.installation_document_promotion import promote_document_providers, validate_document_promotion_configuration
+        validate_document_promotion_configuration(config["document_write_access"],
+            connection_configuration=config["document_connection"],
+            preparation_configuration=config["document_recovery"])
+        document_promote = partial(promote_document_providers,
+            preparation_configuration=config["document_recovery"],
+            connection_configuration=config["document_connection"],
+            configuration=config["document_write_access"])
     workflow = InstallerPortableRestore(
         engine=engine,
         authority_reader=partial(read_private_restore_authority, paths["authority"]),
@@ -95,6 +107,7 @@ def main(argv=None):
         document_prepare=document_prepare,
         document_connect=document_connect,
         gateway_start=gateway_start,
+        document_promote=document_promote,
     )
     try:
         return run_installer_wizard(remaining, restore_workflow=workflow)

@@ -168,6 +168,33 @@ execution or a complete restored-project trial. Document mounts remain read-only
 and the core hold remains closed. On failure, the gateway may already be running;
 retain it for inspection instead of retrying or deleting it.
 
+## Preparing document write access
+
+The optional `document_write_access` step follows verified `gateway_start`:
+
+```json
+{
+  "providers": [{"preparation_index": 0, "container_name": "restored-documents-writable"}]
+}
+```
+
+Select every prepared provider exactly once, using new distinct container names.
+The wizard verifies all old read-only providers first, then stops each exact old
+container and disconnects it from the isolated network. It retains that container
+for inspection. A new container uses the same pinned image, identity, retained
+files, journal and preserved gateway alias. Only `/workspace` and `/journal`
+become writable; bindings, snapshots, secrets and the root filesystem remain
+read-only. The existing catalog and native material/history checks run again
+without submitting a document write operation.
+
+The receipt is `writable_verified`, not a completed task or a released core.
+The old stopped targets and new targets remain on any failure; the wizard reports
+partial write promotion and never retries or deletes them. Do not start an old
+and new writer together. Returning to an old read-only container requires
+inspection of the retained data and deliberate network reattachment, not a blind
+repeat of the import. Production component reconciliation and coordinated core
+activation still follow separately.
+
 ## Partial results and activation
 
 The core PostgreSQL transaction, external PostgreSQL transaction and gateway file

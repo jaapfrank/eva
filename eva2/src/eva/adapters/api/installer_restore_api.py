@@ -92,7 +92,9 @@ def register_installer_restore_routes(
         except InactiveRecoveryMaterialRetained as error:
             return JSONResponse({
                 "detail": ("Herstel is niet bevestigd. De inactieve bestandskopie is bewaard; Eva blijft uit. "
-                    + ("De herstelde gateway en documentproviders kunnen al gestart zijn voor controle. Laat de bewaarde doelen inspecteren; start niet opnieuw op dezelfde doelen."
+                    + ("Documentproviders kunnen gedeeltelijk zijn omgezet naar schrijftoegang. Oude en nieuwe containers zijn bewaard. Laat de doelen inspecteren; start niet opnieuw op dezelfde doelen."
+                       if error.document_promotion_attempted else
+                       "De herstelde gateway en documentproviders kunnen al gestart zijn voor controle. Laat de bewaarde doelen inspecteren; start niet opnieuw op dezelfde doelen."
                        if error.gateway_start_attempted else
                        "Documentproviders kunnen al gestart zijn in alleen-lezen-modus. Laat de bewaarde doelen en providers controleren; start niet opnieuw op dezelfde doelen."
                        if error.document_connection_attempted else
