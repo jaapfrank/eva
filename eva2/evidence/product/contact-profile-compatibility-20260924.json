@@ -1,0 +1,169 @@
+{
+  "actual_provider_requests": 0,
+  "network_transport_disabled": true,
+  "provider_source_sha256": "f4c73ff1f5900cc51ea2f2c4ea8c7ffa548b7626a08a54128e5e3393fc6f1e70",
+  "scope": "Installed dependency version, candidate source loaded only inside isolated Python process; no runtime installation or live action. Shared synthetic identity, memory tool and all delegated-work descriptors. No latency claim for corrected route.",
+  "rows": [
+    {
+      "case": "greeting",
+      "models": [
+        "gpt-5.6-luna",
+        "gpt-6-luna"
+      ],
+      "body_difference_keys_except_model": [
+        "include"
+      ],
+      "different_body_fields": {
+        "include": [
+          [
+            "reasoning.encrypted_content"
+          ],
+          null
+        ]
+      },
+      "tools_equal": true,
+      "reasoning_equal": true,
+      "reasoning": {
+        "effort": "low",
+        "summary": "auto"
+      },
+      "tool_types": [
+        "tool_search",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function"
+      ],
+      "tool_names": [
+        "tool_search",
+        "search_personal_memory",
+        "stop_related_work",
+        "get_related_work",
+        "revise_digital_work",
+        "search_delegated_work",
+        "schedule_work_resume",
+        "list_scheduled_work",
+        "cancel_work_chain",
+        "cancel_scheduled_work",
+        "stop_own_initiative",
+        "give_initiative_feedback",
+        "list_own_initiatives",
+        "get_own_initiative_result",
+        "start_delegated_work",
+        "list_delegated_work",
+        "get_delegated_work",
+        "stop_delegated_work",
+        "resume_delegated_work"
+      ],
+      "deferred_function_count": 18
+    },
+    {
+      "case": "small_talk_during_work",
+      "models": [
+        "gpt-6-luna",
+        "gpt-5.6-luna"
+      ],
+      "body_difference_keys_except_model": [
+        "include"
+      ],
+      "different_body_fields": {
+        "include": [
+          null,
+          [
+            "reasoning.encrypted_content"
+          ]
+        ]
+      },
+      "tools_equal": true,
+      "reasoning_equal": true,
+      "reasoning": {
+        "effort": "low",
+        "summary": "auto"
+      },
+      "tool_types": [
+        "tool_search",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function",
+        "function"
+      ],
+      "tool_names": [
+        "tool_search",
+        "search_personal_memory",
+        "stop_related_work",
+        "get_related_work",
+        "revise_digital_work",
+        "search_delegated_work",
+        "schedule_work_resume",
+        "list_scheduled_work",
+        "cancel_work_chain",
+        "cancel_scheduled_work",
+        "stop_own_initiative",
+        "give_initiative_feedback",
+        "list_own_initiatives",
+        "get_own_initiative_result",
+        "start_delegated_work",
+        "list_delegated_work",
+        "get_delegated_work",
+        "stop_delegated_work",
+        "resume_delegated_work"
+      ],
+      "deferred_function_count": 18
+    },
+    {
+      "case": "accepted_work",
+      "models": [
+        "gpt-5.6-luna",
+        "gpt-6-luna"
+      ],
+      "body_difference_keys_except_model": [
+        "include"
+      ],
+      "different_body_fields": {
+        "include": [
+          [
+            "reasoning.encrypted_content"
+          ],
+          null
+        ]
+      },
+      "tools_equal": true,
+      "reasoning_equal": true,
+      "reasoning": {
+        "effort": "low",
+        "summary": "auto"
+      },
+      "tool_types": [],
+      "tool_names": [],
+      "deferred_function_count": 0
+    }
+  ]
+}
