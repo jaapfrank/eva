@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "23dfee8e",
+  "sourceCommit": "f1a827bf",
   "state": "operator_command_updated_full_restore_unproven",
   "availableCommand": "python3 /home/administrator/project/.eva2-artifacts/installer-document-write-20260924/start-installer.py --restore-config /absolute/private/target.json",
   "checks": {
@@ -15,7 +15,7 @@
     "public_image_ca_scope": "Standard immutable image CA file is not a private credential; mounted overrides still require verification. Existing TLS settings retained.",
     "precreated_network_cases": 29,
     "precreated_network_review": "Independent coordinator review passed; created containers resolve exact configured internal network, running containers require allocated pinned endpoint.",
-    "runtime_authorization_cases": 30,
+    "runtime_authorization_cases": 31,
     "mount_order_review": "Independent review passed; only Mounts sorted by unique absolute Destination, all fields preserved; command/environment ordering unchanged. Installed hash and rollback bytes confirmed.",
     "postgres18_cases": 13,
     "postgres18_actual_inventory": {
@@ -27,6 +27,12 @@
       "source_target_equal": true,
       "source": "/home/administrator/project/.eva2-artifacts/restore-full-route-20260924/pg18-verification-result.json",
       "scope": "Synthetic bank metadata and exact data inventory; no private memory recall or model call."
+    },
+    "actual_memory_ready_after_oom_correction": {
+      "passed": true,
+      "bank_count": 1,
+      "source": "/home/administrator/project/.eva2-artifacts/restore-full-route-20260924/retained-memory-verification-result.json",
+      "scope": "Existing actual running restored API, profile and local readiness; no model call."
     }
   },
   "rollbackDirectory": "/home/administrator/project/.eva2-artifacts/restore-memory-api-683e3780",
@@ -35,7 +41,7 @@
   "restoreInvoked": false,
   "ownerAccepted": false,
   "modelCalls": 0,
-  "next": "Execute the fresh full isolated wizard target with installed fixes and actual post-start readback. Normal target preparation without handwritten JSON remains open.",
+  "next": "Execute fresh full wizard restore after installed OOM default correction; confirm committed release, core/worker startup and retained data. Normal no-terminal target preparation remains open.",
   "additionalRollbackFile": "/home/administrator/project/.eva2-artifacts/runtime-public-ca-20260924/previous-installed-runtime-authorization.py",
   "networkCorrectionInstallation": "/home/administrator/project/.eva2-artifacts/restore-created-network-3b3bd272/installation-receipt.json",
   "fullWizardAttempt": {
@@ -65,5 +71,11 @@
     "status": "failed_before_memory_and_core_start",
     "retained": true,
     "cause": "Version gate supported16 only; actual maintained memory image uses18.6. Corrected in23dfee8e without upgrading any database."
+  },
+  "oomCorrectionInstallation": "/home/administrator/project/.eva2-artifacts/restore-oom-default-f1a827bf/installation-receipt.json",
+  "fullWizardOomAttempt": {
+    "status": "failed_after_memory_api_start_before_core_start",
+    "retained": true,
+    "cause": "Docker represented default OomKillDisable as null after first start instead of false; exact default equivalence corrected in f1a827bf."
   }
 }
