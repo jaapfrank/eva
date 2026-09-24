@@ -143,11 +143,24 @@ class DelegatedWorkOwnerService:
                 return {"status": "already_finished", "work_id": previous.spec.work_id,
                         "guidance": "Deze opdracht is al afgerond. Bespreek het bewaarde resultaat en neem zo nodig een nieuwe vervolgopdracht aan."}
             from eva.adapters.postgres.work_corrections import record_work_correction
-            recorded = record_work_correction(self.store._engine, previous.spec,
-                instruction=revision["instruction"], request_key=request_key, now=self.now())
-            queued = ScheduledOwnerWork(self).schedule(turn, request_key=request_key,
-                request={"work_id": previous.spec.work_id, "run_at": recorded.isoformat().replace("+00:00", "Z")},
-                resume=True, wait_for_stop=True)
+            try:
+                recorded = record_work_correction(self.store._engine, previous.spec,
+                    instruction=revision["instruction"], request_key=request_key, now=self.now())
+            except Exception:
+                # A failed acknowledgement does not prove the write did not commit.
+                # The stop is already durable; never hide it behind an invalid-request error.
+                return {"status": "stop_recorded_correction_unconfirmed", "work_id": previous.spec.work_id,
+                        "in_flight_effects_may_complete": True,
+                        "guidance": "De stop is vastgelegd. Het bewaren van je correctie is niet bevestigd. Controleer de taak en planning voordat je opnieuw probeert; ik herhaal dit verzoek niet automatisch."}
+            try:
+                queued = ScheduledOwnerWork(self).schedule(turn, request_key=request_key,
+                    request={"work_id": previous.spec.work_id, "run_at": recorded.isoformat().replace("+00:00", "Z")},
+                    resume=True, wait_for_stop=True)
+            except Exception:
+                # Scheduling can commit before its acknowledgement is lost. Do not retry here.
+                return {"status": "correction_saved_resume_unconfirmed", "work_id": previous.spec.work_id,
+                        "in_flight_effects_may_complete": True,
+                        "guidance": "De stop en je correctie zijn vastgelegd. Het inplannen van de hervatting is niet bevestigd. Controleer de taak en planning voordat je opnieuw probeert; ik herhaal dit verzoek niet automatisch."}
             return {"status": "correction_saved", "work_id": previous.spec.work_id,
                     "schedule": queued, "in_flight_effects_may_complete": True,
                     "guidance": "Correctie bewaard; de huidige poging stopt en één begrensde hervatting wacht daarop. Eerdere acties en resultaten blijven behouden."}

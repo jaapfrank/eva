@@ -227,6 +227,56 @@ async function main() {
       if (message.type() === 'error') consoleErrors.push(`${message.text()} ${message.location().url}`);
     });
     page.setDefaultTimeout(10_000);
+    if (process.env.EVA_DASHBOARD_CORRECTION_ONLY === '1') {
+      let outcome = 'stop_recorded_correction_unconfirmed';
+      const writes = [];
+      let reads = 0;
+      const job = { work_id: 'work:correction-fixture', state: 'stopped', generation: 1,
+        stop_requested: true, result_available: false, task_preview: 'Correction fixture',
+        task: 'Correction fixture', result: null, scope: 'private_digital_worker' };
+      await page.route(/\/internal\/v1\/dashboard\/work(?:\/|$)/, async route => {
+        const operation = new URL(route.request().url()).pathname.split('/').pop();
+        let payload;
+        if (operation === 'work' || operation === 'get') reads++;
+        if (operation === 'work') payload = { operation: 'list', jobs: [job], truncated: false };
+        else if (operation === 'get') payload = { operation, work: job };
+        else if (operation === 'revise_digital') {
+          writes.push(JSON.parse(route.request().postData()));
+          payload = { operation, status: outcome, work_id: job.work_id };
+        } else throw new Error('Unexpected work operation: ' + operation);
+        await route.fulfill({ status: 200, contentType: 'application/json',
+          body: JSON.stringify({ contract: 'EvaDelegatedWorkOwnerResult/v1', ...payload }) });
+      });
+      await page.goto(origin, { waitUntil: 'domcontentloaded', timeout: 10_000 });
+      const work = page.getByRole('region', { name: 'Mijn hulpopdrachten', exact: true });
+      await work.getByRole('button', { name: 'Opdracht openen', exact: true }).click();
+      for (const [status, expected] of [
+        ['stop_recorded_correction_unconfirmed', 'Het stopverzoek is opgeslagen, maar de bijsturing is niet bevestigd.'],
+        ['correction_saved_resume_unconfirmed', 'Je bijsturing en het stopverzoek zijn opgeslagen, maar de hervatting is niet bevestigd.'],
+        ['correction_saved', 'Bijsturing bewaard. Eva stopt de oude poging en hervat daarna met je wijziging.'],
+      ]) {
+        outcome = status;
+        await work.getByRole('textbox', { name: 'Wat moet Eva anders doen?' }).fill('Use the corrected request');
+        await work.getByRole('button', { name: 'Bewaar bijsturing en hervat', exact: true }).click();
+        await work.getByText(expected, { exact: false }).waitFor();
+        if (status !== 'correction_saved') {
+          const before = reads;
+          if (status === 'stop_recorded_correction_unconfirmed') await page.waitForTimeout(5200);
+          assert.equal(reads, before, 'no automatic reads obscure uncertain outcome');
+          assert.match(await work.innerText(), /Automatisch verversen is gepauzeerd/);
+          assert.equal(await work.getByRole('textbox', { name: 'Wat moet Eva anders doen?' }).count(), 0);
+          await work.getByRole('button', { name: 'Opdracht openen', exact: true }).click();
+        }
+        await work.getByRole('textbox', { name: 'Wat moet Eva anders doen?' }).waitFor();
+      }
+      assert.equal(writes.length, 3, 'one correction submission per explicit user action');
+      assert.ok(writes.every(value => value.work_id === job.work_id));
+      assert.deepEqual(errors, []);
+      assert.deepEqual(external, []);
+      console.log(JSON.stringify({ contract: 'EvaWorkCorrectionOutcomeBrowserProof/v1',
+        outcomes: 3, correctionSubmissions: writes.length, automaticResumeRequests: 0, status: 'passed' }));
+      return;
+    }
     await page.goto(origin, { waitUntil: 'domcontentloaded', timeout: 10_000 });
     await page.getByText('Echte taak').waitFor({ timeout: 10_000 });
     const personalChrome = page.getByRole('region', { name: 'Persoonlijke Chrome', exact: true });

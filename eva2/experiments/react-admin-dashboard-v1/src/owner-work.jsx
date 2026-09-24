@@ -146,10 +146,20 @@ export default function OwnerWork() {
               : data.status === 'newer_attempt_exists'
               ? 'Er bestaat al een vervolgpoging. Open die om haar bij te sturen; er is niets gewijzigd.'
               : data.status === 'already_finished' ? 'Deze opdracht is al klaar. Geef Eva een nieuwe vervolgopdracht.'
+              : data.status === 'stop_recorded_correction_unconfirmed'
+              ? 'Het stopverzoek is opgeslagen, maar de bijsturing is niet bevestigd. Bekijk de bewaarde bijsturing en de taakstatus voordat je opnieuw probeert. Een begonnen actie kan nog afronden. Automatisch verversen is gepauzeerd; klik op Recente opdrachten om de toestand opnieuw op te halen.'
+              : data.status === 'correction_saved_resume_unconfirmed'
+              ? 'Je bijsturing en het stopverzoek zijn opgeslagen, maar de hervatting is niet bevestigd. Bekijk de planning en vervolgpogingen voordat je opnieuw hervat; er kan al een start zijn ingepland. Automatisch verversen is gepauzeerd; klik op Recente opdrachten om de toestand opnieuw op te halen.'
               : 'Geen bijsturing opgeslagen. Open de actuele opdracht of bespreek het vervolg met Eva.');
-            if (data.status === 'correction_saved') setCorrection('');
+            if (['correction_saved', 'correction_saved_resume_unconfirmed'].includes(data.status)) setCorrection('');
             selected = data.work_id || workId; currentDetail = null;
-            pending = { operation: 'get', workId: selected, version: revision, foreground: true };
+            if (['stop_recorded_correction_unconfirmed', 'correction_saved_resume_unconfirmed'].includes(data.status)) {
+              // Preserve the partial-operation receipt until an explicit read;
+              // an automatic failed read must not replace it with a generic error.
+              halted = true;
+            } else {
+              pending = { operation: 'get', workId: selected, version: revision, foreground: true };
+            }
           } else if (['schedule_cancel', 'schedule_cancel_chain'].includes(operation)) {
             selected = null; currentDetail = null; setDetail(null);
             setNotice(data.status === 'chain_stop_recorded' ? 'Stoppen van deze reeks is vastgelegd. Begonnen effecten kunnen nog afronden.'
