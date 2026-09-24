@@ -1,0 +1,72 @@
+{
+  "recordedAt": "2026-09-24T18:23:57.728438+00:00",
+  "sourceCommit": "eb52c2ad98a43bff268b9b8d4a3e6a1453454a57",
+  "result": "Native HA stream advertises same shared neutral input receipt as web voice. HA integration queues it before waiting for model answer.",
+  "tests": {
+    "passed": 44,
+    "seconds": 2.55,
+    "coverage": "Real HTTP delayed-body early receipt, old server compatibility, canonical reply/hash unchanged, unauthorized requests have no receipt header, existing cancellation tests.",
+    "firstSetupFailure": "aiohttp missing from core test image; reused exact already-installed voice-service library files for test environment only. No production dependency change."
+  },
+  "review": "Independent bounded_contact_comparison source GO and verified existing HA deployment path/current baseline.",
+  "coreInstallation": {
+    "checkedAt": "2026-09-24T18:20:48.833158+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:4a0cd25cd40f5e4b37469f878182f332775fba84b2add34e976b30affa718093",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/api/native_voice.py": "7c43798f0c52990568bc4d1fc613103989da025ce9fcfd622613c449a79e7f7a"
+        }
+      },
+      "worker": {
+        "image": "sha256:5c157ee2406f4acdd94bed249d5f2598f16e679aa2c97c9cc6f0ef4ac02f6f0b",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/api/native_voice.py": "7c43798f0c52990568bc4d1fc613103989da025ce9fcfd622613c449a79e7f7a"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/ha-input-receipt-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "haInstallation": {
+    "checkedAt": "2026-09-24T18:23:08.361155+00:00",
+    "sourceHashes": {
+      "client.py": "9e0d6c7ff22f93d84d5a3d8b7574fceb04f9a0f2c9d96e13128043bba7ad3db9",
+      "conversation.py": "a39b439ca9922028ce3b1bdb580cce46fbb1f947c113083e75338a7cced5426b"
+    },
+    "states": [
+      {
+        "entity_id": "conversation.eva2",
+        "state": "2026-09-24T13:26:51.441183+00:00"
+      },
+      {
+        "entity_id": "assist_satellite.home_assistant_voice_0a16e0_assist_satellite",
+        "state": "idle"
+      },
+      {
+        "entity_id": "assist_satellite.home_assistant_voice_0a5035_assist_satellite",
+        "state": "idle"
+      }
+    ],
+    "routes": {
+      "http://localhost:44711/internal/v1/dashboard": 200,
+      "http://localhost:44716/session/ready": 200
+    }
+  },
+  "fullCoreWorkerProfileEquality": true,
+  "rollback": {
+    "ha": "python3 /home/administrator/project/.eva2-artifacts/ha-input-receipt-20260924/rollback-ha.py",
+    "haBaseline": "Current client.py and conversation.py saved before this change; older historical restore script not used.",
+    "compatibility": "Old HA ignores header; new HA supports core without receipt header."
+  },
+  "limitations": [
+    "No physical microphone/speaker or end-to-end latency measurement.",
+    "Receipt confirms authenticated input reception, not accepted or completed work.",
+    "Receipt is included in local HA chatlog/speech, not canonical Eva reply, memory or playback hash.",
+    "Model latency and native32second timeout unchanged."
+  ],
+  "firmwareChanged": false,
+  "runtimeModelCalls": 0,
+  "creditCost": "unknown"
+}

@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T18:10:13.749708+00:00",
+        "checkedAt": "2026-09-24T18:23:57.728438+00:00",
         "deliveries": [
+          {
+            "title": "Snelle ontvangstmelding ook in Home Assistant aangesloten",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Dezelfde Een momentje als webspraak wordt via de bestaande HA-stream aangeboden vóór het modelantwoord. Eva en HA-integratie bijgewerkt, Home Assistant herstart, beide speakers beschikbaar. Firmware behouden.",
+            "remaining": "44 gerichte controles en onafhankelijke review geslaagd. Echt hoorbaar moment op beide Voice PE-apparaten nog niet gemeten of bevestigd. Geen claim dat het inhoudelijke antwoord sneller is.",
+            "source": "eva2/evidence/product/ha-input-receipt-installed-20260924.json"
+          },
           {
             "title": "Aangenomen werk zonder extra bevestigingsmodel terugmelden",
             "date": "24 september",
@@ -2127,28 +2135,29 @@
           }
         ],
         "now": {
-          "title": "Extra bevestigingscall na taakstart verwijderd",
-          "state": "Geïnstalleerd",
-          "detail": "Bestaande ontvangstzin en stopcontrole hergebruikt. Website en spraakroute bereikbaar. Geen nieuwe modelproef of gemeten snelheidsclaim.",
-          "doneWhen": "Technische wijziging afgerond; snelle ontvangst als geheel nog open."
+          "title": "Ontvangstmelding in Eva en HA geïnstalleerd",
+          "state": "Geïnstalleerd; hoorproef open",
+          "detail": "Beide speakers idle, conversation.eva2 beschikbaar en bronhashes bevestigd. Geen nieuwe modelproef uitgevoerd.",
+          "doneWhen": "Technische koppeling afgerond; Jaap moet hoorbare ontvangst via echte speakers nog beoordelen."
         },
         "next": {
-          "title": "Bestaande snelle spraakontvangst aansluiten op taakstart",
+          "title": "Doorpraten tijdens lopend werk over de ingangen afronden",
           "state": "Nog niet gestart",
-          "detail": "Controleren waarom de eerder werkende snelle hoorbare ontvangst de huidige achtergrondopdrachten niet tijdig bereikt. Bestaande route hergebruiken; geen nieuwe brede spraakbouw."
+          "detail": "Werkelijke open verschillen in bestaande tekst-/spraakroutes aanpakken; fysieke ontvangstproef blokkeert onafhankelijk vervolgwerk niet."
         },
         "ownerAction": {
-          "title": "Het echte hergebruikresultaat lezen",
-          "url": "http://localhost:44711/internal/v1/dashboard",
-          "linkLabel": "Open Eva",
+          "title": "Ontvangst op beide Voice PE-speakers horen",
+          "url": "http://localhost:44712/",
+          "linkLabel": "Projectoverzicht",
           "steps": [
-            "Zoek in het taakoverzicht de opdracht die begint met Voer de eerder geregistreerde Nederlandse CSV-totalenwerkwijze uit.",
-            "Kies Resultaat bekijken. Er hoeft geen nieuwe opdracht gestart te worden."
+            "Gebruik op de speaker in de woonkamer het normale wakeword en zeg Hallo Eva.",
+            "Let op of je eerst Een momentje hoort en daarna het antwoord.",
+            "Doe hetzelfde op de tweede speaker en meld bij welke speaker het wel of niet gebeurt."
           ],
-          "expected": "Je ziet totaal1.002,50, inkomen1.000,00, overig2,50,1dubbel en het opgeslagen pad /proof-state/nederlandse-csv-totalen-resultaat-xyz.txt. Dit resultaat is gecontroleerd; jouw beoordeling staat apart."
+          "expected": "Een korte ontvangstmelding vóór het inhoudelijke modelantwoord. Exacte tijd en natuurlijke beleving zijn nog niet bevestigd. De firmware is niet gewijzigd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T18:10:13.749708+00:00"
+        "reviewedAt": "2026-09-24T18:23:57.728438+00:00"
       }
     },
     "pendingTechnicalReview": {
