@@ -479,3 +479,24 @@ The complete bootstrap settings, composed Docker preparation and source/restore
 route integration still require execution. The ordinary wizard is not enabled
 by merely installing these modules. See
 `evidence/product/installer-target-workflow-installed-20260925.json`.
+
+
+## Actual composed preparation — 25 September 2026
+
+The installed workflow at `9d732f9e` completed one actual preparation with the
+maintained nine-service base: two persistent PostgreSQL services running, schema
+`4e_0009_restore_hold` installed, and six remaining services created/stopped.
+A recreated workflow read `prepared`; actual container commands and healthchecks
+matched the maintained rendered graph. Prepared target capture also passed against
+an explicitly selected existing stopped synthetic source and actual PostgreSQL.
+
+Two composition inputs were completed before execution: optional trusted
+`network_subnet` (strict private IPv4 CIDR; Docker rejects conflicts), and an empty
+private target restore-authority directory when no explicit binding is supplied.
+This directory supplies storage, not authority. The exact maintained Compose file
+was also added to the operator package after the actual renderer found it missing.
+
+This used a controlled signed test release and synthetic authorities. The optional
+delegated-work profile, restore import, runtime activation and ordinary browser
+onboarding are not proved by this preparation. Evidence:
+`evidence/product/installer-composed-preparation-20260925.json`.

@@ -1,0 +1,44 @@
+{
+  "sourceCommit": "9d732f9e",
+  "installed": true,
+  "scope": "One actual installed target-workflow invocation using the complete maintained nine-service base",
+  "result": {
+    "passed": true,
+    "namespace": "eva-composed-5aeaa20b",
+    "schema": "4e_0009_restore_hold",
+    "databasesRunning": 2,
+    "schemaInstallerExitCode": 0,
+    "otherServicesCreatedStopped": 6,
+    "recreatedWorkflowStatus": "prepared",
+    "actualCommandsAndHealthchecksVerified": 9,
+    "preparedTargetAndStoppedSyntheticSourceBinding": "passed"
+  },
+  "receipts": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/restore-composed-preparation-20260925/result.json",
+      "sha256": "a5d82f52a93c63a21c34b3ed2a3a520b34b8da1e4981d1b85ec7396a72e74e33"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/restore-composed-preparation-20260925/launch-contracts.json",
+      "sha256": "62701d922731cb714939b770da93ef99c944cf3bb296a033ae84152e4d3dc957"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/restore-composed-preparation-20260925/runtime-binding-result.json",
+      "sha256": "3a4463eb2fe58377356cc17c68629d2fee5c27cef627ad6b47b0bf1aeb002013"
+    }
+  ],
+  "correctionsBeforeExecution": [
+    "Trusted private subnet option passed through existing projection because default Docker pools are exhausted",
+    "Fresh empty target restore-authority storage created without inventing authority",
+    "Missing maintained Compose asset added to installed operator package with exact hash"
+  ],
+  "validation": "Twelve focused controls and independent correction review; executor actual workflow proof followed by coordinator actual container and PostgreSQL binding inspection",
+  "limits": [
+    "Controlled signed test release and synthetic input authorities, not production release",
+    "Complete maintained base excludes optional delegated-work profile",
+    "No backup import, Eva runtime activation, traffic switch or owner browser acceptance in this proof",
+    "Ordinary bootstrap still needs complete trusted settings and restore-route connection"
+  ],
+  "productionChanged": false,
+  "modelCalls": 0
+}

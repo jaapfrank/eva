@@ -1012,12 +1012,12 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
-            "title": "Samengevoegde installer-voorbereiding — interne uitvoering",
+            "title": "Samengestelde installatievoorbereiding uitgevoerd",
             "date": "25 september",
             "state": "installed",
-            "result": "Bestaande stappen verbonden met blijvende voortgang en bescherming tegen opnieuw uitvoeren na onderbreking. Nieuwe runtimebestanden met juiste leestoegang; UID65532 las modeltoegang vóór en na vernieuwing. Modules geïnstalleerd.",
-            "remaining": "Complete instellingen en één volledige uitvoeringsproef ontbreken nog. De gewone herstelknop blijft uitgeschakeld; dit is nog geen zelfstandig bruikbare herstelwizard.",
-            "source": "eva2/evidence/product/installer-target-workflow-installed-20260925.json"
+            "result": "Geïnstalleerde workflow heeft de volledige onderhouden basis daadwerkelijk voorbereid: negen diensten, twee databases gestart, schema geïnstalleerd. Zes overige diensten blijven gestopt. Opnieuw openen toont de bewaarde status; werkelijke containerinstellingen en bron-/doelkoppeling gecontroleerd.",
+            "remaining": "Dit is de doelvoorbereiding. Reservekopie importeren, Eva vrijgeven en de gewone installerbediening verbinden blijven open. Geen productie of gebruikersacceptatie gewijzigd.",
+            "source": "eva2/evidence/product/installer-composed-preparation-20260925.json"
           },
           {
             "title": "Blijvende opslag voor herstel voorbereiden — beheermodule",
@@ -2255,15 +2255,15 @@
           }
         ],
         "now": {
-          "title": "Samengevoegde doelvoorbereiding geïnstalleerd — volledige proef nog open",
-          "state": "Interne uitvoering opgeleverd; gewone herstelbediening nog uit",
-          "detail": "Bestaande invoer-, bestands-, dienst- en opslagstappen zijn verbonden met bewaarde voortgang. Runtime-leestoegang en vernieuwde modelbestanden gecontroleerd. Volledige uitvoering met complete installatieconfiguratie nog niet gedaan. Geen uitvoerder meer op deze deelopdracht.",
-          "doneWhen": "Eén volledige voorbereidings- en herstelroute vanuit de gewone installer, met echte complete instellingen en behouden gegevens."
+          "title": "Samengestelde voorbereiding werkelijk uitgevoerd",
+          "state": "Geïnstalleerd en geslaagd op afzonderlijke proefinstallatie",
+          "detail": "Eén workflow-aanroep maakte de volledige onderhouden basis van negen diensten. Twee databases draaien, schema is klaar en zes overige diensten blijven gestopt. Voortgang na heropenen en echte doel-/broncontrole bevestigd. Herstelimport en gewone bediening blijven open; geen uitvoerder meer actief op deze proef.",
+          "doneWhen": "De gewone installer verbindt deze voorbereiding met reservekopieherstel en vrijgave van de complete nieuwe installatie."
         },
         "next": {
-          "title": "Volledige samengestelde voorbereiding uitvoeren",
+          "title": "Voorbereid doel met reservekopieherstel verbinden",
           "state": "Nog niet gestart",
-          "detail": "Complete vertrouwde release-/identiteits-/providerinstellingen samenstellen, inclusief effectieve runtimegebruikers en bronkeuze. De geïnstalleerde uitvoering met het volledige dienstenmanifest beproeven en daarna op de bestaande herstelroute aansluiten."
+          "detail": "Gebruik de werkelijke voorbereidingsresultaten en bestaande herstelroute om bronkeuze, herstelautoriteit en componentlocaties automatisch te verbinden. Geen handgeschreven doelconfiguratie als eindoplossing; daarna volledige gewone route beproeven."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2277,7 +2277,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T23:11:26.786672+00:00"
+        "reviewedAt": "2026-09-24T23:20:24.321269+00:00"
       }
     },
     "pendingTechnicalReview": {
