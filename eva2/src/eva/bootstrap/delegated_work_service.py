@@ -72,12 +72,15 @@ class DelegatedWorkServiceSettings:
     scope: TimelineScope
     worker_id: str
     poll_interval_seconds: float = 0.25
+    concurrency: int = 1
 
     def __post_init__(self) -> None:
         if not os.path.isabs(self.database_dsn_file):
             raise ValueError("delegated worker DSN file must be absolute")
         if not self.worker_id or len(self.worker_id) > 120:
             raise ValueError("delegated worker ID is invalid")
+        if type(self.concurrency) is not int or not 1 <= self.concurrency <= 2:
+            raise ValueError("delegated worker concurrency must be 1 or 2")
         if not 0.05 <= self.poll_interval_seconds <= 5:
             raise ValueError("delegated worker poll interval must be 0.05..5 seconds")
 
@@ -112,6 +115,7 @@ class DelegatedWorkServiceSettings:
                     "delegated worker scope is required",
                 )
             interval = float(values.get("EVA_DELEGATED_WORK_POLL_SECONDS", "0.25"))
+            concurrency = int(values.get("EVA_DELEGATED_WORK_CONCURRENCY", "1"))
         except ValueError as error:
             raise RuntimeError("delegated worker process settings are invalid") from error
         return cls(
@@ -119,6 +123,7 @@ class DelegatedWorkServiceSettings:
             scope=scope,
             worker_id=required("EVA_DELEGATED_WORKER_ID"),
             poll_interval_seconds=interval,
+            concurrency=concurrency,
         )
 
 
@@ -208,17 +213,21 @@ def _research_composition(settings: OpenAIDelegatedWorkSettings):
 
 
 class DelegatedWorkService:
-    """Poll one PostgreSQL authority and run at most one child at a time."""
+    """Poll one PostgreSQL authority through a bounded set of worker lanes."""
 
     def __init__(
         self,
         worker: DelegatedWorkWorker,
         *,
         poll_interval_seconds: float,
+        additional_workers: tuple[DelegatedWorkWorker, ...] = (),
     ) -> None:
         if not 0.05 <= poll_interval_seconds <= 5:
             raise ValueError("delegated worker poll interval must be 0.05..5 seconds")
+        if len(additional_workers) > 1 or any(item is worker for item in additional_workers):
+            raise ValueError("delegated service needs at most two distinct workers")
         self._worker = worker
+        self._workers = (worker, *additional_workers)
         self._poll_interval_seconds = poll_interval_seconds
 
     async def serve(self, *, once: bool = False) -> Literal["stopped", "completed"]:
@@ -237,19 +246,35 @@ class DelegatedWorkService:
             raise RuntimeError(
                 "delegated worker requires process signal handling"
             ) from error
+        async def lane(worker):
+            try:
+                while not stop.is_set():
+                    disposition = await worker.run_once(cancellation_event=stop)
+                    if once:
+                        return
+                    if disposition == "idle":
+                        try:
+                            await asyncio.wait_for(stop.wait(), timeout=self._poll_interval_seconds)
+                        except TimeoutError:
+                            pass
+            except BaseException:
+                # Ask sibling calls to stop through their existing durable
+                # cancellation path; do not abandon a running provider thread.
+                stop.set()
+                raise
+
+        tasks = [asyncio.create_task(lane(worker))
+                 for worker in (self._workers[:1] if once else self._workers)]
+        group = asyncio.gather(*tasks)
         try:
-            while not stop.is_set():
-                disposition = await self._worker.run_once(cancellation_event=stop)
-                if once:
-                    return "stopped" if stop.is_set() else "completed"
-                if disposition == "idle":
-                    try:
-                        await asyncio.wait_for(
-                            stop.wait(), timeout=self._poll_interval_seconds
-                        )
-                    except TimeoutError:
-                        pass
-            return "stopped"
+            try:
+                await asyncio.shield(group)
+            except BaseException:
+                stop.set()
+                # Join every lane before disposing the shared engine/provider.
+                await asyncio.shield(asyncio.gather(*tasks, return_exceptions=True))
+                raise
+            return "stopped" if stop.is_set() else "completed"
         finally:
             for requested_signal in installed:
                 loop.remove_signal_handler(requested_signal)
@@ -295,28 +320,37 @@ async def serve_delegated_work_service(
     engine = sa.create_engine(sqlalchemy_postgres_dsn(database_dsn), pool_pre_ping=True)
     try:
         require_restore_activation(engine)
-        store = PostgresDelegatedWorkStore(engine, selected.scope,
-            household_authorizer=getattr(runner, "household_authorizer", None))
-        bound_runner = runner.bind_store(store) if callable(getattr(runner, "bind_store", None)) else runner
-        if digital_settings is not None:
-            from eva.bootstrap.delegated_digital_composition import (
-                build_digital_runner, DigitalEnabledDelegatedRunner)
-            expected_scope = TimelineScope(UUID(digital_settings.dashboard_tenant_id),
-                                           UUID(digital_settings.dashboard_installation_id))
-            if expected_scope != store.scope:
-                raise ValueError("digital worker storage scope differs")
-            digital_runner = build_digital_runner(digital_settings, store)
-            bound_runner = DigitalEnabledDelegatedRunner(bound_runner, digital_runner)
-            release = (release if isinstance(release, tuple) else (release,)) + (digital_runner.profile.release,)
-        worker = DelegatedWorkWorker(
-            store,
-            bound_runner,
-            worker_id=selected.worker_id,
-            release=release,
-            clock=clock or (lambda: datetime.now(UTC).replace(microsecond=0)),
-        )
+        workers = []
+        lane_count = 1 if once else selected.concurrency
+        for index in range(lane_count):
+            store = PostgresDelegatedWorkStore(engine, selected.scope,
+                household_authorizer=getattr(runner, "household_authorizer", None))
+            bound_runner = runner.bind_store(store) if callable(getattr(runner, "bind_store", None)) else runner
+            lane_release = release
+            if digital_settings is not None:
+                from eva.bootstrap.delegated_digital_composition import (
+                    build_digital_runner, DigitalEnabledDelegatedRunner)
+                expected_scope = TimelineScope(UUID(digital_settings.dashboard_tenant_id),
+                                               UUID(digital_settings.dashboard_installation_id))
+                if expected_scope != store.scope:
+                    raise ValueError("digital worker storage scope differs")
+                # Connector and model objects belong to a lane; task counters
+                # and journals continue to be created by the existing runner.
+                digital_runner = build_digital_runner(digital_settings, store)
+                bound_runner = DigitalEnabledDelegatedRunner(bound_runner, digital_runner)
+                lane_release = (release if isinstance(release, tuple) else (release,)) + (digital_runner.profile.release,)
+            worker_id = (selected.worker_id if lane_count == 1 else
+                         f"{selected.worker_id[:112]}:slot-{index + 1}")
+            workers.append(DelegatedWorkWorker(
+                store,
+                bound_runner,
+                worker_id=worker_id,
+                release=lane_release,
+                clock=clock or (lambda: datetime.now(UTC).replace(microsecond=0)),
+            ))
         service = DelegatedWorkService(
-            worker,
+            workers[0],
+            additional_workers=tuple(workers[1:]),
             poll_interval_seconds=selected.poll_interval_seconds,
         )
         return await service.serve(once=once)
@@ -329,7 +363,7 @@ async def serve_openai_delegated_work(
     *,
     once: bool = False,
 ) -> Literal["stopped", "completed"]:
-    """Run one worker loop; each admitted task opens its own provider session."""
+    """Run bounded worker lanes; each task opens its own provider session."""
 
     digital_settings = None
     if settings.digital_enabled:
