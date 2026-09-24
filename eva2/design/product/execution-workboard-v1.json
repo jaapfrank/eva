@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T18:23:57.728438+00:00",
+        "checkedAt": "2026-09-24T18:35:48.502027+00:00",
         "deliveries": [
+          {
+            "title": "Privécontext aan juiste bestemming gebonden; antwoordkoppeling gecontroleerd",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Ontbrekende controle op persoon/installatie bij privécontinuïteit toegevoegd en geïnstalleerd. Overlappende Telegram-resultaten houden in de gerichte HTTP-proef hun oorspronkelijke vraag, ook bij omgekeerde aflevervolgorde.",
+            "remaining": "18 databasecontroles en29 Telegramcontroles geslaagd, onafhankelijk beoordeeld. Geen echte Telegram-/speakerproef of snelheidswinst geclaimd.",
+            "source": "eva2/evidence/product/private-continuity-boundary-installed-20260924.json"
+          },
           {
             "title": "Snelle ontvangstmelding ook in Home Assistant aangesloten",
             "date": "24 september",
@@ -2135,15 +2143,15 @@
           }
         ],
         "now": {
-          "title": "Ontvangstmelding in Eva en HA geïnstalleerd",
-          "state": "Geïnstalleerd; hoorproef open",
-          "detail": "Beide speakers idle, conversation.eva2 beschikbaar en bronhashes bevestigd. Geen nieuwe modelproef uitgevoerd.",
-          "doneWhen": "Technische koppeling afgerond; Jaap moet hoorbare ontvangst via echte speakers nog beoordelen."
+          "title": "Privécontinuïteit bijgewerkt; Telegram-antwoordkoppeling gecontroleerd",
+          "state": "Geïnstalleerd; praktijkproeven open",
+          "detail": "Bron4f154992 in gezonde kern/werker; gelijke uitvoerprofielen en website/spraakroute bereikbaar. Geen modelcalls of Telegramberichten.",
+          "doneWhen": "Gerichte technische wijziging afgerond; volledige kanaalgelijkheid en gebruikersacceptatie blijven open."
         },
         "next": {
-          "title": "Doorpraten tijdens lopend werk over de ingangen afronden",
+          "title": "Telegram-tussenvraag tijdens onderzoek afronden",
           "state": "Nog niet gestart",
-          "detail": "Werkelijke open verschillen in bestaande tekst-/spraakroutes aanpakken; fysieke ontvangstproef blokkeert onafhankelijk vervolgwerk niet."
+          "detail": "Bestaande ingang en taakoverdracht controleren op de nog gemelde wachtrij; de geslaagde antwoordkoppeling is geen bewijs van een snel tussengesprek."
         },
         "ownerAction": {
           "title": "Ontvangst op beide Voice PE-speakers horen",
@@ -2157,7 +2165,7 @@
           "expected": "Een korte ontvangstmelding vóór het inhoudelijke modelantwoord. Exacte tijd en natuurlijke beleving zijn nog niet bevestigd. De firmware is niet gewijzigd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T18:23:57.728438+00:00"
+        "reviewedAt": "2026-09-24T18:35:48.502027+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11869,7 +11877,7 @@
             "VB-002"
           ],
           "doneWhen": "Passend initiatief met werkelijk resultaat, terecht stil blijven en bestaande huisfuncties behouden; gezin beoordeelt eigenheid, plezier en hinder.",
-          "preserve": "Algemene HA-API geïnstalleerd op eigenaarroute en achtergrondwerker; echte discovery van 81 servicedomeinen/18 ruimtes. Brede gedeelde bediening wacht op eigenaarbesluit; modelgestuurde uitvoering en nut/hinder blijven open. Bestaande speakerbediening behouden.",
+          "preserve": "Algemene HA-API geïnstalleerd op eigenaarwebsite, Telegram en achtergrondwerker. Echte configuratieanalyse geslaagd; tijdelijke uitgeschakelde automatisering gemaakt, gewijzigd en teruggelezen, eindrapport na één hervatting. Brede gedeelde bediening, algemene huispraktijk en nut/hinder blijven open. Bestaande speakerbediening behouden.",
           "planningEffortHours": "4–12"
         },
         {
@@ -11882,7 +11890,7 @@
             "AU-003"
           ],
           "doneWhen": "Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg.",
-          "preserve": "Werkwijzeopslag, gerichte zoekvraag, privécontinuïteit, geïsoleerde Python-uitvoering en bewaard resultaat zijn aangesloten. Planning, hervatting en geïsoleerde kandidaatvergelijking blijven behouden. Echte leer-/meerdaagse proeven, gemeten verbeterwinst en toepassing zijn nog open.",
+          "preserve": "Eva heeft een Python-werkwijze geschreven, geregistreerd en op twee verschillende CSV-invoeren uitgevoerd; tweede taak gebruikte exact dezelfde code en bewaarde het gecontroleerde resultaat. Concrete hergebruikproef geslaagd. Leren uit externe documentatie, meerdaagse praktijk en eigen verbetering met gemeten winst blijven open; bestaande planning/hervatting behouden.",
           "planningEffortHours": "8–24"
         },
         {
@@ -11929,7 +11937,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Modelinvoer bij eenvoudig contact gericht verkleinen",
+      "nextAction": "Telegram-tussenvraag tijdens onderzoek afronden",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

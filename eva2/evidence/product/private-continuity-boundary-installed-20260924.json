@@ -1,0 +1,50 @@
+{
+  "checkedAt": "2026-09-24T18:35:48.502027+00:00",
+  "sourceCommit": "4f1549925a0d3eb892dec3ad612a16bf2bbcb34f",
+  "state": "installed",
+  "requirement": "Keep private continuity within its verified destination and asynchronous Telegram results attached to their original questions.",
+  "change": "recent_other_channel rejects a mismatched destination tenant, installation or audience principal before reading source data; existing source ownership and retention preserved.",
+  "checks": {
+    "postgres": "18 passed in 3.62s, disposable PostgreSQL",
+    "telegram": "29 passed in 2.31s, local HTTP and controlled receipts",
+    "review": "Coordinator independently reviewed privacy implementation and direct DB matrix; private_continuity_review independently reviewed Telegram regressions.",
+    "liveSource": "Telegram transport byte-identical to repository before install; changed privacy module hashes exact after install.",
+    "profiles": "Complete core and worker release/configuration/source profiles equal.",
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard": 200,
+      "http://localhost:44716/session/ready": 200
+    }
+  },
+  "deployment": {
+    "checkedAt": "2026-09-24T18:35:07.141698+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:687a1a28a04d228837472f884a547cc8d322986598f91529c85b92f9c22e87d1",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/people_memory_overview.py": "053c997908c8089af7422df489047e9613a1e116496042e235222a87693dfe61"
+        }
+      },
+      "worker": {
+        "image": "sha256:71962bfe8161b4385750236ebf8f0c8ba1c59f109e407138f5b23001acd4fbf0",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/people_memory_overview.py": "053c997908c8089af7422df489047e9613a1e116496042e235222a87693dfe61"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/private-continuity-boundary-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/private-continuity-boundary-20260924/baseline.compose.private.json",
+  "testArtifacts": [
+    "/home/administrator/project/.eva2-artifacts/private-continuity-boundaries-20260924/",
+    "/home/administrator/project/.eva2-artifacts/telegram-binding-regression-20260924/"
+  ],
+  "limitations": [
+    "No real Telegram messages sent; reordered local HTTP delivery does not establish foreground model latency or complete ingress concurrency.",
+    "No physical voice trial or new owner acceptance.",
+    "Target mismatch was a missing adapter guard, not evidence of a private-data leak through current ingress."
+  ],
+  "modelCalls": 0,
+  "developmentCredits": "unknown; not estimated"
+}
