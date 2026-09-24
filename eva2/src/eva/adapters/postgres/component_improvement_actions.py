@@ -1,5 +1,7 @@
-"""Owner task source inspection and durable improvement drafts; no code execution."""
+"""Owner source drafts and fixed isolated evaluations, never live installation."""
 from pathlib import Path
+
+from eva.adapters.connectors.component_evaluation import configured_component_evaluator
 
 from eva.application.component_improvements import read_component, draft_component
 from eva.application.conversation import ConversationActionCall, ConversationActionReceipt, ConversationConflict, ConversationToolDescriptor
@@ -9,7 +11,10 @@ from eva.contracts.canonical_json import canonical_sha256
 
 READ = "read_own_component_source"
 DRAFT = "draft_own_component_improvement"
+EVALUATE = "evaluate_own_component_improvement"
 _SCHEMAS = {
+    EVALUATE: {"type": "object", "additionalProperties": False, "required": ["draft_step"],
+               "properties": {"draft_step": {"type": "integer", "minimum": 0}}},
     READ: {"type": "object", "additionalProperties": False, "required": ["path"],
            "properties": {"path": {"type": "string", "maxLength": 240},
                           "start_line": {"type": "integer", "minimum": 1}}},
@@ -23,7 +28,16 @@ _SCHEMAS = {
 
 
 def component_descriptors():
-    return (
+    evaluator = configured_component_evaluator()
+    evaluation = () if evaluator is None else (ConversationToolDescriptor(EVALUATE,
+        "Voer het eerder in deze opdracht opgeslagen eigen codevoorstel geïsoleerd uit. "
+        "Gebruik draft_step uit het voorstelresultaat. Dezelfde vooraf ingestelde controle draait "
+        "op origineel en kandidaat zonder netwerk of privégegevens; geen installatie. "
+        "Ondersteunde componenten: " + ", ".join(evaluator.allowed_paths) + ". "
+        "Bewaar het meetrapport met save_workspace_document. Een geslaagde controle is geen bewijs "
+        "van algemene verbetering; tijd omvat ook opstartkosten.", _SCHEMAS[EVALUATE],
+        "Meld werkelijk gemeten uitkomsten en grenzen. De kandidaat wordt niet automatisch toegepast."),)
+    return (*evaluation,
         ConversationToolDescriptor(READ,
             "Lees de werkelijk geïnstalleerde Eva-broncode. Leeg path toont de mappen; "
             "een Python-pad geeft maximaal 160 regels en een bronhash. Gebruik next_line voor vervolg. "
@@ -44,6 +58,8 @@ class ComponentImprovementActions:
     supports_indexed_steps = True
 
     def __init__(self, engine, spec, source, authorize, dispatch, clock):
+        self.evaluator = configured_component_evaluator()
+        self.action_names = (READ, DRAFT) + (() if self.evaluator is None else (EVALUATE,))
         self.spec, self.source = spec, source
         self.authorize, self.dispatch, self.clock = authorize, dispatch, clock
         self.root = Path(__file__).resolve().parents[2]
@@ -80,10 +96,27 @@ class ComponentImprovementActions:
                 raise ConversationConflict("component action changed during replay")
             return replay
         self.dispatch(turn)
-        value = (read_component(self.root, **call.arguments) if call.name == READ
-                 else draft_component(self.root, call.arguments))
-        output = {"status": "verified", "operation_result": value,
-                  "scope": "source_read" if call.name == READ else "unexecuted_proposal"}
+        if call.name == EVALUATE:
+            draft_step = call.arguments["draft_step"]
+            if draft_step >= step_index:
+                raise ConversationConflict("evaluation requires an earlier recorded draft")
+            draft_receipt = self.pending(turn, step_index=draft_step)
+            if draft_receipt is None or draft_receipt.call.name != DRAFT:
+                raise ConversationConflict("component draft does not exist in this task")
+            draft = draft_receipt.output["operation_result"]
+            # Revalidate the live source binding; a stale candidate is not rebased silently.
+            current = read_component(self.root, draft["path"])
+            if current["source_sha256"] != draft["source_sha256"]:
+                raise ConversationConflict("installed component changed after draft")
+            value = self.evaluator.evaluate(draft)
+            scope = "isolated_measurement"
+        else:
+            value = (read_component(self.root, **call.arguments) if call.name == READ
+                     else draft_component(self.root, call.arguments))
+            if call.name == DRAFT:
+                value["draft_step"] = step_index
+            scope = "source_read" if call.name == READ else "unexecuted_proposal"
+        output = {"status": "verified", "operation_result": value, "scope": scope}
         self.authorize(turn)
         self.timeline.create_thread(thread_id=self._thread(step_index),
             checkpoint_id=self._thread(step_index) + ":saved", occurred_at=self.clock(),

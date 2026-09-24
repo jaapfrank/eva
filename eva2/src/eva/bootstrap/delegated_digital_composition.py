@@ -10,6 +10,7 @@ from eva.bootstrap.background_browser_context import configured_browser_client, 
 from eva.contracts.canonical_json import canonical_sha256
 from eva.adapters.postgres.background_work_progress import progress_descriptor
 from eva.adapters.postgres.component_improvement_actions import component_descriptors
+from eva.adapters.connectors.component_evaluation import configured_component_evaluator
 
 _CONNECTORS = frozenset({"connect_service", "discover_connector_tools",
                         "manage_connected_services", "use_connector_tool"})
@@ -26,6 +27,7 @@ _EXECUTION_SOURCES = (
     "adapters/postgres/work_corrections.py",
     "adapters/postgres/component_improvement_actions.py",
     "application/component_improvements.py",
+    "adapters/connectors/component_evaluation.py",
     "bootstrap/private_conversation_resources.py",
     "adapters/model/pydantic_conversation.py",
     "providers/mcp_autonomy.py",
@@ -92,6 +94,7 @@ def build_digital_profile(settings, provider_bundle):
         "reasoning_effort": settings.conversation_reasoning_effort,
         "budget": asdict(budget), "providers": providers,
         "browser_availability": _configuration_value(configured_browser_client()),
+        "component_evaluator": _configuration_value(configured_component_evaluator()),
         "descriptors": [asdict(tool) for tool in descriptors],
         "memory": {"url": settings.hindsight_url, "namespace": settings.hindsight_bank_namespace,
                    "budget": settings.hindsight_recall_budget, "tokens": settings.hindsight_recall_max_tokens,
