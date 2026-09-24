@@ -15,5 +15,18 @@
     "reviewer": "background_execution_seam",
     "result": "No native HA start action remains in generated candidate; wakeword/button invoke eva_local_wake. Shared microphone has reference-counted listeners. Retained HA error handler can set red phase; custom phase callback cannot. No root cause established.",
     "deviceChanged": false
+  },
+  "sourceRecheck20260924": {
+    "checkedAt": "2026-09-24T00:02:00.110964+00:00",
+    "hypothesis": "An unconverted voice_assistant.start_continuous or native HA start remains in the generated candidate.",
+    "sources": [
+      "firmware/native-controls.yaml",
+      "firmware/.esphome/storage/woonkamer.yaml.validated.yaml",
+      "firmware/.esphome/build/home-assistant-voice-0a16e0/src/main.cpp"
+    ],
+    "result": "No native start/start_continuous action found; wakeword and button call eva_local_wake. Existing candidate log has connection/idle but no captured wakeword transition. Hypothesis unsupported.",
+    "deviceChanged": false,
+    "modelCalls": 0,
+    "nextRequiredEvidence": "A captured wakeword transition on the failing candidate. Do not repeat firmware installation merely to speculate."
   }
 }

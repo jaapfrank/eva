@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T23:59:08.433115+00:00",
+        "checkedAt": "2026-09-24T00:02:00.110964+00:00",
         "deliveries": [
           {
             "title": "Stap 1: onderzoek via de achtergrondroute",
@@ -1637,15 +1637,15 @@
           }
         ],
         "now": {
-          "title": "Stap 1: doorpraten tijdens onderzoek",
-          "state": "Geïnstalleerd",
-          "detail": "De gedeelde snelle gespreksroute krijgt geen wachtende onderzoeksfunctie meer aangeboden als achtergrondonderzoek beschikbaar is. Stoppen van een gekoppelde opdracht blijft eveneens bij het gespreksmodel.",
-          "doneWhen": "Gedeelde kern geïnstalleerd; volledige projectstap 1 blijft open."
+          "title": "Stap 1: Voice PE-oorzaak nog niet vastgesteld",
+          "state": "Gerichte diagnose nodig",
+          "detail": "Controle van de werkelijk gegenereerde firmware vond geen achtergebleven native HA-startactie. De opname bevat geen falende wakeword-overgang. Werkende firmware behouden; geen speculatieve aanpassing.",
+          "doneWhen": "Oorzaak en oplossing voor continue Voice PE vastgesteld; daarna blijft fysieke gebruikersacceptatie afzonderlijk."
         },
         "next": {
-          "title": "Stap 1: resterend spraakgedrag",
-          "state": "Open",
-          "detail": "Snelle begroeting en doorpraten moeten op de echte ingangen kloppen. De bestaande diagnose bevat geen wakeword-overgang van de falende continue-firmware; geen herinstallatie op vermoeden. Uitgebreide proeven blijven uitgesteld."
+          "title": "Keuze fysieke diagnose of onafhankelijk vervolg",
+          "state": "Vraag staat open",
+          "detail": "Jaap is gevraagd of de korte Voice PE-diagnose nu kan, of dat overige projectfuncties voorgaan zoals bij uitgestelde proeven afgesproken. Geen nieuw bouwresultaat in deze diagnosebeurt."
         },
         "ownerAction": {
           "title": "Je hoeft nu geen nieuwe proef te doen",
@@ -1659,7 +1659,7 @@
           "expected": "Onderzoek heeft een achtergrondroute; werkelijke snelheid en fysieke bediening worden nog niet als bewezen gepresenteerd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-23T23:59:08.433115+00:00"
+        "reviewedAt": "2026-09-24T00:02:00.110964+00:00"
       }
     },
     "pendingTechnicalReview": {
