@@ -1159,13 +1159,13 @@ class LivingConversation:
                 voice.event({"type": "action_finished", "name": call.name,
                              "status": completed.output.get("status", "unknown")})
             acceptance = completed.output.get("acceptance_message")
-            if (model is contact_model and len(receipts) == 1
-                    and call.name in {"start_delegated_work", "start_background_research", "start_digital_work"}
+            if (call.name in {"start_delegated_work", "start_background_research", "start_digital_work"}
                     and completed.output.get("status") == "verified"
                     and isinstance(acceptance, str) and acceptance.strip()
                     and len(acceptance) <= 240 and callable(guard_factory)):
-                # The first model drafts a natural acceptance inside its tool
-                # arguments. Publish only after durable admission and the same
+                # The admitting model already drafted a natural acceptance.
+                # Earlier lookup steps do not require another model reply.
+                # Publish only after durable admission and the same
                 # stop/authority guard used by the ordinary second-model reply.
                 reply_guard = guard_factory(turn, tuple(receipts))
                 if reply_guard is not None:
