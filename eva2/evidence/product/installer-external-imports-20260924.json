@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-09-24T02:43:59.236703+00:00",
+  "sourceCommit": "a61e0a13a4763203569d0c806c614c8725dceaaa",
+  "kind": "operator_restore_integration",
+  "availableCommand": "python3 /home/administrator/project/.eva2-artifacts/installer-external-20260924/start-installer.py --restore-config /absolute/private/target.json",
+  "checks": [
+    "Changed Python source syntax",
+    "Staged host launcher --help",
+    "External restore module and wizard/API imports"
+  ],
+  "behavior": [
+    "Existing restore action can import memory dump and gateway SQLite into explicitly configured empty isolated targets",
+    "No external import configuration preserves the previous staging-only behavior",
+    "Database/file partial outcomes require inspection, never automatic retries",
+    "Core restore remains held; no services started"
+  ],
+  "notPerformed": [
+    "No database import or filesystem restoration",
+    "No full HTTP restore workflow trial",
+    "No active installation changes",
+    "No owner acceptance"
+  ],
+  "remaining": [
+    "Document provider mapping and verification",
+    "Separate activation of restored installation",
+    "Complete isolated restore and relocation trial"
+  ],
+  "rollback": "Select previous host stage installer-recovery-20260924 before running any recovery; after partial imports preserve and inspect targets, do not rerun old workflow over them",
+  "paidModelCalls": 0
+}
