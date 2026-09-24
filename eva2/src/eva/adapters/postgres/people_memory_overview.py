@@ -223,9 +223,28 @@ class PostgresOwnerMemorySources:
                             data["principal_id"].astext == alias,
                             data["conversation_id"].astext == alias))
                     dictionary = sa.literal_column("'dutch'::regconfig")
-                    query = query.where(history_channels,
-                        sa.func.to_tsvector(dictionary, sa.func.coalesce(data["content"].astext, "")).op("@@")(
-                            sa.func.plainto_tsquery(dictionary, history_query)))
+                    terms = sa.func.plainto_tsquery(dictionary, history_query)
+                    reply = operational_events.alias("private_history_reply")
+                    reply_data = reply.c.payload["data"]
+                    # Search only the exact reply paired with this still-retained
+                    # private source. Presentation revalidates the journal reply.
+                    reply_match = sa.exists(sa.select(1).select_from(reply).where(
+                        reply.c.tenant_id == e.tenant_id,
+                        reply.c.installation_id == e.installation_id,
+                        reply.c.thread_id == sa.literal("conversation:") + data["source_ref"].astext,
+                        reply.c.event_type == "REPLY_COMMITTED",
+                        reply.c.occurred_at <= now,
+                        reply_data["kind"].astext == "conversation_reply",
+                        reply_data["principal_id"].astext == data["principal_id"].astext,
+                        reply_data["conversation_id"].astext == data["conversation_id"].astext,
+                        reply_data["message_id"].astext == data["source_ref"].astext,
+                        reply_data["project_id"].astext.is_not_distinct_from(data["project_id"].astext),
+                        sa.not_(reply_data.has_key("content_erasure")),
+                        sa.func.to_tsvector(dictionary, sa.func.coalesce(reply_data["text"].astext, "")).op("@@")(terms),
+                    ).correlate(operational_events))
+                    query = query.where(history_channels, sa.or_(
+                        sa.func.to_tsvector(dictionary, sa.func.coalesce(data["content"].astext, "")).op("@@")(terms),
+                        reply_match))
                 if source_id is not None:
                     query = query.where(e.event_id == UUID(source_id))
                 if cursor:
