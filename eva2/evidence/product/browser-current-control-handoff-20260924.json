@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-09-24T18:58:20.822555+00:00",
+  "kind": "current_browser_control_handoff",
+  "sourceCommit": "3f77a151ae8e56c5337f81146dfb8ad41863ec99",
+  "personalChrome": {
+    "controlUrl": "http://localhost:44718/",
+    "state": "disconnected",
+    "connected": false,
+    "busy": false,
+    "ownerSelectionRequired": true
+  },
+  "managedBrowser": {
+    "statusUrl": "http://localhost:44711/internal/v1/dashboard/browser/status",
+    "revision": 38,
+    "state": "owner",
+    "browser_ready": true,
+    "mcp_ready": false,
+    "profile_preserved": true
+  },
+  "ownerQuestion": "Asked owner to explicitly share a harmless Chrome tab, or choose the managed browser for the trial. No answer received during this check.",
+  "sourceReview": {
+    "reviewer": "private_continuity_review",
+    "findings": [
+      "Background context refreshes managed-browser status every model phase; it is not the personal Chrome status.",
+      "Managed takeover stops MCP before owner control; giveback revokes viewer before MCP restart.",
+      "Recovery does not automatically replay uncertain browser actions.",
+      "Fresh observation is instructed; this review alone does not prove an integrated stale-click prevention test."
+    ]
+  },
+  "decision": "Do not override current owner control or select a personal tab automatically. Only actual browser trial waits for the owner selection; other goal work may continue.",
+  "notProven": [
+    "Current model-driven browser task completion",
+    "Personal Chrome takeover/return user trial",
+    "Worker continuation after actual browser recovery",
+    "Exact live dynamic MCP browser connector selection"
+  ],
+  "productionChanged": false,
+  "modelCalls": 0,
+  "browserActions": 0,
+  "developmentCredits": "unknown; not estimated"
+}

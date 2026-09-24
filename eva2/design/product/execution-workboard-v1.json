@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T18:53:56.746976+00:00",
+        "checkedAt": "2026-09-24T18:58:20.822555+00:00",
         "deliveries": [
           {
             "title": "Bijsturen toont wat werkelijk is gestopt en hervat",
@@ -2159,29 +2159,29 @@
           }
         ],
         "now": {
-          "title": "Duidelijke uitkomst bij gedeeltelijk mislukte bijsturing",
-          "state": "Geïnstalleerd",
-          "detail": "Bron0c3ddf14 in kern/werker en eigenaarwebsite. Gezonde diensten, gelijke uitvoerprofielen, actuele websitebestanden gecontroleerd. Geen modelcalls.",
-          "doneWhen": "Deze gerichte bediening is technisch afgerond; volledige taak-/kanaalacceptatie blijft open."
+          "title": "Browserproef wacht op gedeeld tabblad of gekozen browser",
+          "state": "Alleen browserproef wacht op Jaap",
+          "detail": "Persoonlijke Chrome: geen tabblad gedeeld. Eigen browser: jij hebt bediening, browser klaar en MCP uit. Geen bediening overgenomen of nieuwe browserinfrastructuur gemaakt.",
+          "doneWhen": "Na tabselectie de echte opdracht/overnameproef uitvoeren; overige functies kunnen onafhankelijk verder."
         },
         "next": {
-          "title": "Browseropdrachten afmaken en overnemen",
+          "title": "Leren uit documentatie en meerdaags werk afronden",
           "state": "Nog niet gestart",
-          "detail": "Bestaande browserroute gebruiken en het concrete resterende tekort bij uitvoering/overname/hervatting aanpakken; geen nieuwe browserinfrastructuur."
+          "detail": "Bestaande geslaagde CSV-hergebruikproef behouden; resterende documentatie-/projectcontinuïteit uit stap5 gericht oppakken terwijl browserkeuze openstaat."
         },
         "ownerAction": {
-          "title": "Tussenvraag op de bijgewerkte Telegramroute",
-          "url": "http://localhost:44712/",
-          "linkLabel": "Projectoverzicht",
+          "title": "Kies browser voor de echte overnameproef",
+          "url": "http://localhost:44718/",
+          "linkLabel": "Chrome-tabblad delen",
           "steps": [
-            "Stuur in je gewone privéchat met Eva: /eva2 Zoek uit wat Home Assistant Cloud doet voor spraak, met bronnen.",
-            "Stuur direct daarna: /eva2 Hoe gaat het met jou?",
-            "Meld of de tussenvraag vóór het onderzoeksresultaat beantwoord wordt en ongeveer hoe lang dat duurt."
+            "Open de Chrome-bediening via deze link op je computer.",
+            "Kies Deel een bestaand tabblad en selecteer zelf een onschuldig tabblad in de extensie.",
+            "Meld hier gedeeld. Of kies in de open vraag om voorlopig Eva’s eigen browser te gebruiken."
           ],
-          "expected": "De tussenvraag hoeft niet op het onderzoeksresultaat te wachten. De technische proef bewijst nog niet dat het model snel genoeg antwoordt. De eerder gevraagde hoorproef op beide speakers blijft ook open."
+          "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T18:53:56.746976+00:00"
+        "reviewedAt": "2026-09-24T18:58:20.822555+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11953,7 +11953,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Browseropdrachten afmaken en overnemen",
+      "nextAction": "Leren uit documentatie en meerdaags werk afronden",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
