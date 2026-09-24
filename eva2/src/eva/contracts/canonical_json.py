@@ -94,10 +94,9 @@ def is_hex_sha256(value: object) -> bool:
     if not isinstance(value, str) or len(value) != 64:
         return False
     try:
-        bytes.fromhex(value)
+        return len(bytes.fromhex(value)) == 32
     except ValueError:
         return False
-    return True
 
 
 def is_lowercase_sha256(value: object) -> bool:
