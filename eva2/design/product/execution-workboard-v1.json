@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T02:29:48.253237+00:00",
+        "checkedAt": "2026-09-24T02:32:15.904536+00:00",
         "deliveries": [
           {
             "title": "Eigen verbeterpakket naar releasebron overnemen",
@@ -1765,29 +1765,28 @@
           }
         ],
         "now": {
-          "title": "Snelle begroeting nog niet gehaald",
-          "state": "Open · geen nieuwe snelheidswinst",
-          "detail": "Het snelle contactmodel is al actief. Eerdere optimalisaties maakten de totale reactie niet sneller; geen nieuwe betaalde proef of herhaalde wijziging.",
-          "doneWhen": "Korte natuurlijke reactie via de echte route aantoonbaar snel. Dat bewijs ontbreekt nog."
+          "title": "Continue Voice PE wacht op fysieke diagnose",
+          "state": "Wacht op meetmoment",
+          "detail": "De fout is niet vastgelegd tijdens een wakeword. Gewone spraak werkt op de herstelde firmware; geen nieuwe firmwarewissel of reparatieclaim.",
+          "doneWhen": "Eén vastgelegde falende overgang geeft een concrete oorzaak om te corrigeren; daarna fysieke bevestiging."
         },
         "next": {
-          "title": "Continue Voice PE-sessie bij wakeword herstellen",
+          "title": "Bestaande installatiebediening afronden",
           "state": "Nog niet gestart",
-          "detail": "Kandidaatconfiguratie en bestaande diagnose gericht bekijken. Gewone werkende spraak behouden; geen blinde firmwarewissel."
+          "detail": "De reeds aanwezige ongeïntegreerde aansluiting beoordelen en afronden; geen verhuizing of herstel van de actieve installatie uitvoeren."
         },
         "ownerAction": {
-          "title": "Kies wie huisbediening via speakers mag gebruiken",
+          "title": "Kies wanneer de Voice PE-diagnose kan",
           "url": "http://localhost:44712/",
           "linkLabel": "Projectoverzicht",
           "steps": [
-            "Beantwoord de vraag in deze Codex-taak: mag iedereen via beide speakers de bestaande toegestane lampen en schakelaars bedienen?",
-            "Privégeheugen en persoonlijke gesprekken worden hiermee niet gedeeld.",
-            "Er is nu geen fysieke proef nodig."
+            "Beantwoord de vraag in deze Codex-taak: voorlopig uitstellen of één kort wakeword-meetmoment afspreken.",
+            "Zonder afgesproken meetmoment blijft de werkende firmware staan."
           ],
-          "expected": "Na je keuze kan de voorbereide configuratie gericht worden geïnstalleerd of de privébeperking behouden blijven."
+          "expected": "Een vastgelegde falende wakeword-overgang; geen herhaling van een blinde firmwareproef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T02:29:48.253237+00:00"
+        "reviewedAt": "2026-09-24T02:32:15.904536+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11559,7 +11558,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Continue Voice PE-sessie bij wakeword herstellen. Begin met bestaande bron/configuratie; snelle begroeting blijft open.",
+      "nextAction": "Continue Voice PE wacht op een afgesproken meetmoment. Onafhankelijk: bestaande installatiebediening uit stap 6 afronden; actieve gegevens niet herstellen of verplaatsen.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
