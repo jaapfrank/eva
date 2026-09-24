@@ -247,3 +247,62 @@ test('ieder privéaccount wordt afzonderlijk aan Eva2 aangeboden', async () => {
   }
   assert.deepEqual(identities, [['7', 7], ['8', 8]]);
 });
+
+
+test('receipt precedes blocked answer and does not become its draft prefix', async () => {
+  const drafts = []; let controller; let receiptSeen;
+  const seen = new Promise(resolve => { receiptSeen = resolve; });
+  const sink = createEva2DraftSink({ chatId: 7, draftId: 9301,
+    sendDraft: async value => { drafts.push(value); return true; } });
+  const pending = askEva2Canary({
+    baseUrl: 'http://local', chatId: 7, fromId: 7, messageId: 9301,
+    text: '/eva2 Hallo', telegramDate: 1787486400,
+    onDraft: sink, onReceipt: async text => { await sink.receipt(text); receiptSeen(); },
+    fetchImpl: async () => new Response(new ReadableStream({ start(value) { controller = value; } }),
+      { headers: { 'content-type': 'application/x-ndjson', 'x-eva-input-receipt': 'Een momentje.' } }),
+  });
+  await seen;
+  assert.deepEqual(drafts, [{ chat_id: 7, draft_id: 9301, text: 'Een momentje.' }]);
+  const rows = [{ contract: 'EvaTextDelta/v1', text: 'Hallo!' },
+    { contract: 'EvaInternalGroundedReply/v1', conversation_id: 'telegram:7',
+      message_id: 'telegram:7:9301', text: 'Hallo!' }];
+  controller.enqueue(new TextEncoder().encode(rows.map(JSON.stringify).join('\n') + '\n'));
+  controller.close();
+  assert.equal((await pending).text, 'Hallo!');
+  assert.equal(drafts[1].text, 'Hallo!');
+});
+
+for (const mode of ['denied', 'missing', 'oversized', 'failed']) {
+  test(`optional receipt ${mode} preserves answer or HTTP failure`, async () => {
+    let receipts = 0;
+    const headers = { 'content-type': 'application/x-ndjson' };
+    if (mode !== 'missing') headers['x-eva-input-receipt'] = mode === 'oversized' ? 'x'.repeat(121) : 'Een momentje.';
+    const pending = askEva2Canary({
+      baseUrl: 'http://local', chatId: 7, fromId: 7, messageId: 9302,
+      text: '/eva2 Hallo', telegramDate: 1787486400,
+      onDraft: async () => {}, onReceipt: async () => { receipts++; throw new Error('draft unavailable'); },
+      fetchImpl: async () => new Response(JSON.stringify({ contract: 'EvaInternalGroundedReply/v1',
+        conversation_id: 'telegram:7', message_id: 'telegram:7:9302', text: 'Hallo!' }) + '\n',
+        { status: mode === 'denied' ? 403 : 200, headers }),
+    });
+    if (mode === 'denied') await assert.rejects(pending, /HTTP 403/u);
+    else assert.equal((await pending).text, 'Hallo!');
+    assert.equal(receipts, mode === 'failed' ? 1 : 0);
+  });
+}
+
+
+test('receipt draft aborts slow transport without disabling real drafts', async () => {
+  let calls = 0;
+  const sink = createEva2DraftSink({ chatId: 7, draftId: 9303,
+    sendDraft: async (_payload, signal) => {
+      calls++;
+      if (!signal) return true;
+      return new Promise((_resolve, reject) => {
+        signal.addEventListener('abort', () => reject(new Error('aborted')), { once: true });
+      });
+    } });
+  assert.equal(await sink.receipt('Een momentje.'), false);
+  assert.equal(await sink('Hallo!'), true);
+  assert.equal(calls, 2);
+});
