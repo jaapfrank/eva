@@ -30,7 +30,7 @@ DASHBOARD_WORK_RETURN_CLIENT_JS = r"""
       this.running=false; this.closed=false; this.generation=0; this.seen=new Set();
     }
     suspend() {
-      this.generation++; this.cancel(this.timer); this.controller?.abort(); this.clear();
+      this.generation++; this.cancel(this.timer); this.controller?.abort(); this.clear(); this.seen.clear();
     }
     close() { this.closed=true; this.suspend(); }
     resume() { this.closed=false; return this.poll(); }
@@ -70,7 +70,7 @@ DASHBOARD_WORK_RETURN_CLIENT_JS = r"""
           if(ack.status!=='acknowledged') throw new Error('return acknowledgement');
         }
       } catch(error) {
-        if(current()) { this.clear(); this.failed(); }
+        if(current()) { this.clear(); this.seen.clear(); this.failed(); }
       } finally {
         this.cancel(timeout); this.running=false;
         if(!this.closed && this.visible()) this.timer=this.schedule(()=>this.poll(),5000);

@@ -115,7 +115,9 @@ class PrivateWorkReturnStore:
                 claimed = sa.exists(sa.select(checkpoints.c.thread_id).where(
                     checkpoints.c.tenant_id == runs.c.tenant_id,
                     checkpoints.c.installation_id == runs.c.installation_id,
-                    checkpoints.c.thread_id == delivery_prefix + runs.c.work_id))
+                    checkpoints.c.thread_id == delivery_prefix + runs.c.work_id,
+                    # Text can retry an unacknowledged transfer without replaying work.
+                    sa.true() if voice else checkpoints.c.phase != 'claimed'))
                 cutoff = failure_notice_cutoff(connection, self.work, now)
                 query = sa.select(runs).where(
                     runs.c.tenant_id == self.work.scope.tenant_id,
@@ -132,7 +134,8 @@ class PrivateWorkReturnStore:
                     .limit(1).with_for_update(of=runs, skip_locked=True)).mappings().one_or_none()
                 if row is None:
                     document = self._next_document(connection, route, delivery_prefix,
-                        opened_at=datetime.fromisoformat(opened['opened_at']) if voice else None)
+                        opened_at=datetime.fromisoformat(opened['opened_at']) if voice else None,
+                        retry_claimed=not voice)
                     if document is None:
                         return {'status': 'idle', 'result': None}
                 else:
@@ -162,12 +165,24 @@ class PrivateWorkReturnStore:
             state = self._state(connection, thread)
             if operation == 'poll':
                 if state is not None:
-                    raise ValueError("result already claimed")
-                insert_initial_timeline_thread(connection, self.work.scope,
-                    thread_id=thread, checkpoint_id=thread+':claimed', occurred_at=now,
-                    event_type='PRIVATE_WORK_RETURN_CLAIMED', phase='claimed', status='active',
-                    deadline=now+timedelta(minutes=10), operation_id=identity,
-                    data={'route': route, 'work_id': returned_id, 'operation_id': identity})
+                    if (voice or state['phase'] != 'claimed'
+                            or state['operation_id'] != identity
+                            or self._first(connection, thread) != {'route': route,
+                                'work_id': returned_id, 'operation_id': identity}):
+                        raise ValueError("result already claimed or binding changed")
+                    if now >= state['deadline']:
+                        transition_timeline_thread(connection, self.work.scope,
+                            thread_id=thread, expected_revision=state['revision'],
+                            checkpoint_id=thread+':retry:'+str(state['revision']), occurred_at=now,
+                            event_type='PRIVATE_WORK_RETURN_TRANSFER_RETRIED',
+                            phase='claimed', status='active', deadline=now+timedelta(minutes=10),
+                            operation_id=identity, data={'operation_id': identity})
+                else:
+                    insert_initial_timeline_thread(connection, self.work.scope,
+                        thread_id=thread, checkpoint_id=thread+':claimed', occurred_at=now,
+                        event_type='PRIVATE_WORK_RETURN_CLAIMED', phase='claimed', status='active',
+                        deadline=now+timedelta(minutes=10), operation_id=identity,
+                        data={'route': route, 'work_id': returned_id, 'operation_id': identity})
             else:
                 if (state is None or operation_id != identity
                         or self._first(connection, thread) != {'route': route,
@@ -212,11 +227,12 @@ class PrivateWorkReturnStore:
             raise ValueError('document return belongs to another private route')
         return result
 
-    def _next_document(self, connection, route, prefix, *, opened_at):
+    def _next_document(self, connection, route, prefix, *, opened_at, retry_claimed=False):
         if self.documents is None:
             return None
         for work_id in self.documents.candidates():
-            if self._state(connection, prefix + work_id) is not None:
+            state = self._state(connection, prefix + work_id)
+            if state is not None and not (retry_claimed and state['phase'] == 'claimed'):
                 continue
             try:
                 result = self._document(work_id, route)
