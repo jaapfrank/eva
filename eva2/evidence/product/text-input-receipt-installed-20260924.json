@@ -1,0 +1,82 @@
+{
+  "checkedAt": "2026-09-24T20:23:16.781945+00:00",
+  "state": "installed",
+  "coreSourceCommit": "ddeee5b7012638eeb2e02208dd3a8987d5f772a2",
+  "telegramCheckpoint": {
+    "baseCommit": "909bff513d7d7fd653d6a7f270d9e73facce430d",
+    "sourceCommit": "9103dfc783c14ef1acc92400af24809899f21644",
+    "branch": "codex/telegram-input-receipt-20260924",
+    "files": [
+      "src/integrations/eva2canary.js",
+      "src/integrations/telegram.js",
+      "src/telegramdialogue.js",
+      "src/integrations/telegrampolling.js",
+      "test/eva2-telegram-canary.test.js",
+      "test/telegram-concurrent-ingress.test.js",
+      "test/telegram-concurrent-polling.test.js"
+    ],
+    "reason": "Main lacks active legacy Telegram source checkpoint; preserve narrowly required active modules without resetting dirty runtime or merging unrelated legacy code."
+  },
+  "outcome": "Shared input receipt displayed immediately after successful text stream HTTP headers, before model content. Website pending state and private Telegram transient draft; no memory/final-answer contamination or extra model request.",
+  "checks": {
+    "core": "13 passed",
+    "telegramNewCases": "6 passed",
+    "telegramExistingFailures": "Two old503retry expectations fail identically on unchanged baseline; single-request runtime semantics preserved",
+    "review": "Telegram implementer reviewed core independently; coordinator reviewed Telegram patch",
+    "coreInstallation": {
+      "checkedAt": "2026-09-24T20:21:46.820544+00:00",
+      "services": {
+        "core": {
+          "image": "sha256:26ca6b85bd60a8d8a6feb68fff07a63fecd4e4a17dfb89bdfaca686263ffb224",
+          "health": "healthy",
+          "sourceHashes": {
+            "adapters/api/dashboard_conversation.py": "f0fe0bf845c4ac11244fc49b09c85a82efe9dae39d865154778bcdced67d0b96",
+            "application/conversation_receipt.py": "a834e6491e77657eff16e4f3d5355ef55a0680f37399754d1a3722c44e8c9dc6"
+          }
+        },
+        "worker": {
+          "image": "sha256:af85fbbe295fa44b31235764dc1de3be190d663aa0e08d3a72d1e24be9286428",
+          "health": "healthy",
+          "sourceHashes": {
+            "adapters/api/dashboard_conversation.py": "f0fe0bf845c4ac11244fc49b09c85a82efe9dae39d865154778bcdced67d0b96",
+            "application/conversation_receipt.py": "a834e6491e77657eff16e4f3d5355ef55a0680f37399754d1a3722c44e8c9dc6"
+          }
+        }
+      },
+      "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/text-input-receipt-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+    },
+    "telegramInstallation": {
+      "service": "eva.service",
+      "active": true,
+      "sourceCommit": "9103dfc783c14ef1acc92400af24809899f21644",
+      "sourceHashes": {
+        "src/integrations/eva2canary.js": "803b6aad6f2462eea95e53758b9dc589ffdcfeff45d20dee9710e5cbeb49b676",
+        "src/integrations/telegram.js": "2c9e195c2adf13fa5d3b5edd5c7f7d2c879088f0f048added5290bd3b991db6e"
+      },
+      "rollbackFiles": [
+        "telegram-baseline-eva2canary.js",
+        "telegram-baseline-telegram.js"
+      ],
+      "realMessageSent": false
+    },
+    "websiteReceiptUiServed": true,
+    "voiceReady": true
+  },
+  "setupCorrection": "Candidate startup found shared receipt module absent from runtime image; existing tracked module included before deployment. No broken candidate installed.",
+  "limits": [
+    "No model latency improvement",
+    "Telegram draft depends on client/API support;750ms abort cannot retract an already processed external request",
+    "No real Telegram message or physical speaker test performed",
+    "Legacy Telegram has a separately published exact source checkpoint; full main/source convergence not claimed"
+  ],
+  "usage": {
+    "evaModelCalls": 0,
+    "telegramMessagesSentByDeveloper": 0,
+    "creditCost": null
+  },
+  "try": {
+    "website": "Openhttp://localhost:44711/internal/v1/dashboard/conversation and typeHallo. Pending label should becomeEen momentje before actual answer.",
+    "telegram": "Send/eva2 Hallo in private Telegram. Where transient drafts are supported,Een momentje should appear before Eva answer; final reply remains linked to original question."
+  },
+  "rollback": "Restore core/worker baseline compose from observed receipt. Restore the two telegram-baseline files into their matching runtime paths and restart eva.service; leave unrelated runtime changes untouched."
+}

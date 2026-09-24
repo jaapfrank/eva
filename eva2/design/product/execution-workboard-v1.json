@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T19:45:38.510341+00:00",
         "deliveries": [
           {
+            "title": "Dezelfde directe ontvangst via tekstingangen",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Website en privé-Telegram gebruiken dezelfde ontvangsttekst als spraak.13 corecontroles en6 nieuwe Telegramgevallen geslaagd, onafhankelijk beoordeeld. Exacte Telegrambron apart op GitHub vastgelegd en dienst herstart.",
+            "remaining": "Probeer op de website Hallo en in Telegram /eva2 Hallo: eerst Een momentje, daarna het echte antwoord. Telegramconcepten vereisen clientondersteuning. Geen versnelling van het inhoudelijke modelantwoord.",
+            "source": "eva2/evidence/product/text-input-receipt-installed-20260924.json"
+          },
+          {
             "title": "Browserspraak geeft lopende tussenvraag voorrang",
             "date": "24 september",
             "state": "installed",
@@ -2207,15 +2215,15 @@
           }
         ],
         "now": {
-          "title": "Luna-instelling vergeleken; geen voldoende versnelling",
-          "state": "Vergelijking afgerond; productie behouden",
-          "detail": "Echte gedeelde gespreksroute:low4,09s tegenovernone3,87s eerste tekst. Kleine winst in één paar bewijst geen bruikbare versnelling. Instelling blijftlow; kandidaat en negatieve vergelijking op GitHub bewaard. Vier modelcalls20.459input/84outputtokens; creditkosten onbekend.",
-          "doneWhen": "Deze hypothese afgesloten; snelle ontvangst en inhoudelijke reactietijd blijven open."
+          "title": "Directe ontvangst op website en Telegram",
+          "state": "Geïnstalleerd; gebruiksproef open",
+          "detail": "De bestaande Een momentje-melding verschijnt via tekstheaders op de website en als tijdelijk privéconcept in Telegram, zonder extra modelaanroep. Kern/werker gezond en Telegramdienst actief. Modelreactietijd blijft circa4–5s; ontvangst is geen claim dat de opdracht af is.",
+          "doneWhen": "Technische koppeling geïnstalleerd; echte clientervaring en volledige stap1 blijven open."
         },
         "next": {
-          "title": "Directe ontvangst via de bestaande tekstingangen",
+          "title": "Resterende kanaalbediening en terugmelding samenbrengen",
           "state": "Volgende opdracht; nog niet gestart",
-          "detail": "Controleer of dezelfde al werkende ontvangstmelding op website en Telegram direct doorkomt zonder extra modelaanroep. Geen nieuwe kanaalpersoonlijkheid of claim dat onderzoek al klaar is."
+          "detail": "Bestaande kanaalproeven en eigenaarresultaten hergebruiken; concrete ontbrekende aansluiting afronden. Geen herhaling van de afgewezen modelinstelling. Browserkeuze en fysieke spraakproef blijven afzonderlijk open."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2229,7 +2237,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T20:14:39.802237+00:00"
+        "reviewedAt": "2026-09-24T20:23:16.781945+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12001,7 +12009,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Directe ontvangst via bestaande tekstingangen controleren; snelle voice-ontvangst behouden. Inhoudelijke modelwachttijd blijft apart open.",
+      "nextAction": "Resterende kanaalbediening en terugmelding samenbrengen; nieuwe directe tekstontvangst geïnstalleerd, echte clientervaring open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
