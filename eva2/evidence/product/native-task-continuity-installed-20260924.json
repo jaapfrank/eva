@@ -1,0 +1,58 @@
+{
+  "checkedAt": "2026-09-24T16:09:37.008719+00:00",
+  "status": "installed",
+  "sourceCommit": "ec80c7d8843dbc657e74454f0748fe92974784b0",
+  "change": "Public native work from still-valid sessions on the same speaker remains findable and stoppable/resumable after a new conversation. Original origin and exact automatic delivery preserved.",
+  "review": {
+    "sourceCommit": "ec80c7d8843dbc657e74454f0748fe92974784b0",
+    "verdict": "GO",
+    "reviewer": "coordinator, independent of implementing agent",
+    "scope": "Original-origin exact authorization; current ingress retained, public native continuity same device, stop/resume preserve task identity, delivery remains exact, focused test assertions inspected",
+    "test": "2 PostgreSQL cases passed after final guard adjustment, 12.01 seconds",
+    "sourceHashes": {
+      "bootstrap/household_work.py": "db6dca8e0da53674ef8d28cb6a40253578c8ebfcb269b493d1bf9fd28846af2e",
+      "adapters/postgres/household_work_sessions.py": "fbd4041247b620adf4ce1fb041159c68b99cd0e922304ebc9039d15e27557432"
+    },
+    "modelCalls": 0
+  },
+  "installation": {
+    "checkedAt": "2026-09-24T16:08:29.948608+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:b49ca78de5adca850f3d5e2745bb0fad9232fc724858abb7773ff61c63121691",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/household_work.py": "db6dca8e0da53674ef8d28cb6a40253578c8ebfcb269b493d1bf9fd28846af2e",
+          "adapters/postgres/household_work_sessions.py": "fbd4041247b620adf4ce1fb041159c68b99cd0e922304ebc9039d15e27557432"
+        }
+      },
+      "worker": {
+        "image": "sha256:cb7183c47c3f5a336d9a485c815044bf46b15bc19a9caff6b16d4e18c5ea605e",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/household_work.py": "db6dca8e0da53674ef8d28cb6a40253578c8ebfcb269b493d1bf9fd28846af2e",
+          "adapters/postgres/household_work_sessions.py": "fbd4041247b620adf4ce1fb041159c68b99cd0e922304ebc9039d15e27557432"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/native-task-continuity-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "readiness": {
+    "owner": 200,
+    "voice": 200
+  },
+  "tests": {
+    "result": "2 passed in 12.01s",
+    "runs": 2,
+    "repeatReason": "Final ingress guard added after initial successful run; final source retested.",
+    "coverage": "Cross-session list, metadata, get, stop, saved receipt and resume; unrelated task remains admitted; exact delivery preserved; other devices/non-native/expired/closed/revoked excluded."
+  },
+  "runtimeModelCalls": 0,
+  "creditCost": "Unknown",
+  "ownerAccepted": false,
+  "remaining": [
+    "Physical wakeword/model trial open",
+    "Existing native session lifetime remains",
+    "No latency improvement claimed"
+  ]
+}

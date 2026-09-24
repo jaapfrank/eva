@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T15:50:34.917634+00:00",
+        "checkedAt": "2026-09-24T16:10:02.843179+00:00",
         "deliveries": [
+          {
+            "title": "Openbare speakertaak blijft bedienbaar na nieuw wakeword",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Nieuwe HA-conversatie kan eerdere geldige openbare taken van dezelfde speaker vinden, stoppen en hervatten. Andere taak blijft lopen; oorspronkelijke afleverroute behouden. Kern en werker gezond.",
+            "remaining": "Twee gerichte databaseproeven en bronreview geslaagd. Fysieke wakeword-/modelproef nog open; bestaande sessieduur blijft gelden. Geen snelheidsclaim.",
+            "source": "eva2/evidence/product/native-task-continuity-installed-20260924.json"
+          },
           {
             "title": "Eerder advies via gewone privégespreksroute teruggevonden",
             "date": "24 september",
@@ -2055,29 +2063,29 @@
           }
         ],
         "now": {
-          "title": "Eva haalt eerder gegeven advies terug in gesprek",
-          "state": "Geïnstalleerd en in gesprek gecontroleerd",
-          "detail": "Na correctie haalt Eva het eerdere Schuur2-advies juist terug en benoemt het als eerdere analyse. Resultaat onafhankelijk vergeleken met origineel; geen nieuwe achtergrondtaak.",
-          "doneWhen": "Deze eerdere-adviesproef is afgerond. Andere onderwerpen, Telegrampraktijk en jouw acceptatie blijven afzonderlijk open."
+          "title": "Speaker-taakcontinuiteit geinstalleerd",
+          "state": "Technisch opgeleverd",
+          "detail": "Bron ec80c7d8 in kern en werker geinstalleerd. Website en spraakgereedheid HTTP 200; fysieke gebruikersproef apart open.",
+          "doneWhen": "Deze begrensde technische wijziging is afgerond. Het volledige projectgoal blijft open."
         },
         "next": {
-          "title": "Meerdere taken volgen en gericht stoppen afronden",
+          "title": "Algemene taakuitvoering en terugmelding verder afronden",
           "state": "Nog niet gestart",
-          "detail": "Bestaande taakbediening en twee uitvoerslots hergebruiken; gericht vaststellen welk deel van de samenhangende gebruikersuitkomst nog ontbreekt. Geen herstelwizardwerk."
+          "detail": "Na installatie van speaker-taakcontinuïteit volgt het eerstvolgende concrete tekort uit stap 3. Herstelwizard blijft uitgesteld."
         },
         "ownerAction": {
-          "title": "Kom terug op een eerder privéonderwerp",
-          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
-          "linkLabel": "Open privégesprek",
+          "title": "Een eerdere speakertaak gericht stoppen",
+          "url": "http://localhost:44712/",
+          "linkLabel": "Projectoverzicht",
           "steps": [
-            "Vraag in je bestaande privé-Telegram: /eva2 Wat zei je eerder over [onderwerp]?",
-            "Kies bij voorkeur een begrip uit Eva’s eerdere antwoord; je hoeft het oude gesprek niet te kopiëren.",
-            "Geef aan als Eva iets niet terugvindt of een eerder antwoord als een nieuw bewezen feit presenteert."
+            "Vraag op een Voice PE om een openbare onderzoeksopdracht.",
+            "Gebruik opnieuw het wakeword: Welke opdrachten lopen er nog?",
+            "Zeg: Stop het onderzoek over [onderwerp]. Een eventuele andere opdracht moet blijven lopen."
           ],
-          "expected": "Eva haalt de bewaarde privé-uitwisseling op en onderscheidt haar eerdere antwoord van actuele feiten. Deze privé-inhoud blijft buiten gedeelde speakers."
+          "expected": "Eva vindt de eerdere opdracht via dezelfde speaker en stopt alleen de gekozen taak. Deze fysieke proef is nog niet door jou bevestigd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T15:50:34.917634+00:00"
+        "reviewedAt": "2026-09-24T16:10:02.843179+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11739,7 +11747,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 2,
+      "currentStep": 3,
       "steps": [
         {
           "number": 1,
@@ -11849,7 +11857,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Meerdere taken volgen en gericht stoppen afronden",
+      "nextAction": "Algemene taakuitvoering en terugmelding verder afronden; volgende concrete wijziging nog niet gestart.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
