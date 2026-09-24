@@ -1,0 +1,18 @@
+{
+  "sourceCommit": "e0111bbe",
+  "state": "operator_correction_installed",
+  "defect": "Portable archive validation called a runtime store method without an instance. Loading optional failure reports made that call fail.",
+  "change": "Reuse the same pure stored-row validator; runtime loading still attaches retained failure reports.",
+  "checks": [
+    "Independent source review passed",
+    "Real PostgreSQL report atomicity/replay/retention case passed",
+    "Real archive preparation passed the formerly failing validation boundary",
+    "Exact installed operator files and actual imports verified"
+  ],
+  "limits": [
+    "The complete archive fixture subsequently encountered a separate OpenSSL environment error during sealing; isolated retry uses the existing AES-GCM path with legacy-provider loading disabled",
+    "No full restore completion or production runtime replacement claimed"
+  ],
+  "rollbackDirectory": "/home/administrator/project/.eva2-artifacts/restore-export-e0111bbe",
+  "modelCalls": 0
+}

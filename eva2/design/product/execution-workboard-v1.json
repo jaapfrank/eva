@@ -1328,7 +1328,7 @@
             "date": "24 september",
             "state": "built",
             "result": "Controles, vrijgave en start zijn aangesloten. Het bestaande lokale beheercommando is bijgewerkt naar bron 227adb2f met terugweg; imports en startinstructie gecontroleerd. Nog geen volledige herstelfunctie opgeleverd.",
-            "remaining": "Nu: volledige geisoleerde herstelproef van reservekopie tot draaiende herstelde Eva. Afzonderlijke geheugen- en gatewayproeven geslaagd; het geheel nog niet. Huidige Eva blijft draaien; geen actie van Jaap nodig.",
+            "remaining": "De herstelde Hindsight-geheugenservice starten en aansluiten, daarna de volledige geisoleerde herstelproef. Het beheercommando is bijgewerkt, maar de volledige herstelfunctie is nog niet af. Huidige Eva blijft draaien; geen actie van Jaap nodig.",
             "source": "eva2/evidence/product/restore-operator-updated-20260924.json",
             "children": [
               {
@@ -2240,8 +2240,8 @@
         ],
         "now": {
           "title": "Volledige herstelroute uitvoeren",
-          "state": "Geisoleerde proef voorbereiden",
-          "detail": "Beheercommando bijgewerkt naar 227adb2f. Een uitvoerder verbindt bestaande kern-, geheugen-, document- en gatewayproeven tot de volledige wizardroute; coordinator bewaakt installatie en bewijs. Geen productieherstel.",
+          "state": "Ontbrekende geheugenservice-start aansluiten",
+          "detail": "Geheugenservice-start wordt aangesloten. De fout in archiefvalidatie is gecorrigeerd en in het beheercommando geinstalleerd (e0111bbe), met terugweg. Echte archiefvoorbereiding passeert die fout; rapportopslag/herhaling blijft werken. Document-/gatewayproefmateriaal voorbereid. Volledige herstelproef nog open; geen productieherstel.",
           "doneWhen": "Volledige reservekopie via de wizard terugzetten en echte herstelde kern starten met behouden gegevens. Gebruikersacceptatie blijft apart."
         },
         "next": {
@@ -2261,7 +2261,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T21:16:39.601255+00:00"
+        "reviewedAt": "2026-09-24T21:28:41.677186+00:00"
       }
     },
     "pendingTechnicalReview": {

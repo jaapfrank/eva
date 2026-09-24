@@ -1,6 +1,8 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — volledige geisoleerde herstelproef.** Het bestaande lokale beheercommando is bijgewerkt naar bron 227adb2f: controles, vrijgave en starten na commit zijn aangesloten. Vorige bestanden bewaard als terugweg; bronbestanden, imports en startinstructie gecontroleerd. Een uitvoerder verbindt bestaande echte kern-, geheugen-, document- en gatewayproeven tot de volledige wizardroute. De huidige Eva blijft draaien. Geen actie van Jaap nodig.
+**Nu — ontbrekende geheugenservice-start aansluiten.** Bij voorbereiding van de volledige herstelproef blijkt dat de geheugendatabase wel wordt hersteld, maar de Hindsight-API nog niet wordt gestart/aangesloten. Dat wordt eerst opgelost; een gezonde kern alleen bewijst geen bruikbare herstelde Eva. Afzonderlijke kern-/werkerimages zijn gebouwd voor de proef. Beheercommando 227adb2f blijft beschikbaar met terugweg. De huidige Eva blijft draaien; geen actie van Jaap nodig.
+
+**Gevonden tijdens echte voorbereiding:** archiefexport riep een inmiddels database-afhankelijke taakcontrole zonder store aan. Pure recordvalidatie is nu afzonderlijk hergebruikt; bestaande rapportopslag/herhaling en bewaartermijn slagen in de gerichte echte PostgreSQL-proef. Onafhankelijke review geslaagd; echte archiefvoorbereiding passeert de fout. Correctie e0111bbe is met terugweg in het beheercommando geinstalleerd. [Bewijs en grenzen](evidence/product/restore-export-correction-20260924.json).
 
 **Nog niet als volledige functie opgeleverd.** De volledige reservekopie-tot-draaiende-Eva-proef staat open. Gerichte controles, onafhankelijke review en afzonderlijke echte geheugen-/gatewayproeven bewijzen nog niet het geheel. [Beschikbaarheid, bewijs en terugweg](evidence/product/restore-operator-updated-20260924.json). Dagelijkse kanaal-/gezinsproeven blijven afzonderlijk open.
 
