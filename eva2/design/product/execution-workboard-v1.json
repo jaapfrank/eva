@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Directe website-ontvangst door proxycorrectie",
+            "date": "25 september",
+            "state": "installed",
+            "result": "Werkelijke ontvangstmelding4,85s→36ms; proxy flushte headers niet. Gecontroleerde netwerkproef en onafhankelijke review geslaagd, dienst actief.",
+            "remaining": "Geen subsecond modelantwoord of Voice PE-claim. Eerste tekst in één nameting2,09s; gebruikersbeleving open.",
+            "source": "eva2/evidence/product/local-owner-receipt-flush-installed-20260925.json"
+          },
+          {
             "title": "Stopknop gebruikt echte taakbediening",
             "date": "25 september",
             "state": "installed",
@@ -2279,29 +2287,29 @@
           }
         ],
         "now": {
-          "title": "Stopknop voor achtergrondopdrachten aangesloten",
-          "state": "Geïnstalleerd — door jou te proberen",
-          "detail": "De stopknop gebruikt nu hetzelfde stopverzoek als getypte tekst en toont Eva’s echte terugkoppeling. Concepttekst blijft staan; stoppen blijft beschikbaar tijdens andere vragen. Kern en achtergrondwerker gezond, geserveerde pagina gecontroleerd. Geen uitvoerder meer actief op dit deel.",
-          "doneWhen": "Technische aansluiting geïnstalleerd; eigenaarproef controleert stoppen van een aangenomen achtergrondopdracht."
+          "title": "Website ontvangstmelding direct — 36ms gemeten",
+          "state": "Geïnstalleerd en via echte website-HTTP-route gemeten",
+          "detail": "Lokale proxy hield headers vast tot modeltekst. Correctie geïnstalleerd zonder kernherstart: ontvangst4,85s→0,036s. Eerste inhoudelijke tekst nameting2,09s; geen algemene modelsnelheidsclaim. Geen uitvoerder meer actief op deze wijziging.",
+          "doneWhen": "Deze proxycorrectie technisch afgerond; echte gezinsbeleving en overige spraakkanalen blijven apart."
         },
         "next": {
-          "title": "Snelle gespreksreactie en kanaalgelijkheid afronden",
+          "title": "Resterende gespreks- en spraaksamenhang afronden",
           "state": "Nog niet gestart",
-          "detail": "Bestaande ontvangst/overlap behouden. Laatste echte begroeting blijft circa vijf seconden; niet als opgelost markeren. Alleen concrete ontbrekende oorzaak of kanaalaansluiting aanpakken; herstelbouw blijft stap6."
+          "detail": "Nieuwe ontvangstmeting behouden. Inhoudelijke reactietijd en fysieke spraaklatentie zijn niet opgelost verklaard; bestaande kanaalbewijs en open gebruikersproeven volgen."
         },
         "ownerAction": {
-          "title": "Probeer stoppen na de ontvangstbevestiging",
+          "title": "Probeer de snelle ontvangst op de website",
           "url": "http://localhost:44711/internal/v1/dashboard/conversation",
           "linkLabel": "Praat met Eva",
           "steps": [
-            "Open de gesprekspagina opnieuw zodat de aangepaste knop geladen is.",
-            "Geef Eva een onderzoeksopdracht en wacht tot ze die heeft aangenomen.",
-            "Klik Stop deze opdracht terwijl het onderzoek loopt."
+            "Open of herlaad de gesprekspagina.",
+            "Stuur Hallo of een nieuwe vraag.",
+            "Let op Een momentje: dat hoort meteen zichtbaar te zijn; de inhoudelijke reactie volgt daarna."
           ],
-          "expected": "Eva behandelt dit als een gewoon stopverzoek. Ze bevestigt het stoppen of vraagt welke opdracht je bedoelt; de knop meldt niet meer ten onrechte dat er geen werk is omdat de ontvangstzin al klaar is. Een al begonnen stap kan nog afronden."
+          "expected": "Snelle zichtbare ontvangst zonder op het modelantwoord te wachten. Dit bewijst nog geen snellere hoorbare reactie via Voice PE."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T23:51:07.792903+00:00"
+        "reviewedAt": "2026-09-24T23:56:32.107572+00:00"
       }
     },
     "pendingTechnicalReview": {

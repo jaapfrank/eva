@@ -1,0 +1,43 @@
+{
+  "sourceCommit": "d2c8f88d",
+  "checkedAt": "2026-09-24T23:55:02.221120+00:00",
+  "state": "installed",
+  "defect": "Local Node owner proxy used writeHead without flushHeaders; receipt headers waited until first response body.",
+  "change": "Flush existing upstream status and filtered headers before piping response body.",
+  "before": {
+    "receiptSeconds": 4.852734602987766,
+    "firstTextSeconds": 4.852798715990502,
+    "completeSeconds": 5.297346898994874
+  },
+  "after": {
+    "receiptSeconds": 0.03571583901066333,
+    "firstTextSeconds": 2.0905689730425365,
+    "completeSeconds": 2.438573587045539
+  },
+  "receipt": "Een momentje.",
+  "checks": {
+    "controlledNetwork": "Same test failed before correction because headers waited for body; passed after. Response privacy header filtering and exact body preserved.",
+    "independentReview": "contact_overlap_review GO",
+    "service": "eva2-local-owner.service active after restart",
+    "coreRestarted": false
+  },
+  "installedModuleSha256": "b4a29343bae908e374355fb242017543ab53dea7e8c96ae0c9fb564ccbe5ad57",
+  "rollback": {
+    "file": "/home/administrator/project/.eva2-artifacts/website-receipt-timing-20260925/local-owner.before.mjs",
+    "target": "/home/administrator/project/Eva2/eva2/deploy/dashboard/local-owner.mjs",
+    "service": "eva2-local-owner.service"
+  },
+  "usage": {
+    "modelCalls": 2,
+    "inputTokens": 19023,
+    "outputTokens": 24,
+    "toolCalls": 0,
+    "creditCost": null
+  },
+  "limits": [
+    "One before/after website text request; history and returned text differ.",
+    "Model response speed is not established by this proxy correction.",
+    "No physical voice/STT/TTS or owner acceptance measurement."
+  ],
+  "ownerAccepted": false
+}

@@ -19,3 +19,9 @@ Verification: Windows unauthenticated HTML 200, real Chromium page displays
 Jouw geheugenbronnen, dashboard status 200, non-dashboard path and foreign Origin
 403. The existing browser/status endpoint returns 503 independently of access.
 Owner acceptance of memory behavior is still pending.
+
+Streaming responses flush filtered upstream headers immediately, before any body
+chunk. This lets the existing input receipt arrive while Eva is generating the
+answer. Verify with `node --test eva2/tests/api/test_local_owner_streaming.mjs`
+from the repository root. A flushed status does not prove a completed answer;
+conversation clients still require the final saved-reply stream record.
