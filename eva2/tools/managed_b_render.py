@@ -357,8 +357,8 @@ def _render_environment_file(plan: CoreBPlan) -> tempfile.TemporaryDirectory[str
     return directory
 
 
-def render_managed_b(plan: CoreBPlan) -> RenderedBManifest:
-    """Render from a preflighted snapshot; never create, start, or replace B."""
+def render_managed_b_configuration(plan: CoreBPlan) -> tuple[RenderedBManifest, dict[str, Any]]:
+    """Return the verified graph to trusted provisioning without host mutations."""
 
     manifest_bytes = MANAGED_B_MANIFEST.read_bytes()
     manifest_sha256 = _sha256(manifest_bytes)
@@ -407,7 +407,7 @@ def render_managed_b(plan: CoreBPlan) -> RenderedBManifest:
         raise RuntimeError("managed B staging must disable background work")
     if graph["services"]["core"].get("environment", {}).get("EVA_DELEGATED_WORK_ENABLED") != "false":
         raise RuntimeError("managed B staging must disable delegated work")
-    return RenderedBManifest(
+    receipt = RenderedBManifest(
         configuration_sha256=plan.snapshot_sha256,
         compose_version=compose_version,
         manifest_sha256=manifest_sha256,
@@ -415,6 +415,14 @@ def render_managed_b(plan: CoreBPlan) -> RenderedBManifest:
         rendered_sha256=_sha256(_canonical_json(graph)),
         service_names=tuple(sorted(graph["services"])),
     )
+
+    return receipt, graph
+
+
+def render_managed_b(plan: CoreBPlan) -> RenderedBManifest:
+    """Keep the existing receipt-only rendering interface."""
+    receipt, _ = render_managed_b_configuration(plan)
+    return receipt
 
 
 def main(argv: list[str] | None = None) -> int:

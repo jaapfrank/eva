@@ -481,3 +481,17 @@ def test_connector_autonomy_render_keeps_one_mount_and_explicit_activation():
             mcp_gateway_environment({**settings, **enabled, **changes})
     assert all(f"${{{key}:-}}" in (MANAGED_B_MANIFEST.parent / "mcp-gateway.compose.yml").read_text()
                for key in MCP_AUTONOMY_ENVIRONMENT_KEYS)
+
+
+def test_provisioning_receives_exact_verified_graph_without_extra_commands(monkeypatch):
+    from tools.managed_b_render import render_managed_b_configuration
+    plan = _plan()
+    graph = _rendered_graph(plan.snapshot_sha256)
+    calls, _ = _mock_compose(monkeypatch, graph)
+    receipt, actual = render_managed_b_configuration(plan)
+    assert actual == graph
+    assert receipt.rendered_sha256 == hashlib.sha256(
+        json.dumps(actual, ensure_ascii=False, allow_nan=False, separators=(",", ":"), sort_keys=True).encode()
+    ).hexdigest()
+    assert len(calls) == 2
+    assert calls[-1][0][-3:] == ["config", "--format", "json"]
