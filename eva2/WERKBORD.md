@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — start van herstelde services corrigeren.** De volledige wizardproef bereikte kern-/geheugenimport en documentvoorbereiding, maar stopte vóór gatewaystart doordat een nooit gestarte Docker-container nog geen endpoint-NetworkID heeft. Eén uitvoerder corrigeert de controle op de geconfigureerde netwerkbinding; coördinator reviewt en integreert. Proefgegevens blijven bewaard, productie blijft draaien. Volledige herstelactie nog niet geslaagd; geen actie van Jaap nodig.
+**Nu — volledige herstelproef afronden.** Startcorrectie3b3bd272 is geïnstalleerd in het herstelprogramma; beide bronhashes en terugweg gecontroleerd.29 gerichte controles en onafhankelijke review geslaagd. Uitvoerder bereidt een nieuw geïsoleerd hersteldoel voor. De vorige mislukte proef blijft bewaard; volledige herstelactie nog niet geslaagd. Huidige Eva blijft draaien; geen actie van Jaap nodig.
 
 **Nog niet als volledige functie opgeleverd.** De volledige reservekopie-tot-draaiende-Eva-proef en gewone doelvoorbereiding zonder handgeschreven JSON staan open. [Beschikbaarheid, bewijs en terugweg](evidence/product/restore-operator-updated-20260924.json). De gevonden archieffout is gecorrigeerd en de echte export slaagt: [bewijs](evidence/product/restore-export-correction-20260924.json). Dagelijkse kanaal-/gezinsproeven blijven afzonderlijk open.
 

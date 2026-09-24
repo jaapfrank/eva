@@ -2239,9 +2239,9 @@
           }
         ],
         "now": {
-          "title": "Start van herstelde services corrigeren",
-          "state": "Fout gevonden in volledige herstelproef",
-          "detail": "De echte wizard herstelde kern- en geheugengegevens en bereidde documenten voor, maar stopte vóór gatewaystart: een nooit gestarte Docker-container heeft nog geen NetworkID in zijn endpoint. De controle wordt aangesloten op de werkelijk geconfigureerde netwerkbinding. Mislukte proefgegevens blijven bewaard; productie blijft ongemoeid. Eén uitvoerder corrigeert code, coördinator verzorgt review en integratie.",
+          "title": "Volledige herstelproef afronden",
+          "state": "Startcorrectie geïnstalleerd; volledige proef open",
+          "detail": "Bron3b3bd272 is geïnstalleerd in het herstelprogramma; beide bronhashes en terugweg gecontroleerd.29 gerichte controles en onafhankelijke review geslaagd. Uitvoerder bereidt een nieuw geïsoleerd hersteldoel voor na de concrete netwerkcorrectie. De volledige herstelactie is nog niet geslaagd; huidige Eva blijft draaien.",
           "doneWhen": "Volledige reservekopie via de wizard terugzetten en echte herstelde kern starten met behouden gegevens. Gebruikersacceptatie blijft apart."
         },
         "next": {
@@ -2261,7 +2261,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T21:46:11.296475+00:00"
+        "reviewedAt": "2026-09-24T21:50:44.942280+00:00"
       }
     },
     "pendingTechnicalReview": {

@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "cfb27e4b",
+  "sourceCommit": "3b3bd272",
   "state": "operator_command_updated_full_restore_unproven",
   "availableCommand": "python3 /home/administrator/project/.eva2-artifacts/installer-document-write-20260924/start-installer.py --restore-config /absolute/private/target.json",
   "checks": {
@@ -12,7 +12,9 @@
     "memory_api_controlled_cases": 14,
     "memory_api_scope": "Pinned source writers stopped, API bound to restored PostgreSQL, current local model authorization, core bound to this API, health and bank listing. No upstream model-success claim.",
     "public_image_ca_cases": 6,
-    "public_image_ca_scope": "Standard immutable image CA file is not a private credential; mounted overrides still require verification. Existing TLS settings retained."
+    "public_image_ca_scope": "Standard immutable image CA file is not a private credential; mounted overrides still require verification. Existing TLS settings retained.",
+    "precreated_network_cases": 29,
+    "precreated_network_review": "Independent coordinator review passed; created containers resolve exact configured internal network, running containers require allocated pinned endpoint."
   },
   "rollbackDirectory": "/home/administrator/project/.eva2-artifacts/restore-memory-api-683e3780",
   "rollback": "Previous files and an exact manifest are retained. After any restore attempt inspect retained target state before further action.",
@@ -20,6 +22,19 @@
   "restoreInvoked": false,
   "ownerAccepted": false,
   "modelCalls": 0,
-  "next": "Assemble the prepared real core archive, native document/gateway snapshot and Hindsight dump into one package; execute the complete isolated wizard restore.",
-  "additionalRollbackFile": "/home/administrator/project/.eva2-artifacts/runtime-public-ca-20260924/previous-installed-runtime-authorization.py"
+  "next": "Complete a fresh isolated full wizard restore using installed network correction, then read retained task states, memory bank and document history. Ordinary target preparation without handwritten configuration remains open.",
+  "additionalRollbackFile": "/home/administrator/project/.eva2-artifacts/runtime-public-ca-20260924/previous-installed-runtime-authorization.py",
+  "networkCorrectionInstallation": "/home/administrator/project/.eva2-artifacts/restore-created-network-3b3bd272/installation-receipt.json",
+  "fullWizardAttempt": {
+    "status": "failed_before_gateway_start",
+    "retained": true,
+    "reached": [
+      "core_restore",
+      "memory_import",
+      "native_document_preparation",
+      "read_only_document_connection"
+    ],
+    "cause": "Docker created endpoint NetworkID is empty before initial startup; corrected in installed operator3b3bd272.",
+    "production_changed": false
+  }
 }
