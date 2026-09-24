@@ -66,3 +66,19 @@ configured bound. No candidate changes running Eva automatically. Evidence of
 actual benefit, independent review, a rollback and product installation remain
 required before an own improvement is accepted. Broad evaluation and owner
 trials remain separate from the installation startup check.
+
+## Installation candidate handoff
+
+`prepare_own_component_release` refers to an earlier `evaluation_step` in the same
+background execution. The host retrieves its recorded draft and report, verifies
+that production source has not changed, and requires complete successful baseline
+and candidate process results. It packages the exact candidate, patch, original
+hash and evaluation hash. The worker saves this package with the existing document
+tool; the package itself is also retained in the component action journal.
+
+The package state is `awaiting_measured_gain_review`. It is not a signed product
+release or permission to replace production code. Independent evidence of the
+claimed benefit, review, an unchanged baseline and a rollback remain required by
+the existing managed installation process. There is no automatic promotion based
+on exit codes or whole-container timing. Actual beneficial application remains
+open until a real reviewed candidate exists.

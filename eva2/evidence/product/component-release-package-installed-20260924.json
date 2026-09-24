@@ -1,0 +1,38 @@
+{
+  "recordedAt": "2026-09-24T02:05:41.551916+00:00",
+  "sourceCommit": "1786a6e25f4f0c42c200678494b3243fcfb00e79",
+  "status": "installed_start_checked",
+  "image": "eva2-component-release-package:20260924",
+  "services": {
+    "eva2-managed-b-slot3-core": {
+      "image": "eva2-component-release-package:20260924",
+      "imageId": "sha256:31b64d2b0f0f75cab0b74b99226500d7f09ef7b704706d08f9f99b64a1833422",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "image": "eva2-component-release-package:20260924",
+      "imageId": "sha256:31b64d2b0f0f75cab0b74b99226500d7f09ef7b704706d08f9f99b64a1833422",
+      "state": "running",
+      "health": "healthy"
+    }
+  },
+  "outcome": "An earlier draft and isolated evaluation in the same task can be sealed into one exact candidate package, retaining open measured-benefit and installation requirements.",
+  "checks": [
+    "syntax",
+    "configured startup",
+    "candidate-package action descriptor present",
+    "zero active delegated tasks before cutover",
+    "healthy core and worker"
+  ],
+  "notProven": [
+    "semantic improvement",
+    "independent review of an actual candidate",
+    "actual self-modification installation",
+    "complete AU-003"
+  ],
+  "developmentModelTrials": 0,
+  "developmentTestMessages": 0,
+  "creditCost": "unknown",
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/component-release-package-20260924/baseline.compose.private.json"
+}
