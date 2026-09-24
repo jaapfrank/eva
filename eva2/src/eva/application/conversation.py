@@ -960,50 +960,35 @@ class LivingConversation:
         )
         if contact_model is not None:
             self_context = (*self_context,
-                "Houd het contact natuurlijk en kort. Beantwoord eenvoudige vragen direct. "
-                "Gebruik voor langere denk-, schrijf- of analysetaken start_delegated_work "
-                "als die tool beschikbaar is en de taak zonder browser of externe tools kan. "
-                "Deze hulpagent kan geen actuele bronnen raadplegen of handelingen uitvoeren. "
-                "Neem zulk werk alleen met de daarvoor aangeboden echte tools aan. "
-                "Bevestig achtergrondwerk pas na de opgeslagen toelating. Als de starttool "
-                "acceptance_message aanbiedt, schrijf daarin één korte natuurlijke ontvangstzin "
-                "voor deze opdracht, zonder afronding te claimen. Die zin wordt alleen na "
-                "werkelijke toelating getoond. Bewaar work_id voor vervolgvragen en stoppen. "
-                "Wacht daarna niet op voltooiing en poll niet: laat de gebruiker doorpraten. "
-                "Een nieuwe opdracht stopt eerder werk niet. Gebruik bij een expliciete stop "
-                "of onverenigbare correctie de aangeboden stoptool voor het juiste work_id; "
-                "vraag bij een onduidelijk doel welke taak bedoeld wordt. Deel bij delegatie "
-                "alleen context die voor deze persoon en dit publiek is toegestaan.")
+                "Natuurlijk, kort contact; eenvoudige vragen direct beantwoorden. Gebruik aangeboden "
+                "start_delegated_work voor langer denken, schrijven of analyseren zonder browser/externe tools; "
+                "deze hulpagent kan geen actuele bronnen lezen of acties uitvoeren. Daarvoor zijn echte "
+                "aangeboden tools nodig. Bevestig werk pas na opgeslagen toelating. Gebruik aangeboden "
+                "acceptance_message voor één korte, natuurlijke ontvangstzin over de opdracht, zonder "
+                "voltooiingsclaim; die verschijnt pas na toelating. Bewaar work_id voor vervolgvragen/stoppen. "
+                "Wacht of poll niet; laat de gebruiker doorpraten. Nieuw werk stopt oud werk niet. Stop bij "
+                "expliciet verzoek of onverenigbare correctie het juiste work_id met de stoptool; vraag bij "
+                "onduidelijkheid welke taak. Delegeer alleen context toegestaan voor deze persoon én dit "
+                "publiek.")
         if "start_digital_work" in available_names:
             self_context = (*self_context,
-                "Gebruik start_digital_work voor een digitale opdracht met bestaande toegestane "
-                "connectoren zodra de vraag meerdere ontdek-, lees-, vergelijkings- of "
-                "uitvoerstappen vraagt. Kies dit zelf; de gebruiker hoeft niet om achtergrondwerk "
-                "te vragen. Ook bestaande Home Assistant-automatiseringen opzoeken, hun volledige "
-                "configuraties analyseren en een verbetering onderbouwen hoort daarbij. "
-                "Een eenvoudige actuele toestand opvragen of een direct bekende huisactie "
-                "uitvoeren mag via de gewone directe tool. Neem meerstapswerk rechtstreeks "
-                "met start_digital_work aan: voer niet eerst connectorstatus, toolontdekking of "
-                "een deel van de opdracht in dit gesprek uit. De werker zoekt en controleert "
-                "zelf de benodigde tools en bereikbaarheid binnen het bestaande mandaat. "
-                "Een opgeslagen toelating bevestigt alleen dat de opdracht is aangenomen, "
-                "niet dat de uitvoering al lukt. "
-                "Geef de concrete opdracht en de relevante toegestane gegevens mee, "
-                "bevestig pas na opgeslagen toelating en wacht niet op het resultaat. "
-                "Laat de gebruiker verder praten; gebruik work_id voor volgen of stoppen. "
-                "Een verzoek om een digitale vaardigheid of werkwijze te leren en later te "
-                "hergebruiken hoort ook bij start_digital_work, niet bij een toolvrije hulpagent "
-                "of alleen een publiek onderzoeksantwoord. Geef het leerdoel, de toepassing "
-                "en de wens om de werkwijze te bewaren mee. Bij later gebruik van een bewaarde "
-                "werkwijze laat je de werker de actuele inhoud ophalen en toepassen; vraag "
-                "de gebruiker niet om de werkwijze opnieuw uit te leggen.")
+                "Kies zelf start_digital_work voor meerdere ontdek-, lees-, vergelijkings- of uitvoerstappen "
+                "met toegestane connectoren, ook zonder expliciet achtergrondverzoek. Dit omvat "
+                "HA-automatiseringen opzoeken, volledige configuraties analyseren en verbeteringen onderbouwen. "
+                "Eenvoudige actuele staat of direct bekende huisactie mag direct. Delegeer vóór "
+                "connectorstatus, toolontdekking of deeluitvoering; de werker zoekt en controleert tools en "
+                "bereikbaarheid binnen het bestaande mandaat. Geef de concrete opdracht en relevante toegestane gegevens mee. "
+                "Bevestig pas na opgeslagen toelating: aangenomen is niet uitgevoerd. Wacht niet; laat "
+                "doorpraten en gebruik work_id voor volgen/stoppen. Ook digitaal leren en hergebruik horen "
+                "hier, niet bij toolvrije hulp of alleen publiek onderzoek. Geef leerdoel, toepassing en "
+                "bewaren van de werkwijze mee. Laat bij hergebruik de werker de actuele bewaarde inhoud ophalen "
+                "en toepassen; vraag de gebruiker niet opnieuw om uitleg.")
         if "start_background_research" in available_names:
             self_context = (*self_context,
-                "Gebruik start_background_research voor een expliciete opdracht om publieke "
-                "bronnen te onderzoeken terwijl het gesprek doorgaat. Stuur alleen de publieke "
-                "onderzoeksvraag; geen privégegevens of opgehaalde herinneringen. Bevestig pas "
-                "na opgeslagen toelating en wacht niet op het eindresultaat. De bestaande "
-                "taakbediening kan de juiste opdracht volgen, stoppen en hervatten.")
+                "Gebruik start_background_research voor expliciet publiek bronnenonderzoek; alleen de publieke "
+                "onderzoeksvraag, geen privégegevens of opgehaalde herinneringen. Bevestig pas na opgeslagen "
+                "toelating, wacht niet op resultaat en laat doorpraten. Volg, stop of hervat de juiste taak via "
+                "bestaande taakbediening.")
         from eva.application.voice_context import current_voice_context, STOP_VOICE_WORK, SPEAK_AND_CONTINUE
         voice = current_voice_context()
         if voice is not None:
