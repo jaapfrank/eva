@@ -57,17 +57,20 @@ class TelegramProactiveDelivery:
     def deliver(self, claim: ProactiveExpressionClaim) -> str:
         return self._deliver_text(claim.text, silent=claim.urgency < 3)
 
-    def deliver_text(self, text: str, *, expected_chat_id: str) -> str:
+    def deliver_text(self, text: str, *, expected_chat_id: str,
+                     reply_to_message_id: int | None = None) -> str:
         """Deliver a saved result only to its still-current bound private recipient.
 
         The caller owns durable claiming and ambiguous-acceptance recovery. This
         transport makes one attempt and never substitutes a newly paired person.
         """
         self._validate_private_chat(expected_chat_id)
-        return self._deliver_text(text, silent=True, expected_chat_id=expected_chat_id)
+        return self._deliver_text(text, silent=True, expected_chat_id=expected_chat_id,
+                                  reply_to_message_id=reply_to_message_id)
 
     def _deliver_text(self, text: str, *, silent: bool,
-                      expected_chat_id: str | None = None) -> str:
+                      expected_chat_id: str | None = None,
+                      reply_to_message_id: int | None = None) -> str:
         if not isinstance(text, str) or not text.strip() or len(text) > 4096:
             raise ValueError("Telegram proactive text is invalid")
         chat_id = self._chat_id if self._recipient_resolver is None else self._recipient_resolver()
@@ -76,13 +79,19 @@ class TelegramProactiveDelivery:
             raise RuntimeError("configured Telegram recipient differs from verified owner")
         if expected_chat_id is not None and expected_chat_id != chat_id:
             raise RuntimeError("saved Telegram destination differs from verified owner")
+        payload: dict[str, object] = {
+            "chat_id": chat_id, "disable_notification": silent, "text": text,
+        }
+        if reply_to_message_id is not None:
+            if type(reply_to_message_id) is not int or reply_to_message_id < 1:
+                raise ValueError("Telegram reply message identity is invalid")
+            payload["reply_parameters"] = {
+                "message_id": reply_to_message_id,
+                "allow_sending_without_reply": False,
+            }
         result = self._api._call(
             "sendMessage",
-            {
-                "chat_id": chat_id,
-                "disable_notification": silent,
-                "text": text,
-            },
+            payload,
             timeout_seconds=self._timeout,
             maximum_response_bytes=65_536,
         )
@@ -93,6 +102,12 @@ class TelegramProactiveDelivery:
                 or str(chat["id"]) != chat_id or chat.get("type") != "private"
                 or result.get("text") != text):
             raise RuntimeError("Telegram proactive receipt does not prove the intended private delivery")
+        if reply_to_message_id is not None:
+            replied = result.get("reply_to_message")
+            if (not isinstance(replied, dict)
+                    or type(replied.get("message_id")) is not int
+                    or replied["message_id"] != reply_to_message_id):
+                raise RuntimeError("Telegram receipt does not prove the original question binding")
         return f"telegram:{chat_id}:{message_id}"
 
 

@@ -42,6 +42,16 @@ class PrivateWorkDestination:
                     str(self.owner_principal_id), "telegram:" + self.chat_id}):
             raise ValueError("private work destination differs from its origin")
 
+    @property
+    def telegram_message_id(self) -> int:
+        """Resolve only the recorded message within its original private chat."""
+        prefix = self.origin_conversation_id + ":"
+        suffix = self.origin_message_id.removeprefix(prefix)
+        if (not self.origin_message_id.startswith(prefix)
+                or not re.fullmatch(r"[1-9][0-9]{0,15}", suffix)):
+            raise ValueError("private work origin has no Telegram message identity")
+        return int(suffix)
+
     def validate_current(self, bindings: TelegramPrincipalBindings) -> None:
         """A recorded destination never substitutes for a current binding."""
         if (bindings.resolve(self.telegram_user_id, self.chat_id) != str(self.owner_principal_id)

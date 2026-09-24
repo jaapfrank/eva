@@ -62,6 +62,7 @@ class DelegatedWorkDeliveryWorker:
                     raise RuntimeError('delivery authorization expired or changed')
                 receipt = self._delivery.deliver_text(
                     message, expected_chat_id=result.destination.chat_id,
+                    reply_to_message_id=result.destination.telegram_message_id,
                 )
             # All parts have verified provider receipts. The final receipt closes
             # this result; a crash before this commit stays ambiguous, never replayed.
