@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T02:58:23.179037+00:00",
+        "checkedAt": "2026-09-24T03:01:46.337704+00:00",
         "deliveries": [
           {
             "title": "Gesprekcontext bij een vervolgvraag behouden",
@@ -1789,15 +1789,15 @@
           }
         ],
         "now": {
-          "title": "Vervolgvraag behoudt laatste gesprekuitwisseling",
-          "state": "Correctie geïnstalleerd",
-          "detail": "Gedeelde contextinkorting herkent nu echte rollen Eva/Jaap en bewaart de laatste uitwisseling plus vervolgvraag. Kern en werker gezond; geen nieuwe modelproef.",
-          "doneWhen": "Bron geïnstalleerd en start gecontroleerd. Gebruiksproef later. Snelle begroeting en volledige kanaalgelijkheid nog niet afgerond."
+          "title": "Doorpraten na ontvangen taakresultaten",
+          "state": "In uitvoering",
+          "detail": "Vier onafhankelijke controles van bewaarde resultaten verlopen nu na elkaar vóór een nieuwe gesproken vraag. Ze worden gelijktijdig gemaakt; toegang, ingetrokken resultaten en annuleringsgedrag blijven behouden.",
+          "doneWhen": "Spraakadapter geïnstalleerd en opstart gecontroleerd. Geen gemeten snelheid of oplossing van de modelvertraging claimen."
         },
         "next": {
-          "title": "Snelle ontvangst via de gedeelde gespreksroute",
-          "state": "Nog open; volgende wijziging niet gestart",
-          "detail": "Bestaande begroetingen kosten ongeveer drie seconden modeltijd. Geen herhaling van de al verloren voorbereiding-, redeneer- en catalogusproeven. Fysieke Voice PE-diagnose blijft uitgesteld."
+          "title": "Sneller contactmodel kiezen",
+          "state": "Wacht op antwoord over kleine vergelijking",
+          "detail": "Maximaal zes korte aanvragen op de bestaande betaalroute voorgesteld. Geen nieuwe betaalroute of stilzwijgende modelwissel."
         },
         "ownerAction": {
           "title": "Kies wanneer de Voice PE-diagnose kan",
@@ -1810,7 +1810,7 @@
           "expected": "Een vastgelegde falende wakeword-overgang; geen herhaling van een blinde firmwareproef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T02:58:23.179037+00:00"
+        "reviewedAt": "2026-09-24T03:01:46.337704+00:00"
       }
     },
     "pendingTechnicalReview": {

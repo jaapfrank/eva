@@ -303,14 +303,25 @@ class EvaAgent(Agent):
             pass  # Cleanup must still interrupt speech if the UI transport failed.
 
     async def refresh_saved_context(self, selected=None):
+        import asyncio
         contexts = self.state.saved_result_context if selected is None else selected
-        for context_id, result in list(contexts.items()):
-            try:
-                await authorize_saved_return(self.state.backend, self.state.session_id,
-                                             result, lambda: None)
-            except Exception:
-                if self.state.saved_result_context.get(context_id) == result:
-                    self.discard_saved_result(context_id, result)
+        pending = list(contexts.items())
+        slots = asyncio.Semaphore(4)
+
+        async def refresh(context_id, result):
+            async with slots:
+                try:
+                    await authorize_saved_return(self.state.backend, self.state.session_id,
+                                                 result, lambda: None)
+                except Exception:
+                    if self.state.saved_result_context.get(context_id) == result:
+                        self.discard_saved_result(context_id, result)
+
+        # These independent read grants need not delay the new turn in series.
+        # Join every check before publishing context; cancellation joins children too.
+        async with asyncio.TaskGroup() as checks:
+            for context_id, result in pending:
+                checks.create_task(refresh(context_id, result))
 
     async def return_saved_work(self, session, result, check):
         """One claimed result on its original authorized live session; no model call."""
