@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T19:45:38.510341+00:00",
+        "checkedAt": "2026-09-24T20:33:11.499147+00:00",
         "deliveries": [
+          {
+            "title": "Speakerresultaat bewaren bij doorpraten",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Nog niet verstuurd resultaat wacht tot de speaker vrij is. Een mogelijk al verstuurde aankondiging wordt niet automatisch herhaald. Geïnstalleerd met terugweg; gezonde kern/werker en website/spraakroute bereikbaar.",
+            "remaining": "Fysieke proef open: laat publiek onderzoek lopen, praat tussendoor en controleer of Eva het resultaat daarna terugbrengt. Geen algemene spraakacceptatie.",
+            "source": "eva2/evidence/product/native-result-deferral-installed-20260924.json"
+          },
           {
             "title": "Dezelfde directe ontvangst via tekstingangen",
             "date": "24 september",
@@ -2215,10 +2223,10 @@
           }
         ],
         "now": {
-          "title": "Directe ontvangst op website en Telegram",
-          "state": "Geïnstalleerd; gebruiksproef open",
-          "detail": "De bestaande Een momentje-melding verschijnt via tekstheaders op de website en als tijdelijk privéconcept in Telegram, zonder extra modelaanroep. Kern/werker gezond en Telegramdienst actief. Modelreactietijd blijft circa4–5s; ontvangst is geen claim dat de opdracht af is.",
-          "doneWhen": "Technische koppeling geïnstalleerd; echte clientervaring en volledige stap1 blijven open."
+          "title": "Speakerresultaat blijft wachten tijdens nieuw gesprek",
+          "state": "Geïnstalleerd; fysieke proef open",
+          "detail": "Nog niet verstuurde terugmelding wordt duurzaam uitgesteld zodra de speaker opnieuw luistert. Kern en werker gezond; vijf adapter- en zeven databasecontroles geslaagd, onafhankelijk beoordeeld. Geen firmwarewijziging.",
+          "doneWhen": "Technische correctie geïnstalleerd. Werkelijke hoorbaarheid en volledige kanaalgelijkheid blijven apart open."
         },
         "next": {
           "title": "Resterende kanaalbediening en terugmelding samenbrengen",
@@ -2237,7 +2245,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T20:23:16.781945+00:00"
+        "reviewedAt": "2026-09-24T20:33:11.499147+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12009,7 +12017,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Resterende kanaalbediening en terugmelding samenbrengen; nieuwe directe tekstontvangst geïnstalleerd, echte clientervaring open.",
+      "nextAction": "Resterende kanaalbediening samenbrengen; speakeruitstel geïnstalleerd, fysieke proef afzonderlijk open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

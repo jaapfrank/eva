@@ -1,0 +1,58 @@
+{
+  "checkedAt": "2026-09-24T20:33:11.499147+00:00",
+  "sourceCommit": "2a860fbc7e8e23101f9b3dbd3ddf8c8644f7ddce",
+  "status": "installed",
+  "ownerRequirement": "Continue talking during work and receive completed result after the speaker becomes available.",
+  "defect": "Busy second idle check terminated an announcement that had not been sent.",
+  "change": "Durable internal defer before announce; original bound result can be reclaimed once when eligible. Attempted/ambiguous output never automatically replays.",
+  "verification": {
+    "adapterTests": 5,
+    "postgresTests": 7,
+    "independentReview": "Coordinator source/binding/transport review; implementation by separate agent",
+    "startupProfileEquality": true,
+    "live": {
+      "checkedAt": "2026-09-24T20:32:34.337631+00:00",
+      "services": {
+        "core": {
+          "image": "sha256:f567daa86e707934b1ba7c41a7cb14b716921189c58f3f4924795ba7b9231f96",
+          "health": "healthy",
+          "sourceHashes": {
+            "bootstrap/native_work_delivery.py": "b4853c63990d374ff29df78bc2324d167bb22dac911b4abbf09a972d6b54f4d0",
+            "bootstrap/household_work.py": "f9d71dfd0cf25afb6758758a0fe6854ac385102af86fe0ac5449d9c10fcb854d"
+          }
+        },
+        "worker": {
+          "image": "sha256:feaf08570f0f9be6b65a28db281998980e08b0d2ad71c661bbb8e3c7eaae188c",
+          "health": "healthy",
+          "sourceHashes": {
+            "bootstrap/native_work_delivery.py": "b4853c63990d374ff29df78bc2324d167bb22dac911b4abbf09a972d6b54f4d0",
+            "bootstrap/household_work.py": "f9d71dfd0cf25afb6758758a0fe6854ac385102af86fe0ac5449d9c10fcb854d"
+          }
+        }
+      },
+      "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/native-result-deferral-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44716/session/ready": 200
+    }
+  },
+  "baselineDifference": "Worker native adapter lacked the already installed core session continuity fix; both now contain the reviewed core version plus deferral. Other modules preserved.",
+  "rollback": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/native-result-deferral-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker",
+  "physicalAcceptance": "open",
+  "usage": {
+    "modelCalls": 0,
+    "realAnnouncements": 0,
+    "creditCosts": "unknown"
+  },
+  "try": [
+    "Ask for public research through a speaker.",
+    "Continue a short conversation while research completes.",
+    "The saved result should return when the speaker is free; report if it is missing or repeated."
+  ],
+  "limitations": [
+    "No physical audio trial performed.",
+    "Previously interrupted or ambiguous deliveries are not automatically replayed.",
+    "This does not prove completion of all voice features."
+  ]
+}
