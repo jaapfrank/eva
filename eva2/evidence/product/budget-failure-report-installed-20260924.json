@@ -1,0 +1,59 @@
+{
+  "checkedAt": "2026-09-24T17:30:44.175537+00:00",
+  "sourceCommit": "d18704d77315298816292f64b2431d150b6ed4b7",
+  "result": "Fully returned final reply is retained separately when the terminal budget check fails. Task remains failed/budget_exceeded; result stays null.",
+  "tests": {
+    "passed": 55,
+    "seconds": 4.17,
+    "includes": "Real PostgreSQL atomic storage/replay/retention, cancellation, runner terminal versus earlier budget failure, owner detail/summary and failure notice",
+    "firstRun": "Fixture source path corrected; first failure retained locally"
+  },
+  "review": "Independent coordinator-integration GO by bounded_contact_comparison; coordinator reviewed storage/outcome/worker implementation.",
+  "installation": {
+    "checkedAt": "2026-09-24T17:30:03.750588+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:5ceeaa0de53b19f95903bcce20784ee259746d96724d976f8e81d68fc8e08997",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/delegated_work.py": "885197d9916ea4be2ea73f2f5e3fd474ad0d2ca4159a5953268e4c630a9b0689",
+          "adapters/subagents/tool_free_child.py": "1aea0c08af5fd5e319cccbd50ccf47954b2f8e4a314433c32872b63ed21e50d5",
+          "application/work_failure_notice.py": "46c4f2982bc811eb66f5308b1f83a744835ae108eb64668804780cde56d8eb2e",
+          "application/work_result_presentation.py": "c1def34523d0b31cf288f25931d79f893f70ea1f27c09e4040e151ceb2821fd2",
+          "bootstrap/delegated_digital_runner.py": "66e9a9a13d6de1ba3aa2f4404dcd58076a32ff1f5b0750952276328160eac063",
+          "bootstrap/delegated_work_owner_service.py": "dc82a0620313e6f363fbbca439ce8f952c73f7f57c6c3d7157b75e331cffa469",
+          "operations/delegated_work_worker.py": "8ff8132c16da4b7a31d72bd30d520dce4c89dbada43f9ff5d2b50ea71a8a38a9"
+        }
+      },
+      "worker": {
+        "image": "sha256:43fd48c9ee10e6d0d154cfc28f496e12d5b99241d3ed5693bd2332c8e39105de",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/delegated_work.py": "885197d9916ea4be2ea73f2f5e3fd474ad0d2ca4159a5953268e4c630a9b0689",
+          "adapters/subagents/tool_free_child.py": "1aea0c08af5fd5e319cccbd50ccf47954b2f8e4a314433c32872b63ed21e50d5",
+          "application/work_failure_notice.py": "46c4f2982bc811eb66f5308b1f83a744835ae108eb64668804780cde56d8eb2e",
+          "application/work_result_presentation.py": "c1def34523d0b31cf288f25931d79f893f70ea1f27c09e4040e151ceb2821fd2",
+          "bootstrap/delegated_digital_runner.py": "66e9a9a13d6de1ba3aa2f4404dcd58076a32ff1f5b0750952276328160eac063",
+          "bootstrap/delegated_work_owner_service.py": "dc82a0620313e6f363fbbca439ce8f952c73f7f57c6c3d7157b75e331cffa469",
+          "operations/delegated_work_worker.py": "8ff8132c16da4b7a31d72bd30d520dce4c89dbada43f9ff5d2b50ea71a8a38a9"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/budget-failure-report-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "startupProfilesEqual": true,
+  "httpChecks": {
+    "http://localhost:44711/internal/v1/dashboard": 200,
+    "http://localhost:44711/internal/v1/dashboard/work": 200,
+    "http://localhost:44716/session/ready": 200
+  },
+  "baselineDifference": "Worker presentation helper lacked only the existing budget_exceeded message; synchronized to tested candidate. Other changed files matched HEAD.",
+  "limitations": [
+    "No new real model trial; no owner acceptance.",
+    "Does not prevent budget exhaustion or recover previously lost reports.",
+    "Only fully returned replies up to 65536 UTF-8 bytes; no report for cancellation or earlier failure.",
+    "Private digital work only; existing retention applies."
+  ],
+  "runtimeModelCalls": 0,
+  "creditCost": "unknown"
+}

@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T17:12:23.887896+00:00",
+        "checkedAt": "2026-09-24T17:30:44.175537+00:00",
         "deliveries": [
+          {
+            "title": "Geschreven eindantwoord behouden bij budgetgrens",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Volledig teruggegeven antwoord blijft leesbaar bij de mislukte taak en in de bestaande foutterugmelding. Kern en werker geïnstalleerd en gezond.",
+            "remaining": "Taak blijft onafgerond; dit voorkomt geen budgetuitputting en herstelt geen eerder verloren antwoorden. 55 gerichte controles en onafhankelijke review; echte gebruiksproef open.",
+            "source": "eva2/evidence/product/budget-failure-report-installed-20260924.json"
+          },
           {
             "title": "Automatisering gemaakt, aangepast en gecontroleerd — na hervatten",
             "date": "24 september",
@@ -2095,15 +2103,15 @@
           }
         ],
         "now": {
-          "title": "HA-proef afgerond na hervatten",
-          "state": "Geïnstalleerd en functioneel beproefd",
-          "detail": "Aanmaken, wijzigen en teruglezen gelukt; alleen tijdelijke proefautomatisering gebruikt en verwijderd. Eerste poging mislukte op budget; hervatting rondde af zonder herhaalde wijzigingen.",
-          "doneWhen": "Deze concrete proef is afgerond. Betrouwbare aflevering binnen één poging en snelle ontvangst blijven open."
+          "title": "Eindantwoord bij budgetgrens behouden",
+          "state": "Geïnstalleerd",
+          "detail": "Kern en werker gezond, gelijke uitvoerprofielen; website en spraakroute bereikbaar. Geen nieuwe modelaanvragen.",
+          "doneWhen": "Technische deeloplevering afgerond; echte gebruiksproef en algemene taakafronding blijven open."
         },
         "next": {
-          "title": "Uitgevoerd werk niet zonder eindrapport laten stranden",
+          "title": "Achtergrondwerk binnen budget afmaken",
           "state": "Nog niet gestart",
-          "detail": "Budgetgrens bij taakafronding aanpakken met behoud van werkelijk resultaat en verbruik; geen herhaalde effecten of stilzwijgende budgetverhoging."
+          "detail": "Voorkomen dat een bijna afgeronde taak pas na een te grote vervolgaanvraag strandt. Bestaande budget- en hervatroute gebruiken; geen stilzwijgende budgetverhoging."
         },
         "ownerAction": {
           "title": "Een eerdere speakertaak gericht stoppen",
@@ -2117,7 +2125,7 @@
           "expected": "Eva vindt de eerdere opdracht via dezelfde speaker en stopt alleen de gekozen taak. Deze fysieke proef is nog niet door jou bevestigd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T17:12:23.887896+00:00"
+        "reviewedAt": "2026-09-24T17:30:44.175537+00:00"
       }
     },
     "pendingTechnicalReview": {
