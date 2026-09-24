@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-09-24T12:31:14.903266+00:00",
+  "sourceCommit": "e85668ee3601232285af1362022242fca37ea72f",
+  "kind": "operator_preserved_gateway_addresses",
+  "availableCommand": "python3 /home/administrator/project/.eva2-artifacts/installer-gateway-binding-20260924/start-installer.py --restore-config /absolute/private/target.json",
+  "sourceHashes": {
+    "tools/installation_gateway_binding.py": "8b2d1585a162e7d97f6d34983cb3790bea6c473c49985f2ccf3b9cc26655585c",
+    "tools/installation_document_connection.py": "3e9a6acb964948f211565945a2aef4c0168665fe1153fa98328eb1ceb6184c42",
+    "tools/installer_restore_wizard.py": "213085e359884b5f0c3c711a229b9bb702e296eb8abf643d937fb1662550ee8a"
+  },
+  "behavior": [
+    "Explicit gateway registration IDs checked against byte-identical restored SQLite",
+    "Provider receives preserved DNS alias on pinned internal network; no registration or tool ID changes",
+    "Existing aliases checked case-insensitively; running provider alias checked",
+    "Database and archive checked again after provider connection"
+  ],
+  "checks": [
+    "Implementation agent: three synthetic SQLite/configuration checks passed",
+    "Coordinator reviewed SQLite validator; implementation agent independently reviewed root connection/wizard wiring",
+    "Four focused alias tests passed in 1.01s after review correction",
+    "Staged launcher help and imports passed; exact staged source hashes verified"
+  ],
+  "notPerformed": [
+    "No real restored gateway started",
+    "No full gateway-to-restored-provider call or write activation",
+    "No active Eva data or services changed",
+    "No owner acceptance"
+  ],
+  "remaining": [
+    "Start restored gateway with existing database, isolated network and required credentials",
+    "Verify preserved tools and project observation through gateway",
+    "Complete writable activation and full isolated recovery trial"
+  ],
+  "rollback": "Use installer-document-verification-20260924 before a recovery begins. Retain any targets already created; inspect before further actions, never automatically retry or replace them.",
+  "modelRequests": 0
+}
