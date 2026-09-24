@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T15:18:59.256795+00:00",
+        "checkedAt": "2026-09-24T15:22:50.443660+00:00",
         "deliveries": [
+          {
+            "title": "Wachttijd voor geheugen apart zichtbaar in beheerlogs",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Geïnstalleerde tijdmeting zonder gespreksinhoud, ook bij fouten. Kern en werker gezond; bestaande geheugenwerking behouden.",
+            "remaining": "Nog geen echte nieuwe beurt gemeten en geen snelheidsverbetering geclaimd.",
+            "source": "eva2/evidence/product/contact-recall-timing-installed-20260924.json"
+          },
           {
             "title": "Afgerond HA-advies zichtbaar in de website",
             "date": "24 september",
@@ -2023,15 +2031,15 @@
           }
         ],
         "now": {
-          "title": "Geheugenwachttijd afzonderlijk meetbaar maken",
-          "state": "In uitvoering",
-          "detail": "Ook de gemeten korte tussenvraag haalde geheugen op vóór het model. De bestaande meting splitst die tijden niet. Eén begrensde timingregistratie wordt toegevoegd; geheugen en antwoorden blijven hetzelfde.",
-          "doneWhen": "Timingregistratie geïnstalleerd; een volgende echte beurt kan geheugenwachttijd van modeltijd onderscheiden. Dit is nog geen snelheidsverbetering."
+          "title": "Geheugenwachttijd meetbaar; HA-resultaat zichtbaar",
+          "state": "Geïnstalleerd en gecontroleerd",
+          "detail": "Tijdmeting in kern en werker geïnstalleerd, diensten gezond. Het bestaande HA-advies is in de echte website gelezen. Geen nieuwe modelaanvraag; nog geen snelheidswinst gemeten.",
+          "doneWhen": "Deze controle en timingregistratie zijn afgerond. Snelle ontvangst en de volledige kanaaloplevering blijven open."
         },
         "next": {
-          "title": "Ontvangstverbetering installeren bij aangetoonde oorzaak",
+          "title": "Werkelijke ontvangstvertraging uitsplitsen",
           "state": "Nog niet gestart",
-          "detail": "Bestaande contactroute behouden; geen ontvangstscriptjes of herhaalde modelvergelijking."
+          "detail": "Gebruik de timing van de volgende echte beurt naast bestaande modeltijd om de grootste wachtoorzaak gericht aan te pakken. Geen geheugen overslaan of oude modelvergelijking herhalen."
         },
         "ownerAction": {
           "title": "Gebruik een eigen Home Assistant-opdracht",
@@ -2045,7 +2053,7 @@
           "expected": "Eva zoekt zelf de bestaande configuratie/services op en gebruikt de passende API. Een wijziging moet ze teruglezen en eerlijk toelichten; API-bevestiging alleen bewijst geen fysieke werking."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T15:18:59.256795+00:00"
+        "reviewedAt": "2026-09-24T15:22:50.443660+00:00"
       }
     },
     "pendingTechnicalReview": {

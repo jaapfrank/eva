@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-09-24T15:22:50.443660+00:00",
+  "sourceCommit": "7eabd7404a0745664309912a675932fb18da8f63",
+  "change": "Record initial memory recall duration using a monotonic clock and a dedicated INFO stderr logger; hash message identity; omit conversation and memory content.",
+  "reason": "Existing end-to-end latency and recalled evidence IDs do not distinguish initial recall delay from model generation. No bypass of memory continuity is justified.",
+  "validation": {
+    "syntax": "passed",
+    "independentSourceReview": "Coordinator reviewed implementer diff: unchanged recall arguments, result and exception propagation; content-free logging in finally.",
+    "offlineLoggerHarness": "Implementer verified success/failure records, one handler after repeated setup, unchanged root logger.",
+    "configuredStartup": "passed for core and worker; full release dataclasses equal",
+    "installedSources": "Both installed conversation.py hashes match source",
+    "websiteHttpStatus": 200
+  },
+  "services": {
+    "core": {
+      "image": "sha256:11d3d7fd44fc8f8fdb9155302e77fc919da73294b06876b3363a9e69e6336289",
+      "health": "healthy",
+      "sourceHashes": {
+        "application/conversation.py": "ab8363d0b4a450ba0fea234470786094c43c6dc592369e547a01ea8117ff431a"
+      }
+    },
+    "worker": {
+      "image": "sha256:6ae69d6715162ebe8e45c08a06f386fa562276a728ae1e60db2c82c611bf3e85",
+      "health": "healthy",
+      "sourceHashes": {
+        "application/conversation.py": "ab8363d0b4a450ba0fea234470786094c43c6dc592369e547a01ea8117ff431a"
+      }
+    }
+  },
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/contact-recall-timing-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker",
+  "additionalModelCalls": 0,
+  "limitations": [
+    "No new live conversation was submitted. A real recall duration remains unmeasured.",
+    "No response-time improvement or owner acceptance claimed."
+  ]
+}
