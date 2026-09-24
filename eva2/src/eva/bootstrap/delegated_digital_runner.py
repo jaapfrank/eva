@@ -84,13 +84,16 @@ class _TaskModel:
             "Bij een gevraagde verbetering van je eigen code: lees de echte component met "
             "read_own_component_source, onderzoek de oorzaak en relevante bestaande oplossingen, "
             "en maak alleen bij een concrete tekortkoming een draft_own_component_improvement. "
-            "Bewaar de kandidaat, patch en meetplan met save_workspace_document als afzonderlijk "
-            "voorstel. Gebruik evaluate_own_component_improvement indien aangeboden voor die component, "
-            "met de draft_step uit het voorstel. Bewaar ook het echte meetrapport en beoordeel "
+            "Gebruik evaluate_own_component_improvement indien aangeboden voor die component, "
+            "met de draft_step uit het voorstel. Beoordeel aan de hand van het echte meetrapport "
             "of dat de vooraf beschreven winst daadwerkelijk bewijst. Een gelijke uitkomst is geen winst. "
             "Gebruik prepare_own_component_release bij een geslaagde vergelijking om het exacte "
             "voorstel met zijn rapport als installatiekandidaat te bewaren. Gebruik evaluation_step "
-            "uit het meetrapport. Dit pakket wacht nog op gemeten voordeel en beoordeling. "
+            "uit het meetrapport. Bewaar vervolgens alleen het volledige eindpakket met "
+            "save_workspace_document(component_step uit het resultaat), zonder content opnieuw "
+            "uit te schrijven. Bij stoppen vóór voorbereiding bewaar je op dezelfde manier het "
+            "laatste voorstel of rapport. Tussenopslag is niet nodig; de stappen zijn al vastgelegd. "
+            "Dit pakket wacht nog op gemeten voordeel en beoordeling. "
             "Wijzig of installeer geen draaiende component via andere tools. Beschrijf "
             "verwachte winst als hypothese zolang er geen meting is; tekstcontroles bewijzen "
             "geen algemene functionele kwaliteit. Geef de echte vindplaats en beperkingen terug.",
@@ -256,10 +259,31 @@ def _automation_batch_readbacks(receipt):
 
 def _has_completed_tool_evidence(receipts):
     """Discovery is useful context, but cannot alone prove completed work."""
-    if any(receipt.call.name in {DRAFT, EVALUATE, PREPARE} for receipt in receipts) and not any(
-            receipt.call.name == "save_workspace_document" and receipt.output.get("status") == "verified"
-            for receipt in receipts):
-        return False
+    component_positions = [index for index, receipt in enumerate(receipts)
+                           if receipt.call.name in {DRAFT, EVALUATE, PREPARE}]
+    if component_positions:
+        index = component_positions[-1]
+        component = receipts[index]
+        expected = component.output.get("operation_result")
+        saved = False
+        for receipt in receipts[index + 1:]:
+            if (receipt.call.name != "save_workspace_document"
+                    or receipt.output.get("status") != "verified"):
+                continue
+            arguments = receipt.call.arguments
+            if "component_step" in arguments and "content" not in arguments:
+                step = arguments["component_step"]
+                saved = (type(step) is int and step >= 0
+                         and step == component.output.get("component_step"))
+            elif "content" in arguments and "component_step" not in arguments:
+                try:
+                    saved = isinstance(expected, dict) and json.loads(arguments["content"]) == expected
+                except (TypeError, ValueError):
+                    pass
+            if saved:
+                break
+        if not saved:
+            return False
     completed = False
     last_home_assistant_success = None
     last_procedure_success = None
@@ -402,7 +426,11 @@ class DelegatedDigitalRunner:
                                               dispatch_guard, self.clock)
             improvements = ComponentImprovementActions(self.store._engine, spec, source, authorize,
                                                         dispatch_guard, self.clock)
-            actions = BackgroundConnectorActions((*self.connector_tools, progress, improvements), spec.grant.capability_ids,
+            connector_tools = tuple(
+                tool.with_preparation_call_resolver(improvements.resolve_document_call)
+                if "save_workspace_document" in tool.action_names else tool
+                for tool in self.connector_tools)
+            actions = BackgroundConnectorActions((*connector_tools, progress, improvements), spec.grant.capability_ids,
                                                   authorize, spec.grant.maximum_tool_calls)
             from eva.adapters.postgres.work_corrections import work_corrections
             task_model = _TaskModel(self.model, spec.task, self.browser_context,

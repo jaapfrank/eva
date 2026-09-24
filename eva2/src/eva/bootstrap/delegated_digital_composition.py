@@ -1,5 +1,6 @@
 """Shared admission/worker composition for private connector-backed work."""
-from dataclasses import asdict, is_dataclass
+from dataclasses import asdict, is_dataclass, replace
+from copy import deepcopy
 import hashlib
 from pathlib import Path
 from types import SimpleNamespace
@@ -55,11 +56,24 @@ _EXECUTION_SOURCES = (
 )
 
 
+def _digital_document_descriptor(tool):
+    if tool.name != "save_workspace_document":
+        return tool
+    schema = deepcopy(tool.input_schema)
+    schema["required"] = [name for name in schema.get("required", []) if name != "content"]
+    schema["properties"]["component_step"] = {"type": "integer", "minimum": 0}
+    return replace(tool, input_schema=schema, description=tool.description +
+        " Gebruik precies één inhoudsbron: content, of component_step van een eerder "
+        "eigen componentvoorstel, meetrapport of installatiepakket in deze taak. "
+        "component_step bewaart dat exacte resultaat zonder het opnieuw uit te schrijven. "
+        "Bestaande documentlimieten en toegangsregels blijven gelden.")
+
+
 def digital_tools(bundle):
     if bundle is None:
         raise ValueError("digital work requires existing connector tools")
     admitted = _CONNECTORS | _PROCEDURES | _HOME_ASSISTANT
-    descriptors = tuple(tool for tool in bundle.conversation_tools if tool.name in admitted)
+    descriptors = tuple(_digital_document_descriptor(tool) for tool in bundle.conversation_tools if tool.name in admitted)
     routes = tuple(tool for tool in bundle.external_tools if set(tool.action_names) & admitted)
     names = {tool.name for tool in descriptors}
     if not names or names != {name for tool in routes for name in tool.action_names if name in admitted}:

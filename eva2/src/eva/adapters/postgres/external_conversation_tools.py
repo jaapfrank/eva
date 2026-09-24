@@ -64,6 +64,7 @@ class PostgresExternalConversationTools:
         *,
         authorize_turn: Callable[[ConversationTurn], None] | None = None,
         configuration_sha256: str | None = None,
+        preparation_call_resolver: Callable[[ConversationTurn, ConversationActionCall, int], ConversationActionCall] | None = None,
     ) -> None:
         action_names = planner.action_names
         if (
@@ -72,6 +73,7 @@ class PostgresExternalConversationTools:
             or any(not name or len(name) > 120 for name in action_names)
         ):
             raise ValueError("external tool planner action names are invalid")
+        self._preparation_call_resolver = preparation_call_resolver
         self._engine = engine
         self._planner = planner
         self._provider = provider
@@ -80,6 +82,20 @@ class PostgresExternalConversationTools:
             raise ValueError("provider configuration fingerprint is invalid")
         self._configuration_sha256 = configuration_sha256
         self._action_names = action_names
+
+    def with_preparation_call_resolver(self, resolver):
+        """Clone this route while preserving provider authority and durable identity."""
+        return type(self)(self._engine, self._planner, self._provider,
+            authorize_turn=self._authorize_turn,
+            configuration_sha256=self._configuration_sha256,
+            preparation_call_resolver=resolver)
+
+    def _prepare(self, turn, call, step_index):
+        prepared_call = (call if self._preparation_call_resolver is None else
+                         self._preparation_call_resolver(turn, call, step_index))
+        if prepared_call.call_id != call.call_id or prepared_call.name != call.name:
+            raise ConversationConflict("external preparation changed call identity")
+        return asyncio.run(self._planner.prepare(turn, prepared_call))
 
     @property
     def action_names(self) -> tuple[str, ...]:
@@ -138,7 +154,7 @@ class PostgresExternalConversationTools:
         self._authorize(turn)
         # Preserve clarification before storage access for the initial action.
         preparation = (
-            asyncio.run(self._planner.prepare(turn, call)) if step_index == 0 else None
+            self._prepare(turn, call, step_index) if step_index == 0 else None
         )
         # Hold a database session lock across dispatch/readback. A concurrent
         # retry must not mistake an in-flight dispatch for a crashed worker.
@@ -170,7 +186,7 @@ class PostgresExternalConversationTools:
                     )
                 return self._receipt(turn, events, step_index)
         if preparation is None:
-            preparation = asyncio.run(self._planner.prepare(turn, call))
+            preparation = self._prepare(turn, call, step_index)
         self._ensure_running(turn)
         request = self._request(turn, call.name, preparation, step_index)
         admission: dict[str, JsonValue] = {

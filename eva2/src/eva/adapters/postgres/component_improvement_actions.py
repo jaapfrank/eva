@@ -1,5 +1,6 @@
 """Owner source drafts and fixed isolated evaluations, never live installation."""
 from pathlib import Path
+import json
 
 from eva.adapters.connectors.component_evaluation import configured_component_evaluator
 
@@ -38,13 +39,15 @@ def component_descriptors():
         "Gebruik draft_step uit het voorstelresultaat. Dezelfde vooraf ingestelde controle draait "
         "op origineel en kandidaat zonder netwerk of privégegevens; geen installatie. "
         "Ondersteunde componenten: " + ", ".join(evaluator.allowed_paths) + ". "
-        "Bewaar het meetrapport met save_workspace_document. Een geslaagde controle is geen bewijs "
+        "Bewaar alleen bij stoppen hier het meetrapport met save_workspace_document(component_step=evaluation_step). "
+        "Bij doorgaan naar prepare volstaat één definitieve pakketopslag. Een geslaagde controle is geen bewijs "
         "van algemene verbetering; tijd omvat ook opstartkosten.", _SCHEMAS[EVALUATE],
         "Meld werkelijk gemeten uitkomsten en grenzen. De kandidaat wordt niet automatisch toegepast."),)
     preparation = () if evaluator is None else (ConversationToolDescriptor(PREPARE,
         "Maak van een eerder geslaagde geïsoleerde vergelijking in deze taak één exact "
         "installatiekandidaatpakket. Gebruik evaluation_step uit het meetrapport. Bron, patch "
-        "en rapport blijven aan elkaar gebonden. Bewaar het pakket met save_workspace_document. "
+        "en rapport blijven aan elkaar gebonden. Bewaar het exacte pakket met save_workspace_document "
+        "en component_step uit dit resultaat, zonder content opnieuw uit te schrijven. "
         "Dit installeert niets: gemeten voordeel, onafhankelijke beoordeling en terugweg blijven nodig.",
         _SCHEMAS[PREPARE], "Meld pakketvindplaats en resterende beoordeling; claim geen toepassing."),)
     return (*evaluation, *preparation,
@@ -57,8 +60,10 @@ def component_descriptors():
             "Maak bij een gevraagde eigen verbetering een voorstel voor één Python-component tot 32 KiB. "
             "Gebruik de gelezen bronhash, één exact tekstfragment en de vervanging. Beschrijf het concrete "
             "probleem, verwachte winst en hoe die later gemeten kan worden. Vergelijk bestaande oplossingen "
-            "met de aangeboden onderzoekstools waar relevant. Bewaar het voorstel met save_workspace_document.",
-            _SCHEMAS[DRAFT], "De patch en kandidaat zijn alleen een voorstel. Bewaar ze apart en meld de "
+            "met de aangeboden onderzoekstools waar relevant. Bij doorgaan naar evaluatie hoeft geen apart "
+            "document te worden geschreven; bewaar bij stoppen hier het voorstel met "
+            "save_workspace_document(component_step=draft_step).",
+            _SCHEMAS[DRAFT], "De patch en kandidaat zijn alleen een voorstel. Bewaar het eindresultaat en meld de "
             "vindplaats; geen claim van geslaagde tests, gemeten winst of installatie."),
     )
 
@@ -95,6 +100,32 @@ class ComponentImprovementActions:
             return None
         data = events[0].payload["data"]
         return ConversationActionReceipt(ConversationActionCall(data["call_id"], data["name"], data["arguments"]), data["output"])
+
+    def resolve_document_call(self, turn, call, step_index):
+        """Materialize a previous same-task result before the existing write planner."""
+        if call.name != "save_workspace_document":
+            return call
+        if not self.available_for(turn):
+            raise ConversationConflict("component document source differs")
+        arguments = call.arguments
+        if ("content" in arguments) == ("component_step" in arguments):
+            raise ConversationConflict("document requires exactly one content source")
+        if "component_step" not in arguments:
+            return call
+        referenced_step = arguments["component_step"]
+        if (type(referenced_step) is not int or referenced_step < 0
+                or type(step_index) is not int or referenced_step >= step_index):
+            raise ConversationConflict("component document requires an earlier step")
+        receipt = self.pending(turn, step_index=referenced_step)
+        if (receipt is None or receipt.call.name not in {DRAFT, EVALUATE, PREPARE}
+                or receipt.output.get("status") != "verified"):
+            raise ConversationConflict("component result does not exist in this task")
+        content = json.dumps(receipt.output["operation_result"], ensure_ascii=False,
+                             separators=(",", ":"), allow_nan=False)
+        # Content length, destination and live write authority remain the planner's job.
+        prepared = {key: value for key, value in arguments.items() if key != "component_step"}
+        prepared["content"] = content
+        return ConversationActionCall(call.call_id, call.name, prepared)
 
     def execute(self, turn, call, *, step_index=0):
         if not self.available_for(turn) or call.name not in self.action_names or type(step_index) is not int or step_index < 0:
@@ -142,7 +173,8 @@ class ComponentImprovementActions:
             if call.name == DRAFT:
                 value["draft_step"] = step_index
             scope = "source_read" if call.name == READ else "unexecuted_proposal"
-        output = {"status": "verified", "operation_result": value, "scope": scope}
+        output = {"status": "verified", "operation_result": value, "scope": scope,
+                  "component_step": step_index}
         self.authorize(turn)
         self.timeline.create_thread(thread_id=self._thread(step_index),
             checkpoint_id=self._thread(step_index) + ":saved", occurred_at=self.clock(),
