@@ -1,0 +1,51 @@
+{
+  "checkedAt": "2026-09-24T15:41:37.770470+00:00",
+  "sourceCommit": "f67ed3b30fdfe3f883d3966eb6d3b9c6b9474643",
+  "requirement": "Retrieve retained private topics introduced in Eva replies, including after a week, without exposing them to shared speech or another person.",
+  "defect": "Search formerly matched only memory-source user text before LIMIT; exact reply was joined only after selecting a hit.",
+  "change": "Same lexical query now also matches an exact correlated REPLY_COMMITTED event with matching scope, source message, principal, conversation and project, excluding erased/future replies. Existing source retention, audience and owner checks retained. Existing journal validation still supplies displayed content.",
+  "checks": {
+    "isolatedPostgres": "passed; reply-only keyword from an eight-day-old Telegram exchange found through private owner and Telegram bridge before LIMIT; newer nonmatches, wrong person/conversation/message/project, erasure, expiry, future replies and shared caller excluded",
+    "initialFixtureFailure": "Household fixture originally used invalid private route identifiers. Only fixture corrected; failure retained locally.",
+    "sourceReview": "Coordinator independently reviewed source and cases; independent reviewer also checked exact live-to-repository owner-query deduplication difference.",
+    "configuredStartup": "Core/worker full release equal",
+    "services": {
+      "core": {
+        "image": "sha256:416298f29655ff838b1595e6b6715c138e63f99643c631fe27790b8e9794fc87",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/people_memory_overview.py": "f065e853b1449636cbca93e1180c73e3da1fe3f5aefe111f5e4e3612f1dbeb0b"
+        }
+      },
+      "worker": {
+        "image": "sha256:4b8fd17078b40cf58472f19c3f34c25005f2b3692bc0518b4a6a1e0ab9deedd5",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/people_memory_overview.py": "f065e853b1449636cbca93e1180c73e3da1fe3f5aefe111f5e4e3612f1dbeb0b"
+        }
+      }
+    },
+    "liveReadOnlyCheck": {
+      "matches": 3,
+      "validatedReplyPairs": 3,
+      "sharedCallerExcluded": true,
+      "databaseReadOnly": true,
+      "newModelCalls": 0
+    },
+    "websiteHttpStatus": 200
+  },
+  "runtimeBaselineReview": {
+    "reason": "Current installed file has the same owner-authority query inline plus an identical helper appended at bottom. Repository HEAD deduplicates the inline query into that helper and places the helper before the class. Coordinator compared all predicates, selected fields, joins and exceptions; no policy change. New overlay adopts repository source plus bounded reply search.",
+    "liveBaselineSha256": {
+      "eva2-managed-b-slot3-core": "6350a129e8e9f61d1907d0f59630e60103125ccd0da8c966a93cffd1ca4416e8",
+      "eva2-managed-b-slot3-delegated-work-worker-1": "6350a129e8e9f61d1907d0f59630e60103125ccd0da8c966a93cffd1ca4416e8"
+    }
+  },
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/private-answer-history-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker",
+  "newModelCallsForHistoryChange": 0,
+  "limits": [
+    "No new model-driven history conversation or physical speaker trial performed.",
+    "Lexical bounded retrieval remains; this is not exhaustive semantic search.",
+    "Owner acceptance and complete step2 remain open."
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-09-24T15:33:38.852150+00:00",
+  "installedSource": "103c7cd2",
+  "route": "local owner website",
+  "prompt": "Hallo.",
+  "reply": "Hoi Jaap! 👋",
+  "messageId": "dashboard:2ccf8ec8-63cc-4d69-82ae-4c3c19bbea0c",
+  "timing": {
+    "firstVisibleTextSeconds": 4.409,
+    "savedReplySeconds": 4.932,
+    "initialRecallMs": 810,
+    "modelFirstContentMs": 2597,
+    "modelCompletedMs": 2956
+  },
+  "usage": {
+    "modelAttempts": 1,
+    "toolCalls": 0,
+    "inputTokens": 8194,
+    "outputTokens": 10,
+    "costUnknown": true
+  },
+  "comparison": {
+    "beforeFirstTextSeconds": 4.548,
+    "beforeInputTokens": 8602,
+    "observedInputDifference": -408,
+    "interpretation": "One sequential sample per version; history changed by the prior greeting. Lower observed input, but no controlled token or statistically established speedup. Subsecond response not achieved."
+  },
+  "furtherUnchangedTrials": false
+}
