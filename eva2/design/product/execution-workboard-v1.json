@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T19:28:06.506837+00:00",
+        "checkedAt": "2026-09-24T19:40:06.637847+00:00",
         "deliveries": [
+          {
+            "title": "Eigen verbeterpakket bewaren zonder code opnieuw uit te schrijven",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Eva kan een eerder voorstel, meetrapport of volledig pakket rechtstreeks via stapverwijzing laten bewaren. Bestaande schrijf-/terugleesroute en persoonsgrenzen blijven gelden. Alleen het juiste laatste resultaat telt voor afronding.",
+            "remaining": "67 gerichte controles en onafhankelijke review geslaagd; kern/werker gezond. Echte modelgestuurde verbeterproef en gemeten voordeel staan nog open.",
+            "source": "eva2/evidence/product/component-result-save-installed-20260924.json"
+          },
           {
             "title": "Nieuwe werkwijze uit documentatie gemaakt en uitgevoerd — na hulp",
             "date": "24 september",
@@ -2175,15 +2183,15 @@
           }
         ],
         "now": {
-          "title": "Documentatieleerproef afgerond na gerichte hulp",
-          "state": "Resultaat opgeslagen en onafhankelijk gecontroleerd",
-          "detail": "Werkelijke parseruitvoering en eindantwoord kloppen. Eerste mislukking, coördinatorhulp en gerapporteerd verbruik blijven zichtbaar. Geen nieuwe bouwtaak of proef actief.",
-          "doneWhen": "Deze begrensde proef is technisch afgerond; algemene leerfunctie, snelheid en eigenaaracceptatie blijven open."
+          "title": "Verbeterpakketopslag geïnstalleerd",
+          "state": "Technisch opgeleverd; volgende proef nog niet gestart",
+          "detail": "Exacte modulehashes en gelijke uitvoerversies bevestigd; website/spraakroute bereikbaar. Geen modelcalls voor deze wijziging.",
+          "doneWhen": "Deze koppeling is geïnstalleerd; een echte eigen verbetering vereist nog gemeten voordeel, onafhankelijke beoordeling en toepassing."
         },
         "next": {
-          "title": "Langdurig werk en eigen verbetering afronden",
-          "state": "Nog niet gestart",
-          "detail": "Bestaande projecthervatting en geïnstalleerde eigen-verbeterroute hergebruiken. Alleen het concrete ontbrekende gebruikersresultaat oppakken; geen herhaling van bestaande proeven."
+          "title": "Eén eigen codeverbetering maken en gecontroleerd toepassen",
+          "state": "Criteria voorbereid; nog niet gestart",
+          "detail": "Concrete geïnstalleerde fout: SHA256-controle accepteert31bytes plus spaties. Bestaande ondersteunde component en isolatie gebruiken, correcte gevallen behouden, exacte kandidaat vergelijken vóór toepassing."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2197,7 +2205,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T19:28:06.506837+00:00"
+        "reviewedAt": "2026-09-24T19:40:06.637847+00:00"
       }
     },
     "pendingTechnicalReview": {

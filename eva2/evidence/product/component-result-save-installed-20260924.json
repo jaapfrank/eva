@@ -1,0 +1,50 @@
+{
+  "checkedAt": "2026-09-24T19:40:06.630087+00:00",
+  "sourceCommit": "4d5328ebf9a4b8b9bc2a0ba43ca046b98cdad599",
+  "state": "installed",
+  "outcome": "Background component artifacts can be saved by prior step reference through existing document planner and verified write path, without model recopy.",
+  "tests": {
+    "passed": 67,
+    "durationSeconds": 4.1,
+    "artifact": "/home/administrator/project/.eva2-artifacts/component-document-reference-20260924/test-result.txt",
+    "scope": "Real PostgreSQL durable replay with controlled document provider; current task/earlier step only; exact latest result completion; existing runner/composition checks"
+  },
+  "review": "Coordinator independent concrete source/test review GO; implementation by /root/recall_query_review",
+  "deployment": {
+    "checkedAt": "2026-09-24T19:39:23.251092+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:5615892b6cd88f051d2efefb7ad5f4f5754ee083766f2709c86f6c4a5efc967d",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/external_conversation_tools.py": "65b327bf5af2a976bff39b4a7f9f8b7fb8deb76db525067bfdd81f2d7d1e6798",
+          "adapters/postgres/component_improvement_actions.py": "6f95c856e35de585c695023fc3f6ce543efb54bc6566a35f4cddc9f8e96455b7",
+          "bootstrap/delegated_digital_runner.py": "47bd8070d0b594eedbebcccb35cecb7da13a2e170378acf4cf36a6d6fb5f72cd",
+          "bootstrap/delegated_digital_composition.py": "6b370aae6dce696ba5a612f9e2f9efc18c706dd9a34636ce8b43f54c26e37605"
+        }
+      },
+      "worker": {
+        "image": "sha256:7b7ed03ffe8a738cc6bf230326ff2c160f0f95434282201ecd9f90e3f3d68706",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/external_conversation_tools.py": "65b327bf5af2a976bff39b4a7f9f8b7fb8deb76db525067bfdd81f2d7d1e6798",
+          "adapters/postgres/component_improvement_actions.py": "6f95c856e35de585c695023fc3f6ce543efb54bc6566a35f4cddc9f8e96455b7",
+          "bootstrap/delegated_digital_runner.py": "47bd8070d0b594eedbebcccb35cecb7da13a2e170378acf4cf36a6d6fb5f72cd",
+          "bootstrap/delegated_digital_composition.py": "6b370aae6dce696ba5a612f9e2f9efc18c706dd9a34636ce8b43f54c26e37605"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/component-result-save-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "health": {
+    "http://localhost:44711/internal/v1/dashboard": 200,
+    "http://localhost:44716/session/ready": 200
+  },
+  "limits": [
+    "Existing document size and authority unchanged",
+    "Grants unchanged",
+    "No actual model-created candidate workflow yet",
+    "No self-modification installed or measured improvement claimed"
+  ],
+  "artifacts": "/home/administrator/project/.eva2-artifacts/component-result-save-20260924"
+}
