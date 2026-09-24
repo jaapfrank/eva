@@ -1,0 +1,67 @@
+{
+  "verifiedAt": "2026-09-24T11:47:32.814077+00:00",
+  "sourceCommit": "7831e69235c37413626aa869ae9517e5b8592817",
+  "concurrency": 2,
+  "services": {
+    "eva2-managed-b-slot3-core": {
+      "image": "eva2-contact-luna6:20260924",
+      "health": "healthy",
+      "restartCount": 0
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "image": "eva2-background-concurrency:20260924",
+      "health": "healthy",
+      "restartCount": 0
+    }
+  },
+  "http": {
+    "http://localhost:44711/internal/v1/dashboard": 200,
+    "http://localhost:44716/session/ready": 200
+  },
+  "moduleSha256": "00764408e6b03bfcac8d9cdc3d458bcba929d7ee3343548826251a1dbe2d4e97",
+  "modelRequests": 0,
+  "realTaskTrial": "not performed",
+  "outcome": "Two admitted background tasks may execute concurrently in the existing service.",
+  "configuration": {
+    "EVA_DELEGATED_WORK_CONCURRENCY": "2",
+    "default": 1,
+    "maximum": 2
+  },
+  "review": {
+    "reviewer": "root coordinator, independent of implementation agent",
+    "checks": [
+      "PostgreSQL row lock with skip_locked and revision fence prevent duplicate claim",
+      "Per-task grants and call fences unchanged",
+      "Fresh digital composition and store per lane; task-local journals and counters",
+      "One-shot mode remains one attempt; stop joins both lanes",
+      "Configured installed worker --check exited 0"
+    ]
+  },
+  "offlineChecks": {
+    "reportedBy": "bounded_contact_comparison",
+    "passed": [
+      "two overlapping runs",
+      "SIGTERM joins both",
+      "caller cancellation joins both",
+      "lane failure stops sibling",
+      "once uses one lane",
+      "configuration defaults and bounds",
+      "syntax and diff check"
+    ]
+  },
+  "deployment": {
+    "stage": "/home/administrator/project/.eva2-artifacts/background-concurrency-20260924",
+    "onlyRestarted": "delegated-work-worker",
+    "rollbackCompose": "/home/administrator/project/.eva2-artifacts/background-concurrency-20260924/baseline.compose.private.json",
+    "runtimeSourceDifference": "Only concurrency changes overlaid; existing schema 4e_0007 and absence of restore activation guard preserved. Deferred recovery source not deployed."
+  },
+  "limitations": [
+    "No actual model-driven concurrent-task trial",
+    "Does not prove fast foreground speech or complete channel equivalence",
+    "Two tasks can consume their existing grants concurrently; per-task limits unchanged, aggregate spend not measured"
+  ],
+  "usage": {
+    "additionalModelRequests": 0,
+    "creditCost": "unknown; not estimated"
+  }
+}
