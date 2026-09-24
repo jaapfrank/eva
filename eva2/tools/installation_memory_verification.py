@@ -111,7 +111,7 @@ def data_inventory(raw):
             raise ValueError("unsupported memory dump data form")
     if active is not None or set(versions) != {'database', 'tool'} or not tables:
         raise ValueError("incomplete memory dump data")
-    if not all(re.fullmatch(r'16\.[0-9]+(?: \([^\r\n]+\))?', value) for value in versions.values()):
+    if not all(re.fullmatch(r'(?:16|18)\.[0-9]+(?: \([^\r\n]+\))?', value) for value in versions.values()):
         raise ValueError("unsupported memory PostgreSQL version")
     return {"versions": versions, "tables": tables, "sequences": sequences}
 

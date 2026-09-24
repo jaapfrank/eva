@@ -71,3 +71,23 @@ def test_verifier_binds_archive_and_target_and_never_restores(monkeypatch, tmp_p
         assert receipt['table_count'] == 1 and receipt['archive_sha256'] == package['archive_sha256']
         assert guards == ['guard', 'pins', 'lineage', 'guard', 'pins', 'lineage']
     assert len(calls) == 2
+
+
+def test_actual_postgresql_18_hindsight_metadata_dump_is_supported():
+    from pathlib import Path
+    raw = (Path(__file__).parent / 'fixtures/hindsight-18.6-synthetic-data.sql').read_bytes()
+    inventory = module.data_inventory(raw)
+    assert inventory['versions'] == {'database': '18.6', 'tool': '18.6'}
+    assert len(inventory['tables']) == 23 and len(inventory['sequences']) == 2
+    banks = next(value for name, value in inventory['tables'].items() if name.startswith('public.banks '))
+    assert banks['rows'] == 1
+    assert module.data_inventory(raw.replace(b'Synthetic restore bank', b'Changed restore bank')) != inventory
+    assert module.data_inventory(raw.replace(b'version 18.6', b'version 16.13')) != inventory
+    with pytest.raises(ValueError, match='unsupported memory dump data form'):
+        module.data_inventory(raw + b'INSERT INTO public.banks VALUES (1);\n')
+
+
+@pytest.mark.parametrize('version', [b'15.9', b'17.1', b'19.1', b'18beta1'])
+def test_unknown_postgresql_header_is_not_treated_as_supported(version):
+    with pytest.raises(ValueError, match='PostgreSQL version'):
+        module.data_inventory(dump().replace(b'16.13', version))
