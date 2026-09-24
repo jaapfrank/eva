@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T17:37:06.493487+00:00",
+        "checkedAt": "2026-09-24T17:55:34.122356+00:00",
         "deliveries": [
+          {
+            "title": "Werkwijze gemaakt en uitgevoerd; hergebruik nog niet af",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Eva heeft zelf Python opgeslagen en geregistreerd. Echte uitvoering klopt: totaal13,70, categorieën10,50/3,20 en1dubbel. Zoekfout met leeg paginaveld hersteld en geïnstalleerd.",
+            "remaining": "Nieuwe invoer vindt de registratie maar wordt niet uitgevoerd. Apart eerste resultaatbestand ontbreekt. Volledig leren/hergebruik is nog niet opgeleverd; geen eigenaaracceptatie.",
+            "source": "eva2/evidence/product/procedure-learning-trial-20260924.json"
+          },
           {
             "title": "Achtergrondmodel ziet zijn resterende budget",
             "date": "24 september",
@@ -2111,15 +2119,15 @@
           }
         ],
         "now": {
-          "title": "Resterend uitvoerbudget aangesloten",
-          "state": "Geïnstalleerd",
-          "detail": "Kern en werker gezond en gelijk; website en spraakroute bereikbaar. Bestaande budgetgrenzen blijven behouden.",
-          "doneWhen": "Technische wijziging afgerond; werkelijke betere taakafronding nog niet bewezen."
+          "title": "Leerproef: eerste uitvoering gelukt, hergebruik geblokkeerd",
+          "state": "Proef afgerond met open fout",
+          "detail": "Geen modelproef meer gestart. Code en eerste uitvoer blijven behouden. Zoekcorrectie live; vervolgmodel zegt geen achtergrondtaak te kunnen starten. Oorzaak nog niet vastgesteld.",
+          "doneWhen": "Dezelfde opgeslagen code op nieuwe invoer uitvoeren en het resultaat bewaren; nog niet gehaald."
         },
         "next": {
-          "title": "Geleerde werkwijze in een nieuwe opdracht toepassen",
+          "title": "Uitvoer na werkwijzezoeking aansluiten",
           "state": "Nog niet gestart",
-          "detail": "Bestaande leer- en hergebruikroute als samenhangende functie afronden. Gebruik bestaande bewijzen eerst; geen nieuwe taakspecifieke kernfunctie."
+          "detail": "Werkelijke beschikbare vervolgtools na zoeken controleren. Hergebruik bestaande overdracht; geen nieuwe promptproef zonder concrete oorzaak."
         },
         "ownerAction": {
           "title": "Een eerdere speakertaak gericht stoppen",
@@ -2133,7 +2141,7 @@
           "expected": "Eva vindt de eerdere opdracht via dezelfde speaker en stopt alleen de gekozen taak. Deze fysieke proef is nog niet door jou bevestigd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T17:37:06.493487+00:00"
+        "reviewedAt": "2026-09-24T17:55:34.122356+00:00"
       }
     },
     "pendingTechnicalReview": {

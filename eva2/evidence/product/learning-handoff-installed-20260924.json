@@ -1,0 +1,33 @@
+{
+  "sourceCommit": "9ede3ddca0bf0b12f3c440e92b3ddc5acc811b60",
+  "recordedAt": "2026-09-24T17:45:35.262987+00:00",
+  "tests": {
+    "passed": 11,
+    "seconds": 0.95
+  },
+  "review": "Independent bounded_contact_comparison GO",
+  "installation": {
+    "checkedAt": "2026-09-24T17:44:08.601321+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:3029bbb03ff70aac861c95a62ff61f9dc9fe1f72c12e462df30e74bdc45738cc",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "4e0f1633806c65fac636fa6814e8a6298c558eedf1bd16021f86482eab715709"
+        }
+      },
+      "worker": {
+        "image": "sha256:fae7ec9f4434124fc2c42301dc4821179828d2fd566d23e51801ad3a636a921c",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "4e0f1633806c65fac636fa6814e8a6298c558eedf1bd16021f86482eab715709"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/learning-handoff-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "fullCoreWorkerProfileEquality": true,
+  "scope": "Shared digital handoff guidance; no added rights or deterministic task routing",
+  "actualTrial": "First failed before admission; changed-cause retry admitted real work:eva-chat:30e33f4d-a236-51fe-9cd1-565907e8e183. Execution still in progress.",
+  "limitation": "Admission does not prove learning/execution. Receipt36.559s is too slow."
+}

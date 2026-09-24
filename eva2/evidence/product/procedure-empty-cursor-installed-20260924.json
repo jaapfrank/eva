@@ -1,0 +1,37 @@
+{
+  "recordedAt": "2026-09-24T17:55:34.122356+00:00",
+  "sourceCommit": "8b44739c3f52f2aa7073aa2425b8a54377b64b52",
+  "tests": {
+    "passed": 22,
+    "seconds": 1.18,
+    "priorFixtureFailure": "Two old host fixtures lacked scope/constructor fields; corrected without changing product guards. Failed output retained locally."
+  },
+  "review": "Coordinator independently reviewed executor one-line fix and test fixture changes.",
+  "installation": {
+    "checkedAt": "2026-09-24T17:53:15.543655+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:69f4a130cfa4faf0388e7fafa9f041daad1c5ab3c08c6837dadd0ec4167c676d",
+        "health": "healthy",
+        "sourceHashes": {
+          "providers/procedure_reference_actions.py": "088c5a75ccfeac9d0f28c064253d718deb0f47d59ca8cce808357aa43c575f79"
+        }
+      },
+      "worker": {
+        "image": "sha256:ec382fdda4f0acd77e58f5e295d910e9949c46c1942b67840c90799a098f587e",
+        "health": "healthy",
+        "sourceHashes": {
+          "providers/procedure_reference_actions.py": "088c5a75ccfeac9d0f28c064253d718deb0f47d59ca8cce808357aa43c575f79"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/procedure-empty-cursor-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "fullCoreWorkerProfileEquality": true,
+  "httpChecks": {
+    "http://localhost:44711/internal/v1/dashboard": 200,
+    "http://localhost:44716/session/ready": 200
+  },
+  "result": "Empty optional cursor accepted with query; nonempty cursor still rejected. Real changed-cause retry finds stored procedure without stream error.",
+  "limits": "Follow-up model still fails to delegate/execute. This is not complete reuse."
+}

@@ -1,0 +1,138 @@
+{
+  "scenario": {
+    "sourceCommit": "1446ca16",
+    "scenario": "Learn reusable Dutch CSV amount normalization and duplicate detection using synthetic data only",
+    "firstInput": "id;category;amount\na;boodschappen;12,50\nb;vervoer;3,20\na;boodschappen;12,50\nc;boodschappen;-2,00",
+    "firstExpected": {
+      "total": "13.70",
+      "categories": {
+        "boodschappen": "10.50",
+        "vervoer": "3.20"
+      },
+      "duplicates": 1
+    },
+    "secondInput": "id;category;amount\nx;inkomen;1.000,05\ny;inkomen;-0,05\nz;overig;2,50\nz;overig;2,50",
+    "secondExpected": {
+      "total": "1002.50",
+      "categories": {
+        "inkomen": "1000.00",
+        "overig": "2.50"
+      },
+      "duplicates": 1
+    },
+    "required": [
+      "Model writes reusable saved Python source",
+      "Registers saved source as procedure",
+      "Executes with first input and validates exact decimal results",
+      "Second task finds same source hash and executes different input",
+      "Returns actual saved outputs; no success claim based only on exit code"
+    ],
+    "bounds": "At most two task admissions; second only after first success. Existing budgets. No repeats without new concrete cause. No real household data or external changes."
+  },
+  "firstAttempt": {
+    "messageId": "dashboard:dc029d8c-0b7e-47b4-948b-f2afc8df1472",
+    "reply": "Ik kan dit nu niet uitvoeren of registreren: in deze sessie ontbreekt de benodigde tool om een Python-bestand duurzaam op te slaan. Ik heb de CSV daarom niet uitgevoerd en kan geen opgeslagen vindplaats of berekende uitkomst claimen.",
+    "usage": {
+      "tool_calls": 0,
+      "measurement": "measured",
+      "input_tokens": 9698,
+      "output_tokens": 187,
+      "model_attempts": 1
+    },
+    "timing": {
+      "completed_ms": 27757,
+      "first_content_ms": 24630
+    },
+    "firstTextSeconds": 28.805,
+    "completedSeconds": 32.005,
+    "backgroundTaskStarted": false
+  },
+  "status": "first_learning_execution_verified_full_reuse_incomplete",
+  "next": "One changed-cause retrial after shared handoff guidance is installed. Reuse stage not started.",
+  "creditCost": "unknown",
+  "changedCauseRetry": {
+    "messageId": "dashboard:e3d3fa7b-3dc5-4bc0-995c-3250258a956e",
+    "foregroundUsage": {
+      "tool_calls": 2,
+      "measurement": "measured",
+      "input_tokens": 29392,
+      "output_tokens": 587,
+      "model_attempts": 3
+    },
+    "receiptSeconds": 36.559,
+    "workId": "work:eva-chat:30e33f4d-a236-51fe-9cd1-565907e8e183",
+    "state": "succeeded",
+    "workerUsage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 4,
+      "tool_calls": 6,
+      "input_tokens": 34035,
+      "output_tokens": 1140,
+      "total_tokens": 35175,
+      "cost_usd_micros": null
+    },
+    "output": {
+      "output": "Opgeslagen, inhoud geverifieerd en geregistreerd voor later hergebruik: /proof-state/nederlandse-csv-totalen.py.\n\nWerkelijk uitgevoerd op je fictieve CSV: totaal 13,70; boodschappen 10,50; vervoer 3,20; 1 dubbele rij genegeerd. Dit klopt met de onafhankelijke narekening: 12,50 − 2,00 + 3,20 = 13,70.\n\nHet testresultaat is niet afzonderlijk opgeslagen: het beschikbare aantal toolaanroepen was bereikt. Er zijn geen echte gebruikersbestanden of huisbediening gebruikt.",
+      "output_sha256": "2a9ed7949b4ae100391310a3cd4a0509297c8942b2af6cce54e765b7fc004fa1",
+      "completed_at": "2026-09-24T17:45:43Z",
+      "verified": false
+    },
+    "execution": {
+      "limits": {
+        "pids": 64,
+        "memory_mb": 256,
+        "cpu_millicores": 1000,
+        "deadline_seconds": 30,
+        "output_bytes_per_stream": 4096
+      },
+      "result": {
+        "stderr": "",
+        "stdout": "{\"totaal\": \"13,70\", \"categorietotalen\": {\"boodschappen\": \"10,50\", \"vervoer\": \"3,20\"}, \"aantal_dubbelen\": 1}\n",
+        "cancelled": false,
+        "exit_code": 0,
+        "timed_out": false,
+        "elapsed_ms": 937,
+        "stderr_truncated": false,
+        "stdout_truncated": false
+      },
+      "contract": "EvaIsolatedProcedureExecution/v1",
+      "image_id": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+      "installed": false,
+      "input_sha256": "e4f81cf8df22d6c3c34f50a2229c1414e98e3a6887f36d93277b9d4e97716616",
+      "source_sha256": "ac1deb9135ac2fbf37828523451b0806b245f8f394acf99b074db5b7ecde5887",
+      "input_convention": "one_json_value_on_stdin",
+      "semantic_success_verified": false
+    },
+    "independentReview": "Input, source hash, exact amounts and duplicate count independently checked by bounded_contact_comparison. No separate result file; durable execution report and task result retained."
+  },
+  "reuseAttempt": {
+    "messageId": "dashboard:f09bd5a2-d059-4700-97bb-9d4430b37bff",
+    "state": "stream_error_before_background_admission",
+    "modelRequests": 1,
+    "inputTokens": 11803,
+    "outputTokens": 194,
+    "toolCalls": 1,
+    "cause": "list_reusable_procedures(query=...,cursor=\"\") rejected because both keys present. No procedure execution occurred.",
+    "next": "Fix empty optional cursor normalization before a changed-cause retry."
+  },
+  "totalRuntimeUsageSoFar": {
+    "modelResponsesOrAttempts": 11,
+    "inputTokens": 99350,
+    "outputTokens": 2348,
+    "toolCalls": 10,
+    "cost": "unknown"
+  },
+  "reuseChangedCauseRetry": {
+    "messageId": "dashboard:188c9aec-ac51-4a90-80c2-682d4cb06712",
+    "firstTextSeconds": 14.577,
+    "completedSeconds": 16.008,
+    "inputTokens": 14422,
+    "outputTokens": 240,
+    "modelAttempts": 2,
+    "toolCalls": 1,
+    "result": "Stored registration found; model declines execution/delegation. No second run or result file.",
+    "next": "Inspect actual continuation capability exposure after procedure lookup without another model trial."
+  }
+}
