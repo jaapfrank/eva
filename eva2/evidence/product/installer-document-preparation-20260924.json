@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-09-24T12:09:36.292316+00:00",
+  "sourceCommit": "c663145574c4e01d1fdd42ff6e53fdefe740a1b6",
+  "kind": "operator_restore_document_preparation",
+  "availableCommand": "python3 /home/administrator/project/.eva2-artifacts/installer-documents-20260924/start-installer.py --restore-config /absolute/private/target.json",
+  "sourceHashes": {
+    "tools/installation_document_restore.py": "64c97368b126605f877a2336456c611f60ba1471bf799f5af2691c0881c63157",
+    "tools/installer_restore_wizard.py": "6859a127469e7936bc36cdae7021ad8349e057b0a946c0f65a7ab4100ed8f341",
+    "tools/installer_portable_restore.py": "80a850c91788a8a5e9e77ca36ad0e42e68d5575bc04f8ab521671717aaf7c83d",
+    "src/eva/application/installer_restore.py": "769a143d7ad1e06611e4ae6443914a6cf6b761a9e9f735ae5157d6aebdcba796",
+    "src/eva/adapters/api/installer_restore_api.py": "48bf9669a1f23097155993e0b2dcebc21f09ceb2188c5278afc428ce280447fc"
+  },
+  "behavior": [
+    "Optional document_recovery requires existing external recovery and materialization",
+    "Native document preparation follows external imports with shared restore authority/runtime guards",
+    "Prepared bindings and project snapshots retained, no provider connection or activation",
+    "Partial receipt retained for operator inspection; no automatic retry",
+    "Browser reports attempted document preparation without exposing private paths or receipts"
+  ],
+  "checks": [
+    "Changed source syntax and exact staged hashes",
+    "Host launcher --help and imports passed",
+    "Implementation agent fake callback ordering and partial failure checks passed",
+    "Root reviewed integration and native preparation module",
+    "Actual FastAPI TestClient response for document preparation failure passed"
+  ],
+  "notPerformed": [
+    "No active data restored or moved",
+    "No provider started or connected",
+    "No full HTTP/database/document restoration trial",
+    "No owner acceptance"
+  ],
+  "remaining": [
+    "Connect prepared native document providers and verify preserved project results",
+    "Release restored installation only after required component checks",
+    "Complete isolated restore/relocation trial"
+  ],
+  "rollback": "Use previous installer-external-20260924 host stage before beginning recovery. Preserve any partial outputs; never retry old workflow on nonempty targets.",
+  "paidModelCalls": 0
+}

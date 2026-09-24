@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T11:56:56.724282+00:00",
+        "checkedAt": "2026-09-24T12:09:36.292316+00:00",
         "deliveries": [
+          {
+            "title": "Documentprojecten voorbereiden via herstelwizard",
+            "date": "24 september",
+            "state": "built",
+            "result": "Bestaande native documentvoorbereiding aangesloten na kern/geheugen/gateway; beschikbaar in lokale beheerwizard. Start en foutmelding gecontroleerd.",
+            "remaining": "Geen herstel uitgevoerd. Providers aansluiten, activeren en volledige herstelproef blijven open. Geen nieuwe dagelijkse gespreksfunctie.",
+            "source": "eva2/evidence/product/installer-document-preparation-20260924.json"
+          },
           {
             "title": "Geen eindeloze wachtstatus na gemiste taakstart",
             "date": "24 september",
@@ -1853,15 +1861,15 @@
           }
         ],
         "now": {
-          "title": "Continue Voice PE: foutmeting voorbereid",
-          "state": "Alleen deze proef wacht op jou",
-          "detail": "HA-streaming en vervolg luisteren zijn aangesloten. Voor de afgekeurde continue firmware ontbreekt het wakeword-foutmoment. Exacte kandidaat en herstelbestand gecontroleerd; niets geflasht.",
-          "doneWhen": "Na expliciete gereedmelding één kandidaat-wakeword vastleggen, werkende firmware herstellen en aangetoonde oorzaak oplossen."
+          "title": "Documentvoorbereiding in beheerwizard beschikbaar",
+          "state": "Gebouwd en lokaal beschikbaar",
+          "detail": "Voorbereide documentbindingen en projectmomentopnamen worden meegenomen in de bestaande herstelactie. Actieve installatie en gegevens ongewijzigd.",
+          "doneWhen": "Koppeling, startcontrole en gerichte foutafhandeling afgerond. Geen volledige herstelclaim."
         },
         "next": {
-          "title": "Onafhankelijk vervolgwerk blijft open",
+          "title": "Voorbereide documentproviders aansluiten",
           "state": "In wachtrij",
-          "detail": "De Voice PE-vraag blokkeert alleen deze fysieke foutmeting. Het volledige achtstappengoal blijft actief; geen nieuwe algemene audit of speculatieve firmwarewijziging."
+          "detail": "Resterende stap in dezelfde installatieketen: providers verbinden en bewaarde resultaten controleren vóór vrijgave. Voice PE-foutmeting wacht afzonderlijk op antwoord."
         },
         "ownerAction": {
           "title": "Een bestaande lamp bedienen",
@@ -1875,7 +1883,7 @@
           "expected": "Bestaande toegestane lamp schakelt; fysieke werking nog niet bewezen. Geen nieuwe schakelaars toegevoegd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T12:03:24.873788+00:00"
+        "reviewedAt": "2026-09-24T12:09:36.292316+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11537,7 +11545,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 3,
+      "currentStep": 6,
       "steps": [
         {
           "number": 1,
@@ -11647,7 +11655,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Verlopen wachttaken en parallelle uitvoering geïnstalleerd; vervolg met resterende functionele oplevering. Echte model-/kanaalproeven blijven uitgesteld zonder onafhankelijk bouwen te blokkeren.",
+      "nextAction": "Documentvoorbereiding beschikbaar in bestaande beheerwizard. Vervolgens voorbereide documentproviders aansluiten en benodigde componentcontrole koppelen vóór vrijgave; actieve installatie blijft behouden.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
