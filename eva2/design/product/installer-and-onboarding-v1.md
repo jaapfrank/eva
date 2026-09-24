@@ -500,3 +500,27 @@ This used a controlled signed test release and synthetic authorities. The option
 delegated-work profile, restore import, runtime activation and ordinary browser
 onboarding are not proved by this preparation. Evidence:
 `evidence/product/installer-composed-preparation-20260925.json`.
+
+
+## Prepared target to restore session — 25 September 2026
+
+Installed `run_prepared_installer_wizard(preparation=..., config_builder=..., argv=...)`
+connects the same preparation callback/status and a deferred existing restore
+session. The trusted config builder runs only after preparation reports prepared.
+Archive inspection and execution share the existing workflow/context; closing the
+wizard disposes it. A new process requires a fresh archive check, not an old
+confirmation. No backup/passphrase is stored by this bridge and no new target is
+created when restore opens.
+
+`build_prepared_restore_config` reads matching plan/namespace preparation receipts,
+checks the actual core DSN mount and prepared PostgreSQL identity, compares the
+supplied connection lineage, and reuses the existing stopped-writer guard. Memory
+PostgreSQL identity is derived from its actual prepared container. Reserved core
+configuration cannot be overridden by component input. Missing gateway, document,
+materialization and activation configuration remains explicit in `pending`.
+
+The installed builder was exercised read-only against the retained complete
+prepared target. Core and memory database identities matched; restore authority
+was deliberately pending and no import/activation occurred. The full ordinary
+restoration remains open. Evidence:
+`evidence/product/installer-prepared-restore-installed-20260925.json`.

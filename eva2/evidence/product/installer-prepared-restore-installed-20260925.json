@@ -1,0 +1,24 @@
+{
+  "sourceCommit": "5050f80f",
+  "installed": true,
+  "installationReceipt": "/home/administrator/project/.eva2-artifacts/installer-prepared-restore-installed-20260925/installation-receipt.json",
+  "scope": "Existing restore session deferred until target preparation; actual target config derived without recreating target",
+  "verification": {
+    "bridgeAndExistingApiTestsPassed": 9,
+    "configurationTestsPassedBeforePlanBindingCorrection": 8,
+    "newPlanBindingTestPassed": 1,
+    "review": "Bridge independently reviewed; configuration builder reviewed by coordinator",
+    "actualReadOnlyTargetDerivation": true,
+    "actualResult": "/home/administrator/project/.eva2-artifacts/restore-composed-preparation-20260925/prepared-config-result.json",
+    "actualResultSha256": "d55394978358ceb11c1199e128f8c1b45fcb4ff8e87ad403e1f2a1e8fbeba919",
+    "installedSmoke": "Four exact module hashes and imports checked"
+  },
+  "actualScope": "Both prepared core and memory PostgreSQL identities matched; authority deliberately pending, no import or activation",
+  "remaining": [
+    "Recovery materialization, external gateway/document target configuration",
+    "Actual approved restore authority and complete ordinary bootstrap",
+    "Full restore execution/activation and owner acceptance"
+  ],
+  "modelCalls": 0,
+  "productionChanged": false
+}
