@@ -1,0 +1,36 @@
+{
+  "recordedAt": "2026-09-24T01:26:58.134899+00:00",
+  "sourceCommit": "d9e94e7a08e5c225fbcdcec7bf6b4b2ca96e0835",
+  "state": "bounded_source_diagnosis",
+  "ownerRequirement": "VB-002: fitting household speaker presence, while private information remains with its person.",
+  "voiceFinding": "Existing saved diagnostic contains connection/idle but no actual failing wakeword transition. Ordinary recovered voice remains owner-confirmed. No firmware change or repeated probe.",
+  "initiativeFinding": "The existing sensory decision worker recalls private owner memory and initiative history; proactive delivery is composed for private Telegram. Household-only initiative context and spoken delivery are not composed. Redirecting existing private expressions to a speaker is not acceptable.",
+  "sources": [
+    "eva2/src/eva/application/free_will.py:351",
+    "eva2/src/eva/application/free_will.py:384",
+    "eva2/src/eva/bootstrap/runtime.py:2078",
+    "eva2/src/eva/adapters/postgres/sensory_events.py:603",
+    "eva2/src/eva/bootstrap/native_work_delivery.py:53",
+    "eva2/src/eva/bootstrap/household_voice.py:23"
+  ],
+  "reusable": [
+    "Durable sensory ingestion/decision and cooldowns",
+    "Current household device/consent authority",
+    "Native HA idle checks and announcement adapter with offered/ambiguous receipts"
+  ],
+  "nextBuild": "Compose household-only decision context and retain explicit household/device provenance for shared expressions; reuse HA transport without redirecting private owner initiatives. Keep speaker selection and existing owner mandate explicit.",
+  "configurationObserved": {
+    "background_work_enabled": true,
+    "delegated_result_delivery_enabled": true,
+    "household_voice_session_enabled": true,
+    "privateTelegramDeliveryConfigured": true
+  },
+  "deviceChanged": false,
+  "modelsCalled": 0,
+  "messagesSent": 0,
+  "limitations": [
+    "No physical wakeword diagnosis",
+    "No spontaneous household delivery installed",
+    "No permission inferred to broadcast private activity or private task existence"
+  ]
+}

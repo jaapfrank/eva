@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T01:21:33.348016+00:00",
+        "checkedAt": "2026-09-24T01:26:58.134899+00:00",
         "deliveries": [
           {
             "title": "Onderzoek bijsturen terwijl de oude poging stopt",
@@ -1709,15 +1709,15 @@
           }
         ],
         "now": {
-          "title": "Lopend onderzoek bijsturen aangesloten",
-          "state": "Geïnstalleerd; kanaalproef open",
-          "detail": "Na een opgeslagen stopverzoek kan Eva de gecorrigeerde publieke vraag als gekoppeld vervolg aannemen. Privé- en huishoudroute gebruiken dezelfde tooluitleg.",
-          "doneWhen": "Echte correctie via website, Telegram, HA en fysiek Voice PE nog beproeven; startcontrole geslaagd."
+          "title": "Ontbrekende huisaanwezigheid vastgesteld",
+          "state": "Nog te bouwen",
+          "detail": "Spontaan contact gebruikt momenteel privécontext en privé-Telegram. Voor de huisspeakers ontbreekt een afzonderlijke route met uitsluitend gedeelde gezinscontext.",
+          "doneWhen": "Passend spontaan contact uit gedeelde context via de toegestane huisspeaker, met stiltemomenten en stoppen. Geen privé-informatie of hints daarover."
         },
         "next": {
-          "title": "Continue spraak via Voice PE",
-          "state": "Nog open: foutovergang niet vastgelegd",
-          "detail": "Gewone spraak blijft behouden. De eerder gemelde wakeword-fout van de continue route moet eerst concreet worden vastgelegd; geen nieuwe firmware op basis van een onbewezen oorzaak."
+          "title": "Gedeelde initiatiefcontext aansluiten op HA-spraak",
+          "state": "Bouwopdracht bepaald",
+          "detail": "Hergebruik waarnemingsopslag, actuele huishoudtoestemming en bestaande HA-uitvoer. Geen doorsturen van privé-initiatieven."
         },
         "ownerAction": {
           "title": "Kies wie huisbediening via speakers mag gebruiken",
@@ -3820,7 +3820,7 @@
       }
     },
     "deferredVoiceWork": {
-      "reason": "Jaap weigert USB en vraagt door te werken aan het volledige project; hardware-installatie is geen projectbrede afhankelijkheid.",
+      "reason": "Gewone Voice PE-spraak is via OTA hersteld en door Jaap bevestigd. Continue spraak blijft open: de werkelijk falende wakeword-overgang is nog niet vastgelegd. Fysieke proef later; onafhankelijke functiebouw gaat door.",
       "status": "open_not_accepted",
       "task": {
         "id": "VB-001",
@@ -3833,8 +3833,11 @@
           "baseCommit": null,
           "implementationCommit": null,
           "evidenceCommit": null,
-          "reviewEvidencePaths": [],
-          "blockerReason": "Het complete speakerinstallatiepakket is voorbereid en onafhankelijk goedgekeurd. De woonkamer-speaker is niet via USB zichtbaar; fysieke identificatie en backup van zijn huidige flash zijn nodig voor herstel vóór firmware-installatie. Jaap is gevraagd hem met een USB-datakabel aan te sluiten."
+          "reviewEvidencePaths": [
+            "eva2/evidence/product/voice-pe-session-diagnosis-20260923.json",
+            "eva2/evidence/product/voice-pe-woonkamer-ota-installed-20260923.json"
+          ],
+          "blockerReason": "Geen USB-blokkade: OTA en herstel zijn al uitgevoerd. De afgewezen continue-spraakkandidaat heeft nog geen vastgelegde falende wakeword-overgang; oorzaak onbewezen, gewone spraak blijft behouden."
         },
         "ownerRole": "architecturelead",
         "reviewerRole": "proofreviewer",
@@ -11390,7 +11393,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 1,
+      "currentStep": 4,
       "steps": [
         {
           "number": 1,
@@ -11500,7 +11503,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Gewone spraak blijft behouden. De eerder gemelde wakeword-fout van de continue route moet eerst concreet worden vastgelegd; geen nieuwe firmware op basis van een onbewezen oorzaak.",
+      "nextAction": "Hergebruik waarnemingsopslag, actuele huishoudtoestemming en bestaande HA-uitvoer. Geen doorsturen van privé-initiatieven.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
