@@ -65,7 +65,9 @@ class HomeAssistantApiTool:
             completion_guidance=(
                 "result is the persisted API response, not independent physical-state proof. "
                 "Check http_status/success and response_json before claiming success. Read changes "
-                "back with another request. Never repeat an uncertain write automatically. "
+                "back with another request. A verified receipt only confirms receipt of the API response. "
+                "If success is false, inspect the error and correct the request or read current state; "
+                "do not claim completion. Never repeat an uncertain write automatically. "
                 "Use ordinary Dutch names in your reply, not API implementation details."
             ),
         ),)
@@ -178,5 +180,5 @@ class HomeAssistantApiTool:
             or dispatch.details.get("request_sha256") != canonical_sha256(request.arguments)
             or dispatch.provider_ref != canonical_sha256(result)):
             raise RuntimeError("Home Assistant durable API response differs")
-        return ToolProofObservation("verified" if result.get("success") is True else "conflict", {}, {"observation": result,
+        return ToolProofObservation("verified", {}, {"observation": result,
             "source": "home_assistant_api_response", "external_state_verified": False})

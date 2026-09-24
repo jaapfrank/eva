@@ -167,12 +167,21 @@ def _has_completed_tool_evidence(receipts):
             for receipt in receipts):
         return False
     completed = False
+    last_home_assistant_success = None
     for receipt in receipts:
         output = receipt.output
         if receipt.call.name == "save_work_progress":
             # A planning checkpoint proves persistence, never completed work.
             continue
-        if receipt.call.name in {"list_reusable_procedures", "resolve_reusable_procedure", "designate_reusable_procedure", "run_reusable_procedure"}:
+        if receipt.call.name == "home_assistant_request":
+            if output.get("status") != "verified":
+                return False
+            result = output.get("result")
+            if not isinstance(result, dict) or type(result.get("success")) is not bool:
+                return False
+            last_home_assistant_success = result["success"]
+            completed = completed or last_home_assistant_success
+        elif receipt.call.name in {"list_reusable_procedures", "resolve_reusable_procedure", "designate_reusable_procedure", "run_reusable_procedure"}:
             if output.get("status") != "verified":
                 return False
             output = output.get("operation_result", {})
@@ -201,7 +210,7 @@ def _has_completed_tool_evidence(receipts):
             completed = True
         else:
             return False
-    return completed
+    return completed and last_home_assistant_success is not False
 
 
 class DelegatedDigitalRunner:

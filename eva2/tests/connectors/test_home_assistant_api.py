@@ -71,7 +71,7 @@ def test_configured_destination_cannot_be_changed(path):
     with pytest.raises(ConversationConflict): tool._arguments(args(path=path))
 
 
-def test_rejected_api_response_is_not_successful_work():
+def test_rejected_api_response_remains_available_for_model_correction():
     from eva.application.orchestration import ToolDispatchResult
     from eva.contracts.canonical_json import canonical_sha256
     tool = HomeAssistantApiTool(base_url="http://ha.local", token="local-fixture")
@@ -79,5 +79,25 @@ def test_rejected_api_response_is_not_successful_work():
     result = {"success": False, "http_status": 400, "response": {"message": "Invalid service"}}
     dispatch = ToolDispatchResult(True, canonical_sha256(result), {"response": result, "request_sha256": canonical_sha256(request.arguments)})
     observation = asyncio.run(tool.observe(request, dispatch))
-    assert observation.disposition == "conflict"
+    assert observation.disposition == "verified"
     assert observation.evidence["observation"]["http_status"] == 400
+
+
+@pytest.mark.parametrize("outcomes, expected", [
+    ([False], False), ([True, False], False), ([False, True], True),
+    ([True], True),
+])
+def test_background_completion_requires_recovery_after_api_failure(outcomes, expected):
+    from eva.bootstrap.delegated_digital_runner import _has_completed_tool_evidence
+    receipts = [SimpleNamespace(call=SimpleNamespace(name="home_assistant_request"),
+        output={"status": "verified", "result": {"success": success}})
+        for success in outcomes]
+    assert _has_completed_tool_evidence(receipts) is expected
+
+
+@pytest.mark.parametrize("result", [None, {}, {"success": "false"}])
+def test_background_completion_rejects_missing_or_malformed_api_result(result):
+    from eva.bootstrap.delegated_digital_runner import _has_completed_tool_evidence
+    receipt = SimpleNamespace(call=SimpleNamespace(name="home_assistant_request"),
+        output={"status": "verified", "result": result})
+    assert not _has_completed_tool_evidence([receipt])
