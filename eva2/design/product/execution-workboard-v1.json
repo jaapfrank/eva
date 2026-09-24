@@ -1327,8 +1327,8 @@
             "title": "Herstelwizard",
             "date": "24 september",
             "state": "built",
-            "result": "Gedeeltelijk gebouwd; nog niet bruikbaar als volledige herstelfunctie. De acht registraties hieronder zijn technische tussenstappen, geen acht afgeronde functies.",
-            "remaining": "De laatste controles, vrijgave en het opstarten van de herstelde Eva moeten nog worden aangesloten. Daarna volgt één volledige herstelproef. Uitgesteld: dagelijkse Eva-functies gaan voor.",
+            "result": "Nog niet opgeleverd als bruikbare herstelfunctie. De acht onderliggende vermeldingen zijn gebouwde of afzonderlijk geteste onderdelen, geen acht afgeronde functies. De beheerlauncher sluit volledige controle, vrijgave en kernstart nog niet op elkaar aan.",
+            "remaining": "In uitvoering: gezamenlijke componentcontrole en actuele doel-aanmeldgegevens afronden; launcher aangesloten in werkcode. Daarna volledige geïsoleerde herstelproef en beschikbaar maken. Broncheckpoint e7874df1 gepubliceerd; geen nieuwe geïnstalleerde functie. Geen actie van Jaap nodig.",
             "source": "eva2/WERKBORD.md",
             "children": [
               {
@@ -2239,15 +2239,15 @@
           }
         ],
         "now": {
-          "title": "Later werk en vervolgstappen kunnen inplannen",
-          "state": "Geïnstalleerd; praktijkproef open",
-          "detail": "Tegenstrijdige modelinvoer hersteld: één of geen voorganger, tijdstip optioneel bij afhankelijk vervolg. Bestaande planner/replay behouden. Vier databasegevallen, onafhankelijke review en live schema/startcontrole geslaagd.",
-          "doneWhen": "Technische koppeling geïnstalleerd met terugweg. Echte meerdaagse uitvoering en gezinsacceptatie blijven open."
+          "title": "Bestaande herstelwizard functioneel afmaken",
+          "state": "Ontbrekende vrijgave en start aansluiten",
+          "detail": "Broncheckpoint e7874df1 staat op GitHub: vrijgave en starten na commit, geheugenvergelijking en gatewaycontrole. De beheerlauncher wordt aangesloten op de gezamenlijke componentcontrole en actuele doel-aanmeldgegevens. Nog geen volledige herstelproef of installatie; huidige Eva draait door.",
+          "doneWhen": "Bestaande wizard kan gecontroleerde herstelde onderdelen vrijgeven en starten, met heldere gedeeltelijke status en terugweg. Geen vervanging van de huidige installatie tijdens proeven."
         },
         "next": {
-          "title": "Eigen initiatief en huisaanwezigheid afronden",
-          "state": "Volgende opdracht; nog niet gestart",
-          "detail": "Bestaande initiatiefuitvoering, terugmelding en eigenaarfeedback hergebruiken; concreet ontbrekende functie afronden. Fysieke kanaalproeven en browserkeuze blijven afzonderlijk open."
+          "title": "Installatie- en herstelroute samenhangend opleveren",
+          "state": "Na ontbrekende aansluiting",
+          "detail": "Bestaande geïsoleerde herstelbewijzen gebruiken; de acht technische tussenstappen blijven één onafgeronde functie tot de volledige route werkt."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2261,7 +2261,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T20:47:01.434669+00:00"
+        "reviewedAt": "2026-09-24T21:09:48.393147+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12033,7 +12033,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Bestaand eigen initiatief en huisaanwezigheid functioneel afronden; nieuwe planningskoppeling geïnstalleerd, echte meerdaagse proef open.",
+      "nextAction": "Ontbrekende vrijgave en start in bestaande herstelwizard functioneel aansluiten; dagelijkse gebruiksproeven afzonderlijk open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
