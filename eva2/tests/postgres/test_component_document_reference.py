@@ -54,7 +54,7 @@ def test_exact_component_document_is_durable_and_replay_keeps_original_call(data
             assert request.arguments == writes[-1]
             return ToolProofObservation("verified", {"saved": True}, {})
     original = PostgresExternalConversationTools(database, Planner(), Provider())
-    call = ConversationActionCall("save", "save_workspace_document", {"path": "/allowed/proposal.json", "component_step": 1})
+    call = ConversationActionCall("save", "save_workspace_document", {"path": "/allowed/proposal.json", "component_step": 1, "content": None})
     route = original.with_preparation_call_resolver(component().resolve_document_call)
     result = route.execute(turn, call, step_index=2)
     assert result.call == call and result.output["status"] == "verified"
@@ -69,7 +69,9 @@ def test_exact_component_document_is_durable_and_replay_keeps_original_call(data
     assert original._preparation_call_resolver is None
     for arguments, step in [({"component_step": 2}, 2), ({"component_step": True}, 2),
                             ({"component_step": -1}, 2), ({"component_step": 0}, 2),
-                            ({"component_step": 1, "content": "wrong"}, 2), ({}, 2)]:
+                            ({"component_step": 1, "content": "wrong"}, 2),
+                            ({"component_step": 1, "content": ""}, 2),
+                            ({"component_step": None, "content": None}, 2), ({}, 2)]:
         with pytest.raises(ConversationConflict):
             component().resolve_document_call(turn, replace(call, arguments=arguments), step)
     with pytest.raises(ConversationConflict, match="does not exist"):
@@ -80,3 +82,6 @@ def test_exact_component_document_is_durable_and_replay_keeps_original_call(data
     with pytest.raises(AssertionError):
         route.execute(turn, replace(call, call_id="bad-path", arguments={"path": "/outside", "component_step": 1}), step_index=3)
     assert len(writes) == 1
+
+    empty_call = replace(call, arguments={"path": "/allowed/proposal.json", "component_step": None, "content": ""})
+    assert component().resolve_document_call(turn, empty_call, 3).arguments == {"path": "/allowed/proposal.json", "content": ""}

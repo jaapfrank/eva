@@ -270,7 +270,8 @@ def _has_completed_tool_evidence(receipts):
             if (receipt.call.name != "save_workspace_document"
                     or receipt.output.get("status") != "verified"):
                 continue
-            arguments = receipt.call.arguments
+            arguments = {key: value for key, value in receipt.call.arguments.items()
+                         if key not in {"content", "component_step"} or value is not None}
             if "component_step" in arguments and "content" not in arguments:
                 step = arguments["component_step"]
                 saved = (type(step) is int and step >= 0

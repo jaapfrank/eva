@@ -152,7 +152,10 @@ def test_wrapper_keeps_existing_contracts_on_existing_runner():
 def test_procedure_learning_and_verified_writer_share_the_pinned_profile():
     settings, bundle = configuration()
     def descriptor(name):
-        return ConversationToolDescriptor(name, name, {"type": "object", "properties": {}, "required": [], "additionalProperties": False})
+        properties = ({"path": {"type": "string"}, "content": {"type": "string", "maxLength": 12000}}
+                      if name == "save_workspace_document" else {})
+        return ConversationToolDescriptor(name, name, {"type": "object", "properties": properties,
+            "required": list(properties), "additionalProperties": False})
     names = ("list_reusable_procedures", "resolve_reusable_procedure", "designate_reusable_procedure", "save_workspace_document")
     route = SimpleNamespace(action_names=names)
     bundle = replace(bundle, conversation_tools=(*bundle.conversation_tools, *(descriptor(n) for n in names)),

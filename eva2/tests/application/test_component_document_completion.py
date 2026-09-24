@@ -12,7 +12,10 @@ def receipt(name, arguments, output):
 
 
 @pytest.mark.parametrize("arguments,expected", [
-    ({"component_step": 3}, True), ({"component_step": 2}, False),
+    ({"component_step": 3}, True), ({"component_step": 3, "content": None}, True),
+    ({"component_step": None, "content": '{"complete":true}'}, True),
+    ({"component_step": None, "content": None}, False),
+    ({"component_step": 3, "content": ""}, False), ({"component_step": 2}, False),
     ({"content": '{"complete":true}'}, True), ({"content": "unrelated"}, False),
     ({"content": '{}'}, False), ({}, False),
     ({"component_step": 3, "content": '{"complete":true}'}, False),
@@ -35,6 +38,21 @@ def test_background_descriptor_keeps_foreground_schema_unchanged():
     revised = _digital_document_descriptor(descriptor)
     assert descriptor.input_schema["required"] == ["path", "content"]
     assert "component_step" not in descriptor.input_schema["properties"]
-    assert revised.input_schema["required"] == ["path"]
+    assert revised.input_schema["required"] == ["path", "content", "component_step"]
     assert revised.input_schema["properties"]["content"]["maxLength"] == 12000
-    assert revised.input_schema["properties"]["component_step"] == {"type": "integer", "minimum": 0}
+    assert revised.input_schema["properties"]["component_step"] == {"type": ["integer", "null"], "minimum": 0}
+
+
+def test_real_sdk_strict_schema_can_express_either_document_source():
+    from copy import deepcopy
+    from pydantic_ai.profiles.openai import OpenAIJsonSchemaTransformer
+    import jsonschema
+    descriptor = ConversationToolDescriptor("save_workspace_document", "Save text", {
+        "type": "object", "required": ["path", "content"], "additionalProperties": False,
+        "properties": {"path": {"type": "string"}, "content": {"type": "string", "maxLength": 12000}}})
+    schema = OpenAIJsonSchemaTransformer(deepcopy(_digital_document_descriptor(descriptor).input_schema), strict=True).walk()
+    assert set(schema["required"]) == {"path", "content", "component_step"}
+    jsonschema.validate({"path": "/proposal.json", "content": None, "component_step": 3}, schema)
+    jsonschema.validate({"path": "/empty.txt", "content": "", "component_step": None}, schema)
+    with pytest.raises(jsonschema.ValidationError):
+        jsonschema.validate({"path": "/proposal.json", "content": None, "component_step": "3"}, schema)

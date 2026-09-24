@@ -60,11 +60,13 @@ def _digital_document_descriptor(tool):
     if tool.name != "save_workspace_document":
         return tool
     schema = deepcopy(tool.input_schema)
-    schema["required"] = [name for name in schema.get("required", []) if name != "content"]
-    schema["properties"]["component_step"] = {"type": "integer", "minimum": 0}
+    schema["properties"]["content"]["type"] = ["string", "null"]
+    schema["properties"]["component_step"] = {"type": ["integer", "null"], "minimum": 0}
+    schema["required"] = list(dict.fromkeys([*schema.get("required", []), "content", "component_step"]))
     return replace(tool, input_schema=schema, description=tool.description +
         " Gebruik precies één inhoudsbron: content, of component_step van een eerder "
         "eigen componentvoorstel, meetrapport of installatiepakket in deze taak. "
+        "Zet het ongebruikte veld op null; een lege content-tekenreeks is geldige inhoud. "
         "component_step bewaart dat exacte resultaat zonder het opnieuw uit te schrijven. "
         "Bestaande documentlimieten en toegangsregels blijven gelden.")
 

@@ -107,11 +107,12 @@ class ComponentImprovementActions:
             return call
         if not self.available_for(turn):
             raise ConversationConflict("component document source differs")
-        arguments = call.arguments
+        arguments = {key: value for key, value in call.arguments.items()
+                     if key not in {"content", "component_step"} or value is not None}
         if ("content" in arguments) == ("component_step" in arguments):
             raise ConversationConflict("document requires exactly one content source")
         if "component_step" not in arguments:
-            return call
+            return ConversationActionCall(call.call_id, call.name, arguments)
         referenced_step = arguments["component_step"]
         if (type(referenced_step) is not int or referenced_step < 0
                 or type(step_index) is not int or referenced_step >= step_index):
