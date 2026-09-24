@@ -25,7 +25,7 @@ def main(argv=None):
     )
     required = {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed", "runtime_guard"}
     if (not isinstance(config, dict) or not required <= set(config)
-            or not set(config) <= required | {"runtime_identity", "recovery_materialization", "external_recovery", "document_recovery", "document_connection", "document_gateway_binding", "gateway_start", "document_write_access"}
+            or not set(config) <= required | {"runtime_identity", "recovery_materialization", "external_recovery", "document_recovery", "document_connection", "document_gateway_binding", "gateway_start", "document_write_access", "activation"}
             or config["traffic_closed"] is not True):
         raise ValueError("restore configuration requires pinned runtime_guard identities and closed traffic")
     if "document_recovery" in config and not {"external_recovery", "recovery_materialization"} <= set(config):
@@ -42,6 +42,17 @@ def main(argv=None):
         raise ValueError("gateway start requires preserved document gateway bindings")
     if "document_write_access" in config and "gateway_start" not in config:
         raise ValueError("document write access requires gateway startup")
+    if "activation" in config:
+        activation = config["activation"]
+        if not {"document_write_access", "runtime_identity"} <= set(config):
+            raise ValueError("activation requires complete document promotion and runtime identity")
+        if (not isinstance(activation, dict)
+                or not {"native_authorization"} <= set(activation)
+                or not set(activation) <= {"native_authorization", "startup_timeout_seconds"}):
+            raise ValueError("activation configuration differs")
+        timeout = activation.get("startup_timeout_seconds", 60)
+        if type(timeout) not in (int, float) or not 0 < timeout <= 120:
+            raise ValueError("activation startup timeout is invalid")
     paths = {key: Path(config[key]) for key in ("authority", "workspace", "objects")}
     if not all(path.is_absolute() for path in paths.values()):
         raise ValueError("restore target paths must be absolute")
@@ -94,6 +105,25 @@ def main(argv=None):
             preparation_configuration=config["document_recovery"],
             connection_configuration=config["document_connection"],
             configuration=config["document_write_access"])
+    verify_components = start_runtime = None
+    if "activation" in config:
+        from tools.installation_restore_verification import (
+            verify_restored_installation, validate_restore_verification_configuration,
+        )
+        from tools.installation_runtime_start import start_restored_runtime
+        verification = {
+            "runtime": config["runtime_guard"], "external": config["external_recovery"],
+            "gateway": config["gateway_start"], "binding": config["document_gateway_binding"],
+            "document_preparation": config["document_recovery"],
+            "document_connection": config["document_connection"],
+            "document_promotion": config["document_write_access"],
+            "native_authorization": config["activation"]["native_authorization"],
+        }
+        validate_restore_verification_configuration(verification)
+        verify_components = partial(verify_restored_installation, configuration=verification)
+        start_runtime = partial(start_restored_runtime, engine,
+            expected=config["runtime_guard"],
+            timeout_seconds=config["activation"].get("startup_timeout_seconds", 60))
     workflow = InstallerPortableRestore(
         engine=engine,
         authority_reader=partial(read_private_restore_authority, paths["authority"]),
@@ -108,6 +138,8 @@ def main(argv=None):
         document_connect=document_connect,
         gateway_start=gateway_start,
         document_promote=document_promote,
+        verify_components=verify_components,
+        start_runtime=start_runtime,
     )
     try:
         return run_installer_wizard(remaining, restore_workflow=workflow)
