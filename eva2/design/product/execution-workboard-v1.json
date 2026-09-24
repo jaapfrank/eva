@@ -1829,10 +1829,10 @@
           }
         ],
         "now": {
-          "title": "Gedeelde huisbediening voorbereiden",
-          "state": "Voorbereid; niet geïnstalleerd",
-          "detail": "Kandidaat staat op de actuele Luna6-installatie. Alleen toegang voor de twee bestaande speakeridentiteiten toegevoegd; configuratie gecontroleerd. Activering wacht op eigenaarbesluit, privégeheugen blijft ongewijzigd.",
-          "doneWhen": "Actuele kandidaat met dezelfde118 bestaande apparaat/handeling-paren, alleen twee bestaande huisapparaten toegevoegd na toestemming."
+          "title": "Geen bouwtaak actief; twee productkeuzes open",
+          "state": "Wacht op eigenaarbesluit",
+          "detail": "Huisbediening is op de actuele installatie voorbereid. Keuze over toegang via gedeelde speakers en privéspraak ontbreekt. Bestaande browserbediening en hervatten worden niet opnieuw gebouwd zonder aangetoond tekort.",
+          "doneWhen": "Na de eigenaarantwoorden kan de passende functionaliteit worden geactiveerd of verder gebouwd. Uitgestelde praktijkproeven en het volledige doel blijven open."
         },
         "next": {
           "title": "Bestaande huisbediening via Voice PE beschikbaar maken",
@@ -1850,7 +1850,7 @@
           "expected": "Deze keuzes bepalen ontbrekende functionaliteit; bestaande acceptaties en privégrenzen blijven behouden."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T09:56:44.688873+00:00"
+        "reviewedAt": "2026-09-24T09:58:00.114223+00:00"
       }
     },
     "pendingTechnicalReview": {
