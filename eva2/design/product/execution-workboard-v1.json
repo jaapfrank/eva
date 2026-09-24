@@ -1009,14 +1009,22 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T15:41:37.770470+00:00",
+        "checkedAt": "2026-09-24T15:50:34.917634+00:00",
         "deliveries": [
+          {
+            "title": "Eerder advies via gewone privégespreksroute teruggevonden",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Echte vervolgvraag geeft het oorspronkelijke Schuur2-advies correct terug als eerdere analyse. Zoekinstructie en historische uitwisselingszoeking sluiten nu op elkaar aan.",
+            "remaining": "14,1 s tot eerste tekst; geen snelheidsclaim. Eén specifieke gesprekproef, geen algemene eigenaaracceptatie of fysieke kanaalproef.",
+            "source": "eva2/evidence/product/private-history-query-installed-20260924.json"
+          },
           {
             "title": "Ook woorden uit Eva’s eerdere antwoorden terugvinden",
             "date": "24 september",
             "state": "installed",
             "result": "Zoekroute uitgebreid zonder nieuwe geheugenopslag. Proef met acht dagen oud antwoord geslaagd; drie echte privéantwoordparen uit draaiende installatie gelezen.",
-            "remaining": "Een echte modelgestuurde vervolgvraag en eigenaaracceptatie blijven open. Gedeelde spraak krijgt geen privé-inhoud.",
+            "remaining": "Echte vervolgvraag mislukt: Eva zei niet terug te vinden wat de directe zoekroute wel vindt. Zoekinstructie/aansluiting wordt gecorrigeerd; eigenaaracceptatie blijft open.",
             "source": "eva2/evidence/product/private-answer-history-installed-20260924.json"
           },
           {
@@ -2047,15 +2055,15 @@
           }
         ],
         "now": {
-          "title": "Ook onderwerpen uit Eva’s eerdere antwoorden terugvinden",
-          "state": "Geïnstalleerd en gecontroleerd",
-          "detail": "Een term die alleen in Eva’s antwoord staat kan nu de bewaarde privé-uitwisseling vinden. Acht dagen oude proef geslaagd; draaiende installatie las drie bestaande antwoordparen. Geen privétoegang via gedeelde spraak.",
-          "doneWhen": "Deze zoekverbetering is opgeleverd. Modelgestuurde gesprekservaring en jouw acceptatie blijven apart open."
+          "title": "Eva haalt eerder gegeven advies terug in gesprek",
+          "state": "Geïnstalleerd en in gesprek gecontroleerd",
+          "detail": "Na correctie haalt Eva het eerdere Schuur2-advies juist terug en benoemt het als eerdere analyse. Resultaat onafhankelijk vergeleken met origineel; geen nieuwe achtergrondtaak.",
+          "doneWhen": "Deze eerdere-adviesproef is afgerond. Andere onderwerpen, Telegrampraktijk en jouw acceptatie blijven afzonderlijk open."
         },
         "next": {
-          "title": "Ouder onderwerp via de echte gespreksroute voortzetten",
+          "title": "Meerdere taken volgen en gericht stoppen afronden",
           "state": "Nog niet gestart",
-          "detail": "Controleren dat Eva de bestaande geheugenzoekactie zelf kiest en een eerder antwoord correct gebruikt. Geen herhaling van de afgeronde databaseproef."
+          "detail": "Bestaande taakbediening en twee uitvoerslots hergebruiken; gericht vaststellen welk deel van de samenhangende gebruikersuitkomst nog ontbreekt. Geen herstelwizardwerk."
         },
         "ownerAction": {
           "title": "Kom terug op een eerder privéonderwerp",
@@ -2069,7 +2077,7 @@
           "expected": "Eva haalt de bewaarde privé-uitwisseling op en onderscheidt haar eerdere antwoord van actuele feiten. Deze privé-inhoud blijft buiten gedeelde speakers."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T15:41:37.770470+00:00"
+        "reviewedAt": "2026-09-24T15:50:34.917634+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11841,7 +11849,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Ouder onderwerp via de echte gespreksroute voortzetten",
+      "nextAction": "Meerdere taken volgen en gericht stoppen afronden",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

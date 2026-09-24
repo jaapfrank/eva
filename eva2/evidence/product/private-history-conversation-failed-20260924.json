@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-09-24T15:47:30.826626+00:00",
+  "installedSource": "f67ed3b3",
+  "prompt": "Wat was jouw eerdere verbeteradvies over Schuur 2? Zoek het eerdere gesprek erbij; doe geen nieuw Home Assistant-onderzoek en verander niets.",
+  "messageId": "dashboard:7234379f-44be-429a-a5f5-c2c95b53885c",
+  "outcome": "failed_to_recall_existing_advice",
+  "reply": "Ik kan het eerdere verbeteradvies over Schuur 2 niet terugvinden in de bewaarde gespreksgeschiedenis. Er is niets opgehaald uit Home Assistant en ik heb niets gewijzigd.",
+  "timing": {
+    "firstTextSeconds": 15.334,
+    "savedReplySeconds": 16.673,
+    "modelFirstContentMs": 9279,
+    "modelCompletedMs": 10519
+  },
+  "usage": {
+    "modelAttempts": 2,
+    "toolCalls": 1,
+    "inputTokens": 17559,
+    "outputTokens": 109,
+    "costUnknown": true
+  },
+  "counterEvidence": {
+    "directInstalledQuery": "Schuur 2",
+    "targetFound": true,
+    "targetMessageId": "dashboard:dfc2217f-5c61-418c-8a59-7ecd44a535a4",
+    "targetReplyPaired": true
+  },
+  "diagnosis": {
+    "confirmed": "Tool description permits synonyms while retained-history query requires all terms. Terms spread across user and reply also cannot match the old separate-vector predicate.",
+    "notConfirmed": "The actual generated tool query was not persisted; this mismatch is not proven to be the exclusive cause of this failed turn."
+  },
+  "next": "Correct topic-query instruction and search one exact authorized exchange as a combined lexical document; do not repeat unchanged trial."
+}

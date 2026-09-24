@@ -1,0 +1,52 @@
+{
+  "checkedAt": "2026-09-24T15:50:34.917634+00:00",
+  "sourceCommit": "6703a8230775a156d7f5e9cc12e6cd04ba0c0166",
+  "change": "Memory search asks for minimal distinctive original topic instead of synonym expansion; exact authorized user/reply pair is searched as one lexical exchange.",
+  "checks": {
+    "postgres": "One integration scenario passed with eight-day-old reply-only and split-exchange terms plus negative scope/erasure/retention cases",
+    "sourceReview": "Coordinator independently reviewed all three file diffs; no authorization filter removed",
+    "startup": "Core/worker full release equal; installed module hashes exact; healthy services",
+    "websiteHttpStatus": 200
+  },
+  "services": {
+    "core": {
+      "image": "sha256:a19f916982675d20246661231f33723d51a5bc7630e9955014c20bbfa7784fe2",
+      "health": "healthy",
+      "sourceHashes": {
+        "adapters/postgres/people_memory_overview.py": "e618797fbeda80690e82473b673590941d720f671ddd7048cb7546625ba52c36",
+        "adapters/model/pydantic_conversation.py": "a0ac8ebe794d3a657e75c487552134fc675cdbef051f5a78349fa2ad0ddc013b"
+      }
+    },
+    "worker": {
+      "image": "sha256:e747ea218994d189a911a1fc90b600dd8de176000a69a288673c9a27f2c57c0e",
+      "health": "healthy",
+      "sourceHashes": {
+        "adapters/postgres/people_memory_overview.py": "e618797fbeda80690e82473b673590941d720f671ddd7048cb7546625ba52c36",
+        "adapters/model/pydantic_conversation.py": "a0ac8ebe794d3a657e75c487552134fc675cdbef051f5a78349fa2ad0ddc013b"
+      }
+    }
+  },
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/private-history-query-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker",
+  "conversationTrial": {
+    "question": "Wat was jouw eerdere verbeteradvies over Schuur 2? Zoek het eerdere gesprek erbij; doe geen nieuw Home Assistant-onderzoek en verander niets.",
+    "messageId": "dashboard:73d88510-8dd7-4c88-b5c2-850e03f8564d",
+    "reply": "Mijn eerdere advies was: laat ‘Schuur 2’ vóór het uitschakelen dezelfde mediaspelers controleren als de aanhoudregel. Volgens die eerdere analyse controleerde Schuur 2 er maar één, waardoor de regels elkaar mogelijk konden tegenwerken. Ik heb geen nieuw Home Assistant-onderzoek gedaan.",
+    "replySha256": "7c1caaefd1f2a135f8451aa81b5c267929ecb277de76565ef027d168d2326850",
+    "firstTextSeconds": 14.132,
+    "savedReplySeconds": 16.533,
+    "modelAttempts": 2,
+    "toolCalls": 1,
+    "inputTokens": 17852,
+    "outputTokens": 114,
+    "newDelegatedTasks": 0,
+    "independentReview": "Correct original advice reproduced; earlier-analysis qualification preserved. This is one historical answer, not general owner acceptance."
+  },
+  "priorFailure": "private-history-conversation-failed-20260924.json",
+  "limitations": [
+    "Actual generated search query was not separately persisted. Successful content retrieval after the change does not isolate the cause of the earlier miss.",
+    "No physical voice or fresh Telegram transport trial; shared-private boundary tested in isolated database scenario.",
+    "Week-old source tested in isolated PostgreSQL; this actual conversation used same-day prior advice.",
+    "This turn used two owner website requests, four model responses total: 35411 input and 223 output tokens. Credit costs unknown.",
+    "No subsecond response or full step2 acceptance claimed."
+  ]
+}
