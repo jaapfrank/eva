@@ -1,0 +1,45 @@
+{
+  "checkedAt": "2026-09-24T17:37:06.493487+00:00",
+  "sourceCommit": "15d8b3bc12fc5a72b6c358ef10f83df24b039f5b",
+  "result": "Background model receives current measured usage and remaining grant before each generate; incomplete measurements remain unknown. Existing hard admission unchanged.",
+  "tests": {
+    "passed": 49,
+    "seconds": 2.22,
+    "proof": "Controlled three-round run receives updated counters with exactly three original model requests; partial usage does not imply free capacity."
+  },
+  "review": "Independent coordinator reviewed executor source and tests; no blocker.",
+  "installation": {
+    "checkedAt": "2026-09-24T17:36:21.961028+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:2eb023fc9de3f5584f62447ab0ff3697311566c06e839c8974283ef491f087ac",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_runner.py": "87e38f6578c11fb63fd22d7bd237db6d853e4fa42e46e98fcd95d06a578d9ef4"
+        }
+      },
+      "worker": {
+        "image": "sha256:5eaf9cab516d1bc42c3fba9bd273b11914f6cd897e0c7db45b4fec079ae5b9e8",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_runner.py": "87e38f6578c11fb63fd22d7bd237db6d853e4fa42e46e98fcd95d06a578d9ef4"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/background-budget-context-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "fullCoreWorkerProfileEquality": true,
+  "httpChecks": {
+    "http://localhost:44711/internal/v1/dashboard": 200,
+    "http://localhost:44711/internal/v1/dashboard/work": 200,
+    "http://localhost:44716/session/ready": 200
+  },
+  "runtimeModelCalls": 0,
+  "creditCosts": "unknown",
+  "limitations": [
+    "No real model quality or budget saving claim.",
+    "Additional small context text consumes tokens; amount not measured.",
+    "Remaining amounts are not a pre-request token estimate or hard prevention of token overshoot.",
+    "No new budget, model call, journal read or schema migration."
+  ]
+}
