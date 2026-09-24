@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-09-24T09:53:48.506093+00:00",
+  "scope": "Read-only existing native HA work and result route; no new feature or paid trial.",
+  "source_commit": "f5e33ae90988e63f7ac2a72cc548bcc2873100b6",
+  "source_equal_to_live_core": {
+    "bootstrap/native_work_delivery.py": "750bb27e9f0c457f832e595fa0bcd15bb58f30aed0cba88f2f43925e19cfe166",
+    "bootstrap/native_voice.py": "30dc2b242a3e0f90cdb2003ff52dd1287ef3ebadb968cdd28b5a4a802a04d02b",
+    "bootstrap/household_work.py": "b77593ab254a344a24836dfe37d851466e9083b44f19e825f26fca73b1c88124",
+    "adapters/postgres/household_work_sessions.py": "67e0168a9b2033ff5892557b15165df091f7dab3546a1db42665d054a7267178"
+  },
+  "result_delivery_enabled": true,
+  "recent_native_delivery_warning_count": 0,
+  "retained_physical_runs": {
+    "count": 5,
+    "same_ha_conversation_id": true,
+    "includes_one_stt_failure": true
+  },
+  "existing_behavior": [
+    "Native HA maps admitted turns to existing household work session.",
+    "Shared research/list/get/stop/resume tools operate on that session.",
+    "Foreground response does not synchronously wait for the delegated worker.",
+    "Saved public results are offered through HA announce on originating idle satellite within session lifetime."
+  ],
+  "limits": [
+    "No live overlapping research/small-talk trial performed.",
+    "No stored actual research result from these five physical questions was selected or replayed.",
+    "Same HA conversation ID is not speaker identity or proof of private continuity.",
+    "Absence of warnings does not prove an announcement was audible.",
+    "Thirty-minute native session lifetime and newest-session delivery restrictions remain; no unlimited speaker memory claim."
+  ],
+  "additional_model_calls": 0,
+  "decision": "Preserve existing routes; do not rebuild. Physical overlap/return proof remains open and does not reopen accepted memory."
+}

@@ -1829,28 +1829,29 @@
           }
         ],
         "now": {
-          "title": "HA ontvangt nu de bestaande antwoordstream",
-          "state": "Geïnstalleerd",
-          "detail": "Proxy gaf de streamaanvraag niet door en liet HA wachten op volledig antwoord. Headerdoorgifte hersteld, gericht gecontroleerd en onafhankelijk beoordeeld. Spraakproxy actief; firmware en HA ongewijzigd.",
-          "doneWhen": "Concrete streamblokkade technisch hersteld. Hoorbare snelheid en volledige doorlopende spraak blijven afzonderlijk open."
+          "title": "HA-koppeling behouden; praktijkbewijs nog open",
+          "state": "Gerichte controle afgerond",
+          "detail": "Doorpraten, taakbediening en automatische publieke terugmelding bestaan in de draaiende gedeelde route. Vijf spraakpogingen behielden dezelfde HA-gespreksidentiteit. Geen nieuwe functie gebouwd en geen modelcalls gedaan.",
+          "doneWhen": "Geen ontbrekende aansluiting aangetoond. Tussenvraag tijdens onderzoek en hoorbare terugmelding blijven onbevestigd; geen volledige spraakafronding."
         },
         "next": {
-          "title": "Doorpraten en terugmelden via huisapparaat",
-          "state": "Nog niet gestart",
-          "detail": "Volgende open gesprek-/spraakuitkomst: tussenvraag en achtergrondresultaat blijven via dezelfde werkende HA-route beschikbaar. Bestaande koppelingen eerst behouden; geen automatische firmwarewisseling."
+          "title": "Gesprek tijdens werk in dagelijks gebruik beoordelen",
+          "state": "Gebruiksbewijs nog open",
+          "detail": "De nieuwe contactmodel- en streamcorrecties zijn geïnstalleerd. Volgende echte gesprek kan snelheid en overlap bevestigen. Onbekende spreker heeft geen privégeheugen; die persoonskeuze blijft apart open."
         },
         "ownerAction": {
-          "title": "Bij je volgende gewone gesprek",
+          "title": "Zo kun je doorpraten tijdens onderzoek",
           "url": "http://localhost:44712/",
           "linkLabel": "Projectoverzicht",
           "steps": [
-            "Gebruik de woonkamer-Voice PE zoals gewoonlijk.",
-            "Een technische streamcorrectie is geïnstalleerd; merkbare snelheid en natuurlijkheid staan nog open voor jouw beoordeling."
+            "Zeg via het gewone wakeword: Zoek uit wat Home Assistant Cloud doet voor spraak, met bronnen.",
+            "Vraag na Eva’s ontvangstreactie: Hoe gaat het met jou? Gebruik zo nodig het gewone wakeword.",
+            "Verwacht een antwoord op je tussenvraag terwijl het onderzoek doorgaat; het onderzoeksresultaat hoort later apart terug te komen. Stoppen kan met: Stop mijn onderzoek."
           ],
-          "expected": "Eva kan al tijdens de antwoordvorming tekst doorgeven. Geen belofte van een antwoord binnen één seconde."
+          "expected": "Dit is de nog open gebruiksproef. Geen nieuwe firmware nodig; alleen publieke huiscontext, geen bewijs van persoonherkenning."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T09:51:04.261106+00:00"
+        "reviewedAt": "2026-09-24T09:53:48.506093+00:00"
       }
     },
     "pendingTechnicalReview": {
