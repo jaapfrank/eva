@@ -150,3 +150,43 @@ def test_lineage_on_real_postgresql_connection():
                 verify_restore_runtime(connection, expected=changed, inspect_all=lambda: documents)
     finally:
         engine.dispose()
+
+
+def prepared_fixture():
+    expected, documents = fixture()
+    preparation = {"contract": "EvaRestoreTargetPreparation/v1", "status": "prepared",
+        "schema_completed": True,
+        "containers": [{**expected["target"]["workers"][0], "service": "core"}]}
+    return expected, documents, preparation
+
+
+def test_capture_binds_actual_prepared_container_and_connection_without_source_mutation():
+    from tools.restore_runtime_guard import capture_prepared_restore_runtime
+    expected, documents, preparation = prepared_fixture()
+    source = deepcopy(expected["source"])
+    captured = capture_prepared_restore_runtime(Connection(expected["target_database"]),
+        approved_source=source, preparation=preparation, core_service="core",
+        writer_services=("core",), inspect_all=lambda: documents)
+    assert captured == expected
+    captured["source"]["workers"].clear()
+    assert source == expected["source"]
+
+
+@pytest.mark.parametrize("change", ["incomplete", "duplicate", "missing", "replaced", "running"])
+def test_capture_rejects_incomplete_or_changed_target(change):
+    from tools.restore_runtime_guard import capture_prepared_restore_runtime
+    expected, documents, preparation = prepared_fixture()
+    if change == "incomplete":
+        preparation["status"] = "preparing"
+    elif change == "duplicate":
+        preparation["containers"] *= 2
+    elif change == "missing":
+        preparation["containers"] = []
+    elif change == "replaced":
+        documents[-1]["Id"] = "f" * 64
+    else:
+        documents[-1]["State"]["Running"] = True
+    with pytest.raises(RestoreRuntimeGuardError):
+        capture_prepared_restore_runtime(Connection(expected["target_database"]),
+            approved_source=expected["source"], preparation=preparation, core_service="core",
+            writer_services=("core",), inspect_all=lambda: documents)
