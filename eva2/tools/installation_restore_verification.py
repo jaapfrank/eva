@@ -102,8 +102,9 @@ def validate_restore_verification_configuration(configuration):
     from tools.installation_external_restore import validate_external_configuration
     from tools.installation_gateway_start import validate_gateway_start_configuration
     from tools.installation_runtime_authorization import validate_runtime_authorization_configuration
+    from tools.installation_memory_start import validate_memory_start_configuration
     keys = {"runtime", "external", "gateway", "binding", "document_preparation",
-            "document_connection", "document_promotion", "native_authorization"}
+            "document_connection", "document_promotion", "native_authorization", "memory_api"}
     if not isinstance(configuration, dict) or set(configuration) != keys:
         raise ValueError("restore component verification configuration differs")
     _configuration(configuration["runtime"])
@@ -114,6 +115,8 @@ def validate_restore_verification_configuration(configuration):
         connection_configuration=configuration["document_connection"],
         preparation_configuration=configuration["document_preparation"])
     validate_runtime_authorization_configuration(configuration["native_authorization"])
+    validate_memory_start_configuration(configuration["memory_api"],
+        external_configuration=configuration["external"])
 
 def verify_restored_installation(connection, *, package_root, restore_id,
                                 preparation_receipt, connection_receipt, gateway_receipt,
@@ -127,6 +130,7 @@ def verify_restored_installation(connection, *, package_root, restore_id,
     import sqlalchemy as sa
     from eva.operations.restore_activation import _RELEASE_REQUIREMENTS
     from tools.installation_memory_verification import verify_memory_data
+    from tools.installation_memory_start import start_restored_memory_api, verify_restored_memory_api
     from tools.installation_gateway_verification import verify_gateway_providers
     from tools.installation_runtime_authorization import verify_runtime_authorization
     from tools.restore_runtime_guard import verify_restore_runtime
@@ -174,6 +178,9 @@ def verify_restored_installation(connection, *, package_root, restore_id,
             or memory.get("archive_sha256") != archive
             or memory.get("target_binding_sha256") != canonical_sha256(configuration["external"]["memory"])):
         raise ValueError("restored memory binding is not verified")
+    memory_api = start_restored_memory_api(root, configuration=configuration["memory_api"],
+        external_configuration=configuration["external"],
+        runtime_configuration=configuration["runtime"], guard=current)
     documents = verify_promoted_documents(root,
         preparation_configuration=configuration["document_preparation"],
         connection_configuration=configuration["document_connection"],
@@ -191,6 +198,9 @@ def verify_restored_installation(connection, *, package_root, restore_id,
         configuration=configuration["native_authorization"], runtime_configuration=configuration["runtime"], guard=current)
     if latest_native != native:
         raise ValueError("native target authorization changed during component verification")
+    verify_restored_memory_api(root, configuration=configuration["memory_api"],
+        external_configuration=configuration["external"],
+        runtime_configuration=configuration["runtime"], guard=current, receipt=memory_api)
     current()
     return {"contract":"EvaRestoreActivationComponents/v1", "restore_id":str(restore_id),
             "archive_sha256":archive, "target_database_oid":int(hold["target_database_oid"]),

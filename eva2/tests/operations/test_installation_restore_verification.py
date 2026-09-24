@@ -82,6 +82,10 @@ def composition(monkeypatch,tmp_path):
     native.verify_runtime_authorization=lambda *args,**kwargs:result("native",contract="EvaRestoredRuntimeAuthorization/v1",scope="locally_authorized_target_bindings",verified=True,archive_sha256="archive",restore_id="restore",target_database_oid=17)
     native.validate_runtime_authorization_configuration=lambda config:None
     monkeypatch.setitem(sys.modules,"tools.installation_runtime_authorization",native)
+    memory_api=ModuleType("tools.installation_memory_start")
+    memory_api.start_restored_memory_api=lambda *args,**kwargs:result("memory_start",archive_sha256="archive")
+    memory_api.verify_restored_memory_api=lambda *args,**kwargs:result("memory_ready",archive_sha256="archive")
+    monkeypatch.setitem(sys.modules,"tools.installation_memory_start",memory_api)
     monkeypatch.setattr(subject,"validate_restore_verification_configuration",lambda config:None)
     monkeypatch.setattr(memory,"verify_memory_data",lambda *args,**kwargs:result("memory",contract="EvaRestoredMemoryDataVerification/v1",archive_sha256="archive",target_binding_sha256=canonical_sha256({})))
     monkeypatch.setattr(gateway,"verify_gateway_providers",lambda *args,**kwargs:result("gateway",all_verified=True,archive_sha256="archive"))
@@ -101,7 +105,7 @@ def composition(monkeypatch,tmp_path):
         def execute(self,query):return self
         def mappings(self):return self
         def one(self):return hold
-    configuration={key:{} for key in ("runtime","external","gateway","binding","document_preparation","document_connection","document_promotion","native_authorization")}
+    configuration={key:{} for key in ("runtime","external","gateway","binding","document_preparation","document_connection","document_promotion","native_authorization","memory_api")}
     configuration["runtime"]={"target_database":{"oid":17}}
     configuration["external"]={"memory":{}}
     args=dict(connection=Connection(),package_root=tmp_path,restore_id="restore",configuration=configuration,
@@ -114,11 +118,11 @@ def test_component_release_receipt_requires_all_fresh_checks(composition):
     receipt=subject.verify_restored_installation(**args)
     assert receipt["contract"]=="EvaRestoreActivationComponents/v1"
     assert receipt["verified_components"]=={key:canonical_sha256(value) for key,value in manifest["source_components"].items()}
-    assert [value for value in state["calls"] if value!="guard"]==["native","memory","documents","gateway","native"]
+    assert [value for value in state["calls"] if value!="guard"]==["native","memory","memory_start","documents","gateway","native","memory_ready"]
     assert len(receipt["verified_requirements"])==4
 
 
-@pytest.mark.parametrize("failed",["native","memory","documents","gateway","native"])
+@pytest.mark.parametrize("failed",["native","memory","memory_start","documents","gateway","native","memory_ready"])
 def test_any_failed_component_prevents_release_receipt(composition,failed):
     args,state,*_=composition
     state["failed"]=failed
@@ -152,3 +156,11 @@ def test_native_authorization_change_during_other_checks_prevents_release(compos
     monkeypatch.setattr(native,"verify_runtime_authorization",changed)
     with pytest.raises(ValueError,match="changed during"):
         subject.verify_restored_installation(**args)
+
+
+def test_memory_data_failure_never_starts_the_api(composition):
+    args,state,*_=composition
+    state["failed"]="memory"
+    with pytest.raises(ValueError):
+        subject.verify_restored_installation(**args)
+    assert "memory_start" not in state["calls"]

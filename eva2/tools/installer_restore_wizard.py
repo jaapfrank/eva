@@ -47,8 +47,8 @@ def main(argv=None):
         if not {"document_write_access", "runtime_identity"} <= set(config):
             raise ValueError("activation requires complete document promotion and runtime identity")
         if (not isinstance(activation, dict)
-                or not {"native_authorization"} <= set(activation)
-                or not set(activation) <= {"native_authorization", "startup_timeout_seconds"}):
+                or not {"native_authorization", "memory_api"} <= set(activation)
+                or not set(activation) <= {"native_authorization", "memory_api", "startup_timeout_seconds"}):
             raise ValueError("activation configuration differs")
         timeout = activation.get("startup_timeout_seconds", 60)
         if type(timeout) not in (int, float) or not 0 < timeout <= 120:
@@ -118,6 +118,7 @@ def main(argv=None):
             "document_connection": config["document_connection"],
             "document_promotion": config["document_write_access"],
             "native_authorization": config["activation"]["native_authorization"],
+            "memory_api": config["activation"]["memory_api"],
         }
         validate_restore_verification_configuration(verification)
         verify_components = partial(verify_restored_installation, configuration=verification)
