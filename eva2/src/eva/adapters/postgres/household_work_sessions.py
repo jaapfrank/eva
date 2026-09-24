@@ -201,6 +201,45 @@ class HouseholdWorkSessions:
                     return self.read(session_id, satellite_id, device_id)
             return self.open(satellite_id, device_id, native_conversation_key=key)
 
+    def continuity_bindings(self, binding):
+        """Return current-authority native sessions on this exact household device."""
+        current = self.read(binding["session_id"], binding["satellite_id"], binding["device_id"])
+        if current != binding:
+            raise ValueError("household session binding changed")
+        with self.store._engine.begin() as connection:
+            self.store._scope(connection)
+            first = first_session(connection, self.store.scope, binding["session_id"])
+            if first.get("native_conversation_key") is None:
+                return (binding,)
+            data = events.c.payload["data"]
+            selected = connection.execute(sa.select(data["binding"]).select_from(events.join(
+                checkpoints, sa.and_(events.c.tenant_id == checkpoints.c.tenant_id,
+                    events.c.installation_id == checkpoints.c.installation_id,
+                    events.c.thread_id == checkpoints.c.thread_id))).where(
+                events.c.tenant_id == self.store.scope.tenant_id,
+                events.c.installation_id == self.store.scope.installation_id,
+                events.c.event_type == "HOUSEHOLD_WORK_SESSION_OPENED",
+                events.c.sequence == 1,
+                data["native_conversation_key"].astext.is_not(None),
+                data["binding"].contains({key: binding[key] for key in (
+                    "tenant_id", "installation_id", "household_id", "actor_id",
+                    "satellite_id", "device_id", "consent_operation_id",
+                    "household_policy_sha256", "research_policy_sha256")}),
+                checkpoints.c.phase == "open",
+                checkpoints.c.deadline > self.authority.clock(),
+            ).order_by(events.c.occurred_at.desc()).limit(129)).scalars().all()
+        if len(selected) > 128:
+            raise ValueError("native household continuity exceeds its session bound")
+        result = []
+        for item in selected:
+            verified = self.read(item["session_id"], binding["satellite_id"], binding["device_id"])
+            if verified != item:
+                raise ValueError("native household continuity binding changed")
+            result.append(verified)
+        if self.read(binding["session_id"], binding["satellite_id"], binding["device_id"]) != binding:
+            raise ValueError("household session binding changed")
+        return tuple(result)
+
     def read(self, session_id, satellite_id, device_id, *, operation="read"):
         self.authority.validate_device(satellite_id, device_id)
         now = self.authority.clock()

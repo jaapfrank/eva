@@ -174,12 +174,53 @@ class HouseholdWorkService:
             received_at=turn.occurred_at,
         )
 
-    def _load(self, work_id, origin):
+    def _load(self, work_id, origin, *, include_native=True):
         self.current()
-        work = self.store.load(work_id, **self._owner, household_origin=origin)
+        try:
+            work = self.store.load(work_id, **self._owner, household_origin=origin)
+        except DelegatedWorkNotFound:
+            if not include_native:
+                raise
+            rows = self._native_work(origin, work_id=work_id, limit=1)
+            if not rows:
+                raise
+            work = rows[0]
         if self.server.authority.clock() >= work.retention_until:
             raise DelegatedWorkNotFound("household result expired")
         return work
+
+    def _native_work(self, current_origin, *, work_id=None, parent_ids=None, limit=21):
+        """Load stored origins through unchanged exact store authorization."""
+        from eva.adapters.postgres.current_catalog import delegated_work_runs as runs
+        self.current()
+        bindings = {item["session_id"]: item for item in
+                    self.server.sessions.continuity_bindings(self.binding)}
+        now = self.server.authority.clock()
+        with self.store._engine.begin() as connection:
+            self.store._scope(connection)
+            from eva.adapters.postgres.household_work_sessions import verify_origin
+            verify_origin(connection, self.store.scope, current_origin, require_open=True, now=now)
+            rows = connection.execute(sa.select(runs.c.work_id, runs.c.spec_payload).where(
+                runs.c.tenant_id == self.store.scope.tenant_id,
+                runs.c.installation_id == self.store.scope.installation_id,
+                runs.c.owner_principal_id == self._owner["owner_principal_id"],
+                runs.c.principal_binding_id == self._owner["principal_binding_id"],
+                runs.c.spec_payload["audience"].astext == "household",
+                runs.c.spec_payload["origin"]["session_id"].astext.in_(tuple(bindings)),
+                runs.c.retention_until > now,
+                sa.true() if work_id is None else runs.c.work_id == work_id,
+                sa.true() if parent_ids is None else runs.c.parent_task_id.in_(parent_ids),
+            ).order_by(sa.case((sa.and_(runs.c.state.in_(("admitted", "call_started")),
+                runs.c.stop_requested_at.is_(None)), 0), else_=1),
+                runs.c.created_at.desc(), runs.c.work_id.desc()).limit(limit)).all()
+        result = []
+        for row in rows:
+            origin = HouseholdWorkOrigin.model_validate(row.spec_payload["origin"])
+            if origin.destination() != bindings.get(origin.session_id):
+                raise ValueError("native work origin differs from its original session")
+            result.append(self.store.load(row.work_id, **self._owner, household_origin=origin))
+        self.current()
+        return tuple(result)
 
     def view(self, work):
         self.current()
@@ -199,12 +240,11 @@ class HouseholdWorkService:
         )
 
     def active_work_metadata(self, turn):
-        """Use the same task context projection within this exact household session."""
+        """Project work from authorized current-device native sessions."""
         self.validate_authority(turn)
         from eva.application.work_context import work_context_metadata
         now = self.server.authority.clock()
-        rows = self.store.list_household(**self._owner,
-            household_origin=self.origin(turn), active_first=True, now=now, limit=21)
+        rows = self._native_work(self.origin(turn), limit=21)
         return work_context_metadata(rows, now)
 
     def execute(
@@ -243,17 +283,14 @@ class HouseholdWorkService:
             from eva.application.related_work import related_work
             return related_work(work_id,
                 load=lambda identifier: self._load(identifier, origin),
-                children=lambda parents: self.store.list_household(**self._owner,
-                    household_origin=origin, now=self.server.authority.clock(),
-                    parent_ids=parents, limit=65),
+                children=lambda parents: self._native_work(origin, parent_ids=parents, limit=65),
                 render=lambda row: {key: value for key, value in self.view(row).items()
                                     if key not in {"result", "question", "usage"}},
                 missing=DelegatedWorkNotFound)
         if operation == "list":
             if research is not None or work_id is not None or prior_work_id is not None:
                 raise ValueError("household listing cannot select another destination")
-            rows = self.store.list_household(**self._owner, household_origin=origin, active_first=True,
-                now=self.server.authority.clock(), limit=21)
+            rows = self._native_work(self.origin(turn), limit=21)
             # Listing supplies selection context, not all completed research text.
             return {"jobs": [{key: view[key] for key in
                     ("work_id", "title", "question", "state", "generation", "stop_requested")}
@@ -288,7 +325,7 @@ class HouseholdWorkService:
                         self.store.request_stop(
                             work_id,
                             **self._owner,
-                            household_origin=origin,
+                            household_origin=previous.spec.origin,
                             now=self.server.authority.clock(),
                         )
                     )
@@ -393,7 +430,7 @@ class HouseholdWorkService:
     ):
         """One durable claim; uncertain/interrupted output is never replayed."""
         self.validate_authority(turn)
-        work = self._load(work_id, self.origin(turn))
+        work = self._load(work_id, self.origin(turn), include_native=False)
         result = delivery_outcome(work)
         if result is None:
             return None
@@ -517,7 +554,7 @@ class HouseholdWorkActions(PostgresDelegatedWorkActions):
         from dataclasses import replace
         return tuple(
             replace(tool, description="Bekijk de toegankelijke taken binnen de huidige persoons- "
-                    "of huishoudsessiegrenzen, met hun titel, work_id en status.")
+                    "of nog geldige openbare spraaksessies op hetzelfde huisapparaat, met titel, work_id en status.")
             if tool.name == "list_delegated_work" else tool
             for tool in PostgresDelegatedWorkActions.conversation_tools(
                 include_research=True
