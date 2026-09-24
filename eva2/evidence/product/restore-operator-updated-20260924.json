@@ -1,6 +1,6 @@
 {
   "sourceCommit": "f1a827bf",
-  "state": "operator_command_updated_full_restore_unproven",
+  "state": "operator_installed_complete_isolated_route_proven_owner_workflow_open",
   "availableCommand": "python3 /home/administrator/project/.eva2-artifacts/installer-document-write-20260924/start-installer.py --restore-config /absolute/private/target.json",
   "checks": {
     "launcher_help": true,
@@ -41,7 +41,7 @@
   "restoreInvoked": false,
   "ownerAccepted": false,
   "modelCalls": 0,
-  "next": "Correct fixture to maintained worker compose command, then complete full restore/readbacks. Do not auto-retry partially started target.",
+  "next": "Connect ordinary target preparation to existing installer plan; no handwritten target JSON for owner. Current production schema/update path and owner acceptance remain open.",
   "additionalRollbackFile": "/home/administrator/project/.eva2-artifacts/runtime-public-ca-20260924/previous-installed-runtime-authorization.py",
   "networkCorrectionInstallation": "/home/administrator/project/.eva2-artifacts/restore-created-network-3b3bd272/installation-receipt.json",
   "fullWizardAttempt": {
@@ -92,5 +92,6 @@
     "cause": "Fixture omitted maintained delegated worker entrypoint/command and healthcheck; image default attempted core startup instead. Fixture correction required, no product change.",
     "retained": true,
     "production_modified": false
-  }
+  },
+  "fullRouteEvidence": "eva2/evidence/product/restore-full-route-20260925.json"
 }

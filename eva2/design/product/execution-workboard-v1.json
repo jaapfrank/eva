@@ -1324,76 +1324,76 @@
             "source": "eva2/evidence/product/scheduled-failure-return-installed-20260924.json"
           },
           {
-            "title": "Herstelwizard",
-            "date": "24 september",
-            "state": "built",
-            "result": "Het lokale beheercommando is bijgewerkt naar cfb27e4b: herstelcontroles, geheugendienst starten, vrijgave en kernstart zijn aangesloten. Terugweg en startcontrole aanwezig. De volledige herstelfunctie is nog niet als bruikbaar geheel opgeleverd.",
-            "remaining": "Het complete voorbereide proefpakket via de wizard herstellen en echte Eva-kern/werker starten. Daarna blijft gewone installatiebediening zonder handgeschreven doelconfiguratie nog open. De huidige Eva blijft draaien; geen actie van Jaap nodig.",
-            "source": "eva2/evidence/product/restore-operator-updated-20260924.json",
+            "title": "Herstelwizard — technische beheerroute",
+            "date": "25 september",
+            "state": "installed",
+            "result": "Beheerroutef1a827bf geïnstalleerd. Volledige afzonderlijke wizardproef geslaagd: kern en werker gezond,7 taken en21 gebeurtenissen plus geheugenbank en documenthistorie behouden.",
+            "remaining": "Nog niet compleet voor gewone bediening: doelvoorbereiding vereist handgeschreven configuratie. Productieschema/updatepad en eigenaarproef open; bestaande Eva is niet vervangen.",
+            "source": "eva2/evidence/product/restore-full-route-20260925.json",
             "children": [
               {
                 "title": "Document-schrijftoegang in herstelwizard aangesloten",
-                "date": "24 september",
-                "state": "built",
-                "result": "Optionele overgang naar nieuwe schrijfdoelen gebouwd; oude controlecontainers blijven bewaard. Lokale beheerwizard bijgewerkt.",
-                "remaining": "Gerichte controles met gesimuleerde Docker-acties. Geen echte promotie, complete componentcontrole of kernvrijgave uitgevoerd.",
-                "source": "eva2/evidence/product/installer-document-write-20260924.json"
+                "date": "25 september",
+                "state": "installed",
+                "result": "Optionele overgang naar nieuwe schrijfdoelen gebouwd; oude controlecontainers blijven bewaard. Lokale beheerwizard bijgewerkt. Nu geïnstalleerd en als onderdeel van de volledige afzonderlijke herstelproef uitgevoerd.",
+                "remaining": "Technische deelstap geslaagd in de complete proef. Gewone doelvoorbereiding en eigenaaracceptatie van het geheel blijven open.",
+                "source": "eva2/evidence/product/restore-full-route-20260925.json"
               },
               {
                 "title": "Vrijgavetransactie voor herstelde kern gebouwd",
-                "date": "24 september",
-                "state": "built",
-                "result": "Ontbrekende databasevrijgave toegevoegd; drie echte PostgreSQL-transactieproeven geslaagd. Beschikbaar als interne beheerfunctie.",
-                "remaining": "Nog geen wizardknop of volledige activering: echte componentcontrole, document-schrijftoegang en runtime-start ontbreken.",
-                "source": "eva2/evidence/product/restore-release-transaction-20260924.json"
+                "date": "25 september",
+                "state": "installed",
+                "result": "Ontbrekende databasevrijgave toegevoegd; drie echte PostgreSQL-transactieproeven geslaagd. Beschikbaar als interne beheerfunctie. Nu geïnstalleerd en als onderdeel van de volledige afzonderlijke herstelproef uitgevoerd.",
+                "remaining": "Technische deelstap geslaagd in de complete proef. Gewone doelvoorbereiding en eigenaaracceptatie van het geheel blijven open.",
+                "source": "eva2/evidence/product/restore-full-route-20260925.json"
               },
               {
                 "title": "Bewaard document via echt herstelde gateway teruggelezen",
                 "date": "24 september",
                 "state": "tested",
                 "result": "Nieuwe gateway met gekopieerde database gaf exact het oude documentresultaat terug. Tool-ID’s behouden; vervolgstap en herhaling zonder dubbele wijziging geslaagd.",
-                "remaining": "Geïsoleerde synthetische proef. Volledige wizard, privé-kern, activering en gezinsgebruik nog niet bewezen.",
+                "remaining": "Eerdere synthetische gatewayproef behouden. Complete afzonderlijke wizardroute nu eveneens geslaagd; gewone doelvoorbereiding en eigenaaracceptatie blijven open.",
                 "source": "eva2/evidence/product/native-document-restored-gateway-20260924.json"
               },
               {
                 "title": "Herstelde gateway starten vanuit de wizard",
-                "date": "24 september",
-                "state": "built",
-                "result": "Optionele gatewaystart na documentcontrole aangesloten, met teruglezen van registraties en behoud van gedeeltelijke foutuitkomsten. Lokaal beschikbaar.",
-                "remaining": "Geen echte gatewaystart of herstelactie uitgevoerd. Documentaanroep, schrijftoegang en volledige vrijgave nog open.",
-                "source": "eva2/evidence/product/installer-gateway-start-20260924.json"
+                "date": "25 september",
+                "state": "installed",
+                "result": "Optionele gatewaystart na documentcontrole aangesloten, met teruglezen van registraties en behoud van gedeeltelijke foutuitkomsten. Lokaal beschikbaar. Nu geïnstalleerd en als onderdeel van de volledige afzonderlijke herstelproef uitgevoerd.",
+                "remaining": "Technische deelstap geslaagd in de complete proef. Gewone doelvoorbereiding en eigenaaracceptatie van het geheel blijven open.",
+                "source": "eva2/evidence/product/restore-full-route-20260925.json"
               },
               {
                 "title": "Bestaande documentadressen behouden bij herstel",
-                "date": "24 september",
-                "state": "built",
-                "result": "Lokale herstelwizard koppelt gecontroleerde bestaande gatewayadressen aan de nieuwe documentdoelen, zonder herregistratie of gewijzigde tool-ID’s.",
-                "remaining": "Geen echte herstelactie of gatewaystart. Aanroep via herstelde gateway, schrijftoegang en vrijgave nog open.",
-                "source": "eva2/evidence/product/installer-gateway-binding-20260924.json"
+                "date": "25 september",
+                "state": "installed",
+                "result": "Lokale herstelwizard koppelt gecontroleerde bestaande gatewayadressen aan de nieuwe documentdoelen, zonder herregistratie of gewijzigde tool-ID’s. Nu geïnstalleerd en als onderdeel van de volledige afzonderlijke herstelproef uitgevoerd.",
+                "remaining": "Technische deelstap geslaagd in de complete proef. Gewone doelvoorbereiding en eigenaaracceptatie van het geheel blijven open.",
+                "source": "eva2/evidence/product/restore-full-route-20260925.json"
               },
               {
                 "title": "Bewaarde documentbestanden controleren bij herstel",
-                "date": "24 september",
-                "state": "built",
-                "result": "Native bestands- en geschiedeniscontrole aangesloten in lokale herstelwizard. Gewijzigd proefbestand wordt geweigerd; originele opdracht wordt niet herhaald.",
-                "remaining": "Geen echte herstelactie uitgevoerd. Gatewaykoppeling, schrijftoegang en volledige herstelproef nog open. Geen nieuwe spraakfunctie.",
-                "source": "eva2/evidence/product/installer-document-verification-20260924.json"
+                "date": "25 september",
+                "state": "installed",
+                "result": "Native bestands- en geschiedeniscontrole aangesloten in lokale herstelwizard. Gewijzigd proefbestand wordt geweigerd; originele opdracht wordt niet herhaald. Nu geïnstalleerd en als onderdeel van de volledige afzonderlijke herstelproef uitgevoerd.",
+                "remaining": "Technische deelstap geslaagd in de complete proef. Gewone doelvoorbereiding en eigenaaracceptatie van het geheel blijven open.",
+                "source": "eva2/evidence/product/restore-full-route-20260925.json"
               },
               {
                 "title": "Herstelde documentprovider aansluiten voor controle",
-                "date": "24 september",
-                "state": "built",
-                "result": "Bestaande wizard kan voorbereide providers alleen-lezen starten en hun toolcatalogus controleren; lokale beheerroute beschikbaar.",
-                "remaining": "Geen herstelde provider gestart. Projectresultaten teruglezen, gateway verbinden, schrijftoegang en vrijgave blijven open.",
-                "source": "eva2/evidence/product/installer-document-connection-20260924.json"
+                "date": "25 september",
+                "state": "installed",
+                "result": "Bestaande wizard kan voorbereide providers alleen-lezen starten en hun toolcatalogus controleren; lokale beheerroute beschikbaar. Nu geïnstalleerd en als onderdeel van de volledige afzonderlijke herstelproef uitgevoerd.",
+                "remaining": "Technische deelstap geslaagd in de complete proef. Gewone doelvoorbereiding en eigenaaracceptatie van het geheel blijven open.",
+                "source": "eva2/evidence/product/restore-full-route-20260925.json"
               },
               {
                 "title": "Documentprojecten voorbereiden via herstelwizard",
-                "date": "24 september",
-                "state": "built",
-                "result": "Bestaande native documentvoorbereiding aangesloten na kern/geheugen/gateway; beschikbaar in lokale beheerwizard. Start en foutmelding gecontroleerd.",
-                "remaining": "Geen herstel uitgevoerd. Providers aansluiten, activeren en volledige herstelproef blijven open. Geen nieuwe dagelijkse gespreksfunctie.",
-                "source": "eva2/evidence/product/installer-document-preparation-20260924.json"
+                "date": "25 september",
+                "state": "installed",
+                "result": "Bestaande native documentvoorbereiding aangesloten na kern/geheugen/gateway; beschikbaar in lokale beheerwizard. Start en foutmelding gecontroleerd. Nu geïnstalleerd en als onderdeel van de volledige afzonderlijke herstelproef uitgevoerd.",
+                "remaining": "Technische deelstap geslaagd in de complete proef. Gewone doelvoorbereiding en eigenaaracceptatie van het geheel blijven open.",
+                "source": "eva2/evidence/product/restore-full-route-20260925.json"
               }
             ]
           },
@@ -1471,19 +1471,19 @@
           },
           {
             "title": "Geheugen en gateway in dezelfde herstelactie",
-            "date": "24 september",
-            "state": "built",
-            "result": "Externe import gekoppeld aan bestaande wizard en beschikbaar in lokale beheeromgeving.",
-            "remaining": "Geen herstelproef of actieve dataverandering; documentkoppelingen en activatie nog open.",
-            "source": "eva2/evidence/product/installer-external-imports-20260924.json"
+            "date": "25 september",
+            "state": "installed",
+            "result": "Geïnstalleerde beheerroute volledig uitgevoerd op afzonderlijk hersteldoel; import, vrijgave, kern-/werkerstart en gegevenscontrole geslaagd.",
+            "remaining": "Gewone doelvoorbereiding zonder handgeschreven configuratie en eigenaaracceptatie blijven open. Geen vervanging van huidige productie.",
+            "source": "eva2/evidence/product/restore-full-route-20260925.json"
           },
           {
             "title": "Installatiepakket via bestaande herstelwizard",
-            "date": "24 september",
-            "state": "built",
-            "result": "Bestaande code geïntegreerd en hostcommando beschikbaar; retained inactieve kopie krijgt duidelijke foutmelding.",
-            "remaining": "Geen herstelproef. Externe imports, koppelingen en activatie nog open.",
-            "source": "eva2/evidence/product/installer-package-integration-20260924.json"
+            "date": "25 september",
+            "state": "installed",
+            "result": "Geïnstalleerde beheerroute volledig uitgevoerd op afzonderlijk hersteldoel; import, vrijgave, kern-/werkerstart en gegevenscontrole geslaagd.",
+            "remaining": "Gewone doelvoorbereiding zonder handgeschreven configuratie en eigenaaracceptatie blijven open. Geen vervanging van huidige productie.",
+            "source": "eva2/evidence/product/restore-full-route-20260925.json"
           },
           {
             "title": "Eigen verbeterpakket naar releasebron overnemen",
@@ -2239,15 +2239,15 @@
           }
         ],
         "now": {
-          "title": "Werkeropdracht in herstelproef corrigeren",
-          "state": "Herstelde kern gezond; werkerproef nog niet geslaagd",
-          "detail": "De wizard heeft de gegevens vrijgegeven en de echte kern gestart: gezond. Gateway, documenten en geheugen werken in de proef. De proefopstelling miste de bestaande werkeropdracht en gebruikte de imagestandaard; die fixture wordt gecorrigeerd. Gedeeltelijke uitkomst wordt eerlijk gemeld, proefdoel bewaard. Geen wijziging aan productie.",
+          "title": "Technische herstelroute geslaagd",
+          "state": "Geïnstalleerd en volledig op afzonderlijk doel uitgevoerd",
+          "detail": "Werkende kern en werker na volledig wizardherstel;7 taken,21 gebeurtenissen, geheugenbank en documenthistorie exact teruggelezen. Geïnstalleerde beheerbronf1a827bf gecontroleerd. Uitvoerder stopt uitsluitend mislukte proefservices met behoud van gegevens. Normale doelvoorbereiding zonder handgeschreven configuratie is nog niet af.",
           "doneWhen": "Volledige reservekopie via de wizard terugzetten en echte herstelde kern starten met behouden gegevens. Gebruikersacceptatie blijft apart."
         },
         "next": {
-          "title": "Installatie- en herstelroute samenhangend opleveren",
-          "state": "Na ontbrekende aansluiting",
-          "detail": "Bestaande geïsoleerde herstelbewijzen gebruiken; de acht technische tussenstappen blijven één onafgeronde functie tot de volledige route werkt."
+          "title": "Gewone doelvoorbereiding in bestaande installer aansluiten",
+          "state": "Nog niet gestart",
+          "detail": "Bestaand installatieplan gebruiken om de benodigde doelconfiguratie te maken; geen JSON door Jaap laten schrijven. Productieschema/updatepad en gebruikersproef blijven afzonderlijk open."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2261,7 +2261,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T22:12:27.908791+00:00"
+        "reviewedAt": "2026-09-24T22:21:50.465591+00:00"
       }
     },
     "pendingTechnicalReview": {

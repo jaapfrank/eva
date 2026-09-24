@@ -1,0 +1,142 @@
+{
+  "sourceCommit": "f1a827bff46d70f4c1d2b262983a857b00871ee5",
+  "result": "complete_isolated_wizard_restore_passed",
+  "checkedAt": "2026-09-24T22:21:50.451580+00:00",
+  "transport": "in-process FastAPI wizard HTTP",
+  "productionCallbacks": true,
+  "prepareHttpStatus": 200,
+  "executeHttpStatus": 200,
+  "elapsedSeconds": 258.971,
+  "archiveSha256": "6e4232ff7420ce61c42d1e258b2778fafdfa21f7baa30fe6f79a27984891e528",
+  "sourceSchema": "4e_0009_restore_hold",
+  "postgresVersion": "18.6",
+  "runtimeStart": {
+    "contract": "EvaRestoredRuntimeStart/v1",
+    "status": "runtime_started_verified",
+    "restore_id": "d410065b-1e1d-4d83-85bd-a39b9da65de4",
+    "archive_sha256": "6e4232ff7420ce61c42d1e258b2778fafdfa21f7baa30fe6f79a27984891e528",
+    "attempted": [
+      {
+        "name": "eva-full-route-f2422d4664-core",
+        "id": "24a41cb2c40e0622f096b77d454b2ae1178b1756383a37ded82093cb52dda78a",
+        "image": "sha256:841862b8c945ecaabddbff9ce53e6460399ea39e4300c768ae93f072615993ae"
+      },
+      {
+        "name": "eva-full-route-f2422d4664-worker",
+        "id": "9208dc26b2ec8e8f017e732e394ad8e1e09629a2807d219c49302ad5f0f4f471",
+        "image": "sha256:9ab992130f9102185f6f142f9c999eff6a128d32ae0e661253ca3005c8bdb11e"
+      }
+    ],
+    "started": [
+      {
+        "name": "eva-full-route-f2422d4664-core",
+        "id": "24a41cb2c40e0622f096b77d454b2ae1178b1756383a37ded82093cb52dda78a",
+        "image": "sha256:841862b8c945ecaabddbff9ce53e6460399ea39e4300c768ae93f072615993ae"
+      },
+      {
+        "name": "eva-full-route-f2422d4664-worker",
+        "id": "9208dc26b2ec8e8f017e732e394ad8e1e09629a2807d219c49302ad5f0f4f471",
+        "image": "sha256:9ab992130f9102185f6f142f9c999eff6a128d32ae0e661253ca3005c8bdb11e"
+      }
+    ],
+    "ready": [
+      {
+        "name": "eva-full-route-f2422d4664-core",
+        "id": "24a41cb2c40e0622f096b77d454b2ae1178b1756383a37ded82093cb52dda78a",
+        "image": "sha256:841862b8c945ecaabddbff9ce53e6460399ea39e4300c768ae93f072615993ae"
+      },
+      {
+        "name": "eva-full-route-f2422d4664-worker",
+        "id": "9208dc26b2ec8e8f017e732e394ad8e1e09629a2807d219c49302ad5f0f4f471",
+        "image": "sha256:9ab992130f9102185f6f142f9c999eff6a128d32ae0e661253ca3005c8bdb11e"
+      }
+    ],
+    "runtime_started": true,
+    "verification_scope": "Pinned writer Docker healthchecks only; no restored user-flow or channel acceptance"
+  },
+  "postStartReadback": {
+    "core": {
+      "eva_core.delegated_work_runs": {
+        "retained_records": 7,
+        "exact_values": true
+      },
+      "eva_core.operational_events": {
+        "retained_records": 21,
+        "exact_values": true
+      }
+    },
+    "release_committed": true,
+    "memory_bank_listing_exact": true,
+    "memory_bank_count": 1,
+    "document_and_native_history_sha256": {
+      "work/cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc-first.md": "e5713215288cc637f342b34f0422bb7a32d29447cb1eed5052f258898eb1f756",
+      "journal/cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc/workspace-writer.journal": "c45f5af43202c5df59823f5b8858de5cf87d1f4d01e2885a1565d0b7902566c9",
+      "journal/cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc/.project-identity.json": "31dcfc9b350b4e5acedb2c4757066b6e4b9868fbb2146c68062edf4d2b438d1c"
+    },
+    "native_material_verification": {
+      "contract": "EvaDocumentMaterialVerification/v1",
+      "binding_sha256": "3bbd8c4b19652ef6f865516950f0f42a825e47af23bc9f726194aa02b505e1dd",
+      "project_count": 1,
+      "projects": {
+        "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc": {
+          "snapshot_sha256": "27bce349528e2a1895c6486d52b57083158af773a92db16212760ce63a205757",
+          "snapshot_bytes": 666
+        }
+      }
+    },
+    "scope": "Retained records and local readiness only; no new model task or external account authorization"
+  },
+  "runtimeStates": [
+    {
+      "name": "eva-full-route-f2422d4664-source",
+      "id": "41a6e46954a416d0c0171ef3e6247552c376c15f30eaeab5d1922510c66d1f57",
+      "running": false,
+      "health": null,
+      "exit_code": 0
+    },
+    {
+      "name": "eva-full-route-f2422d4664-core",
+      "id": "24a41cb2c40e0622f096b77d454b2ae1178b1756383a37ded82093cb52dda78a",
+      "running": true,
+      "health": "healthy",
+      "exit_code": 0
+    },
+    {
+      "name": "eva-full-route-f2422d4664-worker",
+      "id": "9208dc26b2ec8e8f017e732e394ad8e1e09629a2807d219c49302ad5f0f4f471",
+      "running": true,
+      "health": "healthy",
+      "exit_code": 0
+    },
+    {
+      "name": "eva-full-route-f2422d4664-memory",
+      "id": "cc7b886b8cbd7bd701e9d6744722782ff9a806e1b3721e4d4e5c23805e519a1b",
+      "running": true,
+      "health": null,
+      "exit_code": 0
+    },
+    {
+      "name": "eva-full-route-f2422d4664-gateway",
+      "id": "6e6f87fe4b19b306674a55bdeb596c4f024df9ca7aa1bcf1a5b5b2b5e969d2b8",
+      "running": true,
+      "health": "healthy",
+      "exit_code": 0
+    }
+  ],
+  "installedModulesEqual": true,
+  "installedModuleCount": 15,
+  "independentReview": "Coordinator read harness and post-start checks, checked final receipts and independently inspected healthy actual core and worker; helper fixes reviewed before installation.",
+  "rawEvidence": "/home/administrator/project/.eva2-artifacts/restore-full-route-20260924/full-route-result.json",
+  "rawEvidenceSha256": "658e220b8fe3f3ec4be8a489381dd79c8fd607a5edaf0868a55ccdf853c466d9",
+  "modelCalls": 0,
+  "productionModified": false,
+  "ownerAccepted": false,
+  "limitations": [
+    "Isolated synthetic schema0009 fixture, not current production schema0007 migration.",
+    "Memory proves bank metadata/data preservation, not a model recall response.",
+    "No new model task or external account authorization.",
+    "Wizard API invoked in process; not a browser-driven owner test.",
+    "Normal target provisioning without handwritten configuration remains open."
+  ],
+  "previousFailuresRetained": true
+}
