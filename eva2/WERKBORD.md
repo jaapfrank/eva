@@ -1,5 +1,7 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Afgerond — gerichte broncontrole modelinvoer.** Geen dubbele verzending van instructies of volledige toolcatalogus aangetoond; bestaande uitgestelde tooldefinities en duplicaatfilter zijn aanwezig. Onafhankelijke lezing bevestigt dit. Geen productwijziging of modelcalls; laatste begroeting blijft 4,409 s/8.194 inputtokens. [Bevinding](evidence/product/contact-input-source-inspection-20260924.json). Volgende, nog niet gestart: lokaal onderschepte aanvraag per onderdeel tellen zonder modelaanvraag, zodat verdere verkleining op werkelijk bewijs berust. Herstelwizard blijft uitgesteld.
+
 Laatst bijgewerkt: 2026-09-24.
 
 **Opgeleverd — geheugen en actieve taakcontext tegelijk voorbereiden.** Bron 41928966 geïnstalleerd in kern en werker; gezonde diensten, exacte modulehashes, gelijke uitvoerprofielen en website/spraakgereedheid HTTP200. Beide lezingen blijven volledig verplicht vóór het model. Pending-herstel/toolselectie blijven sequentieel; gekopieerde context, annulering en opruimen gecontroleerd. 55 gerichte controles en onafhankelijke bronreview geslaagd. [Bewijs en terugweg](evidence/product/conversation-preparation-installed-20260924.json). Geen Eva-modelaanvragen. Werkelijke snelheidswinst niet gemeten; eerdere4,409s blijft laatste meting, geen subsecondclaim. Volgende nog niet gestart: modelinvoer bij eenvoudig contact gericht verkleinen zonder functies/geheugen weg te laten.

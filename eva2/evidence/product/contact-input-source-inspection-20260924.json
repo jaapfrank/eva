@@ -1,0 +1,39 @@
+{
+  "checkedAt": "2026-09-24T16:46:13.017598+00:00",
+  "kind": "bounded-source-inspection",
+  "sourceCommit": "fa65bf03",
+  "question": "Does initial simple contact resend duplicate instructions or duplicate complete tool catalogs?",
+  "findings": [
+    {
+      "source": "src/eva/adapters/model/pydantic_conversation.py:1162",
+      "finding": "Initial catalog removes exact discoverable gateway duplicates when authorized discovery is available."
+    },
+    {
+      "source": "src/eva/adapters/model/pydantic_conversation.py:668",
+      "finding": "Admission envelope is used for local budget validation; it is not an additional provider request."
+    },
+    {
+      "source": "src/eva/adapters/model/pydantic_conversation.py:801",
+      "finding": "Each offered tool is represented once as a deferred ToolDefinition."
+    },
+    {
+      "source": "src/eva/adapters/model/pydantic_conversation.py:840",
+      "finding": "Actual agent phase sends instructions once and current user prompt once."
+    },
+    {
+      "source": "src/eva/adapters/model/pydantic_conversation.py:2734",
+      "finding": "Identity, memory, self context and recent timeline are appended once."
+    },
+    {
+      "source": "src/eva/adapters/model/pydantic_conversation.py:2445",
+      "finding": "Conversation cache key is stable for tenant/installation/person/project, not unique per message."
+    }
+  ],
+  "conclusion": "No new material duplication defect demonstrated. Do not repeat cosmetic prose compaction as a claimed latency fix. Exact token attribution for the historical 8194-token request is not available from this source inspection.",
+  "independentReview": "bounded_contact_comparison independently inspected request construction and found no material duplicate serialization.",
+  "next": "Capture a request envelope offline without transmitting it: report only section sizes and tool counts, preserve private content, distinguish serialized bytes from actual provider token usage.",
+  "runtimeChanged": false,
+  "evaModelCalls": 0,
+  "newLatencyMeasurement": false,
+  "ownerAcceptance": false
+}
