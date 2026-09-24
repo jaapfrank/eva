@@ -2185,6 +2185,15 @@ def create_runtime_app() -> FastAPI:
         if len(native_media) == 1:
             native_returns = NativeWorkDelivery(household_work_server, native_media[0])
             idle_tasks = (native_returns.run_once, *idle_tasks)
+            if (settings.background_principal_id is not None and household_voice is not None
+                    and reflection_budget is not None):
+                from eva.bootstrap.household_initiative import HouseholdInitiativeLoop
+                household_initiatives = HouseholdInitiativeLoop(
+                    engine=engine, voice=household_voice, server=household_work_server,
+                    provider=native_media[0], model=model, memory=memory, identity=identity,
+                    budget=reflection_budget, principal_id=settings.background_principal_id,
+                    authorize_initiative=lambda: runtime._initiative_authority().policy())
+                idle_tasks = (*idle_tasks, household_initiatives.run_once)
     runtime = PostgresHindsightMemoryRuntime(
         engine,
         memory,

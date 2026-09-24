@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 import hashlib
 from uuid import NAMESPACE_URL, uuid5
 
@@ -51,6 +51,7 @@ class PostgresSensoryEventStore:
         initiative_principal_id: str | None = None,
         initiative_authorizer=None,
         context_reviews_only: bool = False,
+        household_binding=None,
     ) -> None:
         self._timeline = PostgresOperationalTimeline(
             engine,
@@ -81,10 +82,22 @@ class PostgresSensoryEventStore:
         self._initiative_authorizer = initiative_authorizer
         if context_reviews_only and (initiative_principal_id is None or initiative_authorizer is None):
             raise ValueError("private context reviews require the current owner mandate")
+        self._household_binding = household_binding
+        if household_binding is not None:
+            from eva.application.household_initiative import HouseholdInitiativeBinding
+            if (not isinstance(household_binding, HouseholdInitiativeBinding)
+                    or not context_reviews_only
+                    or household_binding.tenant_id != tenant_id
+                    or household_binding.installation_id != installation_id):
+                raise ValueError("household initiative storage binding differs")
         self._context_reviews_only = context_reviews_only
         self._decision_prefix = ("sensory:initiative-review:" + hashlib.sha256(
             initiative_principal_id.encode()).hexdigest()[:24] + ":"
             if context_reviews_only else "sensory:home-assistant:")
+        if household_binding is not None:
+            self._decision_prefix = "sensory:" + household_binding.event(
+                datetime.fromtimestamp(0, tz=UTC)
+            ).source_event_id.rsplit(":", 1)[0] + ":"
 
     def schedule_context_review(self, *, now: datetime) -> str:
         """At most one durable private opportunity review per hour, without catch-up."""
@@ -95,19 +108,33 @@ class PostgresSensoryEventStore:
         except Exception:
             return "mandate_unavailable"
         scope = self._timeline._scope_value
+        schedule_prefix = ("sensory:household-initiative:" if self._household_binding is not None
+                           else self._decision_prefix)
         with self._timeline._engine.begin() as connection:
             self._timeline._scope(connection)
             connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
-                {"key": self._decision_prefix})
+                {"key": schedule_prefix})
             c, e = operational_checkpoints.c, operational_events.c
-            latest = connection.execute(sa.select(c.phase, c.updated_at, c.thread_id).where(
+            latest = connection.execute(sa.select(c.phase, c.updated_at, c.thread_id, c.revision, c.operation_id).where(
                 c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
-                c.thread_id.startswith(self._decision_prefix)).order_by(c.updated_at.desc()).limit(1)).first()
+                c.thread_id.startswith(schedule_prefix)).order_by(c.updated_at.desc()).limit(1)).first()
             # A lost decision blocks until explicitly abandoned by the owner.
             # Preserve the original interval after abandonment: acknowledgement time
             # is not a new model attempt and must not postpone recovery by an hour.
             if latest is not None:
-                if latest.phase not in {"will_decided", "will_abandoned"}:
+                terminal = {"will_decided", "will_abandoned"}
+                if self._household_binding is not None:
+                    terminal |= {"expression_offered", "expression_interrupted", "expression_expired"}
+                if (self._household_binding is not None and latest.phase == "expression_pending"
+                        and now - latest.updated_at > timedelta(minutes=15)):
+                    transition_timeline_thread(connection, scope, thread_id=latest.thread_id,
+                        expected_revision=latest.revision,
+                        checkpoint_id=f"{latest.thread_id}:expression-expired",
+                        operation_id=latest.operation_id, phase="expression_expired",
+                        status="completed", event_type="PROACTIVE_EXPRESSION_EXPIRED",
+                        occurred_at=now, data={"reason": "household destination opportunity expired"})
+                    return "idle"
+                if latest.phase not in terminal:
                     return "idle"
                 reviewed_at = latest.updated_at
                 if latest.phase == "will_abandoned":
@@ -117,22 +144,29 @@ class PostgresSensoryEventStore:
                         .order_by(e.sequence.desc()).limit(1)).scalar_one()
                 if now - reviewed_at < timedelta(hours=1):
                     return "idle"
-            pending = connection.execute(sa.select(c.thread_id).join(operational_events, sa.and_(
-                c.tenant_id == e.tenant_id, c.installation_id == e.installation_id,
-                c.thread_id == e.thread_id)).where(
-                c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
-                e.event_type == "PERSONAL_INTENT_ADOPTED",
-                e.payload["data"]["principal_id"].astext == self._initiative_principal_id,
-                e.payload["data"]["origin"].astext == "eva_initiative",
-                c.phase.not_in(("release_ready", "personal_stopped", "initiative_completed", "initiative_blocked"))
-            ).limit(1)).first()
-            if pending is not None:
-                return "idle"
+            if self._household_binding is None:
+                pending = connection.execute(sa.select(c.thread_id).join(operational_events, sa.and_(
+                    c.tenant_id == e.tenant_id, c.installation_id == e.installation_id,
+                    c.thread_id == e.thread_id)).where(
+                    c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
+                    e.event_type == "PERSONAL_INTENT_ADOPTED",
+                    e.payload["data"]["principal_id"].astext == self._initiative_principal_id,
+                    e.payload["data"]["origin"].astext == "eva_initiative",
+                    c.phase.not_in(("release_ready", "personal_stopped", "initiative_completed", "initiative_blocked"))
+                ).limit(1)).first()
+                if pending is not None:
+                    return "idle"
             window = int(now.timestamp()) // 3600
             source_id = self._decision_prefix.removeprefix("sensory:") + str(window)
             thread_id = "sensory:" + source_id
             data = {"event_type": "private_opportunity_review", "source": "initiative-review",
                     "source_event_id": source_id, "payload": {"review_window": window}}
+            if self._household_binding is not None:
+                event = self._household_binding.event(now)
+                if source_id != event.source_event_id:
+                    raise RuntimeError("household initiative source identity differs")
+                data = {"event_type": event.event_type, "source": event.source,
+                        "source_event_id": source_id, "payload": event.payload}
             try:
                 insert_initial_timeline_thread(connection, scope, thread_id=thread_id,
                     checkpoint_id=f"checkpoint:{source_id}:observed", occurred_at=now,
@@ -320,6 +354,10 @@ class PostgresSensoryEventStore:
             return None
 
     def _requires_revalidation(self, event: SensoryEvent, *, now: datetime) -> bool:
+        if self._household_binding is not None:
+            if event != self._household_binding.event(event.occurred_at):
+                raise ValueError("household review source differs")
+            return False
         if self._context_reviews_only:
             if event.source != "initiative-review" or event.event_type != "private_opportunity_review":
                 raise ValueError("private review source differs")
@@ -572,7 +610,13 @@ class PostgresSensoryEventStore:
         *,
         now: datetime,
     ) -> None:
-        if self._context_reviews_only and decision.disposition == "respond":
+        if self._household_binding is not None:
+            if (claim.event != self._household_binding.event(claim.event.occurred_at)
+                    or decision.initiative is not None):
+                raise ValueError("household initiative decision audience differs")
+            self._initiative_authorizer()
+        if (self._context_reviews_only and self._household_binding is None
+                and decision.disposition == "respond"):
             decision = FreeWillDecision("silence", decision.reason, 0, decision.provider,
                 usage=decision.usage, initiative=decision.initiative)
         if decision.disposition == "respond" and self._cooldown_applies(
@@ -614,6 +658,8 @@ class PostgresSensoryEventStore:
             retry_count=0,
             last_error_fingerprint=None,
         )
+        if self._household_binding is not None:
+            transition["data"]["household_binding"] = self._household_binding.to_payload()
         original = self._event_from_thread(claim.thread_id)
         if original.event_type != "historical_observation_batch" and decision.initiative is None:
             self._timeline.transition(**transition)
@@ -812,7 +858,7 @@ class PostgresSensoryEventStore:
         self, *, now: datetime
     ) -> ProactiveExpressionClaim | None:
         states = self._timeline.list_checkpoints(
-            thread_prefix="sensory:home-assistant:",
+            thread_prefix=self._decision_prefix,
             phases=("expression_pending", "expression_claimed"),
             statuses=("completed", "active", "failed"),
             updated_before=now,
@@ -849,6 +895,20 @@ class PostgresSensoryEventStore:
                 continue
             if state.status == "failed" and state.retry_count >= 3:
                 continue
+            if self._household_binding is not None:
+                self._validate_household_expression(state.thread_id, self._household_binding.to_payload())
+                event = self._event_from_thread(state.thread_id)
+                if now - event.occurred_at > timedelta(minutes=15):
+                    try:
+                        self._timeline.transition(thread_id=state.thread_id,
+                            expected_revision=state.revision,
+                            checkpoint_id=f"{state.thread_id}:expression-expired",
+                            operation_id=state.operation_id, phase="expression_expired",
+                            status="completed", event_type="PROACTIVE_EXPRESSION_EXPIRED",
+                            occurred_at=now, data={"reason": "household opportunity expired"})
+                    except CheckpointConflict:
+                        pass
+                    continue
             prepared = self._prepared_expression(state.thread_id)
             event = self._event_from_thread(state.thread_id, latest=True)
             if self._requires_revalidation(event, now=now):
@@ -895,6 +955,73 @@ class PostgresSensoryEventStore:
             )
         return None
 
+    def household_notifications_since(self, since: datetime) -> int:
+        if self._household_binding is None:
+            raise ValueError("household notification count requires shared storage")
+        scope = self._timeline._scope_value
+        e = operational_events.c
+        with self._timeline._engine.begin() as connection:
+            self._timeline._scope(connection)
+            return connection.scalar(sa.select(sa.func.count()).select_from(operational_events).where(
+                e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
+                e.thread_id.startswith("sensory:household-initiative:"),
+                e.event_type == "PROACTIVE_EXPRESSION_OFFERED", e.occurred_at >= since))
+
+    def _validate_household_expression(self, thread_id, binding):
+        if (self._household_binding is None
+                or binding != self._household_binding.to_payload()
+                or not thread_id.startswith(self._decision_prefix)):
+            raise ValueError("household expression storage audience differs")
+        self._initiative_authorizer()
+        event = self._event_from_thread(thread_id)
+        if event != self._household_binding.event(event.occurred_at):
+            raise ValueError("household expression origin differs")
+        history = self._timeline.events(thread_id)
+        prepared = next((item.payload.get("data", {}) for item in reversed(history)
+                         if item.event_type == "PROACTIVE_EXPRESSION_PREPARED"), {})
+        if prepared.get("household_binding") != binding:
+            raise ValueError("household expression preparation audience differs")
+
+    def claim_next_household_expression(self, *, binding, now):
+        if self._household_binding is None or binding != self._household_binding.to_payload():
+            raise ValueError("household expression binding differs")
+        self._initiative_authorizer()
+        return self.claim_next_expression(now=now)
+
+    def authorize_household_expression(self, claim, *, binding, now):
+        self._validate_household_expression(claim.thread_id, binding)
+        state = self._timeline.load(claim.thread_id)
+        prepared = self._prepared_expression(claim.thread_id)
+        event = self._event_from_thread(claim.thread_id)
+        if (state.phase != "expression_claimed" or state.status != "active"
+                or state.revision != claim.revision or state.deadline is None
+                or state.deadline <= now or now - event.occurred_at > timedelta(minutes=15)
+                or prepared["source_event_id"] != claim.source_event_id
+                or prepared["expression"] != claim.text):
+            raise CheckpointConflict("household expression claim is stale or differs")
+
+    def acknowledge_household_expression(self, claim, *, binding, disposition,
+                                         provider_message_id, now):
+        if disposition not in {"offered", "interrupted"}:
+            raise ValueError("household expression receipt disposition is invalid")
+        # A receipt records the attempted delivery even when authority expired afterwards.
+        if self._household_binding is None or binding != self._household_binding.to_payload():
+            raise ValueError("household expression receipt binding differs")
+        if not claim.thread_id.startswith(self._decision_prefix):
+            raise ValueError("household expression receipt origin differs")
+        if disposition == "offered" and (not isinstance(provider_message_id, str)
+                or not provider_message_id.strip() or len(provider_message_id) > 240):
+            raise ValueError("household expression receipt is invalid")
+        self._timeline.transition(thread_id=claim.thread_id,
+            expected_revision=claim.revision,
+            checkpoint_id=f"{claim.thread_id}:expression-{disposition}",
+            operation_id=claim.operation_id, phase="expression_" + disposition,
+            status="completed", event_type="PROACTIVE_EXPRESSION_" + disposition.upper(),
+            occurred_at=now, data={"channel": "home_assistant", "disposition": disposition,
+                "household_binding": binding, "source_event_id": claim.source_event_id,
+                "provider_message_id": provider_message_id}, retry_count=0,
+            last_error_fingerprint=None)
+
     def acknowledge_expression(
         self,
         claim: ProactiveExpressionClaim,
@@ -903,7 +1030,7 @@ class PostgresSensoryEventStore:
         provider_message_id: str,
         now: datetime,
     ) -> None:
-        if channel not in {"telegram", "test"}:
+        if self._household_binding is not None or channel not in {"telegram", "test"}:
             raise ValueError("proactive expression channel is invalid")
         if not provider_message_id.strip() or len(provider_message_id) > 240:
             raise ValueError("proactive expression receipt is invalid")
@@ -1074,7 +1201,7 @@ class PostgresSensoryEventStore:
         now: datetime,
     ) -> bool:
         states = self._timeline.list_checkpoints(
-            thread_prefix="sensory:home-assistant:",
+            thread_prefix=self._decision_prefix,
             phases=("expression_pending", "expression_claimed", "expression_delivered"),
             statuses=("completed", "active", "failed"),
             updated_before=now,

@@ -359,6 +359,11 @@ class SensoryDecisionWorker:
                     raise RuntimeError("household initiative provenance changed")
                 # Never load owner history or owner capabilities for a shared expression.
                 history, capabilities, capability_reader = (), (), None
+                if not memory.confirmed_facts:
+                    self._store.complete(claim, FreeWillDecision("silence",
+                        "Er is geen expliciet gedeelde context voor een nuttige huisbijdrage.",
+                        0, "eva:household-context-empty"), now=self._current_time(now))
+                    return "silence"
             else:
                 # Resolve the trusted owner alias afresh so revocation takes effect
                 # without rewriting existing private memories or widening their audience.
