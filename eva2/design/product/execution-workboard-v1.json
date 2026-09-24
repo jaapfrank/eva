@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T02:43:59.236703+00:00",
+        "checkedAt": "2026-09-24T02:50:26.286674+00:00",
         "deliveries": [
           {
             "title": "Geheugen en gateway in dezelfde herstelactie",
@@ -1781,15 +1781,15 @@
           }
         ],
         "now": {
-          "title": "Geheugen en gateway via dezelfde herstelwizard",
-          "state": "Beheeromgeving beschikbaar",
-          "detail": "Externe imports naar geconfigureerde lege doelen zijn aangesloten; importfouten melden mogelijk gedeeltelijk resultaat. Er is niets op actieve Eva hersteld.",
-          "doneWhen": "Startcontrole geslaagd. Volledige herstelproef, documentkoppelingen en activatie nog open."
+          "title": "Dagelijkse functies eerst afmaken",
+          "state": "Uitvoervolgorde gecorrigeerd",
+          "detail": "Herstel en verhuizing zijn uit de actieve bouwvolgorde gehaald. Snelle begroeting en doorpraten tijdens werk blijven open; geïnstalleerde deelwijzigingen betekenen niet dat deze functies af zijn.",
+          "doneWhen": "Eén gedeeld gesprek via website, Telegram, Home Assistant en Voice PE; snelle ontvangst, tussendoor praten, onderbreken en stoppen. Uitgebreide gebruiksproeven volgen later."
         },
         "next": {
-          "title": "Documentkoppelingen en activatie na herstel",
-          "state": "Nog niet gestart",
-          "detail": "Bestaande providerbindingen hergebruiken en ontbrekende aansluiting afronden; geen activatie zonder gereed hersteldoel."
+          "title": "Snelle begroeting en doorpraten via de gedeelde kern",
+          "state": "Volgende bouwopdracht; nog niet gestart",
+          "detail": "Gebruik bestaande timing en code om de resterende wachttijd of blokkering gericht weg te nemen. Geen herbouw of herhaling van verloren modelproeven. Fysieke Voice PE-diagnose blijft afzonderlijk uitgesteld."
         },
         "ownerAction": {
           "title": "Kies wanneer de Voice PE-diagnose kan",
@@ -1802,7 +1802,7 @@
           "expected": "Een vastgelegde falende wakeword-overgang; geen herhaling van een blinde firmwareproef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T02:43:59.236703+00:00"
+        "reviewedAt": "2026-09-24T02:50:26.286674+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11464,7 +11464,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 6,
+      "currentStep": 1,
       "steps": [
         {
           "number": 1,
@@ -11574,7 +11574,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Documentkoppelingen en activatie na herstel. Continue Voice PE wacht op afgesproken fysieke diagnose.",
+      "nextAction": "Gebruik bestaande timing en code om de resterende wachttijd of blokkering gericht weg te nemen. Geen herbouw of herhaling van verloren modelproeven. Fysieke Voice PE-diagnose blijft afzonderlijk uitgesteld.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
@@ -11585,7 +11585,8 @@
         "Mislukte terugweg of gegevensrisico stopt de betreffende installatie; behoud bestaande versie/data.",
         "Geen gefingeerde acceptatie, benchmarkwinst of automatische heropening van geaccepteerd werk."
       ],
-      "ownerPriority20260923": "Eerst de afgesproken functies werkend en geïnstalleerd. Verhuizing, uitgebreide herstelvoorzieningen en aanvullende rechtencontroles naar de afronding. Bestaande bescherming en gegevens behouden; per wijziging alleen benodigde gerichte controles, brede integratiecontrole op het functionele geheel."
+      "ownerPriority20260923": "Eerst de afgesproken functies werkend en geïnstalleerd. Verhuizing, uitgebreide herstelvoorzieningen en aanvullende rechtencontroles naar de afronding. Bestaande bescherming en gegevens behouden; per wijziging alleen benodigde gerichte controles, brede integratiecontrole op het functionele geheel.",
+      "ownerPriority20260924": "Afgesproken productfuncties daadwerkelijk afronden. Geen uitwijking naar technische details of herstel/verhuizing zolang dagelijks gebruik nog ontbreekt. Een wachtende fysieke proef blokkeert alleen afhankelijk werk."
     },
     "dashboardClarityCorrection20260922": {
       "ownerFeedback": "Bewezen basis zegt niet of Eva2 als vaste huisgenoot bruikbaar is; toon concrete opgeleverde resultaten en open werk.",
