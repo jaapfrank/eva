@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-09-24T20:06:12.430262+00:00",
+  "sourceCommit": "8807c3d39962ab0d47d76286005899ad31659e38",
+  "state": "installed",
+  "scope": "Browser voice: defer saved background speech while an admitted foreground turn is forming its answer.",
+  "change": "Wait for existing active turn ownership to clear before offering saved speech; current grant rechecked every500ms; durable result and interruption semantics preserved.",
+  "checks": [
+    "Nine targeted checks on patched currently installed media base passed",
+    "Independent reviewer GO;500ms interval matches existing playback revalidation",
+    "No live rooms before restart",
+    "Exact live source hash, running service with0 restarts and/session/ready200"
+  ],
+  "installation": {
+    "checkedAt": "2026-09-24T20:06:12.430262+00:00",
+    "agentSha256": "b77050d809440386b0357037bafef26000dda3a7e8cde6f005cf18aafe259259",
+    "ready": true,
+    "container": "eva2-owner-voice-media-1",
+    "image": "eva2-foreground-priority-web:20260924",
+    "rollbackCompose": "/home/administrator/project/.eva2-artifacts/voice-foreground-priority-20260924/web/baseline.compose.private.json",
+    "rollbackEnvironment": "/home/administrator/project/.eva2-artifacts/voice-foreground-priority-20260924/runtime.env.before.private"
+  },
+  "limits": [
+    "No model latency improvement",
+    "No physical audio or owner acceptance",
+    "Speaker transport has no matching saved-return implementation and was not changed",
+    "Website and Telegram concurrency retained; read-only review found no new serialization defect"
+  ],
+  "setupCorrections": [
+    "Docker image ID tagged locally before build",
+    "Selected only media image key; LiveKit image unchanged",
+    "First readiness probe preceded startup; existing process subsequently ready without restart"
+  ],
+  "modelRequests": 0,
+  "try": "Via44716 begin een onderzoeksopdracht en stel tijdens het werk een tussenvraag. Als het onderzoeksresultaat binnenkomt terwijl de tussenvraag wordt verwerkt, hoort haar antwoord eerst aangeboden te worden. Hoorbare ervaring nog open."
+}

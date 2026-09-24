@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T19:45:38.510341+00:00",
         "deliveries": [
           {
+            "title": "Browserspraak geeft lopende tussenvraag voorrang",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Binnenkomend opgeslagen onderzoeksresultaat wacht tot Eva het antwoord op de lopende vraag heeft aangeboden. Negen controles, onafhankelijke review en live gereedheid bevestigd.",
+            "remaining": "Geen versnelling van het model; echte hoorbare proef en Voice PE-kanaalbewijs blijven open.",
+            "source": "eva2/evidence/product/voice-foreground-priority-installed-20260924.json"
+          },
+          {
             "title": "Eerste eigen codeverbetering gecontroleerd toegepast",
             "date": "24 september",
             "state": "installed",
@@ -2199,15 +2207,15 @@
           }
         ],
         "now": {
-          "title": "Eigen verbeterpakket toegepast",
-          "state": "Geïnstalleerd; deze begrensde opdracht afgerond",
-          "detail": "Eva maakte de bronwijziging; na herstel en één gerichte hervatting is exact het pakket bewaard en teruggelezen. Onafhankelijke vergelijking71/90→90/90; voorstel beoordeeld en als9a639c97 geïnstalleerd in gezonde kern en werker. Dit bewijst één verbetering met coördinatorhulp, geen algemene zelfstandigheid.",
-          "doneWhen": "Technische deeloplevering afgerond; volledige stap5 en eigenaaracceptatie blijven open."
+          "title": "Tussenvraag vóór een binnenkomend onderzoeksresultaat",
+          "state": "Browserspraak gecorrigeerd en geïnstalleerd",
+          "detail": "Nieuw opgeslagen achtergrondresultaat wacht met spreken zolang een gewone vraag nog wordt verwerkt. Negen gerichte controles en onafhankelijke review geslaagd; live bron en gereedheid bevestigd. Modelwachttijd en fysieke kanaalproeven blijven open.",
+          "doneWhen": "Deze volgordecorrectie technisch opgeleverd; stap1 als geheel blijft open."
         },
         "next": {
-          "title": "Snelle ontvangst en doorpraten via dezelfde Eva",
+          "title": "Merkbare reactietijd van gewone gesprekken",
           "state": "Volgende opdracht; nog niet gestart",
-          "detail": "Terug naar stap1: de bestaande snelle ontvangst, achtergronduitvoering en echte kanaalroutes samenbrengen waar nog een concreet verschil zit. Laatste inhoudelijke begroeting5,2s blijft onvoldoende; geen ongewijzigde herproef."
+          "detail": "Bestaande metingen tonen circa5s voor Hallo. Onderzoek alleen een concrete resterende wachttijd in de gedeelde modelroute; geen nieuwe transportbouw of ongewijzigde herproef."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2221,7 +2229,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T19:59:47.136190+00:00"
+        "reviewedAt": "2026-09-24T20:06:12.430262+00:00"
       }
     },
     "pendingTechnicalReview": {
