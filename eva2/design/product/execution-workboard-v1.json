@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T00:33:54.593109+00:00",
+        "checkedAt": "2026-09-24T00:37:45.049243+00:00",
         "deliveries": [
           {
             "title": "Stoppen na het aannemen van achtergrondwerk",
@@ -1677,29 +1677,29 @@
           }
         ],
         "now": {
-          "title": "Stap 3: digitale taken bedienen",
-          "state": "Stopkoppeling geïnstalleerd",
-          "detail": "Stop na een afgeronde ontvangst gaat naar de gezamenlijke taakbediening. Direct stoppen van een nog lopend antwoord behouden. Kern en werker gezond gestart.",
-          "doneWhen": "Werk uitvoeren, correct terugmelden, volgen, stoppen en hervatten functioneren als geheel."
+          "title": "Stap 4: huisbediening via Voice PE",
+          "state": "Voorbereid — keuze nodig",
+          "detail": "Beide gedeelde speakers ontbreken in de bestaande HA-bedieningslijst. Beperkte configuratie staat klaar voor dezelfde 118 bestaande combinaties. Nog niet geïnstalleerd.",
+          "doneWhen": "De gekozen gedeelde huisbediening is geïnstalleerd; echte bediening blijft apart te beproeven."
         },
         "next": {
-          "title": "Resterende algemene taakuitvoering",
-          "state": "Vervolg nog niet gestart",
-          "detail": "Bestaande uitvoerroute afmaken waar een concreet functioneel gat resteert. Praktijkproeven blijven uitgesteld; geen afgeronde productclaim."
+          "title": "Huisbediening volgens jouw keuze aansluiten",
+          "state": "Wacht alleen voor deze wijziging",
+          "detail": "Gevraagd of iedereen bij beide speakers de al toegestane lampen/schakelaars mag bedienen. Onafhankelijk werk aan overige projectfuncties kan doorgaan."
         },
         "ownerAction": {
-          "title": "Geen proef nodig tijdens deze bouwronde",
-          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
-          "linkLabel": "Open Eva",
+          "title": "Kies wie huisbediening via speakers mag gebruiken",
+          "url": "http://localhost:44712/",
+          "linkLabel": "Projectoverzicht",
           "steps": [
-            "Gebruik Eva zoals gewoonlijk; een nieuwe verplichte proef is nu niet nodig.",
-            "Bij latere Telegram-beoordeling: geef een onderzoeksopdracht en stel tussendoor een andere vraag.",
-            "Controleer dan of het onderzoeksresultaat de oorspronkelijke onderzoeksopdracht citeert."
+            "Beantwoord de vraag in deze Codex-taak: mag iedereen via beide speakers de bestaande toegestane lampen en schakelaars bedienen?",
+            "Privégeheugen en persoonlijke gesprekken worden hiermee niet gedeeld.",
+            "Er is nu geen fysieke proef nodig."
           ],
-          "expected": "Koppeling geïnstalleerd; echte gesprekssnelheid en aflevering blijven afzonderlijk te beoordelen."
+          "expected": "Na je keuze kan de voorbereide configuratie gericht worden geïnstalleerd of de privébeperking behouden blijven."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T00:33:54.593109+00:00"
+        "reviewedAt": "2026-09-24T00:37:45.049243+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11358,7 +11358,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 3,
+      "currentStep": 4,
       "steps": [
         {
           "number": 1,
