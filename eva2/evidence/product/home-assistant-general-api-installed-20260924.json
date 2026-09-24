@@ -1,0 +1,81 @@
+{
+  "verifiedAt": "2026-09-24T14:09:26.615955+00:00",
+  "sourceCommits": [
+    "16d23316",
+    "f03de463"
+  ],
+  "installed": true,
+  "checks": [
+    {
+      "name": "eva2-managed-b-slot3-core",
+      "image": "sha256:4047030c104e44398e51acddf5d59623f3149d0701a4ba790e1c070d94a06855",
+      "health": "healthy",
+      "restarts": 0,
+      "moduleHashes": {
+        "contracts/delegated_digital_work.py": "3d286739fd2d5b3762859ec4bd881d0926df67a90a543af090b41e425c9530a6",
+        "bootstrap/delegated_digital_composition.py": "9486b77106852f21d772c5e917e9f901c4834abdc235a019c7b37d5ac6366e28",
+        "providers/home_assistant.py": "6de6c3c4bde97abe4ba8e811cf392cbf95c4d684be57ea8f79ed764954610073",
+        "adapters/connectors/home_assistant_api.py": "bf07f6f8d400a0bd116ff79e9a98d04c819e50e41975d53506433d42b1c0a0cf",
+        "adapters/connectors/home_assistant.py": "22f370cd76498925e636d5a9f7207dd74258aee396f23431288fe723d3c2db2a",
+        "adapters/connectors/home_assistant_admin.py": "13899de62cacdd89fb6ec252edf2d25bc8f41165e11202d256b2d5eb3d4a3c6a"
+      }
+    },
+    {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "image": "sha256:56c350e949c97c01614f4a090fc0f12897c190326479376643aaabd346aa1893",
+      "health": "healthy",
+      "restarts": 0,
+      "moduleHashes": {
+        "contracts/delegated_digital_work.py": "3d286739fd2d5b3762859ec4bd881d0926df67a90a543af090b41e425c9530a6",
+        "bootstrap/delegated_digital_composition.py": "9486b77106852f21d772c5e917e9f901c4834abdc235a019c7b37d5ac6366e28",
+        "providers/home_assistant.py": "6de6c3c4bde97abe4ba8e811cf392cbf95c4d684be57ea8f79ed764954610073",
+        "adapters/connectors/home_assistant_api.py": "bf07f6f8d400a0bd116ff79e9a98d04c819e50e41975d53506433d42b1c0a0cf",
+        "adapters/connectors/home_assistant.py": "22f370cd76498925e636d5a9f7207dd74258aee396f23431288fe723d3c2db2a",
+        "adapters/connectors/home_assistant_admin.py": "13899de62cacdd89fb6ec252edf2d25bc8f41165e11202d256b2d5eb3d4a3c6a"
+      }
+    }
+  ],
+  "http": {
+    "http://localhost:44711/internal/v1/dashboard": 200,
+    "http://localhost:44716/session/ready": 200
+  },
+  "readOnlyHaDiscovery": {
+    "serviceDomains": 81,
+    "areas": 18,
+    "fromCoreAndWorker": true
+  },
+  "digitalProfileConfigurationAndSourcesMatch": true,
+  "ownerTelegramAuthorizationChecked": true,
+  "sharedApiEnabled": false,
+  "tests": {
+    "apiProtocolCases": 9,
+    "compositionCases": 4,
+    "grantProfileCase": 1
+  },
+  "independentReview": "Existing executor, exact capability, private owner boundary, configured origin and durable no-replay reviewed. API failure receipt corrected to conflict.",
+  "startupCorrections": [
+    "Excluded unrelated voice module from overlay after dependency mismatch; live unchanged during failed candidate checks",
+    "Added exact capability to existing digital grant validation",
+    "Preserved HA numeric types in response_json because durable envelope rejects floating-point values"
+  ],
+  "scope": [
+    "Generic REST and single-command WebSocket requests on configured HA origin",
+    "Live service/registry discovery, arbitrary service request data and full automation configuration via same tool",
+    "Existing durable conversation and background execution; no device-specific task executor"
+  ],
+  "notProven": [
+    "Model choice and completion of arbitrary household tasks",
+    "Physical actuation or actual automation write/readback",
+    "General shared-speaker administration; owner answer pending",
+    "Independent physical-state verification is not supplied by an API acknowledgment"
+  ],
+  "modelCalls": 0,
+  "deviceActions": 0,
+  "automationChanges": 0,
+  "creditCost": "unknown",
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/home-assistant-api-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker",
+  "sources": [
+    "https://developers.home-assistant.io/docs/api/rest/",
+    "https://developers.home-assistant.io/docs/api/websocket/"
+  ]
+}

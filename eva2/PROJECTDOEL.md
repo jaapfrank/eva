@@ -1,5 +1,18 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaarverduidelijking 24 september 2026 — algemene Home Assistant-vaardigheid
+
+Eva moet beschikbare Home Assistant-apparaten, services en automatiseringen zelf
+kunnen ontdekken en de API/MCP passend gebruiken. De eigenaar hoeft geen exacte
+namen of typen te kennen. Automatiseringen maken en bestaande automatiseringen
+begrijpen en verbeteren horen hierbij; vaste lampenlijsten en beperkte
+als/dan-sjablonen zijn geen vervanging voor deze algemene vaardigheid. Gebruik
+de bestaande algemene uitvoeringsroute; geen nieuwe kernfunctie per apparaat
+of gebruikersvraag. De eerdere oplevering van ruimteselectie is slechts een
+deelresultaat, geen afronding van huisbediening. Privé-inhoud blijft op Telegram;
+de uitbreiding van breed beheer voor alle gedeelde sprekers is apart gevraagd.
+
+
 ## Eigenaarbesluit 24 september 2026 — gedeelde bediening, privé via Telegram
 
 Iedereen thuis mag via beide bestaande Voice PE-apparaten de reeds toegestane lampen en schakelaars bedienen. Dit voegt geen apparaten of soorten handelingen toe. Privé-inhoud wordt niet via gedeelde spraak ontsloten; privévoortzetting loopt via Telegram. Stemherkenning is geen voorwaarde voor deze gedeelde huisbediening en geeft geen toegang tot privégeheugen.

@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T13:51:23.450585+00:00",
+        "checkedAt": "2026-09-24T14:09:26.615955+00:00",
         "deliveries": [
+          {
+            "title": "Algemene Home Assistant-API voor jouw opdrachten",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Gesprek en achtergrondwerker kunnen via één algemene tool de HA REST/WebSocket-API gebruiken. Echte ontdekking van 81 servicedomeinen en 18 ruimtes geslaagd. Volledige automatiseringsconfiguratie mogelijk zonder vaste sjablonen.",
+            "remaining": "Jouw Telegramroute aangesloten. Gedeeld breed beheer wacht op jouw keuze. Modelgestuurde apparaatbediening en automatiseringswijziging nog niet beproefd.",
+            "source": "eva2/evidence/product/home-assistant-general-api-installed-20260924.json"
+          },
           {
             "title": "Planning en taakmeldingen wachten niet meer op gespreksrust",
             "date": "24 september",
@@ -1941,29 +1949,29 @@
           }
         ],
         "now": {
-          "title": "Planning en terugmeldingen tijdens gesprek",
-          "state": "Geïnstalleerd",
-          "detail": "Vijfminuten-rustblokkade verwijderd. Gerichte controles, onafhankelijke bronreview en livecontrole afgerond.",
-          "doneWhen": "Technische levering afgerond; echte ontvangst tijdens gesprek nog open."
+          "title": "Algemene Home Assistant-vaardigheid",
+          "state": "Geïnstalleerd voor jouw eigenaarroute",
+          "detail": "Algemene API-tool aangesloten op gesprek én achtergrondwerk; dezelfde configuratie, echte discovery en gezonde installatie gecontroleerd. Geen beperking tot vooraf gekozen apparaten of automatiseringssjablonen.",
+          "doneWhen": "Technische aansluiting geïnstalleerd; echte modeluitvoering nog open. Breed beheer via gedeelde speakers wacht op de expliciet gevraagde keuze."
         },
         "next": {
-          "title": "Gesprek en achtergrondwerk via alle ingangen afronden",
-          "state": "In wachtrij",
-          "detail": "Resterende verschillen in gesprek, taakstop en terugmelding uit het bestaande werkbord oppakken; fysieke spraakacceptatie blijft apart."
+          "title": "Algemene HA-bediening via gedeelde speakers",
+          "state": "Wacht op jouw keuze",
+          "detail": "Eerder mocht iedereen lampen/schakelaars bedienen. Of iedereen ook automatiseringen en ander breed beheer mag uitvoeren is nu gevraagd; privé-inhoud blijft Telegram."
         },
         "ownerAction": {
-          "title": "Praat tegen Eva zoals tegen Eva1",
-          "url": "http://localhost:44712/",
-          "linkLabel": "Projectoverzicht",
+          "title": "Gebruik een eigen Home Assistant-opdracht",
+          "url": "http://localhost:44711/internal/v1/dashboard",
+          "linkLabel": "Eva en taakstatus",
           "steps": [
-            "Zeg via je gewone speaker: Doe de lampen in de woonkamer aan.",
-            "Voor de overkapping kun je gewoon zeggen: Doe de lampen in de overkapping aan.",
-            "Een comfortvraag zoals Het is koud in de overkapping mag Eva met de beschikbare verwarming/context interpreteren; dit modelgedrag is nog niet in een echte spraakproef bevestigd."
+            "Stuur in Telegram /eva2 gevolgd door wat je echt wilt weten of doen in Home Assistant. Je hoeft geen technische apparaatnaam of type te kennen.",
+            "Bijvoorbeeld: Bekijk de automatiseringen voor de overkapping en leg uit wat er beter kan. Geef een wijzigingsopdracht wanneer je wilt dat Eva die uitvoert.",
+            "Beantwoord de open keuze of iedereen via beide speakers ook breed HA-beheer krijgt."
           ],
-          "expected": "Geen technische lampnamen nodig. De bedoelde lampen schakelen; Eva mag geen succes claimen als controle ontbreekt. De heater is nu ook beschikbaar voor aan/uit-bediening."
+          "expected": "Eva zoekt zelf de bestaande configuratie/services op en gebruikt de passende API. Een wijziging moet ze teruglezen en eerlijk toelichten; API-bevestiging alleen bewijst geen fysieke werking."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T13:51:23.450585+00:00"
+        "reviewedAt": "2026-09-24T14:09:26.615955+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11625,7 +11633,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 3,
+      "currentStep": 4,
       "steps": [
         {
           "number": 1,
@@ -11675,7 +11683,7 @@
             "VB-002"
           ],
           "doneWhen": "Passend initiatief met werkelijk resultaat, terecht stil blijven en bestaande huisfuncties behouden; gezin beoordeelt eigenheid, plezier en hinder.",
-          "preserve": "Initiatief behouden. Beide speakers kunnen de bestaande toegestane lampen en de overkapping-heater aan/uit bedienen. Natuurlijke ruimteselectie geïnstalleerd; fysieke bediening, comfortinterpretatie, nut/hinder en IN-02 nog open.",
+          "preserve": "Algemene HA-API geïnstalleerd op eigenaarroute en achtergrondwerker; echte discovery van 81 servicedomeinen/18 ruimtes. Brede gedeelde bediening wacht op eigenaarbesluit; modelgestuurde uitvoering en nut/hinder blijven open. Bestaande speakerbediening behouden.",
           "planningEffortHours": "4–12"
         },
         {
@@ -11735,7 +11743,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Planning en terugmeldingen tijdens gesprek",
+      "nextAction": "Algemene HA-bediening via gedeelde speakers: eigenaarbesluit verwerken",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
