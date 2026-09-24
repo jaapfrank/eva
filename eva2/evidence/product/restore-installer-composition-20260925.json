@@ -1,0 +1,33 @@
+{
+  "sourceCommit": "7c243d00",
+  "outcome": "Existing restore composition callable from trusted installer settings",
+  "installed": true,
+  "installationReceipt": "/home/administrator/project/.eva2-artifacts/restore-composition-7c243d00/installation-receipt.json",
+  "checks": {
+    "focusedLifecycleAndCliCases": 5,
+    "independentReview": "passed; existing validation/callback order/CLI retained, engine disposal covers failed construction and close",
+    "installedHashMatches": true,
+    "launcherHelp": true
+  },
+  "remaining": "Actual target provisioning from confirmed installer choices and owner UI wiring remain open. This entrypoint alone is not a no-terminal installation.",
+  "modelCalls": 0,
+  "productionModified": false,
+  "previousFullRouteProof": "restore-full-route-20260925.json",
+  "fullRouteRepeated": false,
+  "requiredProvisioningInputs": [
+    "Confirmed installer plan and exact plan hash",
+    "Trusted release image/manifests and maintained launch definitions",
+    "Current secret generations and credential/restore authority from authorized storage",
+    "Archive package identity/component bindings",
+    "Persistent workspace/storage and actual verified source fencing"
+  ],
+  "existingFunctionsInspected": [
+    "build_installer_installation_plan (read-only)",
+    "render_managed_b (render-only, fixed service graph)",
+    "core_b_preflight (observes existing inputs/resources)",
+    "InstallerSecretStore.read_secret_with_status",
+    "model_credentials",
+    "install_schema"
+  ],
+  "nextImplementation": "Bind existing trusted release/provider material, then provision real persistent targets and return config to configured_restore_workflow. Do not copy synthetic authorities or tmpfs database storage from fixture."
+}

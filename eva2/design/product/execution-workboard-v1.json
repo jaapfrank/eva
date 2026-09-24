@@ -2239,15 +2239,15 @@
           }
         ],
         "now": {
-          "title": "Technische herstelroute geslaagd",
-          "state": "Geïnstalleerd en volledig op afzonderlijk doel uitgevoerd",
-          "detail": "Werkende kern en werker na volledig wizardherstel;7 taken,21 gebeurtenissen, geheugenbank en documenthistorie exact teruggelezen. Geïnstalleerde beheerbronf1a827bf gecontroleerd. Uitvoerder stopt uitsluitend mislukte proefservices met behoud van gegevens. Normale doelvoorbereiding zonder handgeschreven configuratie is nog niet af.",
+          "title": "Installer-doelvoorbereiding aansluiten",
+          "state": "Gedeelde aanroep geïnstalleerd; doelomgeving nog open",
+          "detail": "Coördinator heeft de bestaande herstelworkflow aanroepbaar gemaakt vanuit vertrouwde installerinstellingen.5 gerichte controles, onafhankelijke review en installatie geslaagd. Uitvoerder heeft broninspectie afgerond; geen uitvoerder bouwt nu. Volgende koppeling: bestaande release- en toegangsgegevens leveren aan echte doelvoorbereiding. Geen complete installatieclaim.",
           "doneWhen": "Volledige reservekopie via de wizard terugzetten en echte herstelde kern starten met behouden gegevens. Gebruikersacceptatie blijft apart."
         },
         "next": {
-          "title": "Gewone doelvoorbereiding in bestaande installer aansluiten",
-          "state": "Nog niet gestart",
-          "detail": "Bestaand installatieplan gebruiken om de benodigde doelconfiguratie te maken; geen JSON door Jaap laten schrijven. Productieschema/updatepad en gebruikersproef blijven afzonderlijk open."
+          "title": "Release en toegang aan doelvoorbereiding binden",
+          "state": "Nog niet geïmplementeerd",
+          "detail": "Bestaande bevestigde installerkeuzes en releasegegevens gebruiken om duurzame opslag, databases en gestopte doelservices te maken. Geen synthetische proefautoriteit of handgeschreven configuratie als productoplossing."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2261,7 +2261,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T22:21:50.465591+00:00"
+        "reviewedAt": "2026-09-24T22:29:59.297641+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12033,7 +12033,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Ontbrekende vrijgave en start in bestaande herstelwizard functioneel aansluiten; dagelijkse gebruiksproeven afzonderlijk open.",
+      "nextAction": "Bestaande bevestigde installerkeuzes aansluiten op echte doelvoorbereiding en herstelconfiguratie; technische volledige herstelroute is al geïnstalleerd en afzonderlijk bewezen.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

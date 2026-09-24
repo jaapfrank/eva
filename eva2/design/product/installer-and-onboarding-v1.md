@@ -4,7 +4,7 @@ Bijgewerkt: 27 augustus 2026.
 
 ## Restore operator integration — 24 September 2026
 
-Source `cfb27e4b` connects the existing restore wizard to component verification,
+Source `f1a827bf` connects the existing restore wizard to component verification,
 database release and runtime startup after commit. The installed operator entry is
 `/home/administrator/project/.eva2-artifacts/installer-document-write-20260924/start-installer.py`.
 Run it with `--restore-config /absolute/private/target.json`; the existing wizard
@@ -29,10 +29,21 @@ another attempt. Do not automatically repeat imports or start both installations
 The operator command has been updated with previous files retained at
 `/home/administrator/project/.eva2-artifacts/restore-memory-api-683e3780`.
 [Installation evidence](../../evidence/product/restore-operator-updated-20260924.json)
-records its exact scope. The complete isolated restore trial remains open.
+records its exact scope. The complete isolated wizard restore passed on 25 September: real core/worker startup and exact retained task/event, memory-bank and native document/history readback. See [full-route evidence](../../evidence/product/restore-full-route-20260925.json). This is not an owner browser test or a production schema migration.
 Generating this operator configuration through ordinary user-facing installation
 choices, without manual JSON, also remains part of the product promise below;
 availability of this command does not complete that requirement.
+
+## Installer composition — 25 September 2026
+
+`configured_restore_workflow(config)` now exposes the same context-managed route
+to trusted installer provisioning; the private-file CLI remains supported.
+The caller must provide installer-owned settings, never raw browser configuration.
+This entrypoint is installed at source `7c243d00`; it does not provision targets.
+The confirmed installation plan and managed-B renderer remain read-only. Actual
+persistent target creation must bind the existing release, current secret
+generations and source fencing before returning this configuration. Fixture
+authorities, tmpfs database storage and preloaded images are not product defaults.
 
 ## Productbelofte
 

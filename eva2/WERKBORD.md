@@ -1,8 +1,10 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Nu — installer-doelvoorbereiding aansluiten.** Gedeelde herstelworkflow is vanuit vertrouwde installerinstellingen aanroepbaar, bron7c243d00 geïnstalleerd met terugweg;5 gerichte controles en onafhankelijke review geslaagd. Broninspectie door uitvoerder afgerond; geen uitvoerder bouwt nu. Coördinator vervolgt de koppeling van echte release-/toegangsgegevens aan duurzame doelvoorbereiding. [Aansluiting en grenzen](evidence/product/restore-installer-composition-20260925.json). Geen complete installerclaim.
+
 **Opgeleverd — technische herstelroute geïnstalleerd en volledig uitgevoerd.** Beheerbronf1a827bf startte op een afzonderlijk doel de echte kern en werker; beide gezond. Na start7 taken,21 gebeurtenissen, geheugenbank en documenthistorie exact teruggelezen.15 gebruikte beheermodules bytegelijk aan installatie;0 modelcalls, productie ongewijzigd. [Bewijs en grenzen](evidence/product/restore-full-route-20260925.json). Uitvoerder stopt alleen mislukte proefservices, gegevens blijven bewaard.
 
-**Nog niet als volledige gebruikersfunctie klaar.** Gewone doelvoorbereiding zonder handgeschreven configuratie, productieschema/updatepad en eigenaarproef blijven open. Volgende, nog niet gestart: bestaande installer-doelvoorbereiding aansluiten; geen tweede wizard. Het volledige achtstappengoal blijft actief.
+**Nog niet als volledige gebruikersfunctie klaar.** Gewone doelvoorbereiding zonder handgeschreven configuratie, productieschema/updatepad en eigenaarproef blijven open. Nu actief: bestaande installer-doelvoorbereiding aansluiten; geen tweede wizard. Het volledige achtstappengoal blijft actief.
 
 **Opgeleverd — geplande taken via het model aannemen.** Bronbd0a5c16 geïnstalleerd in gezonde kern/werker; exact schema/bronhash en gelijke uitvoerprofielen bevestigd, website/spraakroute bereikbaar. Modelkoppeling verplichtte beide voorgangers tegelijk; nu één of geen voorganger en optionele tijd bij afhankelijk vervolg. Bestaande scheduler, opslag/replay en stoppen behouden. Vier echte databasegevallen en onafhankelijke review geslaagd. [Bewijs en proberen](evidence/product/scheduled-tool-nullability-installed-20260924.json). Geen modelcall of echte afspraak; meerdaagse proef open. **Volgende, nog niet gestart: eigen initiatief en huisaanwezigheid afronden.**
 

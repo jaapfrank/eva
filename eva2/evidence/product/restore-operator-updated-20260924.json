@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "f1a827bf",
+  "sourceCommit": "7c243d00",
   "state": "operator_installed_complete_isolated_route_proven_owner_workflow_open",
   "availableCommand": "python3 /home/administrator/project/.eva2-artifacts/installer-document-write-20260924/start-installer.py --restore-config /absolute/private/target.json",
   "checks": {
@@ -41,7 +41,7 @@
   "restoreInvoked": false,
   "ownerAccepted": false,
   "modelCalls": 0,
-  "next": "Connect ordinary target preparation to existing installer plan; no handwritten target JSON for owner. Current production schema/update path and owner acceptance remain open.",
+  "next": "Implement actual installer target preparation and UI wiring using shared composition. No-terminal owner installation remains open.",
   "additionalRollbackFile": "/home/administrator/project/.eva2-artifacts/runtime-public-ca-20260924/previous-installed-runtime-authorization.py",
   "networkCorrectionInstallation": "/home/administrator/project/.eva2-artifacts/restore-created-network-3b3bd272/installation-receipt.json",
   "fullWizardAttempt": {
@@ -93,5 +93,6 @@
     "retained": true,
     "production_modified": false
   },
-  "fullRouteEvidence": "eva2/evidence/product/restore-full-route-20260925.json"
+  "fullRouteEvidence": "eva2/evidence/product/restore-full-route-20260925.json",
+  "compositionIntegrationEvidence": "eva2/evidence/product/restore-installer-composition-20260925.json"
 }
