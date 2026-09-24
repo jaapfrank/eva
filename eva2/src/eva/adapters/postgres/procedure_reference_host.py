@@ -10,12 +10,13 @@ from eva.application.background_execution import authorize_background_dispatch, 
 
 
 class PostgresProcedureReferenceHost:
-    def __init__(self, engine, *, turn, authority, gateway_factory, load_source_turn):
+    def __init__(self, engine, *, turn, authority, gateway_factory, load_source_turn, private_owner_resolver=None):
         self.engine, self.turn, self.authority = engine, turn, authority
         self.gateway_factory = gateway_factory
         self.timeline = PostgresOperationalTimeline(engine, authority.scope)
         self.load_turn = load_source_turn
         self._selected = None
+        self.private_owner_resolver = private_owner_resolver
 
     def require_current(self):
         self.authority.authorize_turn(self.turn)
@@ -27,6 +28,17 @@ class PostgresProcedureReferenceHost:
         if self.load_turn(source) != self.turn:
             raise ProcedureReferenceRejected("current ingress differs")
         PostgresConversationJournal(self.engine, self.authority.scope).ensure_running(self.turn)
+
+    def require_scope(self, scope):
+        self.require_current()
+        principals = (self.turn.principal_id,)
+        if self.private_owner_resolver is not None:
+            principals += self.private_owner_resolver.aliases(self.turn)
+        if (scope.tenant_id != self.turn.tenant_id
+                or scope.installation_id != self.turn.installation_id
+                or scope.project_id != self.turn.project_id
+                or scope.principal_id not in principals):
+            raise ProcedureReferenceRejected("procedure scope differs")
 
     def current_save_call_id(self, scope, document_path):
         """Resolve model-known path to one actual current-turn save, never guess an ID."""
@@ -59,10 +71,7 @@ class PostgresProcedureReferenceHost:
         return rows[0].call_id
 
     def load_save(self, scope, call_id):
-        self.require_current()
-        if scope != ProcedureScope(self.turn.tenant_id, self.turn.installation_id,
-                                  self.turn.principal_id, self.turn.project_id):
-            raise ProcedureReferenceRejected("procedure scope differs")
+        self.require_scope(scope)
         e = operational_events
         with self.engine.connect() as connection:
             self.timeline._scope(connection)
@@ -96,11 +105,11 @@ class PostgresProcedureReferenceHost:
         return VerifiedSaveSource(scope, admission, events[-1].event_type, proof)
 
     def permits(self, scope, path):
-        self.require_current()
+        self.require_scope(scope)
         return True  # path is checked by the pinned gateway request binding on actual readback
 
     def source_active(self, scope, message):
-        self.require_current()
+        self.require_scope(scope)
         events = self.timeline.events("conversation:" + message)
         if not events or events[0].event_type != "INGRESS_COMMITTED":
             return False
@@ -115,7 +124,7 @@ class PostgresProcedureReferenceHost:
             return False
 
     def read_current(self, scope, path):
-        self.require_current()
+        self.require_scope(scope)
         original, admission = self._selected
         if admission["action_arguments"].get("path") != path:
             raise ProcedureReferenceRejected("readback path differs")
