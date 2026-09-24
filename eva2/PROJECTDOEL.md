@@ -1,5 +1,9 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaarbesluit 24 september 2026 — gedeelde bediening, privé via Telegram
+
+Iedereen thuis mag via beide bestaande Voice PE-apparaten de reeds toegestane lampen en schakelaars bedienen. Dit voegt geen apparaten of soorten handelingen toe. Privé-inhoud wordt niet via gedeelde spraak ontsloten; privévoortzetting loopt via Telegram. Stemherkenning is geen voorwaarde voor deze gedeelde huisbediening en geeft geen toegang tot privégeheugen.
+
 ## Aanvullend eigenaarbesluit 23 september 2026 — functies eerst
 
 Complete functies bouwen en installeren heeft voorrang. Uitgebreide tests,

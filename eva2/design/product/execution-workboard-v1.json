@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T03:16:25.114843+00:00",
         "deliveries": [
           {
+            "title": "Bestaande lampbediening via beide speakers",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Beide speakeridentiteiten toegelaten tot bestaande118 light aan/uit-combinaties. Diensten gezond.",
+            "remaining": "Fysieke bediening nog open. Geen switches in de huidige lijst; geen privétoegang.",
+            "source": "eva2/evidence/product/household-light-control-installed-20260924.json"
+          },
+          {
             "title": "Wachten op volledig antwoord in HA-proxy hersteld",
             "date": "24 september",
             "state": "installed",
@@ -1829,28 +1837,29 @@
           }
         ],
         "now": {
-          "title": "Geen bouwtaak actief; twee productkeuzes open",
-          "state": "Wacht op eigenaarbesluit",
-          "detail": "Huisbediening is op de actuele installatie voorbereid. Keuze over toegang via gedeelde speakers en privéspraak ontbreekt. Bestaande browserbediening en hervatten worden niet opnieuw gebouwd zonder aangetoond tekort.",
-          "doneWhen": "Na de eigenaarantwoorden kan de passende functionaliteit worden geactiveerd of verder gebouwd. Uitgestelde praktijkproeven en het volledige doel blijven open."
+          "title": "Lampbediening via beide speakers geactiveerd",
+          "state": "Geïnstalleerd",
+          "detail": "Iedereen thuis mag de bestaande toegestane lampen via beide Voice PE’s aan/uit zetten. Kern en werker gezond. Privé-inhoud blijft buiten gedeelde spraak.",
+          "doneWhen": "Toegang geïnstalleerd; fysieke gesproken bediening nog niet beproefd. Geen switches in de huidige lijst."
         },
         "next": {
-          "title": "Bestaande huisbediening via Voice PE beschikbaar maken",
-          "state": "Wacht op eigenaarbesluit",
-          "detail": "Beide speakeridentiteiten hebben nog geen bedieningstoegang. De keuze over privéspraak staat apart open; privégeheugen blijft beschermd."
+          "title": "Dagelijks gesprek en huisbediening gebruiken",
+          "state": "Gebruiksbewijs open",
+          "detail": "Model, HA-stream en lampbediening aangesloten. Snelheid, doorpraten en hoorbare terugmelding blijven te beoordelen."
         },
         "ownerAction": {
-          "title": "Twee gerichte productkeuzes",
+          "title": "Een bestaande lamp bedienen",
           "url": "http://localhost:44712/",
           "linkLabel": "Projectoverzicht",
           "steps": [
-            "Beantwoord in deze taak of iedereen thuis via beide speakers de bestaande lampen en schakelaars mag bedienen.",
-            "Kies of privé-inhoud op telefoon/Telegram blijft, of ook via gedeelde spraak mogelijk moet worden met verificatie van persoon en publiek."
+            "Gebruik het gewone wakeword op een van beide speakers.",
+            "Zeg: Zet [lampnaam] aan, met de naam uit Home Assistant.",
+            "Controleer of de bedoelde lamp reageert. Privégesprekken voer je via Telegram."
           ],
-          "expected": "Deze keuzes bepalen ontbrekende functionaliteit; bestaande acceptaties en privégrenzen blijven behouden."
+          "expected": "Bestaande toegestane lamp schakelt; fysieke werking nog niet bewezen. Geen nieuwe schakelaars toegevoegd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T09:58:00.114223+00:00"
+        "reviewedAt": "2026-09-24T11:06:53.211414+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11535,7 +11544,7 @@
             "CO-005"
           ],
           "doneWhen": "Later terugkomen op onderwerp en correctie bij geverifieerde persoon; geen privécontext naar dochter, onbekende spreker of onbevoegde toehoorder.",
-          "preserve": "Geaccepteerd geheugen, privé-kanaalcontinuïteit en zoeken naar oudere privé-uitwisselingen zijn aangesloten. Echte gebruiks-/grensproeven blijven open. Gedeelde speakers herkennen geen persoon; geen privécontext bij onbekende spreker.",
+          "preserve": "Geaccepteerd geheugen en privécontinuïteit behouden. Eigenaar kiest privévoortzetting via Telegram; geen privé-inhoud op gedeelde speakers. Gedeelde spraak vereist geen persoonlijke verificatie voor toegestane lamp-/schakelaarbediening. Echte continuïteits-/grensproeven blijven open.",
           "planningEffortHours": "4–12"
         },
         {
@@ -11562,7 +11571,7 @@
             "VB-002"
           ],
           "doneWhen": "Passend initiatief met werkelijk resultaat, terecht stil blijven en bestaande huisfuncties behouden; gezin beoordeelt eigenheid, plezier en hinder.",
-          "preserve": "Privé-initiatief en gedeelde huisbijdragen zijn aangesloten en geïnstalleerd. Gedeelde bijdrage gebruikt één recente spraaksessie, rustmomenten en daglimiet. Hoorbaarheid, nut, hinder en IN-02 blijven open; huisbediening wacht nog op de eigenaarkeuze.",
+          "preserve": "Initiatief behouden. Beide speakers mogen bestaande118 light aan/uit-combinaties gebruiken. Geen switches in huidige lijst. Hoorbare bediening, nut, hinder en IN-02 blijven open.",
           "planningEffortHours": "4–12"
         },
         {
@@ -11622,7 +11631,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Gedeelde huisbediening op actuele installatie voorbereiden; activeren na expliciete keuze over toegang voor beide speakers. Persoons-/publiekskeuze voor privéspraak staat apart open. Zes modelproeven zijn afgerond, contactmodel en HA-streamcorrectie geïnstalleerd.",
+      "nextAction": "Gedeelde lampbediening geïnstalleerd; privé-inhoud buiten gedeelde spraak. Dagelijkse spraak-/overlapproef en overige functies blijven open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
@@ -11634,7 +11643,11 @@
         "Geen gefingeerde acceptatie, benchmarkwinst of automatische heropening van geaccepteerd werk."
       ],
       "ownerPriority20260923": "Eerst de afgesproken functies werkend en geïnstalleerd. Verhuizing, uitgebreide herstelvoorzieningen en aanvullende rechtencontroles naar de afronding. Bestaande bescherming en gegevens behouden; per wijziging alleen benodigde gerichte controles, brede integratiecontrole op het functionele geheel.",
-      "ownerPriority20260924": "Afgesproken productfuncties daadwerkelijk afronden. Geen uitwijking naar technische details of herstel/verhuizing zolang dagelijks gebruik nog ontbreekt. Een wachtende fysieke proef blokkeert alleen afhankelijk werk."
+      "ownerPriority20260924": "Afgesproken productfuncties daadwerkelijk afronden. Geen uitwijking naar technische details of herstel/verhuizing zolang dagelijks gebruik nog ontbreekt. Een wachtende fysieke proef blokkeert alleen afhankelijk werk.",
+      "ownerDecision20260924SharedVoice": {
+        "householdControls": "Everyone at home may use existing light/switch controls through both registered speakers.",
+        "privateContinuation": "Telegram; no private content through shared voice."
+      }
     },
     "dashboardClarityCorrection20260922": {
       "ownerFeedback": "Bewezen basis zegt niet of Eva2 als vaste huisgenoot bruikbaar is; toon concrete opgeleverde resultaten en open werk.",

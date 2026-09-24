@@ -1,6 +1,6 @@
 {
   "checkedAt": "2026-09-24T09:56:44.688873+00:00",
-  "status": "prepared_owner_decision_required",
+  "status": "superseded_by_installed_core_only_configuration",
   "requirement": "Existing permitted household light/switch controls available through shared Voice PE.",
   "findings": {
     "homeAssistantConfigured": true,
@@ -15,9 +15,10 @@
   "preparedChange": "Add only the two existing household-device principal hashes to the existing effect allowlist. Existing entity/service pairs, private memory, credentials and firmware unchanged.",
   "candidateCompose": "/home/administrator/project/.eva2-artifacts/household-light-control-current-20260924/candidate.compose.private.json",
   "baselineCompose": "/home/administrator/project/.eva2-artifacts/household-light-control-current-20260924/baseline.compose.private.json",
-  "notInstalled": true,
-  "decisionRequired": "Whether anyone speaking to the shared speakers may operate the existing permitted lights/switches.",
+  "notInstalled": false,
+  "decisionRequired": null,
   "checks": "Current authority enabled and unexpired; added hashes exactly match two current household-device principals; only same allowlist key changed in core and worker, retaining current core owner binding; docker compose config valid. No device action, model call or installation.",
-  "installationNote": "Rebase candidate on current active compose and revalidate voice policy before installation after owner choice.",
-  "rebasedOnImage": "eva2-contact-luna6:20260924"
+  "installationNote": "Owner approved. Final delta core-only; worker retained baseline after incomplete-provider failure.",
+  "rebasedOnImage": "eva2-contact-luna6:20260924",
+  "installationReceipt": "eva2/evidence/product/household-light-control-installed-20260924.json"
 }

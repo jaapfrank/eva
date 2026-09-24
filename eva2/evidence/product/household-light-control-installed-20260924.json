@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-24",
+  "installed": true,
+  "configurationOnly": true,
+  "image": "eva2-contact-luna6:20260924",
+  "ownerDecision": "Everyone at home may use existing light/switch controls through both speakers. Private content stays on Telegram, outside shared speech.",
+  "scope": "Core allowlist adds exactly both registered household-device principals. Prior owner and 118 existing light turn_on/turn_off pairs preserved. No switches in the existing list.",
+  "checks": ["Configured core startup passed", "Independent review passed corrected core-only delta", "Core and worker healthy", "Both speaker principals verified in running core environment", "Owner dashboard and voice readiness HTTP200"],
+  "installationCorrection": "Adding the allowlist to the worker activated an incomplete HA provider. Worker restored exactly to baseline and confirmed healthy; authorized core access retained.",
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/household-light-control-current-20260924/baseline.compose.private.json",
+  "additionalModelCalls": 0,
+  "physicalDeviceActions": 0,
+  "limitations": ["Physical spoken control not tested", "No new entities or service types", "No speaker recognition or private memory access", "Owner acceptance remains open"]
+}
