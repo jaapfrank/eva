@@ -1,0 +1,37 @@
+{
+  "checkedAt": "2026-09-24T02:58:23.179037+00:00",
+  "sourceCommit": "2a5c1ad18ce458915c8173d2e3958f762c72720c",
+  "image": "eva2-conversation-role-context:20260924",
+  "status": "installed_start_checked",
+  "change": "Recognize actual Eva and user display roles when preserving the latest exchange during input budget trimming.",
+  "scope": "Shared conversation model adapter; no channel-specific response or new model.",
+  "checks": [
+    "Python syntax",
+    "configured runtime application startup",
+    "core and worker healthy",
+    "active delegated work count zero before cutover"
+  ],
+  "limits": [
+    "No model or user trial performed",
+    "No greeting latency improvement claimed",
+    "Full conversation and voice delivery remains incomplete"
+  ],
+  "rollback": "/home/administrator/project/.eva2-artifacts/conversation-role-context-20260924/baseline.compose.private.json",
+  "newModelCalls": 0,
+  "existingGreetingEvidence": {
+    "source": "read-only existing conversation journal; greeting texts selected by exact match without outputting conversation content",
+    "latestSamplesDate": "2026-09-23",
+    "firstContentMs": [
+      2893,
+      2955
+    ],
+    "completedMs": [
+      3448,
+      3410
+    ],
+    "modelAttemptsPerGreeting": 1,
+    "toolCallsPerGreeting": 0,
+    "inputTokensPerGreeting": 5577
+  },
+  "voiceInspection": "LiveKit RunContext.update already releases foreground tool control; no additional serial background-work blocker verified."
+}

@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T02:55:48.751066+00:00",
+        "checkedAt": "2026-09-24T02:58:23.179037+00:00",
         "deliveries": [
+          {
+            "title": "Gesprekcontext bij een vervolgvraag behouden",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Echte rollabels herkend bij inkorten van lange gesprekscontext.",
+            "remaining": "Geen praktijkproef of gemeten snelheidswinst. Gesprek en stem als geheel blijven open.",
+            "source": "eva2/evidence/product/conversation-role-context-installed-20260924.json"
+          },
           {
             "title": "Geheugen en gateway in dezelfde herstelactie",
             "date": "24 september",
@@ -1781,15 +1789,15 @@
           }
         ],
         "now": {
-          "title": "Vervolgvraag houdt de eerdere gesprekcontext",
-          "state": "In uitvoering",
-          "detail": "Gedeelde contextinkorting herkent echte rollen Eva/Jaap nog niet. Daardoor kan bij invoergrenzen een voorstel verdwijnen waar de gebruiker op terugkomt. Herstel in bestaande modeladapter; geen nieuw gesprekssysteem.",
-          "doneWhen": "De echte rollabels behouden de laatste uitwisseling en vervolgvraag bij contextinkorting; bron geïnstalleerd met startcontrole. Gebruiksproef later; snelheid blijft open."
+          "title": "Vervolgvraag behoudt laatste gesprekuitwisseling",
+          "state": "Correctie geïnstalleerd",
+          "detail": "Gedeelde contextinkorting herkent nu echte rollen Eva/Jaap en bewaart de laatste uitwisseling plus vervolgvraag. Kern en werker gezond; geen nieuwe modelproef.",
+          "doneWhen": "Bron geïnstalleerd en start gecontroleerd. Gebruiksproef later. Snelle begroeting en volledige kanaalgelijkheid nog niet afgerond."
         },
         "next": {
-          "title": "Snelle begroeting en doorpraten via de gedeelde kern",
-          "state": "Volgende bouwopdracht; nog niet gestart",
-          "detail": "Gebruik bestaande timing en code om de resterende wachttijd of blokkering gericht weg te nemen. Geen herbouw of herhaling van verloren modelproeven. Fysieke Voice PE-diagnose blijft afzonderlijk uitgesteld."
+          "title": "Snelle ontvangst via de gedeelde gespreksroute",
+          "state": "Nog open; volgende wijziging niet gestart",
+          "detail": "Bestaande begroetingen kosten ongeveer drie seconden modeltijd. Geen herhaling van de al verloren voorbereiding-, redeneer- en catalogusproeven. Fysieke Voice PE-diagnose blijft uitgesteld."
         },
         "ownerAction": {
           "title": "Kies wanneer de Voice PE-diagnose kan",
@@ -1802,7 +1810,7 @@
           "expected": "Een vastgelegde falende wakeword-overgang; geen herhaling van een blinde firmwareproef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T02:55:48.751066+00:00"
+        "reviewedAt": "2026-09-24T02:58:23.179037+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11574,7 +11582,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Contextbehoud bij vervolgvraag in gedeelde route herstellen en installeren; daarna resterende gespreksfuncties. Geen herstel/verhuizing.",
+      "nextAction": "Bestaande begroetingen kosten ongeveer drie seconden modeltijd. Geen herhaling van de al verloren voorbereiding-, redeneer- en catalogusproeven. Fysieke Voice PE-diagnose blijft uitgesteld.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
