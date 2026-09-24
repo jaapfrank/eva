@@ -1012,11 +1012,11 @@
         "checkedAt": "2026-09-24T18:41:08.800542+00:00",
         "deliveries": [
           {
-            "title": "Telegram-kern verwerkt tussenvraag naast wachtend bericht",
+            "title": "Geïnstalleerde Telegram-kern op gelijktijdigheid gecontroleerd",
             "date": "24 september",
-            "state": "tested",
+            "state": "installed",
             "result": "Nieuwe proef met echte database/runtime: tweede vraag antwoordt en wordt opgeslagen terwijl de eerste modelaanroep wacht. Bestaande gelijktijdige verwerking behouden; geen nieuwe productcode nodig.",
-            "remaining": "Gecontroleerd model; echte Telegram-reactietijd en jouw gebruikservaring blijven open.6 controles geslaagd, onafhankelijk beoordeeld.",
+            "remaining": "Geen nieuwe installatie nodig: bestaande geïnstalleerde verwerking gecontroleerd met een gestuurd model. Echte Telegram-reactietijd en jouw gebruikservaring blijven open.6 controles geslaagd, onafhankelijk beoordeeld.",
             "source": "eva2/evidence/product/telegram-runtime-overlap-20260924.json"
           },
           {
