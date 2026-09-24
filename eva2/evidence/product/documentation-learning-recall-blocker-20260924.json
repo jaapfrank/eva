@@ -1,0 +1,14 @@
+{
+  "observedAt": "2026-09-24T19:10:12.849852+00:00",
+  "status": "cause_confirmed_fix_pending",
+  "trial": "FLUXNOTE/1",
+  "conversationOutcome": "EvaTextStreamError/v1 after 2.137 seconds; no work ID returned",
+  "diagnostic": {
+    "method": "one direct recall request through installed core settings; original synthetic prompt; no conversation model",
+    "httpStatus": 400,
+    "reportedQueryTokens": 676,
+    "maximumQueryTokens": 500
+  },
+  "privateArtifact": "/home/administrator/project/.eva2-artifacts/documentation-learning-20260924/recall-diagnostic.private.txt",
+  "next": "Bound recall query without altering the complete user task; preserve scoped memory lookup."
+}

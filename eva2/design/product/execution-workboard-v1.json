@@ -1009,7 +1009,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T18:58:20.822555+00:00",
+        "checkedAt": "2026-09-24T19:10:12.849852+00:00",
         "deliveries": [
           {
             "title": "Bijsturen toont wat werkelijk is gestopt en hervat",
@@ -2159,10 +2159,10 @@
           }
         ],
         "now": {
-          "title": "Browserproef wacht op gedeeld tabblad of gekozen browser",
-          "state": "Alleen browserproef wacht op Jaap",
-          "detail": "Persoonlijke Chrome: geen tabblad gedeeld. Eigen browser: jij hebt bediening, browser klaar en MCP uit. Geen bediening overgenomen of nieuwe browserinfrastructuur gemaakt.",
-          "doneWhen": "Na tabselectie de echte opdracht/overnameproef uitvoeren; overige functies kunnen onafhankelijk verder."
+          "title": "Gespreksfout bij ophalen geheugen oplossen",
+          "state": "Oorzaak vastgesteld; correctie nog niet gebouwd",
+          "detail": "Oorzaak bevestigd met één rechtstreekse geheugenopvraag, zonder gespreksmodel: volledige opdracht telt676 tokens; geïnstalleerde Hindsight weigert boven500 (HTTP400). Geheugenzoekvraag begrenzen zonder de originele opdracht te verliezen. Geen herhaling van de leeropdracht.",
+          "doneWhen": "Concrete oorzaak vastgesteld en noodzakelijke correctie geïnstalleerd; daarna de leeropdracht gericht voortzetten."
         },
         "next": {
           "title": "Leren uit documentatie en meerdaags werk afronden",
@@ -2181,7 +2181,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T18:58:20.822555+00:00"
+        "reviewedAt": "2026-09-24T19:10:12.849852+00:00"
       }
     },
     "pendingTechnicalReview": {
