@@ -1035,3 +1035,15 @@ def test_runtime_background_switch_rejects_non_boolean_constructor_values(invali
         PostgresHindsightMemoryRuntime(
             None, None, None, None, None, None, None, background_work_enabled=invalid,
         )
+
+
+@pytest.mark.parametrize("model", [None, "gpt-6-luna", "gpt-5.6-luna", "gpt-6-astra"])
+def test_contact_none_effort_is_model_specific(model):
+    kwargs = dict(conversation_contact_model=model, conversation_contact_reasoning_effort="none")
+    if model == "gpt-6-luna":
+        settings = RuntimeSettings("unused", "http://memory", **kwargs)
+        assert settings.conversation_contact_reasoning_effort == "none"
+        assert settings.conversation_reasoning_effort == "medium"
+    else:
+        with pytest.raises(ValueError, match="contact reasoning effort"):
+            RuntimeSettings("unused", "http://memory", **kwargs)

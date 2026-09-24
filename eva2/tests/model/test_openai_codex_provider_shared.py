@@ -290,8 +290,8 @@ async def _drain(events: Any) -> None:
         pass
 
 
-@pytest.mark.parametrize("model_name", ["gpt-6-astra", "gpt-5.4-mini"])
-def test_hosted_search_defers_external_action_in_one_request(model_name: str) -> None:
+@pytest.mark.parametrize("model_name, effort", [("gpt-6-astra", "medium"), ("gpt-5.4-mini", "medium"), ("gpt-6-luna", "none")])
+def test_hosted_search_defers_external_action_in_one_request(model_name: str, effort: str) -> None:
     """Exercise the SDK wire, not a FunctionModel's permissive tool profile."""
     requests: list[dict[str, Any]] = []
     definition = ToolDefinition(
@@ -311,7 +311,7 @@ def test_hosted_search_defers_external_action_in_one_request(model_name: str) ->
         body = json.loads(request.content)
         requests.append(body)
         assert body["model"] == model_name
-        assert body["reasoning"]["effort"] == "medium"
+        assert body["reasoning"]["effort"] == effort
         assert {"type": "tool_search"} in body["tools"]
         assert not any(tool.get("name") == "search_tools" for tool in body["tools"])
         tool = next(
@@ -377,7 +377,7 @@ def test_hosted_search_defers_external_action_in_one_request(model_name: str) ->
     async def run() -> None:
         provider = OpenAICodexProvider(
             OpenAICodexProviderSettings(
-                endpoint="https://codex.test/responses", model_name=model_name
+                endpoint="https://codex.test/responses", model_name=model_name, reasoning_effort=effort
             ),
             credential_loader=lambda: ("access-a", "account-a"),
             network_transport=httpx2.MockTransport(respond),
@@ -569,3 +569,9 @@ def test_sanitization_preserves_existing_provider_category() -> None:
     error = CodexProviderError("deadline")
 
     assert _sanitized(error) is error
+
+
+@pytest.mark.parametrize("model_name", ["gpt-5.6-luna", "gpt-6-astra", "gpt-6-luna-unknown"])
+def test_none_effort_rejects_unapproved_provider_models(model_name):
+    with pytest.raises(ValueError, match="reasoning effort"):
+        OpenAICodexProviderSettings(endpoint="https://codex.test/responses", model_name=model_name, reasoning_effort="none")

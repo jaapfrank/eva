@@ -1349,3 +1349,14 @@ def test_contact_catalog_preserves_identity_memory_recent_context(tmp_path):
         "them. Their full schemas are available through discovery."
     )
     assert captures[1] == captures[0] + guidance
+
+
+@pytest.mark.parametrize("model", ["gpt-6-luna", "gpt-5.6-luna", "gpt-6-astra"])
+def test_none_effort_is_opt_in_for_luna_only(model):
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    if model == "gpt-6-luna":
+        adapter = PydanticConversationModel(auth_file=Path("unused"), model=model, reasoning_effort="none")
+        assert adapter._reasoning_effort == "none"
+    else:
+        with pytest.raises(ValueError, match="reasoning effort"):
+            PydanticConversationModel(auth_file=Path("unused"), model=model, reasoning_effort="none")

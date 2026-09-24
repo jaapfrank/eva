@@ -572,7 +572,7 @@ class PydanticConversationModel:
         endpoint: str = _CODEX_SUBSCRIPTION_ENDPOINT,
         timeout_seconds: float = 60.0,
         research_timeout_seconds: float = 90.0,
-        reasoning_effort: Literal["low", "medium", "high"] = "medium",
+        reasoning_effort: Literal["none", "low", "medium", "high"] = "medium",
         resource_budget: RuntimeResourceBudget | None = None,
         conversation_tools: tuple[ConversationToolDescriptor, ...] = (),
         model_backend: Model | None = None,
@@ -586,7 +586,8 @@ class PydanticConversationModel:
             raise ValueError("conversation timeout must be 1..120 seconds")
         if not 10 <= research_timeout_seconds <= 180:
             raise ValueError("research timeout must be 10..180 seconds")
-        if reasoning_effort not in {"low", "medium", "high"}:
+        if (reasoning_effort not in {"low", "medium", "high"}
+                and not (reasoning_effort == "none" and model == "gpt-6-luna")):
             raise ValueError("conversation reasoning effort is invalid")
         external_names = [descriptor.name for descriptor in conversation_tools]
         if (
