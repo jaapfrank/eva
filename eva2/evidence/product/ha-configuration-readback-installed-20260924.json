@@ -1,0 +1,119 @@
+{
+  "checkedAt": "2026-09-24T17:12:23.887896+00:00",
+  "sourceCommit": "80c6d359ceb632f919647eaa76cd96e524db21cb",
+  "change": "Digital-worker completion requires full subsequent readback for each successful automation configuration write, through generic REST or existing full configuration batch.",
+  "tests": {
+    "result": "44 passed",
+    "durationSeconds": 2.32,
+    "kind": "controlled application tests"
+  },
+  "independentReview": {
+    "source": "coordinator reviewed agent changes; batch compatibility corrected before install",
+    "actualTask": "independent agent compared durable dispatch/verification observations, both configurations, final report and off status; passed"
+  },
+  "installation": {
+    "checkedAt": "2026-09-24T17:03:52.102767+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:d99a706afd46204dd6effde05d5b226e393a76e9757ae330829e9888bb262d1c",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_runner.py": "2f2a30edcc2276f652b12e09396905d6eff1314528b436c53bffda3c99eaba00"
+        }
+      },
+      "worker": {
+        "image": "sha256:c398324f3429c4ccfea1f461ed67d7b2253079a12acbfc67a779331d1277c16b",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_runner.py": "2f2a30edcc2276f652b12e09396905d6eff1314528b436c53bffda3c99eaba00"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/ha-configuration-readback-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "liveChecks": {
+    "ownerWebsiteHttp": 200,
+    "voiceReadyHttp": 200,
+    "fullCoreWorkerReleaseEqual": true
+  },
+  "trial": {
+    "temporaryAutomationId": "eva2_delivery_20260924_165828",
+    "originalWorkId": "work:eva-chat:f6f80dea-bc7f-5bd6-bc5b-89431b9ef5cd",
+    "resumedWorkId": "work:eva-resume:3b20f883-ac32-5f51-a770-aca01ebf5599",
+    "initialAttempt": {
+      "state": "failed",
+      "errorCode": "budget_exceeded",
+      "usage": {
+        "schema_version": 1,
+        "contract": "DelegatedWorkUsage/v1",
+        "measurement": "partial",
+        "completed_model_responses": 7,
+        "tool_calls": 6,
+        "input_tokens": 71665,
+        "output_tokens": 748,
+        "total_tokens": 72413,
+        "cost_usd_micros": null
+      }
+    },
+    "resumedAttempt": {
+      "state": "succeeded",
+      "usage": {
+        "schema_version": 1,
+        "contract": "DelegatedWorkUsage/v1",
+        "measurement": "partial",
+        "completed_model_responses": 2,
+        "tool_calls": 1,
+        "input_tokens": 26770,
+        "output_tokens": 203,
+        "total_tokens": 26973,
+        "cost_usd_micros": null
+      },
+      "outputSha256": "68f53069d11a49677eefbe5f723c7759b6c7662bf1c5a3d66233f839ecb3f20d"
+    },
+    "foreground": {
+      "receiptSeconds": 15.817,
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 9641,
+        "output_tokens": 282,
+        "model_attempts": 1
+      },
+      "timing": {
+        "completed_ms": 11467,
+        "first_content_ms": null
+      }
+    },
+    "verifiedEffects": [
+      "Initial absent configuration confirmed404.",
+      "Eva created initial_state false, event-only trigger, always-false condition and local-variable-only action.",
+      "First configuration readback matched requested first version.",
+      "Second write changed only description; full readback confirmed remaining normalized fields unchanged.",
+      "After budget failure, resume retained original execution receipts and made no repeated writes.",
+      "One extra inventory read confirmed off state; final report matched observed configurations."
+    ],
+    "cleanup": {
+      "deletedOnlyTrialId": "eva2_delivery_20260924_165828",
+      "deleteHttpStatus": 200,
+      "afterHttpStatus": 404
+    },
+    "runtimeUsageTotals": {
+      "modelResponsesOrAttempts": 10,
+      "inputTokens": 108076,
+      "outputTokens": 1233,
+      "toolCalls": 8,
+      "costUnknown": true
+    },
+    "noUnchangedNewTrial": true
+  },
+  "limitations": [
+    "First attempt failed at budget boundary and required coordinator-triggered resume. Automatic complete delivery in one attempt is not established.",
+    "Receipt latency15.817 seconds remains too slow.",
+    "Synthetic harmless automation only; not broad home-control acceptance or physical action proof.",
+    "Completion guard proves readback occurrence, not semantic equality; this trial semantic equality was independently checked.",
+    "Guard applies digital worker and automation configuration writes, not every HA endpoint or direct foreground execution.",
+    "Final task report described object left in place; coordinator subsequently removed only that test object."
+  ],
+  "next": "Preserve and return verified completed task results at budget boundary without repeating effects or silently increasing grant.",
+  "ownerAcceptance": false
+}

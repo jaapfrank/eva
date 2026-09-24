@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T16:55:47.830300+00:00",
+        "checkedAt": "2026-09-24T17:12:23.887896+00:00",
         "deliveries": [
+          {
+            "title": "Automatisering gemaakt, aangepast en gecontroleerd — na hervatten",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Eva maakte zelf een tijdelijke uitgeschakelde automatisering, wijzigde alleen de beschrijving en las beide versies terug. Hervatting leverde eindrapport zonder herhaalde schrijfacties. Proefobject opgeruimd.",
+            "remaining": "Eerste poging liep tegen budgetgrens; handmatige hervatting was nodig. Ontvangst15,8s blijft te traag. Geen algemene huisacceptatie. Nieuwe terugleescontrole in kern/werker geïnstalleerd.",
+            "source": "eva2/evidence/product/ha-configuration-readback-installed-20260924.json"
+          },
           {
             "title": "Geheugen en taakcontext tegelijk voorbereiden",
             "date": "24 september",
@@ -2087,15 +2095,15 @@
           }
         ],
         "now": {
-          "title": "Snelle begroeting nog niet gehaald",
-          "state": "Echte proef onvoldoende",
-          "detail": "Hallo na5,2s; model eerste tekst3,525s. Eén aanvraag8.257 input/10outputtokens, geen tools. Geen ongewijzigde herproef.",
-          "doneWhen": "Parallelle voorbereiding geïnstalleerd, maar geen gemeten snelheidswinst. Geen acceptatie of afronding van gesprek/stem."
+          "title": "HA-proef afgerond na hervatten",
+          "state": "Geïnstalleerd en functioneel beproefd",
+          "detail": "Aanmaken, wijzigen en teruglezen gelukt; alleen tijdelijke proefautomatisering gebruikt en verwijderd. Eerste poging mislukte op budget; hervatting rondde af zonder herhaalde wijzigingen.",
+          "doneWhen": "Deze concrete proef is afgerond. Betrouwbare aflevering binnen één poging en snelle ontvangst blijven open."
         },
         "next": {
-          "title": "Algemene HA-automatiseringen afmaken",
+          "title": "Uitgevoerd werk niet zonder eindrapport laten stranden",
           "state": "Nog niet gestart",
-          "detail": "Voortbouwen op geïnstalleerde algemene API: aanmaken en wijzigen via Eva afronden. Geen nieuwe lampenscripts; snelle ontvangst blijft afzonderlijk open."
+          "detail": "Budgetgrens bij taakafronding aanpakken met behoud van werkelijk resultaat en verbruik; geen herhaalde effecten of stilzwijgende budgetverhoging."
         },
         "ownerAction": {
           "title": "Een eerdere speakertaak gericht stoppen",
@@ -2109,7 +2117,7 @@
           "expected": "Eva vindt de eerdere opdracht via dezelfde speaker en stopt alleen de gekozen taak. Deze fysieke proef is nog niet door jou bevestigd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T16:55:47.830300+00:00"
+        "reviewedAt": "2026-09-24T17:12:23.887896+00:00"
       }
     },
     "pendingTechnicalReview": {

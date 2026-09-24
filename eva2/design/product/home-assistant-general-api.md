@@ -62,3 +62,26 @@ configurations and saved a supported recommendation within the existing budget.
 This verifies one read-only configuration-analysis workflow, not physical effects,
 automation editing or broad home-control acceptance. See
 `eva2/evidence/product/full-ha-configurations-installed-20260924.json`.
+
+
+## Background configuration readback — 24 September 2026
+
+A successful REST POST/PUT/PATCH to an automation configuration resource now
+leaves a readback requirement in the digital worker. A later complete GET of
+the same resource, or the existing complete configuration batch for that exact
+automation ID, satisfies it. Another write requires another read. Partial
+responses and a saved report do not replace that readback.
+
+This verifies readback occurred; it does not prove semantic equality, physical
+execution, or other Home Assistant endpoint protocols. The model must still
+compare requested fields with the returned configuration and report limitations.
+The existing generic API and all device-independent planning remain unchanged.
+
+The installed 24 September trial created an inert, initially disabled automation,
+read it back, changed only its description, and read it back again. The first
+attempt reached its budget boundary before delivering a result. One explicit
+resume reused all write receipts, performed one inventory read, and returned a
+verified-against-evidence report. The coordinator removed the temporary object
+afterward. This is a successful resumed workflow, not single-attempt reliability
+or owner acceptance of broad household automation behavior. See
+`eva2/evidence/product/ha-configuration-readback-installed-20260924.json`.
