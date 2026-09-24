@@ -108,9 +108,12 @@ class PostgresDelegatedWorkActions:
                         "type": "object", "additionalProperties": False,
                         "properties": {("task" if operation == "schedule_digital" else "work_id"):
                             {"type": "string", "minLength": 1, "maxLength": 8192 if operation == "schedule_digital" else 240},
-                            "run_at": {"type": "string", "description": "Exact UTC start time, YYYY-MM-DDTHH:MM:SSZ"},
-                            **({"after_work_id": {"type": "string", "maxLength": 240},
-                                "after_schedule_id": {"type": "string", "maxLength": 240}}
+                            "run_at": {"type": ["string", "null"] if operation == "schedule_digital" else "string",
+                                "description": "Exact UTC start time, YYYY-MM-DDTHH:MM:SSZ. For a new dependent step, null starts when its predecessor is ready."},
+                            **({"after_work_id": {"type": ["string", "null"], "maxLength": 240,
+                                    "description": "Existing work predecessor, or null. Choose at most one predecessor."},
+                                "after_schedule_id": {"type": ["string", "null"], "maxLength": 240,
+                                    "description": "Existing scheduled predecessor, or null. Choose at most one predecessor."}}
                                if operation == "schedule_digital" else {})},
                         "required": ["task"] if operation == "schedule_digital" else ["work_id", "run_at"]
                     } if operation in {"schedule_digital", "schedule_resume"} else {
@@ -342,9 +345,16 @@ class PostgresDelegatedWorkActions:
             raise ConversationConflict("delegated action changed after admission")
         if events[-1].event_type == "DELEGATED_ACTION_COMPLETED":
             return ConversationActionReceipt(call, events[-1].payload["data"]["output"])
+        service_argument = None if key is None else call.arguments[key]
+        if operation == "schedule_digital" and isinstance(service_argument, dict):
+            # Strict tools encode unused optional fields as null. Preserve the
+            # original durable call; normalize only the scheduler's input.
+            service_argument = {name: value for name, value in service_argument.items()
+                                if value is not None or name not in {
+                                    "run_at", "after_work_id", "after_schedule_id"}}
         result = self._service.execute(
             operation, turn, request_key=thread_id,
-            **({} if key is None else {key: call.arguments[key]}),
+            **({} if key is None else {key: service_argument}),
             **({"feedback": call.arguments["feedback"]} if operation == "initiative_feedback" else {}),
             **({"prior_work_id": call.arguments["prior_work_id"]} if call.arguments.get("prior_work_id") is not None else {}),
         )
