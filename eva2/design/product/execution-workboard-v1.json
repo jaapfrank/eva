@@ -2239,15 +2239,15 @@
           }
         ],
         "now": {
-          "title": "Installer-doelvoorbereiding aansluiten",
-          "state": "Gedeelde aanroep geïnstalleerd; doelomgeving nog open",
-          "detail": "Coördinator heeft de bestaande herstelworkflow aanroepbaar gemaakt vanuit vertrouwde installerinstellingen.5 gerichte controles, onafhankelijke review en installatie geslaagd. Uitvoerder heeft broninspectie afgerond; geen uitvoerder bouwt nu. Volgende koppeling: bestaande release- en toegangsgegevens leveren aan echte doelvoorbereiding. Geen complete installatieclaim.",
+          "title": "Automatische doelvoorbereiding bouwen",
+          "state": "Invoerkoppeling geïnstalleerd; services nog niet aangemaakt",
+          "detail": "Bron0db7a485 koppelt bevestigde installerkeuzes aan bestaande releasecontrole en actuele secretopslag.8 gerichte controles, onafhankelijke review en installatie/import geslaagd. Uitvoerderopdracht afgerond; coördinator vervolgt de echte resourcevoorbereiding. De normale installer is nog niet klaar.",
           "doneWhen": "Volledige reservekopie via de wizard terugzetten en echte herstelde kern starten met behouden gegevens. Gebruikersacceptatie blijft apart."
         },
         "next": {
-          "title": "Release en toegang aan doelvoorbereiding binden",
+          "title": "Duurzame doelservices automatisch voorbereiden",
           "state": "Nog niet geïmplementeerd",
-          "detail": "Bestaande bevestigde installerkeuzes en releasegegevens gebruiken om duurzame opslag, databases en gestopte doelservices te maken. Geen synthetische proefautoriteit of handgeschreven configuratie als productoplossing."
+          "detail": "Werkelijke opslag/databases/netwerk en gestopte runtimes maken uit bestaande installerkeuzes en releasegegevens, daarna dezelfde herstelroute gebruiken. Geen handgeschreven doelconfiguratie als eindoplossing."
         },
         "ownerAction": {
           "title": "Kies browser voor de echte overnameproef",
@@ -2261,7 +2261,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T22:29:59.297641+00:00"
+        "reviewedAt": "2026-09-24T22:34:50.178918+00:00"
       }
     },
     "pendingTechnicalReview": {

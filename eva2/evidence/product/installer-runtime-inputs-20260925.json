@@ -1,0 +1,18 @@
+{
+  "sourceCommit": "0db7a485",
+  "scope": "Installer-owned release/secret input binding for forthcoming target provisioning",
+  "installed": true,
+  "installedReceipt": "/home/administrator/project/.eva2-artifacts/installer-runtime-inputs-20260925/installation-receipt.json",
+  "tests": 8,
+  "independentReview": "Coordinator reviewed exact module/tests: existing sealed release and canonical hashes, copied input metadata, actual secret generation binding, opaque bytes unchanged, private repr excluded.",
+  "installedImportPassed": true,
+  "targetProvisioned": false,
+  "productionChanged": false,
+  "modelCalls": 0,
+  "next": "Create persistent target services from confirmed installer choices, exact release material and existing private runtime input materializers; connect to configured_restore_workflow.",
+  "limitations": [
+    "No target resource creation or owner UI wired yet.",
+    "Caller must rebuild current plan and provide its trusted expected hash.",
+    "Access-only lease is not refresh authority."
+  ]
+}
