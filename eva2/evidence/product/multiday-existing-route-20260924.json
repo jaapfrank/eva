@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-09-24T02:22:41.757814+00:00",
+  "kind": "targeted_source_and_installation_check",
+  "sourceCommit": "30f87fe4041ba2eaac32ca8c791344054db4d890",
+  "files": [
+    {
+      "path": "eva2/src/eva/adapters/postgres/scheduled_work.py",
+      "liveEqualsSource": true,
+      "sha256": "c165e868a4407e75f9d7516cde034d4610b8af2efd0814f9138a7dc58e437c60"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/background_work_progress.py",
+      "liveEqualsSource": true,
+      "sha256": "d1a5b28811d835e0cc6fb49bfa48841a93b6aff647e7ddeff33cd605517a2684"
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+      "liveEqualsSource": true,
+      "sha256": "c1ce1927e1d5ea508f67408c5977d7d6b9f9525e98a54fc96fd2710da20506c8"
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_work_owner_service.py",
+      "liveEqualsSource": true,
+      "sha256": "4b507b41d0b13a46b6e5512798697a7dbdf8f9e00395da5e1db453ad2b29bcfe"
+    }
+  ],
+  "existingBehavior": [
+    "ScheduledOwnerWork.schedule records start time and optional predecessor using existing journals",
+    "run_once waits for predecessor and passes its stored result into the next admitted task",
+    "Stop-chain reservations stop dependent appointments without starting new work",
+    "Digital runner reloads saved progress and continues within existing attempt budgets",
+    "Owner service provides explicit resumption rather than retrying ambiguous effects automatically"
+  ],
+  "limits": [
+    "Source and installation equality are not execution proof",
+    "No clock-wait, model call, restart, or multiday trial performed",
+    "Full autonomous project success remains open"
+  ],
+  "decision": "Preserve existing planning and resumption. Do not add another scheduler. Next missing implementation: controlled application of a prepared component improvement."
+}
