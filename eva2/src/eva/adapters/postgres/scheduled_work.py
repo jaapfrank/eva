@@ -76,7 +76,9 @@ class ScheduledOwnerWork:
         due = parse_utc_timestamp(run_at)
         now = self.service.now()
         thread_id = self.prefix + hashlib.sha256(request_key.encode()).hexdigest()
-        data = {"source": asdict(turn), "operation": "resume" if resume else "digital",
+        from eva.adapters.postgres.scheduled_work_failure import schedule_return_binding
+        binding = schedule_return_binding(self.service, turn)
+        data = {"return_binding": binding, "source": asdict(turn), "operation": "resume" if resume else "digital",
                 key: request[key], "run_at": run_at,
                 **{name: request[name] for name in dependency_keys},
                 **({"wait_for_stop": True} if wait_for_stop else {})}
@@ -87,7 +89,9 @@ class ScheduledOwnerWork:
             existing = conn.execute(self._rows().where(
                 operational_checkpoints.c.thread_id == thread_id)).one_or_none()
             if existing is not None:
-                if self._request(conn, thread_id) != data:
+                retained = self._request(conn, thread_id)
+                compared = data if "return_binding" in retained else {k: v for k, v in data.items() if k != "return_binding"}
+                if retained != compared:
                     raise ValueError("scheduled work changed during replay")
                 return self._view(conn, existing)
             if due > now + timedelta(days=30) or ("run_at" in request and due <= now and not wait_for_stop):

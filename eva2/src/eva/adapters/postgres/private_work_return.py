@@ -27,8 +27,9 @@ def private_episode(turn):
 class PrivateWorkReturnStore:
     def __init__(self, service, *, document_source=None):
         self.service, self.work = service, service.store
-        self.documents = (document_source if document_source is not None else
-                          getattr(service, "document_completion_source", None))
+        from eva.adapters.postgres.scheduled_work_failure import PrivateCompletionSources
+        self.documents = PrivateCompletionSources(self.work,
+            document_source if document_source is not None else getattr(service, "document_completion_source", None))
 
     def _where(self, table, thread):
         return (table.c.tenant_id == self.work.scope.tenant_id,
@@ -143,7 +144,7 @@ class PrivateWorkReturnStore:
             else:
                 if not isinstance(work_id, str) or not 1 <= len(work_id) <= 240:
                     raise ValueError("return work identity invalid")
-                if self.documents is not None and work_id.startswith('document-task:'):
+                if self.documents is not None and work_id.startswith(('document-task:', 'scheduled-work:')):
                     document = self._document(work_id, route)
                     if document is None:
                         raise ValueError('document return unavailable')

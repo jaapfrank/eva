@@ -83,7 +83,8 @@ class PostgresDelegatedWorkDeliveryStore:
     def __init__(self, work_store, *, bindings_loader: Callable[[], TelegramPrincipalBindings],
                  clock: Callable[[], datetime] | None = None, document_source=None):
         self._work = work_store
-        self._documents = document_source
+        from eva.adapters.postgres.scheduled_work_failure import PrivateCompletionSources
+        self._documents = PrivateCompletionSources(work_store, document_source)
         self._bindings_loader = bindings_loader
         self._clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
 
@@ -116,7 +117,7 @@ class PostgresDelegatedWorkDeliveryStore:
 
     def load(self, work_id: str, *, owner_principal_id: UUID,
              principal_binding_id: UUID) -> PrivateWorkDestination | None:
-        if self._documents is not None and work_id.startswith("document-task:"):
+        if self._documents is not None and work_id.startswith(("document-task:", "scheduled-work:")):
             result = self._document_authorized(work_id, owner_principal_id, principal_binding_id)
             return None if result is None else result.destination
         return self._current(work_id, owner_principal_id=owner_principal_id,
@@ -124,7 +125,7 @@ class PostgresDelegatedWorkDeliveryStore:
 
     def authorize_delivery(self, work_id: str, *, owner_principal_id: UUID,
                            principal_binding_id: UUID) -> AuthorizedWorkDelivery | None:
-        if self._documents is not None and work_id.startswith("document-task:"):
+        if self._documents is not None and work_id.startswith(("document-task:", "scheduled-work:")):
             return self._document_authorized(work_id, owner_principal_id, principal_binding_id)
         work, destination = self._current(work_id, owner_principal_id=owner_principal_id,
                                           principal_binding_id=principal_binding_id)
