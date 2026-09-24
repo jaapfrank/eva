@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-09-24T14:34:00.471252+00:00",
+  "services": {
+    "core": {
+      "image": "sha256:93a70b596d2bb60d66243099678cd8f03b5c4f00854ae2cf5bce1d0e9cccc9a0",
+      "health": "healthy",
+      "sourceHashes": {
+        "adapters/connectors/home_assistant_api.py": "afc49a5aad4e5583ba86752eb9d1bf7a570dcb88cf6117f41439929bb9a12af1",
+        "bootstrap/delegated_digital_runner.py": "f4b1c01ded5d3bbfa6004b07669dd7bc17f5df9363b9632d79dc6017f78cab64"
+      }
+    },
+    "worker": {
+      "image": "sha256:6c5dabf6744165f56f0c093ef46f163e44d397e56c92e7108b1ade76fc9888da",
+      "health": "healthy",
+      "sourceHashes": {
+        "adapters/connectors/home_assistant_api.py": "afc49a5aad4e5583ba86752eb9d1bf7a570dcb88cf6117f41439929bb9a12af1",
+        "bootstrap/delegated_digital_runner.py": "f4b1c01ded5d3bbfa6004b07669dd7bc17f5df9363b9632d79dc6017f78cab64"
+      }
+    }
+  },
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/ha-api-correction-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker",
+  "sourceCommit": "124284774918749ddfda06a727a15d99edcb49c2",
+  "state": "installed",
+  "checks": [
+    "16 focused tests passed in 1.79s",
+    "Independent read-only review passed after correcting initial branch placement",
+    "Core and worker configuration and execution-source hashes match",
+    "Installed source hashes exact; both services healthy; owner dashboard HTTP 200"
+  ],
+  "behavior": "Durable HA error responses remain available to the model for correction. A final failed HA response blocks background completion.",
+  "limitations": [
+    "No model-driven correction trial or physical device actions performed",
+    "A later successful API response is not independent semantic or physical proof"
+  ],
+  "modelRequests": 0
+}

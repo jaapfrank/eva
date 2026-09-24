@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T14:23:35.888431+00:00",
+        "checkedAt": "2026-09-24T14:34:34.326672+00:00",
         "deliveries": [
+          {
+            "title": "HA-fout gebruiken om de aanvraag te corrigeren",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Een ontvangen API-fout sluit vervolgtools niet meer af. Een laatste mislukte HA-aanvraag telt niet als voltooide taak. Geïnstalleerd in kern en achtergrondwerker.",
+            "remaining": "16 gerichte controles en onafhankelijke review geslaagd. Echte modelgestuurde correctie en fysieke werking nog niet beproefd.",
+            "source": "eva2/evidence/product/ha-api-correction-installed-20260924.json"
+          },
           {
             "title": "Algemene HA-toegang ook via jouw lokale eigenaarwebsite",
             "date": "24 september",
@@ -1975,10 +1983,10 @@
           }
         ],
         "now": {
-          "title": "Dezelfde HA-toegang via website en Telegram",
-          "state": "Geïnstalleerd",
-          "detail": "De servergebonden eigenaarwebsite en jouw Telegramroute krijgen nu dezelfde algemene HA-API. Kern en taakwerker gebruiken gelijke configuratie en zijn gezond.",
-          "doneWhen": "Configuratieverschil opgelost en live gecontroleerd. Echte modeluitvoering blijft apart; brede speakerrechten wachten op jouw keuze."
+          "title": "HA-correctie geïnstalleerd; vervolg nog niet gestart",
+          "state": "Technisch opgeleverd",
+          "detail": "Kern en achtergrondwerker gezond en gelijk geconfigureerd. Ontvangen API-fouten kunnen worden gebruikt voor een gecorrigeerde aanvraag; fout alleen geldt niet als afgeronde taak.",
+          "doneWhen": "Technische wijziging afgerond; werkelijke modelcorrectie blijft apart te beoordelen."
         },
         "next": {
           "title": "Algemene HA-bediening via gedeelde speakers",
@@ -1997,7 +2005,7 @@
           "expected": "Eva zoekt zelf de bestaande configuratie/services op en gebruikt de passende API. Een wijziging moet ze teruglezen en eerlijk toelichten; API-bevestiging alleen bewijst geen fysieke werking."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T14:23:35.888431+00:00"
+        "reviewedAt": "2026-09-24T14:34:34.326672+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11769,7 +11777,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Algemene HA-bediening via gedeelde speakers: eigenaarbesluit verwerken",
+      "nextAction": "Vervolg: algemene HA-uitvoering en teruggelezen taakresultaten; gedeelde brede speakerrechten wachten op eigenaarbesluit.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
