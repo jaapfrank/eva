@@ -24,5 +24,6 @@ def work_failure_description(error_code: str | None) -> str | None:
         "incomplete_work": "Deze opdracht is nog niet af. De bewaarde voortgang toont de open stappen en eventuele blokkade. Hervatten kan verdergaan met die stand; er is nog geen afgerond resultaat.",
         "provider_unavailable": "Een benodigde dienst was niet bereikbaar. Er is geen afgerond resultaat bevestigd. Controleer eerdere bestanden of acties voordat je hervat.",
         "internal_error": "De uitvoering is technisch vastgelopen. Er is geen afgerond resultaat bevestigd. Controleer eerdere bestanden of acties voordat je hervat.",
+        "budget_exceeded": "Deze poging heeft het ingestelde model- of toolbudget bereikt. De opdracht is niet afgerond; eerdere acties en voortgang blijven bewaard. Controleer die voordat je hervat.",
         "timed_out": "De uitvoering heeft de tijdslimiet bereikt. Eerdere acties kunnen al uitgevoerd zijn; controleer die voordat je hervat.",
     }.get(error_code)
