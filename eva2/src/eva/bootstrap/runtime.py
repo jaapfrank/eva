@@ -1170,13 +1170,16 @@ class PostgresHindsightMemoryRuntime:
                     principal_id=turn.principal_id, conversation_id=turn.conversation_id,
                     request_message_id=turn.message_id,
                 )
-                return journal.commit_reply(turn, GroundedReply(
-                    conversation_id=turn.conversation_id, message_id=turn.message_id,
-                    text=("Ik start geen verdere stappen voor de lopende opdracht. Een stap die al in behandeling is, kan nog afronden."
-                          if count else "Er is in dit gesprek geen lopende opdracht om te stoppen."),
-                    evidence_memory_ids=(), generated_at=turn.occurred_at,
-                    provider="runtime:conversation-stop-command",
-                ))
+                if count:
+                    return journal.commit_reply(turn, GroundedReply(
+                        conversation_id=turn.conversation_id, message_id=turn.message_id,
+                        text="Ik start geen verdere stappen voor de lopende opdracht. Een stap die al in behandeling is, kan nog afronden.",
+                        evidence_memory_ids=(), generated_at=turn.occurred_at,
+                        provider="runtime:conversation-stop-command",
+                    ))
+                # Accepted background work outlives its completed admission turn.
+                # Let the shared conversation use its existing task context and
+                # stop tools rather than falsely claiming there is no active work.
             durable_recent = journal.recent(turn, exclude_message_id=turn.message_id)
             recent = (voice.recent if voice is not None
                       else tuple((*recent_messages, *durable_recent)[-12:]))
