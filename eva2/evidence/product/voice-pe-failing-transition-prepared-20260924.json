@@ -1,0 +1,19 @@
+{
+  "date": "2026-09-24",
+  "status": "prepared_waiting_for_owner_presence_and_firmware_permission",
+  "finding": "The existing HA adapter forwards streamed content and NativeHouseholdResponder returns continue_conversation=True. The restored-firmware measurement does not diagnose the rejected continuous firmware wakeword failure.",
+  "candidateSha256": "336faf8b0ca4de6883217011d0c456f3738b6f8aeaf69b959a5eb8114f99e961",
+  "recoverySha256": "222b87eefca70de27af8db210c06156c0f2dd34c82558ff2614d7173a93040bc",
+  "binaryRoot": "/home/administrator/project/.eva2-artifacts/woonkamer-speaker-install-hnd0_fwq",
+  "verifiedFiles": ["binaries/firmware.ota.bin", "recovery/firmware.ota.bin"],
+  "sequence": [
+    "Wait for explicit owner readiness and permission to temporarily replace working firmware.",
+    "Start bounded device/server metadata logging and read current device state without changing mute.",
+    "Install the exact retained candidate, then capture one owner wakeword and Hallo Eva utterance.",
+    "Restore the exact recovery firmware, read back its version and obtain ordinary-speech confirmation.",
+    "Use the actual failure transition before proposing firmware changes; do not repeat speculative flashing."
+  ],
+  "deviceChanges": false,
+  "modelRequests": 0,
+  "limits": "No new Eva function, firmware fix, physical success or owner acceptance claimed. A future physical utterance can use the existing conversation model. Only this measurement depends on the pending answer."
+}

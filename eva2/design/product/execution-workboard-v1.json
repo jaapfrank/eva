@@ -1853,15 +1853,15 @@
           }
         ],
         "now": {
-          "title": "Verlopen wachttaken afgehandeld",
-          "state": "Technisch opgeleverd",
-          "detail": "Correctie geïnstalleerd in de achtergrondwerker. Twee uitvoerslots behouden; kern en worker gezond. Geen extra modelaanvragen.",
-          "doneWhen": "Code, gerichte databasecontrole en installatie afgerond. Echte terugmelding blijft apart te beproeven."
+          "title": "Continue Voice PE: foutmeting voorbereid",
+          "state": "Alleen deze proef wacht op jou",
+          "detail": "HA-streaming en vervolg luisteren zijn aangesloten. Voor de afgekeurde continue firmware ontbreekt het wakeword-foutmoment. Exacte kandidaat en herstelbestand gecontroleerd; niets geflasht.",
+          "doneWhen": "Na expliciete gereedmelding één kandidaat-wakeword vastleggen, werkende firmware herstellen en aangetoonde oorzaak oplossen."
         },
         "next": {
-          "title": "Resterende functionele oplevering",
+          "title": "Onafhankelijk vervolgwerk blijft open",
           "state": "In wachtrij",
-          "detail": "Verder met de open gebruikersuitkomsten van de acht stappen. Behouden wat al werkt; uitgestelde praktijkproeven blijven zichtbaar en blokkeren alleen afhankelijk werk."
+          "detail": "De Voice PE-vraag blokkeert alleen deze fysieke foutmeting. Het volledige achtstappengoal blijft actief; geen nieuwe algemene audit of speculatieve firmwarewijziging."
         },
         "ownerAction": {
           "title": "Een bestaande lamp bedienen",
@@ -1875,7 +1875,7 @@
           "expected": "Bestaande toegestane lamp schakelt; fysieke werking nog niet bewezen. Geen nieuwe schakelaars toegevoegd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T11:56:56.724282+00:00"
+        "reviewedAt": "2026-09-24T12:03:24.873788+00:00"
       }
     },
     "pendingTechnicalReview": {
