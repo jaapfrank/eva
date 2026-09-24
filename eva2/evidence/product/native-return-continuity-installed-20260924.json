@@ -1,0 +1,35 @@
+{
+  "verifiedAt": "2026-09-24T14:18:11.212105+00:00",
+  "sourceCommit": "108b8532",
+  "moduleSha256": "9e427a60e449edcaf2064e95437e481d6d206e95573524b0a0910f36ee5db65a",
+  "installed": true,
+  "checks": [
+    {
+      "name": "eva2-managed-b-slot3-core",
+      "image": "sha256:ea24dfe7837e4400a8dedbef9d66225e2f8bd49a0f23101a43d01555cf471d19",
+      "health": "healthy",
+      "restarts": 0
+    },
+    {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "image": "sha256:56c350e949c97c01614f4a090fc0f12897c190326479376643aaabd346aa1893",
+      "health": "healthy",
+      "restarts": 0
+    }
+  ],
+  "http": {
+    "http://localhost:44711/internal/v1/dashboard": 200,
+    "http://localhost:44716/session/ready": 200
+  },
+  "tests": "3 passed in 1.16s; simulated HA and task store",
+  "review": "Independent review verified original household session/device binding, claim, expiry and fresh idle check remain",
+  "behavior": "New native HA session no longer hides pending public results in older still-open sessions on their original speaker. Initial idle read shared per satellite per round; checked again immediately before announcement.",
+  "limitations": [
+    "Physical audible return and wakeword overlap remain untested",
+    "Existing session expiry and 128-open-session batch limit remain",
+    "API service acknowledgment is offered, not audible proof"
+  ],
+  "modelCalls": 0,
+  "testAnnouncements": 0,
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/native-return-continuity-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core"
+}

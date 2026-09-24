@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T14:13:30.510369+00:00",
+        "checkedAt": "2026-09-24T14:18:11.212105+00:00",
         "deliveries": [
+          {
+            "title": "Een nieuwe speakervraag verbergt eerder onderzoeksresultaat niet meer",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Oudere nog geldige openbare opdrachten blijven via hun oorspronkelijke speaker afleverbaar. Luisteren, sluiten/verlopen en bestaande eenmalige aflevering blijven gerespecteerd.",
+            "remaining": "Drie gerichte simulaties en gezonde installatie; echte hoorbare terugmelding tijdens nieuwe vragen nog open.",
+            "source": "eva2/evidence/product/native-return-continuity-installed-20260924.json"
+          },
           {
             "title": "Algemene Home Assistant-API voor jouw opdrachten",
             "date": "24 september",
@@ -1959,10 +1967,10 @@
           }
         ],
         "now": {
-          "title": "Herstelvoortgang begrijpelijk getoond",
-          "state": "Afgerond · projectdashboard",
-          "detail": "Acht technische tussenstappen staan onder één onvoltooide herstelwizard. Dagelijkse Eva-functies blijven vooraan. Dit is een dashboardverbetering, geen afgeronde herstelfunctie.",
-          "doneWhen": "Live op 44712; uitgeklapte details en alle acht registraties in de browser gecontroleerd."
+          "title": "Speakerresultaat na een nieuwe vraag",
+          "state": "Geïnstalleerd",
+          "detail": "Selectiefout hersteld: een nieuw HA-gesprek verbergt oudere nog geldige openbare resultaten niet meer. Gerichte controle, onafhankelijke review en livecontrole afgerond.",
+          "doneWhen": "Technische correctie geleverd; fysieke ontvangst blijft afzonderlijk te beoordelen."
         },
         "next": {
           "title": "Algemene HA-bediening via gedeelde speakers",
@@ -1981,7 +1989,7 @@
           "expected": "Eva zoekt zelf de bestaande configuratie/services op en gebruikt de passende API. Een wijziging moet ze teruglezen en eerlijk toelichten; API-bevestiging alleen bewijst geen fysieke werking."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T14:13:30.510369+00:00"
+        "reviewedAt": "2026-09-24T14:18:11.212105+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11643,7 +11651,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 4,
+      "currentStep": 3,
       "steps": [
         {
           "number": 1,
