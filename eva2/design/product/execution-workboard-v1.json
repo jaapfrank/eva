@@ -1327,8 +1327,8 @@
             "title": "Herstelwizard",
             "date": "24 september",
             "state": "built",
-            "result": "Controles, vrijgave en start zijn aangesloten. Het bestaande lokale beheercommando is bijgewerkt naar bron 227adb2f met terugweg; imports en startinstructie gecontroleerd. Nog geen volledige herstelfunctie opgeleverd.",
-            "remaining": "De herstelde Hindsight-geheugenservice starten en aansluiten, daarna de volledige geisoleerde herstelproef. Het beheercommando is bijgewerkt, maar de volledige herstelfunctie is nog niet af. Huidige Eva blijft draaien; geen actie van Jaap nodig.",
+            "result": "Het lokale beheercommando is bijgewerkt naar 683e3780: herstelcontroles, geheugendienst starten, vrijgave en kernstart zijn aangesloten. Terugweg en startcontrole aanwezig. De volledige herstelfunctie is nog niet als bruikbaar geheel opgeleverd.",
+            "remaining": "Het complete voorbereide proefpakket via de wizard herstellen en echte Eva-kern/werker starten. Daarna blijft gewone installatiebediening zonder handgeschreven doelconfiguratie nog open. De huidige Eva blijft draaien; geen actie van Jaap nodig.",
             "source": "eva2/evidence/product/restore-operator-updated-20260924.json",
             "children": [
               {
@@ -2240,8 +2240,8 @@
         ],
         "now": {
           "title": "Volledige herstelroute uitvoeren",
-          "state": "Ontbrekende geheugenservice-start aansluiten",
-          "detail": "Geheugenservice-start wordt aangesloten. De fout in archiefvalidatie is gecorrigeerd en in het beheercommando geinstalleerd (e0111bbe), met terugweg. Echte archiefvoorbereiding passeert die fout; rapportopslag/herhaling blijft werken. Document-/gatewayproefmateriaal voorbereid. Volledige herstelproef nog open; geen productieherstel.",
+          "state": "Volledig proefpakket samenstellen",
+          "detail": "Beheercommando 683e3780 bevat nu ook start van de geheugendienst en controle van kern naar geheugen naar herstelde database. Gecontroleerd en lokaal bijgewerkt met terugweg. Echte kernreservekopie, document-/gatewaymateriaal en Hindsight-bankdump zijn voorbereid. Volledige wizardproef volgt; geen productieherstel.",
           "doneWhen": "Volledige reservekopie via de wizard terugzetten en echte herstelde kern starten met behouden gegevens. Gebruikersacceptatie blijft apart."
         },
         "next": {
@@ -2261,7 +2261,7 @@
           "expected": "Pas na jouw selectie kan een echte opdracht in het gekozen tabblad worden geprobeerd. Bestaande tabbladen en eigenaarbediening zijn niet automatisch overgenomen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T21:28:41.677186+00:00"
+        "reviewedAt": "2026-09-24T21:37:08.429300+00:00"
       }
     },
     "pendingTechnicalReview": {

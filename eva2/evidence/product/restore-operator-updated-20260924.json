@@ -1,20 +1,22 @@
 {
-  "sourceCommit": "227adb2f",
+  "sourceCommit": "683e3780",
   "state": "operator_command_updated_full_restore_unproven",
   "availableCommand": "python3 /home/administrator/project/.eva2-artifacts/installer-document-write-20260924/start-installer.py --restore-config /absolute/private/target.json",
   "checks": {
     "launcher_help": true,
     "actual_module_imports": true,
     "exact_source_hashes": true,
-    "composition_controlled_cases": 19,
+    "composition_controlled_cases": 22,
     "native_authorization_controlled_cases": 17,
-    "isolated_gateway_discovery": "Passed once; tool IDs and schemas preserved, persisted freshness advanced. Synthetic provider; no private upstream credential proof."
+    "isolated_gateway_discovery": "Passed once; tool IDs and schemas preserved, persisted freshness advanced. Synthetic provider; no private upstream credential proof.",
+    "memory_api_controlled_cases": 14,
+    "memory_api_scope": "Pinned source writers stopped, API bound to restored PostgreSQL, current local model authorization, core bound to this API, health and bank listing. No upstream model-success claim."
   },
-  "rollbackDirectory": "/home/administrator/project/.eva2-artifacts/restore-launcher-227adb2f",
+  "rollbackDirectory": "/home/administrator/project/.eva2-artifacts/restore-memory-api-683e3780",
   "rollback": "Previous files and an exact manifest are retained. After any restore attempt inspect retained target state before further action.",
   "productionServicesChanged": false,
   "restoreInvoked": false,
   "ownerAccepted": false,
   "modelCalls": 0,
-  "next": "Execute the complete isolated wizard restore through real target runtime readiness. No production restore."
+  "next": "Assemble the prepared real core archive, native document/gateway snapshot and Hindsight dump into one package; execute the complete isolated wizard restore."
 }

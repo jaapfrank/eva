@@ -7,12 +7,27 @@
     "Independent source review passed",
     "Real PostgreSQL report atomicity/replay/retention case passed",
     "Real archive preparation passed the formerly failing validation boundary",
-    "Exact installed operator files and actual imports verified"
+    "Exact installed operator files and actual imports verified",
+    "Corrected real core-v2 export and AES-GCM sealing completed; all seven fixture work states retained"
   ],
   "limits": [
-    "The complete archive fixture subsequently encountered a separate OpenSSL environment error during sealing; isolated retry uses the existing AES-GCM path with legacy-provider loading disabled",
+    "OpenSSL legacy-provider loading conflict resolved in the isolated test environment; AES-GCM sealing then passed. Full restore remains separate.",
     "No full restore completion or production runtime replacement claimed"
   ],
   "rollbackDirectory": "/home/administrator/project/.eva2-artifacts/restore-export-e0111bbe",
-  "modelCalls": 0
+  "modelCalls": 0,
+  "archiveProof": {
+    "archive_sha256": "d332cbe866045868fac9f98cce9c09ebf0b8d716f1cd052331b1519865447b7d",
+    "preserved_work_states": [
+      "acknowledged",
+      "admitted",
+      "ambiguous",
+      "call_started",
+      "claimed",
+      "stopped",
+      "undelivered"
+    ],
+    "fixture_resources_removed": true,
+    "source": "/home/administrator/project/.eva2-artifacts/restore-full-route-20260924/core-preparation-result.json"
+  }
 }

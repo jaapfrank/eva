@@ -4,7 +4,7 @@ Bijgewerkt: 27 augustus 2026.
 
 ## Restore operator integration — 24 September 2026
 
-Source `227adb2f` connects the existing restore wizard to component verification,
+Source `683e3780` connects the existing restore wizard to component verification,
 database release and runtime startup after commit. The installed operator entry is
 `/home/administrator/project/.eva2-artifacts/installer-document-write-20260924/start-installer.py`.
 Run it with `--restore-config /absolute/private/target.json`; the existing wizard
@@ -13,7 +13,7 @@ bootstrap link. Keep that link private; it opens the owner session.
 
 The private target configuration selects an empty target, retained source/target
 container identities, component locations and current credential authorization.
-An optional `activation` object supplies `native_authorization` and a
+An optional `activation` object supplies `native_authorization`, `memory_api` and a
 `startup_timeout_seconds` value (default 60, maximum 120). Activation requires the
 complete existing document-promotion configuration and an explicit runtime
 identity. It does not accept verification receipts from the archive or browser.
@@ -27,7 +27,7 @@ partially started restore retains its targets and must be inspected before
 another attempt. Do not automatically repeat imports or start both installations.
 
 The operator command has been updated with previous files retained at
-`/home/administrator/project/.eva2-artifacts/restore-launcher-227adb2f`.
+`/home/administrator/project/.eva2-artifacts/restore-memory-api-683e3780`.
 [Installation evidence](../../evidence/product/restore-operator-updated-20260924.json)
 records its exact scope. The complete isolated restore trial remains open.
 Generating this operator configuration through ordinary user-facing installation
