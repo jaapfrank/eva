@@ -363,3 +363,82 @@ def test_bot_api_poll_send_and_living_core_contract_are_bounded() -> None:
         server.shutdown()
         thread.join(timeout=5)
         server.server_close()
+
+
+@pytest.mark.parametrize("reply", [None, {"message_id": 202}, {"message_id": True}])
+def test_saved_result_rejects_wrong_original_question_without_resending(monkeypatch, reply):
+    delivery = TelegramProactiveDelivery(bot_token="123456:test", chat_id="42")
+    calls = []
+
+    def send(method, body, **kwargs):
+        calls.append(body)
+        return {"message_id": 501, "chat": {"id": 42, "type": "private"},
+                "text": body["text"], "reply_to_message": reply}
+
+    monkeypatch.setattr(delivery._api, "_call", send)
+    with pytest.raises(RuntimeError, match="original question binding"):
+        delivery.deliver_text("Research result", expected_chat_id="42", reply_to_message_id=101)
+    assert len(calls) == 1
+    assert calls[0]["reply_parameters"] == {
+        "message_id": 101, "allow_sending_without_reply": False,
+    }
+
+
+def test_overlapping_saved_results_keep_original_questions_over_http():
+    from concurrent.futures import ThreadPoolExecutor
+    from threading import Event
+
+    first_arrived = Event()
+    release_first = Event()
+    completed = []
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_POST(self):  # noqa: N802
+            payload = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+            origin = payload["reply_parameters"]["message_id"]
+            assert payload["reply_parameters"]["allow_sending_without_reply"] is False
+            if origin == 101:
+                first_arrived.set()
+                if not release_first.wait(5):
+                    self.send_error(504)
+                    return
+            completed.append((origin, payload["text"]))
+            response = json.dumps({"ok": True, "result": {
+                "message_id": origin + 1000, "chat": {"id": 42, "type": "private"},
+                "text": payload["text"], "reply_to_message": {"message_id": origin},
+            }}).encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(response)))
+            self.end_headers()
+            self.wfile.write(response)
+
+        def log_message(self, format, *args):
+            pass
+
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    thread = Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        delivery = TelegramProactiveDelivery(
+            bot_token="123456:test", chat_id="42",
+            api_base_url=f"http://127.0.0.1:{server.server_port}",
+        )
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            first = pool.submit(delivery.deliver_text, "First research", expected_chat_id="42",
+                                reply_to_message_id=101)
+            try:
+                assert first_arrived.wait(5)
+                second = pool.submit(delivery.deliver_text, "Second research", expected_chat_id="42",
+                                     reply_to_message_id=202)
+                assert second.result(timeout=5) == "telegram:42:1202"
+                assert not first.done()
+            finally:
+                release_first.set()
+            assert first.result(timeout=5) == "telegram:42:1101"
+        assert completed == [(202, "Second research"), (101, "First research")]
+    finally:
+        release_first.set()
+        server.shutdown()
+        thread.join(timeout=5)
+        server.server_close()

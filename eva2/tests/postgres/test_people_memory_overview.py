@@ -117,6 +117,54 @@ def test_owner_memory_sources_private_alias_pagination_erasure_and_revocation(pe
         reader().document(items[0].source_id, now=NOW)
 
 
+def test_recent_private_voice_context_respects_target_and_source_boundaries(people_memory_engine):
+    from dataclasses import replace
+    from eva.adapters.postgres.people_memory_overview import PostgresOwnerMemorySources
+    from eva.application.conversation import ConversationTurn
+    from tests.postgres.test_delegated_work_store import _seed_authority, _id
+
+    label = "recent-private-voice-context"
+    scope, _, binding = _seed_authority(people_memory_engine, label)
+    owner = _id(label, "principal")
+    tenant, installation = f"tenant:{label}", f"installation:{label}"
+    outbox = PostgresMemoryOutbox(people_memory_engine, tenant_id=tenant, installation_id=installation)
+    reader = PostgresOwnerMemorySources(people_memory_engine, tenant_id=tenant,
+        installation_id=installation, owner=owner, binding=binding, authority_scope=scope)
+    source = replace(_document(label), tenant_id=tenant, installation_id=installation,
+        principal_id=str(owner), conversation_id="voice:earlier",
+        audience=MemoryAudience.private_person(principal_id=str(owner)))
+    outbox.enqueue(source)
+    turn = ConversationTurn.private(tenant, installation, str(owner), f"dashboard:{binding}",
+        "target-message", "Continue our conversation", NOW.strftime("%Y-%m-%dT%H:%M:%SZ"))
+    found = reader.recent_other_channel(turn, now=NOW)
+    assert found is not None and found[0].document_id == source.document_id
+    voice = replace(turn, conversation_id="voice:new")
+    assert reader.recent_other_channel(voice, now=NOW)[0].document_id == source.document_id
+    assert reader.recent_other_channel(replace(turn, conversation_id=source.conversation_id), now=NOW) is None
+    assert reader.recent_other_channel(turn, now=NOW, after=NOW) is None
+    for changes in ({"tenant_id": "other-tenant"}, {"installation_id": "other-installation"},
+                    {"project_id": "other-project"}):
+        assert reader.recent_other_channel(replace(turn, **changes), now=NOW) is None
+    stranger = replace(turn, principal_id="person:other",
+        audience=MemoryAudience.private_person(principal_id="person:other"))
+    assert reader.recent_other_channel(stranger, now=NOW) is None
+    # Reject shared destinations before touching storage, irrespective of identity hints.
+    from types import SimpleNamespace
+    shared = SimpleNamespace(tenant_id=tenant, installation_id=installation,
+        principal_id=str(owner), conversation_id="voice:shared", project_id=None,
+        audience=SimpleNamespace(kind="household"))
+    assert reader.recent_other_channel(shared, now=NOW) is None
+    shared.audience = SimpleNamespace(kind="private_person", principal_id="person:other")
+    assert reader.recent_other_channel(shared, now=NOW) is None
+    # Once the owner's source is erased, another person's voice source cannot replace it.
+    outbox.erase_content(principal_sha256=hashlib.sha256(str(owner).encode()).hexdigest(),
+        document_id=source.document_id, operation_sha256="cd"*32, erased_at=NOW)
+    outbox.enqueue(replace(source, document_id="other-voice-source", source_ref="other-message",
+        principal_id="person:other", conversation_id="voice:other-person",
+        audience=MemoryAudience.private_person(principal_id="person:other")))
+    assert reader.recent_other_channel(turn, now=NOW) is None
+
+
 @pytest.mark.parametrize(
     ("table_name", "changes", "message"),
     [

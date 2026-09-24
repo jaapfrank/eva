@@ -105,7 +105,9 @@ class PostgresOwnerMemorySources:
                      (turn.conversation_id == dashboard or turn.conversation_id.startswith("voice:")))
                     or (alias is not None and turn.principal_id == alias
                         and turn.conversation_id == alias))
-        if not private or not admitted or turn.project_id is not None:
+        if (turn.tenant_id != self._tenant or turn.installation_id != self._installation
+                or not private or turn.audience.principal_id != turn.principal_id
+                or not admitted or turn.project_id is not None):
             return None
         channels = tuple(value for value in (dashboard, alias)
                          if value is not None and value != turn.conversation_id)
