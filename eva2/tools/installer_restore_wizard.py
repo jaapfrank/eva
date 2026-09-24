@@ -25,11 +25,13 @@ def main(argv=None):
     )
     required = {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed", "runtime_guard"}
     if (not isinstance(config, dict) or not required <= set(config)
-            or not set(config) <= required | {"runtime_identity", "recovery_materialization", "external_recovery", "document_recovery"}
+            or not set(config) <= required | {"runtime_identity", "recovery_materialization", "external_recovery", "document_recovery", "document_connection"}
             or config["traffic_closed"] is not True):
         raise ValueError("restore configuration requires pinned runtime_guard identities and closed traffic")
     if "document_recovery" in config and not {"external_recovery", "recovery_materialization"} <= set(config):
         raise ValueError("document recovery requires external recovery and materialization")
+    if "document_connection" in config and "document_recovery" not in config:
+        raise ValueError("document connection requires document preparation")
     paths = {key: Path(config[key]) for key in ("authority", "workspace", "objects")}
     if not all(path.is_absolute() for path in paths.values()):
         raise ValueError("restore target paths must be absolute")
@@ -48,6 +50,12 @@ def main(argv=None):
         from tools.installation_document_restore import prepare_document_relocations, validate_document_configuration
         validate_document_configuration(config["document_recovery"])
         document_prepare = partial(prepare_document_relocations, configuration=config["document_recovery"])
+    document_connect = None
+    if "document_connection" in config:
+        from tools.installation_document_connection import connect_document_providers, validate_document_connection_configuration
+        validate_document_connection_configuration(config["document_connection"])
+        document_connect = partial(connect_document_providers,
+            preparation_configuration=config["document_recovery"], configuration=config["document_connection"])
     workflow = InstallerPortableRestore(
         engine=engine,
         authority_reader=partial(read_private_restore_authority, paths["authority"]),
@@ -59,6 +67,7 @@ def main(argv=None):
         recovery_materialization=config.get("recovery_materialization"),
         external_restore=external_restore,
         document_prepare=document_prepare,
+        document_connect=document_connect,
     )
     try:
         return run_installer_wizard(remaining, restore_workflow=workflow)

@@ -92,7 +92,9 @@ def register_installer_restore_routes(
         except InactiveRecoveryMaterialRetained as error:
             return JSONResponse({
                 "detail": ("Herstel is niet bevestigd. De inactieve bestandskopie is bewaard; Eva blijft uit. "
-                    + ("Documentkoppelingen kunnen gedeeltelijk zijn voorbereid; geheugen en gateway kunnen al zijn geïmporteerd. Laat de bewaarde hersteldoelen controleren; start niet opnieuw op dezelfde doelen."
+                    + ("Documentproviders kunnen al gestart zijn in alleen-lezen-modus. Laat de bewaarde doelen en providers controleren; start niet opnieuw op dezelfde doelen."
+                       if error.document_connection_attempted else
+                       "Documentkoppelingen kunnen gedeeltelijk zijn voorbereid; geheugen en gateway kunnen al zijn geïmporteerd. Laat de bewaarde hersteldoelen controleren; start niet opnieuw op dezelfde doelen."
                        if error.document_preparation_attempted else
                        "Geheugen of gateway kan al gedeeltelijk zijn geïmporteerd. Laat de hersteldoelen controleren; start niet opnieuw op dezelfde doelen."
                        if error.external_import_attempted else

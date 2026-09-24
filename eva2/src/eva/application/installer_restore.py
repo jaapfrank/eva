@@ -13,9 +13,13 @@ class InactiveRecoveryMaterialRetained(ValueError):
 
     def __init__(self, destination: str, *, external_import_attempted: bool = False,
                  document_preparation_attempted: bool = False,
-                 document_preparation: dict | None = None):
+                 document_preparation: dict | None = None,
+                 document_connection_attempted: bool = False,
+                 document_connection: dict | None = None):
         self.destination = destination
         self.external_import_attempted = external_import_attempted
         self.document_preparation_attempted = document_preparation_attempted
         self.document_preparation = document_preparation
+        self.document_connection_attempted = document_connection_attempted
+        self.document_connection = document_connection
         super().__init__("Recovery was not confirmed; inactive material is retained for operator inspection")

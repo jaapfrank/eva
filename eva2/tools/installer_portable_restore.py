@@ -65,6 +65,7 @@ class InstallerPortableRestore:
         recovery_materialization: dict | None = None,
         external_restore: Callable[..., dict] | None = None,
         document_prepare: Callable[..., dict] | None = None,
+        document_connect: Callable[..., dict] | None = None,
     ):
         # The composition root must provide an isolated, traffic-closed target.
         if (
@@ -94,6 +95,9 @@ class InstallerPortableRestore:
                 or external_restore is None or recovery_materialization is None):
             raise ValueError("document preparation requires external restoration and materialization")
         self.document_prepare = document_prepare
+        if document_connect is not None and (not callable(document_connect) or document_prepare is None):
+            raise ValueError("document connection requires document preparation")
+        self.document_connect = document_connect
         self.external_restore = external_restore
         self.recovery_materialization = deepcopy(recovery_materialization)
         self._lock = Lock()
@@ -175,6 +179,9 @@ class InstallerPortableRestore:
                         document_components="preparation_planned",
                         notice="Deze herstelactie importeert de kern, het geheugen en de gateway in aparte doelen en bereidt daarna documentproviders inactief voor. Voorbereiden sluit geen documentprovider aan en start Eva niet. Aansluiten, controleren en activeren volgen afzonderlijk.",
                     )
+                if self.document_connect is not None:
+                    summary.update(document_components="read_only_connection_planned",
+                        notice="Deze herstelactie zet de gegevens terug, bereidt documentprojecten voor en start de ingestelde documentproviders alleen-lezen voor controle. Eva en haar taakuitvoerders blijven uit; schrijven en vrijgeven volgen afzonderlijk.")
                 return records, package["manifest_raw"], summary
             return records, raw, summary
         outputs, proof = validated
@@ -321,6 +328,7 @@ class InstallerPortableRestore:
             restore_authority_raw=self.authority_reader())
         external = None
         documents = None
+        document_connection = None
         if self.external_restore is not None:
             def guard():
                 if self.runtime_guard is not None:
@@ -349,14 +357,35 @@ class InstallerPortableRestore:
                                ("connected", "provider_verified", "services_started"))):
                     raise ValueError("document preparation receipt differs")
                 guard()
+                if self.document_connect is not None:
+                    materialization_state["document_connection_attempted"] = True
+                    try:
+                        document_connection = self.document_connect(destination,
+                            preparation_receipt=documents, guard=guard)
+                    except Exception as error:
+                        materialization_state["document_connection"] = deepcopy(
+                            getattr(error, "receipt", {"status": "inspection_required_no_retry"}))
+                        raise
+                    materialization_state["document_connection"] = deepcopy(document_connection)
+                    if (not isinstance(document_connection, dict)
+                            or document_connection.get("contract") != "EvaDocumentConnection/v1"
+                            or document_connection.get("status") != "connected_read_only"
+                            or document_connection.get("services_started") is not True
+                            or document_connection.get("core_activated") is not False):
+                        raise ValueError("document connection receipt differs")
+                    guard()
         return {**summary, **result, "archive_sha256": package["archive_sha256"],
             "core_archive_sha256": package["core_archive"]["archive_sha256"],
             "external_components": "imported_inactive" if external is not None else "materialized_inactive",
             "external_restore": external,
             **({"document_preparation": documents, "document_components": "prepared_not_connected"}
                if documents is not None else {}),
+            **({"document_connection": document_connection, "document_components": "connected_read_only"}
+               if document_connection is not None else {}),
             "materialization_destination": str(destination),
-            "notice": ("Kern, geheugen en gateway zijn geïmporteerd. Documentproviders zijn voorbereid maar niet aangesloten of gecontroleerd. Alles blijft inactief; aansluiten, controleren en vrijgeven zijn afzonderlijke stappen."
+            "notice": ("Documentproviders zijn aangesloten voor controle in alleen-lezen-modus. Eva en haar taakuitvoerders blijven uit. Controle van projectresultaten, schrijftoegang en vrijgave blijven afzonderlijke stappen."
+                if document_connection is not None else
+                "Kern, geheugen en gateway zijn geïmporteerd. Documentproviders zijn voorbereid maar niet aangesloten of gecontroleerd. Alles blijft inactief; aansluiten, controleren en vrijgeven zijn afzonderlijke stappen."
                 if documents is not None else
                 "Kern, geheugen en gateway zijn geïmporteerd maar blijven inactief. Koppel en controleer de documentproviders vóór vrijgave."
                 if external is not None else
@@ -425,7 +454,9 @@ class InstallerPortableRestore:
                     raise InactiveRecoveryMaterialRetained(str(destination),
                         external_import_attempted=materialization_state.get("external_import_attempted", False),
                         document_preparation_attempted=materialization_state.get("document_preparation_attempted", False),
-                        document_preparation=deepcopy(materialization_state.get("document_preparation"))) from error
+                        document_preparation=deepcopy(materialization_state.get("document_preparation")),
+                        document_connection_attempted=materialization_state.get("document_connection_attempted", False),
+                        document_connection=deepcopy(materialization_state.get("document_connection"))) from error
                 raise
             finally:
                 self._discard()

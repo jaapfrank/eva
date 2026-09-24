@@ -62,6 +62,40 @@ them with the gateway or release the restored installation. Provisioning must
 connect these exact outputs and verify the preserved project results before
 activation. No document preparation occurs without this optional configuration.
 
+## Read-only document connection
+
+An optional `document_connection` configuration can follow `document_recovery`:
+
+```json
+{
+  "providers": [{
+    "preparation_index": 0,
+    "container_name": "eva-restored-document-check",
+    "network_id": "<full ID of an existing internal Docker network>",
+    "jwt_secret_file": "/absolute/fresh-secrets/jwt",
+    "encryption_secret_file": "/absolute/fresh-secrets/encryption",
+    "admin_password_file": "/absolute/fresh-secrets/admin"
+  }]
+}
+```
+
+Include every preparation provider exactly once. Each target name must be new;
+an existing target is retained for inspection rather than replaced. Secret files
+must be separately provisioned outside the package and preparation output, owned
+by the configured runtime UID/GID, mode `0400`, without line breaks. They are not
+restored from the archive. Images and document paths come from the verified
+preparation configuration, not from this connection request.
+
+The wizard starts the native provider with read-only document, journal, binding
+and snapshot mounts on the pinned internal network, with no published ports.
+It checks the actual container and obtains `tools/list` using the existing MCP
+SDK. The returned catalog must match the preserved canonical catalog hash.
+`provider_verified` covers that startup/catalog check only;
+`documents_verified` remains false. The receipt is `connected_read_only`, and
+the core stays held. This step neither registers or remaps the gateway nor
+enables document writes. Project readback, gateway mapping and writable runtime
+activation remain separate requirements before ordinary use.
+
 ## Partial results and activation
 
 The core PostgreSQL transaction, external PostgreSQL transaction and gateway file
@@ -71,6 +105,9 @@ Those bytes are retained; the wizard reports that the targets need inspection.
 Document preparation receipts, including partial outputs, remain attached to
 the operator exception; private paths and receipts are not exposed in the HTTP
 error. The browser explicitly reports when document preparation was attempted.
+If connection fails, its named read-only targets can already exist or be running.
+The connection receipt remains on the operator exception and the browser says
+that target inspection is required. No retry, deletion or core activation occurs.
 Do not retry against the same nonempty targets or delete them automatically.
 The original installation is the fallback until the restored target is ready.
 
