@@ -135,6 +135,39 @@ checks do not lock Docker against concurrent changes. A later gateway startup
 must use the same network and retained database with the required separate
 credentials. A failed alias assignment retains the new target for inspection.
 
+## Starting the restored gateway
+
+After document connection and preserved-address validation, `gateway_start` can
+start an explicitly provisioned stopped gateway from `external_recovery.writers`:
+
+```json
+{
+  "container": {"name": "restored-gateway", "id": "<full container ID>", "image": "sha256:<source gateway image>"},
+  "network_id": "<same internal network as restored document providers>",
+  "access_token_path": "/run/eva2/gateway-access-token"
+}
+```
+
+Provision this container before running the wizard, with restart disabled and
+no published ports. Its image must match the package's source gateway image.
+Use the existing `start-contextforge.sh` launcher, the restored SQLite database
+at `external_recovery.gateway.target_path`, and the same isolated network as the
+document providers. The container must run as the operator owning the imported
+database. Its root filesystem stays read-only; the database mount is writable
+for the gateway's normal operation. Do not include this gateway in the core/task
+worker pins that the restore guard requires to remain stopped.
+
+Supply the original gateway encryption/JWT credentials and an appropriate
+existing access token separately. New random encryption keys cannot decrypt
+retained credentials. The access token is read inside the container from the
+configured private read-only mount; it is never included in the receipt.
+The wizard checks the pinned target, starts it once, and reads health and
+registration/tool inventories through its authenticated local API. Stored
+registration and tool identities must survive startup. This is not a tool
+execution or a complete restored-project trial. Document mounts remain read-only
+and the core hold remains closed. On failure, the gateway may already be running;
+retain it for inspection instead of retrying or deleting it.
+
 ## Partial results and activation
 
 The core PostgreSQL transaction, external PostgreSQL transaction and gateway file
@@ -150,7 +183,8 @@ that target inspection is required. No retry, deletion or core activation occurs
 Do not retry against the same nonempty targets or delete them automatically.
 The original installation is the fallback until the restored target is ready.
 
-Import does not start services or release the core hold. Document provider
-mapping, required separate secrets, component readback and deliberate activation
-remain required. This delivery does not claim a complete relocation, a successful
+Import alone does not start services or release the core hold. The optional
+document connection and gateway start steps start only their explicitly pinned
+components; the core and task workers remain stopped. Required separate secrets,
+end-to-end component readback and deliberate activation remain required. This delivery does not claim a complete relocation, a successful
 restore trial, or a GUI-only fresh-machine installation.

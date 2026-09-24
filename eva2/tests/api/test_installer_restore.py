@@ -88,3 +88,26 @@ def test_restore_rejects_target_override_and_oversized_input():
     assert c.post(route, json={'archive':'YQ==','passphrase':'x','dsn':'other-target'}).status_code == 409
     assert c.post(route, content=b'{}', headers={'content-length':'100000000'}).status_code == 413
     assert not w.calls
+
+
+def test_partial_gateway_start_reports_retained_target_without_private_receipt():
+    from fastapi import FastAPI
+    from eva.adapters.api.installer_restore_api import register_installer_restore_routes
+    from eva.application.installer_restore import InactiveRecoveryMaterialRetained
+
+    class FailedGateway:
+        def execute(self, confirmation):
+            raise InactiveRecoveryMaterialRetained(
+                "/PRIVATE/target", gateway_start_attempted=True,
+                gateway_connection={"private": "PRIVATE_TOKEN"})
+
+    app = FastAPI()
+    register_installer_restore_routes(app, workflow=FailedGateway(),
+                                     require_write=lambda request: None, security_headers={})
+    response = TestClient(app).post("/internal/v1/onboarding/restore/execute",
+                                   json={"confirmation": "fixture"})
+    assert response.status_code == 409
+    assert response.json()["recovery_state"] == "materialized_inactive"
+    assert "gateway en documentproviders kunnen al gestart" in response.json()["detail"]
+    assert "start niet opnieuw" in response.json()["detail"]
+    assert "PRIVATE" not in response.text
