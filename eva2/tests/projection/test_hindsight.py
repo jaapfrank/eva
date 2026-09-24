@@ -11,6 +11,8 @@ from typing import Any, Iterator
 import pytest
 
 from eva.adapters.projection.hindsight import (
+    _bounded_recall_query,
+    _recall_tokenizer,
     HindsightMemoryEngine,
     HindsightMemoryScopeError,
     HindsightMemoryProjection,
@@ -43,6 +45,7 @@ RETENTION = "2027-08-23T10:00:00Z"
 class _State:
     def __init__(self) -> None:
         self.requests: list[tuple[str, str, dict[str, Any] | None]] = []
+        self.enforce_query_limit = False
         self.bad_recall = False
         self.anchor_recall = False
         self.bound_low_score_recall = False
@@ -114,6 +117,9 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
             body = self._body()
             state.requests.append(("POST", self.path, body))
             if self.path.endswith("/memories/recall"):
+                if state.enforce_query_limit and len(_recall_tokenizer().encode(body["query"], disallowed_special=())) > 500:
+                    self._send(400, {"detail": "Query too long"})
+                    return
                 if state.group_recall_response is not None:
                     self._send(200, state.group_recall_response)
                     return
@@ -1692,3 +1698,39 @@ def test_low_score_candidate_preserves_admission_boundaries(
             engine.recall_for_presence_fast(_query())
     else:
         assert engine.recall_for_presence_fast(_query()).confirmed_facts == ()
+
+
+@pytest.mark.parametrize("text", ["Hallo", "warme woonkamer " * 80, "<|endoftext|> hoi"])
+def test_recall_queries_within_token_limit_are_unchanged(text: str) -> None:
+    assert len(_recall_tokenizer().encode(text, disallowed_special=())) <= 500
+    assert _bounded_recall_query(text) == text
+
+
+@pytest.mark.parametrize("middle", ["documentatie " * 1500, "🔆漢字é " * 1000, "<|endoftext|> " * 500])
+def test_long_recall_keeps_both_ends_without_invalid_unicode(middle: str) -> None:
+    text = "BEGIN woonkamer " + middle + " EINDE overkapping"
+    bounded = _bounded_recall_query(text)
+    assert bounded.startswith("BEGIN woonkamer ")
+    assert bounded.endswith(" EINDE overkapping")
+    assert "\ufffd" not in bounded
+    assert len(_recall_tokenizer().encode(bounded, disallowed_special=())) <= 500
+
+
+def test_long_recall_succeeds_with_original_query_and_person_scope_preserved(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    state.enforce_query_limit = True
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    text = "BEGIN " + "lange formaatdocumentatie " * 600 + " EINDE"
+    query = replace(_query(), query_text=text)
+    variants = engine._recall_query_variants(text)
+    result = engine.recall_for_presence(query)
+    requests = [body for method, path, body in state.requests
+                if method == "POST" and path.endswith("/memories/recall")]
+    assert result.confirmed_facts
+    assert query.query_text == text
+    assert len(requests) == len(variants)
+    assert {body["query"] for body in requests} == {_bounded_recall_query(v) for v in variants}
+    expected_tag = "eva-person-" + hashlib.sha256(PRINCIPAL.encode()).hexdigest()[:32]
+    assert all(body["tags"] == [expected_tag] and body["tags_match"] == "all_strict" for body in requests)

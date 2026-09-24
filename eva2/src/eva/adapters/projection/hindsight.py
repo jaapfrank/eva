@@ -16,6 +16,9 @@ from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import json
 import math
+import os
+from functools import lru_cache
+from pathlib import Path
 import re
 import socket
 import threading
@@ -44,6 +47,52 @@ from eva.application.memory_audience import (
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 from eva.contracts.memory import MemoryRecall, RecalledFact
 from eva.contracts.planning import ConfirmedFact
+
+
+_RECALL_QUERY_TOKEN_LIMIT = 500
+_RECALL_ENCODING_URL = "https://openaipublic.blob.core.windows.net/encodings/cl100k_base.tiktoken"
+_RECALL_ENCODING_SHA256 = "223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7"
+
+
+@lru_cache(maxsize=1)
+def _recall_tokenizer() -> Any:
+    """Use the same verified local vocabulary cache as conversation admission."""
+    import tiktoken
+
+    cache_directory = os.environ.get("TIKTOKEN_CACHE_DIR") or str(
+        Path(__file__).parent.parent / "model" / "tokenizer_data"
+    )
+    cache_path = Path(cache_directory) / hashlib.sha1(_RECALL_ENCODING_URL.encode()).hexdigest()
+    try:
+        if hashlib.sha256(cache_path.read_bytes()).hexdigest() != _RECALL_ENCODING_SHA256:
+            raise ValueError("tokenizer data hash differs")
+    except (OSError, ValueError) as error:
+        raise HindsightProjectionProtocolError("recall tokenizer data unavailable or differs") from error
+    os.environ["TIKTOKEN_CACHE_DIR"] = cache_directory
+    return tiktoken.get_encoding("cl100k_base")
+
+
+def _bounded_recall_query(text: str) -> str:
+    """Fit Hindsight's query limit; leave the full task and anchor extraction intact.
+
+    Keep both ends of a long search query. This is a retrieval approximation,
+    not a replacement for the original user instruction or stored conversation.
+    """
+    if len(text.encode("utf-8")) <= _RECALL_QUERY_TOKEN_LIMIT:
+        return text
+    encoding = _recall_tokenizer()
+    tokens = encoding.encode(text, disallowed_special=())
+    if len(tokens) <= _RECALL_QUERY_TOKEN_LIMIT:
+        return text
+    width = (_RECALL_QUERY_TOKEN_LIMIT - 8) // 2
+    while width:
+        head = encoding.decode_bytes(tokens[:width]).decode("utf-8", errors="ignore")
+        tail = encoding.decode_bytes(tokens[-width:]).decode("utf-8", errors="ignore")
+        bounded = head + "\n…\n" + tail
+        if len(encoding.encode(bounded, disallowed_special=())) <= _RECALL_QUERY_TOKEN_LIMIT:
+            return bounded
+        width -= 1
+    raise HindsightProjectionProtocolError("recall query could not be bounded")
 
 
 _MAX_RESPONSE_BYTES = 8 * 1024 * 1024
@@ -384,7 +433,9 @@ class HindsightMemoryEngine:
 
     @staticmethod
     def _recall_query_variants(query_text: str) -> tuple[str, ...]:
-        """Keep the full meaning while rescuing rare lexical anchors in parallel.
+        """Extract rare lexical anchors from the full query in parallel.
+
+        Each outgoing variant is bounded separately at the HTTP boundary.
 
         Dense retrieval can bury a unique Dutch place, person, or device name under
         the rest of a natural sentence. The longest words are sent as independent
@@ -577,6 +628,8 @@ class HindsightMemoryEngine:
         allowed_statuses: frozenset[int] = frozenset(),
     ) -> tuple[int, dict[str, Any]]:
         data = None
+        if method == "POST" and path.endswith("/memories/recall") and body is not None:
+            body = {**body, "query": _bounded_recall_query(body["query"])}
         if body is not None:
             data = json.dumps(
                 body,
