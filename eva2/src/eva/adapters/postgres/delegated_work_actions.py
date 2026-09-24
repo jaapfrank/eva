@@ -123,8 +123,8 @@ class PostgresDelegatedWorkActions:
                         "properties": {"work_id": {"type": "string", "minLength": 1, "maxLength": 240},
                                        "instruction": {"type": "string", "minLength": 1, "maxLength": 2000}}
                     } if operation == "revise_digital" else {"type":"string"}),
-                        **({"prior_work_id": {"type": "string", "minLength": 1, "maxLength": 240,
-                            "description": "Bij een gevraagde aanvulling of correctie: work_id van eerder onderzoek. Lees een beschikbaar resultaat eerst. Bij nog lopend onderzoek moet eerst stop_delegated_work een stopverzoek hebben vastgelegd. Formuleer in research de volledige zelfstandige gecorrigeerde openbare vraag. Geen automatische herhaling; eerdere resultaten blijven behouden."}}
+                        **({"prior_work_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 240,
+                            "description": "Gebruik null bij een nieuwe onderzoeksopdracht zonder voorganger. Bij een gevraagde aanvulling of correctie: work_id van eerder onderzoek. Lees een beschikbaar resultaat eerst. Bij nog lopend onderzoek moet eerst stop_delegated_work een stopverzoek hebben vastgelegd. Formuleer in research de volledige zelfstandige gecorrigeerde openbare vraag. Geen automatische herhaling; eerdere resultaten blijven behouden."}}
                            if operation == "research" else {}),
                         **({"feedback": {"type": "string", "minLength": 1, "maxLength": 800}}
                            if operation == "initiative_feedback" else {}),
@@ -303,7 +303,7 @@ class PostgresDelegatedWorkActions:
         optional = {"acceptance_message"} if operation in {"start", "research", "digital"} else set()
         if operation == "research":
             optional.add("prior_work_id")
-        if "prior_work_id" in call.arguments and (
+        if call.arguments.get("prior_work_id") is not None and (
                 not isinstance(call.arguments["prior_work_id"], str)
                 or not 1 <= len(call.arguments["prior_work_id"]) <= 240):
             raise ConversationConflict("research predecessor is invalid")
@@ -346,7 +346,7 @@ class PostgresDelegatedWorkActions:
             operation, turn, request_key=thread_id,
             **({} if key is None else {key: call.arguments[key]}),
             **({"feedback": call.arguments["feedback"]} if operation == "initiative_feedback" else {}),
-            **({"prior_work_id": call.arguments["prior_work_id"]} if "prior_work_id" in call.arguments else {}),
+            **({"prior_work_id": call.arguments["prior_work_id"]} if call.arguments.get("prior_work_id") is not None else {}),
         )
         output = {"status": "verified", "operation_result": result}
         work = result.get("work")
