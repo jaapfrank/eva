@@ -1,0 +1,26 @@
+{
+  "contract": "EvaFeatureInstallation/v1",
+  "installedAt": "2026-09-24T02:14:54.282975+00:00",
+  "sourceCommit": "5a94b7211b8516e5e58c2d1c54ce4d5bccd62233",
+  "image": "eva2-connector-refresh:20260924",
+  "feature": "Explicit refresh of an already admitted MCP connector catalog",
+  "checks": [
+    "Changed live files matched source baseline",
+    "Python syntax",
+    "Configured application startup and refresh descriptor",
+    "No active background tasks at cutover",
+    "Core and delegated worker healthy"
+  ],
+  "runtime": {
+    "eva2-managed-b-slot3-core": "healthy",
+    "eva2-managed-b-slot3-delegated-work-worker-1": "healthy"
+  },
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/connector-refresh-20260924/baseline.compose.private.json",
+  "rollbackNote": "Retains the new registry reader so refreshed generations remain readable after rollback. Registration entry point returns to previous behavior.",
+  "limits": [
+    "Uses the current ContextForge gateway catalog; does not request an upstream rescan",
+    "No real service-change or model-driven task trial; deferred by owner",
+    "No claim that digital task execution as a whole is accepted"
+  ],
+  "paidModelCalls": 0
+}
