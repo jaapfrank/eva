@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T16:18:53.743512+00:00",
+        "checkedAt": "2026-09-24T16:30:45.616452+00:00",
         "deliveries": [
+          {
+            "title": "Vervolgwerk kan volledig eerder taakresultaat teruglezen",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Digitale werker kan het volledige bewaarde eigen taakresultaat gericht ophalen. Het eerdere fragment van6000 bytes is geen eindgrens meer. Alleen lezen; geen extra taakstart of budget.",
+            "remaining": "33 gerichte controles inclusief echte PostgreSQL-opslag en onafhankelijke review geslaagd. Echte modelgestuurde vervolgopdracht en jouw beoordeling blijven open.",
+            "source": "eva2/evidence/product/previous-work-result-installed-20260924.json"
+          },
           {
             "title": "Mislukte Python-uitvoering telt niet meer als afgeronde taak",
             "date": "24 september",
@@ -2071,15 +2079,15 @@
           }
         ],
         "now": {
-          "title": "Resultaatbeoordeling van procedurewerk geïnstalleerd",
+          "title": "Volledig taakresultaat beschikbaar voor vervolgwerk",
           "state": "Technisch opgeleverd",
-          "detail": "Bron 6265fe64 draait in kern en werker. Website en spraakgereedheid HTTP 200. Geen Eva-modelaanvragen.",
-          "doneWhen": "Dit concrete tekort is hersteld; volledige digitale taakuitvoering en gezinsacceptatie blijven open."
+          "detail": "Bron f0b320f5 in kern en werker geïnstalleerd. Beide gezond; website en spraakgereedheid HTTP200. Geen modelaanvragen gebruikt.",
+          "doneWhen": "Deze ontbrekende leesmogelijkheid is geïnstalleerd; volledige digitale taakkwaliteit blijft apart open."
         },
         "next": {
-          "title": "Vervolgwerk met eerdere taakresultaten afronden",
+          "title": "Snelle ontvangst en doorpraten verder afronden",
           "state": "Nog niet gestart",
-          "detail": "Bestaande hervatting werkt. Onderzoeken of expliciete overdracht van een eerder resultaat nodig is voor nieuwe vervolgopdrachten; geen algemene herbouw of herstelwizard."
+          "detail": "Terug naar het merkbare open punt uit stap1: bestaande snelle contactroute hergebruiken en de bekende lange wachttijd gericht aanpakken. Geen nieuwe herstelwizard of ongewijzigde begroetingsproef."
         },
         "ownerAction": {
           "title": "Een eerdere speakertaak gericht stoppen",
@@ -2093,7 +2101,7 @@
           "expected": "Eva vindt de eerdere opdracht via dezelfde speaker en stopt alleen de gekozen taak. Deze fysieke proef is nog niet door jou bevestigd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T16:18:53.743512+00:00"
+        "reviewedAt": "2026-09-24T16:30:45.616452+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11865,7 +11873,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Vervolgwerk met eerdere taakresultaten afronden",
+      "nextAction": "Snelle ontvangst en doorpraten verder afronden",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

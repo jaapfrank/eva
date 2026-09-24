@@ -1,0 +1,70 @@
+{
+  "checkedAt": "2026-09-24T16:30:01.177039+00:00",
+  "sourceCommit": "f0b320f53e64e364db62ae78f14b6762c5084e0d",
+  "featureCommit": "c97f0f1c",
+  "status": "installed",
+  "outcome": "Private digital worker can retrieve complete retained previous task results through the existing owner-scoped get_delegated_work service. Scheduled handoff still uses compact excerpt with real work_id.",
+  "scope": [
+    "No recursive start, stop or resume tools added",
+    "Fresh read checks current owner, retention and current task cancellation",
+    "Read alone is not completion of new assignment",
+    "Digital catalog accepts17 existing explicitly allowed names; per-attempt budgets unchanged"
+  ],
+  "tests": {
+    "result": "33 passed in5.33s",
+    "evidence": "Actual PostgreSQL result above8500bytes read byte-for-byte including tail, fresh repeated read, owner isolation, retention and stop guard; composition and runner checks.",
+    "initialIssues": [
+      "One stale catalog expectation corrected, first run31pass1fail retained.",
+      "Configured startup discovered inherited catalog bound16 vs actual17; digital-only bound repaired and regression added."
+    ]
+  },
+  "review": {
+    "verdict": "GO",
+    "reviewers": {
+      "agent": "Coordinator-owned runner/schedule instructions and context-only completion test",
+      "coordinator": "Agent-owned reader, composition, grant extension and PostgreSQL test"
+    },
+    "tests": "32 passed in4.00s, including real PostgreSQL result >6000bytes and current authority/retention/cancellation boundaries",
+    "scope": "No model-driven end-to-end claim"
+  },
+  "catalogFixReview": "Independent agent GO; explicit name whitelist and existing execution budgets preserved.",
+  "installation": {
+    "checkedAt": "2026-09-24T16:29:42.983285+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:3068bc1c7c162a0550fbf3826187f2e740e9db0ce7cf8f8828dd01afeabd6c10",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_runner.py": "2631cccc4ba2702ccc8d0995ba39ff8238fc87b0bc7467e1680f8e5ae587fde8",
+          "bootstrap/delegated_digital_composition.py": "2804f1f1628df577985f5b1e35caba59e40d97fde3d18b931ef7648ab9633f81",
+          "bootstrap/delegated_work_result_reader.py": "7120f58a9894e85f9784b7fd0936aa0572482de4c46ed70a9783825936e2993b",
+          "contracts/delegated_digital_work.py": "bcc72d074a15856b3529b92004ede29bc6b7e764147f84b5c443b086915c7ba5",
+          "adapters/postgres/scheduled_work.py": "f994231bb3d86cfacb4f262cfe083ca8e4322483190ad931299f8feb6fab7fae"
+        }
+      },
+      "worker": {
+        "image": "sha256:8bf87dc4ae59af549e046af7e7109f959a04ccd5fc8cab2b7dcc12bc4c9a2c0f",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_runner.py": "2631cccc4ba2702ccc8d0995ba39ff8238fc87b0bc7467e1680f8e5ae587fde8",
+          "bootstrap/delegated_digital_composition.py": "2804f1f1628df577985f5b1e35caba59e40d97fde3d18b931ef7648ab9633f81",
+          "bootstrap/delegated_work_result_reader.py": "7120f58a9894e85f9784b7fd0936aa0572482de4c46ed70a9783825936e2993b",
+          "contracts/delegated_digital_work.py": "bcc72d074a15856b3529b92004ede29bc6b7e764147f84b5c443b086915c7ba5",
+          "adapters/postgres/scheduled_work.py": "f994231bb3d86cfacb4f262cfe083ca8e4322483190ad931299f8feb6fab7fae"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/previous-work-result-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "readiness": {
+    "owner": 200,
+    "voice": 200
+  },
+  "runtimeModelCalls": 0,
+  "creditCost": "Unknown",
+  "ownerAccepted": false,
+  "remaining": [
+    "No live model-driven follow-up task trial",
+    "No full step3/learning acceptance claim"
+  ]
+}
