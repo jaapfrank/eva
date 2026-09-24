@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T15:02:01.697419+00:00",
+        "checkedAt": "2026-09-24T15:11:40.530097+00:00",
         "deliveries": [
+          {
+            "title": "Volledige HA-configuraties analyseren en advies opleveren",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Echte achtergrondopdracht geslaagd: vier volledige configuraties gelezen en één onderbouwd verbeteradvies opgeslagen. Drie modelrondes, twee leesacties,27.684 inputtokens. Niets gewijzigd. Inhoud onafhankelijk gecontroleerd.",
+            "remaining": "Resultaat in taakoverzicht opvraagbaar. Automatische aflevering nog niet bewezen; terugmeldroute gaf eerst ouder resultaat. Ontvangst9,7 s blijft te traag. Aanmaken/wijzigen en Voice PE-proef staan apart open.",
+            "source": "eva2/evidence/product/full-ha-configurations-installed-20260924.json"
+          },
           {
             "title": "Compacte HA-ontdekking en duidelijke budgetmelding",
             "date": "24 september",
@@ -2007,15 +2015,15 @@
           }
         ],
         "now": {
-          "title": "Compacte ontdekking live; volledige HA-analyse nog niet af",
-          "state": "Proef beëindigd · budget bereikt",
-          "detail": "Echte proef bevestigt gebruik van compacte inventaris en correcte budgetmelding. Dubbele detail-/API-lezingen kosten nog te veel rondes; geen actieve proef meer.",
-          "doneWhen": "Volledige geselecteerde configuraties zonder dubbele rondes lezen, analyseren en resultaat terugbrengen binnen bestaande grenzen."
+          "title": "HA-configuratieanalyse daadwerkelijk opgeleverd",
+          "state": "Technisch afgerond voor deze leesopdracht",
+          "detail": "Nieuwe batchlezer live; echte taak afgerond binnen ongewijzigd budget en resultaat inhoudelijk gecontroleerd. Geen actieve proef meer.",
+          "doneWhen": "Deze begrensde leesanalyse is opgeleverd; algemene huisbediening, snelle ontvangst en kanaalaflevering blijven afzonderlijk open."
         },
         "next": {
-          "title": "Volledige geselecteerde configuraties in één leesstap",
+          "title": "Actuele taakresultaten zichtbaar terugmelden op website",
           "state": "Nog niet gestart",
-          "detail": "Bestaande batchlezer hergebruiken voor bevoegde privé-analyse; ontbrekende templatevoorwaarden niet nogmaals apart ophalen. Geen ongewijzigde herproef."
+          "detail": "Controleren hoe de bestaande terugmeldroute oudere wachtrijresultaten en actuele taken toont, zonder oude resultaten te verliezen. Daarna de resterende ontvangstvertraging gericht aanpakken."
         },
         "ownerAction": {
           "title": "Gebruik een eigen Home Assistant-opdracht",
@@ -2029,7 +2037,7 @@
           "expected": "Eva zoekt zelf de bestaande configuratie/services op en gebruikt de passende API. Een wijziging moet ze teruglezen en eerlijk toelichten; API-bevestiging alleen bewijst geen fysieke werking."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T15:02:01.697419+00:00"
+        "reviewedAt": "2026-09-24T15:11:40.530097+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11801,7 +11809,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Volledige geselecteerde configuraties in één leesstap",
+      "nextAction": "Actuele taakresultaten zichtbaar terugmelden op website",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

@@ -1,0 +1,72 @@
+{
+  "checkedAt": "2026-09-24T15:11:40.530097+00:00",
+  "state": "installed",
+  "sourceCommit": "e8cb2d04",
+  "installation": {
+    "checkedAt": "2026-09-24T15:08:08.158241+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:846cc75495b32f4daf117d8be85422d81433c00211eec906c06fdd25aae3e45c",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/connectors/home_assistant_admin.py": "1159a32231fbf7ec5e52198a40fa93abc041fe5cd3dc70c3b64ef49d0802d974",
+          "adapters/connectors/home_assistant_api.py": "a512f75076ce86ebb4a4011c065ae0e3a890d0f843f7a0c949531b49285db68f"
+        }
+      },
+      "worker": {
+        "image": "sha256:aa22e4dc74c4f0d25d9b69476d0010fd3791fcb6b5814aadde62d5379bd52399",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/connectors/home_assistant_admin.py": "1159a32231fbf7ec5e52198a40fa93abc041fe5cd3dc70c3b64ef49d0802d974",
+          "adapters/connectors/home_assistant_api.py": "a512f75076ce86ebb4a4011c065ae0e3a890d0f843f7a0c949531b49285db68f"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/full-ha-configurations-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "checks": [
+    "22 focused cases passed2.03s",
+    "Independent source and actual result review passed",
+    "Full digital release equality verified",
+    "Exact installed source hashes and healthy core/worker"
+  ],
+  "actualTrial": {
+    "workId": "work:eva-chat:b159cc1f-ef67-5fe5-bffc-10cf6a9575d0",
+    "state": "succeeded",
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 3,
+      "tool_calls": 2,
+      "input_tokens": 27684,
+      "output_tokens": 372,
+      "total_tokens": 28056,
+      "cost_usd_micros": null
+    },
+    "admissionSeconds": 9.668,
+    "createdAt": "2026-09-24T15:08:21Z",
+    "completedAt": "2026-09-24T15:09:00Z",
+    "resultAvailable": true,
+    "outputSha256": "06f96388b1ae496405f1f2e25640afc59e9e78a476b3484d32e1773c9a7868c1",
+    "toolSequence": [
+      "read_home_assistant_inventory:automations",
+      "read_home_assistant_inventory:automation_configurations"
+    ],
+    "configurationsRead": 4,
+    "mutationCalls": 0,
+    "resultSummary": "Complete current configuration comparison identifies possible conflicting media conditions; no physical fault claimed. Independent review confirms all claims."
+  },
+  "delivery": {
+    "taskBoardResult": "Available through existing owner work/get",
+    "automaticWebsiteReturn": "Not proven: return/poll yielded an older pending result; no older result acknowledged"
+  },
+  "limitations": [
+    "This proves one private HA configuration analysis, not all home functions",
+    "No automation creation/edit or physical device action performed",
+    "Admission9.668seconds remains too slow; no physical Voice PE trial",
+    "Full configuration view limited to40,000 content characters per batch; omissions explicit",
+    "No owner acceptance; measured runtime cost unavailable"
+  ],
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/full-ha-configurations-20260924"
+}

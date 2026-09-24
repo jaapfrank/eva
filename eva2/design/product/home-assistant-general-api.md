@@ -45,3 +45,20 @@ Installed owner-route parity on 24 September: both the server-bound local owner
 identity and its verified Telegram bridge are admitted. Core and worker retain
 identical provider configuration. This does not grant shared speakers general
 API administration. See ha-owner-channel-parity-installed-20260924.json.
+
+
+## Complete configuration batches — 24 September 2026
+
+The existing `read_home_assistant_inventory` action offers the private
+`automation_configurations` section for up to eight selected inventory IDs.
+It reuses the existing concurrent reader and returns complete configuration JSON
+as text, retaining template conditions, service data and decimal values. The
+older projected `automation_details` view remains available. Full content is
+limited to 40,000 characters per batch; omitted content is explicitly marked
+incomplete. Shared household audiences cannot select the full private view.
+
+A real owner task used the automation index and one complete batch, compared four
+configurations and saved a supported recommendation within the existing budget.
+This verifies one read-only configuration-analysis workflow, not physical effects,
+automation editing or broad home-control acceptance. See
+`eva2/evidence/product/full-ha-configurations-installed-20260924.json`.
