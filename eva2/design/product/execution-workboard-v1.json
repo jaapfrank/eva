@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T18:04:43.807259+00:00",
+        "checkedAt": "2026-09-24T18:10:13.749708+00:00",
         "deliveries": [
+          {
+            "title": "Aangenomen werk zonder extra bevestigingsmodel terugmelden",
+            "date": "24 september",
+            "state": "installed",
+            "result": "De bij taakstart opgeslagen ontvangstzin wordt na de bestaande controle direct gebruikt, ook als Eva eerst iets opzocht. Kern en werker geïnstalleerd en gezond.",
+            "remaining": "16 gerichte controles en onafhankelijke review geslaagd. Werkelijke tijdwinst nog niet gemeten; voorafgaande zoekacties en modelwachttijd blijven bestaan.",
+            "source": "eva2/evidence/product/admission-acceptance-installed-20260924.json"
+          },
           {
             "title": "Zelfgemaakte werkwijze op nieuwe gegevens hergebruikt",
             "date": "24 september",
@@ -2119,15 +2127,15 @@
           }
         ],
         "now": {
-          "title": "Leer- en hergebruikproef geslaagd",
-          "state": "Geïnstalleerd en functioneel gecontroleerd",
-          "detail": "Dezelfde opgeslagen code werkelijk uitgevoerd op twee verschillende datasets. Tweede resultaatbestand opgeslagen en teruggelezen. Geen nieuwe taak of modelproef loopt.",
-          "doneWhen": "Deze begrensde proef afgerond; snelheid, algemene vaardigheden en eigenaaracceptatie blijven open."
+          "title": "Extra bevestigingscall na taakstart verwijderd",
+          "state": "Geïnstalleerd",
+          "detail": "Bestaande ontvangstzin en stopcontrole hergebruikt. Website en spraakroute bereikbaar. Geen nieuwe modelproef of gemeten snelheidsclaim.",
+          "doneWhen": "Technische wijziging afgerond; snelle ontvangst als geheel nog open."
         },
         "next": {
-          "title": "Sneller aannemen van achtergrondopdrachten",
+          "title": "Bestaande snelle spraakontvangst aansluiten op taakstart",
           "state": "Nog niet gestart",
-          "detail": "De ontvangst duurde41,3s en gebruikte4modelaanvragen vóór werkstart. Bestaande contact-/overdrachtsroute gericht controleren; geen ongewijzigde modelproeven."
+          "detail": "Controleren waarom de eerder werkende snelle hoorbare ontvangst de huidige achtergrondopdrachten niet tijdig bereikt. Bestaande route hergebruiken; geen nieuwe brede spraakbouw."
         },
         "ownerAction": {
           "title": "Het echte hergebruikresultaat lezen",
@@ -2140,7 +2148,7 @@
           "expected": "Je ziet totaal1.002,50, inkomen1.000,00, overig2,50,1dubbel en het opgeslagen pad /proof-state/nederlandse-csv-totalen-resultaat-xyz.txt. Dit resultaat is gecontroleerd; jouw beoordeling staat apart."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T18:04:43.807259+00:00"
+        "reviewedAt": "2026-09-24T18:10:13.749708+00:00"
       }
     },
     "pendingTechnicalReview": {

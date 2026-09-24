@@ -1,0 +1,49 @@
+{
+  "recordedAt": "2026-09-24T18:10:13.749708+00:00",
+  "sourceCommit": "81c334b82d44435830271464b3faac971ad8804c",
+  "result": "Already drafted acceptance returned immediately after guarded durable admission, including work-model admissions after earlier lookup steps. No redundant confirmation request needed when acceptance is supplied.",
+  "tests": {
+    "passed": 16,
+    "seconds": 0.91,
+    "coverage": "Lookup plus work-model admission takes two model calls; current stop guard controls returned text; original admission cases retained."
+  },
+  "review": "Independent bounded_contact_comparison checked production guard validates prior receipt indexes, current authority and stop status. GO.",
+  "installation": {
+    "checkedAt": "2026-09-24T18:09:23.432349+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:7795448ed51ff4106492506580d82302f9b27b30bd471c24d77d4790617c30a2",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "1d59e61d53e17c8f42dcd9181de246204a0b543f7185e47daf9f4b531e4a598a"
+        }
+      },
+      "worker": {
+        "image": "sha256:2fac5f1f8b45321071fda3f15c3722419f0ed747fd7c66e83372c6152382d4fd",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "1d59e61d53e17c8f42dcd9181de246204a0b543f7185e47daf9f4b531e4a598a"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/admission-acceptance-20260924/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "fullCoreWorkerProfileEquality": true,
+  "httpChecks": {
+    "http://localhost:44711/internal/v1/dashboard": 200,
+    "http://localhost:44716/session/ready": 200
+  },
+  "runtimeModelTrials": 0,
+  "cost": "unknown",
+  "historicalReference": {
+    "scenario": "procedure reuse",
+    "totalReceiptSeconds": 41.34,
+    "lastConfirmationInputTokens": 5430,
+    "lastConfirmationOutputTokens": 50
+  },
+  "limitations": [
+    "No measured new runtime latency or token saving.",
+    "Only applies when admitted tool output contains a valid acceptance and an active reply guard.",
+    "Does not remove preceding lookup/model calls or improve provider first-token latency."
+  ]
+}
