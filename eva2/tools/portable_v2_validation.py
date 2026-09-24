@@ -149,6 +149,6 @@ def validate_current_records(records, *, tenant_id, installation_id, runtime_ide
             raise ValueError("delegated work owner dependency missing")
         # This existing validator reads no database and validates all spec/result
         # bindings, output digest, usage, stop state and private-context contracts.
-        PostgresDelegatedWorkStore._validated(None, None,
+        PostgresDelegatedWorkStore.validate_stored_row(
             SimpleNamespace(**typed_row(record, CURRENT_SPECS[1])))
     return last

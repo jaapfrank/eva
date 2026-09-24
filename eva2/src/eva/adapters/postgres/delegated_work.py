@@ -1399,6 +1399,16 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         connection: sa.Connection,
         row: sa.RowMapping,
     ) -> StoredDelegatedWork:
+        work = self.validate_stored_row(row)
+        report = self._read_failure_report(connection, work)
+        if report is not None and self._failure_report_clock() < work.retention_until:
+            from dataclasses import replace
+            work = replace(work, failure_report=report)
+        return work
+
+    @staticmethod
+    def validate_stored_row(row: sa.RowMapping) -> StoredDelegatedWork:
+        """Validate persisted work without loading optional runtime reports."""
         try:
             spec = load_delegated_work_spec(row.spec_payload)
             if bytes(row.spec_sha256).hex() != canonical_sha256(row.spec_payload):
@@ -1474,10 +1484,6 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             retention_policy_id=row.retention_policy_id,
             retention_until=row.retention_until,
         )
-        report = self._read_failure_report(connection, work)
-        if report is not None and self._failure_report_clock() < work.retention_until:
-            from dataclasses import replace
-            work = replace(work, failure_report=report)
         return work
 
     def _card(
