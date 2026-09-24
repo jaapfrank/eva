@@ -1009,8 +1009,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T03:01:46.337704+00:00",
+        "checkedAt": "2026-09-24T03:04:24.034810+00:00",
         "deliveries": [
+          {
+            "title": "Minder opeenvolgend wachten na taakresultaten",
+            "date": "24 september",
+            "state": "installed",
+            "result": "Maximaal vier onafhankelijke resultaatcontroles tegelijk voor de nieuwe gesproken vraag.",
+            "remaining": "Geen gemeten gesprekssnelheid of echte spraakproef; geen fysieke Voice PE-wijziging.",
+            "source": "eva2/evidence/product/voice-context-parallel-installed-20260924.json"
+          },
           {
             "title": "Gesprekcontext bij een vervolgvraag behouden",
             "date": "24 september",
@@ -1790,9 +1798,9 @@
         ],
         "now": {
           "title": "Doorpraten na ontvangen taakresultaten",
-          "state": "In uitvoering",
-          "detail": "Vier onafhankelijke controles van bewaarde resultaten verlopen nu na elkaar vóór een nieuwe gesproken vraag. Ze worden gelijktijdig gemaakt; toegang, ingetrokken resultaten en annuleringsgedrag blijven behouden.",
-          "doneWhen": "Spraakadapter geïnstalleerd en opstart gecontroleerd. Geen gemeten snelheid of oplossing van de modelvertraging claimen."
+          "state": "Spraakaanpassing geïnstalleerd",
+          "detail": "Controles van opgeslagen resultaten lopen parallel voordat een nieuwe gesproken vraag doorgaat. Toegang en uitsluiten van ingetrokken resultaten blijven behouden. Website en stemverbinding beschikbaar.",
+          "doneWhen": "Geïnstalleerd en start gecontroleerd; geen gemeten snelheidswinst. Echte spraakproef later. Snelle begroeting en complete kanaalgelijkheid blijven open."
         },
         "next": {
           "title": "Sneller contactmodel kiezen",
@@ -1810,7 +1818,7 @@
           "expected": "Een vastgelegde falende wakeword-overgang; geen herhaling van een blinde firmwareproef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T03:01:46.337704+00:00"
+        "reviewedAt": "2026-09-24T03:04:24.034810+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11582,7 +11590,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Bestaande begroetingen kosten ongeveer drie seconden modeltijd. Geen herhaling van de al verloren voorbereiding-, redeneer- en catalogusproeven. Fysieke Voice PE-diagnose blijft uitgesteld.",
+      "nextAction": "Contactmodelkeuze wacht op antwoord over maximaal zes korte modelaanvragen. Geen modelwissel zonder toegangs- en snelheidsbewijs; onafhankelijke functionele bouw kan verder.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

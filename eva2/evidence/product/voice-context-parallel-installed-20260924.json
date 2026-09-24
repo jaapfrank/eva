@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-24",
+  "sourceCommit": "6b2e3cc4",
+  "image": "eva2-voice-context-parallel:20260924",
+  "installedService": "eva2-owner-voice-media-1",
+  "status": "installed_start_checked",
+  "change": "Independent saved-result read authorizations run concurrently, at most four. All checks finish before new input reaches the core; invalid results remain excluded and cancellation joins child checks.",
+  "retained": "Unrelated installed household-return additions preserved by patching the runtime fragment.",
+  "checks": ["Python syntax", "Configured voice application startup", "Zero active LiveKit participants before installation", "Container running with intended image", "Website HTTP 200", "Session readiness HTTP 200 and ready=true"],
+  "newModelCalls": 0,
+  "rollbackCompose": "/home/administrator/project/.eva2-artifacts/voice-context-parallel-20260924/baseline.compose.private.json",
+  "candidateCompose": "/home/administrator/project/.eva2-artifacts/voice-context-parallel-20260924/candidate.compose.private.json",
+  "limits": ["No voice or model trial", "No measured latency gain", "Not established as the cause of greeting delay", "No firmware or physical Voice PE change"],
+  "contactModelDecision": {
+    "status": "awaiting_owner_answer_for_bounded_comparison",
+    "proposedMaximumModelCalls": 6,
+    "officialSource": "https://developers.openai.com/api/docs/models/chat-latest",
+    "officialFindings": ["Instant alias supports function calling", "Instant alias does not support tool search"],
+    "accountAccess": "Access via the existing subscription route is not established; no model switch or new paid route"
+  }
+}
