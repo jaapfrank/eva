@@ -2,6 +2,38 @@
 
 Bijgewerkt: 27 augustus 2026.
 
+## Restore operator integration — 24 September 2026
+
+Source `227adb2f` connects the existing restore wizard to component verification,
+database release and runtime startup after commit. The installed operator entry is
+`/home/administrator/project/.eva2-artifacts/installer-document-write-20260924/start-installer.py`.
+Run it with `--restore-config /absolute/private/target.json`; the existing wizard
+options, including `--port`, follow that argument. The launcher prints the local
+bootstrap link. Keep that link private; it opens the owner session.
+
+The private target configuration selects an empty target, retained source/target
+container identities, component locations and current credential authorization.
+An optional `activation` object supplies `native_authorization` and a
+`startup_timeout_seconds` value (default 60, maximum 120). Activation requires the
+complete existing document-promotion configuration and an explicit runtime
+identity. It does not accept verification receipts from the archive or browser.
+Native authorization verifies current operator-approved bindings and mounted
+credentials; it does not prove remote provider availability.
+
+In the wizard, select the encrypted backup, enter its password, choose
+**Controleer reservekopie**, then **Herstel gecontroleerde reservekopie**.
+The operator must verify the configured target before opening the wizard. A failed or
+partially started restore retains its targets and must be inspected before
+another attempt. Do not automatically repeat imports or start both installations.
+
+The operator command has been updated with previous files retained at
+`/home/administrator/project/.eva2-artifacts/restore-launcher-227adb2f`.
+[Installation evidence](../../evidence/product/restore-operator-updated-20260924.json)
+records its exact scope. The complete isolated restore trial remains open.
+Generating this operator configuration through ordinary user-facing installation
+choices, without manual JSON, also remains part of the product promise below;
+availability of this command does not complete that requirement.
+
 ## Productbelofte
 
 Eva moet op een andere computer te installeren zijn zonder dat de gebruiker
