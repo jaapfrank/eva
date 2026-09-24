@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-24T00:37:45.049243+00:00",
+  "checkedAt": "2026-09-24T09:56:44.688873+00:00",
   "status": "prepared_owner_decision_required",
   "requirement": "Existing permitted household light/switch controls available through shared Voice PE.",
   "findings": {
@@ -13,10 +13,11 @@
     "voicePolicyExpiresAt": "2026-10-08T23:37:17Z"
   },
   "preparedChange": "Add only the two existing household-device principal hashes to the existing effect allowlist. Existing entity/service pairs, private memory, credentials and firmware unchanged.",
-  "candidateCompose": "/home/administrator/project/.eva2-artifacts/household-light-control-20260924/candidate.compose.private.json",
-  "baselineCompose": "/home/administrator/project/.eva2-artifacts/household-light-control-20260924/baseline.compose.private.json",
+  "candidateCompose": "/home/administrator/project/.eva2-artifacts/household-light-control-current-20260924/candidate.compose.private.json",
+  "baselineCompose": "/home/administrator/project/.eva2-artifacts/household-light-control-current-20260924/baseline.compose.private.json",
   "notInstalled": true,
   "decisionRequired": "Whether anyone speaking to the shared speakers may operate the existing permitted lights/switches.",
-  "checks": "Read-only source and installed configuration inspection; no device action, model call or physical trial.",
-  "installationNote": "Rebase candidate on current active compose and revalidate voice policy before installation after owner choice."
+  "checks": "Current authority enabled and unexpired; added hashes exactly match two current household-device principals; only same allowlist key changed in core and worker, retaining current core owner binding; docker compose config valid. No device action, model call or installation.",
+  "installationNote": "Rebase candidate on current active compose and revalidate voice policy before installation after owner choice.",
+  "rebasedOnImage": "eva2-contact-luna6:20260924"
 }

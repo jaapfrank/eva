@@ -1829,29 +1829,28 @@
           }
         ],
         "now": {
-          "title": "HA-koppeling behouden; praktijkbewijs nog open",
-          "state": "Gerichte controle afgerond",
-          "detail": "Doorpraten, taakbediening en automatische publieke terugmelding bestaan in de draaiende gedeelde route. Vijf spraakpogingen behielden dezelfde HA-gespreksidentiteit. Geen nieuwe functie gebouwd en geen modelcalls gedaan.",
-          "doneWhen": "Geen ontbrekende aansluiting aangetoond. Tussenvraag tijdens onderzoek en hoorbare terugmelding blijven onbevestigd; geen volledige spraakafronding."
+          "title": "Gedeelde huisbediening voorbereiden",
+          "state": "Voorbereid; niet geïnstalleerd",
+          "detail": "Kandidaat staat op de actuele Luna6-installatie. Alleen toegang voor de twee bestaande speakeridentiteiten toegevoegd; configuratie gecontroleerd. Activering wacht op eigenaarbesluit, privégeheugen blijft ongewijzigd.",
+          "doneWhen": "Actuele kandidaat met dezelfde118 bestaande apparaat/handeling-paren, alleen twee bestaande huisapparaten toegevoegd na toestemming."
         },
         "next": {
-          "title": "Gesprek tijdens werk in dagelijks gebruik beoordelen",
-          "state": "Gebruiksbewijs nog open",
-          "detail": "De nieuwe contactmodel- en streamcorrecties zijn geïnstalleerd. Volgende echte gesprek kan snelheid en overlap bevestigen. Onbekende spreker heeft geen privégeheugen; die persoonskeuze blijft apart open."
+          "title": "Bestaande huisbediening via Voice PE beschikbaar maken",
+          "state": "Wacht op eigenaarbesluit",
+          "detail": "Beide speakeridentiteiten hebben nog geen bedieningstoegang. De keuze over privéspraak staat apart open; privégeheugen blijft beschermd."
         },
         "ownerAction": {
-          "title": "Zo kun je doorpraten tijdens onderzoek",
+          "title": "Twee gerichte productkeuzes",
           "url": "http://localhost:44712/",
           "linkLabel": "Projectoverzicht",
           "steps": [
-            "Zeg via het gewone wakeword: Zoek uit wat Home Assistant Cloud doet voor spraak, met bronnen.",
-            "Vraag na Eva’s ontvangstreactie: Hoe gaat het met jou? Gebruik zo nodig het gewone wakeword.",
-            "Verwacht een antwoord op je tussenvraag terwijl het onderzoek doorgaat; het onderzoeksresultaat hoort later apart terug te komen. Stoppen kan met: Stop mijn onderzoek."
+            "Beantwoord in deze taak of iedereen thuis via beide speakers de bestaande lampen en schakelaars mag bedienen.",
+            "Kies of privé-inhoud op telefoon/Telegram blijft, of ook via gedeelde spraak mogelijk moet worden met verificatie van persoon en publiek."
           ],
-          "expected": "Dit is de nog open gebruiksproef. Geen nieuwe firmware nodig; alleen publieke huiscontext, geen bewijs van persoonherkenning."
+          "expected": "Deze keuzes bepalen ontbrekende functionaliteit; bestaande acceptaties en privégrenzen blijven behouden."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T09:53:48.506093+00:00"
+        "reviewedAt": "2026-09-24T09:56:44.688873+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11513,7 +11512,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 1,
+      "currentStep": 4,
       "steps": [
         {
           "number": 1,
@@ -11623,7 +11622,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Kleine modelvergelijking (maximaal zes aanvragen) en later wakeword-meetmoment zijn gevraagd. Geen proeven zonder antwoord. Onafhankelijk functioneel vervolg blijft mogelijk bij een concreet ontbrekend onderdeel.",
+      "nextAction": "Gedeelde huisbediening op actuele installatie voorbereiden; activeren na expliciete keuze over toegang voor beide speakers. Persoons-/publiekskeuze voor privéspraak staat apart open. Zes modelproeven zijn afgerond, contactmodel en HA-streamcorrectie geïnstalleerd.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
