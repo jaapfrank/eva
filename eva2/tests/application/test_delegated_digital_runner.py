@@ -304,3 +304,40 @@ def test_designation_requires_a_verified_reference_before_counting_completion():
     assert not _has_completed_tool_evidence([receipt("designated")])
     assert not _has_completed_tool_evidence([receipt("unavailable")])
     assert _has_completed_tool_evidence([receipt("designated", reference={"document_id": "verified-save-reference"})])
+
+
+@pytest.mark.parametrize("limit", ["input", "output", "models", "request_admission"])
+def test_exhausted_attempt_is_budget_failure_with_preserved_usage(monkeypatch, limit):
+    from types import SimpleNamespace
+    from eva.application.conversation import ConversationExecutionLimitReached
+    import eva.bootstrap.delegated_digital_runner as module
+    import eva.adapters.postgres.work_corrections as corrections
+
+    source, spec, store, tools, journal, runner, _ = fixture()
+    store._engine = None
+    actual = SimpleNamespace(measurement="measured",
+        model_attempts=spec.grant.maximum_model_runs + 1 if limit == "models" else 5,
+        input_tokens=66910 if limit == "input" else 60,
+        output_tokens=spec.grant.maximum_output_tokens + 1 if limit == "output" else 521)
+    journal.model_usage = lambda turn: actual
+    monkeypatch.setattr(module, "BackgroundWorkProgress", lambda *a: SimpleNamespace(action_names=()))
+    monkeypatch.setattr(module, "ComponentImprovementActions", lambda *a: SimpleNamespace(action_names=()))
+    monkeypatch.setattr(corrections, "work_corrections", lambda *a: ())
+
+    class ControlledConversation:
+        def __init__(self, *args): pass
+        def respond(self, turn, *, before_step, model_journal):
+            if limit == "request_admission":
+                raise ConversationExecutionLimitReached("conversation request limit reached")
+            before_step(turn, actual)
+            raise AssertionError("exhausted checkpoint must not continue")
+
+    monkeypatch.setattr(module, "LivingConversation", ControlledConversation)
+    outcome = asyncio.run(runner.run(spec, call_id="call:budget"))
+    assert outcome.status == "budget_exceeded"
+    assert outcome.result is None and outcome.retryable is False
+    assert outcome.usage.completed_model_responses == actual.model_attempts
+    assert outcome.usage.input_tokens == actual.input_tokens
+    assert outcome.usage.output_tokens == actual.output_tokens
+    assert outcome.usage.cost_usd_micros is None
+    assert not tools.calls

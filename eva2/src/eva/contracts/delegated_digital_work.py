@@ -51,7 +51,7 @@ class DelegatedDigitalWorkGrant(DelegatedWorkGrant):
                    "list_reusable_procedures", "resolve_reusable_procedure",
                    "designate_reusable_procedure", "save_workspace_document", "save_work_progress",
                    "read_own_component_source", "draft_own_component_improvement",
-                   "evaluate_own_component_improvement", "prepare_own_component_release", "run_reusable_procedure", "home_assistant_request"}
+                   "evaluate_own_component_improvement", "prepare_own_component_release", "run_reusable_procedure", "home_assistant_request", "read_home_assistant_inventory"}
         if (not self.capability_ids or len(set(self.capability_ids)) != len(self.capability_ids)
                 or not set(self.capability_ids).issubset(allowed)):
             raise ValueError("digital work capabilities must be explicit connector actions")

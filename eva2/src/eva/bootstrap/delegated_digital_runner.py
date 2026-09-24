@@ -16,10 +16,14 @@ from eva.adapters.postgres.operational_timeline import external_timeline_scope
 from eva.adapters.subagents.tool_free_child import ToolFreeChildOutcome
 from eva.application.background_execution import BackgroundExecutionScope, background_execution
 from eva.application.cancellation import CancellationSignal, cancellation_scope
-from eva.application.conversation import ConversationActionReceipt, ConversationConflict, LivingConversation
+from eva.application.conversation import ConversationActionReceipt, ConversationConflict, ConversationExecutionLimitReached, LivingConversation
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.delegated_work import DelegatedWorkUsage
 from eva.contracts.timestamps import parse_utc_timestamp
+
+
+class _DigitalBudgetExceeded(ConversationConflict):
+    """The current attempt exhausted an existing model or tool grant."""
 
 
 class _UnfinishedWorkPlan(ConversationConflict):
@@ -152,7 +156,7 @@ class BackgroundConnectorActions:
         if call.name not in self.available_action_names(turn):
             raise ConversationConflict("background action was not admitted")
         if self.calls >= self._maximum_calls:
-            raise ConversationConflict("background connector call budget exhausted")
+            raise _DigitalBudgetExceeded("background connector call budget exhausted")
         self.calls += 1
         receipt = self._receipt(self._by_name[call.name].execute(turn, call, step_index=step_index))
         self.receipts.append(receipt)
@@ -249,7 +253,7 @@ class DelegatedDigitalRunner:
         def dispatch_guard(turn):
             authorize(turn)
             if actions is None or actions.dispatches >= spec.grant.maximum_tool_calls:
-                raise ConversationConflict("background dispatch budget exhausted")
+                raise _DigitalBudgetExceeded("background dispatch budget exhausted")
             actions.dispatches += 1
 
         def checkpoint(turn, actual):
@@ -258,7 +262,7 @@ class DelegatedDigitalRunner:
                     (actual.input_tokens, spec.grant.maximum_input_tokens),
                     (actual.output_tokens, spec.grant.maximum_output_tokens)):
                 if value is not None and value > maximum:
-                    raise ConversationConflict("background model budget exceeded")
+                    raise _DigitalBudgetExceeded("background model budget exceeded")
 
         async def watch():
             while True:
@@ -320,13 +324,14 @@ class DelegatedDigitalRunner:
                         state_key = (progress_state["revision"], actions.calls)
                         if state_key in prompted_states:
                             raise _UnfinishedWorkPlan("task made no progress after continuation")
-                        if (actual.measurement != "measured"
-                                or actual.model_attempts >= spec.grant.maximum_model_runs
+                        if actual.measurement != "measured":
+                            raise _UnfinishedWorkPlan("remaining attempt usage is not measured")
+                        if (actual.model_attempts >= spec.grant.maximum_model_runs
                                 or actual.input_tokens >= spec.grant.maximum_input_tokens
                                 or actual.output_tokens >= spec.grant.maximum_output_tokens
                                 or actions.calls >= spec.grant.maximum_tool_calls
                                 or actions.dispatches >= spec.grant.maximum_tool_calls):
-                            raise _UnfinishedWorkPlan("remaining attempt budget cannot continue the plan")
+                            raise _DigitalBudgetExceeded("remaining attempt budget cannot continue the plan")
                         prompted_states.add(state_key)
                         task_model.continuation_feedback = (
                             "Je gaf een slotantwoord, maar je opgeslagen uitvoerplan heeft nog open "
@@ -374,6 +379,7 @@ class DelegatedDigitalRunner:
                     usage = self._usage(journal.model_usage(source), 0 if actions is None else actions.dispatches)
             return ToolFreeChildOutcome("cancelled" if cancellation_event is not None and cancellation_event.is_set()
                 else "timed_out" if self.clock() >= deadline
+                else "budget_exceeded" if isinstance(error, (_DigitalBudgetExceeded, ConversationExecutionLimitReached))
                 else "incomplete_work" if isinstance(error, _UnfinishedWorkPlan)
                 else "provider_unavailable" if type(error) is McpGatewayUnavailable
                 else "internal_error", None, usage, False,

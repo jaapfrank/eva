@@ -17,7 +17,7 @@ _CONNECTORS = frozenset({"connect_service", "discover_connector_tools",
                         "manage_connected_services", "use_connector_tool"})
 _PROCEDURES = frozenset({"list_reusable_procedures", "resolve_reusable_procedure",
                          "designate_reusable_procedure", "save_workspace_document", "run_reusable_procedure"})
-_HOME_ASSISTANT = frozenset({"home_assistant_request"})
+_HOME_ASSISTANT = frozenset({"home_assistant_request", "read_home_assistant_inventory"})
 _DIGITAL_PROVIDERS = frozenset({"mcp_autonomy", "procedure_references", "mcp_gateway", "home_assistant"})
 _ROOT = Path(__file__).resolve().parents[1]
 _EXECUTION_SOURCES = (
@@ -47,6 +47,7 @@ _EXECUTION_SOURCES = (
     "providers/home_assistant.py",
     "adapters/connectors/home_assistant_api.py",
     "adapters/connectors/home_assistant_admin.py",
+    "adapters/connectors/home_assistant_automations.py",
 )
 
 
