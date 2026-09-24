@@ -40,6 +40,8 @@ class ConnectorRegistrationStore(Protocol):
     def register(self, turn: ConversationTurn, connector_id: str, endpoint: str,
                  gateway_id: str, catalog: dict, provenance: dict) -> dict: ...
     def discover(self, turn: ConversationTurn, connector_id: str) -> dict: ...
+    def refresh(self, turn: ConversationTurn, connector_id: str, endpoint: str,
+                gateway_id: str, catalog: dict, provenance: dict) -> dict: ...
 
 
 def connector_id_for(owner_key: str, endpoint: str) -> str:
@@ -56,11 +58,12 @@ def _source(turn: ConversationTurn) -> dict:
 def registration_descriptors() -> tuple[ConversationToolDescriptor, ...]:
     return (
         ConversationToolDescriptor("connect_service",
-            "Sluit een MCP-dienst aan of voltooi een eerder begonnen aansluiting binnen het actieve eigenaarmandaat. Een bestaande eigen gatewayregistratie wordt hergebruikt. Onderzoek eerst de onderhouden documentatie. Geef het echte MCP-endpoint en de bron van de documentatie; vermeld herkomst en licentie alleen voor zover vastgesteld. Na aansluiting kun je de tools bekijken en de oorspronkelijke opdracht ermee afmaken.",
+            "Sluit een MCP-dienst aan of voltooi een eerder begonnen aansluiting binnen het actieve eigenaarmandaat. Een bestaande eigen gatewayregistratie wordt hergebruikt. Onderzoek eerst de onderhouden documentatie. Geef het echte MCP-endpoint en de bron van de documentatie; vermeld herkomst en licentie alleen voor zover vastgesteld. Na aansluiting kun je de tools bekijken en de oorspronkelijke opdracht ermee afmaken. Gebruik refresh=true uitsluitend om de huidige gatewaycatalogus van een bestaande actieve aansluiting opnieuw toe te laten wanneer tools gewijzigd zijn; oude uitvoerregistraties blijven behouden. Dit activeert geen ingetrokken dienst.",
             {"type": "object", "properties": {
                 "endpoint": {"type": "string", "maxLength": 2048},
                 "documentation_url": {"type": "string", "maxLength": 2048},
-                "provenance": {"type": "string", "maxLength": 2000}},
+                "provenance": {"type": "string", "maxLength": 2000},
+                "refresh": {"type": "boolean"}},
              "required": ["endpoint", "documentation_url", "provenance"], "additionalProperties": False},
             "Aangesloten is niet hetzelfde als de gebruikersopdracht afgemaakt. Gebruik discover_connector_tools en daarna use_connector_tool. Een technische loginbehoefte is geen reden om toestemming voor al toegestane stappen opnieuw te vragen."),
         ConversationToolDescriptor("discover_connector_tools",
@@ -84,7 +87,9 @@ class _RegistrationPlanner:
         self.authority.authorize_turn(turn)
         args = call.arguments
         if call.name == "connect_service":
-            if set(args) != {"endpoint", "documentation_url", "provenance"}:
+            required = {"endpoint", "documentation_url", "provenance"}
+            if (not required <= set(args) or set(args) - required - {"refresh"}
+                    or type(args.get("refresh", False)) is not bool):
                 raise ConversationConflict("connector registration arguments differ")
             endpoint = canonical_mcp_endpoint(args["endpoint"])
             documentation = canonical_mcp_endpoint(args["documentation_url"])
@@ -97,6 +102,8 @@ class _RegistrationPlanner:
                        "connector_id": cid, "endpoint": endpoint,
                        "provenance": {"documentation_url": documentation,
                                       "reported_provenance": provenance}}
+            if args.get("refresh", False):
+                payload["refresh"] = True
             expected = {"connector_id": cid, "endpoint": endpoint}
         elif call.name == "discover_connector_tools":
             reference = args.get("connector_id")
@@ -166,6 +173,8 @@ class McpRegistrationToolAdapter:
                     or command.expected_proof != {"connector_id": cid, "endpoint": endpoint}):
                 raise ConversationConflict("connector registration expectation differs")
             self.authority.authorize_endpoint(turn, endpoint)
+            if type(command.arguments.get("refresh", False)) is not bool:
+                raise ConversationConflict("connector refresh flag differs")
         elif command.tool_name == "manage_connected_services":
             action = command.arguments.get("action")
             expected = {"revoked": True} if action == "stop" else {}
@@ -186,8 +195,16 @@ class McpRegistrationToolAdapter:
     async def execute(self, command: ToolRequest) -> ToolDispatchResult:
         turn = self._bound(command)
         if command.tool_name == "connect_service":
-            row = await asyncio.to_thread(self.client.register,
-                owner_key=self.owner_key, endpoint=command.arguments["endpoint"])
+            if command.arguments.get("refresh", False):
+                # Refresh cannot create or reactivate an absent own registration.
+                self.registry.discover(turn, command.arguments["connector_id"])
+                row = await asyncio.to_thread(self.client.find,
+                    owner_key=self.owner_key, endpoint=command.arguments["endpoint"])
+                if row is None:
+                    raise McpRegistrationAbsent("registered gateway is unavailable for refresh")
+            else:
+                row = await asyncio.to_thread(self.client.register,
+                    owner_key=self.owner_key, endpoint=command.arguments["endpoint"])
             return ToolDispatchResult(True, row["id"], {"registration_requested": True})
         if command.tool_name == "manage_connected_services":
             if command.arguments["action"] == "stop":
@@ -212,7 +229,8 @@ class McpRegistrationToolAdapter:
             provenance = command.arguments["provenance"]
             catalog = self.authority.admit_catalog(turn, endpoint, rows, provenance)
             # A rejected catalog remains unavailable; never auto-mark all hints read-only.
-            result = self.registry.register(turn, cid, endpoint, gateway["id"], catalog, provenance)
+            register = self.registry.refresh if command.arguments.get("refresh", False) else self.registry.register
+            result = register(turn, cid, endpoint, gateway["id"], catalog, provenance)
             # Discovery owns the potentially large schemas. Do not place the
             # same catalog twice in the conversation's bounded context.
             result = {**{key: value for key, value in result.items() if key != "tools"},

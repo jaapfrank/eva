@@ -40,7 +40,7 @@ _Phase = Literal["execute", "observe"]
 
 
 class PostgresMcpConnectorRegistry:
-    """Append registration/revocation; never replace a stored configuration.
+    """Append immutable registration generations and irreversible revocation.
 
     ``authorize_turn`` checks the real owner turn. ``authorize_current`` accepts
     keyword-only ``phase`` and ``operation_kind`` and checks the current mandate
@@ -90,6 +90,26 @@ class PostgresMcpConnectorRegistry:
     ) -> dict[str, Any]:
         self._require_owner(turn)
         self._require_current(phase="execute", operation_kind="effect")
+        registration, specs = self._prepare_registration(turn, connector_id, endpoint, gateway_id, catalog, provenance)
+        record_sha = registration["registration_sha256"]
+        hashes = {spec.configuration_sha256 for spec in specs}
+        for _ in range(8):
+            state, records = self._snapshot()
+            existing = records.get(connector_id)
+            if existing is not None:
+                if existing["registration_sha256"] != record_sha:
+                    raise ConversationConflict("MCP connector registration is immutable")
+                self._require_active(existing)
+                return self._summary(existing)
+            self._require_unique_configurations(records, hashes)
+            try:
+                self._append(state, "registered", {"registration": registration})
+                return self._summary({**registration, "revoked": False})
+            except CheckpointConflict:
+                continue
+        raise ConversationConflict("MCP registry changed concurrently; retry registration")
+
+    def _prepare_registration(self, turn, connector_id, endpoint, gateway_id, catalog, provenance):
         self._validate_connector_id(connector_id)
         if not isinstance(endpoint, str):
             raise ValueError("MCP registry endpoint is invalid")
@@ -125,26 +145,55 @@ class PostgresMcpConnectorRegistry:
         if turn.principal_id != self._owner:
             # Host-admitted canonical ownership is separate from immutable ingress.
             registration["source"]["canonical_owner_principal_id"] = self._owner
+        return registration, specs
+
+    @staticmethod
+    def _generations(record):
+        return (record, *record.get("_previous_generations", ()))
+
+    def _require_unique_configurations(self, records, hashes, *, excluding=None):
+        for connector_id, record in records.items():
+            if connector_id == excluding:
+                continue
+            if any(hashes.intersection(spec.configuration_sha256 for spec in self._specs(generation["catalog"]))
+                   for generation in self._generations(record)):
+                raise ConversationConflict("MCP configuration already belongs to another connector")
+        if self._configured_catalog is not None and hashes.intersection(
+                spec.configuration_sha256 for spec in self._configured_catalog.specs):
+            raise ConversationConflict("MCP configuration already belongs to the configured gateway catalog")
+
+    def refresh(self, turn: ConversationTurn, connector_id: str, endpoint: str,
+                gateway_id: str, catalog: dict[str, Any], provenance: dict[str, Any]) -> dict[str, Any]:
+        """Append an explicit new generation; old configurations remain observation-only."""
+        from eva.adapters.connectors.mcp_registration import canonical_mcp_endpoint
+        self._require_owner(turn)
+        self._require_current(phase="execute", operation_kind="effect")
+        registration, specs = self._prepare_registration(
+            turn, connector_id, endpoint, gateway_id, catalog, provenance)
         hashes = {spec.configuration_sha256 for spec in specs}
         for _ in range(8):
             state, records = self._snapshot()
             existing = records.get(connector_id)
-            if existing is not None:
-                if existing["registration_sha256"] != record_sha:
-                    raise ConversationConflict("MCP connector registration is immutable")
-                self._require_active(existing)
+            if existing is None:
+                raise McpConnectorNotFound("MCP connector is unknown")
+            self._require_active(existing)
+            self._require_gateway(existing)
+            if canonical_mcp_endpoint(endpoint) != canonical_mcp_endpoint(existing["endpoint"]):
+                raise ConversationConflict("MCP refresh endpoint differs from the registered service")
+            if existing["registration_sha256"] == registration["registration_sha256"]:
                 return self._summary(existing)
-            for record in records.values():
-                if hashes.intersection(
-                    spec.configuration_sha256 for spec in self._specs(record["catalog"])
-                ):
-                    raise ConversationConflict("MCP configuration already belongs to another connector")
+            self._require_unique_configurations(records, hashes, excluding=connector_id)
+            self._require_owner(turn)
+            self._require_current(phase="execute", operation_kind="effect")
             try:
-                self._append(state, "registered", {"registration": registration})
-                return self._summary({**registration, "revoked": False})
+                self._append(state, "refreshed", {"registration": registration,
+                    "previous_registration_sha256": existing["registration_sha256"]})
+                return self._summary({**registration, "revoked": False,
+                    "_previous_generations": [*existing.get("_previous_generations", []),
+                        {k: v for k, v in existing.items() if k != "_previous_generations"}]})
             except CheckpointConflict:
                 continue
-        raise ConversationConflict("MCP registry changed concurrently; retry registration")
+        raise ConversationConflict("MCP registry changed concurrently; retry refresh")
 
     def inventory(self, turn: ConversationTurn) -> list[dict[str, Any]]:
         """List this owner's admitted bindings without schemas or provider calls."""
@@ -209,12 +258,17 @@ class PostgresMcpConnectorRegistry:
         if phase not in {"execute", "observe"}:
             raise ValueError("MCP execution phase is invalid")
         _, records = self._snapshot()
-        matches = [
-            (record, spec)
-            for record in records.values()
-            for spec in self._specs(record["catalog"])
-            if spec.configuration_sha256 == digest
-        ]
+        matches = []
+        for current in records.values():
+            generations = self._generations(current) if phase == "observe" else (current,)
+            # The same unchanged tool can occur in several generations of one
+            # connector. Prefer the current binding, never create ambiguity there.
+            found = next(((generation, spec) for generation in generations
+                          for spec in self._specs(generation["catalog"])
+                          if spec.configuration_sha256 == digest), None)
+            if found is not None:
+                generation, spec = found
+                matches.append(({**generation, "revoked": current["revoked"]}, spec))
         configured_matches = ([] if self._configured_catalog is None else
                               [spec for spec in self._configured_catalog.specs
                                if spec.configuration_sha256 == digest])
@@ -371,6 +425,7 @@ class PostgresMcpConnectorRegistry:
             "gateway_id": record["gateway_id"],
             "registration_sha256": record["registration_sha256"],
             "state": "revoked" if record["revoked"] else "active",
+            "generation": 1 + len(record.get("_previous_generations", ())),
             "tools": list(self._tools(record)),
         }
 
@@ -399,6 +454,26 @@ class PostgresMcpConnectorRegistry:
                                 and record["source"].get("canonical_owner_principal_id") != self._owner)):
                         raise ConversationConflict("MCP registry immutable registration is invalid")
                     records[connector_id] = {**record, "revoked": False}
+                elif data.get("action") == "refreshed":
+                    from eva.adapters.connectors.mcp_registration import canonical_mcp_endpoint
+                    record = data["registration"]
+                    connector_id = record["connector_id"]
+                    previous = records.get(connector_id)
+                    identity = {k: v for k, v in record.items()
+                                if k not in {"registration_sha256", "source"}}
+                    if (previous is None or previous["revoked"]
+                            or data.get("previous_registration_sha256") != previous["registration_sha256"]
+                            or canonical_sha256(identity) != record["registration_sha256"]
+                            or (record["source"]["principal_id"] != self._owner
+                                and record["source"].get("canonical_owner_principal_id") != self._owner)
+                            or record["gateway"] != previous["gateway"]
+                            or canonical_mcp_endpoint(record["endpoint"]) != canonical_mcp_endpoint(previous["endpoint"])):
+                        raise ConversationConflict("MCP registry refresh binding is invalid")
+                    self._require_unique_configurations(records,
+                        {spec.configuration_sha256 for spec in self._specs(record["catalog"])}, excluding=connector_id)
+                    records[connector_id] = {**record, "revoked": False,
+                        "_previous_generations": [*previous.get("_previous_generations", []),
+                            {k: v for k, v in previous.items() if k != "_previous_generations"}]}
                 elif data.get("action") == "revoked":
                     record = records.get(data["connector_id"])
                     if record is None or record["registration_sha256"] != data["registration_sha256"]:
