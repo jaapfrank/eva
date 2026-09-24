@@ -50,7 +50,8 @@ class DelegatedDigitalWorkGrant(DelegatedWorkGrant):
         allowed = {"connect_service", "discover_connector_tools", "manage_connected_services", "use_connector_tool",
                    "list_reusable_procedures", "resolve_reusable_procedure",
                    "designate_reusable_procedure", "save_workspace_document", "save_work_progress",
-                   "read_own_component_source", "draft_own_component_improvement"}
+                   "read_own_component_source", "draft_own_component_improvement",
+                   "evaluate_own_component_improvement"}
         if (not self.capability_ids or len(set(self.capability_ids)) != len(self.capability_ids)
                 or not set(self.capability_ids).issubset(allowed)):
             raise ValueError("digital work capabilities must be explicit connector actions")
