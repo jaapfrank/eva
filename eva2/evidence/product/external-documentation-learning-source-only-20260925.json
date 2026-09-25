@@ -186,5 +186,45 @@
     "newObservedToolActions": 0,
     "progressUnchanged": true,
     "secondResumeStarted": false
+  },
+  "resumeAfterBlockerFix": {
+    "workId": "work:eva-resume:d13d3067-1983-5918-998a-5a4841344673",
+    "state": "ambiguous",
+    "errorCode": "internal_error",
+    "errorFingerprint": "c84b740eab4789ecfc32c384e7d7b00264a85a3dc43f9361dec91020a37931c1",
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 1,
+      "tool_calls": 1,
+      "input_tokens": 14328,
+      "output_tokens": 247,
+      "total_tokens": 14575,
+      "cost_usd_micros": null
+    },
+    "result": null,
+    "artifacts": "/home/administrator/project/.eva2-artifacts/external-documentation-learning-20260925/after-complete-request-instruction/resume-after-blocker-fix",
+    "automaticRetryStarted": false,
+    "diagnosis": {
+      "exactExceptionFingerprint": "ConversationConflict:stored connector selection bounds are invalid",
+      "exactSelectionArguments": "not recorded; no specific invalid field is inferred",
+      "correction": "Expose all local reader argument bounds and return only selection-input errors as a correctable, unverified tool receipt. Keep authority, hash and incomplete capture errors hard."
+    }
+  },
+  "budgetInspection": {
+    "status": "source_verified_not_changed",
+    "inputLimit": "The configured input limit is labelled per ordinary response and enforced per model request, but digital composition also uses it directly as the cumulative task input cap.",
+    "inputRefs": [
+      "src/eva/bootstrap/installer_budget_api.py:20",
+      "src/eva/adapters/model/pydantic_conversation.py:2111",
+      "src/eva/adapters/model/pydantic_conversation.py:2138",
+      "src/eva/bootstrap/delegated_digital_composition.py:143",
+      "src/eva/bootstrap/delegated_digital_runner.py:394"
+    ],
+    "toolLimit": "Six tool steps are a separate digital default, not a copied per-response setting.",
+    "usageCaveat": "Published tool_calls counts dispatches rather than every local action step; four reported calls do not prove two steps remained.",
+    "resume": "A new explicit attempt receives fresh usage counters and retains execution_id for access to stored results. The first resumed attempt failed on inherited blocked progress, corrected in ebb0a01a.",
+    "limitsChanged": false
   }
 }

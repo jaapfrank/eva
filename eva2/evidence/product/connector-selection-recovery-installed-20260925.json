@@ -1,0 +1,62 @@
+{
+  "status": "installed",
+  "checkedAt": "2026-09-25T16:24:57.754993+00:00",
+  "sourceCommit": "551de6e7cfb780dd3011f2a27273a3ae9688a0ed",
+  "ownerRequirement": "Eva can correct an invalid document selection and continue the actual task with a verifiable saved source.",
+  "cause": "The live error fingerprint exactly identified invalid local selection bounds. Exact attempted arguments were not retained.",
+  "change": [
+    "All local selection argument bounds are advertised in the manifest and corrective receipt.",
+    "Only selection-input errors become unverified, correctable receipts; authority/hash/capture failures remain hard.",
+    "The existing conversation permits a bounded retry only for the host reader selection error and still counts each action against the task budget.",
+    "A successful local selection stores the exact bounded page, arguments and hashes on the operational timeline."
+  ],
+  "validation": {
+    "reviewer": "result_return_review",
+    "decision": "go",
+    "scope": "Only local selection-input errors are recoverable and unverified; authority/hash/capture errors stay hard. Continuation is limited to the host reader and consumes existing budget. Successful bounded selections are durably recorded.",
+    "tests": "66 cases passed together, corrected authority fixture passed separately, and one actual PostgreSQL selection receipt/reopen/replay case passed.",
+    "testArtifacts": [
+      "/home/administrator/project/.eva2-artifacts/reader-selection-validation-20260925",
+      "/home/administrator/project/.eva2-artifacts/connector-selection-recovery-20260925"
+    ],
+    "actualInvalidArguments": "not recorded; 8193 is only the controlled reproduction"
+  },
+  "installation": {
+    "checkedAt": "2026-09-25T16:24:00.538946+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:82ef9e969b5604b65350a6d25fb6a531150d7fca252f7d499c35460198354f45",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/connector_results.py": "953f2852f48ff8d49a90111da4377c849616c1e532e73333dd4ea154b9a8bdd8",
+          "adapters/postgres/external_conversation_tools.py": "6272e4c70807fd1446d46461a982cc14a0391d9f20fd8e369fe10e94aba3bc72",
+          "bootstrap/delegated_digital_runner.py": "bec0e1bf26ec4583cbb5264253b238b9880dd0d3c5a89a90e3889a9ce34eba7d"
+        }
+      },
+      "worker": {
+        "image": "sha256:286de4c3cd3842d478980eaf1e8fb2ba15318b17755adbd0d3d10e920c75c68d",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/connector_results.py": "953f2852f48ff8d49a90111da4377c849616c1e532e73333dd4ea154b9a8bdd8",
+          "adapters/postgres/external_conversation_tools.py": "6272e4c70807fd1446d46461a982cc14a0391d9f20fd8e369fe10e94aba3bc72",
+          "bootstrap/delegated_digital_runner.py": "bec0e1bf26ec4583cbb5264253b238b9880dd0d3c5a89a90e3889a9ce34eba7d"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/connector-selection-recovery-20260925/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "budgetsChanged": false,
+  "usage": {
+    "evaModelCallsForPatch": 0,
+    "creditCost": null
+  },
+  "remaining": [
+    "Live continuation is now starting; no procedure or completed learning task yet.",
+    "Controlled invalid limit 8193 reproduces the class of failure; the actual rejected value is unknown.",
+    "Complete categories remain 2 of 9."
+  ]
+}
