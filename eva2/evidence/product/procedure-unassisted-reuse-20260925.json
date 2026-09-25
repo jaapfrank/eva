@@ -1,0 +1,101 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-25T13:25:40.604686+00:00",
+  "sourceCommit": "669986b7",
+  "outcome": "passed_unassisted_reuse_of_existing_procedure",
+  "workId": "work:eva-chat:7e7bbde1-6db5-5e3f-a843-992da28095c0",
+  "messageId": "dashboard:85ba7376-3509-422a-811a-bc94acc718cc",
+  "taskAdmissions": 1,
+  "state": "succeeded",
+  "ownerPromptProvided": {
+    "procedureId": false,
+    "sourceCode": false,
+    "formatSpecification": false
+  },
+  "observed": {
+    "selfDiscoveredProcedure": true,
+    "executedOriginalSource": true,
+    "sourceSha256": "bba3dfea7ab7966a514c41be42b6c13c40011523db752d6832f7fc3f7025fc63",
+    "executionCount": 1,
+    "executionOutput": [
+      {
+        "meters": {
+          "zolder": {
+            "verbruik": "2,00",
+            "resets": 1
+          },
+          "schuur": {
+            "verbruik": "0,75",
+            "resets": 1
+          }
+        },
+        "totaal": "2,75"
+      },
+      {
+        "error": "Regel 2: M/Z vóór B"
+      }
+    ],
+    "executionElapsedMilliseconds": 713,
+    "exitCode": 0,
+    "originalRequestBindingVerified": true,
+    "storedOutputSha256": "82f8197e9cabfa883e0910d391540b5fb4761b46e96bc89e16a0b3c5d880fcbd",
+    "storedResultSha256": "cb073c711137279d1a3db70d4edfe4d63c8a8acc8b6c0e2b0f60a1693fc7e7d0"
+  },
+  "executionReceipt": {
+    "result": {
+      "report": {
+        "limits": {
+          "pids": 64,
+          "memory_mb": 256,
+          "cpu_millicores": 1000,
+          "deadline_seconds": 30,
+          "output_bytes_per_stream": 4096
+        },
+        "result": {
+          "stderr": "",
+          "stdout": "[{\"meters\": {\"zolder\": {\"verbruik\": \"2,00\", \"resets\": 1}, \"schuur\": {\"verbruik\": \"0,75\", \"resets\": 1}}, \"totaal\": \"2,75\"}, {\"error\": \"Regel 2: M/Z vóór B\"}]\n",
+          "cancelled": false,
+          "exit_code": 0,
+          "timed_out": false,
+          "elapsed_ms": 713,
+          "stderr_truncated": false,
+          "stdout_truncated": false
+        },
+        "contract": "EvaIsolatedProcedureExecution/v1",
+        "image_id": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "installed": false,
+        "input_sha256": "86ca8766233af622155397e3ec7c76a356e9b76353bf2845ac61c1e08c8f055a",
+        "source_sha256": "bba3dfea7ab7966a514c41be42b6c13c40011523db752d6832f7fc3f7025fc63",
+        "input_convention": "one_json_value_on_stdin",
+        "semantic_success_verified": false
+      },
+      "status": "execution_completed",
+      "contract": "ProcedureReferenceAction/v1",
+      "document_id": "procedure-reference:34cd292f1b2a157ea5c599b3d2c5a2331be099ae2ba21fa31f1716440627aee5",
+      "content_sha256": "bba3dfea7ab7966a514c41be42b6c13c40011523db752d6832f7fc3f7025fc63",
+      "semantic_success_verified": false
+    },
+    "result_sha256": "68b82ca4f54845d28ae7b002b55d418652db0df5384d8e3e7cebefe67c9da762"
+  },
+  "usage": {
+    "recordedInputTokens": 43262,
+    "recordedOutputTokens": 1017,
+    "modelResponses": 5,
+    "reportedToolCalls": 6,
+    "distinctToolActionsIncludingAdmission": 4,
+    "measurement": "Includes partial worker usage; no complete measured total or known credit cost.",
+    "creditCost": null
+  },
+  "review": {
+    "agent": "result_return_review",
+    "result": "Prompt, discovery, unchanged source, input/output/event hashes, exact result and original origin verified. No new execution or model calls by reviewer."
+  },
+  "limits": [
+    "Criteria registration is after the second-resolution ingress timestamp but before the first recorded model request and execution; not claimed as proven before trial start.",
+    "Original procedure learning required coordinator assistance; this reuse required no new ID, code, revision or retry from the coordinator.",
+    "One synthetic learned format, not general autonomous learning or owner acceptance.",
+    "Runtime semantic_success_verified flag remains false; the exact output was independently verified after execution.",
+    "Foreground admission took29.111seconds and promoted to Astra after procedure discovery; a concrete routing correction is separate."
+  ],
+  "artifactsDirectory": "/home/administrator/project/.eva2-artifacts/procedure-unassisted-reuse-20260925"
+}

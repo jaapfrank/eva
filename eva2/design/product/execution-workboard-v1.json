@@ -997,7 +997,7 @@
         ],
         "projects": [
           "Taakbediening en terugmelding via Telegram, website en publieke HA-spraak zijn aangesloten. Meerdere opdrachten, juiste terugmelding en echte resultaten als geheel nog bewijzen.",
-          "Werkwijzen zoeken/uitvoeren, planning en verbeterkandidaten zijn gebouwd; ongezien hergebruik, meerdaagse praktijk en bewezen toegepaste verbetering nog open."
+          "Werkwijzen zoeken/uitvoeren, planning en verbeterkandidaten zijn gebouwd; zelfstandig FLUXNOTE-hergebruik zonder nieuwe hulp nu gecontroleerd. Algemene zelfstandigheid, meerdaagse praktijk en brede toegepaste verbetering blijven open."
         ],
         "browser": [
           "Jouw bestaande Chrome-route met zichtbaar meekijken en overnemen werkend bevestigen.",
@@ -1011,6 +1011,14 @@
       "deliveryOverview": {
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
+          {
+            "title": "Een bewaarde werkwijze zelfstandig terugvinden en op nieuwe gegevens toepassen",
+            "date": "25 september",
+            "state": "tested",
+            "result": "Eva vond de eerder bewaarde FLUXNOTE-werkwijze zelf, voerde exact dezelfde bron uit en leverde de juiste nieuwe uitkomst2,75 plus afwijzing van ongeldige invoer. Geen procedure-ID, code of herstelhulp gegeven; bestaande geïnstalleerde functie. Onafhankelijk gecontroleerd.",
+            "remaining": "Eerste aanleren vereiste eerder hulp. Deze nieuwe hergebruikproef sluit geen algemene leerfunctie of hoofdcategorie af. Ontvangst29,111s onthulde een onnodige overstap naar het zware model.",
+            "source": "eva2/evidence/product/procedure-unassisted-reuse-20260925.json"
+          },
           {
             "title": "Tussendoor praten terwijl Eva publiek onderzoek afmaakt",
             "date": "25 september",
@@ -2351,14 +2359,14 @@
           }
         ],
         "now": {
-          "title": "Resultaat leeropdracht binnen; uitvoerbewijs nog controleren",
-          "state": "Controle open",
-          "detail": "De reeds gestarte FLUXNOTE-opdracht heeft status succeeded en een opgeslagen antwoord met de verwachte nieuwe uitkomst en afwijzing van ongeldige invoer. Uitvoerreceipts en ongewijzigde bron moeten nog onafhankelijk worden gecontroleerd; daarom nog geen afgeronde leerfunctie of nieuwe grote categorie geclaimd. Er loopt geen nieuwe modelopdracht."
+          "title": "Snelle gespreksmodel behouden na opzoeken van een werkwijze",
+          "state": "In uitvoering",
+          "detail": "Eén uitvoerder heeft de gedeelde modelkeuze aangepast: read-only werkwijzezoeking blijft bij het contactmodel; echte uitvoering/registratie houdt het werkmodel. Gerichte contacttests en één onafhankelijke review lopen. Coördinator heeft de exacte livebron en terugweg vastgelegd en bereidt kern/werker-installatie voor; geen nieuwe Eva-modelproef."
         },
         "next": {
-          "title": "Bestaand uitvoerbewijs controleren",
+          "title": "Correctie gericht controleren en installeren",
           "state": "Nog niet gestart",
-          "detail": "Controleer alleen receipts van de al voltooide opdracht: zelfstandig gevonden procedure, oorspronkelijke bronhash en werkelijk uitgevoerde geldige/ongeldige invoer. Geen nieuwe proef, modelcall of budgetverhoging. De zeven grote open onderdelen blijven open."
+          "detail": "Bestaande contactmodeltests uitbreiden voor lezen versus uitvoeren van werkwijzen; exacte live bron behouden, kern en werker gelijk bijwerken met terugweg. Geen nieuwe snelheidsclaim zonder meting."
         },
         "ownerAction": {
           "title": "Een langere huisvraag stellen en ondertussen doorpraten",
@@ -2373,7 +2381,7 @@
           "expected": "De langere huisopdracht kan naar de achtergrondwerker. De speaker blijft beschikbaar voor een volgende beurt; resultaat hoort bij de oorspronkelijke huisopdracht. Werkelijke spreeksnelheid en modelkeuze zijn nog niet in deze oplevering gemeten."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-25T13:17:15.369221+00:00"
+        "reviewedAt": "2026-09-25T13:29:35.571415+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12159,7 +12167,7 @@
       "ownerPriority20260923": "Eerst de afgesproken functies werkend en geïnstalleerd. Verhuizing, uitgebreide herstelvoorzieningen en aanvullende rechtencontroles naar de afronding. Bestaande bescherming en gegevens behouden; per wijziging alleen benodigde gerichte controles, brede integratiecontrole op het functionele geheel.",
       "ownerPriority20260924": "Afgesproken productfuncties daadwerkelijk afronden. Geen uitwijking naar technische details of herstel/verhuizing zolang dagelijks gebruik nog ontbreekt. Een wachtende fysieke proef blokkeert alleen afhankelijk werk.",
       "ownerDecision20260924SharedVoice": {
-        "householdControls": "Everyone at home may use existing light/switch controls through both registered speakers.",
+        "householdControls": "Corrected by owner on 25 September: everyone at home may use the general Home Assistant capabilities through both registered speakers, including discovering and operating devices/services and reading, creating and changing automations.",
         "privateContinuation": "Telegram; no private content through shared voice."
       }
     },

@@ -1039,6 +1039,7 @@ class LivingConversation:
             # model. Tool execution / spoken continuation use the existing work model.
             contact_receipts = {
                 MEMORY_SEARCH_ACTION, STOP_VOICE_WORK,
+                "list_reusable_procedures", "resolve_reusable_procedure",
                 "start_delegated_work", "start_background_research", "start_digital_work", "list_delegated_work", "get_delegated_work", "get_related_work", "search_delegated_work", "revise_digital_work",
                 "stop_delegated_work", "stop_related_work", "resume_delegated_work",
                 "list_own_initiatives", "get_own_initiative_result",

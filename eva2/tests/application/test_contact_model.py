@@ -78,14 +78,19 @@ def test_simple_turn_uses_one_contact_call_with_same_authorized_context():
     assert reply.model_usage.model_attempts == 1
 
 
-@pytest.mark.parametrize("action", ["inspect_item", MEMORY_SEARCH_ACTION])
+@pytest.mark.parametrize("action", [
+    "inspect_item", "designate_reusable_procedure", "run_reusable_procedure", MEMORY_SEARCH_ACTION,
+])
 def test_real_tool_continuation_uses_work_but_memory_search_stays_contact(action):
+    class RoutedActions(Actions):
+        action_names = (*Actions.action_names, "designate_reusable_procedure", "run_reusable_procedure")
+
     contact = Model(lambda t, k: ConversationActionCall("call", action,
         {"query_text": "voorkeur"} if action == MEMORY_SEARCH_ACTION else {})
         if k["completed_action"] is None else "Dit weet ik uit je geheugen.")
     work = Model(lambda t, k: "Gelezen en gecontroleerd.")
-    reply = LivingConversation(_Memory(), work, IDENTITY, Actions(), contact_model=contact).respond(turn())
-    assert len(work.calls) == (1 if action == "inspect_item" else 0)
+    reply = LivingConversation(_Memory(), work, IDENTITY, RoutedActions(), contact_model=contact).respond(turn())
+    assert len(work.calls) == (0 if action == MEMORY_SEARCH_ACTION else 1)
     assert reply.model_usage.model_attempts == 2
     if work.calls:
         assert work.calls[0][0][1] is IDENTITY
@@ -237,45 +242,63 @@ def test_admitted_acceptance_uses_one_contact_call_and_current_reply_guard(stopp
     assert reply.text == ("Je opdracht is gestopt." if stopped else "Ik zoek het voor je uit.")
 
 
+@pytest.mark.parametrize("lookup", ["list_reusable_procedures", "resolve_reusable_procedure"])
 @pytest.mark.parametrize("permitted, revoked", [(True, False), (False, False), (True, True)])
-def test_provider_lookup_can_handoff_only_with_current_continuation_permission(permitted, revoked):
+def test_provider_lookup_can_handoff_only_with_current_continuation_permission(lookup, permitted, revoked):
+    status = "candidates" if lookup == "list_reusable_procedures" else "resolved"
+
     class LookupActions(Actions):
-        action_names = ("list_reusable_procedures", "start_digital_work")
+        action_names = (lookup, "start_digital_work")
         def __init__(self):
             super().__init__()
             self.looked_up = False
         def available_action_names(self, turn):
-            return (("list_reusable_procedures",) if self.looked_up and revoked else self.action_names)
+            return ((lookup,) if self.looked_up and revoked else self.action_names)
         def can_continue_after(self, turn, receipt):
-            assert receipt.output["status"] == "candidates"
+            assert receipt.output["status"] == status
             return permitted
         def execute(self, turn, call):
-            assert call.name == "list_reusable_procedures"
+            assert call.name == lookup
             self.looked_up = True
-            return ConversationActionReceipt(call, {"status": "candidates", "candidates": ["saved-source"]})
+            return ConversationActionReceipt(call, {"status": status, "candidates": ["saved-source"]})
         def execute_step(self, turn, call, *, step_index):
             assert call.name == "start_digital_work" and step_index == 1
             self.jobs[turn.message_id] = "admitted"
             return ConversationActionReceipt(call, {"status": "verified", "work_id": turn.message_id})
     actions = LookupActions()
-    contact = Model(lambda t, k: ConversationActionCall("lookup", "list_reusable_procedures", {}))
     def next_step(t, k):
+        if k["completed_action"] is None:
+            return ConversationActionCall("lookup", lookup, {})
         if k["completed_action"].call.name == "start_digital_work":
             assert k["available_actions"] == ()
             return "De opdracht is aangenomen."
         if "start_digital_work" in k["available_actions"]:
             return ConversationActionCall("handoff", "start_digital_work", {"task": "Use saved-source"})
         return "Geen uitvoer gestart."
-    work = Model(next_step)
+    contact = Model(next_step)
+    work = Model(lambda t, k: pytest.fail("procedure discovery must stay on the contact model"))
     LivingConversation(_Memory(), work, IDENTITY, actions, contact_model=contact).respond(turn())
     assert bool(actions.jobs) is (permitted and not revoked)
-    assert len(contact.calls) == 1
+    assert len(contact.calls) == (3 if permitted and not revoked else 2)
 
 
+@pytest.mark.parametrize("lookup", ["inspect_item", "list_reusable_procedures", "resolve_reusable_procedure"])
 @pytest.mark.parametrize("stopped", [False, True])
-def test_acceptance_after_lookup_needs_no_post_admission_model_call(stopped):
+def test_acceptance_after_lookup_needs_no_post_admission_model_call(lookup, stopped):
+    contact_continuation = lookup != "inspect_item"
+    status = {"list_reusable_procedures": "candidates", "resolve_reusable_procedure": "resolved"}.get(lookup, "verified")
+
     class AdmittedAfterLookup(Actions):
-        action_names = ("inspect_item", "start_digital_work")
+        action_names = (lookup, "start_digital_work")
+        def __init__(self):
+            super().__init__()
+            self.guarded = []
+        def execute(self, turn, call):
+            assert call.name == lookup
+            return ConversationActionReceipt(call, {"status": status})
+        def can_continue_after(self, turn, receipt):
+            assert receipt.output["status"] == status
+            return True
         def execute_step(self, turn, call, *, step_index):
             assert step_index == 1 and call.name == "start_digital_work"
             self.jobs[turn.message_id] = "admitted"
@@ -285,16 +308,29 @@ def test_acceptance_after_lookup_needs_no_post_admission_model_call(stopped):
             if not any(r.call.name == "start_digital_work" for r in receipts):
                 return None
             assert len(receipts) == 2
-            return lambda text: "De opdracht is gestopt." if stopped else text
+            def guard(text):
+                self.guarded.append(text)
+                return "De opdracht is gestopt." if stopped else text
+            return guard
     actions = AdmittedAfterLookup()
-    contact = Model(lambda t, k: ConversationActionCall("lookup", "inspect_item", {}))
     def accept(t, k):
-        assert k["completed_action"].call.name == "inspect_item", "No extra call after admission"
+        assert k["completed_action"].call.name == lookup, "No extra call after admission"
         return ConversationActionCall("start", "start_digital_work",
             {"task": "Apply the found method", "acceptance_message": "Ik ga ermee aan de slag."})
-    work = Model(accept)
+    def choose(t, k):
+        if k["completed_action"] is None:
+            return ConversationActionCall("lookup", lookup, {})
+        assert contact_continuation, "Effectful tool continuation must use the work model"
+        return accept(t, k)
+    contact = Model(choose)
+    def work_step(t, k):
+        assert not contact_continuation, "Procedure discovery must not promote to the work model"
+        return accept(t, k)
+    work = Model(work_step)
     reply = LivingConversation(_Memory(), work, IDENTITY, actions, contact_model=contact).respond(turn())
-    assert len(contact.calls) == len(work.calls) == 1
+    assert len(contact.calls) == (2 if contact_continuation else 1)
+    assert len(work.calls) == (0 if contact_continuation else 1)
     assert reply.model_usage.model_attempts == 2
     assert actions.jobs == {"one": "admitted"}
+    assert actions.guarded == ["Ik ga ermee aan de slag."]
     assert reply.text == ("De opdracht is gestopt." if stopped else "Ik ga ermee aan de slag.")
