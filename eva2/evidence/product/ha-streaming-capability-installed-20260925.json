@@ -1,0 +1,80 @@
+{
+  "installedAt": "2026-09-25T11:42:45.106621+00:00",
+  "sourceCommit": "a239303a5fc6062b74633f500f3ec77b62371800",
+  "sourceSha256": "31a3be3f0344b76e63d37a082678a24a2881c4c17590f53de1e3cc5961df2337",
+  "remoteFile": "/config/custom_components/eva2_voice/conversation.py",
+  "firmwareChanged": false,
+  "coreAndWorkerChanged": false,
+  "haRestarted": true,
+  "result": "installed_ha_streaming_advertisement",
+  "requirement": "Use existing HA/Voice PE streaming to begin eligible audio before the complete answer; retain current firmware.",
+  "defect": "Installed Eva entity emitted ChatLog deltas but inherited supports_streaming=False. HA2026.9.2 advertises stream_response only when both agent and TTS support streaming.",
+  "health": {
+    "version": "2026.9.2",
+    "state": "RUNNING",
+    "entries": [
+      {
+        "domain": "eva2_voice",
+        "state": "loaded"
+      }
+    ],
+    "agents": [
+      "conversation.eva2"
+    ],
+    "speakers": [
+      {
+        "entity": "assist_satellite.home_assistant_voice_0a16e0_assist_satellite",
+        "state": "idle"
+      },
+      {
+        "entity": "assist_satellite.home_assistant_voice_0a5035_assist_satellite",
+        "state": "idle"
+      }
+    ]
+  },
+  "pipeline": {
+    "haVersion": "2026.9.2",
+    "pipelines": [
+      {
+        "conversation_engine": "conversation.home_assistant",
+        "name": "Eva",
+        "stt_engine": "stt.home_assistant_cloud",
+        "tts_engine": "tts.home_assistant_cloud"
+      },
+      {
+        "conversation_engine": "conversation.eva2",
+        "name": "Eva2",
+        "stt_engine": "stt.home_assistant_cloud",
+        "tts_engine": "tts.home_assistant_cloud"
+      }
+    ]
+  },
+  "checks": {
+    "focusedEntityTestsPassed": 2,
+    "coverage": [
+      "Receipt and answer deltas before final response, with correct device/conversation binding",
+      "Cancellation suppresses deliberately late client output"
+    ],
+    "environment": "Existing aiohttp test environment; initial host setup lacked aiohttp. No dependency installed.",
+    "independentReview": "household_function_gap reviewed official HA pipeline and existing delta behavior; coordinator reviewed entity behavior tests and exact single-line integration change."
+  },
+  "references": [
+    "https://github.com/home-assistant/core/blob/2026.9.2/homeassistant/components/conversation/entity.py",
+    "https://github.com/home-assistant/core/blob/2026.9.2/homeassistant/components/assist_pipeline/pipeline.py"
+  ],
+  "rollback": {
+    "backup": "/home/administrator/project/.eva2-artifacts/ha-streaming-capability-20260925/conversation.py.baseline",
+    "method": "Restore this exact conversation.py backup to /config/custom_components/eva2_voice/conversation.py through the existing verified SSH route, then restart HA while speakers are idle."
+  },
+  "usage": {
+    "newEvaModelCalls": 0,
+    "syntheticSpeechCalls": 0,
+    "developmentCreditCost": "unknown"
+  },
+  "limitations": [
+    "No physical first-audio timing or owner acceptance after this change.",
+    "HA buffers short text until more than 60 characters or a subsequent tool call; this does not prove immediate spoken short receipts.",
+    "No firmware, STT/TTS engine, private-memory or household-permission change.",
+    "Broader shared Home Assistant API access remains pending the owner choice."
+  ]
+}
