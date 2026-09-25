@@ -66,3 +66,22 @@ def test_private_return_controls_reject_scope_and_preserve_claim_identity():
     identity={'work_id':'work:1', 'operation_id':'a'*64}
     assert client.post(path+'ack', headers=headers, json=identity).status_code == 200
     assert calls == [('return_ack', identity)]
+
+
+def test_history_is_read_only_server_bound_and_not_cacheable():
+    calls = []
+    class Runtime:
+        def dashboard_delegated_work(self, operation, **payload):
+            calls.append((operation, payload))
+            return {"contract": "EvaPrivateWorkReturn/v1", "status": "history", "results": []}
+    app = FastAPI()
+    install_dashboard_work(app, access=DashboardAccess(), runtime=Runtime())
+    client = TestClient(app)
+    path = "/internal/v1/dashboard/work/return/"
+    response = client.post(path + "history", json={})
+    assert response.status_code == 200 and response.headers["cache-control"] == "no-store"
+    assert calls == [("return_history", {})]
+    for url, payload in [(path + "history", {"owner": "other"}),
+                         (path + "history?owner=other", {}), (path + "replay", {})]:
+        assert client.post(url, json=payload).status_code == 422
+    assert len(calls) == 1

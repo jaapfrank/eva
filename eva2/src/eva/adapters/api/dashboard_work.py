@@ -22,8 +22,8 @@ def install_dashboard_work(app, *, access, runtime):
     def work_return(request: Request, operation: str, payload: dict):
         access.require(request)
         import re
-        if (request.query_params or operation not in {"poll", "ack"}
-                or (operation == "poll" and payload != {})
+        if (request.query_params or operation not in {"poll", "ack", "history"}
+                or (operation in {"poll", "history"} and payload != {})
                 or (operation == "ack" and (set(payload) != {"work_id", "operation_id"}
                     or not isinstance(payload["work_id"], str)
                     or not 1 <= len(payload["work_id"]) <= 240

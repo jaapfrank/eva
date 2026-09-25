@@ -27,10 +27,10 @@ DASHBOARD_WORK_RETURN_CLIENT_JS = r"""
   class EvaWorkReturns {
     constructor({fetch, visible, render, clear, failed, digest, recovered=()=>{}, schedule=(callback,delay)=>setTimeout(callback,delay), cancel=timer=>clearTimeout(timer)}) {
       Object.assign(this,{fetch,visible,render,clear,failed,digest,recovered,schedule,cancel});
-      this.running=false; this.closed=false; this.generation=0; this.seen=new Set();
+      this.running=false; this.closed=false; this.generation=0; this.seen=new Set(); this.needsHistory=true;
     }
     suspend() {
-      this.generation++; this.cancel(this.timer); this.controller?.abort(); this.clear(); this.seen.clear();
+      this.generation++; this.cancel(this.timer); this.controller?.abort(); this.clear(); this.seen.clear(); this.needsHistory=true;
     }
     close() { this.closed=true; this.suspend(); }
     resume() { this.closed=false; return this.poll(); }
@@ -43,6 +43,20 @@ DASHBOARD_WORK_RETURN_CLIENT_JS = r"""
       if(data.contract!=='EvaPrivateWorkReturn/v1') throw new Error('return contract');
       return data;
     }
+    async validateResult(result) {
+      if(!result || typeof result.work_id!=='string'
+          || !result.work_id.length || result.work_id.length>240
+          || typeof result.output!=='string' || !result.output.trim()
+          || new TextEncoder().encode(result.output).length>65536
+          || !/^[a-f0-9]{64}$/.test(result.operation_id)
+          || !/^[a-f0-9]{64}$/.test(result.output_sha256)
+          || await this.digest(result.output)!==result.output_sha256) throw new Error('return integrity');
+    }
+    display(result) {
+      if(!this.seen.has(result.operation_id)) {
+        this.render(result); this.seen.add(result.operation_id);
+      }
+    }
     async poll() {
       if(this.running || this.closed || !this.visible()) return;
       this.cancel(this.timer); this.running=true; const generation=this.generation;
@@ -50,27 +64,30 @@ DASHBOARD_WORK_RETURN_CLIENT_JS = r"""
       const timeout=this.schedule(()=>controller.abort(),10000);
       const current=()=>!this.closed && this.visible() && generation===this.generation;
       try {
+        if(this.needsHistory) {
+          const history=await this.request('history',{},controller.signal);
+          if(!current()) return;
+          if(history.status!=='history' || !Array.isArray(history.results)
+              || history.results.length>20) throw new Error('return history');
+          for(const result of history.results) await this.validateResult(result);
+          if(!current()) return;
+          for(const result of history.results) this.display(result);
+          this.needsHistory=false;
+        }
         const data=await this.request('poll',{},controller.signal);
         if(!current()) return;
         if(data.result===null) { if(data.status!=='idle') throw new Error('return state'); this.recovered(); }
         else {
           const result=data.result;
-          if(data.status!=='claimed' || !result || typeof result.work_id!=='string'
-              || !result.work_id.length || result.work_id.length>240
-              || typeof result.output!=='string' || !result.output.trim()
-              || new TextEncoder().encode(result.output).length>65536
-              || !/^[a-f0-9]{64}$/.test(result.operation_id)
-              || !/^[a-f0-9]{64}$/.test(result.output_sha256)
-              || await this.digest(result.output)!==result.output_sha256) throw new Error('return integrity');
+          if(data.status!=='claimed') throw new Error('return state');
+          await this.validateResult(result);
           if(!current()) return;
-          if(!this.seen.has(result.operation_id)) {
-            this.render(result); this.seen.add(result.operation_id);
-          }
+          this.display(result);
           const ack=await this.request('ack',{work_id:result.work_id,operation_id:result.operation_id},controller.signal);
           if(ack.status!=='acknowledged') throw new Error('return acknowledgement');
         }
       } catch(error) {
-        if(current()) { this.clear(); this.seen.clear(); this.failed(); }
+        if(current()) { this.clear(); this.seen.clear(); this.needsHistory=true; this.failed(); }
       } finally {
         this.cancel(timeout); this.running=false;
         if(!this.closed && this.visible()) this.timer=this.schedule(()=>this.poll(),5000);

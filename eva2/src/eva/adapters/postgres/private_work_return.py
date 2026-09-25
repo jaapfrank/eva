@@ -54,8 +54,10 @@ class PrivateWorkReturnStore:
         voice = turn.conversation_id.startswith('voice:')
         if not voice and turn.conversation_id != 'dashboard:' + str(self.service.principal_binding_id):
             raise ValueError("private return route unavailable")
-        if operation not in {'open', 'close', 'renew', 'poll', 'authorize', 'ack'}:
+        if operation not in {'open', 'close', 'renew', 'poll', 'authorize', 'ack', 'history', 'replay'}:
             raise ValueError("unknown return operation")
+        if voice and operation in {'history', 'replay'}:
+            raise ValueError("speech results cannot be replayed")
         if not voice and operation in {'open', 'close'}:
             raise ValueError("dashboard has no speech session")
         route = {'owner': str(self.service.owner_principal_id),
@@ -65,6 +67,8 @@ class PrivateWorkReturnStore:
         route_hash = canonical_sha256(route)
         session_thread = 'private-return-session:' + route_hash
         now = self.service.now()
+        if operation == 'history':
+            return self._history(turn, 'private-work-return:' + route_hash + ':')
         with self.work._engine.begin() as connection:
             self.work._scope(connection)
             self.work._validate_owner_binding(connection, **self.service._owner)
@@ -191,6 +195,8 @@ class PrivateWorkReturnStore:
                     raise ValueError("return claim differs")
                 if state['phase'] == 'acknowledged' and operation == 'ack':
                     return {'status': 'acknowledged'}
+                if operation == 'replay' and state['phase'] != 'acknowledged':
+                    raise ValueError("return has not been acknowledged")
                 if (state['phase'] not in {'claimed', 'acknowledged'}
                         or (state['phase'] == 'claimed' and now >= state['deadline'])):
                     raise ValueError("return claim unavailable or ambiguous")
@@ -214,6 +220,34 @@ class PrivateWorkReturnStore:
                 'completed_at': result.completed_at,
                 'outcome': (document.outcome if document is not None else
                             result.state if isinstance(result, WorkFailureNotice) else 'completed')}}
+
+    def _history(self, turn, prefix):
+        """Read acknowledged text returns through the same current result checks.
+
+        Release the listing transaction before replay validation: execute takes
+        the route lock. History never claims, acknowledges or reruns work.
+        """
+        with self.work._engine.begin() as connection:
+            self.work._scope(connection)
+            self.work._validate_owner_binding(connection, **self.service._owner)
+            rows = connection.execute(sa.select(
+                checkpoints.c.thread_id, checkpoints.c.operation_id).where(
+                    checkpoints.c.tenant_id == self.work.scope.tenant_id,
+                    checkpoints.c.installation_id == self.work.scope.installation_id,
+                    checkpoints.c.thread_id.startswith(prefix, autoescape=True),
+                    checkpoints.c.phase == 'acknowledged',
+                ).order_by(checkpoints.c.updated_at.desc(), checkpoints.c.thread_id.desc())
+                .limit(20)).all()
+        results = []
+        for row in reversed(rows):
+            try:
+                replay = self.execute(turn, 'replay', work_id=row.thread_id[len(prefix):],
+                                      operation_id=row.operation_id)
+            except (ValueError, RuntimeError):
+                # Expired, stopped or no-longer-authorized results stay hidden.
+                continue
+            results.append(replay['result'])
+        return {'status': 'history', 'results': results}
 
     def _document(self, work_id, route):
         result = self.documents.load(work_id)
