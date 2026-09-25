@@ -2351,14 +2351,14 @@
           }
         ],
         "now": {
-          "title": "Browserproef wacht op tabdeling; bestaande functies behouden",
-          "state": "Controle afgerond, geen bouw actief",
-          "detail": "Persoonlijke Chrome-dienst bereikbaar, overnemen/teruggeven aangesloten; geen tabblad gedeeld. Eigenaarvraag staat open. Initiatief is al technisch opgeleverd en wordt niet opnieuw gebouwd. Eerdere leertaak vereiste hulp na budgetoverschrijding; budgetwaarschuwing en bewaarde voortgang bestaan al. Geen codewijziging, modelcall of budgetverhoging in deze controle."
+          "title": "Resultaat leeropdracht binnen; uitvoerbewijs nog controleren",
+          "state": "Controle open",
+          "detail": "De reeds gestarte FLUXNOTE-opdracht heeft status succeeded en een opgeslagen antwoord met de verwachte nieuwe uitkomst en afwijzing van ongeldige invoer. Uitvoerreceipts en ongewijzigde bron moeten nog onafhankelijk worden gecontroleerd; daarom nog geen afgeronde leerfunctie of nieuwe grote categorie geclaimd. Er loopt geen nieuwe modelopdracht."
         },
         "next": {
-          "title": "Een opgeslagen werkwijze zelfstandig terugvinden en toepassen",
+          "title": "Bestaand uitvoerbewijs controleren",
           "state": "Nog niet gestart",
-          "detail": "Eén nieuwe synthetische taakvariant via de bestaande eigenaarroute, zonder procedure-ID of code van de coördinator. Bestaande leer-/uitvoermogelijkheden en budgetten behouden. Uitkomst vastleggen en alleen een aangetoond gat herstellen. HA- en browserproef blijven apart wachten op eigenaar."
+          "detail": "Controleer alleen receipts van de al voltooide opdracht: zelfstandig gevonden procedure, oorspronkelijke bronhash en werkelijk uitgevoerde geldige/ongeldige invoer. Geen nieuwe proef, modelcall of budgetverhoging. De zeven grote open onderdelen blijven open."
         },
         "ownerAction": {
           "title": "Een langere huisvraag stellen en ondertussen doorpraten",
@@ -2373,7 +2373,7 @@
           "expected": "De langere huisopdracht kan naar de achtergrondwerker. De speaker blijft beschikbaar voor een volgende beurt; resultaat hoort bij de oorspronkelijke huisopdracht. Werkelijke spreeksnelheid en modelkeuze zijn nog niet in deze oplevering gemeten."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-25T13:07:37.834375+00:00"
+        "reviewedAt": "2026-09-25T13:17:15.369221+00:00"
       }
     },
     "pendingTechnicalReview": {
