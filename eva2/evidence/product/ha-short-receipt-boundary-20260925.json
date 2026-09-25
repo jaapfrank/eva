@@ -1,0 +1,67 @@
+{
+  "status": "blocked_by_pinned_upstream_api",
+  "scope": "Read-only inspection of receipt segment flushing through the existing Home Assistant 2026.9.2 ChatLog and Assist pipeline; no runtime/configuration inspection.",
+  "integrationBaseCommit": "754dee69",
+  "conclusion": "The existing supported ConversationEntity/ChatLog API has no receipt or segment flush signal. Closing an assistant message, beginning another assistant message, punctuation, or ending a ChatLog stream cannot start TTS for a short receipt before later content. There is no integration-only fix within the authorized constraints.",
+  "sources": [
+    {
+      "url": "https://github.com/home-assistant/core/blob/2026.9.2/homeassistant/components/conversation/chat_log.py#L290-L297",
+      "finding": "AssistantContentDeltaDict exposes role, content, thinking_content, tool_calls and native; no flush field."
+    },
+    {
+      "url": "https://github.com/home-assistant/core/blob/2026.9.2/homeassistant/components/conversation/chat_log.py#L446-L575",
+      "finding": "A new role completes the prior chat message; stream exhaustion stores remaining content. Neither path emits a distinct TTS segment-completion signal. Native content is excluded from the listener."
+    },
+    {
+      "url": "https://github.com/home-assistant/core/blob/2026.9.2/homeassistant/components/assist_pipeline/pipeline.py#L1034-L1113",
+      "finding": "The assistant delta listener starts TTS only after strictly more than STREAM_RESPONSE_CHARS (60) content characters or after nonempty content followed by actual tool_calls. A role/message boundary does not flush."
+    },
+    {
+      "url": "https://github.com/home-assistant/core/blob/2026.9.2/homeassistant/components/assist_pipeline/pipeline.py#L1207-L1211",
+      "finding": "The TTS input end marker is sent only after async_converse returns, so closing one ChatLog message is not the same as completing the pipeline request."
+    },
+    {
+      "url": "https://github.com/home-assistant/core/blob/2026.9.2/homeassistant/components/assist_satellite/entity.py#L185-L224",
+      "finding": "The supported announcement entry point first awaits _cancel_running_pipeline(). It cannot be used as an in-flight receipt without cancelling the current Eva request."
+    },
+    {
+      "url": "https://github.com/home-assistant/core/blob/2026.9.2/homeassistant/components/assist_satellite/entity.py#L499-L506",
+      "finding": "Cancelling the running satellite pipeline cancels and awaits its current task."
+    }
+  ],
+  "existingIntegration": {
+    "file": "eva2/deploy/home-assistant/custom_components/eva2_voice/conversation.py",
+    "lines": "41-64",
+    "behavior": "The receipt and answer chunks already enter the same actual ChatLog delta stream; supports_streaming is already enabled."
+  },
+  "existingTests": {
+    "file": "eva2/tests/operations/test_ha_conversation_streaming.py",
+    "tests": [
+      "test_receipt_and_answer_stream_before_bound_final_response",
+      "test_cancellation_drops_late_client_output_without_final_utterance"
+    ],
+    "limitation": "These tests establish the integration's pre-final delta delivery and cancellation behavior, not Home Assistant TTS flush or physical audibility. They were not rerun for this unchanged-code inspection."
+  },
+  "smallestRealChangeOutsideCurrentScope": "An explicit, maintained segment-flush contract must be added upstream to ChatLog/Assist pipeline and consumed by the existing integration. No supported such contract was found in the pinned version. Do not silently patch or monkeypatch Home Assistant core.",
+  "rejectedWorkarounds": [
+    "Padding receipt text above 60 characters",
+    "Fake tool calls",
+    "Calling announce during the current pipeline",
+    "Replacing firmware or STT/TTS providers",
+    "Monkeypatching the pinned Home Assistant pipeline"
+  ],
+  "productChanges": 0,
+  "testsRun": 0,
+  "modelCalls": 0,
+  "audioCalls": 0,
+  "serviceRestarts": 0,
+  "runtimeConfigurationReads": 0,
+  "acceptance": "No immediate spoken receipt or owner acceptance claimed.",
+  "reviewedAt": "2026-09-25T14:35:52.764449+00:00",
+  "acknowledgementMediaCheck": {
+    "checkedAt": "2026-09-25T14:46:13.958427+00:00",
+    "source": "https://github.com/home-assistant/core/blob/2026.9.2/homeassistant/components/assist_pipeline/pipeline.py",
+    "finding": "acknowledge_media_id appears in the config fields, but is not a short-utterance flush. ACKNOWLEDGE_PATH is used only as the final response after a local intent targeting the satellite area. It does not supply early acknowledgement during an ongoing Eva model response.",
+    "changes": "No HA source, firmware, pipeline or device changes."
+  }
+}

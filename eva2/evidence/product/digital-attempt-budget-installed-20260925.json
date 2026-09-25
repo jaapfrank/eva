@@ -1,0 +1,251 @@
+{
+  "status": "installed",
+  "checkedAt": "2026-09-25T14:57:49.707970+00:00",
+  "sourceCommit": "e4ca5ee80f379b5d5aeec61fcafb0d2c4f2ff099",
+  "ownerRequirement": "Learn and complete an unfamiliar digital task without a task-specific core feature or developer intervention.",
+  "cause": "The ordinary-answer output limit was reused as the cumulative limit for a multi-response digital attempt. The recorded documentation-learning attempt stopped at1262 cumulative output tokens before execution despite already saving valid code.",
+  "sourceEvidence": "eva2/evidence/product/documentation-learning-budget-20260924.json",
+  "change": {
+    "perModelResponseOutputTokens": 1200,
+    "newAttemptOutputTokens": 9600,
+    "maximumModelResponses": 8,
+    "maximumToolCalls": 6,
+    "maximumInputTokens": 65536,
+    "timeoutSeconds": 300,
+    "retainedTasks": "Their stored grants, source and execution identities remain unchanged. Explicit resume uses the current program release with the old grant.",
+    "budgetVisibility": "Both output limits appear in the existing worker model context. Stored task grants record the actual cumulative bound.",
+    "architecture": "Existing worker, planner, store and provider reused; no new execution lane, provider, firmware, schema or subscription."
+  },
+  "validation": {
+    "offlineTests": {
+      "passed": 66,
+      "seconds": 2.78,
+      "evidence": "/home/administrator/project/.eva2-artifacts/digital-attempt-budget-20260925/pytest-final.log"
+    },
+    "postgresTests": {
+      "passed": 1,
+      "seconds": 4.33,
+      "evidence": "/home/administrator/project/.eva2-artifacts/digital-attempt-budget-20260925/pytest-postgres-final.log"
+    },
+    "cases": [
+      "Multiple valid model responses can complete above the former cumulative1200 limit.",
+      "The cumulative attempt cap is still enforced.",
+      "Legacy resume preserves verified prior actions and its old budget.",
+      "Real PostgreSQL old household task load, stop, resume and current-release claim succeed.",
+      "Old executable and widened grant under a legacy profile are rejected."
+    ],
+    "initialFailures": "Three stale unit fixtures and one mismatched cached service-profile fixture were corrected; initial logs retained. No hidden repeated model trial.",
+    "review": {
+      "reviewer": "/root/result_return_review",
+      "decision": "GO",
+      "checkedAt": "2026-09-25T14:53:29.033364+00:00",
+      "scope": [
+        "eva2/src/eva/bootstrap/delegated_digital_composition.py",
+        "eva2/src/eva/bootstrap/delegated_digital_profile.py",
+        "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+        "eva2/src/eva/bootstrap/household_digital_work.py"
+      ],
+      "findingsResolved": [
+        "Legacy household tasks remain readable and resumable under the current release without increasing their grant."
+      ],
+      "validation": {
+        "offlineTests": 66,
+        "postgresTests": 1,
+        "modelCalls": 0
+      },
+      "remaining": [
+        "Candidate and installed source/version parity",
+        "Real unassisted learning quality and owner acceptance"
+      ]
+    },
+    "candidate": {
+      "configuration_sha256": "278a75bde0350a66409fc7db00fa438b538920d7801454918976e003e9380f0c",
+      "modelResponseOutputTokens": 1200,
+      "attemptOutputTokens": 9600,
+      "maximumModelRuns": 8,
+      "maximumToolCalls": 6,
+      "digitalWorkerProfileRelease": "c47a7cd2fea5229bd40d334f860d159ec384f2fdc8035def60ef2da946d82103",
+      "digitalWorkerProgramRelease": "2fd9003189fd207120837cb347e751d92bf5933b9e397a7f4d90627bbf28dda5",
+      "execution_source_sha256": [
+        [
+          "bootstrap/delegated_digital_composition.py",
+          "da3a95c82f80bf1c016995e331156973f5233f309f20b884e3c72275aeb14b08"
+        ],
+        [
+          "bootstrap/household_digital_work.py",
+          "0b9e3c20ccea888a1141b193872dd15b822d209cf6a579df79f92bfc1318689f"
+        ],
+        [
+          "bootstrap/household_work.py",
+          "385b0cab56ead7f079fafa20e0cabac7a106d6dc11f011a63c78355f647d9e80"
+        ],
+        [
+          "bootstrap/delegated_work_result_reader.py",
+          "7120f58a9894e85f9784b7fd0936aa0572482de4c46ed70a9783825936e2993b"
+        ],
+        [
+          "bootstrap/delegated_work_owner_service.py",
+          "fc6cad079885499dd9972686beabf3151a8d140d7aa497ee4963f86323cea909"
+        ],
+        [
+          "adapters/postgres/delegated_work_actions.py",
+          "2887f9388be7c957ce3e6fe7b96f430a16363a65ea7d852a9a37a998e37cf6a8"
+        ],
+        [
+          "bootstrap/delegated_digital_runner.py",
+          "6554bafcdbbab8c47de658e1f225a000927baf9f0020c20c02c56f9eca454733"
+        ],
+        [
+          "bootstrap/background_browser_context.py",
+          "b8474bf8fe32458102f24a4e96d2391d0e53b964855a0593bbf12bac2f745857"
+        ],
+        [
+          "adapters/connectors/browser_session.py",
+          "b2c251ed536ae5ce11d7a7f3fb3369dbdc59c7469b561b195af6105b406c7599"
+        ],
+        [
+          "adapters/postgres/background_work_progress.py",
+          "d1a5b28811d835e0cc6fb49bfa48841a93b6aff647e7ddeff33cd605517a2684"
+        ],
+        [
+          "adapters/postgres/work_corrections.py",
+          "ae06e3322642792b4fdf0ac54d8c3f89eff24b06c7591529261678e6f68ec03b"
+        ],
+        [
+          "adapters/postgres/component_improvement_actions.py",
+          "15cf280f6dda09722c3aa04b93a9efcec79aef6cfc5405e9da6ffcad7f1cb027"
+        ],
+        [
+          "application/component_improvements.py",
+          "0c5cc1c88106161807eb450c8b0d89e6558c1d9089f151fd5a3e1fd52469b16e"
+        ],
+        [
+          "adapters/connectors/component_evaluation.py",
+          "4eb1f42a6865977b4f1af95825ee4c8497fa45c453858a1b01fbb527a14cc1f4"
+        ],
+        [
+          "adapters/connectors/procedure_execution.py",
+          "9099a5f4daec4329afb2f1fca44819b3c3dd628efcc1e3ef70bf0a390b372a02"
+        ],
+        [
+          "bootstrap/private_conversation_resources.py",
+          "2b2456f507fa1cabc4c3c30bd13ec60abe9a9776fc2fd2842971da633f478f65"
+        ],
+        [
+          "adapters/model/pydantic_conversation.py",
+          "ec936fabc19bf06eb308ef531e9e922fb02a206270ef0377041e4c941052cecd"
+        ],
+        [
+          "providers/mcp_autonomy.py",
+          "32c0dbddc8d3138be3d510c29ab9d7a0368ad951cdf08aae4df158a9c8e51a0d"
+        ],
+        [
+          "providers/mcp_registration.py",
+          "751a70d83ad8da44768b7cefe5d92d95563cd45727fb764d024a97525b749c87"
+        ],
+        [
+          "providers/mcp_owner_authority.py",
+          "5613473d28fbd43ce61de59bd9f12d3430852fd0f79eab0197e6563408f3e3b2"
+        ],
+        [
+          "adapters/postgres/mcp_connector_registry.py",
+          "65be2012bec6dc4ca16a1c3c21fbe7fd9a88cce71b99cabf0be2f44ac53fa96f"
+        ],
+        [
+          "providers/procedure_reference_actions.py",
+          "33461c2b20e33d277da37aac3985930489f3222a62cd41f63589fa643ecb67d5"
+        ],
+        [
+          "adapters/postgres/procedure_reference_host.py",
+          "7de5b07b632b816121fd520782fcb1fafcd5942ce69ff2c1800c3eda0b60347e"
+        ],
+        [
+          "application/procedure_references.py",
+          "0331a28fa8256d68bea00428da1ff364e4b520dcd7eb47bb4fb132e977612c1c"
+        ],
+        [
+          "adapters/postgres/memory_outbox.py",
+          "a5dd61f6f6ded20c1c9c02964c74b5d6ee0d0c50e04fe2788cd66b5bed98fa51"
+        ],
+        [
+          "adapters/postgres/external_conversation_tools.py",
+          "65b327bf5af2a976bff39b4a7f9f8b7fb8deb76db525067bfdd81f2d7d1e6798"
+        ],
+        [
+          "adapters/connectors/mcp_gateway.py",
+          "b9d8a0a3247e28a5405638603b93f0a6bbf8215c3b7e6cd0f71de48e1f310902"
+        ],
+        [
+          "providers/mcp_gateway.py",
+          "78071f643b300f1572a613f0128c229fe24820a6d3d64bfea51938032d390d8f"
+        ],
+        [
+          "providers/home_assistant.py",
+          "6c7cd1bb5500e79508ed50c6a8d1b3a8edbf3c5ccf57d59074db60289513e5a5"
+        ],
+        [
+          "adapters/connectors/home_assistant_api.py",
+          "259f2d88c5d34380383e0259daa38892220091316865c8acddee6a11387dbe1a"
+        ],
+        [
+          "adapters/connectors/home_assistant_admin.py",
+          "22e07c2085e53eff9c21a992a38b4249245b7ac2f56f142dbdc783c2f9242c8e"
+        ],
+        [
+          "adapters/connectors/home_assistant_automations.py",
+          "2cea1c363e0b3c04a442f090e89bec84289ecdaae5ee0db00ebec802904c86ba"
+        ]
+      ],
+      "householdResearchRelease": "4bae0a5d399f19b880434a1178be7cac836d60352307b1124e11e06b00e307cb",
+      "speakerCount": 2,
+      "householdDigitalReady": true,
+      "schema": "4e_0007_delegated_private",
+      "retainedPendingNativeSessions": 0
+    }
+  },
+  "installation": {
+    "checkedAt": "2026-09-25T14:56:39.425011+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:c791687b465b9e1a811ecda1309833555440e976e01b840d3d5f4ccfe9b19e0f",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_composition.py": "da3a95c82f80bf1c016995e331156973f5233f309f20b884e3c72275aeb14b08",
+          "bootstrap/delegated_digital_profile.py": "3638ad7092e08f1f66f64f8d3f0c60eaf2ff4fe2df8a6db639987f7163385c45",
+          "bootstrap/delegated_digital_runner.py": "6554bafcdbbab8c47de658e1f225a000927baf9f0020c20c02c56f9eca454733",
+          "bootstrap/household_digital_work.py": "0b9e3c20ccea888a1141b193872dd15b822d209cf6a579df79f92bfc1318689f"
+        }
+      },
+      "worker": {
+        "image": "sha256:cd24524051e57770260c46e1c9e9d14b78031f920e3acb75281ce9360cbb4297",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_composition.py": "da3a95c82f80bf1c016995e331156973f5233f309f20b884e3c72275aeb14b08",
+          "bootstrap/delegated_digital_profile.py": "3638ad7092e08f1f66f64f8d3f0c60eaf2ff4fe2df8a6db639987f7163385c45",
+          "bootstrap/delegated_digital_runner.py": "6554bafcdbbab8c47de658e1f225a000927baf9f0020c20c02c56f9eca454733",
+          "bootstrap/household_digital_work.py": "0b9e3c20ccea888a1141b193872dd15b822d209cf6a579df79f92bfc1318689f"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/digital-attempt-budget-20260925/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "usage": {
+    "evaModelCalls": 0,
+    "physicalHomeActions": 0,
+    "codexCredits": "unknown"
+  },
+  "remaining": [
+    "No new real model-driven documentation-learning trial was run.",
+    "General autonomous learning, wider service use and owner acceptance remain open.",
+    "No additional whole project category marked complete; two of nine remain complete."
+  ],
+  "tryIt": {
+    "route": "Existing Telegram /eva2 or owner website conversation.",
+    "instruction": "Start a new task that learns a small unfamiliar documented format or API and applies it to an example, checking and saving the result. New digital attempts can use the existing sequence of model responses without the former single-answer cumulative cap.",
+    "notice": "This fixes a concrete budget stop, not all possible task failures. Old tasks keep their original limits; existing explicit resume is preserved."
+  }
+}

@@ -1012,6 +1012,22 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Meer modelreacties binnen één digitale opdracht",
+            "date": "25 september",
+            "state": "installed",
+            "result": "De antwoordlimiet werd ten onrechte als hele taaklimiet gebruikt. Antwoordlimiet blijft1200; nieuwe pogingen maximaal8×1200, met ongewijzigde tool-, invoer- en tijdgrenzen. Oude taken blijven bereikbaar en hervatbaar met hun oorspronkelijke budget.",
+            "remaining": "Gecontroleerde uitvoering en databasehervatting slagen; nog geen nieuwe echte modelleerproef of algemene leerfunctieacceptatie. Geen nieuwe hoofdcategorie afgerond.",
+            "source": "eva2/evidence/product/digital-attempt-budget-installed-20260925.json"
+          },
+          {
+            "title": "Korte HA-ontvangst: integratiegrens vastgesteld",
+            "date": "25 september",
+            "state": "investigated",
+            "result": "HA2026.9.2 biedt geen aparte flush voor korte ontvangst; een losse announcement annuleert de lopende pipeline. Bestaande streaming en firmware behouden.",
+            "remaining": "Geen nieuwe snellere spraakfunctie geïnstalleerd. Kortere ontvangst vraagt ondersteuning in het HA-pipelinecontract; geen opvultekst of fictieve toolcall toegevoegd.",
+            "source": "eva2/evidence/product/ha-short-receipt-boundary-20260925.json"
+          },
+          {
             "title": "Werk en resultaat na een gesloten spraakgesprek",
             "date": "25 september",
             "state": "installed",
@@ -1024,7 +1040,7 @@
             "date": "25 september",
             "state": "installed",
             "result": "Correctie uit een volgende spraakbeurt stopt de oude poging en bewaart één aangepaste hervatting. Dezelfde planner en werker; stoppen annuleert ook een wachtende correctie. Hervatting blijft werken wanneer de betrokken gesprekken sluiten.",
-            "remaining": "Fysieke proef open. Na sluiting van de oorspronkelijke sessie blijft het resultaat bewaard; automatische audio en ophalen via nieuw wakeword blijven nog open. Geen nieuwe grote categorie afgerond.",
+            "remaining": "Fysieke proef open. Ophalen en terugmelden na einde van de oorspronkelijke sessie zijn inmiddels geïnstalleerd in de latere oplevering Werk en resultaat na een gesloten spraakgesprek. Geen nieuwe grote categorie afgerond.",
             "source": "eva2/evidence/product/household-correction-installed-20260925.json"
           },
           {
@@ -2383,14 +2399,14 @@
           }
         ],
         "now": {
-          "title": "Werk en resultaat blijven bereikbaar na einde spraakgesprek",
-          "state": "Technisch opgeleverd",
-          "detail": "Bron5c9cd90c geïnstalleerd op gezonde kern/werker met gelijke uitvoerversies. Nieuwe wakeword-beurt op dezelfde speaker kan bewaard werk lezen, stoppen, bijsturen en hervatten; afgerond resultaat wordt op de oorspronkelijke vrije speaker één keer aangeboden. Gerichte controles en onafhankelijke review geslaagd. Geen uitvoerder meer actief op deze wijziging; fysieke hoorbaarheid/eigenaaracceptatie blijven open."
+          "title": "Digitale taakbudgetcorrectie geïnstalleerd",
+          "state": "Opgeleverd",
+          "detail": "Nieuwe digitale pogingen kunnen meerdere modelreacties gebruiken:1200 tokens per reactie, maximaal9600 per begrensde poging. Oude taken houden hun oude grens. Kern en werker gezond; bron en uitvoerprofielen gecontroleerd. Geen uitvoerder meer actief op deze wijziging; algemene leerfunctie nog niet afgerond."
         },
         "next": {
-          "title": "Gesprek en achtergrondwerk via de vier ingangen afronden",
+          "title": "Ongeziene vaardigheid uit documentatie zelfstandig afronden",
           "state": "Nog niet gestart",
-          "detail": "Bestaande snelle ontvangst en nu doorlopende taakbediening behouden. Resterend binnen stap1: snelle inhoudelijke begroeting, kanaalgelijkheid en fysieke continue-spraakproef. Gebruik bestaande bewijzen; geen herbouw van afgeronde taakcontinuïteit."
+          "detail": "Voortbouwen op de bestaande leer-/uitvoeringsroute en de geïnstalleerde budgetcorrectie. Eén nieuwe representatieve opdracht kan het resterende functionele gat aantonen; geen herhaling van de oude proef zonder gewijzigde oorzaak."
         },
         "ownerAction": {
           "title": "Later proberen: doorpraten en terugkomen op een huisopdracht",
@@ -2404,7 +2420,7 @@
           "expected": "Werk blijft bewaard en bedienbaar na het gesprek. Onderzoek en digitale huisopdrachten gebruiken dezelfde opslag/uitvoering. Hoorbaarheid en ervaren snelheid moeten nog fysiek beoordeeld worden."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-25T14:32:16.462475+00:00"
+        "reviewedAt": "2026-09-25T14:57:49.707970+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12176,7 +12192,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Volg deliveryOverview.next: gesprek en achtergrondwerk via de vier ingangen afronden; bewaar de geïnstalleerde taakcontinuïteit. Open fysieke proeven en externe bevestigingen staan apart en blokkeren onafhankelijk werk niet.",
+      "nextAction": "Volg deliveryOverview.next: zelfstandig leren uit documentatie afronden, met behoud van geïnstalleerde taakcontinuïteit en nieuwe budgetkoppeling. Open fysieke proeven blokkeren onafhankelijk werk niet.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
