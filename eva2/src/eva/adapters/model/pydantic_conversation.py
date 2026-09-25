@@ -2354,25 +2354,35 @@ class PydanticConversationModel:
         response: Any,
     ) -> tuple[str, tuple[ResearchSource, ...], tuple[ResearchSource, ...]]:
         deltas: list[str] = []
-        completed_parts: list[str] = []
+        completed_items: dict[object, str] = {}
+        completed_parts: dict[object, str] = {}
+        final_parts: list[str] = []
         cited: dict[str, str] = {}
         consulted: dict[str, str] = {}
-        for kind, data in PydanticConversationModel._iter_sse_events(
-            response, "research"
-        ):
-            if kind in {"response.output_text.delta", "response.text.delta"}:
-                delta = data.get("delta")
-                if not isinstance(delta, str):
-                    raise ConversationModelError("research text delta is invalid")
-                deltas.append(delta)
-                continue
-            if kind == "response.failed":
-                raise ConversationModelError("research provider reported failure")
-            if kind != "response.output_item.done":
-                continue
-            item = data.get("item")
+
+        def annotation_source(annotation):
+            if not isinstance(annotation, dict):
+                return
+            citation = annotation.get("url_citation", annotation)
+            if not isinstance(citation, dict):
+                return
+            url, title = citation.get("url"), citation.get("title")
+            if isinstance(url, str) and isinstance(title, str):
+                cited.setdefault(url, title)
+
+        def read_part(part):
+            if not isinstance(part, dict):
+                return ""
+            annotations = part.get("annotations")
+            if isinstance(annotations, list):
+                for annotation in annotations:
+                    annotation_source(annotation)
+            text = part.get("text")
+            return text if isinstance(text, str) else ""
+
+        def read_item(item):
             if not isinstance(item, dict):
-                continue
+                return ""
             if item.get("type") == "web_search_call":
                 action = item.get("action")
                 raw_sources = (
@@ -2399,32 +2409,39 @@ class PydanticConversationModel:
                                 if isinstance(title, str) and title.strip()
                                 else (host or "Bron"),
                             )
-                continue
-            if item.get("type") != "message":
-                continue
-            content = item.get("content")
-            if not isinstance(content, list):
-                continue
-            for part in content:
-                if not isinstance(part, dict):
-                    continue
-                part_text = part.get("text")
-                if isinstance(part_text, str):
-                    completed_parts.append(part_text)
-                annotations = part.get("annotations")
-                if not isinstance(annotations, list):
-                    continue
-                for annotation in annotations:
-                    if not isinstance(annotation, dict):
-                        continue
-                    citation = annotation.get("url_citation", annotation)
-                    if not isinstance(citation, dict):
-                        continue
-                    url = citation.get("url")
-                    title = citation.get("title")
-                    if isinstance(url, str) and isinstance(title, str):
-                        cited.setdefault(url, title)
-        text = "".join(deltas) if deltas else "".join(completed_parts)
+                return
+            if item.get("type") != "message" or not isinstance(item.get("content"), list):
+                return ""
+            return "".join(read_part(part) for part in item["content"])
+
+        for kind, data in PydanticConversationModel._iter_sse_events(response, "research"):
+            if kind in {"response.output_text.delta", "response.text.delta"}:
+                delta = data.get("delta")
+                if not isinstance(delta, str):
+                    raise ConversationModelError("research text delta is invalid")
+                deltas.append(delta)
+            elif kind == "response.failed":
+                raise ConversationModelError("research provider reported failure")
+            elif kind == "response.output_text.annotation.added":
+                annotation_source(data.get("annotation"))
+            elif kind == "response.content_part.done":
+                text = read_part(data.get("part"))
+                key = (data.get("item_id", data.get("output_index")), data.get("content_index"))
+                completed_parts[key] = text
+            elif kind == "response.output_item.done":
+                item = data.get("item")
+                text = read_item(item)
+                if text:
+                    key = item.get("id", data.get("output_index", ("unidentified", len(completed_items))))
+                    completed_items[key] = text
+            elif kind == "response.completed":
+                result = data.get("response")
+                output = result.get("output") if isinstance(result, dict) else None
+                if isinstance(output, list):
+                    # A completed response is a replacement snapshot, not a delta.
+                    final_parts = [text for item in output if (text := read_item(item))]
+        fallback = final_parts or list(completed_items.values()) or list(completed_parts.values())
+        text = "".join(deltas) if deltas else "".join(fallback)
         cited_sources: list[ResearchSource] = []
         for url, title in cited.items():
             try:
