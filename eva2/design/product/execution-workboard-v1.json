@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Echte onderzoeksopdracht met officiële bronnen afgerond",
+            "date": "25 september",
+            "state": "installed",
+            "result": "De HA-spraakuitleg is door Eva onderzocht, opgeslagen en exact teruggelezen. Ontbrekende bron-events worden nu verwerkt; kern en werker gebruiken gelijke versies.",
+            "remaining": "Hervatte opdracht na eerdere mislukkingen. Geen algemene onderzoeksacceptatie; automatische kanaalterugmelding nog niet in deze proef waargenomen.",
+            "source": "eva2/evidence/product/research-citation-streams-installed-20260925.json"
+          },
+          {
             "title": "Aangenomen onderzoek wordt weer door de werker opgepakt",
             "date": "25 september",
             "state": "installed",
@@ -2303,15 +2311,15 @@
           }
         ],
         "now": {
-          "title": "Onderzoek wordt weer uitgevoerd; bronverwerking nog niet klaar",
-          "state": "Versiecorrectie geïnstalleerd; onderzoeksfout open",
-          "detail": "Kern en werker gebruiken nu dezelfde bestaande werkerscode. De hervatte taak is werkelijk opgepakt en deed één modelaanroep; daarna ontbreekt de vereiste bronverwijzing in het modelresultaat. Geen bruikbaar onderzoeksresultaat bevestigd. Geen uitvoerder actief en geen modelaanvraag meer lopend.",
-          "doneWhen": "Onderzoeksresultaat met gecontroleerde bronnen bewaren en via oorspronkelijke route terugbrengen."
+          "title": "Onderzoeksantwoord met bronnen opgeslagen en teruggelezen",
+          "state": "Geïnstalleerd — concrete opdracht geslaagd",
+          "detail": "Bronparser leest aparte annotations, content-part- en response-eindsnapshots. Echte hervatte HA-spraakopdracht geslaagd; antwoord met officiële bronnen opgeslagen en hash bij teruglezen exact. Eén modelrespons13.124input/753output,1toolcall; creditkosten onbekend. Geen uitvoerder of proef actief.",
+          "doneWhen": "Deze concrete hersteloplevering is technisch afgerond; algemene taakuitvoering en automatische kanaalaflevering blijven afzonderlijk open."
         },
         "next": {
-          "title": "Ontbrekende onderzoeksbronverwijzingen gericht afhandelen",
+          "title": "Het opgeslagen resultaat via de oorspronkelijke gesprekroute terugbrengen",
           "state": "Nog niet gestart",
-          "detail": "Concrete foutfingerprint herleid tot topic research lacks cited sources. Controleer bestaande bronparser en foutafhandeling; geen blinde herhaling, geen versoepeling van bronbewijs."
+          "detail": "Gebruik het bestaande resultaat; controleer de terugmelding zonder nieuw onderzoek. Menselijke kanaalbeleving blijft apart."
         },
         "ownerAction": {
           "title": "Controleer ontvangst op de Voice PE",
@@ -2325,7 +2333,7 @@
           "expected": "Een korte ontvangstmelding vóór het inhoudelijke antwoord. Dit is de fysieke speakerproef; de websiteknop vervangt die niet."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-25T00:26:39.652362+00:00"
+        "reviewedAt": "2026-09-25T00:37:33.005115+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12097,7 +12105,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Concrete foutfingerprint herleid tot topic research lacks cited sources. Controleer bestaande bronparser en foutafhandeling; geen blinde herhaling, geen versoepeling van bronbewijs.",
+      "nextAction": "Gebruik het bestaande resultaat; controleer de terugmelding zonder nieuw onderzoek. Menselijke kanaalbeleving blijft apart.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

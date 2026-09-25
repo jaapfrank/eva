@@ -1,0 +1,63 @@
+{
+  "checkedAt": "2026-09-25T00:35:43.080239+00:00",
+  "services": {
+    "core": {
+      "image": "sha256:f10b9bcfd871296abd780dec9541e28902302641abd04d75f155ee9ebf742725",
+      "health": "healthy",
+      "sourceHashes": {
+        "adapters/model/pydantic_conversation.py": "ec936fabc19bf06eb308ef531e9e922fb02a206270ef0377041e4c941052cecd"
+      }
+    },
+    "worker": {
+      "image": "sha256:b6f82495045bcdf72110ffdbeb464fb6f7009fae9cbd74d7a3281fa7601d8975",
+      "health": "healthy",
+      "sourceHashes": {
+        "adapters/model/pydantic_conversation.py": "ec936fabc19bf06eb308ef531e9e922fb02a206270ef0377041e4c941052cecd"
+      }
+    }
+  },
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/research-citation-streams-20260925/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker",
+  "sourceCommit": "bbf1abbe00b6c8c648e0ce373efccdcd37c1dcc6",
+  "result": "installed_real_research_completed_and_read_back",
+  "tests": {
+    "passed": 16,
+    "scope": "Citation carriers, snapshot deduplication, legacy text, source distinction and failures.",
+    "note": "Initial host collection lacked dependencies; successful run used existing container dependencies."
+  },
+  "independentReview": "Coordinator reviewed bounded parser changes, preserved legacy identical anonymous items, validated separate cited/consulted collections and actual result hash.",
+  "officialReference": "https://developers.openai.com/api/docs/guides/tools-web-search",
+  "sdkEvidence": "Installed ResponseOutputTextAnnotationAddedEvent supports response.output_text.annotation.added.",
+  "liveProgramParity": {
+    "program": "a8a47f6254a1ba951c7c94ea45ac7608ad2b24dd4c9bfc48dd9993bd93869264",
+    "engine": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+    "research": "b65eb9953b19b6b201fd828f121a61a6f82d626a81e9d59e678b54bf8fbba542"
+  },
+  "work": {
+    "workId": "work:eva-resume:c8aa00b1-d594-5489-bb7f-8b6e3f39f1f7",
+    "generation": 3,
+    "state": "succeeded",
+    "outputSha256": "a951ae1eef83912dbd48afec17867c10a24bf2991d4d12e03893eaa365e938c1",
+    "completedAt": "2026-09-25T00:36:20Z",
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "measured",
+      "completed_model_responses": 1,
+      "tool_calls": 1,
+      "input_tokens": 13124,
+      "output_tokens": 753,
+      "total_tokens": 13877
+    },
+    "resultFile": "eva2/evidence/product/results/home-assistant-cloud-spraak-20260925.md"
+  },
+  "limitations": [
+    "Previous provider stream was not retained; cannot prove which missing event caused that failure.",
+    "One actual public research result, after two earlier task attempts; no general task or channel acceptance.",
+    "Result available in task controls; automatic audible/website return not independently observed in this trial.",
+    "Owner acceptance open. Credit cost unknown; one research model response in this turn."
+  ],
+  "liveHttp": {
+    "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+    "http://localhost:44716/": 200
+  }
+}
