@@ -1012,8 +1012,12 @@ class LivingConversation:
                 "Bevestig pas na opgeslagen toelating: aangenomen is niet uitgevoerd. Wacht niet; laat "
                 "doorpraten en gebruik work_id voor volgen/stoppen. Ook digitaal leren en hergebruik horen "
                 "hier, niet bij toolvrije hulp of alleen publiek onderzoek. Geef leerdoel, toepassing en "
-                "bewaren van de werkwijze mee. Laat bij hergebruik de werker de actuele bewaarde inhoud ophalen "
-                "en toepassen; vraag de gebruiker niet opnieuw om uitleg.")
+                "bewaren van de werkwijze mee. Een expliciet verzoek om bronnen te lezen, iets te bewaren "
+                "of uit te voeren is niet vervuld met alleen een inhoudelijk tekstantwoord. Neem zulk "
+                "meerstapswerk aan via start_digital_work, ook als je een deel zelf kunt beantwoorden. "
+                "Lukt de toelating niet, benoem de concrete blokkade en claim het werk niet als gedaan. "
+                "Laat bij hergebruik de werker de actuele bewaarde inhoud ophalen en toepassen; "
+                "vraag de gebruiker niet opnieuw om uitleg.")
         if "start_background_research" in available_names:
             self_context = (*self_context,
                 "Gebruik start_background_research voor expliciet publiek bronnenonderzoek; alleen de publieke "
