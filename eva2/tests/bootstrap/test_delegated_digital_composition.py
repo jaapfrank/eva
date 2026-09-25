@@ -43,6 +43,9 @@ def test_profile_uses_same_configuration_and_changes_when_model_or_provider_chan
     assert "get_delegated_work" in first.capability_ids
     assert "use_connector_tool" in first.capability_ids
     assert first.maximum_model_runs == 8
+    assert first.maximum_response_output_tokens == 1200
+    assert first.grant().maximum_output_tokens == 9600
+    assert first.maximum_tool_calls == 6
     settings.conversation_model = "another-model"
     assert first.release != build_digital_profile(settings, bundle).release
     settings.conversation_model = "configured-model"
@@ -69,7 +72,7 @@ def test_scoped_actions_follow_late_profile_assignment():
     from eva.adapters.postgres.delegated_work_actions import PostgresDelegatedWorkActions
     service = SimpleNamespace(research_profile=None, digital_profile=None)
     actions = ScopedDelegatedWorkActions(PostgresDelegatedWorkActions(None, service), None)
-    assert "start_digital_work" not in actions.action_names
+    assert "start_digital_work" not in actions.private.action_names
     service.digital_profile = object()
     assert "start_digital_work" in actions.action_names
     assert "start_digital_work" in {tool.name for tool in actions.conversation_tools(include_digital=True)}
@@ -113,6 +116,7 @@ def test_runner_factory_reuses_resource_factory_and_exposes_only_connector_tools
     assert runner.memory is memory and runner.identity is identity
     assert runner.connector_tools[:-1] == bundle.external_tools
     assert runner.connector_tools[-1].action_names == ("get_delegated_work",)
+    assert observed["model"]["resource_budget"].max_output_tokens == 1200
     assert observed["model"]["model"] == settings.conversation_model
     assert observed["model"]["conversation_tools"] == composition.digital_tools(bundle)[0]
     assert observed["owner"]["owner_principal_id"] == UUID(settings.background_principal_id)
@@ -196,3 +200,17 @@ def test_digital_grant_accepts_configured_catalog_beyond_legacy_sixteen_tools():
     assert expanded.grant().capability_ids == list(names)
     with pytest.raises(ValueError, match="explicit connector actions"):
         replace(profile, capability_ids=(*names, "start_digital_work"))
+
+
+def test_legacy_budget_is_exact_and_bound_to_current_release():
+    settings, bundle = configuration()
+    profile = build_digital_profile(settings, bundle)
+    current = profile.grant()
+    legacy = current.model_copy(update={"maximum_output_tokens": 1200,
+                                      "maximum_total_tokens": current.maximum_input_tokens + 1200})
+    assert profile.accepts_grant(legacy)
+    assert profile.accepts_grant(current)
+    for changed in ({"maximum_output_tokens": 1201, "maximum_total_tokens": current.maximum_input_tokens + 1201},
+                    {"maximum_total_tokens": current.maximum_total_tokens},
+                    {"maximum_tool_calls": 7}, {"maximum_model_runs": 9}):
+        assert not profile.accepts_grant(legacy.model_copy(update=changed))

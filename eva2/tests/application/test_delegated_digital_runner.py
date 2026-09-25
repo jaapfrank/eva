@@ -588,3 +588,86 @@ def test_partial_measurement_does_not_invent_remaining_token_capacity():
     assert snapshot["remaining"]["output_tokens"] is None
     assert snapshot["remaining"]["model_runs"] is None
     assert snapshot["remaining"]["tool_calls"] == max(0, spec.grant.maximum_tool_calls - 3)
+
+
+def _budget_spec(profile, previous, *, grant=None, resumed=False):
+    return profile.build_spec(source=previous.source.model_dump(mode="json"),
+        source_ingress_sha256=previous.source_ingress_sha256, grant=grant,
+        execution_id=previous.execution_id, work_id="work:resumed" if resumed else previous.work_id,
+        episode_id=previous.episode_id, generation=2 if resumed else 1,
+        parent_task_id=previous.work_id if resumed else previous.parent_task_id,
+        owner_principal_id=previous.owner_principal_id, principal_binding_id=previous.principal_binding_id,
+        task=previous.task, created_at=NOW, deadline=NOW+timedelta(seconds=300))
+
+
+@pytest.mark.parametrize("legacy, expected", [(False, "succeeded"), (True, "budget_exceeded")])
+def test_response_budget_is_not_reused_as_whole_task_budget(legacy, expected):
+    from dataclasses import replace
+    _, old, _, tools, _, runner, _ = fixture()
+    runner.profile = replace(runner.profile, maximum_response_output_tokens=1200, maximum_output_tokens=9600)
+    grant = runner.profile.grant()
+    if legacy:
+        grant = grant.model_copy(update={"maximum_output_tokens":1200,
+                                        "maximum_total_tokens":grant.maximum_input_tokens+1200})
+    spec = _budget_spec(runner.profile, old, grant=grant)
+    class LargerOutput(Model):
+        def generate(self, *args, **kwargs):
+            result = super().generate(*args, **kwargs)
+            return replace(result, usage=ConversationModelUsage.measured(
+                tool_calls=int(result.action_call is not None), input_tokens=30, output_tokens=450))
+    runner.model = LargerOutput()
+    tools.release.set()
+    outcome = asyncio.run(runner.run(spec, call_id="call:output-budget"))
+    assert outcome.status == expected, outcome
+    assert outcome.usage.output_tokens == 1350
+    assert len(tools.calls) == 2
+
+
+def test_legacy_resume_keeps_receipts_and_new_release_without_budget_expansion():
+    from dataclasses import replace
+    async def run():
+        _, old, store, tools, _, runner, _ = fixture()
+        legacy_profile = replace(runner.profile, maximum_output_tokens=1200)
+        runner.profile = legacy_profile
+        spec = _budget_spec(legacy_profile, old)
+        saved = {}
+        execute = tools.execute
+        def persist(turn, call, *, step_index):
+            receipt = execute(turn, call, step_index=step_index)
+            saved[(background_execution_namespace(turn), step_index)] = receipt
+            if step_index == 0: store.stopped = True
+            return receipt
+        tools.execute = persist
+        tools.pending = lambda turn, step_index: saved.get((background_execution_namespace(turn), step_index))
+        tools.release.set()
+        assert (await runner.run(spec, call_id="call:old")).result is None
+        store.stopped = False
+        runner.profile = replace(legacy_profile, maximum_response_output_tokens=1200, maximum_output_tokens=9600)
+        runner.journal_factory = lambda *_: Journal()
+        resumed = _budget_spec(runner.profile, spec, grant=spec.grant, resumed=True)
+        assert resumed.grant == spec.grant
+        assert resumed.worker_profile_release_sha256 == runner.profile.release.worker_profile_release_sha256
+        assert resumed.worker_profile_release_sha256 != spec.worker_profile_release_sha256
+        result = await runner.run(resumed, call_id="call:new")
+        assert result.status == "succeeded", result
+        assert [call[2] for call in tools.calls] == [0, 1]
+        assert result.usage.tool_calls == 1
+    asyncio.run(run())
+
+
+def test_cumulative_task_cap_still_stops_before_unverified_completion():
+    from dataclasses import replace
+    _, old, _, tools, _, runner, _ = fixture()
+    runner.profile = replace(runner.profile, maximum_response_output_tokens=1200,
+        maximum_completed_model_responses=2, maximum_output_tokens=2400)
+    spec = _budget_spec(runner.profile, old)
+    class LargerOutput(Model):
+        def generate(self, *args, **kwargs):
+            result = super().generate(*args, **kwargs)
+            return replace(result, usage=ConversationModelUsage.measured(
+                tool_calls=int(result.action_call is not None), input_tokens=30, output_tokens=900))
+    runner.model = LargerOutput()
+    tools.release.set()
+    outcome = asyncio.run(runner.run(spec, call_id="call:cumulative-cap"))
+    assert outcome.status == "budget_exceeded", outcome
+    assert outcome.result is None and outcome.usage.output_tokens == 2700

@@ -45,6 +45,7 @@ class DelegatedDigitalProfile:
     maximum_tool_calls: int = 6
     maximum_input_tokens: int = 65_536
     maximum_output_tokens: int = 4_000
+    maximum_response_output_tokens: int | None = None
     timeout_seconds: int = 300
     maximum_cost_usd_micros: int | None = None
 
@@ -66,6 +67,11 @@ class DelegatedDigitalProfile:
             names.append(name)
         if len(names) != len(set(names)):
             raise ValueError("digital execution source pins must be unique")
+        if self.maximum_response_output_tokens is not None and (
+                type(self.maximum_response_output_tokens) is not int
+                or self.maximum_response_output_tokens < 1
+                or self.maximum_output_tokens != self.maximum_response_output_tokens * self.maximum_completed_model_responses):
+            raise ValueError("digital output budget must bind response and attempt limits")
         self.grant()
 
     def grant(self):
@@ -82,13 +88,21 @@ class DelegatedDigitalProfile:
         )
 
     def accepts_grant(self, grant):
-        """Keep an older capability subset, with every other bound unchanged."""
+        """Accept current bounds or the exact former single-response attempt cap."""
         if not isinstance(grant, DelegatedDigitalWorkGrant):
             return False
         requested, installed = grant.to_payload(), self.grant().to_payload()
         capabilities = requested.pop("capability_ids")
         available = installed.pop("capability_ids")
-        return requested == installed and set(capabilities).issubset(available)
+        if not set(capabilities).issubset(available):
+            return False
+        if requested == installed:
+            return True
+        if self.maximum_response_output_tokens is None:
+            return False
+        legacy = dict(installed, maximum_output_tokens=self.maximum_response_output_tokens,
+                      maximum_total_tokens=self.maximum_input_tokens + self.maximum_response_output_tokens)
+        return requested == legacy
 
     @property
     def release(self):

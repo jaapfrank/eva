@@ -23,6 +23,7 @@ BINDING = UUID("00000000-0000-0000-0000-000000000002")
 
 
 class Store:
+    _engine = None
     scope = external_timeline_scope("tenant", "installation", "test scope")
 
     def __init__(self):
@@ -44,6 +45,14 @@ class Store:
                                               "retention_policy_id", "retention_until")})
         self.rows[spec.work_id] = row
         return SimpleNamespace(disposition="inserted", work=row)
+
+
+@pytest.fixture(autouse=True)
+def controlled_progress(monkeypatch):
+    import eva.adapters.postgres.work_corrections as corrections
+    import eva.adapters.postgres.background_work_progress as progress
+    monkeypatch.setattr(corrections, "work_corrections", lambda *args: ())
+    monkeypatch.setattr(progress, "load_work_progress", lambda *args: None)
 
 
 def setup(*, digital=True):

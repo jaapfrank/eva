@@ -55,7 +55,18 @@ class HouseholdDigitalAuthority:
         actual, current = DelegatedWorkReleaseSelector.from_spec(spec), profile.release
         release_fields = ("worker_profile_release_sha256", "model_profile_release_sha256",
             "engine_release_sha256", "output_schema_sha256")
-        if (any(getattr(actual, key) != getattr(current, key) for key in release_fields)
+        legacy_read = False
+        if not require_current_release and profile.maximum_response_output_tokens is not None:
+            from eva.bootstrap.delegated_digital_profile import DIGITAL_PROFILE_ID
+            legacy_grant = profile.grant().model_copy(update={
+                "maximum_output_tokens": profile.maximum_response_output_tokens,
+                "maximum_total_tokens": profile.maximum_input_tokens + profile.maximum_response_output_tokens})
+            legacy_hash = canonical_sha256({"profile": DIGITAL_PROFILE_ID, "grant": legacy_grant.to_payload()})
+            legacy_read = (actual.worker_profile_release_sha256 == legacy_hash
+                and spec.grant.maximum_output_tokens == legacy_grant.maximum_output_tokens
+                and profile.accepts_grant(spec.grant))
+        if (any(getattr(actual, key) != getattr(current, key) for key in release_fields
+                if not (legacy_read and key == "worker_profile_release_sha256"))
                 or (require_current_release and actual.worker_program_sha256 != current.worker_program_sha256)
                 or not profile.accepts_grant(spec.grant)
                 or spec.model_profile_id != profile.model_profile_id

@@ -408,3 +408,38 @@ def test_invalid_household_origin_blocks_only_its_queued_correction(database):
             delegated_work_runs.c.installation_id == x.server.store.scope.installation_id,
             delegated_work_runs.c.parent_task_id == first_id))
     assert count == 0
+
+
+def test_legacy_household_budget_is_readable_but_requires_new_release_to_run(database):
+    x = digital_setup(database, "hh-digital-budget")
+    legacy_profile = replace(x.profile, maximum_output_tokens=1200)
+    x.server.authority.digital_profile = legacy_profile
+    x.service.digital_profile = legacy_profile
+    turn = x.service.turn(str(uuid4()), "Controleer de verwarming")
+    receipt = HouseholdWorkActions(x.server.store._engine, x.service).execute(
+        turn, ConversationActionCall("start-old", "start_digital_work", {"task": turn.text}))
+    work_id = receipt.output["operation_result"]["work"]["work_id"]
+    old = x.server.store.load(work_id, **x.service._owner, household_origin=x.service.origin(turn)).spec
+    current = replace(legacy_profile, maximum_output_tokens=9600, maximum_response_output_tokens=1200)
+    authority = x.server.authority
+    authority.digital_profile = current
+    x.service.digital_profile = current
+    assert x.server.store.load(work_id, **x.service._owner, household_origin=old.origin).spec == old
+    authority.validate_read_spec(old)
+    with pytest.raises(ValueError):
+        authority.validate_spec(old)
+    with pytest.raises(ValueError):
+        authority.validate_read_spec(old.model_copy(update={"grant": current.grant()}))
+    x.clock[0] += timedelta(seconds=1)
+    control = x.service.turn(str(uuid4()), "Stop deze taak")
+    x.service.execute("stop", control, request_key="stop-old-budget", work_id=work_id)
+    x.clock[0] += timedelta(seconds=1)
+    followup = x.service.turn(str(uuid4()), "Ga verder")
+    result = x.service.execute("resume", followup, request_key="resume-old-budget", work_id=work_id)
+    resumed = x.server.store.load(result["work"]["work_id"], **x.service._owner,
+        household_origin=old.origin).spec
+    authority.validate_spec(resumed)
+    assert resumed.grant == old.grant
+    assert resumed.execution_id == old.execution_id and resumed.source == old.source
+    claim = x.server.store.claim_next(worker_id="worker:budget-resume", release=current.release, now=x.clock[0])
+    assert claim is not None
