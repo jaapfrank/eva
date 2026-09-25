@@ -1,0 +1,51 @@
+{
+  "status": "installed",
+  "checkedAt": "2026-09-25T15:52:36.700938+00:00",
+  "sourceCommit": "5582a8175077604d86b01a2fdad0292339158243",
+  "ownerRequirement": "Complete every explicitly requested outcome through the common Eva conversation and task route.",
+  "observedFailure": "Previous learning request returned text only with zero tool calls and no admitted work.",
+  "change": "Two existing shared instructions now retain the full request rather than the last sentence and require real admission for explicit multi-step document, storage and execution work.",
+  "hypothesisBoundary": "The instruction ambiguity is plausible, not proven as the cause. Installation does not establish model compliance.",
+  "validation": {
+    "reviewer": "result_return_review",
+    "decision": "go",
+    "scope": "Two existing shared instructions preserve every explicit requested outcome and real tool admission; normal conversations, corrections and mandate unchanged.",
+    "claimBoundary": "Hypothesis only; live outcome required.",
+    "targetedTests": "25 contact cases passed; one model prompt contract passed after correcting test-only OpenSSL legacy-provider configuration."
+  },
+  "installation": {
+    "checkedAt": "2026-09-25T15:51:50.977701+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:3d12b1579d6979d5d671c371d880bcd4a0734f6ba0380bd803056904a055b7fe",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "d9befd28c439142fb1f42f356fd64fa7d6f9064915592e434c4efa40891a7342",
+          "adapters/model/pydantic_conversation.py": "b275e69cb68b8e2954869607dff8b7fdaedec103019ce7a997a9ad34d770e13f"
+        }
+      },
+      "worker": {
+        "image": "sha256:53e0a9b95a2c606b46afac9e4ccd6796cbe8b563c55ea47cacafa3683286128d",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "d9befd28c439142fb1f42f356fd64fa7d6f9064915592e434c4efa40891a7342",
+          "adapters/model/pydantic_conversation.py": "b275e69cb68b8e2954869607dff8b7fdaedec103019ce7a997a9ad34d770e13f"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/complete-request-instruction-20260925/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "usage": {
+    "evaModelCallsBeforeNewTrial": 0,
+    "creditCost": null
+  },
+  "remaining": [
+    "One preregistered unchanged learning request after installation.",
+    "Actual saved procedure, execution and independent reuse remain unproven.",
+    "Complete categories remain 2 of 9."
+  ]
+}
