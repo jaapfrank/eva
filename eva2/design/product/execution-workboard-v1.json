@@ -2351,15 +2351,14 @@
           }
         ],
         "now": {
-          "title": "Doorpraten tijdens publiek onderzoek gecontroleerd",
-          "state": "Geslaagd via spraaksessieroute",
-          "detail": "Echt onderzoek afgerond en exact teruggelezen. Tussenvraag kreeg na 2,779s eerste tekst, vóór onderzoeksresultaat op33,306s. Juiste opdracht/sessie en één terugmelding bevestigd; onafhankelijke bewijsreview akkoord. Eerste inhoudelijke ontvangst12,871s. Geen nieuwe productcode of fysieke audioproef; geen uitvoerder meer actief.",
-          "doneWhen": "Deze softwareproef is afgerond. Fysieke Voice PE, hoorbare ontvangst en echte automatiseringen blijven apart open."
+          "title": "Browserproef wacht op tabdeling; bestaande functies behouden",
+          "state": "Controle afgerond, geen bouw actief",
+          "detail": "Persoonlijke Chrome-dienst bereikbaar, overnemen/teruggeven aangesloten; geen tabblad gedeeld. Eigenaarvraag staat open. Initiatief is al technisch opgeleverd en wordt niet opnieuw gebouwd. Eerdere leertaak vereiste hulp na budgetoverschrijding; budgetwaarschuwing en bewaarde voortgang bestaan al. Geen codewijziging, modelcall of budgetverhoging in deze controle."
         },
         "next": {
-          "title": "Bestaande browserbediening en overname aansluiten",
+          "title": "Een opgeslagen werkwijze zelfstandig terugvinden en toepassen",
           "state": "Nog niet gestart",
-          "detail": "Volgende onafhankelijke functie uit stap3: bestaande Chrome-route en overname bruikbaar aansluiten, uitgaand van de huidige implementatie. HA-automatiseringsproef blijft daarnaast wachten op expliciete bevestiging; geen brede audit of nieuwe browserbouw."
+          "detail": "Eén nieuwe synthetische taakvariant via de bestaande eigenaarroute, zonder procedure-ID of code van de coördinator. Bestaande leer-/uitvoermogelijkheden en budgetten behouden. Uitkomst vastleggen en alleen een aangetoond gat herstellen. HA- en browserproef blijven apart wachten op eigenaar."
         },
         "ownerAction": {
           "title": "Een langere huisvraag stellen en ondertussen doorpraten",
@@ -2374,7 +2373,7 @@
           "expected": "De langere huisopdracht kan naar de achtergrondwerker. De speaker blijft beschikbaar voor een volgende beurt; resultaat hoort bij de oorspronkelijke huisopdracht. Werkelijke spreeksnelheid en modelkeuze zijn nog niet in deze oplevering gemeten."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-25T12:54:38.351072+00:00"
+        "reviewedAt": "2026-09-25T13:07:37.834375+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12555,7 +12554,17 @@
       "ownerAccepted": false,
       "evidence": "eva2/evidence/product/personal-chrome-controls-installed-20260922.json",
       "modelCalls": 0,
-      "remaining": "Echte persoonlijke tabdeling/overname en eigenaaracceptatie blijven open; bestaande geïsoleerde herstelproeven niet herhaald."
+      "remaining": "Echte persoonlijke tabdeling/overname en eigenaaracceptatie blijven open; bestaande geïsoleerde herstelproeven niet herhaald.",
+      "latestCheck": {
+        "checkedAt": "2026-09-25T13:07:37.834375+00:00",
+        "state": "disconnected",
+        "connected": false,
+        "ownerServiceReachable": true,
+        "sourceReview": "No missing takeover/resume wiring found. Existing explicit tab selection is required.",
+        "browserAutomation": "CUA startup failed: sandbox helper setup refresh error; no browser action executed.",
+        "ownerQuestionPending": true,
+        "modelCalls": 0
+      }
     },
     "generalPrivateOwner20260922": {
       "status": "installed_live_catalogs_verified",
