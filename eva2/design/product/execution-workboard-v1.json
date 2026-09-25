@@ -2287,10 +2287,10 @@
           }
         ],
         "now": {
-          "title": "Spraakontvangst aangesloten; hoorbaarheid nog te beoordelen",
-          "state": "Bron- en runtimecontrole afgerond; fysieke proef open",
-          "detail": "HA leest ontvangst vóór antwoordtekst; proxybuffering staat uit. Draaiende mediacode bevat directe ontvangst. Geen dezelfde websiteproxyfout aangetoond; geen nieuwe modelcall/firmwarewijziging. Vraag aan Jaap staat open. Geen uitvoerder actief op deze controle.",
-          "doneWhen": "Jaap kan aangeven of de nieuwe ontvangst hoorbaar direct komt; technische vervolgwerkzaamheden wachten daar niet op."
+          "title": "Installatiestatus herstelonderdelen gecontroleerd",
+          "state": "Controle afgerond",
+          "detail": "De live projectbron op localhost:44712 meldt de herstelonderdelen inmiddels als geïnstalleerd in een afzonderlijke herstelomgeving. De screenshot toont eerdere statussen. Geen installatie in de dagelijkse Eva geclaimd; complete gewone herstelbediening blijft open. De begrensde taakbedieningscontrole vond geen nieuw defect; er is geen uitvoerder actief.",
+          "doneWhen": "Actuele live status en betekenis van installatie uitgelegd; geen nieuwe herstelbouw gestart."
         },
         "next": {
           "title": "Resterende taakuitvoering en terugmelding afronden",
@@ -2309,7 +2309,7 @@
           "expected": "Een korte ontvangstmelding vóór het inhoudelijke antwoord. Dit is de fysieke speakerproef; de websiteknop vervangt die niet."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-24T23:59:18.758364+00:00"
+        "reviewedAt": "2026-09-25T00:05:40.119284+00:00"
       }
     },
     "pendingTechnicalReview": {
