@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-09-25T00:08:46.932404+00:00",
+  "scope": "Two overlapping real HTTP requests through installed local owner proxy, existing model/provider. No physical speech or Telegram acceptance.",
+  "research": {
+    "receiptSeconds": 0.026371288986410946,
+    "result": "EvaTextStreamError/v1",
+    "messageId": "dashboard:88b96f7f-f2e3-4af7-bacf-778f9d2fc552",
+    "durableModelOutcome": "failed",
+    "backgroundAdmissionObserved": false,
+    "usage": "unmeasured"
+  },
+  "smalltalk": {
+    "receiptSeconds": 0.00565568299498409,
+    "firstTextSeconds": 3.5133902119705454,
+    "completeSeconds": 4.000333389965817,
+    "response": "Goed, dank je! Fijn je weer te spreken.",
+    "messageId": "dashboard:fd3e8b93-01c6-4d71-99ad-e2f249bdcf8f",
+    "inputTokens": 8464,
+    "outputTokens": 16,
+    "modelAttempts": 1,
+    "toolCalls": 0
+  },
+  "result": "Smalltalk correctly returned before research terminated; complete research flow failed.",
+  "requestCount": 2,
+  "creditCost": null,
+  "limitation": "No total token claim: failed research usage was not recorded. No retry or duplicate research submitted.",
+  "rawEvidence": "/home/administrator/project/.eva2-artifacts/website-real-overlap-20260925/result.json"
+}

@@ -1,0 +1,61 @@
+{
+  "checkedAt": "2026-09-25T00:23:24.289296+00:00",
+  "services": {
+    "core": {
+      "image": "sha256:73817374c4469dc10a459d6b3b3fd8c5b45e8c702ec7f2ee628ef304a52b16bb",
+      "health": "healthy",
+      "sourceHashes": {
+        "bootstrap/delegated_work_service.py": "00764408e6b03bfcac8d9cdc3d458bcba929d7ee3343548826251a1dbe2d4e97"
+      }
+    },
+    "worker": {
+      "image": "sha256:976c67905bc564fb90aec0449ce31c648c1f1e9036e70fe578615a96a76f21a7",
+      "health": "healthy",
+      "sourceHashes": {
+        "bootstrap/delegated_work_service.py": "00764408e6b03bfcac8d9cdc3d458bcba929d7ee3343548826251a1dbe2d4e97"
+      }
+    }
+  },
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/research-worker-parity-20260925/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker",
+  "result": "installed_and_worker_claim_verified_research_output_failed_source_requirement",
+  "reusedSourceCommit": "7831e692",
+  "installedCompatibility": "Exact existing worker module; schema0007 retained. No database migration.",
+  "cause": "Core retained single-lane delegated_work_service.py while worker used two lanes; source-derived program fingerprints differed, preventing claims.",
+  "liveReleaseParity": {
+    "program": "a8a47f6254a1ba951c7c94ea45ac7608ad2b24dd4c9bfc48dd9993bd93869264",
+    "engine": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+    "research": "971ac19d6e33e2b62a5d219fe6c9084c54bb83bba08fd963b071a2aa6a456e7d"
+  },
+  "independentReview": "GO: exact already installed worker implementation and schema compatibility preserved; no stored spec edits or relaxed pins.",
+  "probe": {
+    "previousWorkId": "work:eva-chat:b20ed9b9-2b4b-5fb6-b00d-163b0cd5760d",
+    "previousClaimCount": 0,
+    "previousStoppedThroughOwnerApi": true,
+    "resumedWorkId": "work:eva-resume:d0284a8f-2c28-51b0-bb80-0d2dd25540d1",
+    "callId": "child-call:f29810cb-4764-456a-adae-2e6254b6f0a5",
+    "state": "ambiguous",
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "measured",
+      "completed_model_responses": 1,
+      "tool_calls": 1,
+      "input_tokens": 13210,
+      "output_tokens": 585,
+      "total_tokens": 13795
+    },
+    "resultAvailable": false,
+    "causeOfResultFailure": "ConversationModelError: topic research lacks cited sources",
+    "causeFingerprint": "a01a9cb506fbc9eb8d074cb114fbe5169abd29b4d5316b884e5e16944ea74425",
+    "fingerprintMatchedExistingRaise": "adapters/model/pydantic_conversation.py:1518"
+  },
+  "limits": [
+    "Original foreground model failure remains unexplained; now safely diagnosed on recurrence.",
+    "Background task now executes, but output lacked required structured citations; no successful research result or owner acceptance.",
+    "Credit cost unknown; stored price-derived cost is not a measured subscription charge."
+  ],
+  "liveHttp": {
+    "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+    "http://localhost:44716/": 200
+  }
+}

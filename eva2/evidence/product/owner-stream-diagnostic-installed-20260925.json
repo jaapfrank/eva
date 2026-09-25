@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-09-25T00:14:44.575639+00:00",
+  "services": {
+    "core": {
+      "image": "sha256:4b79a764d8d93cd9d5f530ca7bdda0ae8de9924b3f881d23bb68440d5d0fb59c",
+      "health": "healthy",
+      "sourceHashes": {
+        "adapters/api/dashboard_conversation.py": "33925e76b44f41422b060bfc42de23ee996b6c5483d669ccd228d382759f53a5"
+      }
+    },
+    "worker": {
+      "image": "sha256:54ab8f110f38af8ce64cccf75cc8221b53871dee3ff28d60fcec7060090d019f",
+      "health": "healthy",
+      "sourceHashes": {
+        "adapters/api/dashboard_conversation.py": "33925e76b44f41422b060bfc42de23ee996b6c5483d669ccd228d382759f53a5"
+      }
+    }
+  },
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/owner-stream-diagnostic-20260925/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker",
+  "sourceCommit": "e60eaf1418426a90edcb3b5bd99f3221285a03bf",
+  "purpose": "Preserve safe code-location and category diagnostics when dashboard_turn fails before returning a turn.",
+  "tests": {
+    "passed": 6,
+    "scope": "Existing diagnostic stream cases and owner pre-return failure with unavailable logger."
+  },
+  "independentReview": "GO: contact_overlap_review; no response change, no retry, no private payload logging.",
+  "underlyingResearchFailureFixed": false,
+  "rollback": "Restore baseline.compose.private.json using recorded rollbackCommand; no database or config migration.",
+  "liveHttp": {
+    "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+    "http://localhost:44716/": 200
+  }
+}

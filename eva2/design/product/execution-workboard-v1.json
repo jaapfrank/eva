@@ -1012,6 +1012,22 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Aangenomen onderzoek wordt weer door de werker opgepakt",
+            "date": "25 september",
+            "state": "installed",
+            "result": "Versieverschil kern/werker hersteld met bestaande twee-taaksimplementatie. Gelijke uitvoerversies live gecontroleerd; hervatte echte taak is gestart.",
+            "remaining": "Onderzoeksresultaat is nog mislukt wegens ontbrekende bronverwijzingen. Dit is geen geslaagde volledige onderzoeksproef.",
+            "source": "eva2/evidence/product/research-worker-parity-installed-20260925.json"
+          },
+          {
+            "title": "Website-tussenvraag komt eerst; onderzoeksopdracht mislukt",
+            "date": "25 september",
+            "state": "tested",
+            "result": "Echte vraag Hoe gaat het met jou? krijgt het passende antwoord terwijl onderzoek loopt. Eerste tekst na3,51s; ontvangst na6ms.",
+            "remaining": "Onderzoek eindigt zonder opgeslagen antwoord. Geen complete kanaalacceptatie of snelheidsclaim. Oorzaak wordt onderzocht.",
+            "source": "eva2/evidence/product/website-real-overlap-20260925.json"
+          },
+          {
             "title": "Directe website-ontvangst door proxycorrectie",
             "date": "25 september",
             "state": "installed",
@@ -2287,15 +2303,15 @@
           }
         ],
         "now": {
-          "title": "Installatiestatus herstelonderdelen gecontroleerd",
-          "state": "Controle afgerond",
-          "detail": "De live projectbron op localhost:44712 meldt de herstelonderdelen inmiddels als geïnstalleerd in een afzonderlijke herstelomgeving. De screenshot toont eerdere statussen. Geen installatie in de dagelijkse Eva geclaimd; complete gewone herstelbediening blijft open. De begrensde taakbedieningscontrole vond geen nieuw defect; er is geen uitvoerder actief.",
-          "doneWhen": "Actuele live status en betekenis van installatie uitgelegd; geen nieuwe herstelbouw gestart."
+          "title": "Onderzoek wordt weer uitgevoerd; bronverwerking nog niet klaar",
+          "state": "Versiecorrectie geïnstalleerd; onderzoeksfout open",
+          "detail": "Kern en werker gebruiken nu dezelfde bestaande werkerscode. De hervatte taak is werkelijk opgepakt en deed één modelaanroep; daarna ontbreekt de vereiste bronverwijzing in het modelresultaat. Geen bruikbaar onderzoeksresultaat bevestigd. Geen uitvoerder actief en geen modelaanvraag meer lopend.",
+          "doneWhen": "Onderzoeksresultaat met gecontroleerde bronnen bewaren en via oorspronkelijke route terugbrengen."
         },
         "next": {
-          "title": "Resterende taakuitvoering en terugmelding afronden",
+          "title": "Ontbrekende onderzoeksbronverwijzingen gericht afhandelen",
           "state": "Nog niet gestart",
-          "detail": "Bestaande taakbediening en stopfix behouden. Alleen aantoonbaar ontbrekende afhandeling afmaken terwijl fysieke spraakproef openstaat; geen ongewijzigde modelmeting."
+          "detail": "Concrete foutfingerprint herleid tot topic research lacks cited sources. Controleer bestaande bronparser en foutafhandeling; geen blinde herhaling, geen versoepeling van bronbewijs."
         },
         "ownerAction": {
           "title": "Controleer ontvangst op de Voice PE",
@@ -2309,7 +2325,7 @@
           "expected": "Een korte ontvangstmelding vóór het inhoudelijke antwoord. Dit is de fysieke speakerproef; de websiteknop vervangt die niet."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-25T00:05:40.119284+00:00"
+        "reviewedAt": "2026-09-25T00:26:39.652362+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12081,7 +12097,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Fysieke ontvangstobservatie staat open. Ga onafhankelijk verder met resterende taakuitvoering/terugmelding; herhaal geen ongewijzigde snelheidsproef.",
+      "nextAction": "Concrete foutfingerprint herleid tot topic research lacks cited sources. Controleer bestaande bronparser en foutafhandeling; geen blinde herhaling, geen versoepeling van bronbewijs.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
