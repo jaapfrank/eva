@@ -23,12 +23,21 @@ def ids(service, turn):
     return {row["work_id"] for row in service.execute("list", turn, request_key="list")["jobs"]}
 
 
-def test_native_controls_preserve_origin_and_leave_other_task_running(database):
-    x = setup(database, "native-controls")
+@pytest.mark.parametrize("kind", ["research", "digital"])
+def test_native_controls_preserve_origin_and_leave_other_task_running(database, kind):
+    if kind == "digital":
+        from tests.postgres.test_household_digital_work import digital_setup
+        x = digital_setup(database, "native-digital-controls")
+        def start_task(session):
+            return session.service.execute("digital", session.turn,
+                request_key="start", task="Bekijk de HA-automatiseringen")["work"]["work_id"]
+    else:
+        x = setup(database, "native-controls")
+        start_task = start
     old = native(x, "first")
-    first = start(old)
+    first = start_task(old)
     current = native(x, "second")
-    second = start(current)
+    second = start_task(current)
     assert ids(current.service, current.turn) == {first, second}
     assert {row["work_id"] for row in current.service.active_work_metadata(current.turn)["jobs"]} == {first, second}
     original = old.service._load(first, old.service.origin(old.turn)).spec.origin

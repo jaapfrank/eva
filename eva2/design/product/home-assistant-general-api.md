@@ -105,9 +105,12 @@ Resuming preserves the original execution identity and verified tool receipts.
 Stored household results may retain their historical program hash for reading;
 new execution still requires the installed program and current authority.
 
-Installed source: `19958b28`. The packaged PostgreSQL lifecycle test covers a
+Installed source: `19958b28`. The source PostgreSQL lifecycle test covers a
 controlled HA write, another foreground turn, stop, resume without repeating the
 write, readback and one return to the originating session. The installed core and
 worker load both registered speaker bindings and equal execution profiles.
-Physical speech/model quality and owner acceptance remain separate. See
+Four further cases verify the exact installed modules and schema, including
+a later wakeword turn. The earlier 50-case container run imported repository
+source and is recorded as source evidence. Physical speech/model quality and
+owner acceptance remain separate. See
 `eva2/evidence/product/household-digital-installed-20260925.json`.

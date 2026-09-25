@@ -1,0 +1,49 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-25T12:32:19.756636+00:00",
+  "installedSourceCommit": "19958b28",
+  "result": "Existing native continuity also handles the new household digital task kind. No product code change or runtime restart required.",
+  "verification": {
+    "installedTests": {
+      "passed": 4,
+      "loadedEvaModules": 206,
+      "moduleRoot": "/opt/eva/src/",
+      "schema": "4e_0007_delegated_private",
+      "migrationConfiguration": "/opt/eva/alembic.ini",
+      "result": "4 passed in 10.13s",
+      "coverage": [
+        "New digital kind: two native wakeword sessions, both tasks visible, selected task stopped/resumed, unrelated task remains running, original return session preserved.",
+        "Digital HA effect, foreground turn during work, stop/resume without duplicate effect and one result return.",
+        "Current policy revocation and historical result readability with strict execution version checks."
+      ]
+    },
+    "review": {
+      "agent": "shared_ha_review",
+      "result": "No missing research-only gate in native delivery and no defect found in the new parameterized continuity case."
+    },
+    "installedSourceHashes": {
+      "bootstrap/native_work_delivery.py": "b4853c63990d374ff29df78bc2324d167bb22dac911b4abbf09a972d6b54f4d0",
+      "adapters/postgres/household_work_sessions.py": "fbd4041247b620adf4ce1fb041159c68b99cd0e922304ebc9039d15e27557432",
+      "bootstrap/household_work.py": "014d302f5f3259c05b870e2beaef367489de7c94270c4f4da039f065a6f12f3f"
+    },
+    "reusedEvidence": [
+      "native-task-continuity-installed-20260924.json",
+      "native-return-continuity-installed-20260924.json",
+      "native-result-deferral-installed-20260924.json"
+    ]
+  },
+  "testSetupCorrections": [
+    "Initial exact-image test used repository migrations ahead of installed schema; changed to the image-owned migration files.",
+    "The prior 50-check candidate-container run imported repository source because contract/conftest prepends it. Those checks are source evidence, not exact installed-source evidence. Four path-verified installed cases now recorded separately."
+  ],
+  "usage": {
+    "evaModelCalls": 0,
+    "physicalAnnouncements": 0,
+    "creditCost": null
+  },
+  "limits": [
+    "No physical audible return or model-driven wakeword quality claim.",
+    "Native session lifetime and existing device scope are unchanged."
+  ],
+  "artifactsDirectory": "/home/administrator/project/.eva2-artifacts/native-digital-continuity-20260925"
+}

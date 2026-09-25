@@ -1015,7 +1015,7 @@
             "title": "Langere huisopdrachten via spraak op de achtergrond uitvoeren",
             "date": "25 september",
             "state": "installed",
-            "result": "Bestaande digitale werker aangesloten op beide speakers. HA-werk blijft gekoppeld aan de huiscontext; voortgang, stoppen, hervatten en terugmelding gebruiken dezelfde taakroute. Installatie-image gecontroleerd op actie zonder dubbele herhaling en één resultaat.",
+            "result": "Bestaande digitale werker aangesloten op beide speakers. HA-werk blijft gekoppeld aan de huiscontext; voortgang, stoppen, hervatten en terugmelding gebruiken dezelfde taakroute. Bron en exacte installatie afzonderlijk gecontroleerd op actie zonder dubbele herhaling en één resultaat.",
             "remaining": "Fysieke spraakproef en kwaliteit/snelheid van echte modelopdrachten nog te beoordelen. Geen privégeheugen via gedeelde spraak.",
             "source": "eva2/evidence/product/household-digital-installed-20260925.json"
           },
@@ -2343,15 +2343,15 @@
           }
         ],
         "now": {
-          "title": "Huisopdrachten op de achtergrond geïnstalleerd",
-          "state": "Geïnstalleerd — technische route gecontroleerd",
-          "detail": "50 gerichte controles op het installatie-image en onafhankelijke review geslaagd. Kern en werker gezond, beide echte speakerbindings aangesloten. Geen uitvoerder meer actief op deze wijziging.",
-          "doneWhen": "De technische taakroute is geleverd: starten, doorpraten, volgen, stoppen, hervatten en terugmelden. De echte fysieke model-/spraakproef blijft afzonderlijk open."
+          "title": "Huisopdracht blijft bereikbaar na volgende wakeword",
+          "state": "Bestaande installatie gecontroleerd",
+          "detail": "Vier proeven met exact geïnstalleerde code en databaseschema slagen. Eerdere taak vindbaar en gericht te stoppen/hervatten; andere taak blijft lopen en resultaat houdt oorspronkelijke bestemming. Geen nieuwe productcode of herstart. Geen uitvoerder meer actief.",
+          "doneWhen": "Technische continuïteit voor het nieuwe digitale taaktype is bevestigd. Fysieke hoorbaarheid en echte modelopdracht blijven afzonderlijk open."
         },
         "next": {
-          "title": "Lopend werk in een volgende spraakbeurt herkennen",
+          "title": "Een echte huisopdracht via de spraakroute afronden",
           "state": "Nog niet gestart",
-          "detail": "Bestaande taakcontext en terugmelding volgen over de volgende gewone spraakbeurt; concrete ontbrekende aansluiting oplossen waar nodig. Geen nieuwe apparaatlogica."
+          "detail": "Eén begrensde leesopdracht met het bestaande model en echte HA-gegevens. Aannemen, tussenvraag en opgeslagen resultaat volgen; geen huisinstellingen wijzigen of ongewijzigde proef herhalen."
         },
         "ownerAction": {
           "title": "Een langere huisvraag stellen en ondertussen doorpraten",
@@ -2366,7 +2366,7 @@
           "expected": "De langere huisopdracht kan naar de achtergrondwerker. De speaker blijft beschikbaar voor een volgende beurt; resultaat hoort bij de oorspronkelijke huisopdracht. Werkelijke spreeksnelheid en modelkeuze zijn nog niet in deze oplevering gemeten."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-25T12:24:23.120874+00:00"
+        "reviewedAt": "2026-09-25T12:32:19.756636+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12138,7 +12138,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Bestaande taakcontext en terugmelding volgen over de volgende gewone spraakbeurt; concrete ontbrekende aansluiting oplossen waar nodig. Geen nieuwe apparaatlogica.",
+      "nextAction": "Eén begrensde leesopdracht met het bestaande model en echte HA-gegevens. Aannemen, tussenvraag en opgeslagen resultaat volgen; geen huisinstellingen wijzigen of ongewijzigde proef herhalen.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

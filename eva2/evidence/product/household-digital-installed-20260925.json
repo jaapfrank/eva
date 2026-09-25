@@ -10,7 +10,21 @@
     "Historical household task results remain readable after program updates; execution requires the current program."
   ],
   "verification": {
-    "packagedTests": {
+    "independentReview": {
+      "agent": "shared_ha_review",
+      "result": "No remaining concrete blocker in reviewed wiring, source loading, accounting, read/execution checks and result lifecycle."
+    },
+    "live": {
+      "coreAndWorkerProfilesMatch": true,
+      "registeredSpeakers": 2,
+      "householdDigitalReady": true,
+      "schema": "4e_0007_delegated_private",
+      "http": {
+        "44711": 200,
+        "44712": 200
+      }
+    },
+    "sourceTests": {
       "passed": 50,
       "database": "isolated PostgreSQL 16.13",
       "files": [
@@ -25,21 +39,15 @@
         "Accounting and background execution had private-only guards.",
         "Controlled test catalog needed to match supplied tools.",
         "Startup fixture needed the shared model settings rather than a worker-only environment key."
-      ]
+      ],
+      "executionContext": "Candidate container, but contract/conftest preferred repository source. Reclassified on 25 September; not exact installed-source proof."
     },
-    "independentReview": {
-      "agent": "shared_ha_review",
-      "result": "No remaining concrete blocker in reviewed wiring, source loading, accounting, read/execution checks and result lifecycle."
-    },
-    "live": {
-      "coreAndWorkerProfilesMatch": true,
-      "registeredSpeakers": 2,
-      "householdDigitalReady": true,
+    "installedTests": {
+      "passed": 4,
+      "moduleRoot": "/opt/eva/src/",
+      "loadedEvaModules": 206,
       "schema": "4e_0007_delegated_private",
-      "http": {
-        "44711": 200,
-        "44712": 200
-      }
+      "evidence": "native-digital-continuity-20260925.json"
     }
   },
   "installation": {
