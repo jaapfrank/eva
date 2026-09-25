@@ -1,0 +1,47 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-25T12:52:33.471994+00:00",
+  "sourceCommit": "ccdd8bee",
+  "outcome": "passed_household_session_public_research_overlap",
+  "route": "POST /internal/v1/ha-voice/session/respond",
+  "scope": "Installed registered household actor, real contact/research models, public official documentation only. No HA installation data read.",
+  "observed": {
+    "workState": "succeeded",
+    "smalltalk": "Goed, dank je! Ik ben er en klaar om met je mee te denken. En met jou?",
+    "researchAcceptance": "Ik ga dit uitzoeken met uitsluitend officiële openbare documentatie, zonder jullie Home Assistant-installatie te lezen. Je kunt ondertussen gewoon doorpraten.",
+    "smalltalkFirstTextSeconds": 2.779,
+    "smalltalkCompleteSeconds": 3.904,
+    "researchAcceptanceFirstTextSeconds": 12.871,
+    "researchResultSeconds": 33.306,
+    "actualWorkStartedAt": "2026-09-25 12:46:55+00:00",
+    "smalltalkModelCompletedAt": "2026-09-25 12:47:00+00:00",
+    "actualWorkCompletedAt": "2026-09-25 12:47:16+00:00",
+    "originalRequestBindingVerified": true,
+    "storedResultEqualsReturnedResult": true,
+    "resultSha256": "a24b84d49a88826f2a6803bcbe4bc3ae755119832ef563303fa10387a402cbbf",
+    "successfulResultAuthorization": true,
+    "acknowledgementCount": 1,
+    "spokenDeliveryProven": false
+  },
+  "usage": {
+    "inputTokens": 24245,
+    "outputTokens": 946,
+    "modelResponses": 3,
+    "toolCalls": 2,
+    "creditCost": null,
+    "costNotice": "Stored API-equivalent estimate is not a measured subscription-credit charge."
+  },
+  "review": {
+    "agent": "shared_ha_review",
+    "findings": "Initial harness lacked assertions; post-run verification checks exact request/session binding, returned/stored result equality, authorize/ack states, one acknowledgement, and durable worker timing before claiming success."
+  },
+  "limits": [
+    "Household software session route; no physical audio, native wakeword or hardware interruption proof.",
+    "Immediate transport receipt is separate client presentation and was not measured in this HTTP probe.",
+    "First substantive admission took 12.871 seconds; no instant-content claim.",
+    "Public research content has sources but was not independently re-researched in this integration check.",
+    "Real automation-content probe remains pending explicit confirmation required by automatic approval review.",
+    "No extra major product category declared complete."
+  ],
+  "artifactsDirectory": "/home/administrator/project/.eva2-artifacts/household-public-overlap-20260925"
+}

@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Tussendoor praten terwijl Eva publiek onderzoek afmaakt",
+            "date": "25 september",
+            "state": "tested",
+            "result": "Werkelijk onderzoek via de huishoud-spraaksessieroute: passend antwoord op Hoe gaat het met je? vóór het onderzoeksresultaat. Opgeslagen resultaat en juiste vraag/sessie exact gelijk; één terugmelding. Geen nieuwe productcode nodig.",
+            "remaining": "Softwareproef; geen fysieke speaker-/audioacceptatie. Tussenvraag eerste tekst2,779s, inhoudelijke ontvangst12,871s, onderzoeksresultaat33,306s. Echte automatiseringsproef wacht apart op bevestiging.",
+            "source": "eva2/evidence/product/household-public-overlap-20260925.json"
+          },
+          {
             "title": "Langere huisopdrachten via spraak op de achtergrond uitvoeren",
             "date": "25 september",
             "state": "installed",
@@ -2343,15 +2351,15 @@
           }
         ],
         "now": {
-          "title": "Spraak: echte huisopdracht en tussenvraag",
-          "state": "Wacht op expliciete proefbevestiging",
-          "detail": "Algemene HA-toegang en achtergrondwerk zijn geïnstalleerd. De proef met twee echte automatiseringen is niet gestart: automatische goedkeuringscontrole verlangt expliciete bevestiging voor uitleg via het bestaande OpenAI-model. Vraag staat bij Jaap. Snelle gesprekskoppeling gecontroleerd: Luna6-contactmodel actief. Geen nieuwe functie afgerond; geen modelcalls of HA-verzoeken in deze proef. Geen bouwuitvoerder actief.",
-          "doneWhen": "Na toestemming: één echte leesopdracht, tussenvraag en teruggegeven resultaat vastleggen. Hoorbare fysieke spraak blijft afzonderlijk te beoordelen."
+          "title": "Doorpraten tijdens publiek onderzoek gecontroleerd",
+          "state": "Geslaagd via spraaksessieroute",
+          "detail": "Echt onderzoek afgerond en exact teruggelezen. Tussenvraag kreeg na 2,779s eerste tekst, vóór onderzoeksresultaat op33,306s. Juiste opdracht/sessie en één terugmelding bevestigd; onafhankelijke bewijsreview akkoord. Eerste inhoudelijke ontvangst12,871s. Geen nieuwe productcode of fysieke audioproef; geen uitvoerder meer actief.",
+          "doneWhen": "Deze softwareproef is afgerond. Fysieke Voice PE, hoorbare ontvangst en echte automatiseringen blijven apart open."
         },
         "next": {
-          "title": "Echte huisopdracht afmaken terwijl gesprek doorgaat",
-          "state": "Wacht op proefbevestiging",
-          "detail": "Eén begrensde modelproef met twee bestaande automatiseringen, zonder wijzigingen. Automatische goedkeuringscontrole heeft expliciete bevestiging gevraagd; geen ongewijzigde herhaling zonder die bevestiging."
+          "title": "Bestaande browserbediening en overname aansluiten",
+          "state": "Nog niet gestart",
+          "detail": "Volgende onafhankelijke functie uit stap3: bestaande Chrome-route en overname bruikbaar aansluiten, uitgaand van de huidige implementatie. HA-automatiseringsproef blijft daarnaast wachten op expliciete bevestiging; geen brede audit of nieuwe browserbouw."
         },
         "ownerAction": {
           "title": "Een langere huisvraag stellen en ondertussen doorpraten",
@@ -2366,7 +2374,7 @@
           "expected": "De langere huisopdracht kan naar de achtergrondwerker. De speaker blijft beschikbaar voor een volgende beurt; resultaat hoort bij de oorspronkelijke huisopdracht. Werkelijke spreeksnelheid en modelkeuze zijn nog niet in deze oplevering gemeten."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-25T12:43:22.263200+00:00"
+        "reviewedAt": "2026-09-25T12:54:38.351072+00:00"
       }
     },
     "pendingTechnicalReview": {
