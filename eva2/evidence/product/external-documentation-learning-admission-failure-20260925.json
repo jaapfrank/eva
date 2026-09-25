@@ -31,5 +31,23 @@
   "creditCost": null,
   "artifacts": "/home/administrator/project/.eva2-artifacts/external-documentation-learning-20260925/after-result-reader",
   "previousFailuresPreserved": true,
-  "next": "Inspect the existing common conversation instruction/admission seam for the explicit request to consult, store and execute; no unchanged repeat."
+  "next": "Inspect the existing common conversation instruction/admission seam for the explicit request to consult, store and execute; no unchanged repeat.",
+  "boundedInspection": {
+    "status": "completed",
+    "missingWiringFound": false,
+    "findings": [
+      "The common conversation instruction already requires learning, execution and storage to use start_digital_work.",
+      "A text-only model response is accepted without checking whether all requested outcomes were addressed.",
+      "A separate instruction emphasizes the last sentence of a request; narrowing the compound request is plausible but unproven."
+    ],
+    "sourceRefs": [
+      "eva2/src/eva/application/conversation.py:1003",
+      "eva2/src/eva/application/conversation.py:1081",
+      "eva2/src/eva/adapters/postgres/delegated_work_actions.py:62",
+      "eva2/src/eva/adapters/model/pydantic_conversation.py:2726"
+    ],
+    "nextHypothesis": "Preserve all explicit requested outcomes in the existing common instruction; text-only interpretation does not fulfil an explicit request to consult, store or execute. No new router or forced tool call for ordinary conversations.",
+    "additionalModelCalls": 0,
+    "sourceChanged": false
+  }
 }

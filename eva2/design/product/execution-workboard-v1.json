@@ -2407,14 +2407,14 @@
           }
         ],
         "now": {
-          "title": "Expliciete leeropdracht daadwerkelijk laten uitvoeren",
-          "state": "Concrete fout onderzoeken",
-          "detail": "De nieuwe poging leverde alleen een tekstantwoord op: nul toolcalls, geen taak, geen gelezen document of opgeslagen/uitgevoerde werkwijze. Ook de gevouwen titel was fout. De geïnstalleerde documentuitlezer werd niet bereikt. Eén uitvoerder controleert alleen de bestaande gezamenlijke instructie en taaktoelating; coördinator bewaart de uitkomst. Geen nieuwe modelproef gestart."
+          "title": "Leeropdracht nog niet af: uitvoering overgeslagen",
+          "state": "Gerichte controle afgerond",
+          "detail": "De documentuitlezer is geïnstalleerd, maar de echte leeropdracht werd alleen met tekst beantwoord. Geen ontbrekende toolkoppeling gevonden; de oorzaak van de modelkeuze is niet bewezen. Uitvoerder en reviewer zijn klaar. Geen vervolgproef of nieuwe bouwtaak loopt nu."
         },
         "next": {
-          "title": "Opdracht uitvoeren in plaats van alleen beantwoorden",
+          "title": "Alle gevraagde resultaten in de opdracht vasthouden",
           "state": "Nog niet gestart",
-          "detail": "Alleen een aangetoonde fout in de bestaande algemene route herstellen; daarna opnieuw bepalen welk bewijs ontbreekt. De oorspronkelijke leer- en hergebruikcriteria blijven staan."
+          "detail": "Kleinste te toetsen wijziging: de bestaande gezamenlijke instructie laat de hele opdracht gelden, niet alleen de laatste zin. Gevraagd bronlezen, bewaren en uitvoeren mogen niet worden vervangen door alleen tekst. Hypothese, nog geen bewezen reparatie; oorspronkelijke leercriteria behouden."
         },
         "ownerAction": {
           "title": "Later proberen: doorpraten en terugkomen op een huisopdracht",
@@ -2428,7 +2428,7 @@
           "expected": "Werk blijft bewaard en bedienbaar na het gesprek. Onderzoek en digitale huisopdrachten gebruiken dezelfde opslag/uitvoering. Hoorbaarheid en ervaren snelheid moeten nog fysiek beoordeeld worden."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-25T15:42:24.088565+00:00"
+        "reviewedAt": "2026-09-25T15:45:58.545945+00:00"
       }
     },
     "pendingTechnicalReview": {
