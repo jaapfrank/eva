@@ -34,7 +34,7 @@ def test_existing_research_worker_receives_only_explicit_household_authority(mon
         assert kwargs == dict(scope=settings.service.scope, profile=profile, model_lease_file=settings.model_access_lease_file)
         return authority
     monkeypatch.setattr(household_work_composition, "load_household_work_authority", load)
-    async def serve(selected, actual_research, actual_profile, *, once, household_authority):
+    async def serve(selected, actual_research, actual_profile, *, once, household_authority, digital_settings=None):
         assert selected is settings and actual_research is research and actual_profile is profile and once
         assert household_authority is (authority if enabled else None)
         return "completed"

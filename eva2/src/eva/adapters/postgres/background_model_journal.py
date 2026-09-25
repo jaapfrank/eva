@@ -17,8 +17,8 @@ class BackgroundModelJournal:
 
     def __init__(self, journal: PostgresConversationJournal, source_turn: ConversationTurn,
                  *, work_id: str) -> None:
-        if source_turn.audience.kind != "private_person" or not work_id.strip():
-            raise ConversationConflict("background accounting requires private admitted work")
+        if source_turn.audience.kind not in {"private_person", "household"} or not work_id.strip():
+            raise ConversationConflict("background accounting requires admitted work")
         self._journal = journal
         self._source = source_turn
         digest = canonical_sha256({
@@ -26,9 +26,12 @@ class BackgroundModelJournal:
             "principal": source_turn.principal_id, "conversation": source_turn.conversation_id,
             "message": source_turn.message_id, "work": work_id,
         })
-        self._accounting = replace(source_turn,
-            conversation_id="background-accounting:" + digest,
-            message_id="background-accounting:" + digest)
+        conversation = "background-accounting:" + digest
+        message = conversation
+        if source_turn.audience.kind == "household":
+            conversation = f"household:{source_turn.audience.household_id}:conversation:{conversation}"
+            message = conversation + ":accounting"
+        self._accounting = replace(source_turn, conversation_id=conversation, message_id=message)
 
     def _turn(self, turn: ConversationTurn) -> ConversationTurn:
         if turn != self._source:

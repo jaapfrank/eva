@@ -18,8 +18,8 @@ class BackgroundExecutionScope:
     authorize_dispatch: Callable[[ConversationTurn], None] | None = None
 
     def __post_init__(self) -> None:
-        if self.source_turn.audience.kind != "private_person":
-            raise ValueError("background execution requires a private source turn")
+        if self.source_turn.audience.kind not in {"private_person", "household"}:
+            raise ValueError("background execution requires an authorized source audience")
         if (not isinstance(self.work_id, str) or not self.work_id.strip()
                 or len(self.work_id.encode("utf-8")) > 512):
             raise ValueError("background work identity is invalid")

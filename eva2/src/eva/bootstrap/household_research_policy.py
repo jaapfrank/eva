@@ -119,6 +119,14 @@ class HouseholdResearchAuthority:
             raise ValueError("household research device unavailable")
 
     def validate_spec(self, spec):
+        """Authorize admission and execution only on the current released program."""
+        self._validate_spec(spec, require_current_release=True)
+
+    def validate_read_spec(self, spec):
+        """Read retained stored work without authorizing its historical program."""
+        self._validate_spec(spec, require_current_release=False)
+
+    def _validate_spec(self, spec, *, require_current_release):
         self.validate_current()
         if not isinstance(spec, DelegatedHouseholdResearchSpec):
             raise ValueError("household work envelope required")
@@ -126,8 +134,17 @@ class HouseholdResearchAuthority:
         from eva.adapters.postgres.delegated_work import DelegatedWorkReleaseSelector
         from eva.contracts.timestamps import parse_utc_timestamp
 
+        release = DelegatedWorkReleaseSelector.from_spec(spec)
+        if not require_current_release:
+            from dataclasses import replace
+            # Stored rows already passed contract, hash and result validation.
+            # Only executable source may differ; model, schema and grant pins
+            # still match the current authority before any retained data leaves.
+            release = replace(release, worker_program_sha256=self._release.worker_program_sha256)
         if (
-            DelegatedWorkReleaseSelector.from_spec(spec) != self._release
+            release != self._release
+            or spec.worker_profile_id != self.profile.profile_id
+            or spec.model_profile_id != self.profile.model_profile_id
             or spec.grant.maximum_input_tokens != self.profile.maximum_input_tokens
             or spec.grant.maximum_output_tokens != self.profile.maximum_output_tokens
             or spec.grant.maximum_total_tokens

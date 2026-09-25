@@ -7,7 +7,10 @@ import re
 
 from eva.adapters.postgres.delegated_work import DelegatedWorkReleaseSelector
 from eva.contracts.canonical_json import canonical_sha256
-from eva.contracts.delegated_digital_work import DelegatedDigitalWorkGrant, DelegatedDigitalWorkSpec
+from eva.contracts.delegated_digital_work import (
+    DelegatedDigitalWorkGrant, DelegatedDigitalWorkSpec, DelegatedHouseholdDigitalWorkSpec,
+    HOUSEHOLD_DIGITAL_CAPABILITIES,
+)
 
 
 DIGITAL_PROFILE_ID = "worker:digital-work:v4"
@@ -100,12 +103,18 @@ class DelegatedDigitalProfile:
             self.engine_release_sha256, DIGITAL_OUTPUT_SHA256,
         )
 
-    def build_spec(self, *, source, source_ingress_sha256, grant=None, **identity):
+    def build_spec(self, *, source, source_ingress_sha256, grant=None, origin=None, **identity):
         def stamp(value):
             if value.tzinfo is None or value.utcoffset() is None or value.microsecond:
                 raise ValueError("digital work timestamps require aware whole seconds")
             return value.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
         selected_grant = self.grant() if grant is None else grant
+        if origin is not None and grant is None:
+            selected_grant = DelegatedDigitalWorkGrant.model_validate({
+                **selected_grant.to_payload(),
+                "capability_ids": [name for name in selected_grant.capability_ids
+                                   if name in HOUSEHOLD_DIGITAL_CAPABILITIES],
+            })
         if not self.accepts_grant(selected_grant):
             raise ValueError("digital work grant is incompatible with the installed profile")
         created, deadline = identity.pop("created_at"), identity.pop("deadline")
@@ -114,8 +123,23 @@ class DelegatedDigitalProfile:
             if identity.get("generation") != 1:
                 raise ValueError("digital resume must retain the initial execution identity")
             identity["execution_id"] = identity["work_id"]
-        return DelegatedDigitalWorkSpec(
-            contract="DelegatedDigitalWork/v4", schema_version=4, audience="private",
+        spec_type = DelegatedDigitalWorkSpec
+        envelope = dict(contract="DelegatedDigitalWork/v4", schema_version=4, audience="private")
+        if origin is not None:
+            from uuid import NAMESPACE_URL, uuid5
+            from eva.contracts.delegated_work import HouseholdWorkOrigin
+            origin = HouseholdWorkOrigin.model_validate(origin)
+            spec_type = DelegatedHouseholdDigitalWorkSpec
+            envelope = dict(contract="DelegatedHouseholdDigitalWork/v1", schema_version=1,
+                audience="household", origin=origin.to_payload())
+            identity.setdefault("episode_id", str(uuid5(NAMESPACE_URL,
+                "household-digital-work:" + canonical_sha256(origin.destination()))))
+            identity.setdefault("destination_sha256", canonical_sha256({
+                "origin": origin.destination(), "work_id": identity["work_id"],
+                "generation": identity["generation"],
+            }))
+        return spec_type(
+            **envelope,
             worker_name="digital-worker", worker_profile_id=DIGITAL_PROFILE_ID,
             worker_profile_release_sha256=release.worker_profile_release_sha256,
             model_profile_id=self.model_profile_id, model_profile_release_sha256=self.configuration_sha256,

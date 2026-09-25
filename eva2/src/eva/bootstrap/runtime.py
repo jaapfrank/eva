@@ -1782,6 +1782,12 @@ def create_runtime_app() -> FastAPI:
     if delegated_work_service is not None:
         delegated_work_service.document_completion_source = document_results
     household_work_server = None
+    provider_bundle = build_external_provider_bundle(settings.external_provider, engine)
+    if settings.delegated_digital_enabled:
+        from eva.bootstrap.delegated_digital_composition import build_digital_profile
+        if delegated_work_service is None:
+            raise ValueError("digital work requires the configured private owner service")
+        delegated_work_service.digital_profile = build_digital_profile(settings, provider_bundle)
     if settings.household_work_config_file is not None:
         if (household_voice is None or not settings.household_voice_session_enabled
                 or delegated_research_profile is None):
@@ -1794,15 +1800,10 @@ def create_runtime_app() -> FastAPI:
         scope = delegated_work_store.scope
         work_authority = load_household_work_authority(settings.household_work_config_file,
             scope=scope, profile=delegated_research_profile,
-            model_lease_file=Path(settings.conversation_auth_file), voice_authority=household_voice)
+            model_lease_file=Path(settings.conversation_auth_file), voice_authority=household_voice,
+            digital_profile=getattr(delegated_work_service, "digital_profile", None))
         household_work_server = HouseholdWorkServer(engine, scope, work_authority)
         delegated_work_actions = ScopedDelegatedWorkActions(delegated_work_actions, household_work_server)
-    provider_bundle = build_external_provider_bundle(settings.external_provider, engine)
-    if settings.delegated_digital_enabled:
-        from eva.bootstrap.delegated_digital_composition import build_digital_profile
-        if delegated_work_service is None:
-            raise ValueError("digital work requires the configured private owner service")
-        delegated_work_service.digital_profile = build_digital_profile(settings, provider_bundle)
     model = PydanticConversationModel(
         auth_file=Path(settings.conversation_auth_file),
         model=settings.conversation_model,

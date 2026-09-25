@@ -85,6 +85,7 @@ class HouseholdWorkService:
             token,
         )
         self.research_profile = server.authority.profile
+        self.digital_profile = getattr(server.authority, "digital_profile", None)
 
     @property
     def _owner(self):
@@ -227,7 +228,7 @@ class HouseholdWorkService:
         return dict(
             work_id=work.spec.work_id,
             title=work.title,
-            question=work.spec.research.question,
+            question=work.spec.task,
             generation=work.spec.generation,
             parent_work_id=work.spec.parent_task_id if work.spec.parent_task_id.startswith("work:") else None,
             state=work.state,
@@ -251,7 +252,8 @@ class HouseholdWorkService:
         self, operation, turn, *, request_key, research=None, work_id=None, task=None, prior_work_id=None
     ):
         self.validate_authority(turn)
-        if task is not None or operation not in {
+        if (task is not None and operation != "digital") or operation not in {
+            "digital",
             "research",
             "list",
             "related",
@@ -268,6 +270,11 @@ class HouseholdWorkService:
             self.store._engine, self.server.conversation_scope
         ).admit_household_ingress(turn, validate_current=self.validate_authority)
         origin = self.origin(turn)
+        if operation == "digital":
+            if research is not None or work_id is not None or prior_work_id is not None:
+                raise ValueError("household digital admission cannot select another destination")
+            from eva.bootstrap.household_digital_work import admit_household_digital
+            return admit_household_digital(self, turn, request_key, task)
         if operation == "stop_related":
             if research is not None or prior_work_id is not None or not isinstance(work_id, str) or not work_id:
                 raise ValueError("related stop requires one work ID")
@@ -330,6 +337,10 @@ class HouseholdWorkService:
                         )
                     )
                 }
+            from eva.contracts.delegated_digital_work import DelegatedHouseholdDigitalWorkSpec
+            if isinstance(previous.spec, DelegatedHouseholdDigitalWorkSpec):
+                from eva.bootstrap.household_digital_work import admit_household_digital
+                return admit_household_digital(self, turn, request_key, None, previous=previous)
             origin = previous.spec.origin
             public = previous.spec.research
             generation, parent = previous.spec.generation + 1, previous.spec.work_id
@@ -549,7 +560,7 @@ class HouseholdWorkService:
 class HouseholdWorkActions(PostgresDelegatedWorkActions):
     @property
     def action_names(self):
-        return (
+        return (() if self._service.digital_profile is None else ("start_digital_work",)) + (
             "start_background_research",
             "list_delegated_work",
             "get_related_work",
@@ -562,6 +573,7 @@ class HouseholdWorkActions(PostgresDelegatedWorkActions):
     @staticmethod
     def conversation_tools(**kwargs):
         allowed = {
+            "start_digital_work",
             "start_background_research",
             "list_delegated_work",
             "get_related_work",
@@ -576,7 +588,7 @@ class HouseholdWorkActions(PostgresDelegatedWorkActions):
                     "of nog geldige openbare spraaksessies op hetzelfde huisapparaat, met titel, work_id en status.")
             if tool.name == "list_delegated_work" else tool
             for tool in PostgresDelegatedWorkActions.conversation_tools(
-                include_research=True
+                include_research=True, include_digital=True
             )
             if tool.name in allowed
         )

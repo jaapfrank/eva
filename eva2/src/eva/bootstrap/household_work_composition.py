@@ -27,7 +27,7 @@ class HouseholdWorkConfiguration(Version1Contract):
     budget_file: str
 
 
-def load_household_work_authority(path, *, scope, profile, model_lease_file, voice_authority=None):
+def load_household_work_authority(path, *, scope, profile, model_lease_file, voice_authority=None, digital_profile=None):
     if path is None:
         return None
     config = HouseholdWorkConfiguration.model_validate_json(read_private_runtime_file_bytes(
@@ -57,8 +57,13 @@ def load_household_work_authority(path, *, scope, profile, model_lease_file, voi
             config.budget_file, setting_name="EVA_RUNTIME_RESOURCE_BUDGET_FILE"),
             expected_tenant_id=voice_policy.tenant_id,
             expected_installation_id=voice_policy.installation_id)
-    return HouseholdResearchAuthority(voice_authority=voice_authority,
+    authority = HouseholdResearchAuthority(voice_authority=voice_authority,
         policy_loader=lambda: read_household_research_policy(config.research_policy_file),
         budget_loader=budget,
         provider_validator=lambda: validate_delegated_model_access_lease(Path(model_lease_file)),
         profile=HouseholdResearchProfile(**asdict(profile)))
+
+    if digital_profile is not None:
+        from eva.bootstrap.household_digital_work import with_household_digital
+        authority = with_household_digital(authority, digital_profile)
+    return authority

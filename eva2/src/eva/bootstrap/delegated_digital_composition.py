@@ -24,6 +24,8 @@ _DIGITAL_PROVIDERS = frozenset({"mcp_autonomy", "procedure_references", "mcp_gat
 _ROOT = Path(__file__).resolve().parents[1]
 _EXECUTION_SOURCES = (
     "bootstrap/delegated_digital_composition.py",
+    "bootstrap/household_digital_work.py",
+    "bootstrap/household_work.py",
     "bootstrap/delegated_work_result_reader.py",
     "bootstrap/delegated_work_owner_service.py",
     "adapters/postgres/delegated_work_actions.py",
@@ -143,7 +145,7 @@ def build_digital_profile(settings, provider_bundle):
     )
 
 
-def build_digital_runner(settings, store, *, provider_bundle=None):
+def build_digital_runner(settings, store, *, provider_bundle=None, household_authority=None):
     """Reuse the foreground identity, memory, connector and owner authorities."""
     from eva.adapters.model.pydantic_conversation import PydanticConversationModel
     from eva.adapters.postgres.operational_timeline import external_timeline_scope
@@ -187,6 +189,16 @@ def build_digital_runner(settings, store, *, provider_bundle=None):
         resource_budget=settings.runtime_resource_budget, conversation_tools=descriptors)
     source_loader = _SourceTurnLoader(engine, SimpleNamespace(
         scope=service.conversation_scope, authorize_turn=service.validate_authority))
+    if household_authority is not None:
+        from eva.bootstrap.household_digital_work import with_household_digital, HouseholdDigitalSourceLoader
+        authority = with_household_digital(household_authority, profile)
+        if getattr(authority, "digital_profile", None) is not None:
+            store._household_authorizer = authority.validate_spec
+            private_loader = source_loader
+            shared_loader = HouseholdDigitalSourceLoader(engine, service.conversation_scope, authority)
+            def source_loader(source):
+                loader = shared_loader if source.get("audience", {}).get("kind") == "household" else private_loader
+                return loader(source)
     return DelegatedDigitalRunner(store, profile, source_loader=source_loader,
         memory=memory, identity=identity, model=model, connector_tools=(*routes, DelegatedWorkResultReader(service)),
         browser_context=BackgroundBrowserContext(configured_browser_client()))

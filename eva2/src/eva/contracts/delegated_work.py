@@ -230,6 +230,9 @@ class DelegatedHouseholdResearchSpec(DelegatedResearchSpec):
 
 
 def load_delegated_work_spec(raw: object) -> DelegatedWorkSpec:
+    if isinstance(raw, dict) and raw.get("contract") == "DelegatedHouseholdDigitalWork/v1":
+        from eva.contracts.delegated_digital_work import DelegatedHouseholdDigitalWorkSpec
+        return DelegatedHouseholdDigitalWorkSpec.model_validate(raw)
     if isinstance(raw, dict) and raw.get("contract") == "DelegatedDigitalWork/v4":
         from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec
         return DelegatedDigitalWorkSpec.model_validate(raw)

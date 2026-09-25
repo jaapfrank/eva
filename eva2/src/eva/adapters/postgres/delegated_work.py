@@ -24,12 +24,15 @@ from eva.contracts.delegated_work import (
     DelegatedWorkSpec, DelegatedResearchSpec, DelegatedHouseholdResearchSpec, load_delegated_work_spec, load_delegated_work_result,
     DelegatedWorkUsage,
 )
+from eva.contracts.delegated_digital_work import DelegatedHouseholdDigitalWorkSpec
 from eva.contracts.workboard import WorkBoard
 from eva.application.delegated_work_delivery import PrivateWorkDestination
 from eva.adapters.postgres.delegated_work_delivery import record_admission_destination
 
 principal_bindings = metadata.tables["eva_core.principal_bindings"]
 principals = metadata.tables["eva_core.principals"]
+
+_HOUSEHOLD_WORK_TYPES = (DelegatedHouseholdResearchSpec, DelegatedHouseholdDigitalWorkSpec)
 
 _TERMINAL_STATES = frozenset(
     {"succeeded", "verified", "failed", "ambiguous", "needs_help", "stopped"}
@@ -160,13 +163,19 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         self._household_authorizer = household_authorizer
         self._household_clock = household_clock or (lambda: datetime.now(UTC).replace(microsecond=0))
 
-    def _authorize_household(self, spec, connection, *, require_open=False):
-        if not isinstance(spec, DelegatedHouseholdResearchSpec):
+    def _authorize_household(self, spec, connection, *, require_open=False, read_only=False):
+        if not isinstance(spec, _HOUSEHOLD_WORK_TYPES):
             return
         try:
             if self._household_authorizer is None:
                 raise ValueError("household work is not explicitly composed")
-            self._household_authorizer(spec)
+            validator = self._household_authorizer
+            if read_only:
+                # Read/control follows validated stored data. Admission, claims,
+                # dispatch and cancellation retain the exact executable release.
+                authority = getattr(validator, "__self__", None)
+                validator = getattr(authority, "validate_read_spec", validator)
+            validator(spec)
             from eva.adapters.postgres.household_work_sessions import verify_origin
             verify_origin(connection, self.scope, spec.origin, require_open=require_open, now=self._household_clock())
         except (ValueError, RuntimeError, OSError) as error:
@@ -177,10 +186,10 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             if spec.audience != "private":
                 raise DelegatedWorkNotFound("delegated work is absent")
         else:
-            if (not isinstance(spec, DelegatedHouseholdResearchSpec)
+            if (not isinstance(spec, _HOUSEHOLD_WORK_TYPES)
                     or spec.origin.destination() != household_origin.destination()):
                 raise DelegatedWorkNotFound("delegated work is absent")
-            self._authorize_household(spec, connection, require_open=True)
+            self._authorize_household(spec, connection, require_open=True, read_only=True)
 
     @property
     def scope(self) -> TimelineScope:
@@ -251,9 +260,9 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         with self._engine.begin() as connection:
             self._scope(connection)
             self._authorize_household(spec, connection, require_open=True)
-            if isinstance(spec, DelegatedHouseholdResearchSpec) and retention_until > _parse_timestamp(spec.created_at) + timedelta(days=7):
+            if isinstance(spec, _HOUSEHOLD_WORK_TYPES) and retention_until > _parse_timestamp(spec.created_at) + timedelta(days=7):
                 raise DelegatedWorkConflict("household retention exceeds its bounded policy")
-            if isinstance(spec, DelegatedHouseholdResearchSpec) and delivery_destination is not None:
+            if isinstance(spec, _HOUSEHOLD_WORK_TYPES) and delivery_destination is not None:
                 raise DelegatedWorkConflict("household work cannot bind a private destination")
             self._validate_owner_binding(
                 connection, owner_principal_id=owner_principal_id,
@@ -273,7 +282,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     f"{previous.spec.work_id}:{previous.spec.generation + 1}",
                 ))
                 if (spec.audience != previous.spec.audience
-                        or (isinstance(spec, DelegatedHouseholdResearchSpec)
+                        or (isinstance(spec, _HOUSEHOLD_WORK_TYPES)
                             and spec.origin != previous.spec.origin)
                         or spec.work_id != expected_id or spec.parent_task_id != previous.spec.work_id
                         or spec.generation != previous.spec.generation + 1
@@ -842,7 +851,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 transaction.rollback()
 
     def household_authority_current(self, call):
-        if not isinstance(call.spec, DelegatedHouseholdResearchSpec):
+        if not isinstance(call.spec, _HOUSEHOLD_WORK_TYPES):
             return True
         try:
             with self._engine.begin() as connection:

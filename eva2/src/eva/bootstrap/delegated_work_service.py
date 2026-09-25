@@ -336,7 +336,8 @@ async def serve_delegated_work_service(
                     raise ValueError("digital worker storage scope differs")
                 # Connector and model objects belong to a lane; task counters
                 # and journals continue to be created by the existing runner.
-                digital_runner = build_digital_runner(digital_settings, store)
+                digital_runner = build_digital_runner(digital_settings, store,
+                    household_authority=getattr(runner, "household_authority", None))
                 bound_runner = DigitalEnabledDelegatedRunner(bound_runner, digital_runner)
                 lane_release = (release if isinstance(release, tuple) else (release,)) + (digital_runner.profile.release,)
             worker_id = (selected.worker_id if lane_count == 1 else
@@ -406,11 +407,12 @@ def check_openai_delegated_work(
     selected = settings or OpenAIDelegatedWorkSettings.from_environment()
     verify_delegated_provider_dependencies()
     validate_delegated_model_access_lease(selected.model_access_lease_file)
+    household_authority = None
     if selected.research_enabled:
         _, profile = _research_composition(selected)
         if selected.household_work_config_file is not None:
             from eva.bootstrap.household_work_composition import load_household_work_authority
-            load_household_work_authority(selected.household_work_config_file,
+            household_authority = load_household_work_authority(selected.household_work_config_file,
                 scope=selected.service.scope, profile=profile,
                 model_lease_file=selected.model_access_lease_file)
     database_dsn = read_runtime_secret_file(
@@ -428,7 +430,7 @@ def check_openai_delegated_work(
                                   UUID(runtime_settings.dashboard_installation_id)) != selected.service.scope):
                 raise ValueError("digital worker runtime scope differs")
             digital = build_digital_runner(runtime_settings,
-                PostgresDelegatedWorkStore(engine, selected.service.scope))
+                PostgresDelegatedWorkStore(engine, selected.service.scope), household_authority=household_authority)
             digital.profile.release  # Validate exact source pins without a model request.
         with engine.connect() as connection:
             revision = connection.scalar(
