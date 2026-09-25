@@ -19,8 +19,10 @@ def test_large_connector_result_survives_actual_timeline_reload(database):
     with result_capture(loaded):
         result = asyncio.run(adapter.observe(command, None))
     assert result.evidence["observation"] == manifest
-    page = loaded.read(manifest["reader"]["tool_id"], {"pointer":"/text", "offset":0,
-        "limit":100, "query":"last section"})
+    selection = {"pointer":"/text", "offset":0, "limit":100, "query":"last section"}
+    page = loaded.read_recorded(manifest["reader"]["tool_id"], selection, "read-last-section")
+    reloaded = ConnectorResults(PostgresOperationalTimeline(database, timeline._scope_value), TURN, lambda _: None)
+    assert reloaded.read_recorded(manifest["reader"]["tool_id"], selection, "read-last-section") == page
     assert page["text"] == "last section" and not page["has_more"]
     assert manifest["byte_length"] == len(_encoded(output))
     assert len(calls) == 1

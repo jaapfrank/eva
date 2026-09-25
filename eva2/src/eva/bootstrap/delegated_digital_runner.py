@@ -155,6 +155,16 @@ class BackgroundConnectorActions:
 
     continuation_action_names = available_action_names
 
+    @staticmethod
+    def can_continue_after(turn, receipt):
+        from eva.adapters.postgres.connector_results import READER_PREFIX
+        return (receipt.call.name == "use_connector_tool"
+                and isinstance(receipt.call.arguments.get("tool_id"), str)
+                and receipt.call.arguments["tool_id"].startswith(READER_PREFIX)
+                and receipt.output.get("source") == "stored_connector_result"
+                and receipt.output.get("status") == "selection_invalid"
+                and receipt.output.get("external_state_verified") is False)
+
     def active_context(self, turn):
         self._authorize(turn)
         return tuple(item for tool in self._tools if tool.available_for(turn)

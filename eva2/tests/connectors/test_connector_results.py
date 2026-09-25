@@ -126,3 +126,36 @@ def test_invalid_provider_output_cannot_be_sealed_or_recovered_as_verified():
             asyncio.run(adapter.observe(command,None))
     assert len(calls) == 1
     assert not any(e.event_type=="CONNECTOR_CAPTURE_SEALED" for events in capture.timeline.rows.values() for e in events)
+
+
+@pytest.mark.parametrize("limit", [8192, 8193])
+def test_background_reader_uses_real_adapter_validation_without_provider_replay(limit):
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+    from eva.bootstrap.delegated_digital_runner import BackgroundConnectorActions
+    output = {"text": "stored document " + "x" * 90000}
+    adapter, command, provider_calls, initial = setup(output)
+    checked, dispatched = [], []
+    with background_execution(BackgroundExecutionScope(TURN, "work:original", lambda turn: dispatched.append(turn))):
+        capture = ConnectorResults(initial.timeline, TURN, lambda turn: checked.append(turn))
+        with result_capture(capture):
+            manifest = asyncio.run(adapter.execute(command)).details["invocation_response"]
+        route = PostgresExternalConversationTools(None,
+            SimpleNamespace(action_names=("use_connector_tool",)),
+            SimpleNamespace(supports_stored_results=True), authorize_turn=lambda turn: checked.append(turn))
+        route._timeline = lambda turn: capture.timeline
+        route._ensure_running = lambda turn: checked.append(turn)
+        actions = BackgroundConnectorActions((route,), ("use_connector_tool",), lambda turn: checked.append(turn), 6)
+        call = ConversationActionCall("read-saved", "use_connector_tool", {
+            "tool_id": manifest["reader"]["tool_id"],
+            "arguments_json": json.dumps({"pointer": "/text", "offset": 0, "limit": limit, "query": None})})
+        if limit == 8192:
+            result = actions.execute_step(TURN, call, step_index=4)
+            assert result.output["result"]["text"] == output["text"][:8192]
+        else:
+            receipt = actions.execute_step(TURN, call, step_index=4)
+            assert receipt.output["status"] == "selection_invalid"
+            assert receipt.output["arguments_schema"]["properties"]["limit"]["maximum"] == 8192
+            assert actions.can_continue_after(TURN, receipt)
+        assert actions.calls == 1
+        assert checked and len(dispatched) == 1
+        assert len(provider_calls) == 1

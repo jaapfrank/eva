@@ -19,6 +19,23 @@ _TRANSPORT_BOUND = 2097152
 _current = ContextVar("connector_result_capture", default=None)
 
 
+class ConnectorSelectionError(ConversationConflict):
+    """A local selection can be corrected without repeating an external action."""
+
+
+def selection_schema():
+    return {"type": "object", "additionalProperties": False,
+            "required": ["pointer", "offset", "limit", "query"],
+            "properties": {
+                "pointer": {"type": "string", "maxLength": 2048,
+                            "description": "JSON pointer to an existing value; empty selects the root, otherwise start with /."},
+                "offset": {"type": "integer", "minimum": 0},
+                "limit": {"type": "integer", "minimum": 1, "maximum": 8192},
+                "query": {"type": ["string", "null"], "minLength": 1, "maxLength": 256,
+                          "description": "Exact text search from offset; null reads directly."}}}
+
+
+
 def _encoded(value):
     validate_json_value(value)
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
@@ -137,19 +154,42 @@ class ConnectorResults:
             "sha256": digest, "byte_length": len(raw), "external_state_verified": False,
             "preview": raw.decode()[:2048], "has_more": True,
             "reader": {"action": "use_connector_tool", "tool_id": reader,
+                "arguments_schema": selection_schema(),
                 "arguments_json": json.dumps({"pointer": "/text" if isinstance(output.get("text"), str) else "",
                     "offset": 0, "limit": 8192, "query": None}),
                 "instructions": "Read saved bytes locally. pointer is a JSON pointer; offset/limit count characters. Optional query searches within the selected value from offset. No connector is invoked."}}
 
+    def read_recorded(self, reader, arguments, call_id):
+        """Persist exactly the bounded page delivered by a successful local read."""
+        output = self.read(reader, arguments)
+        self.authorize(self.turn)
+        binding = {"owner": self.owner, "call_id": call_id}
+        thread = "connector-selection:" + canonical_sha256(binding)
+        data = {**binding, "reader": reader, "arguments": arguments,
+                "output": output, "output_sha256": hashlib.sha256(_encoded(output)).hexdigest()}
+        if len(_encoded(data)) > _BOUND:
+            raise ConnectorSelectionError("stored connector selection receipt exceeds bound; reduce limit")
+        existing = self.timeline.events(thread)
+        if existing:
+            if len(existing) != 1 or existing[0].event_type != "CONNECTOR_SELECTION_READ" or existing[0].payload["data"] != data:
+                raise ConversationConflict("stored connector selection call differs")
+        else:
+            self.timeline.create_thread(thread_id=thread, checkpoint_id=thread + ":read",
+                occurred_at=datetime.now(UTC).replace(microsecond=0), data=data,
+                event_type="CONNECTOR_SELECTION_READ", phase="selection_read", operation_id=thread)
+        return output
+
     def read(self, reader, arguments):
         match = re.fullmatch(re.escape(READER_PREFIX)+r"([0-9a-f]{64}):([0-9a-f]{64})", reader)
-        if not match or not isinstance(arguments, dict) or set(arguments) != {"pointer", "offset", "limit", "query"}:
-            raise ConversationConflict("stored connector selection is invalid")
+        if not match:
+            raise ConversationConflict("stored connector result reference is invalid")
+        if not isinstance(arguments, dict) or set(arguments) != {"pointer", "offset", "limit", "query"}:
+            raise ConnectorSelectionError("stored connector selection is invalid")
         pointer, offset, limit, query = (arguments[k] for k in ("pointer", "offset", "limit", "query"))
         if (not isinstance(pointer, str) or len(pointer) > 2048 or (pointer and not pointer.startswith("/"))
                 or type(offset) is not int or offset < 0 or type(limit) is not int or not 1 <= limit <= 8192
                 or (query is not None and (not isinstance(query, str) or not 1 <= len(query) <= 256))):
-            raise ConversationConflict("stored connector selection bounds are invalid")
+            raise ConnectorSelectionError("stored connector selection bounds are invalid")
         raw, digest = self._bytes(match[1])
         if digest != match[2]:
             raise ConversationConflict("stored connector result reference hash differs")
@@ -159,7 +199,7 @@ class ConnectorResults:
                 key = part.replace("~1", "/").replace("~0", "~")
                 value = value[int(key)] if isinstance(value, list) and key.isdecimal() else value[key]
         except (KeyError, IndexError, TypeError, ValueError):
-            raise ConversationConflict("stored connector JSON pointer is absent") from None
+            raise ConnectorSelectionError("stored connector JSON pointer is absent") from None
         text = value if isinstance(value, str) else _encoded(value).decode()
         selected = text.find(query, offset) if query is not None else min(offset, len(text))
         found = selected >= 0

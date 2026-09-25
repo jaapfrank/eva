@@ -717,3 +717,75 @@ def test_resume_reassesses_prior_blocker_but_current_or_unchanged_blocker_stops(
     assert model.responses == expected_responses
     assert len(tools.calls) == int(prior_attempt and advance)
     assert len(journal.usages) == expected_responses
+
+
+@pytest.mark.parametrize("failure", ["bounds", "pointer", "hash", "authority"])
+def test_background_stored_selection_can_be_corrected_but_security_errors_stop(failure):
+    import json
+    from types import SimpleNamespace
+    from eva.adapters.postgres.connector_results import ConnectorResults, result_capture
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+    from eva.bootstrap.delegated_digital_runner import BackgroundConnectorActions
+    from tests.connectors.test_connector_results import setup
+    from tests.connectors.test_mcp_discovery import TURN
+    adapter, command, provider_calls, initial = setup({"text": "Complete saved content " + "x" * 90000})
+    dispatches = []
+    with background_execution(BackgroundExecutionScope(TURN, "work:original", lambda turn: dispatches.append(turn))):
+        capture = ConnectorResults(initial.timeline, TURN, lambda turn: None)
+        with result_capture(capture):
+            manifest = asyncio.run(adapter.execute(command)).details["invocation_response"]
+        revoked = [False]
+        def authorize(turn):
+            if revoked[0]:
+                raise ConversationConflict("owner authority revoked")
+        route = PostgresExternalConversationTools(None,
+            SimpleNamespace(action_names=("use_connector_tool",)),
+            SimpleNamespace(supports_stored_results=True), authorize_turn=authorize)
+        route._timeline = lambda turn: capture.timeline
+        route._ensure_running = lambda turn: None
+        route.pending = lambda turn, step_index=0: None
+        actions = BackgroundConnectorActions((route,), ("use_connector_tool",), lambda turn: None, 6)
+        class SelectionModel:
+            responses = 0
+            def generate(self, *args, **kwargs):
+                self.responses += 1
+                reader = manifest["reader"]["tool_id"]
+                if self.responses == 1:
+                    revoked[0] = failure == "authority"
+                    if failure == "hash":
+                        reader = reader[:-1] + ("a" if reader[-1] != "a" else "b")
+                    selection = {"pointer": "/missing" if failure == "pointer" else "/text",
+                                 "offset": 0, "limit": 8193 if failure == "bounds" else 100, "query": None}
+                elif self.responses == 2:
+                    assert "use_connector_tool" in kwargs["available_actions"]
+                    assert kwargs["completed_action"].output["status"] == "selection_invalid"
+                    selection = {"pointer": "/text", "offset": 0, "limit": 100, "query": None}
+                else:
+                    assert kwargs["completed_action"].output["result"]["text"].startswith("Complete saved content")
+                    return ConversationModelResult("Saved content read.", "controlled")
+                return ConversationModelResult(None, "controlled", ConversationActionCall(
+                    "selection:" + str(self.responses), "use_connector_tool",
+                    {"tool_id": reader, "arguments_json": json.dumps(selection)}))
+        model = SelectionModel()
+        conversation = LivingConversation(_Memory(), model, IdentityProfile("Eva", "Helpful", ("Be honest",)), actions)
+        if failure in {"bounds", "pointer"}:
+            reply = conversation.respond(TURN)
+            assert reply.text == "Saved content read."
+            assert model.responses == 3 and actions.calls == 2
+            assert len(dispatches) == 2
+            saved = [event for rows in capture.timeline.rows.values() for event in rows
+                     if event.event_type == "CONNECTOR_SELECTION_READ"]
+            assert len(saved) == 1
+            data = saved[0].payload["data"]
+            assert data["call_id"] == "selection:2"
+            assert data["arguments"] == {"pointer": "/text", "offset": 0, "limit": 100, "query": None}
+            assert data["output"]["sha256"] == manifest["sha256"]
+            assert data["output"]["text"].startswith("Complete saved content")
+            from eva.adapters.postgres.connector_results import _encoded
+            assert data["output_sha256"] == hashlib.sha256(_encoded(data["output"])).hexdigest()
+        else:
+            with pytest.raises(ConversationConflict):
+                conversation.respond(TURN)
+            assert model.responses == 1
+        assert len(provider_calls) == 1

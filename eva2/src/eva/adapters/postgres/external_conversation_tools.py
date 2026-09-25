@@ -153,14 +153,24 @@ class PostgresExternalConversationTools:
             raise ConversationConflict(f"external tool {call.name!r} is unavailable")
         self._authorize(turn)
         if getattr(self._provider, "supports_stored_results", False) and call.name == "use_connector_tool":
-            from eva.adapters.postgres.connector_results import ConnectorResults, READER_PREFIX
+            from eva.adapters.postgres.connector_results import (
+                ConnectorResults, ConnectorSelectionError, READER_PREFIX, selection_schema,
+            )
             from eva.providers.mcp_discovery import _arguments
             reader, arguments = _arguments(call)
             if reader.startswith(READER_PREFIX):
                 self._ensure_running(turn)
                 from eva.application.background_execution import authorize_background_dispatch
                 authorize_background_dispatch(turn)
-                output = ConnectorResults(self._timeline(turn), turn, self._authorize).read(reader, arguments)
+                try:
+                    output = ConnectorResults(self._timeline(turn), turn, self._authorize).read_recorded(reader, arguments, call.call_id)
+                except ConnectorSelectionError as error:
+                    return ConversationActionReceipt(call, {
+                        "status": "selection_invalid", "source": "stored_connector_result",
+                        "external_state_verified": False, "error": str(error),
+                        "arguments_schema": selection_schema(),
+                        "guidance": "Correct the local selection and read the same stored tool_id. No external connector was invoked; the task budget still applies.",
+                    })
                 return ConversationActionReceipt(call, {"status": "verified", "result": output,
                     "external_state_verified": False, "source": "stored_connector_result"})
         # Preserve clarification before storage access for the initial action.
