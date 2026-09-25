@@ -1,0 +1,101 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-25T12:24:23.120874+00:00",
+  "sourceCommit": "19958b2840b354ced9f0e803ab6dabb395947f71",
+  "userOutcome": "Longer HA jobs from registered speakers use the existing digital worker while the foreground remains available. Status, stop, resume and result return retain the originating household context.",
+  "implementation": [
+    "Explicit household digital envelope reuses the existing digital runner, journal, tool dispatch, worker lanes and HA API.",
+    "Speaker actor and household memory remain unchanged; no private owner impersonation.",
+    "Existing source receipts survive stop/resume; HA configuration readback remains enforced.",
+    "Historical household task results remain readable after program updates; execution requires the current program."
+  ],
+  "verification": {
+    "packagedTests": {
+      "passed": 50,
+      "database": "isolated PostgreSQL 16.13",
+      "files": [
+        "tests/contract/test_delegated_digital_work.py",
+        "tests/postgres/test_household_digital_work.py",
+        "tests/bootstrap/test_household_worker_configuration.py"
+      ],
+      "functionalCase": "Controlled HA POST, new foreground turn and task listing during work, stop, resume with GET only, one result returned to originating speaker session. Original foreground reply unchanged.",
+      "historicalResultCase": "Existing public research and new digital tasks remain readable after a program change; old execution is rejected.",
+      "earlierCorrections": [
+        "Household origin serialization needed JSON payload.",
+        "Accounting and background execution had private-only guards.",
+        "Controlled test catalog needed to match supplied tools.",
+        "Startup fixture needed the shared model settings rather than a worker-only environment key."
+      ]
+    },
+    "independentReview": {
+      "agent": "shared_ha_review",
+      "result": "No remaining concrete blocker in reviewed wiring, source loading, accounting, read/execution checks and result lifecycle."
+    },
+    "live": {
+      "coreAndWorkerProfilesMatch": true,
+      "registeredSpeakers": 2,
+      "householdDigitalReady": true,
+      "schema": "4e_0007_delegated_private",
+      "http": {
+        "44711": 200,
+        "44712": 200
+      }
+    }
+  },
+  "installation": {
+    "checkedAt": "2026-09-25T12:22:13.283516+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:535ca69f6f85c91dd1a89653483b9b96d512e16d4d6c842284f963b5984d1ed8",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/background_model_journal.py": "2f1a037b7356bcb43e796cacb32672ca7d2873409b7619ba132560680bf9c9a1",
+          "adapters/postgres/delegated_work.py": "b863d0a05809c9812a18f4dd32ba277340489a2a97df94aaef18a4aef4e36919",
+          "application/background_execution.py": "e7708e9a5308890b6833cec2f5f04f740216bdd04ec3f0c8d6efc01cf2738757",
+          "bootstrap/delegated_digital_composition.py": "39d0ad1bb2f05c0b69483b74e4395a8c4ce2cb41488cb2084a248807401510ee",
+          "bootstrap/delegated_digital_profile.py": "ef3598a07a8884be9d97babba9c80c87f5fac3a276696b6bf891f962e7f2fd8d",
+          "bootstrap/delegated_work_service.py": "5e67df2d9b8ea7c401915956aaa748d9f3094f17b505ff0998ec29ad1a6b08db",
+          "bootstrap/household_work.py": "014d302f5f3259c05b870e2beaef367489de7c94270c4f4da039f065a6f12f3f",
+          "bootstrap/household_work_composition.py": "5d8e928f31caa2fe37b5f99c98ea18d282251ce5451e06d9c2887c261e3c34e0",
+          "bootstrap/runtime.py": "f8eff67b6a8811023b56b880742e05ad4cd65325b98fe57438c065af0ef034e1",
+          "contracts/delegated_digital_work.py": "0c65148bc80ff1a2b536019efc7887572b7ce32249435cb4f92dff94cbf81106",
+          "contracts/delegated_work.py": "7ce809b12b83ec5453f55770594def3c287d36b089c79c47ef9246a1e5988bd4",
+          "bootstrap/household_digital_work.py": "8a9b8245ab3b8786595b1160367fa7087af4ea5fd53f595dc38dffcfe29c16fe",
+          "bootstrap/household_research_policy.py": "abb9c7d7cf5bb79da6880675a4cba9b50886c536c215eaf28d24f45dd860b974"
+        }
+      },
+      "worker": {
+        "image": "sha256:f79be8d7542fdb848d7b61c3e31e9f579ccefa19acd05d727add8f4173ae44ae",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/background_model_journal.py": "2f1a037b7356bcb43e796cacb32672ca7d2873409b7619ba132560680bf9c9a1",
+          "adapters/postgres/delegated_work.py": "b863d0a05809c9812a18f4dd32ba277340489a2a97df94aaef18a4aef4e36919",
+          "application/background_execution.py": "e7708e9a5308890b6833cec2f5f04f740216bdd04ec3f0c8d6efc01cf2738757",
+          "bootstrap/delegated_digital_composition.py": "39d0ad1bb2f05c0b69483b74e4395a8c4ce2cb41488cb2084a248807401510ee",
+          "bootstrap/delegated_digital_profile.py": "ef3598a07a8884be9d97babba9c80c87f5fac3a276696b6bf891f962e7f2fd8d",
+          "bootstrap/delegated_work_service.py": "5e67df2d9b8ea7c401915956aaa748d9f3094f17b505ff0998ec29ad1a6b08db",
+          "bootstrap/household_work.py": "014d302f5f3259c05b870e2beaef367489de7c94270c4f4da039f065a6f12f3f",
+          "bootstrap/household_work_composition.py": "5d8e928f31caa2fe37b5f99c98ea18d282251ce5451e06d9c2887c261e3c34e0",
+          "bootstrap/runtime.py": "f8eff67b6a8811023b56b880742e05ad4cd65325b98fe57438c065af0ef034e1",
+          "contracts/delegated_digital_work.py": "0c65148bc80ff1a2b536019efc7887572b7ce32249435cb4f92dff94cbf81106",
+          "contracts/delegated_work.py": "7ce809b12b83ec5453f55770594def3c287d36b089c79c47ef9246a1e5988bd4",
+          "bootstrap/household_digital_work.py": "8a9b8245ab3b8786595b1160367fa7087af4ea5fd53f595dc38dffcfe29c16fe",
+          "bootstrap/household_research_policy.py": "abb9c7d7cf5bb79da6880675a4cba9b50886c536c215eaf28d24f45dd860b974"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/household-digital-20260925/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "sourceApplication": "Only the feature diff from de016e2b was applied to the captured live files. Existing schema 0007/restore exclusions retained; exact installed source hashes recorded.",
+  "usage": {
+    "evaModelCalls": 0,
+    "physicalDeviceActions": 0,
+    "creditCost": null
+  },
+  "limits": [
+    "The functional test uses a controlled model and HA transport; it is not a physical Voice PE acceptance or latency measurement.",
+    "No general claim that every HA automation or conversational task now succeeds.",
+    "User acceptance remains open."
+  ],
+  "artifactsDirectory": "/home/administrator/project/.eva2-artifacts/household-digital-20260925"
+}

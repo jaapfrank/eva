@@ -88,3 +88,26 @@ verified-against-evidence report. The coordinator removed the temporary object
 afterward. This is a successful resumed workflow, not single-attempt reliability
 or owner acceptance of broad household automation behavior. See
 `eva2/evidence/product/ha-configuration-readback-installed-20260924.json`.
+
+
+## Household background work — 25 September 2026
+
+The registered speakers can now admit longer HA work using the existing
+`start_digital_work` action. A distinct household envelope preserves the device
+actor, original ingress and household audience. It reuses the digital worker,
+model accounting, HA provider, progress, cancellation and resume receipts.
+The household grant selects HA API/inventory and progress tools; it grants no
+private connector, browser, document or personal-memory access.
+
+The foreground remains available while the durable job runs. Existing household
+status, stop/resume and result delivery handle both public research and HA jobs.
+Resuming preserves the original execution identity and verified tool receipts.
+Stored household results may retain their historical program hash for reading;
+new execution still requires the installed program and current authority.
+
+Installed source: `19958b28`. The packaged PostgreSQL lifecycle test covers a
+controlled HA write, another foreground turn, stop, resume without repeating the
+write, readback and one return to the originating session. The installed core and
+worker load both registered speaker bindings and equal execution profiles.
+Physical speech/model quality and owner acceptance remain separate. See
+`eva2/evidence/product/household-digital-installed-20260925.json`.
