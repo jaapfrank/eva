@@ -1,4 +1,4 @@
-"""Deliver saved public research to its native HA satellite once.
+"""Deliver saved household work to its original native HA satellite once.
 
 This is a host output adapter, not a new model tool or private speaker identity.
 A service acknowledgement means offered, never proof of audible completion.
@@ -6,7 +6,8 @@ A service acknowledgement means offered, never proof of audible completion.
 import logging
 import sqlalchemy as sa
 import httpx2 as httpx
-from eva.adapters.postgres.operational_timeline import operational_events, operational_checkpoints
+from eva.adapters.postgres.operational_timeline import operational_events
+from eva.bootstrap.household_work import pending_household_results
 from eva.application.work_result_presentation import readable_work_result
 from eva.application.work_failure_notice import FAILURE_STATES
 
@@ -21,26 +22,32 @@ class NativeWorkDelivery:
         store = self.server.store
         with store._engine.begin() as c:
             store._scope(c)
-            rows = c.execute(sa.select(operational_events.c.payload,
-                    operational_checkpoints.c.phase, operational_checkpoints.c.deadline).join(
-                operational_checkpoints,
-                (operational_events.c.tenant_id == operational_checkpoints.c.tenant_id)
-                & (operational_events.c.installation_id == operational_checkpoints.c.installation_id)
-                & (operational_events.c.thread_id == operational_checkpoints.c.thread_id)).where(
+            pending = pending_household_results(c, store, self.server.authority.clock()).subquery()
+            data = operational_events.c.payload["data"]
+            policy = self.server.authority.policy
+            current = {name: getattr(policy, name) for name in (
+                "tenant_id", "installation_id", "household_id", "consent_operation_id",
+                "household_policy_sha256")}
+            current["research_policy_sha256"] = self.server.authority.sha256
+            device_bindings = [data["binding"].contains({"satellite_id": satellite,
+                "device_id": device, "actor_id": "household-device:" + device})
+                for satellite, device in policy.devices.items()]
+            rows = c.execute(sa.select(operational_events.c.payload).where(
                 operational_events.c.tenant_id == store.scope.tenant_id,
                 operational_events.c.installation_id == store.scope.installation_id,
                 operational_events.c.event_type == "HOUSEHOLD_WORK_SESSION_OPENED",
-                operational_checkpoints.c.phase == "open",
-                operational_checkpoints.c.deadline > self.server.authority.clock(),
-                operational_events.c.payload["data"]["native_conversation_key"].astext.is_not(None),
-            ).order_by(operational_events.c.occurred_at.desc(), operational_events.c.thread_id.desc())
+                operational_events.c.sequence == 1,
+                data["native_conversation_key"].astext.is_not(None),
+                data["binding"].contains(current), sa.or_(*device_bindings),
+                sa.exists(sa.select(1).select_from(pending).where(
+                    pending.c.spec_payload["origin"]["session_id"].astext
+                    == data["binding"]["session_id"].astext,
+                    pending.c.spec_payload["owner_principal_id"].astext == str(policy.owner_principal_id),
+                    pending.c.spec_payload["principal_binding_id"].astext == str(policy.principal_binding_id))),
+            ).order_by(operational_events.c.occurred_at, operational_events.c.thread_id)
                 .limit(128)).all()
-        # A later wakeword conversation does not cancel already admitted public
-        # work. Keep its original session/device authority until it closes/expires.
         for row in rows:
-            binding = row.payload["data"]["binding"]
-            if row.phase == "open" and self.server.authority.clock() < row.deadline:
-                yield binding
+            yield row.payload["data"]["binding"]
 
     @staticmethod
     def _idle(client, satellite):
@@ -57,7 +64,7 @@ class NativeWorkDelivery:
             service = None
             turn = None
             try:
-                service = self.server.session(token=self.server.authority.voice.token,
+                service = self.server.delivery_session(token=self.server.authority.voice.token,
                     satellite_id=binding["satellite_id"], device_id=binding["device_id"],
                     session_id=binding["session_id"])
                 turn = service.control_turn()

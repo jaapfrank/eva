@@ -200,6 +200,53 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             raise DelegatedWorkConflict("household continuation differs from its admitted execution")
         self._authorize_household(work.spec, connection, read_only=True)
 
+    def _authorize_household_request(self, work, connection, *, origin, request_origin):
+        """Bind a new native request to the sealed retained task on the same device."""
+        from eva.adapters.postgres.household_work_sessions import verify_origin
+        if (not isinstance(work.spec, _HOUSEHOLD_WORK_TYPES) or origin is None
+                or work.spec.origin != origin or self._household_clock() >= work.retention_until):
+            raise DelegatedWorkNotFound("retained household work is absent")
+        self._authorize_household(work.spec, connection, read_only=True)
+        original = verify_origin(connection, self.scope, work.spec.origin,
+            require_open=False, now=self._household_clock())
+        current = verify_origin(connection, self.scope, request_origin,
+            require_open=True, now=self._household_clock())
+        if (original.get("native_conversation_key") is None
+                or current.get("native_conversation_key") is None
+                or any(getattr(work.spec.origin, key) != getattr(request_origin, key) for key in (
+                    "tenant_id", "installation_id", "household_id", "actor_id",
+                    "satellite_id", "device_id", "consent_operation_id",
+                    "household_policy_sha256", "research_policy_sha256"))):
+            raise DelegatedWorkNotFound("retained household request differs from its device authority")
+
+    def _authorize_household_delivery(self, work, connection, *, origin, binding):
+        """Read only a retained outcome for its sealed original native destination."""
+        from eva.adapters.postgres.household_work_sessions import verify_origin
+        from eva.application.work_failure_notice import delivery_outcome
+        if (not isinstance(work.spec, _HOUSEHOLD_WORK_TYPES) or origin is None
+                or binding != work.spec.origin.destination() or origin.destination() != binding
+                or self._household_clock() >= work.retention_until
+                or delivery_outcome(work) is None):
+            raise DelegatedWorkNotFound("retained household outcome is absent")
+        self._authorize_household(work.spec, connection, read_only=True)
+        original = verify_origin(connection, self.scope, work.spec.origin,
+            require_open=False, now=self._household_clock())
+        if original.get("native_conversation_key") is None:
+            raise DelegatedWorkNotFound("retained household outcome requires its native destination")
+
+    def _authorize_household_access(self, work, connection, *, origin,
+                                    execution_id=None, request_origin=None, delivery_binding=None):
+        if sum(value is not None for value in (execution_id, request_origin, delivery_binding)) > 1:
+            raise DelegatedWorkConflict("household access paths cannot be combined")
+        if request_origin is not None:
+            self._authorize_household_request(work, connection, origin=origin, request_origin=request_origin)
+        elif delivery_binding is not None:
+            self._authorize_household_delivery(work, connection, origin=origin, binding=delivery_binding)
+        elif execution_id is not None:
+            self._authorize_household_continuation(work, connection, origin=origin, execution_id=execution_id)
+        else:
+            self._read_scope(work.spec, connection, origin)
+
     @property
     def scope(self) -> TimelineScope:
         return self._scope_value
@@ -237,6 +284,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         resumes_work_id: str | None = None,
         delivery_destination: PrivateWorkDestination | None = None,
         household_continuation_execution_id: str | None = None,
+        household_request_origin=None,
     ) -> DelegatedWorkAdmission:
         # These three values are trusted operator-display labels, not task text.
         # The local cockpit remains unauthenticated until its own product gate.
@@ -274,8 +322,12 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     or not isinstance(spec, DelegatedHouseholdDigitalWorkSpec)
                     or spec.execution_id != household_continuation_execution_id):
                 raise DelegatedWorkConflict("household continuation requires its original digital attempt")
+            if household_request_origin is not None and (
+                    resumes_work_id is None or not isinstance(spec, _HOUSEHOLD_WORK_TYPES)
+                    or household_continuation_execution_id is not None):
+                raise DelegatedWorkConflict("household requester requires one retained resume")
             self._authorize_household(spec, connection,
-                require_open=household_continuation_execution_id is None)
+                require_open=household_continuation_execution_id is None and household_request_origin is None)
             if isinstance(spec, _HOUSEHOLD_WORK_TYPES) and retention_until > _parse_timestamp(spec.created_at) + timedelta(days=7):
                 raise DelegatedWorkConflict("household retention exceeds its bounded policy")
             if isinstance(spec, _HOUSEHOLD_WORK_TYPES) and delivery_destination is not None:
@@ -293,6 +345,9 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 if household_continuation_execution_id is not None:
                     self._authorize_household_continuation(previous, connection,
                         origin=spec.origin, execution_id=household_continuation_execution_id)
+                if household_request_origin is not None:
+                    self._authorize_household_request(previous, connection,
+                        origin=spec.origin, request_origin=household_request_origin)
                 if (previous.spec.owner_principal_id != str(owner_principal_id)
                         or previous.spec.principal_binding_id != str(principal_binding_id)):
                     raise DelegatedWorkNotFound("previous delegated work is absent")
@@ -751,6 +806,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         now: datetime,
         household_origin=None,
         household_continuation_execution_id: str | None = None,
+        household_request_origin=None,
     ) -> StoredDelegatedWork:
         """Stop before a call or durably request cancellation of an active call."""
 
@@ -783,11 +839,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             loaded = self._load_terminal_locked(
                 connection, work_id=work_id, missing_message="delegated work is absent"
             )
-            if household_continuation_execution_id is None:
-                self._read_scope(loaded.spec, connection, household_origin)
-            else:
-                self._authorize_household_continuation(loaded, connection,
-                    origin=household_origin, execution_id=household_continuation_execution_id)
+            self._authorize_household_access(loaded, connection, origin=household_origin,
+                execution_id=household_continuation_execution_id, request_origin=household_request_origin)
             if loaded.spec.owner_principal_id != str(
                 owner_principal_id
             ) or loaded.spec.principal_binding_id != str(principal_binding_id):
@@ -1008,6 +1061,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         principal_binding_id: UUID,
         household_origin=None,
         household_continuation_execution_id: str | None = None,
+        household_request_origin=None,
+        household_delivery_binding=None,
     ) -> StoredDelegatedWork:
         with self._engine.connect() as connection:
             transaction = connection.begin()
@@ -1019,11 +1074,9 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     principal_binding_id=principal_binding_id,
                 )
                 loaded = self._load_locked(connection, work_id)
-                if household_continuation_execution_id is None:
-                    self._read_scope(loaded.spec, connection, household_origin)
-                else:
-                    self._authorize_household_continuation(loaded, connection,
-                        origin=household_origin, execution_id=household_continuation_execution_id)
+                self._authorize_household_access(loaded, connection, origin=household_origin,
+                    execution_id=household_continuation_execution_id, request_origin=household_request_origin,
+                    delivery_binding=household_delivery_binding)
                 if loaded.spec.owner_principal_id != str(
                     owner_principal_id
                 ) or loaded.spec.principal_binding_id != str(principal_binding_id):

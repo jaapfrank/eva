@@ -15,8 +15,12 @@ def fixture(monkeypatch, idle_states):
         return N(payload={"data": {"binding": {"session_id": session,
             "device_id": "device", "satellite_id": "assist_satellite.room"}}},
             phase=phase, deadline=now + timedelta(seconds=seconds))
-    rows = [row("closed", "closed"), row("new"), row("old"), row("expired", seconds=-1)]
+    rows = [row("new"), row("old", "closed")]
     connection = Mock(); connection.execute.return_value.all.return_value = rows
+    import sqlalchemy as sa
+    from eva.adapters.postgres.current_catalog import delegated_work_runs as runs
+    monkeypatch.setattr("eva.bootstrap.native_work_delivery.pending_household_results",
+        lambda connection, store, now: sa.select(runs.c.work_id, runs.c.spec_payload, runs.c.completed_at))
     @contextmanager
     def begin(): yield connection
     store = N(_engine=N(begin=begin), _scope=lambda c: None,
@@ -44,8 +48,12 @@ def fixture(monkeypatch, idle_states):
         assert kwargs["device_id"] == "device"
         assert kwargs["satellite_id"] == "assist_satellite.room"
         return Service(kwargs["session_id"])
-    server = N(store=store, session=session,
-        authority=N(clock=lambda: now, validate_current=lambda: None, voice=N(token="fixture")))
+    server = N(store=store, delivery_session=session,
+        authority=N(clock=lambda: now, validate_current=lambda: None, voice=N(token="fixture"),
+            sha256="research-policy", policy=N(tenant_id="tenant", installation_id="installation",
+                household_id="household", consent_operation_id="consent", household_policy_sha256="policy",
+                devices={"assist_satellite.room": "device"}, owner_principal_id="owner",
+                principal_binding_id="binding")))
     states = iter(idle_states)
     class Client:
         def __init__(self, **kwargs): pass
@@ -64,7 +72,7 @@ def fixture(monkeypatch, idle_states):
     return delivery, announcements, acknowledgments, polls, gets
 
 
-def test_new_session_does_not_hide_earlier_public_result(monkeypatch):
+def test_closed_original_session_does_not_hide_earlier_public_result(monkeypatch):
     delivery, announcements, acknowledgments, polls, gets = fixture(monkeypatch, ["idle", "idle", "idle"])
     assert [b["session_id"] for b in delivery._sessions()] == ["new", "old"]
     delivery.run_once()

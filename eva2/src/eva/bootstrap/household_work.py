@@ -33,6 +33,28 @@ from eva.contracts.delegated_work import HouseholdWorkOrigin, PublicResearchRequ
 from eva.contracts.timestamps import parse_utc_timestamp
 
 
+def pending_household_results(connection, store, now):
+    """Select retained, unsent outcomes without tying them to a foreground lease."""
+    from eva.adapters.postgres.current_catalog import delegated_work_runs as runs
+    claimed = sa.exists(sa.select(1).select_from(
+        operational_events.outerjoin(operational_checkpoints,
+            (operational_events.c.tenant_id == operational_checkpoints.c.tenant_id)
+            & (operational_events.c.installation_id == operational_checkpoints.c.installation_id)
+            & (operational_events.c.thread_id == operational_checkpoints.c.thread_id))).where(
+        sa.or_(operational_checkpoints.c.phase.is_(None), operational_checkpoints.c.phase != "deferred"),
+        operational_events.c.tenant_id == runs.c.tenant_id,
+        operational_events.c.installation_id == runs.c.installation_id,
+        operational_events.c.event_type == "HOUSEHOLD_WORK_RESULT_CLAIMED",
+        operational_events.c.payload["data"]["work_id"].astext == runs.c.work_id))
+    cutoff = failure_notice_cutoff(connection, store, now)
+    return sa.select(runs.c.work_id, runs.c.spec_payload, runs.c.completed_at).where(
+        runs.c.tenant_id == store.scope.tenant_id,
+        runs.c.installation_id == store.scope.installation_id,
+        runs.c.spec_payload["audience"].astext == "household",
+        deliverable_states(runs, cutoff), runs.c.stop_requested_at.is_(None),
+        runs.c.retention_until > now, ~claimed)
+
+
 class HouseholdWorkServer:
     def __init__(self, engine, scope, authority):
         from eva.bootstrap.delegated_research import HouseholdResearchProfile
@@ -76,8 +98,16 @@ class HouseholdWorkServer:
         return HouseholdWorkService(self, binding, token)
 
 
+    def delivery_session(self, *, token, satellite_id, device_id, session_id):
+        """Bind stored native output without reopening the foreground session."""
+        self.authenticate(token, satellite_id, device_id)
+        binding = self.sessions.read_retained_native(session_id, satellite_id, device_id)
+        return HouseholdWorkService(self, binding, token, delivery_only=True)
+
+
 class HouseholdWorkService:
-    def __init__(self, server, binding, token):
+    def __init__(self, server, binding, token, *, delivery_only=False):
+        self._delivery_only = delivery_only
         self.server, self.store, self.binding, self._token = (
             server,
             server.store,
@@ -98,12 +128,15 @@ class HouseholdWorkService:
     def current(self, operation="read"):
         b = self.binding
         self.server.authenticate(self._token, b["satellite_id"], b["device_id"])
-        if (
-            self.server.sessions.read(
-                b["session_id"], b["satellite_id"], b["device_id"], operation=operation
-            )
-            != b
-        ):
+        if self._delivery_only:
+            if operation != "read":
+                raise ValueError("stored household output cannot control a foreground session")
+            actual = self.server.sessions.read_retained_native(
+                b["session_id"], b["satellite_id"], b["device_id"])
+        else:
+            actual = self.server.sessions.read(
+                b["session_id"], b["satellite_id"], b["device_id"], operation=operation)
+        if actual != b:
             raise ValueError("household session binding changed")
         self.store.validate_admission_authority(**self._owner)
 
@@ -132,6 +165,8 @@ class HouseholdWorkService:
         return turn
 
     def turn(self, request_id, text):
+        if self._delivery_only:
+            raise ValueError("stored household output cannot admit user input")
         turn = self._make_turn(request_id, text)
         return PostgresConversationJournal(
             self.store._engine, self.server.conversation_scope
@@ -175,8 +210,16 @@ class HouseholdWorkService:
             received_at=turn.occurred_at,
         )
 
+    def _request_access(self, work, turn):
+        origin = self.origin(turn)
+        return ({} if work.spec.origin.destination() == origin.destination() else
+                {"household_request_origin": origin})
+
     def _load(self, work_id, origin, *, include_native=True):
         self.current()
+        if self._delivery_only:
+            return self.store.load(work_id, **self._owner, household_origin=origin,
+                household_delivery_binding=self.binding)
         try:
             work = self.store.load(work_id, **self._owner, household_origin=origin)
         except DelegatedWorkNotFound:
@@ -191,11 +234,12 @@ class HouseholdWorkService:
         return work
 
     def _native_work(self, current_origin, *, work_id=None, parent_ids=None, limit=21):
-        """Load stored origins through unchanged exact store authorization."""
+        """Read retained native work through the current device's admitted turn."""
         from eva.adapters.postgres.current_catalog import delegated_work_runs as runs
         self.current()
         bindings = {item["session_id"]: item for item in
-                    self.server.sessions.continuity_bindings(self.binding)}
+                    self.server.sessions.continuity_bindings(self.binding,
+                        work_id=work_id, parent_ids=parent_ids, limit=limit)}
         now = self.server.authority.clock()
         with self.store._engine.begin() as connection:
             self.store._scope(connection)
@@ -219,7 +263,9 @@ class HouseholdWorkService:
             origin = HouseholdWorkOrigin.model_validate(row.spec_payload["origin"])
             if origin.destination() != bindings.get(origin.session_id):
                 raise ValueError("native work origin differs from its original session")
-            result.append(self.store.load(row.work_id, **self._owner, household_origin=origin))
+            result.append(self.store.load(row.work_id, **self._owner, household_origin=origin,
+                **({} if origin.destination() == current_origin.destination() else
+                   {"household_request_origin": current_origin})))
         self.current()
         return tuple(result)
 
@@ -242,6 +288,8 @@ class HouseholdWorkService:
 
     def active_work_metadata(self, turn):
         """Project work from authorized current-device native sessions."""
+        if self._delivery_only:
+            raise ValueError("stored household output cannot supply foreground tools")
         self.validate_authority(turn)
         from eva.application.work_context import work_context_metadata
         now = self.server.authority.clock()
@@ -251,6 +299,8 @@ class HouseholdWorkService:
     def execute(
         self, operation, turn, *, request_key, research=None, work_id=None, task=None, prior_work_id=None, revision=None
     ):
+        if self._delivery_only:
+            raise ValueError("stored household output cannot execute user work")
         self.validate_authority(turn)
         if (task is not None and operation != "digital") or operation not in {
             "digital",
@@ -359,6 +409,7 @@ class HouseholdWorkService:
                             work_id,
                             **self._owner,
                             household_origin=previous.spec.origin,
+                            **self._request_access(previous, turn),
                             now=self.server.authority.clock(),
                         )
                     )
@@ -401,7 +452,8 @@ class HouseholdWorkService:
         self.validate_authority(turn)
         title = previous.title if previous is not None else " ".join(public.title.split())[:120]
         try:
-            saved = self.store.load(work_id, **self._owner, household_origin=origin)
+            saved = self.store.load(work_id, **self._owner, household_origin=origin,
+                **({} if previous is None else self._request_access(previous, turn)))
         except DelegatedWorkNotFound:
             pass
         else:
@@ -415,7 +467,8 @@ class HouseholdWorkService:
             retention_policy_id="retention:household-public-work:v1",
             retention_until=min(created + timedelta(days=7), expiry),
             occurred_at=created,
-            **({} if previous is None else {"resumes_work_id": previous.spec.work_id}),
+            **({} if previous is None else {"resumes_work_id": previous.spec.work_id,
+                **self._request_access(previous, turn)}),
         )
         return dict(
             created=admitted.disposition == "inserted",
@@ -430,36 +483,11 @@ class HouseholdWorkService:
 
         with self.store._engine.begin() as c:
             self.store._scope(c)
-            claimed = sa.exists(
-                sa.select(1).select_from(operational_events.outerjoin(operational_checkpoints,
-                    (operational_events.c.tenant_id == operational_checkpoints.c.tenant_id)
-                    & (operational_events.c.installation_id == operational_checkpoints.c.installation_id)
-                    & (operational_events.c.thread_id == operational_checkpoints.c.thread_id))).where(
-                    sa.or_(operational_checkpoints.c.phase.is_(None), operational_checkpoints.c.phase != "deferred"),
-                    operational_events.c.tenant_id == runs.c.tenant_id,
-                    operational_events.c.installation_id == runs.c.installation_id,
-                    operational_events.c.event_type == "HOUSEHOLD_WORK_RESULT_CLAIMED",
-                    operational_events.c.payload["data"]["work_id"].astext
-                    == runs.c.work_id,
-                )
-            )
-            cutoff = failure_notice_cutoff(c, self.store, self.server.authority.clock())
-            candidate = c.scalar(
-                sa.select(runs.c.work_id)
-                .where(
-                    runs.c.tenant_id == self.store.scope.tenant_id,
-                    runs.c.installation_id == self.store.scope.installation_id,
-                    runs.c.spec_payload["audience"].astext == "household",
-                    runs.c.spec_payload["origin"]["session_id"].astext
-                    == self.binding["session_id"],
-                    deliverable_states(runs, cutoff),
-                    runs.c.stop_requested_at.is_(None),
-                    runs.c.retention_until > self.server.authority.clock(),
-                    ~claimed,
-                )
-                .order_by(runs.c.completed_at, runs.c.work_id)
-                .limit(1)
-            )
+            candidate = c.scalar(pending_household_results(c, self.store,
+                self.server.authority.clock()).with_only_columns(runs.c.work_id).where(
+                runs.c.spec_payload["origin"]["session_id"].astext == self.binding["session_id"]
+            ).order_by(runs.c.completed_at, runs.c.work_id).limit(1))
+
         return (
             None
             if candidate is None

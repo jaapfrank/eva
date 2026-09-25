@@ -186,7 +186,8 @@ def revise_household_work(service, turn, request_key, revision):
         clock=service.server.authority.clock,
         load_work=lambda work_id: service._load(work_id, service.origin(turn)),
         stop_work=lambda work_id, now: service.store.request_stop(work_id, **service._owner,
-            household_origin=previous.spec.origin, now=now),
+            household_origin=previous.spec.origin, now=now,
+            **service._request_access(previous, turn)),
         schedule_resume=lambda work, recorded: scheduler.schedule(turn, request_key=request_key,
             request={"work_id": work.spec.work_id, "run_at": recorded.isoformat().replace("+00:00", "Z")},
             resume=True, wait_for_stop=True))

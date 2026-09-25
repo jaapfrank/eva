@@ -299,8 +299,8 @@ def test_household_correction_survives_new_session_close_and_resumes_once(databa
             original.service.poll(turn)
         current = native(x, "after-completion")
         assert current.service.poll(current.turn) is None
-        with pytest.raises(DelegatedWorkNotFound):
-            current.service.execute("get", current.turn, request_key="get", work_id=second.work_id)
+        assert current.service.execute("get", current.turn, request_key="get",
+            work_id=second.work_id)["work"]["result"] == outcome.result.output
     else:
         result = original.service.poll(turn)
         assert result["work_id"] == second.work_id and result["origin_message_id"] == turn.message_id

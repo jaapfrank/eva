@@ -154,7 +154,9 @@ def admit_household_digital(service, turn, request_key, task, *, previous=None, 
         principal_binding_id=str(service._owner["principal_binding_id"]), task=task,
         created_at=created, deadline=min(created+timedelta(seconds=profile.timeout_seconds),expiry))
     title = previous.title if previous else " ".join(task.split())[:120]
-    continuation = ({} if household_continuation_execution_id is None else
+    continuation = (service._request_access(previous, turn)
+        if previous is not None and household_continuation_execution_id is None else
+        {} if household_continuation_execution_id is None else
         {"household_continuation_execution_id": household_continuation_execution_id})
     try:
         saved = service.store.load(spec.work_id, **service._owner, household_origin=origin, **continuation)

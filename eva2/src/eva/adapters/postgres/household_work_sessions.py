@@ -201,44 +201,80 @@ class HouseholdWorkSessions:
                     return self.read(session_id, satellite_id, device_id)
             return self.open(satellite_id, device_id, native_conversation_key=key)
 
-    def continuity_bindings(self, binding):
-        """Return current-authority native sessions on this exact household device."""
+    def read_retained_native(self, session_id, satellite_id, device_id):
+        """Read an original native destination without renewing its foreground lease."""
+        self.authority.validate_device(satellite_id, device_id)
+        with self.store._engine.begin() as connection:
+            self.store._scope(connection)
+            policy = self.authority.policy
+            self.store._validate_owner_binding(connection,
+                owner_principal_id=policy.owner_principal_id,
+                principal_binding_id=policy.principal_binding_id)
+            first = self._read_binding(connection, session_id, satellite_id, device_id)
+            if first.get("native_conversation_key") is None:
+                raise ValueError("retained household binding requires an original native session")
+            return first["binding"]
+
+    def continuity_bindings(self, binding, *, work_id=None, parent_ids=None, limit=65):
+        """Select this device's retained native tasks, not unrelated session history."""
+        if type(limit) is not int or not 1 <= limit <= 65:
+            raise ValueError("household continuity selection exceeds its task bound")
         current = self.read(binding["session_id"], binding["satellite_id"], binding["device_id"])
         if current != binding:
             raise ValueError("household session binding changed")
+        from eva.adapters.postgres.current_catalog import delegated_work_runs as runs
         with self.store._engine.begin() as connection:
             self.store._scope(connection)
             first = first_session(connection, self.store.scope, binding["session_id"])
             if first.get("native_conversation_key") is None:
                 return (binding,)
             data = events.c.payload["data"]
-            selected = connection.execute(sa.select(data["binding"]).select_from(events.join(
-                checkpoints, sa.and_(events.c.tenant_id == checkpoints.c.tenant_id,
-                    events.c.installation_id == checkpoints.c.installation_id,
-                    events.c.thread_id == checkpoints.c.thread_id))).where(
+            stored_binding = data["binding"]
+            selected = connection.execute(sa.select(stored_binding).select_from(events.join(
+                runs, sa.and_(events.c.tenant_id == runs.c.tenant_id,
+                    events.c.installation_id == runs.c.installation_id,
+                    stored_binding["session_id"].astext == runs.c.spec_payload["origin"]["session_id"].astext)
+            )).where(
                 events.c.tenant_id == self.store.scope.tenant_id,
                 events.c.installation_id == self.store.scope.installation_id,
                 events.c.event_type == "HOUSEHOLD_WORK_SESSION_OPENED",
                 events.c.sequence == 1,
                 data["native_conversation_key"].astext.is_not(None),
-                data["binding"].contains({key: binding[key] for key in (
+                stored_binding.contains({key: binding[key] for key in (
                     "tenant_id", "installation_id", "household_id", "actor_id",
                     "satellite_id", "device_id", "consent_operation_id",
                     "household_policy_sha256", "research_policy_sha256")}),
-                checkpoints.c.phase == "open",
-                checkpoints.c.deadline > self.authority.clock(),
-            ).order_by(events.c.occurred_at.desc()).limit(129)).scalars().all()
-        if len(selected) > 128:
-            raise ValueError("native household continuity exceeds its session bound")
+                runs.c.owner_principal_id == self.authority.policy.owner_principal_id,
+                runs.c.principal_binding_id == self.authority.policy.principal_binding_id,
+                runs.c.spec_payload["audience"].astext == "household",
+                runs.c.retention_until > self.authority.clock(),
+                sa.true() if work_id is None else runs.c.work_id == work_id,
+                sa.true() if parent_ids is None else runs.c.parent_task_id.in_(parent_ids),
+            ).group_by(stored_binding).order_by(sa.func.max(runs.c.updated_at).desc()).limit(limit)).scalars().all()
         result = []
         for item in selected:
-            verified = self.read(item["session_id"], binding["satellite_id"], binding["device_id"])
+            verified = self.read_retained_native(item["session_id"], binding["satellite_id"], binding["device_id"])
             if verified != item:
                 raise ValueError("native household continuity binding changed")
             result.append(verified)
         if self.read(binding["session_id"], binding["satellite_id"], binding["device_id"]) != binding:
             raise ValueError("household session binding changed")
         return tuple(result)
+
+    def _read_binding(self, connection, session_id, satellite_id, device_id):
+        first = first_session(connection, self.store.scope, session_id)
+        binding, policy = first["binding"], self.authority.policy
+        expected = {
+            "tenant_id": policy.tenant_id, "installation_id": policy.installation_id,
+            "household_id": policy.household_id, "actor_id": "household-device:" + device_id,
+            "satellite_id": satellite_id, "device_id": device_id,
+            "consent_operation_id": policy.consent_operation_id,
+            "research_policy_sha256": self.authority.sha256,
+            "household_policy_sha256": policy.household_policy_sha256,
+        }
+        if any(binding.get(key) != value for key, value in expected.items()):
+            raise ValueError("household session belongs to another authority")
+        return first
 
     def read(self, session_id, satellite_id, device_id, *, operation="read"):
         self.authority.validate_device(satellite_id, device_id)
@@ -250,17 +286,8 @@ class HouseholdWorkSessions:
                 sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key,0))"),
                 {"key": thread},
             )
-            first = first_session(c, self.store.scope, session_id)
+            first = self._read_binding(c, session_id, satellite_id, device_id)
             binding = first["binding"]
-            p = self.authority.policy
-            if (
-                binding["satellite_id"] != satellite_id
-                or binding["device_id"] != device_id
-                or binding["household_id"] != p.household_id
-                or binding["research_policy_sha256"] != self.authority.sha256
-                or binding["household_policy_sha256"] != p.household_policy_sha256
-            ):
-                raise ValueError("household session belongs to another authority")
             row = (
                 c.execute(
                     sa.select(checkpoints)

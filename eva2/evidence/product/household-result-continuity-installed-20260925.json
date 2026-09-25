@@ -1,0 +1,55 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-25T14:26:04.510559+00:00",
+  "status": "tested_not_installed",
+  "baseCommit": "c429b179",
+  "ownerRequirement": "Accepted household work remains controllable and its result returns through the original speaker after the foreground voice session ends; one Eva across successive wakeword turns.",
+  "observedDefect": "Session closure/expiry blocked retained task reads, stop/resume and native result delivery, despite durable work and stored results.",
+  "changes": [
+    "Reuse retained native session bindings and canonical work ingress; a fresh current-device turn can read and control prior household research and digital work.",
+    "Reuse the same result claim/authorize/defer/ack lifecycle through an internal output-only service; it cannot admit input or execute new work.",
+    "Select only retained undelivered outcomes and current household/device authority before bounded native delivery selection.",
+    "Keep original source, grant, execution, destination, result and replay binding; no foreground session is reopened."
+  ],
+  "tests": {
+    "sourcePostgresDistinctCasesPassed": 16,
+    "sourcePostgresInitialRun": {
+      "passed": 15,
+      "failed": 1,
+      "seconds": 51.84
+    },
+    "sourcePostgresTargetedRetry": {
+      "case": "closed original research session",
+      "passed": 1,
+      "seconds": 9.93
+    },
+    "initialFailure": "A source docstring changed during the source-mounted test run, changing the research release fingerprint. Timestamp diagnosis is preserved; after freezing source only the affected case was rerun. No authority rule weakened.",
+    "nativeTransportCasesPassed": 5,
+    "nativeTransportSeconds": 2.19,
+    "scope": "Real isolated PostgreSQL, controlled model/tool results and fake HA HTTP transport; no physical announcement or device action.",
+    "covered": [
+      "Research and digital work with closed and expired original sessions",
+      "Fresh same-device get, stop, resume and idempotent resume replay",
+      "Original-speaker announcement once, busy deferral and no retry after uncertain output",
+      "Output-only input/execute refusal and no session reopening",
+      "Other device/private scope/current-policy mismatch rejection",
+      "130 empty old sessions cannot hide retained work"
+    ]
+  },
+  "newEvaModelCalls": 0,
+  "physicalDeviceActions": 0,
+  "creditCost": null,
+  "ownerAccepted": false,
+  "limits": [
+    "Physical speaker playback, perceived speed and owner acceptance remain untested in this delivery.",
+    "This closes a concrete continuity and result-return gap; it does not complete the full speech or task-execution category."
+  ],
+  "artifactsDirectories": [
+    "/home/administrator/project/.eva2-artifacts/household-result-continuity-20260925",
+    "/home/administrator/project/.eva2-artifacts/household-retained-native-20260925"
+  ],
+  "review": {
+    "agent": "result_return_review",
+    "result": "GO: bounded source review and independent reading of final PostgreSQL and transport outputs; no remaining product blocker within this scope."
+  }
+}
