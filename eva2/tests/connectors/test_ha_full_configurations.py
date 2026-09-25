@@ -1,4 +1,4 @@
-"""Full private configuration batches preserve HA content without writes."""
+"""Full authorized configuration batches preserve HA content without writes."""
 import asyncio
 import json
 from types import SimpleNamespace
@@ -41,8 +41,8 @@ def test_output_limit_is_explicit_instead_of_claiming_full_content():
     assert row["reason"] == "configuration_output_limit"
 
 
-@pytest.mark.parametrize("kind,principal", [("household", "owner"), ("private_person", "other"), ("unknown", "owner")])
-def test_full_configuration_view_requires_matching_private_audience(kind, principal):
+@pytest.mark.parametrize("kind,principal", [("household", "other"), ("private_person", "other"), ("unknown", "owner")])
+def test_full_configuration_view_requires_matching_authorized_audience(kind, principal):
     tool = HomeAssistantHouseholdTool(reader({}))
     turn = SimpleNamespace(principal_id="owner", audience=SimpleNamespace(kind=kind, principal_id=principal))
     call = ConversationActionCall("read", "read_home_assistant_inventory", {
@@ -51,9 +51,10 @@ def test_full_configuration_view_requires_matching_private_audience(kind, princi
         asyncio.run(tool.prepare(turn, call))
 
 
-def test_private_full_view_uses_existing_dispatch_and_observation():
+@pytest.mark.parametrize("kind", ["private_person", "household"])
+def test_authorized_full_view_uses_existing_dispatch_and_observation(kind):
     tool = HomeAssistantHouseholdTool(reader({"one": {"alias": "One", "custom": 0.5}}))
-    turn = SimpleNamespace(principal_id="owner", audience=SimpleNamespace(kind="private_person", principal_id="owner"))
+    turn = SimpleNamespace(principal_id="owner", audience=SimpleNamespace(kind=kind, principal_id="owner"))
     call = ConversationActionCall("read", "read_home_assistant_inventory", {
         "section": "automation_configurations", "area_id": "", "offset": 0, "snapshot_sha256": "", "automation_ids": ["one"]})
     preparation = asyncio.run(tool.prepare(turn, call))

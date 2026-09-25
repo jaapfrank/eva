@@ -267,10 +267,10 @@ class HomeAssistantProviderFactory:
             api = HomeAssistantApiTool(base_url=settings.endpoint_url, token=settings.credential)
 
             def authorize_api(turn):
-                if (turn.audience.kind != "private_person"
+                if (turn.audience.kind not in {"private_person", "household"}
                     or turn.audience.principal_id != turn.principal_id
                     or hashlib.sha256(turn.principal_id.encode()).hexdigest() not in effect_principals):
-                    raise ConversationConflict("General Home Assistant API requires the authorized owner route")
+                    raise ConversationConflict("General Home Assistant API requires an authorized bound audience")
 
             external_tools.append(PostgresExternalConversationTools(
                 engine, api, api, authorize_turn=authorize_api,

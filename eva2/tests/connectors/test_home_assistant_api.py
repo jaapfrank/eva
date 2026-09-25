@@ -89,7 +89,7 @@ def test_rejected_api_response_remains_available_for_model_correction():
 ])
 def test_background_completion_requires_recovery_after_api_failure(outcomes, expected):
     from eva.bootstrap.delegated_digital_runner import _has_completed_tool_evidence
-    receipts = [SimpleNamespace(call=SimpleNamespace(name="home_assistant_request"),
+    receipts = [SimpleNamespace(call=SimpleNamespace(name="home_assistant_request", arguments={}),
         output={"status": "verified", "result": {"success": success}})
         for success in outcomes]
     assert _has_completed_tool_evidence(receipts) is expected
@@ -98,6 +98,6 @@ def test_background_completion_requires_recovery_after_api_failure(outcomes, exp
 @pytest.mark.parametrize("result", [None, {}, {"success": "false"}])
 def test_background_completion_rejects_missing_or_malformed_api_result(result):
     from eva.bootstrap.delegated_digital_runner import _has_completed_tool_evidence
-    receipt = SimpleNamespace(call=SimpleNamespace(name="home_assistant_request"),
+    receipt = SimpleNamespace(call=SimpleNamespace(name="home_assistant_request", arguments={}),
         output={"status": "verified", "result": result})
     assert not _has_completed_tool_evidence([receipt])

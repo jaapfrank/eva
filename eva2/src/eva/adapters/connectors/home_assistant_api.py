@@ -49,7 +49,7 @@ class HomeAssistantApiTool:
                 "API-resultaten/documentatie; verzin geen apparaatnamen of schema's. "
                 "Gebruik read_home_assistant_inventory als die beschikbaar is voor compacte "
                 "ontdekking per sectie; haal niet eerst alle /api/states op voor één onderwerp. "
-                "Voor meerdere volledige automatiseringsconfiguraties gebruik je de privésectie "
+                "Voor meerdere volledige automatiseringsconfiguraties gebruik je de sectie "
                 "automation_configurations van die inventaris; deze API blijft voor andere "
                 "gerichte leesaanvragen en wijzigingen beschikbaar. "
                 "Een API-antwoord bewijst geen fysiek resultaat. Controleer veranderingen "

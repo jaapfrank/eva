@@ -1,4 +1,5 @@
 """Household device context remains useful without exposing private entity state."""
+import pytest
 from eva.adapters.connectors.home_assistant_admin import HomeAssistantAdminAdapter
 
 
@@ -24,16 +25,15 @@ def test_inventory_keeps_room_device_category_and_bounded_comfort_state():
     assert "attributes" not in rows["person.owner"]
 
 
-def test_registered_shared_speaker_can_discover_rooms_but_not_automation_details():
+@pytest.mark.parametrize("actor", ["speaker:lounge", "speaker:patio"])
+def test_registered_shared_speaker_has_general_api_and_automation_inventory(actor):
     import asyncio
     import hashlib
-    import pytest
     import sqlalchemy as sa
-    from eva.application.conversation import ConversationTurn, ConversationActionCall, ConversationConflict
+    from eva.application.conversation import ConversationTurn, ConversationActionCall
     from eva.application.memory_audience import MemoryAudience, HouseholdConsentReference
     from eva.providers.home_assistant import HomeAssistantProviderFactory, HomeAssistantProviderSettings
     from eva.adapters.connectors.home_assistant_admin import HomeAssistantHouseholdTool
-    actor = "speaker:lounge"
     audience = MemoryAudience.household(principal_id=actor, household_id="home",
         consent_ref=HouseholdConsentReference(actor, "home", "household-consent:test"))
     turn = ConversationTurn("tenant", "install", actor, "household:home:conversation:test",
@@ -42,11 +42,23 @@ def test_registered_shared_speaker_can_discover_rooms_but_not_automation_details
     try:
         contribution = HomeAssistantProviderFactory.build(HomeAssistantProviderSettings(
             "http://ha.invalid", "fixture", False, (),
-            (hashlib.sha256(actor.encode()).hexdigest(),), ("light",)), engine)
+            tuple(hashlib.sha256(value.encode()).hexdigest() for value in ("speaker:lounge", "speaker:patio")), ("light",), api_enabled=True), engine)
         tool = next(item for item in contribution.external_tools if "read_home_assistant_inventory" in item.action_names)
         assert tool.available_for(turn)
-        with pytest.raises(ConversationConflict, match="rooms and devices"):
-            asyncio.run(HomeAssistantHouseholdTool(None).prepare(turn,
-                ConversationActionCall("one", "read_home_assistant_inventory", {"section": "automation_details"})))
+        api = next(item for item in contribution.external_tools if "home_assistant_request" in item.action_names)
+        assert api.available_for(turn)
+        for section in ("automations", "automation_details", "automation_configurations"):
+            preparation = asyncio.run(HomeAssistantHouseholdTool(None).prepare(turn,
+                ConversationActionCall("one", "read_home_assistant_inventory", {
+                    "section": section, "area_id": "", "offset": 0, "snapshot_sha256": "",
+                    "automation_ids": [] if section == "automations" else ["one"]})))
+            assert preparation.arguments["section"] == section
+        from dataclasses import replace
+        other = "speaker:unregistered"
+        unregistered = MemoryAudience.household(principal_id=other, household_id="home",
+            consent_ref=HouseholdConsentReference(other, "home", "household-consent:other"))
+        assert not api.available_for(replace(turn, principal_id=other, audience=unregistered))
+        assert not api.available_for(replace(turn, principal_id="other",
+            audience=MemoryAudience.private_person(principal_id="other")))
     finally:
         engine.dispose()
