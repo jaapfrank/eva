@@ -1,0 +1,35 @@
+{
+  "status": "failed",
+  "checkedAt": "2026-09-25T15:42:24.088565+00:00",
+  "installedSourceCommit": "8a3643bef6012a31170722475f0745333ca1ff97",
+  "criteriaSha256": "843947ca22fcde19c25a3b99f14b32d4e43f1feb7814405c016bf1999b001f21",
+  "promptUnchanged": true,
+  "messageId": "dashboard:eb67dbdb-b304-430d-aa57-88d6486c20f7",
+  "elapsedSeconds": 53.112,
+  "admittedWork": [],
+  "modelUsage": {
+    "tool_calls": 0,
+    "measurement": "measured",
+    "input_tokens": 21814,
+    "output_tokens": 1046,
+    "model_attempts": 1
+  },
+  "modelTiming": {
+    "completed_ms": 49138,
+    "first_content_ms": 44367
+  },
+  "replySha256": "592312596dc377caece5880879938670105e6995c3e6bb078edf1e67c1afcb2e",
+  "findings": [
+    "No tools were called and no background work was admitted.",
+    "No official document was read, reusable procedure saved, or program executed.",
+    "The reply explicitly said the reusable procedure was not durably saved.",
+    "The folded SUMMARY was returned as buur tteam instead of buurtteam; required semantic output failed.",
+    "The newly installed reader was never reached by this attempt."
+  ],
+  "result": "Text-only approximation does not satisfy the requested work.",
+  "reuse": "not started",
+  "creditCost": null,
+  "artifacts": "/home/administrator/project/.eva2-artifacts/external-documentation-learning-20260925/after-result-reader",
+  "previousFailuresPreserved": true,
+  "next": "Inspect the existing common conversation instruction/admission seam for the explicit request to consult, store and execute; no unchanged repeat."
+}
