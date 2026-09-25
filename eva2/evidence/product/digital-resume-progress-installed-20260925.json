@@ -1,0 +1,49 @@
+{
+  "status": "installed",
+  "checkedAt": "2026-09-25T16:09:52.301586+00:00",
+  "sourceCommit": "ebb0a01adb2eb565e26e3a11e8ccd4f47c8a8c9e",
+  "ownerRequirement": "Resume unfinished work from durable progress rather than treating an old attempt failure as a current blocker.",
+  "cause": "A stored blocked step from the previous work_id caused immediate incomplete_work in a new explicitly resumed attempt. The recorded error fingerprint exactly matched this branch.",
+  "change": "Only a blocked step recorded by the current work_id stops immediately. Inherited blocked progress receives the existing bounded continuation opportunity; unchanged progress still stops after one correction. The model context identifies the current attempt.",
+  "validation": {
+    "reviewer": "result_return_review",
+    "decision": "go",
+    "scope": "Only current-attempt blocked progress terminates immediately. Inherited blocked progress gets existing bounded continuation; unchanged progress stops after one correction. Current authority, budgets, deadline and receipt replay remain unchanged.",
+    "tests": "56 runner tests passed, including inherited-progress continuation, current blocker and unchanged inherited blocker.",
+    "testArtifacts": "/home/administrator/project/.eva2-artifacts/resume-blocker-20260925"
+  },
+  "installation": {
+    "checkedAt": "2026-09-25T16:08:52.740582+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:712d316642d73321ae16e0095ddc246cf7c49addf650c44e2ac67e142368001f",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_runner.py": "db95b5973ecd21eef6f39445887d21d4e84391628c8b04b62db0eb4d6a64dd36"
+        }
+      },
+      "worker": {
+        "image": "sha256:f2b37023d3387b98ea92c235123fbc665a51340f3fea34544a459516217b2212",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_runner.py": "db95b5973ecd21eef6f39445887d21d4e84391628c8b04b62db0eb4d6a64dd36"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/digital-resume-progress-20260925/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "budgetsChanged": false,
+  "usage": {
+    "evaModelCallsForPatch": 0,
+    "creditCost": null
+  },
+  "remaining": [
+    "The one preregistered continuation of the real learning task follows installation.",
+    "No learned procedure, calendar execution or unassisted reuse is claimed.",
+    "Complete product categories remain 2 of 9."
+  ]
+}

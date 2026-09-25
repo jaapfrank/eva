@@ -1,0 +1,190 @@
+{
+  "status": "incomplete",
+  "checkedAt": "2026-09-25T15:57:16.537995+00:00",
+  "sourceCommit": "5582a817",
+  "criteriaSha256": "843947ca22fcde19c25a3b99f14b32d4e43f1feb7814405c016bf1999b001f21",
+  "promptUnchanged": true,
+  "workId": "work:eva-chat:b1a7bc32-4960-5956-b63b-5fdba95b9935",
+  "messageId": "dashboard:35c52b6c-c778-4798-86e6-5f3d4fad602d",
+  "taskState": "failed",
+  "errorCode": "incomplete_work",
+  "admissionSeconds": 14.094,
+  "workerUsage": {
+    "contract": "DelegatedWorkUsage/v1",
+    "tool_calls": 4,
+    "measurement": "partial",
+    "input_tokens": 62629,
+    "total_tokens": 63641,
+    "output_tokens": 1012,
+    "schema_version": 1,
+    "cost_usd_micros": null,
+    "completed_model_responses": 6
+  },
+  "foregroundUsage": {
+    "tool_calls": 1,
+    "measurement": "measured",
+    "input_tokens": 12821,
+    "output_tokens": 315,
+    "model_attempts": 1
+  },
+  "findings": [
+    "The full requested work was admitted after the shared instruction change; this is one observed outcome, not proof of causation or reliability.",
+    "The actual official RFC fetch completed and returned a stored-result manifest with 425990 bytes and full hash.",
+    "Relevant local document selections, saved procedure and procedure execution are not demonstrated; the worker reports viewing only the preview.",
+    "The worker saved progress and reported insufficient remaining tool budget; the precise enforced budget cause is under inspection."
+  ],
+  "result": null,
+  "reuse": "not started",
+  "creditCost": null,
+  "artifacts": "/home/administrator/project/.eva2-artifacts/external-documentation-learning-20260925/after-complete-request-instruction",
+  "priorFailuresPreserved": true,
+  "next": "Verify stored-source receipt and the existing task budget/resumption semantics; no unchanged retry or automatic budget increase.",
+  "independentReview": {
+    "reviewed_at": "2026-09-25T16:01:28.675377+00:00",
+    "reviewer": "independent-reviewer:/root/result_return_review",
+    "verdict": "learning_not_completed; documentation_acquisition_and_durable_capture_verified",
+    "work_id": "work:eva-chat:b1a7bc32-4960-5956-b63b-5fdba95b9935",
+    "recorded_task_title": "Voer Jaaps volledige agenda-exportopdracht uit. Gebruik exact de twee in de huidige gebruikersbeurt aangeleverde letterl",
+    "message_id": "dashboard:35c52b6c-c778-4798-86e6-5f3d4fad602d",
+    "final_state": "failed",
+    "error_code": "incomplete_work",
+    "result_available": false,
+    "criteria_sha256": "843947ca22fcde19c25a3b99f14b32d4e43f1feb7814405c016bf1999b001f21",
+    "prompt_sha256": "49e9905bfbf65b660ffb4ce4cb53f1793a48b8f4b7b18e2c702b404319c0689b",
+    "input_content_hashes": {
+      "buurtplanning.ics": "8ff00cb8e052214e1b049f816865ae5ceacb1dcd78d237ce574ae4af19ca4472",
+      "ongeldige-datum.ics": "2aa58c5f9e1c50087fed6c39f15bad41d3f9b08d9e41035f56e7782a1d8633e5"
+    },
+    "single_admission_in_export": true,
+    "source_ingress_binding_valid": true,
+    "receipt_payload_hashes": {
+      "count": 30,
+      "all_valid": true
+    },
+    "documentation": {
+      "requested_url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+      "provider_response_verified": true,
+      "captured_provider_value_bytes": 425990,
+      "captured_provider_value_sha256": "27e12a68d9f8d5e7c3c9a41eb48f07ab2d20b22ff79ceefe90b70bc114c959c3",
+      "capture_thread": "connector-result:b15bd6812445248208f642fc19579c93f144da19067d0b7161482c904a1425bf",
+      "capture_event_count": 16,
+      "capture_chunk_count": 14,
+      "complete_capture_hash_and_request_owner_namespace_binding_verified": true,
+      "relevant_sections_read": "not_evidenced; worker reports only preview viewed",
+      "limitations": [
+        "The verified stored value does not independently establish completeness of the remote RFC page.",
+        "The local reader does not write a separate durable tool receipt; absence of reader calls in this export alone cannot prove none occurred."
+      ]
+    },
+    "procedure": {
+      "source_saved": false,
+      "designated": false,
+      "executed": false,
+      "reuse_started": false,
+      "calendar_outputs_verified": false
+    },
+    "retained_progress": {
+      "revision": 1,
+      "work_id_matches": true,
+      "worker_reported": true,
+      "independently_verified": false,
+      "reader_reference_matches_capture": true
+    },
+    "blocker_classification": "Worker reports insufficient remaining tool budget. These receipts do not prove a hard budget rejection; no independent budget-code review performed here.",
+    "catalog_empty_claim": "Worker reported no iCalendar candidates; procedure receipt preserves only a result hash, so result emptiness was not independently verified.",
+    "usage_this_attempt_only": {
+      "foreground": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 12821,
+        "output_tokens": 315,
+        "model_attempts": 1
+      },
+      "worker": {
+        "contract": "DelegatedWorkUsage/v1",
+        "tool_calls": 4,
+        "measurement": "partial",
+        "input_tokens": 62629,
+        "total_tokens": 63641,
+        "output_tokens": 1012,
+        "schema_version": 1,
+        "cost_usd_micros": null,
+        "completed_model_responses": 6
+      },
+      "input_tokens": 75450,
+      "output_tokens": 1327,
+      "total_tokens": 76777,
+      "recorded_model_responses": 7,
+      "measurement": "partial",
+      "cost_usd_micros": null,
+      "aggregation": "Foreground CONVERSATION_MODEL_RECORDED counted once; matching REPLY_COMMITTED usage excluded. Worker usage counted once. Capture pages/events are not model calls.",
+      "tool_count_note": "Worker usage reports four tool calls. Receipts show three external connector operations, one procedure-list action and one save-work-progress action; these are distinct counter categories, not five external provider invocations."
+    },
+    "delivery": "No completed result. Foreground acknowledgment is admission, not delivery; owner acceptance is not claimed.",
+    "attempt_history": "This remains a repair attempt with unchanged frozen criteria; earlier failures remain visible and are not relabeled as first-pass success. Prior attempt usage, including unknown first-timeout usage, is outside this subtotal.",
+    "evidence_files": {
+      "detail.private.json": "dd68f4f23f5bfb74e732629b51fc9b3cf5e6deae791141b28809bf82d029f7c2",
+      "receipts.private.json": "35d3741af095e4eb0ccd3f6fa4adb2e23cfb4246d0c2d66205b2577e1304ca04",
+      "independent-capture-review.json": "187cc5e4f2a596f6408e6c0128e483c2ff7cc1f5eb0b437d34891283aa700616"
+    },
+    "review_activity": "Read-only artifact inspection and exact-thread read-only PostgreSQL capture verification; no model/provider calls, execution, service changes or new criteria."
+  },
+  "captureReview": {
+    "thread_id": "connector-result:b15bd6812445248208f642fc19579c93f144da19067d0b7161482c904a1425bf",
+    "event_count": 16,
+    "chunk_count": 14,
+    "all_event_payload_hashes_valid": true,
+    "all_chunk_indices_and_sequence_valid": true,
+    "binding": {
+      "tool": "eva-connector-34e9886d2a79dd6c7c831f8a93139bab-fetch-generic-url-content",
+      "owner": "8fb94b41c872a459fdfaf2a2ea61d798fa14c81c442bdb867a4b546ce216161c",
+      "phase": "invoke",
+      "arguments": {
+        "url": "https://www.rfc-editor.org/rfc/rfc5545.html"
+      },
+      "operation": "external-tool:5289af6acb522e8a97990319da51497a",
+      "configuration": "c8ba9786d0c674505952c3999987755b2360d7c065adf197f8e7a91ac43e3ece"
+    },
+    "seal": {
+      "length": 425990,
+      "sha256": "27e12a68d9f8d5e7c3c9a41eb48f07ab2d20b22ff79ceefe90b70bc114c959c3"
+    },
+    "complete_captured_provider_value_reconstructed": true,
+    "captured_json_keys": [
+      "text"
+    ],
+    "text_character_count": 409705,
+    "text_contains_rfc5545_title": true,
+    "event_operation_ids": [
+      "external-tool:5289af6acb522e8a97990319da51497a"
+    ],
+    "started_at": "2026-09-25 15:53:37+00:00",
+    "sealed_at": "2026-09-25 15:53:39+00:00",
+    "work_id": "work:eva-chat:b1a7bc32-4960-5956-b63b-5fdba95b9935",
+    "message_id": "dashboard:35c52b6c-c778-4798-86e6-5f3d4fad602d",
+    "execution_namespace": "background-work:d692f1a997e33356be743321117cc5041f3d2bd2fcd106ebf1b2560f33daf163",
+    "owner_and_request_binding_match": true,
+    "scope_note": "Read-only exact-thread query; no model or provider call. Complete means all captured provider-value bytes, not independently verified remote-document completeness or model reading.",
+    "reviewer_correction": "Initial reviewer comparison used compact source audience rather than canonical MemoryAudience including audience_id and null fields; corrected comparison matches."
+  },
+  "resume": {
+    "interventions": 1,
+    "workId": "work:eva-resume:eb5b6a44-cffe-55f3-b0bc-9705eea52fb7",
+    "state": "failed",
+    "errorCode": "incomplete_work",
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 1,
+      "tool_calls": 0,
+      "input_tokens": 13696,
+      "output_tokens": 184,
+      "total_tokens": 13880,
+      "cost_usd_micros": null
+    },
+    "newObservedToolActions": 0,
+    "progressUnchanged": true,
+    "secondResumeStarted": false
+  }
+}
