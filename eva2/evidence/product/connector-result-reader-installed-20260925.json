@@ -1,0 +1,78 @@
+{
+  "status": "installed",
+  "checkedAt": "2026-09-25T15:39:00.918585+00:00",
+  "sourceCommit": "8a3643bef6012a31170722475f0745333ca1ff97",
+  "ownerRequirement": "Eva can consult external documentation to learn reusable methods through the existing general tool route.",
+  "cause": "The official RFC fetch returned more than 65536 bytes and was rejected before durable tool evidence.",
+  "change": [
+    "Schema-validated MCP output is captured completely within the existing transport bound on the operational timeline.",
+    "Large output exposes a bounded preview and locally readable selections through the unchanged use_connector_tool descriptor.",
+    "Each local read verifies the originating person, conversation, message, audience and execution namespace.",
+    "Only complete validated captures can recover without repeating the provider call; incomplete outcomes remain explicit."
+  ],
+  "validation": {
+    "targetedCases": 76,
+    "runs": "75 passed in the combined gateway/discovery/new-reader/PostgreSQL run; one corrected alternate-actor fixture passed separately. Earlier fixture/dependency failures remain in logs.",
+    "realPostgres": "Large result captured, reopened through a fresh timeline instance, recovered and searched without a second provider call.",
+    "independentReview": {
+      "decision": "go",
+      "reviewer": "result_return_review",
+      "scope": "Bounded stored MCP result capture and reader; runtime wiring, binding, complete capture recovery and small-output compatibility",
+      "resolved": [
+        "Provider schema validation now precedes sealing",
+        "Timeline timestamps now use whole-second UTC"
+      ],
+      "tests": "75 passed in combined run including actual PostgreSQL capture; alternate-actor fixture corrected and its one affected case passed separately",
+      "modelCalls": 0,
+      "actualProviderCalls": 0
+    },
+    "artifactDirectory": "/home/administrator/project/.eva2-artifacts/connector-result-paging-20260925"
+  },
+  "installation": {
+    "services": {
+      "core": {
+        "image": "sha256:01ede5276b3e6e8b7b0851746d5471d3dd8cefbb4183772296cbf980df742f37",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/connectors/mcp_gateway.py": "18b77333ecd3a0e76520b54aed46a93e36359931b5309060a5d84324b0d691cd",
+          "adapters/postgres/external_conversation_tools.py": "acc3e11aeed96e6c9f4841974cf25dbf9d9c8a3d0db479f11f243ae6a5af48f8",
+          "providers/mcp_discovery.py": "b878b9552470c30b6b0e4967ecffb3b811ac930ea7ce2bba52e7011464c904f1",
+          "adapters/postgres/connector_results.py": "876cb4174e17b9b04af4dae56d15f624088a454153df37383a544743a6c46bea",
+          "bootstrap/delegated_digital_composition.py": "572c0c2214fdbc99ff6659ac0f82805e26e4ec574e695da0503cab4ebe989950"
+        }
+      },
+      "worker": {
+        "image": "sha256:0402962fe258ae443f6bceae5fd2449ba33bf6f06d11e8d74f46cbe242e02ab9",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/connectors/mcp_gateway.py": "18b77333ecd3a0e76520b54aed46a93e36359931b5309060a5d84324b0d691cd",
+          "adapters/postgres/external_conversation_tools.py": "acc3e11aeed96e6c9f4841974cf25dbf9d9c8a3d0db479f11f243ae6a5af48f8",
+          "providers/mcp_discovery.py": "b878b9552470c30b6b0e4967ecffb3b811ac930ea7ce2bba52e7011464c904f1",
+          "adapters/postgres/connector_results.py": "876cb4174e17b9b04af4dae56d15f624088a454153df37383a544743a6c46bea",
+          "bootstrap/delegated_digital_composition.py": "572c0c2214fdbc99ff6659ac0f82805e26e4ec574e695da0503cab4ebe989950"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "configurationFingerprintPreserved": true,
+    "coreWorkerProfileMatch": true,
+    "schema": "4e_0007_delegated_private",
+    "speakerBindings": 2,
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/connector-result-reader-20260925/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker",
+    "artifactDirectory": "/home/administrator/project/.eva2-artifacts/connector-result-reader-20260925"
+  },
+  "usage": {
+    "evaModelCalls": 0,
+    "liveExternalToolCalls": 0,
+    "creditCost": null
+  },
+  "remaining": [
+    "The real learning task has not yet been repeated after installation.",
+    "General learning, unassisted reuse and owner acceptance are not completed by this patch.",
+    "Complete product categories remain 2 of 9."
+  ],
+  "tryIt": "Give Eva an ordinary task requiring a large document; she can now request bounded sections of the saved response without fetching the document again."
+}

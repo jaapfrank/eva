@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "external-documentation-learning-20260925",
+  "baseCommit": "eae03822",
+  "frozenAt": "2026-09-25T15:03:57.527457Z",
+  "status": "preregistered-before-model-admission",
+  "author": "independent-reviewer:/root/result_return_review",
+  "visibility": "Evaluator-only: never pass this complete file, oracle, scoring rules or implementation hints to Eva.",
+  "purpose": "Evaluate documented acquisition of a bounded calendar-import procedure and independent reuse on different inputs.",
+  "publicSources": [
+    {
+      "title": "RFC 5545: Internet Calendaring and Scheduling Core Object Specification",
+      "url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+      "publisher": "RFC Editor / IETF",
+      "checkedAt": "2026-09-25T15:03:57.527457Z",
+      "sections": [
+        "3.1",
+        "3.3.4",
+        "3.3.5",
+        "3.3.11",
+        "3.6.1",
+        "3.8.2.2"
+      ],
+      "anchors": [
+        "https://www.rfc-editor.org/rfc/rfc5545.html#section-3.1",
+        "https://www.rfc-editor.org/rfc/rfc5545.html#section-3.3.4",
+        "https://www.rfc-editor.org/rfc/rfc5545.html#section-3.3.5",
+        "https://www.rfc-editor.org/rfc/rfc5545.html#section-3.3.11",
+        "https://www.rfc-editor.org/rfc/rfc5545.html#section-3.6.1",
+        "https://www.rfc-editor.org/rfc/rfc5545.html#section-3.8.2.2"
+      ]
+    }
+  ],
+  "standardsBasis": [
+    "Folded content lines remove CRLF and the single following space or tab; any additional whitespace remains.",
+    "TEXT escapes distinguish a literal backslash, comma, semicolon, and a newline encoded with either n or N.",
+    "DATE is a real calendar date; UTC DATE-TIME uses a Z suffix.",
+    "An explicit DTEND has the same value type as DTSTART and is later.",
+    "VEVENT end is exclusive, including all-day events."
+  ],
+  "scope": {
+    "userOutcome": "Turn supplied calendar exports into an ordered appointment overview with UID, readable summary and description, normalized start/end, all-day flag and duration; report invalid exports clearly without invented or partial appointments.",
+    "supported": "One VCALENDAR with separate non-recurring VEVENTs. Inputs explicitly contain UID, DTSTAMP, DTSTART, DTEND, SUMMARY and DESCRIPTION. Time values are UTC or all-day dates.",
+    "notClaimed": [
+      "Full RFC conformance",
+      "Timezone conversion or TZID/VTIMEZONE",
+      "Recurrence expansion",
+      "DURATION or missing-end defaults",
+      "Alarms/invitations/attendees",
+      "Editing a real calendar",
+      "Private household data",
+      "All optional properties or arbitrary encodings"
+    ],
+    "implementationConstraint": "Existing Python standard-library procedure execution; no network inside the procedure child; no package installs or product-source changes.",
+    "budgets": "Existing attempt limits, including at most six tool calls per digital attempt; no additional attempts or broader rights silently admitted."
+  },
+  "promptFreeze": {
+    "inputBytesFrozen": true,
+    "finalOwnerPromptFrozenHere": false,
+    "requirement": "Coordinator must save and hash the final learning prompt before its admission, and independently save/hash the final reuse prompt before its admission. Record actual admission timestamps; this file must precede both. No expected outputs may be present in either prompt.",
+    "allowedLearningPromptContent": "Ordinary user outcome, these two learning input exports, official documentation URL, limited scope, and a request to keep a reusable procedure.",
+    "allowedReusePromptContent": "Ordinary user outcome and these two reuse input exports. No code, source text, procedure ID, document path, procedure-selection instruction, parsing rule or expected answer supplied by coordinator.",
+    "inputTransport": "Read the content strings from this JSON; preserve CRLF and continuation whitespace. JSON escapes are transport encoding, not literal replacement characters. Root may package the exact strings as named files or message data and must record that packaging before admission."
+  },
+  "cases": [
+    {
+      "id": "learning",
+      "scenario": "Prepare a checked neighborhood appointment overview and retain the method for later calendar exports.",
+      "inputs": [
+        {
+          "filename": "buurtplanning.ics",
+          "mediaType": "text/calendar; charset=utf-8",
+          "lineEndings": "CRLF",
+          "content": "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Eva Evaluation//Calendar Import//EN\r\nBEGIN:VEVENT\r\nUID:learn-weekend@calendar.example\r\nDTSTAMP:20260925T120000Z\r\nDTSTART;VALUE=DATE:20261010\r\nDTEND;VALUE=DATE:20261012\r\nSUMMARY:Logeerweekend\\, opa\\; oma\r\nDESCRIPTION:Paklijst: jas\\, laarzen\\; lamp\\\\batterij\\nVertrek op tijd.\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nUID:learn-meeting@calendar.example\r\nDTSTAMP:20260925T120000Z\r\nDTSTART:20261009T221500Z\r\nDTEND:20261010T004500Z\r\nSUMMARY:Planbespreking\\, buur\r\n tteam\\; najaar\r\nDESCRIPTION:Neem de kaart\\, notities\\; en\r\n  een pen.\\nPad: C:\\\\Agenda\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n",
+          "contentSha256": "8ff00cb8e052214e1b049f816865ae5ceacb1dcd78d237ce574ae4af19ca4472"
+        },
+        {
+          "filename": "ongeldige-datum.ics",
+          "mediaType": "text/calendar; charset=utf-8",
+          "lineEndings": "CRLF",
+          "content": "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Eva Evaluation//Calendar Import//EN\r\nBEGIN:VEVENT\r\nUID:learn-invalid@calendar.example\r\nDTSTAMP:20260925T120000Z\r\nDTSTART;VALUE=DATE:20260230\r\nDTEND;VALUE=DATE:20260303\r\nSUMMARY:Afspraak met ongeldige datum\r\nDESCRIPTION:Controlebestand.\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n",
+          "contentSha256": "2aa58c5f9e1c50087fed6c39f15bad41d3f9b08d9e41035f56e7782a1d8633e5"
+        }
+      ],
+      "oracle": {
+        "validFilename": "buurtplanning.ics",
+        "eventCount": 2,
+        "eventsInStartOrder": [
+          {
+            "uid": "learn-meeting@calendar.example",
+            "summary": "Planbespreking, buurtteam; najaar",
+            "description": "Neem de kaart, notities; en een pen.\nPad: C:\\Agenda",
+            "start": "2026-10-09T22:15:00Z",
+            "endExclusive": "2026-10-10T00:45:00Z",
+            "allDay": false,
+            "durationMinutes": 150
+          },
+          {
+            "uid": "learn-weekend@calendar.example",
+            "summary": "Logeerweekend, opa; oma",
+            "description": "Paklijst: jas, laarzen; lamp\\batterij\nVertrek op tijd.",
+            "start": "2026-10-10",
+            "endExclusive": "2026-10-12",
+            "allDay": true,
+            "durationDays": 2
+          }
+        ],
+        "crossChecks": {
+          "timedEventMinutes": 150,
+          "allDayEventDays": 2
+        },
+        "invalidFilename": "ongeldige-datum.ics",
+        "invalidUid": "learn-invalid@calendar.example",
+        "invalidReason": "2026-02-30 is not a calendar date.",
+        "invalidExpected": {
+          "success": false,
+          "normalEventOutputAllowed": false,
+          "dateNormalizationAllowed": false,
+          "partialSuccessAllowed": false
+        },
+        "errorTextMatching": "Any clear equivalent error description is accepted; no exact error wording or code is required."
+      }
+    },
+    {
+      "id": "reuse",
+      "scenario": "Prepare the same kind of checked overview for a different workshop/year-boundary export without coordinator-supplied procedure details.",
+      "inputs": [
+        {
+          "filename": "werkplaatsplanning.ics",
+          "mediaType": "text/calendar; charset=utf-8",
+          "lineEndings": "CRLF",
+          "content": "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Eva Evaluation//Calendar Import//EN\r\nBEGIN:VEVENT\r\nUID:reuse-review@calendar.example\r\nDTSTAMP:20260925T120000Z\r\nDTSTART:20280301T100500Z\r\nDTEND:20280301T114000Z\r\nSUMMARY:Terugblik\\; werkplaats\r\nDESCRIPTION:Neem foto's\\, sleutels\\nEn een map.\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nUID:reuse-holiday@calendar.example\r\nDTSTAMP:20260925T120000Z\r\nDTSTART;VALUE=DATE:20271231\r\nDTEND;VALUE=DATE:20280103\r\nSUMMARY:Logeerweekend\\, familie\\; jaarwisseling\r\nDESCRIPTION:Drie nachten weg.\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nUID:reuse-observation@calendar.example\r\nDTSTAMP:20260925T120000Z\r\nDTSTART:20280229T234000Z\r\nDTEND:20280301T001000Z\r\nSUMMARY:Observatie: maan\\, ster\r\n\tren\\; nacht\r\nDESCRIPTION:Route\\\\noord\\NNeem thee.\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n",
+          "contentSha256": "bc5ee9a58eb207d74821b7cb403e6e8f00d9417f981e5ace7f86cc10735557da"
+        },
+        {
+          "filename": "ongeldige-volgorde.ics",
+          "mediaType": "text/calendar; charset=utf-8",
+          "lineEndings": "CRLF",
+          "content": "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Eva Evaluation//Calendar Import//EN\r\nBEGIN:VEVENT\r\nUID:reuse-invalid@calendar.example\r\nDTSTAMP:20260925T120000Z\r\nDTSTART:20280302T140000Z\r\nDTEND:20280302T131500Z\r\nSUMMARY:Einde ligt voor begin\r\nDESCRIPTION:Controlebestand.\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n",
+          "contentSha256": "53906af590c764adee3cb3730c62c9408de5307e42b29f8eccf265669af20655"
+        }
+      ],
+      "oracle": {
+        "validFilename": "werkplaatsplanning.ics",
+        "eventCount": 3,
+        "eventsInStartOrder": [
+          {
+            "uid": "reuse-holiday@calendar.example",
+            "summary": "Logeerweekend, familie; jaarwisseling",
+            "description": "Drie nachten weg.",
+            "start": "2027-12-31",
+            "endExclusive": "2028-01-03",
+            "allDay": true,
+            "durationDays": 3
+          },
+          {
+            "uid": "reuse-observation@calendar.example",
+            "summary": "Observatie: maan, sterren; nacht",
+            "description": "Route\\noord\nNeem thee.",
+            "start": "2028-02-29T23:40:00Z",
+            "endExclusive": "2028-03-01T00:10:00Z",
+            "allDay": false,
+            "durationMinutes": 30
+          },
+          {
+            "uid": "reuse-review@calendar.example",
+            "summary": "Terugblik; werkplaats",
+            "description": "Neem foto's, sleutels\nEn een map.",
+            "start": "2028-03-01T10:05:00Z",
+            "endExclusive": "2028-03-01T11:40:00Z",
+            "allDay": false,
+            "durationMinutes": 95
+          }
+        ],
+        "crossChecks": {
+          "timedEventMinutes": 125,
+          "allDayEventDays": 3
+        },
+        "invalidFilename": "ongeldige-volgorde.ics",
+        "invalidUid": "reuse-invalid@calendar.example",
+        "invalidReason": "The explicit UTC end is 45 minutes earlier than the start.",
+        "invalidExpected": {
+          "success": false,
+          "normalEventOutputAllowed": false,
+          "swappingBoundsAllowed": false,
+          "partialSuccessAllowed": false
+        },
+        "errorTextMatching": "Any clear equivalent error description is accepted; no exact error wording or code is required."
+      }
+    }
+  ],
+  "comparisonPolicy": {
+    "semanticOracle": "Expected values above are exact. Key names, JSON whitespace and display formatting are not prescribed. Equivalent ISO UTC spelling is allowed; all-day dates must stay dates. Duration may use an exactly equivalent unit.",
+    "textFidelity": "Decoded punctuation, literal backslashes, newlines, colon inside TEXT, and the meaningful space left by a two-space continuation must be preserved.",
+    "missingFields": "A summary-only answer is insufficient. UID, text fields, boundaries, all-day distinction and durations must be available in the checked result.",
+    "crossCheckPresentation": "Totals need not be displayed if all event values exactly agree; they are independent evaluator cross-checks.",
+    "noPartialCalendar": "The valid and invalid exports are separate requests within each case. A rejection of the invalid export must not suppress or contaminate the valid export."
+  },
+  "requiredEvidence": {
+    "admission": "Exactly one intended admission for each case. Log work/spec/attempt IDs, original input binding, final state and any retries or failed attempts without hiding them.",
+    "externalDocumentation": "Learning receipts must show Eva requested/read relevant official-source content through an existing allowed tool before creating the procedure. Coordinator-only browsing or a URL in prose is insufficient.",
+    "learningArtifact": "Saved source bytes, content hash, designation receipt, reference identity and relevant provenance are preserved. Eva creates the implementation herself; coordinator does not supply or patch it.",
+    "controlledExecution": "Actual procedure execution receipts show exact input hashes, original source hash, output/status and the expected valid/error behavior. A model-written answer without execution does not satisfy this.",
+    "reuseDiscovery": "Eva independently retrieves/resolves the learned procedure using permitted prior context/catalog access. Coordinator does not name its ID, code or storage path.",
+    "reuseIdentity": "The reuse execution receipt must contain the same source content hash as the learning artifact. The expected hash is defined by equality to that recorded artifact, not filled into this frozen file later.",
+    "sameTaskContinuity": "Any work/result and procedure/execution namespace bindings must be consistent. Existing receipts must not be counted as new executions or silently replaced.",
+    "usage": "Report input/output/total tokens and model/tool counts from actual receipts, with one aggregation per distinct provider response/execution. Separate actual dispatches from replayed receipts; preserve unknown cost/measurement fields.",
+    "delivery": "Report saved artifact availability separately from a delivered foreground result and separately from owner acceptance."
+  },
+  "failureAndLimits": [
+    "An unseen result, absent tool receipt, truncated source fetch, budget exhaustion or failed artifact execution is not a pass.",
+    "If repair is needed, preserve the first attempt and classify the learning case as repaired; do not rewrite this oracle after seeing output.",
+    "If reuse needs source modification, coordinator hints, a supplied procedure ID, or repeated teaching, classify it as assisted adaptation rather than unchanged unassisted reuse.",
+    "iCalendar is an established public standard and may be present in model pretraining. These cases can prove use of external documentation and an unchanged learned artifact on different data; they cannot prove the model had no prior knowledge or establish general learning ability.",
+    "Only the features and two invalid cases actually exercised here are evidenced; unsupported cases and complete RFC correctness remain unproven."
+  ]
+}

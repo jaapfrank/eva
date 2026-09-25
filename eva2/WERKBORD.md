@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Nu — één echte leeropdracht na de documentuitleescorrectie.** Bron 8a3643be geïnstalleerd; kern en werker gezond, exacte bron en gelijke profielen bevestigd. De oorspronkelijke kalenderopdracht en criteria blijven identiek; één nieuwe ingangspoging, geen code- of uitkomsthints. De twee eerdere mislukte pogingen blijven zichtbaar. Coördinator voert uit; uitvoerder en reviewer zijn klaar. Raming: maximaal één toegelaten digitale poging binnen bestaande grenzen; werkelijke gebruikscijfers achteraf, creditkosten onbekend.
+
+**Opgeleverd — grote connectorresultaten volledig bewaren en in delen lezen.** Bestaande tijdlijn en connectoractie hergebruikt; bronhash, volledige opslag en begrensde selectie. 75 gerichte controles en één afzonderlijk herstelde fixturecontrole geslaagd, inclusief echte PostgreSQL-herlezing zonder tweede provideraanroep; onafhankelijke review akkoord. Geïnstalleerd met terugweg, schema en bestaande configuratie behouden. Geen Eva-modelcalls voor deze wijziging. [Bewijs](evidence/product/connector-result-reader-installed-20260925.json). Algemene leerfunctie en volledige onderdelen blijven open; teller 2 van 9.
+
+**Volgende, nog niet gestart:** alleen na een geslaagde eerste taak de bewaarde werkwijze op nieuwe agenda-invoer zelfstandig hergebruiken.
+
 **Opgeleverd — digitale opdrachten kunnen meerdere modelreacties benutten.** Brone4ca5ee8 geïnstalleerd in gezonde kern/werker; exacte bron, gelijke uitvoerprofielen, schema0007 en beide speakerbindings gecontroleerd. Antwoordlimiet1200 blijft; nieuwe digitale pogingen maximaal8×1200. Tool-, invoer- en tijdgrenzen ongewijzigd. Oude taken houden hun oorspronkelijke budget en zijn leesbaar/hervatbaar zonder herhaling van afgeronde acties. Gerichte controles en onafhankelijke review geslaagd; terugweg vastgelegd. Geen Eva-modelcalls of fysieke huisacties; Codex-creditkosten onbekend. Algemene leerfunctie en echte gebruikersproef blijven open; volledige onderdelen nog2van9. Geen uitvoerder actief op deze wijziging. [Bewijs en probeerwijze](evidence/product/digital-attempt-budget-installed-20260925.json).
 
 **Volgende, nog niet gestart:** ongeziene vaardigheid uit documentatie zelfstandig afronden via de bestaande algemene leer-/uitvoeringsroute.

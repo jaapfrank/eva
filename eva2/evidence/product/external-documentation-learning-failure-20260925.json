@@ -1,0 +1,50 @@
+{
+  "checkedAt": "2026-09-25T15:24:59.947733+00:00",
+  "status": "failed_document_acquisition",
+  "criteriaSha256": "843947ca22fcde19c25a3b99f14b32d4e43f1feb7814405c016bf1999b001f21",
+  "firstIngress": {
+    "checkedAt": "2026-09-25T15:11:39.091152+00:00",
+    "classification": "conversation_provider_timeout_before_work_admission",
+    "messageId": "dashboard:a30f9be2-c7ec-4b51-97ee-6f89050bdb56",
+    "elapsedSeconds": 64.335,
+    "causeLocation": "adapters/model/pydantic_conversation.py:1091; conversation provider deadline exceeded",
+    "backgroundAdmissions": [],
+    "observedEvents": [
+      "INGRESS_COMMITTED"
+    ],
+    "modelUsage": "unmeasured; no completed model response recorded",
+    "creditCost": "unknown",
+    "automaticRepeat": false,
+    "criteriaSha256": "843947ca22fcde19c25a3b99f14b32d4e43f1feb7814405c016bf1999b001f21",
+    "nextAction": "Read existing model connection status before deciding whether a further request is justified; retain first attempt."
+  },
+  "workId": "work:eva-chat:85ada042-829d-544a-8678-e15f15c6cca2",
+  "state": "failed",
+  "errorCode": "incomplete_work",
+  "exactConnectorCause": "RuntimeError: MCP gateway invoke result exceeds 65536 bytes; request a smaller result",
+  "connectorErrorFingerprint": "024f959de986697e2d74c82a2738e604e666321c12f015f9427de9d3ef93ed6e",
+  "achieved": [
+    "Eva independently queried stored procedures, discovered an existing connector and requested the official RFC through a generic URL tool."
+  ],
+  "notAchieved": [
+    "Verified document content",
+    "Saved learned procedure",
+    "Calendar execution",
+    "Reuse"
+  ],
+  "knownUsage": {
+    "inputTokens": 55896,
+    "outputTokens": 1006,
+    "modelResponses": 6,
+    "workerToolCalls": 3,
+    "measurement": "Partial worker usage plus one measured foreground reply; initial timeout unmeasured; procedure-list is separately recorded.",
+    "creditCost": null
+  },
+  "independentReview": {
+    "agent": "/root/result_return_review",
+    "result": "No learning pass; all28 event payload hashes verified. First admission retry remains visible.",
+    "evidenceLimit": "Does not prove inability to learn calendar semantics; proves this document-acquisition path failed."
+  },
+  "artifacts": "/home/administrator/project/.eva2-artifacts/external-documentation-learning-20260925",
+  "nextAction": "Implement generic bounded saved-result reading using existing connector timeline; retain unchanged original criteria."
+}
