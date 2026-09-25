@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Lopende huisopdracht via spraak bijsturen",
+            "date": "25 september",
+            "state": "installed",
+            "result": "Correctie uit een volgende spraakbeurt stopt de oude poging en bewaart één aangepaste hervatting. Dezelfde planner en werker; stoppen annuleert ook een wachtende correctie. Hervatting blijft werken wanneer de betrokken gesprekken sluiten.",
+            "remaining": "Fysieke proef open. Na sluiting van de oorspronkelijke sessie blijft het resultaat bewaard; automatische audio en ophalen via nieuw wakeword blijven nog open. Geen nieuwe grote categorie afgerond.",
+            "source": "eva2/evidence/product/household-correction-installed-20260925.json"
+          },
+          {
             "title": "Werkwijze opzoeken houdt het snelle gespreksmodel",
             "date": "25 september",
             "state": "installed",
@@ -2367,14 +2375,14 @@
           }
         ],
         "now": {
-          "title": "Modelkeuzecorrectie geïnstalleerd",
-          "state": "Opgeleverd",
-          "detail": "Bron d4d17ada live in kern en werker.25 gerichte broncontroles en onafhankelijke review; gelijke uitvoerprofielen, exact gecontroleerde bronhash, bestaande databaseschema0007 en beide speakers behouden. Geen uitvoerder of modelproef meer actief op deze wijziging."
+          "title": "Lopende huisopdrachten via spraak bijsturen geïnstalleerd",
+          "state": "Technisch opgeleverd",
+          "detail": "Bron2050a3c4 geïnstalleerd in gezonde kern en werker. Bijsturing gebruikt dezelfde correctie-, stop- en hervatroute als privétaken; gerichte controles en onafhankelijke review geslaagd. Geen bouwtaak meer actief op deze wijziging. Fysieke gebruikersproef blijft open; volledige onderdelen blijven2van9 klaar."
         },
         "next": {
-          "title": "Lopende huisopdrachten via spraak kunnen bijsturen",
+          "title": "Taakresultaat na gesloten spraakgesprek bereikbaar maken",
           "state": "Nog niet gestart",
-          "detail": "De privéroute heeft revise_digital_work; de gedeelde spraakroute biedt deze nog niet aan. Sluit de bestaande correctie- en hervatfunctie aan met behoud van oorspronkelijke huisopdracht en huidige bevoegdheid. Geen nieuw type werker of andere persoonsgrenzen."
+          "detail": "Bestaande uitvoering bewaart het resultaat na sluiting van het oorspronkelijke gesprek, maar automatische audio en ophalen vanuit een nieuwe wakeword-beurt zijn dan nog niet aangesloten. Dit concrete resterende gat oplossen via de bestaande taak- en resultaatroute."
         },
         "ownerAction": {
           "title": "Een langere huisvraag stellen en ondertussen doorpraten",
@@ -2389,7 +2397,7 @@
           "expected": "De langere huisopdracht kan naar de achtergrondwerker. De speaker blijft beschikbaar voor een volgende beurt; resultaat hoort bij de oorspronkelijke huisopdracht. Werkelijke spreeksnelheid en modelkeuze zijn nog niet in deze oplevering gemeten."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-25T13:35:16.675971+00:00"
+        "reviewedAt": "2026-09-25T14:11:34.800527+00:00"
       }
     },
     "pendingTechnicalReview": {

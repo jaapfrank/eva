@@ -1,7 +1,7 @@
 {
   "contract": "EvaDeliveryEvidence/v1",
-  "checkedAt": "2026-09-25T14:06:27.936961+00:00",
-  "status": "tested_not_installed",
+  "checkedAt": "2026-09-25T14:11:34.800527+00:00",
+  "status": "installed",
   "baseCommit": "655097bf",
   "ownerRequirement": "One Eva across channels: correct a running digital household task through the registered speakers, preserve the original task/actions/result destination, and remain able to stop.",
   "change": [
@@ -35,7 +35,9 @@
       "household-tests-retry.txt",
       "household-corruption-and-closed-stop-final.txt",
       "household-lifecycle-final.txt"
-    ]
+    ],
+    "reporting": "Nine distinct household scenarios passed over bounded runs; five private correction cases and one private PostgreSQL scheduler lifecycle passed. Earlier failed runs remain recorded; no all-in-one final suite claim.",
+    "runHistory": "Initial import monkeypatch capture and test-fixture assertions were corrected. Closing a valid original session was rejected as an invalid-authority criterion and replaced with real spec corruption plus explicit closed-session durability and stop cases."
   },
   "review": {
     "agent": "result_return_review",
@@ -48,5 +50,328 @@
     "No measured response-time improvement claim.",
     "An explicitly closed original session is not a new audio/listening authority; automatic result delivery and new-wakeword retrieval after that closure remain open. No claim of completing the full speech or background-work category."
   ],
-  "artifactsDirectory": "/home/administrator/project/.eva2-artifacts/household-correction-20260925"
+  "artifactsDirectory": "/home/administrator/project/.eva2-artifacts/household-correction-20260925",
+  "sourceCommit": "2050a3c47bd59c51542987861b853c78beecc942",
+  "ownerAccepted": false,
+  "installation": {
+    "checkedAt": "2026-09-25T14:10:32.236967+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:8eb59fb68bc7230f648de32abee6bfb6fd2b9e6048cab1c5ef595a48c9baffb1",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/scheduled_work.py": "4e976641bf6c2fbce877c9bc6129d78b4f21e8cb2a8e17b453321eec6a000ec4",
+          "bootstrap/runtime.py": "6fba5c4ccd9debb7d7b8da21253fb464d80af5961f87269b5df14f1a3dd3aba4",
+          "bootstrap/delegated_work_owner_service.py": "fc6cad079885499dd9972686beabf3151a8d140d7aa497ee4963f86323cea909",
+          "bootstrap/delegated_digital_profile.py": "f131420481f0c2dbc29c2541fd2183fcb79db22f340cf9a27a292a1b5153a76f",
+          "bootstrap/household_work.py": "b326ff73b3a28dc465a2a7e9858c8249564f82828a637a96750946458edc4d64",
+          "bootstrap/household_digital_work.py": "f13bbc682b64e8b2751c476301736e1d8e757b5c32e2e63fe1a4531266babb43",
+          "bootstrap/household_work_corrections.py": "086b25127266f6d2b667ef209e1940576b23a3c0362b3ea8b274344260e16ffa",
+          "adapters/postgres/delegated_work_actions.py": "2887f9388be7c957ce3e6fe7b96f430a16363a65ea7d852a9a37a998e37cf6a8",
+          "adapters/postgres/delegated_work.py": "64201f7d7b5445dd85baf70bb9935d9a1df5c7c6743faf64b3fb18a7eff5e492"
+        }
+      },
+      "worker": {
+        "image": "sha256:10fe15bc4ffdb93ef91678fb0f9447b67431a79317715cbf03077467473eedee",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/scheduled_work.py": "4e976641bf6c2fbce877c9bc6129d78b4f21e8cb2a8e17b453321eec6a000ec4",
+          "bootstrap/runtime.py": "6fba5c4ccd9debb7d7b8da21253fb464d80af5961f87269b5df14f1a3dd3aba4",
+          "bootstrap/delegated_work_owner_service.py": "fc6cad079885499dd9972686beabf3151a8d140d7aa497ee4963f86323cea909",
+          "bootstrap/delegated_digital_profile.py": "f131420481f0c2dbc29c2541fd2183fcb79db22f340cf9a27a292a1b5153a76f",
+          "bootstrap/household_work.py": "b326ff73b3a28dc465a2a7e9858c8249564f82828a637a96750946458edc4d64",
+          "bootstrap/household_digital_work.py": "f13bbc682b64e8b2751c476301736e1d8e757b5c32e2e63fe1a4531266babb43",
+          "bootstrap/household_work_corrections.py": "086b25127266f6d2b667ef209e1940576b23a3c0362b3ea8b274344260e16ffa",
+          "adapters/postgres/delegated_work_actions.py": "2887f9388be7c957ce3e6fe7b96f430a16363a65ea7d852a9a37a998e37cf6a8",
+          "adapters/postgres/delegated_work.py": "64201f7d7b5445dd85baf70bb9935d9a1df5c7c6743faf64b3fb18a7eff5e492"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/household-correction-20260925/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "candidateStartup": {
+    "core": {
+      "configuration_sha256": "278a75bde0350a66409fc7db00fa438b538920d7801454918976e003e9380f0c",
+      "execution_source_sha256": [
+        [
+          "bootstrap/delegated_digital_composition.py",
+          "39d0ad1bb2f05c0b69483b74e4395a8c4ce2cb41488cb2084a248807401510ee"
+        ],
+        [
+          "bootstrap/household_digital_work.py",
+          "f13bbc682b64e8b2751c476301736e1d8e757b5c32e2e63fe1a4531266babb43"
+        ],
+        [
+          "bootstrap/household_work.py",
+          "b326ff73b3a28dc465a2a7e9858c8249564f82828a637a96750946458edc4d64"
+        ],
+        [
+          "bootstrap/delegated_work_result_reader.py",
+          "7120f58a9894e85f9784b7fd0936aa0572482de4c46ed70a9783825936e2993b"
+        ],
+        [
+          "bootstrap/delegated_work_owner_service.py",
+          "fc6cad079885499dd9972686beabf3151a8d140d7aa497ee4963f86323cea909"
+        ],
+        [
+          "adapters/postgres/delegated_work_actions.py",
+          "2887f9388be7c957ce3e6fe7b96f430a16363a65ea7d852a9a37a998e37cf6a8"
+        ],
+        [
+          "bootstrap/delegated_digital_runner.py",
+          "abda0f0f24528a36e5618ac3834f12de2baa350df9a3dc2bc0a85c6779f45451"
+        ],
+        [
+          "bootstrap/background_browser_context.py",
+          "b8474bf8fe32458102f24a4e96d2391d0e53b964855a0593bbf12bac2f745857"
+        ],
+        [
+          "adapters/connectors/browser_session.py",
+          "b2c251ed536ae5ce11d7a7f3fb3369dbdc59c7469b561b195af6105b406c7599"
+        ],
+        [
+          "adapters/postgres/background_work_progress.py",
+          "d1a5b28811d835e0cc6fb49bfa48841a93b6aff647e7ddeff33cd605517a2684"
+        ],
+        [
+          "adapters/postgres/work_corrections.py",
+          "ae06e3322642792b4fdf0ac54d8c3f89eff24b06c7591529261678e6f68ec03b"
+        ],
+        [
+          "adapters/postgres/component_improvement_actions.py",
+          "15cf280f6dda09722c3aa04b93a9efcec79aef6cfc5405e9da6ffcad7f1cb027"
+        ],
+        [
+          "application/component_improvements.py",
+          "0c5cc1c88106161807eb450c8b0d89e6558c1d9089f151fd5a3e1fd52469b16e"
+        ],
+        [
+          "adapters/connectors/component_evaluation.py",
+          "4eb1f42a6865977b4f1af95825ee4c8497fa45c453858a1b01fbb527a14cc1f4"
+        ],
+        [
+          "adapters/connectors/procedure_execution.py",
+          "9099a5f4daec4329afb2f1fca44819b3c3dd628efcc1e3ef70bf0a390b372a02"
+        ],
+        [
+          "bootstrap/private_conversation_resources.py",
+          "2b2456f507fa1cabc4c3c30bd13ec60abe9a9776fc2fd2842971da633f478f65"
+        ],
+        [
+          "adapters/model/pydantic_conversation.py",
+          "ec936fabc19bf06eb308ef531e9e922fb02a206270ef0377041e4c941052cecd"
+        ],
+        [
+          "providers/mcp_autonomy.py",
+          "32c0dbddc8d3138be3d510c29ab9d7a0368ad951cdf08aae4df158a9c8e51a0d"
+        ],
+        [
+          "providers/mcp_registration.py",
+          "751a70d83ad8da44768b7cefe5d92d95563cd45727fb764d024a97525b749c87"
+        ],
+        [
+          "providers/mcp_owner_authority.py",
+          "5613473d28fbd43ce61de59bd9f12d3430852fd0f79eab0197e6563408f3e3b2"
+        ],
+        [
+          "adapters/postgres/mcp_connector_registry.py",
+          "65be2012bec6dc4ca16a1c3c21fbe7fd9a88cce71b99cabf0be2f44ac53fa96f"
+        ],
+        [
+          "providers/procedure_reference_actions.py",
+          "33461c2b20e33d277da37aac3985930489f3222a62cd41f63589fa643ecb67d5"
+        ],
+        [
+          "adapters/postgres/procedure_reference_host.py",
+          "7de5b07b632b816121fd520782fcb1fafcd5942ce69ff2c1800c3eda0b60347e"
+        ],
+        [
+          "application/procedure_references.py",
+          "0331a28fa8256d68bea00428da1ff364e4b520dcd7eb47bb4fb132e977612c1c"
+        ],
+        [
+          "adapters/postgres/memory_outbox.py",
+          "a5dd61f6f6ded20c1c9c02964c74b5d6ee0d0c50e04fe2788cd66b5bed98fa51"
+        ],
+        [
+          "adapters/postgres/external_conversation_tools.py",
+          "65b327bf5af2a976bff39b4a7f9f8b7fb8deb76db525067bfdd81f2d7d1e6798"
+        ],
+        [
+          "adapters/connectors/mcp_gateway.py",
+          "b9d8a0a3247e28a5405638603b93f0a6bbf8215c3b7e6cd0f71de48e1f310902"
+        ],
+        [
+          "providers/mcp_gateway.py",
+          "78071f643b300f1572a613f0128c229fe24820a6d3d64bfea51938032d390d8f"
+        ],
+        [
+          "providers/home_assistant.py",
+          "6c7cd1bb5500e79508ed50c6a8d1b3a8edbf3c5ccf57d59074db60289513e5a5"
+        ],
+        [
+          "adapters/connectors/home_assistant_api.py",
+          "259f2d88c5d34380383e0259daa38892220091316865c8acddee6a11387dbe1a"
+        ],
+        [
+          "adapters/connectors/home_assistant_admin.py",
+          "22e07c2085e53eff9c21a992a38b4249245b7ac2f56f142dbdc783c2f9242c8e"
+        ],
+        [
+          "adapters/connectors/home_assistant_automations.py",
+          "2cea1c363e0b3c04a442f090e89bec84289ecdaae5ee0db00ebec802904c86ba"
+        ]
+      ],
+      "householdResearchRelease": "ff5b5a22e2f6155daf88a6b442445787d58df3f19ab80e47fe198774409c05a0",
+      "speakerCount": 2,
+      "householdDigitalReady": true,
+      "schema": "4e_0007_delegated_private"
+    },
+    "delegated-work-worker": {
+      "configuration_sha256": "278a75bde0350a66409fc7db00fa438b538920d7801454918976e003e9380f0c",
+      "execution_source_sha256": [
+        [
+          "bootstrap/delegated_digital_composition.py",
+          "39d0ad1bb2f05c0b69483b74e4395a8c4ce2cb41488cb2084a248807401510ee"
+        ],
+        [
+          "bootstrap/household_digital_work.py",
+          "f13bbc682b64e8b2751c476301736e1d8e757b5c32e2e63fe1a4531266babb43"
+        ],
+        [
+          "bootstrap/household_work.py",
+          "b326ff73b3a28dc465a2a7e9858c8249564f82828a637a96750946458edc4d64"
+        ],
+        [
+          "bootstrap/delegated_work_result_reader.py",
+          "7120f58a9894e85f9784b7fd0936aa0572482de4c46ed70a9783825936e2993b"
+        ],
+        [
+          "bootstrap/delegated_work_owner_service.py",
+          "fc6cad079885499dd9972686beabf3151a8d140d7aa497ee4963f86323cea909"
+        ],
+        [
+          "adapters/postgres/delegated_work_actions.py",
+          "2887f9388be7c957ce3e6fe7b96f430a16363a65ea7d852a9a37a998e37cf6a8"
+        ],
+        [
+          "bootstrap/delegated_digital_runner.py",
+          "abda0f0f24528a36e5618ac3834f12de2baa350df9a3dc2bc0a85c6779f45451"
+        ],
+        [
+          "bootstrap/background_browser_context.py",
+          "b8474bf8fe32458102f24a4e96d2391d0e53b964855a0593bbf12bac2f745857"
+        ],
+        [
+          "adapters/connectors/browser_session.py",
+          "b2c251ed536ae5ce11d7a7f3fb3369dbdc59c7469b561b195af6105b406c7599"
+        ],
+        [
+          "adapters/postgres/background_work_progress.py",
+          "d1a5b28811d835e0cc6fb49bfa48841a93b6aff647e7ddeff33cd605517a2684"
+        ],
+        [
+          "adapters/postgres/work_corrections.py",
+          "ae06e3322642792b4fdf0ac54d8c3f89eff24b06c7591529261678e6f68ec03b"
+        ],
+        [
+          "adapters/postgres/component_improvement_actions.py",
+          "15cf280f6dda09722c3aa04b93a9efcec79aef6cfc5405e9da6ffcad7f1cb027"
+        ],
+        [
+          "application/component_improvements.py",
+          "0c5cc1c88106161807eb450c8b0d89e6558c1d9089f151fd5a3e1fd52469b16e"
+        ],
+        [
+          "adapters/connectors/component_evaluation.py",
+          "4eb1f42a6865977b4f1af95825ee4c8497fa45c453858a1b01fbb527a14cc1f4"
+        ],
+        [
+          "adapters/connectors/procedure_execution.py",
+          "9099a5f4daec4329afb2f1fca44819b3c3dd628efcc1e3ef70bf0a390b372a02"
+        ],
+        [
+          "bootstrap/private_conversation_resources.py",
+          "2b2456f507fa1cabc4c3c30bd13ec60abe9a9776fc2fd2842971da633f478f65"
+        ],
+        [
+          "adapters/model/pydantic_conversation.py",
+          "ec936fabc19bf06eb308ef531e9e922fb02a206270ef0377041e4c941052cecd"
+        ],
+        [
+          "providers/mcp_autonomy.py",
+          "32c0dbddc8d3138be3d510c29ab9d7a0368ad951cdf08aae4df158a9c8e51a0d"
+        ],
+        [
+          "providers/mcp_registration.py",
+          "751a70d83ad8da44768b7cefe5d92d95563cd45727fb764d024a97525b749c87"
+        ],
+        [
+          "providers/mcp_owner_authority.py",
+          "5613473d28fbd43ce61de59bd9f12d3430852fd0f79eab0197e6563408f3e3b2"
+        ],
+        [
+          "adapters/postgres/mcp_connector_registry.py",
+          "65be2012bec6dc4ca16a1c3c21fbe7fd9a88cce71b99cabf0be2f44ac53fa96f"
+        ],
+        [
+          "providers/procedure_reference_actions.py",
+          "33461c2b20e33d277da37aac3985930489f3222a62cd41f63589fa643ecb67d5"
+        ],
+        [
+          "adapters/postgres/procedure_reference_host.py",
+          "7de5b07b632b816121fd520782fcb1fafcd5942ce69ff2c1800c3eda0b60347e"
+        ],
+        [
+          "application/procedure_references.py",
+          "0331a28fa8256d68bea00428da1ff364e4b520dcd7eb47bb4fb132e977612c1c"
+        ],
+        [
+          "adapters/postgres/memory_outbox.py",
+          "a5dd61f6f6ded20c1c9c02964c74b5d6ee0d0c50e04fe2788cd66b5bed98fa51"
+        ],
+        [
+          "adapters/postgres/external_conversation_tools.py",
+          "65b327bf5af2a976bff39b4a7f9f8b7fb8deb76db525067bfdd81f2d7d1e6798"
+        ],
+        [
+          "adapters/connectors/mcp_gateway.py",
+          "b9d8a0a3247e28a5405638603b93f0a6bbf8215c3b7e6cd0f71de48e1f310902"
+        ],
+        [
+          "providers/mcp_gateway.py",
+          "78071f643b300f1572a613f0128c229fe24820a6d3d64bfea51938032d390d8f"
+        ],
+        [
+          "providers/home_assistant.py",
+          "6c7cd1bb5500e79508ed50c6a8d1b3a8edbf3c5ccf57d59074db60289513e5a5"
+        ],
+        [
+          "adapters/connectors/home_assistant_api.py",
+          "259f2d88c5d34380383e0259daa38892220091316865c8acddee6a11387dbe1a"
+        ],
+        [
+          "adapters/connectors/home_assistant_admin.py",
+          "22e07c2085e53eff9c21a992a38b4249245b7ac2f56f142dbdc783c2f9242c8e"
+        ],
+        [
+          "adapters/connectors/home_assistant_automations.py",
+          "2cea1c363e0b3c04a442f090e89bec84289ecdaae5ee0db00ebec802904c86ba"
+        ]
+      ],
+      "householdResearchRelease": "ff5b5a22e2f6155daf88a6b442445787d58df3f19ab80e47fe198774409c05a0",
+      "speakerCount": 2,
+      "householdDigitalReady": true,
+      "schema": "4e_0007_delegated_private"
+    }
+  },
+  "tryLater": [
+    "Use a registered speaker to give a longer digital household task, for example reviewing existing automations without changing them.",
+    "While that task is running, ask Eva to narrow the task to the living room.",
+    "The original attempt should stop and one corrected successor should continue. Explicit stop should also cancel a waiting correction."
+  ]
 }
