@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Werkwijze opzoeken houdt het snelle gespreksmodel",
+            "date": "25 september",
+            "state": "installed",
+            "result": "Onnodige overstap naar Astra na opzoeken of lezen van een bewaarde werkwijze verwijderd. Kern en werker bijgewerkt; echte uitvoering en registratie blijven bij het werkmodel. Bevoegdheid en ontvangst na taaktoelating behouden.",
+            "remaining": "Gerichte broncontroles en onafhankelijke review geslaagd; beide diensten gezond met exacte bron. Geen nieuwe modelproef of gemeten reactietijdwinst.",
+            "source": "eva2/evidence/product/contact-procedure-routing-installed-20260925.json"
+          },
+          {
             "title": "Een bewaarde werkwijze zelfstandig terugvinden en op nieuwe gegevens toepassen",
             "date": "25 september",
             "state": "tested",
@@ -2359,14 +2367,14 @@
           }
         ],
         "now": {
-          "title": "Snelle gespreksmodel behouden na opzoeken van een werkwijze",
-          "state": "In uitvoering",
-          "detail": "Eén uitvoerder heeft de gedeelde modelkeuze aangepast: read-only werkwijzezoeking blijft bij het contactmodel; echte uitvoering/registratie houdt het werkmodel. Gerichte contacttests en één onafhankelijke review lopen. Coördinator heeft de exacte livebron en terugweg vastgelegd en bereidt kern/werker-installatie voor; geen nieuwe Eva-modelproef."
+          "title": "Modelkeuzecorrectie geïnstalleerd",
+          "state": "Opgeleverd",
+          "detail": "Bron d4d17ada live in kern en werker.25 gerichte broncontroles en onafhankelijke review; gelijke uitvoerprofielen, exact gecontroleerde bronhash, bestaande databaseschema0007 en beide speakers behouden. Geen uitvoerder of modelproef meer actief op deze wijziging."
         },
         "next": {
-          "title": "Correctie gericht controleren en installeren",
+          "title": "Lopende huisopdrachten via spraak kunnen bijsturen",
           "state": "Nog niet gestart",
-          "detail": "Bestaande contactmodeltests uitbreiden voor lezen versus uitvoeren van werkwijzen; exacte live bron behouden, kern en werker gelijk bijwerken met terugweg. Geen nieuwe snelheidsclaim zonder meting."
+          "detail": "De privéroute heeft revise_digital_work; de gedeelde spraakroute biedt deze nog niet aan. Sluit de bestaande correctie- en hervatfunctie aan met behoud van oorspronkelijke huisopdracht en huidige bevoegdheid. Geen nieuw type werker of andere persoonsgrenzen."
         },
         "ownerAction": {
           "title": "Een langere huisvraag stellen en ondertussen doorpraten",
@@ -2381,7 +2389,7 @@
           "expected": "De langere huisopdracht kan naar de achtergrondwerker. De speaker blijft beschikbaar voor een volgende beurt; resultaat hoort bij de oorspronkelijke huisopdracht. Werkelijke spreeksnelheid en modelkeuze zijn nog niet in deze oplevering gemeten."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-25T13:29:35.571415+00:00"
+        "reviewedAt": "2026-09-25T13:35:16.675971+00:00"
       }
     },
     "pendingTechnicalReview": {
