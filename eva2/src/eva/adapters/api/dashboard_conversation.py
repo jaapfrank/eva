@@ -27,7 +27,7 @@ _LOGGER = logging.getLogger(__name__)
 _SOURCE_ROOT = Path(__file__).resolve().parents[2]
 
 
-def _record_stream_failure(error: Exception, turn: ConversationTurn, stage: str) -> None:
+def _record_stream_failure(error: Exception, turn: ConversationTurn | None, stage: str) -> None:
     """Log code locations, never exception messages, locals or provider bodies."""
     frames: list[dict[str, Any]] = []
     trace = error.__traceback__
@@ -45,9 +45,9 @@ def _record_stream_failure(error: Exception, turn: ConversationTurn, stage: str)
         (PermissionError, "permission"), (ValueError, "validation"),
     ) if isinstance(error, cls)), "unexpected")
     # Only identifiers enter the correlation hash; no text or exception repr is read.
-    turn_hash = hashlib.sha256(json.dumps([
+    turn_hash = (hashlib.sha256(json.dumps([
         turn.tenant_id, turn.installation_id, turn.conversation_id, turn.message_id,
-    ], separators=(",", ":")).encode()).hexdigest()
+    ], separators=(",", ":")).encode()).hexdigest() if turn is not None else None)
     type_hash = hashlib.sha256(
         f"{error_type.__module__}.{error_type.__qualname__}".encode()
     ).hexdigest()
@@ -152,10 +152,11 @@ def dashboard_stream_response(runtime: Any, text: str) -> StreamingResponse:
         except Exception as error:
             if stage == "respond":
                 queue.put(("error", None))
-            if isinstance(turn, ConversationTurn):
-                _record_stream_failure(error, turn, stage)
-            else:
-                _LOGGER.error("Owner conversation stream ended before a saved reply")
+            try:
+                # dashboard_turn can fail before returning its server-bound turn.
+                _record_stream_failure(error, turn if isinstance(turn, ConversationTurn) else None, stage)
+            except Exception:
+                pass  # The terminal stream record must survive a logging failure.
 
     def events() -> Iterator[bytes]:
         Thread(target=run, name="eva-owner-text-stream", daemon=True).start()

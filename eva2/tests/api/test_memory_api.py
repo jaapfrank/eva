@@ -1231,3 +1231,53 @@ def test_durable_goal_api_rejects_incomplete_pivot_and_unknown_state() -> None:
         },
     )
     assert missing.status_code == 404
+
+
+@pytest.mark.parametrize("broken_sink", [False, True])
+def test_owner_stream_failure_before_turn_return_is_diagnosed(caplog, monkeypatch, broken_sink):
+    import asyncio
+    from eva.adapters.api import dashboard_conversation as streams
+
+    finished = Event()
+    original = streams._record_stream_failure
+
+    def capture(error, turn, stage):
+        try:
+            if broken_sink:
+                raise OSError("private logging failure")
+            original(error, turn, stage)
+        finally:
+            finished.set()
+
+    monkeypatch.setattr(streams, "_record_stream_failure", capture)
+
+    class Runtime:
+        calls = 0
+
+        def dashboard_turn(self, text):
+            self.calls += 1
+            raise TimeoutError("secret-provider-body private-conversation")
+
+    runtime = Runtime()
+
+    async def collect():
+        response = streams.dashboard_stream_response(runtime, "private-conversation")
+        return b"".join([chunk async for chunk in response.body_iterator])
+
+    body = asyncio.run(collect())
+    assert finished.wait(2)
+    assert json.loads(body) == {"contract": "EvaTextStreamError/v1"}
+    assert runtime.calls == 1
+    records = [record for record in caplog.records if record.name == streams.__name__]
+    if broken_sink:
+        assert not records
+    else:
+        assert len(records) == 1
+        diagnostic = json.loads(records[0].getMessage())
+        assert diagnostic["category"] == "timeout"
+        assert diagnostic["stage"] == "respond"
+        assert diagnostic["turn_sha256"] is None
+        assert diagnostic["eva_frames"]
+        assert "secret-provider-body" not in records[0].getMessage()
+        assert "private-conversation" not in records[0].getMessage()
+        assert records[0].exc_info is None
