@@ -1,0 +1,93 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-25T11:59:19.199242+00:00",
+  "sourceCommit": "c3edfbea9e85fbe3012ed3f4287986def0300d4d",
+  "ownerInstruction": "Both existing speakers must support general Home Assistant capabilities, including automation creation and changes. The previous lamp/switch-only limitation was an incorrect interpretation. Private conversations remain on Telegram.",
+  "change": [
+    "Existing general HA API admits configured household speaker principals.",
+    "Automation index, details and full configurations are available to the same authorized household audience.",
+    "No device/domain-specific planner or private-memory change."
+  ],
+  "verification": {
+    "targetedTests": {
+      "passed": 26,
+      "command": "pytest tests/connectors/test_home_assistant_api.py tests/connectors/test_household_comfort_inventory.py tests/connectors/test_ha_full_configurations.py",
+      "initialFixtureFailures": "Six initial failures were invalid test fixtures: missing receipt arguments or mismatched turn/audience. Corrected before the successful run.",
+      "preflightFixtureCorrections": "Two startup-check fixture errors corrected: household conversation prefix and missing conversation_id. No installation attempted until checks passed."
+    },
+    "independentReview": {
+      "agent": "shared_ha_review",
+      "result": "No remaining concrete defect; both fixture/descriptor findings corrected.",
+      "scope": "Native household route through tool exposure and dispatch; current three-source-module diff."
+    },
+    "coreWorkerProfilesMatch": true,
+    "live": {
+      "speakers": [
+        {
+          "satellite": "assist_satellite.home_assistant_voice_0a16e0_assist_satellite",
+          "audience": "household",
+          "generalApiAvailable": true,
+          "automationInventoryAvailable": true
+        },
+        {
+          "satellite": "assist_satellite.home_assistant_voice_0a5035_assist_satellite",
+          "audience": "household",
+          "generalApiAvailable": true,
+          "automationInventoryAvailable": true
+        }
+      ],
+      "websiteAndTelegramAdmitted": true,
+      "unknownActorDenied": true,
+      "realApiDiscovery": "succeeded",
+      "serviceDomainCount": 81,
+      "automationIndexRead": true,
+      "indexFields": [
+        "area_id",
+        "captured_at",
+        "coverage",
+        "has_more",
+        "items",
+        "next_offset",
+        "offset",
+        "section",
+        "snapshot_sha256",
+        "total"
+      ]
+    },
+    "dashboardHttpStatus": 200
+  },
+  "installation": {
+    "checkedAt": "2026-09-25T11:57:39.101768+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:cbf6cd2869998813f7091a225049df351cbc7a705cacc086f5a45ea7f234803f",
+        "health": "healthy",
+        "sourceHashes": {
+          "providers/home_assistant.py": "6c7cd1bb5500e79508ed50c6a8d1b3a8edbf3c5ccf57d59074db60289513e5a5",
+          "adapters/connectors/home_assistant_admin.py": "22e07c2085e53eff9c21a992a38b4249245b7ac2f56f142dbdc783c2f9242c8e",
+          "adapters/connectors/home_assistant_api.py": "259f2d88c5d34380383e0259daa38892220091316865c8acddee6a11387dbe1a"
+        }
+      },
+      "worker": {
+        "image": "sha256:0103daf78b31094f5af6ffc51a1773a6df324e9fc6d84e34d4fdc0ee7cb678a1",
+        "health": "healthy",
+        "sourceHashes": {
+          "providers/home_assistant.py": "6c7cd1bb5500e79508ed50c6a8d1b3a8edbf3c5ccf57d59074db60289513e5a5",
+          "adapters/connectors/home_assistant_admin.py": "22e07c2085e53eff9c21a992a38b4249245b7ac2f56f142dbdc783c2f9242c8e",
+          "adapters/connectors/home_assistant_api.py": "259f2d88c5d34380383e0259daa38892220091316865c8acddee6a11387dbe1a"
+        }
+      }
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/shared-ha-general-20260925/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "limitations": [
+    "No physical voice/model execution or arbitrary automation modification performed in this delivery.",
+    "API availability and live reads do not prove every HA integration or model-generated automation succeeds.",
+    "No full voice or owner acceptance claimed."
+  ],
+  "usage": {
+    "evaModelCalls": 0,
+    "creditCost": null
+  },
+  "artifactsDirectory": "/home/administrator/project/.eva2-artifacts/shared-ha-general-20260925"
+}

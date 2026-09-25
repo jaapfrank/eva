@@ -1,5 +1,15 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Eigenaarcorrectie 25 september 2026 — alle HA-functies via beide speakers
+
+Eva moet via beide bestaande speakers alle Home Assistant-apparaten, diensten en
+automatiseringen kunnen gebruiken, inclusief automatiseringen maken en aanpassen.
+De eerdere bevestiging over lampen/schakelaars was geen exclusieve beperking.
+Gebruik de bestaande algemene HA-API; geen nieuwe apparaat-specifieke scripts of
+herhaalde toestemmingsvraag voor deze reeds toegestane huisfuncties. De bestaande
+geregistreerde huishoudroute blijft leidend. Privégesprekken en privégeheugen
+blijven gescheiden en worden niet via de gedeelde speakers ontsloten.
+
 ## Gezamenlijke Git-basis — eigenaaropdracht 22 september 2026
 
 De coördinator beheert één actuele integratiebasis op GitHub. Nieuwe bouwtaken

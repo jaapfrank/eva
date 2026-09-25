@@ -13,8 +13,11 @@ schema validation and operation behavior. Discovery and readback are part of the
 model's task, not a claim that the transport understands every integration.
 
 The provider is opt-in with `EVA_HOME_ASSISTANT_API_ENABLED=true`. Existing host
-credentials and effect-principal bindings authorize private owner turns. Shared
-speaker access remains unchanged until the owner decides its broader scope.
+credentials and effect-principal bindings authorize owner turns and both registered
+household speakers. On 25 September the owner explicitly corrected the earlier
+lamp/switch-only interpretation: general device and automation management is
+authorized through both speakers. Their household identity stays separate from
+private conversation and memory.
 The digital composition includes the same provider and exact general descriptor;
 its worker must receive the same HA settings and credential mount. No second
 executor or provider credential is introduced.
@@ -43,19 +46,19 @@ the already configured HA API directly for that gap.
 
 Installed owner-route parity on 24 September: both the server-bound local owner
 identity and its verified Telegram bridge are admitted. Core and worker retain
-identical provider configuration. This does not grant shared speakers general
-API administration. See ha-owner-channel-parity-installed-20260924.json.
+identical provider configuration. This historical installation only enabled private routes. The 25 September
+owner correction additionally authorizes registered household speakers. See ha-owner-channel-parity-installed-20260924.json.
 
 
 ## Complete configuration batches — 24 September 2026
 
-The existing `read_home_assistant_inventory` action offers the private
+The existing `read_home_assistant_inventory` action offers the authorized
 `automation_configurations` section for up to eight selected inventory IDs.
 It reuses the existing concurrent reader and returns complete configuration JSON
 as text, retaining template conditions, service data and decimal values. The
 older projected `automation_details` view remains available. Full content is
 limited to 40,000 characters per batch; omitted content is explicitly marked
-incomplete. Shared household audiences cannot select the full private view.
+incomplete. Both registered household and owner audiences can select this full view.
 
 A real owner task used the automation index and one complete batch, compared four
 configurations and saved a supported recommendation within the existing budget.

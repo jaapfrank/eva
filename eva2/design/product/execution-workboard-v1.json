@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Algemene HA-bediening via beide speakers ontsloten",
+            "date": "25 september",
+            "state": "installed",
+            "result": "De onterechte lamp-/schakelaarbeperking is verwijderd. Beide geregistreerde speakers krijgen dezelfde algemene HA-API, ook voor automatiseringen lezen, maken en aanpassen. Kern/werker geïnstalleerd; echte HA-diensten en automatiseringsindex gelezen.",
+            "remaining": "Geen fysieke spraak-/modelproef in deze wijziging. Privégeheugen blijft gescheiden; volledige spraakacceptatie blijft open.",
+            "source": "eva2/evidence/product/shared-ha-general-installed-20260925.json"
+          },
+          {
             "title": "Home Assistant herkent Eva’s bestaande streamingondersteuning",
             "date": "25 september",
             "state": "installed",
@@ -2327,29 +2335,29 @@
           }
         ],
         "now": {
-          "title": "Bestaande spraakstreaming bij Home Assistant aangemeld",
-          "state": "Geïnstalleerd — integratie geladen",
-          "detail": "Ontbrekende streamingaanmelding toegevoegd aan bestaande HA-integratie. Twee gerichte entiteitstests en onafhankelijke review akkoord; na HA-herstart integratie geladen en beide speakers idle. Bestaande firmware behouden. Geen model- of spraakproefaanvraag. Geen uitvoerder meer actief op deze wijziging.",
-          "doneWhen": "Deze aansluiting is geïnstalleerd. HA-buffering van korte tekst en fysieke antwoordtijd blijven afzonderlijk open; geen instant- of volledige spraakacceptatie geclaimd."
+          "title": "Algemene Home Assistant-route op beide speakers geïnstalleerd",
+          "state": "Geïnstalleerd — live toegang gecontroleerd",
+          "detail": "26 gerichte controles en onafhankelijke review geslaagd. Beide echte speakerbindings hebben algemene HA-API en volledige automatiseringsinventaris; diensten gezond en uitvoerprofielen gelijk. Geen uitvoerder meer actief op deze wijziging.",
+          "doneWhen": "Deze onterechte toegangsbeperking is opgelost. Fysieke bediening en kwaliteit van modelgestuurde opdrachten zijn hiermee niet opnieuw beproefd."
         },
         "next": {
-          "title": "Dagelijkse functies verder afronden binnen bestaande rechten",
+          "title": "Langere huisopdrachten via spraak afmaken tijdens gesprek",
           "state": "Nog niet gestart",
-          "detail": "Breder HA-beheer via beide speakers wacht op de open eigenaarvraag. Andere uitvoerbare dagelijkse aansluitingen blijven doorgaan; geen nieuwe herstel-/verhuizingsbouw."
+          "detail": "Bestaande algemene HA-route en achtergrondwerk verbinden waar langere opdrachten nog vastlopen; geen nieuwe functies per apparaat. Het volledige oplevergoal blijft actief."
         },
         "ownerAction": {
-          "title": "Bij je volgende gewone Voice PE-gesprek",
+          "title": "Gebruik je gewone huisvragen op beide speakers",
           "url": "http://localhost:44716/",
           "linkLabel": "Bestaande spraakpagina",
           "steps": [
-            "Gebruik gewoon het wakeword op een van je speakers.",
-            "Je hoeft de firmware of Home Assistant-pipeline niet te wijzigen.",
-            "Beoordeel bij een langer antwoord of Eva eerder begint te spreken."
+            "Gebruik je gewone wakeword; instellingen en firmware blijven hetzelfde.",
+            "Vraag bijvoorbeeld: Welke automatiseringen regelen de verlichting in de woonkamer?",
+            "Geef daarna je gewenste huisopdracht of wijziging in gewone taal."
           ],
-          "expected": "Streaming is nu correct aangemeld. Een korte ontvangstzin kan nog door Home Assistant worden gebufferd; werkelijk hoorbare snelheid is nog niet gemeten."
+          "expected": "Eva kan de bestaande algemene HA-API en automatiseringsconfiguraties gebruiken. Een exacte technische apparaatnaam is geen toegangsvoorwaarde. Deze fysieke gebruikersproef staat nog open."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-25T11:44:17.448866+00:00"
+        "reviewedAt": "2026-09-25T11:59:19.199242+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12034,7 +12042,7 @@
             "CO-005"
           ],
           "doneWhen": "Later terugkomen op onderwerp en correctie bij geverifieerde persoon; geen privécontext naar dochter, onbekende spreker of onbevoegde toehoorder.",
-          "preserve": "Geaccepteerd geheugen en privécontinuïteit behouden. Eigenaar kiest privévoortzetting via Telegram; geen privé-inhoud op gedeelde speakers. Gedeelde spraak vereist geen persoonlijke verificatie voor toegestane lamp-/schakelaarbediening. Echte continuïteits-/grensproeven blijven open.",
+          "preserve": "Geaccepteerd geheugen en privécontinuïteit behouden. Eigenaar kiest privévoortzetting via Telegram; geen privé-inhoud op gedeelde speakers. Gedeelde spraak vereist geen persoonlijke verificatie voor algemeen HA-beheer, inclusief automatiseringen (expliciete eigenaarcorrectie 25 september). Echte continuïteits-/grensproeven blijven open.",
           "planningEffortHours": "4–12"
         },
         {
@@ -12121,7 +12129,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Breder HA-beheer via beide speakers wacht op de open eigenaarvraag. Andere uitvoerbare dagelijkse aansluitingen blijven doorgaan; geen nieuwe herstel-/verhuizingsbouw.",
+      "nextAction": "Bestaande algemene HA-route en achtergrondwerk verbinden waar langere opdrachten nog vastlopen; geen nieuwe functies per apparaat. Het volledige oplevergoal blijft actief.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",

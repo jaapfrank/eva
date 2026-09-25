@@ -10,12 +10,12 @@ als/dan-sjablonen zijn geen vervanging voor deze algemene vaardigheid. Gebruik
 de bestaande algemene uitvoeringsroute; geen nieuwe kernfunctie per apparaat
 of gebruikersvraag. De eerdere oplevering van ruimteselectie is slechts een
 deelresultaat, geen afronding van huisbediening. Privé-inhoud blijft op Telegram;
-de uitbreiding van breed beheer voor alle gedeelde sprekers is apart gevraagd.
+algemeen HA-beheer is op 25 september expliciet voor beide speakers bevestigd.
 
 
 ## Eigenaarbesluit 24 september 2026 — gedeelde bediening, privé via Telegram
 
-Iedereen thuis mag via beide bestaande Voice PE-apparaten de reeds toegestane lampen en schakelaars bedienen. Dit voegt geen apparaten of soorten handelingen toe. Privé-inhoud wordt niet via gedeelde spraak ontsloten; privévoortzetting loopt via Telegram. Stemherkenning is geen voorwaarde voor deze gedeelde huisbediening en geeft geen toegang tot privégeheugen.
+**Gecorrigeerd door de eigenaar op 25 september:** iedereen thuis kan via beide bestaande Voice PE-apparaten de algemene Home Assistant-mogelijkheden gebruiken: apparaten en diensten ontdekken/bedienen, automatiseringen lezen, maken en aanpassen. De eerdere lamp-/schakelaarbeperking was een onjuiste interpretatie van de ontwikkelagent, geen eigenaarbesluit. Privé-inhoud wordt niet via gedeelde spraak ontsloten; privévoortzetting loopt via Telegram. Stemherkenning is geen voorwaarde voor deze gedeelde huisbediening en geeft geen toegang tot privégeheugen.
 
 ## Aanvullend eigenaarbesluit 23 september 2026 — functies eerst
 
