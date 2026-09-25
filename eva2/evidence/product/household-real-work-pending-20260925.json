@@ -1,0 +1,28 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-25T12:43:22.263200+00:00",
+  "sourceCommit": "07070a8e",
+  "outcome": "not_executed_pending_explicit_confirmation",
+  "attempts": 0,
+  "automaticApprovalRejections": 2,
+  "rejectionReason": "Requires explicit owner confirmation to send two actual HA automation configurations to the existing OpenAI model for explanation. Destination confirmed before second rejection. No probe command executed.",
+  "existingProviderEndpoint": "https://chatgpt.com/backend-api/codex/responses",
+  "installedContactModel": {
+    "model": "gpt-6-luna",
+    "reasoning": "low"
+  },
+  "installedWorkModel": {
+    "model": "gpt-6-astra",
+    "reasoning": "medium"
+  },
+  "usage": {
+    "evaModelCalls": 0,
+    "homeAssistantRequests": 0,
+    "creditCost": null
+  },
+  "limits": [
+    "Static wiring/configuration check is not successful voice task execution.",
+    "Household session route differs from native turns and physical audio.",
+    "No additional major product area completed."
+  ]
+}

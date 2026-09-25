@@ -2343,15 +2343,15 @@
           }
         ],
         "now": {
-          "title": "Huisopdracht blijft bereikbaar na volgende wakeword",
-          "state": "Bestaande installatie gecontroleerd",
-          "detail": "Vier proeven met exact geïnstalleerde code en databaseschema slagen. Eerdere taak vindbaar en gericht te stoppen/hervatten; andere taak blijft lopen en resultaat houdt oorspronkelijke bestemming. Geen nieuwe productcode of herstart. Geen uitvoerder meer actief.",
-          "doneWhen": "Technische continuïteit voor het nieuwe digitale taaktype is bevestigd. Fysieke hoorbaarheid en echte modelopdracht blijven afzonderlijk open."
+          "title": "Spraak: echte huisopdracht en tussenvraag",
+          "state": "Wacht op expliciete proefbevestiging",
+          "detail": "Algemene HA-toegang en achtergrondwerk zijn geïnstalleerd. De proef met twee echte automatiseringen is niet gestart: automatische goedkeuringscontrole verlangt expliciete bevestiging voor uitleg via het bestaande OpenAI-model. Vraag staat bij Jaap. Snelle gesprekskoppeling gecontroleerd: Luna6-contactmodel actief. Geen nieuwe functie afgerond; geen modelcalls of HA-verzoeken in deze proef. Geen bouwuitvoerder actief.",
+          "doneWhen": "Na toestemming: één echte leesopdracht, tussenvraag en teruggegeven resultaat vastleggen. Hoorbare fysieke spraak blijft afzonderlijk te beoordelen."
         },
         "next": {
-          "title": "Een echte huisopdracht via de spraakroute afronden",
-          "state": "Nog niet gestart",
-          "detail": "Eén begrensde leesopdracht met het bestaande model en echte HA-gegevens. Aannemen, tussenvraag en opgeslagen resultaat volgen; geen huisinstellingen wijzigen of ongewijzigde proef herhalen."
+          "title": "Echte huisopdracht afmaken terwijl gesprek doorgaat",
+          "state": "Wacht op proefbevestiging",
+          "detail": "Eén begrensde modelproef met twee bestaande automatiseringen, zonder wijzigingen. Automatische goedkeuringscontrole heeft expliciete bevestiging gevraagd; geen ongewijzigde herhaling zonder die bevestiging."
         },
         "ownerAction": {
           "title": "Een langere huisvraag stellen en ondertussen doorpraten",
@@ -2366,7 +2366,7 @@
           "expected": "De langere huisopdracht kan naar de achtergrondwerker. De speaker blijft beschikbaar voor een volgende beurt; resultaat hoort bij de oorspronkelijke huisopdracht. Werkelijke spreeksnelheid en modelkeuze zijn nog niet in deze oplevering gemeten."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-25T12:32:19.756636+00:00"
+        "reviewedAt": "2026-09-25T12:43:22.263200+00:00"
       }
     },
     "pendingTechnicalReview": {
