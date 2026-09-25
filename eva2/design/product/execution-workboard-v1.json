@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Werk en resultaat na een gesloten spraakgesprek",
+            "date": "25 september",
+            "state": "installed",
+            "result": "Een nieuwe wakeword-beurt op dezelfde speaker kan eerder aangenomen onderzoek en huiswerk lezen, stoppen en hervatten. De oorspronkelijke speaker kan het bewaarde resultaat aanbieden als hij vrij is, zonder het oude gesprek te heropenen of dubbel terug te melden.",
+            "remaining": "Technisch gecontroleerd met geïsoleerde database en nagebootste HA-uitvoer. Werkelijke hoorbare Voice PE-proef en gezinsacceptatie staan open; geen nieuwe grote categorie als klaar gemarkeerd.",
+            "source": "eva2/evidence/product/household-result-continuity-installed-20260925.json"
+          },
+          {
             "title": "Lopende huisopdracht via spraak bijsturen",
             "date": "25 september",
             "state": "installed",
@@ -2375,29 +2383,28 @@
           }
         ],
         "now": {
-          "title": "Lopende huisopdrachten via spraak bijsturen geïnstalleerd",
+          "title": "Werk en resultaat blijven bereikbaar na einde spraakgesprek",
           "state": "Technisch opgeleverd",
-          "detail": "Bron2050a3c4 geïnstalleerd in gezonde kern en werker. Bijsturing gebruikt dezelfde correctie-, stop- en hervatroute als privétaken; gerichte controles en onafhankelijke review geslaagd. Geen bouwtaak meer actief op deze wijziging. Fysieke gebruikersproef blijft open; volledige onderdelen blijven2van9 klaar."
+          "detail": "Bron5c9cd90c geïnstalleerd op gezonde kern/werker met gelijke uitvoerversies. Nieuwe wakeword-beurt op dezelfde speaker kan bewaard werk lezen, stoppen, bijsturen en hervatten; afgerond resultaat wordt op de oorspronkelijke vrije speaker één keer aangeboden. Gerichte controles en onafhankelijke review geslaagd. Geen uitvoerder meer actief op deze wijziging; fysieke hoorbaarheid/eigenaaracceptatie blijven open."
         },
         "next": {
-          "title": "Taakresultaat na gesloten spraakgesprek bereikbaar maken",
+          "title": "Gesprek en achtergrondwerk via de vier ingangen afronden",
           "state": "Nog niet gestart",
-          "detail": "Bestaande uitvoering bewaart het resultaat na sluiting van het oorspronkelijke gesprek, maar automatische audio en ophalen vanuit een nieuwe wakeword-beurt zijn dan nog niet aangesloten. Dit concrete resterende gat oplossen via de bestaande taak- en resultaatroute."
+          "detail": "Bestaande snelle ontvangst en nu doorlopende taakbediening behouden. Resterend binnen stap1: snelle inhoudelijke begroeting, kanaalgelijkheid en fysieke continue-spraakproef. Gebruik bestaande bewijzen; geen herbouw van afgeronde taakcontinuïteit."
         },
         "ownerAction": {
-          "title": "Een langere huisvraag stellen en ondertussen doorpraten",
-          "url": "http://localhost:44716/",
-          "linkLabel": "Bestaande spraakpagina",
+          "title": "Later proberen: doorpraten en terugkomen op een huisopdracht",
+          "url": "http://localhost:44712/",
+          "linkLabel": "Projectvoortgang",
           "steps": [
-            "Gebruik je gewone wakeword op een speaker.",
-            "Vraag: Bekijk de automatiseringen voor de woonkamer en leg uit wat ze doen.",
-            "Gebruik tijdens het werk opnieuw het wakeword en stel een korte tussenvraag.",
-            "Je kunt ook vragen welke taak nog loopt of Eva vragen die te stoppen."
+            "Gebruik je gewone wakeword op een van beide speakers en geef een langere publieke onderzoeks- of huisopdracht.",
+            "Laat het gesprek eindigen. Gebruik opnieuw het wakeword op dezelfde speaker en vraag: Welke opdracht loopt nog? Je kunt haar ook bijsturen of stoppen.",
+            "Laat een opdracht afronden: zodra de oorspronkelijke speaker vrij is, hoort Eva het resultaat één keer terug te geven."
           ],
-          "expected": "De langere huisopdracht kan naar de achtergrondwerker. De speaker blijft beschikbaar voor een volgende beurt; resultaat hoort bij de oorspronkelijke huisopdracht. Werkelijke spreeksnelheid en modelkeuze zijn nog niet in deze oplevering gemeten."
+          "expected": "Werk blijft bewaard en bedienbaar na het gesprek. Onderzoek en digitale huisopdrachten gebruiken dezelfde opslag/uitvoering. Hoorbaarheid en ervaren snelheid moeten nog fysiek beoordeeld worden."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-25T14:11:34.800527+00:00"
+        "reviewedAt": "2026-09-25T14:32:16.462475+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12096,7 +12103,7 @@
             "UX-002"
           ],
           "doneWhen": "Meerdere aangenomen taken volgen, gecontroleerd resultaat aan juiste persoon terugbrengen, browserovername en herstel zonder dubbele acties; bruikbare taakbediening.",
-          "preserve": "Publiek onderzoek, digitale uitvoering, taakbediening en terugmelding via bestaande kanalen behouden. Twee achtergrondslots geïnstalleerd; echte gelijktijdigheids-/kanaalproef, brede ongeziene taken en browserpraktijk blijven open.",
+          "preserve": "Publiek onderzoek, digitale uitvoering, taakbediening en terugmelding behouden. Op25september geïnstalleerd: bijsturen, bewaren en bedienen na einde spraakgesprek, plus eenmalige terugmelding op de oorspronkelijke speaker. Twee achtergrondslots behouden; echte gelijktijdigheids-/kanaalproef, brede ongeziene taken en browserpraktijk blijven open.",
           "planningEffortHours": "6–16"
         },
         {
@@ -12169,7 +12176,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Eén begrensde leesopdracht met het bestaande model en echte HA-gegevens. Aannemen, tussenvraag en opgeslagen resultaat volgen; geen huisinstellingen wijzigen of ongewijzigde proef herhalen.",
+      "nextAction": "Volg deliveryOverview.next: gesprek en achtergrondwerk via de vier ingangen afronden; bewaar de geïnstalleerde taakcontinuïteit. Open fysieke proeven en externe bevestigingen staan apart en blokkeren onafhankelijk werk niet.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
