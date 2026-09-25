@@ -6,7 +6,7 @@ import hashlib
 import sqlalchemy as sa
 
 from eva.application.conversation import ConversationTurn, ConversationObservationBinding
-from eva.adapters.postgres.delegated_work import DelegatedWorkNotFound
+from eva.adapters.postgres.delegated_work import DelegatedWorkStoreError, DelegatedWorkNotFound
 from eva.adapters.postgres.operational_timeline import (
     PostgresOperationalTimeline, operational_checkpoints, operational_events,
     insert_initial_timeline_thread, transition_timeline_thread,
@@ -16,19 +16,38 @@ from eva.contracts.timestamps import parse_utc_timestamp
 
 
 class ScheduledOwnerWork:
-    def __init__(self, service):
+    def __init__(self, service, *, audience_adapter=None):
         self.service = service
+        self.audience_adapter = audience_adapter
         self.engine = service.store._engine
         self.scope = service.store.scope
         self.timeline = PostgresOperationalTimeline(self.engine, self.scope)
-        self.prefix = "scheduled-work:" + str(service.owner_principal_id) + ":"
+        self.prefix = ("scheduled-work:" + str(service.owner_principal_id) + ":"
+                       if audience_adapter is None else audience_adapter.prefix)
 
     def _authorize(self, conn, *, lock=False):
         self.timeline._scope(conn)
         if lock:
             conn.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
                          {"key": str(self.scope) + self.prefix})
-        self.service.store.validate_admission_authority(**self.service._owner)
+        if self.audience_adapter is None:
+            self.service.store.validate_admission_authority(**self.service._owner)
+        else:
+            self.audience_adapter.authorize()
+
+    def _load_work(self, work_id, request):
+        if self.audience_adapter is not None:
+            return self.audience_adapter.load(work_id, request)
+        return self.service.store.load(work_id, **self.service._owner)
+
+    def _stop_work(self, work_id, request):
+        if self.audience_adapter is not None:
+            return self.audience_adapter.request_stop(work_id, request, self.service.now())
+        return self.service.store.request_stop(work_id, **self.service._owner, now=self.service.now())
+
+    def _restore_turn(self, request):
+        return (self._turn(request) if self.audience_adapter is None
+                else self.audience_adapter.restore_turn(request))
 
     def _rows(self):
         c = operational_checkpoints.c
@@ -77,11 +96,14 @@ class ScheduledOwnerWork:
         now = self.service.now()
         thread_id = self.prefix + hashlib.sha256(request_key.encode()).hexdigest()
         from eva.adapters.postgres.scheduled_work_failure import schedule_return_binding
-        binding = schedule_return_binding(self.service, turn)
+        binding = (schedule_return_binding(self.service, turn) if self.audience_adapter is None
+                   else self.audience_adapter.return_binding(turn))
         data = {"return_binding": binding, "source": asdict(turn), "operation": "resume" if resume else "digital",
                 key: request[key], "run_at": run_at,
                 **{name: request[name] for name in dependency_keys},
                 **({"wait_for_stop": True} if wait_for_stop else {})}
+        if self.audience_adapter is not None:
+            data["audience_context"] = self.audience_adapter.request_context(turn, request, resume)
         with self.engine.begin() as conn:
             self._authorize(conn, lock=True)
             conn.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
@@ -104,7 +126,7 @@ class ScheduledOwnerWork:
                 if dependency["state"] == "blocked":
                     raise ValueError("the selected predecessor cannot supply a successful result")
             if resume:
-                previous = self.service.store.load(request[key], **self.service._owner)
+                previous = self._load_work(request[key], data)
                 if (previous.state not in {"failed", "ambiguous", "needs_help", "stopped"}
                         and not (wait_for_stop and previous.stop_requested_at is not None)):
                     raise ValueError("only stopped or failed work can be scheduled for resumption")
@@ -141,7 +163,7 @@ class ScheduledOwnerWork:
             return {"state": "blocked", "work_id": work_id,
                     "reason": "Deze vervolgstap hoort bij een inmiddels gestopte reeks."}
         try:
-            work = self.service.store.load(work_id, **self.service._owner)
+            work = self._load_work(work_id, request)
         except DelegatedWorkNotFound:
             return {"state": "blocked", "work_id": work_id,
                     "reason": "Het resultaat van de vorige opdracht is niet meer beschikbaar."}
@@ -270,8 +292,9 @@ class ScheduledOwnerWork:
                     occurred_at=self.service.now(), data={"reason": "owner_cancelled"})
                 return {"status": "cancelled", "schedule_id": schedule_id}
             work_id = row.operation_id if row.phase == "dispatched" else None
+            request = self._request(conn, row.thread_id)
         if work_id is not None:
-            work = self.service.store.request_stop(work_id, **self.service._owner, now=self.service.now())
+            work = self._stop_work(work_id, request)
             return {"status": "stop_requested", "schedule_id": schedule_id,
                     "work_id": work_id, "work_state": work.state}
         return {"status": row.phase, "schedule_id": schedule_id}
@@ -335,8 +358,7 @@ class ScheduledOwnerWork:
                 if row is None:
                     break
                 try:
-                    work = self.service.store.request_stop(row.operation_id,
-                        **self.service._owner, now=self.service.now())
+                    work = self._stop_work(row.operation_id, self._request(conn, row.thread_id))
                     state = work.state
                 except DelegatedWorkNotFound:
                     state = "unavailable"
@@ -367,15 +389,15 @@ class ScheduledOwnerWork:
                     row = candidate
                     break
                 request = self._request(conn, candidate.thread_id)
-                if request.get("wait_for_stop"):
-                    previous = self.service.store.load(request["work_id"], **self.service._owner)
-                    if (previous.state in {"admitted", "call_started"}
-                            or (previous.lease_owner is not None and previous.lease_expires_at is not None
-                                and previous.lease_expires_at > now)):
-                        continue
                 try:
+                    if request.get("wait_for_stop"):
+                        previous = self._load_work(request["work_id"], request)
+                        if (previous.state in {"admitted", "call_started"}
+                                or (previous.lease_owner is not None and previous.lease_expires_at is not None
+                                    and previous.lease_expires_at > now)):
+                            continue
                     dependency = self._dependency(conn, request)
-                except (ValueError, LookupError):
+                except (ValueError, LookupError, DelegatedWorkStoreError):
                     dependency = {"state": "blocked", "reason": "De vorige stap is niet meer beschikbaar."}
                 if dependency["state"] == "waiting":
                     continue
@@ -408,10 +430,13 @@ class ScheduledOwnerWork:
                 e.tenant_id == self.scope.tenant_id, e.installation_id == self.scope.installation_id,
                 e.thread_id == thread_id, e.event_type == "SCHEDULED_WORK_LAUNCH_RESERVED")).scalar_one()
             try:
-                result = self.service._execute(request["operation"], self._turn(request),
-                    task=reserved["data"].get("task", request.get("task")), work_id=request.get("work_id"),
-                    request_key=thread_id,
-                    admission_time=parse_utc_timestamp(reserved["data"]["admission_time"]))
+                task = reserved["data"].get("task", request.get("task"))
+                admission_time = parse_utc_timestamp(reserved["data"]["admission_time"])
+                turn = self._restore_turn(request)
+                result = (self.service._execute(request["operation"], turn,
+                    task=task, work_id=request.get("work_id"), request_key=thread_id,
+                    admission_time=admission_time) if self.audience_adapter is None else
+                    self.audience_adapter.dispatch(request, turn, task, thread_id, admission_time))
                 work_id = result["work"]["work_id"]
             except Exception as error:
                 transition_timeline_thread(conn, self.scope, thread_id=thread_id,

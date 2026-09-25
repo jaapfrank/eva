@@ -249,11 +249,12 @@ class HouseholdWorkService:
         return work_context_metadata(rows, now)
 
     def execute(
-        self, operation, turn, *, request_key, research=None, work_id=None, task=None, prior_work_id=None
+        self, operation, turn, *, request_key, research=None, work_id=None, task=None, prior_work_id=None, revision=None
     ):
         self.validate_authority(turn)
         if (task is not None and operation != "digital") or operation not in {
             "digital",
+            "revise_digital",
             "research",
             "list",
             "related",
@@ -270,6 +271,17 @@ class HouseholdWorkService:
             self.store._engine, self.server.conversation_scope
         ).admit_household_ingress(turn, validate_current=self.validate_authority)
         origin = self.origin(turn)
+        if operation == "revise_digital":
+            if (any(value is not None for value in (task, research, work_id, prior_work_id))
+                    or not isinstance(revision, dict) or set(revision) != {"work_id", "instruction"}
+                    or not isinstance(revision["work_id"], str) or not revision["work_id"]
+                    or not isinstance(revision["instruction"], str)
+                    or not 1 <= len(revision["instruction"].strip()) <= 2000):
+                raise ValueError("household correction requires a work ID and instruction")
+            from eva.bootstrap.household_work_corrections import revise_household_work
+            return revise_household_work(self, turn, request_key, revision)
+        if revision is not None:
+            raise ValueError("correction arguments require their own operation")
         if operation == "digital":
             if research is not None or work_id is not None or prior_work_id is not None:
                 raise ValueError("household digital admission cannot select another destination")
@@ -279,21 +291,32 @@ class HouseholdWorkService:
             if research is not None or prior_work_id is not None or not isinstance(work_id, str) or not work_id:
                 raise ValueError("related stop requires one work ID")
             from eva.application.related_work import stop_related_work
+            from eva.bootstrap.household_work_corrections import HouseholdScheduledWork
             return stop_related_work(work_id,
                 inspect=lambda identifier: self.execute("related", turn,
                     work_id=identifier, request_key=request_key),
                 stop=lambda identifier: self.execute("stop", turn,
-                    work_id=identifier, request_key=request_key))
+                    work_id=identifier, request_key=request_key),
+                cancel_schedule=(None if self.digital_profile is None else
+                    HouseholdScheduledWork(self.server).cancel_chain))
         if operation == "related":
             if research is not None or prior_work_id is not None or not isinstance(work_id, str) or not work_id:
                 raise ValueError("related household work requires one work ID")
             from eva.application.related_work import related_work
-            return related_work(work_id,
+            result = related_work(work_id,
                 load=lambda identifier: self._load(identifier, origin),
                 children=lambda parents: self._native_work(origin, parent_ids=parents, limit=65),
                 render=lambda row: {key: value for key, value in self.view(row).items()
                                     if key not in {"result", "question", "usage"}},
                 missing=DelegatedWorkNotFound)
+            if self.digital_profile is not None and result.get("jobs"):
+                from eva.bootstrap.household_work_corrections import HouseholdScheduledWork
+                planning = HouseholdScheduledWork(self.server).related(
+                    tuple(job["work_id"] for job in result["jobs"]))
+                planning.pop("linked_work_ids")
+                result["planning"] = planning
+                result["truncated"] = result["truncated"] or planning["truncated"]
+            return result
         if operation == "list":
             if research is not None or work_id is not None or prior_work_id is not None:
                 raise ValueError("household listing cannot select another destination")
@@ -327,6 +350,9 @@ class HouseholdWorkService:
             if operation in {"get", "result"}:
                 return {"work": self.view(previous)}
             if operation == "stop":
+                if self.digital_profile is not None:
+                    from eva.bootstrap.household_work_corrections import cancel_pending_household_resumes
+                    cancel_pending_household_resumes(self.server, previous)
                 return {
                     "work": self.view(
                         self.store.request_stop(
@@ -560,7 +586,7 @@ class HouseholdWorkService:
 class HouseholdWorkActions(PostgresDelegatedWorkActions):
     @property
     def action_names(self):
-        return (() if self._service.digital_profile is None else ("start_digital_work",)) + (
+        return (() if self._service.digital_profile is None else ("start_digital_work", "revise_digital_work")) + (
             "start_background_research",
             "list_delegated_work",
             "get_related_work",
@@ -574,6 +600,7 @@ class HouseholdWorkActions(PostgresDelegatedWorkActions):
     def conversation_tools(**kwargs):
         allowed = {
             "start_digital_work",
+            "revise_digital_work",
             "start_background_research",
             "list_delegated_work",
             "get_related_work",
@@ -598,6 +625,8 @@ class HouseholdWorkActions(PostgresDelegatedWorkActions):
             result = receipt.output.get("operation_result", {})
             self._service.validate_authority(turn)
             saved_work = [result.get(field) for field in ("work", "previous")]
+            if receipt.call.name == "revise_digital_work" and result.get("work_id") is not None:
+                saved_work.append({"work_id": result["work_id"]})
             saved_work.extend(result.get("jobs", ()))
             for work in saved_work:
                 if work is not None:

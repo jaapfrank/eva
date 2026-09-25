@@ -2178,6 +2178,10 @@ def create_runtime_app() -> FastAPI:
         from eva.adapters.postgres.scheduled_work import ScheduledOwnerWork
         scheduled_work = ScheduledOwnerWork(delegated_work_service)
         service_tasks = (scheduled_work.run_once, *service_tasks)
+    if household_work_server is not None and getattr(household_work_server.authority, "digital_profile", None) is not None:
+        from eva.bootstrap.household_work_corrections import HouseholdScheduledWork
+        household_schedules = HouseholdScheduledWork(household_work_server)
+        service_tasks = (*service_tasks, household_schedules.run_once)
     if settings.delegated_result_delivery_enabled and household_work_server is not None:
         from eva.providers.home_assistant import HomeAssistantProviderSettings
         from eva.bootstrap.native_work_delivery import NativeWorkDelivery

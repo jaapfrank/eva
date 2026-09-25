@@ -1,0 +1,52 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-25T14:06:27.936961+00:00",
+  "status": "tested_not_installed",
+  "baseCommit": "655097bf",
+  "ownerRequirement": "One Eva across channels: correct a running digital household task through the registered speakers, preserve the original task/actions/result destination, and remain able to stop.",
+  "change": [
+    "Expose the existing revise_digital_work tool on household conversation routes.",
+    "Share the existing correction workflow with the private route; reuse scheduler states, locks, stopped-attempt wait and deterministic resumption.",
+    "Retain sealed original task and correcting ingress plus current authority after both foreground voice sessions close; only the internal durable correction carries its exact execution identity.",
+    "Whole-task stop cancels waiting correction resumes through the existing related-work planning and chain-stop route.",
+    "Block an unavailable individual predecessor without starving other valid pending corrections."
+  ],
+  "newWorker": false,
+  "schemaMigration": false,
+  "newEvaModelCalls": 0,
+  "physicalDeviceActions": 0,
+  "creditCost": null,
+  "tests": {
+    "privateCorrectionCasesPassed": 5,
+    "privateSchedulerLifecyclePassed": 1,
+    "queueIsolationRegression": "Passed: corrupted original blocks only its own schedule; next task dispatches and can be stopped after its original session closes",
+    "scope": "Controlled model/tool, real isolated PostgreSQL lifecycle; no production data or actual HA device actions.",
+    "closedOriginalAndCorrectingSessions": "Passed: one successor despite interrupted scheduler acknowledgement, previous action not repeated, corrected result saved with original origin destination; foreground access remains denied",
+    "householdDistinctPassed": 9,
+    "artifacts": [
+      "private-regression.txt",
+      "household-invalid-origin-final.txt",
+      "household-tests-initial.txt",
+      "private-correction-rerun.txt",
+      "household-tests.txt",
+      "household-closed-origin-final.txt",
+      "household-invalid-origin-initial.txt",
+      "household-closed-origin-and-corruption.txt",
+      "household-tests-retry.txt",
+      "household-corruption-and-closed-stop-final.txt",
+      "household-lifecycle-final.txt"
+    ]
+  },
+  "review": {
+    "agent": "result_return_review",
+    "result": "GO after source review and independent reading of final targeted outputs; no remaining code blockers within stated scope"
+  },
+  "limits": [
+    "No physical speaker or owner acceptance in this delivery.",
+    "Correction applies to a digital household task; finished work keeps its stored result and requires a distinct follow-up.",
+    "Private content remains outside shared speakers.",
+    "No measured response-time improvement claim.",
+    "An explicitly closed original session is not a new audio/listening authority; automatic result delivery and new-wakeword retrieval after that closure remain open. No claim of completing the full speech or background-work category."
+  ],
+  "artifactsDirectory": "/home/administrator/project/.eva2-artifacts/household-correction-20260925"
+}

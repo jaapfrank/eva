@@ -21,7 +21,9 @@ DIGITAL_OUTPUT_SHA256 = canonical_sha256({
 _ROOT = Path(__file__).resolve().parents[1]
 _SOURCES = (
     "contracts/delegated_work.py", "contracts/delegated_digital_work.py",
-    "bootstrap/delegated_digital_profile.py", "application/background_execution.py",
+    "bootstrap/delegated_digital_profile.py", "bootstrap/household_work_corrections.py",
+    "adapters/postgres/scheduled_work.py", "adapters/postgres/work_corrections.py",
+    "application/background_execution.py",
     "application/conversation.py", "application/cancellation.py",
     "adapters/postgres/background_model_journal.py",
     "adapters/postgres/conversation_journal.py", "adapters/postgres/conversation_actions.py",

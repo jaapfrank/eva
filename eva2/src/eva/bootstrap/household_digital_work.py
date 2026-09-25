@@ -122,7 +122,8 @@ class HouseholdDigitalSourceLoader:
         return turn
 
 
-def admit_household_digital(service, turn, request_key, task, *, previous=None):
+def admit_household_digital(service, turn, request_key, task, *, previous=None, admission_time=None,
+                            household_continuation_execution_id=None):
     """Use the same admission, resume receipts and delivery scope as research."""
     profile = service.digital_profile
     if profile is None:
@@ -130,7 +131,7 @@ def admit_household_digital(service, turn, request_key, task, *, previous=None):
     service.validate_authority(turn)
     origin = service.origin(turn) if previous is None else previous.spec.origin
     service.server.authority.validate_actor(origin.actor_id)
-    created = parse_utc_timestamp(turn.occurred_at)
+    created = admission_time or parse_utc_timestamp(turn.occurred_at)
     expiry = parse_utc_timestamp(service.server.authority.policy.expires_at)
     key = canonical_sha256(dict(origin=origin.to_payload(), request_key=request_key))
     if previous is None:
@@ -153,8 +154,10 @@ def admit_household_digital(service, turn, request_key, task, *, previous=None):
         principal_binding_id=str(service._owner["principal_binding_id"]), task=task,
         created_at=created, deadline=min(created+timedelta(seconds=profile.timeout_seconds),expiry))
     title = previous.title if previous else " ".join(task.split())[:120]
+    continuation = ({} if household_continuation_execution_id is None else
+        {"household_continuation_execution_id": household_continuation_execution_id})
     try:
-        saved = service.store.load(spec.work_id, **service._owner, household_origin=origin)
+        saved = service.store.load(spec.work_id, **service._owner, household_origin=origin, **continuation)
         title = saved.title
     except DelegatedWorkNotFound:
         pass
@@ -162,6 +165,6 @@ def admit_household_digital(service, turn, request_key, task, *, previous=None):
         summary="Huisopdracht via de bestaande Home Assistant-API.", worker_role="Huisopdracht",
         retention_policy_id="retention:household-digital-work:v1",
         retention_until=min(created+timedelta(days=7),expiry), occurred_at=created,
-        **({} if previous is None else {"resumes_work_id":previous.spec.work_id}))
+        **continuation, **({} if previous is None else {"resumes_work_id":previous.spec.work_id}))
     return dict(created=admitted.disposition=="inserted", work=service.view(admitted.work),
         prior_outcome_unknown=previous is not None and previous.call_id is not None)

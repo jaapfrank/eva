@@ -129,41 +129,17 @@ class DelegatedWorkOwnerService:
             previous = self.store.load(revision["work_id"], **self._owner)
             if not isinstance(previous.spec, DelegatedDigitalWorkSpec):
                 return {"status": "not_digital", "guidance": "Deze bijsturing geldt voor digitale opdrachten. Stop ander werk gericht en neem de gewijzigde opdracht opnieuw aan via de passende route."}
-            successor_id = "work:eva-resume:" + str(uuid5(self.store.scope.installation_id,
-                f"{previous.spec.work_id}:{previous.spec.generation + 1}"))
-            try:
-                successor = self.store.load(successor_id, **self._owner)
-            except DelegatedWorkNotFound:
-                pass
-            else:
-                return {"status": "newer_attempt_exists", "work_id": successor.spec.work_id,
-                        "guidance": "Gebruik de nieuwere poging voor deze correctie; er is hier niets gewijzigd."}
-            previous = self.store.request_stop(previous.spec.work_id, **self._owner, now=self.now())
-            if previous.state in {"succeeded", "verified"}:
-                return {"status": "already_finished", "work_id": previous.spec.work_id,
-                        "guidance": "Deze opdracht is al afgerond. Bespreek het bewaarde resultaat en neem zo nodig een nieuwe vervolgopdracht aan."}
-            from eva.adapters.postgres.work_corrections import record_work_correction
-            try:
-                recorded = record_work_correction(self.store._engine, previous.spec,
-                    instruction=revision["instruction"], request_key=request_key, now=self.now())
-            except Exception:
-                # A failed acknowledgement does not prove the write did not commit.
-                # The stop is already durable; never hide it behind an invalid-request error.
-                return {"status": "stop_recorded_correction_unconfirmed", "work_id": previous.spec.work_id,
-                        "in_flight_effects_may_complete": True,
-                        "guidance": "De stop is vastgelegd. Het bewaren van je correctie is niet bevestigd. Controleer de taak en planning voordat je opnieuw probeert; ik herhaal dit verzoek niet automatisch."}
-            try:
-                queued = ScheduledOwnerWork(self).schedule(turn, request_key=request_key,
-                    request={"work_id": previous.spec.work_id, "run_at": recorded.isoformat().replace("+00:00", "Z")},
-                    resume=True, wait_for_stop=True)
-            except Exception:
-                # Scheduling can commit before its acknowledgement is lost. Do not retry here.
-                return {"status": "correction_saved_resume_unconfirmed", "work_id": previous.spec.work_id,
-                        "in_flight_effects_may_complete": True,
-                        "guidance": "De stop en je correctie zijn vastgelegd. Het inplannen van de hervatting is niet bevestigd. Controleer de taak en planning voordat je opnieuw probeert; ik herhaal dit verzoek niet automatisch."}
-            return {"status": "correction_saved", "work_id": previous.spec.work_id,
-                    "schedule": queued, "in_flight_effects_may_complete": True,
-                    "guidance": "Correctie bewaard; de huidige poging stopt en één begrensde hervatting wacht daarop. Eerdere acties en resultaten blijven behouden."}
+            from eva.bootstrap.household_work_corrections import revise_digital_work
+            return revise_digital_work(self.store, previous,
+                instruction=revision["instruction"], request_key=request_key, clock=self.now,
+                load_work=lambda identifier: self.store.load(identifier, **self._owner),
+                stop_work=lambda identifier, now: self.store.request_stop(
+                    identifier, **self._owner, now=now),
+                schedule_resume=lambda work, recorded: ScheduledOwnerWork(self).schedule(
+                    turn, request_key=request_key,
+                    request={"work_id": work.spec.work_id,
+                             "run_at": recorded.isoformat().replace("+00:00", "Z")},
+                    resume=True, wait_for_stop=True))
         if revision is not None:
             raise ValueError("correction arguments require their own operation")
         if operation in {"schedule_digital", "schedule_resume", "schedule_list", "schedule_cancel", "schedule_cancel_chain"}:
