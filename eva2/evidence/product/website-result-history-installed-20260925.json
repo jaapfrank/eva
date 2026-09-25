@@ -1,0 +1,66 @@
+{
+  "checkedAt": "2026-09-25T03:37:18.553328+00:00",
+  "services": {
+    "core": {
+      "image": "sha256:82681b1f237c0c4766f34ea57cc4e7be30c20ff05efbae706c8c10986f646836",
+      "health": "healthy",
+      "sourceHashes": {
+        "adapters/api/dashboard_work_return_client.py": "3bcbc38e6789ea279436a30292cd45d265a6e48c8e8510957b77ebf706346d93",
+        "adapters/api/dashboard_work.py": "8ca415c3a31a0c5d217c394db59392f5e7ea9e08c481338162d988aa84249dbf",
+        "bootstrap/dashboard_work.py": "c0ca4821f946502e9df6e0626e1b29058bdabf016bc516ae205625b98370d0cc",
+        "adapters/postgres/private_work_return.py": "2822758b4c2c75c60abbcf08229a9258e008f7b8238d507fdf0f760fb245ebbb"
+      }
+    },
+    "worker": {
+      "image": "sha256:76159a924b004d02915b185233063c63a297eecb138c0e16b192a6f78811a617",
+      "health": "healthy",
+      "sourceHashes": {
+        "adapters/api/dashboard_work_return_client.py": "3bcbc38e6789ea279436a30292cd45d265a6e48c8e8510957b77ebf706346d93",
+        "adapters/api/dashboard_work.py": "8ca415c3a31a0c5d217c394db59392f5e7ea9e08c481338162d988aa84249dbf",
+        "bootstrap/dashboard_work.py": "c0ca4821f946502e9df6e0626e1b29058bdabf016bc516ae205625b98370d0cc",
+        "adapters/postgres/private_work_return.py": "2822758b4c2c75c60abbcf08229a9258e008f7b8238d507fdf0f760fb245ebbb"
+      }
+    }
+  },
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/website-result-history-20260925/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker",
+  "sourceCommit": "c67f853a127a42874008d8642258701d9d75e6de",
+  "result": "installed_saved_research_returned_and_restored",
+  "browser": {
+    "result": "passed",
+    "workId": "work:eva-resume:c8aa00b1-d594-5489-bb7f-8b6e3f39f1f7",
+    "outputSha256": "a951ae1eef83912dbd48afec17867c10a24bf2991d4d12e03893eaa365e938c1",
+    "visibleCopies": {
+      "initial": 1,
+      "reload": 1,
+      "return_to_tab": 1,
+      "reconnected": 1
+    },
+    "historyCount": 20,
+    "newConversationRequests": 0,
+    "limits": "Browser receipt and recovery; no new research or owner acceptance."
+  },
+  "before": {
+    "phase": "before_change",
+    "initialReturnMessages": 2,
+    "afterReloadReturnMessages": 1,
+    "historyWiring": false
+  },
+  "checks": {
+    "targetedTestsPassed": 6,
+    "server": "5 PostgreSQL/API checks in existing isolated environment",
+    "browserClient": "Python/Node lifecycle, integrity, history and deduplication check passed",
+    "independentReview": "Read-only reviewer checked server route/history; coordinator reviewed client changes."
+  },
+  "usage": {
+    "newEvaModelCalls": 0,
+    "newResearchRuns": 0,
+    "codexCreditCost": "unknown"
+  },
+  "deploymentNote": "An initial deployment was started before the candidate compose file existed. Baseline was restored and healthy. After build completion and an explicit preflight check, installation succeeded.",
+  "limitations": [
+    "Last 20 still-authorized acknowledged results in the original website conversation.",
+    "No new Telegram or physical Voice PE result-return proof.",
+    "Owner acceptance remains open.",
+    "No full-product completion claim."
+  ]
+}

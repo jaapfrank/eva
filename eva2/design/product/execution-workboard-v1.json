@@ -1012,6 +1012,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Opgeslagen taakresultaten blijven terug te vinden in het gesprek",
+            "date": "25 september",
+            "state": "installed",
+            "result": "Echt afgerond HA-spraakonderzoek via gesprekspagina getoond; opgeslagen tekst exact gecontroleerd. Na verversen, tabbladwissel en offline/online terug precies eenmaal zichtbaar. Geen nieuwe modelcalls.",
+            "remaining": "Website technisch gecontroleerd; eigenaaracceptatie en bewijs via overige kanalen blijven apart.",
+            "source": "eva2/evidence/product/website-result-history-installed-20260925.json"
+          },
+          {
             "title": "Echte onderzoeksopdracht met officiële bronnen afgerond",
             "date": "25 september",
             "state": "installed",
@@ -2311,29 +2319,29 @@
           }
         ],
         "now": {
-          "title": "Onderzoeksantwoord met bronnen opgeslagen en teruggelezen",
-          "state": "Geïnstalleerd — concrete opdracht geslaagd",
-          "detail": "Bronparser leest aparte annotations, content-part- en response-eindsnapshots. Echte hervatte HA-spraakopdracht geslaagd; antwoord met officiële bronnen opgeslagen en hash bij teruglezen exact. Eén modelrespons13.124input/753output,1toolcall; creditkosten onbekend. Geen uitvoerder of proef actief.",
-          "doneWhen": "Deze concrete hersteloplevering is technisch afgerond; algemene taakuitvoering en automatische kanaalaflevering blijven afzonderlijk open."
+          "title": "Onderzoeksresultaat terug in het gesprek en behouden bij terugkeer",
+          "state": "Geïnstalleerd en live gecontroleerd",
+          "detail": "Het bestaande HA-spraakonderzoek verschijnt op de gesprekspagina en komt na verversen, tabbladwissel en verbindingsherstel precies eenmaal terug. Dezelfde opgeslagen inhoud en bronnen gecontroleerd. Geen nieuw onderzoek of gespreksaanvraag. Deze opdracht is afgerond; geen uitvoerder meer actief.",
+          "doneWhen": "Technisch afgerond voor de website. Jouw beoordeling en kanaalproeven via Telegram/Voice PE blijven afzonderlijk open."
         },
         "next": {
-          "title": "Het opgeslagen resultaat via de oorspronkelijke gesprekroute terugbrengen",
+          "title": "Gesprek en achtergrondwerk via de overige ingangen afronden",
           "state": "Nog niet gestart",
-          "detail": "Gebruik het bestaande resultaat; controleer de terugmelding zonder nieuw onderzoek. Menselijke kanaalbeleving blijft apart."
+          "detail": "Gebruik bestaande kanaalroutes en bewijs; wijzig uitsluitend een aangetoond ontbrekende aansluiting. Geen herbouw of nieuwe onderzoeksproef zonder noodzaak."
         },
         "ownerAction": {
-          "title": "Controleer ontvangst op de Voice PE",
-          "url": "http://localhost:44716/",
-          "linkLabel": "Bestaande spraakpagina",
+          "title": "Je bestaande onderzoeksantwoord bekijken",
+          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
+          "linkLabel": "Open het gesprek",
           "steps": [
-            "Gebruik op de Voice PE het gewone wakeword.",
-            "Zeg Hallo Eva.",
-            "Laat hier weten of Een momentje direct klinkt of dat het eerst meerdere seconden stil blijft."
+            "Open het gesprek via deze link.",
+            "Zoek de terugmelding over Home Assistant Cloud-spraakassistenten.",
+            "Je kunt de pagina verversen: het opgeslagen antwoord blijft terug te vinden."
           ],
-          "expected": "Een korte ontvangstmelding vóór het inhoudelijke antwoord. Dit is de fysieke speakerproef; de websiteknop vervangt die niet."
+          "expected": "Het bestaande antwoord met bronnen verschijnt zonder dat je de onderzoeksopdracht opnieuw hoeft te stellen. Jouw acceptatie staat nog open."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-25T00:37:33.005115+00:00"
+        "reviewedAt": "2026-09-25T03:40:43.534257+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12105,7 +12113,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Gebruik het bestaande resultaat; controleer de terugmelding zonder nieuw onderzoek. Menselijke kanaalbeleving blijft apart.",
+      "nextAction": "Gebruik bestaande kanaalroutes en bewijs; wijzig uitsluitend een aangetoond ontbrekende aansluiting. Geen herbouw of nieuwe onderzoeksproef zonder noodzaak.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
