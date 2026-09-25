@@ -1,3 +1,12 @@
+> Update 25 September 2026: the existing Eva conversation entity now explicitly
+> advertises `supports_streaming` to Home Assistant. HA 2026.9.2 otherwise reports
+> `stream_response: false` to the satellite even while ChatLog deltas arrive.
+> The TTS engine must also support streaming input. HA still buffers short text
+> (its normal threshold is more than 60 characters), so this is not proof of an
+> instant spoken receipt. Existing firmware, request cancellation and final
+> response binding remain unchanged. See the tagged upstream implementation:
+> https://github.com/home-assistant/core/blob/2026.9.2/homeassistant/components/assist_pipeline/pipeline.py
+
 > Update 24 September 2026: the installed native conversation route now supports
 > `Accept: application/x-ndjson`. Request-bound `delta` frames feed Home Assistant's
 > existing `ChatLog.async_add_delta_content_stream`; only a matching `final` frame

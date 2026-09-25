@@ -15,6 +15,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
 class EvaConversation(conversation.ConversationEntity):
     _attr_name = "Eva2"
     _attr_has_entity_name = True
+    _attr_supports_streaming = True
 
     def __init__(self, entry, client):
         self._attr_unique_id = entry.entry_id
