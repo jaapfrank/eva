@@ -52,7 +52,7 @@ def _remaining_budget_context(grant, actual, *, calls, dispatches, response_outp
 
 
 class _TaskModel:
-    def __init__(self, model, task, browser_context=None, corrections=(), budget_context=None):
+    def __init__(self, model, task, browser_context=None, corrections=(), budget_context=None, attempt_work_id=None):
         self.model, self.task = model, task
         self.owner_corrections = tuple(
             "Bewaarde bijsturing van de eigenaar, in volgorde; latere correcties vervangen eerdere alleen waar ze botsen: "
@@ -60,11 +60,19 @@ class _TaskModel:
         self.continuation_feedback = ()
         self.browser_context = browser_context
         self.budget_context = budget_context
+        self.attempt_work_id = attempt_work_id
         self.journals_provider_requests = getattr(model, "journals_provider_requests", False)
 
     def generate(self, *args, self_context=(), **kwargs):
         availability = () if self.browser_context is None else self.browser_context()
         budget = () if self.budget_context is None else (self.budget_context(),)
+        if self.attempt_work_id is not None:
+            budget += ("Huidige uitvoerpoging: " + self.attempt_work_id +
+                ". Voortgang met een ander work_id hoort bij een eerdere poging. "
+                "Beoordeel eerdere blokkades opnieuw met de actuele bevoegdheid, toestand en het "
+                "hier gemelde resterende pogingbudget; een eerdere budgetblokkade bewijst geen "
+                "uitgeput budget in deze poging. Werk de bestaande voortgang bij zodra je verdergaat "
+                "of een actuele blokkade vaststelt. Herhaal geen bevestigde externe handelingen.",)
         return self.model.generate(*args, self_context=(*self_context, *availability, *budget, *self.owner_corrections, *self.continuation_feedback,
             "Je voert nu deze aangenomen achtergrondopdracht uit: " + self.task,
             "Maak deze opdracht af met de aangeboden tools, controleer de uitkomst en geef "
@@ -437,6 +445,7 @@ class DelegatedDigitalRunner:
             from eva.adapters.postgres.work_corrections import work_corrections
             task_model = _TaskModel(self.model, spec.task, self.browser_context,
                                     corrections=work_corrections(self.store._engine, spec),
+                                    attempt_work_id=spec.work_id,
                                     budget_context=lambda: _remaining_budget_context(spec.grant, latest_usage,
                                         calls=actions.calls, dispatches=actions.dispatches,
                                         response_output_tokens=self.profile.maximum_response_output_tokens))
@@ -457,7 +466,8 @@ class DelegatedDigitalRunner:
                                      if step["state"] not in {"done", "skipped"}]
                         if not remaining:
                             return reply
-                        if any(step["state"] == "blocked" for step in remaining):
+                        if (progress_state.get("work_id") == spec.work_id
+                                and any(step["state"] == "blocked" for step in remaining)):
                             raise _UnfinishedWorkPlan("task plan contains a recorded blocker")
                         actual = journal.model_usage(source)
                         checkpoint(source, actual)

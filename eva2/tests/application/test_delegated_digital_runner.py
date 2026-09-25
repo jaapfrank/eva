@@ -671,3 +671,49 @@ def test_cumulative_task_cap_still_stops_before_unverified_completion():
     outcome = asyncio.run(runner.run(spec, call_id="call:cumulative-cap"))
     assert outcome.status == "budget_exceeded", outcome
     assert outcome.result is None and outcome.usage.output_tokens == 2700
+
+
+@pytest.mark.parametrize("prior_attempt, advance, expected_responses, expected_status", [
+    (True, True, 3, "succeeded"),
+    (False, True, 1, "incomplete_work"),
+    (True, False, 2, "incomplete_work"),
+])
+def test_resume_reassesses_prior_blocker_but_current_or_unchanged_blocker_stops(
+        monkeypatch, prior_attempt, advance, expected_responses, expected_status):
+    import json
+    import eva.bootstrap.delegated_digital_runner as module
+    _, spec, _, tools, journal, runner, _ = fixture()
+    spec = spec.model_copy(update={"work_id": "work:resume", "generation": 2,
+                                  "parent_work_id": spec.work_id})
+    progress = {"work_id": "work:one" if prior_attempt else spec.work_id,
+                "revision": 1, "steps": [{"state": "blocked", "evidence": "Previous attempt tool budget exhausted"}]}
+    monkeypatch.setattr(module, "load_work_progress", lambda *args: progress)
+    tools.release.set()
+    original_execute = tools.execute
+    def execute(turn, call, *, step_index):
+        receipt = original_execute(turn, call, step_index=step_index)
+        progress.update(work_id=spec.work_id, revision=2, steps=[{"state": "done"}])
+        return receipt
+    tools.execute = execute
+    class ResumeModel:
+        responses = 0
+        def generate(self, turn, identity, memory, recent_messages, **kwargs):
+            self.responses += 1
+            context = kwargs["self_context"]
+            assert any(spec.work_id in line and "eerdere poging" in line for line in context)
+            if self.responses == 1:
+                budget_line = next(line for line in context if line.startswith("Resterend budget"))
+                budget = json.JSONDecoder().raw_decode(budget_line[budget_line.index("{"):])[0]
+                assert budget["used"]["tool_calls"] == 0
+                assert budget["remaining"]["tool_calls"] == spec.grant.maximum_tool_calls
+            call = (ConversationActionCall("resume-action", "use_connector_tool", {})
+                    if self.responses == 2 and advance else None)
+            return ConversationModelResult(None if call else "Saved blocker noted.", "controlled", call,
+                usage=ConversationModelUsage.measured(tool_calls=int(call is not None), input_tokens=30, output_tokens=10))
+    model = ResumeModel()
+    runner.model = model
+    outcome = asyncio.run(runner.run(spec, call_id="call:resume"))
+    assert outcome.status == expected_status, outcome
+    assert model.responses == expected_responses
+    assert len(tools.calls) == int(prior_attempt and advance)
+    assert len(journal.usages) == expected_responses
