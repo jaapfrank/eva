@@ -485,19 +485,23 @@ class McpGatewayToolAdapter:
                 provider_ref=spec.configuration_sha256,
                 details={"operation_kind": "read", "provider_call_deferred": True},
             )
-        output = await asyncio.to_thread(
-            self._call_tool,
-            spec.execute_tool_name,
-            command.arguments,
-            _rpc_id(command, "execute", spec.execute_tool_name, command.arguments),
-        )
+        from eva.adapters.postgres.connector_results import captured_call, bounded_result
+        def invoke():
+            value = self._call_tool(spec.execute_tool_name, command.arguments,
+                _rpc_id(command, "execute", spec.execute_tool_name, command.arguments))
+            schema = self._verified_output_schemas.get(spec.execute_tool_name)
+            if spec.operation_kind == "invoke" and schema is not None:
+                validate_schema_value(value, schema, "invoke_output", provider_schema=True)
+            return value
+        output = await asyncio.to_thread(captured_call, command, "invoke", invoke) if spec.operation_kind == "invoke" else await asyncio.to_thread(invoke)
         if spec.operation_kind == "invoke":
-            _validate_bounded_output(output, operation_kind="invoke")
             output_schema = self._verified_output_schemas.get(spec.execute_tool_name)
             if output_schema is not None:
                 validate_schema_value(
                     output, output_schema, "invoke_output", provider_schema=True,
                 )
+            output = bounded_result(command, "invoke", output)
+            _validate_bounded_output(output, operation_kind="invoke")
             return ToolDispatchResult(
                 accepted=True,
                 provider_ref=canonical_sha256(output),
@@ -525,8 +529,18 @@ class McpGatewayToolAdapter:
             raise ValueError("MCP gateway command is unsupported")
         self._validate_request_binding(command, spec)
         if spec.operation_kind == "invoke":
-            # The durable dispatch is the only invocation receipt. A missing receipt
-            # can mean the provider acted before a crash: never call it again here.
+            # Recover only a fully sealed capture; never reinvoke an uncertain effect.
+            if dispatch is None:
+                from eva.adapters.postgres.connector_results import recovered_result, bounded_result
+                recovered = recovered_result(command, "invoke")
+                if recovered is not None:
+                    output = bounded_result(command, "invoke", recovered)
+                    digest = canonical_sha256(output)
+                    dispatch = ToolDispatchResult(True, digest, {
+                        "operation_kind": "invoke", "invocation_response": output,
+                        "invocation_request_sha256": _invocation_request_sha256(command),
+                        "tool_configuration_sha256": spec.configuration_sha256,
+                        "gateway_output_sha256": digest})
             return self._observe_invocation(command, spec, dispatch)
         observe_tool_name = command.observation_tool_name or spec.observe_tool_name
         observe_arguments = (
@@ -545,14 +559,16 @@ class McpGatewayToolAdapter:
             "observe_arguments",
             provider_schema=True,
         )
-        output = await asyncio.to_thread(
-            self._call_tool,
-            observe_tool_name,
-            observe_arguments,
-            _rpc_id(command, "observe", observe_tool_name, observe_arguments),
-        )
-        if spec.operation_kind == "read":
-            _validate_bounded_output(output, operation_kind="read")
+        from eva.adapters.postgres.connector_results import captured_call, bounded_result
+        def observe_call():
+            value = self._call_tool(observe_tool_name, observe_arguments,
+                _rpc_id(command, "observe", observe_tool_name, observe_arguments))
+            schema = self._verified_output_schemas.get(observe_tool_name)
+            if spec.operation_kind == "read" and schema is not None:
+                validate_schema_value(value, schema, "observe_output",
+                    provider_schema=spec.contract in {"EvaMcpGatewayProvider/v3", "EvaMcpGatewayProvider/v4"})
+            return value
+        output = await asyncio.to_thread(captured_call, command, "read", observe_call) if spec.operation_kind == "read" else await asyncio.to_thread(observe_call)
         output_schema = self._verified_output_schemas.get(observe_tool_name)
         if output_schema is not None:
             validate_schema_value(
@@ -562,6 +578,8 @@ class McpGatewayToolAdapter:
                 provider_schema=spec.contract in {"EvaMcpGatewayProvider/v3", "EvaMcpGatewayProvider/v4"},
             )
         if spec.operation_kind == "read":
+            output = bounded_result(command, "read", output)
+            _validate_bounded_output(output, operation_kind="read")
             return ToolProofObservation(
                 "verified",
                 {},

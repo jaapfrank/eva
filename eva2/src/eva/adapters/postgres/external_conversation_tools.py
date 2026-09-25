@@ -152,6 +152,17 @@ class PostgresExternalConversationTools:
         if call.name not in self.action_names:
             raise ConversationConflict(f"external tool {call.name!r} is unavailable")
         self._authorize(turn)
+        if getattr(self._provider, "supports_stored_results", False) and call.name == "use_connector_tool":
+            from eva.adapters.postgres.connector_results import ConnectorResults, READER_PREFIX
+            from eva.providers.mcp_discovery import _arguments
+            reader, arguments = _arguments(call)
+            if reader.startswith(READER_PREFIX):
+                self._ensure_running(turn)
+                from eva.application.background_execution import authorize_background_dispatch
+                authorize_background_dispatch(turn)
+                output = ConnectorResults(self._timeline(turn), turn, self._authorize).read(reader, arguments)
+                return ConversationActionReceipt(call, {"status": "verified", "result": output,
+                    "external_state_verified": False, "source": "stored_connector_result"})
         # Preserve clarification before storage access for the initial action.
         preparation = (
             self._prepare(turn, call, step_index) if step_index == 0 else None
@@ -441,6 +452,9 @@ class PostgresExternalConversationTools:
         provider = self._provider
         authorize = self._authorize
         configuration_sha256 = self._configuration_sha256
+        from eva.adapters.postgres.connector_results import ConnectorResults, result_capture
+        capture = (ConnectorResults(timeline, turn, authorize)
+                   if getattr(provider, "supports_stored_results", False) else None)
 
         def verify_configuration(request):
             # Old ordinary-turn receipts without fingerprints retain compatibility.
@@ -468,7 +482,8 @@ class PostgresExternalConversationTools:
                 from eva.application.background_execution import authorize_background_dispatch
                 await asyncio.to_thread(authorize_background_dispatch, turn)
                 check_cancellation()
-                return await provider.execute(request)
+                with result_capture(capture):
+                    return await provider.execute(request)
 
             async def observe(
                 self, request: ToolRequest, dispatch: ToolDispatchResult | None
@@ -479,7 +494,8 @@ class PostgresExternalConversationTools:
                 guard = require_initiative_context(turn)
                 if guard is not None:
                     await asyncio.to_thread(guard.authorize_request, request, phase="observe")
-                return await provider.observe(request, dispatch)
+                with result_capture(capture):
+                    return await provider.observe(request, dispatch)
 
         return VerifiedToolOrchestrator(timeline, StopCheckedProvider())
 

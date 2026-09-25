@@ -137,6 +137,8 @@ class McpDiscoveryToolPlanner:
 class McpDiscoveryToolAdapter:
     """Reuse the sealed gateway adapter; durable requests select immutable records."""
 
+    supports_stored_results = True
+
     def __init__(self, registry: McpConnectorRegistry) -> None:
         self._registry = registry
         self._cache: dict[str, tuple[McpGatewayConfig, McpGatewayToolAdapter]] = {}
