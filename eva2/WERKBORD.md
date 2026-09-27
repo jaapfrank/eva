@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — technische onderzoekshypothese gedocumenteerd en beoordeeld.** De zes productvragen zijn beantwoord. Het [voorstel](research/2026-09-27-system-choice/technical-differentiation.md) koppelt herbruikbare ervaringen aan veranderende aannames; meerdere recente technieken overlappen dit al. Geen bewezen nieuwheid of voordeel. Gebundelde review afgerond, geen uitvoerder actief. Geen featurebouw, installatie of Eva-modelproef.
+**Nu — technisch voorstel geconcretiseerd; voordeel nog onbewezen.** Het [voorstel](research/2026-09-27-system-choice/technical-differentiation.md) onderzoekt uitvoerbare ervaring: kleine taakmodellen die voorspellingen toetsen en herkennen wanneer een geleerde aanpak niet meer geldig is. Twin levert verwante techniek, maar geen bewijs voor betaalbaar dagelijks gezinsgebruik. Onafhankelijke haalbaarheidskritiek afgerond; één vergelijking en afwijscriteria beschreven, nog niet uitgevoerd. Geen uitvoerder actief, geen featurebouw, installatie of Eva-modelproef. Codex-creditkosten onbekend.
 
 **Leidend — het volledige product opnieuw ontwerpen.** Eva moet een warme, slimme en zelfstandig handelende huisgenote worden, met sterk geheugen, initiatief, leren, lage gebruikslast en optionele modules. Bestaande implementaties zijn geen verplichte selectievoorwaarde. Gegevens en huidige installatie blijven tijdens dit onderzoek behouden. De recente [eigenaarbesluiten](PROJECTDOEL.md) gaan voor oudere bouwvolgordes.
 

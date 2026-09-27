@@ -2423,9 +2423,9 @@
           }
         ],
         "now": {
-          "title": "Technische onderzoekshypothese uitgewerkt",
-          "state": "Gedocumenteerd · geen bouw gestart",
-          "detail": "Productvragen beantwoord. Voorgesteld: ervaringen hergebruiken en bij gewijzigde aannames gericht herbeoordelen. Recente papers overlappen grote delen; technische voorsprong is nog niet bewezen. Gebundelde review afgerond, geen uitvoerder actief."
+          "title": "Technisch voorstel geconcretiseerd",
+          "state": "Voorstel vastgelegd · nog niet beproefd",
+          "detail": "Voorstel: ervaring omzetten in kleine uitvoerbare taakmodellen en bij gewijzigde aannames gericht aanpassen. Twin overlapt; betaalbaarheid en voordeel voor Eva zijn onbewezen. Onafhankelijke haalbaarheidskritiek en afwijscriteria vastgelegd. Geen uitvoerder actief; geen bouw, installatie of Eva-modelproef."
         },
         "next": {
           "title": "Een onderbouwde basiskeuze en concrete opleverstappen",
@@ -2443,7 +2443,7 @@
           "expected": "Eerst een concreet en onderbouwd ontwerp, daarna besluiten over de uitvoering."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-27T16:58:51.432290+00:00"
+        "reviewedAt": "2026-09-27T17:05:18.848140+00:00"
       }
     },
     "pendingTechnicalReview": {
