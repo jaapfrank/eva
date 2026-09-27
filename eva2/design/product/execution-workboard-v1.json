@@ -2423,28 +2423,27 @@
           }
         ],
         "now": {
-          "title": "Samen vaststellen wat de complete Eva2 moet zijn",
-          "state": "Vragen gesteld · antwoorden open",
-          "detail": "Jaap wil het plan opnieuw opbouwen. Bestaande code en architectuur zijn geen verplichte basis. Zes vragen over dagelijks gebruik, Eva1, persoonlijkheid, spraak, zelfstandig werk en acceptatie staan open. Geen bouwtaak of onderzoeker actief."
+          "title": "Technische onderzoekshypothese uitgewerkt",
+          "state": "Gedocumenteerd · geen bouw gestart",
+          "detail": "Productvragen beantwoord. Voorgesteld: ervaringen hergebruiken en bij gewijzigde aannames gericht herbeoordelen. Recente papers overlappen grote delen; technische voorsprong is nog niet bewezen. Gebundelde review afgerond, geen uitvoerder actief."
         },
         "next": {
-          "title": "Volledige wensen uitwerken tot één samenhangend plan",
-          "state": "Wacht op antwoorden",
-          "detail": "Coördinator verwerkt antwoorden, vraagt alleen ontbrekende aspecten uit en onderbouwt daarna platform, modules, ontwikkeling en oplevering. Het afgeronde brononderzoek is invoer; er is nog geen gekozen architectuur."
+          "title": "Een onderbouwde basiskeuze en concrete opleverstappen",
+          "state": "Nog niet gestart",
+          "detail": "Beoordeel welke bestaande implementatie het voorgestelde gedrag al levert, begrens de onderscheidende vergelijking en verbind dit aan de platformkeuze en complete opleverstappen. Geen nieuwe featurebouw of installatie gestart."
         },
         "ownerAction": {
-          "title": "Beantwoord de zes vragen in deze Codex-taak",
+          "title": "Geen herhaling van de zes vragen nodig",
           "url": "https://github.com/jaapfrank/eva/tree/main/eva2/research/2026-09-27-system-choice",
           "linkLabel": "Lees het systeemonderzoek",
           "steps": [
-            "Beschrijf de gewenste dagelijkse Eva, huidige Eva1-ervaring en persoonlijkheid.",
-            "Geef de gewenste spraakervaring, echte zelfstandige opdrachten en jouw acceptatiecriteria aan.",
-            "Daarna volgen gerichte vragen over nog ontbrekende gebruiksgrenzen, middelen en oplevering."
+            "De antwoorden over dagelijks gedrag, persoonlijkheid, spraak en zelfstandigheid zijn gegeven.",
+            "Technisch onderscheid wordt nu onderbouwd; een definitief bouwplan en platformkeuze liggen nog niet ter goedkeuring voor."
           ],
-          "expected": "Jouw concrete verwachtingen vormen de basis van het nieuwe plan; bestaande techniek hoeft niet behouden te blijven."
+          "expected": "Eerst een concreet en onderbouwd ontwerp, daarna besluiten over de uitvoering."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-27T12:48:55.083863+00:00"
+        "reviewedAt": "2026-09-27T16:58:51.432290+00:00"
       }
     },
     "pendingTechnicalReview": {

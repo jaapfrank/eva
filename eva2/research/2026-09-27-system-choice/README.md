@@ -8,6 +8,12 @@
 
 **Er is nog geen bewijs dat Eva2 als geheel beter is dan Eva1, of dat één onderzocht alternatief Eva's complete doel al haalt.** De tabel hieronder geeft geschiktheid op basis van bronnen, geen gemeten ranglijst.
 
+## Aanvulling: technisch onderscheid
+
+De eigenaar verlangt ook een concrete technische bijdrage. Het voorstel en de
+aangetoonde overlap met bestaand onderzoek staan in [technisch onderscheid](technical-differentiation.md).
+Dit is een onderzoekshypothese, geen bewezen innovatie of gekozen implementatie.
+
 ## Het landschap in één overzicht
 
 🟢 = past bij die rol volgens bronnen; 🟠 = wezenlijke aansluiting of onzekerheid; — = niet als die productbasis onderzocht. Geen snelheids- of kwaliteitsscores.

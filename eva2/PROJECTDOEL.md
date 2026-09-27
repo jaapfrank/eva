@@ -1,5 +1,34 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaarverduidelijkingen 27 september 2026 — product en technisch onderscheid
+
+De zes vragen over de gewenste dagelijkse Eva zijn beantwoord. Eva moet warm,
+soms grappig en herkenbaar aanwezig zijn; mensen en gewoonten leren kennen,
+zelf onderzoek, voorstellen en nuttig werk beginnen en daadwerkelijk afmaken.
+Zij ondersteunt gezin, huis, werk en het vinden van kansen. Onbekende vaardigheden
+zoekt of ontwikkelt zij zelf. Zelfverbetering moet in later gedrag zichtbaar zijn.
+De werkende deurbelaanwezigheid en huisvaardigheid van Eva1 zijn belangrijke
+ervaringsreferenties, geen verplichte bronimplementatie.
+
+De eigenaar vereist ook technisch onderscheid. Goede opensource combineren en
+bestaande functies anders presenteren zijn onvoldoende onderbouwing voor een
+revolutionair product. Onderzoek concrete mechanismen en vergelijk de winst met
+relevante bestaande implementaties. Een eigen module is pas gerechtvaardigd door
+een aantoonbaar gat of voordeel; wereldwijde nieuwheid en superioriteit zijn niet
+vastgesteld. De concrete innovatiehypothese hieronder is een voorstel van de
+coordinator, geen al goedgekeurde architectuur of bouwopdracht.
+
+Verdere uitgangspunten uit het gesprek: sterk automatisch geheugen, natuurlijke
+spraak via de bestaande Hey Eva-ingangen, een eigen consistente persoonlijkheid,
+modulaire installatie en vervangbare bouwstenen. Beoordeel recente of aantoonbaar
+actueel onderhouden opensource en wetenschappelijk onderzoek. Gebruik bestaande
+abonnementen en lokale middelen; nieuwe betaalde routes vragen een concreet besluit.
+Een algemene installer hoort bij het product, met het eigen gezin als eerste echte
+gebruikers. Privé-inhoud blijft op de private route. Kansen rond geld beginnen met
+onderzoek en een proefportefeuille; echte handel vraagt een afzonderlijk mandaat.
+
+[Technische onderzoekshypothese en eerdere technieken](research/2026-09-27-system-choice/technical-differentiation.md).
+
 ## Eigenaaropdracht 27 september 2026 — product opnieuw vaststellen
 
 De eigenaar wil eerst zijn volledige verwachtingen uitspreken en daarna het plan
