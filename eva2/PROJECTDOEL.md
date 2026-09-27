@@ -1,5 +1,33 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaarverduidelijking 27 september 2026 — productverbetering ten opzichte van Eva1
+
+Eva2 moet Eva1 als dagelijks bruikbaar geheel verbeteren: efficiënter, slimmer,
+sneller en zelfstandiger, met behoud van bestaande nuttige mogelijkheden en data.
+Een losse leerfunctie, technische reparatie of geslaagde deeltest vervangt dit
+productdoel niet.
+
+De basis is modulair en benut geschikte actuele, onderhouden opensourcebouwstenen.
+Per onderdeel eerst bestaande Eva1/Eva2-code en opensource beoordelen; eigen code
+moet een concreet ontbrekende mogelijkheid of aantoonbaar voordeel oplossen.
+Modules moeten naar behoefte geïnstalleerd, weggelaten of vervangen kunnen worden,
+met duidelijke afhankelijkheden en interfaces en zonder verlies van identiteit of
+gegevens. Nieuwheid alleen bewijst geen geschiktheid.
+
+Vergelijking met Eva1 en relevante concurrenten stuurt de bouwkeuzes vanaf nu;
+zij wordt niet uitgesteld tot stap7. Gebruik de bestaande vergelijking en besluiten
+als vertrekpunt. Vul alleen bewijs aan dat een concrete keuze kan veranderen,
+met dezelfde gebruikstaken en vooraf gekozen criteria voor resultaat, snelheid,
+verbruik en benodigde menselijke hulp. Ontwikkelverbruik en Eva-runtimeverbruik
+blijven afzonderlijk; onbekende creditkosten blijven onbekend.
+
+Per groot productonderdeel één besluit: behouden, aansluiten of gericht vervangen,
+met de verwachte gebruikerswinst en bewijs om die vast te stellen. Geen nieuwe
+brede audit of herbouw. De acht opleverstappen en volledige ambitie blijven staan;
+stap7 bundelt en actualiseert de vergelijking, stap8 beoordeelt het eindproduct.
+Technische wijzigingen tellen pas als productoplevering wanneer de bijbehorende
+volledige gebruikersfunctie is geïnstalleerd en bruikbaar; acceptatie blijft apart.
+
 ## Eigenaarverduidelijking 24 september 2026 — algemene Home Assistant-vaardigheid
 
 Eva moet beschikbare Home Assistant-apparaten, services en automatiseringen zelf
