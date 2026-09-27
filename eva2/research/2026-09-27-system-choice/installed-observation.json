@@ -1,0 +1,46 @@
+{
+  "checkedAt": "2026-09-27T12:32:53.870710+00:00",
+  "method": "Read-only container metadata and package/source fingerprints; no provider request or behavior test.",
+  "services": {
+    "core": {
+      "container": "eva2-managed-b-slot3-core",
+      "image": "sha256:82ef9e969b5604b65350a6d25fb6a531150d7fca252f7d499c35460198354f45",
+      "imageTag": "eva2-connector-selection-recovery-core:20260925",
+      "state": "running",
+      "health": "healthy",
+      "versions": {
+        "pydantic-ai-slim": "2.37.0",
+        "dbos": null,
+        "openai": "3.6.0",
+        "livekit-agents": null
+      },
+      "sourceHashes": {
+        "bootstrap/delegated_digital_composition.py": "572c0c2214fdbc99ff6659ac0f82805e26e4ec574e695da0503cab4ebe989950",
+        "bootstrap/delegated_digital_profile.py": "3638ad7092e08f1f66f64f8d3f0c60eaf2ff4fe2df8a6db639987f7163385c45",
+        "bootstrap/delegated_digital_runner.py": "bec0e1bf26ec4583cbb5264253b238b9880dd0d3c5a89a90e3889a9ce34eba7d",
+        "adapters/postgres/connector_results.py": "953f2852f48ff8d49a90111da4377c849616c1e532e73333dd4ea154b9a8bdd8",
+        "application/conversation.py": "d9befd28c439142fb1f42f356fd64fa7d6f9064915592e434c4efa40891a7342"
+      }
+    },
+    "worker": {
+      "container": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "image": "sha256:286de4c3cd3842d478980eaf1e8fb2ba15318b17755adbd0d3d10e920c75c68d",
+      "imageTag": "eva2-connector-selection-recovery-delegated-work-worker:20260925",
+      "state": "running",
+      "health": "healthy",
+      "versions": {
+        "pydantic-ai-slim": "2.37.0",
+        "dbos": null,
+        "openai": "3.6.0",
+        "livekit-agents": null
+      },
+      "sourceHashes": {
+        "bootstrap/delegated_digital_composition.py": "572c0c2214fdbc99ff6659ac0f82805e26e4ec574e695da0503cab4ebe989950",
+        "bootstrap/delegated_digital_profile.py": "3638ad7092e08f1f66f64f8d3f0c60eaf2ff4fe2df8a6db639987f7163385c45",
+        "bootstrap/delegated_digital_runner.py": "bec0e1bf26ec4583cbb5264253b238b9880dd0d3c5a89a90e3889a9ce34eba7d",
+        "adapters/postgres/connector_results.py": "953f2852f48ff8d49a90111da4377c849616c1e532e73333dd4ea154b9a8bdd8",
+        "application/conversation.py": "d9befd28c439142fb1f42f356fd64fa7d6f9064915592e434c4efa40891a7342"
+      }
+    }
+  }
+}

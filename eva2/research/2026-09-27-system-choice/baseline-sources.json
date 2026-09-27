@@ -1,0 +1,460 @@
+{
+  "contract": "EvaBoundedResearchReadRegister/v1",
+  "checkedAt": "2026-09-27T12:42:39.904070+00:00",
+  "researcher": "baseline_research_20260927",
+  "integrationBase": "c025550b618644f19591dd6ad987420252915771",
+  "scope": "One bounded baseline/comparison pass, no whole-repository coverage claim. Hashes captured at registration; coordinator can concurrently update primary documents.",
+  "fullMarkdownCount": 10,
+  "files": [
+    {
+      "path": "eva2/PROJECTDOEL.md",
+      "sha256": "95539c15fc1f3bd833990adbfe43054470f3e72791692fd4b74ae8db1366d725",
+      "bytes": 37475,
+      "lines": 555,
+      "readMode": "full_text",
+      "scope": "Read across displayed text segments. Historical references not all recursively followed; evidence not re-executed."
+    },
+    {
+      "path": "eva2/HERBEOORDELING_2026-09-21.md",
+      "sha256": "6755e88fce97b8dde2459ff9a1bfd1f6788668f1966b968888614c2ea7430c5c",
+      "bytes": 27395,
+      "lines": 353,
+      "readMode": "full_text",
+      "scope": "Read across displayed text segments. Historical references not all recursively followed; evidence not re-executed."
+    },
+    {
+      "path": "eva2/OUDE_EVA_VS_EVA2.md",
+      "sha256": "26fec3cedadc52ca92f38a0931af162c4fbc3cbdd3099742132f96c4d8a1ae00",
+      "bytes": 5434,
+      "lines": 70,
+      "readMode": "full_text",
+      "scope": "Read across displayed text segments. Historical references not all recursively followed; evidence not re-executed."
+    },
+    {
+      "path": "eva2/CONCURRENTIE_EN_HERGEBRUIK.md",
+      "sha256": "e006bdcbd4f104a0cfafd428be4fb377552208694265779b7f018780e1024e84",
+      "bytes": 22159,
+      "lines": 253,
+      "readMode": "full_text",
+      "scope": "Read across displayed text segments. Historical references not all recursively followed; evidence not re-executed."
+    },
+    {
+      "path": "eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md",
+      "sha256": "0fe6319c60053a704e47e09d9f97f2de732d82dc603919a5ebfdf9f8abe91277",
+      "bytes": 38525,
+      "lines": 471,
+      "readMode": "full_text",
+      "scope": "Read across displayed text segments. Historical references not all recursively followed; evidence not re-executed."
+    },
+    {
+      "path": "eva2/DOCUMENTATIE_EN_ONDERHOUD.md",
+      "sha256": "da9105f537cd788949f70a99f34ae94bd8f4677c6ea789c4506cd2ea5711d8b7",
+      "bytes": 12394,
+      "lines": 175,
+      "readMode": "full_text",
+      "scope": "Read across displayed text segments. Historical references not all recursively followed; evidence not re-executed."
+    },
+    {
+      "path": "eva2/reviews/old-eva-presence-parity-p00.md",
+      "sha256": "95e0d0e56bab2b6b56d40de9568255e871377cfe0da1ad896973ca065cb3fd59",
+      "bytes": 1530,
+      "lines": 32,
+      "readMode": "full_text",
+      "scope": "Read across displayed text segments. Historical references not all recursively followed; evidence not re-executed."
+    },
+    {
+      "path": "eva2/reviews/reassessment-evidence-2026-09-21.md",
+      "sha256": "5005624c565c97cfe621413aafec608e74f1a956d5e4008c17759365ad21101d",
+      "bytes": 12480,
+      "lines": 60,
+      "readMode": "full_text",
+      "scope": "Read across displayed text segments. Historical references not all recursively followed; evidence not re-executed."
+    },
+    {
+      "path": "eva2/reviews/reassessment-architecture-2026-09-21.md",
+      "sha256": "e9e71708b14e885b0ab9a6a39084ac63197a4862076254760e5cf9a146f74190",
+      "bytes": 16291,
+      "lines": 82,
+      "readMode": "full_text",
+      "scope": "Read across displayed text segments. Historical references not all recursively followed; evidence not re-executed."
+    },
+    {
+      "path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+      "sha256": "d59a68b4e93a6ed2a903fbca4a6de972e180a6d83b0c2a5935fc71597258f71e",
+      "bytes": 27919,
+      "lines": 395,
+      "readMode": "full_text",
+      "scope": "Read across displayed text segments. Historical references not all recursively followed; evidence not re-executed."
+    },
+    {
+      "path": "eva2/WERKBORD.md",
+      "sha256": "6aff5e73fc11d558e76baf19f09eff46ff9082a38d038978ec9daf47e556d1ae",
+      "bytes": 242696,
+      "lines": 1722,
+      "readMode": "excerpts",
+      "scope": "Lines1-62 and98-145; other portions of initial output truncated and not claimed read."
+    },
+    {
+      "path": "eva2/design/product/execution-workboard-v1.json",
+      "sha256": "e7dc11bac12584cc568c64a378fbc67c90cb505435544bb911ea640bcb694579",
+      "bytes": 1026433,
+      "lines": 15527,
+      "readMode": "structured_excerpts",
+      "scope": "audit.projectDashboard roadmap/summary/nextOutcomes/openRisks; compact practiceTests id/status/title/ownerAccepted/ownerFeedback/acceptanceEvidence; audit.voiceLaptopOwnerFeedback20260911; selected memoryComponentDecision20260911. Other printed large fields truncated, not fully read."
+    },
+    {
+      "path": "eva2/evidence/product/digital-task-budget-candidate-20260927.json",
+      "sha256": "56b8897b052b4095ba021130b09477701bee06049147c5b346fa5295408af3e1",
+      "bytes": 1397,
+      "lines": 36,
+      "readMode": "full_text",
+      "scope": "Full existing JSON receipt read; referenced raw artifacts not inspected/replayed."
+    },
+    {
+      "path": "eva2/evidence/product/external-documentation-learning-source-only-20260925.json",
+      "sha256": "cedec2a2fbc2d5e4894dda11999a0e7fac717d7431774c3ea3e94f286f34956a",
+      "bytes": 13110,
+      "lines": 268,
+      "readMode": "full_text",
+      "scope": "Full existing JSON receipt read; referenced raw artifacts not inspected/replayed."
+    },
+    {
+      "path": "eva2/evidence/product/household-public-overlap-20260925.json",
+      "sha256": "3d631d88cf010d4303c6e93af22e00d54efd0bc759a4fa8cf0fd939533fcd024",
+      "bytes": 2583,
+      "lines": 47,
+      "readMode": "full_text",
+      "scope": "Full existing JSON receipt read; referenced raw artifacts not inspected/replayed."
+    },
+    {
+      "path": "eva2/evidence/product/ha-configuration-readback-installed-20260924.json",
+      "sha256": "6d999b8235a52940fe45620ebadc941da2f6f747e6ce063715e4db58086f356e",
+      "bytes": 5033,
+      "lines": 119,
+      "readMode": "full_text",
+      "scope": "Full existing JSON receipt read; referenced raw artifacts not inspected/replayed."
+    },
+    {
+      "path": "eva2/evidence/product/EV-002-controlled-baseline-result-2026-09-04.json",
+      "sha256": "3bb966c92b24723892ed41bd959881a83a2192cebf8c8aeaaac7f618650fd613",
+      "bytes": 8114,
+      "lines": 203,
+      "readMode": "full_text",
+      "scope": "Full existing JSON receipt read; referenced raw artifacts not inspected/replayed."
+    },
+    {
+      "path": "eva2/evidence/living-core/lab36-c04-blind-2026-08-24.json",
+      "sha256": "8551a92ba175435a780ca3c87c471486dfa0ace0683a1b6a75f54d1df989150a",
+      "bytes": 6651,
+      "lines": 124,
+      "readMode": "full_text",
+      "scope": "Full existing JSON receipt read; referenced raw artifacts not inspected/replayed."
+    },
+    {
+      "path": "eva2/research/2026-09-27-system-choice/installed-observation.json",
+      "sha256": "5ad9c215bdcb36b2f8e624bbb4d5f11402784382ff01bf0a756a4eed56a14edf",
+      "bytes": 2309,
+      "lines": 46,
+      "readMode": "full_text",
+      "scope": "Coordinator read-only current container fingerprints; this researcher did not run additional container inspection."
+    },
+    {
+      "path": "eva2/evidence/product/household-result-continuity-installed-20260925.json",
+      "sha256": "88a0f7211bcf54d97d2e3e45f2071751bc57e9280aadc8d394ac3cb29285091c",
+      "bytes": 16307,
+      "lines": 373,
+      "readMode": "structured_excerpts",
+      "scope": "Status/base/requirement/defect/changes, selected tests, review, installation/startup fingerprints. Truncation omitted some test/nonclaim fields."
+    },
+    {
+      "path": "eva2/evidence/product/household-initiative-installed-20260924.json",
+      "sha256": "3938dfea444c07975ba7994948b4ff80aa9502de65b549e0d955c857a26920c4",
+      "bytes": 1992,
+      "lines": 51,
+      "readMode": "structured_excerpts",
+      "scope": "Displayed non-installation top-level fields incl.source/checks/scope/limits/notProven/rollback."
+    },
+    {
+      "path": "eva2/evidence/product/household-presence-gap-20260924.json",
+      "sha256": "22d321290761aa35dd8d4a1c9acaadc14e382b0dc9d48a5712321620f4f887b6",
+      "bytes": 2068,
+      "lines": 36,
+      "readMode": "structured_excerpts",
+      "scope": "Displayed diagnosis/configuration/reusable parts/limitations."
+    },
+    {
+      "path": "eva2/evidence/product/procedure-unassisted-reuse-20260925.json",
+      "sha256": "f1732f09252ec3d7166b5898a255339a4bda77cff3de37f5caa46d9bd390fe7f",
+      "bytes": 4259,
+      "lines": 101,
+      "readMode": "structured_excerpts",
+      "scope": "Displayed top-level fields/output/receipt/usage/review/limits."
+    },
+    {
+      "path": "eva2/evidence/product/contact-luna6-installed-20260924.json",
+      "sha256": "ca4892b2c5c3573d682a7fe1ff0855030f00ef7088e4289a9abc88709f8e1daf",
+      "bytes": 2101,
+      "lines": 45,
+      "readMode": "structured_excerpts",
+      "scope": "Displayed source/model/check/limit fields."
+    },
+    {
+      "path": "eva2/evidence/product/ha-short-receipt-boundary-20260925.json",
+      "sha256": "52fd653dc8dcb22b892ee9b15c5ba9e0dd3b504b7929e69624c9b510bcb72a5b",
+      "bytes": 4677,
+      "lines": 67,
+      "readMode": "structured_excerpts",
+      "scope": "Displayed conclusions/pinned upstream findings/integration/tests/limitations. Upstream URLs not re-opened by this researcher."
+    },
+    {
+      "path": "eva2/evidence/product/shared-ha-general-installed-20260925.json",
+      "sha256": "1c9c76e7c6f3632733b941300d6a2e87d9b2d4b7081bdc6058fdd2f073ac9ee4",
+      "bytes": 4452,
+      "lines": 93,
+      "readMode": "structured_excerpts",
+      "scope": "Displayed top-level fields except installation/candidateStartup/artifactsDirectories."
+    },
+    {
+      "path": "eva2/evidence/product/private-continuity-boundary-installed-20260924.json",
+      "sha256": "300c81b057fba812d3030998612405fcc4f3882e2233c3e2855ec90e3aa73c1f",
+      "bytes": 2876,
+      "lines": 50,
+      "readMode": "structured_excerpts",
+      "scope": "Displayed top-level fields except installation/candidateStartup/artifactsDirectories."
+    },
+    {
+      "path": "eva2/evidence/product/local-owner-receipt-flush-installed-20260925.json",
+      "sha256": "0c9de8b13e5f0842daca5763b874f201965a9427bb40ce97ae45fef6df007142",
+      "bytes": 1738,
+      "lines": 43,
+      "readMode": "structured_excerpts",
+      "scope": "Displayed top-level fields except installation/candidateStartup/artifactsDirectories."
+    },
+    {
+      "path": "eva2/requirements.lock",
+      "sha256": "89555d14acd8bceb8786dfa8539af29672899e8259e6a2b5352e27ef9219e8dc",
+      "bytes": 69271,
+      "lines": 907,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "Package lines for pydantic*,openai,dbos,fastapi,sqlalchemy,mcp,httpx."
+    },
+    {
+      "path": "eva2/requirements-4d.lock",
+      "sha256": "036e2463be9fea6b3adb8528e8e0288b0985f65f958d4abdbf371c21d828693e",
+      "bytes": 72904,
+      "lines": 950,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "Package lines for pydantic*,openai,dbos,fastapi,sqlalchemy."
+    },
+    {
+      "path": "eva2/deploy/voice-session/requirements.lock",
+      "sha256": "fb39940066a27de2ac7714ab6bdf129c19c7d1114e0a445139e7fc9b5a771749",
+      "bytes": 1689,
+      "lines": 84,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "Package lines for livekit*,pydantic*,openai."
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/cp001_accounting.py",
+      "sha256": "878cfe5b6c90935cb4d5258c0c83b6d143c5f446b941dafd73ff5a2c3b13b5dc",
+      "bytes": 8831,
+      "lines": 240,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "Matches live_enabled/product_result/ranking/return2."
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_composition.py",
+      "sha256": "56f0749971e964a230b174f1d32997e218332908ad3db7772c806a8c22933c3e",
+      "bytes": 13209,
+      "lines": 219,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "Lines128-166 plus provider/budget matching lines."
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_profile.py",
+      "sha256": "b196b347209cde881822004ff4747a69c838ec15e75d4d6c66bc0f185ec98085",
+      "bytes": 10440,
+      "lines": 191,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "Class/maximum-limit matching lines incl.43-49,72-105."
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+      "sha256": "2528ff03cbd0c7a7b125699c155eb2cacfdee1b183ce31180bed0855b8e4241c",
+      "bytes": 33951,
+      "lines": 567,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "Lines385-495; class/function/budget/incomplete_work matches."
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/runtime.py",
+      "sha256": "3bff145966b23516b5fe5c34120ad87511665626ae8fab05bfd603b34244430c",
+      "bytes": 106213,
+      "lines": 2274,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "Selected conversation/Hindsight/memory imports/composition; first55 matches."
+    },
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "b275e69cb68b8e2954869607dff8b7fdaedec103019ce7a997a9ad34d770e13f",
+      "bytes": 139638,
+      "lines": 2847,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "Lines825-872; Pydantic imports/Agent/UsageLimits/input-budget matches."
+    },
+    {
+      "path": "eva2/src/eva/application/conversation.py",
+      "sha256": "d9befd28c439142fb1f42f356fd64fa7d6f9064915592e434c4efa40891a7342",
+      "bytes": 54823,
+      "lines": 1261,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "Selected class/method/memory matches; loop/action-dispatch matches incl.783,809,1038,1141-1148."
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/household_digital_work.py",
+      "sha256": "30df5dbe65d38ff4f301273634e18812bc94c314fff70fecf3867348a30fac83",
+      "bytes": 10355,
+      "lines": 175,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "First35 household/authority/home_assistant/MemoryAudience matches."
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/household_voice.py",
+      "sha256": "eb584247c64e61cc80d7cfd7760856c7138275efdb81176dd0cf00f8759b72a5",
+      "bytes": 7595,
+      "lines": 156,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "Household/private/actor/person/binding matches."
+    },
+    {
+      "path": "src/integrations/homeassistant.js",
+      "sha256": "0cfd676fccda144732c064f0281f22c6996cc19451c5a4f05ecb5b46b53ffcbb",
+      "bytes": 95992,
+      "lines": 2357,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "Exported function signatures discovery/service/REST/verify/camera/intercom/speaker; doorbell matches."
+    },
+    {
+      "path": "src/mind/perceptiondecision.js",
+      "sha256": "e860e3a8c932da3be967d14b750dac221c51ce406d4bbc67463022fc40acb8d4",
+      "bytes": 4224,
+      "lines": 103,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "Lines1-100."
+    },
+    {
+      "path": "src/mind/agent.js",
+      "sha256": "7004a69d5aeba38ebcdb681382cc6f432d49c74aa95647029b7a37f4df5ba5fe",
+      "bytes": 513704,
+      "lines": 10974,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "First18 retry/memory/export matches; not whole implementation."
+    },
+    {
+      "path": "src/mind/autonomy.js",
+      "sha256": "076fbc774659e3046877e30e0a2fb9ca6e566862f6e8f71e799a5ea74c8b0ee7",
+      "bytes": 43794,
+      "lines": 1063,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "First18 schedule/retry/export matches."
+    },
+    {
+      "path": "src/mind/persona.js",
+      "sha256": "e39a5c119db22073ee747c485bfde5ad080613083314314298c7630f34a05fb6",
+      "bytes": 15904,
+      "lines": 235,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "First18 export/memory matches incl.shared identity/instruction composition."
+    },
+    {
+      "path": "src/mind/curiosity.js",
+      "sha256": "01f9d00983dc178840aab9d39188c0f831726803202e6ac062341589f1c06a7b",
+      "bytes": 89488,
+      "lines": 1841,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "First18 schedule/retry/export matches."
+    },
+    {
+      "path": "src/integrations/telegram.js",
+      "sha256": "04cfd9980285b2c6dd1c711b7084475826e4022f7ff081cb64e732feb6144b08",
+      "bytes": 145284,
+      "lines": 3489,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "First18 retry/export matches."
+    },
+    {
+      "path": "src/mind/tools.js",
+      "sha256": "6b01698261e9bd168ed69812266cc1a4a26efb53bc160f824df20ff96a1ff950",
+      "bytes": 284637,
+      "lines": 5449,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "First35 import/tool/execute/install/skill/procedure matches; capability surface only."
+    },
+    {
+      "path": "src/mind/learning.js",
+      "sha256": "b15e8affbe1f995f649789dd0cbcd487b40c9ba29b120a5d71850c63427841ab",
+      "bytes": 64512,
+      "lines": 1303,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "First35 import/export/execute/procedure matches."
+    },
+    {
+      "path": "src/mind/projectexecution.js",
+      "sha256": "2c6e07237c92e949682de494954964504fad661f82fe836974b48dc4cbe8d639",
+      "bytes": 21843,
+      "lines": 507,
+      "readMode": "code_or_lock_excerpts",
+      "scope": "First35 exported function/import/execution matches."
+    }
+  ],
+  "checkoutInstalledRelationship": [
+    {
+      "module": "bootstrap/delegated_digital_composition.py",
+      "checkoutSha256": "56f0749971e964a230b174f1d32997e218332908ad3db7772c806a8c22933c3e",
+      "installedCoreSha256": "572c0c2214fdbc99ff6659ac0f82805e26e4ec574e695da0503cab4ebe989950",
+      "same": false
+    },
+    {
+      "module": "bootstrap/delegated_digital_profile.py",
+      "checkoutSha256": "b196b347209cde881822004ff4747a69c838ec15e75d4d6c66bc0f185ec98085",
+      "installedCoreSha256": "3638ad7092e08f1f66f64f8d3f0c60eaf2ff4fe2df8a6db639987f7163385c45",
+      "same": false
+    },
+    {
+      "module": "bootstrap/delegated_digital_runner.py",
+      "checkoutSha256": "2528ff03cbd0c7a7b125699c155eb2cacfdee1b183ce31180bed0855b8e4241c",
+      "installedCoreSha256": "bec0e1bf26ec4583cbb5264253b238b9880dd0d3c5a89a90e3889a9ce34eba7d",
+      "same": false
+    },
+    {
+      "module": "adapters/postgres/connector_results.py",
+      "checkoutSha256": "56639febdc5f23a3506e850f67374a9c8e094be70c9077baa0bd96d8b534ddf4",
+      "installedCoreSha256": "953f2852f48ff8d49a90111da4377c849616c1e532e73333dd4ea154b9a8bdd8",
+      "same": false
+    },
+    {
+      "module": "application/conversation.py",
+      "checkoutSha256": "d9befd28c439142fb1f42f356fd64fa7d6f9064915592e434c4efa40891a7342",
+      "installedCoreSha256": "d9befd28c439142fb1f42f356fd64fa7d6f9064915592e434c4efa40891a7342",
+      "same": true
+    }
+  ],
+  "activity": {
+    "productCodeEdits": 0,
+    "installations": 0,
+    "testRuns": 0,
+    "evaModelCalls": 0,
+    "newBenchmarks": 0,
+    "commits": 0,
+    "externalMessages": 0,
+    "paidRuntimeExperiments": 0,
+    "creditCost": null
+  },
+  "limitations": [
+    "Filename inventories/search discovery hits are not substantive reads.",
+    "External current-system research is assigned elsewhere; this researcher did not reopen referenced URLs.",
+    "Historical live claims retain their original date and scope.",
+    "Private raw artifacts/EVA1 runtime not inspected.",
+    "Initial truncation repaired for ten Markdown sources; status/code/selected JSON reads remain explicitly excerpted."
+  ]
+}

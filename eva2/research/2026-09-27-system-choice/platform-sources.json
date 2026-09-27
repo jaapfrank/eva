@@ -1,0 +1,332 @@
+{
+  "checked_utc": "2026-09-27 12:35:52 UTC",
+  "scope": "Official documentation and public release metadata only. Moving feature docs are not proven to match stable tags. No runtime trial, installation, paid provider call, benchmark, or complete security audit.",
+  "base_commit": "c025550b",
+  "next_check": "Before candidate installation or 2026-10-05",
+  "owner": "project coordinator",
+  "local_sources": [
+    "eva2/CONCURRENTIE_EN_HERGEBRUIK.md",
+    "eva2/evidence/reassessment/upstream-2026-09-21.json"
+  ],
+  "sources": [
+    {
+      "id": "oc-repo",
+      "url": "https://github.com/openclaw/openclaw",
+      "purpose": "product and installation",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "oc-architecture",
+      "url": "https://docs.openclaw.ai/concepts/architecture",
+      "purpose": "gateway ownership",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "oc-subagents",
+      "url": "https://docs.openclaw.ai/tools/subagents",
+      "purpose": "background sessions",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "oc-operations",
+      "url": "https://docs.openclaw.ai/tools/subagents/operations",
+      "purpose": "restart and stop",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "oc-trust",
+      "url": "https://docs.openclaw.ai/gateway/security/trust-model",
+      "purpose": "family trust boundary",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "oc-license",
+      "url": "https://raw.githubusercontent.com/openclaw/openclaw/v2026.9.6/LICENSE",
+      "purpose": "release license",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "release_tag",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "hermes-repo",
+      "url": "https://github.com/NousResearch/hermes-agent",
+      "purpose": "product and learning",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "hermes-home",
+      "url": "https://hermes-agent.nousresearch.com/",
+      "purpose": "product context",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "hermes-architecture",
+      "url": "https://hermes-agent.nousresearch.com/docs/developer-guide/architecture",
+      "purpose": "runtime and plugins",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "hermes-messaging",
+      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/messaging",
+      "purpose": "channels",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "hermes-ha",
+      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/messaging/homeassistant",
+      "purpose": "HA scope",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "hermes-gateway",
+      "url": "https://hermes-agent.nousresearch.com/docs/developer-guide/gateway-internals",
+      "purpose": "interrupt and routing",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "hermes-delegation",
+      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/delegation",
+      "purpose": "async and durability",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "hermes-memory",
+      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/memory",
+      "purpose": "profile snapshots",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "hermes-security",
+      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/security",
+      "purpose": "containment and guards",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "a0-repo",
+      "url": "https://github.com/agent0ai/agent-zero",
+      "purpose": "workbench and plugins",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "a0-usage",
+      "url": "https://github.com/agent0ai/agent-zero/blob/main/docs/guides/usage.md",
+      "purpose": "tasks voice memory",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "a0-license",
+      "url": "https://raw.githubusercontent.com/agent0ai/agent-zero/v2.13/LICENSE",
+      "purpose": "release license",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "release_tag",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "ocod-repo",
+      "url": "https://github.com/anomalyco/opencode",
+      "purpose": "coding product",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "ocod-server",
+      "url": "https://opencode.ai/docs/server/",
+      "purpose": "async session API",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "ocod-plugins",
+      "url": "https://opencode.ai/docs/plugins/",
+      "purpose": "extension execution",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "pi-repo",
+      "url": "https://github.com/earendil-works/pi",
+      "purpose": "toolkit and permission boundary",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "pi-coding",
+      "url": "https://github.com/earendil-works/pi/tree/main/packages/coding-agent",
+      "purpose": "sessions SDK packages",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    },
+    {
+      "id": "pi-durable",
+      "url": "https://raw.githubusercontent.com/earendil-works/pi/main/packages/durable/README.md",
+      "purpose": "storage limits",
+      "checked_utc": "2026-09-27 12:35:52 UTC",
+      "authority": "official",
+      "version_scope": "moving_documentation_or_main",
+      "checked_utc_meaning": "End of research pass; individual fetch occurred within checked_window_utc"
+    }
+  ],
+  "releases": [
+    {
+      "repo": "openclaw/openclaw",
+      "tag": "v2026.9.6",
+      "commit": "eb377ac59e6c9fd6c7705028034812becf00271b",
+      "published_at": "2026-09-23T23:21:10Z",
+      "pushed_at": "2026-09-27T12:31:12Z",
+      "github_spdx": "NOASSERTION",
+      "license_observation": "MIT at release tag",
+      "archived": false,
+      "prerelease": false,
+      "release_url": "https://github.com/openclaw/openclaw/releases/tag/v2026.9.6",
+      "metadata_url": "https://api.github.com/repos/openclaw/openclaw",
+      "latest_release_url": "https://api.github.com/repos/openclaw/openclaw/releases/latest",
+      "commit_resolution_url": "https://api.github.com/repos/openclaw/openclaw/commits/v2026.9.6",
+      "checked_utc": "2026-09-27 12:35:52 UTC"
+    },
+    {
+      "repo": "NousResearch/hermes-agent",
+      "tag": "v2026.9.24",
+      "commit": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
+      "published_at": "2026-09-24T10:09:38Z",
+      "pushed_at": "2026-09-27T12:30:55Z",
+      "github_spdx": "MIT",
+      "license_observation": "MIT metadata",
+      "archived": false,
+      "prerelease": false,
+      "release_url": "https://github.com/NousResearch/hermes-agent/releases/tag/v2026.9.24",
+      "metadata_url": "https://api.github.com/repos/NousResearch/hermes-agent",
+      "latest_release_url": "https://api.github.com/repos/NousResearch/hermes-agent/releases/latest",
+      "commit_resolution_url": "https://api.github.com/repos/NousResearch/hermes-agent/commits/v2026.9.24",
+      "checked_utc": "2026-09-27 12:35:52 UTC"
+    },
+    {
+      "repo": "agent0ai/agent-zero",
+      "tag": "v2.13",
+      "commit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+      "published_at": "2026-09-23T18:47:44Z",
+      "pushed_at": "2026-09-23T23:03:04Z",
+      "github_spdx": "NOASSERTION",
+      "license_observation": "MIT at release tag",
+      "archived": false,
+      "prerelease": false,
+      "release_url": "https://github.com/agent0ai/agent-zero/releases/tag/v2.13",
+      "metadata_url": "https://api.github.com/repos/agent0ai/agent-zero",
+      "latest_release_url": "https://api.github.com/repos/agent0ai/agent-zero/releases/latest",
+      "commit_resolution_url": "https://api.github.com/repos/agent0ai/agent-zero/commits/v2.13",
+      "checked_utc": "2026-09-27 12:35:52 UTC"
+    },
+    {
+      "repo": "anomalyco/opencode",
+      "tag": "v1.18.32",
+      "commit": "545f51d26cc39a907d2867492d498d9607ea5fa4",
+      "published_at": "2026-09-21T22:51:20Z",
+      "pushed_at": "2026-09-27T12:19:35Z",
+      "github_spdx": "MIT",
+      "license_observation": "MIT metadata",
+      "archived": false,
+      "prerelease": false,
+      "release_url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.32",
+      "metadata_url": "https://api.github.com/repos/anomalyco/opencode",
+      "latest_release_url": "https://api.github.com/repos/anomalyco/opencode/releases/latest",
+      "commit_resolution_url": "https://api.github.com/repos/anomalyco/opencode/commits/v1.18.32",
+      "checked_utc": "2026-09-27 12:35:52 UTC"
+    },
+    {
+      "repo": "earendil-works/pi",
+      "tag": "v0.87.1",
+      "commit": "f07218c4d4bbc12bef056a7058c3dd49dfe41abe",
+      "published_at": "2026-09-22T19:43:43Z",
+      "pushed_at": "2026-09-26T12:37:39Z",
+      "github_spdx": "MIT",
+      "license_observation": "MIT metadata",
+      "archived": false,
+      "prerelease": false,
+      "release_url": "https://github.com/earendil-works/pi/releases/tag/v0.87.1",
+      "metadata_url": "https://api.github.com/repos/earendil-works/pi",
+      "latest_release_url": "https://api.github.com/repos/earendil-works/pi/releases/latest",
+      "commit_resolution_url": "https://api.github.com/repos/earendil-works/pi/commits/v0.87.1",
+      "checked_utc": "2026-09-27 12:35:52 UTC"
+    }
+  ],
+  "redirects": [
+    {
+      "from": "https://github.com/badlogic/pi-mono",
+      "to": "https://github.com/earendil-works/pi",
+      "checked_utc": "2026-09-27T12:30:00Z"
+    }
+  ],
+  "unverified": [
+    "Feature parity between moving docs and release tags",
+    "Voice PE actual hardware route and latency",
+    "Authenticated per-person private memory and audible audience",
+    "Complete HA API including automation creation and editing",
+    "End-to-end cancellation and ambiguous external-effect recovery",
+    "Quality, total runtime calls, resource use and cost versus Eva 1",
+    "Migration effort and exact boundary to remove double orchestration",
+    "Transitive dependency and complete advisory audit"
+  ],
+  "checked_window_utc": {
+    "started": "2026-09-27 12:29:27 UTC",
+    "completed": "2026-09-27 12:35:52 UTC"
+  }
+}

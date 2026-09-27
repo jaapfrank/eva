@@ -1,0 +1,158 @@
+{
+  "checkedAt": "2026-09-27T12:44:39.999190+00:00",
+  "scope": "Official documentation and repository screens, not pinned installations or benchmarks. Claims and limitations are in building-blocks.md. Five primary platform release pins are recorded separately.",
+  "readMode": "Relevant rendered page content and targeted follow-ups; no claim to full-site reading.",
+  "sources": [
+    {
+      "url": "https://github.com/letta-ai/letta",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://github.com/letta-ai/letta-code",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://github.com/letta-ai/letta-code/blob/main/LICENSE",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://docs.letta.com/agent-sdk",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://github.com/letta-ai/letta-code/blob/main/src/channels/README.md",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://pydantic.dev/docs/ai/tools-toolsets/deferred-tools/",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://pydantic.dev/docs/ai/capabilities/durable_execution/overview/",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://pydantic.dev/docs/ai/capabilities/on-demand/",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://docs.langchain.com/oss/python/deepagents/overview",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://github.com/langchain-ai/deepagents",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://docs.langchain.com/oss/python/langgraph/persistence",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://docs.openhands.dev/sdk/arch/overview",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://docs.dbos.dev/python/tutorials/workflow-tutorial",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://docs.dbos.dev/python/tutorials/step-tutorial",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://docs.temporal.io/workflow-execution",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://pydantic.dev/docs/ai/capabilities/durable_execution/backends/",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://docs.livekit.io/agents/logic/sessions/",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://docs.livekit.io/agents/logic/tools/async/",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://docs.livekit.io/agents/logic/tasks/",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://docs.pipecat.ai/pipecat/learn/function-calling",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://github.com/vectorize-io/hindsight",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://hindsight.vectorize.io/",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://hindsight.vectorize.io/blog/2026/07/24/recall-vs-reflect",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://github.com/plastic-labs/honcho",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://hindsight.vectorize.io/blog/2026/07/17/hermes-hindsight-open-stack",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://www.home-assistant.io/integrations/mcp_server/",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://github.com/homeassistant-ai/ha-mcp",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://github.com/microsoft/playwright-mcp",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    },
+    {
+      "url": "https://github.com/browser-use/browser-use",
+      "kind": "official_documentation_or_upstream_repository",
+      "role": "Contract and suitability evidence; main/docs may differ from stable release."
+    }
+  ],
+  "execution": {
+    "newEvaModelCalls": 0,
+    "installations": 0,
+    "productCodeChanges": 0,
+    "developmentCredits": "unknown"
+  }
+}

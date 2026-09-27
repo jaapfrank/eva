@@ -1,0 +1,32 @@
+{
+  "reviewedAt": "2026-09-27T12:45:34.930798+00:00",
+  "scope": "One bundled consistency/evidence review, not a new runtime or full security review.",
+  "reviewers": [
+    {
+      "name": "platform_research_20260927",
+      "result": "No blockers; platform roles, caveats and non-superiority claims consistent; supplementary candidates only screened at documentation level."
+    },
+    {
+      "name": "baseline_research_20260927",
+      "result": "One protocol inconsistency fixed: three candidate families, select two development cases and repeat each twice under existing EV-003. Other owner/integration/consumption claims consistent."
+    }
+  ],
+  "fixedFinding": "README proposed three cases while EV-003 development protocol specifies two cases/two epochs. Text corrected before publication.",
+  "files": {
+    "README.md": "7bbb9177d08e5b64f9a9bffae84abe2057e6a5682996c726b5ec29c1f7a69ed4",
+    "building-blocks.md": "620670cf65e6bcd75588c2e1e5cd47d8b7c70e5e2d82f1e8fa5697a62cbdf11c",
+    "platforms.md": "650be4fda3150abf53b0049f5346dc65fbb7ccb3d7e552df76c028e10e9e88c9",
+    "baseline.md": "21f4c89705f58d5ac9532f991e2332dd2d69b32ee0e2a5eb2b18180a0f9f753f"
+  },
+  "newEvaModelCalls": 0,
+  "installationPerformed": false,
+  "developmentCredits": "unknown",
+  "postReviewOwnerNotice": "A dated scope notice was added to README after review: owner asks to restate requirements and rewrite the plan without mandatory preservation of existing code/architecture. Research findings unchanged.",
+  "publicationFormatting": "Trailing whitespace and final blank lines removed; no further research claim changed.",
+  "finalPublicationFiles": {
+    "README.md": "6840981144a02541ceea523d9bc8f0da5d7acbd1716ff9b222a0cdd671cf6af1",
+    "building-blocks.md": "b4bba80bff18f2e1115d3ee3c15a207bc50f20109b42b3208be978e3c2dcea70",
+    "platforms.md": "7fc4ec006ec99815611a2af3cdaf5494d3159faae62e7262509bb67146837935",
+    "baseline.md": "21f4c89705f58d5ac9532f991e2332dd2d69b32ee0e2a5eb2b18180a0f9f753f"
+  }
+}

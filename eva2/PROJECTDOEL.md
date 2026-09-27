@@ -1,5 +1,44 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaaropdracht 27 september 2026 — product opnieuw vaststellen
+
+De eigenaar wil eerst zijn volledige verwachtingen uitspreken en daarna het plan
+herschrijven. Bestaande Eva1/Eva2-code, architectuur, platformkeuzes en planning
+zijn geen verplichte uitgangspunten. Behoud mag een onderbouwde uitkomst zijn,
+maar is geen selectievoorwaarde. Het onderzoek is invoer voor de nieuwe keuze;
+de voorlopige shortlist is geen vastgesteld ontwerp of bouwopdracht.
+
+De coördinator vraagt eerst naar dagelijks gedrag, tekortkomingen van Eva1,
+persoonlijkheid, spraakervaring, zelfstandige opdrachten en acceptatie. Daarna
+volgen alleen nog ontbrekende vragen over gebruikers, grenzen, middelen,
+modulariteit, kosten en oplevering. Reeds duidelijke eigenaarwensen hoeven niet
+opnieuw te worden verdedigd. Technische selectie en samenhang blijven de
+verantwoordelijkheid van de coördinator.
+
+Actief: eisen uitvragen en vervolgens één samenhangend plan uitwerken. Er wordt
+nu niet gebouwd of geïnstalleerd. Deze planopdracht is geen opdracht om de
+huidige installatie of gegevens te verwijderen. Oudere behoudsvoorkeuren en
+bouwvolgordes hieronder zijn ondergeschikt aan dit nieuwe besluit.
+
+
+## Eigenaaropdracht 27 september 2026 — eerst integraal onderzoek, dan een plan
+
+Onderzoek eerst de relevante volledige systemen, bouwstenen en eerdere keuzes.
+Het beoogde product moet als samenhangende digitale huisgenoot onderscheidend
+zijn: efficiënter, slimmer, sneller, zelfstandiger en modulair, met geschikte
+actuele opensource en vergelijking met Eva1 en concurrenten. Een kleine afwijking
+van een bestaande concurrent is onvoldoende als productconcept. Onderbouw
+onderscheidende waarde als hypothese totdat dezelfde praktijktaken haar bewijzen.
+
+Deze opdracht vervangt nu de directe bouwvolgorde: geen verdere featurebouw,
+installatie of nieuwe Eva-modelproef tijdens het onderzoek. Gebruik eerdere
+onderzoeksresultaten en bestaande code als bewijs; houd ontbrekende en verouderde
+vergelijkingen zichtbaar. Lever eerst een controleerbaar onderzoeksresultaat,
+inclusief alternatieven, samenhang, beperkingen, onderhoud en migratielast, en leid
+daarna pas een concreet bouwplan af. De huidige installatie en gegevens blijven
+behouden. Een basiskeuze is geen stilzwijgende toestemming om de installatie te
+vervangen. Het volledige productdoel blijft van kracht.
+
 ## Eigenaarverduidelijking 27 september 2026 — productverbetering ten opzichte van Eva1
 
 Eva2 moet Eva1 als dagelijks bruikbaar geheel verbeteren: efficiënter, slimmer,

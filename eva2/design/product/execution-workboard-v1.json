@@ -2423,28 +2423,28 @@
           }
         ],
         "now": {
-          "title": "Eva2 als geheel verbeteren ten opzichte van Eva1",
-          "state": "Eigenaarprioriteit vastgelegd",
-          "detail": "Slimmer, sneller, efficiënter en zelfstandiger. Modulaire onderdelen naar behoefte installeren, bestaande mogelijkheden behouden en geschikte actuele opensource benutten. Geen nieuwe functie opgeleverd; leerpatch bewaard. Geen uitvoerder of modelproef actief."
+          "title": "Samen vaststellen wat de complete Eva2 moet zijn",
+          "state": "Vragen gesteld · antwoorden open",
+          "detail": "Jaap wil het plan opnieuw opbouwen. Bestaande code en architectuur zijn geen verplichte basis. Zes vragen over dagelijks gebruik, Eva1, persoonlijkheid, spraak, zelfstandig werk en acceptatie staan open. Geen bouwtaak of onderzoeker actief."
         },
         "next": {
-          "title": "Bouwkeuzes sturen met de bestaande productvergelijking",
-          "state": "Nog niet gestart",
-          "detail": "Per groot onderdeel Eva1, Eva2 en geschikte opensource naast elkaar: behouden, aansluiten of gericht vervangen, met meetbare gebruikerswinst. Bestaand bewijs eerst; alleen ontbrekend bewijs onderzoeken dat de keuze kan veranderen."
+          "title": "Volledige wensen uitwerken tot één samenhangend plan",
+          "state": "Wacht op antwoorden",
+          "detail": "Coördinator verwerkt antwoorden, vraagt alleen ontbrekende aspecten uit en onderbouwt daarna platform, modules, ontwikkeling en oplevering. Het afgeronde brononderzoek is invoer; er is nog geen gekozen architectuur."
         },
         "ownerAction": {
-          "title": "Later proberen: doorpraten en terugkomen op een huisopdracht",
-          "url": "http://localhost:44712/",
-          "linkLabel": "Projectvoortgang",
+          "title": "Beantwoord de zes vragen in deze Codex-taak",
+          "url": "https://github.com/jaapfrank/eva/tree/main/eva2/research/2026-09-27-system-choice",
+          "linkLabel": "Lees het systeemonderzoek",
           "steps": [
-            "Gebruik je gewone wakeword op een van beide speakers en geef een langere publieke onderzoeks- of huisopdracht.",
-            "Laat het gesprek eindigen. Gebruik opnieuw het wakeword op dezelfde speaker en vraag: Welke opdracht loopt nog? Je kunt haar ook bijsturen of stoppen.",
-            "Laat een opdracht afronden: zodra de oorspronkelijke speaker vrij is, hoort Eva het resultaat één keer terug te geven."
+            "Beschrijf de gewenste dagelijkse Eva, huidige Eva1-ervaring en persoonlijkheid.",
+            "Geef de gewenste spraakervaring, echte zelfstandige opdrachten en jouw acceptatiecriteria aan.",
+            "Daarna volgen gerichte vragen over nog ontbrekende gebruiksgrenzen, middelen en oplevering."
           ],
-          "expected": "Werk blijft bewaard en bedienbaar na het gesprek. Onderzoek en digitale huisopdrachten gebruiken dezelfde opslag/uitvoering. Hoorbaarheid en ervaren snelheid moeten nog fysiek beoordeeld worden."
+          "expected": "Jouw concrete verwachtingen vormen de basis van het nieuwe plan; bestaande techniek hoeft niet behouden te blijven."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-27T12:26:27.125550+00:00"
+        "reviewedAt": "2026-09-27T12:48:55.083863+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12216,10 +12216,10 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Bestaande productvergelijking en bouwsteenbesluiten toepassen: per groot onderdeel behouden/aansluiten/vervangen met concrete gebruikerswinst en passende vergelijking. Alleen beslissingsrelevant ontbrekend bewijs aanvullen; daarna uitvoeren volgens de acht bestaande opleverstappen.",
-      "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
+      "nextAction": "Coördinator verwerkt antwoorden, vraagt alleen ontbrekende aspecten uit en onderbouwt daarna platform, modules, ontwikkeling en oplevering. Het afgeronde brononderzoek is invoer; er is nog geen gekozen architectuur.",
+      "effortNotice": "Eerdere bouwraming is geen actuele raming voor de nog te kiezen basis. Brononderzoek: één begrensde bronronde en gebundelde review; creditkosten onbekend. Bouw-/migratieraming volgt pas uit concrete aansluitingen en open beslispunten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
-      "continuationRule": "Volgens eigenaarbesluit functies eerst bouwen en installeren, met noodzakelijke startcontrole en registratie. Uitgebreide tests, reviews en gebruikersproeven volgen later; het volledige oplevergoal blijft open.",
+      "continuationRule": "Actuele eigenaaropdracht: eerst productwensen uitvragen, daarna het integrale plan herschrijven en de technische keuze onderbouwen. Geen verplichte bestaande code/architectuur. Geen featurebouw/installatie tijdens deze planfase.",
       "stopRules": [
         "Geen ongewijzigde proefherhaling; eerst concrete gewijzigde oorzaak of ontbrekend bewijs.",
         "Nieuwe scope wordt vervolgwerk tenzij eigenaar of aantoonbare afhankelijkheid anders bepaalt.",
@@ -12233,7 +12233,10 @@
         "householdControls": "Corrected by owner on 25 September: everyone at home may use the general Home Assistant capabilities through both registered speakers, including discovering and operating devices/services and reading, creating and changing automations.",
         "privateContinuation": "Telegram; no private content through shared voice."
       },
-      "ownerPriority20260927": "Eva2 als geheel efficiënter, slimmer, sneller en autonomer dan Eva1; modulair en selectief installeerbaar met actuele geschikte opensource. Vergelijking met Eva1 en concurrenten bepaalt bouwkeuzes vanaf nu, niet alleen achteraf. Bestaande code, data en acceptaties behouden; geen nieuwe brede audit of algemene herbouw."
+      "ownerPriority20260927": "Eva2 als geheel efficiënter, slimmer, sneller en autonomer dan Eva1; modulair en selectief installeerbaar met actuele geschikte opensource. Vergelijking met Eva1 en concurrenten bepaalt bouwkeuzes vanaf nu, niet alleen achteraf. Bestaande code, data en acceptaties behouden; geen nieuwe brede audit of algemene herbouw.",
+      "ownerResearchMandate20260927": "Integraal onderzoek van relevante systemen vóór bouwplan; onderscheidend geheel, geen losse marginale feature. Tijdens onderzoek geen featurebouw/installatie/modelproeven.",
+      "effortNoticeBeforeSystemResearch20260927": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
+      "ownerProductReset20260927": "Bestaande implementatie hoeft niet behouden te blijven; eerst alle benodigde verwachtingen uitvragen en het volledige plan herschrijven. Onderzoek is onderbouwing, geen definitieve keuze."
     },
     "dashboardClarityCorrection20260922": {
       "ownerFeedback": "Bewezen basis zegt niet of Eva2 als vaste huisgenoot bruikbaar is; toon concrete opgeleverde resultaten en open werk.",
@@ -13052,6 +13055,15 @@
       ],
       "rollbackAssets": "/home/administrator/project/.eva2-artifacts/dashboard-recovery-summary-20260924/project-dist-before",
       "modelCalls": 0
+    },
+    "systemResearch20260927": {
+      "status": "source_research_reviewed",
+      "report": "eva2/research/2026-09-27-system-choice/README.md",
+      "review": "eva2/research/2026-09-27-system-choice/review.json",
+      "architectureSelected": false,
+      "newEvaModelCalls": 0,
+      "developmentCredits": "unknown",
+      "currentActivity": "Awaiting owner product answers; no feature work or researcher active."
     }
   },
   "activeTaskId": "AU-008",
