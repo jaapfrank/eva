@@ -23,7 +23,7 @@ class ConnectorSelectionError(ConversationConflict):
     """A local selection can be corrected without repeating an external action."""
 
 
-def selection_schema():
+def _single_selection_schema():
     return {"type": "object", "additionalProperties": False,
             "required": ["pointer", "offset", "limit", "query"],
             "properties": {
@@ -33,6 +33,17 @@ def selection_schema():
                 "limit": {"type": "integer", "minimum": 1, "maximum": 8192},
                 "query": {"type": ["string", "null"], "minLength": 1, "maxLength": 256,
                           "description": "Exact text search from offset; null reads directly."}}}
+
+
+def selection_schema():
+    return {"description": "Read one selection, or 1..8 selections from the same saved result. "
+            "For a batch the sum of all requested limits must be at most 8192 characters. "
+            "The complete output and recorded receipt must each fit 65536 UTF-8 bytes; "
+            "reduce selection lengths if needed. No selection invokes an external connector.",
+            "oneOf": [_single_selection_schema(),
+                {"type": "object", "additionalProperties": False, "required": ["selections"],
+                 "properties": {"selections": {"type": "array", "minItems": 1, "maxItems": 8,
+                                               "items": _single_selection_schema()}}}]}
 
 
 
@@ -157,7 +168,7 @@ class ConnectorResults:
                 "arguments_schema": selection_schema(),
                 "arguments_json": json.dumps({"pointer": "/text" if isinstance(output.get("text"), str) else "",
                     "offset": 0, "limit": 8192, "query": None}),
-                "instructions": "Read saved bytes locally. pointer is a JSON pointer; offset/limit count characters. Optional query searches within the selected value from offset. No connector is invoked."}}
+                "instructions": "Read saved bytes locally. pointer is a JSON pointer; offset/limit count characters. Optional query searches within the selected value from offset. For multiple passages, use {selections: [...]} with 1..8 selections and sum(limit) <= 8192. No connector is invoked."}}
 
     def read_recorded(self, reader, arguments, call_id):
         """Persist exactly the bounded page delivered by a successful local read."""
@@ -183,6 +194,29 @@ class ConnectorResults:
         match = re.fullmatch(re.escape(READER_PREFIX)+r"([0-9a-f]{64}):([0-9a-f]{64})", reader)
         if not match:
             raise ConversationConflict("stored connector result reference is invalid")
+        batched = isinstance(arguments, dict) and set(arguments) == {"selections"}
+        selections = arguments["selections"] if batched else [arguments]
+        if not isinstance(selections, list) or not 1 <= len(selections) <= 8:
+            raise ConnectorSelectionError("stored connector batch requires 1..8 selections")
+        for selection in selections:
+            self._validate_selection(selection)
+        if sum(selection["limit"] for selection in selections) > 8192:
+            raise ConnectorSelectionError("stored connector combined selection limits exceed 8192 characters")
+        raw, digest = self._bytes(match[1])
+        if digest != match[2]:
+            raise ConversationConflict("stored connector result reference hash differs")
+        document = json.loads(raw)
+        pages = [self._select(document, selection, digest, len(raw)) for selection in selections]
+        result = ({"contract": "EvaStoredConnectorPages/v1", "sha256": digest,
+                   "byte_length": len(raw), "pages": pages,
+                   "selected_characters": sum(len(page["text"]) for page in pages),
+                   "external_state_verified": False} if batched else pages[0])
+        if len(_encoded(result)) > _BOUND:
+            raise ConnectorSelectionError("stored connector page output exceeds bound; reduce limits")
+        return result
+
+    @staticmethod
+    def _validate_selection(arguments):
         if not isinstance(arguments, dict) or set(arguments) != {"pointer", "offset", "limit", "query"}:
             raise ConnectorSelectionError("stored connector selection is invalid")
         pointer, offset, limit, query = (arguments[k] for k in ("pointer", "offset", "limit", "query"))
@@ -190,10 +224,11 @@ class ConnectorResults:
                 or type(offset) is not int or offset < 0 or type(limit) is not int or not 1 <= limit <= 8192
                 or (query is not None and (not isinstance(query, str) or not 1 <= len(query) <= 256))):
             raise ConnectorSelectionError("stored connector selection bounds are invalid")
-        raw, digest = self._bytes(match[1])
-        if digest != match[2]:
-            raise ConversationConflict("stored connector result reference hash differs")
-        value = json.loads(raw)
+
+    @staticmethod
+    def _select(document, arguments, digest, byte_length):
+        pointer, offset, limit, query = (arguments[k] for k in ("pointer", "offset", "limit", "query"))
+        value = document
         try:
             for part in ([] if not pointer else pointer[1:].split("/")):
                 key = part.replace("~1", "/").replace("~0", "~")
@@ -206,10 +241,8 @@ class ConnectorResults:
         start = selected if found else len(text)
         page = text[start:start+limit]
         next_offset = start + len(page)
-        result = {"contract": "EvaStoredConnectorPage/v1", "sha256": digest, "byte_length": len(raw),
+        result = {"contract": "EvaStoredConnectorPage/v1", "sha256": digest, "byte_length": byte_length,
             "pointer": pointer, "offset": start, "next_offset": next_offset,
             "selection_length": len(text), "found": found, "text": page,
             "has_more": found and next_offset < len(text), "external_state_verified": False}
-        if len(_encoded(result)) > _BOUND:
-            raise ConversationConflict("stored connector page exceeds bound")
         return result

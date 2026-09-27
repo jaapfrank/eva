@@ -1016,7 +1016,7 @@
             "date": "25 september",
             "state": "installed",
             "result": "Een oude geblokkeerde planstap beëindigt een hervatte opdracht niet meer meteen. De nieuwe poging beoordeelt de blokkade met haar actuele toestand; nieuwe of ongewijzigde blokkades stoppen nog steeds begrensd. Kern en werker bijgewerkt, limieten behouden.",
-            "remaining": "56 gerichte controles en review geslaagd. Werkelijke leeropdracht vervolgen en beoordelen; geen algemene leerfunctie of hoofdcategorie afgerond.",
+            "remaining": "De echte taak is hervat en heeft een bewaarde bronselectie gelezen. Afmaken van de leeropdracht blijft open door budgetgrenzen.",
             "source": "eva2/evidence/product/digital-resume-progress-installed-20260925.json"
           },
           {
@@ -1024,7 +1024,7 @@
             "date": "25 september",
             "state": "installed",
             "result": "De nadruk op alleen de laatste zin is vervangen door alle expliciet gevraagde resultaten. Lezen, bewaren en uitvoeren vragen echte taaktoelating. Bestaande korte gesprekken, correcties, rechten en taakroute blijven behouden. Kern en werker bijgewerkt.",
-            "remaining": "Gerichte controles en review geslaagd; verbeterd modelgedrag nog niet bewezen. Eén nieuwe echte leeropdracht volgt.",
+            "remaining": "Eén echte volledige opdracht is daarna toegelaten; causaliteit en betrouwbaarheid zijn daarmee niet bewezen. De uitvoering is nog niet afgerond.",
             "source": "eva2/evidence/product/complete-request-instruction-installed-20260925.json"
           },
           {
@@ -1032,7 +1032,7 @@
             "date": "25 september",
             "state": "installed",
             "result": "Grote connectorantwoorden blijven volledig bewaard. Eva kan lokaal stukken lezen; verkeerde selectie-invoer krijgt nu een corrigeerbare fout met de geldige grenzen. Succesvolle pagina’s worden met bronhash en leesbewijs opgeslagen. Geïnstalleerd op kern en werker.",
-            "remaining": "Volledige gecontroleerde gespreksroute en echte database-opslag slagen; actuele bevoegdheid en integriteit blijven vereist. De echte leeropdracht wordt vervolgd; procedure en uitvoering nog niet af.",
+            "remaining": "Een echte lokale bronselectie is nu uitgevoerd en duurzaam vastgelegd. De leeropdracht zelf stopt vóór opslaan/uitvoeren; algemene leerfunctie en eigenaaracceptatie blijven open.",
             "source": "eva2/evidence/product/connector-selection-recovery-installed-20260925.json"
           },
           {
@@ -2423,14 +2423,14 @@
           }
         ],
         "now": {
-          "title": "Leeropdracht vervolgen met corrigeerbare bronlezing",
-          "state": "Eén vervolg starten",
-          "detail": "551de6e7 is geïnstalleerd. De bewaarde taak krijgt één vooraf geregistreerd vervolg na de exact vastgestelde leesfout. Zelfde bron, criteria en limieten; geen code- of uitkomsthints. Coördinator volgt uitvoering; uitvoerder en reviewer van de patch zijn klaar."
+          "title": "Leeropdracht kan nog niet van begin tot eind",
+          "state": "Concrete uitvoeringsgrens vastgesteld",
+          "detail": "De echte taak stopte vóór bewaren en uitvoeren. Broncorrecties voor gebundeld lezen en antwoord-/taakinput zijn gemaakt. Onafhankelijke review: nog onvoldoende voor de complete functie; het bekende pad vraagt minimaal 8 toolacties en 9 modelantwoorden, tegenover huidige grenzen 6 en 8. Geen nieuwe modelproef of installatie gestart. Uitvoerder en reviewer zijn klaar."
         },
         "next": {
-          "title": "Lokale bronlezing via de echte taakroute afronden",
-          "state": "Nog niet gestart",
-          "detail": "Eerst de exacte fout reproduceren zonder model- of provideraanroep. Geen nieuwe proef op alleen de losse gateway; bron, voortgang en grenzen blijven behouden."
+          "title": "Complete taakafloop binnen passende taakgrenzen",
+          "state": "Nog af te maken",
+          "detail": "Beoordeel de hele uitvoering inclusief bronzoeken, bewaren, toepassen en opleveren vóór een nieuwe proef. Gebruik bestaande taakroute en bewaarde gegevens; geen losse verhoging presenteren als afgeronde leerfunctie."
         },
         "ownerAction": {
           "title": "Later proberen: doorpraten en terugkomen op een huisopdracht",
@@ -2444,7 +2444,7 @@
           "expected": "Werk blijft bewaard en bedienbaar na het gesprek. Onderzoek en digitale huisopdrachten gebruiken dezelfde opslag/uitvoering. Hoorbaarheid en ervaren snelheid moeten nog fysiek beoordeeld worden."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-25T16:24:57.754993+00:00"
+        "reviewedAt": "2026-09-27T11:34:03.146004+00:00"
       }
     },
     "pendingTechnicalReview": {

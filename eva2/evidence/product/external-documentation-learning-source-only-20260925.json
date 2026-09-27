@@ -38,7 +38,7 @@
   "creditCost": null,
   "artifacts": "/home/administrator/project/.eva2-artifacts/external-documentation-learning-20260925/after-complete-request-instruction",
   "priorFailuresPreserved": true,
-  "next": "Verify stored-source receipt and the existing task budget/resumption semantics; no unchanged retry or automatic budget increase.",
+  "next": "Inspect attempt input and tool accounting together before another real task; do not repeat unchanged.",
   "independentReview": {
     "reviewed_at": "2026-09-25T16:01:28.675377+00:00",
     "reviewer": "independent-reviewer:/root/result_return_review",
@@ -226,5 +226,43 @@
     "usageCaveat": "Published tool_calls counts dispatches rather than every local action step; four reported calls do not prove two steps remained.",
     "resume": "A new explicit attempt receives fresh usage counters and retains execution_id for access to stored results. The first resumed attempt failed on inherited blocked progress, corrected in ebb0a01a.",
     "limitsChanged": false
+  },
+  "resumeAfterSelectionFix": {
+    "checkedAt": "2026-09-27T11:26:36.390797+00:00",
+    "workId": "work:eva-resume:1fa1d45c-2ec7-56eb-9f68-8906e1cffbce",
+    "state": "failed",
+    "errorCode": "incomplete_work",
+    "usage": {
+      "contract": "DelegatedWorkUsage/v1",
+      "tool_calls": 3,
+      "measurement": "partial",
+      "input_tokens": 64043,
+      "total_tokens": 65148,
+      "output_tokens": 1105,
+      "schema_version": 1,
+      "cost_usd_micros": null,
+      "completed_model_responses": 4
+    },
+    "ownerControlInterventionsTotal": 3,
+    "sourceSelection": {
+      "callId": "call_dcgRNNPnrPL8LrHRyYa29ovB",
+      "arguments": {
+        "limit": 8192,
+        "query": "id=\"section-3.1\"",
+        "offset": 0,
+        "pointer": "/text"
+      },
+      "outputSha256": "d4bbf53662abbb9d6704a6c1604ca4af4276c182483f9bc113de5eec0b7ed190",
+      "characters": 8192,
+      "eventPayloadHashVerified": true,
+      "outputHashVerified": true,
+      "scope": "Coordinator checked stored selection and terminal live status. RFC section 3.1 read; other required sections, saved procedure and execution remain unproven."
+    },
+    "independentReview": "Not completed: review agent hit its account usage limit on 25 September. Earlier source patch review remains valid.",
+    "procedureSaved": false,
+    "procedureExecuted": false,
+    "reuseStarted": false,
+    "newRetryStarted": false,
+    "artifacts": "/home/administrator/project/.eva2-artifacts/external-documentation-learning-20260925/after-complete-request-instruction/resume-after-selection-fix"
   }
 }

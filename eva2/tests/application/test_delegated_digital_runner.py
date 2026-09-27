@@ -623,7 +623,8 @@ def test_response_budget_is_not_reused_as_whole_task_budget(legacy, expected):
     assert len(tools.calls) == 2
 
 
-def test_legacy_resume_keeps_receipts_and_new_release_without_budget_expansion():
+@pytest.mark.parametrize("correct_input", [False, True])
+def test_legacy_resume_keeps_receipts_and_new_release_without_budget_expansion(correct_input):
     from dataclasses import replace
     async def run():
         _, old, store, tools, _, runner, _ = fixture()
@@ -642,7 +643,9 @@ def test_legacy_resume_keeps_receipts_and_new_release_without_budget_expansion()
         tools.release.set()
         assert (await runner.run(spec, call_id="call:old")).result is None
         store.stopped = False
-        runner.profile = replace(legacy_profile, maximum_response_output_tokens=1200, maximum_output_tokens=9600)
+        runner.profile = replace(legacy_profile, maximum_response_output_tokens=1200, maximum_output_tokens=9600,
+            **({"maximum_response_input_tokens": legacy_profile.maximum_input_tokens,
+                "maximum_input_tokens": legacy_profile.maximum_input_tokens * 8} if correct_input else {}))
         runner.journal_factory = lambda *_: Journal()
         resumed = _budget_spec(runner.profile, spec, grant=spec.grant, resumed=True)
         assert resumed.grant == spec.grant
@@ -789,3 +792,31 @@ def test_background_stored_selection_can_be_corrected_but_security_errors_stop(f
                 conversation.respond(TURN)
             assert model.responses == 1
         assert len(provider_calls) == 1
+
+
+@pytest.mark.parametrize("legacy, expected", [(False, "succeeded"), (True, "budget_exceeded")])
+def test_multiple_responses_use_cumulative_input_without_expanding_legacy_grant(legacy, expected):
+    from dataclasses import replace
+    _, old, _, tools, _, runner, _ = fixture()
+    runner.profile = replace(runner.profile, maximum_response_input_tokens=100,
+                             maximum_input_tokens=800)
+    grant = runner.profile.grant()
+    if legacy:
+        grant = grant.model_copy(update={"maximum_input_tokens": 100,
+                                        "maximum_total_tokens": 100 + grant.maximum_output_tokens})
+    spec = _budget_spec(runner.profile, old, grant=grant)
+    snapshots = []
+    class InputModel(Model):
+        def generate(self, *args, **kwargs):
+            snapshots.append(_budget_snapshot(kwargs["self_context"]))
+            result = super().generate(*args, **kwargs)
+            return replace(result, usage=ConversationModelUsage.measured(
+                tool_calls=int(result.action_call is not None), input_tokens=45, output_tokens=10))
+    runner.model = InputModel()
+    tools.release.set()
+    outcome = asyncio.run(runner.run(spec, call_id="call:input-budget"))
+    assert outcome.status == expected, outcome
+    assert outcome.usage.input_tokens == 135
+    assert len(tools.calls) == 2
+    assert snapshots[-1]["limits"]["input_tokens_per_response"] == 100
+    assert snapshots[-1]["limits"]["input_tokens"] == (100 if legacy else 800)

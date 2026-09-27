@@ -140,7 +140,8 @@ def build_digital_profile(settings, provider_bundle):
         capability_ids=tuple(tool.name for tool in descriptors),
         execution_source_sha256=tuple((name, hashlib.sha256((_ROOT / name).read_bytes()).hexdigest())
                                       for name in _EXECUTION_SOURCES),
-        maximum_input_tokens=budget.max_input_tokens,
+        maximum_input_tokens=budget.max_input_tokens * min(settings.conversation_maximum_requests, 8),
+        maximum_response_input_tokens=budget.max_input_tokens,
         maximum_output_tokens=budget.max_output_tokens * min(settings.conversation_maximum_requests, 8),
         maximum_response_output_tokens=budget.max_output_tokens,
         maximum_model_runs=min(settings.conversation_maximum_requests, 8),

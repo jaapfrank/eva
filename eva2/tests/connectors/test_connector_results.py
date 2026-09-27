@@ -154,8 +154,68 @@ def test_background_reader_uses_real_adapter_validation_without_provider_replay(
         else:
             receipt = actions.execute_step(TURN, call, step_index=4)
             assert receipt.output["status"] == "selection_invalid"
-            assert receipt.output["arguments_schema"]["properties"]["limit"]["maximum"] == 8192
+            assert receipt.output["arguments_schema"]["oneOf"][0]["properties"]["limit"]["maximum"] == 8192
             assert actions.can_continue_after(TURN, receipt)
         assert actions.calls == 1
         assert checked and len(dispatched) == 1
         assert len(provider_calls) == 1
+
+
+def test_batch_reads_share_one_capture_and_record_complete_bounded_receipt():
+    output = {"text": "A" * 5000 + "SECTION TWO" + "B" * 85000}
+    adapter, command, calls, capture = setup(output)
+    with result_capture(capture):
+        manifest = asyncio.run(adapter.execute(command)).details["invocation_response"]
+    reader = manifest["reader"]["tool_id"]
+    selections = [{"pointer": "/text", "offset": 0, "limit": 4096, "query": query}
+                  for query in [None, "SECTION TWO"]]
+    route = PostgresExternalConversationTools(None, SimpleNamespace(action_names=("use_connector_tool",)),
+        SimpleNamespace(supports_stored_results=True))
+    route._timeline = lambda turn: capture.timeline
+    route._ensure_running = lambda turn: None
+    call = ConversationActionCall("batch", "use_connector_tool", {
+        "tool_id": reader, "arguments_json": json.dumps({"selections": selections})})
+    receipt = route.execute(TURN, call)
+    result = receipt.output["result"]
+    assert result["contract"] == "EvaStoredConnectorPages/v1"
+    assert result["selected_characters"] == 8192
+    assert result["pages"][1]["text"].startswith("SECTION TWO")
+    assert all(page["sha256"] == manifest["sha256"] for page in result["pages"])
+    assert len(_encoded(result)) <= 65536
+    assert route.execute(TURN, call) == receipt
+    records = [e for rows in capture.timeline.rows.values() for e in rows if e.event_type == "CONNECTOR_SELECTION_READ"]
+    assert len(records) == 1 and records[0].payload["data"]["output"] == result
+    assert records[0].payload["data"]["arguments"] == {"selections": selections}
+    assert len(calls) == 1
+    single = capture.read(reader, selections[0])
+    assert single == result["pages"][0]
+    assert "pages" not in single
+
+
+@pytest.mark.parametrize("case", ["empty", "too_many", "aggregate", "type", "late_pointer", "late_bounds"])
+def test_invalid_batch_never_records_partial_success(case):
+    from eva.adapters.postgres.connector_results import ConnectorSelectionError
+    adapter, command, calls, capture = setup({"text": "x" * 90000})
+    with result_capture(capture):
+        reader = asyncio.run(adapter.execute(command)).details["invocation_response"]["reader"]["tool_id"]
+    first = {"pointer": "/text", "offset": 0, "limit": 4096, "query": None}
+    cases = {"empty": [], "too_many": [dict(first, limit=1)] * 9,
+             "aggregate": [first, dict(first, limit=4097)], "type": {},
+             "late_pointer": [first, dict(first, pointer="/absent")],
+             "late_bounds": [first, dict(first, offset=-1)]}
+    with pytest.raises(ConnectorSelectionError):
+        capture.read_recorded(reader, {"selections": cases[case]}, "invalid-batch")
+    assert not any(e.event_type == "CONNECTOR_SELECTION_READ" for rows in capture.timeline.rows.values() for e in rows)
+    assert len(calls) == 1
+
+
+@pytest.mark.parametrize("count", [1, 8])
+def test_batch_count_boundaries_and_missing_search_are_explicit(count):
+    adapter, command, calls, capture = setup({"text": "x" * 90000})
+    with result_capture(capture):
+        reader = asyncio.run(adapter.execute(command)).details["invocation_response"]["reader"]["tool_id"]
+    args = {"selections": [{"pointer": "/text", "offset": 0, "limit": 8192 // count, "query": "absent"}] * count}
+    result = capture.read_recorded(reader, args, "missing")
+    assert len(result["pages"]) == count and result["selected_characters"] == 0
+    assert all(not page["found"] and not page["has_more"] for page in result["pages"])
+    assert len(calls) == 1

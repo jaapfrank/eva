@@ -45,6 +45,7 @@ class DelegatedDigitalProfile:
     maximum_tool_calls: int = 6
     maximum_input_tokens: int = 65_536
     maximum_output_tokens: int = 4_000
+    maximum_response_input_tokens: int | None = None
     maximum_response_output_tokens: int | None = None
     timeout_seconds: int = 300
     maximum_cost_usd_micros: int | None = None
@@ -67,11 +68,13 @@ class DelegatedDigitalProfile:
             names.append(name)
         if len(names) != len(set(names)):
             raise ValueError("digital execution source pins must be unique")
-        if self.maximum_response_output_tokens is not None and (
-                type(self.maximum_response_output_tokens) is not int
-                or self.maximum_response_output_tokens < 1
-                or self.maximum_output_tokens != self.maximum_response_output_tokens * self.maximum_completed_model_responses):
-            raise ValueError("digital output budget must bind response and attempt limits")
+        for name, response, attempt in (
+                ("input", self.maximum_response_input_tokens, self.maximum_input_tokens),
+                ("output", self.maximum_response_output_tokens, self.maximum_output_tokens)):
+            if response is not None and (
+                    type(response) is not int or response < 1
+                    or attempt != response * self.maximum_completed_model_responses):
+                raise ValueError(f"digital {name} budget must bind response and attempt limits")
         self.grant()
 
     def grant(self):
@@ -87,22 +90,44 @@ class DelegatedDigitalProfile:
             maximum_cost_usd_micros=self.maximum_cost_usd_micros, timeout_seconds=self.timeout_seconds,
         )
 
+    def compatible_grants(self):
+        """Current limits and the exact two historical response-as-attempt limits."""
+        current = self.grant()
+        values = [current]
+        if self.maximum_response_input_tokens is not None:
+            current = current.model_copy(update={
+                "maximum_input_tokens": self.maximum_response_input_tokens,
+                "maximum_total_tokens": self.maximum_response_input_tokens + current.maximum_output_tokens})
+            values.append(current)
+        if self.maximum_response_output_tokens is not None:
+            values.append(current.model_copy(update={
+                "maximum_output_tokens": self.maximum_response_output_tokens,
+                "maximum_total_tokens": current.maximum_input_tokens + self.maximum_response_output_tokens}))
+        return tuple(values)
+
     def accepts_grant(self, grant):
-        """Accept current bounds or the exact former single-response attempt cap."""
+        """Old work keeps its admitted bounds; compatible is not an upgrade."""
         if not isinstance(grant, DelegatedDigitalWorkGrant):
             return False
-        requested, installed = grant.to_payload(), self.grant().to_payload()
+        requested = grant.to_payload()
         capabilities = requested.pop("capability_ids")
-        available = installed.pop("capability_ids")
-        if not set(capabilities).issubset(available):
+        if not set(capabilities).issubset(self.capability_ids):
             return False
-        if requested == installed:
-            return True
-        if self.maximum_response_output_tokens is None:
-            return False
-        legacy = dict(installed, maximum_output_tokens=self.maximum_response_output_tokens,
-                      maximum_total_tokens=self.maximum_input_tokens + self.maximum_response_output_tokens)
-        return requested == legacy
+        for candidate in self.compatible_grants():
+            installed = candidate.to_payload()
+            installed.pop("capability_ids")
+            if requested == installed:
+                return True
+        return False
+
+    def accepts_prior_profile(self, grant, profile_release):
+        """Bind historical household reads to both the old release and its budget."""
+        requested = grant.to_payload()
+        requested["capability_ids"] = list(self.capability_ids)
+        return self.accepts_grant(grant) and any(
+            requested == candidate.to_payload() and profile_release == canonical_sha256({
+                "profile": DIGITAL_PROFILE_ID, "grant": candidate.to_payload()})
+            for candidate in self.compatible_grants())
 
     @property
     def release(self):

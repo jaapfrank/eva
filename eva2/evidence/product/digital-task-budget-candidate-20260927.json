@@ -1,0 +1,36 @@
+{
+  "status": "partial_candidate_not_installed",
+  "checkedAt": "2026-09-27T11:34:03.146004+00:00",
+  "baseCommit": "def8b9b8",
+  "sourceScope": [
+    "batched stored connector selections",
+    "per-response and cumulative digital input budget",
+    "exact historical grant/read/resume compatibility"
+  ],
+  "independentReview": {
+    "reviewer": "/root/result_return_review",
+    "limitedPatch": "No additional blocker found",
+    "completeLearningFunction": "NO-GO: observed initial path needs at least 8 tool actions and 9 model responses; existing caps remain 6 and 8"
+  },
+  "tests": {
+    "budgetUnitTests": {
+      "passed": 78,
+      "artifacts": "/home/administrator/project/.eva2-artifacts/digital-task-budget-20260927"
+    },
+    "readerTests": {
+      "passed": 16,
+      "artifacts": "/home/administrator/project/.eva2-artifacts/batched-reader-20260927"
+    },
+    "postgres": {
+      "passedDistinctCases": 2,
+      "initialFailure": "Duplicate fixed fixture identity across parameterized cases; distinct identity fixed in test only.",
+      "rerun": "Only the failed new-input variant rerun: 1 passed in 14.94s."
+    }
+  },
+  "newEvaModelCalls": 0,
+  "installed": false,
+  "fullFunctionComplete": false,
+  "ownerAccepted": false,
+  "creditCost": null,
+  "next": "Resolve remaining full-task execution boundaries before claiming a functional delivery or repeating the model task."
+}

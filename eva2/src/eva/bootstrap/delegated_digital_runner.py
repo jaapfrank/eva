@@ -32,11 +32,12 @@ class _UnfinishedWorkPlan(ConversationConflict):
     """Preserved progress exists, but this bounded attempt cannot finish it."""
 
 
-def _remaining_budget_context(grant, actual, *, calls, dispatches, response_output_tokens=None):
+def _remaining_budget_context(grant, actual, *, calls, dispatches, response_output_tokens=None, response_input_tokens=None):
     """Report known counters; incomplete measurement cannot imply free capacity."""
     limits = {"model_runs": grant.maximum_model_runs, "input_tokens": grant.maximum_input_tokens,
               "output_tokens": grant.maximum_output_tokens, "tool_calls": grant.maximum_tool_calls,
-              "output_tokens_per_response": response_output_tokens}
+              "output_tokens_per_response": response_output_tokens,
+              "input_tokens_per_response": response_input_tokens}
     used = {"model_runs": actual.model_attempts, "input_tokens": actual.input_tokens,
             "output_tokens": actual.output_tokens, "tool_calls": calls, "tool_dispatches": dispatches}
     remaining = {name: (max(0, limits[name] - used[name]) if actual.measurement == "measured" else None)
@@ -458,7 +459,8 @@ class DelegatedDigitalRunner:
                                     attempt_work_id=spec.work_id,
                                     budget_context=lambda: _remaining_budget_context(spec.grant, latest_usage,
                                         calls=actions.calls, dispatches=actions.dispatches,
-                                        response_output_tokens=self.profile.maximum_response_output_tokens))
+                                        response_output_tokens=self.profile.maximum_response_output_tokens,
+                                        response_input_tokens=self.profile.maximum_response_input_tokens))
             conversation = LivingConversation(self.memory, task_model, self.identity, actions)
 
             def execute():

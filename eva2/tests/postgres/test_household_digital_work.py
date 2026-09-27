@@ -410,8 +410,9 @@ def test_invalid_household_origin_blocks_only_its_queued_correction(database):
     assert count == 0
 
 
-def test_legacy_household_budget_is_readable_but_requires_new_release_to_run(database):
-    x = digital_setup(database, "hh-digital-budget")
+@pytest.mark.parametrize("correct_input", [False, True])
+def test_legacy_household_budget_is_readable_but_requires_new_release_to_run(database, correct_input):
+    x = digital_setup(database, "hh-digital-budget-" + str(correct_input))
     legacy_profile = replace(x.profile, maximum_output_tokens=1200)
     x.server.authority.digital_profile = legacy_profile
     x.service.digital_profile = legacy_profile
@@ -420,7 +421,9 @@ def test_legacy_household_budget_is_readable_but_requires_new_release_to_run(dat
         turn, ConversationActionCall("start-old", "start_digital_work", {"task": turn.text}))
     work_id = receipt.output["operation_result"]["work"]["work_id"]
     old = x.server.store.load(work_id, **x.service._owner, household_origin=x.service.origin(turn)).spec
-    current = replace(legacy_profile, maximum_output_tokens=9600, maximum_response_output_tokens=1200)
+    current = replace(legacy_profile, maximum_output_tokens=9600, maximum_response_output_tokens=1200,
+        **({"maximum_response_input_tokens": legacy_profile.maximum_input_tokens,
+            "maximum_input_tokens": legacy_profile.maximum_input_tokens * 8} if correct_input else {}))
     authority = x.server.authority
     authority.digital_profile = current
     x.service.digital_profile = current

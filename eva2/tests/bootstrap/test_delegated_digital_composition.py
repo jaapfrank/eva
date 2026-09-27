@@ -39,7 +39,8 @@ def test_profile_uses_same_configuration_and_changes_when_model_or_provider_chan
     settings, bundle = configuration()
     first = build_digital_profile(settings, bundle)
     assert first.release == build_digital_profile(settings, bundle).release
-    assert first.grant().maximum_input_tokens == 12000
+    assert first.maximum_response_input_tokens == 12000
+    assert first.grant().maximum_input_tokens == 96000
     assert "get_delegated_work" in first.capability_ids
     assert "use_connector_tool" in first.capability_ids
     assert first.maximum_model_runs == 8
@@ -117,6 +118,7 @@ def test_runner_factory_reuses_resource_factory_and_exposes_only_connector_tools
     assert runner.connector_tools[:-1] == bundle.external_tools
     assert runner.connector_tools[-1].action_names == ("get_delegated_work",)
     assert observed["model"]["resource_budget"].max_output_tokens == 1200
+    assert observed["model"]["resource_budget"].max_input_tokens == 12000
     assert observed["model"]["model"] == settings.conversation_model
     assert observed["model"]["conversation_tools"] == composition.digital_tools(bundle)[0]
     assert observed["owner"]["owner_principal_id"] == UUID(settings.background_principal_id)
@@ -202,15 +204,35 @@ def test_digital_grant_accepts_configured_catalog_beyond_legacy_sixteen_tools():
         replace(profile, capability_ids=(*names, "start_digital_work"))
 
 
-def test_legacy_budget_is_exact_and_bound_to_current_release():
+@pytest.mark.parametrize("old_output", [False, True])
+def test_legacy_budget_is_exact_and_bound_to_current_release(old_output):
+    from eva.bootstrap.delegated_digital_profile import DIGITAL_PROFILE_ID
+    from eva.contracts.canonical_json import canonical_sha256
     settings, bundle = configuration()
     profile = build_digital_profile(settings, bundle)
     current = profile.grant()
-    legacy = current.model_copy(update={"maximum_output_tokens": 1200,
-                                      "maximum_total_tokens": current.maximum_input_tokens + 1200})
+    output = 1200 if old_output else current.maximum_output_tokens
+    legacy = current.model_copy(update={"maximum_input_tokens": 12000,
+        "maximum_output_tokens": output, "maximum_total_tokens": 12000 + output})
+    old_release = canonical_sha256({"profile": DIGITAL_PROFILE_ID, "grant": legacy.to_payload()})
     assert profile.accepts_grant(legacy)
     assert profile.accepts_grant(current)
-    for changed in ({"maximum_output_tokens": 1201, "maximum_total_tokens": current.maximum_input_tokens + 1201},
+    assert profile.accepts_prior_profile(legacy, old_release)
+    assert not profile.accepts_prior_profile(current, old_release)
+    for changed in ({"maximum_input_tokens": 12001, "maximum_total_tokens": 12001 + output},
+                    {"maximum_output_tokens": output + 1, "maximum_total_tokens": 12001 + output},
                     {"maximum_total_tokens": current.maximum_total_tokens},
                     {"maximum_tool_calls": 7}, {"maximum_model_runs": 9}):
         assert not profile.accepts_grant(legacy.model_copy(update=changed))
+
+
+def test_input_attempt_budget_tracks_bounded_model_runs_with_response_limit_unchanged():
+    settings, bundle = configuration()
+    settings.conversation_maximum_requests = 3
+    profile = build_digital_profile(settings, bundle)
+    assert profile.maximum_response_input_tokens == 12000
+    assert profile.maximum_input_tokens == 36000
+    assert profile.maximum_model_runs == profile.maximum_completed_model_responses == 3
+    assert profile.maximum_tool_calls == 6 and profile.timeout_seconds == 300
+    with pytest.raises(ValueError, match="input budget"):
+        replace(profile, maximum_input_tokens=12000)
