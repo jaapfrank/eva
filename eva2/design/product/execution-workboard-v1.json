@@ -2420,14 +2420,14 @@
         ],
         "now": {
           "title": "T1 · Opdrachten volledig laten afronden",
-          "state": "Echte opdracht vastgelopen · oorzaakonderzoek",
-          "detail": "Nieuwe taak had aantoonbaar32/31ruimte, maar stopte na8reacties met interne fout; geen eindresultaat. Eén uitvoerder onderzoekt de vastgelegde fout zonder nieuwe modelcalls. Geïnstalleerde limietcorrectie is geen afgeronde leerfunctie.",
+          "state": "Coördinator · foutoorzaak zichtbaar maken",
+          "detail": "Echte agenda-opdracht faalde; modeladapter bewaart alleen een algemene foutmelding. Diagnose klaar, geen uitvoerder actief. Volgende gerichte stap: veilige foutcategorie vastleggen vóór nieuwe proef. Taaklimietcorrectie geïnstalleerd; leerfunctie niet klaar.",
           "doneWhen": "Compleet taakpad past; bestaande opgeslagen taken blijven hervatbaar. Daarna gerichte review, installatie en werkelijk resultaat."
         },
         "next": {
-          "title": "T1/L1 · Werkelijk taakresultaat opleveren",
-          "state": "Na kandidaat en review",
-          "detail": "De bestaande leer-/onderzoeksroute een volledige opdracht laten afronden, bewaren en teruggeven. C1-gesprekssnelheid blijft apart open."
+          "title": "T1/L1 · Oorzaak oplossen en volledige opdracht afronden",
+          "state": "Na concrete foutdiagnose",
+          "detail": "Geen automatische herpoging en geen nieuwe planner. Bestaande uitvoering herstellen op werkelijk bewijs, daarna resultaat en hergebruik controleren."
         },
         "ownerAction": {
           "title": "Nu geen proef nodig",
@@ -2440,7 +2440,7 @@
           "expected": "Gebouwd, getest, geïnstalleerd en door jou geaccepteerd blijven apart. Alleen werkelijk bruikbare functies tellen als opgeleverd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T09:03:29.768305+00:00"
+        "reviewedAt": "2026-09-28T09:06:27.093814+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12546,7 +12546,8 @@
           ],
           "concreteChange": "Use the existing configured32 request allowance instead of additional composition cap8/tools6; reserve final response. Historical grants unchanged. Actual core setting32 confirmed read-only.",
           "sourceCommit": "ef59f784",
-          "activeWorker": "coordinator integration; independent review: /root/platform_research_20260927"
+          "activeWorker": "coordinator",
+          "latestRealTask": "internal_error; no complete result; causal metadata not retained"
         },
         {
           "id": "T2",

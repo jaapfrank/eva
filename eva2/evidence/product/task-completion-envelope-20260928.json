@@ -85,7 +85,7 @@
     "errorCode": "internal_error",
     "errorFingerprint": "039cc78514ddc215b86bfeea57f2a1d1f932aaf6160e4b687da08e3653eff0dd",
     "knownError": "ConversationModelError:conversation provider returned an invalid response",
-    "underlyingCause": "Not retained in available evidence; adapter wraps multiple exception types.",
+    "underlyingCause": "Not retained. Same wrapper arises from Agent.run exceptions and other CodexProviderError; no specific cause proven.",
     "grantVerified": {
       "contract": "DelegatedDigitalWorkGrant/v4",
       "context_refs": [],
@@ -156,5 +156,12 @@
       "status": 200,
       "sha256": "133304cf68066e44ab70d719862b77a6d3f5c7f02436f04655a9fbe998fe592e"
     }
+  },
+  "diagnosis": {
+    "worker": "/root/baseline_research_20260927",
+    "status": "completed",
+    "extraModelCalls": 0,
+    "finding": "Journal/logs retain usage and wrapper fingerprint, not causal exception or finish metadata.",
+    "next": "Add safe phase, exception class/category to existing failure handling; no prompt, raw response or credentials. No speculative retry."
   }
 }
