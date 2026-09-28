@@ -52,6 +52,8 @@ class _State:
         self.bound_bank_id: str | None = None
         self.source_fact_recall = False
         self.group_recall_response: dict[str, Any] | None = None
+        self.ignore_source_query_update = False
+        self.mental_model_queries: dict[str, str] = {}
         self.mental_models: set[str] = set()
         self.mental_model_triggers: dict[str, dict[str, Any]] = {}
 
@@ -108,6 +110,7 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
                             ),
                             "id": mental_model_id,
                             "trigger": state.mental_model_triggers[mental_model_id],
+                            "source_query": state.mental_model_queries.get(mental_model_id, "legacy"),
                             "reflect_response": {
                                 "based_on": {"world": [FACT], "observation": []}
                             },
@@ -323,6 +326,7 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
             elif self.path.endswith("/mental-models"):
                 assert body is not None
                 state.mental_models.add(body["id"])
+                state.mental_model_queries[body["id"]] = body["source_query"]
                 state.mental_model_triggers[body["id"]] = body["trigger"]
                 self._send(
                     200,
@@ -349,11 +353,14 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
                 assert body is not None
                 mental_model_id = self.path.rsplit("/", 1)[-1]
                 state.mental_model_triggers[mental_model_id] = body["trigger"]
+                if not state.ignore_source_query_update:
+                    state.mental_model_queries[mental_model_id] = body["source_query"]
                 self._send(
                     200,
                     {
                         "id": mental_model_id,
                         "trigger": body["trigger"],
+                        "source_query": state.mental_model_queries.get(mental_model_id, "legacy"),
                     },
                 )
             else:
@@ -1377,6 +1384,33 @@ def test_reflection_removes_an_existing_unmanaged_cron_before_refresh(
         if method == "POST" and path.endswith("/refresh")
     )
     assert patch_index < refresh_index
+
+
+@pytest.mark.parametrize("accept_update", [True, False])
+def test_reflection_upgrades_legacy_query_before_refresh_and_requires_acknowledgment(
+    hindsight_server: tuple[str, _State], accept_update: bool,
+) -> None:
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    engine.maintain_person_scope(TENANT, INSTALLATION, PRINCIPAL)
+    model_id = engine._style_mirror_id(PRINCIPAL)  # noqa: SLF001
+    current_query = state.mental_model_queries[model_id]
+    state.mental_model_queries[model_id] = "Begin altijd met De gebruiker wil"
+    state.ignore_source_query_update = not accept_update
+    state.requests.clear()
+
+    if accept_update:
+        assert engine.maintain_person_scope(TENANT, INSTALLATION, PRINCIPAL).disposition == "refreshed"
+        assert state.mental_model_queries[model_id] == current_query
+        changes = [method for method, path, _ in state.requests if "/mental-models/" in path]
+        assert changes.index("PATCH") < changes.index("POST")
+        state.requests.clear()
+        engine.maintain_person_scope(TENANT, INSTALLATION, PRINCIPAL)
+        assert not any(method == "PATCH" for method, _, _ in state.requests)
+    else:
+        with pytest.raises(HindsightProjectionProtocolError, match="reflection configuration"):
+            engine.maintain_person_scope(TENANT, INSTALLATION, PRINCIPAL)
+        assert not any(path.endswith("/refresh") for _, path, _ in state.requests)
 
 
 def test_projects_current_fact_and_uses_hindsight_to_rank_candidates(

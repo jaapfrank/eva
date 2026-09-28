@@ -776,6 +776,21 @@ class HindsightMemoryEngine:
             "tags_match": "all_strict",
         }
 
+        source_query = (
+            "Schrijf een compacte stijlspiegel van maximaal 100 Nederlandse woorden "
+            "voor Eva. Beschrijf alleen communicatievoorkeuren die deze persoon "
+            "daadwerkelijk heeft uitgesproken: lengte, directheid, warmte, formaliteit, "
+            "opmaak, vragen en feitelijke precisie. Onze instructies zijn geen "
+            "uitspraken of wensen van de gebruiker. Verzin geen voorkeur om een "
+            "vaste openingszin te vullen. Laat onbekende voorkeuren onbekend. "
+            "Zonder onderbouwde communicatievoorkeuren schrijf je uitsluitend: "
+            "Geen onderbouwde communicatievoorkeuren bekend. Neem alleen latere "
+            "correcties op die deze communicatievoorkeuren wijzigen. Onderscheid "
+            "tijdelijke uitzonderingen van blijvende voorkeuren. Geen inhoudelijke "
+            "interesses, vrijetijdskeuzes, projecten, huisfeiten of antwoordtekst; "
+            "die blijven in het gewone geheugen. Geen kopjes of lijst."
+        )
+
         def trigger_matches(value: object) -> bool:
             return isinstance(value, dict) and all(
                 value.get(key) == expected for key, expected in trigger.items()
@@ -795,16 +810,7 @@ class HindsightMemoryEngine:
                     "id": mental_model_id,
                     "max_tokens": 320,
                     "name": "Eva communication style mirror",
-                    "source_query": (
-                        "Schrijf alleen een compacte stijlspiegel van maximaal 100 "
-                        "Nederlandse woorden voor Eva. Begin met 'De gebruiker wil' en "
-                        "schrijf nooit dat Eva deze voorkeuren heeft. Beschrijf de laatst "
-                        "geldende, "
-                        "duurzame voorkeuren van deze persoon voor lengte, directheid, "
-                        "warmte, formaliteit, opmaak, vragen en feitelijke precisie. "
-                        "Noem onzekerheid of een latere correctie. Geen kopjes, lijst, "
-                        "inhoudelijke projecten, huisfeiten of antwoordtekst."
-                    ),
+                    "source_query": source_query,
                     "tags": [person_tag],
                     "trigger": trigger,
                 },
@@ -822,17 +828,18 @@ class HindsightMemoryEngine:
                 raise HindsightProjectionProtocolError(
                     "Hindsight mental model metadata is invalid"
                 )
-            if not trigger_matches(existing["trigger"]):
+            if (not trigger_matches(existing["trigger"])
+                    or existing.get("source_query") != source_query):
                 _, updated = self._request(
                     "PATCH",
                     f"/v1/default/banks/{bank_id}/mental-models/{mental_model_id}",
-                    {"trigger": trigger},
+                    {"trigger": trigger, "source_query": source_query},
                 )
-                if updated.get("id") != mental_model_id or not trigger_matches(
-                    updated.get("trigger")
-                ):
+                if (updated.get("id") != mental_model_id
+                        or not trigger_matches(updated.get("trigger"))
+                        or updated.get("source_query") != source_query):
                     raise HindsightProjectionProtocolError(
-                        "Hindsight did not remove the unmanaged reflection schedule"
+                        "Hindsight did not apply the admitted reflection configuration"
                     )
             _, refreshed = self._request(
                 "POST",
