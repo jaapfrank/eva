@@ -1,5 +1,9 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Eigenaarproef Telegram18:38/18:40:** /eva2 hallo duurt11s. Nieuwste eigen bijdrage mét /eva2 inhoudelijk correct opgehaald, volgens Jaap nog traag. Eva1-antwoord was op bericht zonderprefix; geen Eva2-resultaatdefect. platform_research_20260927 onderzoekt bestaande timinggegevens zonder modelcalls. Coördinator rondt historische leesfoutcorrectie af;183 controles geslaagd, bronreview loopt.
+
+**Nu — L2 verder na bewaarde leesfout, coördinator, basisa5856551:** historische RECOVERY_FAILED sluit alle vervolggereedschappen. Gericht de host-geregistreerde leesclassificatie gebruiken; geen historische gebeurtenissen herschrijven of effecten herhalen. Bestanden: external_conversation_tools.py en gerichte tests; review/installatie daarna. Raming15–25min, maximaal één nieuwe hervatting na gewijzigde oorzaak; credits onbekend.
+
 **Actueel — L2 documentproef vastgelopen:** MCP-leesfoutcorrectie3f0b9311 geïnstalleerd op gezonde kern/werker;191 tests, onafhankelijke review en exacte live broncontrole geslaagd. Eén hervatting eindigde onvoltooid na één modelreactie zonder nieuwe toolactie. Concept ontbreekt; tweede fase niet gestart. Geen actieve herhaling. Volgende: opgeslagen hervattingscontext/modeluitkomst verklaren vóór een nieuwe proef. Gemeten eerste poging40.997in/810uit plus hervatting9.572in/265uit; credits onbekend. Geen volledige L2-claim. [Bewijs](evidence/product/mcp-read-error-continuation-20260928.json).
 
 De eerdere modelomschakeling hieronder is een historische werkaantekening; de afgeronde dashboardregistratie daarvan werd door automatische goedkeuringscontrole geweigerd.

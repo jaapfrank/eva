@@ -2659,10 +2659,10 @@
           }
         ],
         "now": {
-          "title": "L2 · Nieuwe documenten werkelijk afmaken",
-          "state": "Documentproef vastgelopen · geen actieve herhaling",
-          "detail": "MCP-leesfoutcorrectie is geïnstalleerd en technisch gecontroleerd. Eén hervatting eindigde als onvoltooid na één modelreactie zonder nieuwe toolactie; concept ontbreekt. Geen complete L2-oplevering.",
-          "doneWhen": "Toolfout blijft als mislukte lezing zichtbaar, alternatieve stap is mogelijk, geen herhaling van onzekere schrijfhandelingen; daarna dezelfde opdracht voltooien en opgeslagen resultaat controleren."
+          "title": "L2 · Verder na bewaarde leesfout",
+          "state": "Gerichte correctie · coördinator",
+          "detail": "Historische leesfoutcorrectie gebouwd;183 gerichte controles slagen, review loopt. Parallel timingdiagnose van Telegram Hallo11s; eigenaar bevestigt dat ophalen eigen bijdrage met /eva2 inhoudelijk werkt, maar traag is.",
+          "doneWhen": "Bewaarde leesfout laat een toegestane nieuwe stap toe; effectfouten blijven geblokkeerd. Gerichte test/review/installatie, daarna maximaal één hervatting en echt document teruglezen."
         },
         "next": {
           "title": "L2 · Hervatte taak zonder toolactie verklaren",
@@ -2678,10 +2678,10 @@
             "Vraag: Lees je nieuwste opgeslagen eigen bijdrage en vat die kort samen. Start niets nieuws.",
             "Controleer of Eva het bestaande resultaat terughaalt en passend antwoordt. Deze proef mag later."
           ],
-          "expected": "Een normale begroeting en het juiste bewaarde resultaat. Snellere reactie is nog niet bewezen. Automatische proefvoorbereiding werd geblokkeerd; geen eigenaaracceptatie ingevuld."
+          "expected": "Eigenaar bevestigt: nieuwste bijdrage met /eva2 correct opgehaald. Wachttijd blijft onvoldoende; Hallo11s. Antwoord van Eva1 zonderprefix was de andere route, geen mislukte Eva2-resultaatophaling."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T16:37:50.284575+00:00"
+        "reviewedAt": "2026-09-28T16:42:12.269945+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13170,7 +13170,11 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "nextAction": "Geïnstalleerde vervolgstapkoppeling behouden. Echte documentprojectproef strandt op modeldeadline vóór taakaanname (project-continuation-owner-trial-20260928.json). Eerst oorzaak van deze C1/modelgrens vaststellen; niet identiek herhalen, geen tweede planner. Volledige project-/meerdaagse proef blijft open."
+          "nextAction": "Historische mislukte MCP-leesactie laat hervatting geen tools kiezen; gerichte correctie met tests. Geen tweede planner.",
+          "owner": "/root",
+          "activeWorker": "/root",
+          "baseCommit": "a5856551",
+          "effortNotice": "15–25min; maximaal één hervatting na installatie; credits onbekend."
         },
         {
           "id": "L3",
@@ -13367,7 +13371,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "M3",
+      "activeSliceId": "L2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

@@ -71,3 +71,35 @@ def test_successful_provider_output_cannot_spoof_read_failure(monkeypatch, encod
             {"jsonrpc": "2.0", "id": body["id"], "result": result})
         with pytest.raises(RuntimeError, match="reserved key"):
             adapter._call_tool("echo_proof", {}, "spoof", preserve_read_error=True)
+
+
+@pytest.mark.parametrize("kind,deferred,matching,expected", [
+    ("read", True, True, True), ("effect", True, True, False),
+    ("invoke", False, True, False), ("read", False, True, False),
+    ("read", True, False, False),
+])
+def test_historical_failed_read_allows_fresh_choice_without_replaying_it(kind, deferred, matching, expected):
+    from types import SimpleNamespace
+    call = ConversationActionCall("historical", "use_connector_tool", {})
+    configuration = "a" * 64
+    admission = {"action_name": call.name, "action_call_id": call.call_id,
+        "action_arguments": {}, "conversation_id": _turn().conversation_id,
+        "principal_id": _turn().principal_id, "source_message_id": _turn().message_id,
+        "request_tool_configuration_sha256": configuration,
+        "receipt_output": {"transport": "mcp_gateway"}, "observation_output_key": "result"}
+    dispatch = {"accepted": True, "provider_ref": configuration if matching else "b" * 64,
+        "details": {"operation_kind": kind, "provider_call_deferred": deferred}}
+    data = (("TOOL_REQUEST_ADMITTED", admission), ("TOOL_EXECUTED", {"dispatch": dispatch}),
+            ("RECOVERY_FAILED", {"error_fingerprint": "c" * 64}))
+    events = tuple(TimelineEvent(uuid4(), "historical-read", i, f"cp-{i}", "op", event,
+        {"data": value}, canonical_sha256(value), datetime.now(timezone.utc))
+        for i, (event, value) in enumerate(data))
+    tools = PostgresExternalConversationTools(None, SimpleNamespace(action_names=(call.name,)), None)
+    receipt = tools._receipt(_turn(), events)
+    assert receipt.output["status"] == "failed"
+    assert BackgroundConnectorActions.can_continue_after(_turn(), receipt) is expected
+    assert not _has_completed_tool_evidence([receipt])
+    assert "result" not in receipt.output
+    if expected:
+        assert "unknown" in receipt.output["tool_error"]["messages"][0]
+        assert "proof" not in data[-1][1]  # Historical source was not rewritten.

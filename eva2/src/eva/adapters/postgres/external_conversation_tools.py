@@ -323,6 +323,25 @@ class PostgresExternalConversationTools:
         proof = self._event_data(events[-1]).get("proof")
         if proof is not None and not isinstance(proof, dict):
             raise ConversationConflict("external tool proof is malformed")
+        # Older read adapters recorded a terminal failure without retaining its
+        # provider message. Host dispatch metadata can still establish that no
+        # effect was invoked. Preserve failure and permit a fresh model choice;
+        # never invent ENOENT or a successful observation from this metadata.
+        if (proof is None and events[-1].event_type == "RECOVERY_FAILED"
+                and receipt_output.get("transport") == "mcp_gateway"):
+            executed = [self._event_data(event).get("dispatch") for event in events
+                        if event.event_type == "TOOL_EXECUTED"]
+            dispatch = executed[-1] if executed else None
+            details = dispatch.get("details") if isinstance(dispatch, dict) else None
+            configuration = admission.get("request_tool_configuration_sha256")
+            if (isinstance(configuration, str) and len(configuration) == 64
+                    and isinstance(details, dict) and dispatch.get("accepted") is True
+                    and dispatch.get("provider_ref") == configuration
+                    and details.get("operation_kind") == "read"
+                    and details.get("provider_call_deferred") is True):
+                proof = {"evidence": {"source": "mcp_gateway_read_error",
+                    "operation_kind": "read", "classification": "historical_host_dispatch",
+                    "error": {"messages": ["Read failed; the provider cause is unknown. No successful result was recorded."]}}}
         observation_output: dict[str, JsonValue] = {}
         observation_output_key = admission.get("observation_output_key")
         if observation_output_key is not None:
