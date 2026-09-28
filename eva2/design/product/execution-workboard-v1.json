@@ -2491,28 +2491,29 @@
           }
         ],
         "now": {
-          "title": "C3 · Onderzoek aangenomen; doorpraten nog open",
-          "state": "Server-sessiestart gecontroleerd; apparaatfout nog open",
-          "detail": "Beide speakerkoppelingen met Eva gereed. Echte TLS-dienst doorliep OPEN, WAKE, CAPTURE en mute/sluiten in3,71s met gesimuleerd apparaat, zonder audio/modelcalls. Dit bewijst geen werkende fysieke duplexspraak.",
-          "doneWhen": "Werkende ontvangst, doorpraten en resultaat via beide fysieke speakers; geen HTTP-proef als speakeracceptatie."
+          "title": "M1 · Bestaande geheugenoplevering behouden",
+          "state": "Broncontrole afgerond; gebruiksproef open",
+          "detail": "Actuele privé-kanaalkoppeling staat geïnstalleerd. Onthouden/corrigeren/vergeten blijven geaccepteerd. Geen nieuwe geheugenbouw nodig; later voortzetten via andere privé-ingang nog beoordelen.",
+          "doneWhen": "Echte latere voortzetting beoordeeld; bestaande acceptaties blijven staan."
         },
         "next": {
-          "title": "Apparaatkant van duplexkandidaat vastleggen",
-          "state": "Gerichte fysieke observatie ontbreekt",
-          "detail": "Geen concrete codefout gevonden in gecontroleerde sessiestart. Voor verdere diagnose zijn device-logs van de kandidaat nodig; huidige herstelfirmware blijft werkend. Onafhankelijk werk kan doorgaan."
+          "title": "M3 · Voorkeuren en persoonlijkheid",
+          "state": "Nog niet gestart",
+          "detail": "Bestaande persoonlijkheid en voorkeuren koppelen aan de vereiste ontwikkeling en tijdelijke uitzonderingen; alleen concrete ontbrekende werking aanpassen."
         },
         "ownerAction": {
-          "title": "Nu niet opnieuw proberen",
-          "url": "http://localhost:44711/internal/v1/dashboard",
-          "linkLabel": "Eva-overzicht",
+          "title": "Later hetzelfde onderwerp voortzetten",
+          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
+          "linkLabel": "Privégesprek met Eva",
           "steps": [
-            "Je melding is vastgelegd als mislukte speakerproef.",
-            "Wacht op een concrete correctie of meetstap; dezelfde proef hoeft nu niet opnieuw."
+            "Bespreek in privé-Telegram een gewoon onderwerp met Eva.",
+            "Open later het privégesprek op de website en vraag verder over dat onderwerp, zonder alle details te herhalen.",
+            "Meld of onderwerp en laatste correctie kloppen. Deze proef mag later; bouwen gaat door."
           ],
-          "expected": "Geen eigenaaracceptatie. Firmware blijft behouden."
+          "expected": "Eva haalt relevante eerdere context terug. Geaccepteerd onthouden, corrigeren en vergeten hoef je niet opnieuw te testen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T12:03:05.320246+00:00"
+        "reviewedAt": "2026-09-28T12:05:30.528591+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12175,7 +12176,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 1,
+      "currentStep": 2,
       "steps": [
         {
           "number": 1,
@@ -12332,7 +12333,7 @@
           ]
         }
       ],
-      "nextAction": "Geen concrete codefout gevonden in gecontroleerde sessiestart. Voor verdere diagnose zijn device-logs van de kandidaat nodig; huidige herstelfirmware blijft werkend. Onafhankelijk werk kan doorgaan.",
+      "nextAction": "Bestaande persoonlijkheid en voorkeuren koppelen aan de vereiste ontwikkeling en tijdelijke uitzonderingen; alleen concrete ontbrekende werking aanpassen.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -12603,7 +12604,7 @@
           ],
           "outcome": "Onderwerpen later voortzetten",
           "effort": "M",
-          "status": "planned",
+          "status": "in_progress",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Automatic memory/correction/use and inspection/forgetting are owner-accepted; source authority and Hindsight already composed.",
@@ -12615,7 +12616,32 @@
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
-          }
+          },
+          "owner": "/root",
+          "activeWorker": null,
+          "baseCommit": "386a90a0",
+          "assignment": {
+            "stage": "complete_existing_delivery_check",
+            "scope": "Installed private memory alias/projection files and existing accepted evidence; no memory reads or writes.",
+            "outcome": "Make existing cross-session recall delivery and the remaining real-world trial explicit without rebuilding memory.",
+            "endCondition": "Verify installed source matches reviewed implementation; retain owner acceptances and provide the exact remaining cross-session trial.",
+            "effort": "One source provenance check, zero Eva model calls planned; credits unknown",
+            "result": "Installed source matches current implementation; accepted memory retained. Only cross-session family evidence remains; no rebuild."
+          },
+          "technicalStatus": "existing_delivery_retained",
+          "ownerTrial": {
+            "status": "open",
+            "steps": [
+              "Discuss an ordinary subject privately with Eva via Telegram. No special remember command is required.",
+              "Later open the private website conversation and ask to continue that subject without repeating its details.",
+              "Check whether Eva recalls the relevant subject and latest correction; report missing or invented details."
+            ],
+            "expected": "Relevant continuity for the verified owner; no private recall on shared speakers.",
+            "url": "http://localhost:44711/internal/v1/dashboard/conversation",
+            "doesNotRepeatAcceptedTests": true
+          },
+          "evidence": "eva2/evidence/product/m1-existing-delivery-20260928.json",
+          "remaining": "Real later cross-channel topic continuation and long-term family use; no demonstrated implementation defect."
         },
         {
           "id": "M2",
@@ -13143,7 +13169,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "C3",
+      "activeSliceId": "M1",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

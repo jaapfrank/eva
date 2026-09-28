@@ -1,16 +1,14 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — C3: doorpraten via de echte speakers.** Onderzoeksinvoer-correctie getest, onafhankelijk beoordeeld en geïnstalleerd. Kern en werker gezond. Eén echte native HTTP-opdracht nam onderzoek aan in 15,3 seconden en startte achtergrondwerk. Dit is geen fysieke speakeracceptatie en lost full-duplex of snelheid nog niet op. [Bewijs](evidence/product/research-input-recovery-20260928.json).
+**Nu — M1: bestaande geheugenoplevering behouden.** De geïnstalleerde geheugenprojectie en privé-kanaalkoppeling zijn gelijk aan de actuele bron. Onthouden, corrigeren, inzien en vergeten blijven geaccepteerd. Geen nieuwe geheugenbouw of installatie nodig. [Registratie](evidence/product/m1-existing-delivery-20260928.json).
 
-**C3-diagnose:** beide speakerkoppelingen met de kern zijn gereed. De echte TLS-dienst doorliep wakeword, capture en mute/sluiten met een gesimuleerd apparaat in3,71s, zonder audio/modelcalls. De fysieke kandidaatfout blijft onbekend; geen nieuwe productcode of firmware geïnstalleerd. [Controle](evidence/product/c3-existing-candidate-session-20260928.json).
+**Voor Jaap, wanneer het uitkomt:** bespreek een gewoon onderwerp in privé-Telegram. Open later [het privégesprek op de website](http://localhost:44711/internal/v1/dashboard/conversation) en vraag verder over dat onderwerp zonder de details te herhalen. Verwacht relevante eerdere context en de laatste correctie. Dit beoordeelt de kanaalvoortzetting; geaccepteerde geheugenproeven niet herhalen.
 
-**Eerstvolgend:** device-logs bij de bestaande duplexkandidaat verzamelen zodra een gecontroleerde fysieke proef uitvoerbaar is. De gewone herstelfirmware blijft werken. Ontbrekende fysieke observatie blokkeert alleen afhankelijk speakerwerk; onafhankelijke bouwopdrachten blijven uitvoerbaar.
+**Eerstvolgend — M3:** bestaande persoonlijkheid en voorkeuren koppelen aan de vereiste ontwikkeling en tijdelijke uitzonderingen; alleen aangetoonde ontbrekende werking aanpassen. Nog niet gestart.
 
-**Voor Jaap:** dezelfde mislukte speakerproef nu niet herhalen. Eerst een concrete fysieke vervolgstap; geen aanname dat doorpraten al werkt.
+**C3 blijft open:** echte dienstsessiestart met gesimuleerd apparaat gecontroleerd, geen fysieke duplexacceptatie. Apparaatlog van de mislukte kandidaat ontbreekt. Werkende firmware behouden; alleen afhankelijk speakerwerk wacht op die observatie.
 
-**Al afgerond:** C2-combinatiecontrole op de geïnstalleerde versie; twee taken afzonderlijk sturen, stoppen en na terugkeer terugvinden. Websitespraak gebruikt de bestaande geïnstalleerde eigenaarroute; broninspectie wees geen nieuwe ontbrekende koppeling aan. Fysieke ervaring blijft afzonderlijk te beoordelen.
-
-**Leidend:** complete bouwplan, acht productstappen en 24 begrensde opdrachten. Twee van negen afgebakende functies klaar; deze correctie verandert die hoofdteller niet. Bestaande resultaten en acceptaties behouden.
+**Productstand:** twee van negen afgebakende functies klaar. Deze registratie is geen nieuwe functie; complete bouwplan en eerdere acceptaties blijven leidend.
 
 ## Historisch logboek — geen actuele werkopdrachten
 

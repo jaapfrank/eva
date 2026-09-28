@@ -1,0 +1,34 @@
+{
+  "checkedAt": "2026-09-28T12:05:30.528591+00:00",
+  "slice": "M1",
+  "status": "existing_technical_delivery_retained_owner_cross_session_trial_open",
+  "sourceBase": "386a90a0",
+  "installedSourceMatchesCurrent": {
+    "adapters/projection/hindsight.py": "40424a247669d742f819869b1caf9f73c5c7a773103f3de91bd13690d57cb4c3",
+    "adapters/postgres/private_memory_aliases.py": "2e29752fc5cb360753ba167c8a777eb69a4ca93c9b19ed289262566fca8241e1"
+  },
+  "priorEvidence": [
+    "eva2/evidence/product/CO-008-GE-01-owner-acceptance-2026-09-10.json",
+    "eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json",
+    "eva2/evidence/product/private-memory-alias-installed-20260922.json",
+    "eva2/evidence/product/private-continuity-boundary-installed-20260924.json"
+  ],
+  "decision": "Retain delivered memory and private alias integration. No changed platform or demonstrated missing memory behavior requires new construction. Current source equality does not itself prove current recall quality.",
+  "ownerTrial": {
+    "status": "open",
+    "steps": [
+      "Discuss an ordinary subject privately with Eva via Telegram. No special remember command is required.",
+      "Later open the private website conversation and ask to continue that subject without repeating its details.",
+      "Check whether Eva recalls the relevant subject and latest correction; report missing or invented details."
+    ],
+    "expected": "Relevant continuity for the verified owner; no private recall on shared speakers.",
+    "url": "http://localhost:44711/internal/v1/dashboard/conversation",
+    "doesNotRepeatAcceptedTests": true
+  },
+  "longTermFamilyUse": "Remains part of F2; no elapsed-week acceptance invented.",
+  "newProductCode": false,
+  "newInstallation": false,
+  "runtimeModelCalls": 0,
+  "privateMemoryReads": 0,
+  "creditCost": null
+}
