@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Wachttijd onderscheiden zonder nieuwe modelcalls",
+            "date": "28 september",
+            "state": "investigated",
+            "result": "Historische resultaatvraag: 16,531 s van 20,852 s modeltijd. Losse taakcontext 0,106 s; onafhankelijke review akkoord.",
+            "remaining": "Geen snellere begroeting opgeleverd. Historische timing en één losse contextmeting bewijzen geen huidige totale reactietijd.",
+            "source": "eva2/evidence/product/contact-context-timing-20260928.json"
+          },
+          {
             "title": "Compactere toolcatalogus geïnstalleerd",
             "date": "28 september",
             "state": "installed",
@@ -2587,15 +2595,15 @@
           }
         ],
         "now": {
-          "title": "C1 · Compactere toolcatalogus geïnstalleerd",
-          "state": "Geïnstalleerd · gewone gebruiksproef open",
-          "detail": "Kern en werker gezond; broncb0e1cd4 en terugweg gecontroleerd.111tests en onafhankelijke review akkoord. Synthetische begroeting2.146in versus6.057; volledige tooldefinities behouden. Geen snelheidswinst bewezen. Geen uitvoerder meer actief op deze wijziging.",
-          "doneWhen": "Technische wijziging geïnstalleerd; gewone kanaalproef en verdere wachttijdverbetering blijven open. Complete C1 niet afgerond."
+          "title": "C1 · Tijdmeting afgerond",
+          "state": "Afgerond · geen nieuwe installatie",
+          "detail": "Bestaande resultaatvraag: 20,852 s totaal, 16,531 s modeltijd. Losse actuele taakcontext: 0,106 s. Geen grond voor contextombouw of snelheidsclaim; onafhankelijke review akkoord. Geen nieuwe modelcalls.",
+          "doneWhen": "Begrensde meting en beperkingen geregistreerd. Gewone gebruiksproef blijft open; C1 is niet als geheel afgerond."
         },
         "next": {
-          "title": "C1 · Resterende context en wachttijd lokaliseren",
+          "title": "I2 · Ontbrekende beeldwaarneming aansluiten",
           "state": "Nog niet gestart",
-          "detail": "Gebruik bestaande timing- en contextbronnen om resterende wachttijd gericht te meten. Geen nieuwe router of ongewijzigde modelproef."
+          "detail": "Hergebruik Eva1-cameraophaling en bestaande Eva2-agenda/waarneming/initiatief. Eerst de optionele beeldinvoer verbinden; lokale kandidaat blijft onbewezen op echte scènes. Camerakeuze voor vuilnisbakken staat nog open; geen nieuwe initiatiefkern."
         },
         "ownerAction": {
           "title": "Toolgebruik na cataloguswijziging proberen",
@@ -2609,7 +2617,7 @@
           "expected": "Een normale begroeting en het juiste bewaarde resultaat. Snellere reactie is nog niet bewezen. Automatische proefvoorbereiding werd geblokkeerd; geen eigenaaracceptatie ingevuld."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T14:10:25.838358+00:00"
+        "reviewedAt": "2026-09-28T14:32:31.647205+00:00"
       }
     },
     "pendingTechnicalReview": {

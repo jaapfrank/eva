@@ -1,0 +1,79 @@
+{
+  "id": "contact-context-timing-20260928",
+  "sourceBase": "be0776b3",
+  "status": "measured_no_runtime_change",
+  "historicalResultTurn": {
+    "source": "eva2/evidence/product/own-initiative-return-20260928.json",
+    "httpTotalSeconds": 20.85245,
+    "recordedModelSeconds": 16.531,
+    "nonModelRemainderSeconds": 4.32145,
+    "memoryServerRecallSeconds": [
+      1.049,
+      1.517,
+      2.379,
+      2.388
+    ],
+    "memoryHttpSeconds": [
+      1.057,
+      1.525,
+      2.423,
+      2.432
+    ],
+    "rerankingSeconds": [
+      0.8,
+      1.268,
+      1.667,
+      2.078
+    ],
+    "limitation": "Parallel recalls must not be summed. Historical log window association is not a complete distributed trace. The remainder includes all non-model processing."
+  },
+  "historicalGreetings": [
+    {
+      "occurredAt": "2026-09-24T23:52:48Z",
+      "modelFirstContentMs": 2847,
+      "modelCompletedMs": 3225,
+      "secondsToFirstModelAdmissionRounded": 4,
+      "memoryServerRecallSeconds": 0.887,
+      "rerankingSeconds": 0.685
+    },
+    {
+      "occurredAt": "2026-09-24T23:54:59Z",
+      "modelFirstContentMs": 985,
+      "modelCompletedMs": 1269,
+      "secondsToFirstModelAdmissionRounded": 1,
+      "memoryServerRecallSeconds": 0.715,
+      "rerankingSeconds": 0.661
+    }
+  ],
+  "currentContextRead": {
+    "baseContextSeconds": 0.0313,
+    "externalProviderSeconds": 0.0327,
+    "delegatedMetadataSeconds": 0.0417,
+    "totalContextSeconds": 0.1057,
+    "utf8Bytes": 2638,
+    "sqlStatementsIncludingUntimedConstruction": 84,
+    "scope": "Configured conversation identity; separate delegated storage authority, ordinary greeting, current installed source",
+    "databaseGuard": "SELECT/SET/SHOW prefix check on inspected read methods; shared owner-binding locks retained. Not a general SQL sandbox against mutating SELECT functions.",
+    "limitation": "One read-only measurement outside the full HTTP turn. Excludes semantic recall, recent messages, voice context and model execution."
+  },
+  "coldTokenizerSeconds": {
+    "recall": 0.1301,
+    "modelInput": 0.2643
+  },
+  "discardedAttempts": [
+    "Initial diagnostic timestamp had fractional seconds; rejected before the context read.",
+    "Two preliminary reads used dashboard storage scope rather than conversation scope; excluded from timing conclusions.",
+    "Strict read-only transaction rejected an existing SELECT FOR SHARE. Corrected measurement retained shared binding locks with a statement guard.",
+    "Proposed duplicate-anchor change withdrawn: Hallo is below the six-character anchor threshold and already causes one recall. No runtime patch or tests retained."
+  ],
+  "decision": "Do not rewrite task context, remove memory or claim a greeting speed fix. Provider/model timing and pre-model preparation both vary; memory ranking alone does not explain the historical greeting difference. Installed namespace usage trial remains open. Continue independent functional work while that trial is pending.",
+  "usage": {
+    "newModelCalls": 0,
+    "externalActions": 0,
+    "creditCost": "unknown; no Eva generation requested"
+  },
+  "artifacts": "/home/administrator/project/.eva2-artifacts/c1-context-timing-20260928",
+  "review": "GO for bounded finding from independent reviewer platform_research_20260927. Registration findings addressed: retain greeting Complete lines; distinguish SQL statements including untimed construction; clarify prefix guard is not a general SQL sandbox.",
+  "installed": "No new code; cb0e1cd4 catalog installation remains in place",
+  "acceptance": "C1 and full project remain open"
+}
