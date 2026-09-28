@@ -2420,14 +2420,14 @@
         ],
         "now": {
           "title": "T1 · Opdrachten volledig laten afronden",
-          "state": "Geïnstalleerd · één begeleide hervatting loopt",
-          "detail": "Veilige modeldiagnose geïnstalleerd op gezonde kern/werker; bron en terugweg gecontroleerd. Bestaande agenda-opdracht eenmaal hervat, geen nieuwe gebruikersopdracht. Coördinator controleert resultaat of concrete foutoorzaak.",
+          "state": "T1 · modelaanvraag liep tegen tijdslimiet",
+          "detail": "Begeleide hervatting stopte na3modelreacties met een modeldeadline; geen eindresultaat. Achtergrondmodel gebruikt standaard60seconden per aanvraag binnen300seconden taakduur. Diagnose geïnstalleerd; geen proef of uitvoerder actief. Coördinator controleert passende achtergrondafhandeling, zonder nieuwe modelpoging.",
           "doneWhen": "Compleet taakpad past; bestaande opgeslagen taken blijven hervatbaar. Daarna gerichte review, installatie en werkelijk resultaat."
         },
         "next": {
-          "title": "T1/L1 · Oorzaak oplossen en volledige opdracht afronden",
-          "state": "Na concrete foutdiagnose",
-          "detail": "Geen automatische herpoging en geen nieuwe planner. Bestaande uitvoering herstellen op werkelijk bewijs, daarna resultaat en hergebruik controleren."
+          "title": "T1/L1 · Volledige taakafloop afmaken",
+          "state": "Gerichte correctie vóór nieuwe proef",
+          "detail": "Controleer modeldeadline en foutafhandeling tegen het bestaande taakcontract; los aangetoonde oorzaak op. Eerste ongeldige-modelantwoordfout blijft apart onbewezen. Geen succesclaim voor leren."
         },
         "ownerAction": {
           "title": "Nu geen proef nodig",
@@ -2440,7 +2440,7 @@
           "expected": "Gebouwd, getest, geïnstalleerd en door jou geaccepteerd blijven apart. Alleen werkelijk bruikbare functies tellen als opgeleverd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T09:14:46.976306+00:00"
+        "reviewedAt": "2026-09-28T09:19:11.928199+00:00"
       }
     },
     "pendingTechnicalReview": {

@@ -1,7 +1,7 @@
 {
-  "status": "installed_resume_running",
+  "status": "installed_resume_failed",
   "sourceCommit": "b2aa65929d7f04318642237acb7d47bded73a83c",
-  "checkedAt": "2026-09-28T09:13:32.997295+00:00",
+  "checkedAt": "2026-09-28T09:19:11.928199+00:00",
   "reason": "Actual complete task failed with generic fingerprint039cc785; underlying cause not retained.",
   "change": "One existing model adapter logs exception class chain, allowlisted provider category and usage-limit type, hashed request ID. No messages, responses, prompts or credentials. Retry policy unchanged.",
   "tests": {
@@ -14,7 +14,7 @@
     "verdict": "GO",
     "limitation": "Direct ConversationModelError with no cause still indistinguishable."
   },
-  "runtimeModelCalls": 0,
+  "runtimeModelCalls": 3,
   "creditCost": null,
   "trialPlan": {
     "recordedAt": "2026-09-28T09:11:51.499226+00:00",
@@ -52,5 +52,38 @@
     },
     "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/model-failure-diagnostic-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
   },
-  "resumeWorkId": "work:eva-resume:f6ac2ee1-5180-5311-8a3b-be3a4bc31c9e"
+  "resumeWorkId": "work:eva-resume:f6ac2ee1-5180-5311-8a3b-be3a4bc31c9e",
+  "resumeOutcome": {
+    "state": "ambiguous",
+    "errorCode": "internal_error",
+    "errorFingerprint": "f8e705bd54e22a92d7b835c973254a59e20b2ffccfd18d189dfa0b50bb65d291",
+    "fingerprintMatch": "ConversationModelError:conversation provider deadline exceeded",
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 3,
+      "tool_calls": 2,
+      "input_tokens": 31961,
+      "output_tokens": 555,
+      "total_tokens": 32516,
+      "cost_usd_micros": null
+    },
+    "diagnostics": [
+      {
+        "request_id_sha256": "854e56bf1b311bd2b45a31cb041df53245275d10e1c0d80ef1329462bdfe2ac4",
+        "exception_chain": [
+          "CancelledError",
+          "RuntimeError"
+        ],
+        "provider_category": null,
+        "usage_limit": null
+      }
+    ],
+    "resultAvailable": false,
+    "newObservation": "Background model uses shared default60second phase timeout; outer task allowance300seconds. This attempt hit model phase deadline.",
+    "limitation": "Different failure fingerprint than first attempt; underlying first invalid-response cause remains unknown.",
+    "furtherRetries": 0
+  },
+  "next": "Check background model deadline and classification against the existing task deadline offline; no further trial without a concrete correction."
 }

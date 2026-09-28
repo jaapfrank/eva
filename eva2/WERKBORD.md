@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — T1: volledige taakafloop herstellen.** Modeldiagnosecorrectie b2aa6592 gebouwd; 10 gerichte controles en onafhankelijke review geslaagd. Eén gewijzigde modeladapter geïnstalleerd op gezonde kern/werker; exacte bron, configuratie en terugweg gecontroleerd. Nu loopt één begeleide hervatting van de bestaande agenda-opdracht om de ontbrekende oorzaak vast te leggen of het werk af te maken. Geen nieuwe taak, geen zelfstandig-leerclaim; eerdere mislukking blijft staan.
+**Nu — T1: volledige taakafloop herstellen.** Veilige modeldiagnose b2aa6592 geïnstalleerd na 10 gerichte controles en onafhankelijke review; gezonde kern/werker, exacte bron en terugweg gecontroleerd. Eén begeleide hervatting faalde na 3 modelreacties / 2 toolacties: modelaanvraag overschreed de standaard 60 seconden. Taakduur is 300 seconden. Geen eindresultaat, geen volgende proef of uitvoerder actief. Coördinator controleert achtergronddeadline en foutafhandeling offline. Dit is een andere fout dan het eerdere ongeldige modelantwoord; die oorzaak blijft onbewezen. [Bewijs](evidence/product/model-failure-diagnostic-20260928.json).
 
 **Leidend — het complete bouwplan uitvoeren.** Acht vaste productstappen en 24 begrensde opdrachten; geen zakelijke uitwerking of nieuwe algemene audit. Gegevens en acceptaties behouden. Technische afronding, installatie, vergelijkingsbewijs en jouw oordeel blijven apart. De recente [eigenaarbesluiten](PROJECTDOEL.md) gaan voor oudere bouwvolgordes.
 
