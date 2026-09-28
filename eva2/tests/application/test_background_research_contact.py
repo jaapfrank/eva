@@ -21,7 +21,8 @@ def test_background_research_admission_keeps_conversation_available(use_contact)
             assert context["available_actions"] == ()
             return "Het onderzoek is ingepland."
         if t.text == "onderzoek":
-            assert any("publieke bronnen" in line for line in context["self_context"])
+            assert any("start_background_research" in line and "geen privégegevens" in line
+                       for line in context["self_context"])
             return ConversationActionCall("research-call", "start_background_research", {})
         return "Vier."
 

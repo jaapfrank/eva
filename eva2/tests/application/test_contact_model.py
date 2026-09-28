@@ -334,3 +334,128 @@ def test_acceptance_after_lookup_needs_no_post_admission_model_call(lookup, stop
     assert actions.jobs == {"one": "admitted"}
     assert actions.guarded == ["Ik ga ermee aan de slag."]
     assert reply.text == ("De opdracht is gestopt." if stopped else "Ik ga ermee aan de slag.")
+
+
+@pytest.mark.parametrize("lookup", [None, "list_reusable_procedures", "resolve_reusable_procedure"])
+@pytest.mark.parametrize("household", [False, True])
+def test_procedure_execution_uses_available_worker_before_or_after_contact_lookup(lookup, household):
+    source = turn(text="Apply the saved method and preserve the result.")
+    if household:
+        source = replace(source, principal_id="household-device",
+            conversation_id="household:home:conversation:speaker", message_id="household:home:conversation:speaker:one",
+            audience=MemoryAudience.household(
+            principal_id="household-device", household_id="home",
+            consent_ref=HouseholdConsentReference("household-device", "home", "household-consent:one")))
+    class ProcedureActions(Actions):
+        action_names = ("list_reusable_procedures", "resolve_reusable_procedure",
+                        "run_reusable_procedure", "start_digital_work")
+        def __init__(self):
+            super().__init__()
+            self.executed = []
+        def available_action_names(self, t):
+            assert t is source
+            return self.action_names
+        def can_continue_after(self, t, receipt): return receipt.call.name == lookup
+        def execute(self, t, call):
+            assert t is source and call.name != "run_reusable_procedure"
+            self.executed.append(call.name)
+            if call.name == "start_digital_work":
+                self.jobs[t.message_id] = "admitted"
+                return ConversationActionReceipt(call, {"status":"verified", "work_id":t.message_id,
+                    "acceptance_message":call.arguments["acceptance_message"]})
+            return ConversationActionReceipt(call, {"status":"resolved" if lookup == "resolve_reusable_procedure" else "candidates"})
+        def execute_step(self, t, call, *, step_index):
+            assert step_index == 1
+            return self.execute(t, call)
+        def reply_guard(self, t, receipts):
+            return (lambda text: text) if any(r.call.name == "start_digital_work" for r in receipts) else None
+    def choose(t, context):
+        assert t is source
+        assert "run_reusable_procedure" not in context["available_actions"]
+        assert {"list_reusable_procedures", "resolve_reusable_procedure", "start_digital_work"} <= set(context["available_actions"])
+        if lookup is not None and context["completed_action"] is None:
+            return ConversationActionCall("lookup", lookup, {})
+        return ConversationActionCall("admit", "start_digital_work", {
+            "task":t.text, "acceptance_message":"Ik ga ermee aan de slag."})
+    actions = ProcedureActions()
+    contact = Model(choose)
+    work = Model(lambda *_: pytest.fail("worker execution must not run in foreground"))
+    reply = LivingConversation(_Memory(), work, IDENTITY, actions, contact_model=contact).respond(source)
+    assert actions.executed == ([lookup] if lookup else []) + ["start_digital_work"]
+    assert actions.jobs == {source.message_id:"admitted"}
+    assert len(contact.calls) == (2 if lookup else 1)
+    assert reply.text == "Ik ga ermee aan de slag."
+
+
+@pytest.mark.parametrize("contact_enabled, initially_available, later_available", [
+    (False, True, True), (True, False, False), (True, False, True), (True, True, False)])
+def test_procedure_gate_rechecks_current_worker_offer_and_preserves_fallback(contact_enabled, initially_available, later_available):
+    class ChangingActions(Actions):
+        action_names = ("resolve_reusable_procedure", "run_reusable_procedure", "start_digital_work")
+        def __init__(self):
+            super().__init__()
+            self.resolved = False
+        def available_action_names(self, t):
+            available = later_available if self.resolved else initially_available
+            return self.action_names if available else self.action_names[:-1]
+        def can_continue_after(self, t, receipt): return True
+        def execute(self, t, call):
+            assert call.name == "resolve_reusable_procedure"
+            self.resolved = True
+            return ConversationActionReceipt(call, {"status":"resolved"})
+    def choose(t, context):
+        completed = context["completed_action"] is not None
+        worker_available = later_available if completed else initially_available
+        assert ("run_reusable_procedure" in context["available_actions"]) is not (contact_enabled and worker_available)
+        if not completed:
+            return ConversationActionCall("lookup", "resolve_reusable_procedure", {})
+        return "Current route checked."
+    model = Model(choose)
+    reply = LivingConversation(_Memory(), model, IDENTITY, ChangingActions(),
+                               contact_model=model if contact_enabled else None).respond(turn())
+    assert reply.text == "Current route checked." and len(model.calls) == 2
+
+
+def test_recovered_procedure_receipt_is_preserved_without_replaying_execution():
+    resolved = ConversationActionReceipt(ConversationActionCall("lookup", "resolve_reusable_procedure", {}),
+                                          {"status":"verified", "source":"saved-source"})
+    executed = ConversationActionReceipt(ConversationActionCall("executed", "run_reusable_procedure", {}),
+                                          {"status":"verified", "result":"saved-result"})
+    class RecoveredActions(Actions):
+        action_names = ("run_reusable_procedure", "start_digital_work", "save_workspace_document")
+        def pending(self, t): return resolved
+        def pending_step(self, t, *, step_index): return executed if step_index == 1 else None
+        def execute(self, *args): pytest.fail("retained effect must not be repeated")
+        def execute_step(self, *args, **kwargs): pytest.fail("retained effect must not be repeated")
+    def finish(t, context):
+        assert context["completed_action"] is executed
+        assert context["prior_actions"] == (resolved,)
+        assert "run_reusable_procedure" not in context["available_actions"]
+        assert "save_workspace_document" in context["available_actions"]
+        return "The existing result remains available."
+    contact = Model(lambda *_: pytest.fail("a completed effect keeps its work-model continuation"))
+    work = Model(finish)
+    reply = LivingConversation(_Memory(), work, IDENTITY, RecoveredActions(), contact_model=contact).respond(turn())
+    assert reply.text == "The existing result remains available." and len(work.calls) == 1
+
+
+@pytest.mark.parametrize("contact_enabled, research_available", [(True, True), (True, False), (False, True)])
+def test_existing_synchronous_research_gate_remains_conditional(contact_enabled, research_available):
+    class ResearchActions(Actions):
+        action_names = ("research_current_options", "start_background_research") if research_available else ("research_current_options",)
+    def choose(t, context):
+        assert ("research_current_options" in context["available_actions"]) is not (contact_enabled and research_available)
+        return "Route checked."
+    model = Model(choose)
+    LivingConversation(_Memory(), model, IDENTITY, ResearchActions(),
+                       contact_model=model if contact_enabled else None).respond(turn())
+
+
+def test_unoffered_foreground_procedure_is_rejected_before_execution():
+    class ProcedureActions(Actions):
+        action_names = ("run_reusable_procedure", "start_digital_work")
+        def execute(self, *args): pytest.fail("unoffered procedure must not execute inline")
+    contact = Model(lambda t, context: ConversationActionCall("attempt", "run_reusable_procedure", {}))
+    work = Model(lambda *_: pytest.fail("unoffered action must not promote to work model"))
+    with pytest.raises(RuntimeError, match="unavailable action"):
+        LivingConversation(_Memory(), work, IDENTITY, ProcedureActions(), contact_model=contact).respond(turn())

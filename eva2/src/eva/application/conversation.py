@@ -953,13 +953,6 @@ class LivingConversation:
                 )
             else:
                 available_names = continuation_names(completed)
-        if contact_model is not None and completed is None and "start_background_research" in available_names:
-            # Public research belongs to the admitted background worker. Offering
-            # the legacy synchronous equivalent lets the model accidentally hold
-            # this conversation turn open until research finishes. Keep replay of
-            # an already completed legacy action and routes without a worker intact.
-            available_names = tuple(name for name in available_names
-                                    if name != "research_current_options")
         def initial_memory():
             memory_started_at = monotonic()
             memory_outcome = "failed"
@@ -1036,6 +1029,16 @@ class LivingConversation:
         memory_searched = False
         seen_call_ids = {item.call.call_id for item in receipts}
         while True:
+            if contact_model is not None:
+                # Offer admitted background work instead of new synchronous
+                # execution. Reapply after lookups; retained receipts are replayed
+                # above, and routes without the corresponding worker stay intact.
+                deferred_actions = set()
+                if completed is None and "start_background_research" in available_names:
+                    deferred_actions.add("research_current_options")
+                if "start_digital_work" in available_names:
+                    deferred_actions.add("run_reusable_procedure")
+                available_names = tuple(name for name in available_names if name not in deferred_actions)
             checkpoint()
             history = {"prior_actions": tuple(receipts[:-1])} if len(receipts) > 1 else {}
             # Routing uses actual receipts, never channel names or greeting regexes.
