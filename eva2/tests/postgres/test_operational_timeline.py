@@ -1421,12 +1421,19 @@ def test_hindsight_outbox_rejects_legacy_group_payload_without_audience() -> Non
         PostgresMemoryOutbox._document_from_data(legacy_group_data)  # noqa: SLF001
 
 
+@pytest.mark.parametrize("stored_status, phase, label", [
+    ("active", "exploration", "Actief eigen doel"),
+    ("waiting_for_proof", "exploration", "Eigen doel wacht op bewijs"),
+    ("completed", "exploration_projected", "Eigen doel met afgeronde werkstap"),
+    ("completed", "prototype_projected", "Eigen doel met afgeronde werkstap"),
+    ("failed", "exploration", "Eigen doel met vastgelopen werkstap"),
+])
 def test_model_chosen_interest_survives_restart_and_is_not_adopted_twice(
-    timeline_engine: Engine,
+    timeline_engine: Engine, stored_status: str, phase: str, label: str,
 ) -> None:
     actions = PostgresConversationActions(timeline_engine)
     turn = ConversationTurn.private(
-        tenant_id="living-personal-interest",
+        tenant_id=f"living-personal-interest-{stored_status}-{phase}",
         installation_id="home",
         principal_id="jaap",
         conversation_id="telegram:jaap",
@@ -1485,6 +1492,27 @@ def test_model_chosen_interest_survives_restart_and_is_not_adopted_twice(
         event.event_type
         for event in restarted_timeline.events(f"conversation:{turn.message_id}")
     ] == ["INGRESS_COMMITTED", "PERSONAL_INTENT_LINKED"]
+    state = restarted_timeline.load(intent_thread)
+    restarted_timeline.transition(
+        thread_id=intent_thread, expected_revision=state.revision,
+        checkpoint_id="interest-state", phase=phase, status=stored_status,
+        event_type="PERSONAL_INTEREST_STATE_RECORDED",
+        occurred_at=datetime(2026, 8, 23, 13, 1, tzinfo=UTC), data={},
+    )
+    from dataclasses import replace
+    later = replace(turn, conversation_id="new-session", message_id="later-message",
+                    occurred_at="2026-08-24T13:00:00Z")
+    reopened = PostgresConversationActions(restarted_engine)
+    context = reopened.active_context(later)
+    assert len(context) == 1
+    assert context[0].startswith(label + " ‘" + call.arguments["title"])
+    if stored_status != "active":
+        assert "Actief eigen doel" not in context[0]
+    other = ConversationTurn.private(
+        later.tenant_id, later.installation_id, "other-person", "other-session",
+        "other-message", "Waar ben je mee bezig?", later.occurred_at,
+    )
+    assert reopened.active_context(other) == ()
     restarted_engine.dispose()
 
 

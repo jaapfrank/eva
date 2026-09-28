@@ -492,8 +492,14 @@ class PostgresConversationActions:
                 for value in (title, motivation, question)
             ):
                 raise ConversationConflict("active personal intent is malformed")
+            state_label = {
+                "active": "Actief eigen doel",
+                "waiting_for_proof": "Eigen doel wacht op bewijs",
+                "completed": "Eigen doel met afgeronde werkstap",
+                "failed": "Eigen doel met vastgelopen werkstap",
+            }[state.status]
             summary = (
-                f"Actief eigen doel ‘{title}’. Waarom: {motivation} "
+                f"{state_label} ‘{title}’. Waarom: {motivation} "
                 f"Eerste onderzoeksvraag: {question}"
             )
             completed = next(
