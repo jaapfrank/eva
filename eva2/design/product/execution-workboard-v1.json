@@ -2772,14 +2772,14 @@
         ],
         "now": {
           "title": "L2: meerdaags project hervatten",
-          "state": "Gewoon project met afhankelijke vervolgstap starten",
-          "detail": "Bestaande opslag/hervatting en scheduler behouden. Eén projectvraag: concept en projectstaat nu, vervolg morgen29september09:00. Geen echte huisacties of berichten. Oorspronkelijke versies en expliciete wijziging moeten behouden blijven. Geen nieuwe planner.",
+          "state": "Projectopslag gestopt op ontbrekende map",
+          "detail": "Eerste conceptopslag afgewezen; gekozen submap bestaat niet. Bestaande filesystemserver heeft mapaanmaak, blootstelling/terugkoppeling nog controleren. Taak failed/incomplete_work, geen concept of afspraak bevestigd en geen modeltaak actief. Geen automatische herhaling.",
           "doneWhen": "One ordinary project preserves goal, dependencies, artifacts and next action overnight; later correction and continuation use saved state without duplicate effects."
         },
         "next": {
-          "title": "L2: meerdaags project hervatten afronden",
+          "title": "Bestaande mapaanmaak en foutterugkoppeling aansluiten",
           "state": "Nog niet gestart",
-          "detail": "Bestaande duurzame taken, projectdocumenten en geslaagde tweefasenproef hergebruiken. Alleen ontbrekende zelfstandige voortzetting aanpakken; geen nieuwe planner."
+          "detail": "Kleinste concrete aansluiting bepalen zodat Eva haar gekozen projectmap zelf kan gebruiken of de fout kan verwerken. Geen handmatige testmap of nieuwe planner. Controleer daarna de feitelijke vervolgplanning."
         },
         "ownerAction": {
           "title": "Camera voor vuilnisbakken kiezen",
@@ -2792,7 +2792,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T20:44:20.261413+00:00"
+        "reviewedAt": "2026-09-28T20:47:29.289220+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13339,14 +13339,14 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "nextAction": "Twee fasen documentproject slagen na gerichte leesfoutreparaties; zelfstandig meerdaags werk en algemene planning blijven open, geen afwezigheid van opslag.",
+          "nextAction": "Check how existing directory capability and rejected tool feedback are exposed; repair smallest missing connection. Do not manually create the fixture directory or repeat unchanged request.",
           "owner": "/root",
           "activeWorker": null,
           "baseCommit": "2c79af80",
           "effortNotice": "15–25min; maximaal één hervatting na installatie; credits onbekend.",
-          "latestEvidence": "eva2/evidence/product/legacy-read-resume-20260928.json",
+          "latestEvidence": "eva2/evidence/product/l2-project-save-rejection-20260928.json",
           "assignment": {
-            "stage": "preparing_overnight_project",
+            "stage": "initial_project_save_rejected",
             "outcome": "One ordinary project preserves goal, dependencies, artifacts and next action overnight; later correction and continuation use saved state without duplicate effects.",
             "scope": "Synthetic household document project, private website route; existing scheduler and artifact tools only",
             "evidence": "eva2/evidence/product/l2-overnight-project-criteria-20260928.json",

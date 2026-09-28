@@ -2,7 +2,9 @@
 
 ## Actief — L2: meerdaags project hervatten
 
-Eén gewone projectvraag gebruikt bestaande opslag en scheduler: nu concept en projectstaat, één afhankelijke vervolgstap morgen29september09:00. Geen nieuwe planner, huisacties of berichten. Oorspronkelijke versie, afhankelijkheid, volgende stap en latere correctie moeten behouden blijven. Basis2c79af80; één eerste aanvraag, bestaande taaklimieten, credits onbekend. [Criteria](evidence/product/l2-overnight-project-criteria-20260928.json).
+**Concrete blokkade:** eerste conceptopslag in gekozen submap afgewezen; de map bestaat niet. Geïnstalleerde filesystemserver heeft mapaanmaak, maar blootstelling en foutterugkoppeling moeten gericht worden gecontroleerd. Geen concept of afspraak bevestigd; taak terminal failed/incomplete_work. Geen modeltaak actief en geen automatische herhaling. [Bewijs](evidence/product/l2-project-save-rejection-20260928.json).
+
+**Volgende:** bestaande mapaanmaak/terugkoppeling aansluiten waar werkelijk ontbrekend; geen handmatig gemaakte proefmap of nieuwe planner. Daarna dezelfde bewaarde opdracht voortzetten en feitelijke vervolgplanning controleren. Gemeten worker-deelverbruik9.342in/399uit,2modelantwoorden/1tool; foreground niet inbegrepen, credits onbekend.
 
 ## Afgerond — L1: werkwijze leren en hergebruiken
 
