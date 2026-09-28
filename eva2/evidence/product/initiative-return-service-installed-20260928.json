@@ -1,0 +1,63 @@
+{
+  "checkedAt": "2026-09-28T19:08:45.021108+00:00",
+  "status": "installed",
+  "sourceCommit": "122b91ae12f5c2b12e27c7ba32de305c3eb0702b",
+  "outcome": "Completed initiative results use the existing independent delivery service lane instead of waiting for idle memory maintenance.",
+  "change": "One callback registration in bootstrap/runtime.py. Model, transport, recipient and authority unchanged.",
+  "tests": {
+    "passed": 5,
+    "durablePostgresDelivery": 2,
+    "independentServiceLane": 3,
+    "coverage": [
+      "Completed artifact delivered once",
+      "Uncertain send not automatically retried after restart",
+      "Artifact preserved",
+      "Services proceed during blocked memory and observe stop"
+    ],
+    "realTelegramMessages": 0
+  },
+  "review": {
+    "reviewer": "/root/platform_research_20260927",
+    "decision": "GO source; existing lock and durable attempt prevent duplicate send. Other serial service callbacks may delay delivery."
+  },
+  "installation": {
+    "checkedAt": "2026-09-28T19:06:08.105304+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:7067784dca40b39bd6fa573de608fd6b8aa6bb11148e4c04435f21f254972698",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/runtime.py": "6ca27f0697ed67cfdc9f0a9867805ecca16edc3d7f06b40b387e6556440a2ec1"
+        }
+      },
+      "worker": {
+        "image": "sha256:05bd26b964f0f4c62db3f33288aac5f2b440592c0073fe051cbf79c54ab0e1c2",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/runtime.py": "6ca27f0697ed67cfdc9f0a9867805ecca16edc3d7f06b40b387e6556440a2ec1"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/initiative-return-service-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "serviceHostVerification": "Core runs create_runtime_app; installed start/_run_services exactly match tested source. Separate worker runs delegated_work_service, not the initiative service loop; its older memory module is not part of this claim.",
+  "patchProvenance": {
+    "repositoryBase": "9f8708a4",
+    "installedBaseSha256": "45e5a7906e08a41dfe68268928adc79935c552857020c7063e58d4f93fa59c61",
+    "method": "Verified repository diff is exactly one callback line and applied that replacement to captured identical core/worker runtime. All other installed bytes retained."
+  },
+  "runtimeModelCalls": 0,
+  "creditCost": "unknown",
+  "ownerAccepted": false,
+  "remaining": [
+    "Actual next Telegram delivery",
+    "Useful complete new initiative",
+    "Camera choice and camera/calendar correlation",
+    "Complete I1/I2"
+  ],
+  "rollback": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/initiative-return-service-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+}
