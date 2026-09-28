@@ -9,6 +9,9 @@ from typing import Literal
 from uuid import UUID
 from pydantic import Field, model_validator
 from eva.bootstrap.household_voice import HouseholdVoicePolicy
+from eva.bootstrap.delegated_work_provider import (
+    INPUT_PRICE_USD_MICROS_PER_MILLION, OUTPUT_PRICE_USD_MICROS_PER_MILLION,
+)
 from eva.contracts.base import Version1Contract, Identifier, Sha256, Timestamp
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.delegated_work import DelegatedHouseholdResearchSpec
@@ -32,6 +35,7 @@ class HouseholdResearchPolicy(Version1Contract):
     result_scope: Literal["originating_household_session"]
     provider_configuration_sha256: Sha256
     resource_budget_sha256: Sha256
+    retained_read_spec_sha256: tuple[Sha256, ...] = Field(default=(), max_length=4096)
     maximum_retention_days: Literal[7] = 7
     effective_at: Timestamp
     expires_at: Timestamp
@@ -106,7 +110,10 @@ class HouseholdResearchAuthority:
             or self.profile.maximum_input_tokens > budget.max_input_tokens
             or self.profile.maximum_output_tokens > budget.max_output_tokens
             or self.profile.maximum_tool_calls > 3
-            or self.profile.maximum_cost_usd_micros > 100_000
+            or self.profile.maximum_cost_usd_micros > (
+                (budget.max_input_tokens * INPUT_PRICE_USD_MICROS_PER_MILLION + 999_999) // 1_000_000
+                + (budget.max_output_tokens * OUTPUT_PRICE_USD_MICROS_PER_MILLION + 999_999) // 1_000_000
+            )
             or self.profile.timeout_seconds != 60
         ):
             raise ValueError(
@@ -122,6 +129,11 @@ class HouseholdResearchAuthority:
         """Authorize admission and execution only on the current released program."""
         self._validate_spec(spec, require_current_release=True)
 
+    def permits_retained_read(self, spec):
+        """Match only operator-registered stored envelopes, never future work."""
+        return (isinstance(spec, DelegatedHouseholdResearchSpec)
+                and canonical_sha256(spec.to_payload()) in self.policy.retained_read_spec_sha256)
+
     def validate_read_spec(self, spec):
         """Read retained stored work without authorizing its historical program."""
         self._validate_spec(spec, require_current_release=False)
@@ -134,6 +146,10 @@ class HouseholdResearchAuthority:
         from eva.adapters.postgres.delegated_work import DelegatedWorkReleaseSelector
         from eva.contracts.timestamps import parse_utc_timestamp
 
+        retained_read = (
+            not require_current_release
+            and self.permits_retained_read(spec)
+        )
         release = DelegatedWorkReleaseSelector.from_spec(spec)
         if not require_current_release:
             from dataclasses import replace
@@ -141,7 +157,7 @@ class HouseholdResearchAuthority:
             # Only executable source may differ; model, schema and grant pins
             # still match the current authority before any retained data leaves.
             release = replace(release, worker_program_sha256=self._release.worker_program_sha256)
-        if (
+        if not retained_read and (
             release != self._release
             or spec.worker_profile_id != self.profile.profile_id
             or spec.model_profile_id != self.profile.model_profile_id
@@ -157,12 +173,14 @@ class HouseholdResearchAuthority:
             or parse_utc_timestamp(spec.created_at) > self.clock()
         ):
             raise ValueError("household release or resource grant differs")
+        if parse_utc_timestamp(spec.created_at) > self.clock():
+            raise ValueError("household work creation time is in the future")
         self.validate_device(origin.satellite_id, origin.device_id)
         if (
             spec.owner_principal_id != str(policy.owner_principal_id)
             or spec.principal_binding_id != str(policy.principal_binding_id)
             or origin.research_policy_id != policy.policy_id
-            or origin.research_policy_sha256 != self.sha256
+            or (not retained_read and origin.research_policy_sha256 != self.sha256)
             or origin.household_policy_id != policy.household_policy_id
             or origin.household_policy_sha256 != policy.household_policy_sha256
             or (
@@ -179,7 +197,7 @@ class HouseholdResearchAuthority:
             )
             or spec.deadline > policy.expires_at
             or spec.created_at < policy.effective_at
-            or spec.model_profile_release_sha256 != self.profile.configuration_sha256
+            or (not retained_read and spec.model_profile_release_sha256 != self.profile.configuration_sha256)
         ):
             raise ValueError("household work differs from current authority")
 

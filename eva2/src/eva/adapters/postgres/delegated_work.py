@@ -211,12 +211,20 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             require_open=False, now=self._household_clock())
         current = verify_origin(connection, self.scope, request_origin,
             require_open=True, now=self._household_clock())
+        authority = getattr(self._household_authorizer, "__self__", None)
+        retained_read = (
+            callable(getattr(authority, "permits_retained_read", None))
+            and authority.permits_retained_read(work.spec)
+            and request_origin.research_policy_sha256 == authority.sha256
+        )
         if (original.get("native_conversation_key") is None
                 or current.get("native_conversation_key") is None
                 or any(getattr(work.spec.origin, key) != getattr(request_origin, key) for key in (
                     "tenant_id", "installation_id", "household_id", "actor_id",
                     "satellite_id", "device_id", "consent_operation_id",
-                    "household_policy_sha256", "research_policy_sha256"))):
+                    "household_policy_sha256"))
+                or (not retained_read and work.spec.origin.research_policy_sha256
+                    != request_origin.research_policy_sha256)):
             raise DelegatedWorkNotFound("retained household request differs from its device authority")
 
     def _authorize_household_delivery(self, work, connection, *, origin, binding):
