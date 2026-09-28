@@ -66,7 +66,12 @@
   },
   "nextAction": "Establish the cause of this foreground provider deadline before repeating the exact failed project request. Preserve ingress and prior evidence; no blind timeout increase or duplicate task.",
   "review": {
-    "status": "requested",
-    "reviewer": "platform_research_20260927"
+    "status": "GO for failed-phase evidence",
+    "reviewer": "platform_research_20260927",
+    "limits": [
+      "Local stream closure does not prove remote provider termination.",
+      "Timeout cause and actual request model remain unproven.",
+      "No task admission or artifact demonstrated; usage unknown."
+    ]
   }
 }

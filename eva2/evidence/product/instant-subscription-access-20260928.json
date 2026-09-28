@@ -1,0 +1,131 @@
+{
+  "id": "instant-subscription-access-20260928",
+  "checkedAt": "2026-09-28T15:47:00.831753+00:00",
+  "status": "unavailable_on_existing_subscription_route",
+  "model": "chat-latest",
+  "officialSource": "https://developers.openai.com/api/docs/models/chat-latest",
+  "request": {
+    "count": 1,
+    "prompt": "Reply OK.",
+    "tools": false,
+    "memory": false,
+    "history": false,
+    "reasoningOmitted": true,
+    "reason": "Instant candidate availability check; do not infer availability from public API model documentation."
+  },
+  "response": {
+    "httpStatus": 400,
+    "detail": "The 'chat-latest' model is not supported when using Codex with a ChatGPT account."
+  },
+  "events": [
+    {
+      "seconds": 1.483,
+      "event": "network_request",
+      "model": "chat-latest",
+      "request_bytes": 246,
+      "reasoning_omitted": true
+    },
+    {
+      "seconds": 1.483,
+      "event": "transport_trace",
+      "stage": "connection.connect_tcp.started"
+    },
+    {
+      "seconds": 1.498,
+      "event": "transport_trace",
+      "stage": "connection.connect_tcp.complete"
+    },
+    {
+      "seconds": 1.498,
+      "event": "transport_trace",
+      "stage": "connection.start_tls.started"
+    },
+    {
+      "seconds": 1.514,
+      "event": "transport_trace",
+      "stage": "connection.start_tls.complete"
+    },
+    {
+      "seconds": 1.514,
+      "event": "transport_trace",
+      "stage": "http11.send_request_headers.started"
+    },
+    {
+      "seconds": 1.515,
+      "event": "transport_trace",
+      "stage": "http11.send_request_headers.complete"
+    },
+    {
+      "seconds": 1.515,
+      "event": "transport_trace",
+      "stage": "http11.send_request_body.started"
+    },
+    {
+      "seconds": 1.515,
+      "event": "transport_trace",
+      "stage": "http11.send_request_body.complete"
+    },
+    {
+      "seconds": 1.515,
+      "event": "transport_trace",
+      "stage": "http11.receive_response_headers.started"
+    },
+    {
+      "seconds": 1.931,
+      "event": "transport_trace",
+      "stage": "http11.receive_response_headers.complete"
+    },
+    {
+      "seconds": 1.931,
+      "event": "http_response",
+      "status": 400
+    },
+    {
+      "seconds": 1.931,
+      "event": "transport_trace",
+      "stage": "http11.receive_response_body.started"
+    },
+    {
+      "seconds": 1.931,
+      "event": "transport_trace",
+      "stage": "http11.receive_response_body.complete"
+    },
+    {
+      "seconds": 1.931,
+      "event": "transport_trace",
+      "stage": "http11.response_closed.started"
+    },
+    {
+      "seconds": 1.931,
+      "event": "transport_trace",
+      "stage": "http11.response_closed.complete"
+    },
+    {
+      "seconds": 1.931,
+      "event": "provider_rejection",
+      "detail": "{'detail': \"The 'chat-latest' model is not supported when using Codex with a ChatGPT account.\"}"
+    },
+    {
+      "seconds": 1.933,
+      "event": "failed",
+      "error_type": "CodexProviderError",
+      "provider_category": "protocol",
+      "requests": 1
+    }
+  ],
+  "decision": "Do not replace the configured contact model with chat-latest. No separate API account, paid route or subscription was activated. Existing allowed models remain candidates; do not repeat unchanged access request.",
+  "limits": [
+    "Only this alias and existing account route were checked.",
+    "No generation speed or conversational quality measured.",
+    "Provider token usage was not returned; costs remain unknown."
+  ],
+  "usage": {
+    "networkRequests": 1,
+    "completedGenerations": 0,
+    "inputTokens": null,
+    "outputTokens": null,
+    "creditCosts": "unknown"
+  },
+  "sourceChanges": false,
+  "runtimeChanges": false
+}

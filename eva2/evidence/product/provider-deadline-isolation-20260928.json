@@ -1,0 +1,151 @@
+{
+  "id": "provider-deadline-isolation-20260928",
+  "basis": "e1ff4eac",
+  "checkedAt": "2026-09-28T15:43:22.136678+00:00",
+  "status": "isolated_route_succeeds_original_cause_unknown",
+  "question": "Does the installed fast-model route still fail on a tiny request without task context or tools?",
+  "execution": {
+    "model": "gpt-6-luna",
+    "reasoning": "low",
+    "prompt": "Reply OK.",
+    "instructions": "This is a connection check. Respond with exactly OK.",
+    "requestLimit": 1,
+    "timeoutSeconds": 30,
+    "memory": false,
+    "tools": false,
+    "conversationHistory": false,
+    "runtimeSettingsChanged": false,
+    "sourceChanged": false
+  },
+  "events": [
+    {
+      "seconds": 1.052,
+      "event": "network_request",
+      "model": "gpt-6-luna",
+      "request_bytes": 291
+    },
+    {
+      "seconds": 1.052,
+      "event": "transport_trace",
+      "stage": "connection.connect_tcp.started"
+    },
+    {
+      "seconds": 1.065,
+      "event": "transport_trace",
+      "stage": "connection.connect_tcp.complete"
+    },
+    {
+      "seconds": 1.065,
+      "event": "transport_trace",
+      "stage": "connection.start_tls.started"
+    },
+    {
+      "seconds": 1.082,
+      "event": "transport_trace",
+      "stage": "connection.start_tls.complete"
+    },
+    {
+      "seconds": 1.083,
+      "event": "transport_trace",
+      "stage": "http11.send_request_headers.started"
+    },
+    {
+      "seconds": 1.083,
+      "event": "transport_trace",
+      "stage": "http11.send_request_headers.complete"
+    },
+    {
+      "seconds": 1.083,
+      "event": "transport_trace",
+      "stage": "http11.send_request_body.started"
+    },
+    {
+      "seconds": 1.083,
+      "event": "transport_trace",
+      "stage": "http11.send_request_body.complete"
+    },
+    {
+      "seconds": 1.083,
+      "event": "transport_trace",
+      "stage": "http11.receive_response_headers.started"
+    },
+    {
+      "seconds": 1.671,
+      "event": "transport_trace",
+      "stage": "http11.receive_response_headers.complete"
+    },
+    {
+      "seconds": 1.672,
+      "event": "http_response",
+      "status": 200
+    },
+    {
+      "seconds": 1.673,
+      "event": "transport_trace",
+      "stage": "http11.receive_response_body.started"
+    },
+    {
+      "seconds": 1.673,
+      "event": "first_response_bytes",
+      "bytes": 956
+    },
+    {
+      "seconds": 3.596,
+      "event": "transport_trace",
+      "stage": "http11.receive_response_body.complete"
+    },
+    {
+      "seconds": 3.597,
+      "event": "transport_trace",
+      "stage": "http11.response_closed.started"
+    },
+    {
+      "seconds": 3.597,
+      "event": "transport_trace",
+      "stage": "http11.response_closed.complete"
+    },
+    {
+      "seconds": 3.599,
+      "event": "completed",
+      "output": "OK",
+      "usage": {
+        "input_tokens": 24,
+        "output_tokens": 5,
+        "total_tokens": 29
+      },
+      "provider_requests": 1
+    }
+  ],
+  "conclusions": [
+    "Existing provider credentials, transport and fast model currently complete one small tool-free request.",
+    "The previous full project deadline remains unexplained; this isolated success is not a repaired project route.",
+    "Previous local_stream_closed=true implies at least one wrapped HTTP response existed, based on installed transport semantics; it does not establish a successful status, terminal body or remote cancellation."
+  ],
+  "limits": [
+    "Single observation; not a latency benchmark.",
+    "Script/import startup included in3.599 seconds; outbound request began at1.052 seconds.",
+    "Small request omits the tool catalog, task context, memory and history, so it cannot establish which caused the original failure.",
+    "No unmodified repetition of the project request."
+  ],
+  "usage": {
+    "providerRequests": 1,
+    "input_tokens": 24,
+    "output_tokens": 5,
+    "total_tokens": 29,
+    "creditCosts": "unknown"
+  },
+  "nextAction": "Bounded investigation of full-request/tool-catalog behavior. Use an isolated harmless tool call if required to distinguish request-path failure from a transient delay; no model replacement or timeout increase is justified by this result.",
+  "reference": {
+    "url": "https://developers.openai.com/api/docs/guides/streaming-responses",
+    "scope": "Background terminology only: streaming distinguishes partial events from completed output; public API guidance does not prove Codex subscription-route guarantees."
+  },
+  "review": {
+    "status": "GO for limited conclusion",
+    "reviewer": "platform_research_20260927",
+    "limits": [
+      "First response bytes are not first answer text.",
+      "30-second bound not reached; not validated by this run.",
+      "Original project timeout remains unexplained."
+    ]
+  }
+}
