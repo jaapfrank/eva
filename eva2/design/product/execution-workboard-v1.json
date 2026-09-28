@@ -2667,10 +2667,10 @@
           }
         ],
         "now": {
-          "title": "Document bewaren en later afmaken · afgeronde proef",
-          "state": "Opgeleverd en onafhankelijk gecontroleerd",
-          "detail": "Concept opgeslagen; latere websiteopdracht heeft alle concepttekst behouden en einddocument met aanvulling opgeslagen. Beide bestanden en resultaat onafhankelijk gecontroleerd. Eerste fase vroeg reparaties; volledige L2 en snelle reacties blijven open.",
-          "doneWhen": "Bewaarde leesfout laat een toegestane nieuwe stap toe; effectfouten blijven geblokkeerd. Gerichte test/review/installatie, daarna maximaal één hervatting en echt document teruglezen."
+          "title": "C1 · Snelle begroeting en taakontvangst",
+          "state": "Oorzaak vastgesteld · gerichte promptcorrectie",
+          "detail": "Echte Telegrambegroeting deed manage_connected_services en twee modelaanvragen, eindigend op Astra. Compacte catalogusinstructie riep onvoorwaardelijk tot ontdekking op. Die instructie geldt nu alleen bij een passende gebruikersvraag; begroeting/sociale beurt direct, geen kanaalregex of toolverwijdering.",
+          "doneWhen": "Gemeten bottleneck gericht opgelost, snelle eenvoudige reactie gecontroleerd met behoud van identiteit/geheugen en taakroutering; tests, review, installatie en echte routevergelijking."
         },
         "next": {
           "title": "C1 · Begroeting en taakontvangst versnellen",
@@ -2689,7 +2689,7 @@
           "expected": "Eigenaar bevestigt: nieuwste bijdrage met /eva2 correct opgehaald. Wachttijd blijft onvoldoende; Hallo11s. Antwoord van Eva1 zonderprefix was de andere route, geen mislukte Eva2-resultaatophaling."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T16:51:53.876319+00:00"
+        "reviewedAt": "2026-09-28T16:55:31.106057+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12599,11 +12599,11 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "baseCommit": "4a1791200fb1851e134bf98a582424badd63d308",
+          "baseCommit": "ddf8b372",
           "startedAt": "2026-09-28T08:27:21.204348+00:00",
           "owner": "/root",
           "endCondition": "Telegram and website greet warmly with measured content latency and answer a social turn before admitted background research completes, bound to the original question; retain existing working routes.",
-          "effortNotice": "First bounded source/evidence pass; no new live model calls yet. Reuse prior receipts. Development credits unknown.",
+          "effortNotice": "10min begrensde log/broncontrole, dan gemotiveerde kleinste wijziging; maximaal twee nieuwe modelproeven na wijziging. Credits onbekend.",
           "fileOwnership": {
             "/root": [
               "eva2/src/eva/adapters/model/pydantic_conversation.py",
@@ -12622,7 +12622,7 @@
             "evidence": "eva2/evidence/product/c1-contact-20260928.json",
             "remaining": "Latency and actual Telegram/web acceptance remain open; no repeated unchanged model benchmark."
           },
-          "activeWorker": null,
+          "activeWorker": "/root",
           "contactDuringReuseAssignment": {
             "stage": "installed_http_overlap_pass",
             "outcome": "Locate existing admission/contact routing responsible for55.742s first text during procedure task; propose smallest general change only if needed.",
@@ -12644,7 +12644,7 @@
             "workerCommit": "b4b88c6446f2979c11e748e0b8606c6c35e892a6",
             "review": "GO; independent source and test diff review"
           },
-          "remaining": "Current actual Telegram owner trial requested; response pending, no acceptance inferred. Existing runtime/ingress concurrency evidence retained; no rebuild.",
+          "remaining": "Eigenaar bevestigt gewone resultaatophaling met /eva2; begroeting12,209s en resultaat18,678s blijven traag. Werkoverlapbewijs behouden.",
           "telegramOwnerTrial": {
             "status": "awaiting_owner_observation",
             "steps": [
@@ -13380,7 +13380,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "L2",
+      "activeSliceId": "C1",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

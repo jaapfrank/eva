@@ -1362,12 +1362,13 @@ def test_contact_catalog_preserves_identity_memory_recent_context(tmp_path):
                        available_actions=(TOOL.name, *CONNECTOR_ACTION_NAMES),
                        self_context=("One task remains active.",))
         captures.append(scripted.captures[0].instructions)
-    guidance = (
-        "\nUse manage_connected_services status and discover_connector_tools "
-        "to find configured connector tools, then use_connector_tool to run "
-        "them. Their full schemas are available through discovery."
-    )
-    assert captures[1] == captures[0] + guidance
+    # Catalog discovery guidance may change; identity, memory, current work and
+    # recent conversation must remain byte-for-byte intact before that suffix.
+    assert captures[1].startswith(captures[0] + "\n")
+    guidance = captures[1][len(captures[0]):]
+    assert "Connector discovery is optional, not a startup check" in guidance
+    assert "answer directly without" in guidance
+
 
 
 def test_failure_diagnostic_redacts_messages_and_identifies_causal_limit(caplog):

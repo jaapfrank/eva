@@ -1,5 +1,7 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Nu — C1 wachttijd, basisddf8b372:** coördinator inspecteert bestaande provider/contextvoorbereiding; platform_research_20260927 koppelt echte Telegram-/websitelogs. Tien minuten begrensde diagnose zonder modelcalls; daarna kleinste onderbouwde wijziging en maximaal twee gerichte modelproeven. Geen nieuw modelvergelijkingstraject. Begroeting12,209s en websiteaanname34,584s onvoldoende; resultaatophaling inhoudelijk door Jaap bevestigd.
+
 **Opgeleverd — document bewaren en later afmaken:** concept opgeslagen; vervolgfase via gewone website maakte een eindbestand met behouden concept en drie afsluitingstips. Beide echte bestanden onafhankelijk teruggelezen; concept ongewijzigd. Bron0a6abf36 live,183 tests en bronreview en onafhankelijke resultaatreview akkoord. Volledige L2/meerdaagse autonomie blijft open omdat eerste fase reparaties vroeg. Bekend inclusief mislukte pogingen192.927in/3.092uit; credits en extra geheugenverwerking onbekend. Taakontvangst34,584s blijft te traag. Volgende: gemeten C1-wachttijd gericht oplossen, nog niet gestart. [Bewijs](evidence/product/legacy-read-resume-20260928.json).
 
 **L2 concept werkelijk opgeslagen:** bestaand werk na leesfoutcorrectie geslaagd; /proof-state/l2-sol-gezinsavond-concept-20260928.txt onafhankelijk teruggelezen (SHA256e8547586db6224a702d10af5e9786d9eee0b62622dec50f7ce9bb15d71a8b46a). Vier modelreacties, drie tools,48.953in/675uit; credits onbekend. Vervolgfase via gewone website aangevraagd; einddocument nog open.

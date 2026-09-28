@@ -1249,9 +1249,13 @@ class PydanticConversationModel:
             )
             if compact_catalog:
                 instructions += (
-                    "\nUse manage_connected_services status and discover_connector_tools "
-                    "to find configured connector tools, then use_connector_tool to run "
-                    "them. Their full schemas are available through discovery."
+                    "\nConnector discovery is optional, not a startup check. Only when "
+                    "the current request requires a connector that has not been identified, "
+                    "use manage_connected_services status and discover_connector_tools, "
+                    "then use_connector_tool. Their full schemas are available through discovery. "
+                    "For a greeting or ordinary social conversation, answer directly without "
+                    "checking connections, tools, or work status. Do not resume earlier work "
+                    "merely because the person greets you; wait for an actual continuation request."
                 )
             if completed_action is not None and available_actions:
                 instructions += (
