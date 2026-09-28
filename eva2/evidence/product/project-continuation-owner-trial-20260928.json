@@ -1,0 +1,72 @@
+{
+  "id": "project-continuation-owner-trial-20260928",
+  "basis": "efcb5bc4",
+  "status": "failed_before_task_admission",
+  "criteria": {
+    "basis": "efcb5bc4",
+    "scope": "Ordinary website project with retained artifact and subsequent explicit continuation; not elapsed multi-day acceptance",
+    "maxUserRequests": 2,
+    "criteria": [
+      "First stage saves readable draft and states actual path",
+      "Second request uses retained draft without recreating prior effects",
+      "Final document includes draft plus requested correction",
+      "Actual stored bytes checked independently"
+    ],
+    "noClaim": [
+      "No physical restart or elapsed days unless actually performed",
+      "No owner acceptance inferred"
+    ],
+    "usage": "Model/tool totals collected where observable; unknown credits remain unknown"
+  },
+  "request": {
+    "route": "POST /internal/v1/dashboard/conversation/respond",
+    "phase": "Save a short draft; do not produce the final version yet.",
+    "promptSha256": "6c611fba66219f07e92e90b99208baa2546ff8c018b10d19bd8a09363b9de677",
+    "requestsSent": 1,
+    "secondPhaseSent": false,
+    "text": "Dit is een begrensde documentprojectproef. Maak een kort Nederlands conceptdocument van maximaal 150 woorden met de titel Een rustige gezinsavond, met drie eenvoudige activiteiten thuis zonder schermen. Bewaar het als l2-gezinsavond-concept-20260928.txt via je bestaande documentmogelijkheden en controleer dat het echt is opgeslagen. Dit is alleen de eerste fase: maak nu nog geen eindversie. Meld de echte vindplaats en wat er is gedaan, zodat ik later met een aanvulling kan doorgaan. Gebruik geen internet, agenda, berichten of huisbediening; verander geen bestaande bestanden."
+  },
+  "observed": {
+    "elapsedSeconds": 63.242,
+    "responseContracts": [
+      "EvaTextStreamError/v1"
+    ],
+    "initialMemoryMilliseconds": 2551,
+    "initialMemoryOutcome": "succeeded",
+    "failureClass": "eva.adapters.model.contracts.ConversationModelDeadlineExceeded",
+    "failureClassProof": "Installed class full-name SHA256 matches recorded exception_type_sha256 4864a34e0ded5aeaea3e7768ead479a3028ac4298c1729cc19425fefc0dac80a.",
+    "modelJournalOutcome": "failed",
+    "localStreamClosed": true,
+    "exactMessageEventTypes": [
+      "INGRESS_COMMITTED",
+      "CONVERSATION_MODEL_ADMITTED",
+      "CONVERSATION_MODEL_RECORDED"
+    ],
+    "taskAdmissionObserved": false,
+    "artifactCreationConfirmed": false,
+    "websiteReadChecks": {
+      "conversation": 200,
+      "work": 200
+    }
+  },
+  "limits": [
+    "Deadline failure is established; upstream cause, consumed provider tokens and general availability are not.",
+    "Configured contact model gpt-6-luna/low and work model gpt-6-astra/medium do not alone prove which model was used for this request.",
+    "No task execution, project continuation, real restart or multi-day completion demonstrated.",
+    "Read-only observation script required timestamp type and subsecond-cutoff corrections; task request was not repeated."
+  ],
+  "usage": {
+    "ownerRequests": 1,
+    "locallyAdmittedModelRequests": 1,
+    "providerModelAttempts": null,
+    "inputTokens": null,
+    "outputTokens": null,
+    "measurement": "unmeasured",
+    "creditCosts": "unknown"
+  },
+  "nextAction": "Establish the cause of this foreground provider deadline before repeating the exact failed project request. Preserve ingress and prior evidence; no blind timeout increase or duplicate task.",
+  "review": {
+    "status": "requested",
+    "reviewer": "platform_research_20260927"
+  }
+}

@@ -2643,15 +2643,15 @@
           }
         ],
         "now": {
-          "title": "L2 · Bijgestuurd werk houdt zijn vervolgstap",
-          "state": "Geïnstalleerd · gebruikersproef open",
-          "detail": "Bron84cf3fb9 op gezonde kern/werker. Vervolg wacht op gecorrigeerde poging en krijgt resultaat eenmaal; expliciet stoppen behouden.18 controles en onafhankelijke review akkoord. Geen modelcalls.",
-          "doneWhen": "Gerichte koppeling geïnstalleerd en live bron/pagina’s gecontroleerd. Volledige meerdaagse projectafronding en eigenaaracceptatie blijven open."
+          "title": "L2 · Projectproef strandt vóór taakaanname",
+          "state": "Proef mislukt · geen herhaling gestart",
+          "detail": "Eén gewone websitevraag geeft na63,242s een modeldeadline. Journal registreert mislukte aanvraag; geen taakaanname of document bevestigd. Tokenverbruik onbekend. Tweede projectfase niet verstuurd.",
+          "doneWhen": "Oorzaak van deze modeldeadline vaststellen vóór herhaling; bestaande projectcode niet vervangen op basis van deze fout."
         },
         "next": {
-          "title": "L2 · Bestaand project na onderbreking afmaken",
+          "title": "C1/L2 · Oorzaak van modeldeadline vaststellen",
           "state": "Nog niet gestart",
-          "detail": "Bestaande artefacten, planning en hervatting samen gebruiken; resterend bewijs voor een bruikbaar meerdaags resultaat vaststellen. Geen nieuwe planner. I2-camerakeuze blijft open."
+          "detail": "Dit verzoek liep vast vóór uitvoering. Geen blinde timeoutverlenging of duplicaat. Geïnstalleerde correctie-/vervolgstapkoppeling blijft behouden; camera-keuze en fysieke kanaalproeven blijven open."
         },
         "ownerAction": {
           "title": "Toolgebruik na cataloguswijziging proberen",
@@ -2665,7 +2665,7 @@
           "expected": "Een normale begroeting en het juiste bewaarde resultaat. Snellere reactie is nog niet bewezen. Automatische proefvoorbereiding werd geblokkeerd; geen eigenaaracceptatie ingevuld."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T15:26:34.780892+00:00"
+        "reviewedAt": "2026-09-28T15:35:47.266640+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13154,7 +13154,7 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "nextAction": "Correctie-/afhankelijkheidskoppeling geïnstalleerd84cf3fb9, bewijs scheduled-correction-continuity-20260928.json. Volgende: bestaande projectartefacten, planning en hervatting gezamenlijk naar echt bruikbaar resultaat; geen nieuwe planner. Algemene procesuitval en eigenaarproef blijven afzonderlijk open."
+          "nextAction": "Geïnstalleerde vervolgstapkoppeling behouden. Echte documentprojectproef strandt op modeldeadline vóór taakaanname (project-continuation-owner-trial-20260928.json). Eerst oorzaak van deze C1/modelgrens vaststellen; niet identiek herhalen, geen tweede planner. Volledige project-/meerdaagse proef blijft open."
         },
         {
           "id": "L3",
