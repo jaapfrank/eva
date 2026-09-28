@@ -2460,8 +2460,8 @@
         ],
         "now": {
           "title": "C1 · Gesprek beschikbaar houden tijdens werk",
-          "state": "C1 · bestaande vertragingsbron lokaliseren",
-          "detail": "Hergebruik afgerond; eerste taakantwoord55.742s. De proef mat geen ontvangstheader, audio of tussenvraag. Eén bronanalyse onderscheidt bestaande ontvangst en doorpraten van de volledige uitvoering; nog geen defect vastgesteld.",
+          "state": "C1 · bestaand achtergrondpad consequent gebruiken",
+          "detail": "Actuele eigenaarroute en digitale worker beschikbaar bevestigd. Kern biedt daarnaast procedure-uitvoering binnen de gesprekbeurt aan. Eén gedeelde cataloguscorrectie houdt lookup in gesprek en laat uitvoering via bestaande taakroute lopen; fallback/replay blijven behouden.",
           "doneWhen": "Compleet taakpad past; bestaande opgeslagen taken blijven hervatbaar. Daarna gerichte review, installatie en werkelijk resultaat."
         },
         "next": {
@@ -2480,7 +2480,7 @@
           "expected": "Gebouwd, getest, geïnstalleerd en door jou geaccepteerd blijven apart. Alleen werkelijk bruikbare functies tellen als opgeleverd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T10:18:47.421849+00:00"
+        "reviewedAt": "2026-09-28T10:26:53.844426+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12415,13 +12415,18 @@
           },
           "activeWorker": "/root/baseline_research_20260927",
           "contactDuringReuseAssignment": {
-            "stage": "source_analysis",
+            "stage": "bounded_implementation",
             "outcome": "Locate existing admission/contact routing responsible for55.742s first text during procedure task; propose smallest general change only if needed.",
             "scope": "Existing source and exact reuse receipts; no edits or model calls yet.",
-            "endCondition": "Identify current routes, preserved prior optimizations, demonstrated missing link and bounded next action.",
+            "endCondition": "With contact model and actually offered start_digital_work, no new foreground run_reusable_procedure at initial/continuation selection; preserve lookup, worker/fallback and replay.",
             "effort": "one bounded source analysis; credits unknown",
-            "evidence": "eva2/evidence/product/calendar-unassisted-reuse-20260928.json",
-            "measurementLimit": "Owner API task-answer timing only; no acknowledgement or overlap observation. Do not infer defect from completed-task latency alone."
+            "evidence": "eva2/evidence/product/contact-reuse-routing-20260928.json",
+            "measurementLimit": "Owner API task-answer timing only; no acknowledgement or overlap observation. Do not infer defect from completed-task latency alone.",
+            "baseCommit": "58b95f92",
+            "fileOwnership": [
+              "eva2/src/eva/application/conversation.py",
+              "focused conversation catalog and replay tests"
+            ]
           }
         },
         {

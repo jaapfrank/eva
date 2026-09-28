@@ -1,0 +1,37 @@
+{
+  "checkedAt": "2026-09-28T10:25:28.405952+00:00",
+  "basis": "58b95f92",
+  "observedTaskPath": [
+    "resolve_reusable_procedure",
+    "run_reusable_procedure",
+    "save_workspace_document",
+    "final_answer"
+  ],
+  "modelResponses": 4,
+  "measuredFirstTaskTextSeconds": 55.742,
+  "measuredFinalTaskTextSeconds": 62.191,
+  "unmeasured": [
+    "receipt header",
+    "spoken acknowledgement",
+    "overlapping social question"
+  ],
+  "currentLiveConfiguration": {
+    "digital_enabled": true,
+    "contact_model": "gpt-6-luna",
+    "work_model": "gpt-6-astra"
+  },
+  "sourceFindings": [
+    "Digital multi-step delegation instruction already exists in conversation.py.",
+    "Procedure read/resolve stay on contact model; execution receipts select work model.",
+    "Owner endpoint receipt header already exists; no new receipt layer justified."
+  ],
+  "unknown": "Historical offered catalog was not recorded; current structural owner gate and actual admission authority checked with current runtime settings.",
+  "runtimeModelCalls": 0,
+  "productCodeChanges": 0,
+  "creditCosts": "unknown",
+  "currentOwnerGateReadOnly": {
+    "owner_available_for_retained_source": true,
+    "digital_enabled": true,
+    "contact_model_configured": true
+  }
+}
