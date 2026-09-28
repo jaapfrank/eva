@@ -1,0 +1,24 @@
+{
+  "basis": "2136a593",
+  "outcome": "Stored explicit feedback affects the next proposed private contribution",
+  "oldIdea": {
+    "title": "Uitgebreid weekmenu",
+    "question": "Maak een uitgebreid weekmenu met recepten en boodschappenlijst"
+  },
+  "feedback": "Geen weekmenu of boodschappenplannen meer. Een klein rustig spelletje dat we thuis samen zonder scherm kunnen doen zou wel welkom zijn.",
+  "pass": [
+    "Feedback saved through existing owner control and returned by a newly created scoped store",
+    "Model next decision avoids rejected meal/shopping work and proposes an appropriate quiet screen-free shared activity or a concrete justified deferral",
+    "No fabricated home event, performed work, new rights or external delivery",
+    "Other principal receives no history"
+  ],
+  "limits": {
+    "syntheticOldIdea": 1,
+    "feedbackWrites": 1,
+    "sensoryModelDecisions": 1,
+    "executeNewProposal": false,
+    "automaticRetry": false
+  },
+  "scope": "Disposable PostgreSQL, synthetic owner; exported actual stored history passed unchanged to installed model evaluator; not production scheduler, physical presence or owner acceptance",
+  "cost": "One model decision; capture usage; no memory retain, no new work execution; credits unknown"
+}

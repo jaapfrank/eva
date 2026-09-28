@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Afgewezen initiatief vermijden na opgeslagen feedback",
+            "date": "28 september",
+            "state": "tested",
+            "result": "Nieuwe store haalt echte testfeedback terug; één modelbeslissing kiest passend rustig samenspel. Andere persoon ziet niets; onafhankelijke review akkoord.",
+            "remaining": "Aparte testpersoon en directe evaluator; voorstel niet uitgevoerd. Geen volledige autonomie-/M3-acceptatie.",
+            "source": "eva2/evidence/product/initiative-feedback-choice-20260928.json"
+          },
+          {
             "title": "Eigen afgeronde bijdrage in gewoon privégesprek teruglezen",
             "date": "28 september",
             "state": "tested",
@@ -2563,15 +2571,15 @@
           }
         ],
         "now": {
-          "title": "M3 · Bestaand eigen resultaat via gesprek teruggehaald",
-          "state": "Echte websiteproef geslaagd; bestaande functie",
-          "detail": "Eva las de initiatievenlijst en het juiste opgeslagen bestand; antwoord klopt en geen nieuw werk gestart. Onafhankelijke review akkoord. Wel20,9s en39.354invoertokens.",
-          "doneWhen": "Deze terughaalproef is afgerond. Nieuwe initiatiefkeuze, feedbackaanpassing, snelheid en volledige M3 blijven open."
+          "title": "M3 · Feedback beïnvloedt volgende eigen keuze",
+          "state": "Begrensde proef geslaagd; bestaande functie",
+          "detail": "Opgeslagen feedback na nieuwe verbinding gebruikt: afgewezen menuwerk vermeden, rustig gezamenlijk spel voorgesteld. Geen uitvoering/bericht. Eén modelreactie1.166in/196uit; review akkoord.",
+          "doneWhen": "Deze opslag-/keuzeproef afgerond; echte initiatiefuitvoering, voorkeursprecisie en gezinsbeleving blijven afzonderlijk open."
         },
         "next": {
-          "title": "M3 · Feedback gebruiken bij een volgende eigen keuze",
+          "title": "C1 · Minder invoer en wachttijd bij gewone gesprekken",
           "state": "Nog niet gestart",
-          "detail": "Bestaande opgeslagen feedback en initiatiefbeoordeling verbinden; geen nieuwe initiatiefmodule. Het hoge gespreksverbruik blijft gekoppeld aan de open C1-snelheidsopdracht."
+          "detail": "Bestaande contactroute onderzoeken op de gemeten39.354invoertokens/20,9s voor terughalen van één resultaat. Alleen aantoonbaar overbodige context/catalogus aanpakken; geen nieuw gespreksmodel of geheugenverlies."
         },
         "ownerAction": {
           "title": "Later hetzelfde onderwerp voortzetten",
@@ -2585,7 +2593,7 @@
           "expected": "Eva haalt relevante eerdere context terug. Geaccepteerd onthouden, corrigeren en vergeten hoef je niet opnieuw te testen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T13:37:18.136268+00:00"
+        "reviewedAt": "2026-09-28T13:43:18.343721+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12763,20 +12771,21 @@
           "baseCommit": "db340ac1",
           "assignment": {
             "owner": "/root",
-            "baseCommit": "6e21f9dc",
-            "stage": "existing_interest_return",
-            "scope": "Installed private website route; evidence/workboard only",
-            "endCondition": "Reply retrieves latest own-initiative artifact accurately without new work",
-            "effort": "One ordinary request, source/result readback and independent review; credits unknown",
+            "baseCommit": "2136a593",
+            "stage": "feedback_initiative_choice",
+            "scope": "Existing owner_initiatives/sensory_events/model routes; isolated experiment and evidence files only",
+            "endCondition": "Stored feedback affects next initiative decision without replaying rejected work",
+            "effort": "One disposable-storage case and one real decision; no repeat or execution; credits unknown",
             "status": "completed"
           },
           "evidence": "eva2/evidence/product/undated-memory-context-20260928.json",
-          "remaining": "Attribution fix installed; no numbered lists still paraphrased as lists not required, earlier47/40-word result remains. Broader evolving interests/relevant contribution and family evaluation remain open.",
+          "remaining": "Stored feedback changes a new proposal in isolated evaluator case; real initiative execution and family judgment remain separate. Earlier47/40-word and list-fidelity losses remain. No complete M3 claim.",
           "temporalChainEvidence": "eva2/evidence/product/m3-retain-recall-chain-20260928.json",
           "styleFeedbackEvidence": "eva2/evidence/product/style-reflection-refresh-20260928.json",
           "automaticFeedbackEvidence": "eva2/evidence/product/m3-automatic-feedback-20260928.json",
           "groundedStyleEvidence": "eva2/evidence/product/grounded-style-mirror-20260928.json",
-          "ownInitiativeReturnEvidence": "eva2/evidence/product/own-initiative-return-20260928.json"
+          "ownInitiativeReturnEvidence": "eva2/evidence/product/own-initiative-return-20260928.json",
+          "feedbackChoiceEvidence": "eva2/evidence/product/initiative-feedback-choice-20260928.json"
         },
         {
           "id": "T1",
