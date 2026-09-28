@@ -1,0 +1,61 @@
+{
+  "id": "scheduled-correction-gap-20260928",
+  "basis": "3c85f7aa35b37aba789c0e89e4972ccb4226cf91",
+  "checkedAt": "2026-09-28T15:17:02.744841+00:00",
+  "slice": "L2",
+  "status": "reproduced_gap_not_fixed",
+  "userScenario": "Correct the first task of a planned project; continue its dependent step after the corrected result.",
+  "existingCapabilities": [
+    "Durable scheduling, linked resumptions and recorded corrections already exist.",
+    "Earlier lifecycle test covers restart admission idempotency, dependency result transfer and chain cancellation."
+  ],
+  "probe": {
+    "path": "eva2/experiments/scheduled-correction-v1/test_probe.py",
+    "environment": "Disposable PostgreSQL database; existing test container; schema created and disposable database removed by fixture.",
+    "observed": [
+      "First task admitted.",
+      "Dependent task scheduled after first work ID.",
+      "Correction saved and one resumption queued.",
+      "Scheduler permanently blocks dependent task against stopped original attempt.",
+      "Next scheduler pass admits corrected continuation.",
+      "No dependent task admitted."
+    ],
+    "assertionsPassed": 1,
+    "seconds": 4.3,
+    "interpretation": "Passing reproduction assertions confirm a defect, not successful project continuation.",
+    "limits": [
+      "Controlled scheduler/service entry points; no conversation model or external task execution.",
+      "No real multi-day wait or generated artifact.",
+      "No source change or installation in this investigation."
+    ]
+  },
+  "installedSourceMatches": {
+    "adapters/postgres/scheduled_work.py": true,
+    "bootstrap/household_work_corrections.py": true,
+    "bootstrap/delegated_work_owner_service.py": true
+  },
+  "sourceHashes": {
+    "adapters/postgres/scheduled_work.py": "4e976641bf6c2fbce877c9bc6129d78b4f21e8cb2a8e17b453321eec6a000ec4",
+    "bootstrap/household_work_corrections.py": "694421c9dd69eff58c84a486926600ec0df0f16cae8d92620f3d50a357775ab3",
+    "bootstrap/delegated_work_owner_service.py": "fc6cad079885499dd9972686beabf3151a8d140d7aa497ee4963f86323cea909"
+  },
+  "cause": "ScheduledOwnerWork._dependency loads the exact original work ID and treats its correction stop as terminal; it does not resolve the explicitly queued correction continuation. run_once persists this as blocked before that continuation can finish.",
+  "nextAction": "Repair dependency resolution for explicitly recorded correction continuations, including the queued-before-admitted interval; preserve explicit chain cancellation, absence of a continuation, owner boundaries and one-time admission. Convert reproduction into expected continuation regression.",
+  "review": {
+    "status": "confirmed",
+    "reviewer": "platform_research_20260927",
+    "findings": [
+      "Concrete continuation defect, not missing acceptance.",
+      "Follow only explicitly corrected continuation of same execution; preserve original dependency.",
+      "Correction stop/save/schedule use separate transactions: avoid premature blocking during this interval.",
+      "Explicit cancellation remains decisive; no blanket restart of blocked work."
+    ],
+    "scope": "Independent source and recorded-output review; no repeated execution."
+  },
+  "usage": {
+    "modelCalls": 0,
+    "externalTaskActions": 0,
+    "productionMutations": 0,
+    "credits": "unknown"
+  }
+}
