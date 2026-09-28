@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Langere werkreacties binnen bestaand taakbudget",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Een werkreactie stopt niet meer ten onrechte op de1200-tokenlimiet voor gewone antwoorden. Bestaand totaalbudget, gegevens en normale gesprekken blijven behouden.",
+            "remaining": "Volledige leeropdracht en gebruikersacceptatie nog open.",
+            "source": "eva2/evidence/product/task-output-budget-installed-20260928.json"
+          },
+          {
             "title": "Modeldeadline krijgt juiste terugmelding",
             "date": "28 september",
             "state": "installed",
@@ -2428,8 +2436,8 @@
         ],
         "now": {
           "title": "T1 · Opdrachten volledig laten afronden",
-          "state": "T1 · aangetoonde antwoordgrens corrigeren",
-          "detail": "Bestaande gebruiksregistratie toont1634outputtokens in mislukte reactie, boven gedeelde chatgrens1200 terwijl taakbudget over was. Offline exact dezelfde fout gereproduceerd. Eén uitvoerder bepaalt gerichte correctie binnen bestaand totaalbudget; geen nieuwe modelcalls.",
+          "state": "T1 · één volledige taak hervatten",
+          "detail": "Correctie geïnstalleerd op gezonde kern en werker; exacte bron en bestaande taakconfiguratie gecontroleerd. Eén vervolguitvoering van dezelfde documentatieopdracht vanwege gecorrigeerde outputgrens; geen nieuwe algemene leerclaim.",
           "doneWhen": "Compleet taakpad past; bestaande opgeslagen taken blijven hervatbaar. Daarna gerichte review, installatie en werkelijk resultaat."
         },
         "next": {
@@ -2448,7 +2456,7 @@
           "expected": "Gebouwd, getest, geïnstalleerd en door jou geaccepteerd blijven apart. Alleen werkelijk bruikbare functies tellen als opgeleverd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T09:34:17.435423+00:00"
+        "reviewedAt": "2026-09-28T09:48:56.685448+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12554,7 +12562,7 @@
           ],
           "concreteChange": "Use the existing configured32 request allowance instead of additional composition cap8/tools6; reserve final response. Historical grants unchanged. Actual core setting32 confirmed read-only.",
           "sourceCommit": "ef59f784",
-          "activeWorker": "/root/baseline_research_20260927",
+          "activeWorker": null,
           "latestRealTask": "internal_error; no complete result; causal metadata not retained",
           "diagnosticAssignment": {
             "baseCommit": "855d9ac6",
@@ -12585,7 +12593,7 @@
           },
           "outputBudgetAssignment": {
             "baseCommit": "e7bb983722d6bb69c84fddb397ff06d0323b2617",
-            "stage": "implementation_and_focused_offline_checks",
+            "stage": "one_complete_task_running",
             "outcome": "A longer digital tool request can complete inside its existing aggregate grant; foreground limit unchanged.",
             "endCondition": "Real adapter handles a1634token tool request while remaining task grant permits; exhaustion/old grants/cancellation still enforced; then isolated review/install and meaningful task result.",
             "effort": "One bounded implementation/review window before any new live trial",
@@ -12597,7 +12605,14 @@
               "eva2/src/eva/bootstrap/delegated_digital_runner.py",
               "eva2/src/eva/adapters/model/pydantic_conversation.py",
               "focused tests for these boundaries"
-            ]
+            ],
+            "reviewer": "/root/platform_research_20260927",
+            "testResult": "150 passed in 11.57s in the existing runtime image with network disabled; author report, no live model trial.",
+            "candidateCommit": "bb6d4115",
+            "workerCommit": "48e89ded6f6fedce185bea9a54f1d5fb5e69605e",
+            "activeWorker": null,
+            "reviewResult": "GO, independent source review of 48e89ded; no duplicate tests",
+            "trialWorkId": "work:eva-resume:c5cfd3f2-3180-5918-9955-7cabd4f151b2"
           }
         },
         {

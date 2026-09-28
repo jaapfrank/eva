@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — T1: chatgrens blokkeert langere taakreactie.** Exacte achtergrondregistratie alsnog gelezen: mislukte reactie 1.634 outputtokens, boven chatgrens 1.200; totale taak gebruikte 2.741 van beschikbare 38.400. Met echte modeladapter offline dezelfde foutfingerprint gereproduceerd, zonder modelcall. Eén uitvoerder bepaalt kleinste correctie zodat achtergrondwerk het resterende taakbudget gebruikt; chatlimiet, totaalgrant, gegevens en controles blijven behouden. Dit bewijst een noodzakelijke blokkade, niet de inhoud van de oorspronkelijke reactie. [Bewijs](evidence/product/task-output-budget-diagnosis-20260928.json).
+**Nu — T1: volledige opdracht hervatten.** Bron `bb6d4115` geïnstalleerd op gezonde kern en werker;150offline controles, onafhankelijke review, exacte bron en ongewijzigde taakconfiguratie gecontroleerd. Langere werkreacties gebruiken bestaand taakbudget; gewone antwoorden behouden hun grens. Eén vervolguitvoering vanwege deze aangetoonde correctie; volledige leerfunctie nog open. [Installatie en terugweg](evidence/product/task-output-budget-installed-20260928.json).
 
 **Leidend — het complete bouwplan uitvoeren.** Acht vaste productstappen en 24 begrensde opdrachten; geen zakelijke uitwerking of nieuwe algemene audit. Gegevens en acceptaties behouden. Technische afronding, installatie, vergelijkingsbewijs en jouw oordeel blijven apart. De recente [eigenaarbesluiten](PROJECTDOEL.md) gaan voor oudere bouwvolgordes.
 
@@ -10,10 +10,10 @@
 
 | Onderwerp | Huidige stand |
 |---|---|
-| Lopend werk | T1: aantoonbare uitvoerblokkade van de bestaande taakroute corrigeren; één uitvoerder, coördinator bewaakt integratie. |
-| Laatste geïnstalleerde wijziging | Modeldeadline wordt correct als timeout gemeld; geen nieuwe complete functie. [Installatiebewijs](evidence/product/model-deadline-status-20260928.json). |
+| Lopend werk | T1: aantoonbare uitvoerblokkade van de bestaande taakroute corrigeren; uitvoerder en reviewer klaar, coördinator volgt één volledige uitvoering. |
+| Laatste geïnstalleerde wijziging | Langere werkreacties gebruiken bestaand taakbudget; geen nieuwe complete functie. [Installatiebewijs](evidence/product/task-output-budget-installed-20260928.json). |
 | Nog te leveren | De vastgelegde documentatieopdracht daadwerkelijk uitvoeren, werkwijze bewaren en gecontroleerd resultaat teruggeven. |
-| Eerstvolgende actie | Gerichte correctie beoordelen en installeren; pas daarna één vervolguitvoering vanwege de gewijzigde oorzaak. |
+| Eerstvolgende actie | Eén vervolguitvoering controleren op bewaarde werkwijze en volledig resultaat. |
 | Voor Jaap | Nu geen nieuwe proef nodig. Dezelfde twee afgebakende functies blijven afgerond; overige productcriteria blijven open. |
 | Overzicht alle onderdelen | Alle 24 opdrachten hebben bestaand vermogen, resterend tekort/bewijs en vervolgstap in [de bestaande uitvoerlijst](design/product/execution-workboard-v1.json). |
 

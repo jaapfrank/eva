@@ -1,0 +1,48 @@
+{
+  "sourceCommit": "bb6d4115721d27f259fbafeb0683914d68c2fbae",
+  "status": "installed",
+  "change": "Background model responses use remaining admitted task output; ordinary conversation limit and total task grant unchanged.",
+  "tests": {
+    "passed": 150,
+    "seconds": 11.57,
+    "network": "none",
+    "reportedBy": "implementation worker"
+  },
+  "independentReview": "GO by platform_research_20260927, source-only",
+  "limitations": [
+    "Partial/unknown prior usage blocks new admission conservatively.",
+    "Remaining allowance applies to all background responses, including final text.",
+    "UsageLimits is usage enforcement, not a new provider-side hard token stop.",
+    "Complete learning task not yet proven."
+  ],
+  "installation": {
+    "checkedAt": "2026-09-28T09:48:56.685448+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:c1a3da228ea4445aaa6f14a279373fea15f33fbf4f81d1a4edcb19fcc6420159",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/background_execution.py": "729e2db01e76751c81980b4b0a595050245058dc9e1f4a9738c4fb6db20de422",
+          "bootstrap/delegated_digital_runner.py": "eb457e36afde8052c0d60258a5c63a3bf37eb0fa2ab123ae759d05c64e8c7a38",
+          "adapters/model/pydantic_conversation.py": "d7b388fbe537bba965bed893e6aada55b9691aeace7dc7522092510e6cf05cf8"
+        }
+      },
+      "worker": {
+        "image": "sha256:b8d29fd3bbdeeca5319bf2fdb5a457743a42c563902592c94d61d0f9c2bcfbec",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/background_execution.py": "729e2db01e76751c81980b4b0a595050245058dc9e1f4a9738c4fb6db20de422",
+          "bootstrap/delegated_digital_runner.py": "eb457e36afde8052c0d60258a5c63a3bf37eb0fa2ab123ae759d05c64e8c7a38",
+          "adapters/model/pydantic_conversation.py": "d7b388fbe537bba965bed893e6aada55b9691aeace7dc7522092510e6cf05cf8"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/task-output-budget-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "runtimeModelCallsForChecks": 0,
+  "creditCosts": "unknown"
+}
