@@ -1,5 +1,7 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Nu — gerichte HA-inventaris, basis1ebfe9c1:** coördinator wijzigt uitsluitend bestaande algemene inventarisselectie en gerichte tests. Filter op domein vóór paginering; oude opgeslagen opdrachten blijven geldig. Aanleiding: echte cameravraag52,56s/161.398in door vier ontdekstappen. Eén controle na installatie; geen nieuwe cameraregex of router.
+
 **Opgeleverd — lokale camera-analyse op aanvraag:** bron7dbc8202 geïnstalleerd op gezonde kern/werker; optionele GPU-service actief. Gewone websitevraag vindt garagecamera en levert echte beschrijving.16 controles, bronreview en onafhankelijke live-receiptcontrole akkoord. Totaal52,56s,6modelcalls/5tools,161.398in/550uit; credits onbekend. Lokale scèneproef1,357s is geen totale antwoordtijd. Volgende: gerichte algemene HA-inventarisselectie tegen waargenomen pagineeromweg, nog niet gestart. Geen volledige I2-/autonomieclaim. [Bewijs](evidence/product/local-vision-installed-20260928.json).
 
 **Nu — I2 bruikbare camera-analyse, basis92859eae:** bestaande adapter en GPU-kandidaat behouden; één echte scène controleren en bij voldoende resultaat optioneel aansluiten op gewone HA-cameravraag. Geen automatische camera-observaties of nieuwe agenda-/initiatiefbouw. C1 blijft open: bestaande modelmeting alleen al3,33s; geen identieke begroetingsproef. T4 overige signalen uitgesteld ten gunste van productfunctie. Eindpunt: lokale interpretatie via bestaande tool, installatie en terugweg; maximaal één eerste scèneproef, cloudverbruik nul voor beeldanalyse.

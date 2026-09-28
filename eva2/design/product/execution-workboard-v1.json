@@ -2715,15 +2715,15 @@
           }
         ],
         "now": {
-          "title": "I2 · Camera op aanvraag bekijken",
-          "state": "Geïnstalleerd · snelheid nog onvoldoende",
-          "detail": "Gewone websitevraag vindt garagecamera en geeft echte lokale beeldbeschrijving. Volledig antwoord52,56s; inventariszoeken veroorzaakt veel modelinvoer. Geen autonome beeldwaarneming of volledige I2-afronding.",
-          "doneWhen": "Beeldfunctie aangesloten en onafhankelijk bevestigd; resterende concrete verbetering is gerichte algemene HA-inventarisselectie."
+          "title": "HA-apparaten gericht vinden",
+          "state": "In uitvoering",
+          "detail": "Bestaande inventaris krijgt een algemeen filter op apparaatsoort. Aanleiding: vier ontdekstappen en161.398invoertokens vóór camerabeschrijving. Oude opgeslagen verzoeken blijven geldig.",
+          "doneWhen": "Filter vóór paginering, passende regressiecontrole, onafhankelijke review, installatie en één gewone cameravraag met gemeten gebruik."
         },
         "next": {
-          "title": "HA-apparaten gericht vinden",
+          "title": "I2 · Camera en agenda combineren",
           "state": "Nog niet gestart",
-          "detail": "Voorkom brede inventarispagina’s bij één apparaatsoort via bestaande algemene HA-tool. Zelfde bevoegdheden en opgeslagen verzoeken behouden; geen cameraregex of aparte uitvoerroute."
+          "detail": "Bestaande initiatiefroute gebruiken; camera voor vuilnisbakken nog niet door eigenaar aangewezen."
         },
         "ownerAction": {
           "title": "Camera bekijken via Eva",
@@ -2736,7 +2736,7 @@
           "expected": "Eva zoekt zelf de camera en beschrijft een echt opgehaald beeld. Objectherkenning kan fouten bevatten; nog geen betrouwbare automatische visuele beslissing."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T18:12:51.525785+00:00"
+        "reviewedAt": "2026-09-28T18:15:14.302656+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13183,18 +13183,12 @@
           },
           "owner": "/root",
           "assignment": {
-            "stage": "installed_camera_question_independently_verified",
-            "baseCommit": "92859eae",
-            "scope": "Existing local vision HTTP adapter, optional service configuration and HA camera GET; no new initiative or calendar code.",
-            "endCondition": "One real camera scene checked against its image, existing HA tool returns grounded local interpretation, installed optional endpoint with rollback. No broad vision/autonomy claim.",
-            "effort": "One bounded real-scene probe, then integrate only on adequate result; no cloud model calls for the probe.",
-            "fileOwnership": [
-              "eva2/src/eva/adapters/connectors/local_vision.py",
-              "eva2/deploy/local-vision/",
-              "eva2/evidence/product/local-vision-installed-20260928.json",
-              "eva2/WERKBORD.md",
-              "eva2/design/product/execution-workboard-v1.json"
-            ]
+            "stage": "domain_selection",
+            "baseCommit": "1ebfe9c1",
+            "owner": "/root",
+            "scope": "home_assistant_admin.py; focused connector tests; existing workboard/evidence",
+            "endCondition": "Generic domain selection retains legacy requests and room/pagination behavior; installed and measured on one ordinary camera request",
+            "effort": "One bounded filter change and focused checks; at most one new end-to-end model request after installation; credits unknown"
           },
           "evidence": "eva2/evidence/product/local-vision-installed-20260928.json",
           "remaining": "On-demand local camera interpretation now installed; observed HA inventory discovery latency remains excessive. Camera/calendar correlation and autonomous usefulness still open."
