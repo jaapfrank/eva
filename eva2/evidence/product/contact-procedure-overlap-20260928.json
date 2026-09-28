@@ -1,0 +1,54 @@
+{
+  "checkedAt": "2026-09-28T10:39:42.583864+00:00",
+  "status": "passed_owner_http_overlap",
+  "sourceCommit": "b92a20f7",
+  "workId": "work:eva-chat:3869b194-df79-5ce8-89bc-985322a50789",
+  "taskMessageId": "dashboard:cb89918d-ed38-40b5-a12c-43a7fda4de1e",
+  "receiptHeaderSeconds": 0.034860816958826035,
+  "receiptHeaderText": "Een momentje.",
+  "taskAcceptanceSeconds": 15.164598912990186,
+  "socialFirstTextSeconds": 2.6321431630058214,
+  "socialFinalSeconds": 3.1881212640437298,
+  "socialAnswer": "Goed, dank je! En met jou?",
+  "taskStateAfterSocial": "call_started",
+  "taskFinalState": "succeeded",
+  "taskResultMatchesExpectedAndSavedFile": true,
+  "originalQuestionBindingVerified": true,
+  "savedFileSha256": "8f6b4b63daa1a46f5411b5e2db3f7d5da39c07a35db9e613bce43dd51102872b",
+  "usage": {
+    "taskForeground": {
+      "responses": 1,
+      "inputTokens": 14022,
+      "outputTokens": 204,
+      "measurement": [
+        "measured"
+      ]
+    },
+    "social": {
+      "responses": 1,
+      "inputTokens": 12144,
+      "outputTokens": 13,
+      "measurement": [
+        "measured"
+      ]
+    },
+    "worker": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 4,
+      "tool_calls": 5,
+      "input_tokens": 42174,
+      "output_tokens": 1219,
+      "total_tokens": 43393,
+      "cost_usd_micros": null
+    }
+  },
+  "creditCosts": "unknown",
+  "limits": [
+    "Owner website HTTP route, not browser interaction or physical audio.",
+    "Receipt header does not prove audible acknowledgement.",
+    "Telegram, Home Assistant and physical Voice PE overlap not proven by this case.",
+    "One bounded overlap task; no overall C1 completion or owner acceptance."
+  ]
+}

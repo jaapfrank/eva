@@ -1000,6 +1000,22 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Doorpraten terwijl procedurewerk wordt afgemaakt",
+            "date": "28 september",
+            "state": "tested",
+            "result": "Echte eigenaar-HTTPproef: ontvangstheader0,035s; passende tussenvraag afgerond3,188s terwijl taak nog liep. Taak daarna geslaagd, juiste vraagkoppeling en opgeslagen resultaat gecontroleerd.",
+            "remaining": "Taakaanname15,165s. Header is geen hoorbare bevestiging. Browserinteractie, Telegram en fysieke spraak blijven afzonderlijk te beoordelen.",
+            "source": "eva2/evidence/product/contact-procedure-overlap-20260928.json"
+          },
+          {
+            "title": "Procedurewerk via bestaande achtergrondroute",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Gespreksmodel kan lezen/opzoeken en duurzaam werk aannemen. Nieuwe procedure-uitvoering volgt de beschikbare achtergrondwerker; fallback en hervatten blijven behouden.",
+            "remaining": "Echte ontvangst/overlap wordt éénmaal gecontroleerd; overige kanalen en eigenaaracceptatie blijven apart.",
+            "source": "eva2/evidence/product/contact-procedure-admission-installed-20260928.json"
+          },
+          {
             "title": "Geleerde werkwijze zelfstandig hergebruikt",
             "date": "28 september",
             "state": "tested",
@@ -2460,27 +2476,28 @@
         ],
         "now": {
           "title": "C1 · Gesprek beschikbaar houden tijdens werk",
-          "state": "C1 · bestaand achtergrondpad consequent gebruiken",
-          "detail": "Actuele eigenaarroute en digitale worker beschikbaar bevestigd. Kern biedt daarnaast procedure-uitvoering binnen de gesprekbeurt aan. Eén gedeelde cataloguscorrectie houdt lookup in gesprek en laat uitvoering via bestaande taakroute lopen; fallback/replay blijven behouden.",
+          "state": "C1 · HTTP-overlap afgerond",
+          "detail": "Correctie geïnstalleerd en één echte taak+tussenvraag geslaagd. Geen proef meer actief. Coördinator verwerkt kanaalgrenzen; geen herbouw of nieuwe modelproef.",
           "doneWhen": "Compleet taakpad past; bestaande opgeslagen taken blijven hervatbaar. Daarna gerichte review, installatie en werkelijk resultaat."
         },
         "next": {
-          "title": "C1 · Snelle ontvangst en doorpraten",
-          "state": "Gericht bestaand gedrag aansluiten",
-          "detail": "Alleen ontbrekend bewijs of aantoonbaar routeverschil aanpakken. Lange tijd tot een volledig taakresultaat is op zichzelf geen gesprekdefect."
+          "title": "C1 · Resterende echte ingangen",
+          "state": "Nog te controleren",
+          "detail": "Bestaande Telegram-/websitekoppeling behouden; eerst bepalen welk actuele kanaalbewijs ontbreekt. HTTP-overlap bewijst geen fysieke spraak. Geen herhaling van dezelfde taak."
         },
         "ownerAction": {
-          "title": "Nu geen proef nodig",
-          "url": "https://github.com/jaapfrank/eva/blob/main/eva2/EVA2_BOUWPLAN.md",
-          "linkLabel": "Bekijk het vaste uitvoerplan",
+          "title": "Optioneel: doorpraten via de tekstpagina",
+          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
+          "linkLabel": "Open het tekstgesprek",
           "steps": [
-            "Volg Nu, Laatst opgeleverd en Eerstvolgende in dit projectoverzicht.",
-            "Zodra een gebruikersproef nodig is, staan hier de juiste link, handelingen en het verwachte resultaat."
+            "Geef Eva een opdracht die onderzoek of uitvoering vraagt.",
+            "Stel na haar aanname een korte tussenvraag, bijvoorbeeld Hoe gaat het met jou?",
+            "De tussenvraag moet een eigen passend antwoord krijgen terwijl de taak doorloopt."
           ],
-          "expected": "Gebouwd, getest, geïnstalleerd en door jou geaccepteerd blijven apart. Alleen werkelijk bruikbare functies tellen als opgeleverd."
+          "expected": "Op de HTTP-tekstroute technisch gecontroleerd. Jouw ervaring is een apart oordeel; dit is geen verplichte herhaling van eerder geaccepteerde proeven en geen Voice PE-proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T10:26:53.844426+00:00"
+        "reviewedAt": "2026-09-28T10:39:42.583864+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12413,21 +12430,29 @@
             "evidence": "eva2/evidence/product/c1-contact-20260928.json",
             "remaining": "Latency and actual Telegram/web acceptance remain open; no repeated unchanged model benchmark."
           },
-          "activeWorker": "/root/baseline_research_20260927",
+          "activeWorker": null,
           "contactDuringReuseAssignment": {
-            "stage": "bounded_implementation",
+            "stage": "installed_http_overlap_pass",
             "outcome": "Locate existing admission/contact routing responsible for55.742s first text during procedure task; propose smallest general change only if needed.",
             "scope": "Existing source and exact reuse receipts; no edits or model calls yet.",
             "endCondition": "With contact model and actually offered start_digital_work, no new foreground run_reusable_procedure at initial/continuation selection; preserve lookup, worker/fallback and replay.",
             "effort": "one bounded source analysis; credits unknown",
-            "evidence": "eva2/evidence/product/contact-reuse-routing-20260928.json",
+            "evidence": "eva2/evidence/product/contact-procedure-overlap-20260928.json",
             "measurementLimit": "Owner API task-answer timing only; no acknowledgement or overlap observation. Do not infer defect from completed-task latency alone.",
             "baseCommit": "58b95f92",
             "fileOwnership": [
               "eva2/src/eva/application/conversation.py",
               "focused conversation catalog and replay tests"
-            ]
-          }
+            ],
+            "worktree": "/home/administrator/project/eva2-contact-procedure-routing-20260928",
+            "branch": "codex/contact-procedure-routing-20260928",
+            "reviewer": "/root/platform_research_20260927",
+            "tests": "46 passed in3.46s in existing runtime image, network disabled",
+            "sourceCommit": "b92a20f7",
+            "workerCommit": "b4b88c6446f2979c11e748e0b8606c6c35e892a6",
+            "review": "GO; independent source and test diff review"
+          },
+          "remaining": "Actual Telegram and browser interaction proof, naturalness/latency and owner acceptance remain open; physical voice belongs to its channel slices."
         },
         {
           "id": "C2",

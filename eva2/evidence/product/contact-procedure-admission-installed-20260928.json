@@ -1,0 +1,45 @@
+{
+  "sourceCommit": "b92a20f7e0edb7b22f8350fa0e6841880fe287b6",
+  "status": "installed",
+  "productionFiles": [
+    "application/conversation.py"
+  ],
+  "change": "When contact and digital admission are available, procedure execution is offered through durable background work; lookup, fallback and replay remain.",
+  "tests": {
+    "passed": 46,
+    "seconds": 3.46,
+    "network": "none",
+    "reportedBy": "implementation worker"
+  },
+  "independentReview": "GO by platform_research_20260927; source and final test diff",
+  "installation": {
+    "checkedAt": "2026-09-28T10:35:51.818043+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:d39296b60fab112f48f37f7e9167458d2c727f29037bf8bc79c1ca9b42a4e52c",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "31528f9502cb41f1b5ee6503dd75174a4a6babf163d490f825d6670a1dec2949"
+        }
+      },
+      "worker": {
+        "image": "sha256:d493eb41d26421bf7800b1712aa8395ea8e203949e5569205889b96ce9fe606c",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "31528f9502cb41f1b5ee6503dd75174a4a6babf163d490f825d6670a1dec2949"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/contact-procedure-admission-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "limitations": [
+    "Live acknowledgement and overlap not established by controlled tests.",
+    "Physical voice and Telegram need their own channel evidence."
+  ],
+  "runtimeModelCallsForChecks": 0,
+  "creditCosts": "unknown"
+}

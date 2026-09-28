@@ -1,19 +1,19 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — C1: bestaand achtergrondpad consequent gebruiken.** Actuele digitale worker én eigenaarstoegang read-only bevestigd. De gezamenlijke kern biedt procedure-uitvoering ook in de gewone gesprekbeurt aan; één cataloguscorrectie houdt herkennen/lezen in gesprek en stuurt uitvoering naar de bestaande taakroute wanneer die beschikbaar is. Fallback, replay en eerdere optimalisaties blijven behouden. Geen nieuwe modelproef. [Bron- en configuratiebewijs](evidence/product/contact-reuse-routing-20260928.json).
+**Nu — C1: HTTP-overlap afgerond.** Correctie geïnstalleerd. Echte taak+tussenvraag: ontvangstheader0,035s, taakaanname15,165s, passende tussenvraag3,188s terwijl taak nog liep. Taak daarna geslaagd; opgeslagen resultaat en oorspronkelijke vraagkoppeling gecontroleerd. Geen proef of uitvoerder meer actief. Resterende echte kanaalproeven en eigenaaracceptatie apart; header bewijst geen hoorbare ontvangst. [Werkelijke uitkomst](evidence/product/contact-procedure-overlap-20260928.json).
 
 **Leidend — het complete bouwplan uitvoeren.** Acht vaste productstappen en 24 begrensde opdrachten; geen zakelijke uitwerking of nieuwe algemene audit. Gegevens en acceptaties behouden. Technische afronding, installatie, vergelijkingsbewijs en jouw oordeel blijven apart. De recente [eigenaarbesluiten](PROJECTDOEL.md) gaan voor oudere bouwvolgordes.
 
-**Eerstvolgende stap:** de bestaande ontvangst en achtergronduitvoering op de gemeten hergebruikroute beoordelen en alleen een aangetoonde ontbrekende koppeling herstellen. C1 blijft open voor inhoudssnelheid/echte Telegramproef; het bestaande overlap-/taakgedrag maakt deze onafhankelijke T1-correctie al uitvoerbaar. De criteria van C1/C2 worden hiermee niet afgevinkt.
+**Eerstvolgende stap:** ontbrekend actueel bewijs voor Telegram en browserinteractie bepalen; bestaande routes behouden en dezelfde taakproef niet herhalen. C1 blijft open voor inhoudssnelheid/echte Telegramproef; het bestaande overlap-/taakgedrag maakt deze onafhankelijke T1-correctie al uitvoerbaar. De criteria van C1/C2 worden hiermee niet afgevinkt.
 
 ## Actuele opleverstatus — 28 september 2026
 
 | Onderwerp | Huidige stand |
 |---|---|
-| Lopend werk | C1: één uitvoerder onderzoekt de bestaande route achter de gemeten55,742s tot eerste tekst. |
+| Lopend werk | C1: HTTP-overlap afgerond; geen proef of uitvoerder meer actief. Resterende kanaalbewijzen staan apart. |
 | Laatste bruikbare resultaat | Geleerde werkwijze zelfstandig op nieuwe invoer toegepast, resultaat opgeslagen en onafhankelijk gecontroleerd. [Bewijs](evidence/product/calendar-unassisted-reuse-20260928.json). |
-| Nog te leveren | Snelle ontvangst en beschikbaar gesprek op deze uitvoerroute; brede leerfunctie blijft apart. |
-| Eerstvolgende actie | Bestaande routering verklaren en kleinste voldoende koppeling vastleggen. |
+| Nog te leveren | Actuele echte-kanaalbeoordeling en gebruikersbeleving; brede leerfunctie blijft apart. |
+| Eerstvolgende actie | Alleen ontbrekende actuele kanaalbewijzen aanvullen; bestaande geaccepteerde proeven behouden. |
 | Voor Jaap | Nu geen nieuwe proef nodig. Dezelfde twee afgebakende functies blijven afgerond; overige productcriteria blijven open. |
 | Overzicht alle onderdelen | Alle 24 opdrachten hebben bestaand vermogen, resterend tekort/bewijs en vervolgstap in [de bestaande uitvoerlijst](design/product/execution-workboard-v1.json). |
 
