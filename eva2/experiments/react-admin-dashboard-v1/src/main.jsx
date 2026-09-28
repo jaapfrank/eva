@@ -12,6 +12,7 @@ import './style.css';
 import OwnerInitiatives from './owner-initiatives.jsx';
 import OwnerBrowser from './owner-browser.jsx';
 import OwnerWork from './owner-work.jsx';
+import OwnerHealth from './owner-health.jsx';
 import ProjectDashboard, { ProjectLayout, projectProvider } from './project-dashboard.jsx';
 
 const STATUS = '/internal/v1/dashboard/status';
@@ -353,16 +354,17 @@ function Dashboard() {
     return <main className="owner-dashboard"><p>Eva ophalen…</p></main>;
   }
   if (status.error || identity.error || work.error) {
-    return <main className="owner-dashboard"><h1>Eva</h1><p role="alert">De actuele beheerstatus is niet beschikbaar.</p></main>;
+    return <main className="owner-dashboard"><h1>Eva</h1><p role="alert">Het volledige overzicht is niet beschikbaar.</p><OwnerHealth /></main>;
   }
   const cards = work.data || [];
   return <main className="owner-dashboard">
     <header>
       <div><p className="eyebrow">Eigenaarsoverzicht</p><h1>{identity.data.identity.display_name}</h1></div>
       <span className={status.data.runtime.ready ? 'ready' : 'attention'}>
-        {status.data.runtime.ready ? 'Gereed' : 'Aandacht nodig'}
+        {status.data.runtime.ready ? 'Kern bereikbaar' : 'Kern vraagt aandacht'}
       </span>
     </header>
+    <OwnerHealth />
     <OwnerWork />
     <OwnerInitiatives />
     <OwnerBrowser />

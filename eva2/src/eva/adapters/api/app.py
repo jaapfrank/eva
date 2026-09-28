@@ -643,6 +643,10 @@ def create_app(
     app = FastAPI(title="Eva Living Core", version="0.1.0", lifespan=lifespan)
     install_native_voice(app, native_voice)
     dashboard_access = DashboardAccess(dashboard_access_token)
+    from eva.adapters.api.dashboard_health import install_dashboard_health
+    install_dashboard_health(app, access=dashboard_access, runtime=runtime,
+                             web_voice_configured=dashboard_voice is not None,
+                             native_voice_configured=native_voice is not None)
     install_browser_session_routes(app, access=dashboard_access, session=browser_session)
     install_dashboard_initiatives(app, access=dashboard_access, runtime=runtime)
     install_dashboard_work(app, access=dashboard_access, runtime=runtime)
