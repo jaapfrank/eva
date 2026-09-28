@@ -1,5 +1,7 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**C1 cataloguskandidaat6dd7a7c9:**64gereedschappen identiek in17groepen; catalogustekst lokaal1.184→397tokens en werkuitleg583→299.185 gerichte controles slagen, kandidaatbuild en onafhankelijke review lopen. Nog niet geïnstalleerd, geen snelheidsclaim. Daarna maximaal twee echte proeven: begroeting en bestaande bijdrage ophalen.
+
 **Nu — C1 gegroepeerde cataloguspresentatie, basis84fe836b:** coördinator vervangt kandidaatgewijs één namespace per functie door kleine semantische groepen in bestaande provideradapter. Alle functies/schema’s/subsets en oude receipt-replay moeten gelijk blijven; onbekende functies houden eigen namespace. Eerst offline grootte/replay, dan onafhankelijke review; maximaal twee modelproeven alleen bij materiële winst. Geen nieuwe router of geheugensysteem.
 
 **C1 invoercontrole afgerond zonder nieuwe release:** routeringsuitleg583teksttokens; compacte kandidaat299, slechts284minder. Geen volledige opname van historische providerinvoer; geen claim over facturatie/snelheidswinst. Geen modelcalls of runtimewijziging. Kandidaat buiten productbron bewaard voor bundeling, geen losse installatiecyclus. Volgende: bestaande deferred toolcatalogus gericht beoordelen op grotere winst; nog niet gestart. [Bewijs](evidence/product/contact-guidance-size-20260928.json).

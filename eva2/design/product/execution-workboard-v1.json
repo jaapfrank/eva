@@ -2676,8 +2676,8 @@
         ],
         "now": {
           "title": "C1 · Compacte groepen in bestaande toolcatalogus",
-          "state": "Gerichte kandidaat bouwen · coördinator",
-          "detail": "Bestaande adapter maakt één namespace per functie (64 in geregistreerde catalogus). Officiële documentatie adviseert kleine semantische groepen. Kandidaat behoudt alle functies/schema’s, toegestane subsets en replay; onbekende tools houden bestaande individuele presentatie.",
+          "state": "185 controles geslaagd · review en kandidaatbuild",
+          "detail": "64gereedschappen identiek behouden in17groepen. Lokaal zichtbare catalogustekst1.184→397tokens; werkuitleg583→299.185 gerichte controles slagen. Coördinator bouwt kandidaat; platform_research_20260927 doet onafhankelijke review. Nog geen live snelheidswinst bewezen.",
           "doneWhen": "Minder aanvankelijk zichtbare catalogustekst, identieke functies en correcte oude receipt-replay; gerichte controles, onafhankelijke review en pas bij materiële winst maximaal twee echte modelproeven."
         },
         "next": {
@@ -2697,7 +2697,7 @@
           "expected": "Eigenaar bevestigt: nieuwste bijdrage met /eva2 correct opgehaald. Wachttijd blijft onvoldoende; Hallo11s. Antwoord van Eva1 zonderprefix was de andere route, geen mislukte Eva2-resultaatophaling."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T17:09:44.201611+00:00"
+        "reviewedAt": "2026-09-28T17:16:08.813643+00:00"
       }
     },
     "pendingTechnicalReview": {

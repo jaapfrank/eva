@@ -55,7 +55,7 @@ NOW = "2026-08-31T12:00:00Z"
 
 def _phase_transport_adapter(
     tmp_path, monkeypatch, parts, *, fail=False, reuse_message_id=False,
-    before_response=None, timeout_seconds=60.0, namespaced_search=False,
+    before_response=None, timeout_seconds=60.0, namespaced_search=False, namespace=None,
 ):
     """Exercise the installed SDK and Pydantic parser; no external network."""
     requests = []
@@ -81,7 +81,7 @@ def _phase_transport_adapter(
         ])
         if namespaced_search:
             output[1]["tools"] = [{
-                "type": "namespace", "name": TOOL.name,
+                "type": "namespace", "name": namespace or TOOL.name,
                 "description": TOOL.name.replace("_", " "),
                 "tools": output[1]["tools"],
             }]
@@ -96,6 +96,8 @@ def _phase_transport_adapter(
                 "call_id": "comfort-call-1", "name": TOOL.name,
                 "arguments": json.dumps(CALL.arguments),
             }
+            if namespace is not None:
+                item["namespace"] = namespace
             events.append({"type": "response.output_item.added", "output_index": index,
                            "item": item})
             output.append(item)
@@ -1528,3 +1530,21 @@ def test_namespaced_receipt_replay_preserves_original_call_and_result(tmp_path, 
     assert json.loads(calls[0]["arguments"]) == CALL.arguments
     outputs = [item for item in requests[0]["input"] if item["type"] == "function_call_output"]
     assert outputs[0]["call_id"] == calls[0]["call_id"]
+
+
+def test_grouped_namespace_search_keeps_original_authorized_function(tmp_path, monkeypatch):
+    import sys
+    from dataclasses import replace
+    module = sys.modules[__name__]
+    descriptor = replace(TOOL, name="get_own_initiative_result")
+    call = replace(CALL, name=descriptor.name)
+    monkeypatch.setattr(module, "TOOL", descriptor)
+    monkeypatch.setattr(module, "CALL", call)
+    model, _, requests, _ = _phase_transport_adapter(
+        tmp_path, monkeypatch, [("tool", ())], namespaced_search=True, namespace="eva_initiatives")
+    result = _generate(model, available_actions=(descriptor.name,))
+    assert result.action_call == call
+    groups = [item for item in requests[0]["tools"] if item["type"] == "namespace"]
+    group = next(item for item in groups if item["name"] == "eva_initiatives")
+    assert [item["name"] for item in group["tools"]] == [descriptor.name]
+    assert group["tools"][0]["parameters"] == descriptor.input_schema
