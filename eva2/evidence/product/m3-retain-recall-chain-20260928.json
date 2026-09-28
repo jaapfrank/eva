@@ -1,0 +1,143 @@
+{
+  "checkedAt": "2026-09-28T12:56:05.019915+00:00",
+  "status": "existing_installed_chain_pass_reviewed",
+  "criteria": {
+    "outcome": "Real retention/extraction/recall feeds temporary exception and durable preference into common model route across new sessions",
+    "scope": "Isolated synthetic bank/person, no owner memory or Telegram/speaker output",
+    "sourceBasis": "b5cd0abe3cea9e4fb6d309367a91eb9601991460",
+    "maximumCalls": {
+      "retainDocuments": 1,
+      "recalls": 2,
+      "contactGenerations": 2
+    },
+    "criteria": [
+      "Sept28 tea; exception not permanent",
+      "Sept29 coffee; elapsed exception remains historical"
+    ],
+    "stop": "Stop at first extraction/recall error or missing facts; no unmodified repeat",
+    "cost": "One short document plus two short contact calls expected; extraction internals and credits unknown; record measured contact usage"
+  },
+  "observations": [
+    {
+      "stage": "retained",
+      "seconds": 9.365544927015435,
+      "receipt": {
+        "bank_id": "eva2-m3-probe-4fe2e056417d1e319e1a1a9ac2d0298a",
+        "document_id": "synthetic-m3-retain-20260928:doc",
+        "content_sha256": "efc06b5129aeb2cd54d279d1c91fce36ec35c471a8cfda517a397236d5123146",
+        "disposition": "retained"
+      }
+    },
+    {
+      "stage": "recall",
+      "day": "28",
+      "seconds": 2.541560882003978,
+      "facts": [
+        {
+          "fact_id": "hindsight:b49b0137-204b-4eaf-ac18-fe87886014ff",
+          "subject": "synthetic-m3-retain-20260928",
+          "predicate": "memory.world",
+          "value": {
+            "context": "Eva conversation and experience memory",
+            "memory_type": "world",
+            "semantic_trust": "direct_user",
+            "source_observed_at": "2026-09-28T08:00:00Z",
+            "text": "Op 28 september 2026 wil de gebruiker thee drinken in plaats van koffie; op 29 september 2026 geldt de gewone voorkeur voor koffie weer. | When: 28 september 2026, met een uitzondering die eindigt op 28 september 2026; de gewone voorkeur geldt weer op 29 september 2026. | Involving: user | Tijdelijke uitzondering op de gewone koffievoorkeur."
+          },
+          "source_ref": "synthetic-m3-retain-20260928:source",
+          "evidence_ref": "synthetic-m3-retain-20260928:evidence",
+          "observed_at": "2026-09-28T08:00:00Z",
+          "trust": "direct_user"
+        }
+      ]
+    },
+    {
+      "stage": "answer",
+      "day": "28",
+      "seconds": 3.9891277519636787,
+      "result": {
+        "text": "Thee—vandaag geldt je tijdelijke voorkeur daarvoor.",
+        "provider": "chatgpt-codex:gpt-6-luna",
+        "action_call": null,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 1920,
+          "output_tokens": 15
+        },
+        "timing": {
+          "first_content_ms": 2679,
+          "completed_ms": 3651
+        }
+      }
+    },
+    {
+      "stage": "recall",
+      "day": "29",
+      "seconds": 2.7458963689859957,
+      "facts": [
+        {
+          "fact_id": "hindsight:b49b0137-204b-4eaf-ac18-fe87886014ff",
+          "subject": "synthetic-m3-retain-20260928",
+          "predicate": "memory.world",
+          "value": {
+            "context": "Eva conversation and experience memory",
+            "memory_type": "world",
+            "semantic_trust": "direct_user",
+            "source_observed_at": "2026-09-28T08:00:00Z",
+            "text": "Op 28 september 2026 wil de gebruiker thee drinken in plaats van koffie; op 29 september 2026 geldt de gewone voorkeur voor koffie weer. | When: 28 september 2026, met een uitzondering die eindigt op 28 september 2026; de gewone voorkeur geldt weer op 29 september 2026. | Involving: user | Tijdelijke uitzondering op de gewone koffievoorkeur."
+          },
+          "source_ref": "synthetic-m3-retain-20260928:source",
+          "evidence_ref": "synthetic-m3-retain-20260928:evidence",
+          "observed_at": "2026-09-28T08:00:00Z",
+          "trust": "direct_user"
+        }
+      ]
+    },
+    {
+      "stage": "answer",
+      "day": "29",
+      "seconds": 3.541418235981837,
+      "result": {
+        "text": "Koffie. Je voorkeur voor thee gold alleen op 28 september; vandaag is je gewone voorkeur weer van kracht.",
+        "provider": "chatgpt-codex:gpt-6-luna",
+        "action_call": null,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 1920,
+          "output_tokens": 28
+        },
+        "timing": {
+          "first_content_ms": 2821,
+          "completed_ms": 3534
+        }
+      }
+    }
+  ],
+  "assessment": {
+    "activeException": "PASS tea on Sept28",
+    "expiredException": "PASS coffee on Sept29",
+    "sourceScope": "Temporary exception extracted with source date and preserved ordinary preference; new engine per recall",
+    "newImplementationRequired": false
+  },
+  "usage": {
+    "contactModelCalls": 2,
+    "contactInputTokens": 3840,
+    "contactOutputTokens": 43,
+    "memoryExtractionUsage": "not exposed by adapter receipt; total runtime usage unknown",
+    "credits": null
+  },
+  "limits": [
+    "Synthetic isolated person and bank; no owner conversation modified",
+    "Source supplied directly to installed memory adapter; ingress extraction queue not exercised",
+    "Different session IDs and requested dates, not actual elapsed day or service restart",
+    "No complete personality, cross-channel user experience or family acceptance claim"
+  ],
+  "review": {
+    "reviewer": "/root/platform_research_20260927",
+    "result": "GO for real retention/extraction/recall plus contact response; synthetic direct-adapter/date limitations retained"
+  }
+}

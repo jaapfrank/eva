@@ -1,0 +1,16 @@
+{
+  "outcome": "Real retention/extraction/recall feeds temporary exception and durable preference into common model route across new sessions",
+  "scope": "Isolated synthetic bank/person, no owner memory or Telegram/speaker output",
+  "sourceBasis": "b5cd0abe3cea9e4fb6d309367a91eb9601991460",
+  "maximumCalls": {
+    "retainDocuments": 1,
+    "recalls": 2,
+    "contactGenerations": 2
+  },
+  "criteria": [
+    "Sept28 tea; exception not permanent",
+    "Sept29 coffee; elapsed exception remains historical"
+  ],
+  "stop": "Stop at first extraction/recall error or missing facts; no unmodified repeat",
+  "cost": "One short document plus two short contact calls expected; extraction internals and credits unknown; record measured contact usage"
+}

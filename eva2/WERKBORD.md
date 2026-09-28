@@ -1,5 +1,7 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Nu — M3 echte geheugenketen:** één uitspraak opgeslagen/geëxtraheerd; nieuwe sessies kozen correct thee op uitzonderingsdag en koffie erna. Bestaande geïnstalleerde route, geen nieuwe productcode. Testpersoon apart; geen eigenaargeheugen gelezen of gewijzigd. Twee contactcalls3.840input/43output; extractieverbruik onbekend. Onafhankelijke review akkoord; algemene persoonlijkheidsontwikkeling blijft open. [Resultaat](evidence/product/m3-retain-recall-chain-20260928.json).
+
 **Laatste uitvoerproef — I2 visionbackends:** Windows WebGPU gaf hetzelfde juiste antwoord in13,0s modeltijd tegenover eerdere WSL CPU25,1s. Eén synthetisch geval; Windows fysieke adapter nog niet vastgesteld. WSL WebGPU zag alleen software-renderer en is gestopt. Onafhankelijke review akkoord. Geen live visionfunctie. Camerakeuze blijft gevraagd voor echte scèneproef; onafhankelijk M3-vervolg kan verder. [Bewijs](evidence/product/local-vision-backends-20260928.json).
 
 **Eerdere I2-uitvoerproef:** SmolVLM2 heeft één synthetisch beeld correct beschreven: drie blokken, rood/groen/blauw. Modelberekening op CPU25,1s, laden17,5s apart; geen bewijs voor snelle of betrouwbare echte camerawaarneming. FastVLM-gewichten afgevallen door productontwikkelingsbeperking in de licentie. Geen cloudmodelcalls of live installatie. Onafhankelijke review akkoord; volgende GPU/echte-beeldvergelijking, geen identieke herhaling. [Resultaat](evidence/product/local-vision-smoke-20260928.json).

@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Tijdelijke voorkeur via echte geheugenopslag teruggehaald",
+            "date": "28 september",
+            "state": "tested",
+            "result": "Bestaande installatie: opslaan, extractie, terughalen in nieuwe sessies en passende antwoorden slagen voor daggebonden uitzondering. Onafhankelijk beoordeeld.",
+            "remaining": "Synthetische bron en gesimuleerde datums; geen kanaal-/gezinsacceptatie of algemene M3-afronding.",
+            "source": "eva2/evidence/product/m3-retain-recall-chain-20260928.json"
+          },
+          {
             "title": "GLaDOS beoordeeld op hergebruik",
             "date": "28 september",
             "state": "investigated",
@@ -2523,15 +2531,15 @@
           }
         ],
         "now": {
-          "title": "I2 · Lokale visionbackends vergeleken",
-          "state": "Geïsoleerde vergelijking afgerond; review akkoord",
-          "detail": "Windows WebGPU13,0s modeltijd, eerdere WSL CPU25,1s. Eén synthetisch beeld, identiek correct antwoord. WSL WebGPU gestopt wegens alleen softwarerenderer. Geen productinstallatie.",
-          "doneWhen": "Beperkte uitkomst vastleggen; fysieke Windows GPU en echte camerakwaliteit blijven open."
+          "title": "M3 · Tijdelijke voorkeur door echte geheugenketen",
+          "state": "Ketenproef afgerond; review akkoord",
+          "detail": "Eén testuitspraak werkelijk opgeslagen en geëxtraheerd. Nieuwe gesprekken: thee op uitzonderingsdag, koffie erna. Bestaande installatie; geen herbouw.",
+          "doneWhen": "Beperkte ketenuitkomst beoordeeld; algemene persoonlijkheidsontwikkeling en gezinsgebruik blijven apart."
         },
         "next": {
-          "title": "M3 · Persoonlijke ontwikkeling in samenhang",
+          "title": "M3 · Ontwikkeling van eigen interesses en feedback",
           "state": "Nog niet gestart",
-          "detail": "Vervolg bestaande M3-eindvoorwaarden met bestaand bewijs. Vision: echte scèneproef na camerakeuze; geen herhaalde synthetische blokjesproef."
+          "detail": "Bestaande persoonlijke interesse, brongebonden advies en feedbackroute samen afronden. Datumgeval niet opnieuw uitvoeren; vision wacht alleen voor echte beelden op camerakeuze."
         },
         "ownerAction": {
           "title": "Later hetzelfde onderwerp voortzetten",
@@ -2545,7 +2553,7 @@
           "expected": "Eva haalt relevante eerdere context terug. Geaccepteerd onthouden, corrigeren en vergeten hoef je niet opnieuw te testen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T12:52:11.201509+00:00"
+        "reviewedAt": "2026-09-28T12:56:05.019915+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12721,16 +12729,18 @@
           "owner": "/root",
           "baseCommit": "db340ac1",
           "assignment": {
-            "stage": "undated_quote_context_fix",
-            "scope": "adapters/model/pydantic_conversation.py and existing source-date regression",
-            "baseCommit": "ad144667",
-            "outcome": "Undated historical relative-time statement is not presented as a current-day preference.",
-            "endCondition": "Regression and one previously failed real-model case pass, independent review, installation/source verification.",
-            "effort": "One prompt-rendering change and one model call; tokens measured, credits unknown",
-            "status": "completed_installed"
+            "owner": "/root",
+            "stage": "isolated_retention_recall_chain",
+            "baseCommit": "b5cd0abe",
+            "scope": "Existing installed Hindsight and common model; synthetic test bank only",
+            "outcome": "Retained temporary exception used within date, standing preference after expiry",
+            "endCondition": "One retain plus two recall/answer cases assessed; preserve failed case without rerun",
+            "effort": "One short extraction and at most two contact generations; measured usage where available, credits unknown",
+            "status": "completed_reviewed"
           },
           "evidence": "eva2/evidence/product/undated-memory-context-20260928.json",
-          "remaining": "End-to-end memory continuity, developing interests/opinions and family judgment remain open; bounded undated-time failure corrected and installed."
+          "remaining": "Personality/interest development from attributable repeated experience and feedback; family evaluation. Temporal preference chain now passed in isolated direct-adapter case.",
+          "temporalChainEvidence": "eva2/evidence/product/m3-retain-recall-chain-20260928.json"
         },
         {
           "id": "T1",
