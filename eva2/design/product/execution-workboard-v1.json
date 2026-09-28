@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Afzonderlijke onderdeelstatus op eigenaarpagina",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Gekleurde statuskaarten met meettijd en handmatig verversen. Geen algemene groenclaim voor onbeproefde kanalen. Geïnstalleerd, onafhankelijk beoordeeld en visueel gecontroleerd.",
+            "remaining": "Telegram, fysieke spraak en werker nog niet gemeten in dit overzicht. Historische bronhashcontrole blijft afwijkend; volledige T4 en eigenaaracceptatie open.",
+            "source": "eva2/evidence/product/owner-component-status-20260928.json"
+          },
+          {
             "title": "Bestaande taakbediening in eigenaarpagina gecontroleerd",
             "date": "28 september",
             "state": "tested",
@@ -2692,28 +2700,27 @@
         ],
         "now": {
           "title": "T4 · Taken bedienen en resultaten terugvinden",
-          "state": "Bestaande bediening bevestigd · ontbrekende status bepaald",
-          "detail": "Echte eigenaarpagina: taakresultaat, gemeten verbruik en zoeken gecontroleerd; bestaande bediening blijft behouden. Onafhankelijke review bevestigt ontbrekende kanaal-/modulestatus. Geen modelcalls of taakmutaties; volledige T4 blijft open.",
-          "doneWhen": "Bestaand werk zichtbaar met juiste status, resultaat en passende bediening; ontbrekende koppelingen gericht afmaken, onafhankelijk controleren en installeren."
+          "state": "Statusweergave geïnstalleerd en live gecontroleerd",
+          "detail": "Opslag/geheugen en ontvangen websiteaanvraag afzonderlijk zichtbaar met meettijd. Niet gemeten kanalen blijven grijs. Verversen en donker contrast gecontroleerd op echte pagina. Bron0faffac8, contrast0f16076a; kern/werker gezond. Geen volledige T4-afronding.",
+          "doneWhen": "Beschermde statusroute en eigenaarpagina tonen afzonderlijke metingen/tijd en onbekende kanalen; gericht getest, onafhankelijk beoordeeld, geïnstalleerd en live zichtbaar."
         },
         "next": {
-          "title": "T4 · Kanaal- en modulestatus aansluiten",
-          "state": "Nog niet gebouwd",
-          "detail": "Bestaande beschermde statusroute uitbreiden met afzonderlijke waarneming/tijd: database, geheugen, modeltoegang, werker en kanalen. Onbekend blijft onbekend; geen groen op basis van alleen configuratie. Daarna ontbrekende bedieningsproef."
+          "title": "T4 · Ontbrekende bediening en waarnemingen afronden",
+          "state": "Nog niet gestart",
+          "detail": "Bestaande stop/bijstuur/hervatroute via begrensde geïsoleerde UI-proef afronden en bestaande kanaal-/werkerwaarnemingen aansluiten waar beschikbaar. Geen nieuwe taakopslag of modelproeven voor status."
         },
         "ownerAction": {
-          "title": "Toolgebruik na cataloguswijziging proberen",
-          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
-          "linkLabel": "Privégesprek met Eva",
+          "title": "Statusweergave bekijken",
+          "url": "http://localhost:44711/internal/v1/dashboard",
+          "linkLabel": "Open Eva-beheer",
           "steps": [
-            "Zeg Hallo en let op de tijd tot het eerste inhoudelijke antwoord.",
-            "Vraag: Lees je nieuwste opgeslagen eigen bijdrage en vat die kort samen. Start niets nieuws.",
-            "Controleer of Eva het bestaande resultaat terughaalt en passend antwoordt. Deze proef mag later."
+            "Open de eigenaarpagina en bekijk Verbindingen en onderdelen.",
+            "Klik Controleer opnieuw voor een nieuwe meting."
           ],
-          "expected": "Eigenaar bevestigt: nieuwste bijdrage met /eva2 correct opgehaald. Wachttijd blijft onvoldoende; Hallo11s. Antwoord van Eva1 zonderprefix was de andere route, geen mislukte Eva2-resultaatophaling."
+          "expected": "Opslag/geheugen krijgen een gemeten uitslag. Onbeproefde onderdelen blijven Niet gemeten; dat betekent niet dat ze defect zijn."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T17:29:19.843820+00:00"
+        "reviewedAt": "2026-09-28T17:43:17.246114+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13098,8 +13105,8 @@
             ]
           },
           "lastAttempt": {
-            "state": "existing_ui_verified_health_gap_confirmed",
-            "evidence": "eva2/evidence/product/task-controls-live-20260928.json"
+            "state": "component_observations_installed",
+            "evidence": "eva2/evidence/product/owner-component-status-20260928.json"
           },
           "remaining": "Separate dated channel/module health observations plus missing UI correction/resume acceptance; existing task controls/results/usage retained."
         },

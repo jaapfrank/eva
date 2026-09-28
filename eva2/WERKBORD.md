@@ -1,5 +1,9 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Opgeleverd — onderdeelstatus op eigenaarpagina:** bron0faffac8 en contrast0f16076a geïnstalleerd op gezonde kern/werker. Afzonderlijke opslag-/geheugenmeting, websiteaanvraag, meettijd en verversen live gecontroleerd; onbeproefde kanalen eerlijk onbekend. Gerichte controles en onafhankelijke review akkoord; historische bronhashmanifesttest blijft afwijkend. Geen modelcalls. Volgende: resterende T4-bedieningsproef en beschikbare kanaal-/werkerwaarnemingen, nog niet gestart. Geen volledige T4-claim. [Bewijs](evidence/product/owner-component-status-20260928.json).
+
+**Nu — T4 status aansluiten, basisab58f96f:** coördinator bezit adapters/api/dashboard_health.py, app.py-wiring, frontend OwnerHealth en gerichte tests/assets. Bestaande gezondheidschecks hergebruiken; onbekende externe kanalen eerlijk tonen. Raming20–30min, geen modelcalls; review/installatie/livepagina horen bij afronding.
+
 **T4 inspectie afgerond:** bestaande eigenaarpagina toont echt resultaat/verbruik en vindt oudere opdrachten; onafhankelijk bevestigd dat kanaal-/modulestatus nog ontbreekt. Bestaande taakbediening behouden. Volgende, nog niet gebouwd: beschermde statusprojectie en UI aansluiten met afzonderlijke waarnemingen/tijd en expliciet onbekend; daarna ontbrekende bijstuur-/hervatbediening beproeven. Geen modelcalls. [Bewijs](evidence/product/task-controls-live-20260928.json).
 
 **Nu — T4 taakbediening, basis6b5aa125:** coördinator controleert bestaande eigenaarpagina/taakprojecties en maakt alleen aangetoonde ontbrekende bediening af. C2 afgerond; geen nieuw dashboard of modelproeven. Eerste inspectie15min. C1 blijft open: bestaande begroetingslog718ms geheugen en3330ms tot modeltekst; extra cache maakt dat niet instant. [Diagnose](evidence/product/contact-latency-boundary-20260928.json).

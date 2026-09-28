@@ -1,0 +1,170 @@
+{
+  "checkedAt": "2026-09-28T17:43:17.246114+00:00",
+  "sourceCommit": "0faffac8",
+  "status": "installed_live_verified",
+  "scope": "Existing owner page gains protected read-only component observations. No new task scheduler or second dashboard.",
+  "checks": {
+    "initialStatusSuite": "24 passed;1 pre-existing historical evidence hash mismatch",
+    "focusedComponentsAndAssets": "10 passed",
+    "frontendBuild": "passed",
+    "sealedAssets": "passed",
+    "independentReview": "GO, platform_research_20260927"
+  },
+  "knownLimitation": "Historical evidence index no longer matches unchanged HEAD source hashes; not repaired or hidden in this delivery.",
+  "semantics": [
+    "Database and memory use existing runtime.health checks.",
+    "Model ready does not prove a credential check; unknown unless the core reports an explicit problem.",
+    "Website row proves this status request only.",
+    "Telegram, Home Assistant, physical Voice PE and worker lack live observations here and remain unknown.",
+    "No configured route is labeled healthy solely from configuration.",
+    "Raw exceptions are never returned; unauthorized requests remain denied."
+  ],
+  "ownerAccepted": false,
+  "artifactsDirectory": "/home/administrator/project/.eva2-artifacts/owner-component-status-20260928",
+  "usage": {
+    "evaModelCalls": 0,
+    "creditCost": null
+  },
+  "assetContrastCommit": "0f16076a",
+  "installation": {
+    "checkedAt": "2026-09-28T17:37:50.333697+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:6a5c25a3f6ebf01338b4bd150afb14701cce5799e9c805219681bc9e2debb49e",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/api/app.py": "e906a1308bf43233c5a8fbecbea0cba74f7af12caf4f2a9194fc10cdb634c241",
+          "adapters/api/dashboard_health.py": "8e05fcf0855e638dd11e550374c9351f9d403f486d4df62ee29ab9780807325f",
+          "adapters/api/dashboard_static/eva-dashboard-assets.json": "ea095fd321758a4616abe00504df3777631e17e58b597a1cac80df678e573ace",
+          "adapters/api/dashboard_static/index.html": "d05240272e40899c8819a64d229202f565a9126cdf1c20c74a51e9e688ea8841",
+          "adapters/api/dashboard_static/assets/index-tAuP6j_c.js": "1fe92129ec1080e71f5440e68cb392a40c634dc36097e7d041c70abaab8467ea",
+          "adapters/api/dashboard_static/assets/index-DQjzKK6d.css": "5fae6e64430fd4c516b9d67695eaefb882453134095d41808b1c8a65ac883c4c"
+        }
+      },
+      "worker": {
+        "image": "sha256:d63f39f11cac4958125072ef9106510e1c4eca74bef7f83f17e0ebe80b233d86",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/api/app.py": "e906a1308bf43233c5a8fbecbea0cba74f7af12caf4f2a9194fc10cdb634c241",
+          "adapters/api/dashboard_health.py": "8e05fcf0855e638dd11e550374c9351f9d403f486d4df62ee29ab9780807325f",
+          "adapters/api/dashboard_static/eva-dashboard-assets.json": "ea095fd321758a4616abe00504df3777631e17e58b597a1cac80df678e573ace",
+          "adapters/api/dashboard_static/index.html": "d05240272e40899c8819a64d229202f565a9126cdf1c20c74a51e9e688ea8841",
+          "adapters/api/dashboard_static/assets/index-tAuP6j_c.js": "1fe92129ec1080e71f5440e68cb392a40c634dc36097e7d041c70abaab8467ea",
+          "adapters/api/dashboard_static/assets/index-DQjzKK6d.css": "5fae6e64430fd4c516b9d67695eaefb882453134095d41808b1c8a65ac883c4c"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/owner-component-status-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "liveComponents": {
+    "contract": "EvaComponentObservations/v1",
+    "read_only": true,
+    "checked_at": "2026-09-28T17:38:04.210218+00:00",
+    "components": [
+      {
+        "id": "database",
+        "label": "Taak- en gegevensopslag",
+        "state": "ready",
+        "observed_at": "2026-09-28T17:38:04.210218+00:00",
+        "detail": "Verbindingscontrole met de database; geen controle van alle opgeslagen gegevens."
+      },
+      {
+        "id": "memory",
+        "label": "Geheugendienst",
+        "state": "ready",
+        "observed_at": "2026-09-28T17:38:04.210218+00:00",
+        "detail": "Bereikbaarheid van de geheugendienst; geen beoordeling van herinneringen."
+      },
+      {
+        "id": "model_credentials",
+        "label": "Modeltoegang",
+        "state": "unknown",
+        "observed_at": null,
+        "detail": "De kern meldt een toegangsprobleem als zij dit vaststelt. Zonder probleemmelding blijft daadwerkelijke modelbereikbaarheid onbekend; er is geen modelvraag gestuurd."
+      },
+      {
+        "id": "website",
+        "label": "Eigenaarwebsite",
+        "state": "ready",
+        "observed_at": "2026-09-28T17:38:04.210218+00:00",
+        "detail": "Deze beveiligde statusaanvraag is ontvangen en beantwoord."
+      },
+      {
+        "id": "worker",
+        "label": "Achtergrondwerker",
+        "state": "unknown",
+        "observed_at": null,
+        "detail": "Geen actuele werkerhartslag aangesloten op dit overzicht. Taakstatus staat bij Mijn opdrachten."
+      },
+      {
+        "id": "telegram",
+        "label": "Telegram",
+        "state": "unknown",
+        "observed_at": null,
+        "detail": "Geen actuele ontvangst- of aflevercontrole in dit overzicht. Een ingestelde koppeling bewijst geen bereikbaarheid."
+      },
+      {
+        "id": "home_assistant",
+        "label": "Home Assistant",
+        "state": "unknown",
+        "observed_at": null,
+        "detail": "Geen actuele API-controle in dit overzicht. Huisbediening is hiermee niet getest."
+      },
+      {
+        "id": "web_voice",
+        "label": "Spraak op de website",
+        "state": "unknown",
+        "observed_at": null,
+        "detail": "Spraakroute ingesteld; microfoon, transcriptie en geluid niet beproefd."
+      },
+      {
+        "id": "voice_pe",
+        "label": "Voice PE-speakers",
+        "state": "unknown",
+        "observed_at": null,
+        "detail": "Native spraakroute ingesteld; beide fysieke speakers en hun wakeword zijn niet gecontroleerd."
+      }
+    ]
+  },
+  "browserChecks": [
+    "Nine component cards visible on ordinary owner page.",
+    "Refresh moved snapshot from19:37:55 to19:38:15; unknown rows retain no measurement timestamp.",
+    "Final reload19:42:36 shows dark readable headings/status/time on white cards in dark page theme."
+  ],
+  "visualCorrection": "Dark mode contrast corrected, independently reviewed and confirmed by actual browser screenshot after final installation.",
+  "remaining": "No complete T4 claim: external channel/worker measurements and missing correction/resume browser evidence remain open.",
+  "contrastInstallation": {
+    "checkedAt": "2026-09-28T17:42:27.628497+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:eb46f69584cc05aed087a39c0c644698e8fc56ab3f5dc0c30bbab101fb0c3d9a",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/api/dashboard_static/eva-dashboard-assets.json": "2cbd2328add8993462b28b2c770131dc7c418127c026c448db8820aaeaaffe08",
+          "adapters/api/dashboard_static/index.html": "4b4cf4671e66a8dc3e3871ad60779a28ad0112646a58fa8e6a763af63146fd3f",
+          "adapters/api/dashboard_static/assets/index-CSF_X1Gm.js": "1fe92129ec1080e71f5440e68cb392a40c634dc36097e7d041c70abaab8467ea",
+          "adapters/api/dashboard_static/assets/index-BqTPqto5.css": "44189c0d43e62b09fdb304cbed04af46fbcc86948635d99e2287a9fb1d9937f4"
+        }
+      },
+      "worker": {
+        "image": "sha256:01d0a0ee7e78750c6cbb14b6e7048650b826d3e2e9fe3caee6b14bebdabff642",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/api/dashboard_static/eva-dashboard-assets.json": "2cbd2328add8993462b28b2c770131dc7c418127c026c448db8820aaeaaffe08",
+          "adapters/api/dashboard_static/index.html": "4b4cf4671e66a8dc3e3871ad60779a28ad0112646a58fa8e6a763af63146fd3f",
+          "adapters/api/dashboard_static/assets/index-CSF_X1Gm.js": "1fe92129ec1080e71f5440e68cb392a40c634dc36097e7d041c70abaab8467ea",
+          "adapters/api/dashboard_static/assets/index-BqTPqto5.css": "44189c0d43e62b09fdb304cbed04af46fbcc86948635d99e2287a9fb1d9937f4"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/owner-component-contrast-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  }
+}
