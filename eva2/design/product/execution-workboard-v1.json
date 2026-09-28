@@ -2780,14 +2780,14 @@
         ],
         "now": {
           "title": "L2: één project volledig afmaken",
-          "state": "Aansluiting voorbereid; proefbevestiging staat open",
-          "detail": "Geen andere bouwopdracht actief. Laatste zijstap afgerond: HA-/Telegram API-status geïnstalleerd, beide diensten gezond. Nog geen compleet meerdaags project opgeleverd.",
+          "state": "Geblokkeerd — bevestiging na uitvoerafwijzing ontbreekt",
+          "detail": "Geen actieve Eva-modeltaak of ingeplande open vervolgstap. L2-kandidaat getest (32) en onafhankelijk beoordeeld, niet geïnstalleerd. Eerdere automatische afwijzing van proefvoorbereiding is niet opgelost; bevestigingsvraag blijft open. Geen nieuwe zijtaak of ongewijzigde proef.",
           "doneWhen": "Concept en projectstaat opgeslagen, één echte afhankelijke vervolgafspraak, correctie en hervatting gebruiken bewaarde inhoud, eindresultaat geleverd zonder dubbele acties."
         },
         "next": {
           "title": "Dezelfde L2-opdracht afmaken",
-          "state": "Geen nieuwe zijtaak",
-          "detail": "Bestaande cataloguskandidaat hergebruiken. Blokkade gericht oplossen; niet overspringen naar dashboard, onderhoud of een ander onderdeel."
+          "state": "Wacht op antwoord",
+          "detail": "Na afhandeling van de uitvoerafwijzing uitsluitend de voorbereide L2-aansluiting installeren en de oorspronkelijke projectuitkomst vervolgen. Geen nieuwe audit of zijtaak."
         },
         "ownerAction": {
           "title": "Camera voor vuilnisbakken kiezen",
@@ -2800,7 +2800,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T21:31:21.703765+00:00"
+        "reviewedAt": "2026-09-28T21:33:06.037051+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13577,7 +13577,20 @@
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
       "changeRule": "Every slice requires existing capability, dated evidence, concrete gap and smallest sufficient action. Missing acceptance is not missing code. Replacement requires supported benefit over retain/fix; no automatic Hermes or Pydantic rewrite.",
-      "ownerPriorityCompletion20260928": "Eigenaar verlangt afronding van een volledig groot onderdeel. Eén actieve productoplevering: initiatief en huisaanwezigheid. Losse aansluitingen blijven tussenresultaten; andere open onderdelen worden niet als actief draaiend gepresenteerd."
+      "ownerPriorityCompletion20260928": "Eigenaar verlangt afronding van een volledig groot onderdeel. Eén actieve productoplevering: initiatief en huisaanwezigheid. Losse aansluitingen blijven tussenresultaten; andere open onderdelen worden niet als actief draaiend gepresenteerd.",
+      "executionBlocker": {
+        "checkedAt": "2026-09-28T21:33:06.037051+00:00",
+        "kind": "execution_review_rejection_confirmation_pending",
+        "originalAction": "Prepare one existing-filesystem connection probe",
+        "reasonProvided": "blocked by policy; no specific reason supplied",
+        "candidate": "eva2/evidence/product/additional-catalog-candidate-20260928.json",
+        "originalWorkId": "work:eva-chat:84393977-9c68-5d4e-97cb-f2979280e1ac",
+        "originalWorkState": "failed",
+        "activeEvaModelTasks": 0,
+        "openScheduledContinuations": 0,
+        "confirmationRequested": true,
+        "fullGoalComplete": false
+      }
     },
     "dashboardClarityCorrection20260922": {
       "ownerFeedback": "Bewezen basis zegt niet of Eva2 als vaste huisgenoot bruikbaar is; toon concrete opgeleverde resultaten en open werk.",

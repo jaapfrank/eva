@@ -2,6 +2,8 @@
 
 ## Actief — uitsluitend L2: één project volledig afmaken
 
+**Geblokkeerd:** automatische uitvoercontrole wees de proefvoorbereiding af zonder specifieke reden. Expliciete bevestiging gevraagd en nog niet ontvangen. Dezelfde blokkade bestaat meerdere beurten; geen actieve modeltaak of open geplande vervolgstap. Geteste L2-kandidaat blijft behouden, niet geïnstalleerd. Geen nieuw onderzoek, zijtaak of ongewijzigde proef terwijl deze bevestiging ontbreekt. Het volledige projectdoel blijft onafgerond.
+
 **Uitvoering gecorrigeerd na eigenaarmelding over versnippering:** geen andere bouwopdracht starten. Eerst concept/projectstaat, één echte afhankelijke vervolgafspraak, correctie/hervatting en bewaard eindresultaat afronden. Technische afronding en eigenaaracceptatie blijven apart. Bij blokkade geen zijtaak als vervanging van deze uitkomst.
 
 **Laatste zijstap afgesloten:** HA-/Telegram API-status geïnstalleerd; kern/werker gezond en echte status gelezen. Geen compleet T4- of projectresultaat. [Bewijs](evidence/product/channel-connectivity-installed-20260928.json). Geen modeltaak actief.
