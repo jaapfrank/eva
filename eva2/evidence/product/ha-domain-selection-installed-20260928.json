@@ -1,0 +1,111 @@
+{
+  "checkedAt": "2026-09-28T18:24:57.848884+00:00",
+  "sourceCommit": "2e318c91",
+  "status": "installed_domain_filter_used_by_ordinary_conversation",
+  "gap": "A camera request required4discovery steps and161398input tokens; existing inventory lacked a domain selector.",
+  "change": "Optional domain filter on existing general HA inventory, combined with area selection before pagination. No new camera command, model route or permissions. Legacy5-field persisted requests remain accepted.",
+  "tests": {
+    "passed": 71,
+    "artifact": "/home/administrator/project/.eva2-artifacts/ha-domain-selection-20260928/tests.txt",
+    "scope": "Domain paging/room/empty/invalid filters, legacy durable replay and existing HA adapter/room-light/vision tests"
+  },
+  "review": {
+    "source": "GO platform_research_20260927",
+    "liveReceipt": "GO platform_research_20260927: actual returned10camera rows/domain=camera/no next page; selected entity matches garden camera; next GET HTTP200 with hash-bound local interpretation. Accounting independently summed."
+  },
+  "installation": {
+    "checkedAt": "2026-09-28T18:20:48.511247+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:14f3778601c546b7e4629d16df45f250340c34b6d18fbe07387fd5aa71425890",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/connectors/home_assistant_admin.py": "14735d3a9d76c28fb1cbef3902d853adf1b8d6f96a8496b01705283922ee847e"
+        }
+      },
+      "worker": {
+        "image": "sha256:2733c56459a81f7d53c21cbea0b36fce307ccf69f4abc1013561fc2a34ea8ea0",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/connectors/home_assistant_admin.py": "14735d3a9d76c28fb1cbef3902d853adf1b8d6f96a8496b01705283922ee847e"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/ha-domain-selection-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "controlledSelection": {
+    "unfilteredFirstPage": {
+      "total": 2479,
+      "rows": 50,
+      "hasMore": true,
+      "jsonBytes": 14325
+    },
+    "cameraSelection": {
+      "total": 10,
+      "rows": 10,
+      "hasMore": false,
+      "jsonBytes": 3286
+    },
+    "cameraNames": [
+      "G4 Doorbell Pro PoE High resolution channel",
+      "G4 Doorbell Pro PoE Low resolution channel",
+      "Medium resolution channel",
+      "G4 Doorbell Pro PoE Package Camera",
+      "G5 garage deur High resolution channel",
+      "G5 tuin High resolution channel",
+      "G5 garage deur Low resolution channel",
+      "Medium resolution channel",
+      "Map data",
+      "Erik Map data"
+    ],
+    "scope": "Same live inventory snapshot; JSON size not billed tokens; full HA reads unchanged."
+  },
+  "ordinaryRequest": {
+    "question": "Wat zie je op de camera in de tuin? Kijk naar het beeld van nu.",
+    "firstTextSeconds": 23.045,
+    "completedSeconds": 26.508,
+    "usage": {
+      "tool_calls": 2,
+      "measurement": "measured",
+      "input_tokens": 18331,
+      "output_tokens": 263,
+      "model_attempts": 3
+    },
+    "modelTiming": {
+      "completed_ms": 21382,
+      "first_content_ms": 18033
+    },
+    "actions": [
+      {
+        "name": "read_home_assistant_inventory",
+        "section": "entities",
+        "domain": "camera"
+      },
+      {
+        "name": "home_assistant_request",
+        "operation": "Selected garden camera GET"
+      }
+    ],
+    "privateAnswerAndReceipts": "Retained only in private local artifacts, not committed"
+  },
+  "previousObservation": {
+    "evidence": "eva2/evidence/product/local-vision-installed-20260928.json",
+    "completedSeconds": 52.56,
+    "modelAttempts": 6,
+    "toolCalls": 5,
+    "inputTokens": 161398,
+    "outputTokens": 550
+  },
+  "limits": [
+    "Different camera and conversation context: not a controlled latency benchmark or universal improvement claim.",
+    "26.508s remains too slow for natural conversation.",
+    "Underlying HA inventory network reads unchanged; filter reduces model-visible selection and in this case discovery steps.",
+    "No new broad image recognition, autonomous initiative or owner acceptance claim.",
+    "Known ordinary request accounting excludes local vision, background memory and development; credit costs unknown."
+  ],
+  "next": "Continue I2 camera/calendar initiative through existing composition. Owner asked which camera sees bins; dependent scene selection waits, independent tasks remain available."
+}

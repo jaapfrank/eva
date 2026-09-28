@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Apparaten gericht zoeken op soort",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Algemeen domeinfilter behoudt bestaande HA-bediening en oude opdrachten. Echte cameravraag: één inventarisopvraag en één beeldopvraag.",
+            "remaining": "26,5s nog te langzaam. Tijdsvergelijking beperkt door andere camera/context; volledige initiatief-/camerafunctie blijft open.",
+            "source": "eva2/evidence/product/ha-domain-selection-installed-20260928.json"
+          },
+          {
             "title": "Eva kan nu echte camerabeelden lokaal beschrijven",
             "date": "28 september",
             "state": "installed",
@@ -2715,10 +2723,10 @@
           }
         ],
         "now": {
-          "title": "HA-apparaten gericht vinden",
-          "state": "In uitvoering",
-          "detail": "Bestaande inventaris krijgt een algemeen filter op apparaatsoort. Aanleiding: vier ontdekstappen en161.398invoertokens vóór camerabeschrijving. Oude opgeslagen verzoeken blijven geldig.",
-          "doneWhen": "Filter vóór paginering, passende regressiecontrole, onafhankelijke review, installatie en één gewone cameravraag met gemeten gebruik."
+          "title": "Camera’s gericht vinden",
+          "state": "Geïnstalleerd · echte vraag geslaagd",
+          "detail": "Eva gebruikt domain=camera en daarna direct het gekozen beeld. Deze proef: 3 modelaanvragen, 2 tools, 18.331 invoertokens, 26,508 s. Nog te traag; andere camera/context dan de eerdere 52,56 s.",
+          "doneWhen": "Bouw, 71 gerichte controles, installatie en onafhankelijke bron- en live-receiptcontrole afgerond. Eigenaaracceptatie blijft apart."
         },
         "next": {
           "title": "I2 · Camera en agenda combineren",
@@ -2726,17 +2734,17 @@
           "detail": "Bestaande initiatiefroute gebruiken; camera voor vuilnisbakken nog niet door eigenaar aangewezen."
         },
         "ownerAction": {
-          "title": "Camera bekijken via Eva",
+          "title": "Camera voor vuilnisbakken kiezen",
           "url": "http://localhost:44711/internal/v1/dashboard/conversation",
           "linkLabel": "Open gesprek met Eva",
           "steps": [
-            "Vraag: Wat zie je op de camera bij de garagedeur?",
-            "Vergelijk haar beschrijving met het beeld; de volledige wachttijd is nog niet verbeterd."
+            "Geef in deze taak aan welke camera de vuilnisbakken ziet: garage, tuin of deurbel.",
+            "Optioneel: vraag Eva wat zij op een van de camera’s ziet."
           ],
-          "expected": "Eva zoekt zelf de camera en beschrijft een echt opgehaald beeld. Objectherkenning kan fouten bevatten; nog geen betrouwbare automatische visuele beslissing."
+          "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T18:15:14.302656+00:00"
+        "reviewedAt": "2026-09-28T18:24:57.848884+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12556,7 +12564,7 @@
           ]
         }
       ],
-      "nextAction": "Voorkom brede inventarispagina’s bij één apparaatsoort via bestaande algemene HA-tool. Zelfde bevoegdheden en opgeslagen verzoeken behouden; geen cameraregex of aparte uitvoerroute.",
+      "nextAction": "Continue existing camera/calendar initiative composition; camera selection asked, only dependent scene trial waits.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13183,7 +13191,7 @@
           },
           "owner": "/root",
           "assignment": {
-            "stage": "domain_selection",
+            "stage": "domain_filter_installed_independently_verified",
             "baseCommit": "1ebfe9c1",
             "owner": "/root",
             "scope": "home_assistant_admin.py; focused connector tests; existing workboard/evidence",
@@ -13191,7 +13199,8 @@
             "effort": "One bounded filter change and focused checks; at most one new end-to-end model request after installation; credits unknown"
           },
           "evidence": "eva2/evidence/product/local-vision-installed-20260928.json",
-          "remaining": "On-demand local camera interpretation now installed; observed HA inventory discovery latency remains excessive. Camera/calendar correlation and autonomous usefulness still open."
+          "remaining": "On-demand vision and targeted discovery installed;26.5s full answer still slow. Camera choice for bins asked; camera/calendar correlation and autonomous usefulness remain open.",
+          "discoveryEvidence": "eva2/evidence/product/ha-domain-selection-installed-20260928.json"
         },
         {
           "id": "L1",
