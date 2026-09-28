@@ -2779,15 +2779,15 @@
           }
         ],
         "now": {
-          "title": "L2: meerdaags project hervatten",
-          "state": "Bestaande catalogus uitbreidbaar; kandidaat getest, niet geïnstalleerd",
-          "detail": "32 gerichte tests en onafhankelijke review akkoord. Echte bestaande v3-specificaties blijven identiek naast v4-mapfunctie; geen registratie of bestandsactie gedaan. Wacht op expliciete bevestiging na automatische uitvoerblokkade; geen modeltaak actief.",
-          "doneWhen": "One ordinary project preserves goal, dependencies, artifacts and next action overnight; later correction and continuation use saved state without duplicate effects."
+          "title": "L2: één project volledig afmaken",
+          "state": "Aansluiting voorbereid; proefbevestiging staat open",
+          "detail": "Geen andere bouwopdracht actief. Laatste zijstap afgerond: HA-/Telegram API-status geïnstalleerd, beide diensten gezond. Nog geen compleet meerdaags project opgeleverd.",
+          "doneWhen": "Concept en projectstaat opgeslagen, één echte afhankelijke vervolgafspraak, correctie en hervatting gebruiken bewaarde inhoud, eindresultaat geleverd zonder dubbele acties."
         },
         "next": {
-          "title": "Kandidaat installeren en bestaande mapfunctie controleren",
-          "state": "Wacht op afhandeling uitvoerblokkade",
-          "detail": "Gebruik bestaande gateway; geen dubbele dienstregistratie. Daarna echte projectvoortzetting en opgeslagen vervolgafspraak controleren. Geen volledige L2-claim."
+          "title": "Dezelfde L2-opdracht afmaken",
+          "state": "Geen nieuwe zijtaak",
+          "detail": "Bestaande cataloguskandidaat hergebruiken. Blokkade gericht oplossen; niet overspringen naar dashboard, onderhoud of een ander onderdeel."
         },
         "ownerAction": {
           "title": "Camera voor vuilnisbakken kiezen",
@@ -2800,7 +2800,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T21:20:10.870370+00:00"
+        "reviewedAt": "2026-09-28T21:31:21.703765+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12620,7 +12620,7 @@
           ]
         }
       ],
-      "nextAction": "L2: bestaande filesystemregistratie hergebruiken; geen dubbele registratieproef. Geïnstalleerde vervolgplanning behouden; echte projectuitvoering nog open.",
+      "nextAction": "Alleen L2: één project bewaren, vervolg plannen, na onderbreking afmaken en origineel behouden. Geen ander onderdeel starten voordat deze uitkomst af is of de eigenaar expliciet herprioriteert.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -12687,7 +12687,8 @@
           },
           "completedAt": "2026-09-28T08:25:14.659707+00:00",
           "result": "Retain existing execution for C1;24 slices mapped to existing capability/gap/action. This closes corrected planning decision, not Hermes compatibility or product functionality.",
-          "evidence": "eva2/evidence/product/b0-platform-20260928.json"
+          "evidence": "eva2/evidence/product/b0-platform-20260928.json",
+          "activeWorker": null
         },
         {
           "id": "C1",
@@ -12952,7 +12953,8 @@
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
-          }
+          },
+          "activeWorker": null
         },
         {
           "id": "M3",
@@ -12993,7 +12995,8 @@
           "automaticFeedbackEvidence": "eva2/evidence/product/m3-automatic-feedback-20260928.json",
           "groundedStyleEvidence": "eva2/evidence/product/grounded-style-mirror-20260928.json",
           "ownInitiativeReturnEvidence": "eva2/evidence/product/own-initiative-return-20260928.json",
-          "feedbackChoiceEvidence": "eva2/evidence/product/initiative-feedback-choice-20260928.json"
+          "feedbackChoiceEvidence": "eva2/evidence/product/initiative-feedback-choice-20260928.json",
+          "activeWorker": null
         },
         {
           "id": "T1",
@@ -13131,7 +13134,8 @@
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
-          }
+          },
+          "activeWorker": null
         },
         {
           "id": "T3",
@@ -13154,7 +13158,8 @@
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
-          }
+          },
+          "activeWorker": null
         },
         {
           "id": "T4",
@@ -13177,7 +13182,7 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "baseCommit": "6b5aa125",
+          "baseCommit": "789ad2ba",
           "owner": "/root",
           "effortNotice": "First bounded UI/source inspection15min without model calls; only demonstrated missing wiring will be changed.",
           "fileOwnership": {
@@ -13189,10 +13194,11 @@
             ]
           },
           "lastAttempt": {
-            "state": "actual_ui_api_store_controls_verified",
-            "evidence": "eva2/evidence/product/task-controls-store-20260928.json"
+            "state": "channel_connectivity_installed",
+            "evidence": "eva2/evidence/product/channel-connectivity-installed-20260928.json"
           },
-          "remaining": "Connect existing current channel/module observations where available; owner acceptance distinct. UI stop/correct/resume path technically verified without model execution."
+          "remaining": "Connect existing current channel/module observations where available; owner acceptance distinct. UI stop/correct/resume path technically verified without model execution.",
+          "activeWorker": null
         },
         {
           "id": "I1",
@@ -13216,7 +13222,8 @@
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
-          }
+          },
+          "activeWorker": null
         },
         {
           "id": "I2",
@@ -13265,7 +13272,8 @@
           "connectionInstalledEvidence": "eva2/evidence/product/initiative-vision-read-installed-20260928.json",
           "reviewPacingEvidence": "eva2/evidence/product/initiative-review-pacing-installed-20260928.json",
           "calendarSourceEvidence": "eva2/evidence/product/initiative-calendar-source-20260928.json",
-          "returnServiceEvidence": "eva2/evidence/product/initiative-return-service-installed-20260928.json"
+          "returnServiceEvidence": "eva2/evidence/product/initiative-return-service-installed-20260928.json",
+          "activeWorker": null
         },
         {
           "id": "L1",
@@ -13381,7 +13389,8 @@
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
-          }
+          },
+          "activeWorker": null
         },
         {
           "id": "R1",
@@ -13403,7 +13412,8 @@
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
-          }
+          },
+          "activeWorker": null
         },
         {
           "id": "O1",
@@ -13424,7 +13434,8 @@
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
-          }
+          },
+          "activeWorker": null
         },
         {
           "id": "O2",
@@ -13448,7 +13459,8 @@
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
-          }
+          },
+          "activeWorker": null
         },
         {
           "id": "P1",
@@ -13470,7 +13482,8 @@
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
-          }
+          },
+          "activeWorker": null
         },
         {
           "id": "P2",
@@ -13493,7 +13506,8 @@
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
-          }
+          },
+          "activeWorker": null
         },
         {
           "id": "F1",
@@ -13526,7 +13540,8 @@
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
-          }
+          },
+          "activeWorker": null
         },
         {
           "id": "F2",
@@ -13549,7 +13564,8 @@
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
-          }
+          },
+          "activeWorker": null
         }
       ],
       "designDate": "2026-09-28",

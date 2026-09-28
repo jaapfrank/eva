@@ -1,6 +1,10 @@
 # Eva 2 — uitvoerbaar werkbord
 
-## Actief — L2: meerdaags project hervatten
+## Actief — uitsluitend L2: één project volledig afmaken
+
+**Uitvoering gecorrigeerd na eigenaarmelding over versnippering:** geen andere bouwopdracht starten. Eerst concept/projectstaat, één echte afhankelijke vervolgafspraak, correctie/hervatting en bewaard eindresultaat afronden. Technische afronding en eigenaaracceptatie blijven apart. Bij blokkade geen zijtaak als vervanging van deze uitkomst.
+
+**Laatste zijstap afgesloten:** HA-/Telegram API-status geïnstalleerd; kern/werker gezond en echte status gelezen. Geen compleet T4- of projectresultaat. [Bewijs](evidence/product/channel-connectivity-installed-20260928.json). Geen modeltaak actief.
 
 **Kandidaat gereed, niet geïnstalleerd:** optionele extra catalogus houdt bestaande contracten/hashes identiek en voegt de gepinde mapfunctie via dezelfde gateway toe.32 tests en onafhankelijke review akkoord; ook echte geïnstalleerde v3-catalogus gecombineerd met v4-kandidaat zonder netwerk/toolcall. Geen registratie, mapactie of modelcall. Installatie/proef wacht op afhandeling van eerdere automatische uitvoerblokkade; expliciete bevestiging gevraagd. [Bewijs](evidence/product/additional-catalog-candidate-20260928.json) · [Beheeruitleg](docs/mcp-catalog-extension.md).
 

@@ -1,0 +1,114 @@
+{
+  "checkedAt": "2026-09-28T21:31:21.703765+00:00",
+  "sourceCommit": "9ebdd120",
+  "state": "installed",
+  "testsPassed": 7,
+  "review": "GO:review_directory_connection",
+  "installation": {
+    "checkedAt": "2026-09-28T21:30:45.111538+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:2a591be1dd9642c57afc3d05a2cd99b98418b1121ed715e6e27a7df2685d4050",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/component_observations.py": "ae725ff7009551426a8d7ac96b872c3d1c62131f91aba9465e3a180d06ec74f5",
+          "bootstrap/runtime.py": "1ec444b7e676b45cd48987dd54cbbabae97420c93768ab098733e7baa9ebd66b",
+          "adapters/api/app.py": "aa9efedb22108666f318a1a020cdfcc75e6770cd3506de4af7fda190a8f661a0",
+          "adapters/api/dashboard_health.py": "ded168bd5e1e7943107458fee75559612fc8b0c81ba9f335d7d2104f90844eb7"
+        }
+      },
+      "worker": {
+        "image": "sha256:3e49fb0d4d3230ccc292895a9540da5081c13dfe4fa62bfcb591411d782ae54b",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/component_observations.py": "ae725ff7009551426a8d7ac96b872c3d1c62131f91aba9465e3a180d06ec74f5",
+          "bootstrap/runtime.py": "1ec444b7e676b45cd48987dd54cbbabae97420c93768ab098733e7baa9ebd66b",
+          "adapters/api/app.py": "aa9efedb22108666f318a1a020cdfcc75e6770cd3506de4af7fda190a8f661a0",
+          "adapters/api/dashboard_health.py": "ded168bd5e1e7943107458fee75559612fc8b0c81ba9f335d7d2104f90844eb7"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/t4-channel-observations-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "runtimeOverlay": {
+    "reason": "Preserve installed runtime; unrelated restore_activation changes remain uninstalled",
+    "sourceSha256": "1ec444b7e676b45cd48987dd54cbbabae97420c93768ab098733e7baa9ebd66b"
+  },
+  "liveComponents": {
+    "contract": "EvaComponentObservations/v1",
+    "read_only": true,
+    "checked_at": "2026-09-28T21:31:21.620276+00:00",
+    "components": [
+      {
+        "id": "database",
+        "label": "Taak- en gegevensopslag",
+        "state": "ready",
+        "observed_at": "2026-09-28T21:31:21.620276+00:00",
+        "detail": "Verbindingscontrole met de database; geen controle van alle opgeslagen gegevens."
+      },
+      {
+        "id": "memory",
+        "label": "Geheugendienst",
+        "state": "ready",
+        "observed_at": "2026-09-28T21:31:21.620276+00:00",
+        "detail": "Bereikbaarheid van de geheugendienst; geen beoordeling van herinneringen."
+      },
+      {
+        "id": "model_credentials",
+        "label": "Modeltoegang",
+        "state": "unknown",
+        "observed_at": null,
+        "detail": "De kern meldt een toegangsprobleem als zij dit vaststelt. Zonder probleemmelding blijft daadwerkelijke modelbereikbaarheid onbekend; er is geen modelvraag gestuurd."
+      },
+      {
+        "id": "website",
+        "label": "Eigenaarwebsite",
+        "state": "ready",
+        "observed_at": "2026-09-28T21:31:21.620276+00:00",
+        "detail": "Deze beveiligde statusaanvraag is ontvangen en beantwoord."
+      },
+      {
+        "id": "worker",
+        "label": "Achtergrondwerker",
+        "state": "unknown",
+        "observed_at": null,
+        "detail": "Geen actuele werkerhartslag aangesloten op dit overzicht. Taakstatus staat bij Mijn opdrachten."
+      },
+      {
+        "id": "telegram",
+        "label": "Telegram",
+        "state": "ready",
+        "observed_at": "2026-09-28T21:31:21.697294+00:00",
+        "detail": "Telegram-API en bottoegang gecontroleerd; berichtontvangst en aflevering niet getest."
+      },
+      {
+        "id": "home_assistant",
+        "label": "Home Assistant",
+        "state": "ready",
+        "observed_at": "2026-09-28T21:31:21.640597+00:00",
+        "detail": "Home Assistant-API en toegang gecontroleerd; huisbediening en speakergeluid niet getest."
+      },
+      {
+        "id": "web_voice",
+        "label": "Spraak op de website",
+        "state": "unknown",
+        "observed_at": null,
+        "detail": "Spraakroute ingesteld; microfoon, transcriptie en geluid niet beproefd."
+      },
+      {
+        "id": "voice_pe",
+        "label": "Voice PE-speakers",
+        "state": "unknown",
+        "observed_at": null,
+        "detail": "Native spraakroute ingesteld; beide fysieke speakers en hun wakeword zijn niet gecontroleerd."
+      }
+    ]
+  },
+  "modelCalls": 0,
+  "ownerAccepted": false,
+  "scope": "Read-only API connectivity, no message/device/voice test. Full T4 remains incomplete; no further T4 work while L2 is selected."
+}
