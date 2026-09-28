@@ -1120,3 +1120,74 @@ def test_unknown_usage_after_unavailable_failure_cannot_start_internal_retry(tmp
     assert outcome.status == "budget_exceeded", outcome
     assert len(admissions) == len(scripted.captures) == 1
     assert tools.calls == [] and journal.usages == [ConversationModelUsage.unmeasured()]
+
+
+@pytest.mark.parametrize("boundary", ["task_deadline", "shorter_deadline", "legacy_grant", "owner_stop", "expired_before_admission"])
+def test_task_boundary_closes_blocked_provider_with_longer_phase_limit(tmp_path, monkeypatch, boundary):
+    """Exercise runner watcher through the real provider transport without networking."""
+    from dataclasses import replace
+    import httpx2
+    from eva.adapters.model.openai_codex_provider import OpenAICodexProvider
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from tests.model.test_pydantic_conversation_model import _runtime_budget
+    _, original, _, tools, _, runner, _ = fixture()
+    grant = runner.profile.grant()
+    if boundary == "legacy_grant":
+        grant = replace(runner.profile, timeout_seconds=30).grant()
+        runner.profile = replace(runner.profile, historical_grants=(grant,))
+    spec = _budget_spec(runner.profile, original, grant=grant)
+    if boundary == "shorter_deadline":
+        spec = spec.model_copy(update={"deadline": (NOW + timedelta(seconds=20)).strftime("%Y-%m-%dT%H:%M:%SZ")})
+    grant_before = spec.grant.to_payload()
+    clock = [NOW + timedelta(seconds=301) if boundary == "expired_before_admission" else NOW]
+    runner.clock = lambda: clock[0]
+    started, closed, owner_stop = threading.Event(), threading.Event(), threading.Event()
+    requests, admissions, provider_limits, sessions = [], [], [], []
+    class BlockedStream(httpx2.AsyncByteStream):
+        async def __aiter__(self):
+            started.set()
+            await asyncio.Event().wait()
+            yield b"unreachable"
+        async def aclose(self): closed.set()
+    async def respond(request):
+        requests.append(request)
+        return httpx2.Response(200, headers={"content-type": "text/event-stream"},
+                               stream=BlockedStream(), request=request)
+    class LocalProvider(OpenAICodexProvider):
+        def __init__(self, settings, *, credential_loader):
+            provider_limits.append(settings.timeout_seconds)
+            super().__init__(settings, credential_loader=lambda: ("test", "test"),
+                             network_transport=httpx2.MockTransport(respond))
+        async def __aenter__(self):
+            session = await super().__aenter__()
+            sessions.append(session)
+            return session
+    class DurableJournal(Journal):
+        def begin_model_request(self, turn):
+            admissions.append(turn)
+            return str(len(admissions))
+        def complete_model_request(self, turn, request, usage, **kwargs): self.usages.append(usage)
+    monkeypatch.setattr("eva.adapters.model.pydantic_conversation.OpenAICodexProvider", LocalProvider)
+    journal = DurableJournal()
+    runner.journal_factory = lambda *_: journal
+    runner.model = PydanticConversationModel(auth_file=tmp_path / "unused.json", timeout_seconds=120,
+        resource_budget=_runtime_budget(max_input_tokens=65_536))
+    tools.available_for = lambda turn: False
+    async def run():
+        task = asyncio.create_task(runner.run(spec, call_id="call:phase-boundary", cancellation_event=owner_stop))
+        if boundary != "expired_before_admission":
+            assert await asyncio.to_thread(started.wait, 3)
+            if boundary == "owner_stop":
+                owner_stop.set()
+            else:
+                clock[0] = NOW + timedelta(seconds={"task_deadline":301, "shorter_deadline":21, "legacy_grant":31}[boundary])
+        outcome = await asyncio.wait_for(task, 3)
+        assert outcome.status == ("cancelled" if boundary == "owner_stop" else "timed_out"), outcome
+        assert outcome.result is None
+    asyncio.run(run())
+    expected_calls = 0 if boundary == "expired_before_admission" else 1
+    assert len(requests) == len(admissions) == len(journal.usages) == expected_calls
+    assert provider_limits == [120] * expected_calls
+    assert tools.calls == [] and spec.grant.to_payload() == grant_before
+    if expected_calls:
+        assert closed.is_set() and sessions[0].local_stream_closed is True

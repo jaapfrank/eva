@@ -1196,13 +1196,15 @@ def test_each_provider_attempt_is_journaled_and_stop_blocks_internal_repeat(tmp_
     assert begin_current_model_request() is None
 
 
-@pytest.mark.parametrize(("seconds", "expires"), [(60.0, False), (10.0, True)])
-def test_configured_phase_deadline_allows_long_generation_and_still_expires(tmp_path, monkeypatch, seconds, expires):
+@pytest.mark.parametrize(("seconds", "elapsed", "expires"), [
+    (60.0, 24.0, False), (10.0, 24.0, True), (60.0, 90.0, True),
+    (120.0, 90.0, False), (120.0, 121.0, True)])
+def test_configured_phase_deadline_allows_long_generation_and_still_expires(tmp_path, monkeypatch, seconds, elapsed, expires):
     clock = [0.0]
     monkeypatch.setattr("eva.adapters.model.openai_codex_provider.monotonic", lambda: clock[0])
 
     def provider_generation_elapsed():
-        clock[0] = 24.0
+        clock[0] = elapsed
 
     model, _, requests, _ = _phase_transport_adapter(
         tmp_path, monkeypatch, [("final_answer", ("Het advies is klaar.",))],
@@ -1484,3 +1486,9 @@ def test_background_output_allowance_does_not_bypass_source_or_input_guard(tmp_p
         with pytest.raises(ConversationModelError, match="input|budget"):
             _generate(model, completed_action=ConversationActionReceipt(CALL, {"large": "word " * 20_000}))
     assert scripted.captures == []
+
+
+def test_foreground_model_keeps_sixty_second_default(tmp_path):
+    scripted = ScriptedPydanticConversation((ScriptedPhase.text("Hallo."),))
+    model = _adapter_type()(auth_file=tmp_path / "unused.json", model_backend=scripted.model)
+    assert model._timeout_seconds == 60.0
