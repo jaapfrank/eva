@@ -2723,10 +2723,10 @@
           }
         ],
         "now": {
-          "title": "Camera’s gericht vinden",
-          "state": "Geïnstalleerd · echte vraag geslaagd",
-          "detail": "Eva gebruikt domain=camera en daarna direct het gekozen beeld. Deze proef: 3 modelaanvragen, 2 tools, 18.331 invoertokens, 26,508 s. Nog te traag; andere camera/context dan de eerdere 52,56 s.",
-          "doneWhen": "Bouw, 71 gerichte controles, installatie en onafhankelijke bron- en live-receiptcontrole afgerond. Eigenaaracceptatie blijft apart."
+          "title": "I2 · Camera en agenda voor eigen initiatief",
+          "state": "In uitvoering",
+          "detail": "Bestaande initiatiefuitvoering hergebruiken. Geconstateerd: oude inventarisprofielen kennen domain niet en algemene camera-/agenda-GET ontbreekt in de private initiatiefroute.",
+          "doneWhen": "Bestaande route kan begrensd camera/agenda lezen; oude profielen behouden, bronreview en gerichte controle, installatie/configuratie. Geen privédetails naar gedeelde spraak."
         },
         "next": {
           "title": "I2 · Camera en agenda combineren",
@@ -2744,7 +2744,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T18:24:57.848884+00:00"
+        "reviewedAt": "2026-09-28T18:29:40.120260+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13191,12 +13191,12 @@
           },
           "owner": "/root",
           "assignment": {
-            "stage": "domain_filter_installed_independently_verified",
-            "baseCommit": "1ebfe9c1",
+            "stage": "initiative_read_connection",
+            "baseCommit": "9c987870",
             "owner": "/root",
-            "scope": "home_assistant_admin.py; focused connector tests; existing workboard/evidence",
-            "endCondition": "Generic domain selection retains legacy requests and room/pagination behavior; installed and measured on one ordinary camera request",
-            "effort": "One bounded filter change and focused checks; at most one new end-to-end model request after installation; credits unknown"
+            "scope": "providers/home_assistant.py, deployment read profile, focused tests; existing private runtime mandate revision",
+            "endCondition": "Native read profile permits camera/calendar GET and inventory domain without granting writes or public output; existing authority verified and installed. Camera-selected reminder remains dependent on owner answer.",
+            "effort": "Bounded connection and existing route checks; no new planner, background polling or extra model budget."
           },
           "evidence": "eva2/evidence/product/local-vision-installed-20260928.json",
           "remaining": "On-demand vision and targeted discovery installed;26.5s full answer still slow. Camera choice for bins asked; camera/calendar correlation and autonomous usefulness remain open.",

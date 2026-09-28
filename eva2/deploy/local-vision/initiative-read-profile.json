@@ -1,0 +1,103 @@
+{
+  "action_name": "home_assistant_request",
+  "configuration_sha256": "REPLACE_WITH_INSTALLED_PROVIDER_CONFIGURATION_SHA256",
+  "new_cost_eur_cents": 0,
+  "new_obligation": false,
+  "data_scope": "owner_private_local",
+  "communication_scope": "none",
+  "cost_evidence": "Existing local Home Assistant reads and local GPU image analysis; no new provider fee or outbound recipient. Existing model/reflection budgets still apply; this is not a claim of zero energy or model cost.",
+  "tool_name": "home_assistant.api.request",
+  "observation_tool_name": null,
+  "execute_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "transport": {
+        "type": "string",
+        "const": "rest"
+      },
+      "method": {
+        "type": "string",
+        "const": "GET"
+      },
+      "path": {
+        "type": "string",
+        "maxLength": 1000,
+        "pattern": "/api/(?:camera_proxy/camera\\.[a-z0-9_]+|calendars(?:/calendar\\.[a-z0-9_]+)?)(?:\\?[A-Za-z0-9._~%:+,=&-]*)?"
+      },
+      "body_json": {
+        "type": "string",
+        "const": ""
+      },
+      "response_pointer": {
+        "type": "string",
+        "maxLength": 400
+      },
+      "offset": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 100000
+      },
+      "limit": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 50
+      }
+    },
+    "required": [
+      "transport",
+      "method",
+      "path",
+      "body_json",
+      "response_pointer",
+      "offset",
+      "limit"
+    ]
+  },
+  "observe_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "transport": {
+        "type": "string",
+        "const": "rest"
+      },
+      "method": {
+        "type": "string",
+        "const": "GET"
+      },
+      "path": {
+        "type": "string",
+        "maxLength": 1000,
+        "pattern": "/api/(?:camera_proxy/camera\\.[a-z0-9_]+|calendars(?:/calendar\\.[a-z0-9_]+)?)(?:\\?[A-Za-z0-9._~%:+,=&-]*)?"
+      },
+      "body_json": {
+        "type": "string",
+        "const": ""
+      },
+      "response_pointer": {
+        "type": "string",
+        "maxLength": 400
+      },
+      "offset": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 100000
+      },
+      "limit": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 50
+      }
+    },
+    "required": [
+      "transport",
+      "method",
+      "path",
+      "body_json",
+      "response_pointer",
+      "offset",
+      "limit"
+    ]
+  }
+}

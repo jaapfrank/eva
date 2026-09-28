@@ -1,5 +1,7 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Nu — I2 initiatiefkoppeling, basis9c987870:** bestaande native uitvoering en HA-API behouden. Echt tekort: initiatiefprofiel mist nieuw inventarisdomain en camera-/agendalezen; private uitvoeringsbinding koppelen. Coördinator bezit providerwiring, begrensd leesprofiel en gerichte tests. Geen nieuwe planner/polling/modelbudget. Camera voor bakken blijft gevraagd; gedeelde speakers krijgen geen privéagenda.
+
 **Opgeleverd — gericht apparaten zoeken:** bron2e318c91 geïnstalleerd op gezonde kern/werker;71controles en bronreview akkoord. Gewone tuincameravraag gebruikt domeinfilter en één camera-GET:3modelcalls/2tools,18.331in/263uit,26,508s. Vorige andere camera/context52,56s/161.398in; geen gecontroleerde snelheidsclaim. Onafhankelijke live-receiptcontrole akkoord. Camera voor bakken gevraagd; alleen die vervolgproef wacht. [Bewijs](evidence/product/ha-domain-selection-installed-20260928.json).
 
 **Nu — gerichte HA-inventaris, basis1ebfe9c1:** coördinator wijzigt uitsluitend bestaande algemene inventarisselectie en gerichte tests. Filter op domein vóór paginering; oude opgeslagen opdrachten blijven geldig. Aanleiding: echte cameravraag52,56s/161.398in door vier ontdekstappen. Eén controle na installatie; geen nieuwe cameraregex of router.

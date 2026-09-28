@@ -288,6 +288,12 @@ class HomeAssistantProviderFactory:
                     "vision_revision": settings.vision_revision})
 
             def authorize_api(turn):
+                from eva.application.initiative_execution import require_initiative_context
+                native = require_initiative_context(turn)
+                if native is not None and native.action_allowed("home_assistant_request"):
+                    # The durable initiative guard still checks the exact read
+                    # profile and current mandate at dispatch and observation.
+                    return
                 if (turn.audience.kind not in {"private_person", "household"}
                     or turn.audience.principal_id != turn.principal_id
                     or hashlib.sha256(turn.principal_id.encode()).hexdigest() not in effect_principals):

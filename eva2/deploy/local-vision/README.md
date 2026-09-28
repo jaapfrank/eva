@@ -36,3 +36,21 @@ The model must select the camera through existing HA discovery; no camera-specif
 command or name matching has been added. Monochrome imagery cannot establish real
 object colours. One reviewed scene does not establish reliable bin counting or
 other autonomous decisions. Those remain separate product requirements.
+
+## Existing private initiative integration
+
+`initiative-read-profile.json` is a template for the existing native initiative
+mandate, not a second scheduler. Replace its configuration digest with the actual
+installed HA API provider digest (including the selected vision configuration).
+Merge it without removing other capabilities, then use the existing append-only
+mandate revision endpoint. Existing running claims retain their old digest and
+must never be silently rebound. Keep the old file and revision for rollback.
+
+The profile permits only camera and calendar REST GET requests. It adds no house
+writes or outbound recipient. Native output remains owner-private; this profile
+must not be used as authority to expose a private agenda to shared speakers.
+The existing initiative inventory profile also needs optional `domain` (empty or
+a valid HA domain), retaining its old required fields for saved five-field calls.
+Model/reflection limits remain unchanged. A zero transport-fee profile does not
+mean free model inference or energy. Autonomous useful reminders require a separate
+bound event/scene/calendar result; installing this profile alone does not prove one.

@@ -865,3 +865,57 @@ def test_owner_abandons_only_exact_uncertain_review_and_preserves_usage(postgres
     assert restarted.schedule_context_review(now=NOW + timedelta(hours=1)) == "scheduled"
     fresh = restarted.claim_next(now=NOW + timedelta(hours=1))
     assert fresh.thread_id != claim.thread_id
+
+
+@pytest.mark.parametrize("path_value", ["/api/camera_proxy/camera.garden", "/api/calendars/calendar.family?start=2026-09-28T00%3A00%3A00Z&end=2026-09-29T00%3A00%3A00Z"])
+def test_native_camera_calendar_read_uses_existing_guard_and_preserves_receipt(costless_native, monkeypatch, path_value):
+    import json
+    from pathlib import Path
+    from eva.providers.home_assistant import HomeAssistantProviderFactory, HomeAssistantProviderSettings
+    from eva.application.initiative_execution import initiative_execution
+    from eva.application.conversation import ConversationActionCall, ConversationConflict
+    from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+    auth, claim, store, control, source, path, policy = costless_native
+    contribution = HomeAssistantProviderFactory.build(HomeAssistantProviderSettings(
+        endpoint_url="http://existing-home:8123", credential="fixture-only", effects_enabled=False,
+        effect_allowlist=(), effect_principal_sha256_allowlist=("0"*64,), event_domains=("light",),
+        api_enabled=True), auth.owner._engine)
+    api = next(tool for tool in contribution.external_tools if tool.action_names == ("home_assistant_request",))
+    cap = json.loads((Path(__file__).parents[2] / "deploy/local-vision/initiative-read-profile.json").read_text())
+    cap["configuration_sha256"] = api._configuration_sha256
+    policy["capabilities"] = [cap]; path.write_text(json.dumps(policy))
+    calls = []
+    def read(arguments):
+        calls.append(dict(arguments))
+        return {"http_status": 200, "success": True, "response_json": "fixture interpretation or calendar response"}
+    monkeypatch.setattr(api._provider, "_request", read)
+    guard, turn = auth.bind(claim)
+    args = dict(transport="rest", method="GET", path=path_value, body_json="", response_pointer="", offset=0, limit=10)
+    call = ConversationActionCall("read-context", "home_assistant_request", args)
+    with pytest.raises(ConversationConflict): api._authorize(turn)
+    with initiative_execution(guard):
+        PostgresConversationJournal(auth.owner._engine, control._scope).admit(turn)
+        receipt = api.execute(turn, call)
+        assert "fixture interpretation" in json.dumps(receipt.output)
+        assert api.execute(turn, call) == receipt and len(calls) == 1
+        control.stop(claim.intent_id, now=NOW)
+        with pytest.raises(ConversationConflict): api.execute(turn, call, step_index=1)
+        assert len(calls) == 1
+
+
+@pytest.mark.parametrize("changes", [
+    {"method": "POST"}, {"method": "DELETE"}, {"transport": "websocket"},
+    {"path": "/api/services/light/turn_on"}, {"path": "/api/states/person.owner"},
+    {"path": "/api/calendars/../states"}, {"path": "http://external.invalid/api/calendars"},
+    {"body_json": "{}"}, {"limit": 51},
+])
+def test_initiative_context_profile_does_not_grant_general_api_effects(changes):
+    import json
+    from pathlib import Path
+    from eva.adapters.postgres.initiative_execution import _matches_profile, _check_profile_schema
+    cap = json.loads((Path(__file__).parents[2] / "deploy/local-vision/initiative-read-profile.json").read_text())
+    for key in ("execute_schema", "observe_schema"):
+        schema = cap[key]; _check_profile_schema(schema)
+        args = dict(transport="rest", method="GET", path="/api/calendars", body_json="", response_pointer="", offset=0, limit=10)
+        assert _matches_profile(args, schema)
+        assert not _matches_profile({**args, **changes}, schema)
