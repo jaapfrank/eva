@@ -1,5 +1,9 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actief — L2: meerdaags project hervatten
+
+Eén gewone projectvraag gebruikt bestaande opslag en scheduler: nu concept en projectstaat, één afhankelijke vervolgstap morgen29september09:00. Geen nieuwe planner, huisacties of berichten. Oorspronkelijke versie, afhankelijkheid, volgende stap en latere correctie moeten behouden blijven. Basis2c79af80; één eerste aanvraag, bestaande taaklimieten, credits onbekend. [Criteria](evidence/product/l2-overnight-project-criteria-20260928.json).
+
 ## Afgerond — L1: werkwijze leren en hergebruiken
 
 **Technisch afgerond:** Eva heeft een nieuwe JSON Patch-werkwijze uit officiële documentatie geleerd, zelf bewaard/geregistreerd en echt uitgevoerd. Een afzonderlijke gewone vraag liet haar dezelfde code zelfstandig selecteren en ongewijzigd op andere invoer toepassen. Echte uitvoer, invoerhash, ongewijzigde bron en opgeslagen resultaat onafhankelijk akkoord. Geen ontwikkelaarcorrectie, code of procedure-ID in deze casus. [Bewijs](evidence/product/json-patch-learning-reuse-20260928.json) · [Resultaat](evidence/product/json-patch-reuse-output-20260928.json).

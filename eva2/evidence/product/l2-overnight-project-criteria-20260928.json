@@ -1,0 +1,23 @@
+{
+  "recordedAt": "2026-09-28T20:44:20.261413+00:00",
+  "baseCommit": "2c79af80",
+  "slice": "L2",
+  "existingEvidence": [
+    "eva2/evidence/product/legacy-read-resume-20260928.json",
+    "eva2/evidence/product/scheduled-correction-continuity-20260928.json"
+  ],
+  "gap": "One ordinary project preserves goal, dependencies, artifacts and next action overnight; later correction and continuation use saved state without duplicate effects.",
+  "scope": "Synthetic household document project, private website route; existing scheduler and artifact tools only",
+  "criteria": [
+    "Actual first draft and project record saved",
+    "One dependency-bound continuation at 2026-09-29T07:00:00Z",
+    "Goal/artifacts/next step remain readable across process restart",
+    "Explicit correction preserved and used at continuation",
+    "Final uses saved draft, leaves original unchanged, no duplicate followup admission/effect"
+  ],
+  "maxInitialRequests": 1,
+  "automaticRetry": false,
+  "effort": "One bounded initial project request, inspect actual state; later continuation across day boundary. Existing runtime limits, credit costs unknown.",
+  "ownerAccepted": false,
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/l2-overnight-project-20260928"
+}

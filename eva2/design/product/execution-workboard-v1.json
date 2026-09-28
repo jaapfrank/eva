@@ -2771,10 +2771,10 @@
           }
         ],
         "now": {
-          "title": "L1: werkwijze leren en hergebruiken",
-          "state": "Technisch afgerond",
-          "detail": "Nieuwe JSON Patch-werkwijze uit documentatie geleerd, opgeslagen en werkelijk uitgevoerd; daarna zelf geselecteerd en ongewijzigd op andere invoer toegepast. Echte uitvoer en bestanden onafhankelijk akkoord. Geen ontwikkelaarcorrectie in deze casus. Eerste eindverslagtimeout blijft onder T1 open; geen eigenaaracceptatie of volledige-autonomieclaim.",
-          "doneWhen": "Eva leert uit documentatie, bewaart een uitvoerbare werkwijze en past die op andere invoer toe zonder nieuwe kerncode of ontwikkelhints; resultaat onafhankelijk gecontroleerd."
+          "title": "L2: meerdaags project hervatten",
+          "state": "Gewoon project met afhankelijke vervolgstap starten",
+          "detail": "Bestaande opslag/hervatting en scheduler behouden. Eén projectvraag: concept en projectstaat nu, vervolg morgen29september09:00. Geen echte huisacties of berichten. Oorspronkelijke versies en expliciete wijziging moeten behouden blijven. Geen nieuwe planner.",
+          "doneWhen": "One ordinary project preserves goal, dependencies, artifacts and next action overnight; later correction and continuation use saved state without duplicate effects."
         },
         "next": {
           "title": "L2: meerdaags project hervatten afronden",
@@ -2792,7 +2792,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T20:42:00.093823+00:00"
+        "reviewedAt": "2026-09-28T20:44:20.261413+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12612,7 +12612,7 @@
           ]
         }
       ],
-      "nextAction": "L1 technisch afgerond. Volgende L2: bestaand meerdaags projectvervolg en concrete ontbrekende afronding koppelen; geen nieuwe planner of herhaalde leerproef.",
+      "nextAction": "L2: gewone projectvraag bewaart concept en projectstaat, plus één afhankelijke vervolgstap morgen09:00; huidige scheduler en bewijs hergebruiken.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13342,9 +13342,16 @@
           "nextAction": "Twee fasen documentproject slagen na gerichte leesfoutreparaties; zelfstandig meerdaags werk en algemene planning blijven open, geen afwezigheid van opslag.",
           "owner": "/root",
           "activeWorker": null,
-          "baseCommit": "a5856551",
+          "baseCommit": "2c79af80",
           "effortNotice": "15–25min; maximaal één hervatting na installatie; credits onbekend.",
-          "latestEvidence": "eva2/evidence/product/legacy-read-resume-20260928.json"
+          "latestEvidence": "eva2/evidence/product/legacy-read-resume-20260928.json",
+          "assignment": {
+            "stage": "preparing_overnight_project",
+            "outcome": "One ordinary project preserves goal, dependencies, artifacts and next action overnight; later correction and continuation use saved state without duplicate effects.",
+            "scope": "Synthetic household document project, private website route; existing scheduler and artifact tools only",
+            "evidence": "eva2/evidence/product/l2-overnight-project-criteria-20260928.json",
+            "effort": "One bounded initial project request, inspect actual state; later continuation across day boundary. Existing runtime limits, credit costs unknown."
+          }
         },
         {
           "id": "L3",
@@ -13541,7 +13548,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "I2",
+      "activeSliceId": "L2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
