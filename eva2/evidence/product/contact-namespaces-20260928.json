@@ -1,0 +1,87 @@
+{
+  "id": "contact-namespaces-20260928",
+  "baseCommit": "8254f4a2",
+  "status": "reviewed_candidate",
+  "requirement": "C1 lower unnecessary input while retaining authorized capability discovery",
+  "source": "https://developers.openai.com/api/docs/guides/tools-tool-search",
+  "sourceChecked": "2026-09-28",
+  "existing": "Native tool search and runtime-owned ExternalToolset already exist; no second planner or search framework",
+  "change": "Explicit single-function namespaces at owned conversation provider boundary; full schemas and descriptions preserved, replay namespace unchanged",
+  "experiments": {
+    "initial": [
+      {
+        "case": "Hallo.",
+        "model": "gpt-6-luna",
+        "reasoning": "low",
+        "toolCount": 64,
+        "inputTokens": 2146,
+        "outputTokens": 12,
+        "cachedTokens": 0,
+        "requests": 1,
+        "firstTextSeconds": 4.927,
+        "totalSeconds": 5.416,
+        "answer": "Hallo! Fijn je te zien 😊",
+        "calls": [],
+        "externalActionsExecuted": 0
+      },
+      {
+        "case": true,
+        "error": "UsageLimitExceeded"
+      }
+    ],
+    "revisedLocalRegistration": [
+      {
+        "case": "Wat heb je uit eigen initiatief al afgemaakt? Haal het nieuwste bewaarde resultaat op. Begin niets nieuws.",
+        "model": "gpt-6-luna",
+        "reasoning": "low",
+        "toolCount": 64,
+        "inputTokens": 2620,
+        "outputTokens": 71,
+        "cachedTokens": 0,
+        "requests": 1,
+        "firstTextSeconds": null,
+        "totalSeconds": 6.503,
+        "answer": null,
+        "calls": [
+          {
+            "name": "list_own_initiatives",
+            "arguments": {}
+          }
+        ],
+        "externalActionsExecuted": 0
+      }
+    ],
+    "baselineInputTokens": 6057,
+    "candidateGreetingInputTokens": 2146,
+    "greetingReductionPercent": 64.6,
+    "latency": "No speed improvement demonstrated; candidate single greeting4.927s first text vs prior2.879s. Different sequential runs, not general latency estimate."
+  },
+  "verification": {
+    "tests": 111,
+    "seconds": 9.14,
+    "commandArtifact": "/home/administrator/project/.eva2-artifacts/c1-contact-namespaces-20260928/tests-command.json",
+    "firstRun": "33 failures due missing constructor keyword; corrected before passing run",
+    "review": {
+      "result": "GO bounded change",
+      "reviewer": "/root/platform_research_20260927",
+      "scope": "Source membership, full schema/description preservation, receipt replay, opt-in boundaries and111tests; not general discovery quality."
+    }
+  },
+  "usage": {
+    "modelRequests": 3,
+    "knownInputTokens": 4766,
+    "knownOutputTokens": 83,
+    "additionalUnmeasuredRequests": 1,
+    "credits": "unknown",
+    "externalActionsExecuted": 0
+  },
+  "limits": [
+    "synthetic configured catalog rather than exact owner turn",
+    "one greeting and one successful discovery case",
+    "derived tool-name descriptions may affect discovery of less obvious tools",
+    "no complete C1 or family acceptance"
+  ],
+  "installation": {
+    "state": "not installed"
+  }
+}

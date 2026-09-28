@@ -2579,15 +2579,15 @@
           }
         ],
         "now": {
-          "title": "C1 · Oorzaak hoge begroetingsinvoer gemeten",
-          "state": "Vergelijking afgerond · nog geen versnelling",
-          "detail": "Dezelfde synthetische begroeting: 6.057 invoertokens met bestaande deferred catalogus, 41 zonder. Eerste tekst beide circa2,9s. Twee modelcalls, nul acties; onafhankelijke review akkoord. Coördinator klaar met deze meting.",
-          "doneWhen": "Meetopdracht afgerond. Compactere vindbaarheid en werkelijke gespreksvertraging blijven open; geen mogelijkheden verwijderd."
+          "title": "C1 · Compacte toolgroepen beproeven",
+          "state": "Gebouwd en gecontroleerd · installatie voorbereiden",
+          "detail": "Namespacecatalogus: begroeting2.146in tegenover6.057; één echte toolkeuze correct,111gerichte controles en onafhankelijke review akkoord. Geen snelheidsclaim. Coördinator bouwt twee runtime-images; gegevens/firmware/configuratie blijven gelijk.",
+          "doneWhen": "Lagere begroetingsinvoer én dezelfde toolselectie/replay; daarna gerichte bronwijziging, review en installatie als passend."
         },
         "next": {
-          "title": "C1 · Compactere vindbaarheid van dezelfde tools",
+          "title": "C1 · Bewezen catalogusverbetering installeren",
           "state": "Nog niet gestart",
-          "detail": "Ondersteunde catalogusrepresentatie controleren die minder invoer gebruikt met behoud van alle bevoegde mogelijkheden. Native toolzoekfunctie bestaat al; geen tweede eigen zoeksysteem. Gewone gesprekscontext afzonderlijk meten."
+          "detail": "Alleen bij passende selectie en replay. Geen nieuwe router, geen verborgen beperking van Eva."
         },
         "ownerAction": {
           "title": "Later hetzelfde onderwerp voortzetten",
@@ -2601,7 +2601,7 @@
           "expected": "Eva haalt relevante eerdere context terug. Geaccepteerd onthouden, corrigeren en vergeten hoef je niet opnieuw te testen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T13:56:35.038703+00:00"
+        "reviewedAt": "2026-09-28T14:07:19.468761+00:00"
       }
     },
     "pendingTechnicalReview": {

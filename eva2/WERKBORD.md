@@ -10,7 +10,7 @@
 
 **Afgerond — C1 catalogusinvoer gemeten:** dezelfde synthetische begroeting kost met bestaande deferred catalogus6.057invoertokens, zonder41; eerste tekst2,879/2,922s. Twee requests,6.098in/24uit, geen acties; credits onbekend. Onafhankelijke review akkoord. Geen nieuwe functie, installatie of snelheidsclaim. [Bewijs](evidence/product/contact-catalog-cost-20260928.json).
 
-**Volgende — C1, nog niet gestart:** ondersteunde compactere catalogusrepresentatie met behoud van alle bevoegde mogelijkheden. Bestaande toolzoekfunctie niet opnieuw bouwen; gewone gesprekscontext afzonderlijk meten.
+**Nu — C1, coördinator:** vanaf8254f4a2 ondersteunde namespaces beproeven met ongewijzigde tools. Eén geïsoleerde transport-/modelproef, maximaal twee modelcalls, geen acties; credits onbekend. Bestandsgrens: bestaande Codex-providercompatibiliteit en gerichte tests. Eindvoorwaarde: minder invoer én correcte selectie/replay vóór review/installatie. Gewone gesprekscontext blijft afzonderlijk open.
 
 **Nu — M3 stijlcorrectie geïnstalleerd:** een bestaande communicatievoorkeur kon niet worden ververst doordat de providerrespons het vereiste veld wegliet. Gerichte correctie, drie tests en onafhankelijke review akkoord; kern/werker gezond, exacte bron en eigenaarpagina’s gecontroleerd, terugweg vastgelegd. De echte gedragsproef is gedeeltelijk geslaagd: korter en zonder lijst, maar 47 woorden bij maximaal 40. M3 blijft open. Twee contactcalls: 3.884 invoer-/183 uitvoertokens; extractie-/reflectieverbruik onbekend. [Bewijs](evidence/product/style-reflection-refresh-20260928.json).
 

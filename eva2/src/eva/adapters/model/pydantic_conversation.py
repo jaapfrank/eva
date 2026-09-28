@@ -842,7 +842,9 @@ class PydanticConversationModel:
                     description=tool["description"],
                     parameters_json_schema=tool["parameters"],
                     strict=True,
-                    defer_loading=True,
+                    # The owned provider defers full definitions in namespaces.
+                    # Injected backends retain their framework-native discovery.
+                    defer_loading=injected_backend is not None,
                 )
                 for tool in tools
             ]
@@ -1042,6 +1044,7 @@ class PydanticConversationModel:
                                 reasoning_effort=self._reasoning_effort,
                                 maximum_request_bytes=_MAX_STREAM_BYTES,
                                 maximum_response_bytes=_MAX_STREAM_BYTES,
+                                namespace_functions=True,
                             ),
                             credential_loader=self._load_auth,
                         )

@@ -76,6 +76,7 @@ class OpenAICodexProviderSettings:
     reasoning_effort: Literal["low", "medium", "high"] = "medium"
     maximum_request_bytes: int = 8 * 1024 * 1024
     maximum_response_bytes: int = 8 * 1024 * 1024
+    namespace_functions: bool = False
 
     def __post_init__(self) -> None:
         responses_base_url(
@@ -252,8 +253,10 @@ class _CodexTransport(httpx2.AsyncBaseTransport):
         maximum_request_bytes: int,
         maximum_response_bytes: int,
         network: httpx2.AsyncBaseTransport | None,
+        namespace_functions: bool = False,
     ) -> None:
         self._deadline = deadline
+        self._namespace_functions = namespace_functions
         self._maximum_request_bytes = maximum_request_bytes
         self._maximum_response_bytes = maximum_response_bytes
         self._network = network or httpx2.AsyncHTTPTransport(retries=0)
@@ -317,7 +320,9 @@ class _CodexTransport(httpx2.AsyncBaseTransport):
             self._model_requests += 1
             if self._model_requests != 1:
                 raise CodexProviderError("protocol")
-            request = _codex_compatible_request(request)
+            request = _codex_compatible_request(
+                request, namespace_functions=self._namespace_functions
+            )
             if len(request.content) > self._maximum_request_bytes:
                 raise CodexProviderError("request_too_large")
         try:
@@ -370,7 +375,9 @@ class _CodexTransport(httpx2.AsyncBaseTransport):
             self._network_closes_in_progress -= 1
 
 
-def _codex_compatible_request(request: httpx2.Request) -> httpx2.Request:
+def _codex_compatible_request(
+    request: httpx2.Request, *, namespace_functions: bool = False,
+) -> httpx2.Request:
     """Project Pydantic's public Responses request onto the Codex endpoint."""
 
     try:
@@ -437,6 +444,27 @@ def _codex_compatible_request(request: httpx2.Request) -> httpx2.Request:
     body["parallel_tool_calls"] = False
     body.setdefault("tool_choice", "auto" if tools else "none")
     body.setdefault("tools", tools)
+    if namespace_functions:
+        # Pydantic 2.37 only discovers flat function search results. Keep the
+        # authorized ExternalToolset registered locally, and defer descriptions
+        # at the provider boundary. No tool or execution authority is added.
+        # One function per namespace preserves the existing replay namespace.
+        names = {tool["name"] for tool in tools if tool.get("type") == "function"}
+        if names:
+            body["tools"] = [
+                {
+                    "type": "namespace",
+                    "name": tool["name"],
+                    "description": tool["name"].replace("_", " "),
+                    "tools": [{**tool, "defer_loading": True}],
+                } if tool.get("type") == "function" else tool
+                for tool in tools
+            ]
+            if not any(tool.get("type") == "tool_search" for tool in tools):
+                body["tools"].insert(0, {"type": "tool_search"})
+            for item in projected_input:
+                if item.get("type") == "function_call" and item.get("name") in names:
+                    item["namespace"] = item["name"]
     encoded = canonical_json_bytes(body)
     headers = dict(request.headers)
     headers.pop("content-length", None)
@@ -632,6 +660,7 @@ class OpenAICodexProvider:
             maximum_request_bytes=self._settings.maximum_request_bytes,
             maximum_response_bytes=self._settings.maximum_response_bytes,
             network=self._network_transport,
+            namespace_functions=self._settings.namespace_functions,
         )
 
         async def bind_request(request: httpx2.Request) -> None:

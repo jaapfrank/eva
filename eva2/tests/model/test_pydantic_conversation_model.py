@@ -55,7 +55,7 @@ NOW = "2026-08-31T12:00:00Z"
 
 def _phase_transport_adapter(
     tmp_path, monkeypatch, parts, *, fail=False, reuse_message_id=False,
-    before_response=None, timeout_seconds=60.0,
+    before_response=None, timeout_seconds=60.0, namespaced_search=False,
 ):
     """Exercise the installed SDK and Pydantic parser; no external network."""
     requests = []
@@ -79,6 +79,12 @@ def _phase_transport_adapter(
                  "parameters": TOOL.input_schema, "strict": True, "defer_loading": True,
              }]},
         ])
+        if namespaced_search:
+            output[1]["tools"] = [{
+                "type": "namespace", "name": TOOL.name,
+                "description": TOOL.name.replace("_", " "),
+                "tools": output[1]["tools"],
+            }]
         for index, item in enumerate(output):
             for stage in ("added", "done"):
                 events.append({"type": f"response.output_item.{stage}",
@@ -1492,3 +1498,32 @@ def test_foreground_model_keeps_sixty_second_default(tmp_path):
     scripted = ScriptedPydanticConversation((ScriptedPhase.text("Hallo."),))
     model = _adapter_type()(auth_file=tmp_path / "unused.json", model_backend=scripted.model)
     assert model._timeout_seconds == 60.0
+
+
+def test_namespaced_discovery_returns_original_deferred_action(tmp_path, monkeypatch):
+    model, _, requests, _ = _phase_transport_adapter(
+        tmp_path, monkeypatch, [("tool", ())], namespaced_search=True,
+    )
+    result = _generate(model, available_actions=(TOOL.name,))
+    assert result.action_call == CALL
+    assert len(requests) == 1
+    groups = [tool for tool in requests[0]["tools"] if tool["type"] == "namespace"]
+    selected = next(tool for tool in groups if tool["name"] == TOOL.name)
+    assert selected["tools"][0]["parameters"] == TOOL.input_schema
+    assert selected["tools"][0]["description"] == TOOL.description
+    assert selected["tools"][0]["defer_loading"] is True
+
+
+def test_namespaced_receipt_replay_preserves_original_call_and_result(tmp_path, monkeypatch):
+    model, _, requests, _ = _phase_transport_adapter(
+        tmp_path, monkeypatch, [("final_answer", ("Afgerond.",))],
+    )
+    result = _generate(model, completed_action=RECEIPT, available_actions=(TOOL.name,))
+    assert result.text == "Afgerond."
+    calls = [item for item in requests[0]["input"] if item["type"] == "function_call"]
+    assert len(calls) == 1
+    assert calls[0]["name"] == TOOL.name
+    assert calls[0]["namespace"] == TOOL.name
+    assert json.loads(calls[0]["arguments"]) == CALL.arguments
+    outputs = [item for item in requests[0]["input"] if item["type"] == "function_call_output"]
+    assert outputs[0]["call_id"] == calls[0]["call_id"]

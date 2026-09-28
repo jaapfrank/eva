@@ -1,0 +1,18 @@
+{
+  "base": "8254f4a2",
+  "hypothesis": "Explicit single-function namespaces defer descriptions as well as schemas; same namespace name as existing flat deferred replay",
+  "cases": [
+    "same frozen greeting as prior baseline",
+    "request newest saved own initiative result: select list or result tool without executing"
+  ],
+  "pass": [
+    "greeting input below6057 without tool removal",
+    "all64 descriptions and schemas preserved inside namespaces",
+    "tool request semantically appropriate with valid schema and original name"
+  ],
+  "limits": {
+    "modelRequests": 2,
+    "externalActions": 0
+  },
+  "unknown": "General discoverability, ordinary context latency and credits"
+}
