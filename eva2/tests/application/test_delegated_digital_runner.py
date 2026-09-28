@@ -1024,3 +1024,99 @@ def test_model_deadline_keeps_usage_and_prior_effect_without_retry(typed, cancel
     assert outcome.error_fingerprint == hashlib.sha256(
         (error_type.__name__ + ":conversation provider deadline exceeded").encode()).hexdigest()
     assert spec.grant.to_payload() == grant_before
+
+
+@pytest.mark.parametrize("legacy, prior_output, expected", [
+    (False, 0, "succeeded"), (True, 0, "internal_error"), (False, 37_200, "internal_error")])
+def test_real_adapter_uses_remaining_task_output_for_longer_tool_request(tmp_path, legacy, prior_output, expected):
+    from dataclasses import replace
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from eva.application.conversation import ConversationToolDescriptor
+    from tests.model.test_pydantic_conversation_model import _runtime_budget, _TaskOutputUsageModel
+    from tests.support.scripted_pydantic_conversation import ScriptedPydanticConversation, ScriptedPhase, ScriptedCall
+    _, old, _, tools, _, runner, _ = fixture()
+    runner.profile = replace(runner.profile, maximum_response_output_tokens=1_200,
+        maximum_response_input_tokens=65_536, maximum_input_tokens=2_097_152,
+        maximum_output_tokens=38_400, maximum_model_runs=32,
+        maximum_completed_model_responses=32, maximum_tool_calls=31)
+    grant = runner.profile.grant()
+    if legacy:
+        grant = runner.profile.compatible_grants()[-1]
+    spec = _budget_spec(runner.profile, old, grant=grant)
+    scripted = ScriptedPydanticConversation((
+        ScriptedPhase.deferred(ScriptedCall("discover", "discover_connector_tools", {})),
+        ScriptedPhase.deferred(ScriptedCall("perform", "use_connector_tool", {})),
+        ScriptedPhase.text("The comparison was stored and read back.")))
+    scripted.model = _TaskOutputUsageModel(scripted.model, (82, 1_634, 63))
+    class DurableJournal(Journal):
+        def complete_model_request(self, turn, request, usage, **kwargs): self.usages.append(usage)
+    journal = DurableJournal()
+    if prior_output:
+        journal.usages.append(ConversationModelUsage.measured(
+            model_attempts=1, tool_calls=0, input_tokens=100, output_tokens=prior_output))
+    runner.journal_factory = lambda *_: journal
+    runner.model = PydanticConversationModel(auth_file=tmp_path/"unused.json", model_backend=scripted.model,
+        resource_budget=_runtime_budget(max_input_tokens=65_536), conversation_tools=tuple(
+            ConversationToolDescriptor(name, "Controlled task tool", {"type":"object", "properties":{}, "required":[], "additionalProperties":False})
+            for name in tools.action_names))
+    tools.release.set()
+    outcome = asyncio.run(runner.run(spec, call_id="call:long-output"))
+    assert outcome.status == expected, outcome
+    assert [call[2] for call in tools.calls] == ([0, 1] if expected == "succeeded" else [0])
+    assert len(scripted.captures) == (3 if expected == "succeeded" else 2)
+    assert spec.grant == grant
+    if expected == "succeeded":
+        assert outcome.result is not None and 1_779 <= outcome.usage.output_tokens < grant.maximum_output_tokens
+        assert runner.model._resource_budget.max_output_tokens == 1_200
+
+
+@pytest.mark.parametrize("prior", ["exhausted", "unknown"])
+def test_background_unknown_or_exhausted_usage_stops_before_new_admission(tmp_path, prior):
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from tests.model.test_pydantic_conversation_model import _runtime_budget
+    from tests.support.scripted_pydantic_conversation import ScriptedPydanticConversation, ScriptedPhase
+    _, spec, _, tools, journal, runner, _ = fixture()
+    # Production journals convert an unknown admitted request to partial zeros.
+    journal.usages.append((ConversationModelUsage.partial if prior == "unknown" else ConversationModelUsage.measured)(
+        model_attempts=1, tool_calls=0, input_tokens=0,
+        output_tokens=0 if prior == "unknown" else spec.grant.maximum_output_tokens))
+    admissions = []
+    journal.begin_model_request = lambda turn: admissions.append(turn)
+    scripted = ScriptedPydanticConversation((ScriptedPhase.text("No call allowed."),))
+    runner.model = PydanticConversationModel(auth_file=tmp_path/"unused.json", model_backend=scripted.model,
+        resource_budget=_runtime_budget(max_input_tokens=65_536))
+    # No offered descriptors are needed to establish the pre-admission bound.
+    tools.available_for = lambda turn: False
+    outcome = asyncio.run(runner.run(spec, call_id="call:blocked-output"))
+    assert outcome.status == "budget_exceeded", outcome
+    assert admissions == scripted.captures == tools.calls == []
+
+
+
+def test_unknown_usage_after_unavailable_failure_cannot_start_internal_retry(tmp_path):
+    from eva.adapters.model.openai_codex_provider import CodexProviderError
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from tests.model.test_pydantic_conversation_model import _runtime_budget
+    from tests.support.scripted_pydantic_conversation import ScriptedPydanticConversation, ScriptedPhase
+    _, spec, _, tools, _, runner, _ = fixture()
+    admissions = []
+    class DurableJournal(Journal):
+        def begin_model_request(self, turn):
+            admissions.append(turn)
+            return str(len(admissions))
+        def complete_model_request(self, turn, request, usage, **kwargs): self.usages.append(usage)
+        def model_usage(self, turn):
+            return ConversationModelUsage.aggregate(tuple(
+                ConversationModelUsage.partial(model_attempts=1, tool_calls=0, input_tokens=0, output_tokens=0)
+                if usage.measurement == "unmeasured" else usage for usage in self.usages))
+    journal = DurableJournal()
+    runner.journal_factory = lambda *_: journal
+    scripted = ScriptedPydanticConversation((ScriptedPhase.failure(CodexProviderError("unavailable")),
+                                            ScriptedPhase.text("Retry must not start.")))
+    runner.model = PydanticConversationModel(auth_file=tmp_path/"unused.json", model_backend=scripted.model,
+        resource_budget=_runtime_budget(max_input_tokens=65_536))
+    tools.available_for = lambda turn: False
+    outcome = asyncio.run(runner.run(spec, call_id="call:unknown-retry"))
+    assert outcome.status == "budget_exceeded", outcome
+    assert len(admissions) == len(scripted.captures) == 1
+    assert tools.calls == [] and journal.usages == [ConversationModelUsage.unmeasured()]

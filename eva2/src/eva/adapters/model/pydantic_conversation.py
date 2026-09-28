@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
+
 import asyncio
 import base64
 from datetime import UTC, datetime
@@ -45,6 +47,7 @@ from pydantic_ai.messages import (
 from pydantic_ai.models import Model
 from pydantic_ai.usage import UsageLimits
 
+from eva.application.background_execution import background_model_output_limit
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
@@ -754,6 +757,7 @@ class PydanticConversationModel:
         completed_action: ConversationActionReceipt | None = None,
         prior_actions: tuple[ConversationActionReceipt, ...] = (),
         cache_key: str | None = None,
+        output_tokens_limit: Callable[[], int] | None = None,
     ) -> tuple[str, ConversationActionCall | None, ConversationModelUsage,
                ConversationModelTiming]:
         """Run one framework-owned phase and stop before external execution."""
@@ -767,6 +771,7 @@ class PydanticConversationModel:
         async def run(
             model_backend: Model,
             output_started: list[bool],
+            maximum_output_tokens: int | None,
         ) -> tuple[
             str,
             ConversationActionCall | None,
@@ -891,11 +896,7 @@ class PydanticConversationModel:
                             if self._resource_budget is not None
                             else None
                         ),
-                        output_tokens_limit=(
-                            self._resource_budget.max_output_tokens
-                            if self._resource_budget is not None
-                            else None
-                        ),
+                        output_tokens_limit=maximum_output_tokens,
                     ),
                     event_stream_handler=capture_events,
                 )
@@ -987,6 +988,10 @@ class PydanticConversationModel:
             dispatched_attempts = 0
             for attempt in range(2):
                 check_cancellation()
+                # Refresh before admission: retries and language repair spend
+                # the same durable task balance, never a fresh response budget.
+                maximum_output_tokens = (output_tokens_limit() if output_tokens_limit is not None
+                    else self._resource_budget.max_output_tokens if self._resource_budget is not None else None)
                 output_started = [False]
                 session = None
                 request_id = None
@@ -1027,7 +1032,7 @@ class PydanticConversationModel:
                     if injected_backend is not None:
                         request_id = begin_current_model_request()
                         dispatched_attempts += 1
-                        phase = await run(injected_backend, output_started)
+                        phase = await run(injected_backend, output_started, maximum_output_tokens)
                     else:
                         provider = OpenAICodexProvider(
                             OpenAICodexProviderSettings(
@@ -1043,7 +1048,7 @@ class PydanticConversationModel:
                         async with provider as session:
                             request_id = begin_current_model_request()
                             dispatched_attempts += 1
-                            phase = await run(session.model, output_started)
+                            phase = await run(session.model, output_started, maximum_output_tokens)
                             raw_usage_consumed = True
                             raw_usage = session.consume_raw_usage()
                         usage = phase[2]
@@ -1277,6 +1282,12 @@ class PydanticConversationModel:
                        and selected_recent[0].role.casefold() in {"assistant", "eva"}):
                     selected_recent = selected_recent[1:]
                 omitted = True
+        # Capture the starting allowance for this generate result. Per-provider
+        # requests refresh it separately; final aggregation must not subtract
+        # this result's output a second time.
+        initial_output_limit = background_model_output_limit(turn)
+        task_output_limit = (None if initial_output_limit is None
+                             else lambda: background_model_output_limit(turn))
         usages: list[ConversationModelUsage] = []
         timings: list[ConversationModelTiming] = []
         text, action_call, usage, timing = self._run_pydantic_phase(
@@ -1286,6 +1297,7 @@ class PydanticConversationModel:
             completed_action=completed_action,
             prior_actions=prior_actions,
             cache_key=self._cache_key(turn),
+            output_tokens_limit=task_output_limit,
         )
         usages.append(usage)
         timings.append(timing)
@@ -1316,6 +1328,7 @@ class PydanticConversationModel:
                 completed_action=completed_action,
                 prior_actions=prior_actions,
                 cache_key=self._cache_key(turn),
+                output_tokens_limit=task_output_limit,
             )
             usages.append(usage)
             timings.append(timing)
@@ -1334,6 +1347,7 @@ class PydanticConversationModel:
         self._enforce_reported_usage(
             aggregate_usage,
             maximum_model_attempts=2 * len(usages),
+            output_tokens_limit=initial_output_limit,
         )
         return ConversationModelResult(
             text=text.strip() or None,
@@ -2155,6 +2169,7 @@ class PydanticConversationModel:
         *,
         maximum_model_attempts: int = 2,
         provider_managed_research_input: bool = False,
+        output_tokens_limit: int | None = None,
     ) -> None:
         budget = self._resource_budget
         if budget is None:
@@ -2179,10 +2194,11 @@ class PydanticConversationModel:
             raise ConversationModelError(
                 "conversation provider exceeded the runtime input budget", model_usage=usage
             )
-        if usage.output_tokens > budget.max_output_tokens:
+        maximum_output_tokens = budget.max_output_tokens if output_tokens_limit is None else output_tokens_limit
+        if usage.output_tokens > maximum_output_tokens:
             logging.getLogger(__name__).warning(
                 "Model output budget exceeded: measured_input=%d measured_output=%d limit=%d",
-                usage.input_tokens, usage.output_tokens, budget.max_output_tokens,
+                usage.input_tokens, usage.output_tokens, maximum_output_tokens,
             )
             raise ConversationModelError(
                 "conversation provider exceeded the runtime output budget", model_usage=usage

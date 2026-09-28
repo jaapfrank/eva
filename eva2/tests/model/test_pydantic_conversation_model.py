@@ -1388,3 +1388,99 @@ def test_failure_diagnostic_bounds_cyclic_chains_and_unknown_category(caplog):
     assert record["exception_chain"] == ["CodexProviderError"]
     assert record["provider_category"] == "other"
     assert "private-provider-text" not in caplog.text
+
+
+class _TaskOutputUsageModel(WrapperModel):
+    """Supply observed-size accounting through the real streamed model boundary."""
+    def __init__(self, model, outputs, *, input_tokens=19_333):
+        super().__init__(model)
+        self.outputs = iter(outputs)
+        self.input_tokens = input_tokens
+
+    @asynccontextmanager
+    async def request_stream(self, *args, **kwargs):
+        async with self.wrapped.request_stream(*args, **kwargs) as response:
+            response._usage = RequestUsage(input_tokens=self.input_tokens, output_tokens=next(self.outputs))
+            yield response
+
+
+@pytest.mark.parametrize("allowance, accepted", [(None, False), (38_400, True), (1_200, False)])
+def test_background_task_output_allowance_preserves_foreground_and_legacy_caps(tmp_path, allowance, accepted):
+    from contextlib import nullcontext
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+    scripted = ScriptedPydanticConversation((ScriptedPhase.deferred(
+        ScriptedCall(CALL.call_id, CALL.name, CALL.arguments)),))
+    scripted.model = _TaskOutputUsageModel(scripted.model, (1_634,))
+    budget = _runtime_budget(max_input_tokens=65_536)
+    model = _adapter(tmp_path, scripted, resource_budget=budget)
+    scope = (nullcontext() if allowance is None else background_execution(
+        BackgroundExecutionScope(_turn(), "work:output", remaining_model_output_tokens=lambda turn: allowance)))
+    with scope:
+        if accepted:
+            result = _generate(model, available_actions=(TOOL.name,))
+            assert result.action_call == CALL
+            assert result.usage.output_tokens >= 1_634
+        else:
+            with pytest.raises(ConversationModelError) as raised:
+                _generate(model, available_actions=(TOOL.name,))
+            assert type(raised.value.__cause__).__name__ == "UsageLimitExceeded"
+    assert len(scripted.captures) == 1
+    assert budget.max_output_tokens == 1_200
+
+
+@pytest.mark.parametrize("allowance, accepted", [(3_500, True), (2_000, False)])
+def test_background_language_repair_refreshes_remaining_output_without_double_subtraction(tmp_path, allowance, accepted):
+    from dataclasses import replace
+    from eva.adapters.objects.identity_verifier import load_current_identity_pack
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+    from eva.application.conversation import observe_model_requests
+    scripted = ScriptedPydanticConversation((ScriptedPhase.text("Привет"), ScriptedPhase.text("Hallo Jaap.")))
+    scripted.model = _TaskOutputUsageModel(scripted.model, (1_634, 1_000), input_tokens=100)
+    usages, admitted, seen_limits = [], [], []
+    class Journal:
+        def begin_model_request(self, turn):
+            admitted.append(len(admitted))
+            return str(admitted[-1])
+        def complete_model_request(self, turn, request, usage, **kwargs): usages.append(usage)
+    def remaining(turn):
+        limit = allowance - sum(usage.output_tokens or 0 for usage in usages)
+        seen_limits.append(limit)
+        return limit
+    identity = replace(_identity(), identity_pack=load_current_identity_pack())
+    model = _adapter(tmp_path, scripted, resource_budget=_runtime_budget(max_input_tokens=65_536))
+    with background_execution(BackgroundExecutionScope(_turn(), "work:repair", remaining_model_output_tokens=remaining)), observe_model_requests(_turn(), Journal()):
+        if accepted:
+            result = model.generate(_turn(), identity, _memory(), ())
+            assert result.text == "Hallo Jaap."
+            assert 2_634 <= result.usage.output_tokens <= allowance
+        else:
+            with pytest.raises(ConversationModelError): model.generate(_turn(), identity, _memory(), ())
+    assert len(admitted) == len(scripted.captures) == 2
+    assert seen_limits[0] == allowance and seen_limits[-1] < allowance - 1_600
+
+
+@pytest.mark.parametrize("allowance", [0, -1, True, "38400"])
+def test_background_invalid_output_allowance_stops_before_provider_admission(tmp_path, allowance):
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+    from eva.application.conversation import ConversationConflict, observe_model_requests
+    scripted = ScriptedPydanticConversation((ScriptedPhase.text("No call allowed."),))
+    class Journal:
+        def begin_model_request(self, turn): raise AssertionError("must stop before admission")
+    with background_execution(BackgroundExecutionScope(_turn(), "work:empty", remaining_model_output_tokens=lambda turn: allowance)), observe_model_requests(_turn(), Journal()):
+        with pytest.raises(ConversationConflict): _generate(_adapter(tmp_path, scripted, resource_budget=_runtime_budget()))
+    assert scripted.captures == []
+
+
+def test_background_output_allowance_does_not_bypass_source_or_input_guard(tmp_path):
+    from dataclasses import replace
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+    from eva.application.conversation import ConversationConflict
+    scripted = ScriptedPydanticConversation((ScriptedPhase.text("No call allowed."),))
+    model = _adapter(tmp_path, scripted, resource_budget=_runtime_budget())
+    with background_execution(BackgroundExecutionScope(replace(_turn(), message_id="other"), "work:other", remaining_model_output_tokens=lambda turn: 38_400)):
+        with pytest.raises(ConversationConflict, match="source turn"):
+            _generate(model)
+    with background_execution(BackgroundExecutionScope(_turn(), "work:input", remaining_model_output_tokens=lambda turn: 38_400)):
+        with pytest.raises(ConversationModelError, match="input|budget"):
+            _generate(model, completed_action=ConversationActionReceipt(CALL, {"large": "word " * 20_000}))
+    assert scripted.captures == []

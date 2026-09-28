@@ -417,6 +417,19 @@ class DelegatedDigitalRunner:
                 if value is not None and value > maximum:
                     raise _DigitalBudgetExceeded("background model budget exceeded")
 
+        def remaining_model_output(turn):
+            authorize(turn)
+            actual = journal.model_usage(turn)
+            # An empty durable journal is unmeasured. Admitted requests without
+            # known usage become partial totals, so they cannot renew allowance.
+            if actual.measurement == "partial":
+                raise _DigitalBudgetExceeded("background model output usage is incomplete")
+            consumed = actual.output_tokens if actual.measurement == "measured" else 0
+            remaining = spec.grant.maximum_output_tokens - consumed
+            if remaining <= 0:
+                raise _DigitalBudgetExceeded("background model output budget exhausted")
+            return remaining
+
         async def watch():
             while True:
                 if cancellation_event is not None and cancellation_event.is_set():
@@ -460,7 +473,8 @@ class DelegatedDigitalRunner:
                                     attempt_work_id=spec.work_id,
                                     budget_context=lambda: _remaining_budget_context(spec.grant, latest_usage,
                                         calls=actions.calls, dispatches=actions.dispatches,
-                                        response_output_tokens=self.profile.maximum_response_output_tokens,
+                                        response_output_tokens=(max(0, spec.grant.maximum_output_tokens - latest_usage.output_tokens)
+                                            if latest_usage.measurement == "measured" else None),
                                         response_input_tokens=self.profile.maximum_response_input_tokens))
             conversation = LivingConversation(self.memory, task_model, self.identity, actions)
 
@@ -468,7 +482,8 @@ class DelegatedDigitalRunner:
                 # Continue the same admitted attempt, accounting identity and
                 # budgets. Never admit another task or retry an uncertain effect.
                 prompted_states = set()
-                with cancellation_scope(signal), background_execution(BackgroundExecutionScope(source, spec.execution_id, dispatch_guard)):
+                with cancellation_scope(signal), background_execution(BackgroundExecutionScope(
+                    source, spec.execution_id, dispatch_guard, remaining_model_output)):
                     while True:
                         reply = conversation.respond(source, before_step=checkpoint, model_journal=journal)
                         authorize(source)

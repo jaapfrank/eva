@@ -16,6 +16,7 @@ class BackgroundExecutionScope:
     source_turn: ConversationTurn
     work_id: str
     authorize_dispatch: Callable[[ConversationTurn], None] | None = None
+    remaining_model_output_tokens: Callable[[ConversationTurn], int] | None = None
 
     def __post_init__(self) -> None:
         if self.source_turn.audience.kind not in {"private_person", "household"}:
@@ -66,3 +67,17 @@ def authorize_background_dispatch(turn: ConversationTurn) -> None:
         if scope.authorize_dispatch is None:
             raise ConversationConflict("background connector dispatch requires a job guard")
         scope.authorize_dispatch(turn)
+
+
+def background_model_output_limit(turn: ConversationTurn) -> int | None:
+    """Read the admitted task's remaining output allowance for its exact source."""
+    scope = _current.get()
+    if scope is None:
+        return None
+    background_execution_namespace(turn)
+    if scope.remaining_model_output_tokens is None:
+        return None
+    remaining = scope.remaining_model_output_tokens(turn)
+    if isinstance(remaining, bool) or not isinstance(remaining, int) or remaining <= 0:
+        raise ConversationConflict("background model output allowance is invalid")
+    return remaining
