@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-09-28T17:07:11.903425+00:00",
+  "baseCommit": "5d20aa37",
+  "status": "measured_candidate_not_installed",
+  "finding": "No full request snapshot exists for real 5201/5681-token greetings; precise partition cannot be reconstructed from usage alone.",
+  "localTokenizerCounts": {
+    "before": [
+      194,
+      325,
+      64
+    ],
+    "candidate": [
+      101,
+      155,
+      43
+    ],
+    "reduction": 284
+  },
+  "decision": "Do not start another standalone release/probe cycle for this small unmeasured-latency improvement. Candidate retained outside active source for a suitable future bundle.",
+  "artifactDirectory": "/home/administrator/project/.eva2-artifacts/contact-guidance-compact-20260928",
+  "modelCalls": 0,
+  "runtimeChanged": false,
+  "credits": "unknown",
+  "next": "Inspect existing deferred tool namespace representation before changing user context. Any larger candidate requires retained capability/replay proof; no new router or model."
+}

@@ -2675,15 +2675,15 @@
           }
         ],
         "now": {
-          "title": "Begroeting zonder onnodige verbindingscontrole",
-          "state": "Geïnstalleerd · twee echte websiteproeven gecontroleerd",
-          "detail": "Hallo5,734s en sociale vraag3,819s: elk één Sol-aanvraag, nul tools. Oude Telegrambegroeting deed statustool plus Astra. Omweg gecorrigeerd; geen gelijke kanaalvergelijking of instantclaim. Onafhankelijke resultaatreview akkoord.",
-          "doneWhen": "Gemeten bottleneck gericht opgelost, snelle eenvoudige reactie gecontroleerd met behoud van identiteit/geheugen en taakroutering; tests, review, installatie en echte routevergelijking."
+          "title": "Contactinvoer gemeten · kleine kandidaat niet geïnstalleerd",
+          "state": "Begrensde controle afgerond",
+          "detail": "Routeringsuitleg583teksttokens; compacte kandidaat299. Geen volledige historische invoeropname, dus geen exacte toedeling van5.201–5.681 providertokens. Geen runtimewijziging of modelproef voor deze kleine winst. Kandidaat bewaard voor bundeling.",
+          "doneWhen": "Overbodige invoer aantoonbaar verminderd zonder verlies van persoonscontext, taakaanname/stoppen of tooltoegang; gerichte controles/review/installatie en begrensde echte proef."
         },
         "next": {
-          "title": "C1 · Resterende wachttijd eenvoudige gesprekken",
+          "title": "C1 · Bestaande toolcatalogus minder zwaar aanbieden",
           "state": "Nog niet gestart",
-          "detail": "Eenvoudige contactaanvragen bevatten nog5.201–5.681 invoertokens. Beoordeel bestaande contactinvoer op onnodige taak-/catalogusinformatie; behoud identiteit, relevante context en toegang tot werk. Geen nieuwe modelkeuze of identieke herhaling."
+          "detail": "Controleer bestaande deferred namespaces op overbodige catalogustekst; behoud tools en bewaarde uitvoerreceipts. Pas alleen aan bij aantoonbaar grotere winst, zonder nieuwe router of geheugenverlies."
         },
         "ownerAction": {
           "title": "Toolgebruik na cataloguswijziging proberen",
@@ -2697,7 +2697,7 @@
           "expected": "Eigenaar bevestigt: nieuwste bijdrage met /eva2 correct opgehaald. Wachttijd blijft onvoldoende; Hallo11s. Antwoord van Eva1 zonderprefix was de andere route, geen mislukte Eva2-resultaatophaling."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T17:02:02.339979+00:00"
+        "reviewedAt": "2026-09-28T17:07:11.903425+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12607,11 +12607,11 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "baseCommit": "ddf8b372",
+          "baseCommit": "5d20aa37",
           "startedAt": "2026-09-28T08:27:21.204348+00:00",
           "owner": "/root",
           "endCondition": "Telegram and website greet warmly with measured content latency and answer a social turn before admitted background research completes, bound to the original question; retain existing working routes.",
-          "effortNotice": "10min begrensde log/broncontrole, dan gemotiveerde kleinste wijziging; maximaal twee nieuwe modelproeven na wijziging. Credits onbekend.",
+          "effortNotice": "10min inputdiagnose zonder modelcalls; alleen gemeten kandidaat verbeteren; credits onbekend.",
           "fileOwnership": {
             "/root": [
               "eva2/src/eva/adapters/model/pydantic_conversation.py",
@@ -12662,7 +12662,8 @@
             "expected": "Social answer before research result; result replies to original research question.",
             "blocksIndependentWork": false
           },
-          "ordinaryRetrievalPerformanceEvidence": "eva2/evidence/product/own-initiative-return-20260928.json"
+          "ordinaryRetrievalPerformanceEvidence": "eva2/evidence/product/own-initiative-return-20260928.json",
+          "contactInputEvidence": "eva2/evidence/product/contact-guidance-size-20260928.json"
         },
         {
           "id": "C2",
