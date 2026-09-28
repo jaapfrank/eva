@@ -5,3 +5,7 @@ Isolated execution probe, not an installed Eva feature. Run `npm ci` and `node s
 FastVLM model weights were not selected: its Apple AMLR license excludes product development. GLaDOS code MIT does not override model licensing. SmolVLM2 is a provisional Apache-2.0 candidate, not a proven best model. No new model tokenizer or inference engine is implemented; the probe uses Transformers.js.
 
 Next meaningful evaluation requires fixed recorded scenes, expected observations, unchanged/changed/obscured cases, latency and CPU/GPU memory measurements. Household vision must feed the existing sensory/initiative route, preserve capture time and source, and distinguish image inference from verified fact. No separate memory, scheduler or bin-specific core.
+
+## Backend follow-up
+
+`EVA_VISION_DEVICE` explicitly selects cpu/webgpu/cuda; `EVA_VISION_CACHE` may reuse an existing model cache. Backend name alone does not establish physical GPU execution. WSL enumerated llvmpipe only, and that trial was stopped. One native Windows WebGPU run returned the same correct27-token answer in13.017s generation plus6.908s loading. WSL CPU baseline25.082s generation is a single-run cross-platform comparison, not a causal or distributional benchmark. Native Windows adapter identity and actual camera quality remain unproved. See evidence/product/local-vision-backends-20260928.json.

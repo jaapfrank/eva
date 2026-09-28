@@ -2523,15 +2523,15 @@
           }
         ],
         "now": {
-          "title": "I2 · Lokale beeldproef uitgevoerd",
-          "state": "Geïsoleerde proef afgerond; review akkoord",
-          "detail": "Eén synthetisch beeld correct, volledig lokaal. Modelberekening25,1s op CPU, laden17,5s apart. Geen echte-camera- of snelheidsclaim; niets geïnstalleerd.",
-          "doneWhen": "Deze uitvoerproef afgerond. Echte beeldkwaliteit en versnelling blijven open."
+          "title": "I2 · Lokale visionbackends vergeleken",
+          "state": "Geïsoleerde vergelijking afgerond; review akkoord",
+          "detail": "Windows WebGPU13,0s modeltijd, eerdere WSL CPU25,1s. Eén synthetisch beeld, identiek correct antwoord. WSL WebGPU gestopt wegens alleen softwarerenderer. Geen productinstallatie.",
+          "doneWhen": "Beperkte uitkomst vastleggen; fysieke Windows GPU en echte camerakwaliteit blijven open."
         },
         "next": {
-          "title": "I2 · Echte beeldkwaliteit en versnelling",
+          "title": "M3 · Persoonlijke ontwikkeling in samenhang",
           "state": "Nog niet gestart",
-          "detail": "Camera voor vuilnisbakken gevraagd. Vastgelegde beelden en GPU-route beoordelen; niet de identieke CPU-proef herhalen. Niets aan de live installatie gewijzigd."
+          "detail": "Vervolg bestaande M3-eindvoorwaarden met bestaand bewijs. Vision: echte scèneproef na camerakeuze; geen herhaalde synthetische blokjesproef."
         },
         "ownerAction": {
           "title": "Later hetzelfde onderwerp voortzetten",
@@ -2545,7 +2545,7 @@
           "expected": "Eva haalt relevante eerdere context terug. Geaccepteerd onthouden, corrigeren en vergeten hoef je niet opnieuw te testen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T12:46:28.847130+00:00"
+        "reviewedAt": "2026-09-28T12:52:11.201509+00:00"
       }
     },
     "pendingTechnicalReview": {

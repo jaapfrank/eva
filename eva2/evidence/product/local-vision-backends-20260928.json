@@ -1,0 +1,48 @@
+{
+  "checkedAt": "2026-09-28T12:51:51.012039+00:00",
+  "status": "isolated_backend_comparison_not_installed",
+  "sourceBasis": "5cd4710a",
+  "hypothesis": "Explicit acceleration backend may reduce prior25s CPU generation time; same pinned model/image/prompt/dtypes/token bound.",
+  "wslWebgpu": {
+    "result": "terminated_after_software_device_identified",
+    "processTerminalExit": -15,
+    "vulkanDevices": [
+      {
+        "name": "llvmpipe (LLVM20.1.2,256bits)",
+        "deviceType": 4
+      }
+    ],
+    "generatedResult": false,
+    "noAutomaticRetry": true
+  },
+  "windowsWebgpu": {
+    "model": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+    "revision": "7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+    "device": "webgpu",
+    "loadMs": 6907.6417,
+    "inferenceMs": 13017.358200000002,
+    "text": [
+      " There are three coloured blocks visible. The first block is red, the second block is green, and the third block is blue."
+    ],
+    "outputTokens": 27
+  },
+  "baselineCpuMs": 25081.561073999997,
+  "limits": [
+    "One completed run per platform; Windows versus WSL confounds hardware and OS. No p50/p95 claim.",
+    "Reported times cover model.generate only; loading and preprocessing are separate.",
+    "Exact Windows physical adapter not established; do not claim verified RTX5080 acceleration.",
+    "Synthetic blocks only. No camera scene inference, visual/calendar correlation or installed Eva feature."
+  ],
+  "usage": {
+    "attemptedLocalGenerations": 2,
+    "completedLocalGenerations": 1,
+    "completedOutputTokens": 27,
+    "cloudModelCalls": 0,
+    "creditCost": null
+  },
+  "nextAction": "Retain prototype only. Camera choice pending for fixed real-scene quality; no further identical synthetic runs. Exact adapter and sustained performance matter before selecting production runtime. Continue independent M3 work meanwhile.",
+  "review": {
+    "reviewer": "/root/platform_research_20260927",
+    "result": "GO for limited recording; explicit backend is not physical adapter evidence; cross-platform single-run limitation retained"
+  }
+}

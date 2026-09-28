@@ -1,12 +1,14 @@
 import {AutoProcessor, AutoModelForVision2Seq, RawImage, env} from '@huggingface/transformers';
 import fs from 'node:fs';
-env.cacheDir='./cache';
+env.cacheDir=process.env.EVA_VISION_CACHE ?? './cache';
 const id='HuggingFaceTB/SmolVLM2-500M-Video-Instruct';
 const revision='7b375e1b73b11138ff12fe22c8f2822d8fe03467';
+const device=process.env.EVA_VISION_DEVICE ?? 'cpu';
+if (!['cpu','webgpu','cuda'].includes(device)) throw new Error('Unsupported explicit probe device');
 const started=performance.now();
 console.log('Loading pinned processor and model');
 const processor=await AutoProcessor.from_pretrained(id,{revision});
-const model=await AutoModelForVision2Seq.from_pretrained(id,{revision,device:'cpu',dtype:{embed_tokens:'fp32',vision_encoder:'q8',decoder_model_merged:'q4'},session_options:{intraOpNumThreads:4}});
+const model=await AutoModelForVision2Seq.from_pretrained(id,{revision,device,dtype:{embed_tokens:'fp32',vision_encoder:'q8',decoder_model_merged:'q4'},session_options:{intraOpNumThreads:4}});
 const loaded=performance.now();
 const w=384,h=256,data=new Uint8ClampedArray(w*h*3).fill(240);
 for(let y=70;y<190;y++)for(let x=30;x<350;x++){const b=Math.floor((x-30)/110);if((x-30)%110>=80)continue;const colors=[[210,30,30],[30,170,45],[25,60,210]];data.set(colors[b],(y*w+x)*3);}
@@ -16,5 +18,5 @@ const inputs=await processor(prompt,img);
 console.log('Model loaded; running one local case');
 const t=performance.now();
 const out=await model.generate({...inputs,max_new_tokens:80,do_sample:false});
-const result={model:id,revision,device:'cpu',loadMs:loaded-started,inferenceMs:performance.now()-t,text:processor.batch_decode(out.slice(null,[inputs.input_ids.dims.at(-1),null]),{skip_special_tokens:true}),outputTokens:out.dims.at(-1)-inputs.input_ids.dims.at(-1)};
-fs.writeFileSync('result.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));await model.dispose();
+const result={model:id,revision,device,loadMs:loaded-started,inferenceMs:performance.now()-t,text:processor.batch_decode(out.slice(null,[inputs.input_ids.dims.at(-1),null]),{skip_special_tokens:true}),outputTokens:out.dims.at(-1)-inputs.input_ids.dims.at(-1)};
+fs.writeFileSync(`result-${device}.json`,JSON.stringify(result,null,2));console.log(JSON.stringify(result));await model.dispose();
