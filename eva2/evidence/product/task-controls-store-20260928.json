@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-09-28T17:55:34.572844+00:00",
+  "slice": "T4",
+  "status": "control_path_verified",
+  "sourceCommit": "f3dfcc1d",
+  "outcome": "Actual packaged owner UI stops and resumes A, corrects B, and reopens existing B successor without a duplicate, through real API/owner service/PostgreSQL.",
+  "review": {
+    "authorOfFixture": "/root/platform_research_20260927",
+    "reviewerOfFixtureAndStoredState": "/root",
+    "resultReviewer": "/root/platform_research_20260927",
+    "result": "GO for bounded UI-to-store control evidence"
+  },
+  "results": {
+    "originalAttemptsRetained": 2,
+    "successors": 2,
+    "totalRows": 4,
+    "aState": "original stopped, one admitted successor",
+    "bState": "original stopped, one admitted successor with exact correction",
+    "repeatResume": "existing successor returned, created=false",
+    "providerCallsStarted": 0
+  },
+  "limits": [
+    "Synthetic tasks and isolated current-schema database, not owner acceptance.",
+    "No worker/model executed; this does not prove live stop during model execution or application of correction by a model. Existing C2 evidence covers controlled active work separately.",
+    "Fixture uses HEAD source. API, owner service, correction and scheduler modules match installed; store differs by independently reviewed method extraction with same behavior on these routes. Worker bootstrap restore differences are not exercised.",
+    "External channel/worker observations remain unknown in new status UI; full T4 remains open."
+  ],
+  "artifactsDirectory": "/home/administrator/project/.eva2-artifacts/t4-owner-controls-20260928",
+  "artifacts": {
+    "real-server.py": "72065351da01a7ffef83d4c48d80f369945593859e9f5d1fedf01bdc33354611",
+    "real-launcher.py": "34327cb8146132e5ffe22764550ae47aae923640c584e94352c558019661b0f7",
+    "controls.jsonl": "68004e593b668a860926539bbf7768be4a65544ddd4c1ed97c15acf6f4ca65a1",
+    "final-state.json": "df7985427aba3d6aa7226fc7e44177479d71dcab8bcf29d9f5fafab05d9885fb",
+    "control-source-comparison.json": "7d2955edacc794f8d075727374e76368a97ebd33fecec00706cd08704f78d740",
+    "store-source-diff.txt": "b8c090c528fbbc815e123cdef8e55e4f02347e8448cba38d762d5ffe8127bbaa",
+    "cleanup.json": "fd56a2ef4f7baa1d3c2ecb2a8a088833f9c3e2b12679289e4c36c890f90be6e2"
+  },
+  "usage": {
+    "evaModelCalls": 0,
+    "externalTaskActions": 0,
+    "creditCost": null
+  },
+  "ownerAccepted": false
+}

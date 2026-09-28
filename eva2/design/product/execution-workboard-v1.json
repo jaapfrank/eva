@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Stoppen, bijsturen en hervatten via echte taakopslag bevestigd",
+            "date": "28 september",
+            "state": "tested",
+            "result": "Bestaande knoppen bedienen twee afzonderlijke synthetische taken; originelen blijven bestaan en herhaald hervatten verdubbelt niets. Onafhankelijk beoordeeld.",
+            "remaining": "Geen nieuwe bouw of live huisactie; modeluitvoering niet onderdeel van deze proef. Kanaal-/werkerwaarnemingen en volledige T4 blijven open.",
+            "source": "eva2/evidence/product/task-controls-store-20260928.json"
+          },
+          {
             "title": "Afzonderlijke onderdeelstatus op eigenaarpagina",
             "date": "28 september",
             "state": "installed",
@@ -2700,14 +2708,14 @@
         ],
         "now": {
           "title": "T4 · Taken bedienen en resultaten terugvinden",
-          "state": "Statusweergave geïnstalleerd en live gecontroleerd",
-          "detail": "Opslag/geheugen en ontvangen websiteaanvraag afzonderlijk zichtbaar met meettijd. Niet gemeten kanalen blijven grijs. Verversen en donker contrast gecontroleerd op echte pagina. Bron0faffac8, contrast0f16076a; kern/werker gezond. Geen volledige T4-afronding.",
-          "doneWhen": "Beschermde statusroute en eigenaarpagina tonen afzonderlijke metingen/tijd en onbekende kanalen; gericht getest, onafhankelijk beoordeeld, geïnstalleerd en live zichtbaar."
+          "state": "Taakbediening technisch bevestigd",
+          "detail": "Echte UI/API/PostgreSQL in aparte testdatabase: A gestopt/hervat; B exact bijgestuurd; opnieuw hervatten opent bestaande poging. Beide originelen behouden, precies2vervolgpogingen, nul modelcalls. Geen nieuwe productbouw nodig. Testdatabase verwijderd.",
+          "doneWhen": "Bedieningsbewijs afgerond; resterend voor T4 zijn beschikbare kanaal-/werkerwaarnemingen. Eigenaaracceptatie apart."
         },
         "next": {
-          "title": "T4 · Ontbrekende bediening en waarnemingen afronden",
+          "title": "T4 · Bestaande bereikbaarheidssignalen aansluiten",
           "state": "Nog niet gestart",
-          "detail": "Bestaande stop/bijstuur/hervatroute via begrensde geïsoleerde UI-proef afronden en bestaande kanaal-/werkerwaarnemingen aansluiten waar beschikbaar. Geen nieuwe taakopslag of modelproeven voor status."
+          "detail": "Zoek per werkelijk aangesloten kanaal/module een bestaande actuele waarneming. Sluit die gericht op bestaande statusprojectie aan; geen groen op configuratie en geen nieuwe monitorinfrastructuur zonder concreet tekort."
         },
         "ownerAction": {
           "title": "Statusweergave bekijken",
@@ -2720,7 +2728,7 @@
           "expected": "Opslag/geheugen krijgen een gemeten uitslag. Onbeproefde onderdelen blijven Niet gemeten; dat betekent niet dat ze defect zijn."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T17:43:17.246114+00:00"
+        "reviewedAt": "2026-09-28T17:55:34.572844+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13105,10 +13113,10 @@
             ]
           },
           "lastAttempt": {
-            "state": "component_observations_installed",
-            "evidence": "eva2/evidence/product/owner-component-status-20260928.json"
+            "state": "actual_ui_api_store_controls_verified",
+            "evidence": "eva2/evidence/product/task-controls-store-20260928.json"
           },
-          "remaining": "Separate dated channel/module health observations plus missing UI correction/resume acceptance; existing task controls/results/usage retained."
+          "remaining": "Connect existing current channel/module observations where available; owner acceptance distinct. UI stop/correct/resume path technically verified without model execution."
         },
         {
           "id": "I1",
@@ -13428,7 +13436,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "C1",
+      "activeSliceId": "T4",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

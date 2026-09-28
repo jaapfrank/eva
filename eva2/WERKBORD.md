@@ -1,5 +1,9 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**T4 taakbediening technisch bevestigd:** echte UI/API/PostgreSQL-proef: A stoppen/hervatten, B bijsturen en één geplande vervolgpoging, nogmaals hervatten opent bestaande poging. Twee originelen blijven bewaard; vier rijen totaal, geen modelcall of huisactie. Onafhankelijk beoordeeld; testdatabase verwijderd. Bestaande productbediening behouden, geen onnodige bouw/installatie. Volgende: beschikbare kanaal-/werkerwaarnemingen aansluiten, nog niet gestart; volledige T4 en eigenaaracceptatie open. [Bewijs](evidence/product/task-controls-store-20260928.json).
+
+**Nu — T4 bestaande taakknoppen, basisf3dfcc1d:** coördinator controleert actuele UI/API in geïsoleerde fixture; platform_research_20260927 zoekt herbruikbare echte backendproef. Geen productieopdrachten of modelcalls. Eerste ronde15min; sluit bewijs van stoppen/bijsturen/hervatten aan zonder bestaande functies opnieuw te bouwen. Vorige beurt: voortgang door geïnstalleerde statusweergave.
+
 **Opgeleverd — onderdeelstatus op eigenaarpagina:** bron0faffac8 en contrast0f16076a geïnstalleerd op gezonde kern/werker. Afzonderlijke opslag-/geheugenmeting, websiteaanvraag, meettijd en verversen live gecontroleerd; onbeproefde kanalen eerlijk onbekend. Gerichte controles en onafhankelijke review akkoord; historische bronhashmanifesttest blijft afwijkend. Geen modelcalls. Volgende: resterende T4-bedieningsproef en beschikbare kanaal-/werkerwaarnemingen, nog niet gestart. Geen volledige T4-claim. [Bewijs](evidence/product/owner-component-status-20260928.json).
 
 **Nu — T4 status aansluiten, basisab58f96f:** coördinator bezit adapters/api/dashboard_health.py, app.py-wiring, frontend OwnerHealth en gerichte tests/assets. Bestaande gezondheidschecks hergebruiken; onbekende externe kanalen eerlijk tonen. Raming20–30min, geen modelcalls; review/installatie/livepagina horen bij afronding.
