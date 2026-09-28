@@ -2748,14 +2748,14 @@
         ],
         "now": {
           "title": "Leren en zelfstandig hergebruiken afronden",
-          "state": "Voorbereiding",
-          "detail": "Bestaande leer-/vaardigheidsroute hergebruiken. Eerdere agenda-hergebruikproef slaagde, eerste leren had ontwikkelhulp nodig. Eén nieuwe gedocumenteerde taak zonder die hulp voorbereiden.",
+          "state": "Geblokkeerde proef",
+          "detail": "Eerste gewone leeraanvraag eindigde na64,292s: modeldeadline vóór taakopname. Geen nieuwe werkwijze of resultaat; hergebruik niet gestart. Geen automatische herhaling.",
           "doneWhen": "Eva leert uit documentatie, bewaart een uitvoerbare werkwijze en past die op andere invoer toe zonder nieuwe kerncode of ontwikkelhints; resultaat onafhankelijk gecontroleerd."
         },
         "next": {
-          "title": "Eén volledige leeropdracht en nieuwe invoer",
-          "state": "Nog niet uitgevoerd",
-          "detail": "Criteria en beperkte invoer eerst vastleggen. Initiatief/camera blijft open; geen budgetreset of onbewezen afronding."
+          "title": "Eerste modelaanvraag weer betrouwbaar laten aannemen",
+          "state": "Oorzaak nog niet volledig vastgesteld",
+          "detail": "Geheugenvoorbereiding slaagde; één modelaanvraag liep af. Eerst oorzaak onderscheiden, geen nieuwe leer-engine of ongewijzigde herhaling."
         },
         "ownerAction": {
           "title": "Camera voor vuilnisbakken kiezen",
@@ -2768,7 +2768,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T19:10:48.116217+00:00"
+        "reviewedAt": "2026-09-28T19:18:03.703268+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13267,16 +13267,17 @@
             "automaticRetry": false,
             "evidence": "eva2/evidence/product/calendar-unassisted-reuse-20260928.json"
           },
-          "remaining": "Fresh unseen unassisted learning and full product comparison remain open; bounded new-input reuse is complete.",
+          "remaining": "Unassisted new learning remains unproven: first request failed at conversation model deadline before work admission. Reuse not attempted; previous calendar reuse retained.",
           "assignment": {
-            "stage": "prepare_unseen_learning_case",
+            "stage": "initial_conversation_deadline_before_admission",
             "baseCommit": "38cb8dcc",
             "owner": "/root",
             "scope": "Existing installed procedure tools and isolated WebVTT fixtures; no product code by assumption",
             "outcome": "Eva learns a new documented procedure and applies saved skill to a different input without developer code or procedure-ID hint",
             "endCondition": "One bounded initial learning request and one reuse request yield independently checked stored outputs; failed outcome remains visible, no automatic retries.",
             "effort": "Prepare authoritative fixture/expected result first; at most two task admissions, existing runtime limits; credits unknown."
-          }
+          },
+          "newLearningEvidence": "eva2/evidence/product/webvtt-learning-attempt-20260928.json"
         },
         {
           "id": "L2",

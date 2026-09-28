@@ -4,6 +4,8 @@
 
 Bestaande vaardigheden blijven behouden. Eén nieuwe WebVTT-verwerking uit documentatie voorbereiden en daarna op andere invoer hergebruiken. Maximaal twee taakopnames, bestaande runtimegrenzen, geen kernbouw tenzij een concreet tekort blijkt. Basis38cb8dcc; coördinator bezit geïsoleerde fixtures en bewijs. Initiatief/camera blijft open; alleen afhankelijk werk wacht.
 
+**Uitkomst eerste leerproef:** na64,292s modeldeadline vóór taakopname. Eén modelaanvraag, verbruik niet gemeten; geen documentatielezing, nieuwe skill of uitvoerresultaat. Geen hergebruikproef of automatische herhaling. Bestaande kalenderwerkwijze behouden. Volgende: oorzaak van de eerste modeldeadline onderscheiden voordat dezelfde opdracht opnieuw wordt aangeboden. [Bewijs](evidence/product/webvtt-learning-attempt-20260928.json).
+
 ## Initiatief — voortgang en open afhankelijkheden
 
 **Initiatief en huisaanwezigheid (I1/I2)** blijft open; de concrete camerakeuze en vandaag uitgeputte autonome beoordelingsruimte blokkeren de volgende echte proef. Camera-/agendalezen via de bestaande initiatiefroute is nu geïnstalleerd (bron14fe94dc); dat is een tussenresultaat en sluit geen van de zeven open grote onderdelen. Geen uitwijking naar nieuwe statuskaarten, herstel of losse optimalisaties.

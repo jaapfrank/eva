@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-09-28T19:18:03.703268+00:00",
+  "sourceBasis": "38cb8dcc",
+  "status": "failed_before_task_admission",
+  "outcome": "Initial ordinary website request failed before a delegated learning task was admitted. No skill or output produced; reuse not attempted.",
+  "criteria": "eva2/evidence/product/webvtt-learning-criteria-20260928.json",
+  "observed": {
+    "streamSeconds": 64.292,
+    "streamEvent": "EvaTextStreamError/v1",
+    "initialMemoryMilliseconds": 3769,
+    "failureClass": "eva.adapters.model.contracts.ConversationModelDeadlineExceeded",
+    "failureClassVerifiedByInstalledQualifiedNameHash": "4864a34e0ded5aeaea3e7768ead479a3028ac4298c1729cc19425fefc0dac80a",
+    "journalModelRequests": 1,
+    "journalUsageMeasurement": "unmeasured",
+    "inputTokens": null,
+    "outputTokens": null,
+    "newOwnerWorkEventsSinceStart": 0,
+    "completedToolReceipts": 0
+  },
+  "runtimeTaskAdmissions": 0,
+  "ordinaryRequests": 1,
+  "reuseRequests": 0,
+  "automaticRetries": 0,
+  "productSourceChanges": false,
+  "review": {
+    "fixtureReviewer": "/root/platform_research_20260927",
+    "fixtureDecision": "GO: cue arithmetic and text expectations correct. Include saved transcript in final review. Source access needs actual receipt. Novel task/input does not prove WebVTT unknown to the pretrained model."
+  },
+  "nextAction": "Diagnose availability/latency of the first conversation model request before another learning attempt; no new learning engine or repeated unchanged request. Existing learned calendar skill remains retained.",
+  "creditCost": "unknown",
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/webvtt-learning-20260928",
+  "ownerAccepted": false
+}
