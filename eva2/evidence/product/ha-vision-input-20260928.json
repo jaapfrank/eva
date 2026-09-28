@@ -1,0 +1,72 @@
+{
+  "id": "ha-vision-input-20260928",
+  "basis": "ea2dca9b",
+  "sourceCommit": "ad943637a79e86a689617586cd1cbb5f73af58c6",
+  "status": "optional_wiring_installed_analyzer_not_configured",
+  "userOutcome": "Existing HA API can optionally interpret camera GET through one local backend; absent module now gives explicit unavailability instead of binary-to-text garbage. Complete useful vision remains open.",
+  "tests": {
+    "passed": 49,
+    "seconds": 3.73,
+    "environment": "isolated installed-base image; network disabled, deterministic backend fixtures",
+    "initialFailure": "Fixture token had ordinary file permissions; set fixture0600, no production permission rule changed."
+  },
+  "review": {
+    "result": "GO",
+    "reviewer": "platform_research_20260927",
+    "addressed": [
+      "Reject arbitrary dotless/numeric public endpoint aliases; allow only explicit local IP/localhost.",
+      "Extra execution budget only for camera GET.",
+      "Shared CameraSnapshot signature validation before inference."
+    ]
+  },
+  "installation": {
+    "checkedAt": "2026-09-28T15:07:30.621759+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:facbc5c2609e878c975976186aa2c00dd8c1656165f6bea60671ccda9c2d7f4f",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/connectors/home_assistant_api.py": "cc0f97bef3b333d048a868dc94dd3ad6f6d747758e432b6e4d44a2f274152c9c",
+          "adapters/connectors/home_assistant_camera.py": "392d9843bef402ce5427dae8e43cb6538509cf701da86b7803ec9a064155d906",
+          "adapters/connectors/local_vision.py": "6e711cf4846895e8b9cad02d5a65f3ff1a0353e304697bb8a23c8e415ee5ccf9",
+          "providers/home_assistant.py": "19f4c7bc8bc0cd1f60123c684320efb286fd91e31ce16a9feaab7e93261e8a5e"
+        }
+      },
+      "worker": {
+        "image": "sha256:ad6767d1a6c2eedb53edf38433408f0402c2b2920eb599aa4176fecc3b763377",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/connectors/home_assistant_api.py": "cc0f97bef3b333d048a868dc94dd3ad6f6d747758e432b6e4d44a2f274152c9c",
+          "adapters/connectors/home_assistant_camera.py": "392d9843bef402ce5427dae8e43cb6538509cf701da86b7803ec9a064155d906",
+          "adapters/connectors/local_vision.py": "6e711cf4846895e8b9cad02d5a65f3ff1a0353e304697bb8a23c8e415ee5ccf9",
+          "providers/home_assistant.py": "19f4c7bc8bc0cd1f60123c684320efb286fd91e31ce16a9feaab7e93261e8a5e"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/ha-vision-input-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "liveChecks": {
+    "existingHaStateGet": 200,
+    "visionConfigured": false,
+    "namespaceProviderSourceUnchanged": true,
+    "activeWorkBeforeInstall": false,
+    "bothSpeakersBeforeInstall": "idle"
+  },
+  "limits": [
+    "Local analyzer remains unconfigured pending real camera/quality proof. No autonomous polling or initiative enabled.",
+    "No camera image was fetched or analyzed in this change.",
+    "Configured revision identifies host-selected deployment, not remote weight attestation.",
+    "Image signature checking is not full decoding; backend must decode."
+  ],
+  "usage": {
+    "requestedModelCalls": 0,
+    "cameraImageRequests": 0,
+    "haReadRequests": 2,
+    "creditCosts": "unknown; runtime background usage not measured"
+  },
+  "pending": "Camera selection for bins asked from actual inventory: garden, garage door or doorbell. Real scene and suitable image-token profile remain open."
+}

@@ -22,7 +22,9 @@
 
 **I2 CUDA-kandidaat beproefd — niet geïnstalleerd:** Qwen3.5-4B geeft passend blanco-beeldantwoord zonder herhaling. Aanvraag1,806s; koude start tot antwoord6,152s, afsluiten niet inbegrepen. Aparte startup bevestigt33/33 lagen enCLIP op RTX5080CUDA; geen peakVRAMmeting. Eén lokale generatie89in/113uit, geen cloud-/cameracalls. [Bewijs](evidence/product/qwen-vision-gpu-20260928.json).
 
-**Eerstvolgende — I2, nog niet gestart:** vaste echte camerascènes vergelijken; camerakeuze voor vuilnisbakken staat open. Runtimeadvies minimaal1024 beeldtokens voor grounding meenemen; blanco geval met89 totale prompttokens bewijst dat niet. Geen herhaling van dezelfde proef.
+**I2 optionele beeldkoppeling geïnstalleerd — analyser uit:** bronad943637 op gezonde kern/werker, exacte bron en eigenaarpagina’s gecontroleerd.49 gerichte controles en onafhankelijke review akkoord. Gewone HA-leesaanvraag werkt; namespaceprovider ongewijzigd, terugweg vastgelegd. Geen model-/camerabeeldcalls gevraagd. Geen voltooide visionfunctie. [Bewijs](evidence/product/ha-vision-input-20260928.json).
+
+**Eerstvolgende — I2, nog niet gestart:** echte cameraproef met passende beeldtokeninstelling vóór activering. Camerakeuze tuin/garage/deurbel voor vuilnisbakken gevraagd. Geen automatische waarneming of nieuwe planner.
 
 **Nu — M3 stijlcorrectie geïnstalleerd:** een bestaande communicatievoorkeur kon niet worden ververst doordat de providerrespons het vereiste veld wegliet. Gerichte correctie, drie tests en onafhankelijke review akkoord; kern/werker gezond, exacte bron en eigenaarpagina’s gecontroleerd, terugweg vastgelegd. De echte gedragsproef is gedeeltelijk geslaagd: korter en zonder lijst, maar 47 woorden bij maximaal 40. M3 blijft open. Twee contactcalls: 3.884 invoer-/183 uitvoertokens; extractie-/reflectieverbruik onbekend. [Bewijs](evidence/product/style-reflection-refresh-20260928.json).
 
