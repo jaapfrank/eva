@@ -1,0 +1,52 @@
+{
+  "checkedAt": "2026-09-28T21:20:10.870370+00:00",
+  "slice": "L2",
+  "baseCommit": "adc610e7",
+  "state": "tested_not_installed",
+  "change": "Optional additional catalog loads existing v4 tool alongside original v3 catalog without duplicate gateway registration or old spec hash changes.",
+  "sourceHashes": {
+    "eva2/src/eva/providers/mcp_gateway.py": "ea4fd29b3ba8faee60291f2881e4b6d2075a4eb8cfd18238a3210320ba6d86c6",
+    "eva2/tests/connectors/test_mcp_gateway_provider.py": "16c526de11df4af930298aeb5cb1ec60def7508ae0fa77475899472768b99e39"
+  },
+  "tests": {
+    "passed": 32,
+    "artifact": "/home/administrator/project/.eva2-artifacts/l2-additional-catalog-20260928/tests.txt"
+  },
+  "actualCatalogComposition": {
+    "oldSpecHashes": [
+      "a2f87385fed891cf244d4294777901bbdc8509b62304a91e39f82df730947a54",
+      "882d133b00172a5e5d56aaab2848fab0065115da0b5ba9627d1795a506fab82a",
+      "6a5f2e07e585b39f3493560f233e64396858c212a56429e8f3335c9e1e4fea13",
+      "e3d06c7ffdd05bbf41baa160db4d96f669d45083ad83f074ffd6e2057e877229",
+      "ba1503a199857abd40dd043a60fbc351b3b8c4f6c55d4cfa3e80bc69a4818120",
+      "783ddc462e7fc3ad19375e6ff213ab45bab2a55020f50505013964654c1821ba",
+      "6e4c1a7e889f1c9869c1b60ee467942baa8773898b5cd79918808d34b438c786",
+      "240b34eb8f1308ff8b3f0a1e4d428c94339deecd2a61206c7b0e69f1da9a5063"
+    ],
+    "additionalSpecHash": "8242f8a5b5882ef14d388fb1183a289398eccde5f1c0c5ec833fdb6182f2ad4f",
+    "contracts": [
+      "EvaMcpGatewayProvider/v3",
+      "EvaMcpGatewayProvider/v3",
+      "EvaMcpGatewayProvider/v3",
+      "EvaMcpGatewayProvider/v3",
+      "EvaMcpGatewayProvider/v3",
+      "EvaMcpGatewayProvider/v3",
+      "EvaMcpGatewayProvider/v3",
+      "EvaMcpGatewayProvider/v3",
+      "EvaMcpGatewayProvider/v4"
+    ],
+    "providerConstructed": true,
+    "networkCalls": 0,
+    "toolCalls": 0
+  },
+  "review": {
+    "reviewer": "review_directory_connection",
+    "result": "GO",
+    "limitation": "128-tool bound lacks separate new boundary test; source bound checked. No runtime claim."
+  },
+  "next": "After resolving prior automatic execution rejection, install approved supplementary catalog through existing gateway; verify discovery and directory state before continuing project. No duplicate service registration.",
+  "modelCalls": 0,
+  "creditCost": "unknown",
+  "installed": false,
+  "ownerAccepted": false
+}

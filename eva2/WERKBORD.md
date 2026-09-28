@@ -2,6 +2,8 @@
 
 ## Actief — L2: meerdaags project hervatten
 
+**Kandidaat gereed, niet geïnstalleerd:** optionele extra catalogus houdt bestaande contracten/hashes identiek en voegt de gepinde mapfunctie via dezelfde gateway toe.32 tests en onafhankelijke review akkoord; ook echte geïnstalleerde v3-catalogus gecombineerd met v4-kandidaat zonder netwerk/toolcall. Geen registratie, mapactie of modelcall. Installatie/proef wacht op afhandeling van eerdere automatische uitvoerblokkade; expliciete bevestiging gevraagd. [Bewijs](evidence/product/additional-catalog-candidate-20260928.json) · [Beheeruitleg](docs/mcp-catalog-extension.md).
+
 **Huidige blokkade nader vastgesteld:** bestaande filesystemgateway is publiek geregistreerd als eva_workspace. De normale nieuwe owner-registratie gebruikt een andere naam maar dezelfde publieke URL; de geïnstalleerde gateway weigert deze duplicatie. Leescontrole, geen modelcall of registratiepoging. Geen ongewijzigde aansluitproef starten. Bestaande registratie expliciet hergebruiken; oude hashes/resultaten behouden. [Bewijs](evidence/product/project-filesystem-registration-conflict-20260928.json).
 
 **Geïnstalleerd — gevraagde vervolgplanning:** bron5145a139 op gezonde kern/werker;45 gerichte tests en onafhankelijke review akkoord. Na taakaanname blijft uitsluitend bestaande schedule_digital_work beschikbaar; gewone ontvangst blijft direct, geen foregroundpolling. Echte meerdaagse planning/uitvoering nog niet beproefd. [Bewijs](evidence/product/project-followup-planning-20260928.json). Geen modeltaak actief; geen extra modelcalls voor deze wijziging.

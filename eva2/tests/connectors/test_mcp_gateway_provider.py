@@ -389,3 +389,65 @@ def test_v3_binds_output_schema_like_v2_without_changing_legacy_configuration_ha
     assert v2.operation_kind == "effect"
     row = {**CATALOG_ROW, "output_schema": {"type": "object", "properties": {"content": {"type": "string"}}}}
     assert mcp_gateway_catalog_binding(row, contract="EvaMcpGatewayProvider/v3") == mcp_gateway_catalog_binding(row, contract="EvaMcpGatewayProvider/v2")
+
+
+def _additional_catalog_settings(monkeypatch, directory, additional):
+    primary = directory / "primary.json"
+    extra = directory / "additional.json"
+    token = directory / "token"
+    _private_file(primary, _provider_catalog())
+    _private_file(extra, json.dumps(additional))
+    _private_file(token, "test-token")
+    for key, value in {
+        "URL": "https://gateway.example.invalid", "TOKEN_FILE": str(token),
+        "CATALOG_FILE": str(primary), "ADDITIONAL_CATALOG_FILE": str(extra),
+        "ALLOW_PLAIN_HTTP": "false",
+        "PRINCIPAL_SHA256_ALLOWLIST": hashlib.sha256(b"owner").hexdigest(),
+    }.items():
+        monkeypatch.setenv("EVA_MCP_GATEWAY_" + key, value)
+    return McpGatewayProviderFactory.load_settings()
+
+
+def _invoke_addition():
+    payload = json.loads(_provider_catalog())
+    payload["contract"] = "EvaMcpGatewayProvider/v4"
+    tool = payload["tools"][0]
+    tool.update(eva_name="additional_action", execute_tool_name="additional-action",
+                observe_tool_name="additional-action", execute_catalog_name="additional-action",
+                observe_catalog_name="additional-action", operation_kind="invoke", proof_bindings=[])
+    tool["execute_argument_bindings"] = [{"argument_name": "message", "provider_name": "message"}]
+    tool["observe_argument_bindings"] = tool["execute_argument_bindings"]
+    return payload
+
+
+def test_additional_catalog_preserves_historical_contract_and_receipt_binding(monkeypatch, private_tmp_path):
+    original = parse_mcp_gateway_catalog(_provider_catalog())[0]
+    addition = _invoke_addition()
+    settings = _additional_catalog_settings(monkeypatch, private_tmp_path, addition)
+    assert settings.specs[0] == original
+    assert settings.specs[0].configuration_sha256 == original.configuration_sha256
+    assert settings.specs[1] == parse_mcp_gateway_catalog(json.dumps(addition))[0]
+    assert [spec.contract for spec in settings.specs] == ["EvaMcpGatewayProvider/v1", "EvaMcpGatewayProvider/v4"]
+    assert settings.specs[1].operation_kind == "invoke"
+    assert settings.principal_sha256_allowlist == (hashlib.sha256(b"owner").hexdigest(),)
+
+
+@pytest.mark.parametrize("collision", ["descriptor", "provider"])
+def test_additional_catalog_rejects_ambiguous_tools(monkeypatch, private_tmp_path, collision):
+    addition = _invoke_addition()
+    tool = addition["tools"][0]
+    if collision == "descriptor":
+        tool["eva_name"] = "echo_proof"
+    else:
+        for name in ["execute_tool_name", "observe_tool_name", "execute_catalog_name", "observe_catalog_name"]:
+            tool[name] = "proof-echo"
+    with pytest.raises(RuntimeError, match="combined catalog"):
+        _additional_catalog_settings(monkeypatch, private_tmp_path, addition)
+
+
+def test_additional_catalog_cannot_activate_an_unconfigured_provider(monkeypatch):
+    for name in ["URL", "TOKEN_FILE", "TOKEN", "CATALOG_FILE"]:
+        monkeypatch.delenv("EVA_MCP_GATEWAY_" + name, raising=False)
+    monkeypatch.setenv("EVA_MCP_GATEWAY_ADDITIONAL_CATALOG_FILE", "/not-read-without-authority")
+    with pytest.raises(RuntimeError, match="incomplete"):
+        McpGatewayProviderFactory.load_settings()

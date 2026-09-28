@@ -2780,14 +2780,14 @@
         ],
         "now": {
           "title": "L2: meerdaags project hervatten",
-          "state": "Vervolgplanning live; bestaande bestandregistratie vereist hergebruik",
-          "detail": "Leescontrole: filesystemdienst staat al publiek geregistreerd; nieuwe owner-registratie zou dezelfde publieke URL dupliceren en wordt geweigerd. Geen modelcall/proef gestart. Bestaande bestanden en planning behouden. Expliciete bevestiging na eerdere automatische uitvoerblokkade gevraagd; geen omweg.",
+          "state": "Bestaande catalogus uitbreidbaar; kandidaat getest, niet geïnstalleerd",
+          "detail": "32 gerichte tests en onafhankelijke review akkoord. Echte bestaande v3-specificaties blijven identiek naast v4-mapfunctie; geen registratie of bestandsactie gedaan. Wacht op expliciete bevestiging na automatische uitvoerblokkade; geen modeltaak actief.",
           "doneWhen": "One ordinary project preserves goal, dependencies, artifacts and next action overnight; later correction and continuation use saved state without duplicate effects."
         },
         "next": {
-          "title": "Bestaande bestandregistratie gebruiken",
-          "state": "Aansluiting nog open",
-          "detail": "Geen dubbele gatewayregistratie of ongewijzigde aansluitproef. Onderbouw kleinste ondersteunde aansluiting met behoud van oude catalogushashes; daarna werkelijke projectvoortzetting."
+          "title": "Kandidaat installeren en bestaande mapfunctie controleren",
+          "state": "Wacht op afhandeling uitvoerblokkade",
+          "detail": "Gebruik bestaande gateway; geen dubbele dienstregistratie. Daarna echte projectvoortzetting en opgeslagen vervolgafspraak controleren. Geen volledige L2-claim."
         },
         "ownerAction": {
           "title": "Camera voor vuilnisbakken kiezen",
@@ -2800,7 +2800,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T21:15:47.179973+00:00"
+        "reviewedAt": "2026-09-28T21:20:10.870370+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13347,14 +13347,14 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "nextAction": "Reuse existing filesystem gateway explicitly; duplicate public registration is rejected by installed gateway. Planning seam is installed, actual project/schedule remains unproven. Execution-policy clarification pending.",
+          "nextAction": "Gebruik bestaande gateway; geen dubbele dienstregistratie. Daarna echte projectvoortzetting en opgeslagen vervolgafspraak controleren. Geen volledige L2-claim.",
           "owner": "/root",
           "activeWorker": null,
           "baseCommit": "b282c7ef",
           "effortNotice": "15–25min; maximaal één hervatting na installatie; credits onbekend.",
-          "latestEvidence": "eva2/evidence/product/project-filesystem-registration-conflict-20260928.json",
+          "latestEvidence": "eva2/evidence/product/additional-catalog-candidate-20260928.json",
           "assignment": {
-            "stage": "existing_gateway_registration_conflict",
+            "stage": "additional_catalog_reviewed_not_installed",
             "outcome": "One ordinary project preserves goal, dependencies, artifacts and next action overnight; later correction and continuation use saved state without duplicate effects.",
             "scope": "Synthetic household document project, private website route; existing scheduler and artifact tools only",
             "evidence": "eva2/evidence/product/l2-overnight-project-criteria-20260928.json",

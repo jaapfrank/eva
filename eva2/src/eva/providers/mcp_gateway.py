@@ -248,8 +248,9 @@ class McpGatewayProviderFactory:
         base_url = _environment_value("EVA_MCP_GATEWAY_URL")
         token_file = _environment_value("EVA_MCP_GATEWAY_TOKEN_FILE")
         catalog_file = _environment_value("EVA_MCP_GATEWAY_CATALOG_FILE")
+        additional_catalog_file = _environment_value("EVA_MCP_GATEWAY_ADDITIONAL_CATALOG_FILE")
         configured = (bool(base_url), bool(token_file), bool(catalog_file))
-        if not any(configured):
+        if not any(configured) and not additional_catalog_file:
             return None
         if not all(configured):
             raise RuntimeError("MCP gateway provider configuration is incomplete")
@@ -271,11 +272,25 @@ class McpGatewayProviderFactory:
         catalog = read_runtime_secret_file(
             catalog_file, setting_name="EVA_MCP_GATEWAY_CATALOG_FILE"
         )
+        specs = parse_mcp_gateway_catalog(catalog)
+        if additional_catalog_file:
+            # Keep each catalog's original contract and immutable tool binding.
+            # Adding an invoke tool must not rewrite older effect/read receipts.
+            additional = read_runtime_secret_file(
+                additional_catalog_file,
+                setting_name="EVA_MCP_GATEWAY_ADDITIONAL_CATALOG_FILE",
+            )
+            specs = (*specs, *parse_mcp_gateway_catalog(additional))
+            names = [spec.descriptor.name for spec in specs]
+            execute_names = [spec.execute_tool_name for spec in specs]
+            if (len(specs) > 128 or len(set(names)) != len(names)
+                    or len(set(execute_names)) != len(execute_names)):
+                raise RuntimeError("MCP gateway combined catalog contains duplicate tools or exceeds limit")
         settings = McpGatewayProviderSettings(
             base_url=base_url,
             bearer_token=token,
             allow_plain_http=allow_plain_raw == "true",
-            specs=parse_mcp_gateway_catalog(catalog),
+            specs=specs,
             principal_sha256_allowlist=principals,
         )
         try:
