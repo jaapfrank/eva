@@ -1,10 +1,31 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — T1: volledige opdracht blijft open; timeoutcorrectie geïnstalleerd.** Bron 52b9fca6 op gezonde kern en werker, exacte bron en terugweg gecontroleerd na 85 gerichte offline tests en onafhankelijke review door de coördinator. Nieuwe modeldeadlines krijgen de bestaande timeoutmelding; grenzen, gebruikstellers en historische records behouden. Geen nieuwe modelcalls, geen uitvoerder actief. Dit is geen complete leerfunctie. Volgende functionele uitkomst blijft de volledige agenda-/leeropdracht; oorspronkelijke ongeldige-modelantwoordfout onbewezen en geen nieuwe herstelwijziging zonder concrete oorzaak. [Bewijs](evidence/product/model-deadline-status-20260928.json).
+**Nu — T1: chatgrens blokkeert langere taakreactie.** Exacte achtergrondregistratie alsnog gelezen: mislukte reactie 1.634 outputtokens, boven chatgrens 1.200; totale taak gebruikte 2.741 van beschikbare 38.400. Met echte modeladapter offline dezelfde foutfingerprint gereproduceerd, zonder modelcall. Eén uitvoerder bepaalt kleinste correctie zodat achtergrondwerk het resterende taakbudget gebruikt; chatlimiet, totaalgrant, gegevens en controles blijven behouden. Dit bewijst een noodzakelijke blokkade, niet de inhoud van de oorspronkelijke reactie. [Bewijs](evidence/product/task-output-budget-diagnosis-20260928.json).
 
 **Leidend — het complete bouwplan uitvoeren.** Acht vaste productstappen en 24 begrensde opdrachten; geen zakelijke uitwerking of nieuwe algemene audit. Gegevens en acceptaties behouden. Technische afronding, installatie, vergelijkingsbewijs en jouw oordeel blijven apart. De recente [eigenaarbesluiten](PROJECTDOEL.md) gaan voor oudere bouwvolgordes.
 
 **Eerstvolgende stap:** na de gerichte taakcontractcorrectie een complete echte opdracht laten afronden en resultaat opleveren via bestaande routes. C1 blijft open voor inhoudssnelheid/echte Telegramproef; het bestaande overlap-/taakgedrag maakt deze onafhankelijke T1-correctie al uitvoerbaar. De criteria van C1/C2 worden hiermee niet afgevinkt.
+
+## Actuele opleverstatus — 28 september 2026
+
+| Onderwerp | Huidige stand |
+|---|---|
+| Lopend werk | T1: aantoonbare uitvoerblokkade van de bestaande taakroute corrigeren; één uitvoerder, coördinator bewaakt integratie. |
+| Laatste geïnstalleerde wijziging | Modeldeadline wordt correct als timeout gemeld; geen nieuwe complete functie. [Installatiebewijs](evidence/product/model-deadline-status-20260928.json). |
+| Nog te leveren | De vastgelegde documentatieopdracht daadwerkelijk uitvoeren, werkwijze bewaren en gecontroleerd resultaat teruggeven. |
+| Eerstvolgende actie | Gerichte correctie beoordelen en installeren; pas daarna één vervolguitvoering vanwege de gewijzigde oorzaak. |
+| Voor Jaap | Nu geen nieuwe proef nodig. Dezelfde twee afgebakende functies blijven afgerond; overige productcriteria blijven open. |
+| Overzicht alle onderdelen | Alle 24 opdrachten hebben bestaand vermogen, resterend tekort/bewijs en vervolgstap in [de bestaande uitvoerlijst](design/product/execution-workboard-v1.json). |
+
+## Historisch logboek — geen actuele werkopdrachten
+
+Alles hieronder bewaart eerdere tussenstanden en afspraken. Woorden zoals “nu”,
+“volgende”, “actueel” en “nog niet geïnstalleerd” gelden hier voor het toenmalige
+registratiemoment. Ze vormen geen actuele wachtrij en heropenen geen afgerond werk.
+De actuele opdracht staat uitsluitend boven dit logboek en in
+`audit.projectDashboard.deliveryOverview` van de bestaande JSON-werkkaart.
+Het actuele productdoel staat in [PROJECTDOEL.md](PROJECTDOEL.md); latere expliciete
+eigenaarbesluiten gaan voor oudere teksten hieronder.
 
 **Laatste uitvoeringsuitkomst — leeropdracht stopt vóór bewaren en uitvoeren.** Laatste taak werkelijk gestopt; één RFC-bronselectie van8192tekens uitgevoerd en opgeslagen. Coördinator heeft live taakstatus en beide leeshashes gecontroleerd. Geen werkwijze opgeslagen of uitgevoerd; hergebruik niet gestart. Laatste onafhankelijke resultaatreview kon op25september niet draaien wegens verbruikslimiet; eerdere patchreview blijft geldig. Geen nieuwe modelproef gestart. Teller blijft2van9. [Werkelijke uitkomst](evidence/product/external-documentation-learning-source-only-20260925.json).
 
@@ -428,7 +449,7 @@ Uitvoervolgorde volgens eigenaarbesluit: functies verder afmaken; uitgebreide te
 
 **Initiatiefresultaten in het gesprek geïnstalleerd (23 september):** twee private leestools tonen eigen initiatieven en het werkelijk opgeslagen resultaat vanuit dezelfde eigenaarbron als het dashboard. Gespreksoverzicht maximaal acht; gewone dashboardlimiet blijft 64. Het snelle contactmodel kan de opgehaalde informatie beantwoorden. Gedeelde speaker krijgt deze private tools niet. Achtergrondbudget ongewijzigd; geen nieuwe initiatiefbeoordeling of bericht geforceerd. Bron cdc62fef; syntax/imports, bestaande API en startcontrole goed, kern/werker gezond. Modelproef en onafhankelijke review uitgesteld volgens eigenaarbesluit. Automatische terugmelding van initiatiefresultaten blijft open. [Installatie](evidence/product/initiative-conversation-installed-20260923.json).
 
-## Actuele dashboardafspraak
+## Dashboardafspraken en opleveringen van 23 september
 
 **Actueel (23 september):** hoofdpagina heeft vier korte werkkaarten en negen uitgelijnde statusregels. Dubbele koppen verwijderd; lange resultaten en bewijs zijn uitklapbaar. Werk & volgorde gebruikt nu dezelfde werkstatus en eindvoorwaarde, met dezelfde waarschuwing bij oude voortgang. Laatste functionele oplevering is de werkelijk toegepaste werkwijze. Dashboardwerk afgerond en geïnstalleerd; vervolg gesprek/stem nog niet gestart. Negen bestaande controles, onafhankelijke bron-/gegevensreview en live desktop-/mobiele controle geslaagd. Automatische inhoudsverversing daadwerkelijk waargenomen. [Bewijs](evidence/product/dashboard-owner-clarity-20260923.json).
 
@@ -440,7 +461,7 @@ Het compacte projectoverzicht staat live op http://localhost:44712/: vier korte 
 
 De coördinator werkt de bestaande JSON-werkkaart bij bij taakstart, taakwissel, blokkade en oplevering, vóór de bijbehorende voortgangsmelding. Alleen een inhoudelijke controle vernieuwt `deliveryOverview.reviewedAt`; pollen doet dit niet. Bij afronding zonder actieve uitvoering vermeldt de kaart dat expliciet. Acceptaties blijven behouden.
 
-## Doorlopend opleverdoel
+## Eerder vastgelegd opleverdoel en tussenstanden
 
 Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.
 

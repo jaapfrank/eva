@@ -1,0 +1,102 @@
+{
+  "checkedAt": "2026-09-28T09:34:17.435423+00:00",
+  "status": "blocking_limit_reproduced_offline",
+  "workId": "work:eva-chat:03f2f652-a573-5fe9-a172-ead7997e6b34",
+  "phases": [
+    {
+      "at": "2026-09-28T08:59:23Z",
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 8323,
+        "output_tokens": 82,
+        "model_attempts": 1
+      },
+      "outcome": "succeeded"
+    },
+    {
+      "at": "2026-09-28T08:59:29Z",
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 8140,
+        "output_tokens": 63,
+        "model_attempts": 1
+      },
+      "outcome": "succeeded"
+    },
+    {
+      "at": "2026-09-28T08:59:39Z",
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 10351,
+        "output_tokens": 177,
+        "model_attempts": 1
+      },
+      "outcome": "succeeded"
+    },
+    {
+      "at": "2026-09-28T08:59:48Z",
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 10639,
+        "output_tokens": 90,
+        "model_attempts": 1
+      },
+      "outcome": "succeeded"
+    },
+    {
+      "at": "2026-09-28T08:59:57Z",
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 12207,
+        "output_tokens": 145,
+        "model_attempts": 1
+      },
+      "outcome": "succeeded"
+    },
+    {
+      "at": "2026-09-28T09:00:13Z",
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 13966,
+        "output_tokens": 351,
+        "model_attempts": 1
+      },
+      "outcome": "succeeded"
+    },
+    {
+      "at": "2026-09-28T09:00:22Z",
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 17133,
+        "output_tokens": 199,
+        "model_attempts": 1
+      },
+      "outcome": "succeeded"
+    },
+    {
+      "at": "2026-09-28T09:01:15Z",
+      "usage": {
+        "tool_calls": 0,
+        "measurement": "partial",
+        "input_tokens": 19333,
+        "output_tokens": 1634,
+        "model_attempts": 1
+      },
+      "outcome": "failed"
+    }
+  ],
+  "finding": "Failed phase reports1634output tokens; inherited chat limit1200. Total task output2741 remains below existing38400grant.",
+  "offlineReproduction": "Real Pydantic adapter with synthetic recorded usage raises UsageLimitExceeded(output_tokens_limit), wrapped with exact original039cc785 fingerprint.",
+  "limitation": "Original response content/exception cause not retained; reproduction proves the recorded usage is independently sufficient to fail, not original content validity.",
+  "newRuntimeModelCalls": 0,
+  "newCodeChanges": false,
+  "next": "Let digital background work use existing remaining aggregate grant for model output; retain chat budget, total grant and all authority/cancellation/input limits.",
+  "artifacts": "/home/administrator/project/.eva2-artifacts/task-model-accounting-20260928"
+}
