@@ -23,8 +23,9 @@ def test_registered_result_survives_model_policy_change_without_execution(databa
     profile = replace(old.profile, configuration_sha256="b" * 64)
     policy = old.policy.model_copy(update={
         "provider_configuration_sha256": profile.configuration_sha256,
-        "retained_read_spec_sha256": (canonical_sha256(work.spec.to_payload()),),
+        "retained_read_spec_sha256": [canonical_sha256(work.spec.to_payload())],
     })
+    policy = type(policy).model_validate_json(policy.model_dump_json())
     current = [policy]
     authority = HouseholdResearchAuthority(
         voice_authority=old.voice, policy_loader=lambda: current[0],

@@ -35,7 +35,7 @@ class HouseholdResearchPolicy(Version1Contract):
     result_scope: Literal["originating_household_session"]
     provider_configuration_sha256: Sha256
     resource_budget_sha256: Sha256
-    retained_read_spec_sha256: tuple[Sha256, ...] = Field(default=(), max_length=4096)
+    retained_read_spec_sha256: list[Sha256] = Field(default_factory=list, max_length=4096)
     maximum_retention_days: Literal[7] = 7
     effective_at: Timestamp
     expires_at: Timestamp
