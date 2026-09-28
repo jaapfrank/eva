@@ -2,6 +2,8 @@
 
 ## Actuele opdracht — leren zonder ontwikkelhulp (L1)
 
+**Nu in uitvoering, basis44af0c43:** bestaande onderzoeksadapter aansluiten in digitale werktaak met dezelfde gebruiksregistratie en grenzen. Coördinator bezit research-glue/compositie/runner/context/contract en gerichte tests; platform_research_20260927 doet gebundelde review. Raming25–40min, geen modelcalls tot gecontroleerde installatie. Eindpunt blijft de geleerde en hergebruikte werkwijze; deze aansluiting alleen is geen L1-afronding.
+
 **Actueel:** leertaak work:eva-chat:f00ad0ea-0a90-5e15-b5fd-993a016a7841 is beëindigd met incomplete_work. Aangenomen in 18,335s; drie echte W3C-bronopvragen mislukt. Geen nieuwe procedure of resultaat, geen hergebruikproef. Gemeten deelverbruik: 9 modelantwoorden, 7 tools, 87.833 invoer- en 1.407 uitvoertokens; overige aanvraag-/geheugenkosten niet inbegrepen, credits onbekend.
 
 **Concrete vervolgstap binnen L1:** de bestaande onderzoeksfunctie wordt niet aangeboden in de digitale werker. Hergebruik de bestaande onderzoeksadapter met behoud van taakgrenzen, bronbewijs en verbruiksregistratie. Nog niet gebouwd; geen extra herhaling gestart. Dezelfde W3C-ophaalfout stond al in AU-004 van 12 september en had vóór proefselectie meegewogen moeten worden. De eerdere modeltimeout is niet bewezen opgelost.

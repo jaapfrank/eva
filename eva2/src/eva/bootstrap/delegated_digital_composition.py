@@ -24,6 +24,9 @@ _DIGITAL_PROVIDERS = frozenset({"mcp_autonomy", "procedure_references", "mcp_gat
 _ROOT = Path(__file__).resolve().parents[1]
 _EXECUTION_SOURCES = (
     "bootstrap/delegated_digital_composition.py",
+    "bootstrap/background_research.py",
+    "adapters/model/research_tools.py",
+    "adapters/model/research_transport.py",
     "bootstrap/household_digital_work.py",
     "bootstrap/household_work.py",
     "bootstrap/delegated_work_result_reader.py",
@@ -137,7 +140,7 @@ def build_digital_profile(settings, provider_bundle):
     historical = DelegatedDigitalProfile(
         model_profile_id="model:conversation:" + settings.conversation_model,
         configuration_sha256=fingerprint, engine_release_sha256=ENGINE_RELEASE_SHA256,
-        capability_ids=tuple(tool.name for tool in descriptors),
+        capability_ids=(*tuple(tool.name for tool in descriptors), "research_current_options"),
         execution_source_sha256=tuple((name, hashlib.sha256((_ROOT / name).read_bytes()).hexdigest())
                                       for name in _EXECUTION_SOURCES),
         maximum_input_tokens=budget.max_input_tokens * min(settings.conversation_maximum_requests, 8),

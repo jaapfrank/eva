@@ -81,3 +81,8 @@ def background_model_output_limit(turn: ConversationTurn) -> int | None:
     if isinstance(remaining, bool) or not isinstance(remaining, int) or remaining <= 0:
         raise ConversationConflict("background model output allowance is invalid")
     return remaining
+
+
+def has_background_execution() -> bool:
+    """Whether the host has bound the current execution to a durable task."""
+    return _current.get() is not None

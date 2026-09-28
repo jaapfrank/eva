@@ -620,3 +620,28 @@ def test_legacy_household_budget_is_readable_but_requires_new_release_to_run(dat
     assert resumed.execution_id == old.execution_id and resumed.source == old.source
     claim = x.server.store.claim_next(worker_id="worker:budget-resume", release=current.release, now=x.clock[0])
     assert claim is not None
+
+def test_private_research_addition_preserves_old_household_reads_and_grant_on_resume(database):
+    x = digital_setup(database, "hh-research-compat")
+    turn = x.service.turn(str(uuid4()), "Controleer de verwarming")
+    receipt = HouseholdWorkActions(x.server.store._engine, x.service).execute(
+        turn, ConversationActionCall("start-old", "start_digital_work", {"task": turn.text}))
+    work_id = receipt.output["operation_result"]["work"]["work_id"]
+    old = x.server.store.load(work_id, **x.service._owner, household_origin=x.service.origin(turn)).spec
+    current = replace(x.profile, capability_ids=(*x.profile.capability_ids, "research_current_options"))
+    x.server.authority.digital_profile = current
+    x.service.digital_profile = current
+    assert x.server.store.load(work_id, **x.service._owner, household_origin=old.origin).spec == old
+    x.server.authority.validate_read_spec(old)
+    with pytest.raises(ValueError):
+        x.server.authority.validate_spec(old)
+    x.clock[0] += timedelta(seconds=1)
+    control = x.service.turn(str(uuid4()), "Stop deze taak")
+    x.service.execute("stop", control, request_key="stop-before-research", work_id=work_id)
+    x.clock[0] += timedelta(seconds=1)
+    followup = x.service.turn(str(uuid4()), "Ga verder")
+    result = x.service.execute("resume", followup, request_key="resume-after-research", work_id=work_id)
+    resumed = x.server.store.load(result["work"]["work_id"], **x.service._owner, household_origin=old.origin).spec
+    x.server.authority.validate_spec(resumed)
+    assert resumed.grant == old.grant
+    assert "research_current_options" not in resumed.grant.capability_ids

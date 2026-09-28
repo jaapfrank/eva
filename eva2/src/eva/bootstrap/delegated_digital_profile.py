@@ -131,10 +131,23 @@ class DelegatedDigitalProfile:
         """Bind historical household reads to both the old release and its budget."""
         requested = grant.to_payload()
         requested["capability_ids"] = list(self.capability_ids)
-        return self.accepts_grant(grant) and any(
-            requested == candidate.to_payload() and profile_release == canonical_sha256({
-                "profile": DIGITAL_PROFILE_ID, "grant": candidate.to_payload()})
-            for candidate in self.compatible_grants())
+        if not self.accepts_grant(grant):
+            return False
+        for candidate in self.compatible_grants():
+            if requested != candidate.to_payload():
+                continue
+            payload = candidate.to_payload()
+            profiles = [payload]
+            # Read-only compatibility with the exact pre-research profile.
+            # Execution still requires the current release and original grant.
+            if "research_current_options" in payload["capability_ids"]:
+                profiles.append({**payload, "capability_ids": [
+                    name for name in payload["capability_ids"]
+                    if name != "research_current_options"]})
+            if any(profile_release == canonical_sha256({
+                    "profile": DIGITAL_PROFILE_ID, "grant": value}) for value in profiles):
+                return True
+        return False
 
     @property
     def release(self):

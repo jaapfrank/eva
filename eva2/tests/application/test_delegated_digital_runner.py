@@ -1191,3 +1191,13 @@ def test_task_boundary_closes_blocked_provider_with_longer_phase_limit(tmp_path,
     assert tools.calls == [] and spec.grant.to_payload() == grant_before
     if expected_calls:
         assert closed.is_set() and sessions[0].local_stream_closed is True
+
+def test_background_research_uses_single_request_context():
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+    from eva.adapters.model.pydantic_conversation import _native_research_context
+    source = ConversationTurn.private("tenant", "install", "owner", "chat", "message",
+        "Research", "2026-09-28T19:00:00Z")
+    assert not _native_research_context()
+    with background_execution(BackgroundExecutionScope(source, "work:research")):
+        assert _native_research_context()
+    assert not _native_research_context()

@@ -41,6 +41,7 @@ def test_profile_uses_same_configuration_and_changes_when_model_or_provider_chan
     assert first.release == build_digital_profile(settings, bundle).release
     assert first.maximum_response_input_tokens == 12000
     assert first.grant().maximum_input_tokens == 384000
+    assert "research_current_options" in first.capability_ids
     assert "get_delegated_work" in first.capability_ids
     assert "use_connector_tool" in first.capability_ids
     assert first.maximum_model_runs == 32
@@ -171,7 +172,7 @@ def test_procedure_learning_and_verified_writer_share_the_pinned_profile():
     settings.external_provider = ExternalProviderSettings((*settings.external_provider.providers,
         LoadedProvider("procedure_references", None, ("mandate-a", ProviderSettings()))))
     profile = build_digital_profile(settings, bundle)
-    assert set(profile.capability_ids) == {"use_connector_tool", "get_delegated_work",
+    assert set(profile.capability_ids) == {"research_current_options", "use_connector_tool", "get_delegated_work",
         "save_work_progress", "read_own_component_source", "draft_own_component_improvement", *names}
     assert "providers/procedure_reference_actions.py" in dict(profile.execution_source_sha256)
     assert "adapters/postgres/procedure_reference_host.py" in dict(profile.execution_source_sha256)

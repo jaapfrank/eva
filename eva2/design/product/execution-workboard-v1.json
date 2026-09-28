@@ -2748,8 +2748,8 @@
         ],
         "now": {
           "title": "Leren en zelfstandig hergebruiken afronden",
-          "state": "Concrete aansluiting ontbreekt",
-          "detail": "L1-leertaak aangenomen maar gestopt: drie daadwerkelijke W3C-opvragen mislukt, geen werkwijze of bestanden. Bestaande native onderzoeksfunctie ontbreekt in digitale werkercatalogus. Diagnose166a6b98 geïnstalleerd; geen nieuwe modelpoging gestart.",
+          "state": "In uitvoering",
+          "detail": "L1: bestaande onderzoeksadapter aansluiten in digitale werker; coördinator bezit research-glue, compositie/runner, taakcontract, achtergrondcontext en gerichte tests. Basis44af0c43; review door platform_research_20260927. Raming25–40min, geen modelcalls tot gecontroleerde installatie.",
           "doneWhen": "Eva leert uit documentatie, bewaart een uitvoerbare werkwijze en past die op andere invoer toe zonder nieuwe kerncode of ontwikkelhints; resultaat onafhankelijk gecontroleerd."
         },
         "next": {
@@ -2768,7 +2768,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T19:35:56.508097+00:00"
+        "reviewedAt": "2026-09-28T19:39:35.494371+00:00"
       }
     },
     "pendingTechnicalReview": {

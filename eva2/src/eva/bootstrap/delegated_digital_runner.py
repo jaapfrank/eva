@@ -480,6 +480,11 @@ class DelegatedDigitalRunner:
                 tool.with_preparation_call_resolver(improvements.resolve_document_call)
                 if "save_workspace_document" in tool.action_names else tool
                 for tool in self.connector_tools)
+            if "research_current_options" in spec.grant.capability_ids:
+                from eva.bootstrap.background_research import task_research_tools
+                connector_tools = (*connector_tools, task_research_tools(
+                    self.store._engine, self.model, turn=source, journal=journal,
+                    authorize=authorize, grant=spec.grant, profile=self.profile))
             actions = BackgroundConnectorActions((*connector_tools, progress, improvements), spec.grant.capability_ids,
                                                   authorize, spec.grant.maximum_tool_calls)
             from eva.adapters.postgres.work_corrections import work_corrections

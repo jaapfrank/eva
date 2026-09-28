@@ -2929,4 +2929,5 @@ __all__ = [
 
 def _native_research_context() -> bool:
     from eva.application.initiative_execution import current_initiative
-    return current_initiative() is not None
+    from eva.application.background_execution import has_background_execution
+    return current_initiative() is not None or has_background_execution()
