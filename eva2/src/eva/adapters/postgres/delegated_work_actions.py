@@ -97,10 +97,10 @@ class PostgresDelegatedWorkActions:
                         "type": "object", "additionalProperties": False,
                         "properties": {"contract": {"type":"string", "const":"PublicResearchRequest/v1"},
                             "schema_version": {"type":"integer", "const":1},
-                            "question": {"type":"string", "maxLength":2000},
-                            "title": {"type":"string", "maxLength":200},
+                            "question": {"type":"string", "minLength":1, "maxLength":2000},
+                            "title": {"type":"string", "minLength":1, "maxLength":200},
                             "options": {"type":"array", "minItems":1, "maxItems":5,
-                                "items":{"type":"string", "maxLength":120}},
+                                "items":{"type":"string", "minLength":1, "maxLength":120}},
                             "research_mode": {"type":"string", "enum":["topic","comparison"]},
                             "public_review": {"type":"string", "const":"public_unlinked"}},
                         "required": ["contract","schema_version","question","title","options","research_mode","public_review"]

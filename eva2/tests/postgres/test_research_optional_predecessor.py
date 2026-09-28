@@ -3,11 +3,13 @@ import asyncio
 from copy import deepcopy
 from uuid import uuid4
 import pytest
-from jsonschema import validate
+from jsonschema import ValidationError as JsonSchemaValidationError, validate
+from pydantic import ValidationError as ContractValidationError
 from pydantic_ai.profiles.openai import OpenAIJsonSchemaTransformer
 from eva.adapters.postgres.delegated_work_actions import PostgresDelegatedWorkActions
 from eva.application.conversation import ConversationActionCall, ConversationConflict
 from eva.bootstrap.household_work import HouseholdWorkActions
+from eva.contracts.delegated_work import PublicResearchRequest
 from tests.postgres.test_household_public_work import setup, start, PUBLIC
 from tests.postgres.test_scheduled_failure_return import database
 
@@ -20,6 +22,44 @@ def test_strict_research_schema_accepts_null_or_existing_predecessor():
     for predecessor in (None, "work:previous"):
         validate({"research": PUBLIC, "prior_work_id": predecessor,
                   "acceptance_message": "Ik kijk ernaar."}, schema)
+
+
+
+@pytest.mark.parametrize("mode", ["topic", "comparison"])
+@pytest.mark.parametrize("empty_field", ["question", "title", "option"])
+def test_research_schema_rejects_empty_strings_before_provider_transformation(mode, empty_field):
+    descriptor = next(t for t in PostgresDelegatedWorkActions.conversation_tools(include_research=True)
+                      if t.name == "start_background_research")
+    research = {**PUBLIC, "research_mode": mode, "options": ["First topic", "Second topic"]}
+    if empty_field == "option":
+        research["options"][0] = ""
+    else:
+        research[empty_field] = ""
+    with pytest.raises(ContractValidationError):
+        PublicResearchRequest.model_validate(research)
+    arguments = {"research": research, "prior_work_id": None, "acceptance_message": "I will investigate."}
+    with pytest.raises(JsonSchemaValidationError):
+        validate(arguments, descriptor.input_schema)
+    # The installed provider transformer drops length bounds. Application
+    # validation remains necessary; descriptor alignment cannot guarantee input.
+    provider_schema = OpenAIJsonSchemaTransformer(deepcopy(descriptor.input_schema), strict=True).walk()
+    properties = provider_schema["properties"]["research"]["properties"]
+    field_schema = properties["options"]["items"] if empty_field == "option" else properties[empty_field]
+    assert "minLength" not in field_schema
+    validate(arguments, provider_schema)
+
+
+@pytest.mark.parametrize("mode", ["topic", "comparison"])
+def test_research_schema_preserves_valid_topic_and_comparison_requests(mode):
+    descriptor = next(t for t in PostgresDelegatedWorkActions.conversation_tools(include_research=True)
+                      if t.name == "start_background_research")
+    research = {**PUBLIC, "research_mode": mode,
+                "options": ["First topic"] if mode == "topic" else ["First topic", "Second topic"]}
+    assert PublicResearchRequest.model_validate(research).to_payload() == research
+    arguments = {"research": research, "prior_work_id": None, "acceptance_message": "I will investigate."}
+    for schema in (descriptor.input_schema,
+                   OpenAIJsonSchemaTransformer(deepcopy(descriptor.input_schema), strict=True).walk()):
+        validate(arguments, schema)
 
 
 @pytest.mark.parametrize("predecessor_mode", ["null", "absent", "existing"])
