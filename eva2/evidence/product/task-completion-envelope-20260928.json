@@ -1,6 +1,6 @@
 {
-  "checkedAt": "2026-09-28T08:58:53.271094+00:00",
-  "status": "installed_real_task_pending",
+  "checkedAt": "2026-09-28T09:05:00.846345+00:00",
+  "status": "installed_real_task_failed",
   "sourceCommit": "afa0643311dea8c9b88c98cbf5b85a48a990a987",
   "implementationCommit": "ef59f784f09570db749addbe6ad8577c596d76d4",
   "prerequisite": "2f6c1cbc",
@@ -23,7 +23,7 @@
     "verdict": "GO within eight-file backend combination; no extra tests or model calls",
     "limitations": "Actual installed overlay verified separately by coordinator; reviewer did not inspect frontend"
   },
-  "realModelTrials": 0,
+  "realModelTrials": 1,
   "credits": null,
   "ownerAcceptance": "open",
   "completeLearningFunction": "not proven",
@@ -32,7 +32,7 @@
     "Distroless base has no shell; use exec-form Python for replacing static package",
     "Static package removal runs as root at build-time and restores exact original runtime user"
   ],
-  "next": "Candidate startup check, bounded installation, one known failed real task with unchanged prompt",
+  "next": "Identify underlying provider/response failure without speculative model retries; complete task remains open.",
   "installation": {
     "checkedAt": "2026-09-28T08:58:33.392856+00:00",
     "services": {
@@ -78,5 +78,83 @@
       "http://localhost:44712/project-state": 200
     },
     "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/task-completion-envelope-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "realTask": {
+    "workId": "work:eva-chat:03f2f652-a573-5fe9-a172-ead7997e6b34",
+    "state": "ambiguous",
+    "errorCode": "internal_error",
+    "errorFingerprint": "039cc78514ddc215b86bfeea57f2a1d1f932aaf6160e4b687da08e3653eff0dd",
+    "knownError": "ConversationModelError:conversation provider returned an invalid response",
+    "underlyingCause": "Not retained in available evidence; adapter wraps multiple exception types.",
+    "grantVerified": {
+      "contract": "DelegatedDigitalWorkGrant/v4",
+      "context_refs": [],
+      "workspace_ref": null,
+      "capability_ids": [
+        "home_assistant_request",
+        "read_home_assistant_inventory",
+        "save_workspace_document",
+        "connect_service",
+        "discover_connector_tools",
+        "manage_connected_services",
+        "use_connector_tool",
+        "designate_reusable_procedure",
+        "list_reusable_procedures",
+        "resolve_reusable_procedure",
+        "run_reusable_procedure",
+        "get_delegated_work",
+        "save_work_progress",
+        "evaluate_own_component_improvement",
+        "prepare_own_component_release",
+        "read_own_component_source",
+        "draft_own_component_improvement"
+      ],
+      "schema_version": 4,
+      "timeout_seconds": 300,
+      "delegation_depth": 1,
+      "maximum_model_runs": 32,
+      "maximum_tool_calls": 31,
+      "child_network_access": false,
+      "maximum_input_tokens": 2097152,
+      "maximum_total_tokens": 2135552,
+      "maximum_output_tokens": 38400,
+      "maximum_cost_usd_micros": null,
+      "maximum_claims_before_call_start": 2,
+      "maximum_completed_model_responses": 32
+    },
+    "workerUsage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 8,
+      "tool_calls": 6,
+      "input_tokens": 100092,
+      "output_tokens": 2741,
+      "total_tokens": 102833,
+      "cost_usd_micros": null
+    },
+    "foregroundUsage": [
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 13204,
+        "output_tokens": 301,
+        "model_attempts": 1
+      }
+    ],
+    "resultAvailable": false,
+    "retryStarted": false,
+    "classification": "Known failed task repeated once after changed code; not an unseen learning benchmark.",
+    "artifacts": "/home/administrator/project/.eva2-artifacts/task-completion-envelope-20260928/one-real-task"
+  },
+  "liveAssets": {
+    "/internal/v1/dashboard/assets/index-C5NanmYk.js": {
+      "status": 200,
+      "sha256": "3a191fba6ba86116310db41b8afe4e0bf2ebcb95ba7535e23c5231a3a559eb4c"
+    },
+    "/internal/v1/dashboard/assets/index-Bu0OdK_w.css": {
+      "status": 200,
+      "sha256": "133304cf68066e44ab70d719862b77a6d3f5c7f02436f04655a9fbe998fe592e"
+    }
   }
 }
