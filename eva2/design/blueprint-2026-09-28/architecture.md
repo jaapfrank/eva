@@ -7,6 +7,14 @@ Owner scope: the complete family housemate. No business edition is included.
 [Platform decision](platform-decision.md) · [Learning and initiative](learning-and-initiative.md).
 Live progress remains in [WERKBORD](../../WERKBORD.md) and its existing JSON source.
 
+**Controlling correction, 28 September:** the Hermes ownership and migration design
+below is conditional. Existing Eva capabilities must be mapped first and replacement
+must have a supported advantage over the smallest sufficient retained implementation.
+Public API compatibility alone is not that advantage. No old loop, scheduler, memory,
+channel or installer is replaced merely to match this diagram. The
+[delivery mapping](delivery-plan.md#existing-capabilities-and-change-decisions) states
+what is already present and what remains a defect or an untested outcome.
+
 ## 1. Product contract and bounded finish
 
 Eva is one recognizable, warm, curious housemate with her own reasoned judgment,

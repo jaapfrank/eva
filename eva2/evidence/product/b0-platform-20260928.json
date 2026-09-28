@@ -1,0 +1,34 @@
+{
+  "contract": "EvaBasisDecision/v1",
+  "checkedAt": "2026-09-28T08:25:14.659707+00:00",
+  "sourceBase": "82da6f33a8fb5335b3f88b583762926e2705fd00",
+  "decision": "retain_existing_execution_for_C1",
+  "scope": "Owner-corrected B0 capability/change decision covering all24 slices; no product feature completion",
+  "reason": "Existing conversation/work overlap and task/result mechanisms are evidenced; a benefit from replacing them for C1 is not established. T1/T2/L1 share a concrete full-task-envelope defect to address once, in the bounded relevant work.",
+  "hermesCompatibility": "UNKNOWN; five contracts unproven, no GO or NO-GO",
+  "evidence": [
+    "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+    "eva2/research/2026-09-27-system-choice/baseline.md",
+    "eva2/experiments/b0-platform-20260928/README.md",
+    "eva2/experiments/b0-platform-20260928/source-references.json"
+  ],
+  "review": {
+    "reviewer": "/root/platform_research_20260927",
+    "result": "24-row mapping aligned; two stale dispatch instructions found",
+    "resolution": "Coordinator removed unconditional first compatibility trial and B0 candidate-package requirement; aligned dependency policy too.",
+    "limits": "Selected evidence and planning consistency review, not new runtime or full-repository audit"
+  },
+  "usage": {
+    "evaModelCalls": 0,
+    "upstreamProbes": 0,
+    "installations": 0,
+    "developmentCredits": null
+  },
+  "preserved": [
+    "existing installation and data",
+    "owner acceptances",
+    "functional completion counts",
+    "historical tasks and receipts"
+  ],
+  "next": "C1 through existing ingress/context/work routes; only missing behavior evidence or demonstrated defect justifies changes"
+}

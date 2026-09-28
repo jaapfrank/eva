@@ -3,7 +3,7 @@
 Status: bounded design, 28 September 2026; source basis `e94f384551d78b8b7ae158d8688cd3a75fa81cda`.
 No implementation, installation, model trial, measured advantage or novelty claim.
 This document supplies the learning/initiative part of the complete family product; no company plan or business-development track.
-Hermes is the provisional single execution owner, subject to the compatibility decision in [platform-decision.md](platform-decision.md).
+Hermes is only a conditional execution proposal: replacement must first beat retaining or narrowly changing Eva's existing learning/task mechanisms, then pass the compatibility gate in [platform-decision.md](platform-decision.md). The current source investigation establishes neither condition.
 The interfaces below are proposed semantic contracts, not claims about existing Hermes APIs or implemented wire schemas.
 
 ## 1. Product boundary and useful baseline

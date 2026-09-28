@@ -1,5 +1,22 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaarcorrectie 28 september 2026 — onderbouw wijzigingen voor alle onderdelen
+
+Jaap wijst erop dat Eva al taakuitvoering en andere voorgestelde mogelijkheden
+heeft. Voor ieder onderdeel moet het plan daarom de bestaande implementatie en
+bewezen uitkomst noemen, het resterende concrete tekort onderscheiden van alleen
+ontbrekend bewijs, en de kleinste voldoende vervolgstap bepalen. De bestaande
+inventarisatie is invoer; zij was onvoldoende vertaald naar de uitvoeropdrachten.
+Dit is geen opdracht voor een nieuwe brede audit of een herbouw van bestaande
+functies. Werkende resultaten, gegevens en acceptaties blijven behouden.
+
+Hermes is een kandidaat, geen aangetoonde verbetering. De extra compatibiliteits-
+proeven zijn gestopt; de beperkte bronbevindingen blijven UNKNOWN. Een overstap
+vereist eerst een concreet voordeel boven behoud of gerichte aanpassing. Dat geldt
+ook voor alle andere bouwstenen. Het actieve goal en de volledige productambitie
+blijven staan; per opdracht wordt nu expliciet of werk bouwen, aansluiten,
+verbeteren of alleen beproeven betreft. [Onderbouwing per opdracht](design/blueprint-2026-09-28/delivery-plan.md#existing-capabilities-and-change-decisions).
+
 ## Eigenaaropdracht 28 september 2026 — oplevergoal activeren en uitvoeren
 
 Jaap heeft na het complete bouwplan opdracht gegeven hiervan een actief goal te
@@ -27,12 +44,12 @@ De bestaande acht productstappen, dagelijkse Eva1-referentie en vergelijking met
 concurrenten blijven onderdeel van de volledige ambitie. Gegevens en huidige
 installatie blijven tijdens de ontwerpopdracht behouden.
 
-Het [complete bouwplan](EVA2_BOUWPLAN.md) is het actuele ontwerpvoorstel. De daarin
-voorgestelde Hermes-basis en vaste terugval zijn onderbouwde ontwerpkeuzes van de
-coördinator, nog geen eigenaaracceptatie of geïnstalleerde architectuur. De eerste
-uitvoerstap is een begrensde koppelproef; technische geschiktheid en voordeel worden
-niet uit platformdocumentatie alleen afgeleid. Zakelijke verkoop is een mogelijke
-latere richting en vergroot deze scope niet.
+Het [complete bouwplan](EVA2_BOUWPLAN.md) is het actuele ontwerpvoorstel. De latere
+eigenaarcorrectie hierboven maakt elke vervanging voorwaardelijk: eerst bestaand
+resultaat, concreet tekort en voordeel boven gericht aanpassen vastleggen.
+Hermes en een gewijzigde Pydantic-uitvoering zijn kandidaten, geen verplichte
+vervangingen. De platformproef is gestopt met UNKNOWN; een vervolgstap volgt niet
+uit compatibiliteit alleen. Zakelijke verkoop vergroot deze scope niet.
 
 Deze opdracht rondt het uitvragen/ontwerpen uit 27 september af met een concreet plan;
 ze start nog geen featurebouw, installatie of nieuwe Eva-modelproef. Gewone bruikbare

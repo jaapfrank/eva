@@ -1,6 +1,6 @@
 # Platform decision for the Eva2 family blueprint
 
-Status: implementation recommendation, 28 September 2026; compatibility gate pending.
+Status: conditional candidate, 28 September 2026; replacement advantage unestablished.
 Integration base supplied and checked by the coordinator: `e94f384551d78b8b7ae158d8688cd3a75fa81cda`.
 Scope: the complete family housemate. No business edition, feature code, installation,
 model trial or runtime migration is authorized by this document alone.
@@ -11,8 +11,33 @@ Code reads in this pass were targeted signatures/composition/lock excerpts, not 
 
 ## 1. Lead decision and bounded fallback
 
-**Choose Hermes Agent as the lead general execution platform (direction B).**
-Use its persistent gateway, native agent loop, sessions, delegation, skills and scheduling.
+**Hermes Agent was proposed as the lead general execution platform (direction B).**
+This is not a replacement decision. The owner challenged duplication of capabilities
+already present in Eva; that correction applies to every component. The existing
+[baseline](../../research/2026-09-27-system-choice/baseline.md) already documents
+background work, task controls, results and memory. Its known full-task envelope
+failure does not establish that a platform change is necessary or sufficient.
+
+Before any replacement, record the concrete unmet user outcome, existing code and
+evidence, smallest sufficient retained change, candidate benefit and migration cost.
+Compatibility alone cannot satisfy this requirement. The limited pinned-source pass
+is [UNKNOWN](../../experiments/b0-platform-20260928/README.md), with no probes, model
+calls or installation. Its supported seams and caveats are research, not a GO/NO-GO.
+No candidate repair campaign is running. The per-slice decisions in the
+[delivery specification](delivery-plan.md#existing-capabilities-and-change-decisions)
+govern what can be built next.
+
+**B0 decision after this correction:** retain the existing execution for C1. Actual
+overlap/task-result evidence exists; no demonstrated C1 gap requires Hermes or a
+different loop. Address the remaining channel/latency outcome through those routes.
+The shared full-task-envelope failure in T1/T2/L1 is a separate concrete reason to
+assess a narrow execution change when that work is dispatched. This is an operational
+selection under current evidence, not proof that current Eva is superior to Hermes.
+B0's capability/change decision can close while the unused Hermes compatibility gate
+remains UNKNOWN. Reopening replacement requires new decisive evidence.
+
+If replacement is subsequently justified, the proposed Hermes shape uses its
+persistent gateway, native agent loop, sessions, delegation, skills and scheduling.
 Eva contributes identity/audience policy, authorized context, effect/result evidence and
 family channel adapters. These are services and transport boundaries, not another planner.
 
@@ -22,11 +47,13 @@ and background work. Python integration and documented memory/tool/platform exte
 make Hermes the most direct candidate. This is an engineering judgment, not measured superiority,
 a promise of fewer tokens, or proof that Hermes already meets the complete family requirement.
 
-**Fallback is direction C:** Pydantic AI's native multi-step run/streaming loop on the existing
+**The narrower implementation candidate is direction C:** Pydantic AI's native multi-step run/streaming loop on the existing
 2.37.0 dependency basis, behind the same Eva contracts; the existing application owns durable
 job admission and scheduling. Replace the single-step outer loop instead of merely enlarging it.
 Do not run Hermes and the fallback as alternative planners for the same task.
-Direction A is the live rollback, not the target recommendation.
+Direction A remains the current running basis; lack of replacement evidence does not
+make it obsolete. C also requires a concrete outcome that the retained arrangement
+cannot sufficiently deliver; do not rewrite it merely because Hermes is unproven.
 
 | Alternative | Decision for this blueprint |
 |---|---|
@@ -35,7 +62,8 @@ Direction A is the live rollback, not the target recommendation.
 | Agent Zero / OpenCode / Pi / OpenHands | Optional bounded executors only if a later concrete task needs them; none is an initial extra general planner. |
 | Deep Agents / LangGraph / DBOS / Temporal | Not added to the Hermes path. Adding another general scheduler/checkpointer is not required merely because it exists. |
 
-If the gate in section 7 fails, select C once and record the failed contract.
+If justified replacement reaches section 7 and fails, consider C against that same
+concrete gap and record the failed contract. UNKNOWN is not a failed platform test.
 Do not cycle Hermes versions, try OpenClaw next, or extend a platform repair campaign.
 A future change of this decision requires new decisive evidence, not a preference for another stack.
 
@@ -181,9 +209,10 @@ Finite development-probe bounds are a separate agreed implementation control.
 Optional modules declare dependencies/access/data export/disable behavior; absent modules do not
 break conversation or erase history. Stop dependent work visibly and preserve its result handles.
 
-## 7. One compatibility gate, then implementation
+## 7. Compatibility gate only after replacement is justified
 
-Run one bounded adapter-contract spike against the Hermes pin, before live cutover.
+Only after the replacement case above is established, run one bounded adapter-contract
+spike against the Hermes pin before live cutover. This spike is currently stopped.
 It is one implementation slice plus one bundled independent review, not a platform bakeoff.
 Use deterministic model/tool stubs and existing synthetic records; no private database copy,
 new paid provider route or live household action is needed for this compatibility decision.
@@ -200,7 +229,8 @@ The gate produces a pass/fail receipt with source paths, mapped methods and rema
 **GO** only if all five contracts can be demonstrated at the pin through configuration,
 supported adapters/plugins and bounded translations of existing policy/data services.
 **NO-GO** if a general-loop fork, parallel scheduler, unsafe private scope, unavailable credential
-mode or unknown-effect replay is required. Record the exact blocker and use fallback C.
+mode or unknown-effect replay is required. Record the exact blocker and assess the
+narrower C change against the same demonstrated outcome, not as automatic new work.
 A local fixture/adapter defect may be corrected once within this slice; an unresolved contract
 does not trigger more candidate rounds. Missing live-access evidence remains explicitly open.
 

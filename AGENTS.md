@@ -1,5 +1,17 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Eigenaarcorrectie 28 september 2026 — bestaand resultaat vóór elke bouwopdracht
+
+Voor alle onderdelen geldt: koppel de geplande opdracht aan de bestaande Eva1/Eva2-
+implementatie en het beschikbare bewijs. Benoem wat al werkt, welk concreet
+gebruikstekort resteert en of bouwen, aansluiten, gericht verbeteren of alleen
+beproeven nodig is. Ontbrekende acceptatie of een niet-uitgevoerde proef bewijst geen
+ontbrekende functie. Compatibiliteit van Hermes of een andere bouwsteen bewijst geen
+voordeel van vervanging. Vervangen vereist een onderbouwd voordeel ten opzichte van
+de kleinste voldoende aanpassing; de goedgekeurde ambitie is geen herbouwmandaat.
+Gebruik de bestaande inventarisatie en bewijsregistratie; geen nieuwe brede audit.
+Deze correctie gaat voor automatische platformvervanging in het bouwplan.
+
 ## Actief oplevergoal — eigenaaropdracht 28 september 2026
 
 Voer het complete Eva2-bouwplan uit: `eva2/EVA2_BOUWPLAN.md` en

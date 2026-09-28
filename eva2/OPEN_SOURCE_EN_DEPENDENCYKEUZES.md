@@ -3,8 +3,10 @@
 > Actualisatie28 september 2026: de eigenaar heeft op 27 september vastgelegd dat
 > bestaande code/platformkeuzes geen verplichte selectievoorwaarde meer zijn.
 > Het [nieuwe platformvoorstel](design/blueprint-2026-09-28/platform-decision.md)
-> beveelt Hermes aan met één begrensde compatibiliteitscontrole en Pydantic-native
-> als vaste terugval. Oudere voorkeuren/tabellen hieronder blijven historische
+> bevat Hermes en Pydantic-native als kandidaten. Latere eigenaarcorrectie op28september:
+> voor elke bouwsteen eerst bestaand resultaat, tekort en kleinste oplossing vastleggen;
+> vervanging vergt aantoonbaar voordeel. De Hermes-broncontrole eindigde UNKNOWN,
+> zonder vervolgplicht of installatie. Oudere voorkeuren/tabellen hieronder blijven historische
 > bronnen; zij zijn geen opdracht om al die pakketten te installeren. Behoud van
 > gegevens, exacte pins, licentie-/onderhoudscontrole en een werkende terugweg blijven
 > gelden. Dit ontwerp is geen dependency-upgrade of productie-installatie.

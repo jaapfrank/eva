@@ -29,23 +29,27 @@ van iedere nieuwe vaardigheid te zijn.
 | Een beheersbaar product | Modules kiezen, normaal installeren, bijwerken en herstellen met behoud van gegevens |
 | Aantoonbaar beter | Dezelfde taken vergelijken met Eva1 en concurrenten; winst én verlies zichtbaar maken |
 
-## De technische basis die ik aanbeveel
+## Wat al bestaat bepaalt wat moet veranderen
 
-**Hermes als algemene uitvoeringsmotor**, met een beperkte Eva-laag voor identiteit,
-persoon-/publiekscontext, huisintegratie en betrouwbare resultaatterugmelding.
-Hermes krijgt de algemene gespreks-/taaklus; de oude Eva-lus blijft daar niet onder
-meedraaien. Dit is een onderbouwde voorkeur, nog geen bewezen prestatievoorsprong.
+**Dit plan beschrijft eindresultaten, geen lijst met 24 nieuw te bouwen functies.**
+De bestaande inventarisatie laat werkende en geaccepteerde mogelijkheden zien.
+Per opdracht staat nu [welk bestaand resultaat we gebruiken, wat nog ontbreekt en
+welke wijziging gerechtvaardigd is](design/blueprint-2026-09-28/delivery-plan.md#existing-capabilities-and-change-decisions).
+Ontbrekende gebruiksbewijzen worden geen automatische herbouwopdrachten.
 
-Voor de bouw controleren we één keer of de gekozen release de noodzakelijke
-koppelingen werkelijk ondersteunt. Als daarvoor een eigen fork van de hele agentlus
-nodig blijkt, is de vaste terugval de normale meerstapsuitvoering van Pydantic AI.
-We beginnen dan geen nieuwe rondreis langs alle frameworks.
+Hermes was voorgesteld om eigen uitvoeringscode over te nemen. **Het voordeel van
+die vervanging is niet aangetoond.** De beperkte broncontrole blijft UNKNOWN;
+aanvullende proeven zijn gestopt en Hermes is niet geïnstalleerd. Eerst moet een
+concreet tekort worden afgewogen tegen behouden of gericht aanpassen van Eva.
+Pas bij onderbouwd voordeel volgt de noodzakelijke compatibiliteitscontrole.
+Dit geldt voor iedere bouwsteen. Ook de bestaande Pydantic-uitvoering veranderen
+is geen doel op zich. De volledige ambitie blijft staan.
 
 ```mermaid
 flowchart TD
   A[Website · Telegram · Home Assistant · beide speakers] --> B[Eén Eva: identiteit en passende context]
   B <--> C[Geheugen en herinneringen]
-  B --> D[Hermes: gesprek, taken en leren]
+  B --> D[Eén uitvoering: bestaande Eva tenzij vervanging onderbouwd beter is]
   D --> E[Optionele modules: huis, browser, bestanden, diensten en computer]
   E --> F[Werkelijk resultaat controleren en terugbrengen]
   F --> B
@@ -57,6 +61,21 @@ de algemene HA-API, browserbediening, taak-/effect-/resultaatbewijzen en bestaan
 installatievoorzieningen. Eva1 blijft de praktische referentie voor huisvaardigheid,
 persoonlijkheid en spontane aanwezigheid. Alle broncode behouden is geen doel;
 informatie en bruikbaar gedrag behouden wel.
+
+| Onderdeel | Dit bestaat al | Het resterende werk betreft |
+|---|---|---|
+| Gesprek en stem | Gesprek tijdens onderzoek, streaming, spraak en laptoponderbreking | Snelheid en gelijke werking via de echte ingangen |
+| Personen en geheugen | Geaccepteerd onthouden, corrigeren, inzien en wissen; privégrenzen | Gewijzigde koppelingen en langdurige gezinscontinuïteit |
+| Taken en huis | Onderzoek, taakbediening, resultaten, algemene HA-API en browser | Complete moeilijke opdrachten zonder ontwikkelaarshulp |
+| Initiatief | Eva1-aanwezigheid en geïnstalleerde huishoudroute in Eva2 | Nuttige, hoorbare samenhang; camera/agenda-aansluiting vaststellen |
+| Leren en projecten | Werkwijzen opslaan/hergebruiken, hervatten en een geholpen zelfverbetering | Onbekende werkwijze zelfstandig leren en meerdaags werk afronden |
+| Installatie en modules | Wizard, provisioning, herstel en terugweg | Gewone volledige installatie en optionele modules zonder handwerk |
+| Vergelijking | Protocol, hulpmiddelen en eerdere deelvergelijkingen | Actuele gelijke vergelijking met Eva1 en concurrenten |
+| Eindoplevering | Installatie-/controlevoorzieningen en afzonderlijke acceptaties | Eén compleet geheel en zeven dagen werkelijk gezinsgebruik |
+
+Dit vat bestaande bewijzen samen; het is geen nieuwe gebruiksproef of verklaring
+dat elk groot onderdeel af is. De exacte beperkingen en bronnen staan per opdracht
+in de uitvoerspecificatie. Een open oordeel of ontbrekende proef is geen bouwdefect.
 
 ## Wat technisch onderscheidend moet worden
 
@@ -79,7 +98,7 @@ kleinere complete opleveringen; de precieze opdrachten staan in de
 
 | Volgorde | Wat je daarna daadwerkelijk kunt gebruiken | Wanneer het af is |
 |---|---|---|
-| **Vooraf · basis controleren** | Een gekozen, aansluitbare uitvoering zonder productie te vervangen | Publieke koppelingen voor gesprek, werk, geheugen, stop en resultaat passen; één eigenaar per taak |
+| **Vooraf · wijzigingen onderbouwen** | Bestaand werk en concrete resterende tekortkomingen per opdracht | Elke wijziging heeft bewijs en een kleinste voldoende oplossing; vervanging heeft aantoonbare meerwaarde |
 | **1 · Gesprek en stem** | Praten terwijl meerdere opdrachten lopen; antwoord bij de juiste vraag | Alle vier ingangen en beide echte speakers voldoen aan de betreffende gesprek-/spraakgevallen |
 | **2 · Personen en geheugen** | Een onderwerp later voortzetten en correcties terugzien | De juiste context komt bij de juiste persoon; gedeelde speakers geven geen privé-inhoud |
 | **3 · Werk en huis afmaken** | Onderzoek, algemene HA-bediening, browser/bestanden en taakbediening | Het gevraagde resultaat is echt gecontroleerd, opgeslagen en teruggebracht; stoppen/overnemen werkt |
@@ -103,6 +122,9 @@ voortgangsteller omdat er een document, reparatie of losse test is gemaakt.
   samenhang en één gebundelde review horen bij iedere complete oplevering.
 - **Eerst bestaand bewijs gebruiken.** Een afgeronde acceptatie wordt alleen geraakt
   wanneer de nieuwe samenstelling dat gedrag verandert of een regressie aantoont.
+- **Geen automatische nieuwbouw.** Iedere opdracht benoemt bestaand gedrag, bewijs,
+  resterend tekort en de keuze: behouden, aansluiten, verbeteren of alleen beproeven.
+  Vervangen vergt een concreet voordeel boven de kleinste voldoende aanpassing.
 - **Geen eindeloze proefherhaling.** Een nieuwe poging vereist een gewijzigde oorzaak.
   Een mislukte onderzoekshypothese mag gewoon worden afgewezen.
 - **Na een begrensd werkvenster een resultaat of concrete blokkade.** Voorlopige
@@ -117,8 +139,9 @@ en Eva-gebruik worden afzonderlijk gerapporteerd; onbekende kosten blijven onbek
 
 ## Wat nog niet bewezen is
 
-De gekozen Hermes-release moet passen bij de bestaande providerroute, afgeschermde
-geheugenkoppeling en duurzame taak-/effectgrenzen. Echte Voice PE-vertraging en continu
+Een overstap op Hermes heeft nog geen aangetoond voordeel. Compatibiliteit met de
+bestaande provider-, geheugen- en taakgrenzen is evenmin volledig bewezen.
+Echte Voice PE-vertraging en continu
 spreken blijven hardware-/routeproeven; een laptop bewijst dat niet. De huidige
 firmware blijft tijdens de basiscontrole staan. Technisch onderscheid en lagere kosten
 zijn hypotheses totdat de vergelijking ze ondersteunt.
@@ -134,11 +157,11 @@ stilzwijgend bij dit plan.
 | Document | Wat erin staat |
 |---|---|
 | [Architectuur](design/blueprint-2026-09-28/architecture.md) | Moduleverantwoordelijkheden, gegevenscontracten, gesprek/werk tegelijk, spraak, geheugen, migratie en beheer |
-| [Platformkeuze](design/blueprint-2026-09-28/platform-decision.md) | Waarom Hermes, exacte basis, terugval, hergebruik en welke oude routes verdwijnen |
+| [Platformkeuze](design/blueprint-2026-09-28/platform-decision.md) | Voorwaardelijke Hermes-kandidaat, ontbrekende vervangingsonderbouwing en noodzakelijke koppelingen |
 | [Leren en initiatief](design/blueprint-2026-09-28/learning-and-initiative.md) | Geheugenontwikkeling, persoonlijkheid, initiatief, reflectie, skills en begrensde technische vernieuwing |
 | [Opleverstappen](design/blueprint-2026-09-28/delivery-plan.md) | Kleine opdrachten, afhankelijkheden, eindvoorwaarden, ramingen, vergelijking en aansluiting op de negen dashboardonderdelen |
 
-**Eerstvolgende bouwopdracht:** de begrensde Hermes-koppelproef. Daarna de eerste
-complete gespreksoplevering: een warme snelle reactie, werkelijk aangenomen achtergrondwerk
-en een passende tussenvraag vóór dat werk klaar is. Dat wordt het eerste zichtbare
-resultaat van de gekozen basis; de rest van het complete plan blijft daarna vaststaan.
+**Eerstvolgende functionele uitkomst blijft C1:** warme snelle gesprekken en een
+tussenvraag tijdens echt werk via Telegram en website. Bestaand bewijs van
+gelijktijdig gesprek en onderzoek wordt gebruikt; alleen het resterende tekort
+rechtvaardigt werk. De vaste acht productstappen blijven staan.

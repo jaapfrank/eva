@@ -2,6 +2,12 @@
 
 28 September 2026 · design proposal · no new runtime release.
 
+Owner correction, later on 28 September: each delivery must start from the existing
+capability and evidence, then justify its smallest necessary change. See the
+[slice-by-slice decisions](delivery-plan.md#existing-capabilities-and-change-decisions).
+Hermes is a conditional proposal, not an approved replacement based on compatibility
+alone. The limited source investigation is UNKNOWN; no upstream execution or installation.
+
 Start with the Dutch [owner plan](../../EVA2_BOUWPLAN.md).
 This directory contains the detailed specifications for that one plan:
 

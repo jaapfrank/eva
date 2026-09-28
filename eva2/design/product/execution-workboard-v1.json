@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Actief oplevergoal: B0 nu, daarna C1. De acht stappen en 24 opdrachten staan vast. Nieuwe scope vereist een expliciete wijziging of aangetoonde afhankelijkheid.",
+      "priorityDecision": "Alle24 opdrachten: bestaand resultaat, bewijs, resterend tekort, kleinste vervolgstap. B0-keuzebesluit afgerond; C1 volgt via bestaande uitvoering. Hermes-compatibiliteit UNKNOWN, geen automatisch vervangen.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -158,13 +158,7 @@
           "Historical shared repository contents not yet split out"
         ]
       },
-      "summary": [
-        {
-          "label": "ACTIEF GOAL",
-          "value": "Het complete Eva2-plan uitvoeren",
-          "detail": "B0 gestart; daarna C1. Geen nieuwe functie afgevinkt door goalactivatie."
-        }
-      ],
+      "summary": "Eva heeft al bruikbare deelresultaten. De 24 opleveropdrachten zijn geen 24 ontbrekende functies: per opdracht staat nu wat bestaat en of aansluiten, verbeteren of alleen beproeven nodig is.",
       "nextOutcomes": [
         {
           "title": "B0 · Basis controleren — actief",
@@ -572,8 +566,8 @@
         {
           "name": "MODEL & TOOLLOOP",
           "candidate": "Pydantic AI",
-          "state": "In gebruik · behouden",
-          "next": "Alleen aanpassen als een concrete eigenaarseis niet wordt gehaald; geen algemene vereenvoudigingsopdracht."
+          "state": "Bestaand · vervanging niet onderbouwd",
+          "next": "Concrete hele-taaklimiet onderzoeken; kleinste voldoende wijziging kiezen. Hermes of native-loopvervanging vereist meerwaarde, niet alleen compatibiliteit."
         },
         {
           "name": "GEHEUGEN",
@@ -2417,15 +2411,15 @@
           }
         ],
         "now": {
-          "title": "B0 · De gekozen uitvoeringsbasis aansluiten",
-          "state": "Actief goal · B0 gestart",
-          "detail": "Coördinator activeert de vaste uitvoervolgorde. Eén uitvoerder onderzoekt de gepinde Hermes-bron en stubkoppeling. Nog geen nieuwe Eva-functie of productiewijziging.",
-          "doneWhen": "Eén onderbouwde GO/NO-GO voor vijf platformcontracten; daarna de vaste vervolgstap."
+          "title": "B0 · Bestaand werk en vervolgkeuzes vastgelegd",
+          "state": "Voorbereidingsbesluit afgerond",
+          "detail": "Alle24 opdrachten gekoppeld aan bestaand resultaat, concreet tekort en kleinste vervolgstap. Onafhankelijke controle verwerkt. Voor C1 blijft de bestaande uitvoering; Hermes-voordeel niet aangetoond. Beide uitvoerders klaar; coördinator publiceert de bron. Geen nieuwe Eva-functie.",
+          "doneWhen": "Onderbouwing vastgelegd; geen nieuwe platforminstallatie. C1 is de eerstvolgende functionele opdracht."
         },
         "next": {
           "title": "C1 · Praten terwijl Eva werk afmaakt",
-          "state": "Wachtrij na B0",
-          "detail": "Warme snelle reactie via Telegram en website, echt achtergrondwerk aannemen en een tussenvraag beantwoorden voordat dit klaar is."
+          "state": "Eerstvolgende · nog niet gestart",
+          "detail": "Resterende snelheid en kanaalgelijkheid via Telegram en website afronden met bestaande gesprek-/taakroutes. Eerder geslaagd overlapbewijs gebruiken; alleen het concrete tekort wijzigen."
         },
         "ownerAction": {
           "title": "Nu geen proef nodig",
@@ -2438,7 +2432,7 @@
           "expected": "Gebouwd, getest, geïnstalleerd en door jou geaccepteerd blijven apart. Alleen werkelijk bruikbare functies tellen als opgeleverd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T08:02:56.078145+00:00"
+        "reviewedAt": "2026-09-28T08:25:14.659707+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -2523,7 +2517,7 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentWork": "Actief oplevergoal; B0 gestart op ontwerpbasis130b78a1.",
+      "currentWork": "B0-keuzebesluit afgerond: bestaande uitvoering voor C1 behouden;24 opdrachten onderbouwd. C1 nog niet gestart.",
       "currentEvidence": "eva2/EVA2_BOUWPLAN.md",
       "nextStep": "C1 na het begrensde B0-basisbesluit.",
       "usageClarification": {
@@ -12111,7 +12105,7 @@
             "VB-001"
           ],
           "doneWhen": "Begroeten, snelle ontvangst, doorpraten tijdens werk, onderbreken en stoppen via website, Telegram, HA en fysiek Voice PE; gedeelde kern, afzonderlijk bewijs per ingang.",
-          "preserve": "Bestaande spraak en snelle ontvangst behouden. Snelle inhoudelijke begroeting, kanaalgelijkheid en fysieke continue-spraakproef blijven open; uitgebreide proeven volgen later.",
+          "preserve": "Bestaat: contactmodel, streaming, gesprek tijdens onderzoek, spraak en laptoponderbreking. Resteert: inhoudssnelheid, gelijke kanaalwerking en fysieke speakerproeven. Bestaande routes gebruiken; alleen een aangetoond tekort wijzigen.",
           "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
           "historicalPlanningEffortHours": "4–12",
           "blueprintSlices": [
@@ -12131,7 +12125,7 @@
             "CO-005"
           ],
           "doneWhen": "Later terugkomen op onderwerp en correctie bij geverifieerde persoon; geen privécontext naar dochter, onbekende spreker of onbevoegde toehoorder.",
-          "preserve": "Geaccepteerd geheugen en privécontinuïteit behouden. Eigenaar kiest privévoortzetting via Telegram; geen privé-inhoud op gedeelde speakers. Gedeelde spraak vereist geen persoonlijke verificatie voor algemeen HA-beheer, inclusief automatiseringen (expliciete eigenaarcorrectie 25 september). Echte continuïteits-/grensproeven blijven open.",
+          "preserve": "Bestaat: geaccepteerd onthouden, corrigeren, inzien/wissen en geïnstalleerde privégrenzen. Resteert: gewijzigde koppelingen en langdurige gezinscontinuïteit. Geen nieuw geheugensysteem; privé blijft Telegram.",
           "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
           "historicalPlanningEffortHours": "4–12",
           "blueprintSlices": [
@@ -12151,7 +12145,7 @@
             "UX-002"
           ],
           "doneWhen": "Meerdere aangenomen taken volgen, gecontroleerd resultaat aan juiste persoon terugbrengen, browserovername en herstel zonder dubbele acties; bruikbare taakbediening.",
-          "preserve": "Publiek onderzoek, digitale uitvoering, taakbediening en terugmelding behouden. Op25september geïnstalleerd: bijsturen, bewaren en bedienen na einde spraakgesprek, plus eenmalige terugmelding op de oorspronkelijke speaker. Twee achtergrondslots behouden; echte gelijktijdigheids-/kanaalproef, brede ongeziene taken en browserpraktijk blijven open.",
+          "preserve": "Bestaat: onderzoek, taakbediening, oorspronkelijke vraagbinding, bewaarde resultaten, algemene HA en browserovername. Resteert: volledige moeilijke taak binnen passend uitvoeringspad en ontbrekende echte kanaal-/browsergevallen. Geen nieuwe taak- of HA-laag uit voorzorg.",
           "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
           "historicalPlanningEffortHours": "6–16",
           "blueprintSlices": [
@@ -12171,7 +12165,7 @@
             "VB-002"
           ],
           "doneWhen": "Passend initiatief met werkelijk resultaat, terecht stil blijven en bestaande huisfuncties behouden; gezin beoordeelt eigenheid, plezier en hinder.",
-          "preserve": "Algemene HA-API geïnstalleerd op eigenaarwebsite, Telegram en achtergrondwerker. Echte configuratieanalyse geslaagd; tijdelijke uitgeschakelde automatisering gemaakt, gewijzigd en teruggelezen, eindrapport na één hervatting. Brede gedeelde bediening, algemene huispraktijk en nut/hinder blijven open. Bestaande speakerbediening behouden.",
+          "preserve": "Bestaat: Eva1-aanwezigheid en geïnstalleerde Eva2-huishoudcompositie met stiltebeleid en bezorging. Resteert: hoorbaar/nuttig gedrag en vaststellen van camera-/agenda-aansluiting. Geen nieuw initiatiefsysteem vanwege open acceptatie.",
           "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
           "historicalPlanningEffortHours": "4–12",
           "blueprintSlices": [
@@ -12189,7 +12183,7 @@
             "AU-003"
           ],
           "doneWhen": "Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg.",
-          "preserve": "Bestaande CSV- en FLUXNOTE-leer-/hergebruikproeven behouden. Eén eigen bronverbetering door Eva gemaakt, pakket na opslagcorrectie en één gerichte hervatting opgeslagen; onafhankelijk gemeten71/90→90/90, beoordeeld en geïnstalleerd met terugweg. Coördinatorhulp blijft zichtbaar. Externe documentatie, algemene zelfstandigheid en meerdaagse praktijk blijven open.",
+          "preserve": "Bestaat: procedure-opslag, ontdekking en zelfstandig hergebruik; hervatten en geholpen zelfverbetering met geïnstalleerd resultaat. Resteert: volledige onbekende leeropdracht zonder hulp en meerdaagse praktijk. De bewezen taaklimiet eerst gericht oplossen, bestaande onderdelen hergebruiken.",
           "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
           "historicalPlanningEffortHours": "8–24",
           "blueprintSlices": [
@@ -12209,7 +12203,7 @@
             "IN-003"
           ],
           "doneWhen": "Installatie zonder terminal, verhuizing met identiteit/data, veilige herkoppeling, update en verliesloze terugweg werken.",
-          "preserve": "Bestaande deployment en herstelvoorzieningen eerst hergebruiken.",
+          "preserve": "Bestaat: wizard, target-provisioning, negen-servicevoorbereiding, export/herstel en terugweg. Resteert: gewone bootstrap zonder handgeschreven instellingen, modulekeuze en praktijkproef. Bestaande voorzieningen aansluiten; geïsoleerd herstel is geen volledige eigenaarproef.",
           "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
           "historicalPlanningEffortHours": "6–18",
           "blueprintSlices": [
@@ -12227,7 +12221,7 @@
             "CP-003"
           ],
           "doneWhen": "EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat.",
-          "preserve": "Bestaande proeven behouden; verlies of ontbrekend bewijs niet omzetten in winst.",
+          "preserve": "Bestaat: EV-003, eerdere deelvergelijkingen en Inspect-/scorerhulpmiddelen. Resteert: actuele versies/toegang, gelijkwaardige complete vergelijking en transparante uitkomsten. Geen nieuw vergelijkingsframework.",
           "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
           "historicalPlanningEffortHours": "4–12",
           "blueprintSlices": [
@@ -12249,7 +12243,7 @@
             "FN-003"
           ],
           "doneWhen": "Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie.",
-          "preserve": "Technische afronding en eigenaaracceptatie blijven afzonderlijk; geen onbegrensde best-mogelijke-eis.",
+          "preserve": "Bestaat: beheerde installatie, bronherkomst, terugweg en afzonderlijke acceptaties. Resteert: één complete eindkandidaat en zeven dagen gezinsgebruik met expliciet oordeel. Geen nieuwe releasearchitectuur omdat acceptatie nog openstaat.",
           "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
           "historicalPlanningEffortHours": "4–12",
           "blueprintSlices": [
@@ -12258,8 +12252,8 @@
           ]
         }
       ],
-      "nextAction": "B0: de gepinde platformkoppeling met bron en stubs controleren; daarna C1.",
-      "effortNotice": "Voorlopige S/M/L per kleine oplevering:2-4/4-8/8-16 technische werkuren. Geen beloofde doorlooptijden of creditprijzen; na B0 opnieuw ramen.",
+      "nextAction": "C1: alleen resterende gesprekssnelheid/kanaalgelijkheid via bestaande routes afronden; bestaand overlapbewijs gebruiken.",
+      "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
       "stopRules": [
@@ -12284,14 +12278,14 @@
           "id": "B0",
           "parentStep": 0,
           "dependsOn": [],
-          "outcome": "Platform aansluiten",
+          "outcome": "Uitvoeringskeuze onderbouwen met bestaande mogelijkheden en concreet tekort",
           "effort": "M",
-          "status": "in_progress",
+          "status": "completed",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baseCommit": "130b78a166facc8c07db472b467b554ef908d1ac",
           "startedAt": "2026-09-28T08:02:56.078145+00:00",
           "owner": "/root",
-          "endCondition": "One evidenced GO or NO-GO for the five pinned platform contracts; no production changes.",
+          "endCondition": "Document existing capability evidence, concrete remaining user-visible gap and the smallest sufficient change. Replacement requires a supported advantage over retaining Eva; compatibility alone is insufficient. Any Hermes cutover also requires all five pinned contracts.",
           "effortNotice": "M:4-8 provisional engineering hours; unknown credits. Stop at a decisive contract failure.",
           "fileOwnership": {
             "/root/platform_research_20260927": [
@@ -12310,7 +12304,22 @@
             "Pinned source contract evidence",
             "Deterministic stubs against actual supported interfaces if source permits",
             "One independent review of the bounded GO/NO-GO"
-          ]
+          ],
+          "replacementJustification": "Not established; coordinator stopped further Hermes probes after owner questioned duplicating existing capabilities. Source findings remain incomplete research, not a GO or NO-GO.",
+          "baselineDecision": {
+            "existingCapability": "Eva already has a model loop, durable worker, task controls, memory and result binding.",
+            "remainingGap": "**Unknown:** Hermes replacement benefit is unestablished; its five contracts remain UNKNOWN.",
+            "nextAction": "Retain current execution while deciding the smallest change for a concrete gap. No more platform probes solely to justify the proposal.",
+            "evidencePaths": [
+              "eva2/research/2026-09-27-system-choice/baseline.md",
+              "eva2/experiments/b0-platform-20260928/README.md"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          },
+          "completedAt": "2026-09-28T08:25:14.659707+00:00",
+          "result": "Retain existing execution for C1;24 slices mapped to existing capability/gap/action. This closes corrected planning decision, not Hermes compatibility or product functionality.",
+          "evidence": "eva2/evidence/product/b0-platform-20260928.json"
         },
         {
           "id": "C1",
@@ -12321,7 +12330,18 @@
           "outcome": "Gesprek tijdens werk via tekst",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Contact model, Telegram streaming, work admission and actual conversation during research.",
+            "remainingGap": "**Evidence:** Telegram/web parity and desired content latency are not fully demonstrated; overlap is not absent.",
+            "nextAction": "Reuse ingress, persona and task routes. Verify only missing cases; fix measured latency/routing defects. No automatic loop replacement.",
+            "evidencePaths": [
+              "eva2/research/2026-09-27-system-choice/baseline.md",
+              "eva2/evidence/product/household-public-overlap-20260925.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "C2",
@@ -12332,7 +12352,17 @@
           "outcome": "Twee taken sturen en terugmelden",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Durable tasks, original-question binding, stop/resume/correction and retained results. Session-closure defect was fixed and installed.",
+            "remainingGap": "**Evidence:** two independently steered tasks plus reconnect are not fully demonstrated together.",
+            "nextAction": "Keep task/effect/result stores and controls; verify the missing combination, then repair only a demonstrated seam.",
+            "evidencePaths": [
+              "eva2/evidence/product/household-result-continuity-installed-20260925.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "C3",
@@ -12344,7 +12374,18 @@
           "outcome": "HA en beide fysieke speakers",
           "effort": "L",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "General HA, registered speaker identities, native sessions and later result delivery.",
+            "remainingGap": "**Defect:** pinned HA pipeline does not flush short acknowledgement segments. **Evidence:** complete behavior on both physical devices.",
+            "nextAction": "Retain bindings; solve the named transport gap only if required by the end condition. Verify actual speakers; no assumed firmware rebuild.",
+            "evidencePaths": [
+              "eva2/evidence/product/household-result-continuity-installed-20260925.json",
+              "eva2/evidence/product/ha-short-receipt-boundary-20260925.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "C4",
@@ -12355,7 +12396,18 @@
           "outcome": "Spraak en onderbreken per ingang",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "LiveKit/browser speech, native HA transport and owner-accepted laptop interruption.",
+            "remainingGap": "**Evidence:** full wakeword/interruption/continued speech and current latency; historical owner feedback reported unnatural voice/long pauses.",
+            "nextAction": "Preserve audio paths; measure missing physical behavior before choosing a specific repair. No new speech engine by default.",
+            "evidencePaths": [
+              "eva2/research/2026-09-27-system-choice/baseline.md",
+              "eva2/design/product/execution-workboard-v1.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "M1",
@@ -12367,7 +12419,18 @@
           "outcome": "Onderwerpen later voortzetten",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Automatic memory/correction/use and inspection/forgetting are owner-accepted; source authority and Hindsight already composed.",
+            "remainingGap": "**Evidence:** extended family continuity; a changed platform integration would need relevant checks. No new general memory defect shown.",
+            "nextAction": "Keep memory service, data and acceptances. Wire only a justified changed integration; ordinary later recall belongs in family use.",
+            "evidencePaths": [
+              "eva2/evidence/product/CO-008-GE-01-owner-acceptance-2026-09-10.json",
+              "eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "M2",
@@ -12379,7 +12442,17 @@
           "outcome": "Privé en gedeelde context scheiden",
           "effort": "S",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Household/private separation and additional private destination guard already installed.",
+            "remainingGap": "**Evidence:** newly changed combined paths, not a demonstrated new disclosure.",
+            "nextAction": "Keep authorization and destination checks. Check affected boundaries only; no new identity system or private speaker biometrics.",
+            "evidencePaths": [
+              "eva2/evidence/product/private-continuity-boundary-installed-20260924.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "M3",
@@ -12390,7 +12463,18 @@
           "outcome": "Voorkeuren en persoonlijkheid ontwikkelen",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Shared character, preferences and memory correction exist; Eva1 supplies valued humor/judgment.",
+            "remainingGap": "**Evidence:** evolving interests/opinions and temporary exceptions across the whole product. Absence of code not established.",
+            "nextAction": "Reuse persona/memory. Identify missing behavior or context revision before adding code.",
+            "evidencePaths": [
+              "eva2/research/2026-09-27-system-choice/baseline.md",
+              "eva2/evidence/product/CO-008-GE-01-owner-acceptance-2026-09-10.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "T1",
@@ -12401,7 +12485,18 @@
           "outcome": "Onderzoek werkelijk afronden",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Real research completed, saved and returned; source/document tools and durable runner exist.",
+            "remainingGap": "**Defect:** a complete multi-step path exceeds its actual execution envelope. **Evidence:** general research quality.",
+            "nextAction": "Retain tools/storage/readback; fix the concrete full-task path. A native-loop change remains conditional on solving that gap, not platform fashion.",
+            "evidencePaths": [
+              "eva2/evidence/product/household-public-overlap-20260925.json",
+              "eva2/evidence/product/digital-task-budget-candidate-20260927.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "T2",
@@ -12412,7 +12507,18 @@
           "outcome": "Algemene huisbediening",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "General HA API for both speakers; real harmless automation created, edited and read back.",
+            "remainingGap": "**Defect:** observed task needed coordinator resume after budget failure. **Evidence:** broad semantic requests via physical entrances.",
+            "nextAction": "Reuse HA discovery/API/effect verification; address execution gap and speaker wiring. No device-specific functions or second HA planner.",
+            "evidencePaths": [
+              "eva2/evidence/product/shared-ha-general-installed-20260925.json",
+              "eva2/evidence/product/ha-configuration-readback-installed-20260924.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "T3",
@@ -12423,7 +12529,19 @@
           "outcome": "Browser- en diensttaak met overname",
           "effort": "L",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Isolated browser and shared Chrome, takeover and fresh-observation recovery exist.",
+            "remainingGap": "**Evidence/access:** last existing bridge check had no shared tab; no missing recovery link found. General desktop capability unknown.",
+            "nextAction": "Reuse browser/file adapters; verify the real shared-tab case when available. Add an adapter only for a concrete unsupported task.",
+            "evidencePaths": [
+              "eva2/evidence/product/personal-chrome-controls-installed-20260922.json",
+              "eva2/evidence/product/chrome-inflight-recovery-2026-09-12.json",
+              "eva2/research/2026-09-27-system-choice/baseline.md"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "T4",
@@ -12434,7 +12552,18 @@
           "outcome": "Taakbediening en resultaten",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Owner page already has task/result/status/control surfaces and measured/partial/unknown usage.",
+            "remainingGap": "**Evidence:** all task combinations/accounting sources; not an absent dashboard.",
+            "nextAction": "Keep existing UI and task projections. Connect only demonstrated missing controls/fields; no second task truth or dashboard rebuild.",
+            "evidencePaths": [
+              "eva2/experiments/react-admin-dashboard-v1/src/main.jsx",
+              "eva2/evidence/product/household-result-continuity-installed-20260925.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "I1",
@@ -12447,7 +12576,18 @@
           "outcome": "Huisaanwezigheid en initiatief",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Eva1 doorbell presence; Eva2 household initiative composition, quiet hours and delivery installed.",
+            "remainingGap": "**Evidence:** audible usefulness/silence as a whole. Earlier missing household composition is already fixed.",
+            "nextAction": "Reuse perception, policy, scheduler and delivery. Verify a useful outcome; do not rebuild initiative for lack of owner acceptance.",
+            "evidencePaths": [
+              "eva2/evidence/product/household-initiative-installed-20260924.json",
+              "eva2/research/2026-09-27-system-choice/baseline.md"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "I2",
@@ -12459,7 +12599,18 @@
           "outcome": "Camera, agenda en eigen onderzoek",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Camera/HA perception, retained initiative decisions, research and result storage exist.",
+            "remainingGap": "**Unknown:** required calendar availability and camera/calendar context connection not established by this inventory.",
+            "nextAction": "Inspect that named connection only; connect existing services, add a missing generic adapter only if confirmed. No bin-specific core rule.",
+            "evidencePaths": [
+              "eva2/evidence/product/household-presence-gap-20260924.json",
+              "eva2/evidence/product/household-initiative-installed-20260924.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "L1",
@@ -12471,7 +12622,19 @@
           "outcome": "Werkwijze leren en hergebruiken",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Procedure storage/discovery/execution and unassisted reuse exist; initial learning needed help.",
+            "remainingGap": "**Defect:** unseen documentation task never saved/executed the procedure; reviewed path needs at least 8 tools/9 responses versus 6/8 limits.",
+            "nextAction": "Retain learned artifacts and tools; finish the complete failing learning path and verify new-input reuse. No new learning engine by assumption.",
+            "evidencePaths": [
+              "eva2/evidence/product/procedure-unassisted-reuse-20260925.json",
+              "eva2/evidence/product/digital-task-budget-candidate-20260927.json",
+              "eva2/evidence/product/external-documentation-learning-source-only-20260925.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "L2",
@@ -12483,7 +12646,18 @@
           "outcome": "Meerdaags project hervatten",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Durable tasks/effects, resume and project artifacts exist; prior document project was a prepared two-step case.",
+            "remainingGap": "**Evidence:** general multi-day planning/continuation without developer intervention, not absence of persistence.",
+            "nextAction": "Keep ledger, artifacts and reconciliation. Establish missing continuation behavior before adding planning/state machinery.",
+            "evidencePaths": [
+              "eva2/research/2026-09-27-system-choice/baseline.md",
+              "eva2/evidence/product/household-result-continuity-installed-20260925.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "L3",
@@ -12495,7 +12669,17 @@
           "outcome": "Eigen verbetering beoordelen",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Eva produced a small source fix; evaluation, import, installation and rollback exist. Assisted case improved 71/90 to 90/90.",
+            "remainingGap": "**Evidence:** autonomous improvement on held-out cases; assistance means the general criterion remains open.",
+            "nextAction": "Reuse improvement/evaluation/release route. Fix only missing autonomous handoff; do not rebuild evaluator or release system.",
+            "evidencePaths": [
+              "eva2/evidence/product/component-self-improvement-assisted-20260924.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "R1",
@@ -12506,7 +12690,18 @@
           "outcome": "Uitvoerbare ervaring vergelijken",
           "effort": "M research",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Ordinary procedure reuse is the comparison baseline; task-model concept has prior art and no Eva implementation evidence.",
+            "remainingGap": "**Research:** marginal benefit, total learning cost and technical distinction unproven.",
+            "nextAction": "Keep optional and bounded. Build an isolated candidate only when ordinary skills are runnable; reject on loss without relabeling existing skills as novel.",
+            "evidencePaths": [
+              "eva2/evidence/product/procedure-unassisted-reuse-20260925.json",
+              "eva2/research/2026-09-27-system-choice/technical-differentiation.md"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "O1",
@@ -12517,7 +12712,17 @@
           "outcome": "Installatie met optionele modules",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Wizard, target provisioning and nine-service preparation exist, with installed subcomponents.",
+            "remainingGap": "**Unknown/evidence:** ordinary bootstrap without handwritten target settings and optional module omission are not fully demonstrated.",
+            "nextAction": "Reuse wizard/composition. Identify exact absent input/module seam; integrate it, not another installer.",
+            "evidencePaths": [
+              "eva2/evidence/product/installer-composed-preparation-20260925.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "O2",
@@ -12530,7 +12735,18 @@
           "outcome": "Bijwerken en gegevens herstellen",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Export/restore, release/rollback and isolated complete wizard restore exist.",
+            "remainingGap": "**Evidence:** fixture used schema0009, not production0007 migration; in-process API was not an owner browser trial. Module disable/re-enable not established.",
+            "nextAction": "Reuse restore and release paths. Check only ordinary module/data lifecycle gaps; no fresh restore subsystem.",
+            "evidencePaths": [
+              "eva2/evidence/product/restore-full-route-20260925.json",
+              "eva2/evidence/product/installer-composed-preparation-20260925.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "P1",
@@ -12541,7 +12757,18 @@
           "outcome": "Vergelijkingsvoorwaarden vastleggen",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "EV-003 protocol, prior controlled runs and Inspect/accounting scaffolding exist.",
+            "remainingGap": "**Evidence/unknown:** complete runnable manifest and equal connected access, current Eva1 baseline.",
+            "nextAction": "Reuse protocol/scorers; finish version/access manifests and only missing adapter bindings. No benchmark framework rebuild.",
+            "evidencePaths": [
+              "eva2/design/product/comparable-agent-benchmarks-v1.md",
+              "eva2/research/2026-09-27-system-choice/baseline.md"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "P2",
@@ -12553,7 +12780,18 @@
           "outcome": "Volledige vergelijking uitvoeren",
           "effort": "L; runtime unknown",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Historical wins/losses/unavailable cases and concrete task receipts exist.",
+            "remainingGap": "**Evidence:** no complete contemporary equal-task superiority result.",
+            "nextAction": "Run the frozen comparison only once its candidate/access/run budget is ready. Preserve losses; this is evaluation, not feature construction.",
+            "evidencePaths": [
+              "eva2/design/product/comparable-agent-benchmarks-v1.md",
+              "eva2/research/2026-09-27-system-choice/baseline.md"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "F1",
@@ -12574,7 +12812,19 @@
           "outcome": "Geintegreerde eindkandidaat",
           "effort": "M",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Managed installation, provenance, rollback and component checks already used.",
+            "remainingGap": "**Evidence:** one integrated final candidate meeting all required behavior.",
+            "nextAction": "Compose/freeze and run the relevant release checks on that candidate; repair observed blockers only. No new release architecture by default.",
+            "evidencePaths": [
+              "eva2/evidence/product/component-self-improvement-assisted-20260924.json",
+              "eva2/evidence/product/restore-full-route-20260925.json",
+              "eva2/design/product/execution-workboard-v1.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         },
         {
           "id": "F2",
@@ -12585,17 +12835,30 @@
           "outcome": "Gezinsgebruik en eindoordeel",
           "effort": "7 calendar days",
           "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baselineDecision": {
+            "existingCapability": "Specific memory/streaming/interruption acceptance exists, and Eva1 is used by the family.",
+            "remainingGap": "**Evidence:** seven days on the eventual complete candidate plus explicit owner judgment.",
+            "nextAction": "Real family use after technical readiness. Preserve prior accepted scope; do not invent acceptance or construct a new feature because judgment is pending.",
+            "evidencePaths": [
+              "eva2/evidence/product/CO-008-GE-01-owner-acceptance-2026-09-10.json",
+              "eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json",
+              "eva2/design/product/execution-workboard-v1.json"
+            ],
+            "basis": "Existing source/dated evidence synthesis; no new runtime trial",
+            "replacementJustified": false
+          }
         }
       ],
       "designDate": "2026-09-28",
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "B0",
+      "activeSliceId": null,
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
-      "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal"
+      "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
+      "changeRule": "Every slice requires existing capability, dated evidence, concrete gap and smallest sufficient action. Missing acceptance is not missing code. Replacement requires supported benefit over retain/fix; no automatic Hermes or Pydantic rewrite."
     },
     "dashboardClarityCorrection20260922": {
       "ownerFeedback": "Bewezen basis zegt niet of Eva2 als vaste huisgenoot bruikbaar is; toon concrete opgeleverde resultaten en open werk.",
@@ -13422,7 +13685,7 @@
       "architectureSelected": false,
       "newEvaModelCalls": 0,
       "developmentCredits": "unknown",
-      "currentActivity": "Onderzoeksfase afgesloten; compleet plan geactiveerd. Eén uitvoerder verricht B0-bron-/stubcontrole; geen algemene nieuwe audit.",
+      "currentActivity": "Bestaande inventarisatie vertaald naar alle24 opdrachten; geen nieuwe brede audit. Hermes-brononderzoek UNKNOWN en afgesloten.",
       "implementationProposal": "eva2/design/blueprint-2026-09-28/platform-decision.md"
     },
     "completeEvaBlueprint": {
@@ -13491,7 +13754,7 @@
     "activeGoal20260928": {
       "status": "active",
       "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
-      "activeSlice": "B0",
+      "activeSlice": null,
       "scope": "Eight product steps, 24 bounded assignments",
       "ownerAcceptanceSeparate": true,
       "tracking": {
@@ -13510,7 +13773,19 @@
           "installed",
           "owner_accepted"
         ]
-      }
+      },
+      "nextSlice": "C1",
+      "latestOwnerCorrection": "Every component requires existing capability, evidence, real gap and smallest change before building. No automatic platform replacement."
+    },
+    "existingCapabilityMapping20260928": {
+      "status": "reviewed",
+      "sliceCount": 24,
+      "source": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+      "coverage": "Existing research plus selected receipts, not a complete new repository audit",
+      "runtimeTrials": 0,
+      "installations": 0,
+      "featureCompletionChanged": false,
+      "decisionReceipt": "eva2/evidence/product/b0-platform-20260928.json"
     }
   },
   "activeTaskId": "AU-008",

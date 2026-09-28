@@ -30,7 +30,7 @@ parallel only when they do not share files or require an unfinished contract.
 
 ```mermaid
 flowchart LR
-  B0["B0 · Verify chosen execution seam"] --> A["1 · Conversation and voice"]
+  B0["B0 · Existing capability and necessary change"] --> A["1 · Conversation and voice"]
   A --> B["2 · Personal continuity"]
   A --> C["3 · Complete work and control"]
   B --> D["4 · Presence and initiative"]
@@ -50,17 +50,18 @@ Comparison cases are defined before implementation and collected during relevant
 slices. Step7 combines final results; comparison is not postponed until then.
 F1 freezes the candidate before the final P2 comparison; family use F2 may run
 alongside that comparison. Both results are required for the complete project decision.
-Installation capability starts with the candidate package in B0 and develops through
-the slices; step6 proves the complete ordinary owner flow and restore. Broad relocation
+Existing installation capability is reused by any justified functional change;
+B0 does not require another candidate package. Step6 proves the remaining ordinary owner flow and restore. Broad relocation
 and release-hardening work must not take over the earlier functionality slices.
 
 ### Estimation and resource discipline
 
 The effort labels below are provisional engineering estimates: S=2–4 focused hours,
 M=4–8, L=8–16. They are neither elapsed-time promises nor Codex-credit estimates.
-They assume the selected platform supplies the documented seams and existing adapters
-are reusable. B0 must replace those assumptions with evidence before subsequent
-estimates are used as scheduling commitments. Do not add these into a sales deadline.
+They were full-slice design estimates, not measured remaining work. B0 now separates
+already delivered behavior, actual defects and missing evidence. Re-estimate only the
+necessary remainder before dispatch; a platform change is conditional, not an estimate
+assumption. Do not add these numbers into a sales deadline.
 
 For each dispatched slice, choose the smallest complete outcome below, record exact
 files/base commit, one end condition, expected effort and known runtime trial budget.
@@ -74,12 +75,22 @@ finite limits, separate from normal usage. Codex development usage and Eva runti
 usage are separate. Count all known learning, worker, memory and failed-attempt calls;
 unknown credits/prices remain unknown. Never substitute receipt latency for answer speed.
 
-### B0 — choose the execution basis with one bounded gate (M, high uncertainty)
+### B0 — justify necessary changes from existing capabilities
 
-**Outcome:** one selected execution owner and a runnable isolated integration skeleton,
-using pinned upstream and an adapter-size estimate. Current installation stays active.
+**Outcome:** an evidence-linked decision for each slice: retain, connect, fix, verify,
+or conditionally replace. Existing functionality is not rebuilt to satisfy a future
+diagram. This owner correction applies to all components, not just Hermes. Current
+installation stays active; there is no fresh whole-repository audit or test campaign.
 
-- First finish the source/API/license/allowed-provider compatibility matrix. Use the
+Use the matrix below and existing research/receipts. Missing family approval, hardware
+access or a current end-to-end measurement is not evidence that an implementation is
+absent. A code change requires a concrete failed requirement or a demonstrated missing
+connection. Replacement additionally needs a supported advantage over the smallest
+sufficient retained change, with migration implications. The source-only Hermes pass
+ended UNKNOWN; it does not establish that advantage. Remaining compatibility work is
+conditional, not the automatic first build task.
+
+- Only if replacement is justified, finish the source/API/license/allowed-provider compatibility matrix. Use the
   [platform decision](platform-decision.md); do not install the whole shortlist.
 - A provider-free delayed job must allow another input, steering, cancellation,
   original-destination result and observation of process-loss ambiguity.
@@ -91,18 +102,95 @@ using pinned upstream and an adapter-size estimate. Current installation stays a
 - Establish the provider resolver from source and stubs. Real access and model latency
   remain a C1 installation check. A credential limitation is unknown compatibility,
   not a task-quality loss. Freeze realistic development-run envelopes before those calls.
-- GO: public hooks implement the contracts without preserving the old outer loop,
+- Compatibility GO: public hooks implement the contracts without preserving the old outer loop,
   memory/audience/effect boundaries pass, usage can be observed and a complete task
-  is possible. Otherwise apply the one documented fallback; no indefinite platform tour.
+  is possible. This is not a comparative win or an independent replacement mandate.
+  A failed gate returns to the concrete gap and the narrower retained alternative;
+  UNKNOWN never becomes an invented failure. No indefinite platform tour.
 
-Exit artifact: exact pin, interface map, observed limitations, go/no-go and revised
-S/M/L estimates. No general performance superiority claim from this gate.
+Exit artifact: existing capability/gap/change mapping, justified execution decision,
+and scope-adjusted estimates. Any replacement must also have the exact pin/interface
+evidence above. Old S/M/L values are conditional full-slice estimates, not authority
+to spend that time rebuilding components already delivered.
+
+## Existing capabilities and change decisions
+
+This is the 28 September mapping of existing evidence to the planned outcomes,
+not a new runtime audit or new completion claims. Older receipts retain their
+stated build/date/scope. The baseline worker checked eight registered source hashes;
+the coordinator used the listed learning/installation receipts. Product scope stays
+fixed, but these slices are not 24 missing implementations. Current assignment and
+completion remain in the existing JSON workboard, not this table.
+
+Types: **defect** = observed failed requirement; **evidence** = behavior not fully
+demonstrated; **unknown** = bounded inspection still needed; **research** = optional
+unproven mechanism. A historical installed fix is not a current open defect unless
+a later failure establishes regression. Existing accepted outcomes are retained.
+
+| Slice | Existing capability | Remaining gap and evidence type | Necessary next action | Evidence |
+|---|---|---|---|---|
+| B0 | Eva already has a model loop, durable worker, task controls, memory and result binding. | **Unknown:** Hermes replacement benefit is unestablished; its five contracts remain UNKNOWN. | Retain current execution while deciding the smallest change for a concrete gap. No more platform probes solely to justify the proposal. | [BASE], [HERMES] |
+| C1 | Contact model, Telegram streaming, work admission and actual conversation during research. | **Evidence:** Telegram/web parity and desired content latency are not fully demonstrated; overlap is not absent. | Reuse ingress, persona and task routes. Verify only missing cases; fix measured latency/routing defects. No automatic loop replacement. | [BASE], [OVERLAP] |
+| C2 | Durable tasks, original-question binding, stop/resume/correction and retained results. Session-closure defect was fixed and installed. | **Evidence:** two independently steered tasks plus reconnect are not fully demonstrated together. | Keep task/effect/result stores and controls; verify the missing combination, then repair only a demonstrated seam. | [CONTINUITY] |
+| C3 | General HA, registered speaker identities, native sessions and later result delivery. | **Defect:** pinned HA pipeline does not flush short acknowledgement segments. **Evidence:** complete behavior on both physical devices. | Retain bindings; solve the named transport gap only if required by the end condition. Verify actual speakers; no assumed firmware rebuild. | [CONTINUITY], [HA-SHORT] |
+| C4 | LiveKit/browser speech, native HA transport and owner-accepted laptop interruption. | **Evidence:** full wakeword/interruption/continued speech and current latency; historical owner feedback reported unnatural voice/long pauses. | Preserve audio paths; measure missing physical behavior before choosing a specific repair. No new speech engine by default. | [BASE], [BOARD] |
+| M1 | Automatic memory/correction/use and inspection/forgetting are owner-accepted; source authority and Hindsight already composed. | **Evidence:** extended family continuity; a changed platform integration would need relevant checks. No new general memory defect shown. | Keep memory service, data and acceptances. Wire only a justified changed integration; ordinary later recall belongs in family use. | [GE01], [GE02] |
+| M2 | Household/private separation and additional private destination guard already installed. | **Evidence:** newly changed combined paths, not a demonstrated new disclosure. | Keep authorization and destination checks. Check affected boundaries only; no new identity system or private speaker biometrics. | [PRIVATE] |
+| M3 | Shared character, preferences and memory correction exist; Eva1 supplies valued humor/judgment. | **Evidence:** evolving interests/opinions and temporary exceptions across the whole product. Absence of code not established. | Reuse persona/memory. Identify missing behavior or context revision before adding code. | [BASE], [GE01] |
+| T1 | Real research completed, saved and returned; source/document tools and durable runner exist. | **Defect:** a complete multi-step path exceeds its actual execution envelope. **Evidence:** general research quality. | Retain tools/storage/readback; fix the concrete full-task path. A native-loop change remains conditional on solving that gap, not platform fashion. | [OVERLAP], [BUDGET] |
+| T2 | General HA API for both speakers; real harmless automation created, edited and read back. | **Defect:** observed task needed coordinator resume after budget failure. **Evidence:** broad semantic requests via physical entrances. | Reuse HA discovery/API/effect verification; address execution gap and speaker wiring. No device-specific functions or second HA planner. | [HA], [HA-TASK] |
+| T3 | Isolated browser and shared Chrome, takeover and fresh-observation recovery exist. | **Evidence/access:** last existing bridge check had no shared tab; no missing recovery link found. General desktop capability unknown. | Reuse browser/file adapters; verify the real shared-tab case when available. Add an adapter only for a concrete unsupported task. | [CHROME], [CHROME-RECOVERY], [BASE] |
+| T4 | Owner page already has task/result/status/control surfaces and measured/partial/unknown usage. | **Evidence:** all task combinations/accounting sources; not an absent dashboard. | Keep existing UI and task projections. Connect only demonstrated missing controls/fields; no second task truth or dashboard rebuild. | [UI], [CONTINUITY] |
+| I1 | Eva1 doorbell presence; Eva2 household initiative composition, quiet hours and delivery installed. | **Evidence:** audible usefulness/silence as a whole. Earlier missing household composition is already fixed. | Reuse perception, policy, scheduler and delivery. Verify a useful outcome; do not rebuild initiative for lack of owner acceptance. | [INITIATIVE], [BASE] |
+| I2 | Camera/HA perception, retained initiative decisions, research and result storage exist. | **Unknown:** required calendar availability and camera/calendar context connection not established by this inventory. | Inspect that named connection only; connect existing services, add a missing generic adapter only if confirmed. No bin-specific core rule. | [PRESENCE], [INITIATIVE] |
+| L1 | Procedure storage/discovery/execution and unassisted reuse exist; initial learning needed help. | **Defect:** unseen documentation task never saved/executed the procedure; reviewed path needs at least 8 tools/9 responses versus 6/8 limits. | Retain learned artifacts and tools; finish the complete failing learning path and verify new-input reuse. No new learning engine by assumption. | [REUSE], [BUDGET], [LEARNING] |
+| L2 | Durable tasks/effects, resume and project artifacts exist; prior document project was a prepared two-step case. | **Evidence:** general multi-day planning/continuation without developer intervention, not absence of persistence. | Keep ledger, artifacts and reconciliation. Establish missing continuation behavior before adding planning/state machinery. | [BASE], [CONTINUITY] |
+| L3 | Eva produced a small source fix; evaluation, import, installation and rollback exist. Assisted case improved 71/90 to 90/90. | **Evidence:** autonomous improvement on held-out cases; assistance means the general criterion remains open. | Reuse improvement/evaluation/release route. Fix only missing autonomous handoff; do not rebuild evaluator or release system. | [IMPROVEMENT] |
+| R1 | Ordinary procedure reuse is the comparison baseline; task-model concept has prior art and no Eva implementation evidence. | **Research:** marginal benefit, total learning cost and technical distinction unproven. | Keep optional and bounded. Build an isolated candidate only when ordinary skills are runnable; reject on loss without relabeling existing skills as novel. | [REUSE], [RESEARCH] |
+| O1 | Wizard, target provisioning and nine-service preparation exist, with installed subcomponents. | **Unknown/evidence:** ordinary bootstrap without handwritten target settings and optional module omission are not fully demonstrated. | Reuse wizard/composition. Identify exact absent input/module seam; integrate it, not another installer. | [INSTALL] |
+| O2 | Export/restore, release/rollback and isolated complete wizard restore exist. | **Evidence:** fixture used schema0009, not production0007 migration; in-process API was not an owner browser trial. Module disable/re-enable not established. | Reuse restore and release paths. Check only ordinary module/data lifecycle gaps; no fresh restore subsystem. | [RESTORE], [INSTALL] |
+| P1 | EV-003 protocol, prior controlled runs and Inspect/accounting scaffolding exist. | **Evidence/unknown:** complete runnable manifest and equal connected access, current Eva1 baseline. | Reuse protocol/scorers; finish version/access manifests and only missing adapter bindings. No benchmark framework rebuild. | [BENCH], [BASE] |
+| P2 | Historical wins/losses/unavailable cases and concrete task receipts exist. | **Evidence:** no complete contemporary equal-task superiority result. | Run the frozen comparison only once its candidate/access/run budget is ready. Preserve losses; this is evaluation, not feature construction. | [BENCH], [BASE] |
+| F1 | Managed installation, provenance, rollback and component checks already used. | **Evidence:** one integrated final candidate meeting all required behavior. | Compose/freeze and run the relevant release checks on that candidate; repair observed blockers only. No new release architecture by default. | [IMPROVEMENT], [RESTORE], [BOARD] |
+| F2 | Specific memory/streaming/interruption acceptance exists, and Eva1 is used by the family. | **Evidence:** seven days on the eventual complete candidate plus explicit owner judgment. | Real family use after technical readiness. Preserve prior accepted scope; do not invent acceptance or construct a new feature because judgment is pending. | [GE01], [GE02], [BOARD] |
+
+The concrete reviewed failure in T1/T2/L1 concerns a whole-task execution contract.
+One correction may close shared work across these slices; do not implement it three
+times. Other open end conditions chiefly describe evidence/integration gaps, not
+permission to replace functioning subsystems. This mapping is not an assertion that
+all unspecified details work. Resolve remaining unknowns at the relevant bounded
+assignment, not by sending every subsystem through a new audit.
+
+[BASE]: ../../research/2026-09-27-system-choice/baseline.md
+[HERMES]: ../../experiments/b0-platform-20260928/README.md
+[OVERLAP]: ../../evidence/product/household-public-overlap-20260925.json
+[CONTINUITY]: ../../evidence/product/household-result-continuity-installed-20260925.json
+[HA-SHORT]: ../../evidence/product/ha-short-receipt-boundary-20260925.json
+[BOARD]: ../product/execution-workboard-v1.json
+[GE01]: ../../evidence/product/CO-008-GE-01-owner-acceptance-2026-09-10.json
+[GE02]: ../../evidence/product/GE-02-owner-acceptance-2026-09-12.json
+[PRIVATE]: ../../evidence/product/private-continuity-boundary-installed-20260924.json
+[BUDGET]: ../../evidence/product/digital-task-budget-candidate-20260927.json
+[HA]: ../../evidence/product/shared-ha-general-installed-20260925.json
+[HA-TASK]: ../../evidence/product/ha-configuration-readback-installed-20260924.json
+[CHROME]: ../../evidence/product/personal-chrome-controls-installed-20260922.json
+[CHROME-RECOVERY]: ../../evidence/product/chrome-inflight-recovery-2026-09-12.json
+[UI]: ../../experiments/react-admin-dashboard-v1/src/main.jsx
+[INITIATIVE]: ../../evidence/product/household-initiative-installed-20260924.json
+[PRESENCE]: ../../evidence/product/household-presence-gap-20260924.json
+[REUSE]: ../../evidence/product/procedure-unassisted-reuse-20260925.json
+[LEARNING]: ../../evidence/product/external-documentation-learning-source-only-20260925.json
+[IMPROVEMENT]: ../../evidence/product/component-self-improvement-assisted-20260924.json
+[RESEARCH]: ../../research/2026-09-27-system-choice/technical-differentiation.md
+[INSTALL]: ../../evidence/product/installer-composed-preparation-20260925.json
+[RESTORE]: ../../evidence/product/restore-full-route-20260925.json
+[BENCH]: ../product/comparable-agent-benchmarks-v1.md
 
 ### Step1 — one conversation and voice
 
 | Slice | Usable outcome and end condition | Integration responsibility | Effort |
 |---|---|---|---|
-| C1 | Telegram and local page answer a greeting warmly; a real background request gets a bound task, and a social question is answered before that job completes | Ingress/context adapter and selected platform session; retire replaced text outer loop | M |
+| C1 | Telegram and local page answer a greeting warmly; a real background request gets a bound task, and a social question is answered before that job completes | Existing ingress/context/task routes first; replace an outer loop only after justified decision | M |
 | C2 | Two concurrent tasks receive independent corrections/stop and return to their original questions after reconnect; owner can see their real state | Platform event mapping, result projection and existing owner page | M |
 | C3 | Existing HA and both physical Voice PEs reach the same semantics; background task admission returns a short turn and later result is retrievable | Native HA bindings, existing audio/session/result adapter | L |
 | C4 | Browser voice and actual speaker capabilities are measured for wakeword, interruption and continued conversation; all required route cases pass or have an explicit unresolved hardware/transport blocker | Existing LiveKit/native transports; no new speech engine | M |
@@ -250,7 +338,9 @@ can display both retained outcomes and concrete remaining scope. No ambiguous
    give separate file paths and an end-to-end case. Review is bundled within that team.
 3. Complete a slice through installed usable outcome after authorization, not just a
    patch. Keep old data and a working rollback. A source checkpoint is not installation.
-4. Use existing proof first. No extra audit or repeated identical trial. Keep one
+4. Use the existing-capability matrix and proof first. A missing acceptance is not
+   missing code; no work is dispatched without its concrete gap and smallest sufficient
+   action. No extra audit or repeated identical trial. Keep one
    planner per task. A missing platform seam goes through the explicit adapter/platform
    decision; it never licenses adding a parallel planner. A generic fork requires a
    new documented decision and is a NO-GO for the proposed Hermes path.
@@ -263,13 +353,13 @@ can display both retained outcomes and concrete remaining scope. No ambiguous
 
 ## 5. First implementation assignment after the design decision
 
-B0 only: prove the recommended platform's public execution/memory/provider seams in
-an isolated adapter candidate. Root integrates contracts; one executor owns the
-platform adapter; the second checks memory/result/audience and reviews the whole seam.
-No household firmware change, production cutover or retirement until this gate closes.
-Then C1 is the first usable improvement, followed by independent M1 and C2 work once
-the shared input/context/task contracts are stable. Candidate code paths are proposals
-until B0 decides the binding; preserve existing endpoints during transition.
+B0 first links every slice to existing capability, remaining evidence and necessary
+change. Root integrates the decisions; one bounded worker checks the existing evidence,
+followed by a bundled review. No further Hermes probe or replacement is warranted
+without its comparative justification. Then C1 addresses only the actual remaining
+conversation gap through the retained route unless replacement has been justified.
+M1/C2 may require only relevant integration verification, not rebuilding existing
+memory or task controls. Preserve existing endpoints and accepted outcomes.
 
 The design phase itself performs no feature implementation, installations, live model
 trials or new paid routes. It ends with source-backed decisions, this delivery sequence,
