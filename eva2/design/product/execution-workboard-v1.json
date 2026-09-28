@@ -2492,14 +2492,14 @@
         ],
         "now": {
           "title": "C3 · Onderzoek aangenomen; doorpraten nog open",
-          "state": "Correctie geïnstalleerd; duplexkandidaten onderzocht",
-          "detail": "Review akkoord; kern en werker gezond. Echte native HTTP-vraag nam onderzoek aan in 15,3s en startte achtergrondwerk. Geen fysieke speakeracceptatie. Gateway vereist firmware waarvan de link nog een placeholder is; Pipecat heeft een aparte ESPHome-route.",
+          "state": "Pipecat-vergelijking afgerond; bestaande kandidaat behouden",
+          "detail": "De genoemde Pipecat-bron is exact dezelfde pin als onze bestaande speakerkandidaat. Geen tweede integratie bouwen. Onderzoeksinvoer-correctie geïnstalleerd; fysieke full-duplex blijft open na eerdere rollback.",
           "doneWhen": "Werkende ontvangst, doorpraten en resultaat via beide fysieke speakers; geen HTTP-proef als speakeracceptatie."
         },
         "next": {
-          "title": "Passende full-duplexroute bepalen",
-          "state": "Firmware en Eva-koppeling nog te verifiëren",
-          "detail": "Bestaande firmware behouden. Controleer concrete Voice PE-ondersteuning van de aangeleverde opensourcecomponenten en aansluiting op dezelfde Eva-kern."
+          "title": "Wakewordfout in bestaande duplexkandidaat lokaliseren",
+          "state": "Eerstvolgende uitvoering",
+          "detail": "Bestaande Pipecat-component en Eva-koppeling hergebruiken. De meting van24september betrof herstelfirmware en verklaart de kandidaatfout niet. Geen blinde firmwareherinstallatie."
         },
         "ownerAction": {
           "title": "Nu niet opnieuw proberen",
@@ -2512,7 +2512,7 @@
           "expected": "Geen eigenaaracceptatie. Firmware blijft behouden."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T11:55:18.634404+00:00"
+        "reviewedAt": "2026-09-28T11:58:32.495616+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12332,7 +12332,7 @@
           ]
         }
       ],
-      "nextAction": "Bestaande firmware behouden. Controleer concrete Voice PE-ondersteuning van de aangeleverde opensourcecomponenten en aansluiting op dezelfde Eva-kern.",
+      "nextAction": "Bestaande Pipecat-component en Eva-koppeling hergebruiken. De meting van24september betrof herstelfirmware en verklaart de kandidaatfout niet. Geen blinde firmwareherinstallatie.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -12540,13 +12540,14 @@
           },
           "owner": "/root",
           "activeWorker": null,
-          "baseCommit": "7ab5b01d",
+          "baseCommit": "63b45309",
           "assignment": {
-            "stage": "bounded_research_input_repair_review",
-            "scope": "application/conversation.py and adapters/postgres/delegated_work_actions.py; focused conversation and PostgreSQL/schema tests.",
-            "outcome": "Malformed research tool input gets one correction before admission instead of taking down the voice turn; no false accepted-work claim.",
-            "endCondition": "Focused tests and independent review pass, both runtime roles installed, actual native route checked; physical interruption remains separate.",
-            "effort": "Two production files, one bounded validation repair; two diagnostic foreground model calls already made, no research admitted; credits unknown"
+            "stage": "duplex_source_comparison_complete",
+            "scope": "Pinned upstream va_pipecat source and existing Eva speaker transport; evidence/workboard only until compatibility known.",
+            "outcome": "Determine whether existing open-source device audio can serve both Voice PEs with the same Eva core.",
+            "endCondition": "Exact device requirements and protocol seam identified; choose a concrete minimal integration or reject with source evidence.",
+            "effort": "Bounded source inspection, no model calls or device flash; credits unknown",
+            "result": "Same upstream already integrated; required ESPHome APIs present. No justification for duplicate integration."
           },
           "evidence": "eva2/evidence/product/c3-current-speaker-route-20260928.json",
           "ownerTrial": {
@@ -12558,7 +12559,7 @@
             ],
             "blocksIndependentWork": false
           },
-          "remaining": "Owner reports Eva unreachable on requested physical research trial; speaker remains busy until answer and cannot take intervening question.",
+          "remaining": "Physical full-duplex candidate failed after wakeword and was rolled back. Current HTTP research admission succeeds but is slow; physical speech and interruption remain open.",
           "reviewer": "/root/platform_research_20260927"
         },
         {

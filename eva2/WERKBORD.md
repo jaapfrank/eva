@@ -2,7 +2,7 @@
 
 **Nu — C3: doorpraten via de echte speakers.** Onderzoeksinvoer-correctie getest, onafhankelijk beoordeeld en geïnstalleerd. Kern en werker gezond. Eén echte native HTTP-opdracht nam onderzoek aan in 15,3 seconden en startte achtergrondwerk. Dit is geen fysieke speakeracceptatie en lost full-duplex of snelheid nog niet op. [Bewijs](evidence/product/research-input-recovery-20260928.json).
 
-**Eerstvolgend:** de aangeleverde full-duplexcomponenten toetsen op concrete Voice PE-firmware en aansluiting op Eva's bestaande kern. Gatewayfirmwarelink is een placeholder; Pipecat bevat inmiddels een aparte ESPHome-route. Bestaande firmware behouden. [Bronbevindingen](evidence/product/full-duplex-candidates-20260928.json).
+**Eerstvolgend:** de wakewordfout in de bestaande duplexkandidaat lokaliseren. De aangeleverde Pipecat-component blijkt exact dezelfde upstream-pin als de bestaande Eva-kandidaat. Geen tweede integratie bouwen. De meting van24september betreft herstelfirmware en bewijst niets over de teruggedraaide kandidaat. Bestaande werkende firmware behouden. [Bronbevindingen](evidence/product/full-duplex-candidates-20260928.json).
 
 **Voor Jaap:** dezelfde mislukte speakerproef nu niet herhalen. Eerst een concrete fysieke vervolgstap; geen aanname dat doorpraten al werkt.
 

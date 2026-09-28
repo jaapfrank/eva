@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-28T11:55:18.634404+00:00",
+  "checkedAt": "2026-09-28T11:58:32.495616+00:00",
   "status": "bounded_source_inspection_not_device_validation",
   "gateway": {
     "url": "https://github.com/rw4lll/ha-realtime-voice-gateway",
@@ -18,9 +18,26 @@
       "Current README includes va_pipecat ESPHome PCM transport with claimed full-duplex barge-in.",
       "Standard HA Assist bridge explicitly does not provide true barge-in.",
       "Exact Voice PE hardware support, firmware, integration with Eva core and latency still need verification."
+    ],
+    "commit": "a538d1d1bacc8609061719f0b05c1622147ccb4b",
+    "existingEvaPin": "eva2/experiments/native-duplex-v1/speaker-upstream.json",
+    "sameUpstreamAlreadyUsed": true,
+    "compatibility": {
+      "framework": "ESP-IDF with PSRAM",
+      "input": "PCM16 mono 16kHz; existing i2s_mics channel0",
+      "output": "PCM16 mono24kHz; existing resampler to48000Hz",
+      "requiredApisPresentInRetainedESPHome": "microphone_source_schema, microphone_source_to_code, speaker.set_audio_stream_info, api.custom_services",
+      "aec": "required for usable barge-in; physical effectiveness not proven"
+    },
+    "decision": "Reuse existing pinned component and Eva bridge. Do not create a second Pipecat integration. Diagnose rejected candidate wakeword path.",
+    "existingEvidence": [
+      "eva2/deploy/native-speaker/package-receipt-2026-09-22.json",
+      "eva2/evidence/product/voice-pe-woonkamer-ota-installed-20260923.json",
+      "eva2/evidence/product/wakeword-measurement-20260924.json"
     ]
   },
   "ownerFirmwareChanged": false,
   "newProviderActivated": false,
-  "next": "Verify supplied firmware/hardware support and shared-core seam before any replacement."
+  "next": "Locate actual failure in the existing continuous-speaker candidate. September24 traces cover recovery firmware only and cannot diagnose candidate failure.",
+  "runtimeModelCalls": 0
 }
