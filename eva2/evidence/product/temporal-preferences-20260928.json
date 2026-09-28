@@ -1,0 +1,57 @@
+{
+  "checkedAt": "2026-09-28T12:14:33.272562+00:00",
+  "status": "installed_source_and_routes_verified",
+  "sourceCommit": "8e9e5432",
+  "slice": "M3",
+  "concreteGap": "Missing memory source dates were rendered as current recall dates; extraction requested only durable facts and did not preserve explicitly temporary exceptions.",
+  "changes": [
+    "Retain stated temporary scopes without replacing standing preferences outside their scope.",
+    "Preserve mentioned_at as explicit source_observed_at; unknown source date is not replaced by recall/event time in model instructions.",
+    "Relative dates require source date; expired exceptions remain history, not current preference."
+  ],
+  "tests": {
+    "passed": 41,
+    "seconds": 12.17,
+    "scope": "Existing targeted memory/identity/retain checks plus source-date projection and model-input regressions",
+    "modelCalls": 0
+  },
+  "review": {
+    "reviewer": "/root/platform_research_20260927",
+    "result": "GO after source-date blocker corrected",
+    "existingBankUpdateVerified": "Installed Hindsight PUT handler get_config_updates and engine _persist_bank_config update existing missions at first engine use."
+  },
+  "limitations": [
+    "No claim of complete M3 or general personality improvement.",
+    "No real-model temporary-exception trial yet.",
+    "Earlier omitted memories are not re-extracted.",
+    "Temporal observed_at schema fallback retained for compatibility; model sees explicit original-date provenance."
+  ],
+  "ownerAccepted": false,
+  "creditCost": null,
+  "installation": {
+    "checkedAt": "2026-09-28T12:14:00.535356+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:4409fda2ee10a22da3a5ebba9c3c71e3d1ad310dbaf9fd9d64d5cc8efe51cf5f",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/projection/hindsight.py": "f3639f5174c78bfb564693191553557f20aed56c706acb57787cef93619e929a",
+          "adapters/model/pydantic_conversation.py": "f631d9bc2f67a38554694a9d5a1d7d0b7141f8f3da25894c8722b120c4339ef4"
+        }
+      },
+      "worker": {
+        "image": "sha256:e56302d0b341fe778fc9cb91595c80890a277bf900f1e622857197adbb353826",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/projection/hindsight.py": "f3639f5174c78bfb564693191553557f20aed56c706acb57787cef93619e929a",
+          "adapters/model/pydantic_conversation.py": "f631d9bc2f67a38554694a9d5a1d7d0b7141f8f3da25894c8722b120c4339ef4"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/temporal-preferences-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  }
+}
