@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-09-28T11:55:18.634404+00:00",
+  "status": "bounded_source_inspection_not_device_validation",
+  "gateway": {
+    "url": "https://github.com/rw4lll/ha-realtime-voice-gateway",
+    "commit": "ede5cba0ff630c454673437c1240fc186134339a",
+    "findings": [
+      "Bidirectional audio and interrupt interfaces exist.",
+      "Backend tree contains Gemini and mock; OpenAI is documented as coming soon.",
+      "Required modified firmware link points to https://github.com/your-firmware-repo (placeholder).",
+      "Default architecture streams to its own model and HA tools; shared Eva core compatibility is not established."
+    ],
+    "decision": "Useful candidate/protocol reference; not yet a demonstrated deployable Voice PE solution."
+  },
+  "pipecat": {
+    "url": "https://github.com/kyvaith/pipecat-homeassistant",
+    "findings": [
+      "Current README includes va_pipecat ESPHome PCM transport with claimed full-duplex barge-in.",
+      "Standard HA Assist bridge explicitly does not provide true barge-in.",
+      "Exact Voice PE hardware support, firmware, integration with Eva core and latency still need verification."
+    ]
+  },
+  "ownerFirmwareChanged": false,
+  "newProviderActivated": false,
+  "next": "Verify supplied firmware/hardware support and shared-core seam before any replacement."
+}

@@ -1,0 +1,64 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-28T11:03:24.460580+00:00",
+  "status": "physical_observation_pending",
+  "slice": "C3",
+  "baseCommit": "7ab5b01d",
+  "observed": {
+    "haVersion": "2026.9.2",
+    "haState": "RUNNING",
+    "eva2Entry": "loaded",
+    "conversationAgent": "conversation.eva2",
+    "speakers": [
+      {
+        "suffix": "0a16e0",
+        "state": "idle",
+        "primaryAssistant": "Eva2",
+        "secondaryAssistant": "Eva",
+        "wakeword": "Hey Eva"
+      },
+      {
+        "suffix": "0a5035",
+        "state": "idle",
+        "primaryAssistant": "Eva2",
+        "secondaryAssistant": "Eva",
+        "wakeword": "Hey Eva"
+      }
+    ],
+    "stt": "stt.home_assistant_cloud",
+    "tts": "tts.home_assistant_cloud"
+  },
+  "retainedEvidence": [
+    "eva2/evidence/product/household-public-overlap-20260925.json",
+    "eva2/evidence/product/ha-short-receipt-boundary-20260925.json",
+    "eva2/evidence/product/two-task-continuity-verified-20260928.json"
+  ],
+  "decision": "Preserve existing firmware and bindings. Primary selections point to Eva2; physical route and audibility require actual observation. Short receipt flush remains unsupported by the current pinned HA pipeline. No speculative integration patch.",
+  "ownerTrial": {
+    "status": "requested_optional",
+    "steps": [
+      "On each speaker use Hey Eva and ask for research about Home Assistant Cloud speech, with sources.",
+      "When it listens again ask Hoe gaat het met jou?",
+      "Report speaker, whether another wakeword was needed, interim response and later research return."
+    ],
+    "blocksIndependentWork": false
+  },
+  "limits": [
+    "Read-only configuration is not physical playback or owner acceptance.",
+    "Secondary assistant selections are recorded without inferring a routing defect from their existence.",
+    "Prior HTTP overlap is not a physical Voice PE test."
+  ],
+  "artifactsDirectory": "/home/administrator/project/.eva2-artifacts/c3-existing-speaker-route-20260928",
+  "usage": {
+    "evaModelCalls": 0,
+    "audioCalls": 0,
+    "firmwareChanges": 0,
+    "creditCost": null
+  },
+  "subsequentOwnerResult": {
+    "status": "failed",
+    "report": "Research spoke an unreachable error; speaker stays busy until answer.",
+    "followUp": "eva2/evidence/product/research-input-recovery-20260928.json",
+    "physicalRetestPassed": false
+  }
+}

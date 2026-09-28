@@ -1,0 +1,96 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-28T11:55:18.634404+00:00",
+  "status": "installed_native_http_admission_verified",
+  "sourceCommit": "ee4c5d4e",
+  "ownerFailure": "Physical Voice PE research request spoke an unreachable message and remained busy until the reply.",
+  "observedFailure": {
+    "ownerIntentSeconds": 8.976509,
+    "modelOutcome": "succeeded",
+    "failureBeforeTaskAdmission": true,
+    "diagnosticException": "ValidationError",
+    "diagnosticLocation": "adapters/postgres/delegated_work_actions.py:329 PublicResearchRequest.model_validate",
+    "exactInvalidField": "not retained; a later captured output was valid",
+    "notProven": "The original invalid field cannot be attributed specifically to an empty string."
+  },
+  "changes": [
+    "Research descriptor nonempty string bounds now match the internal contract. Provider transformation removes these bounds, so schema alignment alone is insufficient.",
+    "Only input-contract rejection before admission yields safe field names for one correction by the same contact model within existing budgets.",
+    "A second invalid input or a repair response without a valid action returns a truthful not-started response; repair text is not streamed as an unverified acceptance.",
+    "All prior real action receipts remain in correction context. Authority and public-data projection checks remain unchanged and are not retried as input mistakes."
+  ],
+  "tests": {
+    "conversationPassed": 48,
+    "conversationSeconds": 1.27,
+    "databaseAndSchemaPassed": 13,
+    "databaseAndSchemaSeconds": 8.66,
+    "coverage": [
+      "No task or pending action after five malformed research inputs; one valid admission afterwards",
+      "One bounded correction, repeated-invalid fallback, same contact model",
+      "No streamed or final false acceptance when repair returns only text",
+      "Prior lookup retained; permission errors not retried"
+    ]
+  },
+  "review": {
+    "reviewer": "/root/platform_research_20260927",
+    "result": "GO after two findings fixed and covered"
+  },
+  "usage": {
+    "ownerOriginalRequest": {
+      "modelResponses": 1,
+      "inputTokens": 5693,
+      "outputTokens": 216
+    },
+    "diagnosticRequests": {
+      "modelResponses": 2,
+      "inputTokens": 11386,
+      "outputTokens": 469,
+      "backgroundWorkAdmitted": 0
+    },
+    "creditCost": null
+  },
+  "limits": [
+    "No successful physical speaker retest yet.",
+    "This fixes research-input failure handling, not full-duplex speaker listening or model latency.",
+    "Original erroneous input values were not retained; no invented field-specific root cause."
+  ],
+  "artifactsDirectory": "/home/administrator/project/.eva2-artifacts/c3-speaker-failure-20260928",
+  "installationDirectory": "/home/administrator/project/.eva2-artifacts/research-input-recovery-20260928",
+  "ownerAccepted": false,
+  "installation": {
+    "checkedAt": "2026-09-28T11:50:12.727870+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:09055bf144d88275ba5ada8928279a88e1d2e1f83be9fec66557978f0cb35aeb",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "9b7be5ddf90f0f989f1c5f58ddfd75865069021b92bdc5e8a3f28c4e707feffc",
+          "adapters/postgres/delegated_work_actions.py": "1cdaf51d56147f1b66c8885371025de4ceada3d39125d65ae413911745a378c2"
+        }
+      },
+      "worker": {
+        "image": "sha256:35adf07a87ade1d9ed1b794e9873ae4a104d5fcbeddec883d3867ff03e190d14",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "9b7be5ddf90f0f989f1c5f58ddfd75865069021b92bdc5e8a3f28c4e707feffc",
+          "adapters/postgres/delegated_work_actions.py": "1cdaf51d56147f1b66c8885371025de4ceada3d39125d65ae413911745a378c2"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/research-input-recovery-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "liveVerification": {
+    "route": "real installed native HA HTTP endpoint; authenticated registered satellite",
+    "requestId": "40cbaa8d19e84330a24616340ddba37e",
+    "receiptHeaderSeconds": 0.008048164,
+    "finalAdmissionSeconds": 15.335335736,
+    "backgroundStateObserved": "call_started",
+    "physicalSpeakerRetested": false,
+    "inputRepairExercisedByLiveCall": "not established; malformed-input recovery covered by targeted tests",
+    "completeResearchResultVerified": false
+  }
+}

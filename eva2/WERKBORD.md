@@ -1,21 +1,14 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — C2 technisch afgerond op de geïnstalleerde versie.** Twee werkelijk gestarte taken onafhankelijk bijgestuurd/gestopt, oorspronkelijke sessies gesloten, actuele status teruggevonden en één gecorrigeerd resultaat bij de oorspronkelijke vraag teruggeleverd. Eén combinatieproef geslaagd in 9,88 seconden, onafhankelijke review akkoord. Geen productcode, modelcalls of nieuwe installatie nodig. Geen uitvoerder actief.
+**Nu — C3: doorpraten via de echte speakers.** Onderzoeksinvoer-correctie getest, onafhankelijk beoordeeld en geïnstalleerd. Kern en werker gezond. Eén echte native HTTP-opdracht nam onderzoek aan in 15,3 seconden en startte achtergrondwerk. Dit is geen fysieke speakeracceptatie en lost full-duplex of snelheid nog niet op. [Bewijs](evidence/product/research-input-recovery-20260928.json).
 
-**Leidend — het complete bouwplan uitvoeren.** Acht productstappen en 24 afgebakende opdrachten. Bestaande mogelijkheden en acceptaties blijven behouden. Deze technische combinatiecontrole is geen nieuwe afgeronde hoofdcategorie en geen eigenaaracceptatie.
+**Eerstvolgend:** de aangeleverde full-duplexcomponenten toetsen op concrete Voice PE-firmware en aansluiting op Eva's bestaande kern. Gatewayfirmwarelink is een placeholder; Pipecat bevat inmiddels een aparte ESPHome-route. Bestaande firmware behouden. [Bronbevindingen](evidence/product/full-duplex-candidates-20260928.json).
 
-**Eerstvolgende stap — C3, nog niet gestart:** bestaande Home Assistant- en speakerroute afronden voor korte taakontvangst en later terugvinden van resultaat. Ontbrekende fysieke kanaalproeven blijven zichtbaar; geen automatische firmwareherbouw.
+**Voor Jaap:** dezelfde mislukte speakerproef nu niet herhalen. Eerst een concrete fysieke vervolgstap; geen aanname dat doorpraten al werkt.
 
-## Actuele opleverstatus — 28 september 2026
+**Al afgerond:** C2-combinatiecontrole op de geïnstalleerde versie; twee taken afzonderlijk sturen, stoppen en na terugkeer terugvinden. Websitespraak gebruikt de bestaande geïnstalleerde eigenaarroute; broninspectie wees geen nieuwe ontbrekende koppeling aan. Fysieke ervaring blijft afzonderlijk te beoordelen.
 
-| Onderwerp | Huidige stand |
-|---|---|
-| Laatste afronding | C2 technische combinatie op actuele installatie geverifieerd. [Bewijs](evidence/product/two-task-continuity-verified-20260928.json). |
-| Laatste functionele wijziging | Procedurewerk via achtergrondroute geïnstalleerd; tussenvraag afgerond terwijl werk doorging. [Bewijs](evidence/product/contact-procedure-overlap-20260928.json). |
-| Nog te leveren | C1 snelheid/echte Telegrambeoordeling; C3/C4 fysieke spraak en kanaalgedrag. Overige opdrachten behouden hun eigen scope. |
-| Eerstvolgende actie | C3 concrete resterende speakerkoppeling/proef; nog niet gestart. |
-| Voor Jaap | Telegramproef mag later: `/eva2 Zoek uit wat Home Assistant Cloud doet voor spraak, met bronnen.` en daarna `/eva2 Hoe gaat het met jou?`. Verwacht tussenvraag vóór onderzoek en resultaat bij oorspronkelijke vraag. Geen herhaling van geaccepteerde proeven vereist. |
-| Productstand | Twee van negen afgebakende functies klaar. C2-combinatiecontrole verandert die hoofdteller niet automatisch. |
+**Leidend:** complete bouwplan, acht productstappen en 24 begrensde opdrachten. Twee van negen afgebakende functies klaar; deze correctie verandert die hoofdteller niet. Bestaande resultaten en acceptaties behouden.
 
 ## Historisch logboek — geen actuele werkopdrachten
 
