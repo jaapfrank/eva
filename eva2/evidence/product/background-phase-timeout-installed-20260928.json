@@ -1,0 +1,46 @@
+{
+  "sourceCommit": "284d8a83afa5236fcaef4e25a9eb4f8bec54b32a",
+  "state": "installed",
+  "productionFiles": [
+    "bootstrap/delegated_digital_composition.py"
+  ],
+  "change": "Dedicated background model phase120s; foreground60s, total task300s and shorter historical grants unchanged.",
+  "tests": {
+    "passed": 18,
+    "seconds": 7.92,
+    "network": "none",
+    "scope": "composition, virtual model timing, runner watcher through actual blocked mock HTTP/provider stream",
+    "reportedBy": "implementation worker"
+  },
+  "independentReview": "GO by platform_research_20260927; source-only",
+  "limitations": [
+    "Local cooperative cancellation does not guarantee immediate remote provider cessation or hard cleanup deadline.",
+    "Complete task outcome remains unproven."
+  ],
+  "installation": {
+    "checkedAt": "2026-09-28T10:01:31.441322+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:f8ff5dd90ebe4b804ec52c54e5592c0c535198d528ef9f5c5e882a7cc2748715",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_composition.py": "ffa96aa12e601c24a8fb82c75c00bfe4db24a802d8e558345472b4d176860940"
+        }
+      },
+      "worker": {
+        "image": "sha256:3a21e60447496a5930c7f3bd9f73b35b4936337174d0cf6c851565b0446d6cd0",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_composition.py": "ffa96aa12e601c24a8fb82c75c00bfe4db24a802d8e558345472b4d176860940"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/background-phase-timeout-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "runtimeModelCallsForChecks": 0,
+  "creditCosts": "unknown"
+}
