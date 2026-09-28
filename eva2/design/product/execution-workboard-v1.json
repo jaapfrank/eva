@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Doorgaan na een normale fout bij lezen via MCP",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Leesfout bereikt werkmodel als foutinformatie; bewaarde vervolgstappen worden eerst hersteld.191 gerichte tests, onafhankelijke review en live broncontrole geslaagd.",
+            "remaining": "Documentopdracht hervat; resultaat nog niet bevestigd. Geen complete L2-claim.",
+            "source": "eva2/evidence/product/mcp-read-error-continuation-20260928.json"
+          },
+          {
             "title": "Instant-beschikbaarheid via bestaande route gecontroleerd",
             "date": "28 september",
             "state": "investigated",
@@ -2652,14 +2660,14 @@
         ],
         "now": {
           "title": "L2 · Nieuwe documenten werkelijk afmaken",
-          "state": "Getest en bronreview akkoord · installatie in uitvoering",
-          "detail": "Gerichte verwerking van MCP-leesfouten gebouwd;191 tests en onafhankelijke review akkoord. Ontbrekend bestand blijft een mislukte lezing maar blokkeert geen toegestane vervolgstap. Document nog niet gemaakt; installatie en één hervatting volgen.",
+          "state": "Geïnstalleerd · documentopdracht hervat",
+          "detail": "Algemene leesfoutcorrectie geïnstalleerd op gezonde kern en werker;191 tests, bronreview en exacte live broncontrole geslaagd. Dezelfde documentopdracht één keer hervat. Opgeslagen concept nog niet bevestigd.",
           "doneWhen": "Toolfout blijft als mislukte lezing zichtbaar, alternatieve stap is mogelijk, geen herhaling van onzekere schrijfhandelingen; daarna dezelfde opdracht voltooien en opgeslagen resultaat controleren."
         },
         "next": {
           "title": "L2 · Bestaande documentopdracht hervatten",
           "state": "Nog niet gestart",
-          "detail": "Na gerichte tests, review en installatie dezelfde taak voortzetten. Tweede projectfase pas nadat het concept werkelijk bestaat."
+          "detail": "Na werkelijk opgeslagen en teruggelezen concept de tweede projectfase uitvoeren. Geen nieuwe herhaling als de hervatte taak opnieuw vastloopt zonder nieuwe oorzaak."
         },
         "ownerAction": {
           "title": "Toolgebruik na cataloguswijziging proberen",
@@ -2673,7 +2681,7 @@
           "expected": "Een normale begroeting en het juiste bewaarde resultaat. Snellere reactie is nog niet bewezen. Automatische proefvoorbereiding werd geblokkeerd; geen eigenaaracceptatie ingevuld."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T16:32:03.820334+00:00"
+        "reviewedAt": "2026-09-28T16:36:28.697651+00:00"
       }
     },
     "pendingTechnicalReview": {

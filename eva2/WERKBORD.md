@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu in uitvoering — L2 document werkelijk afmaken, basis80d9245c:** de website nam het conceptverzoek aan, maar de werker stopte op de normale leesfout “bestand bestaat niet”. Geen document opgeslagen. De algemene MCP-leesfout blijft nu als begrensde foutinformatie beschikbaar voor een volgende stap; effecten blijven ongewijzigd.191 gerichte tests en onafhankelijke bronreview akkoord. Installatie en één hervatting van dezelfde taak volgen; geen complete L2-claim. Bekend proefverbruik tot de fout40.997in/810uit; credits onbekend.
+**Nu in uitvoering — L2 document werkelijk afmaken:** algemene MCP-leesfoutcorrectie3f0b9311 geïnstalleerd op gezonde kern/werker;191 tests, onafhankelijke review en exacte live broncontrole geslaagd. Dezelfde taak eenmaal hervat; werkelijk opgeslagen concept nog niet bevestigd. Eerste poging40.997in/810uit; hervatting loopt, credits onbekend. Geen volledige L2-claim. [Bewijs](evidence/product/mcp-read-error-continuation-20260928.json).
 
 De eerdere modelomschakeling hieronder is een historische werkaantekening; de afgeronde dashboardregistratie daarvan werd door automatische goedkeuringscontrole geweigerd.
 

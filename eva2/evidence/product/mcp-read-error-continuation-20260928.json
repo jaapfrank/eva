@@ -1,0 +1,56 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-28T16:36:28.697651+00:00",
+  "outcome": "MCP read errors remain bounded failure data for a permitted next step; no document completion claim",
+  "sourceCommit": "3f0b9311",
+  "status": "installed",
+  "tests": {
+    "passed": 191,
+    "rawArtifact": "/home/administrator/project/.eva2-artifacts/l2-sol-project-20260928/tests.txt"
+  },
+  "independentReview": "platform_research_20260927: GO after replay and reserved-key corrections",
+  "runtime": {
+    "checkedAt": "2026-09-28T16:35:37.267245+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:2d7300ec1589cee3b085c97c33e1efcf794180cf265f3a0f09fe11b011d43299",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/connectors/mcp_gateway.py": "8b9bf696ea30c89a2f510c8b2399b0fcbfea4fa7765d3ec482d01e2c02700a00",
+          "adapters/postgres/external_conversation_tools.py": "ef2c84d32ee17d166afd8a7d838302f5d97821cd8018b25e84929a5b3cef719a",
+          "bootstrap/delegated_digital_runner.py": "e5999a566cc94f0c63d3434a2851892d837478faeba0cfa385e83e8410306ab4",
+          "application/conversation.py": "aee6f72fb3fde65a4ddab85ed24bb5fd3b2d9cf265e47325bd9fddc65204d352"
+        }
+      },
+      "worker": {
+        "image": "sha256:eb6b85c6500c7b000458d271b473d33a33ab131d82b56f4665246ac7000af4c2",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/connectors/mcp_gateway.py": "8b9bf696ea30c89a2f510c8b2399b0fcbfea4fa7765d3ec482d01e2c02700a00",
+          "adapters/postgres/external_conversation_tools.py": "ef2c84d32ee17d166afd8a7d838302f5d97821cd8018b25e84929a5b3cef719a",
+          "bootstrap/delegated_digital_runner.py": "e5999a566cc94f0c63d3434a2851892d837478faeba0cfa385e83e8410306ab4",
+          "application/conversation.py": "aee6f72fb3fde65a4ddab85ed24bb5fd3b2d9cf265e47325bd9fddc65204d352"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/l2-sol-project-20260928/release/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "scope": "Four existing runtime modules; no effect retry changes or new document tool. Installed Sol/none and Astra/medium settings preserved and verified on both services.",
+  "trial": {
+    "firstAttempt": "Failed on ENOENT before any document write",
+    "knownTokensBeforeResume": {
+      "input": 40997,
+      "output": 810
+    },
+    "resume": "Same task resumed once after installation; outcome pending",
+    "credits": "unknown"
+  },
+  "limitations": [
+    "No full L2 acceptance",
+    "No website/speaker latency claim"
+  ]
+}
