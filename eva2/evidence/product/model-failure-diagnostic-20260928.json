@@ -1,0 +1,56 @@
+{
+  "status": "installed_resume_running",
+  "sourceCommit": "b2aa65929d7f04318642237acb7d47bded73a83c",
+  "checkedAt": "2026-09-28T09:13:32.997295+00:00",
+  "reason": "Actual complete task failed with generic fingerprint039cc785; underlying cause not retained.",
+  "change": "One existing model adapter logs exception class chain, allowlisted provider category and usage-limit type, hashed request ID. No messages, responses, prompts or credentials. Retry policy unchanged.",
+  "tests": {
+    "passed": 10,
+    "environment": "Installed runtime image, network disabled; local pytest dependencies mounted separately.",
+    "coverage": "Existing failure/no-retry path, existing pre-output retry, causal limit redaction, cyclic chain and unknown category."
+  },
+  "review": {
+    "agent": "/root/platform_research_20260927",
+    "verdict": "GO",
+    "limitation": "Direct ConversationModelError with no cause still indistinguishable."
+  },
+  "runtimeModelCalls": 0,
+  "creditCost": null,
+  "trialPlan": {
+    "recordedAt": "2026-09-28T09:11:51.499226+00:00",
+    "purpose": "Obtain previously missing causal error evidence, or complete the existing task.",
+    "resumeAttempts": 1,
+    "newTaskAdmissions": 0,
+    "oldWorkId": "work:eva-chat:03f2f652-a573-5fe9-a172-ead7997e6b34",
+    "changedEvidence": "Failure handling now logs safe causal exception categories; actual task and limits unchanged.",
+    "scope": "Same known agenda task; developer-assisted resume, not first-pass or unseen learning success.",
+    "nextOnFailure": "Use recorded causal category for offline reproduction before further model use.",
+    "costCredits": null
+  },
+  "artifacts": "/home/administrator/project/.eva2-artifacts/model-failure-diagnostic-20260928",
+  "installation": {
+    "checkedAt": "2026-09-28T09:14:15.238943+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:692f93f02ef0146393d51155b835e6701db33345d917fe2c19d3b08faf501efc",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/model/pydantic_conversation.py": "054f227b35e99e2cc4a3af80ca29d14aa284023929271a1044814b2e8274ceb1"
+        }
+      },
+      "worker": {
+        "image": "sha256:cb3e62bf168ed42b063a28e86718fb5786a75957877d8709ee8a17c067427cd8",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/model/pydantic_conversation.py": "054f227b35e99e2cc4a3af80ca29d14aa284023929271a1044814b2e8274ceb1"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/model-failure-diagnostic-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "resumeWorkId": "work:eva-resume:f6ac2ee1-5180-5311-8a3b-be3a4bc31c9e"
+}

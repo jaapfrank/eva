@@ -2420,8 +2420,8 @@
         ],
         "now": {
           "title": "T1 · Opdrachten volledig laten afronden",
-          "state": "Coördinator · foutoorzaak zichtbaar maken",
-          "detail": "Echte agenda-opdracht faalde; modeladapter bewaart alleen een algemene foutmelding. Diagnose klaar, geen uitvoerder actief. Volgende gerichte stap: veilige foutcategorie vastleggen vóór nieuwe proef. Taaklimietcorrectie geïnstalleerd; leerfunctie niet klaar.",
+          "state": "Geïnstalleerd · één begeleide hervatting loopt",
+          "detail": "Veilige modeldiagnose geïnstalleerd op gezonde kern/werker; bron en terugweg gecontroleerd. Bestaande agenda-opdracht eenmaal hervat, geen nieuwe gebruikersopdracht. Coördinator controleert resultaat of concrete foutoorzaak.",
           "doneWhen": "Compleet taakpad past; bestaande opgeslagen taken blijven hervatbaar. Daarna gerichte review, installatie en werkelijk resultaat."
         },
         "next": {
@@ -2440,7 +2440,7 @@
           "expected": "Gebouwd, getest, geïnstalleerd en door jou geaccepteerd blijven apart. Alleen werkelijk bruikbare functies tellen als opgeleverd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T09:08:12.615117+00:00"
+        "reviewedAt": "2026-09-28T09:14:46.976306+00:00"
       }
     },
     "pendingTechnicalReview": {
