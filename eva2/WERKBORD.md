@@ -2,7 +2,9 @@
 
 ## Actuele opdracht — leren en hergebruiken (L1)
 
-**Nu:** één nieuwe JSON Patch-leertaak voorbereiden via bestaande geïnstalleerde routes; alle zes operaties, afzonderlijke fout en later ongewijzigd hergebruik. Verwachtingen vooraf vastgelegd. Geen implementatie-/bewijsvermelding gevonden in huidige projectbronnen; Eva kiest zelf bestaande skills indien bruikbaar. Basis2bfcd0a1, coördinator; raming5–10min per taak, bestaande limieten, maximaal één leer- en één hergebruikopdracht. Geen echte huiswijziging of ontwikkelaarsconverter. [Criteria](evidence/product/json-patch-learning-criteria-20260928.json).
+**Nu:** JSON Patch-werkwijze zonder hulp gemaakt, geregistreerd en uitgevoerd; originele invoer en juiste uitvoer daadwerkelijk opgeslagen. Eindverslag haalde tijdslimiet niet. Geen taak actief; geen automatische herhaling. Onafhankelijke beoordeling akkoord voor opgeslagen uitvoer en aparte hergebruikproef. [Bewijs](evidence/product/json-patch-learning-result-20260928.json).
+
+**Vervolg:** na review één afzonderlijke, vooraf geplande hergebruikvraag met andere invoer. Timeout van eerste taak blijft zichtbaar. Gemeten deelverbruik190.899in/5.875uit,13modelantwoorden/15tools; foreground niet inbegrepen, credits onbekend.
 
 **Werkelijk opgeleverd:** Eva verbeterde zelf de opgeslagen WebVTT-werkwijze na feedback. Na herstel van de algemene opslag/registratie-aansluiting voerde zij de verbeterde code echt uit. Een nieuwe gewone vraag liet Eva zelf v2 kiezen en ongewijzigd uitvoeren op andere invoer; het resultaat is opgeslagen en exact vergeleken met vooraf vastgelegde verwachtingen. [Resultaat](evidence/product/webvtt-reuse-output-20260928.md) · [Bewijs](evidence/product/webvtt-corrected-learning-reuse-20260928.json). Geen modeltaak actief. Onafhankelijke eindcontrole akkoord.
 

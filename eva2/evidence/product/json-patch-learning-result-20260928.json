@@ -1,0 +1,37 @@
+{
+  "checkedAt": "2026-09-28T20:36:28.786785+00:00",
+  "workId": "work:eva-chat:2665eb5c-ed7f-5078-a549-325e80258e37",
+  "taskState": "ambiguous",
+  "errorCode": "timed_out",
+  "status": "learned_registered_executed_output_saved_but_final_report_timed_out",
+  "criteria": "eva2/evidence/product/json-patch-learning-criteria-20260928.json",
+  "developerHintsAfterAdmission": false,
+  "developerCodeSupplied": false,
+  "runtimeSourceChangedDuringTrial": false,
+  "automaticRetry": false,
+  "codeSha256": "328cebdd5a0cbd70c5a002922cd09f50a06a327e4839a7c0d70aa0a4224e6e66",
+  "actualOutputMatchesSealedExpected": true,
+  "savedOutputEqualsExecutionStdout": true,
+  "originalInputPreserved": true,
+  "files": [
+    "/proof-state/json-patch-2665eb5c.py",
+    "/proof-state/json-patch-2665eb5c-invoer.json",
+    "/proof-state/json-patch-2665eb5c-uitvoer.json"
+  ],
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 13,
+    "tool_calls": 15,
+    "input_tokens": 190899,
+    "output_tokens": 5875,
+    "total_tokens": 196774,
+    "cost_usd_micros": null
+  },
+  "foregroundExcluded": true,
+  "creditCost": "unknown",
+  "independentReview": "GO for separate unchanged reuse. Initial input/receipt hash, stdout/saved JSON and expected output agree; source search and RFC research observed. Task remains timed_out with no final reply.",
+  "remaining": "Independent evidence review; separate unchanged reuse not yet attempted. Initial task remains timed out, no complete-task success claim.",
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/json-patch-learning-20260928"
+}

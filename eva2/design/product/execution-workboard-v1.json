@@ -2764,14 +2764,14 @@
         ],
         "now": {
           "title": "Leren en zelfstandig hergebruiken afronden",
-          "state": "Nieuwe leertaak voorbereiden: configuratiewijzigingen",
-          "detail": "Bestaande onderzoeks-/leerroute, basis2bfcd0a1. Vooraf vastgelegde JSON Patch-invoer/uitkomst, geen bestaande implementatie of bewijs gevonden. Eén leeropdracht en hoogstens één hergebruikopdracht; geen ontwikkelaarscode of echte huiswijziging. Raming5–10min per taak, bestaande limieten, credits onbekend.",
+          "state": "Nieuwe werkwijze en juiste uitvoer opgeslagen; afronding timeout",
+          "detail": "Eva heeft zonder ontwikkelhulp JSON Patch onderzocht, code gemaakt/geregistreerd/uitgevoerd en juiste invoer/uitvoer bewaard. Werkelijke bestanden en receipt kloppen. Laatste verslag niet afgerond binnen tijdslimiet; geen taak actief of automatische herhaling. Onafhankelijke review akkoord voor opgeslagen uitvoer en aparte hergebruikproef.",
           "doneWhen": "Eva leert uit documentatie, bewaart een uitvoerbare werkwijze en past die op andere invoer toe zonder nieuwe kerncode of ontwikkelhints; resultaat onafhankelijk gecontroleerd."
         },
         "next": {
-          "title": "Resterende L1-eis: nieuwe werkwijze zonder ontwikkelhulp",
+          "title": "Aparte hergebruikproef met dezelfde JSON Patch-code",
           "state": "Nog niet gestart",
-          "detail": "Gebruik herstelde bestaande leerroutes. Geen nieuwe leer-engine, geen herhaling van dezelfde WebVTT-proef. Behoud eerdere geslaagde kalender- en WebVTT-hergebruikresultaten."
+          "detail": "Alleen na onafhankelijke beoordeling van opgeslagen leerresultaat; één vooraf geplande nieuwe invoer. Oorspronkelijke timeout blijft zichtbaar."
         },
         "ownerAction": {
           "title": "Camera voor vuilnisbakken kiezen",
@@ -2784,7 +2784,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T20:29:28.682087+00:00"
+        "reviewedAt": "2026-09-28T20:36:28.786785+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13272,7 +13272,7 @@
           },
           "owner": "/root",
           "activeWorker": null,
-          "baseCommit": "a9d00858",
+          "baseCommit": "c7315b9c",
           "endCondition": "One new input is correctly processed by the existing saved procedure, selected without procedure ID or code hints; verify source/input/output hashes and original destination.",
           "effortNotice": "One bounded real reuse request and independent result review; no source changes planned, credit costs unknown.",
           "dependencyEvidence": "Existing procedure execution and completed calendar task support this independent reuse proof; browser T3 acceptance is not required for this case.",
@@ -13283,9 +13283,9 @@
             "automaticRetry": false,
             "evidence": "eva2/evidence/product/calendar-unassisted-reuse-20260928.json"
           },
-          "remaining": "Corrected learning and unchanged new-input reuse succeeded. Previously unseen learning without developer intervention and owner acceptance remain unproven.",
+          "remaining": "Fresh JSON Patch learned/executed and correct output saved without developer intervention; final task report timed out. Independent review and separate unchanged reuse pending. Earlier calendar/WebVTT results retained.",
           "assignment": {
-            "stage": "corrected_learning_and_unchanged_reuse_verified",
+            "stage": "new_procedure_saved_and_executed_final_report_timeout",
             "baseCommit": "38cb8dcc",
             "owner": "/root",
             "scope": "Existing installed procedure tools and isolated WebVTT fixtures; no product code by assumption",
@@ -13293,7 +13293,7 @@
             "endCondition": "One bounded initial learning request and one reuse request yield independently checked stored outputs; failed outcome remains visible, no automatic retries.",
             "effort": "Prepare authoritative fixture/expected result first; at most two task admissions, existing runtime limits; credits unknown."
           },
-          "newLearningEvidence": "eva2/evidence/product/webvtt-corrected-learning-reuse-20260928.json"
+          "newLearningEvidence": "eva2/evidence/product/json-patch-learning-result-20260928.json"
         },
         {
           "id": "L2",
