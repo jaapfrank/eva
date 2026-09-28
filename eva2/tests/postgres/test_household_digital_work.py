@@ -311,6 +311,180 @@ def test_household_correction_survives_new_session_close_and_resumes_once(databa
         store.load(second.work_id, **original.service._owner)
 
 
+
+def test_two_running_tasks_correct_stop_reconnect_and_return_once(database):
+    """Independent controls retain the original result across a closed session."""
+    from threading import Event
+    from eva.adapters.postgres.work_corrections import work_corrections
+    from eva.bootstrap.household_work_corrections import HouseholdScheduledWork
+    from tests.postgres.test_native_task_continuity import native
+
+    x = digital_setup(database, "hh-two-running-continuity")
+    original_a, original_b = native(x, "task-a"), native(x, "task-b")
+    turn_a = original_a.service.turn(str(uuid4()), "Zet de woonkamer op 20 graden en controleer dit")
+    turn_b = original_b.service.turn(str(uuid4()), "Zet de werkkamer op 21 graden en controleer dit")
+    actions, store = ScopedDelegatedWorkActions(None, x.server), x.server.store
+    work_a = actions.execute(turn_a, ConversationActionCall("start-a", "start_digital_work",
+        {"task": turn_a.text})).output["operation_result"]["work"]["work_id"]
+    x.clock[0] += timedelta(seconds=1)
+    work_b = actions.execute(turn_b, ConversationActionCall("start-b", "start_digital_work",
+        {"task": turn_b.text})).output["operation_result"]["work"]["work_id"]
+    first = original_a.service._load(work_a, original_a.service.origin(turn_a)).spec
+    second = original_b.service._load(work_b, original_b.service.origin(turn_b)).spec
+    instruction = "Gebruik 19 graden in plaats van 20 en controleer de uiteindelijke temperatuur."
+    corrected, dispatched, model_sources = [], [], []
+    temperature = [18]
+    b_entered, b_release = Event(), Event()
+    api = HomeAssistantApiTool(base_url="http://ha.invalid", token="fixture")
+
+    def request(arguments):
+        if arguments["method"] == "POST":
+            body = json.loads(arguments["body_json"])
+            assert body["entity_id"] == "climate.lounge", "Stopped task B must never dispatch"
+            temperature[0] = body["temperature"]
+        dispatched.append((arguments["method"], temperature[0]))
+        return {"success": True, "response_json": json.dumps({"temperature": temperature[0]}),
+                "external_state_verified": False}
+    api._request = request
+
+    class Memory:
+        def recall_for_presence(self, query):
+            assert query.audience.kind == "household"
+            return HindsightMemoryEngine._empty_presence(query)
+
+    class Model:
+        def generate(self, source, identity, memory, recent_messages, *,
+                     completed_action=None, self_context=(), **kwargs):
+            model_sources.append(source.message_id)
+            assert source in (turn_a, turn_b) and source.audience.kind == "household"
+            entity = "climate.lounge"
+            revised = any(instruction in item for item in self_context)
+            if source == turn_b:
+                assert completed_action is None
+                b_entered.set()
+                assert b_release.wait(10), "Task A did not release the controlled response"
+                name, target, entity = "stopped-b-write", 21, "climate.office"
+            elif completed_action is None:
+                assert b_entered.wait(10), "Task B did not enter its model phase"
+                name, target = "original-write", 20
+            elif not corrected:
+                current = native(x, "control-both")
+                control = current.service.turn(str(uuid4()), instruction)
+                jobs = current.service.execute("list", control, request_key="list")["jobs"]
+                assert {row["work_id"]: row["state"] for row in jobs} == {
+                    work_a: "call_started", work_b: "call_started"}
+                receipt = actions.execute(control, ConversationActionCall("revise-a", "revise_digital_work",
+                    {"revision": {"work_id": work_a, "instruction": instruction}}))
+                result = receipt.output["operation_result"]
+                assert result["status"] == "correction_saved", result
+                assert len(work_corrections(database, first)) == 1
+                unchanged_b = current.service.execute("get", control, request_key="b-before-stop", work_id=work_b)["work"]
+                assert unchanged_b["state"] == "call_started" and not unchanged_b["stop_requested"]
+                assert work_corrections(database, second) == []
+                stop_turn = current.service.turn(str(uuid4()), "Stop de taak voor de werkkamer")
+                actions.execute(stop_turn, ConversationActionCall("stop-b", "stop_delegated_work", {"work_id": work_b}))
+                assert current.service.execute("get", stop_turn, request_key="b-stopping", work_id=work_b)["work"]["stop_requested"]
+                assert HouseholdScheduledWork(x.server).run_once() == "idle"
+                corrected.append(result["schedule"]["schedule_id"])
+                current.service.current("close")
+                b_release.set()
+                name, target = "blocked-a-read", None
+            elif completed_action.call.arguments["method"] == "POST":
+                assert revised, "The successor must receive A's retained correction"
+                if json.loads(completed_action.call.arguments["body_json"])["temperature"] == 20:
+                    name, target = "corrected-write", 19
+                else:
+                    name, target = "verify-correction", None
+            else:
+                assert revised
+                return ConversationModelResult("De woonkamer staat gecontroleerd op 19 graden.", "controlled",
+                    usage=ConversationModelUsage.measured(tool_calls=0, input_tokens=30, output_tokens=10))
+            call = ConversationActionCall(name, "home_assistant_request", dict(
+                transport="rest", method="GET" if target is None else "POST",
+                path="/api/states/" + entity if target is None else "/api/services/climate/set_temperature",
+                body_json="" if target is None else json.dumps({"entity_id": entity, "temperature": target}),
+                response_pointer="", offset=0, limit=10))
+            return ConversationModelResult(None, "controlled", call,
+                usage=ConversationModelUsage.measured(tool_calls=1, input_tokens=30, output_tokens=10))
+
+    def authorize_worker_turn(source):
+        assert source.audience.kind == "household"
+        assert source.audience.principal_id == source.principal_id
+        x.server.authority.validate_actor(source.principal_id)
+
+    runner = DelegatedDigitalRunner(store, x.profile,
+        source_loader=HouseholdDigitalSourceLoader(database, x.server.conversation_scope, x.server.authority),
+        memory=Memory(), model=Model(), identity=IdentityProfile("Eva", "Warm", ("Be honest",)),
+        connector_tools=(PostgresExternalConversationTools(database, api, api,
+            authorize_turn=authorize_worker_turn),), clock=lambda: x.clock[0])
+    calls = {}
+    for worker_id in ("worker:first", "worker:second"):
+        claim = store.claim_next(worker_id=worker_id, release=x.profile.release, now=x.clock[0])
+        call = store.start_call(claim, now=x.clock[0])
+        calls[call.work_id] = call
+    assert set(calls) == {work_a, work_b}
+    call_a, call_b = calls[work_a], calls[work_b]
+
+    async def run_both():
+        pending_b = asyncio.create_task(runner.run(second, call_id=call_b.call_id))
+        try:
+            outcome_a = await runner.run(first, call_id=call_a.call_id)
+        finally:
+            b_release.set()
+        return outcome_a, await pending_b
+
+    outcome_a, outcome_b = asyncio.run(run_both())
+    assert outcome_a.result is None and outcome_b.result is None
+    assert len(corrected) == 1, (outcome_a, outcome_b)
+    for spec in (first, second):
+        stopping = store.load(spec.work_id, **original_a.service._owner, household_origin=spec.origin)
+        assert stopping.stop_requested_at is not None
+    assert dispatched == [("POST", 20)] and model_sources.count(turn_b.message_id) == 1
+    # The worker normalizes durable stop requests after the runner returns.
+    assert store.stop_requested(call_a) and store.stop_requested(call_b)
+    store.record_stopped(call_a, usage=outcome_a.usage, now=x.clock[0])
+    store.record_stopped(call_b, usage=outcome_b.usage, now=x.clock[0])
+    original_a.service.current("close")
+    original_b.service.current("close")
+    current = native(x, "reconnected")
+    jobs = current.service.execute("list", current.turn, request_key="reconnected-list")["jobs"]
+    assert {row["work_id"]: row["state"] for row in jobs} == {work_a: "stopped", work_b: "stopped"}
+    x.clock[0] += timedelta(seconds=20)
+    scheduler = HouseholdScheduledWork(x.server)
+    assert scheduler.run_once() == "dispatched" and scheduler.run_once() == "idle"
+    schedules = scheduler.list()["schedules"]
+    assert len(schedules) == 1 and schedules[0]["schedule_id"] == corrected[0]
+    successor_id = schedules[0]["work_id"]
+    successor = current.service._load(successor_id, current.service.origin(current.turn)).spec
+    assert successor.source == first.source and successor.origin == first.origin
+    assert successor.execution_id == first.execution_id and successor.grant == first.grant
+    assert successor.generation == first.generation + 1
+    claim = store.claim_next(worker_id="worker:corrected-a", release=x.profile.release, now=x.clock[0])
+    call = store.start_call(claim, now=x.clock[0])
+    assert call.work_id == successor_id
+    outcome = asyncio.run(runner.run(successor, call_id=call.call_id))
+    assert outcome.status == "succeeded", outcome
+    assert dispatched == [("POST", 20), ("POST", 19), ("GET", 19)]
+    assert model_sources.count(turn_b.message_id) == 1
+    store.record_success(call, outcome.result, now=x.clock[0])
+    result_a = current.service.execute("get", current.turn, request_key="current-a", work_id=successor_id)["work"]
+    result_b = current.service.execute("get", current.turn, request_key="current-b", work_id=work_b)["work"]
+    assert result_a["state"] == "succeeded" and result_a["result"] == outcome.result.output
+    assert result_b["state"] == "stopped" and result_b["result"] is None
+    assert store.claim_next(worker_id="worker:no-more-work", release=x.profile.release, now=x.clock[0]) is None
+    with pytest.raises(ValueError):
+        original_a.service.poll(turn_a)
+    assert current.service.poll(current.turn) is None
+    output = x.server.delivery_session(**x.args, session_id=first.origin.session_id)
+    control = output.control_turn()
+    delivered = output.poll(control)
+    assert delivered["work_id"] == successor_id and delivered["origin_message_id"] == turn_a.message_id
+    assert delivered["result"] == outcome.result.output
+    output.result_delivery(control, "ack", work_id=successor_id,
+        result_sha256=delivered["result_sha256"], disposition="completed")
+    assert output.poll(control) is None
+
+
 @pytest.mark.parametrize("operation", ["stop", "stop_related"])
 def test_later_household_stop_cancels_waiting_correction(database, operation):
     from eva.bootstrap.household_work_corrections import HouseholdScheduledWork
