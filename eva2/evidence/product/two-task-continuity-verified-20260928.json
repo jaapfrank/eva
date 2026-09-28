@@ -1,0 +1,50 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-28T10:58:46.900051+00:00",
+  "status": "technically_verified",
+  "slice": "C2",
+  "sourceCommit": "48d0415a",
+  "requirement": "Two running tasks can be independently corrected/stopped, retain real state across session reconnect, and return the corrected result once to the original question.",
+  "result": "Existing installed implementation passes the missing combined case. No production change or redeployment required.",
+  "verification": {
+    "test": "eva2/tests/postgres/test_household_digital_work.py::test_two_running_tasks_correct_stop_reconnect_and_return_once",
+    "passed": 1,
+    "seconds": 9.88,
+    "installedModules": 208,
+    "moduleRoot": "/opt/eva/src/",
+    "schema": "4e_0007_delegated_private",
+    "image": "sha256:d39296b60fab112f48f37f7e9167458d2c727f29037bf8bc79c1ca9b42a4e52c",
+    "coverage": [
+      "Both tasks call_started with overlapping controlled model phases",
+      "Correction of A leaves B untouched until separately stopped",
+      "Stopped B cannot dispatch its late tool response",
+      "Original sessions close; a fresh session retrieves both real states",
+      "Exactly one corrected successor of A retains source, origin and grant",
+      "Original effect is not replayed; corrected effect and verification execute once",
+      "B remains stopped with no result or additional queued execution",
+      "A result bytes and original question binding retained; acknowledgement prevents duplicate return"
+    ]
+  },
+  "review": {
+    "reviewer": "/root",
+    "independentOfAuthor": "/root/baseline_research_20260927",
+    "result": "GO",
+    "method": "Read final test, exact installed runner/import guard and raw successful output; verified stop normalization matches existing worker contract. No additional suite needed for test-only change."
+  },
+  "fixtureCorrections": [
+    "Empty correction list asserted as tuple in first attempt",
+    "Unsupported assumption that admission queue follows test variable order"
+  ],
+  "artifactsDirectory": "/home/administrator/project/.eva2-artifacts/c2-task-combination-20260928",
+  "limits": [
+    "Controlled models and HA transport in isolated PostgreSQL; no actual provider quality or physical audio claim.",
+    "This closes the bounded technical C2 combination; C1/C3/C4 channel speed and real-user observations remain open.",
+    "No new whole product category or owner acceptance claimed."
+  ],
+  "ownerAccepted": false,
+  "usage": {
+    "evaModelCalls": 0,
+    "physicalActions": 0,
+    "creditCost": null
+  }
+}

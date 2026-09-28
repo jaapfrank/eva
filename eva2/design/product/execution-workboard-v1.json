@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Twee taken afzonderlijk sturen en na terugkeer terugvinden",
+            "date": "28 september",
+            "state": "tested",
+            "result": "Op geïnstalleerde code: A bijgestuurd, B gestopt zonder actie; beide statussen behouden na nieuwe sessie; A-resultaat eenmaal bij oorspronkelijke vraag. Onafhankelijk beoordeeld.",
+            "remaining": "Gecontroleerde modellen/HA-transport; fysieke bediening en gebruikersbeleving blijven open. Geen nieuwe installatie nodig.",
+            "source": "eva2/evidence/product/two-task-continuity-verified-20260928.json"
+          },
+          {
             "title": "Doorpraten terwijl procedurewerk wordt afgemaakt",
             "date": "28 september",
             "state": "tested",
@@ -2475,15 +2483,15 @@
           }
         ],
         "now": {
-          "title": "C2 · Twee taken onafhankelijk sturen",
-          "state": "C2 · bestaande combinatie controleren",
-          "detail": "Bestaande losse dekking gecontroleerd; geen nieuw defect aangetoond. Eén uitvoerder maakt de ontbrekende combinatieproef: taak A bijsturen, B stoppen, opnieuw verbinden en juiste terugmelding. Coördinator controleert bestaande websiteprojectie.",
-          "doneWhen": "De gecombineerde proef toont afzonderlijke taaksturing, behouden status en één terugmelding bij de oorspronkelijke vraag; beperkingen en echte gebruikersproef blijven apart."
+          "title": "C2 · Technische combinatie afgerond",
+          "state": "Gecontroleerd op geïnstalleerde versie",
+          "detail": "Twee lopende taken onafhankelijk bijgestuurd/gestopt; na opnieuw verbinden juiste status en één resultaat bij oorspronkelijke vraag. Geen productwijziging nodig. Geen uitvoerder actief.",
+          "doneWhen": "Afgerond voor deze gecontroleerde combinatie. Echte kanaalbediening, snelheid en gezinsbeleving blijven afzonderlijk open."
         },
         "next": {
-          "title": "C2 · Ontbrekend gecombineerd geval afronden",
-          "state": "Begrensde vervolgstap",
-          "detail": "Bestaande taakbediening, opslag en vraagkoppeling hergebruiken; alleen ontbrekend combinatiebewijs of aangetoond defect aanpakken."
+          "title": "C3 · Home Assistant en beide speakers",
+          "state": "Nog niet gestart",
+          "detail": "Bestaande speaker- en taakroutes behouden; ontbrekende fysieke kanaalproef en korte gesproken ontvangst afhandelen. Geen automatische firmwareherbouw."
         },
         "ownerAction": {
           "title": "Open proef: echte Telegramroute",
@@ -2497,7 +2505,7 @@
           "expected": "Actuele app-/kanaalproef; geen impliciete acceptatie. Mag later en blokkeert onafhankelijk werk niet."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T10:47:14.322406+00:00"
+        "reviewedAt": "2026-09-28T10:58:46.900051+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12471,7 +12479,7 @@
           ],
           "outcome": "Twee taken sturen en terugmelden",
           "effort": "M",
-          "status": "in_progress",
+          "status": "completed",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Durable tasks, original-question binding, stop/resume/correction and retained results. Session-closure defect was fixed and installed.",
@@ -12484,16 +12492,22 @@
             "replacementJustified": false
           },
           "owner": "/root",
-          "activeWorker": "/root/baseline_research_20260927",
+          "activeWorker": null,
           "baseCommit": "1ac19a46",
           "assignment": {
-            "stage": "combined_existing_path_proof",
+            "stage": "completed",
             "scope": "Only eva2/tests/postgres/test_household_digital_work.py; coordinator checks existing owner projections. No production changes or model calls.",
             "outcome": "Task A corrected, task B stopped, session reopened, correct states and one result bound to original question.",
             "endCondition": "One combined isolated PostgreSQL case passes or identifies a concrete defect; bounded independent review.",
             "effort": "One combined test and focused run; credit costs unknown"
           },
-          "dependencyEvidence": "Installed HTTP admission/overlap supports independent two-task steering; pending real Telegram owner observation does not block this source/integration work."
+          "dependencyEvidence": "Installed HTTP admission/overlap supports independent two-task steering; pending real Telegram owner observation does not block this source/integration work.",
+          "completion": {
+            "technical": "verified_on_installed_code",
+            "evidence": "eva2/evidence/product/two-task-continuity-verified-20260928.json",
+            "ownerAccepted": false,
+            "remaining": "Physical channel operation and experience remain in C1/C3/C4; no new broad category completion."
+          }
         },
         {
           "id": "C3",
@@ -13089,7 +13103,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "C2",
+      "activeSliceId": null,
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

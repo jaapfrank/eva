@@ -1,21 +1,21 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — C2: twee taken onafhankelijk sturen.** C1HTTP-overlap is afgerond; echte actuele Telegramproef staat apart bij Jaap open en blokkeert onafhankelijk werk niet. Eén uitvoerder controleert bestaande dekking voor twee taken, corrigeren/stoppen en terugkeer met juiste vraagkoppeling. Geen nieuwe taakengine of modelproef. Bestaande installatie en acceptaties blijven behouden.
+**Nu — C2 technisch afgerond op de geïnstalleerde versie.** Twee werkelijk gestarte taken onafhankelijk bijgestuurd/gestopt, oorspronkelijke sessies gesloten, actuele status teruggevonden en één gecorrigeerd resultaat bij de oorspronkelijke vraag teruggeleverd. Eén combinatieproef geslaagd in 9,88 seconden, onafhankelijke review akkoord. Geen productcode, modelcalls of nieuwe installatie nodig. Geen uitvoerder actief.
 
-**Leidend — het complete bouwplan uitvoeren.** Acht vaste productstappen en 24 begrensde opdrachten; geen zakelijke uitwerking of nieuwe algemene audit. Gegevens en acceptaties behouden. Technische afronding, installatie, vergelijkingsbewijs en jouw oordeel blijven apart. De recente [eigenaarbesluiten](PROJECTDOEL.md) gaan voor oudere bouwvolgordes.
+**Leidend — het complete bouwplan uitvoeren.** Acht productstappen en 24 afgebakende opdrachten. Bestaande mogelijkheden en acceptaties blijven behouden. Deze technische combinatiecontrole is geen nieuwe afgeronde hoofdcategorie en geen eigenaaracceptatie.
 
-**Eerstvolgende stap:** één ontbrekende C2-combinatieproef afronden met bestaande taakbediening. Geen nieuwe taakengine of modelproef. Echte Telegrambeoordeling blijft apart open.
+**Eerstvolgende stap — C3, nog niet gestart:** bestaande Home Assistant- en speakerroute afronden voor korte taakontvangst en later terugvinden van resultaat. Ontbrekende fysieke kanaalproeven blijven zichtbaar; geen automatische firmwareherbouw.
 
 ## Actuele opleverstatus — 28 september 2026
 
 | Onderwerp | Huidige stand |
 |---|---|
-| Lopend werk | C2: één uitvoerder maakt de gecombineerde taakproef; coördinator controleert de bestaande websiteprojectie. |
-| Laatste bruikbare resultaat | Procedurewerk op de achtergrond geïnstalleerd. Passende tussenvraag in 3,188 seconden afgerond terwijl werk doorging; resultaat correct bewaard en bij oorspronkelijke vraag. [Bewijs](evidence/product/contact-procedure-overlap-20260928.json). |
-| Nog te leveren | Twee taken onafhankelijk bijsturen/stoppen en na opnieuw verbinden correct terugvinden en terugmelden als geheel aantonen. |
-| Eerstvolgende actie | Eén bestaande PostgreSQL-test uitbreiden; productcode alleen aanpassen bij een concreet defect. |
-| Voor Jaap | Open Telegramproef mag later: stuur `/eva2 Zoek uit wat Home Assistant Cloud doet voor spraak, met bronnen.` en daarna `/eva2 Hoe gaat het met jou?`. Verwacht tussenvraag vóór onderzoek, resultaat gekoppeld aan oorspronkelijke vraag. Blokkeert dit werk niet. |
-| Overzicht alle onderdelen | De bestaande 24 opdrachten en acceptaties blijven leidend. Twee van negen afgebakende functies klaar; deze combinatiecontrole verandert dat niet automatisch. |
+| Laatste afronding | C2 technische combinatie op actuele installatie geverifieerd. [Bewijs](evidence/product/two-task-continuity-verified-20260928.json). |
+| Laatste functionele wijziging | Procedurewerk via achtergrondroute geïnstalleerd; tussenvraag afgerond terwijl werk doorging. [Bewijs](evidence/product/contact-procedure-overlap-20260928.json). |
+| Nog te leveren | C1 snelheid/echte Telegrambeoordeling; C3/C4 fysieke spraak en kanaalgedrag. Overige opdrachten behouden hun eigen scope. |
+| Eerstvolgende actie | C3 concrete resterende speakerkoppeling/proef; nog niet gestart. |
+| Voor Jaap | Telegramproef mag later: `/eva2 Zoek uit wat Home Assistant Cloud doet voor spraak, met bronnen.` en daarna `/eva2 Hoe gaat het met jou?`. Verwacht tussenvraag vóór onderzoek en resultaat bij oorspronkelijke vraag. Geen herhaling van geaccepteerde proeven vereist. |
+| Productstand | Twee van negen afgebakende functies klaar. C2-combinatiecontrole verandert die hoofdteller niet automatisch. |
 
 ## Historisch logboek — geen actuele werkopdrachten
 
