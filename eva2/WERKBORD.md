@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**T4 inspectie afgerond:** bestaande eigenaarpagina toont echt resultaat/verbruik en vindt oudere opdrachten; onafhankelijk bevestigd dat kanaal-/modulestatus nog ontbreekt. Bestaande taakbediening behouden. Volgende, nog niet gebouwd: beschermde statusprojectie en UI aansluiten met afzonderlijke waarnemingen/tijd en expliciet onbekend; daarna ontbrekende bijstuur-/hervatbediening beproeven. Geen modelcalls. [Bewijs](evidence/product/task-controls-live-20260928.json).
+
+**Nu — T4 taakbediening, basis6b5aa125:** coördinator controleert bestaande eigenaarpagina/taakprojecties en maakt alleen aangetoonde ontbrekende bediening af. C2 afgerond; geen nieuw dashboard of modelproeven. Eerste inspectie15min. C1 blijft open: bestaande begroetingslog718ms geheugen en3330ms tot modeltekst; extra cache maakt dat niet instant. [Diagnose](evidence/product/contact-latency-boundary-20260928.json).
+
+**Nu — C1 resterende wachttijd, basis6b5aa125:** coördinator koppelt bestaande logs aan geheugenvoorbereiding en modeltijd. Maximaal tien minuten, geen nieuwe modelcalls of speculatieve cache; eindpunt is één onderbouwde vervolgactie. Vorige beurt was voortgang: bron geïnstalleerd en echte uitkomsten geregistreerd.
+
 **Opgeleverd — C1 compacte invoer:** bron6dd7a7c9 geïnstalleerd op gezonde kern en werker; 186 controles en onafhankelijke bronreview akkoord, terugweg vastgelegd. Twee echte websiteproeven: begroeting5,191s/3.806in; bijdrageophaling15,399s/20.086in. Nog te traag. Onafhankelijke receiptcontrole: echte lijst en exact bijbehorend opgeslagen initiatiefresultaat ondersteunen het antwoord. Samen23.892in/207uit; credits onbekend. Volgende: resterende wachttijd, nog niet gestart. De oudere kandidaatnotities hieronder zijn historisch; geen volledige C1-afronding. [Bewijs](evidence/product/contact-grouped-catalog-20260928.json).
 
 **C1 cataloguskandidaat6dd7a7c9:**64gereedschappen identiek in17groepen; catalogustekst lokaal1.184→397tokens en werkuitleg583→299.185 gerichte controles slagen, kandidaatbuild en onafhankelijke review lopen. Nog niet geïnstalleerd, geen snelheidsclaim. Daarna maximaal twee echte proeven: begroeting en bestaande bijdrage ophalen.

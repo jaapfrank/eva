@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-09-28T17:28:43.725218+00:00",
+  "slice": "T4",
+  "sourceCommit": "6b5aa125",
+  "status": "partial_existing_capability_verified",
+  "method": "Read-only actual browser interactions with installed owner page; no model calls or task mutations.",
+  "url": "http://localhost:44711/internal/v1/dashboard",
+  "observations": [
+    "Existing kanban shows active, attention, result and stopped lanes.",
+    "Opened completed document task and readable saved result with actual final document path.",
+    "Expanded usage:8model responses,7tools,85648input,1074output; cost unknown. Matches prior persisted document evidence.",
+    "Search gezinsavond via older-task search returned two failed attempts and two completed results."
+  ],
+  "reuse": [
+    "eva2/experiments/react-admin-dashboard-v1/src/owner-work.jsx",
+    "eva2/evidence/product/two-task-continuity-verified-20260928.json",
+    "eva2/evidence/product/owner-work-board-installed-20260923.json"
+  ],
+  "remaining": [
+    "Channel/module health absent from owner page: aggregate dashboard/status readiness alone does not establish Telegram or physical voice reachability.",
+    "Stop/steer/resume combined browser controls not exercised by these read-only observations; existing backend evidence has narrower scope."
+  ],
+  "decision": "Retain task UI and stores. Implement only missing health/status wiring and close missing UI control evidence using bounded non-production tasks; no second dashboard.",
+  "ownerAccepted": false,
+  "usage": {
+    "evaModelCalls": 0,
+    "externalTaskActions": 0,
+    "credits": null
+  },
+  "independentReview": {
+    "reviewer": "/root/platform_research_20260927",
+    "result": "GO for bounded gap determination; T4 not complete",
+    "requiredChange": "Extend existing protected status/UI with dated module/channel observations. Preserve unknown/not configured; credentials are not provider reachability; configuration is not speaker health; no raw exceptions."
+  }
+}

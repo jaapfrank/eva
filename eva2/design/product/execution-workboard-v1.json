@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Bestaande taakbediening in eigenaarpagina gecontroleerd",
+            "date": "28 september",
+            "state": "tested",
+            "result": "Echt eindresultaat en gemeten verbruik geopend; zoeken vindt eerdere mislukte en voltooide pogingen. Geen nieuwe bouw nodig voor deze bediening.",
+            "remaining": "Kanaal-/modulestatus ontbreekt; echte bijstuur-/hervatbediening nog apart te controleren. Geen volledige T4-afronding.",
+            "source": "eva2/evidence/product/task-controls-live-20260928.json"
+          },
+          {
             "title": "Compactere invoer voor hetzelfde gesprek en gereedschap",
             "date": "28 september",
             "state": "installed",
@@ -2683,15 +2691,15 @@
           }
         ],
         "now": {
-          "title": "C1 · Compacte groepen in bestaande toolcatalogus",
-          "state": "Deelverbetering geïnstalleerd · snelheid nog onvoldoende",
-          "detail": "186 controles, bronreview en gezonde kern/werker bevestigd. Websitebegroeting5,191s, 3.806in; bestaande initiatiefbijdrage correct teruggelezen in15,399s, 20.086in. Twee proeven afgerond; geen complete C1 of nieuwe hoofdfunctie.",
-          "doneWhen": "Minder aanvankelijk zichtbare catalogustekst, identieke functies en correcte oude receipt-replay; gerichte controles, onafhankelijke review en pas bij materiële winst maximaal twee echte modelproeven."
+          "title": "T4 · Taken bedienen en resultaten terugvinden",
+          "state": "Bestaande bediening bevestigd · ontbrekende status bepaald",
+          "detail": "Echte eigenaarpagina: taakresultaat, gemeten verbruik en zoeken gecontroleerd; bestaande bediening blijft behouden. Onafhankelijke review bevestigt ontbrekende kanaal-/modulestatus. Geen modelcalls of taakmutaties; volledige T4 blijft open.",
+          "doneWhen": "Bestaand werk zichtbaar met juiste status, resultaat en passende bediening; ontbrekende koppelingen gericht afmaken, onafhankelijk controleren en installeren."
         },
         "next": {
-          "title": "C1 · Resterende antwoordvertraging",
-          "state": "Nog niet gestart",
-          "detail": "Gebruik de bestaande timing van deze twee proeven voor de volgende begrensde beslissing; geen herhaalde modelproef zonder gewijzigde oorzaak."
+          "title": "T4 · Kanaal- en modulestatus aansluiten",
+          "state": "Nog niet gebouwd",
+          "detail": "Bestaande beschermde statusroute uitbreiden met afzonderlijke waarneming/tijd: database, geheugen, modeltoegang, werker en kanalen. Onbekend blijft onbekend; geen groen op basis van alleen configuratie. Daarna ontbrekende bedieningsproef."
         },
         "ownerAction": {
           "title": "Toolgebruik na cataloguswijziging proberen",
@@ -2705,7 +2713,7 @@
           "expected": "Eigenaar bevestigt: nieuwste bijdrage met /eva2 correct opgehaald. Wachttijd blijft onvoldoende; Hallo11s. Antwoord van Eva1 zonderprefix was de andere route, geen mislukte Eva2-resultaatophaling."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T17:23:46.184429+00:00"
+        "reviewedAt": "2026-09-28T17:29:19.843820+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13065,7 +13073,7 @@
           ],
           "outcome": "Taakbediening en resultaten",
           "effort": "M",
-          "status": "planned",
+          "status": "in_progress",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Owner page already has task/result/status/control surfaces and measured/partial/unknown usage.",
@@ -13077,7 +13085,23 @@
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
-          }
+          },
+          "baseCommit": "6b5aa125",
+          "owner": "/root",
+          "effortNotice": "First bounded UI/source inspection15min without model calls; only demonstrated missing wiring will be changed.",
+          "fileOwnership": {
+            "/root": [
+              "eva2/experiments/react-admin-dashboard-v1/src/main.jsx",
+              "eva2/src/eva/adapters/http/",
+              "eva2/WERKBORD.md",
+              "eva2/design/product/execution-workboard-v1.json"
+            ]
+          },
+          "lastAttempt": {
+            "state": "existing_ui_verified_health_gap_confirmed",
+            "evidence": "eva2/evidence/product/task-controls-live-20260928.json"
+          },
+          "remaining": "Separate dated channel/module health observations plus missing UI correction/resume acceptance; existing task controls/results/usage retained."
         },
         {
           "id": "I1",

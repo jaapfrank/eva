@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-09-28T17:26:03.195434+00:00",
+  "sourceCommit": "6b5aa125",
+  "method": "Read existing exact-message logs and stored accounting only; no new model calls.",
+  "greeting": {
+    "totalMs": 5191,
+    "firstTextMs": 4784,
+    "initialMemoryMs": 718,
+    "modelFirstContentMs": 3330,
+    "modelCompletedMs": 3677
+  },
+  "retrieval": {
+    "totalMs": 15399,
+    "firstTextMs": 13383,
+    "initialMemoryMs": 2282,
+    "modelFirstContentMs": 9955,
+    "modelCompletedMs": 11910
+  },
+  "decision": "Do not introduce another speculative cache. Current provider request time alone exceeds desired instant response. C1 remains open; continue independent task control slice T4 after completed C2.",
+  "limitations": [
+    "Model timing includes adapter preparation; not pure server compute.",
+    "Existing concurrent self-context read means phases cannot simply be summed.",
+    "No new cost or universal latency estimate."
+  ]
+}
