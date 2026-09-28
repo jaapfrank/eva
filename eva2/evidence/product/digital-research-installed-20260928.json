@@ -1,0 +1,88 @@
+{
+  "checkedAt": "2026-09-28T19:50:09.898043+00:00",
+  "sourceCommit": "3b850420",
+  "status": "installed_actual_research_and_initial_learning_verified",
+  "scope": "Existing native source research available in private digital work with shared task accounting; no new learning engine.",
+  "tests": {
+    "targetedPassing": 196,
+    "postgresIncluded": true,
+    "reviewer": "/root/platform_research_20260927",
+    "review": "GO after exact historical read compatibility fix"
+  },
+  "installation": {
+    "checkedAt": "2026-09-28T19:49:31.797453+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:81621478bdca6173ac55f28ad00984a0da14243f37cb0b488b5d44eda11dc600",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/background_research.py": "e2448b7f6d0ca6721088cc65fd83f3ce5a2382cc25c139f15e13602c0c268510",
+          "bootstrap/delegated_digital_composition.py": "a5c66e7c094feab2638bd67ce97facb9c1320cf384ef5e59b738cefdbb95bb7e",
+          "bootstrap/delegated_digital_runner.py": "b0e10dd5605f56e0fb44cd156bac81a8cefa9e400e27af3ba5f27a703078fd73",
+          "bootstrap/delegated_digital_profile.py": "f633a7056c4ce3829b2c5a90788313a63f8b5ed782e9969c167f7e1e304e6df6",
+          "contracts/delegated_digital_work.py": "777ea15afc8dd8823651bebd2b205a767bdf529b6c799059b090cc80b3264bc0",
+          "application/background_execution.py": "6565adb7ad229fa8fd64675c55a184fdd4e042122f84bcf46f23d2abdfa4adbf",
+          "adapters/model/pydantic_conversation.py": "0b11c22960c9659cfadef50764f719c43dd2ef20e7ab372b199aba0f03df784b"
+        }
+      },
+      "worker": {
+        "image": "sha256:3c4712c75c5f0ff9ecec8bcfb0f565399539d4ce0cdbafee5f07cf34c9453a9a",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/background_research.py": "e2448b7f6d0ca6721088cc65fd83f3ce5a2382cc25c139f15e13602c0c268510",
+          "bootstrap/delegated_digital_composition.py": "a5c66e7c094feab2638bd67ce97facb9c1320cf384ef5e59b738cefdbb95bb7e",
+          "bootstrap/delegated_digital_runner.py": "b0e10dd5605f56e0fb44cd156bac81a8cefa9e400e27af3ba5f27a703078fd73",
+          "bootstrap/delegated_digital_profile.py": "f633a7056c4ce3829b2c5a90788313a63f8b5ed782e9969c167f7e1e304e6df6",
+          "contracts/delegated_digital_work.py": "777ea15afc8dd8823651bebd2b205a767bdf529b6c799059b090cc80b3264bc0",
+          "application/background_execution.py": "6565adb7ad229fa8fd64675c55a184fdd4e042122f84bcf46f23d2abdfa4adbf",
+          "adapters/model/pydantic_conversation.py": "0b11c22960c9659cfadef50764f719c43dd2ef20e7ab372b199aba0f03df784b"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/digital-research-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "retained": {
+    "priorTasksAndResults": true,
+    "oldGrantsNotExpanded": true,
+    "householdCapabilitiesUnchanged": true,
+    "modelPolicyUnchanged": true,
+    "limitsUnchanged": true
+  },
+  "boundaries": [
+    "Hosted research may add input beyond submitted envelope; actual totals are recorded and checked before more work.",
+    "One provider research attempt per admitted journal request; unknown usage blocks further research.",
+    "No claim of WebVTT learning or reuse before actual output."
+  ],
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/digital-research-20260928",
+  "creditCost": "unknown",
+  "ownerAccepted": false,
+  "liveAttempts": {
+    "firstRequestSeconds": 21.038,
+    "firstSelection": "resume of prior grant, no research capability added",
+    "firstWorkId": "work:eva-resume:0db8a574-1518-5477-bafb-83880f6635b0",
+    "firstTerminalUsage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 2,
+      "tool_calls": 0,
+      "input_tokens": 26194,
+      "output_tokens": 254,
+      "total_tokens": 26448,
+      "cost_usd_micros": null
+    },
+    "firstTerminalState": "failed",
+    "newExplicitAdmissionSeconds": 15.395,
+    "newWorkId": "work:eva-chat:4740f0ae-3936-502f-a2eb-19c796baeece",
+    "newState": "failed_after_successful_research_and_code_save_provider503",
+    "previousFailureRetained": true,
+    "promptChange": "Explicitly request a new task; no algorithm, source text or tool identifier supplied.",
+    "continuedState": "succeeded",
+    "continuationWorkId": "work:eva-resume:dbda4a26-cc52-5355-86a2-4b6794c70ff5"
+  },
+  "liveEvidence": "eva2/evidence/product/webvtt-learning-result-20260928.json"
+}

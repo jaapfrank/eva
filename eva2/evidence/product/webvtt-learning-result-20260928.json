@@ -1,0 +1,102 @@
+{
+  "checkedAt": "2026-09-28T20:00:44.062219+00:00",
+  "installedSource": "3b850420",
+  "status": "initial_execution_passed_reuse_static_review_failed",
+  "initialWorkId": "work:eva-chat:4740f0ae-3936-502f-a2eb-19c796baeece",
+  "continuationWorkId": "work:eva-resume:dbda4a26-cc52-5355-86a2-4b6794c70ff5",
+  "criteria": "eva2/evidence/product/webvtt-learning-criteria-20260928.json",
+  "initial": {
+    "actualOfficialResearchReceipt": true,
+    "source": "https://www.w3.org/TR/webvtt1/",
+    "savedProcedure": "/proof-state/webvtt-subset-20260928.py",
+    "procedureSha256": "a196aaaed4cb571023c9e92ed0192d502373c07c32f1e75c03b0e880fb47d6d1",
+    "procedureReference": "procedure-reference:f9160be162c0cccbd82ccc1e6df77791dcb3733138aa77ef894998a3d0942016",
+    "actualExecutionExitCode": 0,
+    "actualExecutionMilliseconds": 873,
+    "normalizedCuesEqualSealedExpected": true,
+    "invalidInputIsolated": true,
+    "actualStdoutEqualsSavedJson": true,
+    "savedReadableTranscriptEqualsActualOutput": true,
+    "resultPath": "/proof-state/webvtt-resultaat-zelfstandig-20260928.md",
+    "resultSha256": "fba2dc0369e561070ff186afafb6d5343e039050e26314857a5ed1e853927043",
+    "independentReview": {
+      "reviewer": "/root/platform_research_20260927",
+      "decision": "GO for initial execution only",
+      "checks": [
+        "All initial cues, times, durations and text equal sealed expected output.",
+        "Saved JSON equals actual execution stdout; readable transcript matches.",
+        "Headerless input rejected independently without partial cues.",
+        "Canonical execution input matches initial fixtures and receipt hash.",
+        "Executed source hash matches stored procedure; exit 0, no stderr or truncation."
+      ],
+      "limitations": [
+        "HTTP 503 and explicit saved continuation remain part of the result.",
+        "Research receipt binds a W3C source but does not independently verify every source claim.",
+        "Held-out reuse remains NO-GO; full L1 not accepted."
+      ]
+    }
+  },
+  "reuse": {
+    "requests": 0,
+    "reviewer": "/root/platform_research_20260927",
+    "decision": "NO-GO from source review, no paid execution needed",
+    "failures": [
+      "Entity matcher rejects adjacent &lt;blijft&gt; text.",
+      "Voice annotation <v Eva> explicitly unsupported."
+    ],
+    "unchangedCriteria": true
+  },
+  "usage": {
+    "newTaskBefore503": {
+      "completedModelResponses": 8,
+      "toolCalls": 6,
+      "inputTokens": 91917,
+      "outputTokens": 3268,
+      "measurement": "partial"
+    },
+    "savedContinuation": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 4,
+      "tool_calls": 8,
+      "input_tokens": 74659,
+      "output_tokens": 1798,
+      "total_tokens": 76457,
+      "cost_usd_micros": null
+    },
+    "previousOldGrantResume": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 2,
+      "tool_calls": 0,
+      "input_tokens": 26194,
+      "output_tokens": 254,
+      "total_tokens": 26448,
+      "cost_usd_micros": null
+    },
+    "newAdmissionForeground": {
+      "inputTokens": 6952,
+      "outputTokens": 485
+    },
+    "otherForegroundAndMemoryNotIncluded": true,
+    "creditCost": "unknown"
+  },
+  "interruption": {
+    "providerHttpStatus": 503,
+    "headersReceivedMilliseconds": 10202,
+    "receivedBytes": 91,
+    "usageMissing": true,
+    "automaticPaidRetry": false,
+    "explicitSavedContinuationRequests": 1
+  },
+  "limitations": [
+    "Research integration and initial execution are proven, complete L1 and wider learning capability are not.",
+    "Pre-existing source-access failures and owner selection help remain in history.",
+    "No competitive advantage or owner acceptance proved."
+  ],
+  "nextAction": "Improve the learned procedure through Eva existing learning/feedback route, preserving the failed reuse criterion and original code; no developer-authored converter or new core learning engine.",
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/digital-research-20260928",
+  "ownerAccepted": false
+}

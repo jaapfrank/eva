@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Documentatie onderzoeken en zelf een uitvoerbare werkwijze maken",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Bestaande research aangesloten; Eva heeft W3C onderzocht, code opgeslagen en geregistreerd, eerste ondertitelbestand correct verwerkt en resultaat bewaard. Echte uitvoer en bestanden gecontroleerd.",
+            "remaining": "Geen complete leerfunctie: entiteit-/sprekerstagfouten in geleerde code blokkeren vervolginvoer; geen bewezen ongewijzigd hergebruik.",
+            "source": "eva2/evidence/product/webvtt-learning-result-20260928.json"
+          },
+          {
             "title": "Afgeronde eigen initiatieven terugmelden tijdens geheugenwerk",
             "date": "28 september",
             "state": "installed",
@@ -2748,14 +2756,14 @@
         ],
         "now": {
           "title": "Leren en zelfstandig hergebruiken afronden",
-          "state": "In uitvoering",
-          "detail": "L1: bestaande onderzoeksadapter aansluiten in digitale werker; coördinator bezit research-glue, compositie/runner, taakcontract, achtergrondcontext en gerichte tests. Basis44af0c43; review door platform_research_20260927. Raming25–40min, geen modelcalls tot gecontroleerde installatie.",
+          "state": "Eerste uitvoering klaar; hergebruik nog niet",
+          "detail": "L1: Eva onderzocht W3C, maakte en registreerde zelf een uitvoerbare werkwijze en verwerkte eerste invoer correct. Exact resultaat teruggelezen. Twee codefouten blokkeren vastgelegde vervolginvoer; geen extra hergebruikcall of nieuwe taak actief.",
           "doneWhen": "Eva leert uit documentatie, bewaart een uitvoerbare werkwijze en past die op andere invoer toe zonder nieuwe kerncode of ontwikkelhints; resultaat onafhankelijk gecontroleerd."
         },
         "next": {
-          "title": "Bestaand onderzoek aansluiten binnen leren",
-          "state": "Nog niet gebouwd",
-          "detail": "Hergebruik bestaande onderzoeksadapter in digitale uitvoering, met echte bronnen en dezelfde budget-/verbruiksregistratie. Daarna bestaande taak hervatten; geen nieuwe leer-engine."
+          "title": "Geleerde werkwijze bruikbaar maken voor vervolginvoer",
+          "state": "Nog niet gestart",
+          "detail": "Laat Eva de bestaande werkwijze verbeteren via haar leerroute; behoud eerste resultaat en mislukte hergebruikbeoordeling. Geen ontwikkelaar schrijft de converter, geen nieuwe leer-engine."
         },
         "ownerAction": {
           "title": "Camera voor vuilnisbakken kiezen",
@@ -2768,7 +2776,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T19:39:35.494371+00:00"
+        "reviewedAt": "2026-09-28T20:00:44.062219+00:00"
       }
     },
     "pendingTechnicalReview": {
