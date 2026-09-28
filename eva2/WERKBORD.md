@@ -8,6 +8,8 @@
 
 **Resteert:** passende eigen actie uit huiscontext, nuttige camera-/agendaherinnering, onderbouwd eigen onderzoeksvoorstel en correcte terugmelding zonder ongewenste herhaling als samenhangend gebruik. Bestaande werking en bewijs hergebruiken. Technische afronding en gezinsbeoordeling blijven apart.
 
+**Agendabron gecontroleerd:** bestaande HA-API levert echte komende afvalafspraken; andere afvalbron is leeg. Geen ophaalmoment morgen gevonden. Geen nieuwe connector nodig. De complete koppeling met een camerawaarneming blijft open; geen extra modelcall of gebruikersmelding. [Broncontrole](evidence/product/initiative-calendar-source-20260928.json).
+
 **Eigenaarvraag open:** welke camera ziet de vuilnisbakken? Alleen die concrete scène wacht op antwoord. [Geïnstalleerde aansluiting](evidence/product/initiative-vision-read-installed-20260928.json). Geen extra Eva-modelcalls voor deze aansluiting; creditkosten onbekend.
 
 ## Historisch uitvoeringslog — onderstaande “Nu”-regels zijn eerdere opdrachten

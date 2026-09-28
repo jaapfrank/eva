@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-09-28T18:58:54.150438+00:00",
+  "sourceBasis": "d5707e8d",
+  "status": "existing_calendar_read_verified",
+  "outcome": "Existing HA API supplies actual waste-calendar events; no new calendar connector needed.",
+  "observations": {
+    "calendarListCount": 11,
+    "relevantSourcesRead": 2,
+    "sourceResponseCounts": [
+      0,
+      2
+    ],
+    "allHTTP200": true,
+    "allUntruncated": true,
+    "collectionTomorrowFound": false
+  },
+  "scope": "Read-only direct calls to the installed HomeAssistantApiTool using existing credentials. This proves source availability, not model selection or an autonomous reminder.",
+  "sourceLimit": "No ordinary model request was submitted; no physical camera or speaker trial. No private event bodies, entity IDs or address data published.",
+  "existingPath": "Periodic private review may choose native exploration; native execution can read camera/calendar through existing installed authority. The decision evaluator itself has only a decision tool and does not fetch these sources.",
+  "nextAction": "Use the existing native exploration/return path for the complete camera/calendar case; do not add a second calendar connector or task-specific bin rule. Camera choice still pending. An actual future collection must support the reminder; no invented tomorrow event.",
+  "runtimeModelCalls": 0,
+  "newProductionCode": false,
+  "productionDataWrites": false,
+  "creditCost": "unknown",
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/initiative-calendar-outcome-20260928",
+  "notCompleted": [
+    "camera/calendar correlation",
+    "autonomous useful reminder",
+    "complete I1/I2",
+    "owner acceptance"
+  ]
+}
