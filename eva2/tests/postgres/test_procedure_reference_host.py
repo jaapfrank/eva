@@ -49,19 +49,35 @@ def workspace_gateway():
     finally:server.shutdown();server.server_close();thread.join()
 
 
-def test_real_save_designate_new_conversation_list_resolve_and_revocation(people_memory_engine,tmp_path):
+@pytest.mark.parametrize("general_connector", [False, True])
+def test_real_save_designate_new_conversation_list_resolve_and_revocation(people_memory_engine,tmp_path,general_connector):
     engine=people_memory_engine
-    mandate={'contract':'OwnerConnectorMandate/v1','mandate_id':'procedure-test','tenant_id':'procedure-test',
+    tenant = "procedure-general" if general_connector else "procedure-test"
+    mandate={'contract':'OwnerConnectorMandate/v1','mandate_id':'procedure-test','tenant_id':tenant,
         'installation_id':'home','owner_principal_id':'owner','issued_at':'2020-01-01T00:00:00Z',
         'authorization_source':'explicit fixture owner grant','enabled':True,'public_https':True,'local_networks':[]}
     path=tmp_path/'mandate.json';path.write_text(json.dumps(mandate));path.chmod(0o600)
     authority=McpOwnerAuthority(engine,str(path))
-    turn=ConversationTurn.private('procedure-test','home','owner','first','message-one','Save this reusable review method.',NOW)
+    turn=ConversationTurn.private(tenant,'home','owner','first','message-one','Save this reusable review method.',NOW)
     journal=PostgresConversationJournal(engine,authority.scope);journal.admit(turn)
     with workspace_gateway() as (factory,handler):
         gateway=factory();asyncio.run(gateway.verify_catalog());planner=gateway.planner()
         external=PostgresExternalConversationTools(engine,planner,gateway,authorize_turn=authority.authorize_turn)
-        receipt=external.execute(turn,ConversationActionCall('save-call','save_document',{'path':'review.md','content':'Check evidence, then review conclusions.'}))
+        save_call = ConversationActionCall('save-call','save_document',{'path':'review.md','content':'Check evidence, then review conclusions.'})
+        if general_connector:
+            class GeneralPlanner:
+                action_names = ('use_connector_tool',)
+                async def prepare(self, current, call):
+                    prepared = await planner.prepare(current, ConversationActionCall(
+                        call.call_id, 'save_document', json.loads(call.arguments['arguments_json'])))
+                    return replace(prepared, receipt_output={**prepared.receipt_output, 'tool_id': 'fixture:save'})
+            general = PostgresExternalConversationTools(engine, GeneralPlanner(), gateway,
+                authorize_turn=authority.authorize_turn)
+            save_call = ConversationActionCall('save-call', 'use_connector_tool',
+                {'tool_id': 'fixture:save', 'arguments_json': json.dumps(save_call.arguments)})
+            receipt = general.execute(turn, save_call)
+        else:
+            receipt=external.execute(turn,save_call)
         assert receipt.output['status']=='verified'
         actions=ProcedureReferenceActions(engine,authority=authority,gateway_factory=factory,clock=lambda:NOW)
         steps={}
@@ -154,7 +170,7 @@ def test_real_save_designate_new_conversation_list_resolve_and_revocation(people
         handler.documents['review.md']='Check evidence, then review conclusions.'
         before=len(handler.calls)
         with pytest.raises(ConversationConflict):
-            run(ConversationTurn.private('procedure-test','home','other','other','other-message','List procedures',NOW),ConversationActionCall('other','list_reusable_procedures',{}))
+            run(ConversationTurn.private(tenant,'home','other','other','other-message','List procedures',NOW),ConversationActionCall('other','list_reusable_procedures',{}))
         assert len(handler.calls)==before
         with pytest.raises(ProcedureReferenceRejected,match='absent'):
             run(turn,ConversationActionCall('unknown-path','designate_reusable_procedure',

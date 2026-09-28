@@ -101,3 +101,29 @@ def test_oversized_verified_content_is_rejected_without_truncation():
     with pytest.raises(ProcedureReferenceRejected,match="bound exceeded"):
         service.resolve_candidates(SCOPE,(ref.document_id,),now=NOW)
     assert host.reads==reads+1
+
+
+@pytest.mark.parametrize("mutation", [None, "arguments", "tool", "json"])
+def test_general_connector_save_retains_receipt_binding(mutation):
+    import json
+    host, store, service = setup()
+    admission = host.source.admission
+    original = dict(admission["action_arguments"])
+    admission["action_name"] = "use_connector_tool"
+    admission["action_arguments"] = {"tool_id": "catalog:save", "arguments_json": json.dumps(original)}
+    admission["receipt_output"]["tool_id"] = "catalog:save"
+    if mutation == "arguments":
+        admission["action_arguments"]["arguments_json"] = json.dumps({**original, "path": "/wrong"})
+    elif mutation == "tool":
+        admission["action_arguments"]["tool_id"] = "other"
+    elif mutation == "json":
+        admission["action_arguments"]["arguments_json"] = "{"
+    if mutation:
+        with pytest.raises(ProcedureReferenceRejected):
+            designate(service)
+        assert not store.documents
+    else:
+        reference = designate(service)
+        resolved = service.resolve_candidates(SCOPE, (reference.document_id,), now=NOW)
+        assert resolved[0].untrusted_content == host.bytes.decode()
+        assert admission["action_arguments"]["arguments_json"] == json.dumps(original)

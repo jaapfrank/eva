@@ -77,6 +77,24 @@ class ProcedureHost(Protocol):
     def source_active(self, scope: ProcedureScope, source_message_id: str) -> bool: ...
 
 
+def verified_save_arguments(admission: dict) -> dict:
+    """Read a save's arguments without changing its durable receipt identity."""
+    arguments = admission.get("action_arguments", {})
+    if admission.get("action_name") != "use_connector_tool":
+        return arguments
+    output = admission.get("receipt_output", {})
+    try:
+        decoded = json.loads(arguments["arguments_json"])
+    except (KeyError, TypeError, ValueError) as error:
+        raise ProcedureReferenceRejected("invalid connector save arguments") from error
+    if (not isinstance(decoded, dict)
+            or decoded != admission.get("request_arguments")
+            or not isinstance(arguments.get("tool_id"), str)
+            or arguments["tool_id"] != output.get("tool_id")):
+        raise ProcedureReferenceRejected("connector save binding differs")
+    return decoded
+
+
 class ProcedureReferences:
     def __init__(self, sources: ProcedureSources, host: ProcedureHost):
         self._sources, self._host = sources, host
@@ -91,7 +109,7 @@ class ProcedureReferences:
         source = self._host.load_save(scope, source_call_id)
         a, proof = source.admission, source.proof
         output = a.get("receipt_output", {})
-        args = a.get("action_arguments", {})
+        args = verified_save_arguments(a)
         if (source.scope != scope or a.get("principal_id") != scope.principal_id
                 or a.get("action_call_id") != source_call_id
                 or source.terminal_event_type != "STATE_VERIFIED"

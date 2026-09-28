@@ -4,7 +4,7 @@ import sqlalchemy as sa
 from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline, operational_events
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
-from eva.application.procedure_references import ProcedureScope, VerifiedSaveSource, ProcedureReferenceRejected
+from eva.application.procedure_references import ProcedureScope, VerifiedSaveSource, ProcedureReferenceRejected, verified_save_arguments
 from eva.application.conversation import ConversationConflict
 from eva.application.background_execution import authorize_background_dispatch, background_execution_namespace
 
@@ -57,15 +57,15 @@ class PostgresProcedureReferenceHost:
                 data["source_message_id"].astext == self.turn.message_id,
                 data["execution_namespace"].astext == namespace if namespace is not None
                     else ~data.has_key("execution_namespace"),
-                data["action_arguments"]["path"].astext == document_path,
-                data["action_arguments"].has_key("content"),
+                data["request_arguments"]["path"].astext == document_path,
+                data["request_arguments"].has_key("content"),
             ).limit(2)).all()
         if len(rows) != 1 or not isinstance(rows[0].call_id, str):
             raise ProcedureReferenceRejected("current save absent or ambiguous")
         source = self.load_save(scope, rows[0].call_id)
         if (source.admission["conversation_id"] != self.turn.conversation_id
                 or source.admission["source_message_id"] != self.turn.message_id
-                or source.admission["action_arguments"].get("path") != document_path
+                or verified_save_arguments(source.admission).get("path") != document_path
                 or source.admission.get("execution_namespace") != namespace):
             raise ProcedureReferenceRejected("current save binding differs")
         return rows[0].call_id
@@ -126,7 +126,7 @@ class PostgresProcedureReferenceHost:
     def read_current(self, scope, path):
         self.require_scope(scope)
         original, admission = self._selected
-        if admission["action_arguments"].get("path") != path:
+        if verified_save_arguments(admission).get("path") != path:
             raise ProcedureReferenceRejected("readback path differs")
         gateway = self.gateway_factory()
         async def observe():
