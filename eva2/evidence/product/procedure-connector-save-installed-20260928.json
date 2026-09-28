@@ -1,0 +1,51 @@
+{
+  "checkedAt": "2026-09-28T20:19:31.619029+00:00",
+  "sourceCommit": "c7c4a5ed",
+  "status": "installed",
+  "cause": "Actual v2 saved using general use_connector_tool. Procedure registration queried flat action_arguments, so the verified save was absent from lookup.",
+  "failureFingerprint": "ae7884be6c36bceedcdaf8be05039afa8fab478fe26606523bd99a8cfc19b1d0",
+  "exactException": "ProcedureReferenceRejected:current save absent or ambiguous",
+  "change": "Resolve actual request path, validate nested connector arguments and tool identity against durable request/receipt; preserve historical receipt hashes and all existing scope/readback checks.",
+  "tests": {
+    "applicationAndProviderPassed": 51,
+    "postgresPassed": 3,
+    "postgresCovers": "Actual wrapped connector save, designate, fresh conversation resolve, revocation/ambiguity; existing background namespace",
+    "harnessCorrections": [
+      "Disposable database prefix",
+      "Separate tenant for parametrized test"
+    ]
+  },
+  "independentReview": {
+    "reviewer": "/root/platform_research_20260927",
+    "decision": "GO"
+  },
+  "installation": {
+    "checkedAt": "2026-09-28T20:19:31.619029+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:977b54c087561794fa021cc8e5713088c9ef77644fdc3d74eb03d0725ff46c5d",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/procedure_references.py": "d089d5596ff9864042798bf54f9e862036eb882d2dcb38248bc13fe60f6de6f0",
+          "adapters/postgres/procedure_reference_host.py": "330b27bc6c54ddfffdbfc8135bf436267345d22cb1d51a564ff1bf4061ccf72e"
+        }
+      },
+      "worker": {
+        "image": "sha256:84a2d4d210fd00f09384dcc3e2ab6b828a5dc2076c1d401e4277676d5c6e92b1",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/procedure_references.py": "d089d5596ff9864042798bf54f9e862036eb882d2dcb38248bc13fe60f6de6f0",
+          "adapters/postgres/procedure_reference_host.py": "330b27bc6c54ddfffdbfc8135bf436267345d22cb1d51a564ff1bf4061ccf72e"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/procedure-connector-save-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "newEvaModelCalls": 0,
+  "ownerAccepted": false,
+  "remaining": "Resume stored v2 work, verify real execution, then unchanged reuse on different input. Full L1 remains open."
+}

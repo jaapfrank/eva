@@ -2,13 +2,13 @@
 
 ## Actuele opdracht — leren en hergebruiken (L1)
 
-**Nieuw resultaat:** Eva heeft na concrete feedback zelf een nieuwe WebVTT-versie opgeslagen. De oorspronkelijke versie is exact behouden; beide bestanden onafhankelijk teruggelezen. Geen ontwikkelaar heeft de converter geschreven.
+**Geïnstalleerd:** c7c4a5ed herstelt de aansluiting tussen algemene bestandsopslag en leerregistratie. Exacte foutfingerprint matchte de lookup die alleen platte argumenten zocht; Eva gebruikte de algemene connector met geneste argumenten. Bestaande bronbindingen behouden. 51 applicatie/provider- en 3 PostgreSQL-controles, onafhankelijke review GO, gezonde kern/werker en exacte bron gecontroleerd. Geen nieuwe Eva-modelcalls. [Bewijs](evidence/product/procedure-connector-save-installed-20260928.json).
 
-**Nog open:** taak `work:eva-chat:128b1da2-2f51-5220-bc94-de846a52a21f` eindigde met `ambiguous/internal_error` vóór bevestigde registratie/uitvoering. Geen modeltaak actief; geen automatische herhaling. Oorzaak nog niet vastgesteld. Eerste uitvoering blijft geslaagd, oorspronkelijk ongewijzigd hergebruik blijft mislukt en L1 blijft open.
+**Bewaard resultaat:** Eva heeft zelf v2 gemaakt, v1 is exact behouden. Beide bestanden onafhankelijk gelezen. Eerste uitvoering geslaagd; oorspronkelijk ongewijzigd hergebruik blijft mislukt.
 
-**Volgende:** bepaal gericht welke operatie na opslaan v2 faalde, herstel de oorzaak en gebruik de bestaande voortgang. Daarna daadwerkelijke uitvoering en afzonderlijk hergebruik; geen nieuwe leer-engine.
+**Volgende:** bewaarde voortgang hervatten na deze concrete oorzaakcorrectie; echte uitvoering en afzonderlijk ongewijzigd hergebruik controleren. Nog geen modeltaak actief. L1 en eigenaaracceptatie blijven open. Geen converter door ontwikkelaar of nieuw onderzoek nodig.
 
-**Verbruik:** gemeten deelverbruik 218.868 invoer- en 6.196 uitvoertokens, 13 modelantwoorden en 10 toolcalls; creditkosten onbekend. Eén verbeteropdracht, geen herstart. [Bewijs](evidence/product/learning-feedback-20260928.json). [Eerste resultaat](evidence/product/webvtt-learning-result-20260928.json).
+**Vorige verbeteropdracht:** 218.868 invoer- en 6.196 uitvoertokens gemeten deelverbruik, 13 modelantwoorden en 10 toolcalls; creditkosten onbekend. [Bewijs](evidence/product/learning-feedback-20260928.json).
 
 ## Initiatief — voortgang en open afhankelijkheden
 
