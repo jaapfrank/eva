@@ -2835,3 +2835,20 @@ def test_topic_research_requires_citations_not_only_consulted_sources(tmp_path, 
     with pytest.raises(ConversationModelError, match="cited sources"):
         model.research_current_options(question="Een algemeen onderwerp", title="Onderzoek",
             options=("Onderwerp",), researched_at=NOW, research_mode="topic")
+
+
+@pytest.mark.parametrize("source_time", [None, "2026-08-20T10:00:00Z"])
+def test_memory_relative_dates_never_use_recall_time_as_source(tmp_path, source_time):
+    from dataclasses import replace
+    memory = _memory()
+    fact = memory.confirmed_facts[0].model_copy(update={
+        "value": {"text": "Morgen liever geen koffie.", "source_observed_at": source_time}
+    })
+    memory = replace(memory, confirmed_facts=(fact,))
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
+    identity = IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80)
+    instructions = model._instructions(identity, memory, ())
+    assert f"waargenomen {NOW}" not in instructions
+    assert (f"waargenomen {source_time}" if source_time else
+            "oorspronkelijke brondatum onbekend") in instructions
+    assert "Morgen liever geen koffie." in instructions

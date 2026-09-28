@@ -510,6 +510,8 @@ def test_hindsight_owns_conversation_memory_and_style_observations(
         "Jaap houdt van een warme overkapping."
     )
     assert memory.confirmed_facts[1].trust == "host_policy"
+    assert memory.confirmed_facts[0].value["source_observed_at"] == NOW
+    assert memory.confirmed_facts[1].value["source_observed_at"] is None
     assert memory.recall.projection_version == "hindsight-0.9.1-v1"
 
     bank = next(body for method, _path, body in state.requests if method == "PUT")

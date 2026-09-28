@@ -2576,8 +2576,17 @@ class PydanticConversationModel:
                     else "afgeleide context"
                 )
             )
+            source_time = (
+                value.get("source_observed_at")
+                if isinstance(value, dict) and "source_observed_at" in value
+                else fact.observed_at
+            )
+            time_label = (
+                f"waargenomen {source_time}" if source_time
+                else "oorspronkelijke brondatum onbekend"
+            )
             remembered.append(
-                f"- [rang {rank}; waargenomen {fact.observed_at}; {trust_label}] "
+                f"- [rang {rank}; {time_label}; {trust_label}] "
                 f"{text.strip()}{qualifier}"
             )
         memories = (
@@ -2782,7 +2791,14 @@ class PydanticConversationModel:
             "Voer de gevraagde eigen handelingen uit. Onderscheid bewijs, voornemen en ontbrekende toegang. Gebruik "
             "duurzame eigen toestand alleen wanneer relevant. Volg de nieuwste expliciete "
             "correctie en uitgesproken grens; bij strijd geldt de nieuwste betrouwbare "
-            "bron volgens de zichtbare waarnemingstijd. Een korte bevestiging van jouw "
+            "bron volgens de zichtbare waarnemingstijd, binnen de genoemde context en "
+            "geldigheidsduur. Een tijdelijke uitzondering vervangt een blijvende voorkeur "
+            "niet buiten die periode. Betrek vandaag of morgen in een oude herinnering "
+            "op de oorspronkelijke datum, niet op vandaag; verzin geen ontbrekende "
+            "einddatum. Bij onbekende brondatum kun je relatieve dagen niet dateren; "
+            "vraag alleen om verduidelijking als de huidige beslissing daarvan afhangt. "
+            "Een afgelopen uitzondering mag als geschiedenis worden genoemd, "
+            "maar niet als huidige voorkeur. Een korte bevestiging van jouw "
             "direct voorafgaande voorstel is een uitvoeringsverzoek. Vraag alleen door "
             "wanneer meerdere doelen openblijven. Verzin geen fysieke feiten. "
             f"{action_guidance} "

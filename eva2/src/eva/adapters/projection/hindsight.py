@@ -693,10 +693,15 @@ class HindsightMemoryEngine:
             {
                 "retain_extraction_mode": self._config.extraction_mode,
                 "retain_mission": (
-                    "Extract only durable information that the user actually states: "
+                    "Extract information the user actually states that remains useful later: "
                     "preferences, relationships, projects, corrections, commitments "
-                    "and lived experiences. Preserve who, what and when. Treat later "
-                    "explicit corrections as newer truth. A question, hypothetical or "
+                    "and lived experiences, including explicitly time-bounded exceptions. "
+                    "Preserve who, what and when, including the stated start, end and "
+                    "conditions of an exception. Anchor relative dates to the source "
+                    "timestamp; do not invent an unspecified duration. A temporary "
+                    "exception does not replace a standing preference outside its scope. Treat later "
+                    "explicit corrections as newer truth only within their stated scope. "
+                    "A question, hypothetical or "
                     "benchmark scenario, quoted third-party claim, and assistant proposal "
                     "is not direct testimony; never turn it into a user preference or "
                     "fact unless the user explicitly asserts it."
@@ -705,6 +710,7 @@ class HindsightMemoryEngine:
                     "Synthesize durable person-specific knowledge, including evolving "
                     "communication preferences such as desired brevity, directness, "
                     "warmth, formality and formatting. Track contradictions over time. "
+                    "Keep temporary exceptions and their dates distinct from enduring traits. "
                     "Describe style preferences; never recommend copying spelling errors, "
                     "broken grammar or transient emotion."
                 ),
@@ -1505,6 +1511,12 @@ class HindsightMemoryEngine:
                         "context": raw.get("context"),
                         "memory_type": memory_type,
                         "semantic_trust": trust,
+                        # Event time and recall time are not the date on which
+                        # the person made a relative-date statement.
+                        "source_observed_at": (
+                            _canonical_timestamp(raw["mentioned_at"])
+                            if raw.get("mentioned_at") else None
+                        ),
                         "text": text,
                         **({"reference_provenance": reference_provenance}
                            if reference_provenance else {}),
