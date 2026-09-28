@@ -1,0 +1,60 @@
+{
+  "contract": "EvaContactGapEvidence/v1",
+  "checkedAt": "2026-09-28T08:40:13.058384+00:00",
+  "sourceBase": "4a1791200fb1851e134bf98a582424badd63d308",
+  "status": "incomplete_candidate_rejected",
+  "existingEvidence": [
+    "telegram-runtime-overlap-20260924.json",
+    "website-overlap-live-20260923.json",
+    "household-public-overlap-20260925.json",
+    "contact-luna6-installed-20260924.json",
+    "local-owner-receipt-flush-installed-20260925.json"
+  ],
+  "liveCheck": {
+    "coreAndWorkerImages": "eva2-connector-selection-recovery-*:20260925",
+    "contactModel": "gpt-6-luna",
+    "contactEffort": "low",
+    "sourceHashesMatchCheckout": [
+      "application/conversation.py",
+      "adapters/model/pydantic_conversation.py",
+      "adapters/model/openai_codex_provider.py"
+    ],
+    "historicalLogMemoryElapsedMs": [
+      748,
+      2134
+    ],
+    "timingLimit": "Two retained log records, not new greeting samples or attribution to the style read.",
+    "sourceHashScope": "Three listed hashes checked on core. Proposed hindsight.py baseline independently matched both core and worker."
+  },
+  "candidate": {
+    "change": "Parallel private style GET and semantic recall using same executor",
+    "artifact": "/home/administrator/project/.eva2-artifacts/c1-private-memory-parallel-20260928/rejected-candidate.patch",
+    "sha256": "22d5a7a3193e36b2fe9e40a85bcc5a441c0dfe6eab1f3e45d14bf10d856da140",
+    "tests": {
+      "focused": "26 passed,51 deselected",
+      "broader": "74 passed,7 failed: local environment lacks tiktoken; not a passing release check",
+      "output": "/home/administrator/project/.eva2-artifacts/c1-private-memory-parallel-20260928/tests.txt"
+    },
+    "reviewer": "/root/platform_research_20260927",
+    "verdict": "NO-GO",
+    "reason": "Early style may survive concurrent forget/refresh. Local generation fence is insufficient: core/worker engines share storage, not generation; style refresh does not increment it.",
+    "decision": "Reject rather than build distributed revision machinery for this latency hypothesis. Candidate source/tests reversed using exact saved patch; no production change."
+  },
+  "remaining": [
+    "Meaningful response latency target not proved on real Telegram/web routes",
+    "Current real Telegram owner trial still open",
+    "No comparative latency gain claimed"
+  ],
+  "nextIndependentWork": {
+    "slice": "T1",
+    "sharedWith": "L1",
+    "reason": "Existing admitted task/overlap/control implementation suffices for runner work; unproved contact latency does not prevent fixing known full-task envelope. Do not mark C1/C2 accepted.",
+    "issue": "Known path requires at least8tools/9responses versus6/8 caps; use existing budget separation patch."
+  },
+  "usage": {
+    "evaModelCalls": 0,
+    "newProviderRequests": 0,
+    "installations": 0,
+    "developmentCredits": null
+  }
+}
