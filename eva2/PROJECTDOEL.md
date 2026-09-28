@@ -1,5 +1,23 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaarbesluit 28 september 2026 — Sol voor contact, Astra voor inhoudelijk werk
+
+Gebruik `gpt-6-sol` met reasoning `none` uitsluitend voor eenvoudige, snelle
+antwoorden en kort contact. Onderzoek, dingen maken en verbeteringen aan Eva
+moeten via `gpt-6-astra` met minimaal `medium` verlopen; verhoog de inspanning
+waar het werk dat vereist. De contactlaag mag zulk werk aannemen en doorgeven,
+maar niet zelf als vervanging van de werklaag uitvoeren. Identiteit, toegestane
+context en taakstatus blijven gedeeld. Dit vervangt de eerdere Luna-keuze voor
+contact; goedkope of kleine modellen zijn niet automatisch sneller.
+
+Dit is een modelkeuze en taakverdeling, geen bewezen snelheidswinst. De huidige
+installatie is hiermee nog niet gewijzigd: contact staat op Luna/low; de
+contactinstelling en gedeelde provider accepteren `none` nog niet. Pas de
+bestaande instellingen en routering gericht aan, controleer dat werk op
+Astra/medium of hoger blijft, en rapporteer pas na installatie dat Sol actief is.
+Gebruik de bestaande abonnementsroute; geen extra betaald account.
+
+
 ## Eigenaarcorrectie 28 september 2026 — onderbouw wijzigingen voor alle onderdelen
 
 Jaap wijst erop dat Eva al taakuitvoering en andere voorgestelde mogelijkheden

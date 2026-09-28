@@ -1,5 +1,7 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Actueel eigenaarbesluit — C1 modelverdeling vastgelegd:** Sol/none uitsluitend voor eenvoudige snelle antwoorden en contact; onderzoek, bouwen en Eva verbeteren via Astra met minimaal medium. Nog niet omgezet: bestaande contact/provider-validatie accepteert none niet. Bestaande contact-/werkroutering aanwezig; gericht aansluiten en controleren, geen nieuwe router bouwen. **Volgende, nog niet gestart:** none-ondersteuning, modelinstellingen en begrenzing van de contactrol aanpassen, gericht toetsen en installeren. Geen nieuwe modelcalls of snelheidsclaim.
+
 **C1 Instant-toegang gecontroleerd:** chat-latest wordt expliciet geweigerd via Codex met ChatGPT-account (HTTP400). Eén aanvraag, geen voltooide generatie/snelheidsmeting. Geen modelwissel of nieuwe betaalde route. **Volgende, nog niet gestart:** snelle gesprekken verbeteren binnen toegestane modellen met bestaande vergelijkingen als basis; geen identieke toegangspoging. [Bewijs](evidence/product/instant-subscription-access-20260928.json).
 
 **Laatste controle — C1/L2:** één actie-loze gpt-6-luna/low-aanvraag slaagt in3,599s inclusief scriptstart;24in/5uit. Actuele toegang/verbinding werken. Volledige projectdeadline blijft onverklaard; projectverzoek niet herhaald, geen bron-/runtimewijziging. **Volgende, nog niet gestart:** volledige aanvraag/toolcontext gericht onderscheiden, zonder modelvervanging of blinde timeoutverlenging. Credits onbekend. [Bewijs](evidence/product/provider-deadline-isolation-20260928.json).
