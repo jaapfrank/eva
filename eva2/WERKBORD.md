@@ -2,7 +2,9 @@
 
 **Nu — C3: doorpraten via de echte speakers.** Onderzoeksinvoer-correctie getest, onafhankelijk beoordeeld en geïnstalleerd. Kern en werker gezond. Eén echte native HTTP-opdracht nam onderzoek aan in 15,3 seconden en startte achtergrondwerk. Dit is geen fysieke speakeracceptatie en lost full-duplex of snelheid nog niet op. [Bewijs](evidence/product/research-input-recovery-20260928.json).
 
-**Eerstvolgend:** de wakewordfout in de bestaande duplexkandidaat lokaliseren. De aangeleverde Pipecat-component blijkt exact dezelfde upstream-pin als de bestaande Eva-kandidaat. Geen tweede integratie bouwen. De meting van24september betreft herstelfirmware en bewijst niets over de teruggedraaide kandidaat. Bestaande werkende firmware behouden. [Bronbevindingen](evidence/product/full-duplex-candidates-20260928.json).
+**C3-diagnose:** beide speakerkoppelingen met de kern zijn gereed. De echte TLS-dienst doorliep wakeword, capture en mute/sluiten met een gesimuleerd apparaat in3,71s, zonder audio/modelcalls. De fysieke kandidaatfout blijft onbekend; geen nieuwe productcode of firmware geïnstalleerd. [Controle](evidence/product/c3-existing-candidate-session-20260928.json).
+
+**Eerstvolgend:** device-logs bij de bestaande duplexkandidaat verzamelen zodra een gecontroleerde fysieke proef uitvoerbaar is. De gewone herstelfirmware blijft werken. Ontbrekende fysieke observatie blokkeert alleen afhankelijk speakerwerk; onafhankelijke bouwopdrachten blijven uitvoerbaar.
 
 **Voor Jaap:** dezelfde mislukte speakerproef nu niet herhalen. Eerst een concrete fysieke vervolgstap; geen aanname dat doorpraten al werkt.
 

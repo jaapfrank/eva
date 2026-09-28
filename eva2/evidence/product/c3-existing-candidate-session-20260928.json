@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-09-28T12:03:05.320246+00:00",
+  "status": "installed_server_boundary_verified_not_physical",
+  "sourceBase": "f485e275",
+  "serviceImage": "sha256:cca850f14f3323382c0ef307f75cb5ede21c593a3acf065dd34766e0690c6123",
+  "checks": {
+    "bothRegisteredDevicesCoreReady": true,
+    "householdWorkReturns": true,
+    "authenticatedTlsUsingRetainedCandidateCredential": true,
+    "nativeOpenWakeCaptureMuteClose": true,
+    "seconds": 3.707343429,
+    "recentSessionFailureRecords": 0,
+    "audioSent": false,
+    "modelCalls": 0
+  },
+  "network": {
+    "wslListener": "10.0.20.46:44715",
+    "hyperVRuleEnabled": true,
+    "allowedSources": [
+      "10.0.20.202",
+      "10.0.20.53"
+    ],
+    "haHostProbeTimedOut": true,
+    "interpretation": "HA host is outside configured speaker allowlist; its timeout is not evidence of a broken speaker route. Device-origin reachability not established."
+  },
+  "limits": [
+    "Synthetic peer ran inside speaker service container, not on a physical device.",
+    "No evidence of microphone capture, AEC, audible response or barge-in on hardware.",
+    "Current logs contain no preserved failure from rejected firmware; historical cause remains unknown."
+  ],
+  "decision": "Keep existing Pipecat/Eva integration. No justified production code change from these checks. Next dependent check needs candidate device-side/network observation with recovery available.",
+  "firmwareChanged": false,
+  "ownerAccepted": false,
+  "creditCost": null
+}
