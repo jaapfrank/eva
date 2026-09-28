@@ -1,16 +1,14 @@
 # Eva 2 — uitvoerbaar werkbord
 
-## Actuele opdracht — leren zonder ontwikkelhulp (L1)
+## Actuele opdracht — leren en hergebruiken (L1)
 
-**Werkelijk opgeleverd binnen L1:** bestaande onderzoeksfunctie aangesloten en geïnstalleerd (3b850420). Eva heeft zelf de officiële WebVTT-bron onderzocht, een uitvoerbare werkwijze geschreven, bewaard en geregistreerd, de oorspronkelijke twee invoeren uitgevoerd en het resultaatdocument teruggelezen. Drie correcte cues, correct transcript en afzonderlijke headerafwijzing zijn onafhankelijk aan daadwerkelijke uitvoer gekoppeld. [Resultaat](evidence/product/webvtt-learning-output-20260928.md) · [Bewijs](evidence/product/webvtt-learning-result-20260928.json).
+**Nieuw resultaat:** Eva heeft na concrete feedback zelf een nieuwe WebVTT-versie opgeslagen. De oorspronkelijke versie is exact behouden; beide bestanden onafhankelijk teruggelezen. Geen ontwikkelaar heeft de converter geschreven.
 
-**Nog niet afgerond:** de geleerde code verwerkt entiteiten naast tekst en sprekerstags niet goed. Onafhankelijke bronreview voorspelt daarmee falen op de vastgelegde vervolginvoer. Geen betaalde hergebruikcall uitgevoerd om dezelfde bekende fout te bevestigen. L1 en de grote leerfunctie blijven open; geen nieuwe modeltaak draait.
+**Nog open:** taak `work:eva-chat:128b1da2-2f51-5220-bc94-de846a52a21f` eindigde met `ambiguous/internal_error` vóór bevestigde registratie/uitvoering. Geen modeltaak actief; geen automatische herhaling. Oorzaak nog niet vastgesteld. Eerste uitvoering blijft geslaagd, oorspronkelijk ongewijzigd hergebruik blijft mislukt en L1 blijft open.
 
-**Volgende:** laat Eva de opgeslagen werkwijze via haar bestaande leer-/verbeterroute geschikt maken voor vervolginvoer. Geen ontwikkelaar schrijft de converter; criteria en eerste code/resultaten blijven bewaard. Nog niet gestart. Technische afsluiting vereist werkelijk hergebruik op andere invoer zonder handmatig aangeleverde oplossing; eigenaaracceptatie staat apart.
+**Volgende:** bepaal gericht welke operatie na opslaan v2 faalde, herstel de oorzaak en gebruik de bestaande voortgang. Daarna daadwerkelijke uitvoering en afzonderlijk hergebruik; geen nieuwe leer-engine.
 
-**Uitvoering en verbruik:**196 gerichte controles, onafhankelijke bronreview GO na behoud van historische huishoudlezingen; exact geïnstalleerde bron en terugweg gecontroleerd. Eerste aanvraag hervatte onbedoeld oud grant en faalde (26.194in/254uit). Nieuwe toelating kreeg een echte provider503 na succesvolle bronlezing/opslag (91.917in/3.268uit gemeten deelverbruik); één hervatting ging door vanaf opgeslagen voortgang en slaagde (74.659in/1.798uit). Eén nieuwe foregroundtoelating6.952in/485uit; andere foreground/geheugenverwerking niet volledig opgeteld. Creditkosten onbekend. Geen quota verhoogd.
-
-**Eerdere fouten blijven zichtbaar:** initiële64s modeltimeout vóór taakopname; eerdere GitMCP-W3C-ophaalfout stond al in AU-004 van12september en had eerder meegewogen moeten worden. Bronproblemen niet opgelost verklaren met alleen compatibiliteit: de nieuwe echte native onderzoeksreceipt bewijst nu wél bronlezing. [Installatie](evidence/product/digital-research-installed-20260928.json).
+**Verbruik:** gemeten deelverbruik 218.868 invoer- en 6.196 uitvoertokens, 13 modelantwoorden en 10 toolcalls; creditkosten onbekend. Eén verbeteropdracht, geen herstart. [Bewijs](evidence/product/learning-feedback-20260928.json). [Eerste resultaat](evidence/product/webvtt-learning-result-20260928.json).
 
 ## Initiatief — voortgang en open afhankelijkheden
 

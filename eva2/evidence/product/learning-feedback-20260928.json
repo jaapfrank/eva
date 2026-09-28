@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-09-28T20:11:27.434937+00:00",
+  "baseCommit": "fe3570de",
+  "workId": "work:eva-chat:128b1da2-2f51-5220-bc94-de846a52a21f",
+  "status": "ambiguous",
+  "errorCode": "internal_error",
+  "errorFingerprint": "ae7884be6c36bceedcdaf8be05039afa8fab478fe26606523bd99a8cfc19b1d0",
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 13,
+    "tool_calls": 10,
+    "input_tokens": 218868,
+    "output_tokens": 6196,
+    "total_tokens": 225064,
+    "cost_usd_micros": null
+  },
+  "creditCost": "unknown",
+  "feedbackSupplied": "Verbeter je laatst opgeslagen WebVTT-werkwijze. Bij controle bleek dat tekst met HTML-entiteiten direct naast gewone tekst en WebVTT-sprekersaanduidingen niet goed wordt verwerkt. Zoek zelf uit hoe dat hoort, verbeter de bestaande opgeslagen werkwijze en controleer zowel je verbetering als de eerdere invoer. Bewaar de oorspronkelijke versie en leg de nieuwe versie en het echte resultaat vast. Start hiervoor één nieuwe zelfstandige taak; hervat geen eerdere mislukte taak. Lever het resultaat op zonder nieuwe ongevraagde opdrachten te starten.",
+  "heldOutFixtureSupplied": false,
+  "developerWroteProcedure": false,
+  "independentlyReadFiles": {
+    "webvtt-v1-original-20260928.py": "a196aaaed4cb571023c9e92ed0192d502373c07c32f1e75c03b0e880fb47d6d1",
+    "webvtt-v2-20260928.py": "e809df5057f132283b164ba752abecf696ceb30287f0795b989f609c8a56e0ff"
+  },
+  "originalPreserved": true,
+  "newCodeSaved": true,
+  "newExecutionVerified": false,
+  "automaticRetry": false,
+  "limitations": [
+    "Original unaided reuse remains failed.",
+    "Improved code saved but no registered/executed final result confirmed.",
+    "Internal exception not identified by available fingerprint; no claim that task deadline caused it."
+  ],
+  "nextAction": "Identify failing operation after saved v2, then continue from preserved progress only after cause is understood. No blind task retry.",
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/learning-feedback-20260928"
+}
