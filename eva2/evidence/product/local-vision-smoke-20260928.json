@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-09-28T12:45:55.163251+00:00",
+  "status": "isolated_cpu_smoke_pass_not_product_ready",
+  "hardwareObserved": {
+    "gpu": "RTX 5080 Laptop GPU",
+    "gpuMemoryMiB": 16303,
+    "gpuUsedForProbe": false,
+    "ramMiB": 47039
+  },
+  "modelResult": {
+    "model": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+    "revision": "7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+    "device": "cpu",
+    "loadMs": 17513.630025,
+    "inferenceMs": 25081.561073999997,
+    "text": [
+      " There are three coloured blocks visible. The first block is red, the second block is green, and the third block is blue."
+    ],
+    "outputTokens": 27
+  },
+  "assessment": "Exact count and red/green/blue order correct in one synthetic case; CPU25.08s is not evidence of fast continuous perception. No real scene, calendar correlation, device installation or general accuracy established.",
+  "selection": {
+    "fastvlm": "Not selected: Apple AMLR explicitly excludes product development; no weights downloaded",
+    "smolvlm": "Provisional Apache2 model; not compared against competitors or latest general model field"
+  },
+  "usage": {
+    "localInferenceCalls": 1,
+    "cloudInferenceCalls": 0,
+    "outputTokens": 27,
+    "codexCredits": null
+  },
+  "next": "Use same candidate only for a changed hypothesis: GPU acceleration and fixed real-scene quality. Do not repeat identical CPU smoke or install as product based on this result.",
+  "review": {
+    "reviewer": "/root/platform_research_20260927",
+    "result": "GO for bounded result recording; no additional runs",
+    "measurementBoundary": "25.081s model.generate only;17.514s load separately; preprocessing excluded. Not end-to-end latency."
+  },
+  "sources": [
+    "https://huggingface.co/onnx-community/FastVLM-0.5B-ONNX/blob/ca35eb9373f8a8761df0855fca19dea330f2407a/LICENSE",
+    "https://huggingface.co/HuggingFaceTB/SmolVLM2-500M-Video-Instruct/tree/7b375e1b73b11138ff12fe22c8f2822d8fe03467"
+  ]
+}

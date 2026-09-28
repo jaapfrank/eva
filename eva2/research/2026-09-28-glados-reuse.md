@@ -2,6 +2,12 @@
 
 Bounded source comparison requested by Jaap. No installation, runtime benchmark, camera access or paid Eva model calls. Candidate revision: `fde319cfb8ceb965e512800b2ffc5b9c0d1574b1`; latest commit at inspection: 17 September 2026. Repository code declares MIT; model weights/assets need separate license assessment before adoption. Activity does not establish security or compatibility. No release/security audit performed.
 
+## Model license correction after direct license inspection
+
+FastVLM weights at onnx-community revision ca35eb9373f8a8761df0855fca19dea330f2407a use Apple AMLR, which expressly excludes product development. Do not adopt these weights for Eva. The scene-change architecture remains useful; the bounded local execution candidate uses HuggingFaceTB/SmolVLM2-500M-Video-Instruct revision 7b375e1b73b11138ff12fe22c8f2822d8fe03467 (model card: Apache-2.0). This corrects the earlier provisional FastVLM recommendation; no FastVLM weights were installed.
+
+Source: https://huggingface.co/onnx-community/FastVLM-0.5B-ONNX/blob/ca35eb9373f8a8761df0855fca19dea330f2407a/LICENSE
+
 ## Decision
 
 Do not replace Eva's core. Prioritize a bounded comparison of local scene-change vision and optional behavioral feedback inside the existing initiative/personality modules. Voice scheduling is a useful reference, but neither verified Dutch latency nor Voice PE firmware compatibility is established. These are follow-up candidates in existing slices, not a new active build mandate.

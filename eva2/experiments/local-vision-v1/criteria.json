@@ -1,0 +1,14 @@
+{
+  "stage": "execution smoke only, not household accuracy",
+  "model": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+  "revision": "7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+  "cases": [
+    {
+      "id": "three_coloured_blocks",
+      "expected": "three blocks with red, green, blue; no invented people or actions"
+    }
+  ],
+  "maxModelRuns": 1,
+  "maxNewTokens": 80,
+  "scope": "Synthetic image; local CPU backend first; no camera or remote inference. Stop on setup failure; fix only identified setup cause."
+}

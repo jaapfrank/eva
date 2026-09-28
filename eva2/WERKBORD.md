@@ -1,5 +1,7 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Nu — I2 lokale beeldproef:** SmolVLM2 heeft één synthetisch beeld correct beschreven: drie blokken, rood/groen/blauw. Modelberekening op CPU25,1s, laden17,5s apart; geen bewijs voor snelle of betrouwbare echte camerawaarneming. FastVLM-gewichten afgevallen door productontwikkelingsbeperking in de licentie. Geen cloudmodelcalls of live installatie. Onafhankelijke review akkoord; volgende GPU/echte-beeldvergelijking, geen identieke herhaling. [Resultaat](evidence/product/local-vision-smoke-20260928.json).
+
 **Actuele aansluitingscontrole — I2 vision:** zeven beschikbare camera-entiteiten gevonden; bestaande Eva-API haalt elf agenda’s op. Geen nieuwe agendaconnector nodig. Cameratriggers bevatten nog geen beeldinterpretatie. Volgende: optionele beeldwaarneming voorbereiden op bestaande camera-/sensory-route, lokale kandidaat eerst begrensd vergelijken. Camerakeuze gevraagd; geen beelden opgehaald of modellen aangeroepen. [Bewijs](evidence/product/vision-existing-connections-20260928.json).
 
 **Laatste eigenaarvraag afgehandeld — GLaDOS:** gerichte bronvergelijking afgerond. Kandidaten voor bestaande vervolgstappen: lokale veranderingsgestuurde beeldanalyse en begrensde gedragsfeedback. Geen installatie, modelcalls of nieuwe functieclaim. [Vergelijking en bronbesluiten](research/2026-09-28-glados-reuse.md).
