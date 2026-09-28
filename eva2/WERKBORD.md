@@ -2,7 +2,9 @@
 
 **Laatste proef — M3 automatische correctie:** afgerond en onafhankelijk beoordeeld. Bestaande werker verwerkte twee bronnen na300s rust; nieuwe sessie adviseert volgens de correctie rustig/schermvrij thuis. Stijlspiegel voegde echter één niet-gezegde persoonlijke voorkeur toe; gedeeltelijk geslaagd, M3 blijft open. Eén contactcall1.940in/41uit, antwoord15,948s; overige providercredits onbekend. Scriptdatumfout gecorrigeerd zonder opslag/reflectie te herhalen. [Bewijs](evidence/product/m3-automatic-feedback-20260928.json).
 
-**Volgende, nog niet gestart:** bestaande stijlspiegel brongetrouw maken bij de concrete ongegronde voorkeur. Geen nieuwe geheugenmodule. Initiatiefgedrag is vervolg; geen initiatiefmodelcall uitgevoerd.
+**Opgeleverd — M3 brongebonden stijlspiegel:** geïnstalleerd op gezonde kern/werker; exacte bron, eigenaarpagina’s en terugweg gecontroleerd. Vijf tests en onafhankelijke review akkoord. Herstelproef verwijdert verzonnen stijlvoorkeur; echte voorkeuren blijven behouden, maar lijstverbod is nog afgezwakt. Nieuwe instructie geldt voor bestaande spiegels bij normale verversing, geen geforceerde massale modelcalls. Twee testspiegels ververst; geen nieuwe opslag/contactcalls, credits onbekend. [Bewijs](evidence/product/grounded-style-mirror-20260928.json).
+
+**Volgende, nog niet gestart:** bestaande eigen interesses/feedback verbinden aan een relevante latere bijdrage. Woordlimiet- en lijstprecisie blijven open; geen nieuwe geheugenmodule.
 
 **Nu — M3 stijlcorrectie geïnstalleerd:** een bestaande communicatievoorkeur kon niet worden ververst doordat de providerrespons het vereiste veld wegliet. Gerichte correctie, drie tests en onafhankelijke review akkoord; kern/werker gezond, exacte bron en eigenaarpagina’s gecontroleerd, terugweg vastgelegd. De echte gedragsproef is gedeeltelijk geslaagd: korter en zonder lijst, maar 47 woorden bij maximaal 40. M3 blijft open. Twee contactcalls: 3.884 invoer-/183 uitvoertokens; extractie-/reflectieverbruik onbekend. [Bewijs](evidence/product/style-reflection-refresh-20260928.json).
 

@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Geen gebruikerswens verzinnen bij onbekende communicatiestijl",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Brongebonden instructie en bijwerken bestaande spiegels geïnstalleerd. Vijf controles, twee beperkte herstelproeven en onafhankelijke review; beide diensten gezond.",
+            "remaining": "Lijstverbod wordt nog afgezwakt, eerdere47/40-woordenmisser blijft. Bestaande spiegels wijzigen bij normale verversing. Geen volledige M3-acceptatie.",
+            "source": "eva2/evidence/product/grounded-style-mirror-20260928.json"
+          },
+          {
             "title": "Automatische correctie verandert later advies",
             "date": "28 september",
             "state": "tested",
@@ -2547,15 +2555,15 @@
           }
         ],
         "now": {
-          "title": "M3 · Automatische correctieverwerking gecontroleerd",
-          "state": "Proef afgerond; gedeeltelijk geslaagd",
-          "detail": "Bestaande werker verwerkte de correctie automatisch; een nieuwe sessie gaf passend advies. Stijlspiegel voegde één niet-gezegde voorkeur toe. Antwoord15,9s; geen snelheidsclaim.",
-          "doneWhen": "Deze proef is afgerond; brongetrouwe stijlinterpretatie en volledige M3 blijven open."
+          "title": "M3 · Brongebonden stijlspiegel geïnstalleerd",
+          "state": "Gerichte correctie opgeleverd; M3 blijft open",
+          "detail": "Kern en werker gezond, exacte bron gecontroleerd. Onbekende stijl blijft onbekend in herstelproef; echte voorkeuren behouden. Lijstverbod nog te los samengevat.",
+          "doneWhen": "Installatie en terugweg gecontroleerd. Bestaande spiegels nemen instructie over bij volgende normale verversing; geen volledige voorkeurstrouwclaim."
         },
         "next": {
-          "title": "M3 · Alleen onderbouwde persoonlijke voorkeuren gebruiken",
+          "title": "M3 · Eigen interesses en latere bijdragen",
           "state": "Nog niet gestart",
-          "detail": "Bestaande stijlspiegel verwart instructie met een wens van de gebruiker. Eerst de concrete bron/instructiegrens controleren; geen nieuwe geheugenmodule en geen herhaling van geslaagde correctieproef."
+          "detail": "Bestaande persoonlijke interesse-/feedbackroute gebruiken voor relevant later gedrag. Woordlimiet- en lijstprecisie blijven apart zichtbaar; geen nieuwe geheugen- of initiatiefmodule."
         },
         "ownerAction": {
           "title": "Later hetzelfde onderwerp voortzetten",
@@ -2569,7 +2577,7 @@
           "expected": "Eva haalt relevante eerdere context terug. Geaccepteerd onthouden, corrigeren en vergeten hoef je niet opnieuw te testen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T13:21:12.695572+00:00"
+        "reviewedAt": "2026-09-28T13:29:33.535069+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12747,18 +12755,19 @@
           "assignment": {
             "owner": "/root",
             "reviewer": "/root/platform_research_20260927",
-            "baseCommit": "d17e1a1f",
-            "stage": "automatic_feedback_continuity",
-            "scope": "Installed cold-path worker and Hindsight; isolated synthetic person; experiment/evidence files only",
-            "endCondition": "Automatic idle maintenance consumes explicit correction and later new-session answer respects it",
-            "effort": "Two retentions, one automatic reflection and one contact answer. Existing 300s idle; no repeat. Credits unknown.",
-            "status": "completed_partial"
+            "baseCommit": "236caf3b",
+            "stage": "grounded_style_installed",
+            "scope": "eva2/src/eva/adapters/projection/hindsight.py; eva2/tests/projection/test_hindsight.py; existing evidence/dashboard",
+            "endCondition": "Existing mirrors adopt source-grounded instruction; no invented preference for empty style evidence; real preferences preserved; reviewed fix installed",
+            "effort": "One targeted patch/test/review/deploy; at most two existing synthetic mirror refreshes, no new retain or contact calls; credits unknown.",
+            "status": "completed_partial_fidelity"
           },
           "evidence": "eva2/evidence/product/undated-memory-context-20260928.json",
-          "remaining": "Automatic correction and later advice pass in isolated worker case; style mirror invents one meta-preference, earlier max40-word trial produced47. Full preference fidelity, broader interests and family evaluation remain open.",
+          "remaining": "Attribution fix installed; no numbered lists still paraphrased as lists not required, earlier47/40-word result remains. Broader evolving interests/relevant contribution and family evaluation remain open.",
           "temporalChainEvidence": "eva2/evidence/product/m3-retain-recall-chain-20260928.json",
           "styleFeedbackEvidence": "eva2/evidence/product/style-reflection-refresh-20260928.json",
-          "automaticFeedbackEvidence": "eva2/evidence/product/m3-automatic-feedback-20260928.json"
+          "automaticFeedbackEvidence": "eva2/evidence/product/m3-automatic-feedback-20260928.json",
+          "groundedStyleEvidence": "eva2/evidence/product/grounded-style-mirror-20260928.json"
         },
         {
           "id": "T1",
