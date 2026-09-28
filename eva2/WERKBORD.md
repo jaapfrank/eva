@@ -4,7 +4,9 @@
 
 **Opgeleverd — M3 brongebonden stijlspiegel:** geïnstalleerd op gezonde kern/werker; exacte bron, eigenaarpagina’s en terugweg gecontroleerd. Vijf tests en onafhankelijke review akkoord. Herstelproef verwijdert verzonnen stijlvoorkeur; echte voorkeuren blijven behouden, maar lijstverbod is nog afgezwakt. Nieuwe instructie geldt voor bestaande spiegels bij normale verversing, geen geforceerde massale modelcalls. Twee testspiegels ververst; geen nieuwe opslag/contactcalls, credits onbekend. [Bewijs](evidence/product/grounded-style-mirror-20260928.json).
 
-**Volgende, nog niet gestart:** bestaande eigen interesses/feedback verbinden aan een relevante latere bijdrage. Woordlimiet- en lijstprecisie blijven open; geen nieuwe geheugenmodule.
+**Afgerond — M3 eigen resultaat terughalen:** gewone privéwebsitevraag gebruikte initiatievenlijst plus resultaatlezen; exacte bestandinhoud/hash en eerlijk antwoord onafhankelijk gecontroleerd. Geen nieuwe taak of code. Gemeten20,852s,3modelreacties,2tools,39.354in/227uit; credits en automatische geheugenextractie onbekend. Dit bewijst bestaand resultaat terugbrengen, geen nieuwe zelfstandige keuze of volledige M3. [Bewijs](evidence/product/own-initiative-return-20260928.json).
+
+**Volgende, nog niet gestart:** bestaande feedback laten meewegen in volgende eigen initiatiefkeuze. Hoog invoerverbruik/latentie hoort bij de open C1-opdracht; woord-/lijstprecisie en gezinsacceptatie blijven apart open.
 
 **Nu — M3 stijlcorrectie geïnstalleerd:** een bestaande communicatievoorkeur kon niet worden ververst doordat de providerrespons het vereiste veld wegliet. Gerichte correctie, drie tests en onafhankelijke review akkoord; kern/werker gezond, exacte bron en eigenaarpagina’s gecontroleerd, terugweg vastgelegd. De echte gedragsproef is gedeeltelijk geslaagd: korter en zonder lijst, maar 47 woorden bij maximaal 40. M3 blijft open. Twee contactcalls: 3.884 invoer-/183 uitvoertokens; extractie-/reflectieverbruik onbekend. [Bewijs](evidence/product/style-reflection-refresh-20260928.json).
 

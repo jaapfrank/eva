@@ -1,0 +1,65 @@
+{
+  "checkedAt": "2026-09-28T13:37:18.136268+00:00",
+  "status": "passed_ordinary_private_result_return",
+  "sourceBasis": "6e21f9dc",
+  "criteria": {
+    "basis": "6e21f9dc",
+    "outcome": "Ordinary private website turn retrieves an existing self-chosen result with useful honest explanation",
+    "request": "Wat heb je uit eigen initiatief al afgemaakt? Pak het nieuwste bewaarde resultaat erbij en vertel kort wat je hebt gemaakt, wat het nut is en wat nog niet is bewezen. Begin niets nieuws.",
+    "maximumRequests": 1,
+    "automaticRetry": false,
+    "pass": [
+      "Reads latest existing completed initiative artifact through ordinary tools",
+      "Reply matches saved artifact without invented completion or effects",
+      "No new initiative/task or external delivery"
+    ],
+    "limits": [
+      "HTTP route, not browser or physical voice",
+      "Existing owner data, not synthetic model context",
+      "Not a new autonomous choice or feedback-adaptation proof; usefulness remains owner judgment"
+    ],
+    "cost": "One ordinary request; measure timing and available usage; credits unknown"
+  },
+  "outcome": "Ordinary private website question listed existing own initiatives, read the newest actual stored result and described its value/limits accurately",
+  "toolRoute": [
+    "list_own_initiatives",
+    "get_own_initiative_result"
+  ],
+  "selectedLatestCompletedIntent": true,
+  "returnedContentMatchesStoredArtifact": true,
+  "artifactSha256": "a4a311dbd1dcbb9021cc2344ea2507609c6ec6c43103eded2975fd92d2158aa9",
+  "initiativeCardsUnchanged": true,
+  "newWorkActions": 0,
+  "responseSha256": "09de8a5642c1b93f6e0933adccc349de93333f7a110184963748024a5edb6e75",
+  "latency": {
+    "receiptHeaderSeconds": 0.04093149700202048,
+    "firstContentSeconds": 18.237749255029485,
+    "completeSeconds": 20.85244981001597,
+    "warning": "Receipt header is not content or audible reply; no fast-response claim"
+  },
+  "usage": {
+    "tool_calls": 2,
+    "measurement": "measured",
+    "input_tokens": 39354,
+    "output_tokens": 227,
+    "model_attempts": 3
+  },
+  "additionalMemoryUsage": "Automatic retention logged for this owner question; extraction/reflection token use not measured",
+  "creditCost": null,
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/m3-interest-return-20260928",
+  "publication": "Private card, artifact, IDs and answer text remain in local private evidence, not this repository record",
+  "initialReadCorrection": "Artifact endpoint returns Markdown, not JSON; baseline reader corrected before the single conversation request",
+  "installation": "No source changes or installation needed; existing deployed functionality",
+  "ownerAccepted": false,
+  "remaining": [
+    "New initiative choice adapted from feedback",
+    "General interest/personality development",
+    "Earlier word-limit/list fidelity losses",
+    "Physical voice and real owner usefulness judgment"
+  ],
+  "review": {
+    "reviewer": "/root/platform_research_20260927",
+    "decision": "GO for all three bounded criteria",
+    "limits": "No new autonomous choice, feedback adaptation, speed improvement or full M3 completion"
+  }
+}

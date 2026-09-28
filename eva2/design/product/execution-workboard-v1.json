@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Eigen afgeronde bijdrage in gewoon privégesprek teruglezen",
+            "date": "28 september",
+            "state": "tested",
+            "result": "Gewone websiteroute las exact het nieuwste bewaarde initiatiefresultaat en lichtte nut/beperkingen juist toe. Onafhankelijk beoordeeld; geen nieuwe taak of code nodig.",
+            "remaining": "20,9s; drie modelreacties39.354in/227uit. Nieuwe autonome keuze, feedbackaanpassing en gezinsacceptatie niet bewezen.",
+            "source": "eva2/evidence/product/own-initiative-return-20260928.json"
+          },
+          {
             "title": "Geen gebruikerswens verzinnen bij onbekende communicatiestijl",
             "date": "28 september",
             "state": "installed",
@@ -2555,15 +2563,15 @@
           }
         ],
         "now": {
-          "title": "M3 · Brongebonden stijlspiegel geïnstalleerd",
-          "state": "Gerichte correctie opgeleverd; M3 blijft open",
-          "detail": "Kern en werker gezond, exacte bron gecontroleerd. Onbekende stijl blijft onbekend in herstelproef; echte voorkeuren behouden. Lijstverbod nog te los samengevat.",
-          "doneWhen": "Installatie en terugweg gecontroleerd. Bestaande spiegels nemen instructie over bij volgende normale verversing; geen volledige voorkeurstrouwclaim."
+          "title": "M3 · Bestaand eigen resultaat via gesprek teruggehaald",
+          "state": "Echte websiteproef geslaagd; bestaande functie",
+          "detail": "Eva las de initiatievenlijst en het juiste opgeslagen bestand; antwoord klopt en geen nieuw werk gestart. Onafhankelijke review akkoord. Wel20,9s en39.354invoertokens.",
+          "doneWhen": "Deze terughaalproef is afgerond. Nieuwe initiatiefkeuze, feedbackaanpassing, snelheid en volledige M3 blijven open."
         },
         "next": {
-          "title": "M3 · Eigen interesses en latere bijdragen",
+          "title": "M3 · Feedback gebruiken bij een volgende eigen keuze",
           "state": "Nog niet gestart",
-          "detail": "Bestaande persoonlijke interesse-/feedbackroute gebruiken voor relevant later gedrag. Woordlimiet- en lijstprecisie blijven apart zichtbaar; geen nieuwe geheugen- of initiatiefmodule."
+          "detail": "Bestaande opgeslagen feedback en initiatiefbeoordeling verbinden; geen nieuwe initiatiefmodule. Het hoge gespreksverbruik blijft gekoppeld aan de open C1-snelheidsopdracht."
         },
         "ownerAction": {
           "title": "Later hetzelfde onderwerp voortzetten",
@@ -2577,7 +2585,7 @@
           "expected": "Eva haalt relevante eerdere context terug. Geaccepteerd onthouden, corrigeren en vergeten hoef je niet opnieuw te testen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T13:29:33.535069+00:00"
+        "reviewedAt": "2026-09-28T13:37:18.136268+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12541,7 +12549,8 @@
             ],
             "expected": "Social answer before research result; result replies to original research question.",
             "blocksIndependentWork": false
-          }
+          },
+          "ordinaryRetrievalPerformanceEvidence": "eva2/evidence/product/own-initiative-return-20260928.json"
         },
         {
           "id": "C2",
@@ -12754,20 +12763,20 @@
           "baseCommit": "db340ac1",
           "assignment": {
             "owner": "/root",
-            "reviewer": "/root/platform_research_20260927",
-            "baseCommit": "236caf3b",
-            "stage": "grounded_style_installed",
-            "scope": "eva2/src/eva/adapters/projection/hindsight.py; eva2/tests/projection/test_hindsight.py; existing evidence/dashboard",
-            "endCondition": "Existing mirrors adopt source-grounded instruction; no invented preference for empty style evidence; real preferences preserved; reviewed fix installed",
-            "effort": "One targeted patch/test/review/deploy; at most two existing synthetic mirror refreshes, no new retain or contact calls; credits unknown.",
-            "status": "completed_partial_fidelity"
+            "baseCommit": "6e21f9dc",
+            "stage": "existing_interest_return",
+            "scope": "Installed private website route; evidence/workboard only",
+            "endCondition": "Reply retrieves latest own-initiative artifact accurately without new work",
+            "effort": "One ordinary request, source/result readback and independent review; credits unknown",
+            "status": "completed"
           },
           "evidence": "eva2/evidence/product/undated-memory-context-20260928.json",
           "remaining": "Attribution fix installed; no numbered lists still paraphrased as lists not required, earlier47/40-word result remains. Broader evolving interests/relevant contribution and family evaluation remain open.",
           "temporalChainEvidence": "eva2/evidence/product/m3-retain-recall-chain-20260928.json",
           "styleFeedbackEvidence": "eva2/evidence/product/style-reflection-refresh-20260928.json",
           "automaticFeedbackEvidence": "eva2/evidence/product/m3-automatic-feedback-20260928.json",
-          "groundedStyleEvidence": "eva2/evidence/product/grounded-style-mirror-20260928.json"
+          "groundedStyleEvidence": "eva2/evidence/product/grounded-style-mirror-20260928.json",
+          "ownInitiativeReturnEvidence": "eva2/evidence/product/own-initiative-return-20260928.json"
         },
         {
           "id": "T1",
