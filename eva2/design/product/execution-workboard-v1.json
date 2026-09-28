@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Nieuwe stijlcorrectie kan eerdere voorkeur weer bijwerken",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Providerrespons gecorrigeerd; drie gerichte tests en onafhankelijke review akkoord. Kern en werker geïnstalleerd en gezond; terugweg vastgelegd.",
+            "remaining": "Gedragsproef gedeeltelijk: 47 woorden bij maximaal 40. Geen volledige M3- of gezinsacceptatie.",
+            "source": "eva2/evidence/product/style-reflection-refresh-20260928.json"
+          },
+          {
             "title": "Tijdelijke voorkeur via echte geheugenopslag teruggehaald",
             "date": "28 september",
             "state": "tested",
@@ -2531,10 +2539,10 @@
           }
         ],
         "now": {
-          "title": "M3 · Tijdelijke voorkeur door echte geheugenketen",
-          "state": "Ketenproef afgerond; review akkoord",
-          "detail": "Eén testuitspraak werkelijk opgeslagen en geëxtraheerd. Nieuwe gesprekken: thee op uitzonderingsdag, koffie erna. Bestaande installatie; geen herbouw.",
-          "doneWhen": "Beperkte ketenuitkomst beoordeeld; algemene persoonlijkheidsontwikkeling en gezinsgebruik blijven apart."
+          "title": "M3 · Stijlverversing gerepareerd en geïnstalleerd",
+          "state": "Technische reparatie afgerond; M3 blijft open",
+          "detail": "Nieuwe stijlcorrecties kunnen bestaande stijlgeheugens weer verversen. Kern en werker gezond, bron gecontroleerd. Gedragsproef gedeeltelijk: korter en zonder lijst, maar 47 woorden bij maximaal 40.",
+          "doneWhen": "Deze reparatie is geïnstalleerd; algemene voorkeur-/persoonlijkheidsontwikkeling en gebruikersbeoordeling blijven afzonderlijk open."
         },
         "next": {
           "title": "M3 · Ontwikkeling van eigen interesses en feedback",
@@ -2553,7 +2561,7 @@
           "expected": "Eva haalt relevante eerdere context terug. Geaccepteerd onthouden, corrigeren en vergeten hoef je niet opnieuw te testen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T12:56:05.019915+00:00"
+        "reviewedAt": "2026-09-28T13:08:31.653920+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12730,17 +12738,18 @@
           "baseCommit": "db340ac1",
           "assignment": {
             "owner": "/root",
-            "stage": "isolated_retention_recall_chain",
-            "baseCommit": "b5cd0abe",
-            "scope": "Existing installed Hindsight and common model; synthetic test bank only",
-            "outcome": "Retained temporary exception used within date, standing preference after expiry",
-            "endCondition": "One retain plus two recall/answer cases assessed; preserve failed case without rerun",
-            "effort": "One short extraction and at most two contact generations; measured usage where available, credits unknown",
-            "status": "completed_reviewed"
+            "stage": "style_refresh_fix_installed",
+            "baseCommit": "bad2a199",
+            "scope": "Existing installed retention/reflection/recall/model route; isolated synthetic bank",
+            "outcome": "A later explicit communication preference changes the next response without rewriting Eva identity",
+            "endCondition": "Two bounded source versions retained/reflected and two equal-question outputs evaluated; independent review",
+            "effort": "Two short retentions, two reflections, two contact generations maximum. Actual contact tokens measured; provider extraction/reflection costs may be unknown.",
+            "status": "completed_with_partial_behavior_result"
           },
           "evidence": "eva2/evidence/product/undated-memory-context-20260928.json",
-          "remaining": "Personality/interest development from attributable repeated experience and feedback; family evaluation. Temporal preference chain now passed in isolated direct-adapter case.",
-          "temporalChainEvidence": "eva2/evidence/product/m3-retain-recall-chain-20260928.json"
+          "remaining": "Style refresh installed; response shorter and unnumbered but 47 words exceeds 40-word criterion. Broader personality/interest development and family evaluation remain open.",
+          "temporalChainEvidence": "eva2/evidence/product/m3-retain-recall-chain-20260928.json",
+          "styleFeedbackEvidence": "eva2/evidence/product/style-reflection-refresh-20260928.json"
         },
         {
           "id": "T1",

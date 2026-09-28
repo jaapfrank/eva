@@ -1,0 +1,17 @@
+{
+  "sourceBasis": "bad2a199",
+  "scope": "One synthetic isolated person, ordinary installed adapter/model; no owner data or message delivery",
+  "outcome": "New explicit feedback is retained and changes later response while Eva identity remains stable",
+  "limits": {
+    "retainOperations": 2,
+    "reflectOperations": 2,
+    "contactGenerations": 2
+  },
+  "question": "Hoe pak ik het opruimen van mijn bureau aan?",
+  "criteria": {
+    "before": "Structured steps with explanations, reflecting detailed style request",
+    "after": "At most40 Dutch words, friendly practical advice, no long numbered list or routine AI/body disclaimer; revised style mirror identifies current preference"
+  },
+  "stop": "No repeat if extraction/reflection/recall fails; preserve outcome. Existing internal provider retries remain outside harness accounting.",
+  "cost": "Short inputs; measured contact usage; extraction/reflection internal usage and credits unknown"
+}

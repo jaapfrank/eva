@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — M3 echte geheugenketen:** één uitspraak opgeslagen/geëxtraheerd; nieuwe sessies kozen correct thee op uitzonderingsdag en koffie erna. Bestaande geïnstalleerde route, geen nieuwe productcode. Testpersoon apart; geen eigenaargeheugen gelezen of gewijzigd. Twee contactcalls3.840input/43output; extractieverbruik onbekend. Onafhankelijke review akkoord; algemene persoonlijkheidsontwikkeling blijft open. [Resultaat](evidence/product/m3-retain-recall-chain-20260928.json).
+**Nu — M3 stijlcorrectie geïnstalleerd:** een bestaande communicatievoorkeur kon niet worden ververst doordat de providerrespons het vereiste veld wegliet. Gerichte correctie, drie tests en onafhankelijke review akkoord; kern/werker gezond, exacte bron en eigenaarpagina’s gecontroleerd, terugweg vastgelegd. De echte gedragsproef is gedeeltelijk geslaagd: korter en zonder lijst, maar 47 woorden bij maximaal 40. M3 blijft open. Twee contactcalls: 3.884 invoer-/183 uitvoertokens; extractie-/reflectieverbruik onbekend. [Bewijs](evidence/product/style-reflection-refresh-20260928.json).
 
 **Laatste uitvoerproef — I2 visionbackends:** Windows WebGPU gaf hetzelfde juiste antwoord in13,0s modeltijd tegenover eerdere WSL CPU25,1s. Eén synthetisch geval; Windows fysieke adapter nog niet vastgesteld. WSL WebGPU zag alleen software-renderer en is gestopt. Onafhankelijke review akkoord. Geen live visionfunctie. Camerakeuze blijft gevraagd voor echte scèneproef; onafhankelijk M3-vervolg kan verder. [Bewijs](evidence/product/local-vision-backends-20260928.json).
 

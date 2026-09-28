@@ -31,7 +31,7 @@ Do not replace Eva's core. Prioritize a bounded comparison of local scene-change
 
 ## Follow-up within existing plan
 
-- I-step: consider FastVLM observation adapter; source reuse only after an isolated recorded-scene comparison can decide adoption.
+- I-step: reuse change-triggered observation design, not FastVLM weights (product-development license exclusion). The isolated SmolVLM2 candidate remains unselected pending a recorded-scene comparison; see local-vision evidence.
 - M3: consider bounded observer feedback; retain Eva identity, user corrections and existing authority. Measure whether it removes the actual repetitive/impersonal behavior without new invented claims.
 - C3: retain current firmware until the existing candidate failure is observed. GLaDOS is not established as a ready-to-install replacement.
 - Coordinator owns candidate reassessment at the relevant slice, before any adoption. Pin exact revision/model versions, verify licenses/dependencies, establish upgrade/rollback and schedule maintenance then. No recurring monitor installed.
