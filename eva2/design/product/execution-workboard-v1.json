@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Modeldeadline krijgt juiste terugmelding",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Beide modeltimeoutpaden gebruiken bestaande timeoutmelding in plaats van interne fout. Verbruik, annuleren, eerdere acties en grenzen behouden.",
+            "remaining": "Dit verbetert foutafhandeling; het bewijst geen geslaagde leeropdracht. Bestaande mislukte records blijven onveranderd.",
+            "source": "eva2/evidence/product/model-deadline-status-20260928.json"
+          },
+          {
             "title": "Langere digitale opdrachten volgen bestaande taakinstelling",
             "date": "28 september",
             "state": "installed",
@@ -2420,14 +2428,14 @@
         ],
         "now": {
           "title": "T1 · Opdrachten volledig laten afronden",
-          "state": "T1 · modelaanvraag liep tegen tijdslimiet",
-          "detail": "Begeleide hervatting stopte na3modelreacties met een modeldeadline; geen eindresultaat. Achtergrondmodel gebruikt standaard60seconden per aanvraag binnen300seconden taakduur. Diagnose geïnstalleerd; geen proef of uitvoerder actief. Coördinator controleert passende achtergrondafhandeling, zonder nieuwe modelpoging.",
+          "state": "Timeoutcorrectie geïnstalleerd · volledige taak nog open",
+          "detail": "Modeldeadline wordt bij nieuwe taken correct als tijdslimiet gemeld.85gerichte tests, onafhankelijke review, gezonde kern/werker en exacte bron gecontroleerd. Geen modelproef of uitvoerder actief. Volledige agenda-/leeropdracht blijft open; eerdere foutoorzaak onbekend.",
           "doneWhen": "Compleet taakpad past; bestaande opgeslagen taken blijven hervatbaar. Daarna gerichte review, installatie en werkelijk resultaat."
         },
         "next": {
-          "title": "T1/L1 · Volledige taakafloop afmaken",
-          "state": "Gerichte correctie vóór nieuwe proef",
-          "detail": "Controleer modeldeadline en foutafhandeling tegen het bestaande taakcontract; los aangetoonde oorzaak op. Eerste ongeldige-modelantwoordfout blijft apart onbewezen. Geen succesclaim voor leren."
+          "title": "T1/L1 · Een volledige opdracht werkelijk afronden",
+          "state": "Open · geen modelproef actief",
+          "detail": "Gebruik bestaande taakroute en vastgelegde opdracht. Geen volgende herstelwijziging zonder aantoonbare oorzaak; deadline verhogen is geen bewezen oplossing. Oorspronkelijke modelantwoordfout blijft apart open."
         },
         "ownerAction": {
           "title": "Nu geen proef nodig",
@@ -2440,7 +2448,7 @@
           "expected": "Gebouwd, getest, geïnstalleerd en door jou geaccepteerd blijven apart. Alleen werkelijk bruikbare functies tellen als opgeleverd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T09:19:11.928199+00:00"
+        "reviewedAt": "2026-09-28T09:29:55.525396+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12546,7 +12554,7 @@
           ],
           "concreteChange": "Use the existing configured32 request allowance instead of additional composition cap8/tools6; reserve final response. Historical grants unchanged. Actual core setting32 confirmed read-only.",
           "sourceCommit": "ef59f784",
-          "activeWorker": "coordinator",
+          "activeWorker": "coordinator; no execution worker active",
           "latestRealTask": "internal_error; no complete result; causal metadata not retained",
           "diagnosticAssignment": {
             "baseCommit": "855d9ac6",
@@ -12558,6 +12566,22 @@
             "endCondition": "Safe causal categories recorded on existing failure path; no prompt/response/credentials exposed; retry behavior unchanged",
             "effort": "One bounded implementation and review window; model trial only after changed evidence",
             "runtimeCallsBeforeInstallation": 0
+          },
+          "deadlineAssignment": {
+            "baseCommit": "32de8ef7",
+            "files": [
+              "adapters/model/contracts.py",
+              "adapters/model/pydantic_conversation.py",
+              "bootstrap/delegated_digital_runner.py",
+              "targeted model and runner tests"
+            ],
+            "outcome": "A model request timeout is shown as timeout, with preserved usage and no retry or duplicate effect.",
+            "endCondition": "Both provider and local timeouts reach existing timed_out lifecycle and owner description; focused checks and independent review, installation.",
+            "effort": "One small bounded implementation/review window",
+            "runtimeModelCalls": 0,
+            "sourceCommit": "52b9fca6",
+            "testsPassed": 85,
+            "status": "installed"
           }
         },
         {

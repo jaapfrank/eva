@@ -1,0 +1,69 @@
+{
+  "status": "installed",
+  "checkedAt": "2026-09-28T09:29:55.525396+00:00",
+  "sourceCommit": "52b9fca6",
+  "implementationCommit": "a590096a32e3a4c8bc7b0313bc0e6c95732d0169",
+  "observedDefect": "A confirmed model phase deadline was recorded as internal_error; the existing timed_out owner description was never selected.",
+  "change": "Typed deadline propagated from provider and local timeout through digital runner to existing timed_out outcome. Possible prior effects still mean ambiguous task state.",
+  "preserved": [
+    "60second model phase limit",
+    "300second task limit",
+    "cancellation precedence",
+    "measured usage",
+    "no automatic retry",
+    "historical task records and grants"
+  ],
+  "tests": {
+    "passed": 85,
+    "type": "Offline in installed runtime image with network disabled",
+    "coverage": [
+      "provider deadline",
+      "local absolute deadline",
+      "post-output stall",
+      "shared retry deadline",
+      "task result code",
+      "usage and prior effect preservation",
+      "cancellation precedence",
+      "untyped same-text error remains internal_error"
+    ]
+  },
+  "independentReview": {
+    "reviewer": "coordinator, independent of implementation by /root/baseline_research_20260927",
+    "verdict": "GO",
+    "ownerPresentation": "Existing work_failure_description(timed_out) already describes timeout and possible prior actions."
+  },
+  "runtimeModelCalls": 0,
+  "creditCost": null,
+  "doesNotProve": "Long task completion, original invalid-response cause, or general learning function.",
+  "artifacts": "/home/administrator/project/.eva2-artifacts/model-deadline-status-20260928",
+  "installation": {
+    "checkedAt": "2026-09-28T09:29:18.167122+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:90b16a903130b894c27851e497866ffb915fc5caa1965616d0e5faab0f2d5869",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/model/contracts.py": "a38c7e6a29a3f53f2c64e2e806dae988f4519fbf4955749f8adad198a1ae48d4",
+          "adapters/model/pydantic_conversation.py": "5b897d34def2c1b6822e9aee19f530bc35bee48295c7ed26880ad64b6735c580",
+          "bootstrap/delegated_digital_runner.py": "0bf061600da6cca6832a871580f8ecd4cc9e6f4ce1edbc6a734dc7c724c5d0c9"
+        }
+      },
+      "worker": {
+        "image": "sha256:217d8d86608203406b0139563fb985fbe8a2eb170eec45d236d866a028e2e2df",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/model/contracts.py": "a38c7e6a29a3f53f2c64e2e806dae988f4519fbf4955749f8adad198a1ae48d4",
+          "adapters/model/pydantic_conversation.py": "5b897d34def2c1b6822e9aee19f530bc35bee48295c7ed26880ad64b6735c580",
+          "bootstrap/delegated_digital_runner.py": "0bf061600da6cca6832a871580f8ecd4cc9e6f4ce1edbc6a734dc7c724c5d0c9"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/model-deadline-status-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "ownerAcceptance": "open",
+  "next": "Return to complete-task outcome; original invalid-response cause remains unproven. Do not repeat model trial solely for this classification change."
+}
