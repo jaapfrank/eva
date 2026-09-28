@@ -2747,15 +2747,15 @@
           }
         ],
         "now": {
-          "title": "Initiatief en huisaanwezigheid als geheel afronden",
-          "state": "In uitvoering",
-          "detail": "Terugmelding van afgeronde eigen initiatieven aangesloten op bestaande onafhankelijke bezorgroute en geïnstalleerd. Nuttige nieuwe bijdrage en echte camera-/agendaherinnering blijven open; camerakeuze gevraagd. Dagbudget niet gereset.",
-          "doneWhen": "Eva kiest uit echte huiscontext passend werk, voert dit uit en brengt het resultaat bij de juiste persoon; camera/agenda ondersteunen een nuttige herinnering, eigen onderzoek een onderbouwd voorstel, ongewenste herhaling blijft uit. Gezinsbeoordeling apart."
+          "title": "Leren en zelfstandig hergebruiken afronden",
+          "state": "Voorbereiding",
+          "detail": "Bestaande leer-/vaardigheidsroute hergebruiken. Eerdere agenda-hergebruikproef slaagde, eerste leren had ontwikkelhulp nodig. Eén nieuwe gedocumenteerde taak zonder die hulp voorbereiden.",
+          "doneWhen": "Eva leert uit documentatie, bewaart een uitvoerbare werkwijze en past die op andere invoer toe zonder nieuwe kerncode of ontwikkelhints; resultaat onafhankelijk gecontroleerd."
         },
         "next": {
-          "title": "Nuttige camera-/agendaherinnering afronden",
+          "title": "Eén volledige leeropdracht en nieuwe invoer",
           "state": "Nog niet uitgevoerd",
-          "detail": "Bestaande waarneming, initiatiefuitvoering en terugmelding gebruiken. Alleen de vuilnisbakscène wacht op de gevraagde camerakeuze; geen nieuw algemeen initiatiefsysteem."
+          "detail": "Criteria en beperkte invoer eerst vastleggen. Initiatief/camera blijft open; geen budgetreset of onbewezen afronding."
         },
         "ownerAction": {
           "title": "Camera voor vuilnisbakken kiezen",
@@ -2768,7 +2768,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T19:08:45.021108+00:00"
+        "reviewedAt": "2026-09-28T19:10:48.116217+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12431,7 +12431,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 4,
+      "currentStep": 5,
       "steps": [
         {
           "number": 1,
@@ -12588,7 +12588,7 @@
           ]
         }
       ],
-      "nextAction": "Finish the existing presence/initiative product step (I1/I2); camera selection only blocks the bin-scene correlation. Do not switch to unrelated status, recovery or optimization work.",
+      "nextAction": "Finish L1 unseen learning and new-input reuse with existing installed procedures; I1/I2 actual camera case waits on camera identification, autonomous daily review allowance remains consumed.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13267,7 +13267,16 @@
             "automaticRetry": false,
             "evidence": "eva2/evidence/product/calendar-unassisted-reuse-20260928.json"
           },
-          "remaining": "Fresh unseen unassisted learning and full product comparison remain open; bounded new-input reuse is complete."
+          "remaining": "Fresh unseen unassisted learning and full product comparison remain open; bounded new-input reuse is complete.",
+          "assignment": {
+            "stage": "prepare_unseen_learning_case",
+            "baseCommit": "38cb8dcc",
+            "owner": "/root",
+            "scope": "Existing installed procedure tools and isolated WebVTT fixtures; no product code by assumption",
+            "outcome": "Eva learns a new documented procedure and applies saved skill to a different input without developer code or procedure-ID hint",
+            "endCondition": "One bounded initial learning request and one reuse request yield independently checked stored outputs; failed outcome remains visible, no automatic retries.",
+            "effort": "Prepare authoritative fixture/expected result first; at most two task admissions, existing runtime limits; credits unknown."
+          }
         },
         {
           "id": "L2",

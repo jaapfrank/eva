@@ -1,8 +1,12 @@
 # Eva 2 — uitvoerbaar werkbord
 
-## Actuele opdracht — één volledig onderdeel afronden
+## Actuele opdracht — leren zonder ontwikkelhulp (L1)
 
-**Initiatief en huisaanwezigheid (I1/I2)** is de ene actieve productoplevering. Camera-/agendalezen via de bestaande initiatiefroute is nu geïnstalleerd (bron14fe94dc); dat is een tussenresultaat en sluit geen van de zeven open grote onderdelen. Geen uitwijking naar nieuwe statuskaarten, herstel of losse optimalisaties.
+Bestaande vaardigheden blijven behouden. Eén nieuwe WebVTT-verwerking uit documentatie voorbereiden en daarna op andere invoer hergebruiken. Maximaal twee taakopnames, bestaande runtimegrenzen, geen kernbouw tenzij een concreet tekort blijkt. Basis38cb8dcc; coördinator bezit geïsoleerde fixtures en bewijs. Initiatief/camera blijft open; alleen afhankelijk werk wacht.
+
+## Initiatief — voortgang en open afhankelijkheden
+
+**Initiatief en huisaanwezigheid (I1/I2)** blijft open; de concrete camerakeuze en vandaag uitgeputte autonome beoordelingsruimte blokkeren de volgende echte proef. Camera-/agendalezen via de bestaande initiatiefroute is nu geïnstalleerd (bron14fe94dc); dat is een tussenresultaat en sluit geen van de zeven open grote onderdelen. Geen uitwijking naar nieuwe statuskaarten, herstel of losse optimalisaties.
 
 **Geïnstalleerd — dagruimte voor initiatief spreiden:** bron43548a77,38 gerichte controles en onafhankelijke bronreview akkoord. De vier periodieke beoordelingen gebruikten vandaag alle ruimte tussen02:37 en05:42 lokale tijd. Beschikbaarheid wordt voortaan over de UTC-dag gespreid, zonder budgetverhoging/reset. Vandaag blijft de ruimte uitgeput; geheugen deelt de teller. Kern/werker gezond en bestaande4/40-limieten teruggelezen. [Bewijs](evidence/product/initiative-review-pacing-installed-20260928.json).
 

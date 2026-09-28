@@ -1,0 +1,60 @@
+{
+  "recordedAt": "2026-09-28T19:12:16.065471+00:00",
+  "baseCommit": "38cb8dcc",
+  "slice": "L1",
+  "goal": "Learn unseen WebVTT processing from official documentation, store executable skill, apply unchanged to new input without developer code or procedure-ID hint.",
+  "source": "https://www.w3.org/TR/webvtt1/",
+  "scope": "Two small text subtitle fixtures, one missing-header rejection; not full WebVTT conformance.",
+  "pass": [
+    "Observed documentation access",
+    "Saved executable skill and actual execution",
+    "Stored results match expected cues/text and invalid isolation",
+    "New ordinary request selects same saved skill without code or ID hints",
+    "Stored reuse output matches unseen input and skill source hash unchanged"
+  ],
+  "stop": [
+    "At most one initial task admission and one reuse admission",
+    "No automatic retry on failure or observation timeout",
+    "Do not modify product code without demonstrated failure",
+    "No production permission/budget reset or notifications to others"
+  ],
+  "cost": "Existing configured task allowance; capture observed usage, credit cost unknown",
+  "expected": {
+    "initial": [
+      {
+        "start_ms": 250,
+        "end_ms": 2500,
+        "duration_ms": 2250,
+        "text": "Welkom & hallo.\nDit is regel twee."
+      },
+      {
+        "start_ms": 3000,
+        "end_ms": 4500,
+        "duration_ms": 1500,
+        "text": "Rustig beginnen."
+      },
+      {
+        "start_ms": 60000,
+        "end_ms": 62250,
+        "duration_ms": 2250,
+        "text": "Tot de volgende keer."
+      }
+    ],
+    "reuse": [
+      {
+        "start_ms": 58500,
+        "end_ms": 60000,
+        "duration_ms": 1500,
+        "text": "De deur <blijft> dicht."
+      },
+      {
+        "start_ms": 3600000,
+        "end_ms": 3601001,
+        "duration_ms": 1001,
+        "text": "Café klaar.\nTot zo."
+      }
+    ],
+    "invalid": "Rejected separately, no successful cue output"
+  },
+  "runtimeTaskAdmissions": 0
+}
