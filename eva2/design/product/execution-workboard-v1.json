@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Eva kan nu echte camerabeelden lokaal beschrijven",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Bestaande HA-tool en lokale GPU-analyse aangesloten. Gewone websitevraag over garagecamera beantwoord;16 controles en bronreview geslaagd.",
+            "remaining": "52,56s totaal nog te traag; precieze objectherkenning beperkt. Camera/agenda/initiatief als geheel en eigenaaracceptatie open.",
+            "source": "eva2/evidence/product/local-vision-installed-20260928.json"
+          },
+          {
             "title": "Stoppen, bijsturen en hervatten via echte taakopslag bevestigd",
             "date": "28 september",
             "state": "tested",
@@ -2707,28 +2715,28 @@
           }
         ],
         "now": {
-          "title": "I2 · Camera daadwerkelijk laten bekijken",
-          "state": "In uitvoering",
-          "detail": "Bestaande lokale beeldadapter aansluiten op de al beproefde GPU-kandidaat. Eerst één echte scène controleren; geen nieuw camerastelsel of automatische observaties.",
-          "doneWhen": "Bestaande HA-cameravraag levert een lokale beeldbeschrijving met bron en tijd; service aangesloten en terugweg vastgelegd."
+          "title": "I2 · Camera op aanvraag bekijken",
+          "state": "Geïnstalleerd · snelheid nog onvoldoende",
+          "detail": "Gewone websitevraag vindt garagecamera en geeft echte lokale beeldbeschrijving. Volledig antwoord52,56s; inventariszoeken veroorzaakt veel modelinvoer. Geen autonome beeldwaarneming of volledige I2-afronding.",
+          "doneWhen": "Beeldfunctie aangesloten en onafhankelijk bevestigd; resterende concrete verbetering is gerichte algemene HA-inventarisselectie."
         },
         "next": {
-          "title": "I2 · Beeld en agenda samen gebruiken",
+          "title": "HA-apparaten gericht vinden",
           "state": "Nog niet gestart",
-          "detail": "Pas na werkende camera-analyse; bestaande agenda en initiatiefroute behouden."
+          "detail": "Voorkom brede inventarispagina’s bij één apparaatsoort via bestaande algemene HA-tool. Zelfde bevoegdheden en opgeslagen verzoeken behouden; geen cameraregex of aparte uitvoerroute."
         },
         "ownerAction": {
-          "title": "Statusweergave bekijken",
-          "url": "http://localhost:44711/internal/v1/dashboard",
-          "linkLabel": "Open Eva-beheer",
+          "title": "Camera bekijken via Eva",
+          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
+          "linkLabel": "Open gesprek met Eva",
           "steps": [
-            "Open de eigenaarpagina en bekijk Verbindingen en onderdelen.",
-            "Klik Controleer opnieuw voor een nieuwe meting."
+            "Vraag: Wat zie je op de camera bij de garagedeur?",
+            "Vergelijk haar beschrijving met het beeld; de volledige wachttijd is nog niet verbeterd."
           ],
-          "expected": "Opslag/geheugen krijgen een gemeten uitslag. Onbeproefde onderdelen blijven Niet gemeten; dat betekent niet dat ze defect zijn."
+          "expected": "Eva zoekt zelf de camera en beschrijft een echt opgehaald beeld. Objectherkenning kan fouten bevatten; nog geen betrouwbare automatische visuele beslissing."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T18:01:47.438745+00:00"
+        "reviewedAt": "2026-09-28T18:12:51.525785+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12548,7 +12556,7 @@
           ]
         }
       ],
-      "nextAction": "Finish optional on-demand camera interpretation using the existing local analyzer; no new autonomous polling.",
+      "nextAction": "Voorkom brede inventarispagina’s bij één apparaatsoort via bestaande algemene HA-tool. Zelfde bevoegdheden en opgeslagen verzoeken behouden; geen cameraregex of aparte uitvoerroute.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13175,19 +13183,21 @@
           },
           "owner": "/root",
           "assignment": {
-            "stage": "real_scene_connection",
+            "stage": "installed_camera_question_independently_verified",
             "baseCommit": "92859eae",
             "scope": "Existing local vision HTTP adapter, optional service configuration and HA camera GET; no new initiative or calendar code.",
             "endCondition": "One real camera scene checked against its image, existing HA tool returns grounded local interpretation, installed optional endpoint with rollback. No broad vision/autonomy claim.",
             "effort": "One bounded real-scene probe, then integrate only on adequate result; no cloud model calls for the probe.",
             "fileOwnership": [
               "eva2/src/eva/adapters/connectors/local_vision.py",
-              "eva2/operations/ optional vision deployment",
-              "eva2/evidence/product/",
+              "eva2/deploy/local-vision/",
+              "eva2/evidence/product/local-vision-installed-20260928.json",
               "eva2/WERKBORD.md",
               "eva2/design/product/execution-workboard-v1.json"
             ]
-          }
+          },
+          "evidence": "eva2/evidence/product/local-vision-installed-20260928.json",
+          "remaining": "On-demand local camera interpretation now installed; observed HA inventory discovery latency remains excessive. Camera/calendar correlation and autonomous usefulness still open."
         },
         {
           "id": "L1",

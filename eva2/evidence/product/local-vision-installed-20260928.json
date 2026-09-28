@@ -1,0 +1,417 @@
+{
+  "checkedAt": "2026-09-28T18:12:51.525785+00:00",
+  "sourceCommit": "7dbc8202",
+  "status": "installed_ordinary_camera_question_answered",
+  "outcome": "Existing Home Assistant tool discovers a camera and returns a locally generated image description through an ordinary owner website question. No camera-specific script or new conversation route.",
+  "question": "Wat zie je op de camera bij de garagedeur? Kijk naar het beeld van nu.",
+  "tests": {
+    "passed": 16,
+    "artifact": "/home/administrator/project/.eva2-artifacts/vision-live-20260928/tests.txt",
+    "serviceUnitValidationExit": 0
+  },
+  "review": {
+    "source": "GO platform_research_20260927 after fixing systemd executable substitution",
+    "scene": "Main visible anchors pass; exact furniture/wheelbarrow identification remains uncertain.",
+    "installedReceipt": {
+      "result": "GO platform_research_20260927",
+      "thread": "tool:external-tool:0fc1bedd4ef5ff3c878819f973cecb09",
+      "responseSha256": "8301b3b22f973a608439d494e3535e485c3f269278ec2a31c502f0563344fb4f",
+      "finding": "Actual successful camera GET and local interpretation support final answer; explicit unknown capture time retained. No independent object verification."
+    }
+  },
+  "installation": {
+    "checkedAt": "2026-09-28T18:09:18.723228+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:d86d24bb6b6b4896823b8277a81ed4bc761eec448399aaca923fb7709249e0c4",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/connectors/local_vision.py": "a9810fca21e6733fd60fd547ff9bfd54335f3382f9fb6990308a1e2c42c79aba"
+        }
+      },
+      "worker": {
+        "image": "sha256:cc7fc4133aeff9a0a3e459b5b121699783070b71f4a8f46f5c4ab9a19129566b",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/connectors/local_vision.py": "a9810fca21e6733fd60fd547ff9bfd54335f3382f9fb6990308a1e2c42c79aba"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/vision-live-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "configuration": {
+    "eva2-managed-b-slot3-core": {
+      "endpoint": "http://172.28.0.1:44740",
+      "model": "eva-local-vision",
+      "revision": "qwen-e87f176479d0855a907a41277aca2f8ee7a09523-llama-b11146"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "endpoint": "http://172.28.0.1:44740",
+      "model": "eva-local-vision",
+      "revision": "qwen-e87f176479d0855a907a41277aca2f8ee7a09523-llama-b11146"
+    }
+  },
+  "service": {
+    "unit": "eva2-local-vision.service",
+    "manager": "systemd --user",
+    "state": "active/running",
+    "bind": "172.28.0.1:44740",
+    "model": "eva-local-vision",
+    "gpu": "Existing pinned CUDA runtime and Qwen3.5-4B Q4_K_M assets",
+    "disable": "Restore baseline core/worker compose first; systemctl --user disable --now eva2-local-vision.service",
+    "scope": "On-demand only; no camera polling or sensory persistence enabled"
+  },
+  "sceneProbe": {
+    "imageSha256": "e613a6311795b0d8f73c11b70814d3281351e664621b75b48052f3dec3330f82",
+    "rawImage": "Private local artifact only; not committed",
+    "criteria": {
+      "beforeInference": true,
+      "visibleAnchors": [
+        "wooden fence near centre",
+        "brick wall and glass doorway left",
+        "car beyond fence",
+        "covered objects right"
+      ],
+      "mustNot": [
+        "invent people or identities",
+        "state object colours from monochrome infrared image",
+        "assert bin counts not visible"
+      ],
+      "acceptance": "Major anchors correctly described, no unsupported person/bin/colour claim, finish_reason stop; one scene only, no general benchmark."
+    },
+    "requestSeconds": 1.3567985029658303,
+    "startupAndRequestSeconds": 4.69635817600647,
+    "finishReason": "stop",
+    "usage": {
+      "completion_tokens": 75,
+      "prompt_tokens": 1151,
+      "total_tokens": 1226,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "initialFailure": "120-token cap truncated description; changed instruction to70words and cap256. One accidental unchanged repeat occurred after a diagnostic read encountered a .pyc file; retained as extra local usage, no cloud call."
+  },
+  "ordinaryWebsite": {
+    "seconds": 52.56,
+    "provider": "chatgpt-codex:gpt-6-astra",
+    "text": "Het zojuist opgehaalde beeld van de camera bij de garagedeur wordt beschreven als een zwart-wit nachtbeeld van de achtertuin: links een glazen deur naar een verlichte ruimte, tegen de bakstenen muur gestapelde tafels en krukken en een leunend donker paneel. Achter de houten schutting staat een auto; rechts liggen spullen onder een zeil.\n\nDit is een automatische beeldbeschrijving. Het beeld is net opgehaald, maar de camera geeft geen opnametijd mee; ik kan dus niet bevestigen dat het exact van nu is.",
+    "journal": [
+      {
+        "type": "MEMORY_RETAIN_QUEUED",
+        "data": {}
+      },
+      {
+        "type": "CONVERSATION_MODEL_RECORDED",
+        "data": {
+          "usage": {
+            "tool_calls": 1,
+            "measurement": "measured",
+            "input_tokens": 4852,
+            "output_tokens": 71,
+            "model_attempts": 1
+          }
+        }
+      },
+      {
+        "type": "TOOL_REQUEST_ADMITTED",
+        "data": {
+          "action_name": "read_home_assistant_inventory"
+        }
+      },
+      {
+        "type": "CONVERSATION_DISPATCH_ADMITTED",
+        "data": {}
+      },
+      {
+        "type": "CONVERSATION_MODEL_ADMITTED",
+        "data": {}
+      },
+      {
+        "type": "TOOL_REQUEST_ADMITTED",
+        "data": {
+          "action_name": "home_assistant_request"
+        }
+      },
+      {
+        "type": "CONVERSATION_DISPATCH_ADMITTED",
+        "data": {}
+      },
+      {
+        "type": "CONVERSATION_MODEL_ADMITTED",
+        "data": {}
+      },
+      {
+        "type": "CONVERSATION_MODEL_RECORDED",
+        "data": {
+          "usage": {
+            "tool_calls": 1,
+            "measurement": "measured",
+            "input_tokens": 41696,
+            "output_tokens": 81,
+            "model_attempts": 1
+          }
+        }
+      },
+      {
+        "type": "CONVERSATION_MODEL_ADMITTED",
+        "data": {}
+      },
+      {
+        "type": "CONVERSATION_MODEL_ADMITTED",
+        "data": {}
+      },
+      {
+        "type": "CONVERSATION_MODEL_RECORDED",
+        "data": {
+          "usage": {
+            "tool_calls": 1,
+            "measurement": "measured",
+            "input_tokens": 12486,
+            "output_tokens": 78,
+            "model_attempts": 1
+          }
+        }
+      },
+      {
+        "type": "TOOL_REQUEST_ADMITTED",
+        "data": {
+          "action_name": "read_home_assistant_inventory"
+        }
+      },
+      {
+        "type": "CONVERSATION_DISPATCH_ADMITTED",
+        "data": {}
+      },
+      {
+        "type": "TOOL_REQUEST_ADMITTED",
+        "data": {
+          "action_name": "read_home_assistant_inventory"
+        }
+      },
+      {
+        "type": "CONVERSATION_DISPATCH_ADMITTED",
+        "data": {}
+      },
+      {
+        "type": "CONVERSATION_MODEL_RECORDED",
+        "data": {
+          "usage": {
+            "tool_calls": 1,
+            "measurement": "measured",
+            "input_tokens": 26164,
+            "output_tokens": 100,
+            "model_attempts": 1
+          }
+        }
+      },
+      {
+        "type": "CONVERSATION_MODEL_RECORDED",
+        "data": {
+          "usage": {
+            "tool_calls": 1,
+            "measurement": "measured",
+            "input_tokens": 34568,
+            "output_tokens": 96,
+            "model_attempts": 1
+          }
+        }
+      },
+      {
+        "type": "CONVERSATION_MODEL_ADMITTED",
+        "data": {}
+      },
+      {
+        "type": "TOOL_REQUEST_ADMITTED",
+        "data": {
+          "action_name": "home_assistant_request"
+        }
+      },
+      {
+        "type": "CONVERSATION_DISPATCH_ADMITTED",
+        "data": {}
+      },
+      {
+        "type": "REPLY_COMMITTED",
+        "data": {
+          "provider": "chatgpt-codex:gpt-6-astra",
+          "model_usage": {
+            "tool_calls": 5,
+            "measurement": "measured",
+            "input_tokens": 161398,
+            "output_tokens": 550,
+            "model_attempts": 6
+          },
+          "model_timing": {
+            "completed_ms": 45078,
+            "first_content_ms": 41240
+          }
+        }
+      },
+      {
+        "type": "CONVERSATION_MODEL_RECORDED",
+        "data": {
+          "usage": {
+            "tool_calls": 0,
+            "measurement": "measured",
+            "input_tokens": 41632,
+            "output_tokens": 124,
+            "model_attempts": 1
+          }
+        }
+      },
+      {
+        "type": "CONVERSATION_MODEL_ADMITTED",
+        "data": {}
+      },
+      {
+        "type": "INGRESS_COMMITTED",
+        "data": {}
+      }
+    ]
+  },
+  "actions": [
+    {
+      "type": "TOOL_REQUEST_ADMITTED",
+      "data": {
+        "action_name": "read_home_assistant_inventory",
+        "action_arguments": {
+          "offset": 0,
+          "area_id": "",
+          "section": "entities",
+          "automation_ids": [],
+          "snapshot_sha256": ""
+        },
+        "request_arguments": {
+          "offset": 0,
+          "area_id": "",
+          "section": "entities",
+          "automation_ids": [],
+          "snapshot_sha256": ""
+        }
+      }
+    },
+    {
+      "type": "TOOL_REQUEST_ADMITTED",
+      "data": {
+        "step_index": 1,
+        "action_name": "home_assistant_request",
+        "action_arguments": {
+          "path": "",
+          "limit": 50,
+          "method": "GET",
+          "offset": 0,
+          "body_json": "{\"type\":\"config/entity_registry/list\"}",
+          "transport": "websocket",
+          "response_pointer": ""
+        },
+        "request_arguments": {
+          "path": "",
+          "limit": 50,
+          "method": "GET",
+          "offset": 0,
+          "body_json": "{\"type\":\"config/entity_registry/list\"}",
+          "transport": "websocket",
+          "response_pointer": ""
+        }
+      }
+    },
+    {
+      "type": "TOOL_REQUEST_ADMITTED",
+      "data": {
+        "step_index": 2,
+        "action_name": "read_home_assistant_inventory",
+        "action_arguments": {
+          "offset": 50,
+          "area_id": "",
+          "section": "entities",
+          "automation_ids": [],
+          "snapshot_sha256": "633bb1acc3711f27e1884388ee1281cb0930f98bb27c525792f2683f3026042d"
+        },
+        "request_arguments": {
+          "offset": 50,
+          "area_id": "",
+          "section": "entities",
+          "automation_ids": [],
+          "snapshot_sha256": "633bb1acc3711f27e1884388ee1281cb0930f98bb27c525792f2683f3026042d"
+        }
+      }
+    },
+    {
+      "type": "TOOL_REQUEST_ADMITTED",
+      "data": {
+        "step_index": 3,
+        "action_name": "read_home_assistant_inventory",
+        "action_arguments": {
+          "offset": 0,
+          "area_id": "buiten",
+          "section": "entities",
+          "automation_ids": [],
+          "snapshot_sha256": ""
+        },
+        "request_arguments": {
+          "offset": 0,
+          "area_id": "buiten",
+          "section": "entities",
+          "automation_ids": [],
+          "snapshot_sha256": ""
+        }
+      }
+    },
+    {
+      "type": "TOOL_REQUEST_ADMITTED",
+      "data": {
+        "step_index": 4,
+        "action_name": "home_assistant_request",
+        "action_arguments": {
+          "path": "/api/camera_proxy/camera.g5_pro_high_resolution_channel",
+          "limit": 50,
+          "method": "GET",
+          "offset": 0,
+          "body_json": "",
+          "transport": "rest",
+          "response_pointer": ""
+        },
+        "request_arguments": {
+          "path": "/api/camera_proxy/camera.g5_pro_high_resolution_channel",
+          "limit": 50,
+          "method": "GET",
+          "offset": 0,
+          "body_json": "",
+          "transport": "rest",
+          "response_pointer": ""
+        }
+      }
+    }
+  ],
+  "usage": {
+    "ordinaryWebsiteInputTokens": 161398,
+    "ordinaryWebsiteOutputTokens": 550,
+    "ordinaryWebsiteModelCalls": 6,
+    "ordinaryWebsiteToolCalls": 5,
+    "isolatedLocalGenerations": 3,
+    "isolatedLocalInputTokens": 3385,
+    "isolatedLocalOutputTokens": 315,
+    "installedLocalGenerations": 1,
+    "installedLocalTokens": "not retained by existing tool contract",
+    "creditCosts": "unknown; development and automatic memory use excluded"
+  },
+  "limitations": [
+    "52.56s complete answer remains too slow;1.357s is isolated local inference, not end-to-end latency.",
+    "Single garage scene does not prove general object recognition, bin counts/colours, identity or autonomous visual decisions.",
+    "No owner acceptance; I2 camera/calendar/initiative category remains open.",
+    "Camera supplies no trusted capture timestamp; retrieval time and interpretation remain explicit.",
+    "No Voice PE/Telegram end-to-end trial in this delivery.",
+    "Optional service activation is not wizard module-installation completion."
+  ],
+  "nextAction": "Address observed inventory discovery overhead through existing general HA inventory selection, preserving old call/replay contracts; no separate camera command.",
+  "dashboardLiveCheck": {
+    "url": "http://localhost:44712/project-state",
+    "status": 200,
+    "newDeliveryVisible": true
+  }
+}
