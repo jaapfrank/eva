@@ -1,0 +1,291 @@
+{
+  "checkedAt": "2026-09-28T13:21:12.695572+00:00",
+  "sourceBasis": "d17e1a1f",
+  "status": "independently_reviewed_partial",
+  "criteria": {
+    "basis": "d17e1a1f",
+    "outcome": "Explicit corrected leisure preference changes a later answer after automatic idle-time processing",
+    "limits": {
+      "retains": 2,
+      "automaticReflections": 1,
+      "contactAnswers": 1
+    },
+    "idleSeconds": 300,
+    "oldPreference": "Bij een vrije avond vind ik een druk café met vrienden meestal leuk.",
+    "correction": "Ik verander dat: ik wil voortaan op vrije avonden juist thuis iets rustigs doen zonder scherm. Stel mij geen café of kroeg meer voor. Mijn eerdere voorkeur geldt niet meer.",
+    "question": "Ik heb vanavond een uur vrij. Wat zou jij mij aanraden?",
+    "pass": [
+      "Automatic worker retains both sources and creates an evidenced style mirror after idle, without harness calling maintenance",
+      "New conversation answer proposes a quiet screen-free activity at home, not cafe/pub/outdoor trip or screen activity",
+      "No performed-action claim, no question asking again what preference is already available"
+    ],
+    "limitsOfEvidence": [
+      "Synthetic person, direct worker submission instead of HTTP ingress",
+      "No production durable outbox/budget gate exercised; existing live wiring checked separately",
+      "One case is not a full M3 or family acceptance result"
+    ],
+    "cost": "One contact call measured; Hindsight extraction/reflection usage and credits unknown",
+    "stop": "No automatic harness rerun; worker/provider retries remain observable and bounded by wrapper."
+  },
+  "result": {
+    "automaticRetentionAndReflection": "pass",
+    "correctedAdviceInNewSession": "pass",
+    "evidencedStyleMirror": "partial: unsupported user preference about not assuming style; leisure fact nevertheless source-linked",
+    "wholeM3": "not complete"
+  },
+  "originalRun": [
+    {
+      "stage": "submitted",
+      "elapsed": 0.00634664500830695,
+      "documents": 2,
+      "idle_seconds": 300.0
+    },
+    {
+      "stage": "retained",
+      "elapsed": 3.9120092180091888,
+      "document_id": "synthetic-m3-auto-feedback-20260928:original",
+      "receipt": {
+        "bank_id": "eva2-m3-auto-feedback-9b125c18a198c32b35d1b4a1c9b7d4d7",
+        "document_id": "synthetic-m3-auto-feedback-20260928:original",
+        "content_sha256": "7be52dab505934b3680feee5d3082087b792c273128f74a2cd2ed90956063ca1",
+        "disposition": "retained"
+      }
+    },
+    {
+      "stage": "retained",
+      "elapsed": 9.297128632024396,
+      "document_id": "synthetic-m3-auto-feedback-20260928:correction",
+      "receipt": {
+        "bank_id": "eva2-m3-auto-feedback-9b125c18a198c32b35d1b4a1c9b7d4d7",
+        "document_id": "synthetic-m3-auto-feedback-20260928:correction",
+        "content_sha256": "c54041bcf2c89a5b53f8475fd48c853b4b74842266a26acb8968beceacf36943",
+        "disposition": "retained"
+      }
+    },
+    {
+      "stage": "worker_wait",
+      "elapsed": 20.007423042028677,
+      "retains_started": 2,
+      "error": null
+    },
+    {
+      "stage": "worker_wait",
+      "elapsed": 40.007679481001105,
+      "retains_started": 2,
+      "error": null
+    },
+    {
+      "stage": "worker_wait",
+      "elapsed": 60.00790495600086,
+      "retains_started": 2,
+      "error": null
+    },
+    {
+      "stage": "worker_wait",
+      "elapsed": 80.00825242104474,
+      "retains_started": 2,
+      "error": null
+    },
+    {
+      "stage": "worker_wait",
+      "elapsed": 100.00852119503543,
+      "retains_started": 2,
+      "error": null
+    },
+    {
+      "stage": "worker_wait",
+      "elapsed": 120.00874124205438,
+      "retains_started": 2,
+      "error": null
+    },
+    {
+      "stage": "worker_wait",
+      "elapsed": 140.00897132302634,
+      "retains_started": 2,
+      "error": null
+    },
+    {
+      "stage": "worker_wait",
+      "elapsed": 160.00918404303957,
+      "retains_started": 2,
+      "error": null
+    },
+    {
+      "stage": "worker_wait",
+      "elapsed": 180.00943842501147,
+      "retains_started": 2,
+      "error": null
+    },
+    {
+      "stage": "worker_wait",
+      "elapsed": 200.00968922005268,
+      "retains_started": 2,
+      "error": null
+    },
+    {
+      "stage": "worker_wait",
+      "elapsed": 220.00994764303323,
+      "retains_started": 2,
+      "error": null
+    },
+    {
+      "stage": "worker_wait",
+      "elapsed": 240.01020225603133,
+      "retains_started": 2,
+      "error": null
+    },
+    {
+      "stage": "worker_wait",
+      "elapsed": 260.0104054090334,
+      "retains_started": 2,
+      "error": null
+    },
+    {
+      "stage": "worker_wait",
+      "elapsed": 280.0106848620344,
+      "retains_started": 2,
+      "error": null
+    },
+    {
+      "stage": "worker_wait",
+      "elapsed": 300.0108815280255,
+      "retains_started": 2,
+      "error": null
+    },
+    {
+      "stage": "automatic_reflection",
+      "elapsed": 317.93432888702955,
+      "receipt": {
+        "bank_id": "eva2-m3-auto-feedback-9b125c18a198c32b35d1b4a1c9b7d4d7",
+        "mental_model_id": "eva-style-mirror-v1-675f5cd585bb4571",
+        "disposition": "created",
+        "operation_id": "afd67191-0154-42cd-8f3f-6fc190ad2f88"
+      }
+    }
+  ],
+  "originalHarnessFailure": "After completed automatic reflection, requested_valid_at/created_at contained microseconds and exceeded MemoryRecall 20-character timestamp contract. No answer call made.",
+  "changedCauseResume": "Harness timestamp precision corrected to seconds. Only recall and previously unspent contact answer resumed; no repeated retain/reflection. No production source change.",
+  "resumedRun": [
+    {
+      "stage": "recalled",
+      "elapsed": 1.3948159749852493,
+      "style_mirror": "De gebruiker wil dat er geen communicatiestijlvoorkeuren worden verondersteld zonder vastgelegde informatie: over lengte, directheid, warmte, formaliteit, opmaak, vragen en feitelijke precisie is niets bekend. Wel is er een latere correctie: sinds 28 september 2026 wil de gebruiker op vrije avonden thuis iets rustigs doen zonder scherm; de eerdere voorkeur voor een druk café geldt niet meer.",
+      "facts": [
+        {
+          "fact_id": "hindsight:de169afe-3411-41ff-8bb4-51cb638984da",
+          "subject": "synthetic-m3-auto-feedback-20260928",
+          "predicate": "memory.observation",
+          "value": {
+            "context": null,
+            "memory_type": "observation",
+            "semantic_trust": "direct_user",
+            "source_observed_at": "2026-09-28T13:13:56Z",
+            "text": "Vanaf 28 september 2026 wil de gebruiker op vrije avonden thuis iets rustigs doen zonder scherm; de eerdere voorkeur voor een druk café met vrienden geldt niet meer."
+          },
+          "source_ref": "synthetic-m3-auto-feedback-20260928:correction",
+          "evidence_ref": "synthetic-m3-auto-feedback-20260928:correction:evidence",
+          "observed_at": "2026-09-28T13:13:56Z",
+          "trust": "direct_user"
+        }
+      ]
+    },
+    {
+      "stage": "answer",
+      "elapsed": 17.6343080640072,
+      "result": {
+        "text": "Blijf lekker thuis en kies iets rustigs zonder scherm. Een uurtje lezen, wat muziek opzetten of gewoon even rustig zitten past bij wat je fijn vindt op vrije avonden.",
+        "provider": "chatgpt-codex:gpt-6-luna",
+        "action_call": null,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 1940,
+          "output_tokens": 41
+        },
+        "timing": {
+          "first_content_ms": 13625,
+          "completed_ms": 15948
+        }
+      },
+      "retains_previously_completed": 2,
+      "reflections_previously_completed": 1
+    }
+  ],
+  "usage": {
+    "retentions": 2,
+    "automaticReflections": 1,
+    "contactCalls": 1,
+    "contactInputTokens": 1940,
+    "contactOutputTokens": 41,
+    "providerExtractionReflectionTokens": null,
+    "credits": null
+  },
+  "latency": {
+    "firstContentMs": 13625,
+    "completedMs": 15948,
+    "claim": "No fast-response claim"
+  },
+  "sourceVerification": {
+    "bootstrap/runtime.py": {
+      "sourceSha256": "6fba5c4ccd9debb7d7b8da21253fb464d80af5961f87269b5df14f1a3dd3aba4",
+      "matchesRepository": false
+    },
+    "application/memory_background.py": {
+      "sourceSha256": "7239107217649f513cd2cd09020723026e617351adafb9b22b94d7a6b373ebf8",
+      "matchesRepository": true
+    },
+    "adapters/projection/hindsight.py": {
+      "sourceSha256": "1a849487fe04d1b10b4f460e18b1db17c6594729a5c2de9bffdf2f08752e2ab6",
+      "matchesRepository": true
+    },
+    "adapters/model/pydantic_conversation.py": {
+      "sourceSha256": "0efaf5291e7c31981ef3460580874264113e458598df765dd48a282430fd876b",
+      "matchesRepository": true
+    }
+  },
+  "wiringInspection": {
+    "inspection": "Source inspection only; not HTTP ingress execution",
+    "automaticIngress": {
+      "path": "eva2/src/eva/bootstrap/runtime.py",
+      "lines": [
+        1268,
+        1291,
+        1323,
+        1341
+      ],
+      "behavior": "After durable reply, direct user utterance submitted with principal/audience/date/source/evidence; assistant output excluded"
+    },
+    "composition": {
+      "path": "eva2/src/eva/bootstrap/runtime.py",
+      "lines": [
+        2211,
+        2214,
+        2215,
+        2216
+      ],
+      "behavior": "Existing worker receives configured idle, durable outbox and reflection/storage budgets"
+    },
+    "installedDifference": "Only import/call to require_restore_activation differs in runtime.py; memory submission/composition unchanged. Worker, Hindsight and contact model match repository bytes. No install performed.",
+    "existingTestsInspectedNotRerun": [
+      "eva2/tests/application/test_memory_background.py::test_retain_is_fire_and_forget_and_reflect_waits_for_idle",
+      "eva2/tests/application/test_memory_background.py::test_group_memory_never_schedules_a_person_style_reflection",
+      "eva2/tests/application/test_memory_background.py::test_daily_budget_blocks_reflection_before_memory_provider",
+      "eva2/tests/bootstrap/test_memory_provenance.py::test_semantic_retention_never_promotes_model_output_to_direct_user"
+    ]
+  },
+  "review": {
+    "reviewer": "/root/platform_research_20260927",
+    "decision": "GO for partial evidence publication; not complete M3",
+    "findings": [
+      "Automatic worker and corrected answer confirmed",
+      "Style mirror contains unsupported user-preference framing",
+      "Preserve harness timestamp failure and slow response",
+      "No HTTP ingress, durable outbox, budget gate or family acceptance claim"
+    ]
+  },
+  "artifacts": "/home/administrator/project/.eva2-artifacts/m3-automatic-feedback-20260928",
+  "ownerAccepted": false,
+  "installation": "No new product code or installation; existing installed behavior exercised",
+  "next": "Apply source-vs-inference discipline to the existing style mirror before claiming complete preference fidelity; do not repeat this passed correction case unchanged."
+}

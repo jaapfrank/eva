@@ -1,0 +1,25 @@
+{
+  "basis": "d17e1a1f",
+  "outcome": "Explicit corrected leisure preference changes a later answer after automatic idle-time processing",
+  "limits": {
+    "retains": 2,
+    "automaticReflections": 1,
+    "contactAnswers": 1
+  },
+  "idleSeconds": 300,
+  "oldPreference": "Bij een vrije avond vind ik een druk café met vrienden meestal leuk.",
+  "correction": "Ik verander dat: ik wil voortaan op vrije avonden juist thuis iets rustigs doen zonder scherm. Stel mij geen café of kroeg meer voor. Mijn eerdere voorkeur geldt niet meer.",
+  "question": "Ik heb vanavond een uur vrij. Wat zou jij mij aanraden?",
+  "pass": [
+    "Automatic worker retains both sources and creates an evidenced style mirror after idle, without harness calling maintenance",
+    "New conversation answer proposes a quiet screen-free activity at home, not cafe/pub/outdoor trip or screen activity",
+    "No performed-action claim, no question asking again what preference is already available"
+  ],
+  "limitsOfEvidence": [
+    "Synthetic person, direct worker submission instead of HTTP ingress",
+    "No production durable outbox/budget gate exercised; existing live wiring checked separately",
+    "One case is not a full M3 or family acceptance result"
+  ],
+  "cost": "One contact call measured; Hindsight extraction/reflection usage and credits unknown",
+  "stop": "No automatic harness rerun; worker/provider retries remain observable and bounded by wrapper."
+}

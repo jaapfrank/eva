@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Automatische correctie verandert later advies",
+            "date": "28 september",
+            "state": "tested",
+            "result": "Twee uitspraken automatisch verwerkt; nieuwe sessie kiest rustig en schermvrij thuis, volgens laatste correctie. Onafhankelijk gecontroleerd op bestaande installatie.",
+            "remaining": "Stijlspiegel bevat ongegronde voorkeur; antwoord15,9s. Synthetische directe workerproef, geen gewone kanaal-/gezinsacceptatie of nieuwe functie.",
+            "source": "eva2/evidence/product/m3-automatic-feedback-20260928.json"
+          },
+          {
             "title": "Nieuwe stijlcorrectie kan eerdere voorkeur weer bijwerken",
             "date": "28 september",
             "state": "installed",
@@ -2539,15 +2547,15 @@
           }
         ],
         "now": {
-          "title": "M3 · Stijlverversing gerepareerd en geïnstalleerd",
-          "state": "Technische reparatie afgerond; M3 blijft open",
-          "detail": "Nieuwe stijlcorrecties kunnen bestaande stijlgeheugens weer verversen. Kern en werker gezond, bron gecontroleerd. Gedragsproef gedeeltelijk: korter en zonder lijst, maar 47 woorden bij maximaal 40.",
-          "doneWhen": "Deze reparatie is geïnstalleerd; algemene voorkeur-/persoonlijkheidsontwikkeling en gebruikersbeoordeling blijven afzonderlijk open."
+          "title": "M3 · Automatische correctieverwerking gecontroleerd",
+          "state": "Proef afgerond; gedeeltelijk geslaagd",
+          "detail": "Bestaande werker verwerkte de correctie automatisch; een nieuwe sessie gaf passend advies. Stijlspiegel voegde één niet-gezegde voorkeur toe. Antwoord15,9s; geen snelheidsclaim.",
+          "doneWhen": "Deze proef is afgerond; brongetrouwe stijlinterpretatie en volledige M3 blijven open."
         },
         "next": {
-          "title": "M3 · Ontwikkeling van eigen interesses en feedback",
+          "title": "M3 · Alleen onderbouwde persoonlijke voorkeuren gebruiken",
           "state": "Nog niet gestart",
-          "detail": "Bestaande persoonlijke interesse, brongebonden advies en feedbackroute samen afronden. Datumgeval niet opnieuw uitvoeren; vision wacht alleen voor echte beelden op camerakeuze."
+          "detail": "Bestaande stijlspiegel verwart instructie met een wens van de gebruiker. Eerst de concrete bron/instructiegrens controleren; geen nieuwe geheugenmodule en geen herhaling van geslaagde correctieproef."
         },
         "ownerAction": {
           "title": "Later hetzelfde onderwerp voortzetten",
@@ -2561,7 +2569,7 @@
           "expected": "Eva haalt relevante eerdere context terug. Geaccepteerd onthouden, corrigeren en vergeten hoef je niet opnieuw te testen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T13:08:31.653920+00:00"
+        "reviewedAt": "2026-09-28T13:21:12.695572+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12738,18 +12746,19 @@
           "baseCommit": "db340ac1",
           "assignment": {
             "owner": "/root",
-            "stage": "style_refresh_fix_installed",
-            "baseCommit": "bad2a199",
-            "scope": "Existing installed retention/reflection/recall/model route; isolated synthetic bank",
-            "outcome": "A later explicit communication preference changes the next response without rewriting Eva identity",
-            "endCondition": "Two bounded source versions retained/reflected and two equal-question outputs evaluated; independent review",
-            "effort": "Two short retentions, two reflections, two contact generations maximum. Actual contact tokens measured; provider extraction/reflection costs may be unknown.",
-            "status": "completed_with_partial_behavior_result"
+            "reviewer": "/root/platform_research_20260927",
+            "baseCommit": "d17e1a1f",
+            "stage": "automatic_feedback_continuity",
+            "scope": "Installed cold-path worker and Hindsight; isolated synthetic person; experiment/evidence files only",
+            "endCondition": "Automatic idle maintenance consumes explicit correction and later new-session answer respects it",
+            "effort": "Two retentions, one automatic reflection and one contact answer. Existing 300s idle; no repeat. Credits unknown.",
+            "status": "completed_partial"
           },
           "evidence": "eva2/evidence/product/undated-memory-context-20260928.json",
-          "remaining": "Style refresh installed; response shorter and unnumbered but 47 words exceeds 40-word criterion. Broader personality/interest development and family evaluation remain open.",
+          "remaining": "Automatic correction and later advice pass in isolated worker case; style mirror invents one meta-preference, earlier max40-word trial produced47. Full preference fidelity, broader interests and family evaluation remain open.",
           "temporalChainEvidence": "eva2/evidence/product/m3-retain-recall-chain-20260928.json",
-          "styleFeedbackEvidence": "eva2/evidence/product/style-reflection-refresh-20260928.json"
+          "styleFeedbackEvidence": "eva2/evidence/product/style-reflection-refresh-20260928.json",
+          "automaticFeedbackEvidence": "eva2/evidence/product/m3-automatic-feedback-20260928.json"
         },
         {
           "id": "T1",

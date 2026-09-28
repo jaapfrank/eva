@@ -1,5 +1,9 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Laatste proef — M3 automatische correctie:** afgerond en onafhankelijk beoordeeld. Bestaande werker verwerkte twee bronnen na300s rust; nieuwe sessie adviseert volgens de correctie rustig/schermvrij thuis. Stijlspiegel voegde echter één niet-gezegde persoonlijke voorkeur toe; gedeeltelijk geslaagd, M3 blijft open. Eén contactcall1.940in/41uit, antwoord15,948s; overige providercredits onbekend. Scriptdatumfout gecorrigeerd zonder opslag/reflectie te herhalen. [Bewijs](evidence/product/m3-automatic-feedback-20260928.json).
+
+**Volgende, nog niet gestart:** bestaande stijlspiegel brongetrouw maken bij de concrete ongegronde voorkeur. Geen nieuwe geheugenmodule. Initiatiefgedrag is vervolg; geen initiatiefmodelcall uitgevoerd.
+
 **Nu — M3 stijlcorrectie geïnstalleerd:** een bestaande communicatievoorkeur kon niet worden ververst doordat de providerrespons het vereiste veld wegliet. Gerichte correctie, drie tests en onafhankelijke review akkoord; kern/werker gezond, exacte bron en eigenaarpagina’s gecontroleerd, terugweg vastgelegd. De echte gedragsproef is gedeeltelijk geslaagd: korter en zonder lijst, maar 47 woorden bij maximaal 40. M3 blijft open. Twee contactcalls: 3.884 invoer-/183 uitvoertokens; extractie-/reflectieverbruik onbekend. [Bewijs](evidence/product/style-reflection-refresh-20260928.json).
 
 **Laatste uitvoerproef — I2 visionbackends:** Windows WebGPU gaf hetzelfde juiste antwoord in13,0s modeltijd tegenover eerdere WSL CPU25,1s. Eén synthetisch geval; Windows fysieke adapter nog niet vastgesteld. WSL WebGPU zag alleen software-renderer en is gestopt. Onafhankelijke review akkoord. Geen live visionfunctie. Camerakeuze blijft gevraagd voor echte scèneproef; onafhankelijk M3-vervolg kan verder. [Bewijs](evidence/product/local-vision-backends-20260928.json).
