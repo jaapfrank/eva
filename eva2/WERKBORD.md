@@ -18,7 +18,9 @@
 
 **I2 beeldinvoer voorbereid — nog niet aangesloten:** bestaande HA-camera_proxy-route hergebruikt voor binaire snapshotadapter.12 transporttests en onafhankelijke review akkoord; geen camera-/modelcalls. Ophaaltijd is geen opnametijd; geen visionfunctie geïnstalleerd. [Bewijs](evidence/product/camera-binary-input-20260928.json).
 
-**Eerstvolgende — I2, nog niet gestart:** lokale analyser koppelen aan bestaande waarnemingsroute, met totale taakdeadline en behoud van bron. Camerakeuze voor vuilnisbakken en echte-scènevergelijking blijven open; model nog niet als productbasis geselecteerd.
+**I2 lokale analysekoppeling gebouwd — niet geïnstalleerd:** bestaande SensoryEvent met bronhash, ophaal-/analysetijd en expliciete modelinterpretatie.17 gerichte tests en bronreview akkoord. Eén nieuwe lokale leegbeeldproef: geen verzonnen objecten maar herhaling,57,704s inclusief laden/verwerking. Kandidaat niet gekozen; geen cloud-/cameracalls. [Bewijs](evidence/product/local-vision-bridge-20260928.json).
+
+**Eerstvolgende — I2, nog niet gestart:** geschikte backend op vaste echte scènes kiezen vóór productieaansluiting; camerakeuze voor vuilnisbakken blijft open. Geen nieuwe planning-/initiatiefkern en geen identieke proefherhaling.
 
 **Nu — M3 stijlcorrectie geïnstalleerd:** een bestaande communicatievoorkeur kon niet worden ververst doordat de providerrespons het vereiste veld wegliet. Gerichte correctie, drie tests en onafhankelijke review akkoord; kern/werker gezond, exacte bron en eigenaarpagina’s gecontroleerd, terugweg vastgelegd. De echte gedragsproef is gedeeltelijk geslaagd: korter en zonder lijst, maar 47 woorden bij maximaal 40. M3 blijft open. Twee contactcalls: 3.884 invoer-/183 uitvoertokens; extractie-/reflectieverbruik onbekend. [Bewijs](evidence/product/style-reflection-refresh-20260928.json).
 

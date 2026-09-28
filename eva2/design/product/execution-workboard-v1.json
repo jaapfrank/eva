@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Lokale beeldanalyse kan bestaande waarnemingsstructuur leveren",
+            "date": "28 september",
+            "state": "built",
+            "result": "Brongebonden interpretatie met lokale backend, hash en aparte ophaal-/analysetijd.17 transport-/procescontroles en bronreview akkoord.",
+            "remaining": "Niet geïnstalleerd. Modelproef57,7s en herhalend antwoord; kandidaat niet gekozen, geen echte camera-/agenda-uitkomst.",
+            "source": "eva2/evidence/product/local-vision-bridge-20260928.json"
+          },
+          {
             "title": "Camerabeeld behouden als beeldbytes",
             "date": "28 september",
             "state": "built",
@@ -2603,15 +2611,15 @@
           }
         ],
         "now": {
-          "title": "I2 · Beeldinvoer voorbereid",
-          "state": "Bron gecontroleerd · nog niet aangesloten",
-          "detail": "Binaire camera-adapter gebouwd met bestaand HA-endpoint.12 transporttests en onafhankelijke review geslaagd; nul camera-/modelcalls. Geen geïnstalleerde visionfunctie.",
-          "doneWhen": "Transportvoorbereiding afgerond. Lokale analyse, echte-scènevergelijking en bestaande initiatiefkoppeling blijven nodig voor de gebruikersuitkomst."
+          "title": "I2 · Beeldkoppeling gebouwd; model nog ongeschikt bevonden",
+          "state": "Bron gecontroleerd · niet geïnstalleerd",
+          "detail": "Beeld naar bestaande SensoryEvent gekoppeld;17 gerichte tests en bronreview akkoord. Leeg beeld: geen verzonnen objecten, wel herhaling en57,7s inclusief laden/verwerking. Geen camerabewaking aangezet.",
+          "doneWhen": "Deze bronstap is afgerond. Bruikbare visionfunctie vraagt geschikte backend en echte-scènebewijs; geen nieuwe hoofdfunctie afgerond."
         },
         "next": {
-          "title": "I2 · Beeld naar lokale analyse en bestaande waarneming",
+          "title": "I2 · Geschikte beeldanalyse kiezen vóór activering",
           "state": "Nog niet gestart",
-          "detail": "Koppel optionele analyser aan bestaande sensory-events; geen tweede initiatiefkern. Modelkwaliteit en camera voor vuilnisbakken nog te bepalen."
+          "detail": "SmolVLM2-kandidaat niet geselecteerd. Gebruik vaste echte scènes en gemeten kwaliteit/wachttijd; camera voor vuilnisbakken blijft gevraagd. Bestaande camera-/waarnemingskoppeling behouden."
         },
         "ownerAction": {
           "title": "Toolgebruik na cataloguswijziging proberen",
@@ -2625,7 +2633,7 @@
           "expected": "Een normale begroeting en het juiste bewaarde resultaat. Snellere reactie is nog niet bewezen. Automatische proefvoorbereiding werd geblokkeerd; geen eigenaaracceptatie ingevuld."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T14:37:22.183693+00:00"
+        "reviewedAt": "2026-09-28T14:43:26.558552+00:00"
       }
     },
     "pendingTechnicalReview": {

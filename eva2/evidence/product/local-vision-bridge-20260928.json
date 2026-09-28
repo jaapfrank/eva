@@ -1,0 +1,38 @@
+{
+  "id": "local-vision-bridge-20260928",
+  "basis": "5d6a93c5",
+  "status": "optional_source_bridge_not_installed",
+  "change": "Trusted local backend consumes private temporary image, returns hash-bound interpretation through existing SensoryEvent. No new scheduler or initiative core. No persistence/default camera activation.",
+  "validation": {
+    "transportAndBridgeTests": 17,
+    "testSeconds": 2.18,
+    "testScope": "isolated current runtime image; fake subprocesses for transport/deadline/failure/provenance. Not real model quality proof.",
+    "realBackendResult": {
+      "image_sha256": "82bac50f77192af333973d6666b81fb428d4238b82b5ec0b9b312964f8847a47",
+      "model": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+      "revision": "7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+      "description": " The image is a simple, black and white image with a white background. The image is a photograph of a white background with no discernible content. The image is a simple black and white photograph with no discernible content. The image is a simple black and white photograph with no discernible content. The image is a simple black and white photograph with no discernible content. The image is a simple black and white photograph with no discernible content. The image is a simple black and white photograph with no discernible content. The image is a simple black and white photograph with no discernible content.",
+      "elapsed_ms": 57703.76960299999
+    },
+    "blankFrameCriterion": "No definite objects/people/events; blank/unclear acceptable. Meets this narrow criterion.",
+    "quality": "Repetitive description and57.704s whole-backend elapsed including model load/preprocess/generation. Not selected as product basis. Also labels the generated white frame as a photograph without evidence.",
+    "initialFailure": "Offline model ID lookup failed before generation; fixed by explicit pinned cache revision path. Preserved blank-stderr.log.",
+    "repeatPolicy": "One completed new negative-frame case; no repeat after result."
+  },
+  "limits": [
+    "No camera scenes, calendar correlation, semantic change detection or useful reminder proven.",
+    "Only direct-process communication/inference timeout; OS process creation/descendants not generally bounded.",
+    "Trusted backend stdout/stderr captured before result-size validation; not an arbitrary-code sandbox.",
+    "No independently verified image capture time; retrieval and analysis times remain separate."
+  ],
+  "usage": {
+    "completedLocalGenerations": 1,
+    "cloudModelCalls": 0,
+    "cameraRequests": 0,
+    "maxGeneratedTokens": 120,
+    "actualGeneratedTokens": "not recorded",
+    "credits": "unknown; no cloud generation"
+  },
+  "review": "GO from platform_research_20260927 for source preparation and bounded registration, not product backend selection.",
+  "next": "Do not activate this candidate for initiative. Select a suitable backend on fixed real-scene quality and latency before production wiring; camera choice remains open."
+}
