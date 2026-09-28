@@ -1,7 +1,7 @@
 {
   "id": "contact-namespaces-20260928",
   "baseCommit": "8254f4a2",
-  "status": "reviewed_candidate",
+  "status": "installed_user_route_trial_open",
   "requirement": "C1 lower unnecessary input while retaining authorized capability discovery",
   "source": "https://developers.openai.com/api/docs/guides/tools-tool-search",
   "sourceChecked": "2026-09-28",
@@ -82,6 +82,14 @@
     "no complete C1 or family acceptance"
   ],
   "installation": {
-    "state": "not installed"
+    "state": "installed",
+    "sourceCommit": "cb0e1cd4",
+    "checkedAt": "2026-09-28T14:10:25.838358+00:00",
+    "services": "core and worker healthy; exact source hashes verified",
+    "configuration": "Task profiles, schema0007 and both speaker bindings preserved",
+    "http": "Conversation page and project-state returned200",
+    "evidenceArtifact": "/home/administrator/project/.eva2-artifacts/c1-contact-namespaces-20260928/observed.json",
+    "rollback": "/home/administrator/project/.eva2-artifacts/c1-contact-namespaces-20260928/baseline.compose.private.json",
+    "liveConversationTrial": "Not run: automatic approval review rejected preparation without a specific reason. No bypass attempted."
   }
 }

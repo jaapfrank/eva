@@ -10,7 +10,11 @@
 
 **Afgerond — C1 catalogusinvoer gemeten:** dezelfde synthetische begroeting kost met bestaande deferred catalogus6.057invoertokens, zonder41; eerste tekst2,879/2,922s. Twee requests,6.098in/24uit, geen acties; credits onbekend. Onafhankelijke review akkoord. Geen nieuwe functie, installatie of snelheidsclaim. [Bewijs](evidence/product/contact-catalog-cost-20260928.json).
 
-**Nu — C1, coördinator:** vanaf8254f4a2 ondersteunde namespaces beproeven met ongewijzigde tools. Eén geïsoleerde transport-/modelproef, maximaal twee modelcalls, geen acties; credits onbekend. Bestandsgrens: bestaande Codex-providercompatibiliteit en gerichte tests. Eindvoorwaarde: minder invoer én correcte selectie/replay vóór review/installatie. Gewone gesprekscontext blijft afzonderlijk open.
+**Opgeleverd — C1 compactere toolcatalogus:** broncb0e1cd4 geïnstalleerd op gezonde kern/werker; exacte bron, instellingen, eigenaarpagina’s en terugweg gecontroleerd.111gerichte controles en onafhankelijke review akkoord. Synthetische begroeting2.146in tegenover6.057; geen snelheidswinst bewezen. Volledige tooldefinities behouden. Drie proefcalls, bekend4.766in/83uit plus één onbekend verbruik; credits onbekend. [Bewijs](evidence/product/contact-namespaces-20260928.json).
+
+**Gebruiksproef open:** automatische voorbereiding van de echte websiteproef is afgewezen door goedkeuringscontrole zonder specifieke reden; niet omzeild. Op de gesprekspagina: begroet Eva en vraag daarna haar nieuwste bewaarde eigen bijdrage terug. Verwacht correct resultaat; reactietijd beoordelen, geen acceptatie ingevuld.
+
+**Volgende — C1, nog niet gestart:** resterende context en wachttijd vanuit bestaande meetbronnen lokaliseren. Geen herbouw van zoekroute of ongewijzigde proefherhaling.
 
 **Nu — M3 stijlcorrectie geïnstalleerd:** een bestaande communicatievoorkeur kon niet worden ververst doordat de providerrespons het vereiste veld wegliet. Gerichte correctie, drie tests en onafhankelijke review akkoord; kern/werker gezond, exacte bron en eigenaarpagina’s gecontroleerd, terugweg vastgelegd. De echte gedragsproef is gedeeltelijk geslaagd: korter en zonder lijst, maar 47 woorden bij maximaal 40. M3 blijft open. Twee contactcalls: 3.884 invoer-/183 uitvoertokens; extractie-/reflectieverbruik onbekend. [Bewijs](evidence/product/style-reflection-refresh-20260928.json).
 

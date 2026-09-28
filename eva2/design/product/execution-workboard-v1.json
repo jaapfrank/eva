@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Compactere toolcatalogus geïnstalleerd",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Volledige tooldefinities behouden; synthetische begroeting2.146in tegenover6.057. Broncb0e1cd4 op gezonde kern/werker,111controles en onafhankelijke review akkoord.",
+            "remaining": "Geen bewezen snelheidswinst. Gewone gebruiksproef open; automatische proefvoorbereiding geblokkeerd door goedkeuringscontrole.",
+            "source": "eva2/evidence/product/contact-namespaces-20260928.json"
+          },
+          {
             "title": "Extra invoer door toolcatalogus vastgesteld",
             "date": "28 september",
             "state": "investigated",
@@ -2579,29 +2587,29 @@
           }
         ],
         "now": {
-          "title": "C1 · Compacte toolgroepen beproeven",
-          "state": "Gebouwd en gecontroleerd · installatie voorbereiden",
-          "detail": "Namespacecatalogus: begroeting2.146in tegenover6.057; één echte toolkeuze correct,111gerichte controles en onafhankelijke review akkoord. Geen snelheidsclaim. Coördinator bouwt twee runtime-images; gegevens/firmware/configuratie blijven gelijk.",
-          "doneWhen": "Lagere begroetingsinvoer én dezelfde toolselectie/replay; daarna gerichte bronwijziging, review en installatie als passend."
+          "title": "C1 · Compactere toolcatalogus geïnstalleerd",
+          "state": "Geïnstalleerd · gewone gebruiksproef open",
+          "detail": "Kern en werker gezond; broncb0e1cd4 en terugweg gecontroleerd.111tests en onafhankelijke review akkoord. Synthetische begroeting2.146in versus6.057; volledige tooldefinities behouden. Geen snelheidswinst bewezen. Geen uitvoerder meer actief op deze wijziging.",
+          "doneWhen": "Technische wijziging geïnstalleerd; gewone kanaalproef en verdere wachttijdverbetering blijven open. Complete C1 niet afgerond."
         },
         "next": {
-          "title": "C1 · Bewezen catalogusverbetering installeren",
+          "title": "C1 · Resterende context en wachttijd lokaliseren",
           "state": "Nog niet gestart",
-          "detail": "Alleen bij passende selectie en replay. Geen nieuwe router, geen verborgen beperking van Eva."
+          "detail": "Gebruik bestaande timing- en contextbronnen om resterende wachttijd gericht te meten. Geen nieuwe router of ongewijzigde modelproef."
         },
         "ownerAction": {
-          "title": "Later hetzelfde onderwerp voortzetten",
+          "title": "Toolgebruik na cataloguswijziging proberen",
           "url": "http://localhost:44711/internal/v1/dashboard/conversation",
           "linkLabel": "Privégesprek met Eva",
           "steps": [
-            "Bespreek in privé-Telegram een gewoon onderwerp met Eva.",
-            "Open later het privégesprek op de website en vraag verder over dat onderwerp, zonder alle details te herhalen.",
-            "Meld of onderwerp en laatste correctie kloppen. Deze proef mag later; bouwen gaat door."
+            "Zeg Hallo en let op de tijd tot het eerste inhoudelijke antwoord.",
+            "Vraag: Lees je nieuwste opgeslagen eigen bijdrage en vat die kort samen. Start niets nieuws.",
+            "Controleer of Eva het bestaande resultaat terughaalt en passend antwoordt. Deze proef mag later."
           ],
-          "expected": "Eva haalt relevante eerdere context terug. Geaccepteerd onthouden, corrigeren en vergeten hoef je niet opnieuw te testen."
+          "expected": "Een normale begroeting en het juiste bewaarde resultaat. Snellere reactie is nog niet bewezen. Automatische proefvoorbereiding werd geblokkeerd; geen eigenaaracceptatie ingevuld."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T14:07:19.468761+00:00"
+        "reviewedAt": "2026-09-28T14:10:25.838358+00:00"
       }
     },
     "pendingTechnicalReview": {
