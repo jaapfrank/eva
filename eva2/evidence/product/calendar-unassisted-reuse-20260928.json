@@ -23,7 +23,7 @@
   "limitations": [
     "Reuse proven within existing conversation/memory context and supported calendar subset.",
     "Initial learning required developer repairs; genuinely unseen unassisted learning remains open.",
-    "First text55.742s and final62.191s; not fast contact.",
+    "First task-answer text55.742s and final62.191s. This probe did not measure receipt headers, spoken acknowledgement or an overlapping question; no contact/overlap defect is established by this timing alone.",
     "No competitor superiority or owner acceptance claimed."
   ],
   "artifactPath": "/home/administrator/project/.eva2-artifacts/calendar-unassisted-reuse-20260928/nieuwe-planning-gecontroleerde-uitkomsten.json"

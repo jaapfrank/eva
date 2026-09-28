@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — C1: gesprek beschikbaar houden tijdens werk.** Kalenderleeropdracht én nieuwe-invoerhergebruik daadwerkelijk afgerond en onafhankelijk beoordeeld. Eva vond zelf dezelfde opgeslagen bron en bewaarde correcte uitkomsten. Eerste tekst kwam echter pas na55,742s; één gerichte bronanalyse bepaalt welke bestaande gesprek-/taakroute deze wachttijd veroorzaakt. Geen nieuwe modelproef of herbouw. [Afgerond hergebruik](evidence/product/calendar-unassisted-reuse-20260928.json).
+**Nu — C1: gesprek beschikbaar houden tijdens werk.** Kalenderleeropdracht én nieuwe-invoerhergebruik daadwerkelijk afgerond en onafhankelijk beoordeeld. Eva vond zelf dezelfde opgeslagen bron en bewaarde correcte uitkomsten. Eerste taakantwoord kwam na55,742s; ontvangstheader, audio en tussenvraag zijn niet gemeten. Eén gerichte bronanalyse onderscheidt bestaand ontvangst-/gesprekgedrag van uitvoertijd; timing alleen bewijst geen defect. Geen nieuwe modelproef of herbouw. [Afgerond hergebruik](evidence/product/calendar-unassisted-reuse-20260928.json).
 
 **Leidend — het complete bouwplan uitvoeren.** Acht vaste productstappen en 24 begrensde opdrachten; geen zakelijke uitwerking of nieuwe algemene audit. Gegevens en acceptaties behouden. Technische afronding, installatie, vergelijkingsbewijs en jouw oordeel blijven apart. De recente [eigenaarbesluiten](PROJECTDOEL.md) gaan voor oudere bouwvolgordes.
 

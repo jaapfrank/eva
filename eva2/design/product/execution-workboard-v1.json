@@ -2461,13 +2461,13 @@
         "now": {
           "title": "C1 · Gesprek beschikbaar houden tijdens werk",
           "state": "C1 · bestaande vertragingsbron lokaliseren",
-          "detail": "Hergebruik functioneel afgerond, maar eerste tekst pas55.742s. Eén bronanalyse van bestaande routering: waarom voert dit gesprek de taak af vóór reactie? Geen nieuwe modelproef of herbouw.",
+          "detail": "Hergebruik afgerond; eerste taakantwoord55.742s. De proef mat geen ontvangstheader, audio of tussenvraag. Eén bronanalyse onderscheidt bestaande ontvangst en doorpraten van de volledige uitvoering; nog geen defect vastgesteld.",
           "doneWhen": "Compleet taakpad past; bestaande opgeslagen taken blijven hervatbaar. Daarna gerichte review, installatie en werkelijk resultaat."
         },
         "next": {
           "title": "C1 · Snelle ontvangst en doorpraten",
           "state": "Gericht bestaand gedrag aansluiten",
-          "detail": "Bestaande ontvangst en achtergrondtaakroute gebruiken voor de aangetoonde uitvoerroute. Eerst vaststellen wat werkelijk ontbreekt; geen nieuw taakspecifiek script."
+          "detail": "Alleen ontbrekend bewijs of aantoonbaar routeverschil aanpakken. Lange tijd tot een volledig taakresultaat is op zichzelf geen gesprekdefect."
         },
         "ownerAction": {
           "title": "Nu geen proef nodig",
@@ -12420,7 +12420,8 @@
             "scope": "Existing source and exact reuse receipts; no edits or model calls yet.",
             "endCondition": "Identify current routes, preserved prior optimizations, demonstrated missing link and bounded next action.",
             "effort": "one bounded source analysis; credits unknown",
-            "evidence": "eva2/evidence/product/calendar-unassisted-reuse-20260928.json"
+            "evidence": "eva2/evidence/product/calendar-unassisted-reuse-20260928.json",
+            "measurementLimit": "Owner API task-answer timing only; no acknowledgement or overlap observation. Do not infer defect from completed-task latency alone."
           }
         },
         {
