@@ -49,6 +49,7 @@ class DelegatedDigitalProfile:
     maximum_response_output_tokens: int | None = None
     timeout_seconds: int = 300
     maximum_cost_usd_micros: int | None = None
+    historical_grants: tuple[DelegatedDigitalWorkGrant, ...] = ()
 
     def __post_init__(self):
         if (not isinstance(self.model_profile_id, str) or not self.model_profile_id.strip()
@@ -75,6 +76,10 @@ class DelegatedDigitalProfile:
                     type(response) is not int or response < 1
                     or attempt != response * self.maximum_completed_model_responses):
                 raise ValueError(f"digital {name} budget must bind response and attempt limits")
+        if (not isinstance(self.historical_grants, tuple)
+                or any(not isinstance(grant, DelegatedDigitalWorkGrant)
+                       for grant in self.historical_grants)):
+            raise ValueError("historical digital grants must be explicit immutable host grants")
         self.grant()
 
     def grant(self):
@@ -91,8 +96,10 @@ class DelegatedDigitalProfile:
         )
 
     def compatible_grants(self):
-        """Current limits and the exact two historical response-as-attempt limits."""
+        """Accept exact historical envelopes without upgrading an admitted attempt."""
         current = self.grant()
+        if self.historical_grants:
+            return (current, *self.historical_grants)
         values = [current]
         if self.maximum_response_input_tokens is not None:
             current = current.model_copy(update={

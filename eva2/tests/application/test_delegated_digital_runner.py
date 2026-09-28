@@ -820,3 +820,170 @@ def test_multiple_responses_use_cumulative_input_without_expanding_legacy_grant(
     assert len(tools.calls) == 2
     assert snapshots[-1]["limits"]["input_tokens_per_response"] == 100
     assert snapshots[-1]["limits"]["input_tokens"] == (100 if legacy else 800)
+
+
+@pytest.mark.parametrize("historical", [False, True])
+def test_configured_envelope_completes_learning_path_and_final_answer(monkeypatch, historical):
+    """Exercise the real runner/loop across discovery, source, skill and result steps."""
+    from dataclasses import replace
+    from types import SimpleNamespace
+    import eva.bootstrap.delegated_digital_runner as module
+    from eva.bootstrap.delegated_digital_composition import build_digital_profile
+    from tests.bootstrap.test_delegated_digital_composition import configuration
+
+    settings, bundle = configuration()
+    names = ("discover_connector_tools", "use_connector_tool", "save_workspace_document",
+             "designate_reusable_procedure", "run_reusable_procedure")
+    _, previous, _, _, journal, runner, _ = fixture()
+    runner.profile = replace(build_digital_profile(settings, bundle), capability_ids=names)
+    # The production profile includes optional progress/component tools; this
+    # deterministic fixture replaces only their persistence, not the task loop.
+    monkeypatch.setattr(module, "ComponentImprovementActions", lambda *args: SimpleNamespace(
+        action_names=(), available_for=lambda turn: False, resolve_document_call=lambda call: call))
+    calls = (
+        ConversationActionCall("discover", names[0], {}),
+        ConversationActionCall("documentation", names[1], {"operation": "documentation"}),
+        ConversationActionCall("input", names[1], {"operation": "input"}),
+        ConversationActionCall("save-method", names[2], {"document": "method"}),
+        ConversationActionCall("register", names[3], {}),
+        ConversationActionCall("execute", names[4], {}),
+        ConversationActionCall("readback", names[1], {"operation": "readback"}),
+        ConversationActionCall("save-result", names[2], {"document": "result"}),
+    )
+    state = {"calls": [], "documents": {}}
+
+    class LearningTools:
+        action_names = names
+        def available_for(self, turn): return True
+        def active_context(self, turn): return ()
+        def pending(self, turn, *, step_index): return None
+        def with_preparation_call_resolver(self, resolver): return self
+        def execute(self, turn, call, *, step_index):
+            from eva.application.background_execution import authorize_background_dispatch
+            authorize_background_dispatch(turn)
+            assert call == calls[step_index]
+            state["calls"].append(call.call_id)
+            if step_index == 1:
+                state["documentation"] = "Return the sum of the supplied values."
+            elif step_index == 2:
+                state["input"] = [4, 7, 6]
+            elif step_index == 3:
+                state["documents"]["method"] = state["documentation"]
+            elif step_index == 4:
+                assert state["documents"]["method"]
+                return ConversationActionReceipt(call, {"contract": "ProcedureReferenceAction/v1",
+                    "status": "designated", "reference": "procedure:controlled"})
+            elif step_index == 5:
+                state["result"] = sum(state["input"])
+                return ConversationActionReceipt(call, {"contract": "ProcedureReferenceAction/v1",
+                    "status": "execution_completed", "output": state["result"]})
+            elif step_index == 6:
+                assert state["result"] == 17
+                state["verified"] = True
+            elif step_index == 7:
+                assert state["verified"]
+                state["documents"]["result"] = state["result"]
+            return ConversationActionReceipt(call, {"status": "verified"})
+
+    class LearningModel:
+        responses = 0
+        def generate(self, *args, **kwargs):
+            index = self.responses
+            self.responses += 1
+            call = calls[index] if index < len(calls) else None
+            if call is None:
+                assert state["documents"]["result"] == 17
+            return ConversationModelResult(None if call else "Saved verified result: 17.", "controlled", call,
+                usage=ConversationModelUsage.measured(tool_calls=int(call is not None),
+                    input_tokens=100, output_tokens=20))
+
+    grant = None
+    if historical:
+        grant = runner.profile.historical_grants[0].model_copy(update={"capability_ids": list(names)})
+    spec = _budget_spec(runner.profile, previous, grant=grant)
+    runner.model, runner.connector_tools = LearningModel(), (LearningTools(),)
+    outcome = asyncio.run(runner.run(spec, call_id="call:complete-path"))
+    if historical:
+        assert outcome.status == "budget_exceeded", outcome
+        assert spec.grant.maximum_model_runs == 8 and spec.grant.maximum_tool_calls == 6
+        assert len(state["calls"]) == 6
+        assert "result" not in state["documents"] and outcome.result is None
+    else:
+        assert outcome.status == "succeeded", outcome
+        assert state["documents"]["result"] == 17
+        assert outcome.result.output == "Saved verified result: 17."
+        assert len(state["calls"]) == outcome.usage.tool_calls == 8
+        assert len(journal.usages) == outcome.usage.completed_model_responses == 9
+        _validate_usage(spec, outcome.usage, successful=True)
+
+
+@pytest.mark.parametrize("variant", [0, 1, 2])
+def test_new_envelope_resumes_exact_old_grant_without_replaying_completed_effect(variant):
+    from dataclasses import replace
+    from eva.bootstrap.delegated_digital_composition import build_digital_profile
+    from tests.bootstrap.test_delegated_digital_composition import configuration
+
+    source, previous, store, tools, _, runner, _ = fixture()
+    settings, bundle = configuration()
+    current = replace(build_digital_profile(settings, bundle), capability_ids=Tools.action_names)
+    grant = current.historical_grants[variant].model_copy(update={"capability_ids": list(Tools.action_names)})
+    old_profile = replace(runner.profile, maximum_input_tokens=grant.maximum_input_tokens,
+        maximum_output_tokens=grant.maximum_output_tokens)
+    old = _budget_spec(old_profile, previous, grant=grant)
+    runner.profile = old_profile
+    saved = {}
+    execute = tools.execute
+    def persist(turn, call, *, step_index):
+        receipt = execute(turn, call, step_index=step_index)
+        saved[(background_execution_namespace(turn), step_index)] = receipt
+        if step_index == 0: store.stopped = True
+        return receipt
+    tools.execute = persist
+    tools.pending = lambda turn, step_index: saved.get((background_execution_namespace(turn), step_index))
+    tools.release.set()
+    assert asyncio.run(runner.run(old, call_id="call:old-envelope")).result is None
+    store.stopped = False
+    runner.profile = current
+    runner.journal_factory = lambda *_: Journal()
+    resumed = _budget_spec(current, old, grant=old.grant, resumed=True)
+    assert resumed.grant.to_payload() == old.grant.to_payload()
+    assert resumed.execution_id == old.execution_id
+    assert resumed.worker_profile_release_sha256 != old.worker_profile_release_sha256
+    outcome = asyncio.run(runner.run(resumed, call_id="call:resumed-envelope"))
+    assert outcome.status == "succeeded", outcome
+    assert [call[2] for call in tools.calls] == [0, 1]
+    assert outcome.usage.tool_calls == 1
+
+
+
+def test_runtime_allowance_usage_survives_final_result_and_workboard_serialization():
+    from dataclasses import replace
+    from eva.bootstrap.delegated_digital_composition import build_digital_profile
+    from eva.contracts.workboard import WorkBoardUsage
+    from tests.bootstrap.test_delegated_digital_composition import configuration
+    _, previous, _, tools, _, runner, _ = fixture()
+    settings, bundle = configuration()
+    settings.runtime_resource_budget = replace(settings.runtime_resource_budget, max_input_tokens=65536)
+    runner.profile = replace(build_digital_profile(settings, bundle), capability_ids=Tools.action_names)
+    spec = _budget_spec(runner.profile, previous)
+    class ModelAtDeclaredLimits:
+        responses = 0
+        def generate(self, *args, **kwargs):
+            self.responses += 1
+            call = (ConversationActionCall("action:" + str(self.responses), "use_connector_tool", {})
+                    if self.responses < 32 else None)
+            return ConversationModelResult(None if call else "Verified task result.", "controlled", call,
+                usage=ConversationModelUsage.measured(tool_calls=int(call is not None),
+                    input_tokens=65536, output_tokens=1200))
+    runner.model = ModelAtDeclaredLimits()
+    tools.release.set()
+    outcome = asyncio.run(runner.run(spec, call_id="call:configured-allowance"))
+    assert outcome.status == "succeeded", outcome
+    assert outcome.usage.completed_model_responses == 32 and outcome.usage.tool_calls == 31
+    assert outcome.usage.input_tokens == 2097152
+    assert outcome.usage.output_tokens == 38400
+    _validate_usage(spec, outcome.usage, successful=True)
+    usage = WorkBoardUsage(contract="EvaWorkBoardUsage/v1", schema_version=1,
+        **{name: getattr(outcome.usage, name) for name in ("measurement", "input_tokens",
+            "output_tokens", "total_tokens", "cost_usd_micros")})
+    assert WorkBoardUsage.model_validate(usage.model_dump(mode="json")).total_tokens == 2135552

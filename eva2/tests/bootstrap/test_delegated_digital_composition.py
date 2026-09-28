@@ -40,13 +40,13 @@ def test_profile_uses_same_configuration_and_changes_when_model_or_provider_chan
     first = build_digital_profile(settings, bundle)
     assert first.release == build_digital_profile(settings, bundle).release
     assert first.maximum_response_input_tokens == 12000
-    assert first.grant().maximum_input_tokens == 96000
+    assert first.grant().maximum_input_tokens == 384000
     assert "get_delegated_work" in first.capability_ids
     assert "use_connector_tool" in first.capability_ids
-    assert first.maximum_model_runs == 8
+    assert first.maximum_model_runs == 32
     assert first.maximum_response_output_tokens == 1200
-    assert first.grant().maximum_output_tokens == 9600
-    assert first.maximum_tool_calls == 6
+    assert first.grant().maximum_output_tokens == 38400
+    assert first.maximum_tool_calls == 31
     settings.conversation_model = "another-model"
     assert first.release != build_digital_profile(settings, bundle).release
     settings.conversation_model = "configured-model"
@@ -204,23 +204,26 @@ def test_digital_grant_accepts_configured_catalog_beyond_legacy_sixteen_tools():
         replace(profile, capability_ids=(*names, "start_digital_work"))
 
 
-@pytest.mark.parametrize("old_output", [False, True])
-def test_legacy_budget_is_exact_and_bound_to_current_release(old_output):
+@pytest.mark.parametrize("variant", ["cumulative", "response_input", "response_both"])
+def test_legacy_budget_is_exact_and_bound_to_current_release(variant):
     from eva.bootstrap.delegated_digital_profile import DIGITAL_PROFILE_ID
     from eva.contracts.canonical_json import canonical_sha256
     settings, bundle = configuration()
     profile = build_digital_profile(settings, bundle)
     current = profile.grant()
-    output = 1200 if old_output else current.maximum_output_tokens
-    legacy = current.model_copy(update={"maximum_input_tokens": 12000,
-        "maximum_output_tokens": output, "maximum_total_tokens": 12000 + output})
+    input_tokens = 96000 if variant == "cumulative" else 12000
+    output = 1200 if variant == "response_both" else 9600
+    legacy = current.model_copy(update={"maximum_model_runs": 8,
+        "maximum_completed_model_responses": 8, "maximum_tool_calls": 6,
+        "maximum_input_tokens": input_tokens, "maximum_output_tokens": output,
+        "maximum_total_tokens": input_tokens + output})
     old_release = canonical_sha256({"profile": DIGITAL_PROFILE_ID, "grant": legacy.to_payload()})
     assert profile.accepts_grant(legacy)
     assert profile.accepts_grant(current)
     assert profile.accepts_prior_profile(legacy, old_release)
     assert not profile.accepts_prior_profile(current, old_release)
-    for changed in ({"maximum_input_tokens": 12001, "maximum_total_tokens": 12001 + output},
-                    {"maximum_output_tokens": output + 1, "maximum_total_tokens": 12001 + output},
+    for changed in ({"maximum_input_tokens": input_tokens + 1, "maximum_total_tokens": input_tokens + 1 + output},
+                    {"maximum_output_tokens": output + 1, "maximum_total_tokens": input_tokens + output + 1},
                     {"maximum_total_tokens": current.maximum_total_tokens},
                     {"maximum_tool_calls": 7}, {"maximum_model_runs": 9}):
         assert not profile.accepts_grant(legacy.model_copy(update=changed))
@@ -233,6 +236,80 @@ def test_input_attempt_budget_tracks_bounded_model_runs_with_response_limit_unch
     assert profile.maximum_response_input_tokens == 12000
     assert profile.maximum_input_tokens == 36000
     assert profile.maximum_model_runs == profile.maximum_completed_model_responses == 3
-    assert profile.maximum_tool_calls == 6 and profile.timeout_seconds == 300
+    assert profile.maximum_tool_calls == 2 and profile.timeout_seconds == 300
     with pytest.raises(ValueError, match="input budget"):
         replace(profile, maximum_input_tokens=12000)
+
+
+@pytest.mark.parametrize("configured, runs", [(1, 1), (3, 3), (9, 9), (32, 32), (64, 32)])
+def test_execution_envelope_uses_host_allowance_without_changing_response_limits(configured, runs):
+    settings, bundle = configuration()
+    settings.conversation_maximum_requests = configured
+    profile = build_digital_profile(settings, bundle)
+    assert profile.maximum_model_runs == profile.maximum_completed_model_responses == runs
+    assert profile.maximum_tool_calls == max(1, runs - 1)
+    assert profile.maximum_input_tokens == 12000 * runs
+    assert profile.maximum_output_tokens == 1200 * runs
+    assert profile.maximum_response_input_tokens == 12000
+    assert profile.maximum_response_output_tokens == 1200
+    assert profile.timeout_seconds == 300
+    assert {grant.maximum_tool_calls for grant in profile.historical_grants} == {6}
+    assert {grant.maximum_model_runs for grant in profile.historical_grants} == {min(configured, 8)}
+    # No fabricated intermediate grant or response-sized 32-run variant existed.
+    if runs > 8:
+        current = profile.grant()
+        assert not profile.accepts_grant(current.model_copy(update={
+            "maximum_input_tokens": 12000, "maximum_total_tokens": 12000 + current.maximum_output_tokens}))
+
+
+@pytest.mark.parametrize("variant", [0, 1, 2])
+def test_old_household_envelope_remains_readable_but_requires_current_release_for_resume(variant):
+    from datetime import UTC, datetime
+    from eva.bootstrap.household_digital_work import HouseholdDigitalAuthority
+    from eva.contracts.delegated_digital_work import DelegatedHouseholdDigitalWorkSpec
+    settings, bundle = configuration()
+    descriptor = ConversationToolDescriptor("home_assistant_request", "Use HA", {
+        "type": "object", "additionalProperties": False, "properties": {}, "required": []})
+    bundle = replace(bundle, conversation_tools=(*bundle.conversation_tools, descriptor),
+        external_tools=(*bundle.external_tools, SimpleNamespace(action_names=(descriptor.name,))))
+    current = build_digital_profile(settings, bundle)
+    grant = current.historical_grants[variant]
+    legacy = replace(current, maximum_model_runs=grant.maximum_model_runs,
+        maximum_completed_model_responses=grant.maximum_completed_model_responses,
+        maximum_tool_calls=grant.maximum_tool_calls, maximum_input_tokens=grant.maximum_input_tokens,
+        maximum_output_tokens=grant.maximum_output_tokens, maximum_response_input_tokens=None,
+        maximum_response_output_tokens=None, historical_grants=())
+    policy = SimpleNamespace(devices={"assist_satellite.kitchen": "kitchen"}, owner_principal_id="owner",
+        principal_binding_id="binding", policy_id="policy", household_policy_id="household-policy",
+        household_policy_sha256="c" * 64, tenant_id="tenant", installation_id="installation",
+        household_id="family", consent_operation_id="consent", effective_at="2026-09-01T00:00:00Z",
+        expires_at="2026-10-01T00:00:00Z")
+    parent = SimpleNamespace(policy=policy, sha256="d" * 64, validate_current=lambda: None,
+        validate_device=lambda *args: None, clock=lambda: datetime(2026, 9, 28, tzinfo=UTC))
+    import hashlib
+    actor = "household-device:kitchen"
+    authority = HouseholdDigitalAuthority(parent, current, lambda: SimpleNamespace(api_enabled=True,
+        effect_principal_sha256_allowlist={hashlib.sha256(actor.encode()).hexdigest()}))
+    origin = SimpleNamespace(actor_id=actor, satellite_id="assist_satellite.kitchen", device_id="kitchen",
+        research_policy_id=policy.policy_id, research_policy_sha256=parent.sha256,
+        **{key: getattr(policy, key) for key in ("household_policy_id", "household_policy_sha256",
+            "tenant_id", "installation_id", "household_id", "consent_operation_id")})
+    def release_fields(profile):
+        release = profile.release
+        return {name: getattr(release, name) for name in ("worker_profile_release_sha256",
+            "model_profile_release_sha256", "worker_program_sha256", "engine_release_sha256",
+            "output_schema_sha256")}
+    old = DelegatedHouseholdDigitalWorkSpec.model_construct(origin=origin,
+        grant=grant.model_copy(update={"capability_ids": ["home_assistant_request"]}),
+        worker_profile_id="worker:digital-work:v4", model_profile_id=current.model_profile_id,
+        owner_principal_id="owner", principal_binding_id="binding",
+        created_at="2026-09-23T00:00:00Z", deadline="2026-09-23T00:05:00Z", **release_fields(legacy))
+    authority.validate_read_spec(old)
+    with pytest.raises(ValueError, match="current authority"):
+        authority.validate_spec(old)
+    forged = old.model_copy(update={"grant": old.grant.model_copy(update={"maximum_tool_calls": 7})})
+    with pytest.raises(ValueError, match="current authority"):
+        authority.validate_read_spec(forged)
+    resumed = old.model_copy(update=release_fields(current))
+    authority.validate_spec(resumed)
+    assert resumed.grant == old.grant

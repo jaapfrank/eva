@@ -270,3 +270,23 @@ def test_household_store_rechecks_digital_authority_and_rejects_private_reads(mo
     store._household_authorizer = None
     with pytest.raises(DelegatedWorkConflict, match="authority unavailable"):
         store._authorize_household(spec, connection)
+
+
+
+@pytest.mark.parametrize("input_tokens, output_tokens", [(100, 20), (3_200_000, 100_000)])
+def test_usage_wire_bounds_cover_existing_digital_grant_bounds(input_tokens, output_tokens):
+    from eva.contracts.delegated_work import DelegatedWorkUsage
+    from eva.contracts.workboard import WorkBoardUsage
+    counters = dict(measurement="partial", input_tokens=input_tokens, output_tokens=output_tokens,
+                    total_tokens=input_tokens + output_tokens, cost_usd_micros=None)
+    delegated = DelegatedWorkUsage(contract="DelegatedWorkUsage/v1", schema_version=1,
+        completed_model_responses=32, tool_calls=31, **counters)
+    board = WorkBoardUsage(contract="EvaWorkBoardUsage/v1", schema_version=1, **counters)
+    assert DelegatedWorkUsage.model_validate(delegated.to_payload()) == delegated
+    assert WorkBoardUsage.model_validate(board.model_dump(mode="json")) == board
+    for value in (delegated, board):
+        with pytest.raises(ValidationError):
+            type(value).model_validate({**value.model_dump(mode="json"), "input_tokens": 3_200_001,
+                                       "total_tokens": 3_200_001 + output_tokens})
+        with pytest.raises(ValidationError):
+            type(value).model_validate({**value.model_dump(mode="json"), "total_tokens": 3_300_001})

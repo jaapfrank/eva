@@ -250,9 +250,9 @@ class DelegatedWorkUsage(_DelegatedContract):
     measurement: Literal["measured", "partial", "unmeasured"]
     completed_model_responses: int | None = Field(default=None, ge=0, le=1_000)
     tool_calls: int | None = Field(default=None, ge=0, le=1_000)
-    input_tokens: int | None = Field(default=None, ge=0, le=1_000_000)
+    input_tokens: int | None = Field(default=None, ge=0, le=3_200_000)
     output_tokens: int | None = Field(default=None, ge=0, le=1_000_000)
-    total_tokens: int | None = Field(default=None, ge=0, le=2_000_000)
+    total_tokens: int | None = Field(default=None, ge=0, le=3_300_000)
     cost_usd_micros: int | None = Field(default=None, ge=0, le=1_000_000_000)
 
     @model_validator(mode="after")

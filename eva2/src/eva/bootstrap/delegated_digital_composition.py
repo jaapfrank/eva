@@ -134,7 +134,7 @@ def build_digital_profile(settings, provider_bundle):
                    "budget": settings.hindsight_recall_budget, "tokens": settings.hindsight_recall_max_tokens,
                    "nodes": settings.hindsight_recall_node_budget},
     })
-    return DelegatedDigitalProfile(
+    historical = DelegatedDigitalProfile(
         model_profile_id="model:conversation:" + settings.conversation_model,
         configuration_sha256=fingerprint, engine_release_sha256=ENGINE_RELEASE_SHA256,
         capability_ids=tuple(tool.name for tool in descriptors),
@@ -147,6 +147,16 @@ def build_digital_profile(settings, provider_bundle):
         maximum_model_runs=min(settings.conversation_maximum_requests, 8),
         maximum_completed_model_responses=min(settings.conversation_maximum_requests, 8),
     )
+    # Use the host's existing request allowance, within the digital v4 schema.
+    # One model response must remain available to return the verified result.
+    # Only new tasks receive this envelope; read/resume retains exact old grants.
+    runs = min(settings.conversation_maximum_requests, 32)
+    return replace(historical,
+        maximum_model_runs=runs, maximum_completed_model_responses=runs,
+        maximum_tool_calls=max(1, runs - 1),
+        maximum_input_tokens=budget.max_input_tokens * runs,
+        maximum_output_tokens=budget.max_output_tokens * runs,
+        historical_grants=historical.compatible_grants())
 
 
 def build_digital_runner(settings, store, *, provider_bundle=None, household_authority=None):
