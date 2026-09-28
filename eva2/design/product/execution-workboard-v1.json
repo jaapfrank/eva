@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Het complete ontwerpvoorstel is gereed; geen featurebouw gestart. Eerst B0 om de aanbevolen basis te toetsen, daarna C1 gesprek tijdens werk. Acht productstappen en alle vergelijkings- en gezinscriteria blijven behouden. Geen zakelijke uitwerking.",
+      "priorityDecision": "Actief oplevergoal: B0 nu, daarna C1. De acht stappen en 24 opdrachten staan vast. Nieuwe scope vereist een expliciete wijziging of aangetoonde afhankelijkheid.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -160,25 +160,15 @@
       },
       "summary": [
         {
-          "label": "ACTUELE FASE",
-          "value": "Compleet bouwplan uitgewerkt",
-          "detail": "Ontwerpvoorstel; geen nieuwe Eva-functie geïnstalleerd."
-        },
-        {
-          "label": "EERSTVOLGENDE",
-          "value": "B0: gekozen platform aansluiten",
-          "detail": "Eén bron- en stubcontrole, daarna de eerste gespreksoplevering."
-        },
-        {
-          "label": "BEHOUDEN ACCEPTATIE",
-          "value": "Streaming en geheugen blijven geaccepteerd",
-          "detail": "Geen productpunten voor ontwerpwerk."
+          "label": "ACTIEF GOAL",
+          "value": "Het complete Eva2-plan uitvoeren",
+          "detail": "B0 gestart; daarna C1. Geen nieuwe functie afgevinkt door goalactivatie."
         }
       ],
       "nextOutcomes": [
         {
-          "title": "B0 · Basis controleren — nog niet gestart",
-          "detail": "Na het ontwerpbesluit: B0, een begrensde Hermes-koppelproef met bron en stubs; daarna C1. Nog geen bouw gestart."
+          "title": "B0 · Basis controleren — actief",
+          "detail": "Gepinde bron en stubs; één onderbouwde GO/NO-GO voor vijf platformcontracten."
         },
         {
           "title": "Stap 1 · Eén gesprek en stem — voorgesteld",
@@ -2427,28 +2417,28 @@
           }
         ],
         "now": {
-          "title": "Het complete Eva2-bouwplan is uitgewerkt",
-          "state": "Ontwerp opgeleverd; bouw nog niet gestart",
-          "detail": "Architectuur, modulecontracten, platformadvies, leren en zelfverbetering en kleine opleverstappen zijn vastgelegd. Twee onafhankelijke beoordelingen verwerkt. Geen uitvoerder actief, geen nieuwe functie of installatie. Geen zakelijke uitwerking.",
-          "doneWhen": "Een samenhangend bouwplan met interfaces, hergebruik, eindvoorwaarden, vergelijking en afzonderlijke technische en menselijke acceptatie."
+          "title": "B0 · De gekozen uitvoeringsbasis aansluiten",
+          "state": "Actief goal · B0 gestart",
+          "detail": "Coördinator activeert de vaste uitvoervolgorde. Eén uitvoerder onderzoekt de gepinde Hermes-bron en stubkoppeling. Nog geen nieuwe Eva-functie of productiewijziging.",
+          "doneWhen": "Eén onderbouwde GO/NO-GO voor vijf platformcontracten; daarna de vaste vervolgstap."
         },
         "next": {
-          "title": "B0: de aanbevolen Hermes-basis begrensd controleren",
-          "state": "Nog niet gestart",
-          "detail": "Een bron- en stubcontrole van gesprek, parallel werk, geheugen, stoppen en resultaat. Daarna C1: warme reactie en tussenvraag tijdens werkelijk achtergrondwerk."
+          "title": "C1 · Praten terwijl Eva werk afmaakt",
+          "state": "Wachtrij na B0",
+          "detail": "Warme snelle reactie via Telegram en website, echt achtergrondwerk aannemen en een tussenvraag beantwoorden voordat dit klaar is."
         },
         "ownerAction": {
-          "title": "Lees het complete Eva2-bouwplan",
+          "title": "Nu geen proef nodig",
           "url": "https://github.com/jaapfrank/eva/blob/main/eva2/EVA2_BOUWPLAN.md",
-          "linkLabel": "Open het bouwplan",
+          "linkLabel": "Bekijk het vaste uitvoerplan",
           "steps": [
-            "Begin bij het Nederlandstalige overzicht en de acht opleverstappen.",
-            "Technische documenten bevatten de modulecontracten, opdrachten en open beslisgrenzen. Geen herhaling van oude gebruikersproeven gevraagd."
+            "Volg Nu, Laatst opgeleverd en Eerstvolgende in dit projectoverzicht.",
+            "Zodra een gebruikersproef nodig is, staan hier de juiste link, handelingen en het verwachte resultaat."
           ],
-          "expected": "Een controleerbaar ontwerp van het volledige gezinsproduct; platformadvies en innovatie zijn nog geen bewezen productvoorsprong."
+          "expected": "Gebouwd, getest, geïnstalleerd en door jou geaccepteerd blijven apart. Alleen werkelijk bruikbare functies tellen als opgeleverd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T07:54:18.303305+00:00"
+        "reviewedAt": "2026-09-28T08:02:56.078145+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -2533,9 +2523,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentWork": "Compleet Eva2-ontwerp uitgewerkt en beoordeeld; geen bouw gestart.",
+      "currentWork": "Actief oplevergoal; B0 gestart op ontwerpbasis130b78a1.",
       "currentEvidence": "eva2/EVA2_BOUWPLAN.md",
-      "nextStep": "Een bron- en stubcontrole van gesprek, parallel werk, geheugen, stoppen en resultaat. Daarna C1: warme reactie en tussenvraag tijdens werkelijk achtergrondwerk.",
+      "nextStep": "C1 na het begrensde B0-basisbesluit.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -12109,7 +12099,7 @@
     "deliveryPlan": {
       "date": "2026-09-22",
       "authorizedBy": "Jaap",
-      "status": "design_ready",
+      "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
       "currentStep": 1,
       "steps": [
@@ -12268,10 +12258,10 @@
           ]
         }
       ],
-      "nextAction": "Na het ontwerpbesluit: B0, een begrensde Hermes-koppelproef met bron en stubs; daarna C1. Nog geen bouw gestart.",
+      "nextAction": "B0: de gepinde platformkoppeling met bron en stubs controleren; daarna C1.",
       "effortNotice": "Voorlopige S/M/L per kleine oplevering:2-4/4-8/8-16 technische werkuren. Geen beloofde doorlooptijden of creditprijzen; na B0 opnieuw ramen.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
-      "continuationRule": "Complete Eva2-ontwerp, geen zakelijke uitwerking. Plan is geen runtime-release of impliciete start van featurebouw. Na bouwstart de complete slices volgen.",
+      "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
       "stopRules": [
         "Geen ongewijzigde proefherhaling; eerst concrete gewijzigde oorzaak of ontbrekend bewijs.",
         "Nieuwe scope wordt vervolgwerk tenzij eigenaar of aantoonbare afhankelijkheid anders bepaalt.",
@@ -12296,8 +12286,31 @@
           "dependsOn": [],
           "outcome": "Platform aansluiten",
           "effort": "M",
-          "status": "planned",
-          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+          "status": "in_progress",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+          "baseCommit": "130b78a166facc8c07db472b467b554ef908d1ac",
+          "startedAt": "2026-09-28T08:02:56.078145+00:00",
+          "owner": "/root",
+          "endCondition": "One evidenced GO or NO-GO for the five pinned platform contracts; no production changes.",
+          "effortNotice": "M:4-8 provisional engineering hours; unknown credits. Stop at a decisive contract failure.",
+          "fileOwnership": {
+            "/root/platform_research_20260927": [
+              "eva2/experiments/b0-platform-20260928/"
+            ],
+            "/root": [
+              "AGENTS.md",
+              "eva2/PROJECTDOEL.md",
+              "eva2/EVA2_BOUWPLAN.md",
+              "eva2/WERKBORD.md",
+              "eva2/design/product/execution-workboard-v1.json",
+              "eva2/evidence/product/b0-platform-20260928.json"
+            ]
+          },
+          "checks": [
+            "Pinned source contract evidence",
+            "Deterministic stubs against actual supported interfaces if source permits",
+            "One independent review of the bounded GO/NO-GO"
+          ]
         },
         {
           "id": "C1",
@@ -12578,7 +12591,11 @@
       "designDate": "2026-09-28",
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
-      "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open."
+      "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
+      "activeSliceId": "B0",
+      "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
+      "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
+      "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal"
     },
     "dashboardClarityCorrection20260922": {
       "ownerFeedback": "Bewezen basis zegt niet of Eva2 als vaste huisgenoot bruikbaar is; toon concrete opgeleverde resultaten en open werk.",
@@ -13405,7 +13422,7 @@
       "architectureSelected": false,
       "newEvaModelCalls": 0,
       "developmentCredits": "unknown",
-      "currentActivity": "Productantwoorden verwerkt in het complete ontwerpvoorstel. Hermes aanbevolen onder compatibiliteitsvoorwaarde; niet geinstalleerd. Geen onderzoeker actief.",
+      "currentActivity": "Onderzoeksfase afgesloten; compleet plan geactiveerd. Eén uitvoerder verricht B0-bron-/stubcontrole; geen algemene nieuwe audit.",
       "implementationProposal": "eva2/design/blueprint-2026-09-28/platform-decision.md"
     },
     "completeEvaBlueprint": {
@@ -13469,6 +13486,30 @@
         ],
         "liveProductCount": "2 of 9 unchanged",
         "runtimeModelTrial": false
+      }
+    },
+    "activeGoal20260928": {
+      "status": "active",
+      "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
+      "activeSlice": "B0",
+      "scope": "Eight product steps, 24 bounded assignments",
+      "ownerAcceptanceSeparate": true,
+      "tracking": {
+        "project": "http://localhost:44712/",
+        "runtime": "http://localhost:44711/internal/v1/dashboard",
+        "conversation": "http://localhost:44716/",
+        "updatesOn": [
+          "start",
+          "blocker",
+          "delivery"
+        ],
+        "workWindowRule": "At most the predeclared slice/window before a usable result or explicit blocker; no silent extension",
+        "completionStages": [
+          "built",
+          "tested",
+          "installed",
+          "owner_accepted"
+        ]
       }
     }
   },

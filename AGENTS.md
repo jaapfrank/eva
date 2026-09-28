@@ -1,5 +1,17 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Actief oplevergoal — eigenaaropdracht 28 september 2026
+
+Voer het complete Eva2-bouwplan uit: `eva2/EVA2_BOUWPLAN.md` en
+`eva2/design/blueprint-2026-09-28/`. Geen zakelijke uitwerking. Acht productstappen,
+24 begrensde opdrachten; B0 eerst, daarna C1 en de vastgelegde afhankelijkheden.
+De planfase is afgerond; de eigenaar heeft het oplevergoal geactiveerd. De nieuwste
+besluiten bovenaan `eva2/PROJECTDOEL.md` en de actuele `audit.deliveryPlan` zijn
+leidend boven oudere behoudsvoorkeuren, reparatiewachtrijen en ontwerpstops.
+Bewaar gegevens en acceptaties, houd één uitvoeringsverantwoordelijke per taak,
+werk het bestaande dashboard bij en rond complete bruikbare uitkomsten af.
+Een basisproef of document is geen nieuwe productfunctie.
+
 ## Eigenaarcorrectie 25 september 2026 — alle HA-functies via beide speakers
 
 Eva moet via beide bestaande speakers alle Home Assistant-apparaten, diensten en

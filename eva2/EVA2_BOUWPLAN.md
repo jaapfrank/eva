@@ -1,8 +1,9 @@
 # Eva2 — het complete bouwplan
 
-**Ontwerpvoorstel · 28 september 2026.** Dit gaat over Eva voor het gezin. Er wordt
-geen zakelijke versie uitgewerkt. Dit plan is nog geen gebouwde of geïnstalleerde
-Eva en verandert geen eerdere acceptatie. De actuele voortgang staat op het
+**Uitvoerplan · actief goal sinds 28 september 2026.** Dit gaat over Eva voor het gezin.
+Er wordt geen zakelijke versie uitgewerkt. De eigenaar heeft uitvoering volgens dit
+plan gestart. Het plan zelf is geen gebouwde of geïnstalleerde functie en verandert
+geen eerdere acceptatie. De actuele voortgang staat op het
 [bestaande werkbord](WERKBORD.md).
 
 ## Wat we gaan opleveren

@@ -1,5 +1,22 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaaropdracht 28 september 2026 — oplevergoal activeren en uitvoeren
+
+Jaap heeft na het complete bouwplan opdracht gegeven hiervan een actief goal te
+maken, de vaste uitvoering te bewaken en daadwerkelijk onderdelen af te ronden.
+Het goal in deze taak is actief. De acht stappen en 24 opdrachten uit
+[EVA2_BOUWPLAN.md](EVA2_BOUWPLAN.md) bepalen de scope; B0 is de eerste opdracht,
+daarna C1 en de vastgelegde afhankelijkheden. De ontwerpstop hieronder is daarmee
+vervangen door uitvoering volgens dit plan. Dit bewijst nog geen platformgeschiktheid
+of nieuwe functie; B0 behoudt zijn begrensde bron-/stubkarakter.
+
+Houd één actueel werkbord aan. Toon bij start, blokkade en oplevering wat loopt,
+wie het doet, de laatste bruikbare oplevering, wat volgt en eventuele gebruikersproef
+met link, handelingen en verwacht resultaat. Controleer, installeer en publiceer
+geautoriseerde complete wijzigingen; technische afronding en eigenaaracceptatie
+blijven apart. Geen scope-uitbreiding, ongewijzigde proefherhaling of nieuwe brede
+herontwerpronde. Alleen afhankelijk werk wacht op een open gebruikersproef.
+
 ## Eigenaaropdracht 28 september 2026 — het complete Eva2-project bouwbaar uitwerken
 
 De eigenaar bedoelt het volledige Eva2-product, uitdrukkelijk geen zakelijke
