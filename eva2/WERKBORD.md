@@ -1,12 +1,14 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Actuele aansluitingscontrole — I2 vision:** zeven beschikbare camera-entiteiten gevonden; bestaande Eva-API haalt elf agenda’s op. Geen nieuwe agendaconnector nodig. Cameratriggers bevatten nog geen beeldinterpretatie. Volgende: optionele beeldwaarneming voorbereiden op bestaande camera-/sensory-route, lokale kandidaat eerst begrensd vergelijken. Camerakeuze gevraagd; geen beelden opgehaald of modellen aangeroepen. [Bewijs](evidence/product/vision-existing-connections-20260928.json).
+
 **Laatste eigenaarvraag afgehandeld — GLaDOS:** gerichte bronvergelijking afgerond. Kandidaten voor bestaande vervolgstappen: lokale veranderingsgestuurde beeldanalyse en begrensde gedragsfeedback. Geen installatie, modelcalls of nieuwe functieclaim. [Vergelijking en bronbesluiten](research/2026-09-28-glados-reuse.md).
 
-**Nu — M3: gerichte geheugencorrectie geïnstalleerd.** Oude ongedateerde uitspraken met “morgen” krijgen expliciete historische context. De enige gewijzigde herstelproef slaagt; oorspronkelijke mislukking blijft bewaard. Drie codecontroles en onafhankelijke review geslaagd. Kern/werker gezond, exacte bron en eigenaarpagina’s gecontroleerd; terugweg vastgelegd. Geen complete M3-claim. Herstelproef: één modelreactie, 1.866 invoer- en 34 uitvoertokens. [Bewijs](evidence/product/undated-memory-context-20260928.json).
+**Laatste geïnstalleerde correctie — M3: gerichte geheugencorrectie geïnstalleerd.** Oude ongedateerde uitspraken met “morgen” krijgen expliciete historische context. De enige gewijzigde herstelproef slaagt; oorspronkelijke mislukking blijft bewaard. Drie codecontroles en onafhankelijke review geslaagd. Kern/werker gezond, exacte bron en eigenaarpagina’s gecontroleerd; terugweg vastgelegd. Geen complete M3-claim. Herstelproef: één modelreactie, 1.866 invoer- en 34 uitvoertokens. [Bewijs](evidence/product/undated-memory-context-20260928.json).
 
 **Voor Jaap, wanneer het uitkomt:** bespreek een gewoon onderwerp in privé-Telegram. Open later [het privégesprek op de website](http://localhost:44711/internal/v1/dashboard/conversation) en vraag verder over dat onderwerp zonder de details te herhalen. Verwacht relevante eerdere context en de laatste correctie. Dit beoordeelt de kanaalvoortzetting; geaccepteerde geheugenproeven niet herhalen.
 
-**Eerstvolgend — M3, nog niet gestart:** bestaande extractie, terughalen en eigen interesses verbinden aan resterende eindvoorwaarden. Bestaand bewijs eerst; geen herhaling van geslaagde modelgevallen zonder nieuwe reden.
+**M3-vervolg blijft open, nog niet gestart:** bestaande extractie, terughalen en eigen interesses verbinden aan resterende eindvoorwaarden. Bestaand bewijs eerst; geen herhaling van geslaagde modelgevallen zonder nieuwe reden.
 
 **C3 blijft open:** echte dienstsessiestart met gesimuleerd apparaat gecontroleerd, geen fysieke duplexacceptatie. Apparaatlog van de mislukte kandidaat ontbreekt. Werkende firmware behouden; alleen afhankelijk speakerwerk wacht op die observatie.
 

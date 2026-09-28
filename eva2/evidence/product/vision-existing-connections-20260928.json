@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-09-28T12:40:58.405378+00:00",
+  "status": "existing_connections_verified_gap_identified",
+  "sourceCommit": "3ce6403e2c840a8b143ecff97f86dac3c245b635",
+  "scope": "I2 bounded existing camera/calendar connection; no whole-product audit",
+  "existing": {
+    "eva1": "src/integrations/homeassistant.js cameraSnapshot: bounded UniFi Protect image retrieval with HA camera_proxy fallback",
+    "eva2Events": "home_assistant_events.py emits state strings; resident_attention.py coalesces admitted camera binary-sensor incidents, without visual scene content",
+    "eva2Calendar": "Existing HomeAssistantApiTool GET /api/calendars returned HTTP200, success true,11 rows, untruncated. No new calendar connector needed.",
+    "liveInventory": {
+      "cameraEntities": 7,
+      "availableCameraEntities": 7,
+      "calendarStateEntities": 12,
+      "availableCalendarStateEntities": 11,
+      "eventDomains": [
+        "binary_sensor",
+        "light",
+        "person"
+      ]
+    }
+  },
+  "gap": "Current HomeAssistantApiTool._request decodes non-JSON bytes as replacement-character UTF8 text. It is not a visual image input. No local scene understanding adapter was found in the scoped Eva2 implementation search.",
+  "nextAction": "Reuse Eva1 snapshot access pattern, current HA credential and sensory event authority. Add only optional visual-observation adapter after model/hardware selection and a bounded recorded-image comparison; preserve original image timestamp/provenance, do not put private calendar contents into shared speaker context.",
+  "pendingOwnerInput": "Which existing camera sees the bins; asked asynchronously. Does not block generic adapter/interface preparation.",
+  "notDone": [
+    "No camera image fetched or sent to model",
+    "No calendar event details read",
+    "No FastVLM installation or benchmark",
+    "No camera/calendar correlated outcome or household acceptance"
+  ],
+  "developmentUsage": {
+    "evaModelCalls": 0,
+    "credits": null
+  },
+  "diagnosticCorrection": "First read-only probe imported unavailable httpx; changed probe to standard-library urllib. Production source unchanged."
+}

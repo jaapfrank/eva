@@ -2523,15 +2523,15 @@
           }
         ],
         "now": {
-          "title": "GLaDOS · Vergelijking afgerond",
-          "state": "Onderzocht; niets geïnstalleerd",
-          "detail": "Lokale veranderingsgestuurde beeldanalyse en begrensde gedragsfeedback zijn kansrijke kandidaten. Geen aangetoond voordeel voor vervanging van geheugen of kern. Voice PE en Nederlandse snelheid niet bewezen.",
-          "doneWhen": "Bronbesluit vastgelegd; vervolg bij bestaande initiatief-/persoonlijkheidsstappen, niet als nieuwe bouwronde."
+          "title": "I2 · Camera- en agendakoppeling vastgesteld",
+          "state": "Aansluitingscontrole afgerond; vision nog niet gebouwd",
+          "detail": "Zeven beschikbare camera-entiteiten. Bestaande Eva-API haalt elf agenda’s op. Cameratriggers werken als statusinformatie; beeldinhoud bereikt nog geen visionmodel.",
+          "doneWhen": "Deze controle is afgerond; camera-inhoud begrijpen en met agenda combineren blijven open."
         },
         "next": {
-          "title": "M3 · Geheugen en ontwikkeling in samenhang",
-          "state": "Nog niet gestart",
-          "detail": "Koppel bestaande extractie, terughalen en eigen interesses aan de resterende M3-eindvoorwaarden. Gebruik bestaande bewijzen; geen herbouw of herhaling van geslaagde modelgevallen."
+          "title": "I2 · Optionele beeldwaarneming",
+          "state": "Voorbereiding; nog geen installatie",
+          "detail": "Hergebruik bestaande camera-toegang en sensory-eventroute. Bepaal een lokale modelkandidaat en vergelijk op vastgelegde beelden voordat een adapter wordt aangesloten. Camerakeuze voor vuilnisbakken gevraagd."
         },
         "ownerAction": {
           "title": "Later hetzelfde onderwerp voortzetten",
@@ -2545,7 +2545,7 @@
           "expected": "Eva haalt relevante eerdere context terug. Geaccepteerd onthouden, corrigeren en vergeten hoef je niet opnieuw te testen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T12:37:44.323609+00:00"
+        "reviewedAt": "2026-09-28T12:40:58.405378+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12948,14 +12948,23 @@
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Camera/HA perception, retained initiative decisions, research and result storage exist.",
-            "remainingGap": "**Unknown:** required calendar availability and camera/calendar context connection not established by this inventory.",
-            "nextAction": "Inspect that named connection only; connect existing services, add a missing generic adapter only if confirmed. No bin-specific core rule.",
+            "remainingGap": "Confirmed visual-input gap: existing API is JSON/text, not image inference. Calendar list access works; authorized event selection and visual-calendar correlation remain open.",
+            "nextAction": "Reuse Eva1 snapshot access pattern, current HA credential and sensory event authority. Add only optional visual-observation adapter after model/hardware selection and a bounded recorded-image comparison; preserve original image timestamp/provenance, do not put private calendar contents into shared speaker context.",
             "evidencePaths": [
               "eva2/evidence/product/household-presence-gap-20260924.json",
               "eva2/evidence/product/household-initiative-installed-20260924.json"
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
+          },
+          "connectionEvidence": "eva2/evidence/product/vision-existing-connections-20260928.json",
+          "preparationAssignment": {
+            "owner": "/root",
+            "baseCommit": "3ce6403e2c840a8b143ecff97f86dac3c245b635",
+            "status": "bounded_connection_check_completed",
+            "scope": "Existing snapshot/API/event connection only",
+            "effort": "Source inspection and two successful read-only HA probes; zero Eva model calls; credits unknown",
+            "endCondition": "Identify real missing adapter without rebuilding calendar or initiative."
           }
         },
         {
