@@ -1,5 +1,12 @@
 # Eva 2 — documentatie- en onderhoudscontract
 
+> Ontwerpopdracht28 september 2026: [EVA2_BOUWPLAN.md](EVA2_BOUWPLAN.md) is de
+> actuele leesbare ingang voor het volledige toekomstige product; de
+> [technische uitwerking](design/blueprint-2026-09-28/README.md) specificeert de bouw.
+> De bestaande runtime-architectuur hieronder beschrijft de huidige/historische
+> implementatie. Voorstel en geïnstalleerd gedrag blijven afzonderlijk; alleen
+> `WERKBORD.md` en de bestaande JSON-bron bevatten actuele uitvoerstatus.
+
 > Actuele ingang, 22 september 2026: [PROJECTDOEL.md](PROJECTDOEL.md) bepaalt
 > de ambitie en [WERKBORD.md](WERKBORD.md) met zijn JSON-bron de uitvoervolgorde.
 > [HERBEOORDELING_2026-09-21.md](HERBEOORDELING_2026-09-21.md) onderbouwt de

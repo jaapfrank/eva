@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Stap 1: hergebruik de bestaande snelle ontvangst en maak doorpraten tijdens achtergrondwerk gelijk over de vier ingangen. Parallel: controleer en herstel alleen het concrete gat in persoons- en toehoordergrenzen uit stap 2. De volledige achtstappenroute blijft het actieve goal.",
+      "priorityDecision": "Het complete ontwerpvoorstel is gereed; geen featurebouw gestart. Eerst B0 om de aanbevolen basis te toetsen, daarna C1 gesprek tijdens werk. Acht productstappen en alle vergelijkings- en gezinscriteria blijven behouden. Geen zakelijke uitwerking.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -160,53 +160,57 @@
       },
       "summary": [
         {
-          "label": "UITGANGSPUNT",
-          "value": "Behouden wat aan jouw eisen voldoet",
-          "detail": "Geen ombouw om de architectuur of code op zichzelf. Alleen wijzigen bij een concreet tekort."
+          "label": "ACTUELE FASE",
+          "value": "Compleet bouwplan uitgewerkt",
+          "detail": "Ontwerpvoorstel; geen nieuwe Eva-functie geïnstalleerd."
         },
         {
-          "label": "LOKAAL OPGELEVERD",
-          "value": "Begin gesprek zonder token",
-          "detail": "Lokale toegang getest en live; dezelfde Eva op alle kanalen is nog niet volledig bewezen."
+          "label": "EERSTVOLGENDE",
+          "value": "B0: gekozen platform aansluiten",
+          "detail": "Eén bron- en stubcontrole, daarna de eerste gespreksoplevering."
         },
         {
           "label": "BEHOUDEN ACCEPTATIE",
           "value": "Streaming en geheugen blijven geaccepteerd",
-          "detail": "Bestaande proeven en Jaaps oordelen blijven ongewijzigd. Open gespreks- en fysieke luisteroordelen worden apart bijgehouden."
+          "detail": "Geen productpunten voor ontwerpwerk."
         }
       ],
       "nextOutcomes": [
         {
-          "title": "Stap 1 · Eén gesprek en stem — actief",
-          "detail": "Begroeten, snelle ontvangst, doorpraten tijdens werk, onderbreken en stoppen via website, Telegram, HA en fysiek Voice PE; gedeelde kern, afzonderlijk bewijs per ingang. Bestaande spraak en947ms ontvangst behouden; kanaalgelijkheid en begroetingsvertraging nog open."
+          "title": "B0 · Basis controleren — nog niet gestart",
+          "detail": "Na het ontwerpbesluit: B0, een begrensde Hermes-koppelproef met bron en stubs; daarna C1. Nog geen bouw gestart."
         },
         {
-          "title": "Stap 2 · Personen en continuïteit — hierna",
-          "detail": "Later terugkomen op onderwerp en correctie bij geverifieerde persoon; geen privécontext naar dochter, onbekende spreker of onbevoegde toehoorder. Geaccepteerd geheugen blijft afgesloten; nieuwe persoons-/publieksgrenzen en gedeelde speakerroute controleren."
+          "title": "Stap 1 · Eén gesprek en stem — voorgesteld",
+          "detail": "Begroeten, snelle ontvangst, doorpraten tijdens werk, onderbreken en stoppen via website, Telegram, HA en fysiek Voice PE; gedeelde kern, afzonderlijk bewijs per ingang."
         },
         {
-          "title": "Stap 3 · Taken afmaken en terugmelden — open",
-          "detail": "Meerdere aangenomen taken volgen, gecontroleerd resultaat aan juiste persoon terugbrengen, browserovername en herstel zonder dubbele acties; bruikbare taakbediening. Publiek onderzoek en taakbediening geïnstalleerd; automatische terugmelding, brede taken en browserherstart nog apart open."
+          "title": "Stap 2 · Personen en continuïteit — voorgesteld",
+          "detail": "Later terugkomen op onderwerp en correctie bij geverifieerde persoon; geen privécontext naar dochter, onbekende spreker of onbevoegde toehoorder."
         },
         {
-          "title": "Stap 4 · Initiatief en huisaanwezigheid — open",
-          "detail": "Passend initiatief met werkelijk resultaat, terecht stil blijven en bestaande huisfuncties behouden; gezin beoordeelt eigenheid, plezier en hinder. AU-008 technisch klaar; IN-02 menselijk oordeel blijft open zonder verdere bouw te blokkeren."
+          "title": "Stap 3 · Taken afmaken en terugmelden — voorgesteld",
+          "detail": "Meerdere aangenomen taken volgen, gecontroleerd resultaat aan juiste persoon terugbrengen, browserovername en herstel zonder dubbele acties; bruikbare taakbediening."
         },
         {
-          "title": "Stap 5 · Leren en langdurig werk — open",
-          "detail": "Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg. Bestaand procedure- en documentbewijs hergebruiken; algemene ongeziene uitkomst niet uit beperkte proef afleiden."
+          "title": "Stap 4 · Initiatief en huisaanwezigheid — voorgesteld",
+          "detail": "Passend initiatief met werkelijk resultaat, terecht stil blijven en bestaande huisfuncties behouden; gezin beoordeelt eigenheid, plezier en hinder."
         },
         {
-          "title": "Stap 6 · Installatie en herstel — open",
-          "detail": "Installatie zonder terminal, verhuizing met identiteit/data, veilige herkoppeling, update en verliesloze terugweg werken. Bestaande deployment en herstelvoorzieningen eerst hergebruiken."
+          "title": "Stap 5 · Leren en langdurig werk — voorgesteld",
+          "detail": "Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg."
         },
         {
-          "title": "Stap 7 · Vergelijking voorbereiden en uitvoeren — open",
-          "detail": "EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. Bestaande proeven behouden; verlies of ontbrekend bewijs niet omzetten in winst."
+          "title": "Stap 6 · Installatie en herstel — voorgesteld",
+          "detail": "Installatie zonder terminal, verhuizing met identiteit/data, veilige herkoppeling, update en verliesloze terugweg werken."
         },
         {
-          "title": "Stap 8 · Eindkandidaat en acceptatie — open",
-          "detail": "Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. Technische afronding en eigenaaracceptatie blijven afzonderlijk; geen onbegrensde best-mogelijke-eis."
+          "title": "Stap 7 · Vergelijking voorbereiden en uitvoeren — voorgesteld",
+          "detail": "EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat."
+        },
+        {
+          "title": "Stap 8 · Eindkandidaat en acceptatie — voorgesteld",
+          "detail": "Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie."
         }
       ],
       "openRisks": [
@@ -2423,27 +2427,28 @@
           }
         ],
         "now": {
-          "title": "Technisch voorstel geconcretiseerd",
-          "state": "Voorstel vastgelegd · nog niet beproefd",
-          "detail": "Voorstel: ervaring omzetten in kleine uitvoerbare taakmodellen en bij gewijzigde aannames gericht aanpassen. Twin overlapt; betaalbaarheid en voordeel voor Eva zijn onbewezen. Onafhankelijke haalbaarheidskritiek en afwijscriteria vastgelegd. Geen uitvoerder actief; geen bouw, installatie of Eva-modelproef."
+          "title": "Het complete Eva2-bouwplan is uitgewerkt",
+          "state": "Ontwerp opgeleverd; bouw nog niet gestart",
+          "detail": "Architectuur, modulecontracten, platformadvies, leren en zelfverbetering en kleine opleverstappen zijn vastgelegd. Twee onafhankelijke beoordelingen verwerkt. Geen uitvoerder actief, geen nieuwe functie of installatie. Geen zakelijke uitwerking.",
+          "doneWhen": "Een samenhangend bouwplan met interfaces, hergebruik, eindvoorwaarden, vergelijking en afzonderlijke technische en menselijke acceptatie."
         },
         "next": {
-          "title": "Een onderbouwde basiskeuze en concrete opleverstappen",
+          "title": "B0: de aanbevolen Hermes-basis begrensd controleren",
           "state": "Nog niet gestart",
-          "detail": "Beoordeel welke bestaande implementatie het voorgestelde gedrag al levert, begrens de onderscheidende vergelijking en verbind dit aan de platformkeuze en complete opleverstappen. Geen nieuwe featurebouw of installatie gestart."
+          "detail": "Een bron- en stubcontrole van gesprek, parallel werk, geheugen, stoppen en resultaat. Daarna C1: warme reactie en tussenvraag tijdens werkelijk achtergrondwerk."
         },
         "ownerAction": {
-          "title": "Geen herhaling van de zes vragen nodig",
-          "url": "https://github.com/jaapfrank/eva/tree/main/eva2/research/2026-09-27-system-choice",
-          "linkLabel": "Lees het systeemonderzoek",
+          "title": "Lees het complete Eva2-bouwplan",
+          "url": "https://github.com/jaapfrank/eva/blob/main/eva2/EVA2_BOUWPLAN.md",
+          "linkLabel": "Open het bouwplan",
           "steps": [
-            "De antwoorden over dagelijks gedrag, persoonlijkheid, spraak en zelfstandigheid zijn gegeven.",
-            "Technisch onderscheid wordt nu onderbouwd; een definitief bouwplan en platformkeuze liggen nog niet ter goedkeuring voor."
+            "Begin bij het Nederlandstalige overzicht en de acht opleverstappen.",
+            "Technische documenten bevatten de modulecontracten, opdrachten en open beslisgrenzen. Geen herhaling van oude gebruikersproeven gevraagd."
           ],
-          "expected": "Eerst een concreet en onderbouwd ontwerp, daarna besluiten over de uitvoering."
+          "expected": "Een controleerbaar ontwerp van het volledige gezinsproduct; platformadvies en innovatie zijn nog geen bewezen productvoorsprong."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-27T17:05:18.848140+00:00"
+        "reviewedAt": "2026-09-28T07:54:18.303305+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -2528,9 +2533,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentWork": "Doorlopend projectgoal actief: acht stappen tot één afgeronde Eva. Nu stap1: gedeeld gesprek en stem, met behoud van bestaande snelle ontvangst. Publiek achtergrondonderzoek is al geïnstalleerd; geheugenacceptaties en eerdere opleveringen blijven staan.",
-      "currentEvidence": "eva2/evidence/product/background-public-research-live-2026-09-22.json",
-      "nextStep": "Stap 1: hergebruik de bestaande snelle ontvangst en maak doorpraten tijdens achtergrondwerk gelijk over de vier ingangen. Parallel: controleer en herstel alleen het concrete gat in persoons- en toehoordergrenzen uit stap 2. De volledige achtstappenroute blijft het actieve goal.",
+      "currentWork": "Compleet Eva2-ontwerp uitgewerkt en beoordeeld; geen bouw gestart.",
+      "currentEvidence": "eva2/EVA2_BOUWPLAN.md",
+      "nextStep": "Een bron- en stubcontrole van gesprek, parallel werk, geheugen, stoppen en resultaat. Daarna C1: warme reactie en tussenvraag tijdens werkelijk achtergrondwerk.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -2545,7 +2550,8 @@
         "previousInterpretation": "Een door de assistent verplicht gesteld dagmaximum of nieuw verbruiksmandaat was geen eis van Jaap. De geïnstalleerde €0-configuratiewaarde was geen bewijs dat Jaap bestaand abonnementsgebruik wilde blokkeren.",
         "developmentWeekLimitCause": "Niet vastgesteld; werktijd alleen is geen gebruiksmeting."
       },
-      "developmentSourceCommit": "3e7e6811ccf400fec1c6c9d44882e95487ba4253"
+      "developmentSourceCommit": "3e7e6811ccf400fec1c6c9d44882e95487ba4253",
+      "designUpdatedAt": "2026-09-28T07:54:18.303305+00:00"
     },
     "pendingHumanAcceptance": {
       "authorization": "Jaap approved 7 September: build memory viewer while conversation assessment stays open. No human acceptance inferred.",
@@ -12103,7 +12109,7 @@
     "deliveryPlan": {
       "date": "2026-09-22",
       "authorizedBy": "Jaap",
-      "status": "active",
+      "status": "design_ready",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
       "currentStep": 1,
       "steps": [
@@ -12116,7 +12122,14 @@
           ],
           "doneWhen": "Begroeten, snelle ontvangst, doorpraten tijdens werk, onderbreken en stoppen via website, Telegram, HA en fysiek Voice PE; gedeelde kern, afzonderlijk bewijs per ingang.",
           "preserve": "Bestaande spraak en snelle ontvangst behouden. Snelle inhoudelijke begroeting, kanaalgelijkheid en fysieke continue-spraakproef blijven open; uitgebreide proeven volgen later.",
-          "planningEffortHours": "4–12"
+          "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
+          "historicalPlanningEffortHours": "4–12",
+          "blueprintSlices": [
+            "C1",
+            "C2",
+            "C3",
+            "C4"
+          ]
         },
         {
           "number": 2,
@@ -12129,7 +12142,13 @@
           ],
           "doneWhen": "Later terugkomen op onderwerp en correctie bij geverifieerde persoon; geen privécontext naar dochter, onbekende spreker of onbevoegde toehoorder.",
           "preserve": "Geaccepteerd geheugen en privécontinuïteit behouden. Eigenaar kiest privévoortzetting via Telegram; geen privé-inhoud op gedeelde speakers. Gedeelde spraak vereist geen persoonlijke verificatie voor algemeen HA-beheer, inclusief automatiseringen (expliciete eigenaarcorrectie 25 september). Echte continuïteits-/grensproeven blijven open.",
-          "planningEffortHours": "4–12"
+          "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
+          "historicalPlanningEffortHours": "4–12",
+          "blueprintSlices": [
+            "M1",
+            "M2",
+            "M3"
+          ]
         },
         {
           "number": 3,
@@ -12143,7 +12162,14 @@
           ],
           "doneWhen": "Meerdere aangenomen taken volgen, gecontroleerd resultaat aan juiste persoon terugbrengen, browserovername en herstel zonder dubbele acties; bruikbare taakbediening.",
           "preserve": "Publiek onderzoek, digitale uitvoering, taakbediening en terugmelding behouden. Op25september geïnstalleerd: bijsturen, bewaren en bedienen na einde spraakgesprek, plus eenmalige terugmelding op de oorspronkelijke speaker. Twee achtergrondslots behouden; echte gelijktijdigheids-/kanaalproef, brede ongeziene taken en browserpraktijk blijven open.",
-          "planningEffortHours": "6–16"
+          "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
+          "historicalPlanningEffortHours": "6–16",
+          "blueprintSlices": [
+            "T1",
+            "T2",
+            "T3",
+            "T4"
+          ]
         },
         {
           "number": 4,
@@ -12156,7 +12182,12 @@
           ],
           "doneWhen": "Passend initiatief met werkelijk resultaat, terecht stil blijven en bestaande huisfuncties behouden; gezin beoordeelt eigenheid, plezier en hinder.",
           "preserve": "Algemene HA-API geïnstalleerd op eigenaarwebsite, Telegram en achtergrondwerker. Echte configuratieanalyse geslaagd; tijdelijke uitgeschakelde automatisering gemaakt, gewijzigd en teruggelezen, eindrapport na één hervatting. Brede gedeelde bediening, algemene huispraktijk en nut/hinder blijven open. Bestaande speakerbediening behouden.",
-          "planningEffortHours": "4–12"
+          "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
+          "historicalPlanningEffortHours": "4–12",
+          "blueprintSlices": [
+            "I1",
+            "I2"
+          ]
         },
         {
           "number": 5,
@@ -12169,7 +12200,14 @@
           ],
           "doneWhen": "Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg.",
           "preserve": "Bestaande CSV- en FLUXNOTE-leer-/hergebruikproeven behouden. Eén eigen bronverbetering door Eva gemaakt, pakket na opslagcorrectie en één gerichte hervatting opgeslagen; onafhankelijk gemeten71/90→90/90, beoordeeld en geïnstalleerd met terugweg. Coördinatorhulp blijft zichtbaar. Externe documentatie, algemene zelfstandigheid en meerdaagse praktijk blijven open.",
-          "planningEffortHours": "8–24"
+          "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
+          "historicalPlanningEffortHours": "8–24",
+          "blueprintSlices": [
+            "L1",
+            "L2",
+            "L3",
+            "R1"
+          ]
         },
         {
           "number": 6,
@@ -12182,7 +12220,12 @@
           ],
           "doneWhen": "Installatie zonder terminal, verhuizing met identiteit/data, veilige herkoppeling, update en verliesloze terugweg werken.",
           "preserve": "Bestaande deployment en herstelvoorzieningen eerst hergebruiken.",
-          "planningEffortHours": "6–18"
+          "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
+          "historicalPlanningEffortHours": "6–18",
+          "blueprintSlices": [
+            "O1",
+            "O2"
+          ]
         },
         {
           "number": 7,
@@ -12195,7 +12238,12 @@
           ],
           "doneWhen": "EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat.",
           "preserve": "Bestaande proeven behouden; verlies of ontbrekend bewijs niet omzetten in winst.",
-          "planningEffortHours": "4–12"
+          "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
+          "historicalPlanningEffortHours": "4–12",
+          "blueprintSlices": [
+            "P1",
+            "P2"
+          ]
         },
         {
           "number": 8,
@@ -12212,13 +12260,18 @@
           ],
           "doneWhen": "Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie.",
           "preserve": "Technische afronding en eigenaaracceptatie blijven afzonderlijk; geen onbegrensde best-mogelijke-eis.",
-          "planningEffortHours": "4–12"
+          "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
+          "historicalPlanningEffortHours": "4–12",
+          "blueprintSlices": [
+            "F1",
+            "F2"
+          ]
         }
       ],
-      "nextAction": "Coördinator verwerkt antwoorden, vraagt alleen ontbrekende aspecten uit en onderbouwt daarna platform, modules, ontwikkeling en oplevering. Het afgeronde brononderzoek is invoer; er is nog geen gekozen architectuur.",
-      "effortNotice": "Eerdere bouwraming is geen actuele raming voor de nog te kiezen basis. Brononderzoek: één begrensde bronronde en gebundelde review; creditkosten onbekend. Bouw-/migratieraming volgt pas uit concrete aansluitingen en open beslispunten.",
+      "nextAction": "Na het ontwerpbesluit: B0, een begrensde Hermes-koppelproef met bron en stubs; daarna C1. Nog geen bouw gestart.",
+      "effortNotice": "Voorlopige S/M/L per kleine oplevering:2-4/4-8/8-16 technische werkuren. Geen beloofde doorlooptijden of creditprijzen; na B0 opnieuw ramen.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
-      "continuationRule": "Actuele eigenaaropdracht: eerst productwensen uitvragen, daarna het integrale plan herschrijven en de technische keuze onderbouwen. Geen verplichte bestaande code/architectuur. Geen featurebouw/installatie tijdens deze planfase.",
+      "continuationRule": "Complete Eva2-ontwerp, geen zakelijke uitwerking. Plan is geen runtime-release of impliciete start van featurebouw. Na bouwstart de complete slices volgen.",
       "stopRules": [
         "Geen ongewijzigde proefherhaling; eerst concrete gewijzigde oorzaak of ontbrekend bewijs.",
         "Nieuwe scope wordt vervolgwerk tenzij eigenaar of aantoonbare afhankelijkheid anders bepaalt.",
@@ -12235,7 +12288,297 @@
       "ownerPriority20260927": "Eva2 als geheel efficiënter, slimmer, sneller en autonomer dan Eva1; modulair en selectief installeerbaar met actuele geschikte opensource. Vergelijking met Eva1 en concurrenten bepaalt bouwkeuzes vanaf nu, niet alleen achteraf. Bestaande code, data en acceptaties behouden; geen nieuwe brede audit of algemene herbouw.",
       "ownerResearchMandate20260927": "Integraal onderzoek van relevante systemen vóór bouwplan; onderscheidend geheel, geen losse marginale feature. Tijdens onderzoek geen featurebouw/installatie/modelproeven.",
       "effortNoticeBeforeSystemResearch20260927": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
-      "ownerProductReset20260927": "Bestaande implementatie hoeft niet behouden te blijven; eerst alle benodigde verwachtingen uitvragen en het volledige plan herschrijven. Onderzoek is onderbouwing, geen definitieve keuze."
+      "ownerProductReset20260927": "Bestaande implementatie hoeft niet behouden te blijven; eerst alle benodigde verwachtingen uitvragen en het volledige plan herschrijven. Onderzoek is onderbouwing, geen definitieve keuze.",
+      "implementationSlices": [
+        {
+          "id": "B0",
+          "parentStep": 0,
+          "dependsOn": [],
+          "outcome": "Platform aansluiten",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "C1",
+          "parentStep": 1,
+          "dependsOn": [
+            "B0"
+          ],
+          "outcome": "Gesprek tijdens werk via tekst",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "C2",
+          "parentStep": 1,
+          "dependsOn": [
+            "C1"
+          ],
+          "outcome": "Twee taken sturen en terugmelden",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "C3",
+          "parentStep": 1,
+          "dependsOn": [
+            "C1",
+            "C2"
+          ],
+          "outcome": "HA en beide fysieke speakers",
+          "effort": "L",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "C4",
+          "parentStep": 1,
+          "dependsOn": [
+            "C3"
+          ],
+          "outcome": "Spraak en onderbreken per ingang",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "M1",
+          "parentStep": 2,
+          "dependsOn": [
+            "B0",
+            "C1"
+          ],
+          "outcome": "Onderwerpen later voortzetten",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "M2",
+          "parentStep": 2,
+          "dependsOn": [
+            "M1",
+            "C3"
+          ],
+          "outcome": "Privé en gedeelde context scheiden",
+          "effort": "S",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "M3",
+          "parentStep": 2,
+          "dependsOn": [
+            "M1"
+          ],
+          "outcome": "Voorkeuren en persoonlijkheid ontwikkelen",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "T1",
+          "parentStep": 3,
+          "dependsOn": [
+            "C2"
+          ],
+          "outcome": "Onderzoek werkelijk afronden",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "T2",
+          "parentStep": 3,
+          "dependsOn": [
+            "C3"
+          ],
+          "outcome": "Algemene huisbediening",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "T3",
+          "parentStep": 3,
+          "dependsOn": [
+            "C2"
+          ],
+          "outcome": "Browser- en diensttaak met overname",
+          "effort": "L",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "T4",
+          "parentStep": 3,
+          "dependsOn": [
+            "C2"
+          ],
+          "outcome": "Taakbediening en resultaten",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "I1",
+          "parentStep": 4,
+          "dependsOn": [
+            "M2",
+            "M3",
+            "T2"
+          ],
+          "outcome": "Huisaanwezigheid en initiatief",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "I2",
+          "parentStep": 4,
+          "dependsOn": [
+            "I1",
+            "T1"
+          ],
+          "outcome": "Camera, agenda en eigen onderzoek",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "L1",
+          "parentStep": 5,
+          "dependsOn": [
+            "T1",
+            "T3"
+          ],
+          "outcome": "Werkwijze leren en hergebruiken",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "L2",
+          "parentStep": 5,
+          "dependsOn": [
+            "C2",
+            "T3"
+          ],
+          "outcome": "Meerdaags project hervatten",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "L3",
+          "parentStep": 5,
+          "dependsOn": [
+            "L1",
+            "L2"
+          ],
+          "outcome": "Eigen verbetering beoordelen",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "R1",
+          "parentStep": 5,
+          "dependsOn": [
+            "L1"
+          ],
+          "outcome": "Uitvoerbare ervaring vergelijken",
+          "effort": "M research",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "O1",
+          "parentStep": 6,
+          "dependsOn": [
+            "C1"
+          ],
+          "outcome": "Installatie met optionele modules",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "O2",
+          "parentStep": 6,
+          "dependsOn": [
+            "O1",
+            "M1",
+            "L2"
+          ],
+          "outcome": "Bijwerken en gegevens herstellen",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "P1",
+          "parentStep": 7,
+          "dependsOn": [
+            "B0"
+          ],
+          "outcome": "Vergelijkingsvoorwaarden vastleggen",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "P2",
+          "parentStep": 7,
+          "dependsOn": [
+            "F1",
+            "P1"
+          ],
+          "outcome": "Volledige vergelijking uitvoeren",
+          "effort": "L; runtime unknown",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "F1",
+          "parentStep": 8,
+          "dependsOn": [
+            "C4",
+            "M2",
+            "M3",
+            "T1",
+            "T2",
+            "T3",
+            "T4",
+            "I2",
+            "L3",
+            "O2",
+            "P1"
+          ],
+          "outcome": "Geintegreerde eindkandidaat",
+          "effort": "M",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        },
+        {
+          "id": "F2",
+          "parentStep": 8,
+          "dependsOn": [
+            "F1"
+          ],
+          "outcome": "Gezinsgebruik en eindoordeel",
+          "effort": "7 calendar days",
+          "status": "planned",
+          "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+        }
+      ],
+      "designDate": "2026-09-28",
+      "blueprint": "eva2/EVA2_BOUWPLAN.md",
+      "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
+      "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open."
     },
     "dashboardClarityCorrection20260922": {
       "ownerFeedback": "Bewezen basis zegt niet of Eva2 als vaste huisgenoot bruikbaar is; toon concrete opgeleverde resultaten en open werk.",
@@ -13062,7 +13405,71 @@
       "architectureSelected": false,
       "newEvaModelCalls": 0,
       "developmentCredits": "unknown",
-      "currentActivity": "Awaiting owner product answers; no feature work or researcher active."
+      "currentActivity": "Productantwoorden verwerkt in het complete ontwerpvoorstel. Hermes aanbevolen onder compatibiliteitsvoorwaarde; niet geinstalleerd. Geen onderzoeker actief.",
+      "implementationProposal": "eva2/design/blueprint-2026-09-28/platform-decision.md"
+    },
+    "completeEvaBlueprint": {
+      "date": "2026-09-28",
+      "status": "design_reviewed",
+      "baseCommit": "e94f384551d78b8b7ae158d8688cd3a75fa81cda",
+      "scope": "Complete family product; no business edition",
+      "documents": [
+        "eva2/EVA2_BOUWPLAN.md",
+        "eva2/design/blueprint-2026-09-28/README.md",
+        "eva2/design/blueprint-2026-09-28/architecture.md",
+        "eva2/design/blueprint-2026-09-28/platform-decision.md",
+        "eva2/design/blueprint-2026-09-28/learning-and-initiative.md",
+        "eva2/design/blueprint-2026-09-28/delivery-plan.md"
+      ],
+      "activeWorkers": [],
+      "workOwnership": {
+        "/root": [
+          "architecture.md",
+          "delivery-plan.md",
+          "owner overview",
+          "primary documents and workboard"
+        ],
+        "/root/platform_research_20260927": [
+          "platform-decision.md"
+        ],
+        "/root/baseline_research_20260927": [
+          "learning-and-initiative.md"
+        ]
+      },
+      "independentReview": {
+        "reviewers": [
+          "/root/platform_research_20260927",
+          "/root/baseline_research_20260927"
+        ],
+        "outcome": "No remaining blocking findings after stated integration corrections",
+        "resolved": [
+          "B0 is source/stub only; live comparative cases are C1/L1",
+          "A local product gap cannot authorize a second planner"
+        ],
+        "scope": "Cross-document design coherence; not runtime evidence"
+      },
+      "newEvaModelCalls": 0,
+      "featureCodeChanged": false,
+      "installed": false,
+      "ownerAccepted": false,
+      "developmentCredits": "unknown",
+      "openTechnicalQuestions": [
+        "Pinned platform hooks and authorized provider compatibility",
+        "Scoped memory/correction integration",
+        "Physical Voice PE latency and continuous speech",
+        "Whole-task quality/cost and research benefit"
+      ],
+      "verification": {
+        "checkedAt": "2026-09-28T07:58:01.647604+00:00",
+        "checks": [
+          "Relative blueprint links resolve and Markdown fences balance",
+          "All 24 proposed slices have an acyclic dependency graph",
+          "Original execution completions, capability evidence and acceptance unchanged",
+          "Live localhost:44712/project-state serves the updated design status"
+        ],
+        "liveProductCount": "2 of 9 unchanged",
+        "runtimeModelTrial": false
+      }
     }
   },
   "activeTaskId": "AU-008",

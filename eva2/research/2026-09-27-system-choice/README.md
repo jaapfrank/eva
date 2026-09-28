@@ -1,5 +1,10 @@
 # Eva2: systeemonderzoek vóór een nieuw bouwplan
 
+> Vervolg28 september: het [complete bouwplan](../../EVA2_BOUWPLAN.md) en de
+> [technische specificatie](../../design/blueprint-2026-09-28/README.md) verwerken dit
+> onderzoek tot een voorgestelde basiskeuze en kleine opleverstappen. Dit eerdere
+> onderzoeksdocument blijft bewijs/achtergrond; het is geen tweede actuele planning.
+
 27 september 2026 · onderzoeksbasis c025550b · brononderzoek, geen nieuwe productrelease.
 
 **Nieuw eigenaarbesluit na dit onderzoek:** eerst verwachtingen uitvragen en het plan opnieuw schrijven. Bestaande code of architectuur hoeft niet behouden te blijven. Onderstaande bevindingen en shortlist zijn onderzoeksinvoer, geen vastgesteld plan.

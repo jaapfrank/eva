@@ -1,5 +1,14 @@
 # Eva 2 — eerst hergebruiken, pas daarna zelf bouwen
 
+> Actualisatie28 september 2026: de eigenaar heeft op 27 september vastgelegd dat
+> bestaande code/platformkeuzes geen verplichte selectievoorwaarde meer zijn.
+> Het [nieuwe platformvoorstel](design/blueprint-2026-09-28/platform-decision.md)
+> beveelt Hermes aan met één begrensde compatibiliteitscontrole en Pydantic-native
+> als vaste terugval. Oudere voorkeuren/tabellen hieronder blijven historische
+> bronnen; zij zijn geen opdracht om al die pakketten te installeren. Behoud van
+> gegevens, exacte pins, licentie-/onderhoudscontrole en een werkende terugweg blijven
+> gelden. Dit ontwerp is geen dependency-upgrade of productie-installatie.
+
 > Eigenaarbesluit 22 september 2026: bestaande bouwstenen blijven in gebruik
 > zolang zij aan de eigenaarseisen voldoen. Onderstaande alternatieven zijn
 > geen vervangingsopdracht; selecteer alleen opnieuw bij een concreet tekort.

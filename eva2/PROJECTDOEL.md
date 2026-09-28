@@ -1,5 +1,29 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaaropdracht 28 september 2026 — het complete Eva2-project bouwbaar uitwerken
+
+De eigenaar bedoelt het volledige Eva2-product, uitdrukkelijk geen zakelijke
+uitwerking. Lever een samenhangend detailplan waarmee daarna gebouwd kan worden:
+alle gezinsfuncties, technische vernieuwing, modulegrenzen, hergebruik/vervanging,
+interfaces, kleine opleverstappen, meetbare eindvoorwaarden en verbruiksbeheersing.
+De bestaande acht productstappen, dagelijkse Eva1-referentie en vergelijking met
+concurrenten blijven onderdeel van de volledige ambitie. Gegevens en huidige
+installatie blijven tijdens de ontwerpopdracht behouden.
+
+Het [complete bouwplan](EVA2_BOUWPLAN.md) is het actuele ontwerpvoorstel. De daarin
+voorgestelde Hermes-basis en vaste terugval zijn onderbouwde ontwerpkeuzes van de
+coördinator, nog geen eigenaaracceptatie of geïnstalleerde architectuur. De eerste
+uitvoerstap is een begrensde koppelproef; technische geschiktheid en voordeel worden
+niet uit platformdocumentatie alleen afgeleid. Zakelijke verkoop is een mogelijke
+latere richting en vergroot deze scope niet.
+
+Deze opdracht rondt het uitvragen/ontwerpen uit 27 september af met een concreet plan;
+ze start nog geen featurebouw, installatie of nieuwe Eva-modelproef. Gewone bruikbare
+functionaliteit, bewezen technische onderscheiding en gezinsacceptatie blijven
+apart zichtbaar. Als een innovatiehypothese wordt afgewezen, blijft het vereiste
+technische onderscheid open; een bruikbare tussenrelease wordt geen volledige
+revolutieclaim. Voortgang en opdrachten blijven op het bestaande werkbord.
+
 ## Eigenaarverduidelijkingen 27 september 2026 — product en technisch onderscheid
 
 De zes vragen over de gewenste dagelijkse Eva zijn beantwoord. Eva moet warm,
