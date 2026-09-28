@@ -61,7 +61,8 @@ article h3 { text-transform: capitalize; }
 .work-step.skipped { border-color: #9a9690; }
 
 .component-health { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; margin-top:16px; }
-.component-health .card { border-left:5px solid #869298; }
+.component-health .card { border-left:5px solid #869298; background:#fff; color:#20332b; }
+.component-health .card h3, .component-health .card strong, .component-health .card small { color:#20332b; }
 .component-health .component-ready { border-left-color:#28704f; }
 .component-health .component-attention { border-left-color:#b74432; }
 .component-health .component-not_configured { border-left-color:#ad8432; }
