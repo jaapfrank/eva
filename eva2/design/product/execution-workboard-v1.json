@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Bijsturen blokkeert de geplande vervolgstap niet meer",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Gecorrigeerde poging wordt gevolgd; resultaat eenmaal doorgegeven.18 gerichte controles, onafhankelijke review en live broncontrole geslaagd.",
+            "remaining": "Geen algemene L2- of gezinsacceptatie. Historisch geblokkeerd werk niet herstart; procesuitval midden in correctie nog niet gedekt.",
+            "source": "eva2/evidence/product/scheduled-correction-continuity-20260928.json"
+          },
+          {
             "title": "Vastgesteld waarom een geplande reeks na bijsturen vastloopt",
             "date": "28 september",
             "state": "investigated",
@@ -2635,15 +2643,15 @@
           }
         ],
         "now": {
-          "title": "L2 · Geplande vervolgstap na correctie herstellen",
-          "state": "In uitvoering · coördinator",
-          "detail": "Basis788af92c. Bestaande correctie/scheduler koppelen, inclusief gelijktijdig stop-bewaar-hervat. Bestanden: scheduled_work.py, work_corrections.py, household_work_corrections.py en gerichte schedulerregressie. Geen modelcalls; raming één gerichte code-/databasecontrole en review.",
-          "doneWhen": "Vervolg wacht op expliciet gecorrigeerde poging, ontvangt resultaat eenmaal; annulering blijft werken. Daarna installatie en live broncontrole."
+          "title": "L2 · Bijgestuurd werk houdt zijn vervolgstap",
+          "state": "Geïnstalleerd · gebruikersproef open",
+          "detail": "Bron84cf3fb9 op gezonde kern/werker. Vervolg wacht op gecorrigeerde poging en krijgt resultaat eenmaal; expliciet stoppen behouden.18 controles en onafhankelijke review akkoord. Geen modelcalls.",
+          "doneWhen": "Gerichte koppeling geïnstalleerd en live bron/pagina’s gecontroleerd. Volledige meerdaagse projectafronding en eigenaaracceptatie blijven open."
         },
         "next": {
-          "title": "L2 · Vervolgstap laten wachten op gecorrigeerd werk",
+          "title": "L2 · Bestaand project na onderbreking afmaken",
           "state": "Nog niet gestart",
-          "detail": "Bestaande resolver en correctietransactie gericht verbeteren; resultaat eenmaal doorgeven, expliciet stoppen behouden. Geen tweede planner. I2-cameraproef wacht daarnaast op camerakeuze."
+          "detail": "Bestaande artefacten, planning en hervatting samen gebruiken; resterend bewijs voor een bruikbaar meerdaags resultaat vaststellen. Geen nieuwe planner. I2-camerakeuze blijft open."
         },
         "ownerAction": {
           "title": "Toolgebruik na cataloguswijziging proberen",
@@ -2657,7 +2665,7 @@
           "expected": "Een normale begroeting en het juiste bewaarde resultaat. Snellere reactie is nog niet bewezen. Automatische proefvoorbereiding werd geblokkeerd; geen eigenaaracceptatie ingevuld."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T15:19:39.035118+00:00"
+        "reviewedAt": "2026-09-28T15:26:34.780892+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13146,7 +13154,7 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "nextAction": "Bewezen correctie-/afhankelijkheidsdefect oplossen op bestaande scheduler: expliciete voortzetting volgen, transactierace afdekken, annulering behouden. Proef en onafhankelijke review in scheduled-correction-gap-20260928.json; geen nieuwe planner."
+          "nextAction": "Correctie-/afhankelijkheidskoppeling geïnstalleerd84cf3fb9, bewijs scheduled-correction-continuity-20260928.json. Volgende: bestaande projectartefacten, planning en hervatting gezamenlijk naar echt bruikbaar resultaat; geen nieuwe planner. Algemene procesuitval en eigenaarproef blijven afzonderlijk open."
         },
         {
           "id": "L3",

@@ -1,7 +1,7 @@
 {
   "id": "scheduled-correction-continuity-20260928",
   "basis": "788af92c",
-  "status": "tested_reviewed_not_installed",
+  "status": "installed",
   "userOutcome": "A dependent project step waits for the explicitly corrected preceding task and consumes its result once.",
   "preserved": [
     "Existing scheduler, correction journal and task execution.",
@@ -43,6 +43,39 @@
   },
   "limits": [
     "General multi-day autonomous project completion and owner acceptance remain open.",
-    "Previously blocked project steps are retained, not automatically reactivated."
-  ]
+    "Previously blocked project steps are retained, not automatically reactivated.",
+    "Process failure between the separate correction writes is not made crash-atomic by the advisory boundary."
+  ],
+  "sourceCommit": "84cf3fb9328f805a1660106d83a997ad223d2ab7",
+  "installation": {
+    "checkedAt": "2026-09-28T15:26:34.780892+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:4b7d9576247af221053902997ba91370044a8311ea0496a62fa5d5f8b86b7984",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/scheduled_work.py": "18a85a70f2183fbb46455e41220f1a101d5ff8d64a51e4a80f0a723e614bd6be",
+          "adapters/postgres/work_corrections.py": "0002ffa9f92387e39007a8843054378da1367d5f0ba9ef58477a203b257e70dd",
+          "bootstrap/household_work_corrections.py": "62f237e013eb50357914d233e312b5b8fd474e7b1fafba18fce4fee68b1253df"
+        }
+      },
+      "worker": {
+        "image": "sha256:c43d4463f5f207a942d1af678db343f0a24880dc0c8686c0f96a02ba1c617653",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/scheduled_work.py": "18a85a70f2183fbb46455e41220f1a101d5ff8d64a51e4a80f0a723e614bd6be",
+          "adapters/postgres/work_corrections.py": "0002ffa9f92387e39007a8843054378da1367d5f0ba9ef58477a203b257e70dd",
+          "bootstrap/household_work_corrections.py": "62f237e013eb50357914d233e312b5b8fd474e7b1fafba18fce4fee68b1253df"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/l2-correction-fix-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker",
+    "preconditions": "No active delegated work; both HA speakers idle",
+    "rollback": "Previous exact images retained; rollback command recorded, not re-executed without cause."
+  },
+  "ownerAcceptance": "open"
 }
