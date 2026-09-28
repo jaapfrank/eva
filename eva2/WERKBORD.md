@@ -20,7 +20,9 @@
 
 **I2 lokale analysekoppeling gebouwd — niet geïnstalleerd:** bestaande SensoryEvent met bronhash, ophaal-/analysetijd en expliciete modelinterpretatie.17 gerichte tests en bronreview akkoord. Eén nieuwe lokale leegbeeldproef: geen verzonnen objecten maar herhaling,57,704s inclusief laden/verwerking. Kandidaat niet gekozen; geen cloud-/cameracalls. [Bewijs](evidence/product/local-vision-bridge-20260928.json).
 
-**Eerstvolgende — I2, nog niet gestart:** geschikte backend op vaste echte scènes kiezen vóór productieaansluiting; camerakeuze voor vuilnisbakken blijft open. Geen nieuwe planning-/initiatiefkern en geen identieke proefherhaling.
+**I2 CUDA-kandidaat beproefd — niet geïnstalleerd:** Qwen3.5-4B geeft passend blanco-beeldantwoord zonder herhaling. Aanvraag1,806s; koude start tot antwoord6,152s, afsluiten niet inbegrepen. Aparte startup bevestigt33/33 lagen enCLIP op RTX5080CUDA; geen peakVRAMmeting. Eén lokale generatie89in/113uit, geen cloud-/cameracalls. [Bewijs](evidence/product/qwen-vision-gpu-20260928.json).
+
+**Eerstvolgende — I2, nog niet gestart:** vaste echte camerascènes vergelijken; camerakeuze voor vuilnisbakken staat open. Runtimeadvies minimaal1024 beeldtokens voor grounding meenemen; blanco geval met89 totale prompttokens bewijst dat niet. Geen herhaling van dezelfde proef.
 
 **Nu — M3 stijlcorrectie geïnstalleerd:** een bestaande communicatievoorkeur kon niet worden ververst doordat de providerrespons het vereiste veld wegliet. Gerichte correctie, drie tests en onafhankelijke review akkoord; kern/werker gezond, exacte bron en eigenaarpagina’s gecontroleerd, terugweg vastgelegd. De echte gedragsproef is gedeeltelijk geslaagd: korter en zonder lijst, maar 47 woorden bij maximaal 40. M3 blijft open. Twee contactcalls: 3.884 invoer-/183 uitvoertokens; extractie-/reflectieverbruik onbekend. [Bewijs](evidence/product/style-reflection-refresh-20260928.json).
 

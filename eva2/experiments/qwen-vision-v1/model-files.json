@@ -1,0 +1,26 @@
+[
+  {
+    "type": "file",
+    "oid": "4ca59aa028e499c9351f394e844f5e27056e5846",
+    "size": 2740937888,
+    "lfs": {
+      "oid": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+      "size": 2740937888,
+      "pointerSize": 135
+    },
+    "xetHash": "1d203c2196991da08bc5b191ab4727516f476f3167e3276f75a0c5257493aadb",
+    "path": "Qwen3.5-4B-Q4_K_M.gguf"
+  },
+  {
+    "type": "file",
+    "oid": "df5eff16338bf924865eb98723fc7ef20eb54e7f",
+    "size": 672423616,
+    "lfs": {
+      "oid": "cd88edcf8d031894960bb0c9c5b9b7e1fea6ebee02b9f7ce925a00d12891f864",
+      "size": 672423616,
+      "pointerSize": 134
+    },
+    "xetHash": "b397450689efdf321105b79b21df4b9b842269c590ee4ac4e999bb2b82d3f704",
+    "path": "mmproj-F16.gguf"
+  }
+]

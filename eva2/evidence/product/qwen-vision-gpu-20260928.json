@@ -1,0 +1,88 @@
+{
+  "id": "qwen-vision-gpu-20260928",
+  "basis": "b2bbc1a4",
+  "status": "isolated_candidate_pass_not_product_selected",
+  "selectionSource": "eva2/research/2026-09-28-vision-gpu-selection.md",
+  "hardware": {
+    "gpu": "NVIDIA GeForce RTX5080 Laptop GPU",
+    "memoryMiB": 16303,
+    "driver": "610.88",
+    "visibleIn": [
+      "Windows",
+      "WSL"
+    ]
+  },
+  "downloads": {
+    "allFourHashesVerified": true,
+    "prepareProcessExit": 0,
+    "weightsRevision": "e87f176479d0855a907a41277aca2f8ee7a09523",
+    "runtimeTag": "b11146",
+    "runtimeSource": "7fe450e19305b828c199d602c23a8337aaa1f03b",
+    "runtimeChannel": "pre-release source version0.5.0",
+    "runtime": "Ubuntu CUDA12.8 x64",
+    "actualDownloadBytes": 4176655441
+  },
+  "result": {
+    "startupSeconds": 4.346349088998977,
+    "requestSeconds": 1.806135053979233,
+    "totalSeconds": 6.152484776976053,
+    "response": {
+      "choices": [
+        {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "The image is entirely white — there are no visible objects, textures, colors, shapes, or variations in tone. It appears as a uniform, featureless field of white light or color. There is no evidence of depth, shadow, or detail.\n\nUncertainty: While it’s possible this is a blank canvas, a screen displaying white, or an intentional minimalist design, nothing in the image allows for confident identification of context or origin. The absence of any visual information means no further description can be made beyond what is literally present: a completely white surface."
+          }
+        }
+      ],
+      "created": 1790607052,
+      "model": "/home/administrator/project/.eva2-artifacts/qwen-vision-20260928/Qwen3.5-4B-Q4_K_M.gguf",
+      "system_fingerprint": "b11146-7fe450e19",
+      "object": "chat.completion",
+      "usage": {
+        "completion_tokens": 113,
+        "prompt_tokens": 89,
+        "total_tokens": 202,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "id": "chatcmpl-4rPcwAh1xIJaFIlw2csOeW8qD813R97B",
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 89,
+        "prompt_ms": 756.06,
+        "prompt_per_token_ms": 8.49505617977528,
+        "prompt_per_second": 117.71552522286592,
+        "predicted_n": 113,
+        "predicted_ms": 1042.83,
+        "predicted_per_token_ms": 9.310982142857142,
+        "predicted_per_second": 107.40005561788595
+      }
+    }
+  },
+  "evaluation": {
+    "blankNegativeCriterion": "pass; no objects asserted; possibilities explicitly uncertain",
+    "nonRepetitionCriterion": "pass; no repeated paragraph",
+    "gpuAllocation": "Separate startup-only verbose run:33/33 language layers onCUDA0 RTX5080 andCLIP CUDA0. Initial generation used same GPU arguments but default logs omitted device details.",
+    "peakMemory": "not measured; nvidia-smi compute process memory N/A",
+    "comparison": "One Qwen/CUDA result6.152s including startup vs prior SmolVLM2/CPU57.704s including loading. Model/backend/device all differ; not a causal GPU-only benchmark.",
+    "scope": "uniform white image only, no real camera quality or household result",
+    "timingBoundary": "cold start-to-result; excludes subsequent terminate/wait. requestSeconds includes full HTTP image request and result.",
+    "groundingLimit": "Runtime warns grounding tasks need minimum1024 image tokens. Blank case total prompt89tokens does not validate that setting; real-scene trial must set/verify suitable image resolution/token minimum."
+  },
+  "usage": {
+    "localGenerations": 1,
+    "localPromptTokens": 89,
+    "localCompletionTokens": 113,
+    "extraGpuStartupGenerations": 0,
+    "cloudModelCalls": 0,
+    "cameraRequests": 0,
+    "credits": "unknown; no cloud generation"
+  },
+  "cleanup": "Both isolated server processes stoppedexit0; existing Eva services unchanged",
+  "review": "GO from platform_research_20260927 for limited result registration; timing boundary, separate GPU startup and grounding-token warning preserved. No product selection/acceptance.",
+  "next": "Use fixed real scene quality before product adoption; retain current interfaces. Do not repeat synthetic case without a new cause."
+}

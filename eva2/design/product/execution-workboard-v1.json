@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Lokale visionkandidaat geeft passend antwoord in1,81s na laden",
+            "date": "28 september",
+            "state": "tested",
+            "result": "Qwen3.5-4B verwerkt blanco beeld zonder verzonnen objecten of herhaald tekstblok. Koude start tot antwoord6,15s; aparte startup bevestigtCUDA-toewijzing.",
+            "remaining": "Eén negatief testbeeld; echte camera, groundinginstelling en agenda-/initiatiefuitkomst onbewezen. Niet als product geïnstalleerd.",
+            "source": "eva2/evidence/product/qwen-vision-gpu-20260928.json"
+          },
+          {
             "title": "Lokale beeldanalyse kan bestaande waarnemingsstructuur leveren",
             "date": "28 september",
             "state": "built",
@@ -2611,15 +2619,15 @@
           }
         ],
         "now": {
-          "title": "I2 · Beeldkoppeling gebouwd; model nog ongeschikt bevonden",
-          "state": "Bron gecontroleerd · niet geïnstalleerd",
-          "detail": "Beeld naar bestaande SensoryEvent gekoppeld;17 gerichte tests en bronreview akkoord. Leeg beeld: geen verzonnen objecten, wel herhaling en57,7s inclusief laden/verwerking. Geen camerabewaking aangezet.",
-          "doneWhen": "Deze bronstap is afgerond. Bruikbare visionfunctie vraagt geschikte backend en echte-scènebewijs; geen nieuwe hoofdfunctie afgerond."
+          "title": "I2 · Snellere lokale visionkandidaat beproefd",
+          "state": "Proef afgerond · niet geïnstalleerd",
+          "detail": "Qwen3.5-4B: blanco beeld passend,1,806s aanvraag;6,152s koude start tot antwoord. Aparte startup bevestigt taalmodel enCLIP op RTX5080CUDA. Eén lokale generatie, geen cloud-/cameracalls.",
+          "doneWhen": "Negatieve proef afgerond, geen productacceptatie. Echte camerascènes en juiste beeldresolutie blijven nodig."
         },
         "next": {
-          "title": "I2 · Geschikte beeldanalyse kiezen vóór activering",
-          "state": "Nog niet gestart",
-          "detail": "SmolVLM2-kandidaat niet geselecteerd. Gebruik vaste echte scènes en gemeten kwaliteit/wachttijd; camera voor vuilnisbakken blijft gevraagd. Bestaande camera-/waarnemingskoppeling behouden."
+          "title": "I2 · Echte camerawaarneming vergelijken",
+          "state": "Nog niet gestart · camerakeuze open",
+          "detail": "Gebruik vaste changed/unchanged/occluded scènes; kleur/aantal, onzekerheid, herhaling en tijd controleren. Neem runtimeadvies minimaal1024 beeldtokens voor grounding mee. Geen herhaling van blanco proef."
         },
         "ownerAction": {
           "title": "Toolgebruik na cataloguswijziging proberen",
@@ -2633,7 +2641,7 @@
           "expected": "Een normale begroeting en het juiste bewaarde resultaat. Snellere reactie is nog niet bewezen. Automatische proefvoorbereiding werd geblokkeerd; geen eigenaaracceptatie ingevuld."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T14:43:26.558552+00:00"
+        "reviewedAt": "2026-09-28T14:53:20.835557+00:00"
       }
     },
     "pendingTechnicalReview": {

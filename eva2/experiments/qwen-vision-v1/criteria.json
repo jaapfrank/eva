@@ -1,0 +1,11 @@
+{
+  "scope": "One CUDA local candidate, not production adoption",
+  "input": "reuse uniform white image from previous negative case",
+  "expected": "No invented objects, no repeated paragraph; uncertainty/blank acceptable",
+  "generationLimit": 120,
+  "hardProcessSeconds": 90,
+  "measure": "whole process plus runtime-reported prompt/generation timing; verify CUDA device and offload logs",
+  "nextGate": "real camera changed/unchanged/occluded scenes before initiative activation",
+  "downloadsApproxGB": 4.18,
+  "cloudCalls": 0
+}
