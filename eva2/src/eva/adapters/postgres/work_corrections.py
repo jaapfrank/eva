@@ -1,4 +1,7 @@
 """Owner corrections retained with a digital execution across explicit resumptions."""
+from contextlib import contextmanager
+import sqlalchemy as sa
+
 from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline, external_timeline_scope, CheckpointConflict
 from eva.contracts.canonical_json import canonical_sha256
 
@@ -47,3 +50,20 @@ def record_work_correction(engine, spec, *, instruction, request_key, now):
         except CheckpointConflict:
             continue
     raise ValueError("work corrections changed concurrently; retry the same request")
+
+
+def correction_lock_key(spec):
+    """Share the correction boundary with dependent schedule evaluation."""
+    return "work-correction-lock:" + canonical_sha256({
+        "execution_id": spec.execution_id, "source": spec.source.model_dump(mode="json")})
+
+
+@contextmanager
+def correction_boundary(engine, spec):
+    # Keep stop/save/schedule indivisible to dependency readers without changing
+    # the existing durable operations. Readers try the lock rather than waiting,
+    # so they cannot deadlock against the scheduler's owner-level admission lock.
+    with engine.begin() as connection:
+        connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
+                           {"key": correction_lock_key(spec)})
+        yield

@@ -1,0 +1,48 @@
+{
+  "id": "scheduled-correction-continuity-20260928",
+  "basis": "788af92c",
+  "status": "tested_reviewed_not_installed",
+  "userOutcome": "A dependent project step waits for the explicitly corrected preceding task and consumes its result once.",
+  "preserved": [
+    "Existing scheduler, correction journal and task execution.",
+    "Explicit cancellation and ordinary stop remain terminal.",
+    "Historical blocked work is not silently restarted."
+  ],
+  "implementation": [
+    "Per-execution advisory boundary spans stop, correction recording and resume scheduling.",
+    "Dependency readers try the boundary lock and wait instead of racing or blocking the owner scheduling lock.",
+    "Only recorded correction resumes with matching execution/source/parent/generation are followed."
+  ],
+  "tests": {
+    "passed": 18,
+    "seconds": 35.62,
+    "files": [
+      "eva2/tests/postgres/test_scheduled_work_corrections.py",
+      "eva2/tests/postgres/test_scheduled_work_lifecycle.py",
+      "eva2/tests/postgres/test_household_digital_work.py"
+    ],
+    "scope": "Real disposable PostgreSQL; controlled tasks/results. No generated document or real conversation model.",
+    "cases": [
+      "Direct-work and schedule dependencies survive correction.",
+      "Scheduler between stop and correction recording cannot prematurely block the child.",
+      "Corrected predecessor result is transferred and child admitted once.",
+      "Ordinary stop, dependent cancellation and correction cancellation preserve terminal outcomes.",
+      "Existing restart admission and household correction/stop cases."
+    ]
+  },
+  "review": {
+    "status": "GO",
+    "reviewer": "platform_research_20260927",
+    "scope": "Source, concurrency/cancellation provenance and test review; no remaining concrete blocker.",
+    "limitation": "Advisory boundary prevents live races but does not make separate writes crash-atomic. Mid-correction process failure recovery not proven."
+  },
+  "usage": {
+    "requestedModelCalls": 0,
+    "externalTaskActions": 0,
+    "creditCosts": "unknown"
+  },
+  "limits": [
+    "General multi-day autonomous project completion and owner acceptance remain open.",
+    "Previously blocked project steps are retained, not automatically reactivated."
+  ]
+}

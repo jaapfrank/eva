@@ -13,6 +13,15 @@ def revise_digital_work(store, previous, *, instruction, request_key, clock,
     """Preserve the same stop, correction and uncertain-acknowledgement semantics."""
     if not isinstance(previous.spec, DelegatedDigitalWorkSpec):
         return {"status": "not_digital", "guidance": "Deze bijsturing geldt voor digitale opdrachten. Stop ander werk gericht en neem de gewijzigde opdracht opnieuw aan via de passende route."}
+    from eva.adapters.postgres.work_corrections import correction_boundary
+    with correction_boundary(store._engine, previous.spec):
+        return _revise_digital_work(store, previous, instruction=instruction,
+            request_key=request_key, clock=clock, load_work=load_work,
+            stop_work=stop_work, schedule_resume=schedule_resume)
+
+
+def _revise_digital_work(store, previous, *, instruction, request_key, clock,
+                         load_work, stop_work, schedule_resume):
     successor_id = "work:eva-resume:" + str(uuid5(store.scope.installation_id,
         f"{previous.spec.work_id}:{previous.spec.generation + 1}"))
     try:

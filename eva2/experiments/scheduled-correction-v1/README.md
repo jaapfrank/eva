@@ -15,7 +15,9 @@ rebind B. The relevant installed source hashes match the inspected worktree.
 
 ## Execution
 
-Run `test_probe.py` with the existing isolated PostgreSQL test runtime and
+Original defect probe: `test_probe.py` at commit `788af92c`.
+The current regression lives in `../../tests/postgres/test_scheduled_work_corrections.py`.
+Run that regression with the existing isolated PostgreSQL test runtime and
 `EVA2_IN002_TEST_ADMIN_DSN` pointing to a dedicated test server. The imported
 fixture creates and removes its own disposable database. Never use the production
 server. Dependencies and command convention match the existing scheduler tests.

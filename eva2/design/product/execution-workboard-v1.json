@@ -2635,10 +2635,10 @@
           }
         ],
         "now": {
-          "title": "L2 · Defect in geplande reeks bevestigd",
-          "state": "Onderzocht · correctie nog niet gebouwd",
-          "detail": "Na bijsturen hervat de eerste taak, maar de afhankelijke stap wordt geblokkeerd. Geïsoleerde databaseproef en onafhankelijke review bevestigen dit; geïnstalleerde bron komt overeen. Geen modelcalls.",
-          "doneWhen": "Gerichte aansluitingsfout vastgesteld. Meerdaags werk is hiermee niet afgerond."
+          "title": "L2 · Geplande vervolgstap na correctie herstellen",
+          "state": "In uitvoering · coördinator",
+          "detail": "Basis788af92c. Bestaande correctie/scheduler koppelen, inclusief gelijktijdig stop-bewaar-hervat. Bestanden: scheduled_work.py, work_corrections.py, household_work_corrections.py en gerichte schedulerregressie. Geen modelcalls; raming één gerichte code-/databasecontrole en review.",
+          "doneWhen": "Vervolg wacht op expliciet gecorrigeerde poging, ontvangt resultaat eenmaal; annulering blijft werken. Daarna installatie en live broncontrole."
         },
         "next": {
           "title": "L2 · Vervolgstap laten wachten op gecorrigeerd werk",
@@ -2657,7 +2657,7 @@
           "expected": "Een normale begroeting en het juiste bewaarde resultaat. Snellere reactie is nog niet bewezen. Automatische proefvoorbereiding werd geblokkeerd; geen eigenaaracceptatie ingevuld."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T15:18:22.506241+00:00"
+        "reviewedAt": "2026-09-28T15:19:39.035118+00:00"
       }
     },
     "pendingTechnicalReview": {

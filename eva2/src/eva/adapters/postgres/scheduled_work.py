@@ -167,6 +167,10 @@ class ScheduledOwnerWork:
         except DelegatedWorkNotFound:
             return {"state": "blocked", "work_id": work_id,
                     "reason": "Het resultaat van de vorige opdracht is niet meer beschikbaar."}
+        work, pending = self._corrected_predecessor(conn, work, request)
+        if pending is not None:
+            return pending
+        work_id = work.spec.work_id
         if work.state in {"admitted", "call_started"} and work.stop_requested_at is None:
             if parse_utc_timestamp(work.spec.deadline) < self.service.now():
                 return {"state": "blocked", "work_id": work_id,
@@ -178,6 +182,50 @@ class ScheduledOwnerWork:
         return {"state": "ready", "work_id": work_id, "title": work.title,
                 "result": work.result.output, "result_sha256": work.result.output_sha256,
                 "independently_verified": work.state == "verified"}
+
+    def _corrected_predecessor(self, conn, work, request):
+        """Follow only the recorded correction chain, never an unrelated retry."""
+        from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec
+        from eva.adapters.postgres.work_corrections import correction_lock_key, work_corrections
+        if not isinstance(work.spec, DelegatedDigitalWorkSpec):
+            return work, None
+        if not conn.scalar(sa.text("SELECT pg_try_advisory_xact_lock(hashtextextended(:key, 0))"),
+                           {"key": correction_lock_key(work.spec)}):
+            return work, {"state": "waiting", "work_id": work.spec.work_id,
+                          "reason": "De correctie wordt nog vastgelegd."}
+        corrected = {item["work_id"] for item in work_corrections(self.engine, work.spec)}
+        c, e = operational_checkpoints.c, operational_events.c
+        for _ in range(17):
+            if work.spec.work_id not in corrected:
+                return work, None
+            candidates = conn.execute(self._rows().join(operational_events, sa.and_(
+                e.tenant_id == c.tenant_id, e.installation_id == c.installation_id,
+                e.thread_id == c.thread_id, e.sequence == 1)).where(
+                e.payload["data"]["work_id"].astext == work.spec.work_id,
+                e.payload["data"]["operation"].astext == "resume",
+                e.payload["data"]["wait_for_stop"].as_boolean() == True,
+            ).limit(2)).all()
+            blocked = {"state": "blocked", "work_id": work.spec.work_id,
+                       "reason": "De gecorrigeerde voortzetting is niet eenduidig beschikbaar of is gestopt."}
+            if len(candidates) != 1:
+                return work, blocked
+            candidate = candidates[0]
+            self._request(conn, candidate.thread_id)  # Verify retained request integrity.
+            if candidate.phase in {"scheduled", "launching"}:
+                return work, {"state": "waiting", "work_id": work.spec.work_id,
+                              "schedule_id": candidate.thread_id}
+            if candidate.phase != "dispatched":
+                return work, blocked
+            successor = self._load_work(candidate.operation_id, request)
+            if (not isinstance(successor.spec, DelegatedDigitalWorkSpec)
+                    or successor.spec.execution_id != work.spec.execution_id
+                    or successor.spec.source != work.spec.source
+                    or successor.spec.parent_task_id != work.spec.work_id
+                    or successor.spec.generation != work.spec.generation + 1):
+                return work, blocked
+            work = successor
+        return work, {"state": "blocked", "work_id": work.spec.work_id,
+                      "reason": "De correctieketen overschrijdt de ondersteunde grens."}
 
     @staticmethod
     def _task_with_result(request, dependency):
