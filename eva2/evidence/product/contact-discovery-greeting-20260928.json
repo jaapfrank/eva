@@ -1,0 +1,158 @@
+{
+  "checkedAt": "2026-09-28T17:02:02.339979+00:00",
+  "sourceCommit": "b7c5434b",
+  "status": "installed",
+  "problem": "An ordinary greeting invoked connection status and a second model request; compact-catalog instructions unconditionally requested discovery.",
+  "change": "Discovery is conditional on the current request. Greeting/social answers do not start connector checks or resume old work. Tools and routing retained.",
+  "tests": {
+    "passed": 12,
+    "artifact": "/home/administrator/project/.eva2-artifacts/contact-discovery-greeting-20260928/tests.txt"
+  },
+  "sourceReview": "platform_research_20260927 GO",
+  "runtime": {
+    "checkedAt": "2026-09-28T17:00:07.917755+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:31e6622f152784dfdb6b0b407af8bcab54565c5202adf95325d6aa7a6b1aafdb",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/model/pydantic_conversation.py": "f7f0fa8462f6cbd66356876336b2e3b738ba63746550090fc4a201fae3861aa8"
+        }
+      },
+      "worker": {
+        "image": "sha256:0d8a096e4355133a9c1de1642ab2a9c856942f216d0b2596aec49a7c2a3f0c5b",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/model/pydantic_conversation.py": "f7f0fa8462f6cbd66356876336b2e3b738ba63746550090fc4a201fae3861aa8"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/contact-discovery-greeting-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "greeting": {
+    "seconds": 5.734,
+    "provider": "chatgpt-codex:gpt-6-sol",
+    "text": "Hoi Jaap! Leuk je te zien.",
+    "journal": [
+      {
+        "type": "INGRESS_COMMITTED",
+        "data": {}
+      },
+      {
+        "type": "CONVERSATION_MODEL_ADMITTED",
+        "data": {}
+      },
+      {
+        "type": "CONVERSATION_MODEL_RECORDED",
+        "data": {
+          "usage": {
+            "tool_calls": 0,
+            "measurement": "measured",
+            "input_tokens": 5681,
+            "output_tokens": 13,
+            "model_attempts": 1
+          }
+        }
+      },
+      {
+        "type": "REPLY_COMMITTED",
+        "data": {
+          "provider": "chatgpt-codex:gpt-6-sol",
+          "model_usage": {
+            "tool_calls": 0,
+            "measurement": "measured",
+            "input_tokens": 5681,
+            "output_tokens": 13,
+            "model_attempts": 1
+          },
+          "model_timing": {
+            "completed_ms": 3883,
+            "first_content_ms": 3363
+          }
+        }
+      },
+      {
+        "type": "MEMORY_RETAIN_QUEUED",
+        "data": {}
+      }
+    ]
+  },
+  "social": {
+    "seconds": 3.819,
+    "provider": "chatgpt-codex:gpt-6-sol",
+    "text": "Goed, dank je! Leuk dat je er bent. Hoe gaat het met jou?",
+    "journal": [
+      {
+        "type": "CONVERSATION_MODEL_RECORDED",
+        "data": {
+          "usage": {
+            "tool_calls": 0,
+            "measurement": "measured",
+            "input_tokens": 5201,
+            "output_tokens": 21,
+            "model_attempts": 1
+          }
+        }
+      },
+      {
+        "type": "INGRESS_COMMITTED",
+        "data": {}
+      },
+      {
+        "type": "MEMORY_RETAIN_QUEUED",
+        "data": {}
+      },
+      {
+        "type": "CONVERSATION_MODEL_ADMITTED",
+        "data": {}
+      },
+      {
+        "type": "REPLY_COMMITTED",
+        "data": {
+          "provider": "chatgpt-codex:gpt-6-sol",
+          "model_usage": {
+            "tool_calls": 0,
+            "measurement": "measured",
+            "input_tokens": 5201,
+            "output_tokens": 21,
+            "model_attempts": 1
+          },
+          "model_timing": {
+            "completed_ms": 2323,
+            "first_content_ms": 1794
+          }
+        }
+      }
+    ]
+  },
+  "usage": {
+    "inputTokens": 10882,
+    "outputTokens": 34,
+    "modelRequests": 2,
+    "toolCalls": 0,
+    "credits": "unknown",
+    "excludes": "Background memory processing and development usage"
+  },
+  "historicalTelegram": {
+    "seconds": 12.209,
+    "inputTokens": 12742,
+    "outputTokens": 65,
+    "modelRequests": 2,
+    "toolCalls": 1,
+    "action": "manage_connected_services status",
+    "finalProvider": "gpt-6-astra",
+    "modelCompletedMs": 9858,
+    "memoryMs": 730,
+    "source": "/home/administrator/project/.eva2-artifacts/c1-owner-telegram-timing-20260928/review.private.json"
+  },
+  "resultReview": "platform_research_20260927 GO: two website cases each one Sol request, no tools or Astra handoff. No general speed/Telegram/C1 completion claim.",
+  "limits": [
+    "Website probes, not controlled before/after Telegram comparison",
+    "5.734s and3.819s are not instant; C1 remains open",
+    "No family acceptance inferred"
+  ]
+}

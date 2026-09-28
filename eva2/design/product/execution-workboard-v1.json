@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Begroeting doet geen ongevraagde verbindingscontrole meer",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Gedeelde instructie gecorrigeerd,12 tests en bronreview akkoord. Websitebegroeting/sociale vraag elk één Sol-aanvraag en nul tools.",
+            "remaining": "5,734s/3,819s nog traag. Onafhankelijk gecontroleerd; Telegramverbetering en volledigeC1 niet bewezen.",
+            "source": "eva2/evidence/product/contact-discovery-greeting-20260928.json"
+          },
+          {
             "title": "Bewaard document later aanvullen en als eindresultaat opleveren",
             "date": "28 september",
             "state": "tested",
@@ -2667,15 +2675,15 @@
           }
         ],
         "now": {
-          "title": "C1 · Snelle begroeting en taakontvangst",
-          "state": "Oorzaak vastgesteld · gerichte promptcorrectie",
-          "detail": "Echte Telegrambegroeting deed manage_connected_services en twee modelaanvragen, eindigend op Astra. Compacte catalogusinstructie riep onvoorwaardelijk tot ontdekking op. Die instructie geldt nu alleen bij een passende gebruikersvraag; begroeting/sociale beurt direct, geen kanaalregex of toolverwijdering.",
+          "title": "Begroeting zonder onnodige verbindingscontrole",
+          "state": "Geïnstalleerd · twee echte websiteproeven gecontroleerd",
+          "detail": "Hallo5,734s en sociale vraag3,819s: elk één Sol-aanvraag, nul tools. Oude Telegrambegroeting deed statustool plus Astra. Omweg gecorrigeerd; geen gelijke kanaalvergelijking of instantclaim. Onafhankelijke resultaatreview akkoord.",
           "doneWhen": "Gemeten bottleneck gericht opgelost, snelle eenvoudige reactie gecontroleerd met behoud van identiteit/geheugen en taakroutering; tests, review, installatie en echte routevergelijking."
         },
         "next": {
-          "title": "C1 · Begroeting en taakontvangst versnellen",
+          "title": "C1 · Resterende wachttijd eenvoudige gesprekken",
           "state": "Nog niet gestart",
-          "detail": "Gebruik werkelijke Telegrammeting12,209s en websiteaanname34,584s. Splits model/context/transport met bestaande journalgegevens en kies alleen de gemeten bottleneck; geen extra modelvergelijkingsronde."
+          "detail": "Eenvoudige contactaanvragen bevatten nog5.201–5.681 invoertokens. Beoordeel bestaande contactinvoer op onnodige taak-/catalogusinformatie; behoud identiteit, relevante context en toegang tot werk. Geen nieuwe modelkeuze of identieke herhaling."
         },
         "ownerAction": {
           "title": "Toolgebruik na cataloguswijziging proberen",
@@ -2689,7 +2697,7 @@
           "expected": "Eigenaar bevestigt: nieuwste bijdrage met /eva2 correct opgehaald. Wachttijd blijft onvoldoende; Hallo11s. Antwoord van Eva1 zonderprefix was de andere route, geen mislukte Eva2-resultaatophaling."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T16:55:31.106057+00:00"
+        "reviewedAt": "2026-09-28T17:02:02.339979+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12618,11 +12626,11 @@
           },
           "concreteChange": "Rejected: early style read introduces forget/refresh race across engines. No product source change retained.",
           "lastAttempt": {
-            "state": "rejected_without_installation",
-            "evidence": "eva2/evidence/product/c1-contact-20260928.json",
-            "remaining": "Latency and actual Telegram/web acceptance remain open; no repeated unchanged model benchmark."
+            "state": "installed_greeting_detour_removed",
+            "evidence": "eva2/evidence/product/contact-discovery-greeting-20260928.json",
+            "remaining": "Website5.734s/3.819s; desired latency and actual Telegram recheck remain open"
           },
-          "activeWorker": "/root",
+          "activeWorker": null,
           "contactDuringReuseAssignment": {
             "stage": "installed_http_overlap_pass",
             "outcome": "Locate existing admission/contact routing responsible for55.742s first text during procedure task; propose smallest general change only if needed.",
@@ -12644,7 +12652,7 @@
             "workerCommit": "b4b88c6446f2979c11e748e0b8606c6c35e892a6",
             "review": "GO; independent source and test diff review"
           },
-          "remaining": "Eigenaar bevestigt gewone resultaatophaling met /eva2; begroeting12,209s en resultaat18,678s blijven traag. Werkoverlapbewijs behouden.",
+          "remaining": "Unnecessary greeting status/tool handoff removed in observed website cases. Fast response/Telegram parity and fullC1 acceptance remain open.",
           "telegramOwnerTrial": {
             "status": "awaiting_owner_observation",
             "steps": [
