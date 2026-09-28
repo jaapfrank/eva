@@ -1,0 +1,81 @@
+{
+  "checkedAt": "2026-09-28T18:55:08.443085+00:00",
+  "sourceCommit": "43548a770f4d09fdebbf0bb787f7a3f37d20e443",
+  "status": "installed",
+  "concreteProblem": "All four existing daily per-person reflection slots were reserved by periodic initiative reviews in the first four hours of the UTC day; later reviews were denied. Each admitted review chose silence without new context.",
+  "change": "Existing periodic context reviews opt into gradual availability of the same daily allowance. With limit4, availability increases at00/06/12/18UTC. Ordinary memory admission is unchanged and shares the same ledger.",
+  "sourceFiles": [
+    "adapters/postgres/runtime_resource_usage.py",
+    "application/free_will.py"
+  ],
+  "tests": {
+    "passed": 38,
+    "scope": "Actual PostgreSQL admission races, four time windows and exact boundaries, day change, mixed ordinary/periodic usage; existing free-will and memory background unit cases. No production model/notification test.",
+    "databaseDropped": true
+  },
+  "review": {
+    "reviewer": "/root/platform_research_20260927",
+    "result": "GO source and design; daily caps retained, unused slots accumulate, memory shares allowance. Unnecessary protocol edit removed, original memory protocol preserved."
+  },
+  "installation": {
+    "checkedAt": "2026-09-28T18:54:22.570125+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:dc2a7ebba7c0ef460a00213657ece497ffd6c39ed0606c27f975ddad296cc7f8",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/runtime_resource_usage.py": "54548d2af83c74599a6dbbfa04fc5e080b8593fe07d3862342b6bdef96973317",
+          "application/free_will.py": "3bac9854126bf65b054ac79755458a40d86c6c8344a293a817a0e46e0cccfdba"
+        }
+      },
+      "worker": {
+        "image": "sha256:709e2edd32d4a8471ec489ded40f7847d1ac2084a1c69c4766da78a02eb1eaea",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/runtime_resource_usage.py": "54548d2af83c74599a6dbbfa04fc5e080b8593fe07d3862342b6bdef96973317",
+          "application/free_will.py": "3bac9854126bf65b054ac79755458a40d86c6c8344a293a817a0e46e0cccfdba"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/initiative-outcome-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "liveBudget": {
+    "checkedAt": "2026-09-28T18:55:08.129407+00:00",
+    "personLimit": 4,
+    "installationLimit": 40,
+    "installationUsed": 4,
+    "maximumPersonUsed": 4,
+    "reserved": [
+      {
+        "time": "2026-09-28 00:37:51+00:00",
+        "periodicReview": true
+      },
+      {
+        "time": "2026-09-28 01:41:22+00:00",
+        "periodicReview": true
+      },
+      {
+        "time": "2026-09-28 02:41:52+00:00",
+        "periodicReview": true
+      },
+      {
+        "time": "2026-09-28 03:42:06+00:00",
+        "periodicReview": true
+      }
+    ],
+    "noReservationOrResetPerformed": true
+  },
+  "runtimeModelCalls": 0,
+  "creditCost": "unknown",
+  "ownerAccepted": false,
+  "limits": [
+    "No quota increase or reset; today remains exhausted.",
+    "Availability is spread, not a guaranteed review every six hours; ordinary memory can consume shared slots.",
+    "Useful autonomous camera/calendar reminder and complete I1/I2 remain open."
+  ],
+  "next": "Connect a useful camera/calendar situation to existing choice/execution/private return; existing camera selection question remains open."
+}

@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Initiatiefbeoordelingen putten hun dagruimte niet meer achter elkaar in de nacht uit",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Bestaand budget gespreid beschikbaar, geen verhoging/reset;38 gerichte controles en onafhankelijke bronreview akkoord. Kern en werker gezond.",
+            "remaining": "Geen gegarandeerde vier initiatiefmomenten: geheugen deelt de ruimte. Vandaag al verbruikte ruimte blijft verbruikt; nuttige complete initiatiefuitkomst nog open.",
+            "source": "eva2/evidence/product/initiative-review-pacing-installed-20260928.json"
+          },
+          {
             "title": "Camera en agenda aangesloten op bestaande eigen initiatiefuitvoering",
             "date": "28 september",
             "state": "installed",
@@ -2733,7 +2741,7 @@
         "now": {
           "title": "Initiatief en huisaanwezigheid als geheel afronden",
           "state": "In uitvoering",
-          "detail": "Concrete blokkade gevonden: vier dagelijkse initiatiefbeoordelingen waren vandaag al vóór 05:43 lokale tijd opgebruikt. Bestaand budget over de dag verdelen, zonder verhoging of reset; daarna nuttige initiatiefuitkomst vervolgen.",
+          "detail": "Nachtelijke uitputting door periodieke beoordelingen aangepakt en geïnstalleerd: bestaande ruimte wordt over de dag beschikbaar. Vandaag verbruikte ruimte blijft verbruikt. Camera-/agendaherinnering en complete initiatiefuitkomst blijven open.",
           "doneWhen": "Eva kiest uit echte huiscontext passend werk, voert dit uit en brengt het resultaat bij de juiste persoon; camera/agenda ondersteunen een nuttige herinnering, eigen onderzoek een onderbouwd voorstel, ongewenste herhaling blijft uit. Gezinsbeoordeling apart."
         },
         "next": {
@@ -2752,7 +2760,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T18:49:41.068764+00:00"
+        "reviewedAt": "2026-09-28T18:55:08.443085+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13199,17 +13207,19 @@
           },
           "owner": "/root",
           "assignment": {
-            "stage": "prevent_overnight_review_budget_exhaustion",
+            "stage": "review_pacing_installed",
             "owner": "/root",
             "baseCommit": "a95890f0",
             "scope": "Existing background reflection admission, context review caller/protocol and focused PostgreSQL tests",
             "endCondition": "Periodic review allowance remains available later in day, same daily caps and existing memory behavior; targeted tests/review/install, no production quota reset.",
-            "effort": "One bounded admission change and review; no Eva model calls planned; unknown credits."
+            "effort": "One bounded admission change and review; no Eva model calls planned; unknown credits.",
+            "sourceCommit": "43548a770f4d09fdebbf0bb787f7a3f37d20e443"
           },
           "evidence": "eva2/evidence/product/local-vision-installed-20260928.json",
           "remaining": "Useful camera/calendar reminder through existing initiative execution, self-chosen research and appropriate private return; real household usefulness remains open. Camera selection question pending. No complete I1/I2 claim.",
           "discoveryEvidence": "eva2/evidence/product/ha-domain-selection-installed-20260928.json",
-          "connectionInstalledEvidence": "eva2/evidence/product/initiative-vision-read-installed-20260928.json"
+          "connectionInstalledEvidence": "eva2/evidence/product/initiative-vision-read-installed-20260928.json",
+          "reviewPacingEvidence": "eva2/evidence/product/initiative-review-pacing-installed-20260928.json"
         },
         {
           "id": "L1",

@@ -4,7 +4,7 @@
 
 **Initiatief en huisaanwezigheid (I1/I2)** is de ene actieve productoplevering. Camera-/agendalezen via de bestaande initiatiefroute is nu geïnstalleerd (bron14fe94dc); dat is een tussenresultaat en sluit geen van de zeven open grote onderdelen. Geen uitwijking naar nieuwe statuskaarten, herstel of losse optimalisaties.
 
-**Actuele blokkade:** vier privébeoordelingen hebben vandaag tussen 02:37 en 05:42 lokale tijd het volledige bestaande persoonsdagbudget gebruikt. De overige beoordelingen zijn daarom overgeslagen. Spreid periodieke beoordelingen binnen hetzelfde budget; geen verhoging/reset. Basis a95890f0; coördinator bezit bestaande budgettoelating, aanroeper en gerichte tests.
+**Geïnstalleerd — dagruimte voor initiatief spreiden:** bron43548a77,38 gerichte controles en onafhankelijke bronreview akkoord. De vier periodieke beoordelingen gebruikten vandaag alle ruimte tussen02:37 en05:42 lokale tijd. Beschikbaarheid wordt voortaan over de UTC-dag gespreid, zonder budgetverhoging/reset. Vandaag blijft de ruimte uitgeput; geheugen deelt de teller. Kern/werker gezond en bestaande4/40-limieten teruggelezen. [Bewijs](evidence/product/initiative-review-pacing-installed-20260928.json).
 
 **Resteert:** passende eigen actie uit huiscontext, nuttige camera-/agendaherinnering, onderbouwd eigen onderzoeksvoorstel en correcte terugmelding zonder ongewenste herhaling als samenhangend gebruik. Bestaande werking en bewijs hergebruiken. Technische afronding en gezinsbeoordeling blijven apart.
 
