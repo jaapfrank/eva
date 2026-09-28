@@ -1,0 +1,57 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "slice": "L2",
+  "sourceCommit": "5145a139",
+  "checkedAt": "2026-09-28T21:11:47.612182+00:00",
+  "status": "installed",
+  "userOutcome": "A request for current work and a later dependent step can retain the existing scheduling tool after background admission, without polling or waiting for the worker.",
+  "priorGap": "Foreground continuation returned no tools after durable admission; worker profile does not offer scheduling.",
+  "implementation": "Only currently available schedule_digital_work can follow verified admission and later schedule receipts. Ordinary acceptance fast path is unchanged. Shared guidance delegates current step and schedules later step from the returned work ID.",
+  "tests": {
+    "passed": 45,
+    "covers": [
+      "ordinary single-call acceptance and stop guard",
+      "dependent scheduling using actual admitted work ID",
+      "replay of admission without duplicate execution",
+      "current scheduling availability",
+      "no foreground worker execution or polling"
+    ],
+    "artifact": "/home/administrator/project/.eva2-artifacts/l2-project-planning-20260928/tests.txt"
+  },
+  "review": {
+    "reviewer": "review_directory_connection",
+    "result": "GO",
+    "scope": "bounded source seam; not proof of actual future project execution"
+  },
+  "modelCalls": 0,
+  "creditCost": "unknown",
+  "remaining": [
+    "Actual stored dependent schedule and next-day continuation",
+    "Owner acceptance"
+  ],
+  "connectorProbe": "Previous automatic execution rejection remains open; no workaround attempted.",
+  "installed": {
+    "checkedAt": "2026-09-28T21:11:18.647242+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:3837884bd2e8354431befd9441017f2608199b0d33e3e67b9dea45fb1fbdb230",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "67c554e03207272cd54f994c15ad1698c15955ae02e27f8c1a4425ef9eecfcfa"
+        }
+      },
+      "worker": {
+        "image": "sha256:e58b4725deaa32d7c411cddc1b96549f86287e62d8c0439899eb626915bc8efe",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "67c554e03207272cd54f994c15ad1698c15955ae02e27f8c1a4425ef9eecfcfa"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/l2-project-planning-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  }
+}

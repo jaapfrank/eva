@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Vervolgplanning beschikbaar na het aannemen van achtergrondwerk",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Gedeelde gespreksroute kan gevraagde vervolgplanning opslaan zonder op de werker te wachten; gewone directe ontvangst behouden.45 tests en bronreview akkoord; kern/werker gezond.",
+            "remaining": "Echte meerdaagse opdracht en eigenaaracceptatie nog open. Geen volledige L2-afronding.",
+            "source": "eva2/evidence/product/project-followup-planning-20260928.json"
+          },
+          {
             "title": "L1 afgerond: nieuwe werkwijze leren en ongewijzigd hergebruiken",
             "date": "28 september",
             "state": "tested",
@@ -2772,14 +2780,14 @@
         ],
         "now": {
           "title": "L2: meerdaags project hervatten",
-          "state": "Bestandserver toegelaten; aansluiting nog open",
-          "detail": "Bestaand filesystem-endpoint geïnstalleerd als beheerde dienst; kern/werker gezond, acht gerichte controles en onafhankelijke review akkoord. Oude catalogus/code behouden. Dienstregistratie en projectvoortzetting nog niet uitgevoerd; voorbereiding proef door automatische uitvoercontrole geblokkeerd. Geen modeltaak actief.",
+          "state": "Vervolgplanning aangesloten en geïnstalleerd",
+          "detail": "Bron5145a139 op gezonde kern/werker; exacte bron en eigenaar-/projectpagina gecontroleerd.45 gerichte tests en onafhankelijke review akkoord. Gewone snelle ontvangst behouden. Echte vervolgafspraak/meerdaagse uitvoering nog niet bewezen; geen modeltaak actief.",
           "doneWhen": "One ordinary project preserves goal, dependencies, artifacts and next action overnight; later correction and continuation use saved state without duplicate effects."
         },
         "next": {
-          "title": "Bestandserver registreren en bewaarde projectopdracht voortzetten",
+          "title": "Echte projectplanning en voortzetting controleren",
           "state": "Nog niet uitgevoerd",
-          "detail": "Bestaande connect_service-route gebruiken; eerst werkelijke registratie controleren. Geen nieuw concept of vervolgafspraak claimen. Automatische uitvoerblokkade op proefvoorbereiding blijft zichtbaar."
+          "detail": "Bestaande projectopdracht, bestanden en afhankelijkheden behouden. Aansluitproef voor filesystemdienst is nog geblokkeerd door automatische uitvoercontrole; geen omweg. Geen geplande afspraak claimen vóór werkelijke opslag."
         },
         "ownerAction": {
           "title": "Camera voor vuilnisbakken kiezen",
@@ -2792,7 +2800,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T21:04:34.307240+00:00"
+        "reviewedAt": "2026-09-28T21:11:47.612182+00:00"
       }
     },
     "pendingTechnicalReview": {

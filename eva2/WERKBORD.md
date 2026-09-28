@@ -2,6 +2,8 @@
 
 ## Actief — L2: meerdaags project hervatten
 
+**Geïnstalleerd — gevraagde vervolgplanning:** bron5145a139 op gezonde kern/werker;45 gerichte tests en onafhankelijke review akkoord. Na taakaanname blijft uitsluitend bestaande schedule_digital_work beschikbaar; gewone ontvangst blijft direct, geen foregroundpolling. Echte meerdaagse planning/uitvoering nog niet beproefd. [Bewijs](evidence/product/project-followup-planning-20260928.json). Geen modeltaak actief; geen extra modelcalls voor deze wijziging.
+
 **Geïnstalleerd:** bestaande filesystemdienst opgenomen in beheerde endpoints, zonder bron- of oude cataloguswijziging. Kern/werker en beide lokale routes gezond. Acht gerichte controles en onafhankelijke review akkoord. Eerste installatie wees verkeerd bestandseigendom af; teruggezet en gecorrigeerd naar runtime-UID65532/mode400. [Bewijs](evidence/product/project-filesystem-endpoint-20260928.json).
 
 **Nog open:** werkelijke dienstregistratie via connect_service, daarna bewaarde projectopdracht voortzetten. Geen map, concept of afspraak gemaakt. Voorbereiding van de gewone aansluitproef is door automatische uitvoercontrole geblokkeerd zonder specifieke reden; geen omweg uitgevoerd. Geen modeltaak actief. Deze aansluiting sluit L2 niet af.
