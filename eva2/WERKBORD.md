@@ -1,5 +1,15 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actuele opdracht — één volledig onderdeel afronden
+
+**Initiatief en huisaanwezigheid (I1/I2)** is de ene actieve productoplevering. Camera-/agendalezen via de bestaande initiatiefroute is nu geïnstalleerd (bron14fe94dc); dat is een tussenresultaat en sluit geen van de zeven open grote onderdelen. Geen uitwijking naar nieuwe statuskaarten, herstel of losse optimalisaties.
+
+**Resteert:** passende eigen actie uit huiscontext, nuttige camera-/agendaherinnering, onderbouwd eigen onderzoeksvoorstel en correcte terugmelding zonder ongewenste herhaling als samenhangend gebruik. Bestaande werking en bewijs hergebruiken. Technische afronding en gezinsbeoordeling blijven apart.
+
+**Eigenaarvraag open:** welke camera ziet de vuilnisbakken? Alleen die concrete scène wacht op antwoord. [Geïnstalleerde aansluiting](evidence/product/initiative-vision-read-installed-20260928.json). Geen extra Eva-modelcalls voor deze aansluiting; creditkosten onbekend.
+
+## Historisch uitvoeringslog — onderstaande “Nu”-regels zijn eerdere opdrachten
+
 **Nu — I2 initiatiefkoppeling, basis9c987870:** bestaande native uitvoering en HA-API behouden. Echt tekort: initiatiefprofiel mist nieuw inventarisdomain en camera-/agendalezen; private uitvoeringsbinding koppelen. Coördinator bezit providerwiring, begrensd leesprofiel en gerichte tests. Geen nieuwe planner/polling/modelbudget. Camera voor bakken blijft gevraagd; gedeelde speakers krijgen geen privéagenda.
 
 **Opgeleverd — gericht apparaten zoeken:** bron2e318c91 geïnstalleerd op gezonde kern/werker;71controles en bronreview akkoord. Gewone tuincameravraag gebruikt domeinfilter en één camera-GET:3modelcalls/2tools,18.331in/263uit,26,508s. Vorige andere camera/context52,56s/161.398in; geen gecontroleerde snelheidsclaim. Onafhankelijke live-receiptcontrole akkoord. Camera voor bakken gevraagd; alleen die vervolgproef wacht. [Bewijs](evidence/product/ha-domain-selection-installed-20260928.json).

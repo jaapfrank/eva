@@ -1,0 +1,76 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "checkedAt": "2026-09-28T18:43:56.272395+00:00",
+  "outcome": "Existing private initiative execution can request local camera interpretation and calendar reads through the existing HA API.",
+  "sourceCommit": "14fe94dc7c2706145b14f77cef4b50b62adf2043",
+  "status": "installed_connection",
+  "tests": {
+    "selectedCases": 72,
+    "passedBeforeFixtureCorrection": 70,
+    "passedAfterFixtureCorrection": 2,
+    "note": "Two new fixtures corrected to use a valid event domain, then only those two rerun. Earlier environment-only attempt is retained in local artifacts. Simulated HA transport; not an autonomous household trial."
+  },
+  "review": {
+    "source": "GO /root/platform_research_20260927",
+    "installedRecords": "GO /root/platform_research_20260927: independently compared private policies, all previous capabilities retained; recorded installed hashes, append-only revision and readback confirmed. No autonomous outcome claim."
+  },
+  "installation": {
+    "checkedAt": "2026-09-28T18:42:45.709616+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:984f67598fb2e6d18d54a7626b9b45f4a76ae5f314894bae72fb2840c9aee77f",
+        "health": "healthy",
+        "sourceHashes": {
+          "providers/home_assistant.py": "070411d04444b66cb1dafb56e8203d4ae7f58cd594b319a34e869a3322968555"
+        }
+      },
+      "worker": {
+        "image": "sha256:33d24fd9ad97eb061b36547d58d793f22c2f23ccca29edf6c77bf5d574830cdd",
+        "health": "healthy",
+        "sourceHashes": {
+          "providers/home_assistant.py": "070411d04444b66cb1dafb56e8203d4ae7f58cd594b319a34e869a3322968555"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/initiative-vision-read-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "mandateRevision": {
+    "status": "revised",
+    "previousDigest": "5d3606336f931c3d355ff8a308741072615379827851d3bf9d45f7bc5b2d4b49",
+    "candidateDigest": "a84a1cd9056dba36f46a8236b75c3bb843cb272fd068eeabd1a3209ea62e9d3f",
+    "oldCapabilities": 9,
+    "newCapabilities": 10,
+    "previousCapabilitiesPreserved": true,
+    "activeInitiatives": 0,
+    "containersReadExactPolicy": true,
+    "repeatAdmission": "unchanged"
+  },
+  "preserved": [
+    "All nine previous capabilities and root mandate fields",
+    "Prior inventory calls without domain",
+    "Private audience and original initiative budgets",
+    "Current firmware and all unrelated services"
+  ],
+  "liveVerification": [
+    "Both services healthy and exact source bytes installed",
+    "Existing owner pages HTTP200",
+    "Both services read exact candidate mandate",
+    "Existing append-only revision returned revised; repeat returned unchanged"
+  ],
+  "runtimeModelCalls": 0,
+  "creditCost": "unknown",
+  "notProven": [
+    "Useful autonomous camera/calendar reminder",
+    "Family usefulness or acceptance",
+    "Complete I1/I2 or a newly completed major dashboard category"
+  ],
+  "rollback": {
+    "source": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/initiative-vision-read-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker",
+    "policy": "Restore mandate-before.private.json with existing file owner/group/mode, then POST existing mandate revise endpoint with expected candidateDigest and candidate previousDigest from local mandate-revision.json."
+  },
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/initiative-vision-read-20260928"
+}
