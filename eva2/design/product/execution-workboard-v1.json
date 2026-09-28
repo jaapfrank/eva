@@ -2412,8 +2412,8 @@
         ],
         "now": {
           "title": "T1 · Opdrachten volledig laten afronden",
-          "state": "Actief · één uitvoerder",
-          "detail": "Bestaande uitvoering stopt bij6toolacties/8modelreacties terwijl het bekende hele leerpad minstens8/9nodig heeft. Uitvoerder corrigeert het algemene taakcontract; coördinator bewaakt integratie. C1-versnellingskandidaat afgewezen, installatie ongewijzigd.",
+          "state": "Integratie · onafhankelijke review",
+          "detail": "Taakroute volgt nu in bron de bestaande instelling van32reacties en31toolacties.153gerichte gevallen geslaagd, inclusief oude taken zonder dubbele uitvoering. Uitvoerder klaar; coördinator bereidt installatie voor en reviewer controleert de combinatie. Nog niet geïnstalleerd.",
           "doneWhen": "Compleet taakpad past; bestaande opgeslagen taken blijven hervatbaar. Daarna gerichte review, installatie en werkelijk resultaat."
         },
         "next": {
@@ -2432,7 +2432,7 @@
           "expected": "Gebouwd, getest, geïnstalleerd en door jou geaccepteerd blijven apart. Alleen werkelijk bruikbare functies tellen als opgeleverd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T08:40:13.058384+00:00"
+        "reviewedAt": "2026-09-28T08:53:58.205609+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12533,8 +12533,12 @@
             "eva2/src/eva/bootstrap/delegated_digital_runner.py",
             "eva2/src/eva/contracts/delegated_digital_work.py",
             "eva2/src/eva/contracts/runtime_budget.py",
-            "related focused tests"
-          ]
+            "related focused tests",
+            "eva2/src/eva/bootstrap/delegated_digital_composition.py"
+          ],
+          "concreteChange": "Use the existing configured32 request allowance instead of additional composition cap8/tools6; reserve final response. Historical grants unchanged. Actual core setting32 confirmed read-only.",
+          "sourceCommit": "ef59f784",
+          "activeWorker": "coordinator integration; independent review: /root/platform_research_20260927"
         },
         {
           "id": "T2",

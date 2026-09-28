@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — T1: complete opdrachten binnen het bestaande taakcontract afronden.** Eén uitvoerder werkt vanaf4a179120 in codex/task-completion-envelope-20260928; alleen de benodigde uitvoerings-/budgetcode en gerichte tests. Het bekende hele pad vraagt minstens8toolacties/9modelreacties, terwijl de grenzen6/8zijn. Bestaande inputbudgetscheiding hergebruiken en oude taken exact hervatbaar houden. Coördinator integreert/reviewt/installeert na bewijs. C1-geheugenversnelling afgewezen wegens vergeet-/verversingsrace; bron teruggezet, niets geïnstalleerd. [C1-besluit](evidence/product/c1-contact-20260928.json).
+**Nu — T1: complete opdrachten afronden.** Correctie geïntegreerd in bron ef59f784: bestaande instelling van 32 reacties / 31 toolacties, exacte oude taakgrenzen behouden. 153 gerichte gevallen geslaagd. Uitvoerder klaar; coördinator bereidt installatie voor, onafhankelijke reviewer controleert de combinatie met het bestaande bronlezen en inputbudget. Nog niet geïnstalleerd; daarna één echte complete opdracht. C1-snelheid blijft open.
 
 **Leidend — het complete bouwplan uitvoeren.** Acht vaste productstappen en 24 begrensde opdrachten; geen zakelijke uitwerking of nieuwe algemene audit. Gegevens en acceptaties behouden. Technische afronding, installatie, vergelijkingsbewijs en jouw oordeel blijven apart. De recente [eigenaarbesluiten](PROJECTDOEL.md) gaan voor oudere bouwvolgordes.
 

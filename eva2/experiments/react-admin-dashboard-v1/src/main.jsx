@@ -116,9 +116,9 @@ function workboardPayload(value) {
       || !resultColumns[card.result_status]?.includes(card.column)
       || usage.contract !== 'EvaWorkBoardUsage/v1' || usage.schema_version !== 1
       || !['measured', 'partial', 'unmeasured'].includes(usage.measurement)
-      || !nullableInteger(usage.input_tokens, 1000000)
+      || !nullableInteger(usage.input_tokens, 3200000)
       || !nullableInteger(usage.output_tokens, 1000000)
-      || !nullableInteger(usage.total_tokens, 2000000)
+      || !nullableInteger(usage.total_tokens, 3300000)
       || !nullableInteger(usage.cost_usd_micros, 1000000000)
       || (usage.measurement === 'unmeasured' && (!noTokens || usage.cost_usd_micros !== null))
       || (usage.measurement === 'measured' && (!allTokens || usage.cost_usd_micros === null))
