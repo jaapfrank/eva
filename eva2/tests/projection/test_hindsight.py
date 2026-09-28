@@ -95,6 +95,9 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
                 )[0]
                 if mental_model_id not in state.mental_models:
                     self._send(404, {"detail": "not found"})
+                elif self.path.endswith("?detail=metadata"):
+                    # Hindsight 0.9.1 excludes configuration from metadata.
+                    self._send(200, {"id": mental_model_id})
                 else:
                     self._send(
                         200,

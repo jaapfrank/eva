@@ -784,7 +784,7 @@ class HindsightMemoryEngine:
         status, existing = self._request(
             "GET",
             f"/v1/default/banks/{bank_id}/mental-models/{mental_model_id}"
-            "?detail=metadata",
+            "?detail=full",
             allowed_statuses=frozenset({404}),
         )
         if status == 404:
