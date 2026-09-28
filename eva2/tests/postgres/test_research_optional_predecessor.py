@@ -100,3 +100,31 @@ def test_invalid_explicit_predecessor_still_rejected(prior):
     with pytest.raises(ConversationConflict, match="predecessor"):
         actions.execute(None, ConversationActionCall("invalid", "start_background_research",
             {"research": PUBLIC, "prior_work_id": prior}))
+
+
+def test_invalid_research_inputs_leave_no_admission_and_can_be_corrected(database):
+    from eva.application.conversation import ConversationActionInputRejected
+
+    x = setup(database, "research-input-correction")
+    actions = HouseholdWorkActions(database, x.service)
+    turn = x.service.turn(str(uuid4()), PUBLIC["question"])
+    variants = [
+        ({**PUBLIC, "question": ""}, ("question",)),
+        ({key: value for key, value in PUBLIC.items() if key != "title"}, ("title",)),
+        ({**PUBLIC, "options": [""]}, ("options",)),
+        ({**PUBLIC, "options": 42}, ("options",)),
+        ({**PUBLIC, "private-input-key": "private-value"}, ("research",)),
+    ]
+    for index, (research, fields) in enumerate(variants):
+        call = ConversationActionCall(f"invalid:{index}", "start_background_research", {"research": research})
+        with pytest.raises(ConversationActionInputRejected) as caught:
+            actions.execute(turn, call)
+        assert caught.value.fields == fields
+        assert "private" not in str(caught.value)
+        assert actions.pending(turn) is None
+        assert x.service.execute("list", turn, request_key=f"empty:{index}")["jobs"] == []
+    corrected = ConversationActionCall("corrected", "start_background_research", {"research": PUBLIC})
+    receipt = actions.execute(turn, corrected)
+    assert receipt.output["status"] == "verified"
+    assert actions.pending(turn) == receipt
+    assert len(x.service.execute("list", turn, request_key="one-job")["jobs"]) == 1

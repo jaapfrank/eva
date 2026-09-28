@@ -326,7 +326,19 @@ class PostgresDelegatedWorkActions:
         if operation == "research":
             from eva.contracts.delegated_work import PublicResearchRequest
             from eva.adapters.model.research_tools import validate_public_projection
-            public = PublicResearchRequest.model_validate(call.arguments["research"])
+            from pydantic import ValidationError
+            from eva.application.conversation import ConversationActionInputRejected
+            try:
+                public = PublicResearchRequest.model_validate(call.arguments["research"])
+            except ValidationError as error:
+                # This precedes preparation/admission. Return field names only,
+                # never the rejected public projection or private input values.
+                known = set(PublicResearchRequest.model_fields)
+                fields = tuple(sorted({
+                    item["loc"][0] if item["loc"] and item["loc"][0] in known else "research"
+                    for item in error.errors(include_input=False, include_url=False, include_context=False)
+                }))
+                raise ConversationActionInputRejected(fields) from None
             validate_public_projection(public.arguments())
         thread_id = self._thread_id(turn, step_index)
         request = {"call_id": call.call_id, "name": call.name, "arguments": call.arguments}

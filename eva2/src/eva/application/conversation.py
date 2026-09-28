@@ -79,6 +79,16 @@ class ConversationClarificationRequired(RuntimeError):
         super().__init__(prompt)
 
 
+class ConversationActionInputRejected(ConversationClarificationRequired):
+    """A tool input failed validation before admission or side effects."""
+
+    def __init__(self, fields: tuple[str, ...]) -> None:
+        self.fields = fields
+        super().__init__(
+            "Het onderzoek is nog niet gestart: de onderzoeksopdracht kon niet correct worden verwerkt."
+        )
+
+
 _SHA256 = re.compile(r"[0-9a-f]{64}")
 _TOOL_NAME = re.compile(r"[A-Za-z][A-Za-z0-9_]{0,63}")
 _TEXT_DELTA_SINK: ContextVar[Callable[[str], None] | None] = ContextVar(
@@ -1027,6 +1037,8 @@ class LivingConversation:
         if initiative is not None:
             self_context = (*self_context, initiative.instructions())
         memory_searched = False
+        action_input_repaired = False
+        input_rejection_prompt = ""
         seen_call_ids = {item.call.call_id for item in receipts}
         while True:
             if contact_model is not None:
@@ -1040,7 +1052,9 @@ class LivingConversation:
                     deferred_actions.add("run_reusable_procedure")
                 available_names = tuple(name for name in available_names if name not in deferred_actions)
             checkpoint()
-            history = {"prior_actions": tuple(receipts[:-1])} if len(receipts) > 1 else {}
+            repairing_input = completed is not None and completed.output.get("status") == "invalid_input"
+            prior_actions = receipts if repairing_input else receipts[:-1]
+            history = {"prior_actions": tuple(prior_actions)} if prior_actions else {}
             # Routing uses actual receipts, never channel names or greeting regexes.
             # Acknowledging durable work and searching memory stay on the contact
             # model. Tool execution / spoken continuation use the existing work model.
@@ -1069,7 +1083,7 @@ class LivingConversation:
             # generated. Do not publish provisional claims before its guard.
             with observe_model_requests(turn, model_journal if individual_requests else None), (
                 stream_conversation_text(lambda _delta: None)
-                if reply_guard is not None else nullcontext()
+                if reply_guard is not None or repairing_input else nullcontext()
             ):
                 generated = model.generate(
                     turn,
@@ -1087,6 +1101,8 @@ class LivingConversation:
             timings.append(generated.timing)
             call = generated.action_call
             if call is None:
+                if repairing_input:
+                    generated = replace(generated, text=input_rejection_prompt)
                 break
             checkpoint()
             if call.call_id in seen_call_ids:
@@ -1150,6 +1166,17 @@ class LivingConversation:
                 else:
                     completed = self._actions.execute(turn, call)
             except ConversationClarificationRequired as clarification:
+                if isinstance(clarification, ConversationActionInputRejected) and not action_input_repaired:
+                    # Nothing was admitted. Let the same model correct its own
+                    # arguments once, within the existing request/turn budget.
+                    action_input_repaired = True
+                    input_rejection_prompt = clarification.prompt
+                    completed = ConversationActionReceipt(call, {
+                        "status": "invalid_input", "action_admitted": False,
+                        "invalid_fields": list(clarification.fields),
+                        "instruction": "Correct the tool arguments using its schema. No work has started.",
+                    })
+                    continue
                 return GroundedReply(
                     conversation_id=turn.conversation_id,
                     message_id=turn.message_id,
