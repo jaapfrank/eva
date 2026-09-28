@@ -1,0 +1,75 @@
+{
+  "recordedAt": "2026-09-28T20:29:28.682087+00:00",
+  "baseCommit": "2bfcd0a1",
+  "slice": "L1",
+  "task": "Learn and reuse JSON Patch for isolated configuration documents",
+  "source": "https://www.rfc-editor.org/rfc/rfc6902",
+  "novelty": "No JSON Patch/RFC6902 match in current tracked implementation/design/evidence; runtime skill selection remains Eva responsibility. No claim of absence from model pretraining.",
+  "expected": {
+    "initial": [
+      {
+        "name": "room-settings",
+        "result": {
+          "rooms": [
+            "living",
+            "kitchen",
+            "hall"
+          ],
+          "a/b": {
+            "~key": 3
+          },
+          "copy": {
+            "settings": {
+              "~key": 3
+            }
+          }
+        }
+      },
+      {
+        "name": "wrong-type",
+        "error": true,
+        "unchanged": {
+          "enabled": true
+        }
+      }
+    ],
+    "reuse": [
+      {
+        "name": "other-settings",
+        "result": {
+          "queue": [
+            "b",
+            "d",
+            "a"
+          ],
+          "a/b": {
+            "~key": [
+              1,
+              2,
+              3
+            ]
+          },
+          "backup": [
+            1,
+            2
+          ]
+        }
+      }
+    ]
+  },
+  "pass": [
+    "Actual source research",
+    "Saved executable procedure and actual execution",
+    "Initial output exact and invalid patch isolated",
+    "Separate ordinary request chooses same procedure unchanged, no ID/code hints",
+    "Held-out input and stored output match independent receipt"
+  ],
+  "stop": [
+    "One initial task and one reuse task at most",
+    "No automatic retries",
+    "No task budget reset/increase",
+    "Failure preserved; no developer writes converter or changes expected output"
+  ],
+  "effort": "5–10 minutes per bounded task, existing runtime limits; credit cost unknown",
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/json-patch-learning-20260928"
+}

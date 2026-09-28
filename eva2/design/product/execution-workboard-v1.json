@@ -2764,8 +2764,8 @@
         ],
         "now": {
           "title": "Leren en zelfstandig hergebruiken afronden",
-          "state": "Verbeteren en zelfstandig hergebruiken gelukt",
-          "detail": "Eva verbeterde na feedback zelf de werkwijze, voerde die werkelijk uit en koos haar daarna zelf voor andere invoer. Code bleef ongewijzigd; opgeslagen uitvoer exact gelijk aan vooraf vastgelegde verwachting. Geen modeltaak actief. Onafhankelijke eindcontrole akkoord; onbegeleid nieuw leren en eigenaaracceptatie blijven open.",
+          "state": "Nieuwe leertaak voorbereiden: configuratiewijzigingen",
+          "detail": "Bestaande onderzoeks-/leerroute, basis2bfcd0a1. Vooraf vastgelegde JSON Patch-invoer/uitkomst, geen bestaande implementatie of bewijs gevonden. Eén leeropdracht en hoogstens één hergebruikopdracht; geen ontwikkelaarscode of echte huiswijziging. Raming5–10min per taak, bestaande limieten, credits onbekend.",
           "doneWhen": "Eva leert uit documentatie, bewaart een uitvoerbare werkwijze en past die op andere invoer toe zonder nieuwe kerncode of ontwikkelhints; resultaat onafhankelijk gecontroleerd."
         },
         "next": {
@@ -2784,7 +2784,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T20:27:39.784252+00:00"
+        "reviewedAt": "2026-09-28T20:29:28.682087+00:00"
       }
     },
     "pendingTechnicalReview": {
