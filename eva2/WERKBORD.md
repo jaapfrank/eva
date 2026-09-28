@@ -1,10 +1,10 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — T1: volledige taak opnieuw uitvoeren.** Bron `284d8a83` geïnstalleerd op gezonde kern en werker: achtergrondmodel120s, totale taak300s en gewone gesprekken60s.18gerichte controles en onafhankelijke review geslaagd; oude korte grants en stoppen behouden. Eén hervatting vanwege de aangetoonde60s-blokkade; volledig resultaat nog niet bewezen. [Installatie en terugweg](evidence/product/background-phase-timeout-installed-20260928.json).
+**Nu — L1: geleerde werkwijze opnieuw gebruiken.** De hervatte kalenderopdracht is daadwerkelijk afgerond: procedure opgeslagen, beide originele exports uitgevoerd, juiste afspraken en afzonderlijke datumfout opgeleverd. JSON en blijvende bestanden onafhankelijk gecontroleerd; resultaatreview akkoord. Eén nieuwe-invoerproef zonder procedure-ID of code voorbereiden. Eerdere reparatiehulp blijft zichtbaar; geen algemene leerclaim. [Bruikbaar resultaat en bewijs](evidence/product/calendar-learning-completed-20260928.json).
 
 **Leidend — het complete bouwplan uitvoeren.** Acht vaste productstappen en 24 begrensde opdrachten; geen zakelijke uitwerking of nieuwe algemene audit. Gegevens en acceptaties behouden. Technische afronding, installatie, vergelijkingsbewijs en jouw oordeel blijven apart. De recente [eigenaarbesluiten](PROJECTDOEL.md) gaan voor oudere bouwvolgordes.
 
-**Eerstvolgende stap:** na de gerichte taakcontractcorrectie een complete echte opdracht laten afronden en resultaat opleveren via bestaande routes. C1 blijft open voor inhoudssnelheid/echte Telegramproef; het bestaande overlap-/taakgedrag maakt deze onafhankelijke T1-correctie al uitvoerbaar. De criteria van C1/C2 worden hiermee niet afgevinkt.
+**Eerstvolgende stap:** Eva de bestaande werkwijze zelf laten vinden en toepassen op nieuwe invoer. C1 blijft open voor inhoudssnelheid/echte Telegramproef; het bestaande overlap-/taakgedrag maakt deze onafhankelijke T1-correctie al uitvoerbaar. De criteria van C1/C2 worden hiermee niet afgevinkt.
 
 ## Actuele opleverstatus — 28 september 2026
 

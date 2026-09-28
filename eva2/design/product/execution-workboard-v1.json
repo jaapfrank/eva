@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Agenda-opdracht werkelijk afgerond",
+            "date": "28 september",
+            "state": "tested",
+            "result": "Eva bewaarde een werkende werkwijze, voerde beide originele exports uit en leverde de juiste afsprakenlijst plus afzonderlijke foutmelding. Uitvoer en opgeslagen bestanden onafhankelijk gecontroleerd; resultaatreview akkoord.",
+            "remaining": "Opdracht vereiste eerdere ontwikkelaarsreparaties. Nieuwe-invoerhergebruik en eigenaaracceptatie nog open; geen algemene leerclaim.",
+            "source": "eva2/evidence/product/calendar-learning-completed-20260928.json"
+          },
+          {
             "title": "Achtergrondwerk krijgt passende modeltijd",
             "date": "28 september",
             "state": "installed",
@@ -2443,15 +2451,15 @@
           }
         ],
         "now": {
-          "title": "T1 · Opdrachten volledig laten afronden",
-          "state": "T1 · volledige taak opnieuw uitvoeren",
-          "detail": "Eén-bestand-correctie geïnstalleerd; kern en werker gezond, achtergrond120s en totaaltaak300s gecontroleerd. Eén hervatting vanwege gecorrigeerde60s-blokkade; volledig resultaat nog niet bewezen.",
+          "title": "L1 · Geleerde werkwijze opnieuw gebruiken",
+          "state": "L1 · nieuwe invoer voorbereiden",
+          "detail": "Hervatte kalenderopdracht daadwerkelijk afgerond en onafhankelijk beoordeeld: werkwijze bewaard, originele invoer uitgevoerd, correct resultaat teruggelezen. Coördinator bereidt één nieuwe invoerproef voor zonder procedure-ID of code; bestaande functies blijven behouden.",
           "doneWhen": "Compleet taakpad past; bestaande opgeslagen taken blijven hervatbaar. Daarna gerichte review, installatie en werkelijk resultaat."
         },
         "next": {
-          "title": "T1/L1 · Een volledige opdracht werkelijk afronden",
-          "state": "Open · geen modelproef actief",
-          "detail": "Kleinste onderbouwde correctie van achtergrondtijd bepalen; gewone gesprekken en totaaltaakbudget behouden. Geen herhaling zonder gewijzigde oorzaak; complete opdracht blijft de eindvoorwaarde."
+          "title": "L1 · Hergebruik zonder ontwikkelaarhulp",
+          "state": "Eén begrensde vervolgproef",
+          "detail": "Eva moet zelf de opgeslagen werkwijze vinden, op nieuwe gegevens uitvoeren en gecontroleerd terugmelden. Geen nieuw onderzoek of kernbouw zonder aangetoond tekort."
         },
         "ownerAction": {
           "title": "Nu geen proef nodig",
@@ -2464,7 +2472,7 @@
           "expected": "Gebouwd, getest, geïnstalleerd en door jou geaccepteerd blijven apart. Alleen werkelijk bruikbare functies tellen als opgeleverd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T10:01:31.441322+00:00"
+        "reviewedAt": "2026-09-28T10:12:39.200523+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12571,7 +12579,7 @@
           "concreteChange": "Use the existing configured32 request allowance instead of additional composition cap8/tools6; reserve final response. Historical grants unchanged. Actual core setting32 confirmed read-only.",
           "sourceCommit": "ef59f784",
           "activeWorker": null,
-          "latestRealTask": "internal_error; no complete result; causal metadata not retained",
+          "latestRealTask": "succeeded; complete concrete task independently checked",
           "diagnosticAssignment": {
             "baseCommit": "855d9ac6",
             "files": [
@@ -12623,7 +12631,7 @@
             "trialWorkId": "work:eva-resume:c5cfd3f2-3180-5918-9955-7cabd4f151b2"
           },
           "phaseDeadlineAssignment": {
-            "stage": "one_full_task_running",
+            "stage": "installed_result_review_passed",
             "baseCommit": "1489b084",
             "owner": "/root/baseline_research_20260927",
             "scope": "bootstrap/delegated_digital_composition.py and focused composition/cancellation tests",
@@ -12639,7 +12647,9 @@
             "reviewResult": "GO; independent source review, local cooperative cancellation only",
             "testResult": "18 focused cases passed in7.92s; virtual timing and actual blocked mock HTTP stream, network disabled",
             "trialWorkId": "work:eva-resume:0046a00f-df03-56fd-aa06-f27bdbfd5584"
-          }
+          },
+          "fullTaskEvidence": "eva2/evidence/product/calendar-learning-completed-20260928.json",
+          "remaining": "General new-question research quality and full original T1 criteria remain separate from this repaired case."
         },
         {
           "id": "T2",
@@ -12764,11 +12774,11 @@
           ],
           "outcome": "Werkwijze leren en hergebruiken",
           "effort": "M",
-          "status": "planned",
+          "status": "in_progress",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Procedure storage/discovery/execution and unassisted reuse exist; initial learning needed help.",
-            "remainingGap": "**Defect:** unseen documentation task never saved/executed the procedure; reviewed path needs at least 8 tools/9 responses versus 6/8 limits.",
+            "remainingGap": "Learning case now completed after developer repairs. New-input autonomous reuse and genuinely unseen learning remain to be proven.",
             "nextAction": "Retain learned artifacts and tools; finish the complete failing learning path and verify new-input reuse. No new learning engine by assumption.",
             "evidencePaths": [
               "eva2/evidence/product/procedure-unassisted-reuse-20260925.json",
@@ -12777,7 +12787,13 @@
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
-          }
+          },
+          "owner": "/root",
+          "activeWorker": null,
+          "baseCommit": "499e4830",
+          "endCondition": "One new input is correctly processed by the existing saved procedure, selected without procedure ID or code hints; verify source/input/output hashes and original destination.",
+          "effortNotice": "One bounded real reuse request and independent result review; no source changes planned, credit costs unknown.",
+          "dependencyEvidence": "Existing procedure execution and completed calendar task support this independent reuse proof; browser T3 acceptance is not required for this case."
         },
         {
           "id": "L2",
@@ -12997,7 +13013,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "T1",
+      "activeSliceId": "L1",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

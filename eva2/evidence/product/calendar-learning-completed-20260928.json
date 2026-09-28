@@ -1,0 +1,57 @@
+{
+  "checkedAt": "2026-09-28T10:12:39.200523+00:00",
+  "status": "completed_concrete_resumed_task",
+  "workId": "work:eva-resume:0046a00f-df03-56fd-aa06-f27bdbfd5584",
+  "sourceCommit": "284d8a83",
+  "outcome": "Learned and stored reusable calendar procedure, executed exact original inputs, correctly returned two sorted events and separately rejected invalid date.",
+  "semanticCheck": {
+    "eventOutputsMatch": true,
+    "invalidIsolated": true,
+    "originalInputsExact": true,
+    "procedureId": "procedure-reference:583af06a40cc7fb00d86ead1de28c51cb9e83d969856933c5868ea302f009d8e"
+  },
+  "savedFiles": {
+    "ical-losse-afspraken-20260928.py": {
+      "sha256": "09d92934285345fee709ea2daf747717dcc942ed64714c99a5a3fff70ed731b9",
+      "bytes": 9413,
+      "matchesWriteRequest": true,
+      "independentVolumeRead": true
+    },
+    "agenda-uitkomsten-20260928.md": {
+      "sha256": "1108cea1d22ee2cbae74cd84daac2cc4dba9dcb08db8a401ba78f262ceeb5b6e",
+      "bytes": 2951,
+      "matchesWriteRequest": true,
+      "independentVolumeRead": true
+    }
+  },
+  "taskResult": {
+    "output": "Uitgevoerd en gecontroleerd. De [volledige afsprakenlijst](/proof-state/agenda-uitkomsten-20260928.md) bevat alle identificaties, gedecodeerde titels en beschrijvingen, tijden, duur en hele-dag-status, plus de zes geraadpleegde RFC-bronlinks.\n\nbuurtplanning.ics, op begin gesorteerd: Planbespreking, buurtteam; najaar — 9 oktober 2026 22:15 tot 10 oktober 00:45 UTC, 2½ uur, geen hele dagen. Logeerweekend, opa; oma — 10 tot 12 oktober 2026 exclusief, dus twee hele dagen. ongeldige-datum.ics is afzonderlijk afgewezen: 30 februari bestaat niet; geen afspraken of succesresultaat.\n\nDe [werkende Python-werkwijze](/proof-state/ical-losse-afspraken-20260928.py) is duurzaam opgeslagen, als herbruikbaar geregistreerd en op beide bestanden toegepast. Beperking: conservatieve subset, geen volledige RFC-validator.",
+    "output_sha256": "60d8765f8dc551cde5e97a45657aab1013633ede9b0b9f1b15946a4d7dd08455",
+    "completed_at": "2026-09-28T10:06:23Z",
+    "verified": false
+  },
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 8,
+    "tool_calls": 10,
+    "input_tokens": 203076,
+    "output_tokens": 5735,
+    "total_tokens": 208811,
+    "cost_usd_micros": null
+  },
+  "modelAccounting": {
+    "measuredResponses": 8,
+    "inputTokens": 203076,
+    "outputTokens": 5735
+  },
+  "independentReview": "GO by platform_research_20260927 for outputs, persisted report and procedure.",
+  "sourceEvidence": "Full official RFC download confirmed. Separate reading of every listed section was not independently confirmed in this export.",
+  "limitations": [
+    "Known task resumed after developer repairs; not a fresh unassisted learning comparison.",
+    "New-input reuse remains to be verified.",
+    "Owner acceptance remains open; no general category completion.",
+    "Credits unknown; aggregate task usage remains partial as reported."
+  ]
+}
