@@ -2178,7 +2178,7 @@ def create_runtime_app() -> FastAPI:
                 authority_scope=dashboard_authority_scope),
             proactive_delivery, lambda: runtime._initiative_authority().policy(),
         )
-        idle_tasks = (initiative_delivery.run_once, *idle_tasks)
+        service_tasks = (*service_tasks, initiative_delivery.run_once)
     if delegated_work_service is not None:
         from eva.adapters.postgres.scheduled_work import ScheduledOwnerWork
         scheduled_work = ScheduledOwnerWork(delegated_work_service)

@@ -6,6 +6,8 @@
 
 **Geïnstalleerd — dagruimte voor initiatief spreiden:** bron43548a77,38 gerichte controles en onafhankelijke bronreview akkoord. De vier periodieke beoordelingen gebruikten vandaag alle ruimte tussen02:37 en05:42 lokale tijd. Beschikbaarheid wordt voortaan over de UTC-dag gespreid, zonder budgetverhoging/reset. Vandaag blijft de ruimte uitgeput; geheugen deelt de teller. Kern/werker gezond en bestaande4/40-limieten teruggelezen. [Bewijs](evidence/product/initiative-review-pacing-installed-20260928.json).
 
+**Nu — terugmelding afronden:** bestaande initiatiefbezorging hangt nog aan ruststand van geheugenwerk. Eén registratie koppelen aan bestaande onafhankelijke servicelus, basis9f8708a4; coördinator bezit runtimewiring en gerichte bezorgtests. Geen modelproef of echt Telegrambericht.
+
 **Resteert:** passende eigen actie uit huiscontext, nuttige camera-/agendaherinnering, onderbouwd eigen onderzoeksvoorstel en correcte terugmelding zonder ongewenste herhaling als samenhangend gebruik. Bestaande werking en bewijs hergebruiken. Technische afronding en gezinsbeoordeling blijven apart.
 
 **Agendabron gecontroleerd:** bestaande HA-API levert echte komende afvalafspraken; andere afvalbron is leeg. Geen ophaalmoment morgen gevonden. Geen nieuwe connector nodig. De complete koppeling met een camerawaarneming blijft open; geen extra modelcall of gebruikersmelding. [Broncontrole](evidence/product/initiative-calendar-source-20260928.json).

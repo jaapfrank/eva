@@ -919,3 +919,43 @@ def test_initiative_context_profile_does_not_grant_general_api_effects(changes):
         args = dict(transport="rest", method="GET", path="/api/calendars", body_json="", response_pointer="", offset=0, limit=10)
         assert _matches_profile(args, schema)
         assert not _matches_profile({**args, **changes}, schema)
+
+
+@pytest.mark.parametrize("uncertain_send", [False, True])
+def test_completed_native_result_delivery_keeps_artifact_and_never_repeats_send(
+    costless_native, monkeypatch, uncertain_send
+):
+    from eva.adapters.postgres import initiative_delivery as delivery_module
+    from eva.application.conversation import GroundedReply
+    auth, claim, store, control, source, path, policy = costless_native
+    now = NOW
+
+    class Clock(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return now
+
+    monkeypatch.setattr(delivery_module, "datetime", Clock)
+    sent = []
+
+    class Transport:
+        def deliver(self, message):
+            sent.append(message)
+            if uncertain_send:
+                raise TimeoutError("Transport may have sent the message")
+            return "private-transport-receipt"
+
+    delivery = delivery_module.InitiativeCompletionDelivery(control, Transport(), auth.policy)
+    assert delivery.run_once() == "enabled"
+    guard, turn = auth.bind(claim)
+    content = "A completed contribution with its actual result."
+    now = NOW + timedelta(seconds=1)
+    reply = GroundedReply(turn.conversation_id, turn.message_id, content, (), turn.occurred_at, "fixture")
+    store.complete_native(claim, reply, now=now)
+    now += timedelta(seconds=1)
+    assert delivery.run_once() == ("delivery_uncertain" if uncertain_send else "delivered")
+    assert len(sent) == 1 and content in sent[0].text
+    assert control.artifact(claim.intent_id, now=now)["content"] == content
+    restarted = delivery_module.InitiativeCompletionDelivery(control, Transport(), auth.policy)
+    assert restarted.run_once() == "idle"
+    assert len(sent) == 1

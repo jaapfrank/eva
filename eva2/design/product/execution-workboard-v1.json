@@ -2741,7 +2741,7 @@
         "now": {
           "title": "Initiatief en huisaanwezigheid als geheel afronden",
           "state": "In uitvoering",
-          "detail": "Bestaande afvalagenda rechtstreeks via de geïnstalleerde API gecontroleerd: twee bronnen, één met komende afspraken en één leeg. Geen ophaalmoment morgen gevonden. Geen nieuwe kalenderconnector nodig. Complete camera-/agenda-uitkomst nog open; camerakeuze gevraagd.",
+          "detail": "Afgeronde eigen initiatieven blijken nog op de ruststand van geheugenwerk te wachten. Bestaande aparte bezorgroute aansluiten; geen nieuwe transportlaag of proefbericht naar Telegram.",
           "doneWhen": "Eva kiest uit echte huiscontext passend werk, voert dit uit en brengt het resultaat bij de juiste persoon; camera/agenda ondersteunen een nuttige herinnering, eigen onderzoek een onderbouwd voorstel, ongewenste herhaling blijft uit. Gezinsbeoordeling apart."
         },
         "next": {
@@ -2760,7 +2760,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T18:58:54.150438+00:00"
+        "reviewedAt": "2026-09-28T19:01:16.400163+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13207,13 +13207,12 @@
           },
           "owner": "/root",
           "assignment": {
-            "stage": "existing_calendar_source_verified",
+            "stage": "initiative_return_service_connection",
+            "baseCommit": "9f8708a4",
             "owner": "/root",
-            "baseCommit": "d5707e8d",
-            "scope": "Existing installed HA calendar API and I1/I2 model/execution source; read-only",
-            "endCondition": "Identify usable real calendar source and avoid rebuilding an existing connector. Next actual correlation requires selected camera.",
-            "effort": "Three successful read-only API requests, no Eva model calls; credits unknown.",
-            "result": "Actual collection events available; no event for tomorrow. Existing native exploration is the execution path; standalone decision evaluator does not inspect calendars."
+            "scope": "bootstrap/runtime.py one existing callback registration; real PostgreSQL delivery checks",
+            "endCondition": "Completed native result delivery proceeds independently of memory maintenance; original artifact and no-duplicate/uncertain-send behavior retained; install bounded one-line runtime patch.",
+            "effort": "One bounded connection, existing worker checks and two durable delivery cases; zero model calls or real messages."
           },
           "evidence": "eva2/evidence/product/local-vision-installed-20260928.json",
           "remaining": "Useful camera/calendar reminder through existing initiative execution, self-chosen research and appropriate private return; real household usefulness remains open. Camera selection question pending. No complete I1/I2 claim.",
