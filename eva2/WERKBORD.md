@@ -2,6 +2,8 @@
 
 ## Actuele opdracht — leren zonder ontwikkelhulp (L1)
 
+**Nu:** bestaande providerdiagnose gericht aanvullen: opgeslagen local_stream_closed=true bewijst dat de HTTP-respons geopend was. Nog onbekend of modeldata binnenkwam. Basis ec3c890e; coördinator bezit openai_codex_provider.py, pydantic_conversation.py en gerichte modeltests. Raming 15–25 minuten; geen modelcalls tijdens bouw. Dit is afhankelijk werk voor L1, geen nieuwe productoplevering.
+
 Bestaande vaardigheden blijven behouden. Eén nieuwe WebVTT-verwerking uit documentatie voorbereiden en daarna op andere invoer hergebruiken. Maximaal twee taakopnames, bestaande runtimegrenzen, geen kernbouw tenzij een concreet tekort blijkt. Basis38cb8dcc; coördinator bezit geïsoleerde fixtures en bewijs. Initiatief/camera blijft open; alleen afhankelijk werk wacht.
 
 **Uitkomst eerste leerproef:** na64,292s modeldeadline vóór taakopname. Eén modelaanvraag, verbruik niet gemeten; geen documentatielezing, nieuwe skill of uitvoerresultaat. Geen hergebruikproef of automatische herhaling. Bestaande kalenderwerkwijze behouden. Volgende: oorzaak van de eerste modeldeadline onderscheiden voordat dezelfde opdracht opnieuw wordt aangeboden. [Bewijs](evidence/product/webvtt-learning-attempt-20260928.json).

@@ -571,3 +571,49 @@ def test_sanitization_preserves_existing_provider_category() -> None:
     error = CodexProviderError("deadline")
 
     assert _sanitized(error) is error
+
+
+@pytest.mark.parametrize("stage", ["before_headers", "after_headers", "after_chunk"])
+def test_cancelled_request_retains_content_free_transport_observation(stage: str) -> None:
+    """Distinguish upstream wait stages even when the outer deadline cancels."""
+    reached = asyncio.Event()
+
+    class WaitingBody(httpx2.AsyncByteStream):
+        async def __aiter__(self):
+            if stage == "after_chunk":
+                yield b": private upstream keepalive\n\n"
+            reached.set()
+            await asyncio.Event().wait()
+            yield b""  # pragma: no cover
+
+    async def respond(request: httpx2.Request) -> httpx2.Response:
+        if stage == "before_headers":
+            reached.set()
+            await asyncio.Event().wait()
+        return httpx2.Response(200, stream=WaitingBody(), request=request)
+
+    async def run() -> None:
+        provider = OpenAICodexProvider(
+            _settings(), credential_loader=lambda: ("secret-access", "private-account"),
+            network_transport=httpx2.MockTransport(respond),
+        )
+        async with provider as session:
+            task = asyncio.create_task(Agent(session.model, retries=0).run(
+                "private request", instructions="private instructions",
+                usage_limits=UsageLimits(request_limit=1),
+            ))
+            await asyncio.wait_for(reached.wait(), timeout=2)
+            task.cancel()
+            with pytest.raises(asyncio.CancelledError):
+                await task
+            observed = session.observation
+            assert observed["network_started_ms"] is not None
+            assert (observed["headers_received_ms"] is None) == (stage == "before_headers")
+            assert observed["response_status"] == (None if stage == "before_headers" else 200)
+            assert observed["received_chunks"] == (1 if stage == "after_chunk" else 0)
+            assert observed["received_bytes"] == (len(b": private upstream keepalive\n\n") if stage == "after_chunk" else 0)
+            assert "private" not in json.dumps(observed)
+            assert "secret" not in json.dumps(observed)
+            assert session.model_requests == 1
+
+    asyncio.run(run())

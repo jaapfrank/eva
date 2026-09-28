@@ -107,7 +107,8 @@ _MAX_STREAM_BYTES = 8 * 1024 * 1024
 _MODEL_LEASE_OWNER_UID = 1000
 
 
-def _log_model_failure(error: BaseException, request_id: str | None) -> None:
+def _log_model_failure(error: BaseException, request_id: str | None,
+                       transport: dict[str, int | None] | None = None) -> None:
     """Retain causal categories without prompts, response bodies or exception text."""
     chain = []
     seen = set()
@@ -136,6 +137,7 @@ def _log_model_failure(error: BaseException, request_id: str | None) -> None:
         "exception_chain": chain,
         "provider_category": provider_category,
         "usage_limit": limit,
+        **({"transport": transport} if transport is not None else {}),
     }, separators=(",", ":")))
 
 
@@ -1002,7 +1004,7 @@ class PydanticConversationModel:
 
                 def record_failure(error: BaseException) -> None:
                     nonlocal raw_usage, raw_usage_consumed
-                    _log_model_failure(error, request_id)
+                    _log_model_failure(error, request_id, getattr(session, "observation", None))
                     if request_id is None:
                         return
                     usage = getattr(error, "model_usage", None)

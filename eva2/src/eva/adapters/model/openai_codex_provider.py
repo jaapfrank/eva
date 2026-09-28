@@ -197,6 +197,8 @@ class _AttestedStreamingBody(httpx2.AsyncByteStream):
         self._attestor = _RawSseUsageAttestor() if attest else None
         self._retain = retain
         self._retained = False
+        self.received_bytes = 0
+        self.received_chunks = 0
         self.closed_successfully = False
         self.close_failed = False
         self.closes_in_progress = 0
@@ -214,6 +216,8 @@ class _AttestedStreamingBody(httpx2.AsyncByteStream):
                 await self.aclose()
                 raise CodexProviderError("deadline") from error
             total += len(chunk)
+            self.received_bytes += len(chunk)
+            self.received_chunks += 1
             if total > self._maximum_bytes:
                 await self.aclose()
                 raise CodexProviderError("response_too_large")
@@ -269,6 +273,10 @@ class _CodexTransport(httpx2.AsyncBaseTransport):
         self._network_close_failed = False
         self._network_closes_in_progress = 0
         self.provider_scope_closed = False
+        self._started_at = monotonic()
+        self._network_started_ms: int | None = None
+        self._headers_received_ms: int | None = None
+        self._response_status: int | None = None
 
     @property
     def local_stream_closed(self) -> bool | None:
@@ -277,6 +285,17 @@ class _CodexTransport(httpx2.AsyncBaseTransport):
                         and self._streams
                         and all(body.closed_successfully and not body.close_failed and not body.closes_in_progress
                                 for body in self._streams)) else None
+
+    @property
+    def observation(self) -> dict[str, int | None]:
+        """Expose bounded transport metadata without content or credentials."""
+        return {
+            "network_started_ms": self._network_started_ms,
+            "headers_received_ms": self._headers_received_ms,
+            "response_status": self._response_status,
+            "received_bytes": sum(body.received_bytes for body in self._streams),
+            "received_chunks": sum(body.received_chunks for body in self._streams),
+        }
 
     @property
     def model_requests(self) -> int:
@@ -327,7 +346,10 @@ class _CodexTransport(httpx2.AsyncBaseTransport):
                 raise CodexProviderError("request_too_large")
         try:
             async with asyncio.timeout(_remaining(self._deadline)):
+                self._network_started_ms = round((monotonic() - self._started_at) * 1000)
                 response = await self._network.handle_async_request(request)
+                self._headers_received_ms = round((monotonic() - self._started_at) * 1000)
+                self._response_status = response.status_code
         except TimeoutError as error:
             raise CodexProviderError("deadline") from error
         declared = response.headers.get("content-length")
@@ -592,6 +614,10 @@ class OpenAICodexSession:
     model: Model
     _transport: _CodexTransport
     _used_access_token: _UsedAccessToken
+
+    @property
+    def observation(self) -> dict[str, int | None]:
+        return self._transport.observation
 
     @property
     def model_requests(self) -> int:

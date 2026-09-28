@@ -1548,3 +1548,12 @@ def test_grouped_namespace_search_keeps_original_authorized_function(tmp_path, m
     group = next(item for item in groups if item["name"] == "eva_initiatives")
     assert [item["name"] for item in group["tools"]] == [descriptor.name]
     assert group["tools"][0]["parameters"] == descriptor.input_schema
+
+def test_failure_diagnostic_includes_available_transport_snapshot(caplog):
+    from eva.adapters.model.pydantic_conversation import _log_model_failure
+    observed = {"network_started_ms": 1, "headers_received_ms": 15,
+                "response_status": 200, "received_bytes": 30, "received_chunks": 1}
+    _log_model_failure(ConversationModelError("private body"), "request-id", observed)
+    record = json.loads(caplog.records[-1].message.split(" ", 1)[1])
+    assert record["transport"] == observed
+    assert "private body" not in caplog.text
