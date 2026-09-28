@@ -2852,3 +2852,8 @@ def test_memory_relative_dates_never_use_recall_time_as_source(tmp_path, source_
     assert (f"waargenomen {source_time}" if source_time else
             "oorspronkelijke brondatum onbekend") in instructions
     assert "Morgen liever geen koffie." in instructions
+    if source_time is None:
+        assert "Historische uitspraak zonder datum" in instructions
+        assert "Leid hieruit geen afspraak voor vandaag of morgen af" in instructions
+    else:
+        assert "Historische uitspraak zonder datum" not in instructions

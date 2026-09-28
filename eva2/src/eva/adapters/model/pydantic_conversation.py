@@ -2585,9 +2585,16 @@ class PydanticConversationModel:
                 f"waargenomen {source_time}" if source_time
                 else "oorspronkelijke brondatum onbekend"
             )
+            historical_scope = (
+                "" if source_time else
+                " Historische uitspraak zonder datum: tijdwoorden zoals vandaag, "
+                "morgen en gisteren horen bij een onbekende vroegere dag. Leid "
+                "hieruit geen afspraak voor vandaag of morgen af. Dit zegt niets "
+                "tegen een eventuele tijdonafhankelijke voorkeur in dezelfde uitspraak."
+            )
             remembered.append(
                 f"- [rang {rank}; {time_label}; {trust_label}] "
-                f"{text.strip()}{qualifier}"
+                f"{text.strip()}{qualifier}{historical_scope}"
             )
         memories = (
             "\n".join(remembered) if remembered else "- Geen relevante herinnering."
