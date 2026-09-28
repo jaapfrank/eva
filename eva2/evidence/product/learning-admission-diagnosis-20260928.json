@@ -1,0 +1,82 @@
+{
+  "checkedAt": "2026-09-28T19:35:56.493893+00:00",
+  "sourceCommit": "166a6b98",
+  "status": "diagnostics_installed_learning_failed_source_retrieval",
+  "purpose": "Diagnose the actual L1 conversation deadline, without changing routing, timeout, retry or model policy.",
+  "previousAttempt": {
+    "requestId": "3db43dc6-fdae-49e8-8b96-fa51ead6a9a9",
+    "localStreamClosed": true,
+    "meaning": "An HTTP response stream existed and local closure completed; prior logs cannot identify received body bytes or remote cause."
+  },
+  "tests": {
+    "uniquePassing": 117,
+    "initialFailure": "Existing no-session log shape assertion; preserved old shape and reran three targeted diagnostics.",
+    "reviewer": "/root/platform_research_20260927",
+    "review": "GO"
+  },
+  "installation": {
+    "checkedAt": "2026-09-28T19:30:30.599225+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:6fc6704be3954cf244e0dcb5e8dc525105f2915c4b44b5862be3df7f8ada6af6",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/model/openai_codex_provider.py": "3de29b595107243115fb49dce7e6c26f7e7fca94b2711ab25bce695227be2f90",
+          "adapters/model/pydantic_conversation.py": "ca3d2fef4d695671af4e5a1193797f87cad2fcee8ebe9739215514379c861a93"
+        }
+      },
+      "worker": {
+        "image": "sha256:f997041dfa3aa3a4d1af369d69d254fed6d98da63601a7f9c02de8cb54b4f36f",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/model/openai_codex_provider.py": "3de29b595107243115fb49dce7e6c26f7e7fca94b2711ab25bce695227be2f90",
+          "adapters/model/pydantic_conversation.py": "ca3d2fef4d695671af4e5a1193797f87cad2fcee8ebe9739215514379c861a93"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/learning-admission-diagnosis-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "learningAttempt": {
+    "ordinaryRequestsThisTurn": 1,
+    "acknowledgementSeconds": 18.335,
+    "workId": "work:eva-chat:f00ad0ea-0a90-5e15-b5fd-993a016a7841",
+    "state": "failed",
+    "resultVerified": false,
+    "causeOfPriorTimeoutStillUnknown": true,
+    "errorCode": "incomplete_work",
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 9,
+      "tool_calls": 7,
+      "input_tokens": 87833,
+      "output_tokens": 1407,
+      "total_tokens": 89240,
+      "cost_usd_micros": null
+    },
+    "reuseRequests": 0
+  },
+  "creditCost": "unknown",
+  "ownerAccepted": false,
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/learning-admission-diagnosis-20260928",
+  "sourceRetrieval": {
+    "actualFailedToolReceipts": 3,
+    "urls": [
+      "https://www.w3.org/TR/webvtt1/",
+      "https://www.w3.org/TR/webvtt1",
+      "https://www.w3.org/TR/webvtt1/index.html"
+    ],
+    "providerMessage": "Content could not be retrieved; no HTTP cause exposed",
+    "installedCompositionMatchesSource": true,
+    "nativeResearchOfferedToDigitalWorker": false,
+    "existingReusableImplementation": "adapters/model/research_tools.py:OwnerResearchContinuationTool",
+    "priorSameSourceFailure": "eva2/evidence/product/AU-004-procedure-attempt2-failure-2026-09-12.json",
+    "priorEvidenceSelectionMistake": "Existing same-source retrieval failure was not used before selecting this trial. The current task is not evidence that the domain itself was previously unseen."
+  },
+  "nextAction": "Reuse existing research within digital execution, preserving source receipts, current limits and accounting; no new learning engine, direct task bypass or unchanged request repetition."
+}

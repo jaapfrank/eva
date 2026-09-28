@@ -2,11 +2,13 @@
 
 ## Actuele opdracht — leren zonder ontwikkelhulp (L1)
 
-**Nu:** bestaande providerdiagnose gericht aanvullen: opgeslagen local_stream_closed=true bewijst dat de HTTP-respons geopend was. Nog onbekend of modeldata binnenkwam. Basis ec3c890e; coördinator bezit openai_codex_provider.py, pydantic_conversation.py en gerichte modeltests. Raming 15–25 minuten; geen modelcalls tijdens bouw. Dit is afhankelijk werk voor L1, geen nieuwe productoplevering.
+**Actueel:** leertaak work:eva-chat:f00ad0ea-0a90-5e15-b5fd-993a016a7841 is beëindigd met incomplete_work. Aangenomen in 18,335s; drie echte W3C-bronopvragen mislukt. Geen nieuwe procedure of resultaat, geen hergebruikproef. Gemeten deelverbruik: 9 modelantwoorden, 7 tools, 87.833 invoer- en 1.407 uitvoertokens; overige aanvraag-/geheugenkosten niet inbegrepen, credits onbekend.
 
-Bestaande vaardigheden blijven behouden. Eén nieuwe WebVTT-verwerking uit documentatie voorbereiden en daarna op andere invoer hergebruiken. Maximaal twee taakopnames, bestaande runtimegrenzen, geen kernbouw tenzij een concreet tekort blijkt. Basis38cb8dcc; coördinator bezit geïsoleerde fixtures en bewijs. Initiatief/camera blijft open; alleen afhankelijk werk wacht.
+**Concrete vervolgstap binnen L1:** de bestaande onderzoeksfunctie wordt niet aangeboden in de digitale werker. Hergebruik de bestaande onderzoeksadapter met behoud van taakgrenzen, bronbewijs en verbruiksregistratie. Nog niet gebouwd; geen extra herhaling gestart. Dezelfde W3C-ophaalfout stond al in AU-004 van 12 september en had vóór proefselectie meegewogen moeten worden. De eerdere modeltimeout is niet bewezen opgelost.
 
-**Uitkomst eerste leerproef:** na64,292s modeldeadline vóór taakopname. Eén modelaanvraag, verbruik niet gemeten; geen documentatielezing, nieuwe skill of uitvoerresultaat. Geen hergebruikproef of automatische herhaling. Bestaande kalenderwerkwijze behouden. Volgende: oorzaak van de eerste modeldeadline onderscheiden voordat dezelfde opdracht opnieuw wordt aangeboden. [Bewijs](evidence/product/webvtt-learning-attempt-20260928.json).
+**Geïnstalleerde diagnose166a6b98:** alleen inhoudsvrije transportwaarneming op modelfouten,117 unieke gerichte controles na herstel van logcompatibiliteit, onafhankelijke bronreview GO. Kern/werker gezond, exacte bron gecontroleerd en terugweg vastgelegd. Dit is geen afgeronde leerfunctie. [Bewijs](evidence/product/learning-admission-diagnosis-20260928.json).
+
+**Eindvoorwaarde L1:** Eva leert uit documentatie, bewaart een uitvoerbare werkwijze en past deze op andere invoer toe zonder nieuwe kerncode of ontwikkelhints. Bestaande kalenderwerkwijze behouden; oorspronkelijke [criteria](evidence/product/webvtt-learning-criteria-20260928.json) blijven gelden. Initiatief/camera blijft open; alleen afhankelijk werk wacht.
 
 ## Initiatief — voortgang en open afhankelijkheden
 

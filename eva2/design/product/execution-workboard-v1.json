@@ -2748,14 +2748,14 @@
         ],
         "now": {
           "title": "Leren en zelfstandig hergebruiken afronden",
-          "state": "In uitvoering",
-          "detail": "L1 blijft de enige actieve oplevering. Eerste modelantwoord opende wel een HTTP-stream maar liep af. Coördinator voegt uitsluitend inhoudsvrije transportmeting toe in bestaande provider/gespreksadapter en gerichte tests; basis ec3c890e. Raming 15–25 minuten; geen modelcall tijdens bouw.",
+          "state": "Concrete aansluiting ontbreekt",
+          "detail": "L1-leertaak aangenomen maar gestopt: drie daadwerkelijke W3C-opvragen mislukt, geen werkwijze of bestanden. Bestaande native onderzoeksfunctie ontbreekt in digitale werkercatalogus. Diagnose166a6b98 geïnstalleerd; geen nieuwe modelpoging gestart.",
           "doneWhen": "Eva leert uit documentatie, bewaart een uitvoerbare werkwijze en past die op andere invoer toe zonder nieuwe kerncode of ontwikkelhints; resultaat onafhankelijk gecontroleerd."
         },
         "next": {
-          "title": "Eerste modelaanvraag weer betrouwbaar laten aannemen",
-          "state": "Oorzaak nog niet volledig vastgesteld",
-          "detail": "Geheugenvoorbereiding slaagde; één modelaanvraag liep af. Eerst oorzaak onderscheiden, geen nieuwe leer-engine of ongewijzigde herhaling."
+          "title": "Bestaand onderzoek aansluiten binnen leren",
+          "state": "Nog niet gebouwd",
+          "detail": "Hergebruik bestaande onderzoeksadapter in digitale uitvoering, met echte bronnen en dezelfde budget-/verbruiksregistratie. Daarna bestaande taak hervatten; geen nieuwe leer-engine."
         },
         "ownerAction": {
           "title": "Camera voor vuilnisbakken kiezen",
@@ -2768,7 +2768,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T19:24:54.583578+00:00"
+        "reviewedAt": "2026-09-28T19:35:56.508097+00:00"
       }
     },
     "pendingTechnicalReview": {
