@@ -1,0 +1,74 @@
+{
+  "checkedAt": "2026-09-28T09:52:26.215569+00:00",
+  "workId": "work:eva-resume:c5cfd3f2-3180-5918-9955-7cabd4f151b2",
+  "state": "ambiguous",
+  "errorCode": "timed_out",
+  "errorFingerprint": "477455588d88093bd24610bb7b84f25592273940520865c62a669e5cdbebfcf0",
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 3,
+    "tool_calls": 2,
+    "input_tokens": 31978,
+    "output_tokens": 553,
+    "total_tokens": 32531,
+    "cost_usd_micros": null
+  },
+  "resultAvailable": false,
+  "newProcedureOrExecutedResultProven": false,
+  "modelAccounting": [
+    {
+      "event": "CONVERSATION_MODEL_ADMITTED",
+      "at": "2026-09-28T09:49:44Z",
+      "usage": null
+    },
+    {
+      "event": "CONVERSATION_MODEL_RECORDED",
+      "at": "2026-09-28T09:49:59Z",
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 14398,
+        "output_tokens": 351,
+        "model_attempts": 1
+      }
+    },
+    {
+      "event": "CONVERSATION_MODEL_ADMITTED",
+      "at": "2026-09-28T09:50:00Z",
+      "usage": null
+    },
+    {
+      "event": "CONVERSATION_MODEL_RECORDED",
+      "at": "2026-09-28T09:50:09Z",
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 17580,
+        "output_tokens": 202,
+        "model_attempts": 1
+      }
+    },
+    {
+      "event": "CONVERSATION_MODEL_ADMITTED",
+      "at": "2026-09-28T09:50:10Z",
+      "usage": null
+    },
+    {
+      "event": "CONVERSATION_MODEL_RECORDED",
+      "at": "2026-09-28T09:51:10Z",
+      "usage": {
+        "tool_calls": null,
+        "measurement": "unmeasured",
+        "input_tokens": null,
+        "output_tokens": null,
+        "model_attempts": null
+      }
+    }
+  ],
+  "changedCause": "Installed task output allowance fix bb6d4115",
+  "outcome": "Third model request timed out; whole task not complete. No automatic retry.",
+  "creditCosts": "unknown",
+  "nextAction": "Bounded source analysis of background phase timeout versus existing300second task allowance; ordinary conversation and total grant unchanged."
+}

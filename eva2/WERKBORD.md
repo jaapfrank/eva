@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — T1: volledige opdracht hervatten.** Bron `bb6d4115` geïnstalleerd op gezonde kern en werker;150offline controles, onafhankelijke review, exacte bron en ongewijzigde taakconfiguratie gecontroleerd. Langere werkreacties gebruiken bestaand taakbudget; gewone antwoorden behouden hun grens. Eén vervolguitvoering vanwege deze aangetoonde correctie; volledige leerfunctie nog open. [Installatie en terugweg](evidence/product/task-output-budget-installed-20260928.json).
+**Nu — T1: tijdgrens van achtergrondwerk gericht onderzoeken.** Outputcorrectie geïnstalleerd; één vervolguitvoering eindigde met `timed_out` in de derde modelaanvraag. Gemeten31.978input/553output; derde reactie onbekend. Geen werkwijze of eindresultaat bewezen. Eén uitvoerder onderzoekt de60s-modelgrens binnen het bestaande300s-taakbudget; geen nieuwe proef of algemene audit. [Werkelijke uitkomst](evidence/product/task-output-budget-trial-20260928.json).
 
 **Leidend — het complete bouwplan uitvoeren.** Acht vaste productstappen en 24 begrensde opdrachten; geen zakelijke uitwerking of nieuwe algemene audit. Gegevens en acceptaties behouden. Technische afronding, installatie, vergelijkingsbewijs en jouw oordeel blijven apart. De recente [eigenaarbesluiten](PROJECTDOEL.md) gaan voor oudere bouwvolgordes.
 
@@ -10,10 +10,10 @@
 
 | Onderwerp | Huidige stand |
 |---|---|
-| Lopend werk | T1: aantoonbare uitvoerblokkade van de bestaande taakroute corrigeren; uitvoerder en reviewer klaar, coördinator volgt één volledige uitvoering. |
+| Lopend werk | T1: aantoonbare uitvoerblokkade van de bestaande taakroute corrigeren; één uitvoerder onderzoekt nu de concrete modeltijdgrens. |
 | Laatste geïnstalleerde wijziging | Langere werkreacties gebruiken bestaand taakbudget; geen nieuwe complete functie. [Installatiebewijs](evidence/product/task-output-budget-installed-20260928.json). |
 | Nog te leveren | De vastgelegde documentatieopdracht daadwerkelijk uitvoeren, werkwijze bewaren en gecontroleerd resultaat teruggeven. |
-| Eerstvolgende actie | Eén vervolguitvoering controleren op bewaarde werkwijze en volledig resultaat. |
+| Eerstvolgende actie | Onderbouwde oplossing voor de modeltijdgrens bepalen; geen ongewijzigde proef herhalen. |
 | Voor Jaap | Nu geen nieuwe proef nodig. Dezelfde twee afgebakende functies blijven afgerond; overige productcriteria blijven open. |
 | Overzicht alle onderdelen | Alle 24 opdrachten hebben bestaand vermogen, resterend tekort/bewijs en vervolgstap in [de bestaande uitvoerlijst](design/product/execution-workboard-v1.json). |
 

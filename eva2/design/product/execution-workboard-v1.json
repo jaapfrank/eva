@@ -2436,14 +2436,14 @@
         ],
         "now": {
           "title": "T1 · Opdrachten volledig laten afronden",
-          "state": "T1 · één volledige taak hervatten",
-          "detail": "Correctie geïnstalleerd op gezonde kern en werker; exacte bron en bestaande taakconfiguratie gecontroleerd. Eén vervolguitvoering van dezelfde documentatieopdracht vanwege gecorrigeerde outputgrens; geen nieuwe algemene leerclaim.",
+          "state": "T1 · taakdeadline gericht onderzoeken",
+          "detail": "Eén vervolguitvoering gestopt met timeout in derde modelaanvraag.31978input/553output gemeten; derde uitvoer onbekend. Geen werkwijze of eindresultaat bewezen. Eén uitvoerder bekijkt60s-modelgrens tegenover bestaand300s-taakbudget; geen nieuwe proef.",
           "doneWhen": "Compleet taakpad past; bestaande opgeslagen taken blijven hervatbaar. Daarna gerichte review, installatie en werkelijk resultaat."
         },
         "next": {
           "title": "T1/L1 · Een volledige opdracht werkelijk afronden",
           "state": "Open · geen modelproef actief",
-          "detail": "Na gerichte correctie, review en installatie één volledige uitvoering via de bestaande taakroute. De offline aangetoonde uitvoergrens is de gewijzigde oorzaak; geen herhaling alleen voor logging. Een bewaarde werkwijze en gecontroleerd eindresultaat blijven vereist."
+          "detail": "Kleinste onderbouwde correctie van achtergrondtijd bepalen; gewone gesprekken en totaaltaakbudget behouden. Geen herhaling zonder gewijzigde oorzaak; complete opdracht blijft de eindvoorwaarde."
         },
         "ownerAction": {
           "title": "Nu geen proef nodig",
@@ -2456,7 +2456,7 @@
           "expected": "Gebouwd, getest, geïnstalleerd en door jou geaccepteerd blijven apart. Alleen werkelijk bruikbare functies tellen als opgeleverd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T09:48:56.685448+00:00"
+        "reviewedAt": "2026-09-28T09:52:26.215569+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12562,7 +12562,7 @@
           ],
           "concreteChange": "Use the existing configured32 request allowance instead of additional composition cap8/tools6; reserve final response. Historical grants unchanged. Actual core setting32 confirmed read-only.",
           "sourceCommit": "ef59f784",
-          "activeWorker": null,
+          "activeWorker": "/root/baseline_research_20260927",
           "latestRealTask": "internal_error; no complete result; causal metadata not retained",
           "diagnosticAssignment": {
             "baseCommit": "855d9ac6",
@@ -12593,7 +12593,7 @@
           },
           "outputBudgetAssignment": {
             "baseCommit": "e7bb983722d6bb69c84fddb397ff06d0323b2617",
-            "stage": "one_complete_task_running",
+            "stage": "installed_trial_failed_timeout",
             "outcome": "A longer digital tool request can complete inside its existing aggregate grant; foreground limit unchanged.",
             "endCondition": "Real adapter handles a1634token tool request while remaining task grant permits; exhaustion/old grants/cancellation still enforced; then isolated review/install and meaningful task result.",
             "effort": "One bounded implementation/review window before any new live trial",
@@ -12613,6 +12613,16 @@
             "activeWorker": null,
             "reviewResult": "GO, independent source review of 48e89ded; no duplicate tests",
             "trialWorkId": "work:eva-resume:c5cfd3f2-3180-5918-9955-7cabd4f151b2"
+          },
+          "phaseDeadlineAssignment": {
+            "stage": "bounded_source_proposal",
+            "baseCommit": "1489b084",
+            "owner": "/root/baseline_research_20260927",
+            "scope": "existing background phase deadline and composition; no edits yet",
+            "endCondition": "smallest proposed change preserves foreground60s, provider<=120s and existing task300s stop",
+            "effort": "one bounded source analysis; credits unknown",
+            "runtimeModelCalls": 0,
+            "evidence": "eva2/evidence/product/task-output-budget-trial-20260928.json"
           }
         },
         {
