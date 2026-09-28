@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Geleerde werkwijze zelfstandig hergebruikt",
+            "date": "28 september",
+            "state": "tested",
+            "result": "Zonder procedure-ID of code vond Eva de opgeslagen kalenderwerkwijze, voerde nieuwe bestanden uit en bewaarde correct resultaat. Jaarovergang, schrikkeljaar en foutisolatie onafhankelijk gecontroleerd; review akkoord.",
+            "remaining": "Zelfstandig hergebruik bewezen voor deze context/subset. Eerste antwoord55.742s; snelle ontvangst en volledig zelfstandig nieuw leren blijven open.",
+            "source": "eva2/evidence/product/calendar-unassisted-reuse-20260928.json"
+          },
+          {
             "title": "Agenda-opdracht werkelijk afgerond",
             "date": "28 september",
             "state": "tested",
@@ -2451,15 +2459,15 @@
           }
         ],
         "now": {
-          "title": "L1 · Geleerde werkwijze opnieuw gebruiken",
-          "state": "L1 · nieuwe invoer voorbereiden",
-          "detail": "Hervatte kalenderopdracht daadwerkelijk afgerond en onafhankelijk beoordeeld: werkwijze bewaard, originele invoer uitgevoerd, correct resultaat teruggelezen. Coördinator bereidt één nieuwe invoerproef voor zonder procedure-ID of code; bestaande functies blijven behouden.",
+          "title": "C1 · Gesprek beschikbaar houden tijdens werk",
+          "state": "C1 · bestaande vertragingsbron lokaliseren",
+          "detail": "Hergebruik functioneel afgerond, maar eerste tekst pas55.742s. Eén bronanalyse van bestaande routering: waarom voert dit gesprek de taak af vóór reactie? Geen nieuwe modelproef of herbouw.",
           "doneWhen": "Compleet taakpad past; bestaande opgeslagen taken blijven hervatbaar. Daarna gerichte review, installatie en werkelijk resultaat."
         },
         "next": {
-          "title": "L1 · Hergebruik zonder ontwikkelaarhulp",
-          "state": "Eén begrensde vervolgproef",
-          "detail": "Eva moet zelf de opgeslagen werkwijze vinden, op nieuwe gegevens uitvoeren en gecontroleerd terugmelden. Geen nieuw onderzoek of kernbouw zonder aangetoond tekort."
+          "title": "C1 · Snelle ontvangst en doorpraten",
+          "state": "Gericht bestaand gedrag aansluiten",
+          "detail": "Bestaande ontvangst en achtergrondtaakroute gebruiken voor de aangetoonde uitvoerroute. Eerst vaststellen wat werkelijk ontbreekt; geen nieuw taakspecifiek script."
         },
         "ownerAction": {
           "title": "Nu geen proef nodig",
@@ -2472,7 +2480,7 @@
           "expected": "Gebouwd, getest, geïnstalleerd en door jou geaccepteerd blijven apart. Alleen werkelijk bruikbare functies tellen als opgeleverd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T10:12:39.200523+00:00"
+        "reviewedAt": "2026-09-28T10:18:47.421849+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12369,7 +12377,7 @@
           ],
           "outcome": "Gesprek tijdens werk via tekst",
           "effort": "M",
-          "status": "planned",
+          "status": "in_progress",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Contact model, Telegram streaming, work admission and actual conversation during research.",
@@ -12404,6 +12412,15 @@
             "state": "rejected_without_installation",
             "evidence": "eva2/evidence/product/c1-contact-20260928.json",
             "remaining": "Latency and actual Telegram/web acceptance remain open; no repeated unchanged model benchmark."
+          },
+          "activeWorker": "/root/baseline_research_20260927",
+          "contactDuringReuseAssignment": {
+            "stage": "source_analysis",
+            "outcome": "Locate existing admission/contact routing responsible for55.742s first text during procedure task; propose smallest general change only if needed.",
+            "scope": "Existing source and exact reuse receipts; no edits or model calls yet.",
+            "endCondition": "Identify current routes, preserved prior optimizations, demonstrated missing link and bounded next action.",
+            "effort": "one bounded source analysis; credits unknown",
+            "evidence": "eva2/evidence/product/calendar-unassisted-reuse-20260928.json"
           }
         },
         {
@@ -12793,7 +12810,15 @@
           "baseCommit": "499e4830",
           "endCondition": "One new input is correctly processed by the existing saved procedure, selected without procedure ID or code hints; verify source/input/output hashes and original destination.",
           "effortNotice": "One bounded real reuse request and independent result review; no source changes planned, credit costs unknown.",
-          "dependencyEvidence": "Existing procedure execution and completed calendar task support this independent reuse proof; browser T3 acceptance is not required for this case."
+          "dependencyEvidence": "Existing procedure execution and completed calendar task support this independent reuse proof; browser T3 acceptance is not required for this case.",
+          "newInputTrial": {
+            "stage": "independently_reviewed_pass",
+            "artifactDirectory": "/home/administrator/project/.eva2-artifacts/calendar-unassisted-reuse-20260928",
+            "maximumRequests": 1,
+            "automaticRetry": false,
+            "evidence": "eva2/evidence/product/calendar-unassisted-reuse-20260928.json"
+          },
+          "remaining": "Fresh unseen unassisted learning and full product comparison remain open; bounded new-input reuse is complete."
         },
         {
           "id": "L2",
@@ -13013,7 +13038,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "L1",
+      "activeSliceId": "C1",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

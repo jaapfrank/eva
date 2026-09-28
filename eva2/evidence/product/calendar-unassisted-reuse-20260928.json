@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-09-28T10:18:47.421849+00:00",
+  "status": "completed_bounded_unassisted_reuse",
+  "sourceCommit": "284d8a83",
+  "messageId": "dashboard:6867ef0d-5678-4458-9e93-e577242af638",
+  "result": {
+    "exactInput": true,
+    "sameSavedSourceHash": "09d92934285345fee709ea2daf747717dcc942ed64714c99a5a3fff70ed731b9",
+    "sameProcedureId": "procedure-reference:583af06a40cc7fb00d86ead1de28c51cb9e83d969856933c5868ea302f009d8e",
+    "allEventFieldsCorrect": true,
+    "invalidFileIsolated": true,
+    "savedJsonSemanticallyMatchesExecutedOutput": true,
+    "savedReportDifference": "Adds explanatory wrapper and abbreviates0uur30minuten0seconden to30minuten; numeric duration unchanged.",
+    "savedSha256": "90be08a0e2ff8221ba4ac5c7f47bf85f017bccb8f47587bc5929dcdb471240cb",
+    "measuredModelResponses": 4,
+    "inputTokens": 68952,
+    "outputTokens": 1314,
+    "firstTextSeconds": 55.742,
+    "finalSeconds": 62.191,
+    "creditCosts": "unknown"
+  },
+  "independentReview": "GO by platform_research_20260927; source procedure, exact new input, outputs and persisted result independently checked.",
+  "limitations": [
+    "Reuse proven within existing conversation/memory context and supported calendar subset.",
+    "Initial learning required developer repairs; genuinely unseen unassisted learning remains open.",
+    "First text55.742s and final62.191s; not fast contact.",
+    "No competitor superiority or owner acceptance claimed."
+  ],
+  "artifactPath": "/home/administrator/project/.eva2-artifacts/calendar-unassisted-reuse-20260928/nieuwe-planning-gecontroleerde-uitkomsten.json"
+}

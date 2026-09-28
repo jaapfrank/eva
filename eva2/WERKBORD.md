@@ -1,19 +1,19 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — L1: geleerde werkwijze opnieuw gebruiken.** De hervatte kalenderopdracht is daadwerkelijk afgerond: procedure opgeslagen, beide originele exports uitgevoerd, juiste afspraken en afzonderlijke datumfout opgeleverd. JSON en blijvende bestanden onafhankelijk gecontroleerd; resultaatreview akkoord. Eén nieuwe-invoerproef zonder procedure-ID of code voorbereiden. Eerdere reparatiehulp blijft zichtbaar; geen algemene leerclaim. [Bruikbaar resultaat en bewijs](evidence/product/calendar-learning-completed-20260928.json).
+**Nu — C1: gesprek beschikbaar houden tijdens werk.** Kalenderleeropdracht én nieuwe-invoerhergebruik daadwerkelijk afgerond en onafhankelijk beoordeeld. Eva vond zelf dezelfde opgeslagen bron en bewaarde correcte uitkomsten. Eerste tekst kwam echter pas na55,742s; één gerichte bronanalyse bepaalt welke bestaande gesprek-/taakroute deze wachttijd veroorzaakt. Geen nieuwe modelproef of herbouw. [Afgerond hergebruik](evidence/product/calendar-unassisted-reuse-20260928.json).
 
 **Leidend — het complete bouwplan uitvoeren.** Acht vaste productstappen en 24 begrensde opdrachten; geen zakelijke uitwerking of nieuwe algemene audit. Gegevens en acceptaties behouden. Technische afronding, installatie, vergelijkingsbewijs en jouw oordeel blijven apart. De recente [eigenaarbesluiten](PROJECTDOEL.md) gaan voor oudere bouwvolgordes.
 
-**Eerstvolgende stap:** Eva de bestaande werkwijze zelf laten vinden en toepassen op nieuwe invoer. C1 blijft open voor inhoudssnelheid/echte Telegramproef; het bestaande overlap-/taakgedrag maakt deze onafhankelijke T1-correctie al uitvoerbaar. De criteria van C1/C2 worden hiermee niet afgevinkt.
+**Eerstvolgende stap:** de bestaande ontvangst en achtergronduitvoering op de gemeten hergebruikroute beoordelen en alleen een aangetoonde ontbrekende koppeling herstellen. C1 blijft open voor inhoudssnelheid/echte Telegramproef; het bestaande overlap-/taakgedrag maakt deze onafhankelijke T1-correctie al uitvoerbaar. De criteria van C1/C2 worden hiermee niet afgevinkt.
 
 ## Actuele opleverstatus — 28 september 2026
 
 | Onderwerp | Huidige stand |
 |---|---|
-| Lopend werk | T1: aantoonbare uitvoerblokkade van de bestaande taakroute corrigeren; uitvoerder en reviewer klaar; coördinator controleert één volledige uitvoering. |
-| Laatste geïnstalleerde wijziging | Achtergrondmodel krijgt120s per reactie binnen bestaande300s-taakgrens; geen nieuwe complete functie. [Installatiebewijs](evidence/product/background-phase-timeout-installed-20260928.json). |
-| Nog te leveren | De vastgelegde documentatieopdracht daadwerkelijk uitvoeren, werkwijze bewaren en gecontroleerd resultaat teruggeven. |
-| Eerstvolgende actie | Eén hervatting controleren op bewaarde werkwijze en volledig taakresultaat. |
+| Lopend werk | C1: één uitvoerder onderzoekt de bestaande route achter de gemeten55,742s tot eerste tekst. |
+| Laatste bruikbare resultaat | Geleerde werkwijze zelfstandig op nieuwe invoer toegepast, resultaat opgeslagen en onafhankelijk gecontroleerd. [Bewijs](evidence/product/calendar-unassisted-reuse-20260928.json). |
+| Nog te leveren | Snelle ontvangst en beschikbaar gesprek op deze uitvoerroute; brede leerfunctie blijft apart. |
+| Eerstvolgende actie | Bestaande routering verklaren en kleinste voldoende koppeling vastleggen. |
 | Voor Jaap | Nu geen nieuwe proef nodig. Dezelfde twee afgebakende functies blijven afgerond; overige productcriteria blijven open. |
 | Overzicht alle onderdelen | Alle 24 opdrachten hebben bestaand vermogen, resterend tekort/bewijs en vervolgstap in [de bestaande uitvoerlijst](design/product/execution-workboard-v1.json). |
 
