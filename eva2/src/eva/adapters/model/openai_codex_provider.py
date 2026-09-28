@@ -73,7 +73,7 @@ class OpenAICodexProviderSettings:
     endpoint: str
     model_name: str
     timeout_seconds: float = 30.0
-    reasoning_effort: Literal["low", "medium", "high"] = "medium"
+    reasoning_effort: Literal["none", "low", "medium", "high"] = "medium"
     maximum_request_bytes: int = 8 * 1024 * 1024
     maximum_response_bytes: int = 8 * 1024 * 1024
     namespace_functions: bool = False
@@ -87,7 +87,7 @@ class OpenAICodexProviderSettings:
             raise ValueError("Codex model name is invalid")
         if not 1 <= self.timeout_seconds <= 120:
             raise ValueError("Codex phase timeout must be 1..120 seconds")
-        if self.reasoning_effort not in {"low", "medium", "high"}:
+        if self.reasoning_effort not in {"none", "low", "medium", "high"}:
             raise ValueError("Codex reasoning effort is invalid")
         for value in (self.maximum_request_bytes, self.maximum_response_bytes):
             if not 4_096 <= value <= 8 * 1024 * 1024:
@@ -697,7 +697,7 @@ class OpenAICodexProvider:
                 timeout=self._settings.timeout_seconds,
             )
             profile = openai_model_profile(self._settings.model_name)
-            if self._settings.model_name in {"gpt-6-astra", "gpt-6-luna"}:
+            if self._settings.model_name in {"gpt-6-astra", "gpt-6-sol", "gpt-6-luna"}:
                 # Pydantic 2.37 omits these models' documented hosted tool search.
                 # Remove this compatibility override when upstream covers it.
                 # https://developers.openai.com/api/docs/guides/tools-tool-search
@@ -712,7 +712,7 @@ class OpenAICodexProvider:
                 profile=profile,
                 settings={
                     "openai_reasoning_effort": self._settings.reasoning_effort,
-                    "openai_reasoning_summary": "auto",
+                    **({} if self._settings.reasoning_effort == "none" else {"openai_reasoning_summary": "auto"}),
                     "openai_store": False,
                     "parallel_tool_calls": False,
                     "timeout": self._settings.timeout_seconds,

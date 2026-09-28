@@ -129,7 +129,7 @@ def _home_tool_model(**kwargs: Any) -> PydanticConversationModel:
 
 def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
     assert canonical_sha256(conversation_module._ACTION_TOOLS) == (
-        "e96adcb879caaf9a7ef864369c15d30db1b106603e8c37056b1e55c8511b6ca0"
+        "4b2ed4d6d8b444a917aee8c34ed92c13b08f72f94effed8f3ce1423ebdd9d905"
     )
     assert not {
         "create_home_assistant_advanced_state_automation",
@@ -152,7 +152,7 @@ def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
         for descriptor in HomeAssistantToolAdapter.conversation_tools()
     ]
     assert canonical_sha256(provider_tools) == (
-        "2a14106fcc0b4a0a333f76f157a2dc129b37b763c1a7c9b259f888c2d03ae9b2"
+        "3c2977afc85113be84164ecb9edd1fc01befa7418417e9e098027b9ec0704809"
     )
     automation_tools = [
         {
@@ -200,11 +200,11 @@ def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
             "_FREE_WILL_TOOL",
         )
     } == {
-        "_MEMORY_SEARCH_TOOL": "3b283cb89ebf253f0650dd55739d24410566b6d1e34aaf76fbe9edd302586727",
+        "_MEMORY_SEARCH_TOOL": "fcf03c91f04c8d30ca819f33002704402af1a60c9fb4a1cb054e9c6cb9dcdefe",
         "_REPOSITORY_PROPOSAL_TOOL": "d19c74dcf7f7a81747448558dbf1f573d28ff8044c6250bd62ccba6a9ab2a34c",
         "_PROTOTYPE_TOOL": "fc225d60d8fa19d2a3542ff528cf5554f90f75d5404d137c642aa00df7a698af",
         "_LISTING_TOOL": "401df39c0d1c0bc41fc1a35c3c008cfbcd4ece9bf9c3b7f1e406b9e3b25de7cb",
-        "_FREE_WILL_TOOL": "2959078dc6323da786622599f7631ec74de2f38693d9cb144475609030788895",
+        "_FREE_WILL_TOOL": "194ee987408844d109c0debdc35808454d86378f55f826c8c7c903adc83445a9",
     }
 
 

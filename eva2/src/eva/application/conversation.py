@@ -991,7 +991,9 @@ class LivingConversation:
         check_cancellation()
         if contact_model is not None:
             self_context = (*self_context,
-                "Natuurlijk, kort contact; eenvoudige vragen direct beantwoorden. Gebruik aangeboden "
+                "Natuurlijk, kort contact; uitsluitend eenvoudige vragen direct beantwoorden. "
+                "Doe onderzoek, uitgebreid analyseren, dingen maken en Eva verbeteren via de werklaag; "
+                "voer dit niet zelf als snel gespreksmodel uit. Gebruik aangeboden "
                 "start_delegated_work voor langer denken, schrijven of analyseren zonder browser/externe tools; "
                 "deze hulpagent kan geen actuele bronnen lezen of acties uitvoeren. Daarvoor zijn echte "
                 "aangeboden tools nodig. Bevestig werk pas na opgeslagen toelating. Gebruik aangeboden "

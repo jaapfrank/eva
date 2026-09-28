@@ -46,7 +46,15 @@ def test_core_and_worker_factories_have_identical_release_and_budget(monkeypatch
     assert core_profile==worker_profile and core_profile.release==worker_profile.release
     assert core_model.research_configuration_sha256()==worker_model.research_configuration_sha256()
     assert worker_model._resource_budget==budget
-    assert worker_model._model=='gpt-5.6-luna' and worker_model._reasoning_effort=='low'
+    payload = worker_model.research_request_payload(question="Find official speech documentation", options=())
+    assert payload["model"] == "gpt-6-astra"
+    assert payload["reasoning"]["effort"] == "medium"
+    assert worker_profile.maximum_cost_usd_micros == 715_360
+    previous_hash = worker_model.research_configuration_sha256()
+    worker_model._reasoning_effort = "high"
+    assert worker_model.research_configuration_sha256() != previous_hash
+    worker_model._reasoning_effort = "medium"
+    assert worker_model._model=='gpt-6-astra' and worker_model._reasoning_effort=='medium'
     assert worker_model._research_timeout_seconds==60 and worker_profile.maximum_tool_calls==3
     assert worker_profile.maximum_input_tokens==65536 and worker_profile.maximum_output_tokens==1200
     for field in ['research_tenant_id','research_installation_id']:
@@ -58,7 +66,8 @@ def test_enabled_entrypoint_reuses_worker_service_composition(monkeypatch):
     fixtures(monkeypatch)
     settings=OpenAIDelegatedWorkSettings.from_environment(ENV | {'EVA_DELEGATED_RESEARCH_ENABLED':'true'})
     observed=[]
-    async def composed(actual,model,profile,*,once):
+    async def composed(actual,model,profile,*,once,household_authority,digital_settings):
+        assert household_authority is None and digital_settings is None
         observed.append((actual,profile,once)); return 'completed'
     monkeypatch.setattr(research_module,'serve_research_enabled_work',composed)
     assert asyncio.run(service.serve_openai_delegated_work(settings,once=True))=='completed'
@@ -70,14 +79,17 @@ def test_check_validates_research_config_without_provider_or_worker_run(monkeypa
     settings=OpenAIDelegatedWorkSettings.from_environment(ENV | {'EVA_DELEGATED_RESEARCH_ENABLED':'true'})
     checked=[]
     original=service._research_composition
-    def capture(value): checked.append(original(value)[1].release)
+    def capture(value):
+        result=original(value)
+        checked.append(result[1].release)
+        return result
     monkeypatch.setattr(service,'_research_composition',capture)
     monkeypatch.setattr('eva.bootstrap.delegated_work_provider.verify_delegated_provider_dependencies',lambda:None)
     monkeypatch.setattr(service,'read_runtime_secret_file',lambda *a,**kw:'postgresql://unused/test')
     class Connection:
         def __enter__(self): return self
         def __exit__(self,*args): pass
-        def scalar(self,statement): return '4e_0007_delegated_private'
+        def scalar(self,statement): return service._SCHEMA_HEAD
     class Engine:
         def connect(self): return Connection()
         def dispose(self): pass

@@ -1035,3 +1035,19 @@ def test_runtime_background_switch_rejects_non_boolean_constructor_values(invali
         PostgresHindsightMemoryRuntime(
             None, None, None, None, None, None, None, background_work_enabled=invalid,
         )
+
+
+def test_owner_sol_contact_keeps_work_on_astra(monkeypatch, private_tmp_path):
+    _minimum(monkeypatch, private_tmp_path)
+    monkeypatch.setenv("EVA_CONVERSATION_CONTACT_MODEL", "gpt-6-sol")
+    monkeypatch.setenv("EVA_CONVERSATION_CONTACT_REASONING_EFFORT", "none")
+    monkeypatch.setenv("EVA_CONVERSATION_MODEL", "gpt-6-astra")
+    monkeypatch.setenv("EVA_CONVERSATION_REASONING_EFFORT", "medium")
+    settings = RuntimeSettings.from_environment()
+    assert settings.conversation_contact_reasoning_effort == "none"
+    from dataclasses import replace
+    for changes in ({"conversation_model": "gpt-6-sol"},
+                    {"conversation_reasoning_effort": "low"},
+                    {"conversation_contact_reasoning_effort": "low"}):
+        with pytest.raises(ValueError, match="Sol contact requires"):
+            replace(settings, **changes)

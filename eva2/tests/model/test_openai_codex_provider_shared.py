@@ -290,7 +290,7 @@ async def _drain(events: Any) -> None:
         pass
 
 
-@pytest.mark.parametrize("model_name", ["gpt-6-astra", "gpt-5.4-mini"])
+@pytest.mark.parametrize("model_name", ["gpt-6-astra", "gpt-5.4-mini", "gpt-6-sol"])
 def test_hosted_search_defers_external_action_in_one_request(model_name: str) -> None:
     """Exercise the SDK wire, not a FunctionModel's permissive tool profile."""
     requests: list[dict[str, Any]] = []
@@ -311,7 +311,7 @@ def test_hosted_search_defers_external_action_in_one_request(model_name: str) ->
         body = json.loads(request.content)
         requests.append(body)
         assert body["model"] == model_name
-        assert body["reasoning"]["effort"] == "medium"
+        assert body["reasoning"]["effort"] == ("none" if model_name == "gpt-6-sol" else "medium")
         assert {"type": "tool_search"} in body["tools"]
         assert not any(tool.get("name") == "search_tools" for tool in body["tools"])
         tool = next(
@@ -377,7 +377,8 @@ def test_hosted_search_defers_external_action_in_one_request(model_name: str) ->
     async def run() -> None:
         provider = OpenAICodexProvider(
             OpenAICodexProviderSettings(
-                endpoint="https://codex.test/responses", model_name=model_name
+                endpoint="https://codex.test/responses", model_name=model_name,
+                reasoning_effort="none" if model_name == "gpt-6-sol" else "medium",
             ),
             credential_loader=lambda: ("access-a", "account-a"),
             network_transport=httpx2.MockTransport(respond),
@@ -412,7 +413,8 @@ def test_astra_compatibility_does_not_expand_other_model_capabilities(
     async def run() -> None:
         async with OpenAICodexProvider(
             OpenAICodexProviderSettings(
-                endpoint="https://codex.test/responses", model_name=model_name
+                endpoint="https://codex.test/responses", model_name=model_name,
+                reasoning_effort="none" if model_name == "gpt-6-sol" else "medium",
             ),
             credential_loader=lambda: ("access-a", "account-a"),
         ) as session:

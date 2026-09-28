@@ -57,13 +57,13 @@ class DelegatedResearchProfile:
     maximum_output_tokens: int = 1_200
     maximum_tool_calls: int = 3
     timeout_seconds: int = 60
-    maximum_cost_usd_micros: int = 100_000
+    maximum_cost_usd_micros: int = 715_360
 
     def __post_init__(self):
         if self.timeout_seconds != 60:
             raise ValueError("this research profile uses the existing 60-second tool deadline")
         if self.model_profile_id != MODEL_PROFILE_ID:
-            raise ValueError("research accounting requires the existing Luna model profile")
+            raise ValueError("research accounting requires the selected work model profile")
 
     @property
     def release(self):
@@ -136,11 +136,14 @@ def build_public_research_composition(*, model_access_lease_file: Path, resource
         raise ValueError("public research lease must use an absolute path")
     validate_delegated_model_access_lease(model_access_lease_file)
     research = PydanticConversationModel(auth_file=model_access_lease_file,
-        model=MODEL_NAME, endpoint=MODEL_ENDPOINT, reasoning_effort="low",
+        model=MODEL_NAME, endpoint=MODEL_ENDPOINT, reasoning_effort="medium",
         timeout_seconds=60, research_timeout_seconds=60, resource_budget=resource_budget)
     profile = DelegatedResearchProfile(MODEL_PROFILE_ID, research.research_configuration_sha256(),
         maximum_input_tokens=resource_budget.max_input_tokens,
-        maximum_output_tokens=resource_budget.max_output_tokens, maximum_tool_calls=3)
+        maximum_output_tokens=resource_budget.max_output_tokens, maximum_tool_calls=3,
+        maximum_cost_usd_micros=(
+            (resource_budget.max_input_tokens * INPUT_PRICE_USD_MICROS_PER_MILLION + 999_999) // 1_000_000
+            + (resource_budget.max_output_tokens * OUTPUT_PRICE_USD_MICROS_PER_MILLION + 999_999) // 1_000_000))
     return research, profile
 
 

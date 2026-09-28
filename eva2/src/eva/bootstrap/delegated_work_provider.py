@@ -36,19 +36,18 @@ _MODEL_LEASE_READER_GID = 65532
 _MODEL_LEASE_FILE_MODE = 0o640
 _SHA256 = re.compile(r"[0-9a-f]{64}")
 
-# ChatGPT-sign-in replacement for retired GPT-5.4 mini:
-# https://learn.chatgpt.com/docs/models
+# Owner-selected work model, 2026-09-28.
 # API-equivalent accounting rates, not a ChatGPT subscription invoice:
-# https://developers.openai.com/api/docs/models/gpt-5.6-luna
-MODEL_PROFILE_ID = "model:codex:gpt-5.6-luna:v1"
+# https://developers.openai.com/api/docs/models/gpt-6-astra
+MODEL_PROFILE_ID = "model:codex:gpt-6-astra:v1"
 WORKER_PROFILE_ID = "worker:research:v1"
-MODEL_NAME = "gpt-5.6-luna"
+MODEL_NAME = "gpt-6-astra"
 MODEL_ENDPOINT = "https://chatgpt.com/backend-api/codex/responses"
 MODEL_TIMEOUT_SECONDS = 30
 MODEL_MAXIMUM_REQUEST_BYTES = 256 * 1024
 MODEL_MAXIMUM_RESPONSE_BYTES = 256 * 1024
-INPUT_PRICE_USD_MICROS_PER_MILLION = 200_000
-OUTPUT_PRICE_USD_MICROS_PER_MILLION = 1_200_000
+INPUT_PRICE_USD_MICROS_PER_MILLION = 10_000_000
+OUTPUT_PRICE_USD_MICROS_PER_MILLION = 50_000_000
 PYDANTIC_AI_VERSION = "2.37.0"
 OPENAI_SDK_VERSION = "3.6.0"
 WORKER_INSTRUCTIONS = (
@@ -76,7 +75,7 @@ MODEL_PROFILE_RELEASE_SHA256 = canonical_sha256(
         ),
         "input_price_usd_micros_per_million": INPUT_PRICE_USD_MICROS_PER_MILLION,
         "pydantic_ai": PYDANTIC_AI_VERSION,
-        "reasoning_effort": "low",
+        "reasoning_effort": "medium",
         "timeout_seconds": MODEL_TIMEOUT_SECONDS,
     }
 )
@@ -178,7 +177,7 @@ def build_unadmitted_delegated_work_spec(
         maximum_input_tokens=4_000,
         maximum_output_tokens=500,
         maximum_total_tokens=4_500,
-        maximum_cost_usd_micros=10_000,
+        maximum_cost_usd_micros=65_000,
         timeout_seconds=MODEL_TIMEOUT_SECONDS,
         maximum_claims_before_call_start=2,
         delegation_depth=1,
@@ -263,7 +262,7 @@ class _CodexDelegatedWorkRunner:
                 endpoint=MODEL_ENDPOINT,
                 model_name=MODEL_NAME,
                 timeout_seconds=MODEL_TIMEOUT_SECONDS,
-                reasoning_effort="low",
+                reasoning_effort="medium",
                 maximum_request_bytes=MODEL_MAXIMUM_REQUEST_BYTES,
                 maximum_response_bytes=MODEL_MAXIMUM_RESPONSE_BYTES,
             ),

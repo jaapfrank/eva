@@ -608,7 +608,7 @@ class PydanticConversationModel:
         endpoint: str = _CODEX_SUBSCRIPTION_ENDPOINT,
         timeout_seconds: float = 60.0,
         research_timeout_seconds: float = 90.0,
-        reasoning_effort: Literal["low", "medium", "high"] = "medium",
+        reasoning_effort: Literal["none", "low", "medium", "high"] = "medium",
         resource_budget: RuntimeResourceBudget | None = None,
         conversation_tools: tuple[ConversationToolDescriptor, ...] = (),
         model_backend: Model | None = None,
@@ -622,7 +622,7 @@ class PydanticConversationModel:
             raise ValueError("conversation timeout must be 1..120 seconds")
         if not 10 <= research_timeout_seconds <= 180:
             raise ValueError("research timeout must be 10..180 seconds")
-        if reasoning_effort not in {"low", "medium", "high"}:
+        if reasoning_effort not in {"none", "low", "medium", "high"}:
             raise ValueError("conversation reasoning effort is invalid")
         external_names = [descriptor.name for descriptor in conversation_tools]
         if (
@@ -1392,7 +1392,7 @@ class PydanticConversationModel:
             "model": self._model,
             "parallel_tool_calls": False,
             "prompt_cache_key": f"eva-interest-{hashlib.sha256(claim.intent_id.encode()).hexdigest()[:32]}",
-            "reasoning": {"effort": "low", "summary": "auto"},
+            "reasoning": {"effort": self._reasoning_effort, "summary": "auto"},
             "store": False,
             "stream": True,
             "tool_choice": "none",
@@ -1495,6 +1495,7 @@ class PydanticConversationModel:
             "public_input_policy": "abstract-projection-host-checks-v1",
             "research_descriptor": _ACTION_TOOLS[_CURRENT_RESEARCH_ACTION],
             "endpoint": self._endpoint, "model": self._model,
+            "reasoning_effort": self._reasoning_effort,
             "instructions": _CURRENT_RESEARCH_INSTRUCTIONS,
             "tools": [{"search_context_size": "low", "type": "web_search"}],
             "timeout_milliseconds": int(min(self._research_timeout_seconds, 55.0) * 1000),
@@ -1534,7 +1535,7 @@ class PydanticConversationModel:
                 "claim geen automatische volledige dekking van alle aspecten."
                 if research_mode == "topic" else ""),
             "model": self._model,
-            "reasoning": {"effort": "low", "summary": "auto"},
+            "reasoning": {"effort": self._reasoning_effort, "summary": "auto"},
             "store": False,
             "stream": True,
             "tool_choice": "auto",
@@ -1734,7 +1735,7 @@ class PydanticConversationModel:
                 "eva-free-will-"
                 f"{hashlib.sha256(event.source_event_id.encode()).hexdigest()[:32]}"
             ),
-            "reasoning": {"effort": "low", "summary": "auto"},
+            "reasoning": {"effort": self._reasoning_effort, "summary": "auto"},
             "store": False,
             "stream": True,
             "tool_choice": {"name": _FREE_WILL_ACTION, "type": "function"},
@@ -1818,7 +1819,7 @@ class PydanticConversationModel:
             "model": self._model,
             "parallel_tool_calls": False,
             "prompt_cache_key": f"eva-prototype-{hashlib.sha256(interest.intent_id.encode()).hexdigest()[:32]}",
-            "reasoning": {"effort": "low", "summary": "auto"},
+            "reasoning": {"effort": self._reasoning_effort, "summary": "auto"},
             "store": False,
             "stream": True,
             "tool_choice": {"name": _PROTOTYPE_ACTION, "type": "function"},
@@ -1890,7 +1891,7 @@ class PydanticConversationModel:
                 "eva-listing-"
                 f"{hashlib.sha256(interest.intent_id.encode()).hexdigest()[:32]}"
             ),
-            "reasoning": {"effort": "low", "summary": "auto"},
+            "reasoning": {"effort": self._reasoning_effort, "summary": "auto"},
             "store": False,
             "stream": True,
             "tool_choice": {"name": _LISTING_ACTION, "type": "function"},
