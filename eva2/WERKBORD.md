@@ -1,5 +1,7 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Opgeleverd — C1 compacte invoer:** bron6dd7a7c9 geïnstalleerd op gezonde kern en werker; 186 controles en onafhankelijke bronreview akkoord, terugweg vastgelegd. Twee echte websiteproeven: begroeting5,191s/3.806in; bijdrageophaling15,399s/20.086in. Nog te traag. Onafhankelijke receiptcontrole: echte lijst en exact bijbehorend opgeslagen initiatiefresultaat ondersteunen het antwoord. Samen23.892in/207uit; credits onbekend. Volgende: resterende wachttijd, nog niet gestart. De oudere kandidaatnotities hieronder zijn historisch; geen volledige C1-afronding. [Bewijs](evidence/product/contact-grouped-catalog-20260928.json).
+
 **C1 cataloguskandidaat6dd7a7c9:**64gereedschappen identiek in17groepen; catalogustekst lokaal1.184→397tokens en werkuitleg583→299.185 gerichte controles slagen, kandidaatbuild en onafhankelijke review lopen. Nog niet geïnstalleerd, geen snelheidsclaim. Daarna maximaal twee echte proeven: begroeting en bestaande bijdrage ophalen.
 
 **Nu — C1 gegroepeerde cataloguspresentatie, basis84fe836b:** coördinator vervangt kandidaatgewijs één namespace per functie door kleine semantische groepen in bestaande provideradapter. Alle functies/schema’s/subsets en oude receipt-replay moeten gelijk blijven; onbekende functies houden eigen namespace. Eerst offline grootte/replay, dan onafhankelijke review; maximaal twee modelproeven alleen bij materiële winst. Geen nieuwe router of geheugensysteem.

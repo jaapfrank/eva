@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Compactere invoer voor hetzelfde gesprek en gereedschap",
+            "date": "28 september",
+            "state": "installed",
+            "result": "64 functies in17 groepen, definities behouden. Begroeting één Sol-aanvraag zonder tools; bestaande initiatiefbijdrage met echte gereedschappen opgehaald en onafhankelijk gecontroleerd.",
+            "remaining": "Begroeting5,191s en ophalen15,399s nog te traag. Geen gecontroleerde snelheidsvergelijking, Telegram- of volledige C1-afronding.",
+            "source": "eva2/evidence/product/contact-grouped-catalog-20260928.json"
+          },
+          {
             "title": "Begroeting doet geen ongevraagde verbindingscontrole meer",
             "date": "28 september",
             "state": "installed",
@@ -2676,14 +2684,14 @@
         ],
         "now": {
           "title": "C1 · Compacte groepen in bestaande toolcatalogus",
-          "state": "185 controles geslaagd · review en kandidaatbuild",
-          "detail": "64gereedschappen identiek behouden in17groepen. Lokaal zichtbare catalogustekst1.184→397tokens; werkuitleg583→299.185 gerichte controles slagen. Coördinator bouwt kandidaat; platform_research_20260927 doet onafhankelijke review. Nog geen live snelheidswinst bewezen.",
+          "state": "Deelverbetering geïnstalleerd · snelheid nog onvoldoende",
+          "detail": "186 controles, bronreview en gezonde kern/werker bevestigd. Websitebegroeting5,191s, 3.806in; bestaande initiatiefbijdrage correct teruggelezen in15,399s, 20.086in. Twee proeven afgerond; geen complete C1 of nieuwe hoofdfunctie.",
           "doneWhen": "Minder aanvankelijk zichtbare catalogustekst, identieke functies en correcte oude receipt-replay; gerichte controles, onafhankelijke review en pas bij materiële winst maximaal twee echte modelproeven."
         },
         "next": {
-          "title": "C1 · Bestaande toolcatalogus minder zwaar aanbieden",
+          "title": "C1 · Resterende antwoordvertraging",
           "state": "Nog niet gestart",
-          "detail": "Controleer bestaande deferred namespaces op overbodige catalogustekst; behoud tools en bewaarde uitvoerreceipts. Pas alleen aan bij aantoonbaar grotere winst, zonder nieuwe router of geheugenverlies."
+          "detail": "Gebruik de bestaande timing van deze twee proeven voor de volgende begrensde beslissing; geen herhaalde modelproef zonder gewijzigde oorzaak."
         },
         "ownerAction": {
           "title": "Toolgebruik na cataloguswijziging proberen",
@@ -2697,7 +2705,7 @@
           "expected": "Eigenaar bevestigt: nieuwste bijdrage met /eva2 correct opgehaald. Wachttijd blijft onvoldoende; Hallo11s. Antwoord van Eva1 zonderprefix was de andere route, geen mislukte Eva2-resultaatophaling."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T17:16:08.813643+00:00"
+        "reviewedAt": "2026-09-28T17:23:46.184429+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12626,9 +12634,9 @@
           },
           "concreteChange": "Rejected: early style read introduces forget/refresh race across engines. No product source change retained.",
           "lastAttempt": {
-            "state": "installed_greeting_detour_removed",
-            "evidence": "eva2/evidence/product/contact-discovery-greeting-20260928.json",
-            "remaining": "Website5.734s/3.819s; desired latency and actual Telegram recheck remain open"
+            "state": "installed_grouped_catalog_verified",
+            "evidence": "eva2/evidence/product/contact-grouped-catalog-20260928.json",
+            "remaining": "Greeting5.191s/retrieval15.399s; desired latency and Telegram parity remain open."
           },
           "activeWorker": "/root",
           "contactDuringReuseAssignment": {

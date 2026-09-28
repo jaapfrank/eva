@@ -1,0 +1,191 @@
+{
+  "checkedAt": "2026-09-28T17:22:45.695613+00:00",
+  "sourceCommit": "6dd7a7c9",
+  "testCommit": "290e12f2",
+  "scope": "Group existing authorized deferred tool definitions and compact existing contact work guidance; no new permissions or execution routes.",
+  "tests": {
+    "passed": 186,
+    "artifact": "/home/administrator/project/.eva2-artifacts/contact-grouped-catalog-20260928/tests.txt"
+  },
+  "sourceReview": "GO by platform_research_20260927",
+  "installation": {
+    "checkedAt": "2026-09-28T17:19:07.179030+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:6c690287142f435c6eea52c092db86a7ea297a571d6bd64f85fbce75cf89f9a8",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/model/tool_namespaces.py": "2bdedb62dfb69a055a5559c070235ffd12cb1bcbbeca397c61e94c5216acedc8",
+          "adapters/model/openai_codex_provider.py": "a22e5f86f73c16746fb8df92b1e1b28233082eed90bd57d8834054339a37cfe2",
+          "application/conversation.py": "991438463cad546a5bdb6edd385c22b6aca5c73779121c429e9b2c9ec806874b"
+        }
+      },
+      "worker": {
+        "image": "sha256:9f9016bda8f31099890e6a05c4a63972d202c0683cec67f5cbc3e3ea059024eb",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/model/tool_namespaces.py": "2bdedb62dfb69a055a5559c070235ffd12cb1bcbbeca397c61e94c5216acedc8",
+          "adapters/model/openai_codex_provider.py": "a22e5f86f73c16746fb8df92b1e1b28233082eed90bd57d8834054339a37cfe2",
+          "application/conversation.py": "991438463cad546a5bdb6edd385c22b6aca5c73779121c429e9b2c9ec806874b"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/contact-grouped-catalog-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "offlineMeasurement": {
+    "functions": 64,
+    "beforeNamespaces": 64,
+    "afterNamespaces": 17,
+    "beforeVisibleTextTokens": 1184,
+    "afterVisibleTextTokens": 397,
+    "definitionsUnchanged": true,
+    "maximumGroupSize": 8
+  },
+  "websiteProbes": {
+    "greeting": {
+      "seconds": 5.191,
+      "provider": "chatgpt-codex:gpt-6-sol",
+      "text": "Hoi Jaap! fijn je te zien.",
+      "journal": [
+        {
+          "type": "CONVERSATION_MODEL_ADMITTED",
+          "data": {}
+        },
+        {
+          "type": "INGRESS_COMMITTED",
+          "data": {}
+        },
+        {
+          "type": "CONVERSATION_MODEL_RECORDED",
+          "data": {
+            "usage": {
+              "tool_calls": 0,
+              "measurement": "measured",
+              "input_tokens": 3806,
+              "output_tokens": 13,
+              "model_attempts": 1
+            }
+          }
+        },
+        {
+          "type": "REPLY_COMMITTED",
+          "data": {
+            "provider": "chatgpt-codex:gpt-6-sol",
+            "model_usage": {
+              "tool_calls": 0,
+              "measurement": "measured",
+              "input_tokens": 3806,
+              "output_tokens": 13,
+              "model_attempts": 1
+            },
+            "model_timing": {
+              "completed_ms": 3677,
+              "first_content_ms": 3330
+            }
+          }
+        },
+        {
+          "type": "MEMORY_RETAIN_QUEUED",
+          "data": {}
+        }
+      ]
+    },
+    "retrieval": {
+      "seconds": 15.399,
+      "provider": "chatgpt-codex:gpt-6-sol",
+      "text": "Mijn nieuwste opgeslagen eigen bijdrage legt het verschil uit tussen wat een API technisch kan, wat tokenrechten mogelijk maken en waarvoor ik toestemming heb. De kern: toegang is niet automatisch toestemming voor een handeling. De opgeslagen inhoud is gecontroleerd; werkelijke rechten zijn niet getest. Ik heb niets nieuws gestart.",
+      "journal": [
+        {
+          "type": "CONVERSATION_MODEL_ADMITTED",
+          "data": {}
+        },
+        {
+          "type": "INGRESS_COMMITTED",
+          "data": {}
+        },
+        {
+          "type": "CONVERSATION_MODEL_RECORDED",
+          "data": {
+            "usage": {
+              "tool_calls": 1,
+              "measurement": "measured",
+              "input_tokens": 5973,
+              "output_tokens": 43,
+              "model_attempts": 1
+            }
+          }
+        },
+        {
+          "type": "CONVERSATION_MODEL_ADMITTED",
+          "data": {}
+        },
+        {
+          "type": "CONVERSATION_MODEL_RECORDED",
+          "data": {
+            "usage": {
+              "tool_calls": 0,
+              "measurement": "measured",
+              "input_tokens": 7007,
+              "output_tokens": 64,
+              "model_attempts": 1
+            }
+          }
+        },
+        {
+          "type": "CONVERSATION_MODEL_RECORDED",
+          "data": {
+            "usage": {
+              "tool_calls": 1,
+              "measurement": "measured",
+              "input_tokens": 7106,
+              "output_tokens": 87,
+              "model_attempts": 1
+            }
+          }
+        },
+        {
+          "type": "REPLY_COMMITTED",
+          "data": {
+            "provider": "chatgpt-codex:gpt-6-sol",
+            "model_usage": {
+              "tool_calls": 2,
+              "measurement": "measured",
+              "input_tokens": 20086,
+              "output_tokens": 194,
+              "model_attempts": 3
+            },
+            "model_timing": {
+              "completed_ms": 11910,
+              "first_content_ms": 9955
+            }
+          }
+        },
+        {
+          "type": "CONVERSATION_MODEL_ADMITTED",
+          "data": {}
+        },
+        {
+          "type": "MEMORY_RETAIN_QUEUED",
+          "data": {}
+        }
+      ]
+    }
+  },
+  "knownUsage": {
+    "inputTokens": 23892,
+    "outputTokens": 207,
+    "credits": "unknown",
+    "excludes": "development and automatic memory processing"
+  },
+  "limitations": [
+    "No controlled before/after comparison: conversation context differs.",
+    "Greeting5.191s and retrieval15.399s still too slow; no instant or full C1 completion claim.",
+    "Two ordinary website requests only; no Telegram or physical voice observation.",
+    "Initiative retrieval is grounded in its actual list/result. Earlier Telegram agenda-export response refers to different evidence; no cross-channel latest-result equivalence claim."
+  ],
+  "resultReview": "Independent persisted-receipt review: list_own_initiatives returned six untruncated initiatives; latest completed is API/permission dated2026-09-12. get_own_initiative_result used that exact intent_id; saved content supports summary. Earlier Telegram agenda export is not in this initiative list; cross-category equivalence not established."
+}
