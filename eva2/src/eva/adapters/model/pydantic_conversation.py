@@ -82,6 +82,7 @@ from eva.application.repository_improvements import (
 from eva.adapters.credentials.runtime_files import read_shared_runtime_file_bytes
 from eva.adapters.model.contracts import (
     ConversationCredentialStatus,
+    ConversationModelDeadlineExceeded,
     ConversationModelError,
 )
 from eva.adapters.model.openai_codex_provider import (
@@ -1070,7 +1071,9 @@ class PydanticConversationModel:
                     ):
                         continue
                     if error.category == "deadline":
-                        message = "conversation provider deadline exceeded"
+                        raise ConversationModelDeadlineExceeded(
+                            "conversation provider deadline exceeded"
+                        ) from error
                     elif error.category == "credentials_rejected":
                         message = "conversation credentials were rejected"
                     elif error.category == "unavailable":
@@ -1121,7 +1124,7 @@ class PydanticConversationModel:
             try:
                 return asyncio.run(bounded_execute())
             except TimeoutError as error:
-                raise ConversationModelError(
+                raise ConversationModelDeadlineExceeded(
                     "conversation provider deadline exceeded"
                 ) from error
         raise ConversationModelError(

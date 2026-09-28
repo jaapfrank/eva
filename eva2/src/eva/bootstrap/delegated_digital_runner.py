@@ -9,6 +9,7 @@ import json
 from urllib.parse import unquote, urlsplit
 
 from eva.adapters.connectors.mcp_gateway import McpGatewayUnavailable
+from eva.adapters.model.contracts import ConversationModelDeadlineExceeded
 from eva.adapters.postgres.background_model_journal import BackgroundModelJournal
 from eva.adapters.postgres.background_work_progress import BackgroundWorkProgress, load_work_progress
 from eva.adapters.postgres.component_improvement_actions import ComponentImprovementActions, DRAFT, EVALUATE, PREPARE
@@ -540,7 +541,7 @@ class DelegatedDigitalRunner:
                 with suppress(Exception):
                     usage = self._usage(journal.model_usage(source), 0 if actions is None else actions.dispatches)
             status = ("cancelled" if cancellation_event is not None and cancellation_event.is_set()
-                else "timed_out" if self.clock() >= deadline
+                else "timed_out" if isinstance(error, ConversationModelDeadlineExceeded) or self.clock() >= deadline
                 else "budget_exceeded" if isinstance(error, (_DigitalBudgetExceeded, ConversationExecutionLimitReached))
                 else "incomplete_work" if isinstance(error, _UnfinishedWorkPlan)
                 else "provider_unavailable" if type(error) is McpGatewayUnavailable

@@ -987,3 +987,40 @@ def test_runtime_allowance_usage_survives_final_result_and_workboard_serializati
         **{name: getattr(outcome.usage, name) for name in ("measurement", "input_tokens",
             "output_tokens", "total_tokens", "cost_usd_micros")})
     assert WorkBoardUsage.model_validate(usage.model_dump(mode="json")).total_tokens == 2135552
+
+
+@pytest.mark.parametrize("typed, cancelled, expected", [
+    (True, False, "timed_out"),
+    (True, True, "cancelled"),
+    (False, False, "internal_error"),
+])
+def test_model_deadline_keeps_usage_and_prior_effect_without_retry(typed, cancelled, expected):
+    from eva.adapters.model.contracts import ConversationModelDeadlineExceeded, ConversationModelError
+    _, spec, _, tools, journal, runner, _ = fixture()
+    cancellation = threading.Event()
+    grant_before = spec.grant.to_payload()
+    error_type = ConversationModelDeadlineExceeded if typed else ConversationModelError
+    class DeadlineAfterEffect(Model):
+        requests = 0
+        def generate(self, *args, **kwargs):
+            self.requests += 1
+            if kwargs.get("completed_action") is not None:
+                if cancelled:
+                    cancellation.set()
+                raise error_type("conversation provider deadline exceeded")
+            return super().generate(*args, **kwargs)
+    model = DeadlineAfterEffect()
+    runner.model = model
+    tools.release.set()
+    outcome = asyncio.run(runner.run(spec, call_id="call:model-deadline",
+                                    cancellation_event=cancellation))
+    assert runner.clock() == NOW  # The overall admitted task still has time.
+    assert outcome.status == expected and outcome.result is None
+    assert outcome.failure_report is None
+    assert model.requests == 2 and len(tools.calls) == 1
+    assert len(journal.usages) == outcome.usage.completed_model_responses == 1
+    assert outcome.usage.tool_calls == 1
+    assert outcome.usage.input_tokens == 30 and outcome.usage.output_tokens == 10
+    assert outcome.error_fingerprint == hashlib.sha256(
+        (error_type.__name__ + ":conversation provider deadline exceeded").encode()).hexdigest()
+    assert spec.grant.to_payload() == grant_before

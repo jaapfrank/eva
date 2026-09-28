@@ -22,7 +22,7 @@ from pydantic_ai.models.function import AgentInfo, FunctionModel
 from pydantic_ai.models.wrapper import WrapperModel
 from pydantic_ai.usage import RequestUsage
 
-from eva.adapters.model.contracts import ConversationModelError
+from eva.adapters.model.contracts import ConversationModelDeadlineExceeded, ConversationModelError
 from eva.adapters.model.openai_codex_provider import (
     CodexProviderError,
     OpenAICodexProvider,
@@ -653,7 +653,7 @@ def test_scripted_absolute_deadline_cancels_one_stalled_phase(
 ) -> None:
     scripted = ScriptedPydanticConversation((ScriptedPhase.stall(),))
     started = monotonic()
-    with pytest.raises(ConversationModelError, match="deadline"):
+    with pytest.raises(ConversationModelDeadlineExceeded, match="deadline"):
         _generate(
             _adapter(tmp_path, scripted, timeout_seconds=1.0),
             completed_action=RECEIPT,
@@ -671,7 +671,7 @@ def test_scripted_post_delta_stall_is_not_retried(tmp_path: Path) -> None:
     )
     deltas: list[str] = []
     with stream_conversation_text(deltas.append):
-        with pytest.raises(ConversationModelError, match="deadline"):
+        with pytest.raises(ConversationModelDeadlineExceeded, match="deadline"):
             _generate(
                 _adapter(tmp_path, scripted, timeout_seconds=1.0),
                 completed_action=RECEIPT,
@@ -799,9 +799,14 @@ def test_non_transient_or_unknown_failure_is_never_retried(
         )
     )
 
-    with pytest.raises(ConversationModelError):
+    with pytest.raises(ConversationModelError) as raised:
         _generate(_adapter(tmp_path, scripted), completed_action=RECEIPT)
 
+    deadline = isinstance(failure, CodexProviderError) and failure.category == "deadline"
+    assert isinstance(raised.value, ConversationModelDeadlineExceeded) is deadline
+    if deadline:
+        assert str(raised.value) == "conversation provider deadline exceeded"
+        assert raised.value.__cause__ is failure
     assert len(scripted.captures) == 1
     assert scripted.remaining_phases == 1
     diagnostics = [record.message for record in caplog.records if record.message.startswith("conversation_model_failure ")]
@@ -821,7 +826,7 @@ def test_retry_attempts_share_one_absolute_phase_deadline(tmp_path: Path) -> Non
     )
     started = monotonic()
 
-    with pytest.raises(ConversationModelError, match="deadline"):
+    with pytest.raises(ConversationModelDeadlineExceeded, match="deadline"):
         _generate(
             _adapter(tmp_path, scripted, timeout_seconds=1.0),
             completed_action=RECEIPT,
@@ -1204,7 +1209,7 @@ def test_configured_phase_deadline_allows_long_generation_and_still_expires(tmp_
         before_response=provider_generation_elapsed, timeout_seconds=seconds,
     )
     if expires:
-        with pytest.raises(ConversationModelError, match="deadline"):
+        with pytest.raises(ConversationModelDeadlineExceeded, match="deadline"):
             _generate(model)
     else:
         assert _generate(model).text == "Het advies is klaar."

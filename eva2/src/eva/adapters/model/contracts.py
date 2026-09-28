@@ -19,6 +19,10 @@ class ConversationModelError(RuntimeError):
         super().__init__(*args)
 
 
+class ConversationModelDeadlineExceeded(ConversationModelError):
+    """The model phase reached its deadline without a usable result."""
+
+
 @dataclass(frozen=True, slots=True)
 class ConversationCredentialStatus:
     """Non-secret readiness state for the current model access lease."""
@@ -28,4 +32,4 @@ class ConversationCredentialStatus:
     expires_at: datetime | None = None
 
 
-__all__ = ["ConversationCredentialStatus", "ConversationModelError"]
+__all__ = ["ConversationCredentialStatus", "ConversationModelError", "ConversationModelDeadlineExceeded"]
