@@ -1,8 +1,10 @@
 # Eva 2 — uitvoerbaar werkbord
 
-## Actief — uitsluitend L2: één project volledig afmaken
+## Wacht op09:00 — uitsluitend L2: één project volledig afmaken
 
 **Laatste bruikbare resultaat:** Eva heeft Gezinsweek L2 opgeslagen, na een herstart teruggelezen en een correctie apart bewaard: maximaal30min en een mondeling woordspel in plaats van tekenen. De oorspronkelijke concept- en projectbestanden zijn byte voor byte behouden. Onafhankelijke controle akkoord.
+
+**Uitvoeringswacht:** het ontwikkelgoal is geblokkeerd op het geplande tijdstip, na drie opeenvolgende doelbeurten met dezelfde tijdsafhankelijkheid. Dit stopt herhaalde wachtbeurten, niet Eva’s scheduler. Na09:00 het bestaande resultaat controleren; geen nieuwe opdracht starten.
 
 **Werkelijke planning:** precies één vervolgafspraak voor29 september2026 om09:00 Europe/Amsterdam (07:00UTC), afhankelijk van de geslaagde correctietaak453ee52a. Afhankelijkheid is gereed. Dan moet Eva de opgeslagen bestanden opnieuw lezen, de eindversie met benodigdhedenlijst bewaren en controleren. Geen nieuwe modelopdracht vóór dit moment; geen andere bouwtaak gestart.
 
