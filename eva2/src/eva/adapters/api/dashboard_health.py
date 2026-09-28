@@ -5,7 +5,7 @@ from fastapi import Request
 from fastapi.responses import JSONResponse
 
 
-def install_dashboard_health(app, *, access, runtime, web_voice_configured, native_voice_configured):
+def install_dashboard_health(app, *, access, runtime, web_voice_configured, native_voice_configured, observer=None):
     @app.get("/internal/v1/dashboard/components")
     def components(request: Request):
         access.require(request)
@@ -40,6 +40,15 @@ def install_dashboard_health(app, *, access, runtime, web_voice_configured, nati
             unknown("web_voice", "Spraak op de website", "Spraakroute ingesteld; microfoon, transcriptie en geluid niet beproefd." if web_voice_configured else "Deze webspraakroute is niet ingesteld.", web_voice_configured),
             unknown("voice_pe", "Voice PE-speakers", "Native spraakroute ingesteld; beide fysieke speakers en hun wakeword zijn niet gecontroleerd." if native_voice_configured else "Native spraakroute niet ingesteld; een eventuele andere HA-spraakroute is niet gecontroleerd."),
         ]
+        if observer is not None:
+            try:
+                measurements = observer()
+            except Exception:
+                measurements = {}
+            for row in rows:
+                measurement = measurements.get(row["id"])
+                if measurement is not None:
+                    row.update(measurement)
         return JSONResponse({"contract": "EvaComponentObservations/v1", "read_only": True,
                              "checked_at": checked_at, "components": rows},
                             headers={"Cache-Control": "no-store"})

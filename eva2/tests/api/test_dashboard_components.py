@@ -51,3 +51,18 @@ def test_ready_runtime_does_not_prove_a_model_credential_check():
     row = next(row for row in data["components"] if row["id"] == "model_credentials")
     assert row["state"] == "unknown"
     assert row["observed_at"] is None
+
+
+def test_live_observations_are_owner_only_and_keep_their_measurement_time():
+    calls = []
+    def observer():
+        calls.append(True)
+        return {"telegram": {"state": "ready", "observed_at": "2026-09-28T10:00:00Z", "detail": "API checked; no delivery test."}}
+    client = TestClient(create_app(Runtime(), dashboard_access_token=TOKEN, component_observer=observer))
+    assert client.get(URL).status_code == 401 and calls == []
+    response = client.get(URL, headers=HEADERS)
+    rows = {row["id"]: row for row in response.json()["components"]}
+    assert calls == [True]
+    assert rows["telegram"]["state"] == "ready"
+    assert rows["telegram"]["observed_at"] == "2026-09-28T10:00:00Z"
+    assert rows["worker"]["state"] == "unknown"

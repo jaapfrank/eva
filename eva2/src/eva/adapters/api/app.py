@@ -622,6 +622,7 @@ def create_app(
     dashboard_voice: DashboardVoice | None = None,
     native_voice: NativeVoiceService | None = None,
     browser_session: BrowserSession | None = None,
+    component_observer=None,
 ) -> FastAPI:
     start_background = getattr(runtime, "start_background_work", None)
     stop_background = getattr(runtime, "stop_background_work", None)
@@ -646,7 +647,8 @@ def create_app(
     from eva.adapters.api.dashboard_health import install_dashboard_health
     install_dashboard_health(app, access=dashboard_access, runtime=runtime,
                              web_voice_configured=dashboard_voice is not None,
-                             native_voice_configured=native_voice is not None)
+                             native_voice_configured=native_voice is not None,
+                             observer=component_observer)
     install_browser_session_routes(app, access=dashboard_access, session=browser_session)
     install_dashboard_initiatives(app, access=dashboard_access, runtime=runtime)
     install_dashboard_work(app, access=dashboard_access, runtime=runtime)

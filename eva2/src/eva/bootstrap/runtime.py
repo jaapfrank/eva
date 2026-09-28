@@ -2257,6 +2257,7 @@ def create_runtime_app() -> FastAPI:
     native_voice = (None if household_voice is None else household_voice.build_service(
         runtime=runtime, engine=engine, work_server=household_work_server,
     ))
+    from eva.bootstrap.component_observations import configured_component_observer
     app = create_app(
         runtime,
         native_voice=native_voice,
@@ -2264,6 +2265,7 @@ def create_runtime_app() -> FastAPI:
         dashboard_identity_loader=current_identity_pack,
         dashboard_voice=dashboard_voice,
         browser_session=browser_session_from_environment(),
+        component_observer=configured_component_observer(),
     )
     if household_voice is not None and settings.household_voice_session_enabled:
         from eva.adapters.api.household_voice_session import install_household_voice_session
