@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Eigen doelen met juiste werkstapstatus in gesprek",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Bestaande eigen interesses blijven na herstart/nieuwe sessie beschikbaar met juiste status.5 databasegevallen en onafhankelijke review geslaagd; geïnstalleerd.",
+            "remaining": "Geen claim van complete persoonlijkheidsontwikkeling. Echte modelinterpretatie volgt als begrensde proef.",
+            "source": "eva2/evidence/product/personal-interest-state-20260928.json"
+          },
+          {
             "title": "Oude herinnering krijgt geen verzonnen actuele brondatum",
             "date": "28 september",
             "state": "installed",
@@ -2499,15 +2507,15 @@
           }
         ],
         "now": {
-          "title": "M3 · Tijdelijke voorkeuren correct behandelen",
-          "state": "Gerichte correctie geïnstalleerd",
-          "detail": "Onbekende brondatum wordt niet meer als vandaag getoond. Tijdelijke uitzonderingen krijgen expliciete begrenzing in geheugen- en gespreksinstructies.41 controles geslaagd, review akkoord, kern/werker gezond en bron gecontroleerd. Echte tijdelijke-voorkeurproef nog open.",
-          "doneWhen": "Gedeelde extractie en gespreksinstructie gecorrigeerd, gecontroleerd en geïnstalleerd; echte werking afzonderlijk beoordelen."
+          "title": "M3 · Eigen doelen correct meenemen",
+          "state": "Correctie geïnstalleerd en live gecontroleerd",
+          "detail": "Eigen interesses krijgen nu de werkelijke werkstapstatus in de gesprekscontext.5 databasegevallen slagen, review akkoord, kern/werker gezond. Afgeronde verkenning wordt niet als voltooid doel gepresenteerd.",
+          "doneWhen": "Werkelijke doelstatus blijft zichtbaar na nieuwe sessie/herstart; gericht getest, review en installatie."
         },
         "next": {
-          "title": "M3 · Eigen interesses en onderbouwd oordeel",
+          "title": "M3 · Begrensde gespreksproef",
           "state": "Nog niet gestart",
-          "detail": "Bestaande duurzame eigen toestand gebruiken; nog ontbrekende ontwikkeling en echte tijdelijke-voorkeurproef bepalen zonder nieuw identiteitssysteem."
+          "detail": "Controleer echte modelantwoorden met vooraf vastgelegde tijdelijke voorkeuren en eigen doelstatus. Geen nieuwe persoonsgegevens opslaan; ontbrekende modelkwaliteit zichtbaar laten."
         },
         "ownerAction": {
           "title": "Later hetzelfde onderwerp voortzetten",
@@ -2521,7 +2529,7 @@
           "expected": "Eva haalt relevante eerdere context terug. Geaccepteerd onthouden, corrigeren en vergeten hoef je niet opnieuw te testen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T12:14:33.272562+00:00"
+        "reviewedAt": "2026-09-28T12:23:28.202922+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12341,7 +12349,7 @@
           ]
         }
       ],
-      "nextAction": "Bestaande duurzame eigen toestand gebruiken; nog ontbrekende ontwikkeling en echte tijdelijke-voorkeurproef bepalen zonder nieuw identiteitssysteem.",
+      "nextAction": "Controleer echte modelantwoorden met vooraf vastgelegde tijdelijke voorkeuren en eigen doelstatus. Geen nieuwe persoonsgegevens opslaan; ontbrekende modelkwaliteit zichtbaar laten.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -12695,16 +12703,16 @@
             "replacementJustified": false
           },
           "owner": "/root",
-          "baseCommit": "b57c0932",
+          "baseCommit": "db340ac1",
           "assignment": {
-            "stage": "temporal_scope_fix_installed",
-            "scope": "adapters/projection/hindsight.py and adapters/model/pydantic_conversation.py",
-            "outcome": "Retain dated temporary exceptions without overwriting standing preferences; apply corrections only within their stated scope.",
-            "endCondition": "Shared extraction and response instructions agree on temporary scope, focused checks and review pass, installed with source verification. Real recall quality remains separate.",
-            "effort": "Two bounded instruction changes, existing focused checks; no new runtime model calls planned, credits unknown",
-            "result": "Source-date bug corrected; instructions scoped;41 checks and independent review GO; installed and live source verified."
+            "stage": "personal_interest_state_installed",
+            "scope": "adapters/postgres/conversation_actions.py and existing PostgreSQL restart test",
+            "outcome": "Eva recalls its durable chosen interest with its actual current state instead of calling completed/failed work active.",
+            "endCondition": "All four stored states correct after restart/new session; no other-person context; review and installation.",
+            "effort": "One small production edit, existing database regression; no Eva model calls planned, credits unknown",
+            "result": "Five database cases pass; independent review GO; installed on both runtime roles with matching source and healthy owner routes."
           },
-          "evidence": "eva2/evidence/product/temporal-preferences-20260928.json",
+          "evidence": "eva2/evidence/product/personal-interest-state-20260928.json",
           "remaining": "Actual model interpretation of temporary exceptions and evolving own interests/opinions not yet proven."
         },
         {

@@ -1,0 +1,54 @@
+{
+  "checkedAt": "2026-09-28T12:23:28.202922+00:00",
+  "status": "installed_source_routes_verified",
+  "sourceCommit": "67e12bf7",
+  "existingCapability": "Durable self-chosen interests and exploration/prototype receipts are already supplied to new conversations by active_context.",
+  "gap": "All selected checkpoint statuses were rendered as active, including completed/failed worksteps.",
+  "change": "Context now names active, awaiting proof, completed workstep or failed workstep. Completed workstep does not claim completed whole goal.",
+  "tests": {
+    "passed": 5,
+    "seconds": 2.69,
+    "coverage": [
+      "Durable adoption without duplicate after restart",
+      "Actual exploration_projected and prototype_projected states",
+      "New conversation context",
+      "Other principal sees no interest"
+    ],
+    "initialRunnerAndFixtureFailures": "Missing disposable DSN, mismatched other-person audience and shared parameter fixture corrected before final passing run."
+  },
+  "review": {
+    "reviewer": "/root/platform_research_20260927",
+    "result": "GO after distinguishing completed workstep from goal completion"
+  },
+  "modelCalls": 0,
+  "creditCost": null,
+  "ownerAccepted": false,
+  "limits": [
+    "This corrects context accuracy; it does not establish better personality or general interest development.",
+    "No new interest subsystem, no model-produced behavioral comparison yet."
+  ],
+  "installation": {
+    "checkedAt": "2026-09-28T12:22:56.130456+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:94aba5edd7c5e7b8cef6b31380ff23fba449987317414f5dbefb64d91464a68a",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/conversation_actions.py": "8b852ab87988ae4daae9560d66ef8d9548b774ccdb5c76e8c73da6bf765dc760"
+        }
+      },
+      "worker": {
+        "image": "sha256:e10bc21e07ee42672431ba8dc71e275c85521941ed2c79ee3342148f0b493456",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/conversation_actions.py": "8b852ab87988ae4daae9560d66ef8d9548b774ccdb5c76e8c73da6bf765dc760"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/personal-interest-state-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  }
+}

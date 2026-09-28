@@ -1,10 +1,10 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — M3: tijdelijke voorkeuren en juiste brondatum.** Concrete fout gecorrigeerd: een ontbrekende brondatum werd in het modelbericht als de actuele zoekdatum getoond. Die datum is nu expliciet onbekend. Tijdelijke uitzonderingen krijgen hun eigen looptijd; 41 gerichte controles geslaagd, onafhankelijke review akkoord. Geïnstalleerd in kern en werker; gezond, bron en bereikbaarheid gecontroleerd. [Bewijs](evidence/product/temporal-preferences-20260928.json).
+**Nu — M3: bestaande eigen interesses correct voortzetten.** Opslag en terughalen bestaan al. De gesprekscontext noemde ook afgeronde/mislukte werkstappen altijd actief. Labels gecorrigeerd, vijf databasecontroles geslaagd na nieuwe sessie/herstart, review akkoord. Geïnstalleerd; kern en werker gezond, bron en bereikbaarheid gecontroleerd. [Bewijs](evidence/product/personal-interest-state-20260928.json). Een afgeronde werkstap wordt niet als voltooid doel voorgesteld.
 
 **Voor Jaap, wanneer het uitkomt:** bespreek een gewoon onderwerp in privé-Telegram. Open later [het privégesprek op de website](http://localhost:44711/internal/v1/dashboard/conversation) en vraag verder over dat onderwerp zonder de details te herhalen. Verwacht relevante eerdere context en de laatste correctie. Dit beoordeelt de kanaalvoortzetting; geaccepteerde geheugenproeven niet herhalen.
 
-**Eerstvolgend — M3:** bestaande duurzame eigen interesses en onderbouwd oordeel beoordelen. Echte tijdelijke-voorkeurproef blijft open; dit is nog geen complete M3-acceptatie. Geen nieuw identiteitssysteem.
+**Eerstvolgend — M3:** één begrensde modelproef met vastgelegde tijdelijke voorkeuren en eigen doelstatus; vooraf dezelfde beoordelingscriteria, geen nieuwe persoonlijke herinneringen bewaren. Nog niet gestart. Menselijke persoonlijkheidsbeleving blijft apart.
 
 **C3 blijft open:** echte dienstsessiestart met gesimuleerd apparaat gecontroleerd, geen fysieke duplexacceptatie. Apparaatlog van de mislukte kandidaat ontbreekt. Werkende firmware behouden; alleen afhankelijk speakerwerk wacht op die observatie.
 
