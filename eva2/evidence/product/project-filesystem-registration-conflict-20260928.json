@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-09-28T21:15:47.179973+00:00",
+  "slice": "L2",
+  "basis": "b282c7ef",
+  "method": "Read-only installed gateway catalog, installed registration settings and installed gateway_service.py uniqueness check",
+  "observed": {
+    "filesystemEndpoint": "http://eva2-workspace-filesystem:9000/mcp",
+    "existingGatewayName": "eva_workspace",
+    "existingVisibility": "public",
+    "newRegistrationVisibility": "public",
+    "newNameRule": "owner-derived registration_name; existing differently named registration is not reused",
+    "gatewayRule": "Same public URL without differing credentials is rejected by _check_gateway_uniqueness before registration"
+  },
+  "conclusion": "Ordinary connect_service would attempt a duplicate public registration. Do not spend a model call on this unchanged route. Preserve existing gateway registration and pinned catalog. Determine supported explicit reuse before further connection work.",
+  "limitation": "No registration attempt executed; conclusion follows installed source and current configuration.",
+  "modelCalls": 0,
+  "creditCost": "unknown",
+  "executionPolicy": "Previous preparation rejected without detailed reason; explicit confirmation requested, pending. No bypass attempted.",
+  "unchanged": "Existing files, tasks, gateway and installed planning remain retained."
+}

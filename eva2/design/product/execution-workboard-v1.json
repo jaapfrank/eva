@@ -2780,14 +2780,14 @@
         ],
         "now": {
           "title": "L2: meerdaags project hervatten",
-          "state": "Vervolgplanning aangesloten en geïnstalleerd",
-          "detail": "Bron5145a139 op gezonde kern/werker; exacte bron en eigenaar-/projectpagina gecontroleerd.45 gerichte tests en onafhankelijke review akkoord. Gewone snelle ontvangst behouden. Echte vervolgafspraak/meerdaagse uitvoering nog niet bewezen; geen modeltaak actief.",
+          "state": "Vervolgplanning live; bestaande bestandregistratie vereist hergebruik",
+          "detail": "Leescontrole: filesystemdienst staat al publiek geregistreerd; nieuwe owner-registratie zou dezelfde publieke URL dupliceren en wordt geweigerd. Geen modelcall/proef gestart. Bestaande bestanden en planning behouden. Expliciete bevestiging na eerdere automatische uitvoerblokkade gevraagd; geen omweg.",
           "doneWhen": "One ordinary project preserves goal, dependencies, artifacts and next action overnight; later correction and continuation use saved state without duplicate effects."
         },
         "next": {
-          "title": "Echte projectplanning en voortzetting controleren",
-          "state": "Nog niet uitgevoerd",
-          "detail": "Bestaande projectopdracht, bestanden en afhankelijkheden behouden. Aansluitproef voor filesystemdienst is nog geblokkeerd door automatische uitvoercontrole; geen omweg. Geen geplande afspraak claimen vóór werkelijke opslag."
+          "title": "Bestaande bestandregistratie gebruiken",
+          "state": "Aansluiting nog open",
+          "detail": "Geen dubbele gatewayregistratie of ongewijzigde aansluitproef. Onderbouw kleinste ondersteunde aansluiting met behoud van oude catalogushashes; daarna werkelijke projectvoortzetting."
         },
         "ownerAction": {
           "title": "Camera voor vuilnisbakken kiezen",
@@ -2800,7 +2800,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T21:11:47.612182+00:00"
+        "reviewedAt": "2026-09-28T21:15:47.179973+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12620,7 +12620,7 @@
           ]
         }
       ],
-      "nextAction": "L2: gewone projectvraag bewaart concept en projectstaat, plus één afhankelijke vervolgstap morgen09:00; huidige scheduler en bewijs hergebruiken.",
+      "nextAction": "L2: bestaande filesystemregistratie hergebruiken; geen dubbele registratieproef. Geïnstalleerde vervolgplanning behouden; echte projectuitvoering nog open.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13347,14 +13347,14 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "nextAction": "Check how existing directory capability and rejected tool feedback are exposed; repair smallest missing connection. Do not manually create the fixture directory or repeat unchanged request.",
+          "nextAction": "Reuse existing filesystem gateway explicitly; duplicate public registration is rejected by installed gateway. Planning seam is installed, actual project/schedule remains unproven. Execution-policy clarification pending.",
           "owner": "/root",
           "activeWorker": null,
-          "baseCommit": "2c79af80",
+          "baseCommit": "b282c7ef",
           "effortNotice": "15–25min; maximaal één hervatting na installatie; credits onbekend.",
-          "latestEvidence": "eva2/evidence/product/l2-project-save-rejection-20260928.json",
+          "latestEvidence": "eva2/evidence/product/project-filesystem-registration-conflict-20260928.json",
           "assignment": {
-            "stage": "initial_project_save_rejected",
+            "stage": "existing_gateway_registration_conflict",
             "outcome": "One ordinary project preserves goal, dependencies, artifacts and next action overnight; later correction and continuation use saved state without duplicate effects.",
             "scope": "Synthetic household document project, private website route; existing scheduler and artifact tools only",
             "evidence": "eva2/evidence/product/l2-overnight-project-criteria-20260928.json",
