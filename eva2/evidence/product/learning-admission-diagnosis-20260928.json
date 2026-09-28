@@ -76,7 +76,12 @@
     "nativeResearchOfferedToDigitalWorker": false,
     "existingReusableImplementation": "adapters/model/research_tools.py:OwnerResearchContinuationTool",
     "priorSameSourceFailure": "eva2/evidence/product/AU-004-procedure-attempt2-failure-2026-09-12.json",
-    "priorEvidenceSelectionMistake": "Existing same-source retrieval failure was not used before selecting this trial. The current task is not evidence that the domain itself was previously unseen."
+    "priorEvidenceSelectionMistake": "Existing same-source retrieval failure was not used before selecting this trial. The current task is not evidence that the domain itself was previously unseen.",
+    "independentReview": {
+      "reviewer": "/root/platform_research_20260927",
+      "verdict": "Targeted reuse integration justified; HTTP root cause unknown.",
+      "integrationConstraint": "Research returns usage in tool artifact, while digital execution uses journal.model_usage. Admit research against the same task grant before dispatch, count its usage exactly once, and preserve unknown-usage blocking. Adding only descriptor and route is insufficient."
+    }
   },
   "nextAction": "Reuse existing research within digital execution, preserving source receipts, current limits and accounting; no new learning engine, direct task bypass or unchanged request repetition."
 }
