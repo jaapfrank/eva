@@ -2,7 +2,7 @@
 
 ## Actief — uitsluitend L2: één project volledig afmaken
 
-**Actueel:** de echte projectaanvraag faalde na14s vóór taakaanname door ongeldige toolargumenten. Geen concept of vervolgafspraak opgeslagen. Gerichte foutafhandeling gebruikt bestaande eenmalige invoercorrectie;35 controles geslaagd, onafhankelijke review loopt. Gemeten poging7.923 invoer-/215 uitvoertokens, één modelcall; creditkosten onbekend. Twee bestaande onderzoekstests hebben een verouderde Nederlandstalige tekstassertie; niet als geslaagd geteld.
+**Actueel:** concept-v1 en project-v1 zijn opgeslagen en onafhankelijk teruggelezen. Werk0297065e eindigde onvoltooid omdat het ook de planning wilde afronden; die hoort bij het gesprek. Concreet schemafout vastgesteld: strict modelprotocol verplicht acceptance_message, terwijl instructie vroeg het weg te laten. Nullable waarde sluit bestaande vervolgroute aan zonder nieuwe planner.73 gerichte controles geslaagd; review loopt. Geen herschrijving van opgeslagen projectbestanden.
 
 **Hervat op expliciete eigenaaropdracht:** geteste extra catalogus installeren en dezelfde projectuitkomst vervolgen. Basis435d2b13; alleen bestaande provider/catalogaansluiting. Geen nieuwe dienstregistratie, zijtaak of brede testcyclus. Bestaand review/testbewijs hergebruiken; maximaal één gerichte projectpoging na gewijzigde oorzaak. Werkraming30–45min voor installatie en eerste projectfase; uitvoering op afgesproken later tijdstip blijft afzonderlijk bewijs.
 

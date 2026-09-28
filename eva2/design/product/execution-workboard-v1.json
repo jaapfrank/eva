@@ -2780,8 +2780,8 @@
         ],
         "now": {
           "title": "L2: één project volledig afmaken",
-          "state": "Projectaanname herstellen vóór opslag",
-          "detail": "Echte opdracht stopte na14s bij ongeldige argumenten vóór taakaanname. Geen concept of planning. Gerichte correctie laat bestaande invoerherstelroute eenmaal corrigeren;35 controles geslaagd, onafhankelijke review loopt. Geen zijtaak.",
+          "state": "Concept bewaard; ontbrekende vervolgplanning corrigeren",
+          "detail": "Concept-v1 en project-v1 bestaan en zijn onafhankelijk teruggelezen. Taak eindigde onvoltooid door planning die bij gesprek hoort. Oorzaak: strikt modelschema verplicht ontvangstveld dat instructie vroeg weg te laten. Gerichte nullable-correctie,73 controles geslaagd; review loopt. Geen bestanden opnieuw maken.",
           "doneWhen": "Concept en projectstaat opgeslagen, één echte afhankelijke vervolgafspraak, correctie en hervatting gebruiken bewaarde inhoud, eindresultaat geleverd zonder dubbele acties."
         },
         "next": {
@@ -2800,7 +2800,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T22:47:48.576910+00:00"
+        "reviewedAt": "2026-09-28T22:56:31.649473+00:00"
       }
     },
     "pendingTechnicalReview": {

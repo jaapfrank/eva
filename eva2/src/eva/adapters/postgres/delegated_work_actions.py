@@ -132,8 +132,8 @@ class PostgresDelegatedWorkActions:
                         **({"feedback": {"type": "string", "minLength": 1, "maxLength": 800}}
                            if operation == "initiative_feedback" else {}),
                         **({"acceptance_message": {
-                            "type": "string", "minLength": 1, "maxLength": 240,
-                            "description": "Formuleer een korte, natuurlijke ontvangstzin voor deze opdracht. "
+                            "type": ["string", "null"] if operation == "digital" else "string", "minLength": 1, "maxLength": 240,
+                            "description": ("Use null when a later dependent step must still be scheduled in this conversation. " if operation == "digital" else "") + "Formuleer een korte, natuurlijke ontvangstzin voor deze opdracht. "
                             "Deze zin wordt alleen na opgeslagen toelating uitgesproken. "
                             "Zeg dat je ermee aan de slag gaat; beweer nog geen resultaat."
                         }} if operation in {"start", "research", "digital"} else {})},
@@ -312,7 +312,8 @@ class PostgresDelegatedWorkActions:
             raise ConversationConflict("research predecessor is invalid")
         acceptance = call.arguments.get("acceptance_message")
         if (not required <= set(call.arguments) <= required | optional
-                or ("acceptance_message" in call.arguments and (
+                or ("acceptance_message" in call.arguments
+                    and not (operation == "digital" and acceptance is None) and (
                     not isinstance(acceptance, str) or not acceptance.strip()
                     or len(acceptance) > 240))) or (
             key is not None and operation not in {"research", "schedule_digital", "schedule_resume", "search", "revise_digital"} and (

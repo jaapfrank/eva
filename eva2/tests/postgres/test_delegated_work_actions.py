@@ -289,7 +289,7 @@ def test_household_admission_uses_same_acceptance_gate(acceptance_actions):
 
 
 @pytest.mark.parametrize("arguments", [
-    {}, {"task": ""}, {"task": "Save draft", "acceptance_message": None},
+    {}, {"task": ""},
     {"task": "Save draft", "acceptance_message": ""},
     {"task": "Save draft", "unexpected": "private-value"},
 ])
@@ -301,3 +301,21 @@ def test_invalid_project_admission_returns_repair_before_timeline_or_effect(argu
         actions.execute(object(), ConversationActionCall("invalid", "start_digital_work", arguments))
     assert caught.value.fields == ("task", "acceptance_message")
     assert "private-value" not in str(caught.value)
+
+
+def test_project_acceptance_can_be_null_in_strict_schema_and_reaches_admission(monkeypatch):
+    from pydantic_ai.profiles.openai import OpenAIJsonSchemaTransformer
+    actions = module.PostgresDelegatedWorkActions(object(), SimpleNamespace(digital_profile=object()))
+    descriptor = next(d for d in actions.conversation_tools(include_digital=True) if d.name == "start_digital_work")
+    schema = OpenAIJsonSchemaTransformer(descriptor.input_schema, strict=True).walk()
+    assert "acceptance_message" in schema["required"]
+    assert "null" in schema["properties"]["acceptance_message"]["type"]
+    class ReachedAdmission(Exception):
+        pass
+    def reached(*_):
+        raise ReachedAdmission
+    monkeypatch.setattr(actions, "_timeline", reached)
+    with pytest.raises(ReachedAdmission):
+        actions.execute(object(), ConversationActionCall("valid", "start_digital_work", {
+            "task": "Verify saved draft only", "acceptance_message": None,
+        }))

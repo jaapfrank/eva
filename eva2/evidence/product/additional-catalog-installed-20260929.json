@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-09-28T22:42:27.860368+00:00",
+  "services": {
+    "core": {
+      "image": "sha256:0941235fd1a6c42c062a3c1ae970c1b432d0bba6806e088a69e2d2df9bc23dfa",
+      "health": "healthy",
+      "sourceHashes": {
+        "providers/mcp_gateway.py": "ea4fd29b3ba8faee60291f2881e4b6d2075a4eb8cfd18238a3210320ba6d86c6"
+      }
+    },
+    "worker": {
+      "image": "sha256:f3b20e2ffc745228b911d668dc3ffc6daa2ead518f87ec6a0137c133b0ba9557",
+      "health": "healthy",
+      "sourceHashes": {
+        "providers/mcp_gateway.py": "ea4fd29b3ba8faee60291f2881e4b6d2075a4eb8cfd18238a3210320ba6d86c6"
+      }
+    }
+  },
+  "http": {
+    "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+    "http://localhost:44712/project-state": 200
+  },
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/l2-additional-catalog-install-20260929/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker",
+  "status": "installed",
+  "sourceCommit": "789ad2ba",
+  "review": "review_directory_connection GO",
+  "productOutcome": "Filesystem directory tool available through existing gateway; no project completion claim",
+  "firstAttempt": "Read-only mount target rejected; rollback successful; corrected separate read-only mount preflight passed"
+}

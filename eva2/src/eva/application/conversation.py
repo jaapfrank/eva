@@ -1024,7 +1024,7 @@ class LivingConversation:
                 "fulfil an explicit request to read sources, save or act. Confirm admission only; "
                 "remain available and use work_id for status/stop. If admission fails, state the "
                 "blocker without claiming execution. If the request combines work now with "
-                "a later dependent step, delegate only the current step and omit acceptance_message. "
+                "a later dependent step, delegate only the current step and set acceptance_message to null. "
                 "Then use schedule_digital_work with the returned work_id as after_work_id and "
                 "the requested time. Keep scheduling in this conversation; workers cannot schedule "
                 "their own continuation. Confirm a future step only from its stored schedule receipt. "
