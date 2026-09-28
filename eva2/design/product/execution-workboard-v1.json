@@ -2507,15 +2507,15 @@
           }
         ],
         "now": {
-          "title": "M3 · Eigen doelen correct meenemen",
-          "state": "Correctie geïnstalleerd en live gecontroleerd",
-          "detail": "Eigen interesses krijgen nu de werkelijke werkstapstatus in de gesprekscontext.5 databasegevallen slagen, review akkoord, kern/werker gezond. Afgeronde verkenning wordt niet als voltooid doel gepresenteerd.",
-          "doneWhen": "Werkelijke doelstatus blijft zichtbaar na nieuwe sessie/herstart; gericht getest, review en installatie."
+          "title": "M3 · Echte modelantwoorden beoordelen",
+          "state": "Gespreksproef: 3 geslaagd, 1 mislukt",
+          "detail": "Tijdelijke voorkeur op juiste dag en afgeronde werkstap correct. Ongedateerd “morgen” wordt nog als actueel gezien.4 modelvragen,7.439 invoertokens en117 uitvoertokens; geen geheugenwijzigingen.",
+          "doneWhen": "Alle vier antwoorden en gemeten verbruik beoordeeld; verlies en ontbrekende ketenproeven zichtbaar."
         },
         "next": {
-          "title": "M3 · Begrensde gespreksproef",
-          "state": "Nog niet gestart",
-          "detail": "Controleer echte modelantwoorden met vooraf vastgelegde tijdelijke voorkeuren en eigen doelstatus. Geen nieuwe persoonsgegevens opslaan; ontbrekende modelkwaliteit zichtbaar laten."
+          "title": "M3 · Ongedateerde uitspraak niet als actuele afspraak gebruiken",
+          "state": "Concrete mislukte modelproef",
+          "detail": "Pas alleen het aantoonbaar onduidelijke onderscheid in geheugencontext aan; herhaal uitsluitend het gefaalde geval na wijziging. Geen volledige nieuwe geheugenbouw."
         },
         "ownerAction": {
           "title": "Later hetzelfde onderwerp voortzetten",
@@ -2529,7 +2529,7 @@
           "expected": "Eva haalt relevante eerdere context terug. Geaccepteerd onthouden, corrigeren en vergeten hoef je niet opnieuw te testen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T12:23:28.202922+00:00"
+        "reviewedAt": "2026-09-28T12:26:44.583003+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12349,7 +12349,7 @@
           ]
         }
       ],
-      "nextAction": "Controleer echte modelantwoorden met vooraf vastgelegde tijdelijke voorkeuren en eigen doelstatus. Geen nieuwe persoonsgegevens opslaan; ontbrekende modelkwaliteit zichtbaar laten.",
+      "nextAction": "Pas alleen het aantoonbaar onduidelijke onderscheid in geheugencontext aan; herhaal uitsluitend het gefaalde geval na wijziging. Geen volledige nieuwe geheugenbouw.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -12705,15 +12705,15 @@
           "owner": "/root",
           "baseCommit": "db340ac1",
           "assignment": {
-            "stage": "personal_interest_state_installed",
-            "scope": "adapters/postgres/conversation_actions.py and existing PostgreSQL restart test",
-            "outcome": "Eva recalls its durable chosen interest with its actual current state instead of calling completed/failed work active.",
-            "endCondition": "All four stored states correct after restart/new session; no other-person context; review and installation.",
-            "effort": "One small production edit, existing database regression; no Eva model calls planned, credits unknown",
-            "result": "Five database cases pass; independent review GO; installed on both runtime roles with matching source and healthy owner routes."
+            "stage": "model_cases_three_pass_one_fail",
+            "scope": "Installed Pydantic conversation adapter with current contact model and signed identity; synthetic memory inputs.",
+            "baseCommit": "8ac9513b",
+            "outcome": "Observe whether actual model answers respect temporary scope and actual own workstep state.",
+            "endCondition": "Four frozen cases recorded and reviewed; no additional repeat without changed hypothesis.",
+            "effort": "Four generate calls max, zero tool execution/real memory writes; tokens measured, credits unknown"
           },
-          "evidence": "eva2/evidence/product/personal-interest-state-20260928.json",
-          "remaining": "Actual model interpretation of temporary exceptions and evolving own interests/opinions not yet proven."
+          "evidence": "eva2/evidence/product/m3-model-cases-20260928.json",
+          "remaining": "Undated relative-time memory still misinterpreted; end-to-end memory and personality/family judgment remain open."
         },
         {
           "id": "T1",

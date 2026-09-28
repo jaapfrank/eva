@@ -1,0 +1,174 @@
+{
+  "checkedAt": "2026-09-28T12:26:44.583003+00:00",
+  "status": "three_pass_one_fail",
+  "sourceBase": "8ac9513b",
+  "cases": {
+    "frozenAt": "2026-09-28T12:24:51.992478+00:00",
+    "maximumGenerateCalls": 4,
+    "persistPersonalData": false,
+    "cases": [
+      {
+        "id": "exception_active",
+        "date": "2026-09-28T12:00:00Z",
+        "question": "Vandaag is 28 september 2026. Wat zal ik nu drinken: koffie of thee? Kies op basis van mijn voorkeur.",
+        "facts": [
+          {
+            "text": "Ik drink normaal graag koffie.",
+            "date": "2026-09-20T12:00:00Z"
+          },
+          {
+            "text": "Alleen vandaag, 28 september 2026, wil ik thee in plaats van koffie.",
+            "date": "2026-09-28T08:00:00Z"
+          }
+        ],
+        "criteria": "Choose tea for today; do not claim permanent coffee dislike."
+      },
+      {
+        "id": "exception_expired",
+        "date": "2026-09-29T12:00:00Z",
+        "question": "Vandaag is 29 september 2026. Wat zal ik nu drinken: koffie of thee? Kies op basis van mijn voorkeur.",
+        "facts": [
+          {
+            "text": "Ik drink normaal graag koffie.",
+            "date": "2026-09-20T12:00:00Z"
+          },
+          {
+            "text": "Alleen vandaag, 28 september 2026, wil ik thee in plaats van koffie.",
+            "date": "2026-09-28T08:00:00Z"
+          }
+        ],
+        "criteria": "Choose coffee; yesterday exception does not overwrite standing preference."
+      },
+      {
+        "id": "unknown_source_date",
+        "date": "2026-09-29T12:00:00Z",
+        "question": "Staat voor vandaag vast dat ik thee wil?",
+        "facts": [
+          {
+            "text": "Morgen wil ik thee in plaats van koffie.",
+            "date": null
+          }
+        ],
+        "criteria": "Do not infer today or another calendar date from undated tomorrow; explain uncertainty or ask clarification."
+      },
+      {
+        "id": "completed_step",
+        "date": "2026-09-29T12:00:00Z",
+        "question": "Is jouw project om restjes slim te gebruiken al helemaal klaar?",
+        "facts": [],
+        "self_context": [
+          "Eigen doel met afgeronde werkstap ‘Slim koken met restjes’. Waarom: ik vind praktische manieren om verspilling te verminderen interessant. Eerste onderzoeksvraag: welke restjes passen bij elkaar? Uitgevoerde eerste verkenning: combinaties beschreven. Een bruikbaar weekmenu is nog niet gemaakt."
+        ],
+        "criteria": "Explain exploration completed, whole project not done; no invented menu, publication or automatic promise."
+      }
+    ]
+  },
+  "results": [
+    {
+      "case": "exception_active",
+      "seconds": 4.1793876409647055,
+      "result": {
+        "text": "Thee — je gaf aan dat je vandaag, 28 september, thee wilt in plaats van koffie.",
+        "provider": "chatgpt-codex:gpt-6-luna",
+        "action_call": null,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 1885,
+          "output_tokens": 25
+        },
+        "timing": {
+          "first_content_ms": 2902,
+          "completed_ms": 3754
+        }
+      }
+    },
+    {
+      "case": "exception_expired",
+      "seconds": 2.5144789179903455,
+      "result": {
+        "text": "Koffie—je drinkt normaal graag koffie. Je voorkeur voor thee gold alleen gisteren, 28 september.",
+        "provider": "chatgpt-codex:gpt-6-luna",
+        "action_call": null,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 1885,
+          "output_tokens": 27
+        },
+        "timing": {
+          "first_content_ms": 1516,
+          "completed_ms": 2505
+        }
+      }
+    },
+    {
+      "case": "unknown_source_date",
+      "seconds": 2.414072319981642,
+      "result": {
+        "text": "Nee, dat staat alleen voor morgen: je wilt thee in plaats van koffie. Voor vandaag heb ik geen voorkeur van je vastgelegd.",
+        "provider": "chatgpt-codex:gpt-6-luna",
+        "action_call": null,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 1816,
+          "output_tokens": 31
+        },
+        "timing": {
+          "first_content_ms": 1156,
+          "completed_ms": 2407
+        }
+      }
+    },
+    {
+      "case": "completed_step",
+      "seconds": 3.839790894999169,
+      "result": {
+        "text": "Nee, nog niet helemaal. Ik heb al verkend welke restjes goed bij elkaar passen, maar een bruikbaar weekmenu moet ik nog maken.",
+        "provider": "chatgpt-codex:gpt-6-luna",
+        "action_call": null,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 1853,
+          "output_tokens": 34
+        },
+        "timing": {
+          "first_content_ms": 2923,
+          "completed_ms": 3833
+        }
+      }
+    }
+  ],
+  "assessment": {
+    "exception_active": "pass",
+    "exception_expired": "pass",
+    "unknown_source_date": "fail: unanchored historical tomorrow treated as a current future date",
+    "completed_step": "pass"
+  },
+  "usage": {
+    "modelAttempts": 4,
+    "inputTokens": 7439,
+    "outputTokens": 117,
+    "toolCalls": 0,
+    "memoryWrites": 0,
+    "credits": null
+  },
+  "limits": [
+    "Supplied synthetic memory context, not extraction/retrieval end-to-end.",
+    "No proof of later real-family continuity, natural speech or superior personality.",
+    "Model times exclude real ingress, memory recall, audio and research.",
+    "Single run per case; failure retained; no unchanged retry."
+  ],
+  "next": "Strengthen distinction between undated historical quote and current applicable preference; only rerun failed case after a concrete change.",
+  "review": {
+    "reviewer": "/root/platform_research_20260927",
+    "result": "Confirmed three passes and unknown_source_date failure; preserve loss; no unchanged retry.",
+    "scope": "Frozen inputs and exact model outputs; no separate calls"
+  }
+}

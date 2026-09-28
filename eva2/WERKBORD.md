@@ -1,10 +1,10 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — M3: bestaande eigen interesses correct voortzetten.** Opslag en terughalen bestaan al. De gesprekscontext noemde ook afgeronde/mislukte werkstappen altijd actief. Labels gecorrigeerd, vijf databasecontroles geslaagd na nieuwe sessie/herstart, review akkoord. Geïnstalleerd; kern en werker gezond, bron en bereikbaarheid gecontroleerd. [Bewijs](evidence/product/personal-interest-state-20260928.json). Een afgeronde werkstap wordt niet als voltooid doel voorgesteld.
+**Nu — M3: vier echte modelgevallen uitgevoerd.** Drie geslaagd: tijdelijke uitzondering op de juiste dag, terugkeer naar normale voorkeur en afgeronde werkstap zonder onterechte projectafronding. Eén mislukt: ongedateerd “morgen” wordt toch als actueel behandeld. Geen complete M3-claim. Vier modelvragen, 7.439 invoertokens en117 uitvoertokens; geen echte persoonlijke herinneringen gelezen of geschreven. [Uitkomsten](evidence/product/m3-model-cases-20260928.json).
 
 **Voor Jaap, wanneer het uitkomt:** bespreek een gewoon onderwerp in privé-Telegram. Open later [het privégesprek op de website](http://localhost:44711/internal/v1/dashboard/conversation) en vraag verder over dat onderwerp zonder de details te herhalen. Verwacht relevante eerdere context en de laatste correctie. Dit beoordeelt de kanaalvoortzetting; geaccepteerde geheugenproeven niet herhalen.
 
-**Eerstvolgend — M3:** één begrensde modelproef met vastgelegde tijdelijke voorkeuren en eigen doelstatus; vooraf dezelfde beoordelingscriteria, geen nieuwe persoonlijke herinneringen bewaren. Nog niet gestart. Menselijke persoonlijkheidsbeleving blijft apart.
+**Eerstvolgend — M3:** corrigeer de omgang met ongedateerde historische uitspraken. Alleen het gefaalde geval opnieuw uitvoeren na concrete wijziging; geen herhaling van de drie geslaagde gevallen zonder nieuwe reden.
 
 **C3 blijft open:** echte dienstsessiestart met gesimuleerd apparaat gecontroleerd, geen fysieke duplexacceptatie. Apparaatlog van de mislukte kandidaat ontbreekt. Werkende firmware behouden; alleen afhankelijk speakerwerk wacht op die observatie.
 
