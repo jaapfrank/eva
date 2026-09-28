@@ -1,0 +1,30 @@
+{
+  "id": "camera-binary-input-20260928",
+  "basis": "5688c102",
+  "status": "source_preparation_not_runtime_feature",
+  "existing": "Eva1 src/integrations/homeassistant.js cameraSnapshot uses authenticated GET /api/camera_proxy/<entity>; reuse that endpoint and installed httpx2, no new connector dependency. Eva2 generic API currently decodes binary as text.",
+  "change": "Separate optional binary snapshot adapter preserves bytes, entity, media type, retrieval timestamp and SHA256. No image capture timestamp or visual truth is invented.",
+  "files": [
+    "eva2/src/eva/adapters/connectors/home_assistant_camera.py",
+    "eva2/tests/connectors/test_home_assistant_camera.py"
+  ],
+  "validation": {
+    "testsPassed": 12,
+    "seconds": 0.18,
+    "environment": "isolated existing runtime image08fd17e493b6 with network disabled; source mounted read-only",
+    "initialAttempt": "Host test environment lacked httpx2; collection failed. No tests or camera request ran in that attempt."
+  },
+  "limits": [
+    "HTTP15s timeout is per network operation, not total elapsed deadline; caller must own overall cancellation.",
+    "Signature checks are not image decoding. Vision backend must reject corrupt image content.",
+    "No production wiring, model selection, visual observation event or camera/calendar reminder is delivered.",
+    "Camera for bin scene remains unspecified; no camera images fetched."
+  ],
+  "usage": {
+    "modelCalls": 0,
+    "cameraRequests": 0,
+    "credits": "unknown; no Eva generation"
+  },
+  "review": "GO from platform_research_20260927 for bounded source preparation. Timeout scope, signature validation limits and retrieval timestamp distinction documented.",
+  "next": "Connect optional analysis through existing sensory interface after backend selection and real recorded-scene comparison. Do not enable polling without a selected camera and execution budget."
+}

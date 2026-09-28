@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Camerabeeld behouden als beeldbytes",
+            "date": "28 september",
+            "state": "built",
+            "result": "Optionele transportadapter bewaart beeldbytes, bron, ophaaltijd en hash.12 gerichte tests en onafhankelijke review akkoord.",
+            "remaining": "Niet aangesloten of geïnstalleerd. Geen camerabeelden geanalyseerd of herinneringen opgeleverd.",
+            "source": "eva2/evidence/product/camera-binary-input-20260928.json"
+          },
+          {
             "title": "Wachttijd onderscheiden zonder nieuwe modelcalls",
             "date": "28 september",
             "state": "investigated",
@@ -2595,15 +2603,15 @@
           }
         ],
         "now": {
-          "title": "C1 · Tijdmeting afgerond",
-          "state": "Afgerond · geen nieuwe installatie",
-          "detail": "Bestaande resultaatvraag: 20,852 s totaal, 16,531 s modeltijd. Losse actuele taakcontext: 0,106 s. Geen grond voor contextombouw of snelheidsclaim; onafhankelijke review akkoord. Geen nieuwe modelcalls.",
-          "doneWhen": "Begrensde meting en beperkingen geregistreerd. Gewone gebruiksproef blijft open; C1 is niet als geheel afgerond."
+          "title": "I2 · Beeldinvoer voorbereid",
+          "state": "Bron gecontroleerd · nog niet aangesloten",
+          "detail": "Binaire camera-adapter gebouwd met bestaand HA-endpoint.12 transporttests en onafhankelijke review geslaagd; nul camera-/modelcalls. Geen geïnstalleerde visionfunctie.",
+          "doneWhen": "Transportvoorbereiding afgerond. Lokale analyse, echte-scènevergelijking en bestaande initiatiefkoppeling blijven nodig voor de gebruikersuitkomst."
         },
         "next": {
-          "title": "I2 · Ontbrekende beeldwaarneming aansluiten",
+          "title": "I2 · Beeld naar lokale analyse en bestaande waarneming",
           "state": "Nog niet gestart",
-          "detail": "Hergebruik Eva1-cameraophaling en bestaande Eva2-agenda/waarneming/initiatief. Eerst de optionele beeldinvoer verbinden; lokale kandidaat blijft onbewezen op echte scènes. Camerakeuze voor vuilnisbakken staat nog open; geen nieuwe initiatiefkern."
+          "detail": "Koppel optionele analyser aan bestaande sensory-events; geen tweede initiatiefkern. Modelkwaliteit en camera voor vuilnisbakken nog te bepalen."
         },
         "ownerAction": {
           "title": "Toolgebruik na cataloguswijziging proberen",
@@ -2617,7 +2625,7 @@
           "expected": "Een normale begroeting en het juiste bewaarde resultaat. Snellere reactie is nog niet bewezen. Automatische proefvoorbereiding werd geblokkeerd; geen eigenaaracceptatie ingevuld."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T14:32:31.647205+00:00"
+        "reviewedAt": "2026-09-28T14:37:22.183693+00:00"
       }
     },
     "pendingTechnicalReview": {

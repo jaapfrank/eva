@@ -16,7 +16,9 @@
 
 **Afgerond — C1 tijdmeting:** historische resultaatvraag20,852s waarvan16,531s modeltijd; overige4,321s niet uitsluitend geheugen. Actuele losse taakcontext0,106s. Onafhankelijke review akkoord; geen nieuwe modelcalls of runtimewijziging. Geen snelheidsclaim of contextherbouw. [Bewijs](evidence/product/contact-context-timing-20260928.json).
 
-**Eerstvolgende — I2, nog niet gestart:** ontbrekende optionele beeldinvoer verbinden met bestaande camera-, waarnemings- en initiatiefroute. Eva1-cameraophaling en bestaande agenda hergebruiken. Lokale kandidaat blijft onbewezen op echte scènes; camerakeuze voor vuilnisbakken staat open. Geen vervanging van bestaande functies.
+**I2 beeldinvoer voorbereid — nog niet aangesloten:** bestaande HA-camera_proxy-route hergebruikt voor binaire snapshotadapter.12 transporttests en onafhankelijke review akkoord; geen camera-/modelcalls. Ophaaltijd is geen opnametijd; geen visionfunctie geïnstalleerd. [Bewijs](evidence/product/camera-binary-input-20260928.json).
+
+**Eerstvolgende — I2, nog niet gestart:** lokale analyser koppelen aan bestaande waarnemingsroute, met totale taakdeadline en behoud van bron. Camerakeuze voor vuilnisbakken en echte-scènevergelijking blijven open; model nog niet als productbasis geselecteerd.
 
 **Nu — M3 stijlcorrectie geïnstalleerd:** een bestaande communicatievoorkeur kon niet worden ververst doordat de providerrespons het vereiste veld wegliet. Gerichte correctie, drie tests en onafhankelijke review akkoord; kern/werker gezond, exacte bron en eigenaarpagina’s gecontroleerd, terugweg vastgelegd. De echte gedragsproef is gedeeltelijk geslaagd: korter en zonder lijst, maar 47 woorden bij maximaal 40. M3 blijft open. Twee contactcalls: 3.884 invoer-/183 uitvoertokens; extractie-/reflectieverbruik onbekend. [Bewijs](evidence/product/style-reflection-refresh-20260928.json).
 
