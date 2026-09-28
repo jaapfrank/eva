@@ -34,6 +34,7 @@ from eva.application.conversation import ConversationExternalToolPort, Conversat
 from eva.providers.home_assistant_advanced_store import PostgresAdvancedTaskStore
 from eva.providers.contracts import ProviderContribution
 from eva.adapters.connectors.home_assistant_api import HomeAssistantApiTool
+from eva.adapters.connectors.local_vision import LocalVisionHttpAnalyzer
 from eva.contracts.canonical_json import canonical_sha256
 
 
@@ -63,6 +64,9 @@ class HomeAssistantProviderSettings:
     effect_principal_sha256_allowlist: tuple[str, ...]
     event_domains: tuple[str, ...]
     api_enabled: bool = False
+    vision_endpoint: str = ""
+    vision_model: str = ""
+    vision_revision: str = ""
 
 
 def home_assistant_read_configuration_sha256(endpoint_url: str) -> str:
@@ -128,6 +132,12 @@ class HomeAssistantProviderFactory:
         )
         if not event_domains:
             raise RuntimeError("Eva external tool event domain set is empty")
+        vision_values = tuple(_value(name) for name in (
+            "EVA_LOCAL_VISION_URL", "EVA_LOCAL_VISION_MODEL", "EVA_LOCAL_VISION_REVISION"))
+        if any(vision_values):
+            if not all(vision_values) or not endpoint or not _boolean("EVA_HOME_ASSISTANT_API_ENABLED"):
+                raise RuntimeError("Local vision requires complete model settings and the HA API")
+            LocalVisionHttpAnalyzer(endpoint=vision_values[0], model=vision_values[1], revision=vision_values[2])
         if not endpoint:
             if effects_enabled or effect_allowlist or principals:
                 raise RuntimeError("Eva external tool provider configuration is incomplete")
@@ -140,6 +150,9 @@ class HomeAssistantProviderFactory:
             effect_principal_sha256_allowlist=principals,
             event_domains=event_domains,
             api_enabled=_boolean("EVA_HOME_ASSISTANT_API_ENABLED"),
+            vision_endpoint=vision_values[0],
+            vision_model=vision_values[1],
+            vision_revision=vision_values[2],
         )
 
     @staticmethod
@@ -264,7 +277,15 @@ class HomeAssistantProviderFactory:
                 )
             )
         if settings.api_enabled:
-            api = HomeAssistantApiTool(base_url=settings.endpoint_url, token=settings.credential)
+            vision = (LocalVisionHttpAnalyzer(endpoint=settings.vision_endpoint,
+                      model=settings.vision_model, revision=settings.vision_revision)
+                      if settings.vision_endpoint else None)
+            api = HomeAssistantApiTool(base_url=settings.endpoint_url, token=settings.credential, vision=vision)
+            api_configuration = home_assistant_read_configuration_sha256(settings.endpoint_url)
+            if vision is not None:
+                api_configuration = canonical_sha256({"home_assistant": api_configuration,
+                    "vision_endpoint": settings.vision_endpoint, "vision_model": settings.vision_model,
+                    "vision_revision": settings.vision_revision})
 
             def authorize_api(turn):
                 if (turn.audience.kind not in {"private_person", "household"}
@@ -274,7 +295,7 @@ class HomeAssistantProviderFactory:
 
             external_tools.append(PostgresExternalConversationTools(
                 engine, api, api, authorize_turn=authorize_api,
-                configuration_sha256=home_assistant_read_configuration_sha256(settings.endpoint_url),
+                configuration_sha256=api_configuration,
             ))
         available_actions = {
             name for external_tool in external_tools for name in external_tool.action_names

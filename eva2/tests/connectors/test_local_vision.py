@@ -12,7 +12,7 @@ from eva.adapters.connectors.local_vision import LocalVisionAnalyzer
 
 
 def snapshot():
-    return CameraSnapshot("camera.front", "image/png", b"image fixture", datetime.now(UTC))
+    return CameraSnapshot("camera.front", "image/png", b"\x89PNG\r\n\x1a\nimage fixture", datetime.now(UTC))
 
 
 def backend(tmp_path, text):

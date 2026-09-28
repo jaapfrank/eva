@@ -19,6 +19,16 @@ class CameraSnapshot:
     data: bytes = field(repr=False)
     retrieved_at: datetime
 
+    def __post_init__(self) -> None:
+        data = self.data
+        valid = (
+            (self.content_type == "image/jpeg" and data.startswith(b"\xff\xd8\xff"))
+            or (self.content_type == "image/png" and data.startswith(b"\x89PNG\r\n\x1a\n"))
+            or (self.content_type == "image/webp" and data.startswith(b"RIFF") and data[8:12] == b"WEBP")
+        )
+        if not valid or len(data) > 2_097_152:
+            raise RuntimeError("camera response does not match its image media type or size limit")
+
     @property
     def sha256(self) -> str:
         return hashlib.sha256(self.data).hexdigest()
@@ -59,13 +69,6 @@ class HomeAssistantCameraSource:
                         raise RuntimeError("camera snapshot exceeds the transport limit")
                     chunks.append(chunk)
                 data = b"".join(chunks)
-        signatures_match = (
-            (content_type == "image/jpeg" and data.startswith(b"\xff\xd8\xff"))
-            or (content_type == "image/png" and data.startswith(b"\x89PNG\r\n\x1a\n"))
-            or (content_type == "image/webp" and data.startswith(b"RIFF") and data[8:12] == b"WEBP")
-        )
-        if not signatures_match:
-            raise RuntimeError("camera response does not match its image media type")
         # Signature checking is not image decoding; the selected vision backend
         # must reject corrupt or unsupported image content before inference.
         return CameraSnapshot(entity_id, content_type, data, datetime.now(UTC))

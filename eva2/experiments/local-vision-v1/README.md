@@ -21,6 +21,23 @@ remains unknown. The configured process timeout covers communication/inference,
 not OS process creation or arbitrary subprocess descendants. The trusted backend
 output is captured before size validation; this is not an arbitrary-code sandbox.
 
+## Optional on-demand Home Assistant wiring
+
+The existing HA API tool can interpret a GET of `/api/camera_proxy/camera.<id>`
+when all three host settings are configured: `EVA_LOCAL_VISION_URL`,
+`EVA_LOCAL_VISION_MODEL`, and `EVA_LOCAL_VISION_REVISION`. HA API access and its
+existing authorized audience are still required. With no settings, an image
+response explicitly reports `local_vision_not_configured` instead of decoding
+image bytes into text. No polling or autonomous initiative is enabled by this.
+
+The URL must use HTTP with localhost or a literal private/loopback IP reachable
+from the Eva container. Arbitrary DNS names, redirects, ambient HTTP proxies and
+public endpoints are not admitted. The server must return the configured model
+alias, a completed response, and no oversized output. Revision is host deployment
+provenance, not remote weight attestation. HA credentials are never sent to vision.
+The selected backend must decode images, enforce its own execution/output limits,
+and use an image resolution appropriate for the measured task before activation.
+
 ## Backend follow-up
 
 `EVA_VISION_DEVICE` explicitly selects cpu/webgpu/cuda; `EVA_VISION_CACHE` may reuse an existing model cache. Backend name alone does not establish physical GPU execution. WSL enumerated llvmpipe only, and that trial was stopped. One native Windows WebGPU run returned the same correct27-token answer in13.017s generation plus6.908s loading. WSL CPU baseline25.082s generation is a single-run cross-platform comparison, not a causal or distributional benchmark. Native Windows adapter identity and actual camera quality remain unproved. See evidence/product/local-vision-backends-20260928.json.

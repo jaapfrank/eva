@@ -8,6 +8,8 @@ from __future__ import annotations
 import asyncio
 import json
 import hashlib
+import re
+from datetime import UTC, datetime
 from urllib.parse import unquote, urlsplit
 
 import httpx2 as httpx
@@ -18,6 +20,7 @@ from eva.application.conversation import (
 )
 from eva.application.orchestration import ToolDispatchResult, ToolProofObservation
 from eva.contracts.canonical_json import canonical_sha256
+from eva.adapters.connectors.home_assistant_camera import CameraSnapshot
 
 _ACTION = "home_assistant_request"
 _MAX_BYTES = 2_097_152
@@ -26,10 +29,11 @@ _MAX_BYTES = 2_097_152
 class HomeAssistantApiTool:
     action_names = (_ACTION,)
 
-    def __init__(self, *, base_url, token):
+    def __init__(self, *, base_url, token, vision=None):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self.admin = HomeAssistantAdminAdapter(base_url=base_url, token=token)
+        self.vision = vision
 
     @staticmethod
     def conversation_tools():
@@ -56,6 +60,10 @@ class HomeAssistantApiTool:
                 "met een aparte leesaanvraag. Lang werk kan via start_digital_work doorgaan. "
                 "response_pointer is een JSON Pointer om in een groot antwoord te kijken; "
                 "offset/limit pagineren arrays of objectvelden. Leeg pointer toont de root."
+                " GET /api/camera_proxy/<camera.entity> kan bij geïnstalleerde lokale "
+                "beeldanalyse een beschrijving geven. Ontdek de camera in de inventaris; "
+                "een beeldinterpretatie is geen geverifieerd feit. Zonder beeldmodule "
+                "meldt de API dat beeldanalyse niet beschikbaar is."
             ),
             input_schema={"type": "object", "additionalProperties": False,
                 "properties": {
@@ -113,10 +121,12 @@ class HomeAssistantApiTool:
         if call.name != _ACTION:
             raise ConversationConflict("Home Assistant API tool is unavailable")
         args, _ = self._arguments(call.arguments)
+        camera_get = (args["transport"] == "rest" and args["method"] == "GET"
+                      and re.fullmatch(r"/api/camera_proxy/camera\.[a-z0-9_]+", urlsplit(args["path"]).path))
         return ConversationToolPreparation(
             tool_name="home_assistant.api.request", arguments=args, expected_proof={},
             receipt_output={"operation_kind": "invoke", "external_state_verified": False},
-            observation_output_key="result", execution_timeout_seconds=25,
+            observation_output_key="result", execution_timeout_seconds=45 if self.vision and camera_get else 25,
             verification_timeout_seconds=1,
         )
 
@@ -134,11 +144,24 @@ class HomeAssistantApiTool:
                             raise RuntimeError("Home Assistant response exceeds the transport limit")
                         chunks.append(chunk)
                     raw = b"".join(chunks)
-                    try:
-                        value = json.loads(raw) if raw else None
-                    except ValueError:
-                        value = raw.decode("utf-8", errors="replace")
                     status = {"http_status": response.status_code, "success": 200 <= response.status_code < 300}
+                    media_type = getattr(response, "headers", {}).get("content-type", "").split(";", 1)[0].strip().lower()
+                    if media_type.startswith("image/"):
+                        match = re.fullmatch(r"/api/camera_proxy/(camera\.[a-z0-9_]+)", urlsplit(a["path"]).path)
+                        if not status["success"] or a["method"] != "GET" or not match or media_type not in {"image/jpeg", "image/png", "image/webp"}:
+                            value = {"error": "unsupported_image_response"}
+                            status["success"] = False
+                        elif self.vision is None:
+                            value = {"error": "local_vision_not_configured", "image_sha256": hashlib.sha256(raw).hexdigest()}
+                            status["success"] = False
+                        else:
+                            snapshot = CameraSnapshot(match[1], media_type, raw, datetime.now(UTC))
+                            value = self.vision.analyze(snapshot).payload
+                    else:
+                        try:
+                            value = json.loads(raw) if raw else None
+                        except ValueError:
+                            value = raw.decode("utf-8", errors="replace")
         else:
             with self.admin._session() as socket:
                 socket.send(json.dumps({**body, "id": 1}))
