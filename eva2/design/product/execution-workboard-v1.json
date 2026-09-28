@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Zelf verbeterde werkwijze op andere invoer hergebruikt",
+            "date": "28 september",
+            "state": "tested",
+            "result": "Na feedback zelf v2 gemaakt en uitgevoerd. Daarna gewone nieuwe vraag: zelf gekozen, ongewijzigd uitgevoerd, resultaat correct opgeslagen. Geïnstalleerde leerroutes gebruikt.",
+            "remaining": "Oorspronkelijk leren vereiste hulp en reparaties. Geen volledige onbegeleide leer-/autonomieclaim of eigenaaracceptatie.",
+            "source": "eva2/evidence/product/webvtt-corrected-learning-reuse-20260928.json"
+          },
+          {
             "title": "Documentatie onderzoeken en zelf een uitvoerbare werkwijze maken",
             "date": "28 september",
             "state": "installed",
@@ -2756,14 +2764,14 @@
         ],
         "now": {
           "title": "Leren en zelfstandig hergebruiken afronden",
-          "state": "Leerregistratie hersteld en geïnstalleerd",
-          "detail": "c7c4a5ed: werkelijk opgeslagen algemene connectorbestanden worden nu correct als werkwijze herkend. 54 gerichte controles en onafhankelijke review akkoord; kern/werker gezond en exacte bron teruggelezen. Eva’s eigen v2 blijft bewaard, nog niet werkelijk uitgevoerd. Geen modeltaak actief.",
+          "state": "Verbeteren en zelfstandig hergebruiken gelukt",
+          "detail": "Eva verbeterde na feedback zelf de werkwijze, voerde die werkelijk uit en koos haar daarna zelf voor andere invoer. Code bleef ongewijzigd; opgeslagen uitvoer exact gelijk aan vooraf vastgelegde verwachting. Geen modeltaak actief. Onafhankelijke eindcontrole akkoord; onbegeleid nieuw leren en eigenaaracceptatie blijven open.",
           "doneWhen": "Eva leert uit documentatie, bewaart een uitvoerbare werkwijze en past die op andere invoer toe zonder nieuwe kerncode of ontwikkelhints; resultaat onafhankelijk gecontroleerd."
         },
         "next": {
-          "title": "Opgeslagen verbetering uitvoeren en hergebruiken",
+          "title": "Resterende L1-eis: nieuwe werkwijze zonder ontwikkelhulp",
           "state": "Nog niet gestart",
-          "detail": "Bestaande voortgang hervatten nu concrete registratieoorzaak hersteld is. Geen nieuwe converter of herhaald onderzoek. Daadwerkelijke uitvoering en later ongewijzigd hergebruik nog nodig."
+          "detail": "Gebruik herstelde bestaande leerroutes. Geen nieuwe leer-engine, geen herhaling van dezelfde WebVTT-proef. Behoud eerdere geslaagde kalender- en WebVTT-hergebruikresultaten."
         },
         "ownerAction": {
           "title": "Camera voor vuilnisbakken kiezen",
@@ -2776,7 +2784,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T20:19:31.619029+00:00"
+        "reviewedAt": "2026-09-28T20:27:39.784252+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13264,7 +13272,7 @@
           },
           "owner": "/root",
           "activeWorker": null,
-          "baseCommit": "499e4830",
+          "baseCommit": "a9d00858",
           "endCondition": "One new input is correctly processed by the existing saved procedure, selected without procedure ID or code hints; verify source/input/output hashes and original destination.",
           "effortNotice": "One bounded real reuse request and independent result review; no source changes planned, credit costs unknown.",
           "dependencyEvidence": "Existing procedure execution and completed calendar task support this independent reuse proof; browser T3 acceptance is not required for this case.",
@@ -13275,9 +13283,9 @@
             "automaticRetry": false,
             "evidence": "eva2/evidence/product/calendar-unassisted-reuse-20260928.json"
           },
-          "remaining": "Unassisted new learning remains unproven: first request failed at conversation model deadline before work admission. Reuse not attempted; previous calendar reuse retained.",
+          "remaining": "Corrected learning and unchanged new-input reuse succeeded. Previously unseen learning without developer intervention and owner acceptance remain unproven.",
           "assignment": {
-            "stage": "initial_conversation_deadline_before_admission",
+            "stage": "corrected_learning_and_unchanged_reuse_verified",
             "baseCommit": "38cb8dcc",
             "owner": "/root",
             "scope": "Existing installed procedure tools and isolated WebVTT fixtures; no product code by assumption",
@@ -13285,7 +13293,7 @@
             "endCondition": "One bounded initial learning request and one reuse request yield independently checked stored outputs; failed outcome remains visible, no automatic retries.",
             "effort": "Prepare authoritative fixture/expected result first; at most two task admissions, existing runtime limits; credits unknown."
           },
-          "newLearningEvidence": "eva2/evidence/product/webvtt-learning-attempt-20260928.json"
+          "newLearningEvidence": "eva2/evidence/product/webvtt-corrected-learning-reuse-20260928.json"
         },
         {
           "id": "L2",

@@ -2,13 +2,13 @@
 
 ## Actuele opdracht — leren en hergebruiken (L1)
 
-**Geïnstalleerd:** c7c4a5ed herstelt de aansluiting tussen algemene bestandsopslag en leerregistratie. Exacte foutfingerprint matchte de lookup die alleen platte argumenten zocht; Eva gebruikte de algemene connector met geneste argumenten. Bestaande bronbindingen behouden. 51 applicatie/provider- en 3 PostgreSQL-controles, onafhankelijke review GO, gezonde kern/werker en exacte bron gecontroleerd. Geen nieuwe Eva-modelcalls. [Bewijs](evidence/product/procedure-connector-save-installed-20260928.json).
+**Werkelijk opgeleverd:** Eva verbeterde zelf de opgeslagen WebVTT-werkwijze na feedback. Na herstel van de algemene opslag/registratie-aansluiting voerde zij de verbeterde code echt uit. Een nieuwe gewone vraag liet Eva zelf v2 kiezen en ongewijzigd uitvoeren op andere invoer; het resultaat is opgeslagen en exact vergeleken met vooraf vastgelegde verwachtingen. [Resultaat](evidence/product/webvtt-reuse-output-20260928.md) · [Bewijs](evidence/product/webvtt-corrected-learning-reuse-20260928.json). Geen modeltaak actief. Onafhankelijke eindcontrole akkoord.
 
-**Bewaard resultaat:** Eva heeft zelf v2 gemaakt, v1 is exact behouden. Beide bestanden onafhankelijk gelezen. Eerste uitvoering geslaagd; oorspronkelijk ongewijzigd hergebruik blijft mislukt.
+**Nog open:** de oorspronkelijke nieuwe leertaak slaagde niet zonder ontwikkelhulp; feedback en bronreparaties waren nodig. L1 blijft daarom open voor werkelijk nieuw leren zonder die hulp en eigenaaracceptatie. Kalenderhergebruik en het nieuwe WebVTT-hergebruik blijven bewaard; geen herhaling van dezelfde proef of nieuwe leer-engine.
 
-**Volgende:** bewaarde voortgang hervatten na deze concrete oorzaakcorrectie; echte uitvoering en afzonderlijk ongewijzigd hergebruik controleren. Nog geen modeltaak actief. L1 en eigenaaracceptatie blijven open. Geen converter door ontwikkelaar of nieuw onderzoek nodig.
+**Verbruik deze ronde:** hervatting 189.924in/3.784uit; hergebruik 49.650in/1.397uit, beide gemeten deelverbruik. Hergebruik inclusief foreground: 58.399in/1.760uit, zes modelantwoorden. Creditkosten onbekend. Eén hervatting na concrete oorzaakcorrectie en één nieuwe hergebruikvraag.
 
-**Vorige verbeteropdracht:** 218.868 invoer- en 6.196 uitvoertokens gemeten deelverbruik, 13 modelantwoorden en 10 toolcalls; creditkosten onbekend. [Bewijs](evidence/product/learning-feedback-20260928.json).
+**Geïnstalleerde bron:** c7c4a5ed, 54 gerichte controles en onafhankelijke review GO; gezonde kern/werker, exacte bron en terugweg gecontroleerd. [Installatie](evidence/product/procedure-connector-save-installed-20260928.json).
 
 ## Initiatief — voortgang en open afhankelijkheden
 

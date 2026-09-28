@@ -1,0 +1,64 @@
+{
+  "checkedAt": "2026-09-28T20:27:00.788185+00:00",
+  "status": "corrected_learning_and_unchanged_reuse_verified",
+  "sourceCommit": "c7c4a5ed",
+  "improvementWorkId": "work:eva-resume:d6bbfaf4-8921-57c3-961c-d958d95b8b2e",
+  "reuseWorkId": "work:eva-chat:df615afc-c8f9-566d-8ca7-89015f66e083",
+  "originalCriteria": "eva2/evidence/product/webvtt-learning-criteria-20260928.json",
+  "originalUnaidedOutcome": "failed; feedback and source integration repairs were necessary",
+  "reuse": {
+    "ordinaryPrompt": "Verwerk deze andere ondertitelopname met je laatst verbeterde opgeslagen WebVTT-werkwijze. Gebruik die bestaande werkwijze ongewijzigd; maak geen nieuwe code en start geen nieuw onderzoek. Bewaar de daadwerkelijke uitvoer met per ondertitel begin- en eindtijd, duur in milliseconden en gewone tekst met behouden regels. Bewaar ook het transcript zonder sprekerlabels. Controleer het resultaat en geef de vindplaats. Invoer: [{\"name\": \"andere-opname.vtt\", \"content\": \"WEBVTT\\n\\nNOTE Tweede bestand\\nOok deze notitie overslaan.\\n\\nnieuwe-cue\\n00:58.500 --> 01:00.000\\nDe deur &lt;blijft&gt; dicht.\\n\\n01:00:00.000 --> 01:00:01.001\\n<v Eva>Café klaar.\\nTot zo.\\n\"}]",
+    "procedureIdOrCodeSuppliedByCoordinator": false,
+    "codeUnchanged": true,
+    "codeSha256": "e809df5057f132283b164ba752abecf696ceb30287f0795b989f609c8a56e0ff",
+    "inputSha256": "827528a82f6d93eda2c0c5a85fd7ee4917dd33804d8069017c91cd8d285150a5",
+    "actualExecutionMilliseconds": 1037,
+    "exitCode": 0,
+    "savedJsonEqualsActualStdout": true,
+    "actualOutputEqualsSealedExpected": true,
+    "resultPath": "/proof-state/andere-opname-webvtt-resultaat.md",
+    "resultSha256": "314cf5c875f041e6738071c18558ed0fe8e799b0202a99967a1c6e0b567a7893"
+  },
+  "usage": {
+    "improvementResume": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 5,
+      "tool_calls": 9,
+      "input_tokens": 189924,
+      "output_tokens": 3784,
+      "total_tokens": 193708,
+      "cost_usd_micros": null
+    },
+    "reuse": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 5,
+      "tool_calls": 5,
+      "input_tokens": 49650,
+      "output_tokens": 1397,
+      "total_tokens": 51047,
+      "cost_usd_micros": null
+    },
+    "creditCost": "unknown",
+    "foregroundNotIncluded": false,
+    "reuseIncludingForeground": {
+      "modelResponses": 6,
+      "inputTokens": 58399,
+      "outputTokens": 1760
+    },
+    "improvementForegroundNotIncluded": true
+  },
+  "independentReview": {
+    "improvement": "GO /root/platform_research_20260927",
+    "reuse": "GO /root/platform_research_20260927: original held-out input and receipt hash match; unchanged source, actual stdout and stored output equal sealed expected."
+  },
+  "limits": [
+    "Not full WebVTT conformance.",
+    "Previously unseen learning without developer intervention remains unproven.",
+    "No owner acceptance or competitive superiority established."
+  ],
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/webvtt-reuse-20260928"
+}
