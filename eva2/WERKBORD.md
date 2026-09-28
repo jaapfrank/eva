@@ -2,17 +2,17 @@
 
 ## Actief — uitsluitend L2: één project volledig afmaken
 
-**Actueel:** concept-v1 en project-v1 zijn opgeslagen en onafhankelijk teruggelezen. Werk0297065e eindigde onvoltooid omdat het ook de planning wilde afronden; die hoort bij het gesprek. Concreet schemafout vastgesteld: strict modelprotocol verplicht acceptance_message, terwijl instructie vroeg het weg te laten. Nullable waarde sluit bestaande vervolgroute aan zonder nieuwe planner.73 gerichte controles geslaagd; review loopt. Geen herschrijving van opgeslagen projectbestanden.
+**Laatste bruikbare resultaat:** Eva heeft Gezinsweek L2 opgeslagen, na een herstart teruggelezen en een correctie apart bewaard: maximaal30min en een mondeling woordspel in plaats van tekenen. De oorspronkelijke concept- en projectbestanden zijn byte voor byte behouden. Onafhankelijke controle akkoord.
 
-**Hervat op expliciete eigenaaropdracht:** geteste extra catalogus installeren en dezelfde projectuitkomst vervolgen. Basis435d2b13; alleen bestaande provider/catalogaansluiting. Geen nieuwe dienstregistratie, zijtaak of brede testcyclus. Bestaand review/testbewijs hergebruiken; maximaal één gerichte projectpoging na gewijzigde oorzaak. Werkraming30–45min voor installatie en eerste projectfase; uitvoering op afgesproken later tijdstip blijft afzonderlijk bewijs.
+**Werkelijke planning:** precies één vervolgafspraak voor29 september2026 om09:00 Europe/Amsterdam (07:00UTC), afhankelijk van de geslaagde correctietaak453ee52a. Afhankelijkheid is gereed. Dan moet Eva de opgeslagen bestanden opnieuw lezen, de eindversie met benodigdhedenlijst bewaren en controleren. Geen nieuwe modelopdracht vóór dit moment; geen andere bouwtaak gestart.
 
-**Uitvoering gecorrigeerd na eigenaarmelding over versnippering:** geen andere bouwopdracht starten. Eerst concept/projectstaat, één echte afhankelijke vervolgafspraak, correctie/hervatting en bewaard eindresultaat afronden. Technische afronding en eigenaaracceptatie blijven apart. Bij blokkade geen zijtaak als vervanging van deze uitkomst.
+**Nog open — L2 blijft open:** daadwerkelijke latere uitvoering, einddocument, geen dubbele effecten en eigenaaracceptatie. Eerdere pogingen vereisten ontwikkelaarhulp; dit is geen onbegeleide eerste-pogingclaim of nieuw afgerond groot productonderdeel. [Actueel bewijs](evidence/product/l2-corrected-project-scheduled-20260929.json).
 
-**Laatste zijstap afgesloten:** HA-/Telegram API-status geïnstalleerd; kern/werker gezond en echte status gelezen. Geen compleet T4- of projectresultaat. [Bewijs](evidence/product/channel-connectivity-installed-20260928.json). Geen modeltaak actief.
+**Geïnstalleerde gerichte wijzigingen:** extra mapfunctie via bestaande gateway; eenmalig herstel van ongeldige projectinvoer; null-ontvangst voor digitale vervolgplanning in het strikte modelschema. Laatste broncde5f24d,73 gerichte controles en onafhankelijke review akkoord; gezonde kern/werker en exacte bron gecontroleerd. Bestaande planner, gegevens en andere routes behouden. [Installatie](evidence/product/project-null-acceptance-installed-20260929.json).
 
-**Geïnstalleerd — projectbestanden:** extra mapfunctie via bestaande gateway beschikbaar op gezonde kern/werker; exacte bron en eigenaarpagina gecontroleerd. Eerste installatie wees een mount in een alleen-lezen map af; automatische terugweg werkte, afzonderlijk mountpunt vooraf gecontroleerd en tweede installatie geslaagd. Bestaande contracten en gegevens behouden. Eén echte gewijzigde projectpoging volgt; L2 blijft open.
+**Verbruik/beperkingen:** succesvolle correctiewerker8 modelantwoorden/7 toolcalls,86.827in/1.222uit (gedeeltelijke meting, foreground apart). Vorige opgeslagen maar onvoltooide projectfase90.494in/1.717uit; eerdere afwijzingen blijven in bewijs. Creditkosten onbekend. Circa30min actieve uitvoering deze beurt; de latere geplande uitvoering is nog geen geleverd resultaat.
 
-**Planning beschikbaar:** bron5145a139 is al geïnstalleerd. De gewone projectopdracht moet nu werkelijk een concept, projectstaat en één afhankelijke vervolgafspraak opleveren. Geen duplicaatregistratie of nieuwe aansluiting nodig.
+**Zelf bekijken:** open http://localhost:44711/internal/v1/dashboard en lees de afgeronde taak over het bestaande documentproject Gezinsweek L2. Je hoeft de proef niet te herhalen. Verwacht de bevestiging van het afzonderlijke correctiebestand; de eindversie volgt pas uit de geplande stap.
 
 ## Afgerond — L1: werkwijze leren en hergebruiken
 
@@ -20,7 +20,7 @@
 
 **Beperkingen blijven zichtbaar:** eerste leeropdracht liep bij het laatste verslag tegen de tijdslimiet, nadat juiste uitvoer was opgeslagen. Dat afrondingsprobleem blijft onder T1 open. Dit is één complete begrensde leer-/hergebruikfunctie, geen algemene vaardigheids-, conformiteits- of concurrentieclaim. Eigenaaracceptatie staat open; grote categorie zelfstandig werk blijft open voor L2/L3.
 
-**Volgende, nog niet gestart:** L2 meerdaags project hervatten. Bestaande duurzame taken/projectdocumenten en geslaagde tweefasenproef behouden; concrete ontbrekende zelfstandige voortzetting vaststellen, geen nieuwe planner of herhaalde leerproef. Geen Eva-modeltaak actief.
+**Vervolg inmiddels actief:** L2 meerdaags project hervatten; zie actuele stand bovenaan. Bestaande duurzame taken/projectdocumenten en geslaagde tweefasenproef behouden; concrete ontbrekende zelfstandige voortzetting vaststellen, geen nieuwe planner of herhaalde leerproef. Geen Eva-modeltaak actief.
 
 **Zelf bekijken:** open de lokale eigenaarpagina /internal/v1/dashboard, zoek de taak over configuratiewijzigingen en open het resultaat. Verwacht queue [b,d,a], backup [1,2] en bronarray [1,2,3]; dezelfde uitkomst staat in het gelinkte resultaatbestand. Geen nieuwe proef nodig om deze technische uitkomst te bewijzen.
 

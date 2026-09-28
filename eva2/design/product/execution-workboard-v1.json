@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Bewaard project na herstart gecorrigeerd en vervolg ingepland",
+            "date": "29 september",
+            "state": "tested",
+            "result": "Concept en projectstaat bewaard; correctie apart opgeslagen. Beide originelen bytegelijk. Eén echte vervolgafspraak voor09:00, afhankelijkheid gereed. Onafhankelijk gecontroleerd.",
+            "remaining": "L2 nog open: geplande einduitvoering, einddocument en geen dubbele acties nog controleren. Ontwikkelaarhulp bij eerdere mislukkingen zichtbaar; geen volledige autonomieclaim.",
+            "source": "eva2/evidence/product/l2-corrected-project-scheduled-20260929.json"
+          },
+          {
             "title": "Vervolgplanning beschikbaar na het aannemen van achtergrondwerk",
             "date": "28 september",
             "state": "installed",
@@ -2780,27 +2788,27 @@
         ],
         "now": {
           "title": "L2: één project volledig afmaken",
-          "state": "Concept bewaard; ontbrekende vervolgplanning corrigeren",
-          "detail": "Concept-v1 en project-v1 bestaan en zijn onafhankelijk teruggelezen. Taak eindigde onvoltooid door planning die bij gesprek hoort. Oorzaak: strikt modelschema verplicht ontvangstveld dat instructie vroeg weg te laten. Gerichte nullable-correctie,73 controles geslaagd; review loopt. Geen bestanden opnieuw maken.",
+          "state": "Projectfase afgerond; vervolg gepland voor09:00",
+          "detail": "Concept en projectstaat bewaard, na herstart teruggelezen en correctie apart opgeslagen. Originelen ongewijzigd; onafhankelijke controle akkoord. Eén echte afhankelijke vervolgafspraak klaar voor29 september09:00. Geen actieve bouwtaak of andere opdracht gestart.",
           "doneWhen": "Concept en projectstaat opgeslagen, één echte afhankelijke vervolgafspraak, correctie en hervatting gebruiken bewaarde inhoud, eindresultaat geleverd zonder dubbele acties."
         },
         "next": {
           "title": "Dezelfde L2-opdracht afmaken",
-          "state": "Na eerste projectfase",
-          "detail": "Bewaarde inhoud en echte planning controleren; correctie en hervatting binnen hetzelfde project."
+          "state": "29 september09:00 lokaal, na geslaagde correctie",
+          "detail": "Eva leest bewaarde originelen en correctie opnieuw en bewaart de eindversie met benodigdhedenlijst. Eindresultaat en geen dubbele uitvoering nog controleren."
         },
         "ownerAction": {
-          "title": "Camera voor vuilnisbakken kiezen",
-          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
-          "linkLabel": "Open gesprek met Eva",
+          "title": "Je hoeft deze proef niet opnieuw te doen",
+          "url": "http://localhost:44711/internal/v1/dashboard",
+          "linkLabel": "Bekijk Eva’s taken",
           "steps": [
-            "Geef in deze taak aan welke camera de vuilnisbakken ziet: garage, tuin of deurbel.",
-            "Optioneel: vraag Eva wat zij op een van de camera’s ziet."
+            "Open de afgeronde taak over het bestaande documentproject Gezinsweek L2.",
+            "Lees het resultaat: correctie opgeslagen, originelen behouden."
           ],
-          "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
+          "expected": "De eindversie wordt pas bij de geplande vervolgstap om09:00 gemaakt; die uitvoering is nog niet gecontroleerd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T22:56:31.649473+00:00"
+        "reviewedAt": "2026-09-28T23:03:30.245850+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12620,7 +12628,7 @@
           ]
         }
       ],
-      "nextAction": "L2: geteste aanvullende catalogus installeren op bestaande gateway; echte projectopslag en afhankelijke vervolgplanning controleren.",
+      "nextAction": "Controleer de ene geplande vervolgstap op29 september07:00UTC: eindversie met correctie, originelen behouden, geen dubbele effecten. Geen nieuwe modelopdracht vóór dit moment.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13355,14 +13363,14 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "nextAction": "Gebruik bestaande gateway; geen dubbele dienstregistratie. Daarna echte projectvoortzetting en opgeslagen vervolgafspraak controleren. Geen volledige L2-claim.",
+          "nextAction": "Controleer de ene geplande vervolgstap op29 september07:00UTC: eindversie met correctie, originelen behouden, geen dubbele effecten. Geen nieuwe modelopdracht vóór dit moment.",
           "owner": "/root",
           "activeWorker": null,
-          "baseCommit": "b282c7ef",
-          "effortNotice": "15–25min; maximaal één hervatting na installatie; credits onbekend.",
-          "latestEvidence": "eva2/evidence/product/additional-catalog-candidate-20260928.json",
+          "baseCommit": "cde5f24d",
+          "effortNotice": "Deze beurt circa30min actieve uitvoering; echte vervolgafspraak09:00 lokaal. Gemeten runtimegebruik in bewijs; creditkosten onbekend.",
+          "latestEvidence": "eva2/evidence/product/l2-corrected-project-scheduled-20260929.json",
           "assignment": {
-            "stage": "additional_catalog_reviewed_not_installed",
+            "stage": "saved_corrected_and_scheduled_waiting_due_time",
             "outcome": "One ordinary project preserves goal, dependencies, artifacts and next action overnight; later correction and continuation use saved state without duplicate effects.",
             "scope": "Synthetic household document project, private website route; existing scheduler and artifact tools only",
             "evidence": "eva2/evidence/product/l2-overnight-project-criteria-20260928.json",

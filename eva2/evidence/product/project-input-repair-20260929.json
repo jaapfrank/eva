@@ -1,6 +1,6 @@
 {
   "checkedAt": "2026-09-28T22:48:08.168485+00:00",
-  "status": "reviewed_source_candidate",
+  "status": "installed",
   "failure": {
     "elapsedSeconds": 14,
     "stage": "digital action validation before admission",
@@ -20,5 +20,29 @@
     "decision": "GO",
     "limitation": "Fallback wording mentions research; actual project still unproven."
   },
-  "ownerAccepted": false
+  "ownerAccepted": false,
+  "installation": {
+    "checkedAt": "2026-09-28T22:52:04.320653+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:bf9624a3863f648065d856f2e81b904bf703395c061fd985aa8e2c99a8adfa20",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/delegated_work_actions.py": "a72fb84132a6841e372ec282dd87cd28704e5cbaa20402099c5f35ce3e5184c5"
+        }
+      },
+      "worker": {
+        "image": "sha256:e3512c76fc2680bfa8ac3c1681bbff9f5cf81938c528b0c3ff0b271b6b190f75",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/delegated_work_actions.py": "a72fb84132a6841e372ec282dd87cd28704e5cbaa20402099c5f35ce3e5184c5"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/l2-project-input-repair-20260929/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  }
 }

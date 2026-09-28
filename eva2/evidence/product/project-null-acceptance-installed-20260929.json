@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-09-28T22:59:53.465862+00:00",
+  "services": {
+    "core": {
+      "image": "sha256:0a91ddf2ac36b536b83b94c5dc69c8f7a9a734404b786f3c3292f79f4f42eaa3",
+      "health": "healthy",
+      "sourceHashes": {
+        "adapters/postgres/delegated_work_actions.py": "b92ca3b7bab60247169647f4c31cf8dc32188d8adf6a443063d17104b8014d51",
+        "application/conversation.py": "23be7239b5a811c659f2442ce6cee8a7673b6e81278ed2ad563661fa8b6772ee"
+      }
+    },
+    "worker": {
+      "image": "sha256:06c63a2548e6804ea06787a065503c36c318c0e56da8eae6c56d755aa5e1cb9b",
+      "health": "healthy",
+      "sourceHashes": {
+        "adapters/postgres/delegated_work_actions.py": "b92ca3b7bab60247169647f4c31cf8dc32188d8adf6a443063d17104b8014d51",
+        "application/conversation.py": "23be7239b5a811c659f2442ce6cee8a7673b6e81278ed2ad563661fa8b6772ee"
+      }
+    }
+  },
+  "http": {
+    "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+    "http://localhost:44712/project-state": 200
+  },
+  "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/l2-project-null-acceptance-20260929/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker",
+  "status": "installed",
+  "sourceCommit": "cde5f24d",
+  "tests": {
+    "passed": 73
+  },
+  "independentReview": {
+    "reviewer": "review_directory_connection",
+    "decision": "GO"
+  },
+  "cause": "Strict OpenAI schema requires every field; optional nonnullable acceptance conflicted with instruction to omit it. Digital admission now explicitly allows null to retain existing planning continuation.",
+  "preserved": "Saved original project files, other acceptance contracts and existing scheduler. No new planner.",
+  "ownerAccepted": false
+}

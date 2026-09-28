@@ -1,0 +1,29 @@
+{
+  "status": "saved_project_phase_incomplete",
+  "workId": "work:eva-chat:0297065e-5949-5ea2-834d-54308d992905",
+  "artifacts": {
+    "gezinsweek-l2-concept-v1.md": {
+      "sha256": "e963853a1c5e14debb21f7bc424ed9ebd79a14b7acb92db1ac86e49c25b3d83d",
+      "bytes": 459
+    },
+    "gezinsweek-l2-project-v1.md": {
+      "sha256": "3980cd6fc97d6f023ef90d709a7fa39d2b4d3011c9f6a089d8d14f3a65eaec12",
+      "bytes": 1347
+    }
+  },
+  "independentReadback": true,
+  "workState": "failed",
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 8,
+    "tool_calls": 7,
+    "input_tokens": 90494,
+    "output_tokens": 1717,
+    "total_tokens": 92211,
+    "cost_usd_micros": null
+  },
+  "remaining": "No schedule. Worker also considered scheduling required, although only foreground has the scheduler. Strict nonnullable acceptance forced early foreground return. Originals preserved for corrected continuation.",
+  "ownerAccepted": false
+}

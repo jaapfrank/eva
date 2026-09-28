@@ -1,0 +1,76 @@
+{
+  "checkedAt": "2026-09-28T23:02:02.612564+00:00",
+  "status": "saved_corrected_and_scheduled",
+  "workId": "work:eva-chat:453ee52a-4911-5201-b299-acd276dc0f19",
+  "state": "succeeded",
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 8,
+    "tool_calls": 7,
+    "input_tokens": 86827,
+    "output_tokens": 1222,
+    "total_tokens": 88049,
+    "cost_usd_micros": null
+  },
+  "artifacts": {
+    "gezinsweek-l2-concept-v1.md": {
+      "sha256": "e963853a1c5e14debb21f7bc424ed9ebd79a14b7acb92db1ac86e49c25b3d83d",
+      "bytes": 459
+    },
+    "gezinsweek-l2-project-v1.md": {
+      "sha256": "3980cd6fc97d6f023ef90d709a7fa39d2b4d3011c9f6a089d8d14f3a65eaec12",
+      "bytes": 1347
+    },
+    "gezinsweek-l2-correctie-v1.md": {
+      "sha256": "56983fcf30dfd7a2a8751f91848738b39fbfbea094a38b23b60209cce5a91315",
+      "bytes": 1125
+    }
+  },
+  "originalsUnchanged": true,
+  "readAfterCoreAndWorkerRestart": true,
+  "schedule": {
+    "schedule_id": "scheduled-work:33333333-3333-3333-8333-333333333333:96db0818b3b41b394d44dd9b4a407033daa7a0f1cce604f40e16f540377b9fae",
+    "state": "scheduled",
+    "dependency": {
+      "state": "ready",
+      "work_id": "work:eva-chat:453ee52a-4911-5201-b299-acd276dc0f19",
+      "title": "Vervolg uitsluitend het bestaande documentproject Gezinsweek L2. Lees nu de bestaande eigen projectbestanden /proof-stat",
+      "result_sha256": "e9656a7a851a60ce4b05e97f3b866bcadcd22034666463c80ef92adec8b0b4be",
+      "independently_verified": false
+    },
+    "block_reason": null,
+    "after_work_id": "work:eva-chat:453ee52a-4911-5201-b299-acd276dc0f19",
+    "after_schedule_id": null,
+    "run_at": "2026-09-29T07:00:00Z",
+    "task": "Uitsluitend de ene vervolgstap voor Gezinsweek L2, mits de afhankelijke huidige lees-/correctiefase werkelijk is geslaagd en het afzonderlijke correctiebestand aantoonbaar is opgeslagen. Lees /proof-state/gezinsweek-l2-concept-v1.md en /proof-state/gezinsweek-l2-project-v1.md en het in de voorganger opgeslagen correctiebestand opnieuw, inclusief eventuele wijzigingen. Maak en bewaar vervolgens een eindversie met korte benodigdhedenlijst en controleer het opgeslagen resultaat. Verwerk de correctie: de hele avond duurt maximaal 30 minuten; vervang samen tekenen door een mondeling woordspel. Laat de originele bestanden ongewijzigd; uitsluitend eigen projectbestanden, geen internet, echte agenda, huisacties of berichten aan anderen. Geen verdere taken plannen.",
+    "resume_work_id": null,
+    "work_id": null,
+    "can_cancel": true
+  },
+  "humanAssistance": "Developer continued existing project after prior admission/planning failures; no file content created manually. No first-attempt autonomy claim.",
+  "remaining": [
+    "Scheduled execution at 2026-09-29T07:00:00Z",
+    "Final output readback and original preservation",
+    "No duplicate dispatch/effect",
+    "Owner acceptance"
+  ],
+  "ownerAccepted": false,
+  "independentReview": {
+    "reviewer": "review_directory_connection",
+    "decision": "GO for saved/corrected/scheduled phase only",
+    "verified": [
+      "original hashes unchanged",
+      "new correction matches request",
+      "one new schedule, dependency ready, result hash matches",
+      "installed source healthy before continuation"
+    ],
+    "stillOpen": [
+      "Scheduled execution at 2026-09-29T07:00:00Z",
+      "Final output readback and original preservation",
+      "No duplicate dispatch/effect",
+      "Owner acceptance"
+    ]
+  }
+}
