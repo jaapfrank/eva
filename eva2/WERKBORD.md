@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — T1: complete opdrachten afronden.** Correctie geïntegreerd in bron ef59f784: bestaande instelling van 32 reacties / 31 toolacties, exacte oude taakgrenzen behouden. 153 gerichte gevallen geslaagd. Uitvoerder klaar; coördinator bereidt installatie voor, onafhankelijke reviewer controleert de combinatie met het bestaande bronlezen en inputbudget. Nog niet geïnstalleerd; daarna één echte complete opdracht. C1-snelheid blijft open.
+**Nu — T1: complete opdrachten afronden.** Correctie geïntegreerd in bron ef59f784: bestaande instelling van 32 reacties / 31 toolacties, exacte oude taakgrenzen behouden. 153 gerichte gevallen geslaagd. Uitvoerder en reviewer klaar; onafhankelijke review akkoord. Kandidaatstart voor kern en werker geslaagd met behouden taakconfiguratie. Geïnstalleerd op gezonde kern en werker, exacte bron en terugweg gecontroleerd. Nu één echte complete agenda-opdracht. C1-snelheid blijft open.
 
 **Leidend — het complete bouwplan uitvoeren.** Acht vaste productstappen en 24 begrensde opdrachten; geen zakelijke uitwerking of nieuwe algemene audit. Gegevens en acceptaties behouden. Technische afronding, installatie, vergelijkingsbewijs en jouw oordeel blijven apart. De recente [eigenaarbesluiten](PROJECTDOEL.md) gaan voor oudere bouwvolgordes.
 

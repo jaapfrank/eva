@@ -1,0 +1,82 @@
+{
+  "checkedAt": "2026-09-28T08:58:53.271094+00:00",
+  "status": "installed_real_task_pending",
+  "sourceCommit": "afa0643311dea8c9b88c98cbf5b85a48a990a987",
+  "implementationCommit": "ef59f784f09570db749addbe6ad8577c596d76d4",
+  "prerequisite": "2f6c1cbc",
+  "defect": "Digital execution clamped configured32 requests to8 responses/6 tools; complete known path needs at least8 tools and9 responses.",
+  "changes": [
+    "Use existing host request allowance bounded by existing digital schema32; reserve final response",
+    "Preserve exact historical grants and completed-effect resume",
+    "Match measured usage serialization/display to existing digital grant maxima",
+    "Install existing cumulative-input and batched saved-result reader prerequisite"
+  ],
+  "checks": {
+    "workerDistinctOfflineCases": 153,
+    "controlledCompletePath": "8 tools plus final ninth response",
+    "maximumUsageRoundtrip": "32 responses/31 tools;2097152 input/38400 output",
+    "historicalGrantVariants": 3,
+    "frontend": "Existing and configured-max usage accepted; overflow rejected; built JS differs only at two numeric bounds"
+  },
+  "review": {
+    "agent": "/root/platform_research_20260927",
+    "verdict": "GO within eight-file backend combination; no extra tests or model calls",
+    "limitations": "Actual installed overlay verified separately by coordinator; reviewer did not inspect frontend"
+  },
+  "realModelTrials": 0,
+  "credits": null,
+  "ownerAcceptance": "open",
+  "completeLearningFunction": "not proven",
+  "artifacts": "/home/administrator/project/.eva2-artifacts/task-completion-envelope-20260928",
+  "installationBuildCorrections": [
+    "Distroless base has no shell; use exec-form Python for replacing static package",
+    "Static package removal runs as root at build-time and restores exact original runtime user"
+  ],
+  "next": "Candidate startup check, bounded installation, one known failed real task with unchanged prompt",
+  "installation": {
+    "checkedAt": "2026-09-28T08:58:33.392856+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:3f830b4577044f63c2a57367e51ad475153ee9c7656ac58ecd8f237eff80e298",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/connector_results.py": "56639febdc5f23a3506e850f67374a9c8e094be70c9077baa0bd96d8b534ddf4",
+          "bootstrap/delegated_digital_composition.py": "d15ad4ed31c55a8fd74b9e524dcf69daa0e2eabd7be46e30d1455bc380be72f3",
+          "bootstrap/delegated_digital_profile.py": "ee0775b419e0a06dfb25e48b149251dd4510e81631a07be83b558b62454b12eb",
+          "bootstrap/delegated_digital_runner.py": "2528ff03cbd0c7a7b125699c155eb2cacfdee1b183ce31180bed0855b8e4241c",
+          "bootstrap/household_digital_work.py": "30df5dbe65d38ff4f301273634e18812bc94c314fff70fecf3867348a30fac83",
+          "contracts/delegated_digital_work.py": "dc12f52e15bf34f03c4ee52be785acd2cceb7f02ff11333b0959f0fe68a60cbf",
+          "contracts/delegated_work.py": "569af84679c8d061cce7ae5e518c09e77ede87fef7ec4460a2d91db7d734d454",
+          "contracts/workboard.py": "128c92d0ed8162649d941811c6481256c89f32d42cc9b1703c8c05f06dc65771",
+          "adapters/api/dashboard_static/eva-dashboard-assets.json": "fa1ac9b83dc6aa0ab443778a4c5e6db2bb828272cacb24ae25275e3403eb4e94",
+          "adapters/api/dashboard_static/index.html": "e245a26d1ea622c87666b6a8ce49882930c2e3d9ff1b927c12621f10c7b7929b",
+          "adapters/api/dashboard_static/assets/index-C5NanmYk.js": "3a191fba6ba86116310db41b8afe4e0bf2ebcb95ba7535e23c5231a3a559eb4c",
+          "adapters/api/dashboard_static/assets/index-Bu0OdK_w.css": "133304cf68066e44ab70d719862b77a6d3f5c7f02436f04655a9fbe998fe592e"
+        }
+      },
+      "worker": {
+        "image": "sha256:8220bcd1602b164472c820604d7a2e7d4fead6461274309b1e09e00697feb283",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/connector_results.py": "56639febdc5f23a3506e850f67374a9c8e094be70c9077baa0bd96d8b534ddf4",
+          "bootstrap/delegated_digital_composition.py": "d15ad4ed31c55a8fd74b9e524dcf69daa0e2eabd7be46e30d1455bc380be72f3",
+          "bootstrap/delegated_digital_profile.py": "ee0775b419e0a06dfb25e48b149251dd4510e81631a07be83b558b62454b12eb",
+          "bootstrap/delegated_digital_runner.py": "2528ff03cbd0c7a7b125699c155eb2cacfdee1b183ce31180bed0855b8e4241c",
+          "bootstrap/household_digital_work.py": "30df5dbe65d38ff4f301273634e18812bc94c314fff70fecf3867348a30fac83",
+          "contracts/delegated_digital_work.py": "dc12f52e15bf34f03c4ee52be785acd2cceb7f02ff11333b0959f0fe68a60cbf",
+          "contracts/delegated_work.py": "569af84679c8d061cce7ae5e518c09e77ede87fef7ec4460a2d91db7d734d454",
+          "contracts/workboard.py": "128c92d0ed8162649d941811c6481256c89f32d42cc9b1703c8c05f06dc65771",
+          "adapters/api/dashboard_static/eva-dashboard-assets.json": "fa1ac9b83dc6aa0ab443778a4c5e6db2bb828272cacb24ae25275e3403eb4e94",
+          "adapters/api/dashboard_static/index.html": "e245a26d1ea622c87666b6a8ce49882930c2e3d9ff1b927c12621f10c7b7929b",
+          "adapters/api/dashboard_static/assets/index-C5NanmYk.js": "3a191fba6ba86116310db41b8afe4e0bf2ebcb95ba7535e23c5231a3a559eb4c",
+          "adapters/api/dashboard_static/assets/index-Bu0OdK_w.css": "133304cf68066e44ab70d719862b77a6d3f5c7f02436f04655a9fbe998fe592e"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/task-completion-envelope-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  }
+}
