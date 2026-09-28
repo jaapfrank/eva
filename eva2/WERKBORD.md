@@ -8,7 +8,9 @@
 
 **Afgerond — M3 initiatief na feedback:** bestaande opslag en nieuwe store leveren de correctie; één modelbeslissing vermijdt afgewezen menuwerk en kiest rustig gezamenlijk schermvrij spel. Andere persoon ziet geen historie. Onafhankelijke review akkoord.1.166in/196uit,8,175s; credits onbekend. Alleen voorstel, geen uitvoerings-/gezinsclaim. [Bewijs](evidence/product/initiative-feedback-choice-20260928.json).
 
-**Volgende, nog niet gestart — C1:** gemeten overmatige invoer en wachttijd bij gewone contactroute aanpakken vanuit bestaande context/catalogus. Geen nieuwe gespreksroute; M3-precisie en echte initiatiefuitvoering blijven zichtbaar open.
+**Afgerond — C1 catalogusinvoer gemeten:** dezelfde synthetische begroeting kost met bestaande deferred catalogus6.057invoertokens, zonder41; eerste tekst2,879/2,922s. Twee requests,6.098in/24uit, geen acties; credits onbekend. Onafhankelijke review akkoord. Geen nieuwe functie, installatie of snelheidsclaim. [Bewijs](evidence/product/contact-catalog-cost-20260928.json).
+
+**Volgende — C1, nog niet gestart:** ondersteunde compactere catalogusrepresentatie met behoud van alle bevoegde mogelijkheden. Bestaande toolzoekfunctie niet opnieuw bouwen; gewone gesprekscontext afzonderlijk meten.
 
 **Nu — M3 stijlcorrectie geïnstalleerd:** een bestaande communicatievoorkeur kon niet worden ververst doordat de providerrespons het vereiste veld wegliet. Gerichte correctie, drie tests en onafhankelijke review akkoord; kern/werker gezond, exacte bron en eigenaarpagina’s gecontroleerd, terugweg vastgelegd. De echte gedragsproef is gedeeltelijk geslaagd: korter en zonder lijst, maar 47 woorden bij maximaal 40. M3 blijft open. Twee contactcalls: 3.884 invoer-/183 uitvoertokens; extractie-/reflectieverbruik onbekend. [Bewijs](evidence/product/style-reflection-refresh-20260928.json).
 

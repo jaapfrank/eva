@@ -1,0 +1,72 @@
+{
+  "id": "c1-contact-catalog-cost-20260928",
+  "sourceBase": "e975681f",
+  "status": "measured_not_fixed",
+  "scope": "Configured tool catalog, installed provider, frozen synthetic greeting; not ordinary owner-route benchmark",
+  "previousGoalTurn": "no progress: preference acknowledgement only; this turn revalidated current source and produced transport and usage evidence",
+  "offline": {
+    "toolSearch": true,
+    "deferredFunctions": 64,
+    "externalModelRequests": 0,
+    "bodyBytes": 48054,
+    "limitation": "Superset catalog; outgoing serialization only, no server accounting proof"
+  },
+  "criteria": "eva2/experiments/c1-contact-catalog-cost-v1/criteria.json",
+  "results": [
+    {
+      "case": "deferred_catalog",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "toolCount": 64,
+      "inputTokens": 6057,
+      "outputTokens": 12,
+      "cachedTokens": 0,
+      "requests": 1,
+      "firstTextSeconds": 2.879,
+      "totalSeconds": 3.46,
+      "answer": "Hallo! Fijn je te zien 😊",
+      "externalActionsExecuted": 0
+    },
+    {
+      "case": "no_catalog",
+      "model": "gpt-6-luna",
+      "reasoning": "low",
+      "toolCount": 0,
+      "inputTokens": 41,
+      "outputTokens": 12,
+      "cachedTokens": 0,
+      "requests": 1,
+      "firstTextSeconds": 2.922,
+      "totalSeconds": 3.602,
+      "answer": "Hallo! Leuk dat je er bent 😊",
+      "externalActionsExecuted": 0
+    }
+  ],
+  "finding": {
+    "additionalInputTokens": 6016,
+    "catalogExplainsHighInputForThisPair": true,
+    "latencyConclusion": "No observed latency disadvantage with catalog in this single sequential pair; not equivalence proof."
+  },
+  "usage": {
+    "modelRequests": 2,
+    "inputTokens": 6098,
+    "outputTokens": 24,
+    "externalActions": 0,
+    "credits": "unknown",
+    "codexDevelopmentUsage": "not measured"
+  },
+  "decision": "Preserve all authorized capabilities. Check supported catalog representation on this provider route for lower input and preserved discoverability. No new search layer by default, no production no-tools greeting branch. Actual conversation context remains unmeasured.",
+  "review": {
+    "status": "GO bounded finding",
+    "reviewer": "/root/platform_research_20260927",
+    "limitations": [
+      "synthetic greeting without actual conversation context",
+      "configured superset",
+      "fixed sequential order",
+      "one observation per case",
+      "no financial cost measurement"
+    ]
+  },
+  "installed": false,
+  "ownerAcceptance": "not requested; diagnostic only"
+}

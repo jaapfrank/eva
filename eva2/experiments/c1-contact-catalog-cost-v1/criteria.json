@@ -1,0 +1,21 @@
+{
+  "question": "Does deferred tool catalog explain excessive greeting input?",
+  "cases": [
+    "configured deferred catalog",
+    "no catalog"
+  ],
+  "fixed": {
+    "prompt": "Hallo.",
+    "instructions": "Je bent Eva, een vriendelijke digitale huisgenoot. Beantwoord deze begroeting kort en natuurlijk in het Nederlands. Voer geen handelingen uit.",
+    "model": "installed contact model",
+    "reasoning": "installed contact reasoning"
+  },
+  "limits": {
+    "requests": 2,
+    "request_limit_per_case": 1,
+    "external_actions": 0,
+    "retries": 0
+  },
+  "decision": "Compare actual input tokens and first text latency; no catalog is diagnostic only and must not become production capability removal. Single pair is not general benchmark.",
+  "credits": "unknown"
+}

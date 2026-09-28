@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Extra invoer door toolcatalogus vastgesteld",
+            "date": "28 september",
+            "state": "investigated",
+            "result": "Bevroren begroeting: catalogus6.057in, zonder41in; geen uitgevoerd huiswerk of andere acties. Twee echte modelcalls en onafhankelijke review.",
+            "remaining": "Geen snelheidswinst of complete functie. Eerste tekst circa2,9s in beide gevallen; gewone kanaalcontext niet gemeten.",
+            "source": "eva2/evidence/product/contact-catalog-cost-20260928.json"
+          },
+          {
             "title": "Afgewezen initiatief vermijden na opgeslagen feedback",
             "date": "28 september",
             "state": "tested",
@@ -2571,15 +2579,15 @@
           }
         ],
         "now": {
-          "title": "M3 · Feedback beïnvloedt volgende eigen keuze",
-          "state": "Begrensde proef geslaagd; bestaande functie",
-          "detail": "Opgeslagen feedback na nieuwe verbinding gebruikt: afgewezen menuwerk vermeden, rustig gezamenlijk spel voorgesteld. Geen uitvoering/bericht. Eén modelreactie1.166in/196uit; review akkoord.",
-          "doneWhen": "Deze opslag-/keuzeproef afgerond; echte initiatiefuitvoering, voorkeursprecisie en gezinsbeleving blijven afzonderlijk open."
+          "title": "C1 · Oorzaak hoge begroetingsinvoer gemeten",
+          "state": "Vergelijking afgerond · nog geen versnelling",
+          "detail": "Dezelfde synthetische begroeting: 6.057 invoertokens met bestaande deferred catalogus, 41 zonder. Eerste tekst beide circa2,9s. Twee modelcalls, nul acties; onafhankelijke review akkoord. Coördinator klaar met deze meting.",
+          "doneWhen": "Meetopdracht afgerond. Compactere vindbaarheid en werkelijke gespreksvertraging blijven open; geen mogelijkheden verwijderd."
         },
         "next": {
-          "title": "C1 · Minder invoer en wachttijd bij gewone gesprekken",
+          "title": "C1 · Compactere vindbaarheid van dezelfde tools",
           "state": "Nog niet gestart",
-          "detail": "Bestaande contactroute onderzoeken op de gemeten39.354invoertokens/20,9s voor terughalen van één resultaat. Alleen aantoonbaar overbodige context/catalogus aanpakken; geen nieuw gespreksmodel of geheugenverlies."
+          "detail": "Ondersteunde catalogusrepresentatie controleren die minder invoer gebruikt met behoud van alle bevoegde mogelijkheden. Native toolzoekfunctie bestaat al; geen tweede eigen zoeksysteem. Gewone gesprekscontext afzonderlijk meten."
         },
         "ownerAction": {
           "title": "Later hetzelfde onderwerp voortzetten",
@@ -2593,7 +2601,7 @@
           "expected": "Eva haalt relevante eerdere context terug. Geaccepteerd onthouden, corrigeren en vergeten hoef je niet opnieuw te testen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T13:43:18.343721+00:00"
+        "reviewedAt": "2026-09-28T13:56:35.038703+00:00"
       }
     },
     "pendingTechnicalReview": {
