@@ -2475,29 +2475,29 @@
           }
         ],
         "now": {
-          "title": "C1 · Gesprek beschikbaar houden tijdens werk",
-          "state": "C1 · HTTP-overlap afgerond",
-          "detail": "Correctie geïnstalleerd en één echte taak+tussenvraag geslaagd. Geen proef meer actief. Coördinator verwerkt kanaalgrenzen; geen herbouw of nieuwe modelproef.",
-          "doneWhen": "Compleet taakpad past; bestaande opgeslagen taken blijven hervatbaar. Daarna gerichte review, installatie en werkelijk resultaat."
+          "title": "C2 · Twee taken onafhankelijk sturen",
+          "state": "C2 · bestaande combinatie controleren",
+          "detail": "Bestaande losse dekking gecontroleerd; geen nieuw defect aangetoond. Eén uitvoerder maakt de ontbrekende combinatieproef: taak A bijsturen, B stoppen, opnieuw verbinden en juiste terugmelding. Coördinator controleert bestaande websiteprojectie.",
+          "doneWhen": "De gecombineerde proef toont afzonderlijke taaksturing, behouden status en één terugmelding bij de oorspronkelijke vraag; beperkingen en echte gebruikersproef blijven apart."
         },
         "next": {
-          "title": "C1 · Resterende echte ingangen",
-          "state": "Nog te controleren",
-          "detail": "Bestaande Telegram-/websitekoppeling behouden; eerst bepalen welk actuele kanaalbewijs ontbreekt. HTTP-overlap bewijst geen fysieke spraak. Geen herhaling van dezelfde taak."
+          "title": "C2 · Ontbrekend gecombineerd geval afronden",
+          "state": "Begrensde vervolgstap",
+          "detail": "Bestaande taakbediening, opslag en vraagkoppeling hergebruiken; alleen ontbrekend combinatiebewijs of aangetoond defect aanpakken."
         },
         "ownerAction": {
-          "title": "Optioneel: doorpraten via de tekstpagina",
+          "title": "Open proef: echte Telegramroute",
           "url": "http://localhost:44711/internal/v1/dashboard/conversation",
-          "linkLabel": "Open het tekstgesprek",
+          "linkLabel": "Tekstpagina blijft beschikbaar",
           "steps": [
-            "Geef Eva een opdracht die onderzoek of uitvoering vraagt.",
-            "Stel na haar aanname een korte tussenvraag, bijvoorbeeld Hoe gaat het met jou?",
-            "De tussenvraag moet een eigen passend antwoord krijgen terwijl de taak doorloopt."
+            "Stuur in Telegram: /eva2 Zoek uit wat Home Assistant Cloud doet voor spraak, met bronnen.",
+            "Stuur daarna: /eva2 Hoe gaat het met jou?",
+            "Meld of de tussenvraag eerder wordt beantwoord en het onderzoek bij de oorspronkelijke vraag terugkomt."
           ],
-          "expected": "Op de HTTP-tekstroute technisch gecontroleerd. Jouw ervaring is een apart oordeel; dit is geen verplichte herhaling van eerder geaccepteerde proeven en geen Voice PE-proef."
+          "expected": "Actuele app-/kanaalproef; geen impliciete acceptatie. Mag later en blokkeert onafhankelijk werk niet."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T10:39:42.583864+00:00"
+        "reviewedAt": "2026-09-28T10:47:14.322406+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12452,7 +12452,16 @@
             "workerCommit": "b4b88c6446f2979c11e748e0b8606c6c35e892a6",
             "review": "GO; independent source and test diff review"
           },
-          "remaining": "Actual Telegram and browser interaction proof, naturalness/latency and owner acceptance remain open; physical voice belongs to its channel slices."
+          "remaining": "Current actual Telegram owner trial requested; response pending, no acceptance inferred. Existing runtime/ingress concurrency evidence retained; no rebuild.",
+          "telegramOwnerTrial": {
+            "status": "awaiting_owner_observation",
+            "steps": [
+              "/eva2 Zoek uit wat Home Assistant Cloud doet voor spraak, met bronnen.",
+              "/eva2 Hoe gaat het met jou?"
+            ],
+            "expected": "Social answer before research result; result replies to original research question.",
+            "blocksIndependentWork": false
+          }
         },
         {
           "id": "C2",
@@ -12462,7 +12471,7 @@
           ],
           "outcome": "Twee taken sturen en terugmelden",
           "effort": "M",
-          "status": "planned",
+          "status": "in_progress",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Durable tasks, original-question binding, stop/resume/correction and retained results. Session-closure defect was fixed and installed.",
@@ -12473,7 +12482,18 @@
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
-          }
+          },
+          "owner": "/root",
+          "activeWorker": "/root/baseline_research_20260927",
+          "baseCommit": "1ac19a46",
+          "assignment": {
+            "stage": "combined_existing_path_proof",
+            "scope": "Only eva2/tests/postgres/test_household_digital_work.py; coordinator checks existing owner projections. No production changes or model calls.",
+            "outcome": "Task A corrected, task B stopped, session reopened, correct states and one result bound to original question.",
+            "endCondition": "One combined isolated PostgreSQL case passes or identifies a concrete defect; bounded independent review.",
+            "effort": "One combined test and focused run; credit costs unknown"
+          },
+          "dependencyEvidence": "Installed HTTP admission/overlap supports independent two-task steering; pending real Telegram owner observation does not block this source/integration work."
         },
         {
           "id": "C3",
@@ -13069,7 +13089,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "C1",
+      "activeSliceId": "C2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
