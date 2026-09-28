@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "L1 afgerond: nieuwe werkwijze leren en ongewijzigd hergebruiken",
+            "date": "28 september",
+            "state": "tested",
+            "result": "Via geïnstalleerde leerroutes zelf JSON Patch onderzocht, procedure gemaakt/geregistreerd en nieuwe invoer correct verwerkt. Onafhankelijke review GO.",
+            "remaining": "Eerste taakverslagtimeout onder T1 open; gezinsacceptatie en algemene concurrentievoorsprong niet geclaimd. Grote categorie zelfstandig werk blijft open voor L2/L3.",
+            "source": "eva2/evidence/product/json-patch-learning-reuse-20260928.json"
+          },
+          {
             "title": "Zelf verbeterde werkwijze op andere invoer hergebruikt",
             "date": "28 september",
             "state": "tested",
@@ -2763,15 +2771,15 @@
           }
         ],
         "now": {
-          "title": "Leren en zelfstandig hergebruiken afronden",
-          "state": "Nieuwe werkwijze en juiste uitvoer opgeslagen; afronding timeout",
-          "detail": "Eva heeft zonder ontwikkelhulp JSON Patch onderzocht, code gemaakt/geregistreerd/uitgevoerd en juiste invoer/uitvoer bewaard. Werkelijke bestanden en receipt kloppen. Laatste verslag niet afgerond binnen tijdslimiet; geen taak actief of automatische herhaling. Onafhankelijke review akkoord voor opgeslagen uitvoer en aparte hergebruikproef.",
+          "title": "L1: werkwijze leren en hergebruiken",
+          "state": "Technisch afgerond",
+          "detail": "Nieuwe JSON Patch-werkwijze uit documentatie geleerd, opgeslagen en werkelijk uitgevoerd; daarna zelf geselecteerd en ongewijzigd op andere invoer toegepast. Echte uitvoer en bestanden onafhankelijk akkoord. Geen ontwikkelaarcorrectie in deze casus. Eerste eindverslagtimeout blijft onder T1 open; geen eigenaaracceptatie of volledige-autonomieclaim.",
           "doneWhen": "Eva leert uit documentatie, bewaart een uitvoerbare werkwijze en past die op andere invoer toe zonder nieuwe kerncode of ontwikkelhints; resultaat onafhankelijk gecontroleerd."
         },
         "next": {
-          "title": "Aparte hergebruikproef met dezelfde JSON Patch-code",
+          "title": "L2: meerdaags project hervatten afronden",
           "state": "Nog niet gestart",
-          "detail": "Alleen na onafhankelijke beoordeling van opgeslagen leerresultaat; één vooraf geplande nieuwe invoer. Oorspronkelijke timeout blijft zichtbaar."
+          "detail": "Bestaande duurzame taken, projectdocumenten en geslaagde tweefasenproef hergebruiken. Alleen ontbrekende zelfstandige voortzetting aanpakken; geen nieuwe planner."
         },
         "ownerAction": {
           "title": "Camera voor vuilnisbakken kiezen",
@@ -2784,7 +2792,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T20:36:28.786785+00:00"
+        "reviewedAt": "2026-09-28T20:42:00.093823+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12604,7 +12612,7 @@
           ]
         }
       ],
-      "nextAction": "Finish L1 unseen learning and new-input reuse with existing installed procedures; I1/I2 actual camera case waits on camera identification, autonomous daily review allowance remains consumed.",
+      "nextAction": "L1 technisch afgerond. Volgende L2: bestaand meerdaags projectvervolg en concrete ontbrekende afronding koppelen; geen nieuwe planner of herhaalde leerproef.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13089,7 +13097,11 @@
             "trialWorkId": "work:eva-resume:0046a00f-df03-56fd-aa06-f27bdbfd5584"
           },
           "fullTaskEvidence": "eva2/evidence/product/calendar-learning-completed-20260928.json",
-          "remaining": "General new-question research quality and full original T1 criteria remain separate from this repaired case."
+          "remaining": "General new-question research quality and full original T1 criteria remain separate from this repaired case.",
+          "learningTaskCompletionLimitation": {
+            "evidence": "eva2/evidence/product/json-patch-learning-result-20260928.json",
+            "detail": "Actual correct output saved, but final report timed out after extra self-tests. No full-task success claim. Preserve result and assess completion within task deadline."
+          }
         },
         {
           "id": "T2",
@@ -13256,7 +13268,7 @@
           ],
           "outcome": "Werkwijze leren en hergebruiken",
           "effort": "M",
-          "status": "in_progress",
+          "status": "completed",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Procedure storage/discovery/execution and unassisted reuse exist; initial learning needed help.",
@@ -13283,9 +13295,9 @@
             "automaticRetry": false,
             "evidence": "eva2/evidence/product/calendar-unassisted-reuse-20260928.json"
           },
-          "remaining": "Fresh JSON Patch learned/executed and correct output saved without developer intervention; final task report timed out. Independent review and separate unchanged reuse pending. Earlier calendar/WebVTT results retained.",
+          "remaining": "Owner acceptance and broader capability comparisons remain separate. Original learning final-report timeout retained under T1; no broad mastery claim.",
           "assignment": {
-            "stage": "new_procedure_saved_and_executed_final_report_timeout",
+            "stage": "completed_independently_reviewed",
             "baseCommit": "38cb8dcc",
             "owner": "/root",
             "scope": "Existing installed procedure tools and isolated WebVTT fixtures; no product code by assumption",
@@ -13293,7 +13305,17 @@
             "endCondition": "One bounded initial learning request and one reuse request yield independently checked stored outputs; failed outcome remains visible, no automatic retries.",
             "effort": "Prepare authoritative fixture/expected result first; at most two task admissions, existing runtime limits; credits unknown."
           },
-          "newLearningEvidence": "eva2/evidence/product/json-patch-learning-result-20260928.json"
+          "newLearningEvidence": "eva2/evidence/product/json-patch-learning-result-20260928.json",
+          "completedAt": "2026-09-28T20:42:00.093773+00:00",
+          "latestEvidence": "eva2/evidence/product/json-patch-learning-reuse-20260928.json",
+          "technicalCompletion": {
+            "learnedNewDocumentedProcedure": true,
+            "savedExecutableSkill": true,
+            "differentInputUnchangedReuse": true,
+            "developerCodeOrIdHints": false,
+            "independentReview": "GO",
+            "ownerAccepted": false
+          }
         },
         {
           "id": "L2",

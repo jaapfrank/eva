@@ -1,0 +1,45 @@
+{
+  "checkedAt": "2026-09-28T20:40:25.509780+00:00",
+  "status": "new_documented_procedure_learned_and_unchanged_reuse_verified",
+  "workId": "work:eva-chat:5e6237e3-dfda-53f8-ac3e-04933ca6f504",
+  "criteria": "eva2/evidence/product/json-patch-learning-criteria-20260928.json",
+  "initialEvidence": "eva2/evidence/product/json-patch-learning-result-20260928.json",
+  "ordinaryPrompt": "Pas deze configuratiewijzigingen toe met je bestaande opgeslagen JSON Patch-werkwijze. Gebruik dezelfde code ongewijzigd, zonder nieuw onderzoek. Controleer de echte uitvoer, bewaar het resultaat en geef mij kort de vindplaats. Verander geen echte huisinstellingen. Invoer: [{\"name\": \"other-settings\", \"document\": {\"queue\": [\"a\", \"b\", \"c\"], \"a/b\": {\"~key\": [1, 2]}, \"old\": \"x\"}, \"patch\": [{\"op\": \"test\", \"path\": \"/queue/1\", \"value\": \"b\"}, {\"op\": \"copy\", \"from\": \"/a~1b/~0key\", \"path\": \"/backup\"}, {\"op\": \"add\", \"path\": \"/a~1b/~0key/-\", \"value\": 3}, {\"op\": \"replace\", \"path\": \"/queue/2\", \"value\": \"d\"}, {\"op\": \"move\", \"from\": \"/queue/0\", \"path\": \"/queue/2\"}, {\"op\": \"remove\", \"path\": \"/old\"}]}]",
+  "developerCodeOrIdHints": false,
+  "newCoreCodeDuringLearningOrReuse": false,
+  "codeSha256": "328cebdd5a0cbd70c5a002922cd09f50a06a327e4839a7c0d70aa0a4224e6e66",
+  "inputSha256": "9c6459088078f08f5106508ec77ae706911d3e6a49e32bb69a593892a96e2579",
+  "savedOutputMatchesActualStdout": true,
+  "outputMatchesSealedExpected": true,
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "executionMilliseconds": 1036,
+  "savedResultPath": "/proof-state/json-patch-other-settings-5e6237e3-result.json",
+  "savedResultSha256": "956e3d1ffc806375bab6508b4412d0d02d68d83562bc1ab47ee87f88490a29a2",
+  "taskState": "succeeded",
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 4,
+    "tool_calls": 5,
+    "input_tokens": 38174,
+    "output_tokens": 901,
+    "total_tokens": 39075,
+    "cost_usd_micros": null
+  },
+  "foregroundExcluded": true,
+  "creditCost": "unknown",
+  "ownerAccepted": false,
+  "independentReview": "GO /root/platform_research_20260927: bounded L1 requirement proven; original final-report timeout retained as T1 reliability limitation.",
+  "limitations": [
+    "Original learning task final report timed out; actual learned code and output were saved and verified.",
+    "One bounded documented skill and different-input reuse; not general mastery, full RFC conformance or superiority."
+  ],
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/json-patch-reuse-20260928",
+  "usageIncludingForeground": {
+    "modelResponses": 5,
+    "inputTokens": 47088,
+    "outputTokens": 1273
+  }
+}

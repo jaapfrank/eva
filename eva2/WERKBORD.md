@@ -1,18 +1,16 @@
 # Eva 2 — uitvoerbaar werkbord
 
-## Actuele opdracht — leren en hergebruiken (L1)
+## Afgerond — L1: werkwijze leren en hergebruiken
 
-**Nu:** JSON Patch-werkwijze zonder hulp gemaakt, geregistreerd en uitgevoerd; originele invoer en juiste uitvoer daadwerkelijk opgeslagen. Eindverslag haalde tijdslimiet niet. Geen taak actief; geen automatische herhaling. Onafhankelijke beoordeling akkoord voor opgeslagen uitvoer en aparte hergebruikproef. [Bewijs](evidence/product/json-patch-learning-result-20260928.json).
+**Technisch afgerond:** Eva heeft een nieuwe JSON Patch-werkwijze uit officiële documentatie geleerd, zelf bewaard/geregistreerd en echt uitgevoerd. Een afzonderlijke gewone vraag liet haar dezelfde code zelfstandig selecteren en ongewijzigd op andere invoer toepassen. Echte uitvoer, invoerhash, ongewijzigde bron en opgeslagen resultaat onafhankelijk akkoord. Geen ontwikkelaarcorrectie, code of procedure-ID in deze casus. [Bewijs](evidence/product/json-patch-learning-reuse-20260928.json) · [Resultaat](evidence/product/json-patch-reuse-output-20260928.json).
 
-**Vervolg:** na review één afzonderlijke, vooraf geplande hergebruikvraag met andere invoer. Timeout van eerste taak blijft zichtbaar. Gemeten deelverbruik190.899in/5.875uit,13modelantwoorden/15tools; foreground niet inbegrepen, credits onbekend.
+**Beperkingen blijven zichtbaar:** eerste leeropdracht liep bij het laatste verslag tegen de tijdslimiet, nadat juiste uitvoer was opgeslagen. Dat afrondingsprobleem blijft onder T1 open. Dit is één complete begrensde leer-/hergebruikfunctie, geen algemene vaardigheids-, conformiteits- of concurrentieclaim. Eigenaaracceptatie staat open; grote categorie zelfstandig werk blijft open voor L2/L3.
 
-**Werkelijk opgeleverd:** Eva verbeterde zelf de opgeslagen WebVTT-werkwijze na feedback. Na herstel van de algemene opslag/registratie-aansluiting voerde zij de verbeterde code echt uit. Een nieuwe gewone vraag liet Eva zelf v2 kiezen en ongewijzigd uitvoeren op andere invoer; het resultaat is opgeslagen en exact vergeleken met vooraf vastgelegde verwachtingen. [Resultaat](evidence/product/webvtt-reuse-output-20260928.md) · [Bewijs](evidence/product/webvtt-corrected-learning-reuse-20260928.json). Geen modeltaak actief. Onafhankelijke eindcontrole akkoord.
+**Volgende, nog niet gestart:** L2 meerdaags project hervatten. Bestaande duurzame taken/projectdocumenten en geslaagde tweefasenproef behouden; concrete ontbrekende zelfstandige voortzetting vaststellen, geen nieuwe planner of herhaalde leerproef. Geen Eva-modeltaak actief.
 
-**Nog open:** de oorspronkelijke nieuwe leertaak slaagde niet zonder ontwikkelhulp; feedback en bronreparaties waren nodig. L1 blijft daarom open voor werkelijk nieuw leren zonder die hulp en eigenaaracceptatie. Kalenderhergebruik en het nieuwe WebVTT-hergebruik blijven bewaard; geen herhaling van dezelfde proef of nieuwe leer-engine.
+**Zelf bekijken:** open de lokale eigenaarpagina /internal/v1/dashboard, zoek de taak over configuratiewijzigingen en open het resultaat. Verwacht queue [b,d,a], backup [1,2] en bronarray [1,2,3]; dezelfde uitkomst staat in het gelinkte resultaatbestand. Geen nieuwe proef nodig om deze technische uitkomst te bewijzen.
 
-**Verbruik deze ronde:** hervatting 189.924in/3.784uit; hergebruik 49.650in/1.397uit, beide gemeten deelverbruik. Hergebruik inclusief foreground: 58.399in/1.760uit, zes modelantwoorden. Creditkosten onbekend. Eén hervatting na concrete oorzaakcorrectie en één nieuwe hergebruikvraag.
-
-**Geïnstalleerde bron:** c7c4a5ed, 54 gerichte controles en onafhankelijke review GO; gezonde kern/werker, exacte bron en terugweg gecontroleerd. [Installatie](evidence/product/procedure-connector-save-installed-20260928.json).
+**Verbruik hergebruik:** inclusief foreground 47.088 invoer-/1.273 uitvoertokens, vijf modelantwoorden. Worker vier antwoorden/vijf tooldispatches. Creditkosten onbekend. Eerste leertaak en eerdere WebVTT-reparaties blijven afzonderlijk in bewijs geregistreerd.
 
 ## Initiatief — voortgang en open afhankelijkheden
 
