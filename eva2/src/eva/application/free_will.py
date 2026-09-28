@@ -338,7 +338,7 @@ class SensoryDecisionWorker:
                 admission = None if self._context_review_budget is None else self._context_review_budget.admit_background_reflection(
                     tenant_id=self._tenant_id, installation_id=self._installation_id,
                     principal_id=self._principal_id, now=self._current_time(now),
-                    reservation_id=claim.thread_id)
+                    reservation_id=claim.thread_id, spread_over_day=True)
                 if admission is None or not admission.admitted:
                     self._store.complete(claim, FreeWillDecision("silence",
                         "Het bestaande achtergrondbudget laat nu geen nieuwe beoordeling toe.",

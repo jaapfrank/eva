@@ -2733,7 +2733,7 @@
         "now": {
           "title": "Initiatief en huisaanwezigheid als geheel afronden",
           "state": "In uitvoering",
-          "detail": "Camera-/agendalezen is nu aangesloten op de bestaande private initiatiefroute en geïnstalleerd. Het grote onderdeel is nog niet klaar. Andere deeltrajecten worden nu niet tegelijk opgepakt.",
+          "detail": "Concrete blokkade gevonden: vier dagelijkse initiatiefbeoordelingen waren vandaag al vóór 05:43 lokale tijd opgebruikt. Bestaand budget over de dag verdelen, zonder verhoging of reset; daarna nuttige initiatiefuitkomst vervolgen.",
           "doneWhen": "Eva kiest uit echte huiscontext passend werk, voert dit uit en brengt het resultaat bij de juiste persoon; camera/agenda ondersteunen een nuttige herinnering, eigen onderzoek een onderbouwd voorstel, ongewenste herhaling blijft uit. Gezinsbeoordeling apart."
         },
         "next": {
@@ -2752,7 +2752,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T18:43:56.272395+00:00"
+        "reviewedAt": "2026-09-28T18:49:41.068764+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13199,13 +13199,12 @@
           },
           "owner": "/root",
           "assignment": {
-            "stage": "initiative_read_connection_installed",
-            "baseCommit": "9c987870",
+            "stage": "prevent_overnight_review_budget_exhaustion",
             "owner": "/root",
-            "scope": "providers/home_assistant.py, deployment read profile, focused tests; existing private runtime mandate revision",
-            "endCondition": "Native read profile permits camera/calendar GET and inventory domain without granting writes or public output; existing authority verified and installed. Camera-selected reminder remains dependent on owner answer.",
-            "effort": "Bounded connection and existing route checks; no new planner, background polling or extra model budget.",
-            "sourceCommit": "14fe94dc7c2706145b14f77cef4b50b62adf2043"
+            "baseCommit": "a95890f0",
+            "scope": "Existing background reflection admission, context review caller/protocol and focused PostgreSQL tests",
+            "endCondition": "Periodic review allowance remains available later in day, same daily caps and existing memory behavior; targeted tests/review/install, no production quota reset.",
+            "effort": "One bounded admission change and review; no Eva model calls planned; unknown credits."
           },
           "evidence": "eva2/evidence/product/local-vision-installed-20260928.json",
           "remaining": "Useful camera/calendar reminder through existing initiative execution, self-chosen research and appropriate private return; real household usefulness remains open. Camera selection question pending. No complete I1/I2 claim.",

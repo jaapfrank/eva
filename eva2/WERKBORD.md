@@ -4,6 +4,8 @@
 
 **Initiatief en huisaanwezigheid (I1/I2)** is de ene actieve productoplevering. Camera-/agendalezen via de bestaande initiatiefroute is nu geïnstalleerd (bron14fe94dc); dat is een tussenresultaat en sluit geen van de zeven open grote onderdelen. Geen uitwijking naar nieuwe statuskaarten, herstel of losse optimalisaties.
 
+**Actuele blokkade:** vier privébeoordelingen hebben vandaag tussen 02:37 en 05:42 lokale tijd het volledige bestaande persoonsdagbudget gebruikt. De overige beoordelingen zijn daarom overgeslagen. Spreid periodieke beoordelingen binnen hetzelfde budget; geen verhoging/reset. Basis a95890f0; coördinator bezit bestaande budgettoelating, aanroeper en gerichte tests.
+
 **Resteert:** passende eigen actie uit huiscontext, nuttige camera-/agendaherinnering, onderbouwd eigen onderzoeksvoorstel en correcte terugmelding zonder ongewenste herhaling als samenhangend gebruik. Bestaande werking en bewijs hergebruiken. Technische afronding en gezinsbeoordeling blijven apart.
 
 **Eigenaarvraag open:** welke camera ziet de vuilnisbakken? Alleen die concrete scène wacht op antwoord. [Geïnstalleerde aansluiting](evidence/product/initiative-vision-read-installed-20260928.json). Geen extra Eva-modelcalls voor deze aansluiting; creditkosten onbekend.

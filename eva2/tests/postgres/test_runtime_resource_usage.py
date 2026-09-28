@@ -964,3 +964,48 @@ def test_removal_releases_group_and_installation_capacity_only_after_ack(
     assert replacement.group_bytes_used == 500_000
     assert replacement.installation_records_used == 1
     assert replacement.installation_bytes_used == 500_000
+
+
+def test_periodic_reflections_preserve_allowance_for_later_daily_windows(resource_engine):
+    start = NOW.replace(hour=0) + timedelta(days=100)
+
+    def admit(at):
+        # A new governor sees the durable count on each invocation.
+        return _governor(resource_engine).admit_background_reflection(
+            tenant_id=TENANT, installation_id=INSTALLATION,
+            principal_id="person:periodic", now=at, spread_over_day=True,
+        )
+
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        attempts = tuple(pool.map(lambda _: admit(start), range(4)))
+    assert sum(a.admitted for a in attempts) == 1
+    assert {a.reason for a in attempts if not a.admitted} == {"person_daily_window_not_ready"}
+    for hour in (6, 12, 18):
+        early = admit(start + timedelta(hours=hour, seconds=-1))
+        assert not early.admitted
+        assert early.reason == "person_daily_window_not_ready"
+        accepted = admit(start + timedelta(hours=hour))
+        assert accepted.admitted
+        assert accepted.person_used == 1 + hour // 6
+    exhausted = admit(start + timedelta(hours=23))
+    assert not exhausted.admitted
+    assert exhausted.reason == "person_daily_limit_reached"
+    next_day = admit(start + timedelta(days=1))
+    assert next_day.admitted and next_day.person_used == 1
+
+
+def test_periodic_reflections_share_existing_usage_without_increasing_daily_cap(resource_engine):
+    start = NOW.replace(hour=0) + timedelta(days=102)
+    governor = _governor(resource_engine)
+    args = dict(tenant_id=TENANT, installation_id=INSTALLATION,
+                principal_id="person:mixed", now=start)
+    # Existing memory work retains its original admission behavior.
+    assert governor.admit_background_reflection(**args).admitted
+    held = governor.admit_background_reflection(**args, spread_over_day=True)
+    assert not held.admitted and held.person_used == 1
+    for _ in range(3):
+        assert governor.admit_background_reflection(**args).admitted
+    late = governor.admit_background_reflection(
+        **{**args, "now": start + timedelta(hours=18)}, spread_over_day=True)
+    assert not late.admitted and late.person_used == 4
+    assert late.reason == "person_daily_limit_reached"

@@ -188,12 +188,20 @@ class PostgresDailyReflectionBudget:
         principal_id: str,
         now: datetime,
         reservation_id: str | None = None,
+        spread_over_day: bool = False,
     ) -> BackgroundReflectionAdmission:
         """Consume at most one slot; revision conflicts are retried, never widened."""
 
         if tenant_id != self._tenant_id or installation_id != self._installation_id:
             raise ValueError("reflection admission crossed its runtime scope")
         day = self._day(now)
+        if type(spread_over_day) is not bool:
+            raise ValueError("reflection pacing must be boolean")
+        utc_now = now.astimezone(UTC)
+        elapsed = utc_now.hour * 3600 + utc_now.minute * 60 + utc_now.second
+        # Release the existing daily allowance gradually for periodic work.
+        # Unused slots carry forward within the day; no budget is added or reset.
+        available = min(self._person_limit, 1 + elapsed * self._person_limit // 86400)
         principal_sha256 = self._principal_sha256(principal_id)
         thread_id = f"runtime-reflections:{day}"
         for _attempt in range(32):
@@ -231,6 +239,9 @@ class PostgresDailyReflectionBudget:
             elif installation_used >= self._installation_limit:
                 admitted = False
                 reason = "installation_daily_limit_reached"
+            elif spread_over_day and person_used >= available:
+                admitted = False
+                reason = "person_daily_window_not_ready"
             else:
                 admitted = True
                 reason = "reserved"
