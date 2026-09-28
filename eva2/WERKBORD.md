@@ -1,10 +1,10 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu — M3: vier echte modelgevallen uitgevoerd.** Drie geslaagd: tijdelijke uitzondering op de juiste dag, terugkeer naar normale voorkeur en afgeronde werkstap zonder onterechte projectafronding. Eén mislukt: ongedateerd “morgen” wordt toch als actueel behandeld. Geen complete M3-claim. Vier modelvragen, 7.439 invoertokens en117 uitvoertokens; geen echte persoonlijke herinneringen gelezen of geschreven. [Uitkomsten](evidence/product/m3-model-cases-20260928.json).
+**Nu — M3: gerichte geheugencorrectie geïnstalleerd.** Oude ongedateerde uitspraken met “morgen” krijgen expliciete historische context. De enige gewijzigde herstelproef slaagt; oorspronkelijke mislukking blijft bewaard. Drie codecontroles en onafhankelijke review geslaagd. Kern/werker gezond, exacte bron en eigenaarpagina’s gecontroleerd; terugweg vastgelegd. Geen complete M3-claim. Herstelproef: één modelreactie, 1.866 invoer- en 34 uitvoertokens. [Bewijs](evidence/product/undated-memory-context-20260928.json).
 
 **Voor Jaap, wanneer het uitkomt:** bespreek een gewoon onderwerp in privé-Telegram. Open later [het privégesprek op de website](http://localhost:44711/internal/v1/dashboard/conversation) en vraag verder over dat onderwerp zonder de details te herhalen. Verwacht relevante eerdere context en de laatste correctie. Dit beoordeelt de kanaalvoortzetting; geaccepteerde geheugenproeven niet herhalen.
 
-**Eerstvolgend — M3:** corrigeer de omgang met ongedateerde historische uitspraken. Alleen het gefaalde geval opnieuw uitvoeren na concrete wijziging; geen herhaling van de drie geslaagde gevallen zonder nieuwe reden.
+**Eerstvolgend — M3, nog niet gestart:** bestaande extractie, terughalen en eigen interesses verbinden aan resterende eindvoorwaarden. Bestaand bewijs eerst; geen herhaling van geslaagde modelgevallen zonder nieuwe reden.
 
 **C3 blijft open:** echte dienstsessiestart met gesimuleerd apparaat gecontroleerd, geen fysieke duplexacceptatie. Apparaatlog van de mislukte kandidaat ontbreekt. Werkende firmware behouden; alleen afhankelijk speakerwerk wacht op die observatie.
 

@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Oud “morgen” zonder datum niet als actuele afspraak",
+            "date": "28 september",
+            "state": "installed",
+            "result": "Gerichte correctie geïnstalleerd op gezonde kern en werker. Drie controles, één echte herstelproef en onafhankelijke review geslaagd.",
+            "remaining": "Eén geval bewijst geen algemene geheugenbetrouwbaarheid. Oorspronkelijke mislukking bewaard; volledige M3 blijft open.",
+            "source": "eva2/evidence/product/undated-memory-context-20260928.json"
+          },
+          {
             "title": "Eigen doelen met juiste werkstapstatus in gesprek",
             "date": "28 september",
             "state": "installed",
@@ -2507,15 +2515,15 @@
           }
         ],
         "now": {
-          "title": "M3 · Echte modelantwoorden beoordelen",
-          "state": "Gespreksproef: 3 geslaagd, 1 mislukt",
-          "detail": "Tijdelijke voorkeur op juiste dag en afgeronde werkstap correct. Ongedateerd “morgen” wordt nog als actueel gezien.4 modelvragen,7.439 invoertokens en117 uitvoertokens; geen geheugenwijzigingen.",
-          "doneWhen": "Alle vier antwoorden en gemeten verbruik beoordeeld; verlies en ontbrekende ketenproeven zichtbaar."
+          "title": "M3 · Ongedateerde herinnering gecorrigeerd",
+          "state": "Geïnstalleerd; gerichte oplevering afgerond",
+          "detail": "Oud “morgen” wordt in de herstelproef niet meer als actuele afspraak behandeld. Drie codecontroles, één gewijzigde modelproef en onafhankelijke review geslaagd. Kern en werker gezond; bron en eigenaarpagina’s gecontroleerd.",
+          "doneWhen": "Deze correctie is technisch opgeleverd; volledige M3 en gezinsbeoordeling blijven open."
         },
         "next": {
-          "title": "M3 · Ongedateerde uitspraak niet als actuele afspraak gebruiken",
-          "state": "Concrete mislukte modelproef",
-          "detail": "Pas alleen het aantoonbaar onduidelijke onderscheid in geheugencontext aan; herhaal uitsluitend het gefaalde geval na wijziging. Geen volledige nieuwe geheugenbouw."
+          "title": "M3 · Geheugen en ontwikkeling in samenhang",
+          "state": "Nog niet gestart",
+          "detail": "Koppel bestaande extractie, terughalen en eigen interesses aan de resterende M3-eindvoorwaarden. Gebruik bestaande bewijzen; geen herbouw of herhaling van geslaagde modelgevallen."
         },
         "ownerAction": {
           "title": "Later hetzelfde onderwerp voortzetten",
@@ -2529,7 +2537,7 @@
           "expected": "Eva haalt relevante eerdere context terug. Geaccepteerd onthouden, corrigeren en vergeten hoef je niet opnieuw te testen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T12:26:44.583003+00:00"
+        "reviewedAt": "2026-09-28T12:34:40.658161+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12349,7 +12357,7 @@
           ]
         }
       ],
-      "nextAction": "Pas alleen het aantoonbaar onduidelijke onderscheid in geheugencontext aan; herhaal uitsluitend het gefaalde geval na wijziging. Geen volledige nieuwe geheugenbouw.",
+      "nextAction": "Koppel bestaande extractie, terughalen en eigen interesses aan de resterende M3-eindvoorwaarden. Gebruik bestaande bewijzen; geen herbouw of herhaling van geslaagde modelgevallen.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -12705,15 +12713,16 @@
           "owner": "/root",
           "baseCommit": "db340ac1",
           "assignment": {
-            "stage": "model_cases_three_pass_one_fail",
-            "scope": "Installed Pydantic conversation adapter with current contact model and signed identity; synthetic memory inputs.",
-            "baseCommit": "8ac9513b",
-            "outcome": "Observe whether actual model answers respect temporary scope and actual own workstep state.",
-            "endCondition": "Four frozen cases recorded and reviewed; no additional repeat without changed hypothesis.",
-            "effort": "Four generate calls max, zero tool execution/real memory writes; tokens measured, credits unknown"
+            "stage": "undated_quote_context_fix",
+            "scope": "adapters/model/pydantic_conversation.py and existing source-date regression",
+            "baseCommit": "ad144667",
+            "outcome": "Undated historical relative-time statement is not presented as a current-day preference.",
+            "endCondition": "Regression and one previously failed real-model case pass, independent review, installation/source verification.",
+            "effort": "One prompt-rendering change and one model call; tokens measured, credits unknown",
+            "status": "completed_installed"
           },
-          "evidence": "eva2/evidence/product/m3-model-cases-20260928.json",
-          "remaining": "Undated relative-time memory still misinterpreted; end-to-end memory and personality/family judgment remain open."
+          "evidence": "eva2/evidence/product/undated-memory-context-20260928.json",
+          "remaining": "End-to-end memory continuity, developing interests/opinions and family judgment remain open; bounded undated-time failure corrected and installed."
         },
         {
           "id": "T1",

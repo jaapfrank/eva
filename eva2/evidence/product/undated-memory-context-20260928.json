@@ -1,0 +1,68 @@
+{
+  "checkedAt": "2026-09-28T12:34:40.658161+00:00",
+  "status": "installed_verified",
+  "sourceCommit": "7f7be3de",
+  "originalFailure": "eva2/evidence/product/m3-model-cases-20260928.json",
+  "hypothesis": "Placing historical temporal scope beside the undated statement removes ambiguity that a general instruction and unknown-date label did not resolve.",
+  "change": "Only undated recalled items gain an explicit historical-time qualifier; timeless preferences remain usable and original content is preserved.",
+  "targetedChecks": {
+    "passed": 3,
+    "seconds": 2.16
+  },
+  "singleChangedCase": {
+    "case": "unknown_source_date",
+    "seconds": 3.5791120000067167,
+    "result": {
+      "text": "Nee, dat staat niet vast. Je had gezegd dat je morgen thee wilde in plaats van koffie, maar de datum van die uitspraak is onbekend.",
+      "provider": "chatgpt-codex:gpt-6-luna",
+      "action_call": null,
+      "usage": {
+        "measurement": "measured",
+        "model_attempts": 1,
+        "tool_calls": 0,
+        "input_tokens": 1866,
+        "output_tokens": 34
+      },
+      "timing": {
+        "first_content_ms": 2511,
+        "completed_ms": 3192
+      }
+    }
+  },
+  "assessment": "pass: response explicitly states source date unknown and does not assign historic tomorrow to a current date",
+  "review": {
+    "reviewer": "/root/platform_research_20260927",
+    "result": "GO for bounded change and result interpretation"
+  },
+  "limits": [
+    "Original failure retained.",
+    "One same-case repeat after actual source change; no general reliability or extraction/retrieval claim.",
+    "Candidate module executed in isolated process using current provider/identity; no private memory read/write."
+  ],
+  "ownerAccepted": false,
+  "credits": null,
+  "installation": {
+    "checkedAt": "2026-09-28T12:34:01.080147+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:64f74865a6a833baf5b81aa7b8f50aa91e991cd5cff45e4e59a8587aaf051850",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/model/pydantic_conversation.py": "0efaf5291e7c31981ef3460580874264113e458598df765dd48a282430fd876b"
+        }
+      },
+      "worker": {
+        "image": "sha256:fa77aaa91e7853747f7d5399a2e165848df5a643e083c28c440ff123cc89a5cf",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/model/pydantic_conversation.py": "0efaf5291e7c31981ef3460580874264113e458598df765dd48a282430fd876b"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/undated-memory-context-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  }
+}
