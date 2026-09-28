@@ -920,14 +920,23 @@ class LivingConversation:
                 before_step(turn, usage)
 
         def continuation_names(receipt: ConversationActionReceipt) -> tuple[str, ...]:
-            if receipt.call.name in {"start_background_research", "start_digital_work"} or (
-                contact_model is not None
-                and receipt.call.name in {"start_delegated_work", "resume_delegated_work"}
-            ):
-                # Durable admission is the end of this foreground request, not
-                # an invitation to poll the worker until its result is ready.
-                return ()
             selector = getattr(self._actions, "continuation_action_names", None)
+            admitted_work = any(item.call.name in {
+                "start_background_research", "start_digital_work",
+                "start_delegated_work", "resume_delegated_work",
+            } for item in (*receipts, receipt))
+            if admitted_work and (contact_model is not None or any(
+                item.call.name in {"start_background_research", "start_digital_work"}
+                for item in (*receipts, receipt)
+            )):
+                # An admitted task may need owner-requested dependent planning.
+                # Keep the worker asynchronous: never offer status polling or
+                # more foreground execution after admission, including after
+                # a schedule receipt or replay of an interrupted planning turn.
+                if receipt.output.get("status") != "verified" or not callable(selector):
+                    return ()
+                return tuple(name for name in selector(turn)
+                             if name == "schedule_digital_work")
             if not callable(selector):
                 return ()
             if receipt.output.get("status") != "verified":
@@ -1014,7 +1023,12 @@ class LivingConversation:
                 "and apply the stored method rather than asking for it again. Text alone cannot "
                 "fulfil an explicit request to read sources, save or act. Confirm admission only; "
                 "remain available and use work_id for status/stop. If admission fails, state the "
-                "blocker without claiming execution.")
+                "blocker without claiming execution. If the request combines work now with "
+                "a later dependent step, delegate only the current step and omit acceptance_message. "
+                "Then use schedule_digital_work with the returned work_id as after_work_id and "
+                "the requested time. Keep scheduling in this conversation; workers cannot schedule "
+                "their own continuation. Confirm a future step only from its stored schedule receipt. "
+                "For ordinary work without follow-up planning, keep the immediate acceptance.")
         if "start_background_research" in available_names:
             self_context = (*self_context,
                 "Use start_background_research for explicit public-source research, with only "

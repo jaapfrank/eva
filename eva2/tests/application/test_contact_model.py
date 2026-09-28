@@ -459,3 +459,69 @@ def test_unoffered_foreground_procedure_is_rejected_before_execution():
     work = Model(lambda *_: pytest.fail("unoffered action must not promote to work model"))
     with pytest.raises(RuntimeError, match="unavailable action"):
         LivingConversation(_Memory(), work, IDENTITY, ProcedureActions(), contact_model=contact).respond(turn())
+
+
+@pytest.mark.parametrize("replayed", [False, True])
+@pytest.mark.parametrize("planning_available", [False, True])
+def test_current_work_can_plan_requested_followup_without_polling(replayed, planning_available):
+    admission = ConversationActionReceipt(
+        ConversationActionCall("admit", "start_digital_work", {"task": "Save the draft"}),
+        {"status": "verified", "operation_result": {"work": {"work_id": "work:draft"}}},
+    )
+
+    class ProjectActions(Actions):
+        action_names = ("start_digital_work", "schedule_digital_work", "get_delegated_work", "inspect_item")
+
+        def __init__(self):
+            super().__init__()
+            self.executed = []
+
+        def pending(self, turn):
+            return admission if replayed else None
+
+        def continuation_action_names(self, turn):
+            return self.action_names if planning_available else ("get_delegated_work",)
+
+        def execute(self, turn, call):
+            assert call == admission.call
+            self.executed.append(call.name)
+            return admission
+
+        def execute_step(self, turn, call, *, step_index):
+            assert step_index == 1
+            assert call.name == "schedule_digital_work"
+            assert call.arguments["schedule"] == {
+                "task": "Read the draft and complete it",
+                "run_at": "2026-09-29T07:00:00Z", "after_work_id": "work:draft",
+            }
+            self.executed.append(call.name)
+            return ConversationActionReceipt(call, {
+                "status": "verified", "operation_result": {"schedule_id": "schedule:finish"},
+            })
+
+    actions = ProjectActions()
+
+    def choose(source, request):
+        receipt = request["completed_action"]
+        if receipt is None:
+            return admission.call
+        assert request["available_actions"] == (("schedule_digital_work",) if planning_available else ())
+        if receipt.call.name == "start_digital_work" and planning_available:
+            work_id = receipt.output["operation_result"]["work"]["work_id"]
+            return ConversationActionCall("schedule", "schedule_digital_work", {"schedule": {
+                "task": "Read the draft and complete it",
+                "run_at": "2026-09-29T07:00:00Z", "after_work_id": work_id,
+            }})
+        if planning_available:
+            assert request["prior_actions"] == (admission,)
+            assert receipt.output["operation_result"]["schedule_id"] == "schedule:finish"
+            return "Concept aangenomen; vervolg voor morgenochtend opgeslagen."
+        return "Concept aangenomen; vervolg niet ingepland."
+
+    contact = Model(choose)
+    work = Model(lambda *_: pytest.fail("Foreground must not run or wait for the worker"))
+    reply = LivingConversation(_Memory(), work, IDENTITY, actions, contact_model=contact).respond(
+        turn(text="Save a draft now and complete it tomorrow at 09:00 Europe/Amsterdam."))
+    assert actions.executed == ([] if replayed else ["start_digital_work"]) + (
+        ["schedule_digital_work"] if planning_available else [])
+    assert ("opgeslagen" in reply.text) is planning_available
