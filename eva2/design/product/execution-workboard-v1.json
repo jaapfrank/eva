@@ -1004,7 +1004,7 @@
             "date": "28 september",
             "state": "installed",
             "result": "Leesfout bereikt werkmodel als foutinformatie; bewaarde vervolgstappen worden eerst hersteld.191 gerichte tests, onafhankelijke review en live broncontrole geslaagd.",
-            "remaining": "Documentopdracht hervat; resultaat nog niet bevestigd. Geen complete L2-claim.",
+            "remaining": "Echte hervatting opnieuw onvoltooid, zonder nieuwe toolactie; document ontbreekt. Geen complete L2-claim.",
             "source": "eva2/evidence/product/mcp-read-error-continuation-20260928.json"
           },
           {
@@ -2660,14 +2660,14 @@
         ],
         "now": {
           "title": "L2 · Nieuwe documenten werkelijk afmaken",
-          "state": "Geïnstalleerd · documentopdracht hervat",
-          "detail": "Algemene leesfoutcorrectie geïnstalleerd op gezonde kern en werker;191 tests, bronreview en exacte live broncontrole geslaagd. Dezelfde documentopdracht één keer hervat. Opgeslagen concept nog niet bevestigd.",
+          "state": "Documentproef vastgelopen · geen actieve herhaling",
+          "detail": "MCP-leesfoutcorrectie is geïnstalleerd en technisch gecontroleerd. Eén hervatting eindigde als onvoltooid na één modelreactie zonder nieuwe toolactie; concept ontbreekt. Geen complete L2-oplevering.",
           "doneWhen": "Toolfout blijft als mislukte lezing zichtbaar, alternatieve stap is mogelijk, geen herhaling van onzekere schrijfhandelingen; daarna dezelfde opdracht voltooien en opgeslagen resultaat controleren."
         },
         "next": {
-          "title": "L2 · Bestaande documentopdracht hervatten",
+          "title": "L2 · Hervatte taak zonder toolactie verklaren",
           "state": "Nog niet gestart",
-          "detail": "Na werkelijk opgeslagen en teruggelezen concept de tweede projectfase uitvoeren. Geen nieuwe herhaling als de hervatte taak opnieuw vastloopt zonder nieuwe oorzaak."
+          "detail": "Lees de opgeslagen hervattingscontext en modeluitkomst; geen nieuwe betaalde proef voordat de oorzaak en kleinste noodzakelijke wijziging duidelijk zijn. Tweede documentfase blijft open."
         },
         "ownerAction": {
           "title": "Toolgebruik na cataloguswijziging proberen",
@@ -2681,7 +2681,7 @@
           "expected": "Een normale begroeting en het juiste bewaarde resultaat. Snellere reactie is nog niet bewezen. Automatische proefvoorbereiding werd geblokkeerd; geen eigenaaracceptatie ingevuld."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T16:36:28.697651+00:00"
+        "reviewedAt": "2026-09-28T16:37:50.284575+00:00"
       }
     },
     "pendingTechnicalReview": {

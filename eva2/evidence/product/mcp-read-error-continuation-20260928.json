@@ -1,6 +1,6 @@
 {
   "contract": "EvaDeliveryEvidence/v1",
-  "checkedAt": "2026-09-28T16:36:28.697651+00:00",
+  "checkedAt": "2026-09-28T16:37:50.284575+00:00",
   "outcome": "MCP read errors remain bounded failure data for a permitted next step; no document completion claim",
   "sourceCommit": "3f0b9311",
   "status": "installed",
@@ -46,8 +46,13 @@
       "input": 40997,
       "output": 810
     },
-    "resume": "Same task resumed once after installation; outcome pending",
-    "credits": "unknown"
+    "resume": "Failed as incomplete_work; one model response, zero new tool calls; no saved document or second phase. No further retry.",
+    "credits": "unknown",
+    "resumeTokens": {
+      "input": 9572,
+      "output": 265
+    },
+    "remaining": "Determine why saved failed state caused the resumed attempt to end without tool continuation; installed read-error handling does not retroactively rewrite historical receipts."
   },
   "limitations": [
     "No full L2 acceptance",

@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Nu in uitvoering — L2 document werkelijk afmaken:** algemene MCP-leesfoutcorrectie3f0b9311 geïnstalleerd op gezonde kern/werker;191 tests, onafhankelijke review en exacte live broncontrole geslaagd. Dezelfde taak eenmaal hervat; werkelijk opgeslagen concept nog niet bevestigd. Eerste poging40.997in/810uit; hervatting loopt, credits onbekend. Geen volledige L2-claim. [Bewijs](evidence/product/mcp-read-error-continuation-20260928.json).
+**Actueel — L2 documentproef vastgelopen:** MCP-leesfoutcorrectie3f0b9311 geïnstalleerd op gezonde kern/werker;191 tests, onafhankelijke review en exacte live broncontrole geslaagd. Eén hervatting eindigde onvoltooid na één modelreactie zonder nieuwe toolactie. Concept ontbreekt; tweede fase niet gestart. Geen actieve herhaling. Volgende: opgeslagen hervattingscontext/modeluitkomst verklaren vóór een nieuwe proef. Gemeten eerste poging40.997in/810uit plus hervatting9.572in/265uit; credits onbekend. Geen volledige L2-claim. [Bewijs](evidence/product/mcp-read-error-continuation-20260928.json).
 
 De eerdere modelomschakeling hieronder is een historische werkaantekening; de afgeronde dashboardregistratie daarvan werd door automatische goedkeuringscontrole geweigerd.
 
