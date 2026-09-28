@@ -1,5 +1,9 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Nu in uitvoering — L2 document werkelijk afmaken, basis80d9245c:** de website nam het conceptverzoek aan, maar de werker stopte op de normale leesfout “bestand bestaat niet”. Geen document opgeslagen. De algemene MCP-leesfout blijft nu als begrensde foutinformatie beschikbaar voor een volgende stap; effecten blijven ongewijzigd.191 gerichte tests en onafhankelijke bronreview akkoord. Installatie en één hervatting van dezelfde taak volgen; geen complete L2-claim. Bekend proefverbruik tot de fout40.997in/810uit; credits onbekend.
+
+De eerdere modelomschakeling hieronder is een historische werkaantekening; de afgeronde dashboardregistratie daarvan werd door automatische goedkeuringscontrole geweigerd.
+
 **Actueel eigenaarbesluit — C1 modelverdeling vastgelegd:** Sol/none uitsluitend voor eenvoudige snelle antwoorden en contact; onderzoek, bouwen en Eva verbeteren via Astra met minimaal medium. Nog niet omgezet: bestaande contact/provider-validatie accepteert none niet. Bestaande contact-/werkroutering aanwezig; gericht aansluiten en controleren, geen nieuwe router bouwen. **Nu in uitvoering — coördinator, basis491fc258:** none-ondersteuning, vaste hulp-/onderzoeksprofielen en contactrol aanpassen, gericht toetsen en installeren. Raming20–35min, maximaal2modelproeven; credits onbekend. Geen snelheidsclaim.
 
 **C1 Instant-toegang gecontroleerd:** chat-latest wordt expliciet geweigerd via Codex met ChatGPT-account (HTTP400). Eén aanvraag, geen voltooide generatie/snelheidsmeting. Geen modelwissel of nieuwe betaalde route. **Volgende, nog niet gestart:** snelle gesprekken verbeteren binnen toegestane modellen met bestaande vergelijkingen als basis; geen identieke toegangspoging. [Bewijs](evidence/product/instant-subscription-access-20260928.json).

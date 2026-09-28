@@ -903,10 +903,11 @@ def test_pending_durable_interest_resumes_without_choosing_again() -> None:
 
 
 @pytest.mark.parametrize("already_completed", [0, 1, 2])
-def test_dependent_tool_chain_recovers_before_model_and_aggregates_usage(already_completed):
+@pytest.mark.parametrize("first_status", ["verified", "failed"])
+def test_dependent_tool_chain_recovers_before_model_and_aggregates_usage(already_completed, first_status):
     first = ConversationActionReceipt(
         ConversationActionCall("step:0", "inspect_item", {"item": "root"}),
-        {"status": "verified", "next": "child"},
+        {"status": first_status, "next": "child"},
     )
     second = ConversationActionReceipt(
         ConversationActionCall("step:1", "inspect_item", {"item": "child"}),
@@ -923,6 +924,9 @@ def test_dependent_tool_chain_recovers_before_model_and_aggregates_usage(already
 
         def pending_step(self, turn, *, step_index):
             return durable.get(step_index)
+
+        def can_continue_after(self, turn, receipt):
+            return receipt == first
 
         def active_context(self, turn):
             return ()

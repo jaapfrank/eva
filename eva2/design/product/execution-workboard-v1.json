@@ -2651,15 +2651,15 @@
           }
         ],
         "now": {
-          "title": "C1 · Sol voor snel contact, Astra voor inhoudelijk werk",
-          "state": "In uitvoering · coördinator",
-          "detail": "Basis 491fc258. Bestaande contactinstellingen en vaste onderzoek-/hulpwerkprofielen aansluiten op Sol/none en Astra/medium. Gerichte controle, één onafhankelijke review, daarna installatie. Raming 20–35 minuten; maximaal twee modelproeven, creditkosten onbekend.",
-          "doneWhen": "Bestaande modelinstellingen en routering voldoen aan deze verdeling, gericht gecontroleerd en geïnstalleerd; gemeten snelheid apart rapporteren."
+          "title": "L2 · Nieuwe documenten werkelijk afmaken",
+          "state": "Getest en bronreview akkoord · installatie in uitvoering",
+          "detail": "Gerichte verwerking van MCP-leesfouten gebouwd;191 tests en onafhankelijke review akkoord. Ontbrekend bestand blijft een mislukte lezing maar blokkeert geen toegestane vervolgstap. Document nog niet gemaakt; installatie en één hervatting volgen.",
+          "doneWhen": "Toolfout blijft als mislukte lezing zichtbaar, alternatieve stap is mogelijk, geen herhaling van onzekere schrijfhandelingen; daarna dezelfde opdracht voltooien en opgeslagen resultaat controleren."
         },
         "next": {
-          "title": "C1 · Vastgelegde modelverdeling aansluiten",
+          "title": "L2 · Bestaande documentopdracht hervatten",
           "state": "Nog niet gestart",
-          "detail": "None-ondersteuning en contactconfiguratie gericht aanpassen; inhoudelijk werk op Astra/medium of hoger houden. Geen nieuwe router, betaalde providerroute of ongemeten snelheidsclaim."
+          "detail": "Na gerichte tests, review en installatie dezelfde taak voortzetten. Tweede projectfase pas nadat het concept werkelijk bestaat."
         },
         "ownerAction": {
           "title": "Toolgebruik na cataloguswijziging proberen",
@@ -2673,7 +2673,7 @@
           "expected": "Een normale begroeting en het juiste bewaarde resultaat. Snellere reactie is nog niet bewezen. Automatische proefvoorbereiding werd geblokkeerd; geen eigenaaracceptatie ingevuld."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T15:53:11.721132+00:00"
+        "reviewedAt": "2026-09-28T16:32:03.820334+00:00"
       }
     },
     "pendingTechnicalReview": {

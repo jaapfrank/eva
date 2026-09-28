@@ -159,6 +159,8 @@ class BackgroundConnectorActions:
 
     @staticmethod
     def can_continue_after(turn, receipt):
+        if _recoverable_read_error(receipt):
+            return True
         from eva.adapters.postgres.connector_results import READER_PREFIX
         return (receipt.call.name == "use_connector_tool"
                 and isinstance(receipt.call.arguments.get("tool_id"), str)
@@ -278,6 +280,16 @@ def _automation_batch_readbacks(receipt):
     return targets
 
 
+def _recoverable_read_error(receipt):
+    proof = receipt.output.get("proof")
+    evidence = proof.get("evidence") if isinstance(proof, dict) else None
+    return (receipt.output.get("status") == "failed"
+            and receipt.output.get("recoverable_read_error") is True
+            and isinstance(evidence, dict)
+            and evidence.get("source") == "mcp_gateway_read_error"
+            and evidence.get("operation_kind") == "read")
+
+
 def _has_completed_tool_evidence(receipts):
     """Discovery is useful context, but cannot alone prove completed work."""
     component_positions = [index for index, receipt in enumerate(receipts)
@@ -311,6 +323,9 @@ def _has_completed_tool_evidence(receipts):
     last_procedure_success = None
     pending_automation_readbacks = set()
     for receipt in receipts:
+        if _recoverable_read_error(receipt):
+            completed = False
+            continue
         output = receipt.output
         if receipt.call.name in {"save_work_progress", "get_delegated_work"}:
             # Planning and reading a predecessor are context, not new completed work.

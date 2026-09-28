@@ -997,12 +997,9 @@ def test_v3_read_calls_provider_once_and_delivers_result_to_existing_receipt() -
                 ("STATE_VERIFIED", {"proof": proof}),
             ))
         )
-        engine = sa.create_engine("sqlite://")
-        try:
-            tools = PostgresExternalConversationTools(engine, planner, adapter)
-            receipt = tools._receipt(_turn(), events)
-        finally:
-            engine.dispose()
+        # Receipt projection does not access a database.
+        tools = PostgresExternalConversationTools(None, planner, adapter)
+        receipt = tools._receipt(_turn(), events)
         assert receipt.output["result"] == {"text": "lees mij"}
         assert receipt.output["status"] == "verified"
         assert len(handler.calls) == 1

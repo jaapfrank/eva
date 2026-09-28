@@ -562,13 +562,19 @@ class McpGatewayToolAdapter:
         from eva.adapters.postgres.connector_results import captured_call, bounded_result
         def observe_call():
             value = self._call_tool(observe_tool_name, observe_arguments,
-                _rpc_id(command, "observe", observe_tool_name, observe_arguments))
+                _rpc_id(command, "observe", observe_tool_name, observe_arguments),
+                **({"preserve_read_error": True} if spec.operation_kind == "read" else {}))
             schema = self._verified_output_schemas.get(observe_tool_name)
-            if spec.operation_kind == "read" and schema is not None:
+            if spec.operation_kind == "read" and "eva_mcp_read_error" not in value and schema is not None:
                 validate_schema_value(value, schema, "observe_output",
                     provider_schema=spec.contract in {"EvaMcpGatewayProvider/v3", "EvaMcpGatewayProvider/v4"})
             return value
         output = await asyncio.to_thread(captured_call, command, "read", observe_call) if spec.operation_kind == "read" else await asyncio.to_thread(observe_call)
+        if spec.operation_kind == "read" and "eva_mcp_read_error" in output:
+            return ToolProofObservation("conflict", {}, {
+                "source": "mcp_gateway_read_error", "operation_kind": "read",
+                "error": output["eva_mcp_read_error"],
+            })
         output_schema = self._verified_output_schemas.get(observe_tool_name)
         if output_schema is not None:
             validate_schema_value(
@@ -673,6 +679,7 @@ class McpGatewayToolAdapter:
         tool_name: str,
         arguments: dict[str, JsonValue],
         rpc_id: str,
+        *, preserve_read_error: bool = False,
     ) -> dict[str, JsonValue]:
         response = self._request_json(
             "POST",
@@ -696,11 +703,21 @@ class McpGatewayToolAdapter:
         if not isinstance(result, dict):
             raise RuntimeError("MCP gateway returned no tool result")
         if result.get("isError") is True:
+            if preserve_read_error:
+                # A tool-level read error is an observed outcome, not an unknown
+                # write effect. Keep bounded provider text as untrusted data.
+                blocks = result.get("content", [])
+                texts = [item["text"][:4096] for item in blocks[:2]
+                         if isinstance(item, dict) and item.get("type") == "text"
+                         and isinstance(item.get("text"), str)] if isinstance(blocks, list) else []
+                return {"eva_mcp_read_error": {"messages": texts or ["MCP read failed"]}}
             raise ToolExecutionRejected("MCP tool rejected the operation")
         structured = result.get("structuredContent")
         if structured is not None:
             if not isinstance(structured, dict):
                 raise RuntimeError("MCP gateway structured output is invalid")
+            if "eva_mcp_read_error" in structured:
+                raise RuntimeError("MCP gateway output uses a reserved key")
             validate_json_value(structured)
             return structured
         content = result.get("content")
@@ -721,6 +738,8 @@ class McpGatewayToolAdapter:
             decoded = {"text": text}
         if not isinstance(decoded, dict):
             raise RuntimeError("MCP gateway JSON tool output must be an object")
+        if "eva_mcp_read_error" in decoded:
+            raise RuntimeError("MCP gateway output uses a reserved key")
         validate_json_value(decoded)
         return decoded
 

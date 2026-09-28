@@ -943,7 +943,11 @@ class LivingConversation:
             receipts.append(completed)
             pending_step = getattr(self._actions, "pending_step", None)
             # Recover admitted steps before asking the model to choose again.
-            while completed.output.get("status") == "verified" and callable(pending_step):
+            while callable(pending_step):
+                if completed.output.get("status") != "verified":
+                    permits = getattr(self._actions, "can_continue_after", None)
+                    if not callable(permits) or permits(turn, completed) is not True:
+                        break
                 checkpoint()
                 recovered = pending_step(turn, step_index=len(receipts))
                 if recovered is None:
