@@ -321,6 +321,11 @@ class PostgresDelegatedWorkActions:
                 or len(call.arguments[key].encode("utf-8")) > (8192 if key == "task" else 240)
             )
         ):
+            if operation == "digital":
+                from eva.application.conversation import ConversationActionInputRejected
+                # No admission or effect has occurred. Use the existing bounded
+                # repair turn; never coerce or discard model arguments silently.
+                raise ConversationActionInputRejected(("task", "acceptance_message"))
             raise ConversationConflict("delegated action arguments differ")
         timeline = self._timeline(turn)
         if operation == "research":

@@ -2,23 +2,17 @@
 
 ## Actief — uitsluitend L2: één project volledig afmaken
 
-**Geblokkeerd:** automatische uitvoercontrole wees de proefvoorbereiding af zonder specifieke reden. Expliciete bevestiging gevraagd en nog niet ontvangen. Dezelfde blokkade bestaat meerdere beurten; geen actieve modeltaak of open geplande vervolgstap. Geteste L2-kandidaat blijft behouden, niet geïnstalleerd. Geen nieuw onderzoek, zijtaak of ongewijzigde proef terwijl deze bevestiging ontbreekt. Het volledige projectdoel blijft onafgerond.
+**Actueel:** de echte projectaanvraag faalde na14s vóór taakaanname door ongeldige toolargumenten. Geen concept of vervolgafspraak opgeslagen. Gerichte foutafhandeling gebruikt bestaande eenmalige invoercorrectie;35 controles geslaagd, onafhankelijke review loopt. Gemeten poging7.923 invoer-/215 uitvoertokens, één modelcall; creditkosten onbekend. Twee bestaande onderzoekstests hebben een verouderde Nederlandstalige tekstassertie; niet als geslaagd geteld.
+
+**Hervat op expliciete eigenaaropdracht:** geteste extra catalogus installeren en dezelfde projectuitkomst vervolgen. Basis435d2b13; alleen bestaande provider/catalogaansluiting. Geen nieuwe dienstregistratie, zijtaak of brede testcyclus. Bestaand review/testbewijs hergebruiken; maximaal één gerichte projectpoging na gewijzigde oorzaak. Werkraming30–45min voor installatie en eerste projectfase; uitvoering op afgesproken later tijdstip blijft afzonderlijk bewijs.
 
 **Uitvoering gecorrigeerd na eigenaarmelding over versnippering:** geen andere bouwopdracht starten. Eerst concept/projectstaat, één echte afhankelijke vervolgafspraak, correctie/hervatting en bewaard eindresultaat afronden. Technische afronding en eigenaaracceptatie blijven apart. Bij blokkade geen zijtaak als vervanging van deze uitkomst.
 
 **Laatste zijstap afgesloten:** HA-/Telegram API-status geïnstalleerd; kern/werker gezond en echte status gelezen. Geen compleet T4- of projectresultaat. [Bewijs](evidence/product/channel-connectivity-installed-20260928.json). Geen modeltaak actief.
 
-**Kandidaat gereed, niet geïnstalleerd:** optionele extra catalogus houdt bestaande contracten/hashes identiek en voegt de gepinde mapfunctie via dezelfde gateway toe.32 tests en onafhankelijke review akkoord; ook echte geïnstalleerde v3-catalogus gecombineerd met v4-kandidaat zonder netwerk/toolcall. Geen registratie, mapactie of modelcall. Installatie/proef wacht op afhandeling van eerdere automatische uitvoerblokkade; expliciete bevestiging gevraagd. [Bewijs](evidence/product/additional-catalog-candidate-20260928.json) · [Beheeruitleg](docs/mcp-catalog-extension.md).
+**Geïnstalleerd — projectbestanden:** extra mapfunctie via bestaande gateway beschikbaar op gezonde kern/werker; exacte bron en eigenaarpagina gecontroleerd. Eerste installatie wees een mount in een alleen-lezen map af; automatische terugweg werkte, afzonderlijk mountpunt vooraf gecontroleerd en tweede installatie geslaagd. Bestaande contracten en gegevens behouden. Eén echte gewijzigde projectpoging volgt; L2 blijft open.
 
-**Huidige blokkade nader vastgesteld:** bestaande filesystemgateway is publiek geregistreerd als eva_workspace. De normale nieuwe owner-registratie gebruikt een andere naam maar dezelfde publieke URL; de geïnstalleerde gateway weigert deze duplicatie. Leescontrole, geen modelcall of registratiepoging. Geen ongewijzigde aansluitproef starten. Bestaande registratie expliciet hergebruiken; oude hashes/resultaten behouden. [Bewijs](evidence/product/project-filesystem-registration-conflict-20260928.json).
-
-**Geïnstalleerd — gevraagde vervolgplanning:** bron5145a139 op gezonde kern/werker;45 gerichte tests en onafhankelijke review akkoord. Na taakaanname blijft uitsluitend bestaande schedule_digital_work beschikbaar; gewone ontvangst blijft direct, geen foregroundpolling. Echte meerdaagse planning/uitvoering nog niet beproefd. [Bewijs](evidence/product/project-followup-planning-20260928.json). Geen modeltaak actief; geen extra modelcalls voor deze wijziging.
-
-**Geïnstalleerd:** bestaande filesystemdienst opgenomen in beheerde endpoints, zonder bron- of oude cataloguswijziging. Kern/werker en beide lokale routes gezond. Acht gerichte controles en onafhankelijke review akkoord. Eerste installatie wees verkeerd bestandseigendom af; teruggezet en gecorrigeerd naar runtime-UID65532/mode400. [Bewijs](evidence/product/project-filesystem-endpoint-20260928.json).
-
-**Nog open:** werkelijke dienstregistratie via connect_service, daarna bewaarde projectopdracht voortzetten. Geen map, concept of afspraak gemaakt. Voorbereiding van de gewone aansluitproef is door automatische uitvoercontrole geblokkeerd zonder specifieke reden; geen omweg uitgevoerd. Geen modeltaak actief. Deze aansluiting sluit L2 niet af.
-
-**Verbruik deze stap:** nul modelcalls; creditkosten onbekend. Bestaande mislukte projectproef blijft bewaard met9.342in/399uit worker-deelverbruik.
+**Planning beschikbaar:** bron5145a139 is al geïnstalleerd. De gewone projectopdracht moet nu werkelijk een concept, projectstaat en één afhankelijke vervolgafspraak opleveren. Geen duplicaatregistratie of nieuwe aansluiting nodig.
 
 ## Afgerond — L1: werkwijze leren en hergebruiken
 

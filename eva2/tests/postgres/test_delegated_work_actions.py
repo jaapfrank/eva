@@ -286,3 +286,18 @@ def test_household_admission_uses_same_acceptance_gate(acceptance_actions):
             "options": ["Home Assistant Cloud"], "research_mode": "topic",
             "public_review": "public_unlinked"}, "acceptance_message": "I will investigate."}))
     assert receipt.output["acceptance_message"] == "I will investigate."
+
+
+@pytest.mark.parametrize("arguments", [
+    {}, {"task": ""}, {"task": "Save draft", "acceptance_message": None},
+    {"task": "Save draft", "acceptance_message": ""},
+    {"task": "Save draft", "unexpected": "private-value"},
+])
+def test_invalid_project_admission_returns_repair_before_timeline_or_effect(arguments, monkeypatch):
+    from eva.application.conversation import ConversationActionInputRejected
+    actions = module.PostgresDelegatedWorkActions(object(), SimpleNamespace(digital_profile=object()))
+    monkeypatch.setattr(actions, "_timeline", lambda *_: pytest.fail("Invalid input reached storage"))
+    with pytest.raises(ConversationActionInputRejected) as caught:
+        actions.execute(object(), ConversationActionCall("invalid", "start_digital_work", arguments))
+    assert caught.value.fields == ("task", "acceptance_message")
+    assert "private-value" not in str(caught.value)

@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-09-28T22:48:08.168485+00:00",
+  "status": "reviewed_source_candidate",
+  "failure": {
+    "elapsedSeconds": 14,
+    "stage": "digital action validation before admission",
+    "exactInvalidArgument": "not retained; no specific argument diagnosis claimed",
+    "inputTokens": 7923,
+    "outputTokens": 215,
+    "modelCalls": 1
+  },
+  "change": "Invalid digital task arguments use existing one-repair input rejection before storage or effects. Validation unchanged.",
+  "tests": {
+    "passed": 35,
+    "deselected": 2,
+    "reason": "Existing research prompt tests assert obsolete Dutch substring against English instructions; unchanged source."
+  },
+  "independentReview": {
+    "reviewer": "review_directory_connection",
+    "decision": "GO",
+    "limitation": "Fallback wording mentions research; actual project still unproven."
+  },
+  "ownerAccepted": false
+}
