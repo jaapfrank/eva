@@ -1,0 +1,15 @@
+[Unit]
+Description=Eva optional local camera interpretation (Qwen / llama.cpp)
+
+[Service]
+Type=simple
+EnvironmentFile=%h/.config/eva2/local-vision.env
+ExecStart=/usr/bin/env ${VISION_RUNTIME}/llama-server -m ${VISION_MODEL_FILE} --mmproj ${VISION_PROJECTOR_FILE} -ngl 99 -c 4096 --no-warmup --host ${VISION_BIND_ADDRESS} --port ${VISION_PORT} --alias eva-local-vision --image-min-tokens 1024 --image-max-tokens 2048 --reasoning off --chat-template-kwargs '{"enable_thinking":false}'
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=15
+NoNewPrivileges=yes
+UMask=0077
+
+[Install]
+WantedBy=default.target

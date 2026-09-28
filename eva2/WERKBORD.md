@@ -1,5 +1,7 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Nu — I2 bruikbare camera-analyse, basis92859eae:** bestaande adapter en GPU-kandidaat behouden; één echte scène controleren en bij voldoende resultaat optioneel aansluiten op gewone HA-cameravraag. Geen automatische camera-observaties of nieuwe agenda-/initiatiefbouw. C1 blijft open: bestaande modelmeting alleen al3,33s; geen identieke begroetingsproef. T4 overige signalen uitgesteld ten gunste van productfunctie. Eindpunt: lokale interpretatie via bestaande tool, installatie en terugweg; maximaal één eerste scèneproef, cloudverbruik nul voor beeldanalyse.
+
 **T4 taakbediening technisch bevestigd:** echte UI/API/PostgreSQL-proef: A stoppen/hervatten, B bijsturen en één geplande vervolgpoging, nogmaals hervatten opent bestaande poging. Twee originelen blijven bewaard; vier rijen totaal, geen modelcall of huisactie. Onafhankelijk beoordeeld; testdatabase verwijderd. Bestaande productbediening behouden, geen onnodige bouw/installatie. Volgende: beschikbare kanaal-/werkerwaarnemingen aansluiten, nog niet gestart; volledige T4 en eigenaaracceptatie open. [Bewijs](evidence/product/task-controls-store-20260928.json).
 
 **Nu — T4 bestaande taakknoppen, basisf3dfcc1d:** coördinator controleert actuele UI/API in geïsoleerde fixture; platform_research_20260927 zoekt herbruikbare echte backendproef. Geen productieopdrachten of modelcalls. Eerste ronde15min; sluit bewijs van stoppen/bijsturen/hervatten aan zonder bestaande functies opnieuw te bouwen. Vorige beurt: voortgang door geïnstalleerde statusweergave.

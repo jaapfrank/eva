@@ -41,9 +41,9 @@ class LocalVisionHttpAnalyzer:
     def analyze(self, snapshot: CameraSnapshot) -> SensoryEvent:
         encoded = base64.b64encode(snapshot.data).decode("ascii")
         body = {"model": self.model, "messages": [{"role": "user", "content": [
-            {"type": "text", "text": "Describe only visible objects, colours and positions. Mention uncertainty. Do not infer identities, intentions, dates or unseen events. Keep it brief."},
+            {"type": "text", "text": "Describe the visible scene in at most 70 words. Name the main objects and their positions. For ambiguous objects say what they may be; do not guess exact types. Mention uncertainty. For monochrome or infrared images do not infer real colours. Do not infer identities, intentions, dates or unseen events."},
             {"type": "image_url", "image_url": {"url": f"data:{snapshot.content_type};base64,{encoded}"}},
-        ]}], "max_tokens": 120, "temperature": 0}
+        ]}], "max_tokens": 256, "temperature": 0}
         with httpx.Client(timeout=15, follow_redirects=False, trust_env=False) as client:
             with client.stream("POST", self.endpoint + "/v1/chat/completions", json=body) as response:
                 if response.status_code != 200:
