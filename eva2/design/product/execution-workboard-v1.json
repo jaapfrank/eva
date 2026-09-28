@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "GLaDOS beoordeeld op hergebruik",
+            "date": "28 september",
+            "state": "investigated",
+            "result": "Code en bestaande Eva-basis vergeleken. Kansrijk: lokale beeldwaarneming en gedragsfeedback.",
+            "remaining": "Geen benchmark, installatie of nieuwe productfunctie. Nederlandse spraak, Voice PE en gemeten voordeel blijven onbewezen.",
+            "source": "eva2/research/2026-09-28-glados-reuse.md"
+          },
+          {
             "title": "Oud “morgen” zonder datum niet als actuele afspraak",
             "date": "28 september",
             "state": "installed",
@@ -2515,10 +2523,10 @@
           }
         ],
         "now": {
-          "title": "M3 · Ongedateerde herinnering gecorrigeerd",
-          "state": "Geïnstalleerd; gerichte oplevering afgerond",
-          "detail": "Oud “morgen” wordt in de herstelproef niet meer als actuele afspraak behandeld. Drie codecontroles, één gewijzigde modelproef en onafhankelijke review geslaagd. Kern en werker gezond; bron en eigenaarpagina’s gecontroleerd.",
-          "doneWhen": "Deze correctie is technisch opgeleverd; volledige M3 en gezinsbeoordeling blijven open."
+          "title": "GLaDOS · Vergelijking afgerond",
+          "state": "Onderzocht; niets geïnstalleerd",
+          "detail": "Lokale veranderingsgestuurde beeldanalyse en begrensde gedragsfeedback zijn kansrijke kandidaten. Geen aangetoond voordeel voor vervanging van geheugen of kern. Voice PE en Nederlandse snelheid niet bewezen.",
+          "doneWhen": "Bronbesluit vastgelegd; vervolg bij bestaande initiatief-/persoonlijkheidsstappen, niet als nieuwe bouwronde."
         },
         "next": {
           "title": "M3 · Geheugen en ontwikkeling in samenhang",
@@ -2537,7 +2545,7 @@
           "expected": "Eva haalt relevante eerdere context terug. Geaccepteerd onthouden, corrigeren en vergeten hoef je niet opnieuw te testen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T12:34:40.658161+00:00"
+        "reviewedAt": "2026-09-28T12:37:44.323609+00:00"
       }
     },
     "pendingTechnicalReview": {
