@@ -2440,7 +2440,7 @@
           "expected": "Gebouwd, getest, geïnstalleerd en door jou geaccepteerd blijven apart. Alleen werkelijk bruikbare functies tellen als opgeleverd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T09:06:27.093814+00:00"
+        "reviewedAt": "2026-09-28T09:08:12.615117+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12547,7 +12547,18 @@
           "concreteChange": "Use the existing configured32 request allowance instead of additional composition cap8/tools6; reserve final response. Historical grants unchanged. Actual core setting32 confirmed read-only.",
           "sourceCommit": "ef59f784",
           "activeWorker": "coordinator",
-          "latestRealTask": "internal_error; no complete result; causal metadata not retained"
+          "latestRealTask": "internal_error; no complete result; causal metadata not retained",
+          "diagnosticAssignment": {
+            "baseCommit": "855d9ac6",
+            "files": [
+              "eva2/src/eva/adapters/model/pydantic_conversation.py",
+              "eva2/tests/model/test_pydantic_conversation_model.py"
+            ],
+            "outcome": "Distinguish actual failed provider/model-response cause, then fix complete task execution",
+            "endCondition": "Safe causal categories recorded on existing failure path; no prompt/response/credentials exposed; retry behavior unchanged",
+            "effort": "One bounded implementation and review window; model trial only after changed evidence",
+            "runtimeCallsBeforeInstallation": 0
+          }
         },
         {
           "id": "T2",

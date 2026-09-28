@@ -790,7 +790,7 @@ def test_second_pre_output_unavailable_is_not_retried_again(tmp_path: Path) -> N
     ],
 )
 def test_non_transient_or_unknown_failure_is_never_retried(
-    tmp_path: Path, failure: Exception
+    tmp_path: Path, failure: Exception, caplog
 ) -> None:
     scripted = ScriptedPydanticConversation(
         (
@@ -804,6 +804,12 @@ def test_non_transient_or_unknown_failure_is_never_retried(
 
     assert len(scripted.captures) == 1
     assert scripted.remaining_phases == 1
+    diagnostics = [record.message for record in caplog.records if record.message.startswith("conversation_model_failure ")]
+    assert len(diagnostics) == 1
+    diagnostic = json.loads(diagnostics[0].split(" ", 1)[1])
+    assert type(failure).__name__ in diagnostic["exception_chain"]
+    assert diagnostic["provider_category"] == (failure.category if isinstance(failure, CodexProviderError) else None)
+    assert "unknown provider failure" not in diagnostics[0]
 
 
 def test_retry_attempts_share_one_absolute_phase_deadline(tmp_path: Path) -> None:
@@ -1349,3 +1355,31 @@ def test_contact_catalog_preserves_identity_memory_recent_context(tmp_path):
         "them. Their full schemas are available through discovery."
     )
     assert captures[1] == captures[0] + guidance
+
+
+def test_failure_diagnostic_redacts_messages_and_identifies_causal_limit(caplog):
+    from pydantic_ai.exceptions import UsageLimitExceeded
+    from eva.adapters.model.pydantic_conversation import _log_model_failure
+    secret = "private-prompt-token-should-never-be-logged"
+    cause = UsageLimitExceeded("Exceeded the output_tokens_limit: " + secret)
+    error = ConversationModelError(secret)
+    error.__cause__ = cause
+    _log_model_failure(error, secret)
+    record = json.loads(caplog.records[-1].message.split(" ", 1)[1])
+    assert record == {
+        "request_id_sha256": hashlib.sha256(secret.encode()).hexdigest(),
+        "exception_chain": ["ConversationModelError", "UsageLimitExceeded"],
+        "provider_category": None, "usage_limit": "output_tokens",
+    }
+    assert secret not in caplog.text
+
+
+def test_failure_diagnostic_bounds_cyclic_chains_and_unknown_category(caplog):
+    from eva.adapters.model.pydantic_conversation import _log_model_failure
+    error = CodexProviderError("private-provider-text")
+    error.__cause__ = error
+    _log_model_failure(error, None)
+    record = json.loads(caplog.records[-1].message.split(" ", 1)[1])
+    assert record["exception_chain"] == ["CodexProviderError"]
+    assert record["provider_category"] == "other"
+    assert "private-provider-text" not in caplog.text

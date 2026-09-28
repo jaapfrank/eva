@@ -103,6 +103,38 @@ _MAX_STREAM_BYTES = 8 * 1024 * 1024
 _MODEL_LEASE_OWNER_UID = 1000
 
 
+def _log_model_failure(error: BaseException, request_id: str | None) -> None:
+    """Retain causal categories without prompts, response bodies or exception text."""
+    chain = []
+    seen = set()
+    current = error
+    provider_category = None
+    limit = None
+    while current is not None and id(current) not in seen and len(chain) < 8:
+        seen.add(id(current))
+        name = type(current).__name__
+        chain.append(name if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,79}", name) else "UnknownError")
+        if isinstance(current, CodexProviderError):
+            category = current.category
+            provider_category = category if category in {
+                "unavailable", "deadline", "credentials_rejected", "configuration",
+                "protocol", "response_too_large", "request_too_large",
+            } else "other"
+        if name == "UsageLimitExceeded":
+            # Inspect only known field labels; never retain the message or values.
+            text = str(current)
+            limit = next((field for field in (
+                "input_tokens", "output_tokens", "total_tokens", "tool_calls", "request",
+            ) if field in text), "unknown")
+        current = current.__cause__ or current.__context__
+    logging.getLogger(__name__).warning("conversation_model_failure %s", json.dumps({
+        "request_id_sha256": hashlib.sha256(request_id.encode()).hexdigest() if request_id else None,
+        "exception_chain": chain,
+        "provider_category": provider_category,
+        "usage_limit": limit,
+    }, separators=(",", ":")))
+
+
 def _recent_message_line(message: RecentConversationMessage, source_label: int | None = None) -> str:
     descriptions = {
         "completed": "afspelen voltooid; dit bewijst niet dat iemand het hoorde",
@@ -962,6 +994,7 @@ class PydanticConversationModel:
 
                 def record_failure(error: BaseException) -> None:
                     nonlocal raw_usage, raw_usage_consumed
+                    _log_model_failure(error, request_id)
                     if request_id is None:
                         return
                     usage = getattr(error, "model_usage", None)
