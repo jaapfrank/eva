@@ -1,0 +1,56 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-28T10:48:39.716888+00:00",
+  "status": "in_progress",
+  "baseCommit": "1ac19a46",
+  "requirement": "C2: independently steer two tasks and preserve status and original-question result delivery across reconnect.",
+  "existingCoverage": [
+    {
+      "source": "eva2/tests/postgres/test_delegated_work_owner_service.py",
+      "coverage": "Running task, second admitted task, intervening conversation and selected stop."
+    },
+    {
+      "source": "eva2/tests/postgres/test_native_task_continuity.py",
+      "coverage": "Two tasks over successive sessions, selected stop/resume and original delivery binding."
+    },
+    {
+      "source": "eva2/tests/postgres/test_household_digital_work.py",
+      "coverage": "Durable correction across closed session, one successor and preserved effects/origin."
+    },
+    {
+      "source": "eva2/tests/postgres/test_private_work_return.py",
+      "coverage": "Stored result, claim/ack and duplicate prevention."
+    }
+  ],
+  "missingCombinedCase": "A corrected, B independently stopped, session closed/reopened, both states visible, corrected A completed once and delivered to its original question; B remains stopped.",
+  "ownerProjection": {
+    "source": "eva2/src/eva/adapters/api/dashboard_work.py",
+    "observation": "Control requests use explicit work_id and no-store responses.",
+    "resultClient": "eva2/src/eva/adapters/api/dashboard_work_return_client.py",
+    "reconnectMechanism": "History reload after suspend/offline and operation-ID deduplication. Source inspection, not a new browser trial.",
+    "readOnlyLiveCheck": {
+      "workId": "work:eva-chat:3869b194-df79-5ce8-89bc-985322a50789",
+      "separateHttpConnections": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "taskStates": [
+        "succeeded",
+        "succeeded"
+      ],
+      "cacheControl": "no-store"
+    }
+  },
+  "changes": "No production change identified or made. One existing integration test extension in progress.",
+  "limits": [
+    "Individual controlled cases do not yet prove the combined lifecycle.",
+    "HTTP reconnect observation does not prove browser offline behavior or physical voice playback.",
+    "Owner acceptance and Telegram trial remain open."
+  ],
+  "usage": {
+    "evaModelCalls": 0,
+    "physicalActions": 0,
+    "creditCost": null
+  }
+}
