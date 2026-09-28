@@ -1,0 +1,84 @@
+{
+  "checkedAt": "2026-09-28T16:51:16.668691+00:00",
+  "sourceCommit": "0a6abf36",
+  "status": "installed",
+  "outcome": "Host-confirmed historical read failure permits a fresh authorized step without replaying historical effects.",
+  "tests": {
+    "passed": 183,
+    "path": "/home/administrator/project/.eva2-artifacts/legacy-read-resume-20260928/tests.txt",
+    "beforeFix": "Historical read continuation regression failed as expected"
+  },
+  "review": "platform_research_20260927 GO",
+  "runtime": {
+    "checkedAt": "2026-09-28T16:46:21.261155+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:691a54df6270d512740ae4dbc2b187824170abb88b5981960fb5a52973a1802d",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/external_conversation_tools.py": "2333bf377dedc495f70e81328d7fcf4b21d280a0a0c7dc86bc597eb772ef8e83"
+        }
+      },
+      "worker": {
+        "image": "sha256:faf2d07e00dd5e3e45ea96d26cb0c0ec1188bb547c46bf07fd41e7fdb7d09a84",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/external_conversation_tools.py": "2333bf377dedc495f70e81328d7fcf4b21d280a0a0c7dc86bc597eb772ef8e83"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/legacy-read-resume-20260928/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "trial": {
+    "state": "two_stage_document_succeeded_independently_reviewed",
+    "draftWorkId": "work:eva-resume:4294264a-b4df-5741-9d6d-1c13c30dd86a",
+    "finalWorkId": "work:eva-chat:24ab956b-aeed-5953-b146-1bc69dca5b57",
+    "filesystem": {
+      "checkedAt": "2026-09-28T16:50:02.112189+00:00",
+      "draftUnchanged": true,
+      "draftPreservedInFinal": true,
+      "draftSha256": "e8547586db6224a702d10af5e9786d9eee0b62622dec50f7ce9bb15d71a8b46a",
+      "finalSha256": "a517ba8a81c4526b38887f9bf83f8f0fbb1276941e18121c3568934f96476ecc",
+      "finalBytes": 769,
+      "finalPath": "/proof-state/l2-sol-gezinsavond-eind-20260928.txt",
+      "independentFilesystemRead": true,
+      "noClaim": [
+        "Elapsed multi-day use",
+        "Full L2 autonomy: first phase required developer fixes",
+        "Fast contact",
+        "Owner acceptance"
+      ]
+    },
+    "phase2ReceiptSeconds": 34.584,
+    "knownUsageIncludingFailedAttempts": {
+      "inputTokens": 192927,
+      "outputTokens": 3092,
+      "credits": "unknown",
+      "excludes": "Unmeasured background memory processing and development usage",
+      "calculation": "40997+9572+48953+85648+7757 input;810+265+675+1074+268 output. First term includes first foreground; final term is measured second foreground journal."
+    },
+    "successfulResumeUsage": {
+      "inputTokens": 48953,
+      "outputTokens": 675,
+      "modelResponses": 4,
+      "toolCalls": 3
+    },
+    "phase2Usage": {
+      "inputTokens": 93405,
+      "outputTokens": 1342,
+      "modelResponses": 9,
+      "toolCalls": 8
+    },
+    "artifactDirectory": "/home/administrator/project/.eva2-artifacts/legacy-read-resume-20260928"
+  },
+  "noClaim": [
+    "Full L2 autonomous multi-day use; draft required developer fixes",
+    "Fast contact",
+    "Owner acceptance"
+  ],
+  "resultReview": "platform_research_20260927 GO: 105-word draft, final preserves every draft byte, adds three closing tips; hashes match independent filesystem read, both work records succeeded."
+}

@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Bewaard document later aanvullen en als eindresultaat opleveren",
+            "date": "28 september",
+            "state": "tested",
+            "result": "Eva bewaarde concept, las het bij een latere gewone websiteopdracht terug en maakte een einddocument. Concept ongewijzigd en volledig behouden; bestandbytes onafhankelijk gecontroleerd.",
+            "remaining": "Bron en resultaat onafhankelijk goedgekeurd. Eerste fase vereiste reparaties; geen volledige meerdaagse/autonomieclaim. Ontvangst34,584s blijft te traag.",
+            "source": "eva2/evidence/product/legacy-read-resume-20260928.json"
+          },
+          {
             "title": "Doorgaan na een normale fout bij lezen via MCP",
             "date": "28 september",
             "state": "installed",
@@ -2659,15 +2667,15 @@
           }
         ],
         "now": {
-          "title": "L2 · Verder na bewaarde leesfout",
-          "state": "Gerichte correctie · coördinator",
-          "detail": "Historische leesfoutcorrectie gebouwd;183 gerichte controles slagen, review loopt. Parallel timingdiagnose van Telegram Hallo11s; eigenaar bevestigt dat ophalen eigen bijdrage met /eva2 inhoudelijk werkt, maar traag is.",
+          "title": "Document bewaren en later afmaken · afgeronde proef",
+          "state": "Opgeleverd en onafhankelijk gecontroleerd",
+          "detail": "Concept opgeslagen; latere websiteopdracht heeft alle concepttekst behouden en einddocument met aanvulling opgeslagen. Beide bestanden en resultaat onafhankelijk gecontroleerd. Eerste fase vroeg reparaties; volledige L2 en snelle reacties blijven open.",
           "doneWhen": "Bewaarde leesfout laat een toegestane nieuwe stap toe; effectfouten blijven geblokkeerd. Gerichte test/review/installatie, daarna maximaal één hervatting en echt document teruglezen."
         },
         "next": {
-          "title": "L2 · Hervatte taak zonder toolactie verklaren",
+          "title": "C1 · Begroeting en taakontvangst versnellen",
           "state": "Nog niet gestart",
-          "detail": "Lees de opgeslagen hervattingscontext en modeluitkomst; geen nieuwe betaalde proef voordat de oorzaak en kleinste noodzakelijke wijziging duidelijk zijn. Tweede documentfase blijft open."
+          "detail": "Gebruik werkelijke Telegrammeting12,209s en websiteaanname34,584s. Splits model/context/transport met bestaande journalgegevens en kies alleen de gemeten bottleneck; geen extra modelvergelijkingsronde."
         },
         "ownerAction": {
           "title": "Toolgebruik na cataloguswijziging proberen",
@@ -2681,7 +2689,7 @@
           "expected": "Eigenaar bevestigt: nieuwste bijdrage met /eva2 correct opgehaald. Wachttijd blijft onvoldoende; Hallo11s. Antwoord van Eva1 zonderprefix was de andere route, geen mislukte Eva2-resultaatophaling."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T16:42:12.269945+00:00"
+        "reviewedAt": "2026-09-28T16:51:53.876319+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13170,11 +13178,12 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "nextAction": "Historische mislukte MCP-leesactie laat hervatting geen tools kiezen; gerichte correctie met tests. Geen tweede planner.",
+          "nextAction": "Twee fasen documentproject slagen na gerichte leesfoutreparaties; zelfstandig meerdaags werk en algemene planning blijven open, geen afwezigheid van opslag.",
           "owner": "/root",
-          "activeWorker": "/root",
+          "activeWorker": null,
           "baseCommit": "a5856551",
-          "effortNotice": "15–25min; maximaal één hervatting na installatie; credits onbekend."
+          "effortNotice": "15–25min; maximaal één hervatting na installatie; credits onbekend.",
+          "latestEvidence": "eva2/evidence/product/legacy-read-resume-20260928.json"
         },
         {
           "id": "L3",

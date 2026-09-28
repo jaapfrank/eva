@@ -1,6 +1,12 @@
 # Eva 2 — uitvoerbaar werkbord
 
-**Eigenaarproef Telegram18:38/18:40:** /eva2 hallo duurt11s. Nieuwste eigen bijdrage mét /eva2 inhoudelijk correct opgehaald, volgens Jaap nog traag. Eva1-antwoord was op bericht zonderprefix; geen Eva2-resultaatdefect. platform_research_20260927 onderzoekt bestaande timinggegevens zonder modelcalls. Coördinator rondt historische leesfoutcorrectie af;183 controles geslaagd, bronreview loopt.
+**Opgeleverd — document bewaren en later afmaken:** concept opgeslagen; vervolgfase via gewone website maakte een eindbestand met behouden concept en drie afsluitingstips. Beide echte bestanden onafhankelijk teruggelezen; concept ongewijzigd. Bron0a6abf36 live,183 tests en bronreview en onafhankelijke resultaatreview akkoord. Volledige L2/meerdaagse autonomie blijft open omdat eerste fase reparaties vroeg. Bekend inclusief mislukte pogingen192.927in/3.092uit; credits en extra geheugenverwerking onbekend. Taakontvangst34,584s blijft te traag. Volgende: gemeten C1-wachttijd gericht oplossen, nog niet gestart. [Bewijs](evidence/product/legacy-read-resume-20260928.json).
+
+**L2 concept werkelijk opgeslagen:** bestaand werk na leesfoutcorrectie geslaagd; /proof-state/l2-sol-gezinsavond-concept-20260928.txt onafhankelijk teruggelezen (SHA256e8547586db6224a702d10af5e9786d9eee0b62622dec50f7ce9bb15d71a8b46a). Vier modelreacties, drie tools,48.953in/675uit; credits onbekend. Vervolgfase via gewone website aangevraagd; einddocument nog open.
+
+**Live — historische leesfoutcorrectie0a6abf36:**183 tests, onafhankelijke review, exacte bron en gezonde kern/werker bevestigd. Dezelfde documentopdracht hervat; worker voert uit. Concept nog niet bevestigd. [Bewijs](evidence/product/legacy-read-resume-20260928.json).
+
+**Eigenaarproef Telegram18:38/18:40:** /eva2 hallo duurt11s. Nieuwste eigen bijdrage mét /eva2 inhoudelijk correct opgehaald, volgens Jaap nog traag. Eva1-antwoord was op bericht zonderprefix; geen Eva2-resultaatdefect. platform_research_20260927 onderzoekt bestaande timinggegevens zonder modelcalls. Historische leesfoutcorrectie0a6abf36:183 controles en onafhankelijke review akkoord; coördinator bereidt installatie voor, reviewer klaar.
 
 **Nu — L2 verder na bewaarde leesfout, coördinator, basisa5856551:** historische RECOVERY_FAILED sluit alle vervolggereedschappen. Gericht de host-geregistreerde leesclassificatie gebruiken; geen historische gebeurtenissen herschrijven of effecten herhalen. Bestanden: external_conversation_tools.py en gerichte tests; review/installatie daarna. Raming15–25min, maximaal één nieuwe hervatting na gewijzigde oorzaak; credits onbekend.
 
