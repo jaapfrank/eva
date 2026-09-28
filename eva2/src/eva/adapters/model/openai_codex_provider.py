@@ -448,23 +448,15 @@ def _codex_compatible_request(
         # Pydantic 2.37 only discovers flat function search results. Keep the
         # authorized ExternalToolset registered locally, and defer descriptions
         # at the provider boundary. No tool or execution authority is added.
-        # One function per namespace preserves the existing replay namespace.
+        from eva.adapters.model.tool_namespaces import deferred_namespaces
         names = {tool["name"] for tool in tools if tool.get("type") == "function"}
         if names:
-            body["tools"] = [
-                {
-                    "type": "namespace",
-                    "name": tool["name"],
-                    "description": tool["name"].replace("_", " "),
-                    "tools": [{**tool, "defer_loading": True}],
-                } if tool.get("type") == "function" else tool
-                for tool in tools
-            ]
+            body["tools"], namespaces = deferred_namespaces(tools)
             if not any(tool.get("type") == "tool_search" for tool in tools):
                 body["tools"].insert(0, {"type": "tool_search"})
             for item in projected_input:
                 if item.get("type") == "function_call" and item.get("name") in names:
-                    item["namespace"] = item["name"]
+                    item["namespace"] = namespaces[item["name"]]
     encoded = canonical_json_bytes(body)
     headers = dict(request.headers)
     headers.pop("content-length", None)

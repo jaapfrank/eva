@@ -995,44 +995,31 @@ class LivingConversation:
         check_cancellation()
         if contact_model is not None:
             self_context = (*self_context,
-                "Natuurlijk, kort contact; uitsluitend eenvoudige vragen direct beantwoorden. "
-                "Doe onderzoek, uitgebreid analyseren, dingen maken en Eva verbeteren via de werklaag; "
-                "voer dit niet zelf als snel gespreksmodel uit. Gebruik aangeboden "
-                "start_delegated_work voor langer denken, schrijven of analyseren zonder browser/externe tools; "
-                "deze hulpagent kan geen actuele bronnen lezen of acties uitvoeren. Daarvoor zijn echte "
-                "aangeboden tools nodig. Bevestig werk pas na opgeslagen toelating. Gebruik aangeboden "
-                "acceptance_message voor één korte, natuurlijke ontvangstzin over de opdracht, zonder "
-                "voltooiingsclaim; die verschijnt pas na toelating. Bewaar work_id voor vervolgvragen/stoppen. "
-                "Wacht of poll niet; laat de gebruiker doorpraten. Nieuw werk stopt oud werk niet. Stop bij "
-                "expliciet verzoek of onverenigbare correctie het juiste work_id met de stoptool; vraag bij "
-                "onduidelijkheid welke taak. Delegeer alleen context toegestaan voor deze persoon én dit "
-                "publiek.")
+                "Answer only simple questions directly, warmly and briefly. Delegate research, "
+                "substantial analysis, creation and Eva improvements. start_delegated_work is "
+                "for tool-free thinking/writing, not current sources or external actions. "
+                "Confirm only durable admission, using a short acceptance_message, never completion. "
+                "Keep work_id; do not wait or poll. New work does not stop old work. Use the stop "
+                "tool for an explicit stop or incompatible correction; clarify an ambiguous target. "
+                "Delegate only context authorized for both this person and audience.")
         if "start_digital_work" in available_names:
             self_context = (*self_context,
-                "Kies zelf start_digital_work voor meerdere ontdek-, lees-, vergelijkings- of uitvoerstappen "
-                "met toegestane connectoren, ook zonder expliciet achtergrondverzoek. Dit omvat "
-                "HA-automatiseringen opzoeken, volledige configuraties analyseren en verbeteringen onderbouwen. "
-                "Eenvoudige actuele staat of direct bekende huisactie mag direct. Delegeer vóór "
-                "connectorstatus, toolontdekking of deeluitvoering. De gesprekscatalogus is niet de uitvoercatalogus: "
-                "ontbrekende opslag- of uitvoertools hier bewijzen niet dat de achtergrondwerker ze mist. "
-                "Laat die werker binnen het bestaande mandaat de tools en bereikbaarheid controleren; "
-                "wijs digitaal werk niet af uitsluitend omdat je het hier niet zelf kunt uitvoeren. "
-                "Geef de concrete opdracht en relevante toegestane gegevens mee. "
-                "Bevestig pas na opgeslagen toelating: aangenomen is niet uitgevoerd. Wacht niet; laat "
-                "doorpraten en gebruik work_id voor volgen/stoppen. Ook digitaal leren en hergebruik horen "
-                "hier, niet bij toolvrije hulp of alleen publiek onderzoek. Geef leerdoel, toepassing en "
-                "bewaren van de werkwijze mee. Een expliciet verzoek om bronnen te lezen, iets te bewaren "
-                "of uit te voeren is niet vervuld met alleen een inhoudelijk tekstantwoord. Neem zulk "
-                "meerstapswerk aan via start_digital_work, ook als je een deel zelf kunt beantwoorden. "
-                "Lukt de toelating niet, benoem de concrete blokkade en claim het werk niet als gedaan. "
-                "Laat bij hergebruik de werker de actuele bewaarde inhoud ophalen en toepassen; "
-                "vraag de gebruiker niet opnieuw om uitleg.")
+                "Use start_digital_work BEFORE discovery or partial execution for multi-step "
+                "connector work: reading, comparison, saving, actions, HA automation/configuration "
+                "analysis, learning and skill reuse. A simple current-state read or known house "
+                "action may run directly. The worker has its own authorized tools; do not infer "
+                "missing capability from the foreground catalog. Let it check access within the "
+                "existing mandate. Pass the full task and relevant authorized context; for learning "
+                "include the goal, application and retaining the method. For reuse, have it fetch "
+                "and apply the stored method rather than asking for it again. Text alone cannot "
+                "fulfil an explicit request to read sources, save or act. Confirm admission only; "
+                "remain available and use work_id for status/stop. If admission fails, state the "
+                "blocker without claiming execution.")
         if "start_background_research" in available_names:
             self_context = (*self_context,
-                "Gebruik start_background_research voor expliciet publiek bronnenonderzoek; alleen de publieke "
-                "onderzoeksvraag, geen privégegevens of opgehaalde herinneringen. Bevestig pas na opgeslagen "
-                "toelating, wacht niet op resultaat en laat doorpraten. Volg, stop of hervat de juiste taak via "
-                "bestaande taakbediening.")
+                "Use start_background_research for explicit public-source research, with only "
+                "the public question, never private context or recalled memories. Confirm durable "
+                "admission, remain available, and use existing task controls for status/stop/resume.")
         from eva.application.voice_context import current_voice_context, STOP_VOICE_WORK, SPEAK_AND_CONTINUE
         voice = current_voice_context()
         if voice is not None:

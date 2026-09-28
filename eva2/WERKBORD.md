@@ -1,5 +1,7 @@
 # Eva 2 — uitvoerbaar werkbord
 
+**Nu — C1 gegroepeerde cataloguspresentatie, basis84fe836b:** coördinator vervangt kandidaatgewijs één namespace per functie door kleine semantische groepen in bestaande provideradapter. Alle functies/schema’s/subsets en oude receipt-replay moeten gelijk blijven; onbekende functies houden eigen namespace. Eerst offline grootte/replay, dan onafhankelijke review; maximaal twee modelproeven alleen bij materiële winst. Geen nieuwe router of geheugensysteem.
+
 **C1 invoercontrole afgerond zonder nieuwe release:** routeringsuitleg583teksttokens; compacte kandidaat299, slechts284minder. Geen volledige opname van historische providerinvoer; geen claim over facturatie/snelheidswinst. Geen modelcalls of runtimewijziging. Kandidaat buiten productbron bewaard voor bundeling, geen losse installatiecyclus. Volgende: bestaande deferred toolcatalogus gericht beoordelen op grotere winst; nog niet gestart. [Bewijs](evidence/product/contact-guidance-size-20260928.json).
 
 **Nu — C1 contactinvoer, basis5d20aa37:** coördinator onderzoekt dubbele rol-/werkinstructies; platform_research_20260927 zoekt bestaande of modelvrije invoeropname. Tien minuten begrensde diagnose, geen nieuwe modelcalls. Behoud identiteit, toegestane herinneringen, taakcontext en toegang tot werk. Alleen meetbaar overbodige invoer aanpassen.
