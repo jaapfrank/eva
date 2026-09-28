@@ -2772,14 +2772,14 @@
         ],
         "now": {
           "title": "L2: meerdaags project hervatten",
-          "state": "Projectopslag gestopt op ontbrekende map",
-          "detail": "Eerste conceptopslag afgewezen; gekozen submap bestaat niet. Bestaande filesystemserver heeft mapaanmaak, blootstelling/terugkoppeling nog controleren. Taak failed/incomplete_work, geen concept of afspraak bevestigd en geen modeltaak actief. Geen automatische herhaling.",
+          "state": "Bestandserver toegelaten; aansluiting nog open",
+          "detail": "Bestaand filesystem-endpoint geïnstalleerd als beheerde dienst; kern/werker gezond, acht gerichte controles en onafhankelijke review akkoord. Oude catalogus/code behouden. Dienstregistratie en projectvoortzetting nog niet uitgevoerd; voorbereiding proef door automatische uitvoercontrole geblokkeerd. Geen modeltaak actief.",
           "doneWhen": "One ordinary project preserves goal, dependencies, artifacts and next action overnight; later correction and continuation use saved state without duplicate effects."
         },
         "next": {
-          "title": "Bestaande mapaanmaak en foutterugkoppeling aansluiten",
-          "state": "Nog niet gestart",
-          "detail": "Kleinste concrete aansluiting bepalen zodat Eva haar gekozen projectmap zelf kan gebruiken of de fout kan verwerken. Geen handmatige testmap of nieuwe planner. Controleer daarna de feitelijke vervolgplanning."
+          "title": "Bestandserver registreren en bewaarde projectopdracht voortzetten",
+          "state": "Nog niet uitgevoerd",
+          "detail": "Bestaande connect_service-route gebruiken; eerst werkelijke registratie controleren. Geen nieuw concept of vervolgafspraak claimen. Automatische uitvoerblokkade op proefvoorbereiding blijft zichtbaar."
         },
         "ownerAction": {
           "title": "Camera voor vuilnisbakken kiezen",
@@ -2792,7 +2792,7 @@
           "expected": "Keuze bepaalt de volgende camera-/agendaproef; de al werkende beeldbeschrijving blijft beschikbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-28T20:47:29.289220+00:00"
+        "reviewedAt": "2026-09-28T21:04:34.307240+00:00"
       }
     },
     "pendingTechnicalReview": {

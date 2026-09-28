@@ -1,0 +1,36 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "slice": "L2",
+  "checkedAt": "2026-09-28T21:04:34.307240+00:00",
+  "result": "Existing filesystem endpoint added to managed connector admission; generic registration is still pending. No project folder or schedule created.",
+  "sourceCommit": "8efd5719",
+  "sourceChanged": false,
+  "installed": {
+    "checkedAt": "2026-09-28T21:03:54.715462+00:00",
+    "services": {
+      "eva2-managed-b-slot3-core": {
+        "health": "healthy",
+        "image": "sha256:977b54c087561794fa021cc8e5713088c9ef77644fdc3d74eb03d0725ff46c5d"
+      },
+      "eva2-managed-b-slot3-delegated-work-worker-1": {
+        "health": "healthy",
+        "image": "sha256:84a2d4d210fd00f09384dcc3e2ab6b828a5dc2076c1d401e4277676d5c6e92b1"
+      }
+    },
+    "change": "Exact existing filesystem endpoint admitted; original catalog and source unchanged",
+    "rollbackFile": "/home/administrator/project/.eva2-artifacts/l2-directory-capability-20260928/managed-before.private.json"
+  },
+  "http": {
+    "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+    "http://localhost:44712/project-state": 200
+  },
+  "targetedTests": {
+    "passed": 8,
+    "log": "/home/administrator/project/.eva2-artifacts/l2-directory-capability-20260928/tests.txt"
+  },
+  "review": "review_directory_connection: configuration-only route accepted; existing gateway duplicate-endpoint behavior remains to verify",
+  "installationFailure": "Initial install changed owner to root; rejected by runtime. Original configuration and UID65532 mode400 restored; services recovered. Corrected candidate installed with UID65532 mode400.",
+  "pending": "Preparing ordinary connection probe was rejected by automatic execution policy without a specific reason; no workaround attempted.",
+  "modelCalls": 0,
+  "creditCost": "unknown"
+}

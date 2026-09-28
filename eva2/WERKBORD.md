@@ -2,9 +2,11 @@
 
 ## Actief — L2: meerdaags project hervatten
 
-**Concrete blokkade:** eerste conceptopslag in gekozen submap afgewezen; de map bestaat niet. Geïnstalleerde filesystemserver heeft mapaanmaak, maar blootstelling en foutterugkoppeling moeten gericht worden gecontroleerd. Geen concept of afspraak bevestigd; taak terminal failed/incomplete_work. Geen modeltaak actief en geen automatische herhaling. [Bewijs](evidence/product/l2-project-save-rejection-20260928.json).
+**Geïnstalleerd:** bestaande filesystemdienst opgenomen in beheerde endpoints, zonder bron- of oude cataloguswijziging. Kern/werker en beide lokale routes gezond. Acht gerichte controles en onafhankelijke review akkoord. Eerste installatie wees verkeerd bestandseigendom af; teruggezet en gecorrigeerd naar runtime-UID65532/mode400. [Bewijs](evidence/product/project-filesystem-endpoint-20260928.json).
 
-**Volgende:** bestaande mapaanmaak/terugkoppeling aansluiten waar werkelijk ontbrekend; geen handmatig gemaakte proefmap of nieuwe planner. Daarna dezelfde bewaarde opdracht voortzetten en feitelijke vervolgplanning controleren. Gemeten worker-deelverbruik9.342in/399uit,2modelantwoorden/1tool; foreground niet inbegrepen, credits onbekend.
+**Nog open:** werkelijke dienstregistratie via connect_service, daarna bewaarde projectopdracht voortzetten. Geen map, concept of afspraak gemaakt. Voorbereiding van de gewone aansluitproef is door automatische uitvoercontrole geblokkeerd zonder specifieke reden; geen omweg uitgevoerd. Geen modeltaak actief. Deze aansluiting sluit L2 niet af.
+
+**Verbruik deze stap:** nul modelcalls; creditkosten onbekend. Bestaande mislukte projectproef blijft bewaard met9.342in/399uit worker-deelverbruik.
 
 ## Afgerond — L1: werkwijze leren en hergebruiken
 
