@@ -70,3 +70,40 @@ def test_stopped_core_routes_to_created_then_running_memory_api(monkeypatch):
     memory._core_route(configuration, runtime)
     api["NetworkSettings"]["Networks"]["isolated"]["NetworkID"] = ""
     with pytest.raises(ValueError): memory._core_route(configuration, runtime)
+
+
+EGRESS = "d" * 64
+
+
+def gateway_with_egress():
+    row = created()
+    row["State"].update(Running=True, Status="running", Pid=123)
+    row["NetworkSettings"]["Networks"] = {
+        "isolated": {"NetworkID": NETWORK}, "existing-egress": {"NetworkID": EGRESS}}
+    return row
+
+
+def test_gateway_allows_explicit_existing_egress_without_widening_memory_contract(monkeypatch):
+    row = gateway_with_egress()
+    monkeypatch.setattr(gateway, "_command", lambda args: json.dumps([
+        {"Id": EGRESS, "Name": "existing-egress", "Internal": False, "Driver": "bridge"}]))
+    assert gateway._gateway_networks(row, {"network_id": NETWORK, "egress_network_id": EGRESS})["NetworkID"] == NETWORK
+    with pytest.raises(ValueError, match="count"):
+        gateway._configured_network(row, NETWORK)
+    with pytest.raises(ValueError, match="count"):
+        gateway._gateway_networks(row, {"network_id": NETWORK})
+
+
+@pytest.mark.parametrize("fault", ["unapproved", "extra", "replaced", "internal", "driver", "missing_primary"])
+def test_gateway_egress_rejects_unpinned_or_changed_networks(monkeypatch, fault):
+    row = gateway_with_egress()
+    observed = {"Id": EGRESS, "Name": "existing-egress", "Internal": False, "Driver": "bridge"}
+    if fault == "unapproved": row["NetworkSettings"]["Networks"]["existing-egress"]["NetworkID"] = "b" * 64
+    elif fault == "extra": row["NetworkSettings"]["Networks"]["third"] = {"NetworkID": "b" * 64}
+    elif fault == "replaced": observed["Id"] = "b" * 64
+    elif fault == "internal": observed["Internal"] = True
+    elif fault == "driver": observed["Driver"] = "host"
+    else: row["NetworkSettings"]["Networks"]["isolated"]["NetworkID"] = "b" * 64
+    monkeypatch.setattr(gateway, "_command", lambda args: json.dumps([observed]))
+    with pytest.raises(ValueError):
+        gateway._gateway_networks(row, {"network_id": NETWORK, "egress_network_id": EGRESS})

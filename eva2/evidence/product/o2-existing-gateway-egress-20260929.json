@@ -1,0 +1,21 @@
+{
+  "checkedAt": "2026-09-29T21:20:09.017522+00:00",
+  "status": "installed_explicit_existing_gateway_egress",
+  "testsPassed": 37,
+  "independentReview": "GO",
+  "liveTargetNetworkVerification": true,
+  "gatewayOnly": true,
+  "sourceNetworksChanged": false,
+  "coreAndWorkerStarted": false,
+  "filesystem": {
+    "status": "filesystem_started_pending_discovery",
+    "id": "35c45a3dda4fc0dc59460335afb04a7ec3b4b91b15211b31fd88cdafa85a4908",
+    "image": "sha256:bd31ea2dde76561fe662a551756f939e9007048956c300e54ad49a8c18ddfdc4",
+    "sourceImagePreserved": true,
+    "rootIsRestoredDocuments": true,
+    "sourceServicesChanged": false,
+    "modelCalls": 0
+  },
+  "modelCalls": 0,
+  "limitation": "Gateway upstream discovery still open. HA-MCP refresh returned success but no fresh discovery; source archive already marks this connector unreachable. No runtime activation claim."
+}

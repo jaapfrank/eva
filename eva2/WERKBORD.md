@@ -1,6 +1,6 @@
-## Actueel: O2.3 gateway hersteld; documentenschrijftoegang afronden — 29 september 2026
+## Actueel: O2.3 bestaande gatewayuitgang aangesloten — 29 september 2026
 
-Gezamenlijke import en vier documentproviders zijn teruggelezen. Gateway gezond: 9 koppelingen en 61 tools exact behouden. Verkeerde omgeving in controletoken gecorrigeerd; teruglezen hervat op dezelfde draaiende gateway, zonder herstart of import. Bestaande documentenschrijftoegang wordt nu hersteld. Alle-upstreamcontrole en runtimevrijgave blijven open; geen volledige O2.3-afronding. [Bewijs](evidence/product/o2-restored-gateway-running-20260929.json).
+Vier documentproviders hebben gecontroleerde schrijftoegang. De bestaande uitgaande gatewayverbinding is expliciet aangesloten en live gecontroleerd, na37 gerichte controles en onafhankelijke review. Algemene bestandsprovider gebruikt herstelde map. Kern/werker staan voorbereid maar uit. Providercontrole nog open: de oude HA-MCP-koppeling stond al onbereikbaar in de kopie en slaat verse discovery over; dit is geen geslaagde providercontrole. Geen volledige O2.3-afronding. [Bewijs](evidence/product/o2-existing-gateway-egress-20260929.json).
 
 ## Actueel: O2.3 herhaalde pakketcontrole versneld — 29 september 2026
 

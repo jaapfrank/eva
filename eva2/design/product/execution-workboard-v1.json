@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T21:07:14.589238+00:00",
+        "checkedAt": "2026-09-29T21:20:09.017522+00:00",
         "deliveries": [
           {
             "title": "Herhaalde herstelpakketcontrole versneld",
@@ -3051,10 +3051,10 @@
           }
         ],
         "now": {
-          "title": "O2.3: gateway hersteld; documentenschrijftoegang afronden",
+          "title": "O2.3: bestaande gatewayuitgang aangesloten; providercontrole",
           "state": "Bezig",
           "owner": "Codex /root",
-          "detail": "Gateway gezond; 9 koppelingen en 61 tools exact teruggelezen. Controletoken gericht gecorrigeerd zonder herstart of import. Dezelfde route herstelt nu schrijftoegang; kern nog gesloten."
+          "detail": "Geïnstalleerd na37 gerichte controles en review. Gateway gebruikt eigen interne netwerk plus bestaande expliciet gekozen uitgang. Bestandsprovider gestart op herstelde map. Oude HA-MCP-koppeling slaat verse discovery over; oorzaak controleren vóór kernvrijgave."
         },
         "next": {
           "title": "O2.3: teruglezen en vier documentproviders aansluiten",
@@ -3071,7 +3071,7 @@
           "linkLabel": "Antwoord in deze chat"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T21:07:14.589238+00:00"
+        "reviewedAt": "2026-09-29T21:20:09.017522+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14508,20 +14508,17 @@
               "assignment": {
                 "baseCommit": "b97becc9",
                 "files": [
-                  "eva2/tools/installation_document_restore.py",
-                  "eva2/tools/installation_document_connection.py",
-                  "eva2/tests/portable/test_document_recovery_layouts.py",
-                  "eva2/tools/installer_document_components.py",
-                  "eva2/tests/operations/test_installer_document_components.py"
+                  "eva2/tools/installation_gateway_start.py",
+                  "eva2/tests/portable/test_restore_precreated_network.py"
                 ],
                 "existing": "Current restore route proven from0009; existing install_schema forward route supports0007",
                 "gap": "Actual retained0007 data has not passed the existing forward migration needed by portable v2",
                 "outcome": "Bevroren echte gegevens via bestaande volledige herstelroute herstellen.",
                 "estimate": "Bestaande kernexport duurt eerder circa8min; één export van deze nieuwe consistente bronkopie, geen nieuwe live snapshot/modelcalls. Credits onbekend.",
                 "finish": "Consistent source copy collected through existing helpers; complete joint restore remains required.",
-                "stage": "gateway_verified_document_write_promotion_running",
+                "stage": "existing_gateway_egress_installed_upstream_discovery",
                 "workers": {
-                  "/root": "following document write promotion after successful gateway readback"
+                  "/root": "resolving original unreachable HA-MCP discovery before runtime activation"
                 },
                 "activeWorkers": [],
                 "endCondition": "Pakket/autoriteit/wizard gebruiken dezelfde v3-kern met bestaande externe stappen; gerichte combinatiecontrole, onafhankelijke review en operatorinstallatie.",
@@ -14529,10 +14526,10 @@
                 "liveRestoreSession": null,
                 "catalogFinding": "Four native catalogs recoverable exactly from preserved gateway rows; standalone catalog interface still requires connection. Evidence: eva2/evidence/product/o2-preserved-document-catalog-20260929.json",
                 "liveDocumentSession": null,
-                "liveGatewaySession": 30818
+                "liveGatewaySession": null
               },
-              "latestEvidence": "eva2/evidence/product/o2-restored-gateway-running-20260929.json",
-              "remaining": "Gegevens en vier documentproviders teruggelezen. Bestaande gateway starten, documentenschrijftoegang en runtimevrijgave afronden."
+              "latestEvidence": "eva2/evidence/product/o2-existing-gateway-egress-20260929.json",
+              "remaining": "Vier documentproviders schrijfbaar en gatewayuitgang aangesloten. Algemene bestandsprovider gebruikt herstelde map. Verse providercontrole en runtimevrijgave open; oude HA-MCP-koppeling levert nog geen verse discovery."
             }
           ],
           "latestEvidence": "eva2/evidence/product/o2-consistent-source-collected-20260929.json"

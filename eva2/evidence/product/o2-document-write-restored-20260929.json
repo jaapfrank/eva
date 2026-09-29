@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-09-29T21:13:27.193779+00:00",
+  "status": "writable_verified",
+  "providers": 4,
+  "providersVerified": true,
+  "runtimeWritersPreparedStopped": 2,
+  "coreActivated": false,
+  "modelCalls": 0,
+  "limitation": "Native retained material and writable mounts verified; no new document task executed. Runtime activation still open.",
+  "nextGap": "Current source gateway has existing non-internal eva2-mcp-egress network, but restore verifier accepts exactly one internal network. Explicit existing egress binding needed before actual external provider verification; keep checks."
+}

@@ -33,13 +33,19 @@ class RestoredGatewayStartError(RuntimeError):
 
 
 def validate_gateway_start_configuration(configuration, *, external_configuration, binding_configuration):
-    if not isinstance(configuration, dict) or set(configuration) != {"container", "network_id", "access_token_path"}:
+    fields = {"container", "network_id", "access_token_path"}
+    if not isinstance(configuration, dict) or set(configuration) not in (fields, fields | {"egress_network_id"}):
         raise ValueError("restored gateway start configuration differs")
     _pin(configuration["container"])
     if configuration["container"] not in external_configuration.get("writers", []):
         raise ValueError("gateway target must be one exact previously stopped external writer")
     if not isinstance(configuration["network_id"], str) or not re.fullmatch(r"[a-f0-9]{64}", configuration["network_id"]):
         raise ValueError("gateway target network must be pinned")
+    if "egress_network_id" in configuration:
+        egress = configuration["egress_network_id"]
+        if (not isinstance(egress, str) or not re.fullmatch(r"[a-f0-9]{64}", egress)
+                or egress == configuration["network_id"]):
+            raise ValueError("gateway egress must be a separate explicitly pinned network")
     token = configuration["access_token_path"]
     if (not isinstance(token, str) or not token.startswith("/run/") or len(token) > 1024
             or str(PurePosixPath(token)) != token or ".." in PurePosixPath(token).parts
@@ -96,13 +102,46 @@ def _configured_network(row, network_id):
     return endpoint
 
 
+def _gateway_networks(row, configuration):
+    """Permit only the private restore network and explicitly selected egress.
+
+    Memory and writer checks retain the single-network contract. This optional
+    gateway-only binding preserves the existing external connector route without
+    attaching the source document network or accepting arbitrary extra networks.
+    """
+    egress_id = configuration.get("egress_network_id")
+    if egress_id is None:
+        return _configured_network(row, configuration["network_id"])
+    networks = row.get("NetworkSettings", {}).get("Networks", {})
+    if len(networks) != 2:
+        raise ValueError("gateway must have exactly its pinned private and egress networks")
+    matches = []
+    for name, endpoint in networks.items():
+        if endpoint.get("NetworkID") == egress_id:
+            matches.append((name, endpoint))
+        elif endpoint.get("NetworkID") == "" and row.get("State", {}).get("Status") == "created":
+            actual = json.loads(_command(["docker", "network", "inspect", name]))
+            if len(actual) == 1 and actual[0].get("Id") == egress_id:
+                matches.append((name, endpoint))
+    if len(matches) != 1:
+        raise ValueError("gateway egress endpoint does not match its pin")
+    name, endpoint = matches[0]
+    actual = json.loads(_command(["docker", "network", "inspect", name]))
+    if (len(actual) != 1 or actual[0].get("Id") != egress_id
+            or actual[0].get("Name") != name or actual[0].get("Internal") is not False
+            or actual[0].get("Driver") != "bridge"):
+        raise ValueError("gateway egress network was replaced or is not the selected bridge")
+    primary = {key: value for key, value in networks.items() if key != name}
+    return _configured_network({**row, "NetworkSettings": {"Networks": primary}}, configuration["network_id"])
+
+
 def _target(configuration, target_path, root, *, running):
     pin = configuration["container"]
     rows = json.loads(_command(["docker", "inspect", pin["id"]]))
     if len(rows) != 1:
         raise ValueError("gateway target is absent")
     row = rows[0]; host = row["HostConfig"]; config = row["Config"]; state = row["State"]
-    _configured_network(row, configuration["network_id"])
+    _gateway_networks(row, configuration)
     if (row.get("Id") != pin["id"] or row.get("Name") != "/" + pin["name"] or row.get("Image") != pin["image"]
             or state.get("Running") is not running or state.get("Paused") or state.get("Restarting")
             or (not running and (state.get("Status") not in {"created", "exited"} or state.get("Pid") != 0))
