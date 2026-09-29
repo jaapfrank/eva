@@ -131,6 +131,12 @@ class PostgresExternalConversationTools:
                 continue
             with self._execution_lock(thread_id):
                 events = timeline.events(thread_id)
+                if events[0].event_type == "CONNECTOR_SELECTION_ADMITTED":
+                    data = self._event_data(events[0])
+                    if data.get("action_name") not in self.action_names or not getattr(self._provider, "supports_stored_results", False):
+                        return None
+                    call = ConversationActionCall(data["action_call_id"], data["action_name"], data["action_arguments"])
+                    return self._execute_selection(turn, call, step_index)
                 admitted_name = self._event_data(events[0]).get("action_name")
                 if admitted_name not in self.action_names:
                     return None
@@ -159,20 +165,8 @@ class PostgresExternalConversationTools:
             from eva.providers.mcp_discovery import _arguments
             reader, arguments = _arguments(call)
             if reader.startswith(READER_PREFIX):
-                self._ensure_running(turn)
-                from eva.application.background_execution import authorize_background_dispatch
-                authorize_background_dispatch(turn)
-                try:
-                    output = ConnectorResults(self._timeline(turn), turn, self._authorize).read_recorded(reader, arguments, call.call_id)
-                except ConnectorSelectionError as error:
-                    return ConversationActionReceipt(call, {
-                        "status": "selection_invalid", "source": "stored_connector_result",
-                        "external_state_verified": False, "error": str(error),
-                        "arguments_schema": selection_schema(),
-                        "guidance": "Correct the local selection and read the same stored tool_id. No external connector was invoked; the task budget still applies.",
-                    })
-                return ConversationActionReceipt(call, {"status": "verified", "result": output,
-                    "external_state_verified": False, "source": "stored_connector_result"})
+                with self._execution_lock(self._thread_id(turn, call.name, step_index)):
+                    return self._execute_selection(turn, call, step_index)
         # Preserve clarification before storage access for the initial action.
         preparation = (
             self._prepare(turn, call, step_index) if step_index == 0 else None
@@ -184,11 +178,64 @@ class PostgresExternalConversationTools:
                 turn, call, step_index=step_index, preparation=preparation
             )
 
+    def _execute_selection(self, turn, call, step_index):
+        """Replay a local read in the same indexed slot as ordinary tool actions."""
+        from eva.adapters.postgres.connector_results import (
+            ConnectorResults, ConnectorSelectionError, READER_PREFIX, selection_schema,
+        )
+        from eva.providers.mcp_discovery import _arguments
+        self._authorize(turn)
+        reader, arguments = _arguments(call)
+        if not reader.startswith(READER_PREFIX):
+            raise ConversationConflict("stored connector action differs")
+        timeline = self._timeline(turn)
+        capture = ConnectorResults(timeline, turn, self._authorize)
+        thread = self._thread_id(turn, call.name, step_index)
+        admission = {"action_call_id": call.call_id, "action_name": call.name,
+                     "action_arguments": call.arguments, "step_index": step_index,
+                     "owner": capture.owner}
+        events = timeline.events(thread)
+        if events:
+            if events[0].event_type != "CONNECTOR_SELECTION_ADMITTED" or self._event_data(events[0]) != admission:
+                raise ConversationConflict("external tool replay differs")
+            if events[-1].event_type == "CONNECTOR_SELECTION_COMPLETED":
+                return ConversationActionReceipt(call, self._event_data(events[-1])["receipt_output"])
+            if len(events) != 1:
+                raise ConversationConflict("stored connector selection history differs")
+        else:
+            self._ensure_running(turn)
+            timeline.create_thread(thread_id=thread, checkpoint_id=thread + ":selection-admitted",
+                occurred_at=self._timestamp(turn), data=admission,
+                event_type="CONNECTOR_SELECTION_ADMITTED", phase="selection_admitted",
+                operation_id=self._operation_id(turn, call.name, step_index))
+        self._ensure_running(turn)
+        from eva.application.background_execution import authorize_background_dispatch
+        authorize_background_dispatch(turn)
+        try:
+            output = capture.read_recorded(reader, arguments, call.call_id)
+            receipt_output = {"status": "verified", "result": output,
+                              "external_state_verified": False, "source": "stored_connector_result"}
+        except ConnectorSelectionError as error:
+            receipt_output = {"status": "selection_invalid", "source": "stored_connector_result",
+                "external_state_verified": False, "error": str(error),
+                "arguments_schema": selection_schema(),
+                "guidance": "Correct the local selection and read the same stored tool_id. No external connector was invoked; the task budget still applies."}
+        self._authorize(turn)
+        timeline.transition(thread_id=thread, expected_revision=1,
+            checkpoint_id=thread + ":selection-completed", occurred_at=self._timestamp(turn),
+            data={"receipt_output": receipt_output}, event_type="CONNECTOR_SELECTION_COMPLETED",
+            phase="selection_completed", status="completed",
+            operation_id=self._operation_id(turn, call.name, step_index))
+        return ConversationActionReceipt(call, receipt_output)
+
     def _execute(
         self, turn: ConversationTurn, call: ConversationActionCall,
         *, step_index: int, preparation: ConversationToolPreparation | None,
     ) -> ConversationActionReceipt:
         self._authorize(turn)
+        existing = self._timeline(turn).events(self._thread_id(turn, call.name, step_index))
+        if existing and existing[0].event_type == "CONNECTOR_SELECTION_ADMITTED":
+            return self._execute_selection(turn, call, step_index)
         if step_index:
             timeline = self._timeline(turn)
             events = timeline.events(self._thread_id(turn, call.name, step_index))

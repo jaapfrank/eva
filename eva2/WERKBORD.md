@@ -2,13 +2,15 @@
 
 ## Nu — T1: onderzoek volledig afronden
 
+**Concrete vervolgblokkade:** hervatting99b7f7e9 faalt door ontbrekende stapkoppeling voor lokaal gelezen bronfragmenten. Oude fragmenten zijn wel bewaard, maar hun stapnummers niet; vervolg botst op een bestaande actie. /root/background_execution_seam heeft alleen external_conversation_tools.py aangepast;104 gerichte controles en onafhankelijke review akkoord. /root installeert de correctie. Geen modelcalls voor bouw/test. /root beheert werkbord/integratie; oude onzekere stappen niet reconstrueren op aanname. Rapport blijft behouden.
+
 **Geleverd:** [GLaDOS-visionrapport](evidence/product/glados-vision-resultaat-20260929.md), opgeslagen door Eva, door coördinator teruggelezen en onafhankelijk inhoudelijk akkoord. Code/documentatieverschillen en privacygrenzen zijn concreet onderbouwd. [Bewijs](evidence/product/glados-vision-research-20260929.json).
 
 **Geïnstalleerd:** bron8f1c9b0d corrigeert de eerdere55s-onderzoekgrens en behoudt de oorspronkelijke timeoutreden. Kern/werker gezond, bron exact gecontroleerd,25 gerichte controles en onafhankelijke review GO. Bestaande terugweg bewaard. De nieuwe opdracht koos URL-leestools en beproefde de langere native onderzoekstijd niet.
 
 **Nog niet af:** nieuwe volledige opdracht bereikte300s vóór eigen teruglezing/eindantwoord.20 modelantwoorden/19 tools,592.136in/3.595uit gedeeltelijk gemeten; creditkosten onbekend. Geen actieve modeltaak of tweede onderzoek gestart. T1 blijft open.
 
-**Nu, /root:** bestaande taakbudgetcontext mist resterende wandtijd. Begrensde wijziging in delegated_digital_runner.py plus gerichte test; raming15–20min inclusief review/installatie. Eén bewaarde-resultaatvoortzetting, geen nieuwe bronproef. Die afrondingsinformatie gericht aansluiten en het al bewaarde resultaat afmaken zonder de bronnen opnieuw te onderzoeken. Geen nieuwe planner of budgetverhoging. Telegramproef blijft afzonderlijk open.
+**Nu, /root:** resterende wandtijd is geïnstalleerd (720e2eff),85 gerichte controles en onafhankelijke review akkoord; kern/werker gezond. Bewaarde rapporttaak afronden zonder nieuw onderzoek. Begrensde wijziging in delegated_digital_runner.py plus gerichte test; raming15–20min inclusief review/installatie. Eén bewaarde-resultaatvoortzetting, geen nieuwe bronproef. Die afrondingsinformatie gericht aansluiten en het al bewaarde resultaat afmaken zonder de bronnen opnieuw te onderzoeken. Geen nieuwe planner of budgetverhoging. Telegramproef blijft afzonderlijk open.
 
 ## C1 — tekstgesprek tijdens werk
 

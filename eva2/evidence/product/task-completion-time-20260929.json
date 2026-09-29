@@ -1,0 +1,78 @@
+{
+  "checkedAt": "2026-09-29T07:14:35.486751+00:00",
+  "status": "installed_resume_failed_existing_index_gap",
+  "sourceCommit": "720e2eff",
+  "installation": {
+    "checkedAt": "2026-09-29T07:10:04.381986+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:8366aff61a7ffbba1c9e59bce6d41bb566ad3f928f672e0a2293a1a326195039",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_runner.py": "52d499c7ee3eabfa63571d4d7d565f315a09751dd43b2fc3bbd6da5545bdb893"
+        }
+      },
+      "worker": {
+        "image": "sha256:c5aa58b5f9f8b0e1b84c1e33edee6f26261c0bc115cf0fac58179485ca55106b",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_runner.py": "52d499c7ee3eabfa63571d4d7d565f315a09751dd43b2fc3bbd6da5545bdb893"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/t1-completion-time-20260929/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "validation": {
+    "testsPassed": 85,
+    "independentReview": "review_directory_connection GO",
+    "shortDeadlineCountdownSeconds": [
+      180,
+      150,
+      120
+    ],
+    "limitsChanged": false
+  },
+  "resume": {
+    "workId": "work:eva-resume:99b7f7e9-1bc7-541b-a460-c430bb424b7e",
+    "state": "ambiguous",
+    "errorCode": "internal_error",
+    "errorFingerprint": "fad1df4ea416557c1ded5b7d79bb32be604a0d21446aada1677e2f994d97e167",
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 2,
+      "tool_calls": 1,
+      "input_tokens": 98758,
+      "output_tokens": 214,
+      "total_tokens": 98972,
+      "cost_usd_micros": null
+    },
+    "correctionSaved": true,
+    "sameOriginalTask": true
+  },
+  "cause": {
+    "exception": "ConversationConflict:external tool replay differs",
+    "fingerprintMatchedSource": true,
+    "missingIndexedReads": [
+      14,
+      16
+    ],
+    "originalReadsPreservedAs": "CONNECTOR_SELECTION_READ, keyed by owner/call_id but without step_index",
+    "effect": "Resume treats first unrecorded indexed step as new work; later action collides with existing slot. No differing action executed."
+  },
+  "report": {
+    "sha256": "bd02fa3a3389f6c4f6c4fc1b9ade39411ede6fe931fbfe6c876d780ded82ba31",
+    "unchanged": true
+  },
+  "nextAction": "Add indexed replay for local result reads without guessing legacy indexes or allowing differing effects. No new model attempt before correction.",
+  "limitations": [
+    "Remaining-time prompt makes time visible but does not prove improved autonomous completion",
+    "Original saved report still needs own full readback/final",
+    "Credit costs unknown; reported usage partial"
+  ]
+}

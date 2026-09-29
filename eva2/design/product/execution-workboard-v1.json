@@ -2820,8 +2820,8 @@
         ],
         "now": {
           "title": "T1: onderzoek volledig afronden",
-          "state": "Afrondingstijd aansluiten op bestaande taakcontext",
-          "detail": "Coördinator /root wijzigt alleen delegated_digital_runner.py en gerichte test: actuele resterende wandtijd naast bestaande token/toolbudgetten. Geen nieuwe planner of budgetverhoging. Rapport en bronnen blijven behouden.",
+          "state": "Hervatcorrectie getest en beoordeeld; installatie voorbereiden",
+          "detail": "Eén productbestand gewijzigd: bestaande externe-tooladapter bewaart lokale leesstappen op vaste index.104 gerichte controles geslaagd, waaronder drie echte PostgreSQL-hervatgevallen zonder dubbele schrijfactie. Onafhankelijke review GO.",
           "doneWhen": "Eva bewaart, controleert en meldt het volledige onderzoeksresultaat zelfstandig terug binnen het geldende taakbudget."
         },
         "next": {
@@ -2841,7 +2841,7 @@
           "expected": "Tussenvraag vóór het onderzoeksantwoord; onderzoeksantwoord bij de oorspronkelijke vraag."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T07:06:13.391027+00:00"
+        "reviewedAt": "2026-09-29T07:19:32.597932+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13183,7 +13183,25 @@
             ],
             "outcome": "Existing worker sees shrinking admitted wall time and finishes saved research without repeating sources",
             "endCondition": "Per-turn deadline context checked with advancing clock, actual hard deadline unchanged; independent review, installation, saved-report completion",
-            "effort": "One small implementation/review; expected15-20min including installation. At most one saved-result continuation; no new research. Credits unknown."
+            "effort": "One small implementation/review; expected15-20min including installation. At most one saved-result continuation; no new research. Credits unknown.",
+            "stage": "installed_resume_exposed_missing_local_read_steps",
+            "resumeWorkId": "work:eva-resume:99b7f7e9-1bc7-541b-a460-c430bb424b7e"
+          },
+          "indexedReadAssignment": {
+            "baseCommit": "720e2eff",
+            "owner": "/root/background_execution_seam",
+            "files": [
+              "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
+              "eva2/tests/postgres/test_indexed_connector_reads.py",
+              "focused existing fixture adjustments"
+            ],
+            "endCondition": "Local saved-result reads replay at original step without shifting later effects; failure cases retain scope/identity; independent review/install",
+            "effort": "One bounded20min source pass, no runtime modelcalls",
+            "legacyRule": "Do not infer old missing step indexes from timestamps or weaken differing-effect rejection.",
+            "scopeReason": "Existing conversation recovery already honors can_continue_after; no conversation.py or connector_results.py change needed.",
+            "stage": "tested_reviewed",
+            "testResult": "104 passed:101 existing reader/runner cases and3 realPostgreSQL indexedread resume/crash cases",
+            "reviewer": "/root/review_directory_connection"
           }
         },
         {

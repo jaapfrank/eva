@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-09-29T07:19:32.628121+00:00",
+  "status": "tested_reviewed_candidate",
+  "baseCommit": "720e2eff",
+  "productFiles": [
+    "eva2/src/eva/adapters/postgres/external_conversation_tools.py"
+  ],
+  "causeEvidence": "eva2/evidence/product/task-completion-time-20260929.json",
+  "change": "Persist local selection admission/completion in the existing indexed tool slot under the existing lock; exact bound receipts replay without another dispatch. Selection errors also occupy their original slot.",
+  "validation": {
+    "testsPassed": 104,
+    "postgresCases": [
+      "valid local read, later write, process restart: no repeated effect or dispatch",
+      "invalid selection, corrected read, later write, restart: no shifted step or repeated effect",
+      "interruption after local page receipt before index completion: recover immutable local read and persist completion"
+    ],
+    "independentReview": "review_directory_connection GO; targeted tests subsequently passed",
+    "temporaryDatabasesDropped": true,
+    "runtimeModelCalls": 0
+  },
+  "limitations": [
+    "Historical local reads have no reliable saved index; no retrospective inference or migration",
+    "Original GLaDOS task retains failure status; saved report can be read in a separate normal read request",
+    "Controlled regression proves these execution paths, not general research quality or fullT1 acceptance"
+  ],
+  "creditCosts": "unknown"
+}

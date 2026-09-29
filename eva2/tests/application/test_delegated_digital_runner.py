@@ -745,6 +745,8 @@ def test_background_stored_selection_can_be_corrected_but_security_errors_stop(f
         route = PostgresExternalConversationTools(None,
             SimpleNamespace(action_names=("use_connector_tool",)),
             SimpleNamespace(supports_stored_results=True), authorize_turn=authorize)
+        from contextlib import nullcontext
+        route._execution_lock = lambda key: nullcontext()
         route._timeline = lambda turn: capture.timeline
         route._ensure_running = lambda turn: None
         route.pending = lambda turn, step_index=0: None

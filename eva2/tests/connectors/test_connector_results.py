@@ -1,5 +1,6 @@
 """Stored connector pages preserve bytes without provider replay or new tools."""
 import asyncio
+from contextlib import nullcontext
 from dataclasses import replace
 import hashlib
 import json
@@ -68,6 +69,7 @@ def test_large_result_pages_and_crash_readback_never_repeat_invoke():
     # Existing action API is intercepted before the external planner or provider.
     route = PostgresExternalConversationTools(None, SimpleNamespace(action_names=("use_connector_tool",)),
         SimpleNamespace(supports_stored_results=True))
+    route._execution_lock = lambda key: nullcontext()
     route._timeline = lambda turn: capture.timeline
     route._ensure_running = lambda turn: None
     receipt = route.execute(TURN, ConversationActionCall("page", "use_connector_tool", {
@@ -142,6 +144,7 @@ def test_background_reader_uses_real_adapter_validation_without_provider_replay(
         route = PostgresExternalConversationTools(None,
             SimpleNamespace(action_names=("use_connector_tool",)),
             SimpleNamespace(supports_stored_results=True), authorize_turn=lambda turn: checked.append(turn))
+        route._execution_lock = lambda key: nullcontext()
         route._timeline = lambda turn: capture.timeline
         route._ensure_running = lambda turn: checked.append(turn)
         actions = BackgroundConnectorActions((route,), ("use_connector_tool",), lambda turn: checked.append(turn), 6)
@@ -171,6 +174,7 @@ def test_batch_reads_share_one_capture_and_record_complete_bounded_receipt():
                   for query in [None, "SECTION TWO"]]
     route = PostgresExternalConversationTools(None, SimpleNamespace(action_names=("use_connector_tool",)),
         SimpleNamespace(supports_stored_results=True))
+    route._execution_lock = lambda key: nullcontext()
     route._timeline = lambda turn: capture.timeline
     route._ensure_running = lambda turn: None
     call = ConversationActionCall("batch", "use_connector_tool", {
