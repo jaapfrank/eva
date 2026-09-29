@@ -1,5 +1,19 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — T3 wacht op lokale runtime
+
+Bestaande browseroplevering geselecteerd. Eigenaarroute44711 is niet bereikbaar; Docker-API reageert niet en docker.service staat op activating. Lokale eigenaar- en browserdiensten wachten op die opstart. Projectdashboard44712 is bereikbaar. Geen browsertaak of modelcall gestart; geen runtimeversie vervangen. Daarna bestaande browsertoegang en kleinste uitvoerbare taak afronden. AIDE blijft gepland.
+
+## Opgeleverd — zelfstandig een HA-automatisering maken en wijzigen
+
+De gewone websiteopdracht is zonder handmatige hervatting voltooid: maken, beschrijving aanpassen, volledig teruglezen en eindantwoord. Onafhankelijke controle akkoord; proefautomatisering uit, nooit uitgevoerd, daarna uitsluitend dat object verwijderd (404 bevestigd). [Bewijs](evidence/product/t2-ha-delivered-20260929.json). Bestaande runtime gebruikt; geen nieuwe installatie. Eerdere timeouts blijven onopgelost, fysieke speakers en volledige T2 blijven open.
+
+## Gepland — AIDE/AIDE² binnen L3
+
+[Onderzoek en begrensde proef](experiments/aide-20260929/README.md) opgenomen in projectdoel en bouwplan. Eerst eenvoudige functionele opleveringen volgens nieuwste eigenaaropdracht. Twee reeds gestarte kandidaatcalls mislukt na circa121,4s; geen kandidaat, vergelijking of integratie. Verbruik onbekend, geen herhaling gestart. Historische 71/90→90/90 blijft een geholpen verbetering.
+
+## Historische T2-diagnose — onderstaande stand is opgevolgd door de oplevering hierboven
+
 ## T2 — oorspronkelijke fout nog niet gereproduceerd
 
 Zes gerichte geïsoleerde vervolgstappen slagen in 9,6–12,4 seconden: echte HA-schema’s, volledige catalogus, gereconstrueerde werkinstructies, strict-modus, streamhandler en de geïnstalleerde modeladapter. Geen HA-uitvoering, productwijziging of installatie. Bekend 31.607 invoer-/1.014 uitvoertokens; credits onbekend. Onafhankelijke broninspectie vond geen namespace-/schemafout. [Bewijs](evidence/product/t2-worker-differential-20260929.json).

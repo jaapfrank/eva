@@ -1,5 +1,20 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaaropdracht 29 september 2026 — gerichte zelfverbetering, eerst bruikbare opleveringen
+
+Neem de aanpak van AIDE en AIDE² op binnen L3: enkele codevarianten vergelijken,
+vooraf vaste taken en harde grenzen, onafhankelijke afgeschermde eindbeoordeling,
+en alleen aantoonbare winst integreren. Hergebruik bestaande kandidaat-, evaluatie-
+en vrijgavevoorzieningen; geen algemeen optimalisatieplatform.
+[Onderzoek, proefvoorwaarden en actuele uitkomst](experiments/aide-20260929/README.md)
+zijn vastgelegd. Er is nog geen verbeterkandidaat of gemeten voordeel.
+
+**Uitvoervolgorde:** eerst de eenvoudigste nog open bruikbare uitkomsten afmaken,
+met bestaande code als vertrekpunt. AIDE-vervolg staat gepland en draait niet.
+Bestaande afhankelijkheden en acceptaties blijven geldig. Een proefdocument of
+bijgewerkt dashboard telt niet als afgeronde Eva-functie.
+
+
 ## Eigenaarcorrectie 29 september 2026 — doorbouwen in de ontwikkelversie
 
 Eva2 is nog in ontwikkeling. Een mislukte functieproef is op zichzelf geen reden

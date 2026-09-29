@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-09-29T09:29:26.669155+00:00",
+  "result": "bounded_function_verified_on_installed_runtime",
+  "workId": "work:eva-chat:2564ab6e-4b2c-5565-b789-3905658b31e4",
+  "capability": "Model-driven HA automation creation, description-only change, full readback and final reply without coordinator resume",
+  "independentReview": "eva2/evidence/product/t2-ha-independent-20260929.json",
+  "cleanup": {
+    "deletedOnlyTrialId": "eva2_delivery_20260929_general",
+    "deleteHttpStatus": 200,
+    "afterHttpStatus": 404
+  },
+  "runtimeChanged": false,
+  "ownerAccepted": false,
+  "limitations": [
+    "Earlier timeouts unresolved; one success is not general reliability",
+    "No physical speaker or device actuation trial",
+    "Worker usage partial: 83530 input, 852 output tokens; credit cost unknown",
+    "Exact-worker diagnostic interception did not run; normal worker completed task"
+  ]
+}

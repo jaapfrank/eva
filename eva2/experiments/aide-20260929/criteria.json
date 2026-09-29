@@ -1,0 +1,42 @@
+{
+  "id": "AIDE-TASK-CONTEXT-01",
+  "baseCommit": "b9757cf6",
+  "sourcePath": "adapters/postgres/delegated_work_actions.py",
+  "baselineSha256": "b92ca3b7bab60247169647f4c31cf8dc32188d8adf6a443063d17104b8014d51",
+  "runtimeImage": "sha256:106194c0054781828521dc9c091c7b6cd78cde8cd552fe10ffca09ec80f6cc61",
+  "target": "PostgresDelegatedWorkActions.active_context only; same available_for and authorized service read",
+  "gap": "Selection ignores the current question: a named active task outside the first8 authorized jobs is omitted, requiring another lookup. Repeated task/instruction context can also cost tokens.",
+  "primary": "Correct task/status answers without extra lookup; no regression on previously answerable cases.",
+  "secondary": "Serialized input tokens and actual model response time; no unsupported end-to-end latency claim.",
+  "hardConditions": [
+    "No denied-scope read or output",
+    "No result/question/task/private_secret values in context",
+    "No task execution or authority/schema change",
+    "Stop needs a real tool action; no stopped success claim",
+    "Preserve at most8 active(nonstopping),3 recent outcomes, 160/120 title limits and honest limited flag",
+    "Recent means original last24h flag; no old outcomes represented as recent",
+    "Titles treated as data, results require get, missing tasks require list/search",
+    "No evaluation rule or heldout data access/change by optimizer"
+  ],
+  "budget": {
+    "candidateModel": "gpt-6-astra medium via existing lease",
+    "maxInitialCandidates": 2,
+    "maxRefinements": 1,
+    "maxModelSecondsPerCandidate": 120,
+    "evaluationContainers": {
+      "deadlineSecondsEach": 60,
+      "memoryMb": 256,
+      "network": "none"
+    },
+    "finalAnswerModel": "gpt-6-sol none, simple task-status answers only",
+    "maxAnswerCalls": 24,
+    "repetitions": 3,
+    "maxCasesAnswerEval": 4,
+    "maxAnswerSecondsEach": 30,
+    "credits": "unknown",
+    "effortEstimateMinutes": "45–90"
+  },
+  "selectionRule": "Dev hardgate first, maximize relevant task inclusion/answerability, then lower context tokens. Freeze best candidate before independent heldout scoring. No optimization feedback from heldout.",
+  "promotionRule": "All hard checks; no heldout correctness regression; either >=1 newly answerable heldout task with same lookup semantics or >=20% mean input-token reduction at equal answer quality. Actual answer median latency must not regress by >25%; repeat each selected question3times. Otherwise retain baseline.",
+  "limits": "One laboratory task-context experiment with controlled authorized tasks, not broad private-memory quality, actual family acceptance, or autonomous recursive self-improvement."
+}

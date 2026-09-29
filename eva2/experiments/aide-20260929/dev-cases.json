@@ -1,0 +1,364 @@
+[
+  {
+    "id": "named_late",
+    "text": "Hoe staat het met de fietstocht?",
+    "allowed": true,
+    "listing": {
+      "jobs": [
+        {
+          "work_id": "work:dev-00",
+          "title": "Onderzoek 0",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:00:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-01",
+          "title": "Onderzoek 1",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:01:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-02",
+          "title": "Onderzoek 2",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:02:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-03",
+          "title": "Onderzoek 3",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:03:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-04",
+          "title": "Onderzoek 4",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:04:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-05",
+          "title": "Onderzoek 5",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:05:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-06",
+          "title": "Onderzoek 6",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:06:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-07",
+          "title": "Onderzoek 7",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:07:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-08",
+          "title": "Onderzoek 8",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:08:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-09",
+          "title": "Onderzoek 9",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:09:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-10",
+          "title": "Fietstocht plannen",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:10:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        }
+      ],
+      "truncated": false
+    },
+    "required_ids": [
+      "work:dev-10"
+    ]
+  },
+  {
+    "id": "ordinary",
+    "text": "Hoe staat het met het verjaardagsmenu?",
+    "allowed": true,
+    "listing": {
+      "jobs": [
+        {
+          "work_id": "work:dev-01",
+          "title": "Verjaardagsmenu maken",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:01:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-02",
+          "title": "Printer instellen",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:02:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        }
+      ],
+      "truncated": false
+    },
+    "required_ids": [
+      "work:dev-01"
+    ]
+  },
+  {
+    "id": "recent_named",
+    "text": "Is de isolatievergelijking klaar?",
+    "allowed": true,
+    "listing": {
+      "jobs": [
+        {
+          "work_id": "work:dev-01",
+          "title": "Afgerond 1",
+          "state": "succeeded",
+          "stop_requested": false,
+          "recent_outcome": true,
+          "result_available": true,
+          "updated_at": "2026-09-29T08:01:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-02",
+          "title": "Afgerond 2",
+          "state": "succeeded",
+          "stop_requested": false,
+          "recent_outcome": true,
+          "result_available": true,
+          "updated_at": "2026-09-29T08:02:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-03",
+          "title": "Afgerond 3",
+          "state": "succeeded",
+          "stop_requested": false,
+          "recent_outcome": true,
+          "result_available": true,
+          "updated_at": "2026-09-29T08:03:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-04",
+          "title": "Afgerond 4",
+          "state": "succeeded",
+          "stop_requested": false,
+          "recent_outcome": true,
+          "result_available": true,
+          "updated_at": "2026-09-29T08:04:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-00",
+          "title": "Isolatievergelijking",
+          "state": "succeeded",
+          "stop_requested": false,
+          "recent_outcome": true,
+          "result_available": true,
+          "updated_at": "2026-09-29T08:00:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        }
+      ],
+      "truncated": false
+    },
+    "required_ids": [
+      "work:dev-00"
+    ]
+  },
+  {
+    "id": "no_match",
+    "text": "Hallo",
+    "allowed": true,
+    "listing": {
+      "jobs": [
+        {
+          "work_id": "work:dev-01",
+          "title": "Onderzoek ramen",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:01:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        }
+      ],
+      "truncated": false
+    },
+    "required_ids": [
+      "work:dev-01"
+    ]
+  },
+  {
+    "id": "stop",
+    "text": "Stop het tuinonderzoek",
+    "allowed": true,
+    "listing": {
+      "jobs": [
+        {
+          "work_id": "work:dev-01",
+          "title": "Tuinonderzoek",
+          "state": "call_started",
+          "stop_requested": true,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:01:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-02",
+          "title": "Lampenonderzoek",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:02:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        }
+      ],
+      "truncated": false
+    },
+    "required_ids": [
+      "work:dev-02"
+    ]
+  },
+  {
+    "id": "denied",
+    "text": "Wat doet Jaap?",
+    "allowed": false,
+    "listing": {
+      "jobs": [
+        {
+          "work_id": "work:dev-01",
+          "title": "Priveonderzoek",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:01:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        }
+      ],
+      "truncated": false
+    },
+    "required_ids": []
+  }
+]

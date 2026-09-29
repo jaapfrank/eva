@@ -1,0 +1,72 @@
+{
+  "checkedAt": "2026-09-29T09:12:41.956049+00:00",
+  "reviewer": "/root/review_directory_connection",
+  "result": "GO",
+  "scope": "Bounded model-driven HA automation create, description-only update, complete readback, off-state and final result.",
+  "workId": "work:eva-chat:2564ab6e-4b2c-5565-b789-3905658b31e4",
+  "sourceCommit": "b9757cf695dba579c3bf1516fe6a8b0860afa83c",
+  "checks": {
+    "initialGetReturned404": true,
+    "toolProofs": 7,
+    "mutationCalls": 2,
+    "mutationsOnlyExactTrialObject": true,
+    "firstDescription": "eerste versie",
+    "secondDescription": "tweede versie",
+    "completeReadbacks": 2,
+    "onlyStoredDifference": "description",
+    "initialState": false,
+    "onlyTrigger": "eva2_delivery_20260929_general",
+    "alwaysFalseCondition": "{{ false }}",
+    "onlyAction": {
+      "variables": {
+        "proef": true
+      }
+    },
+    "modelObservedEntityState": "off",
+    "finalReplyMatchesProofs": true,
+    "finalReplySha256": "18cfabe3eadd0fe7062427415606e9825e24a71cdf286c152610eeb2fadac161"
+  },
+  "independentLiveGet": {
+    "configurationHttpStatus": 200,
+    "configurationResponseSha256": "2561cf8c992c374b17a19821d1620da604f7e7624f357212a078a2d3ace1b83f",
+    "configurationMatchesSecondStoredReadback": true,
+    "entityHttpStatus": 200,
+    "entityId": "automation.eva2_afrondproef",
+    "state": "off",
+    "lastTriggered": null,
+    "activeExecutions": 0,
+    "stateResponseSha256": "6a30e8e28aad05769aa00be3afca368a6d6a72a5b6a129c76291ccc01d4a662d"
+  },
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 8,
+    "tool_calls": 7,
+    "input_tokens": 83530,
+    "output_tokens": 852,
+    "total_tokens": 84382,
+    "cost_usd_micros": null
+  },
+  "reviewActions": {
+    "modelCalls": 0,
+    "readOnlyHaGets": 2,
+    "haMutations": 0,
+    "testRuns": 0
+  },
+  "evidenceFiles": {
+    "/home/administrator/project/.eva2-artifacts/t2-worker-capture-20260929/events.private.json": "974f719674bac6db3c60d4888b7e30618746f3f567001f1748ea318d0d117790",
+    "/home/administrator/project/.eva2-artifacts/t2-worker-capture-20260929/current-work.private.json": "61835755540df5d73da91ca9984428c148a9cc2505c3be88cd96ddb0c354c162",
+    "/home/administrator/project/.eva2-artifacts/t2-worker-capture-20260929/prompt.txt": "af2041e37048f9c1820360b2278b6ddfa1aca0b1c7d3065278fbff2c221179f0"
+  },
+  "ownerAccepted": false,
+  "limitations": [
+    "This single bounded task does not establish general HA reliability or physical speaker support.",
+    "Earlier failed/timed-out attempts remain failures; this outcome does not prove their cause fixed.",
+    "No device action, notification, automation execution or physical voice trial was performed.",
+    "No-other-actions claim refers to this task's seven recorded tool dispatches, not an audit of all concurrent HA activity.",
+    "Task result is stored and accessible; private_route_available does not prove external notification delivery.",
+    "Usage measurement is partial and monetary credit cost is unknown.",
+    "Trial object remains present for coordinator cleanup; reviewer did not remove it."
+  ]
+}

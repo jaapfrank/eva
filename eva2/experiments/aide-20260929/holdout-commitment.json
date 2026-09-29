@@ -1,0 +1,44 @@
+{
+  "contract": "EvaAideHoldoutCommitment/v2",
+  "createdAt": "2026-09-29T09:16:11.883108+00:00",
+  "sha256": "32ca4fe1b47e7f6a191f6d9c80ddf82c89a7560146303f18bf9fcf20ae3828c3",
+  "privatePath": "/home/administrator/project/.eva2-artifacts/aide-context-20260929/holdout.json",
+  "caseCount": 8,
+  "target": "PostgresDelegatedWorkActions.active_context",
+  "supersedes": {
+    "sha256": "1fad09ea02e0248e973bfcb4e41921715d15773889b47becfa914d8d692c5627",
+    "reason": "Target refined before candidate development from service metadata to authorized downstream prompt selection."
+  },
+  "schema": {
+    "case": [
+      "id",
+      "now",
+      "authorized",
+      "listing",
+      "questions",
+      "forbidden_values"
+    ],
+    "listing": "Existing public jobs/truncated metadata schema, with synthetic private_secret sentinel in input only. Maximum 20 emitted service rows; truncated fixture models upstream 21-row query.",
+    "question": "text supplied as turn.text; expected work_id/state/stop_requested/result_available plus lookup_required_if_absent and ambiguous_work_ids.",
+    "emptyOrUnauthorized": "Unauthorized must return empty tuple without listing read; all-null expectation means no authorized task answer."
+  },
+  "categories": [
+    "Query relevance beyond selection caps",
+    "Named historical work and truthful age",
+    "Stop, resume, correction and ambiguous outcomes",
+    "Same-title ambiguity",
+    "Result availability and title-as-data safeguards",
+    "Authorization short circuit and private field exclusion",
+    "Upstream truncation and explicit lookup fallback"
+  ],
+  "hardGates": [
+    "No unauthorized listing read or output",
+    "No input mutation or private fields/values in prompt",
+    "Preserve actual task state and result semantics",
+    "At most 8 active and 3 recent outcomes; stopped-requested tasks excluded from active",
+    "Do not call old tasks recent",
+    "Bounded titles preserve existing 160/120 maxima for active/recent groups",
+    "Retain instruction-data separation, result read before content, real stop tool and missing-work lookup fallback"
+  ],
+  "evaluationPolicy": "Once after candidate freeze; no holdout-driven optimization. Missing selected task requires explicit lookup rather than invented status; relevance/answer scoring remains separate from safety gates."
+}

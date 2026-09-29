@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Eva maakt en wijzigt zelfstandig een HA-automatisering",
+            "date": "29 september",
+            "state": "tested",
+            "result": "Gewone websiteopdracht volledig uitgevoerd zonder handmatige hervatting: maken, beschrijving aanpassen, configuratie teruglezen en eindantwoord. Onafhankelijke controle akkoord; alleen het proefobject daarna verwijderd.",
+            "remaining": "Bestaande geïnstalleerde functie bevestigd; eerdere timeouts en fysieke speakerervaring blijven open. Geen volledige T2-afronding.",
+            "source": "eva2/evidence/product/t2-ha-delivered-20260929.json"
+          },
+          {
             "title": "Projectvervolg blijft uitvoerbaar na uitval vóór de start",
             "date": "29 september",
             "state": "installed",
@@ -2867,15 +2875,15 @@
           }
         ],
         "now": {
-          "title": "T2: echte HA-uitvoering nog niet afgerond",
-          "state": "Diagnose afgebakend; geen modeltaak actief",
-          "detail": "Zes geïsoleerde vervolgstappen slagen, inclusief de echte modeladapter (9,6–12,4 s). Oorspronkelijk vastlopen niet gereproduceerd. Geen bronwijziging, installatie of huisactie. Bekend 31.607 invoer-/1.014 uitvoertokens; credits onbekend.",
-          "doneWhen": "De echte algemene HA-opdracht zelfstandig afmaken; nog niet gehaald."
+          "title": "Browseroplevering wacht op lokale runtime",
+          "state": "Geblokkeerd: Docker start nog op",
+          "detail": "Poort44711 niet bereikbaar; Docker-API time-out en docker.service activating. Geen browser- of modeltaak gestart. Projectdashboard44712 bereikbaar.",
+          "doneWhen": "Bestaande runtime beschikbaar; daarna browsertoegang en kleinste uitvoerbare taak."
         },
         "next": {
-          "title": "T2: exacte werkerinvoer vastleggen",
-          "state": "Nog niet gestart",
-          "detail": "Bij volgende gerichte echte uitvoering exacte request en streamgebeurtenissen vastleggen; de oorspronkelijke request is niet uit de bestaande journal te reconstrueren. Geen verdere benaderingsproeven of terugzetcyclus."
+          "title": "Bestaande browserbediening afronden",
+          "state": "Gepland: wacht op runtime",
+          "detail": "AIDE-vervolg blijft later. Bestaande bediening hergebruiken."
         },
         "ownerAction": {
           "title": "Telegram: tussenvraag tijdens onderzoek",
@@ -2889,7 +2897,7 @@
           "expected": "Tussenvraag vóór het onderzoeksantwoord; onderzoeksantwoord bij de oorspronkelijke vraag."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T09:04:07.606091+00:00"
+        "reviewedAt": "2026-09-29T09:32:49.135114+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12709,7 +12717,7 @@
           ]
         }
       ],
-      "nextAction": "Find why ordinary Astra tool-followup fails to reach a valid terminal response; use bounded isolated evidence without real HA effects, no third unchanged task or quota increase. Physical room/comfort/speaker proof remains separate.",
+      "nextAction": "Existing Docker startup blocks T3 execution; do not repeat model requests. AIDE remains queued.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13314,7 +13322,7 @@
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "General HA API for both speakers; real harmless automation created, edited and read back.",
-            "remainingGap": "**Defect:** observed task needed coordinator resume after budget failure. **Evidence:** broad semantic requests via physical entrances.",
+            "remainingGap": "Physical semantic requests and general reliability remain open. One ordinary automation task now completed without manual resume.",
             "nextAction": "Reuse HA discovery/API/effect verification; address execution gap and speaker wiring. No device-specific functions or second HA planner.",
             "evidencePaths": [
               "eva2/evidence/product/shared-ha-general-installed-20260925.json",
@@ -13327,15 +13335,15 @@
           "baseCommit": "87c006c2",
           "owner": "/root",
           "effortNotice": "One task up to existing5min deadline, then inspection/review/cleanup; approximately15min active work.",
-          "latestEvidence": "eva2/evidence/product/t2-general-ha-failed-20260929.json",
+          "latestEvidence": "eva2/evidence/product/t2-ha-delivered-20260929.json",
           "assignment": {
-            "stage": "model_followup_unresolved_previous_runtime_restored",
+            "stage": "bounded_automation_completed_without_resume",
             "outcome": "Complete a general HA automation create/edit/readback task without coordinator resume.",
             "scope": "3files: delegated_digital_composition.py, pydantic_conversation.py, openai_codex_provider.py; coordinator owns exact overlay and evidence.",
             "doneWhen": "Create/edit/readback/finalreply without manualresume; inspect and remove only trial object.",
-            "ownership": "No active executor; review and rollback completed."
+            "ownership": "Coordinator delivery record; independent review complete"
           },
-          "nextAction": "Bij volgende gerichte echte uitvoering exacte request en streamgebeurtenissen vastleggen; de oorspronkelijke request is niet uit de bestaande journal te reconstrueren. Geen verdere benaderingsproeven of terugzetcyclus."
+          "nextAction": "Physical semantic speaker requests remain in C3/T2. Earlier timeout cause unresolved; no unchanged repeat."
         },
         {
           "id": "T3",
@@ -13345,7 +13353,7 @@
           ],
           "outcome": "Browser- en diensttaak met overname",
           "effort": "L",
-          "status": "planned",
+          "status": "in_progress",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Isolated browser and shared Chrome, takeover and fresh-observation recovery exist.",
@@ -13359,7 +13367,15 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": null
+          "activeWorker": null,
+          "assignment": {
+            "stage": "blocked_runtime_startup",
+            "owner": "/root",
+            "scope": "Read-only installed browser availability; no takeover, no model calls",
+            "effort": "One status request and existing source inspection; credits unknown",
+            "doneWhen": "Select an executable existing browser outcome or record the exact access prerequisite",
+            "result": "Owner route connection refused; Docker API timeout, service activating. No browser task or model call started."
+          }
         },
         {
           "id": "T4",
@@ -13630,7 +13646,15 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": null
+          "activeWorker": null,
+          "aideExperiment": {
+            "state": "queued_after_easy_deliveries",
+            "source": "eva2/experiments/aide-20260929/README.md",
+            "candidateRequests": 2,
+            "validCandidates": 0,
+            "evaluationRun": false,
+            "reason": "Owner prioritized easiest useful deliveries; two started requests failed, no retry."
+          }
         },
         {
           "id": "R1",
@@ -13812,7 +13836,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": null,
+      "activeSliceId": "T3",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
