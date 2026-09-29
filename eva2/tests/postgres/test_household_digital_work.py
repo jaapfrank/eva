@@ -645,3 +645,31 @@ def test_private_research_addition_preserves_old_household_reads_and_grant_on_re
     x.server.authority.validate_spec(resumed)
     assert resumed.grant == old.grant
     assert "research_current_options" not in resumed.grant.capability_ids
+
+
+def test_household_scheduled_resume_keeps_time_after_delayed_admission(database, monkeypatch):
+    from eva.bootstrap.household_work_corrections import HouseholdScheduledWork
+    from tests.postgres.test_native_task_continuity import native
+    from tests.postgres.test_scheduled_work_lifecycle import CoordinatorInterrupted
+
+    x = digital_setup(database, "hh-delayed-admission")
+    original = native(x, "original")
+    first_id = original.service.execute("digital", original.turn, request_key="start",
+        task="Controleer de temperatuur")["work"]["work_id"]
+    corrected = original.service.execute("revise_digital", original.turn, request_key="revision",
+        revision={"work_id": first_id, "instruction": "Controleer ook de doeltemperatuur."})
+    assert corrected["status"] == "correction_saved"
+    scheduler = HouseholdScheduledWork(x.server)
+    def interrupt_before_admission(*args, **kwargs):
+        raise CoordinatorInterrupted()
+    with monkeypatch.context() as crash:
+        crash.setattr(scheduler.audience_adapter, "dispatch", interrupt_before_admission)
+        with pytest.raises(CoordinatorInterrupted):
+            scheduler.run_once()
+    x.clock[0] += timedelta(minutes=15)
+    assert HouseholdScheduledWork(x.server).run_once() == "dispatched"
+    successor_id = HouseholdScheduledWork(x.server).list()["schedules"][0]["work_id"]
+    claim = x.server.store.claim_next(worker_id="worker:household-restart", release=x.profile.release, now=x.clock[0])
+    assert claim is not None and claim.spec.work_id == successor_id
+    assert claim.spec.parent_task_id == first_id
+    assert HouseholdScheduledWork(x.server).run_once() == "idle"

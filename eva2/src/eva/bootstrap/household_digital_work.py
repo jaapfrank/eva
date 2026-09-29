@@ -134,7 +134,6 @@ def admit_household_digital(service, turn, request_key, task, *, previous=None, 
     service.validate_authority(turn)
     origin = service.origin(turn) if previous is None else previous.spec.origin
     service.server.authority.validate_actor(origin.actor_id)
-    created = admission_time or parse_utc_timestamp(turn.occurred_at)
     expiry = parse_utc_timestamp(service.server.authority.policy.expires_at)
     key = canonical_sha256(dict(origin=origin.to_payload(), request_key=request_key))
     if previous is None:
@@ -152,15 +151,20 @@ def admit_household_digital(service, turn, request_key, task, *, previous=None, 
             parent_task_id=spec.work_id, source=spec.source.model_dump(mode="json"),
             source_ingress_sha256=spec.source_ingress_sha256, execution_id=spec.execution_id,
             episode_id=spec.episode_id, grant=spec.grant)
+    continuation = (service._request_access(previous, turn)
+        if previous is not None and household_continuation_execution_id is None else
+        {} if household_continuation_execution_id is None else
+        {"household_continuation_execution_id": household_continuation_execution_id})
+    from eva.bootstrap.scheduled_admission import scheduled_creation_time
+    created = scheduled_creation_time(admission_time, turn.occurred_at,
+        service.server.authority.clock,
+        lambda: service.store.load(identity["work_id"], **service._owner,
+            household_origin=origin, **continuation))
     spec = profile.build_spec(**identity, origin=origin.to_payload(),
         owner_principal_id=str(service._owner["owner_principal_id"]),
         principal_binding_id=str(service._owner["principal_binding_id"]), task=task,
         created_at=created, deadline=min(created+timedelta(seconds=profile.timeout_seconds),expiry))
     title = previous.title if previous else " ".join(task.split())[:120]
-    continuation = (service._request_access(previous, turn)
-        if previous is not None and household_continuation_execution_id is None else
-        {} if household_continuation_execution_id is None else
-        {"household_continuation_execution_id": household_continuation_execution_id})
     try:
         saved = service.store.load(spec.work_id, **service._owner, household_origin=origin, **continuation)
         title = saved.title

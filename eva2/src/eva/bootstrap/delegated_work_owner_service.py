@@ -297,7 +297,9 @@ class DelegatedWorkOwnerService:
                 "message": turn.message_id, "request": request_key,
             })
             identity = uuid5(NAMESPACE_URL, key)
-            created = admission_time or parse_utc_timestamp(turn.occurred_at)
+            from eva.bootstrap.scheduled_admission import scheduled_creation_time
+            created = scheduled_creation_time(admission_time, turn.occurred_at, self.now,
+                lambda: self.store.load("work:eva-chat:" + str(identity), **self._owner))
             builder = (self.digital_profile.build_spec if operation == "digital" else
                        build_unadmitted_delegated_work_spec if operation == "start"
                        else self.research_profile.build_spec)
@@ -348,11 +350,13 @@ class DelegatedWorkOwnerService:
         previous = self.store.load(work_id, **self._owner)
         if operation in {"get", "result"}:
             return {**response, "work": self._view(previous, turn=turn)}
-        created = admission_time or parse_utc_timestamp(turn.occurred_at)
         next_id = "work:eva-resume:" + str(uuid5(
             self.store.scope.installation_id,
             f"{previous.spec.work_id}:{previous.spec.generation + 1}",
         ))
+        from eva.bootstrap.scheduled_admission import scheduled_creation_time
+        created = scheduled_creation_time(admission_time, turn.occurred_at, self.now,
+            lambda: self.store.load(next_id, **self._owner))
         is_research = isinstance(previous.spec, DelegatedResearchSpec)
         is_digital = isinstance(previous.spec, DelegatedDigitalWorkSpec)
         if is_research and self.research_profile is None:

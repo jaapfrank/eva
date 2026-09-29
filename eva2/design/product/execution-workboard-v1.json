@@ -2851,15 +2851,15 @@
           }
         ],
         "now": {
-          "title": "Documentopdracht afgerond",
-          "state": "Einddocument en eindantwoord beschikbaar",
-          "detail": "Bestaand einddocument gecontroleerd: drie activiteiten binnen 30 minuten, mondeling woordspel verwerkt, bronbestanden behouden. Eindantwoord eerder succesvol hervat; geen nieuwe modelopdracht nodig.",
-          "doneWhen": "Het gevraagde einddocument en de bijbehorende terugmelding zijn beschikbaar. Dit sluit de documentopdracht, niet de volledige L2-projectfunctie."
+          "title": "L2: zelfstandig projectwerk voortzetten",
+          "state": "Gerichte controle actief",
+          "detail": "Coördinator controleert bestaande hervatroute; platform_research_20260927 beoordeelt uitsluitend het resterende gat. Afgerond document blijft gesloten. Geen modelcalls.",
+          "doneWhen": "Concrete missing continuation behavior identified and either existing proof linked or smallest demonstrated fix delivered."
         },
         "next": {
-          "title": "L2: zelfstandige projectvoortzetting",
-          "state": "Nog niet gestart",
-          "detail": "L2: gebruik bestaand opgeslagen project en bewijs om uitsluitend ontbrekende zelfstandige vervolgstap na onderbreking vast te stellen; documentopdracht niet opnieuw uitvoeren."
+          "title": "L2: ontbrekende vervolgstap afronden",
+          "state": "Afhankelijk van gerichte controle",
+          "detail": "Bestaande planning en opgeslagen resultaten hergebruiken; geen nieuwe planner of herhaalde documentopdracht."
         },
         "ownerAction": {
           "title": "Telegram: tussenvraag tijdens onderzoek",
@@ -2873,7 +2873,7 @@
           "expected": "Tussenvraag vóór het onderzoeksantwoord; onderzoeksantwoord bij de oorspronkelijke vraag."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T08:05:14.427667+00:00"
+        "reviewedAt": "2026-09-29T08:06:19.052692+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13569,16 +13569,16 @@
           },
           "nextAction": "Documentopdracht afgesloten; lange-duur/zelfstandigheidsbewijs blijft afzonderlijk open. Niet opnieuw uitvoeren.",
           "owner": "/root",
-          "activeWorker": null,
-          "baseCommit": "cde5f24d",
-          "effortNotice": "Deze beurt circa30min actieve uitvoering; echte vervolgafspraak09:00 lokaal. Gemeten runtimegebruik in bewijs; creditkosten onbekend.",
+          "activeWorker": "/root",
+          "baseCommit": "29f8fadc",
+          "effortNotice": "Eerste gerichte ronde maximaal 20 minuten; geen modelcalls. Alleen aangetoond tekort herstellen, creditkosten onbekend.",
           "latestEvidence": "eva2/evidence/product/l2-final-reply-resumed-20260929.json",
           "assignment": {
-            "stage": "document_and_final_reply_completed_via_assisted_resume",
-            "outcome": "One ordinary project preserves goal, dependencies, artifacts and next action overnight; later correction and continuation use saved state without duplicate effects.",
-            "scope": "Synthetic household document project, private website route; existing scheduler and artifact tools only",
-            "evidence": "eva2/evidence/product/l2-overnight-project-criteria-20260928.json",
-            "effort": "One bounded initial project request, inspect actual state; later continuation across day boundary. Existing runtime limits, credit costs unknown."
+            "stage": "checking_remaining_continuation_gap",
+            "outcome": "Bewaard project zelfstandig voortzetten met bestaande afhankelijkheden en correcties.",
+            "scope": "Existing scheduled_work.py, work_corrections.py, household_work_corrections.py and matching lifecycle tests; no document rerun.",
+            "ownership": "/root: source and board; /root/platform_research_20260927: bounded read-only gap assessment.",
+            "doneWhen": "Concrete missing continuation behavior identified and either existing proof linked or smallest demonstrated fix delivered."
           }
         },
         {
@@ -13784,7 +13784,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": null,
+      "activeSliceId": "L2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

@@ -1,5 +1,9 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Nu — L2: zelfstandige projectvoortzetting
+
+Basis29f8fadc. Coördinator controleert bestaande scheduling/correctieroute en bijbehorende lifecycle-proeven; platform_research_20260927 beoordeelt het resterende gat zonder bestandswijzigingen. Eerste ronde maximaal20min, geen modelcalls. Eindpunt: ontbrekend gedrag concreet vaststellen en bestaand bewijs benutten of kleinste noodzakelijke correctie opleveren. Afgeronde documentopdracht blijft gesloten.
+
 ## Actuele afronding — gevraagde documentopdracht
 
 Het [einddocument](evidence/product/gezinsweek-l2-resultaat.md) en de [succesvolle eindterugmelding](evidence/product/l2-final-reply-resumed-20260929.json) zijn beschikbaar. Bestaande afronding gecontroleerd; geen nieuwe modelopdracht of herhaling. De tegenstrijdige actuele dashboardkoppen over reeds afgerond T1-onderzoek zijn gelijkgetrokken. Volgende L2-zelfstandigheidswerk is nog niet gestart; deze documentopdracht blijft gesloten.

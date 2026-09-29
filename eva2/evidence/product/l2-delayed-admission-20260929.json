@@ -1,0 +1,34 @@
+{
+  "checkedAt": "2026-09-29T08:12:20.769830+00:00",
+  "status": "reviewed_source_candidate",
+  "baseCommit": "29f8fadc",
+  "ownerRequirement": "L2: saved project continuation remains executable after interruption.",
+  "defect": "A crash after durable launch reservation but before admission consumed the entire execution window while no work existed. One-day delayed restart dispatched an unclaimable task.",
+  "change": "For scheduled admission only, use current time if the target work does not exist. Replay retains the existing immutable creation time and original deadline. Private starts/resumes and household resumes share the rule.",
+  "files": [
+    "eva2/src/eva/bootstrap/scheduled_admission.py",
+    "eva2/src/eva/bootstrap/delegated_work_owner_service.py",
+    "eva2/src/eva/bootstrap/household_digital_work.py"
+  ],
+  "checks": {
+    "beforeFix": "Real PostgreSQL regression failed: claim_next returned None after one day before admission. Initial tuple/list assertion error corrected separately.",
+    "existingAndFirstRegression": "20 passed in38.19s",
+    "expandedPrivateRegressions": "4 passed in4.90s: initial/resume delayed1day; admitted replay retains exact spec and is not renewed; existing lifecycle.",
+    "householdDelayedResume": "1 passed in4.60s after15min before admission.",
+    "uniqueCases": 23
+  },
+  "review": {
+    "reviewer": "/root/platform_research_20260927",
+    "decision": "GO for bounded fix",
+    "ranOwnTests": false
+  },
+  "runtimeModelCalls": 0,
+  "creditCosts": "unknown",
+  "ownerAccepted": false,
+  "limitations": [
+    "Not yet installed at this source checkpoint.",
+    "Injected interruption and controlled clock, not a wall-clock day or physical speaker trial.",
+    "Does not automatically rerun already admitted expired tasks or prove full L2 autonomy.",
+    "Crash atomicity across separate correction writes remains outside this change."
+  ]
+}
