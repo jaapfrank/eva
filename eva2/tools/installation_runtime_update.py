@@ -64,6 +64,12 @@ def require_current_storage(config: dict, service: str, current: dict) -> None:
         raise ValueError("running storage differs from the installed configuration")
 
 
+def same_mounts(left: list[dict], right: list[dict]) -> bool:
+    """Docker inspect mount ordering is not part of storage identity."""
+    return sorted(left, key=lambda mount: json.dumps(mount, sort_keys=True)) == sorted(
+        right, key=lambda mount: json.dumps(mount, sort_keys=True))
+
+
 def update_runtime(*, project: str, installed: Path, candidate: Path,
                    receipt: Path, run=_command) -> dict:
     """Use existing Compose execution once, with a durable pre-dispatch receipt."""
@@ -127,7 +133,7 @@ def update_runtime(*, project: str, installed: Path, candidate: Path,
             if len(ids) != 1:
                 raise RuntimeError("updated service is unavailable")
             current = json.loads(run(["docker", "inspect", ids[0]]))[0]
-            if current["Image"] != entry["candidate_image"] or current["Mounts"] != entry["mounts"]:
+            if current["Image"] != entry["candidate_image"] or not same_mounts(current["Mounts"], entry["mounts"]):
                 raise RuntimeError("updated image or retained mounts differ")
             entry["current_container"] = ids[0]
         result["status"] = "running_with_retained_mounts"

@@ -2,11 +2,17 @@
 
 ## Zo lees je de 24 opdrachten — 29 september 2026
 
-De 24 hoofdopdrachten zijn werkpakketten van het afgesproken bouwplan, niet 24 resterende kleine klusjes. Huidige registratie: 6 hoofdopdrachten technisch afgerond, 18 open. Binnen die open pakketten staan 44 afzonderlijke taken: 6 afgerond en 38 open. Deze aantallen zijn geen percentage van een bruikbaar product.
+De 24 hoofdopdrachten zijn werkpakketten van het afgesproken bouwplan, niet 24 resterende kleine klusjes. Huidige registratie: 6 hoofdopdrachten technisch afgerond, 18 open. Binnen die open pakketten staan 44 afzonderlijke taken: 7 afgerond en 37 open. Deze aantallen zijn geen percentage van een bruikbaar product.
 
 De afzonderlijke taken staan in de bestaande dashboardtab **Werk & volgorde → Alle taken per onderdeel**, met ID, eigenaar, status en eindvoorwaarde. De enige taakbron blijft `audit.deliveryPlan.implementationSlices[].remainingTasks`. Zeven dagen gezinsgebruik, vergelijking en eindoordeel zitten al in het plan; geen verborgen extra bouwronde na de 24 opdrachten. Technisch klaar en door Jaap geaccepteerd blijven afzonderlijk.
 
 Werkregel: één bruikbaar resultaat afmaken; alleen passende gerichte controle, review en installatie bundelen. Een mislukte proef gericht repareren in de ontwikkelversie; niet telkens terugzetten of opnieuw installeren. Nieuwe wensen vergroten de bestaande eindvoorwaarden niet stilzwijgend.
+
+## Afgerond — O2.2 werkelijke update met bestaande gegevens
+
+Kern en achtergrondwerker via bestaande updater bijgewerkt naar dezelfde0009-aansluiting. Beide gezond, taakprogrammahash gelijk, exact dezelfde opslagkoppelingen en bestaande resultaat-aantallen behouden. Onjuiste controle op de volgorde van Docker-mounts gericht gecorrigeerd: vijf controles en onafhankelijke review GO; module geïnstalleerd, oorspronkelijke foutreceipts bewaard en gecontroleerd aangevuld. Geen tweede installatie of rollback. Nul Eva-modelcalls; credits onbekend.
+
+**O2.2 technisch afgerond.** O2.3 gezamenlijke herstelactie is eerstvolgend; eigenaaracceptatie blijft apart. Geen actieve uitvoerder. [Bewijs](evidence/product/o2-actual-update-completed-20260929.json).
 
 ## Laatste resultaat — O2.3 consistente gegevenskopie verzameld
 

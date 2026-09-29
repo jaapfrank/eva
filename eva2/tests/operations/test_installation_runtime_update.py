@@ -70,3 +70,15 @@ def test_named_volume_project_mapping_must_match_live_storage():
         require_current_storage(config, "core", current)
     config["volumes"]["data"]["name"] = "actual-data"
     require_current_storage(config, "core", current)
+
+
+def test_mount_order_is_not_identity_but_storage_changes_are():
+    from tools.installation_runtime_update import same_mounts
+    mounts = [{"Destination": "/data", "Source": "/volume/a", "RW": True},
+              {"Destination": "/config", "Source": "/config/a", "RW": False}]
+    assert same_mounts(mounts, list(reversed(mounts)))
+    for field, value in [("Source", "/volume/b"), ("Destination", "/other"), ("RW", False)]:
+        changed = [dict(m) for m in mounts]
+        changed[0][field] = value
+        assert not same_mounts(mounts, changed)
+    assert not same_mounts(mounts, [*mounts, mounts[0]])

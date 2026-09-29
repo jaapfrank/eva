@@ -1,0 +1,41 @@
+{
+  "date": "2026-09-29T14:59:21.311750+00:00",
+  "task": "O2.2",
+  "status": "technically_completed_installed",
+  "change": "Existing schema0009 worker entrypoint and restore activation module installed into matching core/worker images through InstallerRuntimeUpdate; same storage/configuration retained.",
+  "services": {
+    "core": {
+      "image": "sha256:78935471f5d3ab73a3954b2ee594533a37ddc20a46f4c1dd2e40085d1ff86172",
+      "health": "healthy",
+      "retained_mounts": true
+    },
+    "delegated-work-worker": {
+      "image": "sha256:e05f3e9f2e0ebabc1fcc9a74678bf82777d17f31489c3e3ed7bc126f7bc750e9",
+      "health": "healthy",
+      "retained_mounts": true
+    }
+  },
+  "program_sha256": "513acad45215c9003c1045b02dff0bb70a1d53dbdbe5d5940d05f7e51024a77b",
+  "existing_work": {
+    "pending_or_running_before": 0,
+    "before_and_after_counts": {
+      "succeeded": 36,
+      "stopped": 4,
+      "failed": 16,
+      "ambiguous": 17
+    },
+    "limitation": "Counts and unchanged storage verified; no full database byte-identity claim during live operation."
+  },
+  "verification": {
+    "focused_update_tests": 5,
+    "independent_review": "GO for matching paired deployment and mount-order correction",
+    "live_health": "both healthy; schema0009 and program hashes equal",
+    "model_calls": 0
+  },
+  "correction": "Initial postcheck falsely treated Docker Mounts order as storage change. Compare full records irrespective of ordering; original failure receipts retained and explicitly reconciled, no second update.",
+  "operator_module_installed": true,
+  "private_evidence": "/home/administrator/project/.eva2-artifacts/o2-worker-schema-20260929",
+  "credit_cost": "unknown",
+  "owner_accepted": false,
+  "remaining": "O2.3 full combined restore remains open; no complete installation category or family acceptance claim."
+}

@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T14:49:00.910538+00:00",
+        "checkedAt": "2026-09-29T14:59:21.311750+00:00",
         "deliveries": [
+          {
+            "title": "O2.2 echte update met behoud van gegevens afgerond",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Werkelijke kern-/werkerupdate uitgevoerd via bestaande updater; opslag en bestaande werkresultaten behouden, beide gezond en taakversies gelijk.",
+            "remaining": "Eigenaaracceptatie apart; volledige herstelactie onder O2.3 open.",
+            "source": "eva2/evidence/product/o2-actual-update-completed-20260929.json"
+          },
           {
             "title": "Samenhangende kopie van huidige Eva-gegevens",
             "date": "29 september",
@@ -3011,9 +3019,9 @@
           }
         ],
         "now": {
-          "title": "O2.3 gezamenlijke gegevenskopie gereed",
-          "state": "Deelresultaat opgeleverd",
-          "detail": "92 bestanden, beide databases en gateway verzameld; twaalf bronservices hervat. Volledige herstelactie nog open; geen actieve uitvoerder.",
+          "title": "O2.2 bijwerken met bestaande gegevens afgerond",
+          "state": "Technisch afgerond en geïnstalleerd",
+          "detail": "Werkelijke kern-/werkerupdate uitgevoerd via bestaande updater; opslag en bestaande werkresultaten behouden, beide gezond en taakversies gelijk. Geen actieve uitvoerder.",
           "owner": "/root"
         },
         "next": {
@@ -3032,7 +3040,7 @@
           "linkLabel": "Geef resultaat in deze taak door"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T14:49:00.910538+00:00"
+        "reviewedAt": "2026-09-29T14:59:21.311750+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14388,7 +14396,7 @@
             {
               "id": "O2.2",
               "title": "Gewone update met bestaande gegevens afronden",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "aansluiten",
               "doneWhen": "Bestaande updater werkt met werkelijke gegevensversie en behoud van informatie.",
               "owner": "/root",
@@ -14404,10 +14412,13 @@
                   "eva2/tools/installation_runtime_update.py"
                 ],
                 "finish": "Owner can apply an update with current data preserved; no rebuild of release tooling",
-                "stage": "owner_update_wiring_installed"
+                "stage": "actual_update_completed",
+                "activeWorkers": []
               },
-              "latestEvidence": "eva2/evidence/product/o2-update-wizard-20260929.json",
-              "remaining": "Eigenaarbediening nu aangesloten en geïnstalleerd: vooraf voorbereid updatepakket via bestaande wizard uitvoeren en status teruglezen. Nog volgende echte compatibele productie-update met huidige gegevens via deze route uitvoeren; geen nutteloze herinstallatie."
+              "latestEvidence": "eva2/evidence/product/o2-actual-update-completed-20260929.json",
+              "remaining": "Eigenaaracceptatie apart; volledige herstelactie onder O2.3 open.",
+              "completedAt": "2026-09-29T14:59:21.311750+00:00",
+              "result": "Werkelijke kern-/werkerupdate uitgevoerd via bestaande updater; opslag en bestaande werkresultaten behouden, beide gezond en taakversies gelijk."
             },
             {
               "id": "O2.3",
