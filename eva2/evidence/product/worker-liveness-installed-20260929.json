@@ -1,0 +1,115 @@
+{
+  "checkedAt": "2026-09-29T07:56:43.504118+00:00",
+  "sourceCommit": "d63a67e8",
+  "state": "installed_live_verified",
+  "testsPassed": 16,
+  "review": "review_directory_connection GO for source and boundedT4 completion; live installation condition fulfilled",
+  "installation": {
+    "checkedAt": "2026-09-29T07:55:28.548351+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:4c1efdfd91d73f164aa5d2d6f927e7a8fe6eaa43a09dbd11cfd6cf598e842f69",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_work_service.py": "fc793d6a0296ed015342765c9b1f7be6abbab639cd982778b55f659377de5086",
+          "bootstrap/worker_liveness.py": "177489d1bdfaf78c85c4ca2e2ddd50a6ebb1435f91681bfe6e6d6f31c30f39d1",
+          "bootstrap/component_observations.py": "53d2da6010f21288957a0999d115f926a6d7fcd0e86f4d231cfb05b49a9b254f"
+        }
+      },
+      "worker": {
+        "image": "sha256:bc7a46ddda1b84128a766b860b2f43208f213adbae4ced6d02f241afbeca3b17",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_work_service.py": "fc793d6a0296ed015342765c9b1f7be6abbab639cd982778b55f659377de5086",
+          "bootstrap/worker_liveness.py": "177489d1bdfaf78c85c4ca2e2ddd50a6ebb1435f91681bfe6e6d6f31c30f39d1",
+          "bootstrap/component_observations.py": "53d2da6010f21288957a0999d115f926a6d7fcd0e86f4d231cfb05b49a9b254f"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/t4-worker-liveness-20260929/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "components": {
+    "contract": "EvaComponentObservations/v1",
+    "read_only": true,
+    "checked_at": "2026-09-29T07:55:36.732038+00:00",
+    "components": [
+      {
+        "id": "database",
+        "label": "Taak- en gegevensopslag",
+        "state": "ready",
+        "observed_at": "2026-09-29T07:55:36.732038+00:00",
+        "detail": "Verbindingscontrole met de database; geen controle van alle opgeslagen gegevens."
+      },
+      {
+        "id": "memory",
+        "label": "Geheugendienst",
+        "state": "ready",
+        "observed_at": "2026-09-29T07:55:36.732038+00:00",
+        "detail": "Bereikbaarheid van de geheugendienst; geen beoordeling van herinneringen."
+      },
+      {
+        "id": "model_credentials",
+        "label": "Modeltoegang",
+        "state": "unknown",
+        "observed_at": null,
+        "detail": "De kern meldt een toegangsprobleem als zij dit vaststelt. Zonder probleemmelding blijft daadwerkelijke modelbereikbaarheid onbekend; er is geen modelvraag gestuurd."
+      },
+      {
+        "id": "website",
+        "label": "Eigenaarwebsite",
+        "state": "ready",
+        "observed_at": "2026-09-29T07:55:36.732038+00:00",
+        "detail": "Deze beveiligde statusaanvraag is ontvangen en beantwoord."
+      },
+      {
+        "id": "worker",
+        "label": "Achtergrondwerker",
+        "state": "ready",
+        "observed_at": "2026-09-29T07:55:19.850043+00:00",
+        "detail": "Werkerproces reageert; ingestelde werklussen zijn actief. De modeltoegang, voortgang en succesvolle taakuitvoering zijn hiermee niet getest."
+      },
+      {
+        "id": "telegram",
+        "label": "Telegram",
+        "state": "ready",
+        "observed_at": "2026-09-29T07:55:19.906332+00:00",
+        "detail": "Telegram-API en bottoegang gecontroleerd; berichtontvangst en aflevering niet getest."
+      },
+      {
+        "id": "home_assistant",
+        "label": "Home Assistant",
+        "state": "ready",
+        "observed_at": "2026-09-29T07:55:19.855390+00:00",
+        "detail": "Home Assistant-API en toegang gecontroleerd; huisbediening en speakergeluid niet getest."
+      },
+      {
+        "id": "web_voice",
+        "label": "Spraak op de website",
+        "state": "unknown",
+        "observed_at": null,
+        "detail": "Spraakroute ingesteld; microfoon, transcriptie en geluid niet beproefd."
+      },
+      {
+        "id": "voice_pe",
+        "label": "Voice PE-speakers",
+        "state": "unknown",
+        "observed_at": null,
+        "detail": "Native spraakroute ingesteld; beide fysieke speakers en hun wakeword zijn niet gecontroleerd."
+      }
+    ]
+  },
+  "overlay": "Only reviewed worker service diff transplanted onto installed module; installedschema4e_0007 and restore behavior preserved. New helper and observer exactsource. Worker internal8081, no publishedhostport.",
+  "semantics": [
+    "Same serving process/eventloop answers; all lanes alive and shutdown not requested",
+    "Active lanes may be waiting or stalled; no provider/taskprogress claim",
+    "Read-only owner observation cached30s with original observed_at",
+    "Model/audio health remain unknown when unmeasured"
+  ],
+  "runtimeModelCalls": 0,
+  "ownerAccepted": false,
+  "creditCosts": "unknown"
+}

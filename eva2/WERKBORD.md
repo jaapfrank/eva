@@ -1,12 +1,19 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Afgerond — T4: taakbediening, resultaten en actuele status
+
+**Geïnstalleerd:** interne werkercontrole op dezelfde eventloop;16gerichte controles en onafhankelijke review GO. Kern/werker gezond, exacte overlay en interne poort gecontroleerd, terugweg bewaard. Eigenaarpagina toont werker bereikbaar met meettijd; geen model-/voortgangclaim. [Bewijs](evidence/product/worker-liveness-installed-20260929.json).
+
+**Bestaande complete bediening behouden:** taakstatussen inclusief wachten, resultaten, stoppen, bijsturen/hervatten en gemeten/ongemeten verbruik hebben gebundeld bewijs. T4 technisch afgerond; eigenaaracceptatie en fysiekeC1/C3 blijven afzonderlijk. Geen modelcalls.
+
+**Volgende, nog niet gestart — I2:** bestaande camera-/agendakoppeling en bewaarde initiatieven gebruiken voor een volledige nuttige initiatiefuitkomst; geen nieuwe cameralaag.
+
 ## Afgerond — M2: privécontext en gedeelde speakers
 
 **Technisch gecontroleerd, geen herbouw:**15 gerichte gevallen geslaagd; bestaande grenzen en de nieuw gewijzigde opgeslagen-leesroute laten geen privéresultaat terug bij ander publiek, persoon of uitvoering. Oorspronkelijke eigenaar houdt toegang. Onafhankelijke review GO. [Bewijs](evidence/product/m2-boundaries-current-20260929.json). Geen productwijziging, herstart, modelcalls of echte berichten. Eén bestaande testfixture wees nog naar schema7 in plaats van9; alleen die verwachting gecorrigeerd.
 
 **Nog afzonderlijk open:** M1 langdurige continuïteit, C3 fysieke ervaring, eigenaaracceptatie. Dit is bewijs van bestaande bescherming, geen nieuwe functie.
 
-**Nu — T4, /root:** interne werkerstatus gebouwd en16gerichte controles geslaagd; onafhankelijke review akkoord. Installatie met precieze overlay op bestaande service, geen nieuwe hostpoort. Actieve werklussen bewijzen geen modeltoegang of taakvoortgang; fysieke spraak blijft afzonderlijk onbekend.
 
 
 ## Afgerond — T1: onderzoek opslaan, controleren en teruggeven
