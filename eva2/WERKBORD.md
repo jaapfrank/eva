@@ -1,5 +1,15 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## L3.1 — oorspronkelijke proef mislukt afgesloten
+
+Twee kandidaat-aanvragen eindigden na elk circa121,4s met een providerfout; geen kandidaat. Geen blinde derde aanvraag. Bestaande evaluator draaide de ongewijzigde baseline tegen zichzelf:0 geconstateerde harde fouten,3/5 vereiste taakverwijzingen en4.017contextbytes. Dit is geen beter modelantwoord of zelfverbetering. Afgeschermde data niet gelezen. [Verslag](experiments/aide-20260929/README.md) · [Bewijs](evidence/product/aide-bounded-outcome-20260929.json).
+
+L3.1 gesloten volgens de vooraf toegestane mislukte uitkomst; L3 als functie blijft open. Geen productwijziging of installatie. Deze afronding is onderzoek, geen extra bruikbare Eva-functie. Geen nieuwe modelcalls; eerdere tokens/credits onbekend. Onafhankelijke review akkoord.
+
+**Volgende, nog niet gestart:** R1.1 bestaande taakmodelhypothese begrensd tegenover gewone procedurehergebruik zetten. Eerst vaste taak, leerverbruik en stopvoorwaarde. Geen actieve uitvoerders.
+
+## Eerdere voortgang
+
 ## I1.1 — speakerkeuze hersteld en geïnstalleerd; bijdrage open
 
 Initiatief gebruikte ten onrechte de bestemmingenlijst voor openstaande onderzoeksresultaten. Nieuwe selectie gebruikt bestaande sessieautoriteit: native, passend apparaat, open en niet verlopen.8 gerichte PostgreSQL-controles en onafhankelijke review akkoord. Kern gezond en bron gecontroleerd; worker niet gewijzigd. [Bewijs](evidence/product/i1-native-destination-20260929.json).

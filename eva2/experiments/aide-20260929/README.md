@@ -1,4 +1,4 @@
-# AIDE application in Eva — bounded work, queued
+# AIDE application in Eva — bounded trial closed without a candidate
 
 Owner priority, 29 September 2026: record this work in the project, then finish the easiest useful deliveries first. This is part of L3, not a new platform or an additional product milestone.
 
@@ -16,8 +16,16 @@ The proposed bounded target is existing `PostgresDelegatedWorkActions.active_con
 
 Two already-started Astra/medium candidate requests ended with `CodexProviderError` after approximately 121.4 seconds each. Neither returned a valid candidate. Token usage and subscription credit cost were unavailable. No candidate evaluation, final comparison, product source change or installation occurred. The failure does not establish that AIDE is unsuitable.
 
-Further calls are deferred under the owner's new priority. Preserve the bounded allowance rather than restarting it: two initial requests have been consumed; at most one refinement remains under the original ceiling. No blind retry. Before resuming, diagnose the concrete provider failure or obtain a revised experiment decision. Baseline/hash changes require revalidation before comparison, not silently using stale evidence.
+## Final outcome — 29 September 2026
 
-## Next execution
+The original trial is closed as unsuccessful. Both Astra requests were terminal failures, with no candidate. No unchanged third request was made. The current target still matches the frozen baseline SHA-256, so the existing `ComponentEvaluator` was used once to evaluate that baseline against an identical copy on the frozen development cases.
 
-Finish useful product outcomes first. Then resume L3 only with a concrete user-facing deficit, applicable baseline, fixed evaluation and remaining budget. Report useful answer quality, human help, speed and measured usage separately from context bytes and local scorer results. No claim of improvement exists yet.
+Both legs report zero detected hard-check failures, 3/5 required task references included, and 4,017 context bytes. The two omitted references confirm the development selection gap; these are metadata-selection scores, not user-answer quality or tokens. The leg named `candidate` by the evaluator is an identical baseline control, not a generated improvement. No held-out data was read or evaluated, and no answer-model comparison was run.
+
+No product code, installation or promotion follows. Independent review approved this limited interpretation. Earlier candidate tokens and subscription credits remain unknown; this closing measurement used no model calls. See the [bounded outcome](../../evidence/product/aide-bounded-outcome-20260929.json).
+
+## Further application
+
+Keep the existing proposal/evaluation/release facilities. A future attempt needs a concrete changed cause or revised experiment decision and an explicit accounting of the original allowance; do not reset the budget or assume the unused refinement is a fresh draft allowance. The current failure does not establish that AIDE is unsuitable. Whole L3 and the technical-differentiation requirement remain open.
+
+Original AIDE program search, AIDE² harness evolution, and Eva's demonstrated results remain separate: this trial produced no improved candidate and demonstrates no recursive self-improvement. Do not build a general optimizer to conceal a failed bounded trial.

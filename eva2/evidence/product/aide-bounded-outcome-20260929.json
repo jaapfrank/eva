@@ -1,0 +1,96 @@
+{
+  "checkedAt": "2026-09-29T11:51:14.972842+00:00",
+  "baseCommit": "7ebfd963",
+  "status": "original_bounded_trial_closed_unsuccessful",
+  "existing": "draft_component, ComponentEvaluator and prepare_component_release reused; assisted SHA256 improvement is historical evidence only.",
+  "newProductCode": false,
+  "newProviderCalls": 0,
+  "candidateAttempts": [
+    {
+      "status": "failed",
+      "elapsedSeconds": 121.4058470040327,
+      "error": "CodexProviderError"
+    },
+    {
+      "status": "failed",
+      "elapsedSeconds": 121.3996193719795,
+      "error": "CodexProviderError"
+    }
+  ],
+  "validCandidates": 0,
+  "baselineSha256": "b92ca3b7bab60247169647f4c31cf8dc32188d8adf6a443063d17104b8014d51",
+  "baselineMeasurement": {
+    "hardFailures": 0,
+    "requiredHits": 3,
+    "requiredTotal": 5,
+    "contextBytes": 4017,
+    "cases": [
+      {
+        "id": "named_late",
+        "requiredHits": 0,
+        "requiredTotal": 1,
+        "hardFailures": [],
+        "contextBytes": 1141
+      },
+      {
+        "id": "ordinary",
+        "requiredHits": 1,
+        "requiredTotal": 1,
+        "hardFailures": [],
+        "contextBytes": 732
+      },
+      {
+        "id": "recent_named",
+        "requiredHits": 0,
+        "requiredTotal": 1,
+        "hardFailures": [],
+        "contextBytes": 846
+      },
+      {
+        "id": "no_match",
+        "requiredHits": 1,
+        "requiredTotal": 1,
+        "hardFailures": [],
+        "contextBytes": 649
+      },
+      {
+        "id": "stop",
+        "requiredHits": 1,
+        "requiredTotal": 1,
+        "hardFailures": [],
+        "contextBytes": 649
+      },
+      {
+        "id": "denied",
+        "requiredHits": 0,
+        "requiredTotal": 0,
+        "hardFailures": [],
+        "contextBytes": 0
+      }
+    ]
+  },
+  "evaluationMeaning": "Existing evaluator ran baseline against identical baseline; candidate-labelled leg is not a generated candidate. Required hits measure selected task metadata, not actual model-answer quality.",
+  "heldoutRead": false,
+  "heldoutEvaluationRun": false,
+  "answerEvaluationRun": false,
+  "promotion": false,
+  "installationRequired": false,
+  "review": {
+    "reviewer": "/root/review_l2_autonomous_run",
+    "decision": "GO to close failed original trial; no product improvement or AIDE/AIDE2 suitability conclusion"
+  },
+  "usage": {
+    "priorCandidateRequests": 2,
+    "priorCandidateSeconds": [
+      121.4058470040327,
+      121.3996193719795
+    ],
+    "priorCandidateTokens": null,
+    "newOfflineEvaluatorRuns": 1,
+    "newRuntimeModelCalls": 0,
+    "creditCost": null
+  },
+  "remaining": "No candidate or measured improvement. Whole L3 and technical differentiation remain open. No blind third request; future continuation needs concrete changed cause/experiment decision and explicit remaining budget.",
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/aide-context-20260929",
+  "distinction": "AIDE searches task programs; AIDE2 searches research-agent harnesses with fixed models. Eva demonstrated neither recursive improvement nor a better candidate in this trial."
+}
