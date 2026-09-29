@@ -1,5 +1,35 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Concrete resterende taken — overzicht 29 september
+
+De 24 hoofdopdrachten zijn het volledige afgesproken traject, niet 24 extra functies. Zes hoofdopdrachten zijn technisch afgesloten. De overige 18 zijn uitgesplitst in 44 kleine taken: vijf gesloten, 39 open. Eén van die vijf is een mislukte onderzoeksproef, geen functieoplevering. De negen productonderdelen hebben een afzonderlijke afronding; daarvan blijven er twee klaar.
+
+Elke kleine taak heeft in het bestaande dashboard een eigen status en eindvoorwaarde. Onderstaande lijst toont alleen het resterende werk; bestaande acceptaties blijven staan. Onderzoek, vergelijking en gezinsacceptatie zitten al in het traject en worden niet achteraf als extra bouwronde toegevoegd.
+
+| Hoofdopdracht | Nog af te maken kleine taken |
+|---|---|
+| C1 — Gesprek tijdens werk via tekst | C1.1 Begroeting versnellen; C1.2 Telegram-tussenvraag vóór onderzoeksresultaat (wacht op blokkade) |
+| C3 — HA en beide fysieke speakers | C3.1 Doorpraten via woonkamer-speaker; C3.2 Doorpraten via tweede speaker; C3.3 Onderzoeksresultaat terug op juiste speaker |
+| C4 — Spraak en onderbreken per ingang | C4.1 Onderbreken op woonkamer-speaker; C4.2 Onderbreken op tweede speaker; C4.3 Stoppen en doorpraten op telefoon |
+| M1 — Onderwerpen later voortzetten | M1.2 Continuïteit tijdens gezinsgebruik beoordelen (wacht op Jaap) |
+| M3 — Voorkeuren en persoonlijkheid ontwikkelen | M3.3 Persoonlijkheid in gewoon gebruik beoordelen (wacht op Jaap) |
+| T2 — Algemene huisbediening | T2.1 Resterende HA-timeout gericht oplossen; T2.2 Gewone huisvraag via woonkamer uitvoeren; T2.3 Gewone huisvraag via tweede speaker uitvoeren; T2.4 Automatisering via spraak maken en wijzigen |
+| T3 — Browser- en diensttaak met overname | T3.1 Bestaand Chrome-tabblad met Eva verbinden (wacht op blokkade); T3.2 Een browseropdracht volledig afmaken; T3.3 Overnemen en correct doorgaan |
+| I1 — Huisaanwezigheid en initiatief | I1.1 Een nuttige huisbijdrage laten aankomen (wacht op blokkade); I1.2 Stilte en passendheid beoordelen (wacht op Jaap) |
+| I2 — Camera, agenda en eigen onderzoek | I2.1 Bedoelde camera en agenda kiezen (wacht op Jaap); I2.2 Waarneming tot herinnering afmaken |
+| L2 — Meerdaags project hervatten | L2.1 Project na onderbreking zelfstandig vervolgen |
+| L3 — Eigen verbetering beoordelen | L3.2 Kandidaat onafhankelijk vergelijken (wacht op blokkade); L3.3 Verbetering integreren of afwijzen |
+| R1 — Uitvoerbare ervaring vergelijken | R1.1 Ervaringsmodel begrensd vergelijken; R1.2 Meerwaarde beslissen |
+| O1 — Installatie met optionele modules | O1.1 Installatiewizard zonder handwerk afronden (wacht op blokkade); O1.2 Optionele modules kunnen weglaten (wacht op blokkade) |
+| O2 — Bijwerken en gegevens herstellen | O2.1 Module uitzetten en weer aansluiten; O2.2 Gewone update met bestaande gegevens afronden; O2.3 Herstelroute met werkelijke gegevensversie afronden |
+| P1 — Vergelijkingsvoorwaarden vastleggen | P1.1 Vergelijkbare versies en toegang vastleggen; P1.2 Gelijke taken en meetbudget vastzetten |
+| P2 — Volledige vergelijking uitvoeren | P2.1 Vergelijking op eindkandidaat uitvoeren; P2.2 Winsten én verliezen publiceren |
+| F1 — Geintegreerde eindkandidaat | F1.1 Eén eindkandidaat samenstellen; F1.2 Gezamenlijke werking en herstart controleren |
+| F2 — Gezinsgebruik en eindoordeel | F2.1 Zeven dagen gezinsgebruik (wacht op Jaap); F2.2 Eindoordeel vastleggen (wacht op Jaap) |
+
+**Uitvoeringsafspraak:** één kleine gebruikersuitkomst tegelijk afmaken. Bestaande werking gebruiken; alleen het concrete ontbrekende stuk wijzigen. Gerichte controle en gebundelde review/installatie horen bij die uitkomst. Bij een fout gericht doorrepareren, geen automatische terugzet-/herinstallatiecyclus. Nieuwe noodzakelijke taken krijgen zichtbaar een reden; geen stille scopegroei. Een afgeronde proef telt niet als afgeronde productfunctie.
+
+
 ## L3.1 — oorspronkelijke proef mislukt afgesloten
 
 Twee kandidaat-aanvragen eindigden na elk circa121,4s met een providerfout; geen kandidaat. Geen blinde derde aanvraag. Bestaande evaluator draaide de ongewijzigde baseline tegen zichzelf:0 geconstateerde harde fouten,3/5 vereiste taakverwijzingen en4.017contextbytes. Dit is geen beter modelantwoord of zelfverbetering. Afgeschermde data niet gelezen. [Verslag](experiments/aide-20260929/README.md) · [Bewijs](evidence/product/aide-bounded-outcome-20260929.json).
