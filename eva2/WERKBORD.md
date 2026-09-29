@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Uitvoering begrensd — goal blijft gepauzeerd
+
+Op eigenaarverzoek gelden nu de [bindende uitvoerregels](../AGENTS.md#eigenaaropdracht-29-september-2026--begrensd-uitvoeren-resultaat-vóór-tussenwerk): één concrete gebruikersuitkomst, eerst relevante geïnstalleerde basis controleren, standaard maximaal60minuten per totale poging inclusief controle/review/installatie. Deadline blijft gelijk over beurten en agents. Bij overschrijding, wezenlijke scopegroei of tweemaal dezelfde fout stoppen met uitbreiden en een expliciete vervolgkeuze voorleggen. Geen onderhoudsronde als vervanging van functies afronden.
+
+Dit wijzigt geen voortgangsteller of acceptatie en hervat geen productwerk. App-goaltekst kon met de beschikbare tool niet worden gewijzigd; het bestaande goal verwijst al naar PROJECTDOEL/bouwplan/dit werkbord. De aanvullende regels staan bovenaan AGENTS.md en PROJECTDOEL.md en in `audit.deliveryPlan.boundedExecutionPolicy`. Het zijn uitvoerinstructies, geen technische kredietlimiet van de app.
+
 ## Zo lees je de 24 opdrachten — 29 september 2026
 
 De 24 hoofdopdrachten zijn werkpakketten van het afgesproken bouwplan, niet 24 resterende kleine klusjes. Huidige registratie: 6 hoofdopdrachten technisch afgerond, 18 open. Binnen die open pakketten staan 44 afzonderlijke taken: 7 afgerond en 37 open. Deze aantallen zijn geen percentage van een bruikbaar product.
