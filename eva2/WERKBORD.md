@@ -1,5 +1,13 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## C1.2 — actuele kanaaldiagnose klaar; echte proef open
+
+Begroeting van28september16:38UTC duurde12.209ms: twee modelpogingen, één onnodige `manage_connected_services`, eindproviderAstra;12.742in/65uit deels gemeten. Dit was vóór de bestaande correctie van17:00UTC. Huidige kern/werker bevatten dezelfde modeladapter als de bron. Geen nieuwe ombouw, modelcall of acceptatie. [Bewijs](evidence/product/c1-telegram-current-20260929.json).
+
+**Jaap gevraagd:** stuur de HA-onderzoeksvraag en direct daarna `/eva2 Hoe gaat het met jou?`; meld Beide verstuurd. Codex controleert echte volgorde en oorspronkelijke vraagbinding. Geen antwoord ontvangen; alleen C1.2 wacht hierop. T3-tabdeling blijft eveneens open.
+
+**Volgende, nog niet gestart:** L2 bestaande autonome projectroute vervolgen vanuit bewaard resultaat. Geen nieuwe scheduler. Credits onbekend; geen actieve uitvoerders.
+
 ## P1.2 — klein ontwikkelmeetbudget vastgelegd; uitvoering uit
 
 Twee bestaande gesprekstaken, twee herhalingen en vijf deelnemers:20samples, maximaal40providerpogingen,480.000in/81.920uit-tokens en40min totale uitvoertijd. Dit zijn bovengrenzen, geen verbruiksverwachting. Modelrollen, volgorde, bronhashes, stopgrenzen en beoordeling staan in het bestaande [participantmanifest](benchmark/inspect_ai_v1/p1_participants_20260929.json). Geen modelcalls of nieuwe Eva-functie. Native toelating, ongeziene einddataset en definitieve familiebudgetten blijven open; volledige P1.2 niet afgerond.

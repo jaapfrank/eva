@@ -2899,29 +2899,29 @@
           }
         ],
         "now": {
-          "title": "P1.2: begrensde ontwikkelronde vastgelegd",
-          "state": "Voorbereiding afgerond — uitvoering niet gestart",
-          "detail": "Kleine ontwikkelronde vastgelegd: C01/C04, 2epochs, 5systemen, maximaal40providerpogingen en gedeelde grenzen. Niet uitvoerbaar zolang native toelating ontbreekt. Definitieve ongeziene eindtaken en familiebudgetten blijven open.",
-          "owner": "/root"
+          "title": "C1.2: wacht op echte Telegram-overlapproef",
+          "state": "Gebruikersproef open",
+          "detail": "Twaalfseconden-begroeting was vóór bestaande correctie; huidige code bevestigd. Geen bewezen nieuw concurrencydefect.",
+          "owner": "Jaap voor de proef; Codex voor logcontrole"
         },
         "next": {
-          "title": "C1.2: Telegram-tussenvraag tijdens onderzoek",
+          "title": "L2: zelfstandig projectvervolg",
           "state": "Nog niet gestart",
-          "detail": "Bestaande geïnstalleerde route en bewijs gebruiken; alleen resterende blokkade of echte kanaalproef oplossen. Geen nieuwe gesprekslaag."
+          "detail": "Bestaande scheduler en opgeslagen projectresultaten gebruiken; concrete resterende afhankelijkheid bepalen. Telegramproef blokkeert dit niet."
         },
         "ownerAction": {
-          "title": "Deel één Chrome-tabblad voor T3.1",
+          "title": "Twee Telegram-berichten direct na elkaar",
           "steps": [
-            "Open http://127.0.0.1:44718 in Google Chrome.",
-            "Klik Deel een bestaand tabblad en kies Allow & select bij het bedoelde tabblad.",
-            "Geef hier Gedeeld door."
+            "Stuur /eva2 Zoek uit wat Home Assistant Cloud voor spraak doet, met bronnen.",
+            "Stuur direct daarna /eva2 Hoe gaat het met jou?",
+            "Meld hier Beide verstuurd; Codex controleert volgorde en vraagbinding."
           ],
-          "expected": "Eva krijgt toegang tot uitsluitend het gekozen tabblad; daarna kunnen T3.2 en T3.3 verder.",
-          "url": "http://127.0.0.1:44718",
-          "linkLabel": "Open bestaande Chrome-bediening"
+          "expected": "De gewone tussenvraag wordt vóór het onderzoeksresultaat beantwoord; beide antwoorden verwijzen naar hun oorspronkelijke vraag.",
+          "url": "",
+          "linkLabel": "Gebruik je bestaande Telegram-gesprek met Eva"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T10:43:42.233435+00:00"
+        "reviewedAt": "2026-09-29T10:49:09.405499+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12741,7 +12741,7 @@
           ]
         }
       ],
-      "nextAction": "C1.2 Telegram foreground question during research: reuse installed route and existing evidence, determine exact remaining channel gap. P1 development inputs frozen; no repeated source audit or model matrix.",
+      "nextAction": "L2: continue existing autonomous project route from retained results; inspect concrete existing dependency without rebuilding scheduler. C1.2 awaits actual owner pair; no duplicate concurrency tests.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -12906,10 +12906,23 @@
             {
               "id": "C1.2",
               "title": "Telegram-tussenvraag vóór onderzoeksresultaat",
-              "status": "planned",
+              "status": "blocked",
               "kind": "praktijk",
               "doneWhen": "Gewone tussenvraag komt vóór onderzoek terug en beide antwoorden horen bij hun eigen vraag.",
-              "owner": "Codex"
+              "owner": "Codex",
+              "assignment": {
+                "baseCommit": "9226c7ae",
+                "files": [
+                  "eva2/evidence/product/c1-telegram-current-20260929.json"
+                ],
+                "existing": "Installed concurrent Bottie polling, original-message reply binding and shared runtime overlap proof.",
+                "gap": "Current real Telegram ordering after installed corrections not established.",
+                "finish": "Use current ingress/archive metadata to locate an actual failure or verify a bounded real overlapping pair; do not rebuild tested concurrency.",
+                "estimate": "15–30 minutes initial diagnosis; zero planned replay/model calls; credits unknown."
+              },
+              "blocker": "Huidige echte overlappende Telegram-proef ontbreekt. Eigenaar gevraagd twee berichten direct na elkaar te sturen; antwoord nog open. Bestaande concurrency en vraagbinding behouden.",
+              "latestEvidence": "eva2/evidence/product/c1-telegram-current-20260929.json",
+              "checkedAt": "2026-09-29T10:49:09.405499+00:00"
             }
           ]
         },

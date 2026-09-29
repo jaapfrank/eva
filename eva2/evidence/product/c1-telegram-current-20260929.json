@@ -1,0 +1,54 @@
+{
+  "checkedAt": "2026-09-29T10:49:09.405499+00:00",
+  "sourceBase": "9226c7ae",
+  "scope": "Read-only current Telegram diagnosis; no new user trial or product change",
+  "service": {
+    "unit": "eva.service",
+    "scope": "system",
+    "state": "active",
+    "workingDirectory": "/home/administrator/project/Bottie"
+  },
+  "archive": {
+    "latestEva2RequestAt": "2026-09-28T16:40:32.000Z",
+    "latestTwoRequestGapSeconds": 140,
+    "currentOverlappingPair": "not_present_after_installed_corrections"
+  },
+  "ownerGreeting": {
+    "receivedAt": "2026-09-28T16:38:12.000Z",
+    "replyAt": "2026-09-28T16:38:24.000Z",
+    "transportPrepMs": 1,
+    "coreRequestMs": 12208,
+    "transportTotalMs": 12209,
+    "modelFirstContentMs": 9196,
+    "modelCompletedMs": 9858,
+    "modelAttempts": 2,
+    "toolCalls": 1,
+    "toolName": "manage_connected_services",
+    "finalProvider": "chatgpt-codex:gpt-6-astra",
+    "inputTokens": 12742,
+    "outputTokens": 65,
+    "usageScope": "Recorded conversation calls only; not all infrastructure/helper usage"
+  },
+  "alreadyFixed": {
+    "evidence": "eva2/evidence/product/contact-discovery-greeting-20260928.json",
+    "installedBefore": "2026-09-28T17:02:02.339979+00:00",
+    "finding": "Owner greeting predates installed conditional discovery correction. Do not repeat that implementation.",
+    "currentCoreAndWorkerModelAdapterSha256": "fb55c995d54c6d80291c3de5ba8eb1bb9cc75a400d49d3b50fd10040195e2459",
+    "matchesCurrentRepository": true
+  },
+  "existingOverlapEvidence": [
+    "eva2/evidence/product/telegram-runtime-overlap-20260924.json",
+    "eva2/evidence/product/telegram-poll-throttle-installed-20260922.json",
+    "eva2/evidence/product/telegram-result-binding-installed-20260924.json"
+  ],
+  "remaining": "Actual current owner Telegram pair: short question delivered before research, correct original reply references. Requested asynchronously; no answer yet.",
+  "limitations": [
+    "Archive timestamps alone do not establish perceived speech or first draft timing.",
+    "Current module hash is not a new quality/latency trial.",
+    "No whole C1 or owner acceptance claim."
+  ],
+  "newModelCalls": 0,
+  "telegramMessagesSent": 0,
+  "runtimeChanged": false,
+  "developmentCredits": null
+}
