@@ -2947,15 +2947,15 @@
           }
         ],
         "now": {
-          "title": "P1.1 transportinstelling opgelost; vergelijking nog niet toegelaten",
-          "state": "Begrensde controle afgerond",
-          "detail": "Agent Zero transportinstelling opgelost zonder upstreamwijziging: extra_body reasoning none blijft none; gewone medium blijft medium. Vastgelegd in bestaand deelnemersmanifest. Nog native opgeslagen configuratie, OAuth-toegang en cumulatieve budgetgrenzen. Geen herhaling van deze transportproef.",
+          "title": "P1.1 vergelijking nog geblokkeerd",
+          "state": "Geen vergelijkingsrun gestart",
+          "detail": "Transportconfiguratie vastgelegd. Volledige samplebegrenzing, native toegang en annulering ontbreken nog in de uitvoerbare aansluiting. Geen modelcalls in deze controle.",
           "owner": "Codex; geen actieve uitvoerder"
         },
         "next": {
-          "title": "P1.1 bestaande native toegang en cumulatieve grenzen aansluiten",
+          "title": "R1 kleinere bestaande leeropdracht afbakenen",
           "state": "Nog niet gestart",
-          "detail": "Geen nieuwe benchmarklaag of betaalde route. Transportproef is afgesloten; geen productcategorie afgevinkt."
+          "detail": "Gebruik de bestaande hypothese en leerroute; eerdere 13-antwoordenproef past niet binnen de vastgelegde 12-callgrens. Geen herhaling daarvan."
         },
         "ownerAction": {
           "title": "Doorpraten op woonkamerspeaker proberen",
@@ -2969,7 +2969,7 @@
           "linkLabel": "Geef resultaat in deze taak door"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T12:52:13.184946+00:00"
+        "reviewedAt": "2026-09-29T12:54:08.423301+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14353,7 +14353,7 @@
             {
               "id": "P1.1",
               "title": "Vergelijkbare versies en toegang vastleggen",
-              "status": "planned",
+              "status": "blocked",
               "kind": "voorbereiden",
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex",
@@ -14372,7 +14372,9 @@
                 "endCondition": "Execute actual transport plus LiteLLM/SDK serialization to local mocked HTTP and actual bridge; preserve none via existing configuration or record failure. No real auth/provider inference.",
                 "estimate": "One offline three-case run after source inspection; zero upstream calls; credits unknown.",
                 "stage": "transport_configuration_resolved"
-              }
+              },
+              "blocker": "Native vergelijking nog niet uitvoerbaar: bestaande cp001_native/preflight en cp001_accounting geven live_enabled=false. Requestinstelling bewijst geen samplebrede begrenzing inclusief geheugen/helpers/retries, native toegang of annulering. Geen gate omzetten of modelrun starten op basis van alleen de nieuwe preset.",
+              "nextImplementation": "Bind disposable native participant and existing per-sample measurement/control contracts before any comparison run; do not create a second benchmark framework."
             },
             {
               "id": "P1.2",

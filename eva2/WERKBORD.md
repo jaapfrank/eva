@@ -1,5 +1,9 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — P1.1 blijft niet toegelaten voor modelruns
+
+Bestaande cp001_native en cp001_accounting laten live uitvoering expliciet niet toe. De nieuwe transportpreset sluit geen volledige samplebegrenzing, native toegang of annulering aan. P1.1 daarom als geblokkeerd zichtbaar; geen modelcall of herhaalde probe gestart. Dit is geen functievoortgang. Geen actieve uitvoerder. Volgende onafhankelijke stap: bestaande R1-hypothese met een kleinere leeropdracht afbakenen binnen de al vastgelegde grens; nog niet gestart.
+
 ## Actueel — P1.1 transportconfiguratie opgelost
 
 Bestaande Agent Zero-configuratie kan Sol none behouden via extra_body; Astra medium blijft behouden. Werkelijke transportcode en LiteLLM-serialisatie tot de OAuth-bodyvoorbereiding offline uitgevoerd. Configuratie staat in het bestaande deelnemersmanifest; onafhankelijke review GO voor deze beperkte conclusie. [Bewijs](evidence/product/p1-agentzero-transport-20260929.json).
