@@ -1,3 +1,7 @@
+## Actueel: I2.1 concrete bronkeuze gevraagd — 29 september 2026
+
+Bestaande bronregistratie bevat G5 garage deur, G5 tuin en G4 Doorbell Pro, plus twee afvalagenda’s (Afvalwijzer Calendar en afval). Twee concrete keuzevragen staan open bij Jaap. Bestaand bewijs voor camera-/agendatoegang hergebruikt; geen nieuwe connector, modelaanvraag of camera-opname. C1-providerweigering en O2.3-browserafhankelijkheid blijven open zoals hieronder.
+
 ## Actueel: C1 en O2.3 blokkades gecontroleerd — 29 september 2026
 
 Geen bouwproces actief. Bestaande kernlog bevestigt HTTP429 zonder antwoord. Accountcontrole meldt weekvenster100%, maar ook ordinaryUsageAllowed=true; precieze oorzaak blijft onbewezen. Geen nieuwe modelaanvraag of reset. O2.3 blijft geblokkeerd doordat de onbereikbare oude browser nog geautoriseerd is; geen verse verificatie overslaan. Gegevens en voorbereide herstelinstallatie behouden. Review afgerond. Volgende beschikbare stap: I2.1 na keuze van camera/afvalkalender; dagelijkse gesprekproef na herstelde providertoegang. [Bewijs](evidence/product/c1-o2-current-blockers-20260929.json). Geen extra afgeronde productfunctie.

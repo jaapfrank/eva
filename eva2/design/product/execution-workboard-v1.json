@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T21:33:08.145142+00:00",
+        "checkedAt": "2026-09-29T21:34:52.725734+00:00",
         "deliveries": [
           {
             "title": "Herhaalde herstelpakketcontrole versneld",
@@ -3051,27 +3051,27 @@
           }
         ],
         "now": {
-          "title": "C1: providerweigering; O2.3: browserafhankelijkheid",
-          "state": "Geblokkeerd",
-          "owner": "Codex /root",
-          "detail": "Bestaande log: HTTP429 zonder antwoord. Accountcontrole: weekvenster100%, ordinaryUsageAllowed=true; precieze weigering niet bewezen. Geen nieuwe modelcall of reset. Herstel kan oude geautoriseerde maar onbereikbare browser niet als geverifieerd overslaan. Geen bouwproces actief."
+          "title": "I2.1: bestaande camera en afvalagenda kiezen",
+          "state": "Wacht op Jaap",
+          "owner": "Jaap",
+          "detail": "Bestaande bronregistratie nagekeken: drie relevante camera’s en twee afvalagenda’s gevonden. Concrete keuzevragen staan in de chat. Geen nieuwe connectorbouw, modelaanvraag of camera-opname."
         },
         "next": {
           "title": "Verder met beschikbare huiscontext of herstelde toegang",
           "detail": "I2.1 kan verder zodra camera en afvalkalender bekend zijn. C1 vereist herstelde providerbeschikbaarheid; geen ongewijzigde herhaalproef. O2.3 bewaart de voorbereide herstelde installatie en blijft open voor browserafhankelijkheid."
         },
         "ownerAction": {
-          "title": "Welke camera en afvalkalender?",
+          "title": "Kies camera en afvalagenda",
           "steps": [
-            "Geef de gewone naam van de camera die de vuilnisbakken ziet.",
-            "Geef de naam van de agenda of afvalkalender met de ophaaldagen."
+            "Camera: G5 garage deur, G5 tuin of G4 Doorbell Pro?",
+            "Agenda: Afvalwijzer Calendar of afval?"
           ],
-          "expected": "De bedoelde bronnen gebruiken zonder de bestaande koppelingen opnieuw te bouwen.",
+          "expected": "De bestaande beeld-/agendaroute op de bedoelde bronnen richten; geen nieuwe connector nodig.",
           "url": "",
-          "linkLabel": "Antwoord in deze chat"
+          "linkLabel": "Beantwoord de twee keuzes in deze chat"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T21:33:08.145142+00:00"
+        "reviewedAt": "2026-09-29T21:34:52.725734+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14071,8 +14071,12 @@
               "kind": "keuze",
               "doneWhen": "De bestaande koppelingen gebruiken de bedoelde bronnen; nog open camerakeuze expliciet vastgelegd.",
               "owner": "Jaap",
-              "blocker": "Owner asked which camera sees bins and which existing calendar holds collection dates; answer pending. Existing local vision service active/running; prior real calendar read already retained.",
-              "checkedAt": "2026-09-29T19:43:41.600081+00:00"
+              "blocker": "Concrete owner choice pending: G5 garage deur, G5 tuin or G4 Doorbell Pro; Afvalwijzer Calendar or afval. Existing source evidence confirms availability; no new connector or camera sweep needed.",
+              "checkedAt": "2026-09-29T21:34:52.725734+00:00",
+              "sourceEvidence": [
+                "eva2/evidence/product/ha-domain-selection-installed-20260928.json",
+                "eva2/evidence/product/initiative-calendar-source-20260928.json"
+              ]
             },
             {
               "id": "I2.2",
