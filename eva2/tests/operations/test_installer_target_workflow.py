@@ -97,3 +97,29 @@ def test_incomplete_bindings_do_not_provision(flow, monkeypatch):
         new()(plan)
     assert "resources" not in events and "access" not in events
     assert new().status() == "needs_inspection"
+
+
+
+def test_ordinary_launcher_uses_live_wizard_stores_and_current_plan(flow, tmp_path, monkeypatch):
+    from eva.bootstrap import installer_wizard_cli
+    new, plan, events = flow
+    template = new().settings
+    secrets, budget = object(), object()
+    def wizard(argv, **kwargs):
+        preparation = kwargs["installation_preparation_factory"](
+            workspace=tmp_path, secret_store=secrets, budget_workflow=budget,
+            plan_reader=lambda: dict(plan),
+        )
+        assert preparation.settings.secret_store is secrets
+        assert preparation.settings.budget_workflow is budget
+        assert preparation.settings.release_manifest is template.release_manifest
+        assert preparation.workspace == tmp_path / "target"
+        assert events == []
+        plan["plan_sha256"] = "b" * 64
+        preparation(dict(plan))
+        assert preparation.status() == "prepared"
+        assert events.count("resources") == 1
+        return 0
+    monkeypatch.setattr(installer_wizard_cli, "run_installer_wizard", wizard)
+    assert module.run_target_installer_wizard(settings=template, argv=["--workspace", str(tmp_path)]) == 0
+    assert template.secret_store is None

@@ -2939,15 +2939,15 @@
           }
         ],
         "now": {
-          "title": "O1.1 technische aansluiting geïnstalleerd",
-          "state": "Tussenstap; installatie nog niet af",
-          "detail": "Voorbereiding kan de actuele wizardinstellingen ontvangen. Acht gerichte controles en bronreview akkoord; actueel operatorpakket start. Nog geen volledige nieuwe installatie.",
+          "title": "O1.1 doelvoorbereiding verbonden met wizard",
+          "state": "Technische tussenstap; volledige installatie open",
+          "detail": "Bestaande voorbereiding gebruikt actuele keuzes en credentials. Zes gerichte controles/review akkoord; module geïnstalleerd. Geen nieuwe Eva gestart.",
           "owner": "Geen actieve uitvoerder"
         },
         "next": {
-          "title": "O1.1 pakketinstellingen en nieuwe-installatiestart",
+          "title": "O1.1 concrete pakketgegevens en nieuwe start",
           "state": "Nog niet gestart",
-          "detail": "Bestaande doelvoorbereiding daadwerkelijk samenstellen vanuit pakketgegevens; nieuwe installatie initialiseren en starten. O1 blijft dezelfde lopende opdracht."
+          "detail": "Goedgekeurde release/doelgegevens leveren aan gekoppelde voorbereiding; nieuwe installatie initialiseren en starten."
         },
         "ownerAction": {
           "title": "Twee Telegram-berichten direct na elkaar",
@@ -2961,7 +2961,7 @@
           "linkLabel": "Gebruik je bestaande Telegram-gesprek met Eva"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T12:17:03.233239+00:00"
+        "reviewedAt": "2026-09-29T12:20:07.335103+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12781,7 +12781,7 @@
           ]
         }
       ],
-      "nextAction": "O1.1: construct existing InstallerTargetWorkflow from trusted package inputs using installed preparation factory; implement missing fresh initialization/start without pretending restore.",
+      "nextAction": "O1.1 supply concrete verified package/target settings to existing run_target_installer_wizard, then fresh initialization/start; no further abstract composition hooks.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -14199,19 +14199,18 @@
               "doneWhen": "Bestaande wizard kan de gekozen doelinstallatie zonder handgeschreven instellingen voorbereiden en starten.",
               "owner": "/root",
               "assignment": {
-                "baseCommit": "59709c00",
+                "baseCommit": "c81727b2",
                 "files": [
-                  "eva2/tools/installer_restore_wizard.py",
-                  "eva2/src/eva/bootstrap/installer_wizard_cli.py",
-                  "existing preparation and release inputs"
+                  "eva2/tools/installer_target_workflow.py",
+                  "eva2/tests/operations/test_installer_target_workflow.py"
                 ],
                 "outcome": "Ordinary installation uses existing provisioning rather than handwritten restore settings.",
-                "estimate": "Bounded connection implementation after exact preparation interface check; no runtime model calls; credit cost unknown.",
+                "estimate": "Six offline focused tests; zero runtime model calls; credits unknown.",
                 "doneWhen": "Wizard can prepare/start an actual isolated target through existing provisioning, checked and reviewed; no support-label substitution.",
-                "stage": "composition_seam_installed_next_packaged_factory"
+                "stage": "target_composition_installed_package_inputs_open"
               },
-              "latestEvidence": "eva2/evidence/product/installer-preparation-factory-20260929.json",
-              "remaining": "Factoryaansluiting op actuele wizardinstellingen getest en in actueel operatorpakket geïnstalleerd. Nog: concrete pakketinstellingenfactory, geldige release/doelconfiguratie en initialisatie/start voor nieuwe installatie. Geen volledige O1-afronding.",
+              "latestEvidence": "eva2/evidence/product/installer-target-binding-20260929.json",
+              "remaining": "Bestaande InstallerTargetWorkflow gekoppeld aan wizardstores/actueel plan; zes controles en review akkoord, module geïnstalleerd. Nog concrete goedgekeurde pakketinstellingen, valide doelversie en initialisatie/start. Standaardlauncher levert die instellingen nog niet.",
               "blocker": "Existing release lock has no validated target or runnable image pins; exact host upgrades alone cannot fix release support. Existing 13 September evidence confirms this prerequisite. No new platform rewrite started."
             },
             {

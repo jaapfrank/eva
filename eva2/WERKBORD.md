@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — O1.1 bestaande doelvoorbereiding verbonden
+
+De gewone wizard kan de bestaande InstallerTargetWorkflow samenstellen met actuele secret-/budgetstores en plan. Zes gerichte controles en onafhankelijke review akkoord; module in actueel operatorpakket geïnstalleerd en import gecontroleerd. Geen nieuwe Eva gestart, geen modelcalls; credits onbekend. [Bewijs](evidence/product/installer-target-binding-20260929.json).
+
+**Nog binnen O1.1:** concrete goedgekeurde pakket-/doelgegevens leveren en nieuwe installatie initialiseren/starten. Standaardlauncher levert die gegevens nog niet. Geen extra afgeronde functie; geen actieve uitvoerder. Geen verdere abstracte aansluitingen bouwen vóór deze concrete pakketgegevens.
+
 ## Actueel — O1.1 aansluiting getest en geïnstalleerd; volledige installatie open
 
 Voorbereidingsfactory ontvangt de werkelijke opgeslagen wizardinstellingen en het actuele plan. Acht gerichte controles geslaagd; onafhankelijke bronreview akkoord. Module in het actuele operatorpakket geïnstalleerd, bootstrap HTTP200. Twee eerdere rookproeven wezen op een verkeerd gekozen historisch pakket; die eigen wijzigingen zijn daar ongedaan gemaakt. Geen Eva-runtime, gegevens of huisacties veranderd. Geen nieuwe modelcalls; credits onbekend. [Bewijs](evidence/product/installer-preparation-factory-20260929.json).

@@ -1,6 +1,6 @@
 """Durable composition of existing installer target preparation operations."""
 from copy import deepcopy
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 import json
 from pathlib import Path
 from uuid import uuid4
@@ -140,3 +140,29 @@ class InstallerTargetWorkflow:
             raise RuntimeError("preparation incomplete; inspect retained target, do not repeat") from error
         finally:
             self.running = False
+
+
+def run_target_installer_wizard(*, settings: InstallerTargetSettings, argv=None):
+    """Bind trusted package settings to the ordinary wizard's live state.
+
+    Package assembly supplies release and graph inputs. Browser data cannot
+    choose these inputs, and factory construction creates no Docker resources.
+    """
+    from eva.bootstrap.installer_wizard_cli import run_installer_wizard
+
+    if not isinstance(settings, InstallerTargetSettings):
+        raise ValueError("trusted installer target settings required")
+
+    def factory(*, workspace, secret_store, budget_workflow, plan_reader):
+        if workspace is None or secret_store is None or budget_workflow is None:
+            raise ValueError("ordinary target preparation requires a complete wizard workspace")
+        target_workspace = Path(workspace) / "target"
+        target_workspace.mkdir(mode=0o700, exist_ok=True)
+        return InstallerTargetWorkflow(
+            workspace=target_workspace,
+            settings=replace(settings, secret_store=secret_store,
+                             budget_workflow=budget_workflow),
+            plan_reader=plan_reader,
+        )
+
+    return run_installer_wizard(argv, installation_preparation_factory=factory)

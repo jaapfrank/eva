@@ -1,0 +1,29 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-29T12:20:07.335103+00:00",
+  "sourceCommit": "c81727b2",
+  "task": "O1.1",
+  "change": "Existing InstallerTargetWorkflow can be composed by ordinary wizard factory with actual secret/budget stores and current plan reader; trusted release/graph settings retained.",
+  "tests": {
+    "passed": 6,
+    "seconds": 1.5,
+    "file": "tests/operations/test_installer_target_workflow.py",
+    "scope": "Mocked provisioning; current plan change used, live stores replace template stores, construction causes no resource effects, existing durable attempt checks."
+  },
+  "review": {
+    "agent": "/root/review_o1_target_binding",
+    "result": "No blocking issue; mocked test does not prove fresh startup."
+  },
+  "installed": {
+    "package": "/home/administrator/project/.eva2-artifacts/installer-document-write-20260924",
+    "sha256": "16b41c29730bb04188e43d88451255f278a8a48002bea1050d9db06400c0ce1f",
+    "importPassed": true
+  },
+  "remaining": [
+    "Concrete signed package settings and validated target inputs",
+    "Fresh initialization/start; default package launcher still does not supply target settings"
+  ],
+  "completedFunction": false,
+  "providerCalls": 0,
+  "creditCost": null
+}
