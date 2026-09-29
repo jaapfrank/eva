@@ -1,12 +1,12 @@
 # Eva 2 — uitvoerbaar werkbord
 
-## Actueel — T3 wacht op lokale runtime
+## Actueel — T3: bewaarde browsersessie herstellen
 
-Bestaande browseroplevering geselecteerd. Eigenaarroute44711 is niet bereikbaar; Docker-API reageert niet en docker.service staat op activating. Lokale eigenaar- en browserdiensten wachten op die opstart. Projectdashboard44712 is bereikbaar. Geen browsertaak of modelcall gestart; geen runtimeversie vervangen. Daarna bestaande browsertoegang en kleinste uitvoerbare taak afronden. AIDE blijft gepland.
+Docker en Eva zijn weer bereikbaar. Bestaande browser meldt recovery_required, profiel behouden. Coördinator gebruikt bestaande herstelbediening; geen nieuwe browserlaag, geen modeltaak gestart. Daarna kleinste bruikbare browseruitkomst afronden. AIDE blijft gepland.
 
-## Opgeleverd — zelfstandig een HA-automatisering maken en wijzigen
+## Geïnstalleerd en gecontroleerd — zelfstandig een HA-automatisering maken en wijzigen
 
-De gewone websiteopdracht is zonder handmatige hervatting voltooid: maken, beschrijving aanpassen, volledig teruglezen en eindantwoord. Onafhankelijke controle akkoord; proefautomatisering uit, nooit uitgevoerd, daarna uitsluitend dat object verwijderd (404 bevestigd). [Bewijs](evidence/product/t2-ha-delivered-20260929.json). Bestaande runtime gebruikt; geen nieuwe installatie. Eerdere timeouts blijven onopgelost, fysieke speakers en volledige T2 blijven open.
+De gewone websiteopdracht is zonder handmatige hervatting voltooid: maken, beschrijving aanpassen, volledig teruglezen en eindantwoord. Onafhankelijke controle akkoord; proefautomatisering uit, nooit uitgevoerd, daarna uitsluitend dat object verwijderd (404 bevestigd). [Bewijs](evidence/product/t2-ha-delivered-20260929.json). Bestaande geïnstalleerde runtime gebruikt; niets wacht hier op installatie. Het eerdere dashboardlabel “getest, niet geïnstalleerd” was onjuist en is gecorrigeerd. Eerdere timeouts blijven onopgelost, fysieke speakers en volledige T2 blijven open.
 
 ## Gepland — AIDE/AIDE² binnen L3
 

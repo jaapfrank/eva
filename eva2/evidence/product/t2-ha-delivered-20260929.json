@@ -16,5 +16,7 @@
     "No physical speaker or device actuation trial",
     "Worker usage partial: 83530 input, 852 output tokens; credit cost unknown",
     "Exact-worker diagnostic interception did not run; normal worker completed task"
-  ]
+  ],
+  "installationStatus": "already_installed_verified_in_running_eva",
+  "installationRequired": false
 }

@@ -1000,11 +1000,11 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
-            "title": "Eva maakt en wijzigt zelfstandig een HA-automatisering",
+            "title": "Geïnstalleerd: HA-automatiseringen zelfstandig maken en wijzigen",
             "date": "29 september",
-            "state": "tested",
-            "result": "Gewone websiteopdracht volledig uitgevoerd zonder handmatige hervatting: maken, beschrijving aanpassen, configuratie teruglezen en eindantwoord. Onafhankelijke controle akkoord; alleen het proefobject daarna verwijderd.",
-            "remaining": "Bestaande geïnstalleerde functie bevestigd; eerdere timeouts en fysieke speakerervaring blijven open. Geen volledige T2-afronding.",
+            "state": "installed",
+            "result": "Uitgevoerd in de al geïnstalleerde Eva: automatisering gemaakt, gewijzigd, volledig teruggelezen en eindantwoord geleverd zonder handmatige hervatting. Onafhankelijk gecontroleerd. Geen nieuwe installatie nodig.",
+            "remaining": "Maken en wijzigen is in de draaiende versie bevestigd. Nog afmaken binnen algemene huisbediening: betrouwbaar afronden ondanks eerdere timeouts en gebruik via beide fysieke speakers.",
             "source": "eva2/evidence/product/t2-ha-delivered-20260929.json"
           },
           {
@@ -2875,10 +2875,10 @@
           }
         ],
         "now": {
-          "title": "Browseroplevering wacht op lokale runtime",
-          "state": "Geblokkeerd: Docker start nog op",
-          "detail": "Poort44711 niet bereikbaar; Docker-API time-out en docker.service activating. Geen browser- of modeltaak gestart. Projectdashboard44712 bereikbaar.",
-          "doneWhen": "Bestaande runtime beschikbaar; daarna browsertoegang en kleinste uitvoerbare taak."
+          "title": "Browserbediening: bewaarde sessie herstellen",
+          "state": "Actief: coördinator",
+          "detail": "Docker en Eva zijn weer bereikbaar. Browser meldt recovery_required; bestaande herstelbediening gebruiken met behoud van profiel. Geen modelopdracht gestart.",
+          "doneWhen": "Browser weer beschikbaar en bestaande taakuitvoering gericht afronden."
         },
         "next": {
           "title": "Bestaande browserbediening afronden",
@@ -2897,7 +2897,7 @@
           "expected": "Tussenvraag vóór het onderzoeksantwoord; onderzoeksantwoord bij de oorspronkelijke vraag."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T09:32:49.135114+00:00"
+        "reviewedAt": "2026-09-29T09:34:29.364478+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12717,7 +12717,7 @@
           ]
         }
       ],
-      "nextAction": "Existing Docker startup blocks T3 execution; do not repeat model requests. AIDE remains queued.",
+      "nextAction": "Use existing browser recovery with preserved profile; then complete the bounded browser outcome. AIDE remains queued.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13369,12 +13369,12 @@
           },
           "activeWorker": null,
           "assignment": {
-            "stage": "blocked_runtime_startup",
+            "stage": "existing_browser_recovery_required",
             "owner": "/root",
             "scope": "Read-only installed browser availability; no takeover, no model calls",
             "effort": "One status request and existing source inspection; credits unknown",
             "doneWhen": "Select an executable existing browser outcome or record the exact access prerequisite",
-            "result": "Owner route connection refused; Docker API timeout, service activating. No browser task or model call started."
+            "result": "Docker active; owner route and worker ready. Browser reports recovery_required with preserved profile."
           }
         },
         {
