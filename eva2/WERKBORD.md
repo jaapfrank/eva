@@ -8,13 +8,11 @@ De afzonderlijke taken staan in de bestaande dashboardtab **Werk & volgorde → 
 
 Werkregel: één bruikbaar resultaat afmaken; alleen passende gerichte controle, review en installatie bundelen. Een mislukte proef gericht repareren in de ontwikkelversie; niet telkens terugzetten of opnieuw installeren. Nieuwe wensen vergroten de bestaande eindvoorwaarden niet stilzwijgend.
 
-## Nu — O2.3 export van consistente gegevenskopie loopt
+## Gepauzeerd op verzoek — 29 september 2026
 
-Werkelijke export draait op afgesloten kopiedatabase, sessie63174. Eerdere export stopte door ontbrekende leesrechten na portable dump en daarna door ontbrekende schemas in operatorpakket. Alleen kopierechten hersteld;193 bestaande schemas exact geïnstalleerd, schema-preflight slaagt. Geen nieuwe live snapshot/modelcalls. Uitvoerder `/root`; credits onbekend.
+De huidige oplevering is afgesloten met een open fout. Identiteitsherstel is aangesloten op de daadwerkelijke runtimegebruiker, gericht getest, onafhankelijk beoordeeld en geïnstalleerd. De export van de bevroren gegevenskopie eindigde met `DelegatedWorkStoreError: stored delegated work is corrupt`; geen geldig archief gepubliceerd. Of de oorzaak in bronrecords of exporttransformatie zit is nog niet vastgesteld. Bron en kopie blijven behouden; geen nieuwe reparatie of volledige herstelproef gestart.
 
-Bestaande identiteitsherstelstap nu aangesloten op echte runtime-UID/GID met private rechten en afzonderlijke directorymount.30 gerichte tests, zes finale ownershipgevallen (inclusief echt lezen als UID65532), onafhankelijke review GO. Vier modules geïnstalleerd; zes geïnstalleerde gevallen geslaagd. [Bewijs](evidence/product/o2-restored-identity-runtime-owner-20260929.json).
-
-**Volgende:** na succesvolle export dezelfde geheugen/gateway/documentkopie verpakken en bestaande volledige herstelroute uitvoeren. O2.3 niet afgerond. Gateway-overlaycode blijft afzonderlijke, gepinde installatie-invoer; pakket alleen reconstrueert die code niet.
+Geen actieve uitvoerders of exportprocessen. **O2.3 blijft open.** Eerstvolgend na hervatten: deze specifieke validatiefout verklaren. Nul Eva-modelcalls; credits onbekend. [Bewijs](evidence/product/o2-restored-identity-runtime-owner-20260929.json).
 
 ## Afgerond — O2.2 werkelijke update met bestaande gegevens
 

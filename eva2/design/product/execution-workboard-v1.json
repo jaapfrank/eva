@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T15:11:16.509921+00:00",
+        "checkedAt": "2026-09-29T15:16:34.726872+00:00",
         "deliveries": [
           {
             "title": "Herstelde identiteit leesbaar voor Eva-runtime",
@@ -3027,14 +3027,14 @@
           }
         ],
         "now": {
-          "title": "O2.3 export van bevroren gegevenskopie loopt",
-          "state": "In uitvoering",
-          "detail": "Werkelijk exportproces actief (sessie63174). Identiteitskoppeling geïnstalleerd; geen nieuwe live snapshot of modelcalls.",
+          "title": "Gepauzeerd op verzoek van Jaap",
+          "state": "Gepauzeerd",
+          "detail": "Identiteitsherstel geïnstalleerd; laatste export afgewezen. Geen actieve uitvoerders of exportprocessen. O2.3 niet afgerond.",
           "owner": "/root"
         },
         "next": {
-          "title": "O2.3 gezamenlijke herstelactie",
-          "detail": "Consistente echte bronkopie verzameld; twaalf diensten hervat. Dezelfde kernkopie naar huidig archief omzetten en samen met geheugen/gateway/documenten via bestaande herstelroute uitvoeren."
+          "title": "Na hervatten: concrete exportfout verklaren",
+          "detail": "Controle opgeslagen achtergrondwerk wees de bevroren kopie af; onderscheid brongegeven van portable transformatie voordat één gerichte correctie volgt. Geen nieuwe snapshot nodig."
         },
         "ownerAction": {
           "title": "Doorpraten op woonkamerspeaker proberen",
@@ -3048,7 +3048,7 @@
           "linkLabel": "Geef resultaat in deze taak door"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T15:11:16.509921+00:00"
+        "reviewedAt": "2026-09-29T15:16:34.726872+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14449,18 +14449,16 @@
                 "outcome": "Bevroren echte gegevens via bestaande volledige herstelroute herstellen.",
                 "estimate": "Bestaande kernexport duurt eerder circa8min; één export van deze nieuwe consistente bronkopie, geen nieuwe live snapshot/modelcalls. Credits onbekend.",
                 "finish": "Consistent source copy collected through existing helpers; complete joint restore remains required.",
-                "stage": "identity_runtime_connection_installed_export_running",
+                "stage": "export_rejected_owner_requested_pause",
                 "workers": {
                   "/root": "frozen database export running; actual package composition next"
                 },
-                "activeWorkers": [
-                  "/root"
-                ],
+                "activeWorkers": [],
                 "endCondition": "Pakket/autoriteit/wizard gebruiken dezelfde v3-kern met bestaande externe stappen; gerichte combinatiecontrole, onafhankelijke review en operatorinstallatie.",
-                "liveExportSession": 63174
+                "liveExportSession": null
               },
               "latestEvidence": "eva2/evidence/product/o2-restored-identity-runtime-owner-20260929.json",
-              "remaining": "Identiteitsherstel op daadwerkelijke runtimegebruiker aangesloten en geïnstalleerd; export van consistente bevroren kopie loopt. Volledig pakket en gezamenlijke herstelactie nog open."
+              "remaining": "Laatste export afgewezen door controle opgeslagen achtergrondwerk (DelegatedWorkStoreError). Oorzaak bron versus exporttransformatie nog niet vastgesteld. Bron en kopie behouden. Eigenaar vraagt stoppen; geen nieuwe reparatie gestart."
             }
           ],
           "latestEvidence": "eva2/evidence/product/o2-consistent-source-collected-20260929.json"

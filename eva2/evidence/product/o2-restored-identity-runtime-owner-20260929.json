@@ -21,13 +21,16 @@
   "export": {
     "frozen_database": "eva2_living_disposable_o2_consistent_20260929",
     "session": 63174,
-    "status": "running_at_record_time",
+    "status": "rejected_no_archive_published",
     "first_failures": [
       "portable dump omits archive-reader ACLs; only isolated copy read grants restored",
       "operator package missing existing schemas; all193 copied with exact hashes before corrected export"
     ],
-    "model_calls": 0
+    "model_calls": 0,
+    "error_type": "DelegatedWorkStoreError",
+    "error": "stored delegated work is corrupt",
+    "interpretation": "Archive validator rejected delegated-work records; cause not yet localized to source state versus portable transformation. No claim that live data is corrupt."
   },
   "credit_cost": "unknown",
-  "remaining": "Current actual full export still running; full installation package and combined restore remain unproven. No O2.3 completion or owner acceptance."
+  "remaining": "Export rejection requires targeted diagnosis before full package/restore. Owner requested stop after current delivery; paused without starting another repair round. O2.3 incomplete."
 }
