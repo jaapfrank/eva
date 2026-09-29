@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-09-29T12:56:11.019811+00:00",
+  "baseCommit": "c869a426",
+  "task": "R1.1",
+  "status": "reference_gap_not_established_no_trial",
+  "existingArtifactSha256": "328cebdd5a0cbd70c5a002922cd09f50a06a327e4839a7c0d70aa0a4224e6e66",
+  "sourceEvidence": "eva2/evidence/product/json-patch-learning-reuse-20260928.json",
+  "observed": [
+    "execute() deep-copies the document before applying operations",
+    "get/index/pointer/test validate missing paths, indices, types and expected values",
+    "batch() returns no output document for failed operations and reports input preservation"
+  ],
+  "decision": "Do not wrap the same executable semantics as a supposed distinct task-model arm or weaken ordinary skill checks to create a win. This reference does not yet define a justified distinct candidate.",
+  "remaining": "A changed-assumption task and distinct candidate intervention must be specified before independently held-out comparison. R1 hypothesis and technical distinction remain open.",
+  "limits": [
+    "Source inspection only; no candidate tested or rejected on measured performance",
+    "No generic JSON Patch conformity claim",
+    "Earlier learning cost remains part of any future total-cost claim"
+  ],
+  "newModelCalls": 0,
+  "newTests": 0,
+  "creditCost": "unknown"
+}

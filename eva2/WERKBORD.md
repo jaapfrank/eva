@@ -1,5 +1,9 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — R1 geen onderscheiden kandidaat vastgesteld
+
+Exact bestaande geleerde JSON Patch-artifact gecontroleerd: uitvoering-op-kopie en preconditiecontrole bestaan al. Dezelfde code nogmaals als taakmodel uitvoeren is geen eerlijke onderscheidende kandidaat. Geen proef, codewijziging of modelcall gestart; R1 blijft open. [Bronbevinding](evidence/product/r1-narrow-reference-20260929.json). Geen actieve uitvoerder en geen extra functie afgerond.
+
 ## Actueel — P1.1 blijft niet toegelaten voor modelruns
 
 Bestaande cp001_native en cp001_accounting laten live uitvoering expliciet niet toe. De nieuwe transportpreset sluit geen volledige samplebegrenzing, native toegang of annulering aan. P1.1 daarom als geblokkeerd zichtbaar; geen modelcall of herhaalde probe gestart. Dit is geen functievoortgang. Geen actieve uitvoerder. Volgende onafhankelijke stap: bestaande R1-hypothese met een kleinere leeropdracht afbakenen binnen de al vastgelegde grens; nog niet gestart.

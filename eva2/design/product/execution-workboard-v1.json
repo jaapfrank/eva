@@ -2947,15 +2947,15 @@
           }
         ],
         "now": {
-          "title": "P1.1 vergelijking nog geblokkeerd",
-          "state": "Geen vergelijkingsrun gestart",
-          "detail": "Transportconfiguratie vastgelegd. Volledige samplebegrenzing, native toegang en annulering ontbreken nog in de uitvoerbare aansluiting. Geen modelcalls in deze controle.",
+          "title": "R1 geen nieuwe proef gestart",
+          "state": "Onderzoek nog open",
+          "detail": "Bestaande geleerde JSON Patch-code heeft al uitvoering-op-kopie en preconditiecontrole. Dezelfde semantiek nogmaals als taakmodel uitvoeren biedt geen onderscheiden kandidaat. Geen proef gestart; concrete andere interventie en gewijzigde-aannamecasus nog nodig. Dit is geen gemeten verlies of afgeronde R1.",
           "owner": "Codex; geen actieve uitvoerder"
         },
         "next": {
-          "title": "R1 kleinere bestaande leeropdracht afbakenen",
-          "state": "Nog niet gestart",
-          "detail": "Gebruik de bestaande hypothese en leerroute; eerdere 13-antwoordenproef past niet binnen de vastgelegde 12-callgrens. Geen herhaling daarvan."
+          "title": "Open afhankelijkheden oplossen vóór verdere uitvoering",
+          "state": "Nog open",
+          "detail": "Speakerwaarneming en installerdoel gevraagd; L2 staat voor 30 september 15:00 gepland. Vergelijkingsaansluiting en onderscheiden R1-kandidaat zijn niet afgerond."
         },
         "ownerAction": {
           "title": "Doorpraten op woonkamerspeaker proberen",
@@ -2969,7 +2969,7 @@
           "linkLabel": "Geef resultaat in deze taak door"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T12:54:08.423301+00:00"
+        "reviewedAt": "2026-09-29T12:56:11.019811+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14183,7 +14183,7 @@
               "kind": "onderzoek",
               "doneWhen": "Eén passende geïsoleerde vergelijking met gewone bestaande werkwijzen, inclusief leerverbruik.",
               "owner": "Codex",
-              "latestEvidence": "eva2/evidence/product/r1-existing-reference-admission-20260929.json",
+              "latestEvidence": "eva2/evidence/product/r1-narrow-reference-20260929.json",
               "assignment": {
                 "baseCommit": "724e0c57",
                 "outcome": "Check the existing reference against the frozen R1 envelope before spending runtime tokens.",
@@ -14193,7 +14193,7 @@
                 "estimate": "Bounded source/evidence comparison, zero model calls; credits unknown.",
                 "doneWhen": "Replay admissibility decided from recorded counts; do not claim comparison or R1 completed."
               },
-              "remaining": "Volledige bestaande leerreferentie gebruikt13modelantwoorden; proefgrens12. Geen herhaling gestart. Kleinere eerlijke vergelijking moet vooraf passen; geen verlies of algemene onuitvoerbaarheid bewezen."
+              "remaining": "Bestaande geleerde JSON Patch-code heeft al uitvoering-op-kopie en preconditiecontrole. Dezelfde semantiek nogmaals als taakmodel uitvoeren biedt geen onderscheiden kandidaat. Geen proef gestart; concrete andere interventie en gewijzigde-aannamecasus nog nodig. Dit is geen gemeten verlies of afgeronde R1."
             },
             {
               "id": "R1.2",
