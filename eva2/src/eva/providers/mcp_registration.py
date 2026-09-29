@@ -33,6 +33,8 @@ class ConnectorRegistrationAuthority(Protocol):
     def managed_endpoints(self, turn: ConversationTurn) -> list[str]: ...
     def status(self, turn: ConversationTurn) -> dict: ...
     def stop(self, turn: ConversationTurn) -> dict: ...
+    def pause(self, turn: ConversationTurn, revision: int) -> dict: ...
+    def resume(self, turn: ConversationTurn, revision: int) -> dict: ...
 
 
 class ConnectorRegistrationStore(Protocol):
@@ -42,6 +44,11 @@ class ConnectorRegistrationStore(Protocol):
     def discover(self, turn: ConversationTurn, connector_id: str) -> dict: ...
     def refresh(self, turn: ConversationTurn, connector_id: str, endpoint: str,
                 gateway_id: str, catalog: dict, provenance: dict) -> dict: ...
+
+
+def _management_proof(action: str) -> dict:
+    return {"stop": {"revoked": True}, "pause": {"paused": True},
+            "resume": {"active": True}}.get(action, {})
 
 
 def connector_id_for(owner_key: str, endpoint: str) -> str:
@@ -71,8 +78,8 @@ def registration_descriptors() -> tuple[ConversationToolDescriptor, ...]:
             {"type": "object", "properties": {"connector_id": {"type": "string", "maxLength": 2048}},
              "required": ["connector_id"], "additionalProperties": False}),
         ConversationToolDescriptor("manage_connected_services",
-            "Bekijk met status het eigenaarmandaat, aangesloten connectoren en ingestelde endpoints. Gebruik de teruggegeven connector_id met discover_connector_tools voor echte toolschema’s. Een ingesteld endpoint is niet automatisch aangesloten of bereikbaar. Stop blijvend met stop het eigenaarmandaat voor aangesloten MCP-diensten. Stop weigert nieuwe aanroepen; reeds begonnen werk kan nog worden teruggelezen. Opnieuw activeren vereist de eigenaarinstallatie.",
-            {"type": "object", "properties": {"action": {"type": "string", "enum": ["status", "stop"]}},
+            "Bekijk met status het eigenaarmandaat, aangesloten connectoren en ingestelde endpoints. Gebruik de teruggegeven connector_id met discover_connector_tools voor echte toolschema’s. Een ingesteld endpoint is niet automatisch aangesloten of bereikbaar. Pauzeer alle MCP-koppelingen met pause; resume hervat ze met behoud van registraties en gegevens. Pauze weigert nieuwe aanroepen; al begonnen werk kan nog afronden. Stop blijvend met stop het eigenaarmandaat voor aangesloten MCP-diensten. Stop weigert nieuwe aanroepen; reeds begonnen werk kan nog worden teruggelezen. Opnieuw activeren vereist de eigenaarinstallatie.",
+            {"type": "object", "properties": {"action": {"type": "string", "enum": ["status", "pause", "resume", "stop"]}},
              "required": ["action"], "additionalProperties": False}),
     )
 
@@ -122,10 +129,12 @@ class _RegistrationPlanner:
                 payload["endpoint"] = endpoint
             expected = {"connector_id": cid}
         elif call.name == "manage_connected_services":
-            if set(args) != {"action"} or args["action"] not in {"status", "stop"}:
+            if set(args) != {"action"} or args["action"] not in {"status", "pause", "resume", "stop"}:
                 raise ConversationConflict("connector mandate action is invalid")
             payload = {"source": _source(turn), "action": args["action"]}
-            expected = {"revoked": True} if args["action"] == "stop" else {}
+            expected = _management_proof(args["action"])
+            if args["action"] in {"pause", "resume"}:
+                payload["revision"] = self.authority.status(turn)["revision"]
             cid = None
         else:
             raise ConversationConflict("connector registration action is unavailable")
@@ -177,8 +186,10 @@ class McpRegistrationToolAdapter:
                 raise ConversationConflict("connector refresh flag differs")
         elif command.tool_name == "manage_connected_services":
             action = command.arguments.get("action")
-            expected = {"revoked": True} if action == "stop" else {}
-            if action not in {"stop", "status"} or command.expected_proof != expected:
+            expected = _management_proof(action)
+            if action in {"pause", "resume"} and type(command.arguments.get("revision")) is not int:
+                raise ConversationConflict("connector mandate revision is missing")
+            if action not in {"stop", "status", "pause", "resume"} or command.expected_proof != expected:
                 raise ConversationConflict("connector mandate expectation differs")
         else:
             cid = command.arguments["connector_id"]
@@ -209,6 +220,8 @@ class McpRegistrationToolAdapter:
         if command.tool_name == "manage_connected_services":
             if command.arguments["action"] == "stop":
                 self.authority.stop(turn)
+            elif command.arguments["action"] in {"pause", "resume"}:
+                getattr(self.authority, command.arguments["action"])(turn, command.arguments["revision"])
             return ToolDispatchResult(True, self.authority.configuration_sha256, {})
         # Discovery is performed once in the normal observation phase.
         return ToolDispatchResult(True, command.arguments["connector_id"], {"read_deferred": True})
@@ -252,8 +265,9 @@ class McpRegistrationToolAdapter:
                               if endpoint not in known_endpoints],
                           "inventory_scope": "owner_admitted_registry_and_managed_endpoints",
                           "reachability_verified": False}
-            observed = {"revoked": result["revoked"]} if command.arguments["action"] == "stop" else {}
-            if command.arguments["action"] == "stop" and not result["revoked"]:
+            expected = _management_proof(command.arguments["action"])
+            observed = {key: result[key] for key in expected}
+            if observed != expected:
                 return ToolProofObservation("safe_to_execute" if dispatch is None else "pending", observed, {})
         else:
             try:

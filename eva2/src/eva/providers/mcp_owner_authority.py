@@ -262,11 +262,47 @@ class McpOwnerAuthority:
         return {"active": state.phase == "active" and current["enabled"]
                 and canonical_sha256(self._identity(current)) == self.configuration_sha256,
                 "revoked": state.phase == "revoked",
+                "paused": state.phase == "paused",
+                "revision": state.revision,
                 "mandate_id": self._mandate["mandate_id"],
                 "public_https": self._mandate["public_https"],
                 "local_networks": self._mandate["local_networks"],
                 "budget": "existing_conversation_budget", "scope_guidance": _POLICY,
                 "configuration_sha256": self.configuration_sha256}
+
+    def pause(self, turn: ConversationTurn, revision: int) -> dict:
+        return self._set_paused(turn, revision, paused=True)
+
+    def resume(self, turn: ConversationTurn, revision: int) -> dict:
+        return self._set_paused(turn, revision, paused=False)
+
+    def _set_paused(self, turn: ConversationTurn, revision: int, *, paused: bool) -> dict:
+        """Change admission only; preserve catalogs and already admitted results."""
+        self.authorize_turn(turn)
+        state = self._state()
+        current = self._read()
+        if (state.phase == "revoked" or not current["enabled"]
+                or canonical_sha256(self._identity(current)) != self.configuration_sha256):
+            raise ConversationConflict("connector mandate is revoked, disabled or changed")
+        if type(revision) is not int or revision != state.revision:
+            raise ConversationConflict("connector mandate changed since the request")
+        target = "paused" if paused else "active"
+        if state.phase != target:
+            try:
+                self._timeline.transition(
+                    thread_id=self._thread_id, expected_revision=revision,
+                    checkpoint_id=f"{self._thread_id}:{revision + 1}",
+                    phase=target, status="active",
+                    event_type="CONNECTOR_MANDATE_PAUSED" if paused else "CONNECTOR_MANDATE_RESUMED",
+                    occurred_at=datetime.now(UTC).replace(microsecond=0),
+                    data={"contract": _CONTRACT,
+                          "configuration_sha256": self.configuration_sha256,
+                          "source_message_id": turn.message_id,
+                          "conversation_id": turn.conversation_id,
+                          "principal_id": turn.principal_id})
+            except CheckpointConflict as error:
+                raise ConversationConflict("connector mandate changed since the request") from error
+        return self.status(turn)
 
     def stop(self, turn: ConversationTurn) -> dict:
         self.authorize_turn(turn)

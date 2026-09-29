@@ -121,3 +121,57 @@ def test_managed_endpoint_is_exact_owner_bound_and_cannot_revive_stopped_mandate
     assert len(restarted._timeline.events(restarted._thread_id)) == 2
     assert mandate_file.read_bytes() == original
     assert restarted.configuration_sha256 == original_configuration
+
+
+def test_pause_resume_preserves_mandate_and_rejects_stale_resume(timeline_engine, private_tmp_path):
+    path = private_tmp_path / "pause-mandate.json"
+    mandate = {"contract": "OwnerConnectorMandate/v1", "mandate_id": "pause-test",
+               "tenant_id": "pause-test", "installation_id": "home", "owner_principal_id": "owner",
+               "issued_at": "2020-01-01T00:00:00Z", "authorization_source": "fixture grant",
+               "enabled": True, "public_https": True, "local_networks": []}
+    original = json.dumps(mandate)
+    path.write_text(original)
+    path.chmod(0o600)
+    owner = ConversationTurn.private("pause-test", "home", "owner", "conversation", "pause",
+                                     "Pause MCP services", "2026-09-29T12:00:00Z")
+    authority = McpOwnerAuthority(timeline_engine, str(path))
+    initial = authority.status(owner)
+    import asyncio
+    from eva.application.conversation import ConversationActionCall
+    from eva.providers.mcp_registration import McpRegistrationToolAdapter
+    from tests.connectors.test_mcp_registration_tools import command
+    adapter = McpRegistrationToolAdapter(None, None, authority, authority.owner_key,
+                                         lambda source: owner)
+
+    def control(action):
+        preparation = asyncio.run(adapter.planner().prepare(owner, ConversationActionCall(
+            action, "manage_connected_services", {"action": action})))
+        request = command(preparation)
+        assert asyncio.run(adapter.observe(request, None)).disposition == "safe_to_execute"
+        dispatch = asyncio.run(adapter.execute(request))
+        proof = asyncio.run(adapter.observe(request, dispatch))
+        assert proof.disposition == "verified"
+        return proof.evidence["observation"]
+
+    paused = control("pause")
+    assert paused["paused"] and not paused["active"]
+    restarted = McpOwnerAuthority(timeline_engine, str(path))
+    with pytest.raises(ConversationConflict, match="stopped"):
+        restarted.authorize_current(phase="execute", operation_kind="invoke")
+    restarted.authorize_current(phase="observe", operation_kind="invoke")
+    adapter.authority = restarted
+    resumed = control("resume")
+    assert resumed["active"] and not resumed["paused"]
+    restarted.authorize_current(phase="execute", operation_kind="invoke")
+    restarted.pause(owner, resumed["revision"])
+    with pytest.raises(ConversationConflict, match="changed since"):
+        restarted.resume(owner, paused["revision"])
+    path.write_text(json.dumps({**mandate, "enabled": False}))
+    with pytest.raises(ConversationConflict, match="disabled"):
+        restarted.resume(owner, restarted.status(owner)["revision"])
+    path.write_text(original)
+    restarted.stop(owner)
+    with pytest.raises(ConversationConflict, match="revoked"):
+        restarted.resume(owner, restarted.status(owner)["revision"])
+    assert path.read_text() == original
+    assert restarted.configuration_sha256 == initial["configuration_sha256"]

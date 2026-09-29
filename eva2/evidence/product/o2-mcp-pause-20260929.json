@@ -1,0 +1,39 @@
+{
+  "date": "2026-09-29T13:13:47.185422+00:00",
+  "scope": "O2.1: reversible admission pause for the existing general MCP module",
+  "existing": "Durable owner authority, connector registry, registration tools and current invocation checks; retained without replacement",
+  "added": "pause/resume actions on manage_connected_services; durable paused phase and revision-bound changes",
+  "verification": {
+    "source_tests": "9 existing registration adapter tests and 3 PostgreSQL authority cases passed",
+    "installed_image": "New pause/resume adapter lifecycle case passed against installed core image, isolated PostgreSQL16.13 database",
+    "review": "architecture_audit GO including full prepare/execute/observe test delta",
+    "runtime": "core and delegated-work-worker healthy; core descriptor exposes status/pause/resume/stop; source hashes matched"
+  },
+  "data": "No registry, credential or result deletion; mandate file unchanged in lifecycle test",
+  "limits": [
+    "General MCP module only; does not turn off HA, voice or Telegram",
+    "Previously admitted invocations may finish; pause is admission control, not cancellation",
+    "Natural-language model selection and owner acceptance not tested",
+    "Update and restore O2.2/O2.3 remain open"
+  ],
+  "usage": {
+    "eva_model_calls": 0,
+    "credits": "unknown"
+  },
+  "failed_attempts": [
+    "Initial database fixture rejected PostgreSQL18; used isolated pinned16.13 without weakening fixture",
+    "Dockerfile FROM raw image ID failed; rebuilt from local tags pinned to existing images; no runtime rollback"
+  ],
+  "installation": {
+    "core": "eva2-o2-pause-core:20260929",
+    "worker": "eva2-o2-pause-delegated-work-worker:20260929",
+    "previous_images_retained": true,
+    "private_compose_directory": "/home/administrator/project/.eva2-artifacts/o2-mcp-pause-20260929"
+  },
+  "try": [
+    "On private website: Pauzeer mijn MCP-koppelingen tijdelijk. Bewaar alle aansluitingen.",
+    "Ask the state of MCP connections; it should report paused.",
+    "Hervat mijn MCP-koppelingen.",
+    "Do not use stop for a temporary pause; stop remains permanent revocation."
+  ]
+}

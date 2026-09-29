@@ -1,5 +1,13 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — O2.1 MCP-pauze en hervatten geïnstalleerd
+
+Algemene MCP-module kan via bestaande eigenaarbediening tijdelijk pauzeren en hervatten. Registraties en gegevens blijven behouden; een al toegelaten aanroep kan afronden. Kern en achtergrondwerker gezond. Gerichte controles (9 adaptergevallen, 3 databasegevallen), onafhankelijke review GO en één lifecycleproef op de geïnstalleerde image geslaagd. Geen Eva-modelcalls; credits onbekend. [Bewijs](evidence/product/o2-mcp-pause-20260929.json).
+
+Proberen op de privéwebsite: **Pauzeer mijn MCP-koppelingen tijdelijk. Bewaar alle aansluitingen.** Vraag daarna de status; hervat met **Hervat mijn MCP-koppelingen.** Gebruik niet “stop”: dat blijft definitieve intrekking. Natuurlijk gesprek en eigenaaracceptatie nog niet beproefd. HA/spraak/Telegram worden hierdoor niet uitgezet.
+
+O2.1 technisch afgerond voor deze bestaande module; O2 als geheel niet klaar. Volgende: O2.2 bestaande updater met huidige gegevensversie, nog niet gestart. Geen actieve uitvoerder.
+
 ## Actueel — R1 geen onderscheiden kandidaat vastgesteld
 
 Exact bestaande geleerde JSON Patch-artifact gecontroleerd: uitvoering-op-kopie en preconditiecontrole bestaan al. Dezelfde code nogmaals als taakmodel uitvoeren is geen eerlijke onderscheidende kandidaat. Geen proef, codewijziging of modelcall gestart; R1 blijft open. [Bronbevinding](evidence/product/r1-narrow-reference-20260929.json). Geen actieve uitvoerder en geen extra functie afgerond.

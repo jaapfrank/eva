@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "MCP-koppelingen tijdelijk pauzeren en hervatten",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Algemene MCP-module tijdelijk pauzeren en hervatten via bestaande eigenaarbediening; gegevens en registraties blijven staan. Geïnstalleerd en gericht gecontroleerd. Eigenaarproef nog open.",
+            "remaining": "Al gestarte aanroepen kunnen afronden. Geen uitschakeling van HA/spraak/Telegram. Eigenaaracceptatie open.",
+            "source": "eva2/evidence/product/o2-mcp-pause-20260929.json"
+          },
+          {
             "title": "Nieuwe installatiestart aangesloten op bestaande wizard",
             "date": "29 september",
             "state": "installed",
@@ -2947,15 +2955,14 @@
           }
         ],
         "now": {
-          "title": "R1 geen nieuwe proef gestart",
-          "state": "Onderzoek nog open",
-          "detail": "Bestaande geleerde JSON Patch-code heeft al uitvoering-op-kopie en preconditiecontrole. Dezelfde semantiek nogmaals als taakmodel uitvoeren biedt geen onderscheiden kandidaat. Geen proef gestart; concrete andere interventie en gewijzigde-aannamecasus nog nodig. Dit is geen gemeten verlies of afgeronde R1.",
-          "owner": "Codex; geen actieve uitvoerder"
+          "title": "O2.1 MCP-pauze en hervatten geïnstalleerd",
+          "state": "Technisch afgerond",
+          "detail": "Nieuwe MCP-aanroepen tijdelijk weigeren en later hervatten zonder registraties te verwijderen. Kern en werker gezond. Geen actieve uitvoerder; update/herstel blijven open.",
+          "owner": "Codex"
         },
         "next": {
-          "title": "Open afhankelijkheden oplossen vóór verdere uitvoering",
-          "state": "Nog open",
-          "detail": "Speakerwaarneming en installerdoel gevraagd; L2 staat voor 30 september 15:00 gepland. Vergelijkingsaansluiting en onderscheiden R1-kandidaat zijn niet afgerond."
+          "title": "O2.2 bestaande updater met huidige gegevensversie",
+          "detail": "Bestaande updatevoorziening en bewijs gebruiken; alleen het resterende aansluitingsgat aanpakken. Nog niet gestart."
         },
         "ownerAction": {
           "title": "Doorpraten op woonkamerspeaker proberen",
@@ -2969,7 +2976,7 @@
           "linkLabel": "Geef resultaat in deze taak door"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T12:56:11.019811+00:00"
+        "reviewedAt": "2026-09-29T13:13:47.185422+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14284,7 +14291,7 @@
           ],
           "outcome": "Bijwerken en gegevens herstellen",
           "effort": "M",
-          "status": "planned",
+          "status": "in_progress",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Export/restore, release/rollback and isolated complete wizard restore exist.",
@@ -14303,10 +14310,24 @@
             {
               "id": "O2.1",
               "title": "Module uitzetten en weer aansluiten",
-              "status": "planned",
+              "status": "completed",
               "kind": "aansluiten",
               "doneWhen": "Gegevens blijven behouden bij uit-/inschakelen via bestaande modulevoorzieningen.",
-              "owner": "Codex"
+              "owner": "/root",
+              "assignment": {
+                "outcome": "Pause and resume existing MCP module without deleting registrations or data",
+                "files": [
+                  "eva2/src/eva/providers/mcp_owner_authority.py",
+                  "eva2/src/eva/providers/mcp_registration.py",
+                  "eva2/tests/postgres/test_mcp_owner_authority.py"
+                ],
+                "baseCommit": "e0521808",
+                "estimate": "One bounded implementation, focused database/adapter checks and bundled review; no planned model calls; credits unknown",
+                "finish": "Durable pause blocks new invocations; resume retains registration; revoke and host disable cannot be bypassed"
+              },
+              "completedAt": "2026-09-29T13:13:47.185422+00:00",
+              "latestEvidence": "eva2/evidence/product/o2-mcp-pause-20260929.json",
+              "result": "Algemene MCP-module tijdelijk pauzeren en hervatten via bestaande eigenaarbediening; gegevens en registraties blijven staan. Geïnstalleerd en gericht gecontroleerd. Eigenaarproef nog open."
             },
             {
               "id": "O2.2",
@@ -14554,7 +14575,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "O1",
+      "activeSliceId": "O2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
