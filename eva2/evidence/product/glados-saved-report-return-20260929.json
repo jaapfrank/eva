@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-09-29T07:26:38.449255+00:00",
+  "status": "saved_report_return_succeeded",
+  "workId": "work:eva-chat:efac1f44-bd0e-536e-8c84-3dc5e3bb6ccd",
+  "createdAt": "2026-09-29T07:24:29Z",
+  "completedAt": "2026-09-29T07:25:18Z",
+  "workerElapsedSeconds": 49,
+  "foregroundResponseSeconds": 13.225,
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 4,
+    "tool_calls": 3,
+    "input_tokens": 38407,
+    "output_tokens": 428,
+    "total_tokens": 38835,
+    "cost_usd_micros": null
+  },
+  "foregroundUsage": {
+    "inputTokens": 7529,
+    "outputTokens": 198,
+    "modelAttempts": 1
+  },
+  "report": "eva2/evidence/product/glados-vision-resultaat-20260929.md",
+  "reportSha256": "bd02fa3a3389f6c4f6c4fc1b9ade39411ede6fe931fbfe6c876d780ded82ba31",
+  "reportUnchanged": true,
+  "actions": [
+    "manage_connected_services status",
+    "discover_connector_tools",
+    "eva-workspace-read-text-file"
+  ],
+  "result": "Het rapport is volledig gelezen. GLaDOS verwerkt camera’s en OpenCV-ondersteunde streams/videobestanden lokaal, met wijzigingsdetectie en hergebruik van eerdere resultaten. Geen kant-en-klare schermopname of foto-upload aangetroffen. Beschrijvingen kunnen via een cloud-LLM alsnog naar buiten; volledige lokale privacy is niet bewezen.\n\nConcrete verschillen: de handleiding noemt enabled en standaard 200 tokens; de code heeft geen enabled-veld en gebruikt 64. Uitschakelen gebeurt door de vision-configuratie weg te laten/null te maken. Downloads belanden volgens de instructie onder onnx/, terwijl de loader bestanden rechtstreeks onder model_dir zoekt. ‘85× sneller’ is niet gemeten; praktijktests ontbreken.\n\nVindplaats: /proof-state/glados-vision-onderzoek-20260929.md.",
+  "limitations": [
+    "Separate read-only request; original research and legacy resume remain failed/ambiguous",
+    "No new research or writes",
+    "This live request did not exercise indexed local result selection; that regression is covered by database tests",
+    "Full autonomous T1 research and owner acceptance remain open",
+    "49 seconds worker time is not a fast response claim",
+    "Result available in website work route; physical owner receipt not confirmed"
+  ],
+  "creditCosts": "unknown",
+  "independentReview": "review_directory_connection GO: summary matches report; only status/discovery/direct read; no research/write. Live indexed selection and owner receipt not claimed."
+}

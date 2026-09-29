@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Bewaard GLaDOS-rapport gelezen en eindantwoord geleverd",
+            "date": "29 september",
+            "state": "tested",
+            "result": "Gewone websiteopdracht geslaagd; bronbestand ongewijzigd. Hervatcorrectie f118d9de geïnstalleerd op gezonde kern/werker.",
+            "remaining": "49s leestijd blijft traag. Afzonderlijke leesopdracht, geen geslaagde oorspronkelijke onderzoekstaak of volledigeT1.",
+            "source": "eva2/evidence/product/glados-saved-report-return-20260929.json"
+          },
+          {
             "title": "GLaDOS-visionrapport opgeslagen en inhoudelijk gecontroleerd",
             "date": "29 september",
             "state": "tested",
@@ -2820,8 +2828,8 @@
         ],
         "now": {
           "title": "T1: onderzoek volledig afronden",
-          "state": "Hervatcorrectie getest en beoordeeld; installatie voorbereiden",
-          "detail": "Eén productbestand gewijzigd: bestaande externe-tooladapter bewaart lokale leesstappen op vaste index.104 gerichte controles geslaagd, waaronder drie echte PostgreSQL-hervatgevallen zonder dubbele schrijfactie. Onafhankelijke review GO.",
+          "state": "Bewaard rapport teruggegeven; hervatcorrectie geïnstalleerd",
+          "detail": "Leesopdracht geslaagd in49s zonder nieuw onderzoek of bestandswijziging. T1 als geheel blijft open: oorspronkelijke onderzoekstaak rondde niet zelfstandig af.",
           "doneWhen": "Eva bewaart, controleert en meldt het volledige onderzoeksresultaat zelfstandig terug binnen het geldende taakbudget."
         },
         "next": {
@@ -2841,7 +2849,7 @@
           "expected": "Tussenvraag vóór het onderzoeksantwoord; onderzoeksantwoord bij de oorspronkelijke vraag."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T07:19:32.597932+00:00"
+        "reviewedAt": "2026-09-29T07:26:38.449255+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13199,7 +13207,7 @@
             "effort": "One bounded20min source pass, no runtime modelcalls",
             "legacyRule": "Do not infer old missing step indexes from timestamps or weaken differing-effect rejection.",
             "scopeReason": "Existing conversation recovery already honors can_continue_after; no conversation.py or connector_results.py change needed.",
-            "stage": "tested_reviewed",
+            "stage": "installed",
             "testResult": "104 passed:101 existing reader/runner cases and3 realPostgreSQL indexedread resume/crash cases",
             "reviewer": "/root/review_directory_connection"
           }

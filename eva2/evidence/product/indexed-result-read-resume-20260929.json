@@ -1,6 +1,6 @@
 {
   "checkedAt": "2026-09-29T07:19:32.628121+00:00",
-  "status": "tested_reviewed_candidate",
+  "status": "installed",
   "baseCommit": "720e2eff",
   "productFiles": [
     "eva2/src/eva/adapters/postgres/external_conversation_tools.py"
@@ -23,5 +23,30 @@
     "Original GLaDOS task retains failure status; saved report can be read in a separate normal read request",
     "Controlled regression proves these execution paths, not general research quality or fullT1 acceptance"
   ],
-  "creditCosts": "unknown"
+  "creditCosts": "unknown",
+  "installation": {
+    "checkedAt": "2026-09-29T07:24:06.757056+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:d9caf47a126b8b00632b4da2967b99d8a1447e7f82d2888a3b845b023b2cb81f",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/external_conversation_tools.py": "fcd9c2c4414309bfbfd39436122939868b2588199e3374d032a4b69918e95553"
+        }
+      },
+      "worker": {
+        "image": "sha256:8ac44671b39fef2a35c207c6f2d14e46686e754e7c8f4abaa09e09c8f4bca814",
+        "health": "healthy",
+        "sourceHashes": {
+          "adapters/postgres/external_conversation_tools.py": "fcd9c2c4414309bfbfd39436122939868b2588199e3374d032a4b69918e95553"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/t1-indexed-result-reads-20260929/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "sourceCommit": "f118d9de"
 }

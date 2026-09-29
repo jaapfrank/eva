@@ -2,15 +2,13 @@
 
 ## Nu — T1: onderzoek volledig afronden
 
-**Concrete vervolgblokkade:** hervatting99b7f7e9 faalt door ontbrekende stapkoppeling voor lokaal gelezen bronfragmenten. Oude fragmenten zijn wel bewaard, maar hun stapnummers niet; vervolg botst op een bestaande actie. /root/background_execution_seam heeft alleen external_conversation_tools.py aangepast;104 gerichte controles en onafhankelijke review akkoord. /root installeert de correctie. Geen modelcalls voor bouw/test. /root beheert werkbord/integratie; oude onzekere stappen niet reconstrueren op aanname. Rapport blijft behouden.
+**Afgerond:** de gewone leesopdracht heeft het bestaande [GLaDOS-rapport](evidence/product/glados-vision-resultaat-20260929.md) volledig gelezen en het eindantwoord opgeslagen. Geen nieuw onderzoek of bestandswijziging. Werker49s,4 modelantwoorden/3 tools,38.407in/428uit gedeeltelijk gemeten; ontvangst13,225s met7.529in/198uit. Credits onbekend. [Bewijs](evidence/product/glados-saved-report-return-20260929.json).
 
-**Geleverd:** [GLaDOS-visionrapport](evidence/product/glados-vision-resultaat-20260929.md), opgeslagen door Eva, door coördinator teruggelezen en onafhankelijk inhoudelijk akkoord. Code/documentatieverschillen en privacygrenzen zijn concreet onderbouwd. [Bewijs](evidence/product/glados-vision-research-20260929.json).
+**Geïnstalleerd:** f118d9de bewaart lokaal gelezen bronfragmenten in hun oorspronkelijke uitvoerstap, zodat hervatting niet tegen latere acties botst. Eén productbestand,104 gerichte controles waaronder3 echte databasegevallen; onafhankelijke review akkoord. Kern/werker gezond, exacte bron gecontroleerd en terugweg bewaard. Oude stappen zonder opgeslagen index worden niet achteraf geraden.
 
-**Geïnstalleerd:** bron8f1c9b0d corrigeert de eerdere55s-onderzoekgrens en behoudt de oorspronkelijke timeoutreden. Kern/werker gezond, bron exact gecontroleerd,25 gerichte controles en onafhankelijke review GO. Bestaande terugweg bewaard. De nieuwe opdracht koos URL-leestools en beproefde de langere native onderzoekstijd niet.
+**Ook geïnstalleerd:** 720e2eff toont resterende taakduur aan het werkmodel;8f1c9b0d corrigeert de eerdere55s-onderzoekgrens. Geen nieuwe budgetten of betaalde route.
 
-**Nog niet af:** nieuwe volledige opdracht bereikte300s vóór eigen teruglezing/eindantwoord.20 modelantwoorden/19 tools,592.136in/3.595uit gedeeltelijk gemeten; creditkosten onbekend. Geen actieve modeltaak of tweede onderzoek gestart. T1 blijft open.
-
-**Nu, /root:** resterende wandtijd is geïnstalleerd (720e2eff),85 gerichte controles en onafhankelijke review akkoord; kern/werker gezond. Bewaarde rapporttaak afronden zonder nieuw onderzoek. Begrensde wijziging in delegated_digital_runner.py plus gerichte test; raming15–20min inclusief review/installatie. Eén bewaarde-resultaatvoortzetting, geen nieuwe bronproef. Die afrondingsinformatie gericht aansluiten en het al bewaarde resultaat afmaken zonder de bronnen opnieuw te onderzoeken. Geen nieuwe planner of budgetverhoging. Telegramproef blijft afzonderlijk open.
+**T1 blijft open:** de oorspronkelijke onderzoekstaak bereikte300s vóór eigen teruglezing/eindantwoord; de historische hervatting liep vast. Het goede rapport is behouden en afzonderlijk teruggegeven, maar dit bewijst geen volledig zelfstandig afgerond onderzoek. De actuele leesopdracht beproefde geen lokale selectie; de hervatcorrectie is daarvoor met echte databasegevallen gecontroleerd.49s voor alleen lezen blijft traag. Geen actieve modeltaak of herhaalde onderzoeksproef.
 
 ## C1 — tekstgesprek tijdens werk
 
