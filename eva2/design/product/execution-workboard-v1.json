@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T20:52:35.113757+00:00",
+        "checkedAt": "2026-09-29T21:00:24.956815+00:00",
         "deliveries": [
           {
             "title": "Herhaalde herstelpakketcontrole versneld",
@@ -3051,10 +3051,10 @@
           }
         ],
         "now": {
-          "title": "O2.3: gegevens hersteld; documentaansluiting afmaken",
+          "title": "O2.3: vier documentproviders hersteld; gateway aansluiten",
           "state": "Bezig",
           "owner": "Codex /root",
-          "detail": "Gegevensimport en teruglezen geslaagd. Catalogus-/layoutaansluiting geïnstalleerd na26 gerichte controles en onafhankelijke review. Vier documentproviders worden nu op hetzelfde herstelde doel aangesloten; runtime blijft gesloten."
+          "detail": "Alle vier providers draaien geïsoleerd; toolcatalogi en bewaard documentmateriaal gecontroleerd. Dezelfde uitvoerroute start nu de herstelde gateway en herstelt schrijftoegang. Kern nog gesloten."
         },
         "next": {
           "title": "O2.3: teruglezen en vier documentproviders aansluiten",
@@ -3071,7 +3071,7 @@
           "linkLabel": "Antwoord in deze chat"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T20:52:35.113757+00:00"
+        "reviewedAt": "2026-09-29T21:00:24.956815+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14519,19 +14519,20 @@
                 "outcome": "Bevroren echte gegevens via bestaande volledige herstelroute herstellen.",
                 "estimate": "Bestaande kernexport duurt eerder circa8min; één export van deze nieuwe consistente bronkopie, geen nieuwe live snapshot/modelcalls. Credits onbekend.",
                 "finish": "Consistent source copy collected through existing helpers; complete joint restore remains required.",
-                "stage": "installed_document_connection_running",
+                "stage": "four_documents_connected_gateway_promotion_running",
                 "workers": {
-                  "/root": "following actual four-provider connection on restored target"
+                  "/root": "following existing gateway start and document promotion on retained target"
                 },
                 "activeWorkers": [],
                 "endCondition": "Pakket/autoriteit/wizard gebruiken dezelfde v3-kern met bestaande externe stappen; gerichte combinatiecontrole, onafhankelijke review en operatorinstallatie.",
                 "liveExportSession": null,
                 "liveRestoreSession": null,
                 "catalogFinding": "Four native catalogs recoverable exactly from preserved gateway rows; standalone catalog interface still requires connection. Evidence: eva2/evidence/product/o2-preserved-document-catalog-20260929.json",
-                "liveDocumentSession": 54532
+                "liveDocumentSession": null,
+                "liveGatewaySession": 29662
               },
-              "latestEvidence": "eva2/evidence/product/o2-document-catalog-installed-20260929.json",
-              "remaining": "Gezamenlijke import en teruglezen geslaagd; vier documentproviders aansluiten en gecontroleerde vrijgave blijven open."
+              "latestEvidence": "eva2/evidence/product/o2-four-documents-connected-20260929.json",
+              "remaining": "Gegevens en vier documentproviders teruggelezen. Bestaande gateway starten, documentenschrijftoegang en runtimevrijgave afronden."
             }
           ],
           "latestEvidence": "eva2/evidence/product/o2-consistent-source-collected-20260929.json"

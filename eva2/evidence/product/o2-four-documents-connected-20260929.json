@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-09-29T21:00:24.956815+00:00",
+  "status": "four_document_providers_connected_read_only",
+  "providers": [
+    {
+      "name": "eva-o2-joint-20260929-documents-0-ro",
+      "status": "connected_read_only",
+      "providerVerified": true,
+      "documentsVerified": true,
+      "catalogSha256": "73da70f4d4537699d5432dc620d881262743c538ffe004f5245e3584271cbf1f"
+    },
+    {
+      "name": "eva-o2-joint-20260929-documents-1-ro",
+      "status": "connected_read_only",
+      "providerVerified": true,
+      "documentsVerified": true,
+      "catalogSha256": "a8b3265a78dd35a2d409f72b63ec084a8b96ea478fc8a0be653abeb49909e721"
+    },
+    {
+      "name": "eva-o2-joint-20260929-documents-2-ro",
+      "status": "connected_read_only",
+      "providerVerified": true,
+      "documentsVerified": true,
+      "catalogSha256": "bc7ee51c95b9ef0f37517902fc98cc35cef48fd0c5e9f3a533799f351cb6ab95"
+    },
+    {
+      "name": "eva-o2-joint-20260929-documents-3-ro",
+      "status": "connected_read_only",
+      "providerVerified": true,
+      "documentsVerified": true,
+      "catalogSha256": "428d405fc683768480e10976fff9b091742994fdba72c4855827bcf96d89cd89"
+    }
+  ],
+  "preservedGatewayBindings": "validated_unchanged",
+  "coreActivated": false,
+  "modelCalls": 0,
+  "next": "Reviewed existing gateway start and writable document promotion running on same target.",
+  "activeSession": 29662,
+  "limitations": [
+    "Read-only document connection is not complete O2.3 or runtime activation."
+  ]
+}

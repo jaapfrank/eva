@@ -1,6 +1,6 @@
-## Actueel: O2.3 gegevens hersteld; documentaansluiting afmaken — 29 september 2026
+## Actueel: O2.3 vier documentproviders hersteld; gateway aansluiten — 29 september 2026
 
-De bestaande wizard heeft dezelfde gezamenlijke kopie succesvol geïmporteerd. Teruglezen geslaagd: alle73 achtergrondwerkrecords geldig; gateway en identiteit bytegelijk, runtime nog gesloten. Documentcatalogi uit bestaande gatewaykopie aangesloten in operatorcode:26 gerichte controles en onafhankelijke review geslaagd; geïnstalleerd. Uitvoering voor vier providers op hetzelfde doel loopt, daarna gecontroleerde vrijgave. Geen volledige O2.3-afronding; import draait niet meer.
+De gezamenlijke import is geslaagd en teruggelezen. Alle vier documentproviders draaien op hetzelfde geïsoleerde doel; oorspronkelijke toolcatalogi, bewaarde documenten en logboeken zijn gecontroleerd. De beoordeelde bestaande route start nu de herstelde gateway en herstelt documentenschrijftoegang. Daarna runtimevrijgave; kern nog gesloten. Geen volledige O2.3-afronding. [Bewijs](evidence/product/o2-four-documents-connected-20260929.json).
 
 ## Actueel: O2.3 herhaalde pakketcontrole versneld — 29 september 2026
 
