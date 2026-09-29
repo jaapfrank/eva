@@ -1,3 +1,7 @@
+## Actueel: O2.3 gezamenlijk herstel loopt — 29 september 2026
+
+Geldig pakket door geïnstalleerde wizard geaccepteerd. Werkelijke import naar apart intern doel loopt; geheugenservice blijft uit en runtime blijft gesloten. Dezelfde kopie, geen nieuwe export of oorspronkelijke dienstenwijziging. Daarna teruglezen, vier documentproviders aansluiten en gecontroleerde vrijgave. Geen volledige herstelclaim. [Bewijs](evidence/product/o2-joint-data-restore-20260929.json).
+
 ## Actueel: O2.3 herhaalde pakketcontrole versneld — 29 september 2026
 
 Geïnstalleerde correctie hergebruikt binnen één uitvoering alleen de inhoudelijke kerncontrole; alle bestandshashes/inventarissen blijven per aanroep gecontroleerd. Echt pakket:260,836s eerste controle,10,104s herhaling; gemeten piek2,36GiB.7 gerichte controles en onafhankelijke review akkoord. Geen Eva-modelcalls of runtimeherstart. Gezamenlijk herstel nog open; meting is voltooid en draait niet meer. [Bewijs](evidence/product/o2-scoped-package-validation-20260929.json).

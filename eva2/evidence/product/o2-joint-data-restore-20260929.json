@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-09-29T20:37:37.795804+00:00",
+  "task": "O2.3",
+  "status": "wizard_execute_running",
+  "sessionId": 54933,
+  "privateTarget": "/home/administrator/project/.eva2-artifacts/o2-consistent-source-20260929/joint-target",
+  "packageSha256": "1e7f0d2d767f116f70439d0ad58c43e26833d4c18b3cfbefc6410938d4c20f28",
+  "runnerSha256": "8950f13c26f5ee290ce4833f6b068f471883f4d5f81095c7d48c87635dc021c2",
+  "route": "Installed InstallerPortableRestore and restore_external_components; no replacement importer.",
+  "target": {
+    "network": "eva-o2-joint-20260929-network",
+    "internal": true,
+    "subnet": "172.16.248.0/24",
+    "databaseContainer": "eva-o2-joint-20260929-postgres",
+    "memoryService": "created_not_started",
+    "activation": "closed"
+  },
+  "independentPreflightReview": "GO after explicit materialization role UID mapping; applied before execution.",
+  "sourceServicesChanged": false,
+  "initialPreparationIssue": "Automatic network allocation failed before database creation; observed default address ranges occupied. Continued same empty target using verified free explicit subnet. No deletion or new export.",
+  "modelCalls": 0,
+  "creditCost": "unknown",
+  "remaining": [
+    "Finish same wizard execution and compare actual imported records with package.",
+    "Connect four document providers and verify controlled activation; O2.3 not complete."
+  ]
+}

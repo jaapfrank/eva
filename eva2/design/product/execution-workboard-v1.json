@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T20:24:29.982954+00:00",
+        "checkedAt": "2026-09-29T20:37:37.795804+00:00",
         "deliveries": [
           {
             "title": "Herhaalde herstelpakketcontrole versneld",
@@ -3051,10 +3051,10 @@
           }
         ],
         "now": {
-          "title": "O2.3: herhaalde pakketcontrole versneld en geïnstalleerd",
-          "state": "Tussenresultaat gereed",
+          "title": "O2.3: gezamenlijk herstel loopt op apart doel",
+          "state": "Bezig",
           "owner": "Codex /root",
-          "detail": "Echt pakket: eerste inhoudelijke controle260,8s, herhaalde controle10,1s met alle bestandscontroles behouden.7 gerichte controles, onafhankelijke review en exacte geïnstalleerde bron bevestigd. Gezamenlijk herstel nog open."
+          "detail": "Pakket door geïnstalleerde wizard geaccepteerd. Kern, geheugen, gateway en documenten worden geïmporteerd; uitvoering blijft gesloten. Geen nieuwe export of wijziging aan oorspronkelijke Eva."
         },
         "next": {
           "title": "O2.3: echt gezamenlijk herstel uitvoeren",
@@ -3071,7 +3071,7 @@
           "linkLabel": "Antwoord in deze chat"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T20:24:29.982954+00:00"
+        "reviewedAt": "2026-09-29T20:37:37.795804+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14516,13 +14516,16 @@
                 "outcome": "Bevroren echte gegevens via bestaande volledige herstelroute herstellen.",
                 "estimate": "Bestaande kernexport duurt eerder circa8min; één export van deze nieuwe consistente bronkopie, geen nieuwe live snapshot/modelcalls. Credits onbekend.",
                 "finish": "Consistent source copy collected through existing helpers; complete joint restore remains required.",
-                "stage": "scoped_validation_reuse_installed",
-                "workers": {},
+                "stage": "installed_wizard_joint_restore_running",
+                "workers": {
+                  "/root": "following same installed wizard execution"
+                },
                 "activeWorkers": [],
                 "endCondition": "Pakket/autoriteit/wizard gebruiken dezelfde v3-kern met bestaande externe stappen; gerichte combinatiecontrole, onafhankelijke review en operatorinstallatie.",
-                "liveExportSession": null
+                "liveExportSession": null,
+                "liveRestoreSession": 54933
               },
-              "latestEvidence": "eva2/evidence/product/o2-scoped-package-validation-20260929.json",
+              "latestEvidence": "eva2/evidence/product/o2-joint-data-restore-20260929.json",
               "remaining": "Geldig gezamenlijk pakket behouden. Herhaalde controle aantoonbaar versneld en geïnstalleerd. Echt gezamenlijk herstel met vier documentproviders op huidig geïsoleerd doel nog open."
             }
           ],
