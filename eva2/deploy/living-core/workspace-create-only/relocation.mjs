@@ -34,9 +34,9 @@ export function physicalHashes(executable) {
 }
 function originalBinding(bytes) {
   const binding = JSON.parse(bytes);
-  if (binding.version !== 2 || binding.journal_mode !== 'per_path_prefix_v1'
+  if ((binding.version !== 1 && (binding.version !== 2 || binding.journal_mode !== 'per_path_prefix_v1'))
       || !hex(binding.project_journal_identity) || !hex(binding.binary_sha256)
-      || !hex(binding.client_sha256) || !hex(binding.resolver_sha256)) throw Error('relocation_source_binding_refused');
+      || !hex(binding.client_sha256) || (binding.version === 2 && !hex(binding.resolver_sha256))) throw Error('relocation_source_binding_refused');
   return binding;
 }
 
@@ -46,10 +46,31 @@ function originalBinding(bytes) {
 // only as its binding and relocation files before resuming the restored service.
 export function prepareRelocation({executable, rootFd, journalFd, originalBindingBytes, logicalCatalogIdentity, projectKeys}) {
   const old = originalBinding(originalBindingBytes);
-  if (!hex(logicalCatalogIdentity) || !Array.isArray(projectKeys) || projectKeys.length === 0
+  if (!hex(logicalCatalogIdentity) || !Array.isArray(projectKeys)
       || new Set(projectKeys).size !== projectKeys.length || projectKeys.some(key => !hex(key))) throw Error('relocation_projects_refused');
   const root = privateDirectory(rootFd), journal = privateDirectory(journalFd);
   if (equal(root, old.root) || equal(journal, old.journal)) throw Error('relocation_requires_new_directories');
+  const names = fs.readdirSync(`/proc/self/fd/${journalFd}`);
+  if (old.version === 1) {
+    if (projectKeys.length || names.some(name => name !== 'workspace-writer.journal')) throw Error('relocation_flat_inventory_refused');
+    const snapshots = {};
+    let flat = null;
+    if (names.length) {
+      const result = spawnSync(executable, ['--relocation-snapshot'], {input: Buffer.alloc(0), stdio: ['pipe','pipe','pipe',rootFd,journalFd], env: {PATH:'/usr/bin:/bin',LANG:'C'}, timeout:10000,maxBuffer:4194304});
+      if (result.status !== 0 || result.error || result.signal) throw Error('relocation_snapshot_refused: ' + String(result.stderr));
+      const snapshot = result.stdout;
+      if (snapshot.subarray(0,8).toString() !== 'EVWWREL1' || snapshot.length !== 124 + 510 * snapshot.readUInt32BE(120) + 32) throw Error('relocation_snapshot_refused');
+      for (let i=0; i<snapshot.readUInt32BE(120); i++) {
+        const offset=124+510*i+32;
+        if(snapshot.readBigUInt64BE(offset)!==BigInt(old.root.dev) || snapshot.readBigUInt64BE(offset+8)!==BigInt(old.root.ino)) throw Error('relocation_chain_unsupported');
+      }
+      flat={snapshot_sha256:hash(snapshot),prefix_length:Number(snapshot.readBigUInt64BE(8)),prefix_sha256:snapshot.subarray(16,48).toString('hex')};
+      snapshots.flat=snapshot;
+    }
+    const binding={version:4,kind:'host_authorized_flat_relocation_v1',original_binding_base64:Buffer.from(originalBindingBytes).toString('base64'),logical_provider_identity:hash(originalBindingBytes),logical_catalog_identity:logicalCatalogIdentity,physical:{...physicalHashes(executable),root,journal},flat};
+    return {bindingBytes:Buffer.from(JSON.stringify(binding)),snapshots};
+  }
+  if (!equal([...names].sort(), [...projectKeys].sort())) throw Error('relocation_project_inventory_refused');
   const projects = {}, snapshots = {};
   for (const key of projectKeys) {
     const childFd = fs.openSync(`/proc/self/fd/${journalFd}/${key}`, directoryFlags);
@@ -90,12 +111,19 @@ export function prepareRelocation({executable, rootFd, journalFd, originalBindin
 // supply a package, path, executable, fd or logical identity to this function.
 export function validateRelocationBinding(bindingBytes, {executable, rootFd, journalFd}) {
   const binding = JSON.parse(bindingBytes);
-  if (binding.version !== 3 || binding.kind !== 'host_authorized_relocation_v1') throw Error('relocation_binding_refused');
+  const flatBinding = binding.version === 4 && binding.kind === 'host_authorized_flat_relocation_v1';
+  if (!flatBinding && (binding.version !== 3 || binding.kind !== 'host_authorized_relocation_v1')) throw Error('relocation_binding_refused');
   const originalBytes = Buffer.from(binding.original_binding_base64, 'base64');
   const old = originalBinding(originalBytes);
   if (hash(originalBytes) !== binding.logical_provider_identity || !hex(binding.logical_catalog_identity)
       || !equal(binding.physical, {...physicalHashes(executable), root: privateDirectory(rootFd), journal: privateDirectory(journalFd)})
-      || !binding.projects || Array.isArray(binding.projects)) throw Error('relocation_binding_refused');
+      || (!flatBinding && (!binding.projects || Array.isArray(binding.projects)))) throw Error('relocation_binding_refused');
+  if (flatBinding) {
+    if (old.version !== 1 || !Object.hasOwn(binding,'flat')) throw Error('relocation_binding_refused');
+    if (binding.flat !== null && (!hex(binding.flat.snapshot_sha256) || !hex(binding.flat.prefix_sha256) || !Number.isSafeInteger(binding.flat.prefix_length) || binding.flat.prefix_length < 0)) throw Error('relocation_binding_refused');
+    return {binding,originalBytes,original:old};
+  }
+  if (old.version !== 2) throw Error('relocation_binding_refused');
   for (const [key, project] of Object.entries(binding.projects)) {
     const marker = Buffer.from(project.marker_base64, 'base64');
     const parsed = JSON.parse(marker);

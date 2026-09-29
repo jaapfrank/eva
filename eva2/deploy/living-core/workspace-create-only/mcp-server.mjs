@@ -19,8 +19,8 @@ const binding=JSON.parse(bindingBytes.toString('utf8'));
 const statMatches=(fd,expected)=>{const st=fs.fstatSync(fd);return st.dev===expected.dev&&st.ino===expected.ino;};
 const clientHash=createHash('sha256').update(fs.readFileSync(new URL('./broker-client.mjs',import.meta.url))).digest('hex');
 const resolverHash=createHash('sha256').update(fs.readFileSync(new URL('./project-journal.mjs',import.meta.url))).digest('hex');
-const relocation=binding.version===3?validateRelocationBinding(bindingBytes,{executable,rootFd,journalFd}):null;
-const dynamicJournal=!!relocation||(binding.version===2&&binding.journal_mode==='per_path_prefix_v1'&&binding.resolver_sha256===resolverHash);
+const relocation=[3,4].includes(binding.version)?validateRelocationBinding(bindingBytes,{executable,rootFd,journalFd}):null;
+const dynamicJournal=relocation?binding.version===3:(binding.version===2&&binding.journal_mode==='per_path_prefix_v1'&&binding.resolver_sha256===resolverHash);
 if(!relocation&&((binding.version!==1&&!dynamicJournal)||typeof binding.project_journal_identity!=='string'||!/^[a-f0-9]{64}$/.test(binding.project_journal_identity)||binding.binary_sha256!==digest||binding.client_sha256!==clientHash||!statMatches(rootFd,binding.root)||!statMatches(journalFd,binding.journal))) throw Error('host binding mismatch');
 const providerBinding=createHash('sha256').update(relocation?relocation.originalBytes:bindingBytes).digest('hex');
 const properties={operation_id:{type:'string',pattern:'^[0-9a-f]{64}$'},request_binding_sha256:{type:'string',pattern:'^[0-9a-f]{64}$'},expected_generation:{type:'integer',minimum:0,maximum:Number.MAX_SAFE_INTEGER},path:{type:'string',pattern:'^[A-Za-z0-9_-][A-Za-z0-9_.-]*$',maxLength:255},content:{type:'string',maxLength:1048576}};
@@ -36,11 +36,12 @@ server.setRequestHandler(CallToolRequestSchema,async({params})=>{
   requestFrame(args);
   const observe=params.name===names[1];
   const key=args.path.split('-')[0];
-  const project=relocation?.binding.projects[key]??null;
+  const project=relocation?.binding.projects?.[key]??null;
   const selectedFd=dynamicJournal?resolveProjectJournal(journalFd,args.path,{observe,relocation:project}):journalFd;
   let relocationFd=null;
   try {
     if(project) relocationFd=openRelocationSnapshot(project,'/run/eva2/relocations/'+key+'.relocation');
+    else if(relocation?.binding.flat) relocationFd=openRelocationSnapshot(relocation.binding.flat,'/run/eva2/relocations/flat.relocation');
     result=runBrokerResult({executable,rootFd,journalFd:selectedFd,request:args,observe,relocationFd});
   } finally {if(relocationFd!==null) fs.closeSync(relocationFd);if(dynamicJournal) fs.closeSync(selectedFd);}
  } catch {result={status:'blocked',code:'invalid_request'};}

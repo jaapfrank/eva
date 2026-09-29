@@ -1,0 +1,42 @@
+{
+  "date": "2026-09-29T14:35:41.159530+00:00",
+  "task": "O2.3",
+  "sourceBase": "a402ca4c",
+  "status": "actual_document_layout_support_installed_operator_image_available",
+  "gap": "Actual mounted document providers use flat v1 journals (including empty) and an empty per-project v2 root. Existing recovery required nonempty per-project journals. Actual legacy workspace mode0755 also conflicted with private restored root0700.",
+  "change": "Preserve flat layout via explicit v4 relocation binding; allow verified empty roots without inventing markers. Native directory comparison permits unchanged permissions or removal of group/other bits, preserving type/owner bits/linkcount/uid/gid. Operator preparation/material checks retain layout and snapshot identity.",
+  "verification": {
+    "native_cases": 12,
+    "operator_cases": 7,
+    "independent_review": "GO for layout seam and subsequent two native permission guards",
+    "actual_readonly_copies": {
+      "flat_nonempty": {
+        "snapshot_bytes": 1176,
+        "original_provider_identity_preserved": true,
+        "final_image": "sha256:56945913eacf31a47d4e2df5ad8f5ecced8bfd7c6cddcf249b49d60ba7d4210c"
+      },
+      "flat_empty": "passed with no snapshots on first candidate with same JS changes",
+      "per_project_empty": "passed with no snapshots on first candidate with same JS changes",
+      "source_file_hashes_equal_after_copy": true,
+      "limitation": "Native preparation and binding verification on retained actual file copies; not coordinated full recovery or live task replay. Earlier copy harness used wrong UID/file modes; corrected to expected materialized ownership/private modes. All failed diagnostics retained."
+    }
+  },
+  "installation": {
+    "operator_modules": 2,
+    "installed_operator_cases": 7,
+    "module_origin_verified": true,
+    "recovery_image": "sha256:56945913eacf31a47d4e2df5ad8f5ecced8bfd7c6cddcf249b49d60ba7d4210c",
+    "running_providers_changed": false,
+    "previous_modules_and_image_retained": true
+  },
+  "remaining": [
+    "Consistent current core/memory/gateway/document snapshot under actual writer quiescence.",
+    "One full existing recovery-route execution using real external data and this explicit recovery image.",
+    "Owner acceptance remains separate; O2.3 is not complete."
+  ],
+  "consumption": {
+    "eva_model_calls": 0,
+    "credits": "unknown"
+  },
+  "private_artifacts": "/home/administrator/project/.eva2-artifacts/o2-document-layouts-20260929/"
+}

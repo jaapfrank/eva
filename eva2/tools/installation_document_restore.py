@@ -60,7 +60,7 @@ def validate_document_configuration(configuration):
                 or not _HEX.fullmatch(config["logical_catalog_sha256"])
                 or not isinstance(config["image"], str)
                 or not re.fullmatch(r"sha256:[a-f0-9]{64}", config["image"])
-                or not isinstance(config["project_keys"], list) or not 1 <= len(config["project_keys"]) <= 16
+                or not isinstance(config["project_keys"], list) or not 0 <= len(config["project_keys"]) <= 16
                 or any(not isinstance(key, str) or not _HEX.fullmatch(key) for key in config["project_keys"])
                 or len(set(config["project_keys"])) != len(config["project_keys"])):
             raise ValueError("document relocation image/catalog/project pin differs")
@@ -91,26 +91,32 @@ try {
 """
 
 
+def _empty_journal(root, relative, config):
+    """Restore an explicitly empty journal directory, never invent journal files."""
+    with _root_descriptor(root) as root_fd:
+        fd = os.dup(root_fd)
+        try:
+            parts = relative.split("/")
+            for index, part in enumerate(parts):
+                try:
+                    child = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=fd)
+                except FileNotFoundError:
+                    os.mkdir(part, 0o700, dir_fd=fd)
+                    child = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=fd)
+                    os.fchown(child, config["runtime_uid"], config["runtime_gid"])
+                os.close(fd)
+                fd = child
+            if os.listdir(fd):
+                raise ValueError("empty journal declaration would omit existing entries")
+        finally:
+            os.close(fd)
+
+
 def _validate_sources(root, package, config):
     entries = package["manifest"]["files"]
     for key, role in (("original_binding", "provider_binding"), ("catalog_path", "provider_catalog")):
         if entries.get(config[key], {}).get("role") != role:
             raise ValueError("document relocation authority file role differs")
-    for key, roles in (("document_directory", {"document_artifact"}),
-                       ("journal_directory", {"document_journal", "document_marker"})):
-        prefix = config[key] + "/"
-        names = [name for name in entries if name.startswith(prefix)]
-        if not names or any(entries[name]["role"] not in roles for name in names):
-            raise ValueError("document relocation directory roles differ")
-        directory = root / config[key]
-        info = directory.stat()
-        if (directory.resolve() != directory or info.st_uid != config["runtime_uid"]
-                or info.st_gid != config["runtime_gid"] or stat.S_IMODE(info.st_mode) != 0o700):
-            raise ValueError("document relocation source directory owner differs")
-    journal = config["journal_directory"] + "/"
-    actual_projects = {name[len(journal):].split("/")[0] for name in entries if name.startswith(journal)}
-    if actual_projects != set(config["project_keys"]):
-        raise ValueError("document relocation project coverage differs")
     with _root_descriptor(root) as fd:
         original = _read_regular(fd, config["original_binding"])
         catalog = _read_regular(fd, config["catalog_path"])
@@ -119,6 +125,34 @@ def _validate_sources(root, package, config):
             raise ValueError("document authority source bytes changed")
     if canonical_sha256(json.loads(catalog)) != config["logical_catalog_sha256"]:
         raise ValueError("document relocation logical catalog pin differs")
+    binding = json.loads(original)
+    flat = binding.get("version") == 1
+    if not flat and not (binding.get("version") == 2 and binding.get("journal_mode") == "per_path_prefix_v1"):
+        raise ValueError("document source journal layout is unsupported")
+    if flat and config["project_keys"]:
+        raise ValueError("flat journals cannot declare project directories")
+    for key, roles in (("document_directory", {"document_artifact"}),
+                       ("journal_directory", {"document_journal", "document_marker"})):
+        prefix = config[key] + "/"
+        names = [name for name in entries if name.startswith(prefix)]
+        if any(entries[name]["role"] not in roles for name in names):
+            raise ValueError("document relocation directory roles differ")
+        if not names:
+            if key != "journal_directory" or config["project_keys"]:
+                raise ValueError("document relocation directory inventory is empty")
+            _empty_journal(root, config[key], config)
+        directory = root / config[key]
+        info = directory.stat()
+        if (directory.resolve() != directory or info.st_uid != config["runtime_uid"]
+                or info.st_gid != config["runtime_gid"] or stat.S_IMODE(info.st_mode) != 0o700):
+            raise ValueError("document relocation source directory owner differs")
+    journal = config["journal_directory"] + "/"
+    names = {name[len(journal):] for name in entries if name.startswith(journal)}
+    if flat:
+        if names not in (set(), {"workspace-writer.journal"}):
+            raise ValueError("flat journal inventory differs")
+    elif {name.split("/")[0] for name in names} != set(config["project_keys"]):
+        raise ValueError("document relocation project coverage differs")
     return original
 
 
@@ -163,26 +197,30 @@ def prepare_document_relocations(package_root: Path, *, configuration: dict, gua
                 if cleanup["timed_out"] or (cleanup["exit_code"] != 0 and "No such container" not in cleanup["stderr"]):
                     raise RuntimeError("native relocation preparation cleanup uncertain")
             wire = json.loads(result["stdout"])
-            if set(wire) != {"binding", "snapshots"} or set(wire["snapshots"]) != set(config["project_keys"]):
+            flat = json.loads(original).get("version") == 1
+            expected_snapshots = ({"flat"} if (root / config["journal_directory"] / "workspace-writer.journal").exists() else set()) if flat else set(config["project_keys"])
+            if set(wire) != {"binding", "snapshots"} or set(wire["snapshots"]) != expected_snapshots:
                 raise ValueError("native relocation output inventory differs")
             files = {"binding.json": base64.b64decode(wire["binding"], validate=True)}
             files.update({key + ".relocation": base64.b64decode(value, validate=True)
                           for key, value in wire["snapshots"].items()})
             binding = json.loads(files["binding.json"])
-            if (binding.get("version") != 3 or binding.get("kind") != "host_authorized_relocation_v1"
+            expected_kind = "host_authorized_flat_relocation_v1" if flat else "host_authorized_relocation_v1"
+            if (binding.get("version") != (4 if flat else 3) or binding.get("kind") != expected_kind
                     or binding.get("logical_provider_identity") != hashlib.sha256(original).hexdigest()
                     or binding.get("logical_catalog_identity") != config["logical_catalog_sha256"]):
                 raise ValueError("native relocation authority binding differs")
             if (base64.b64decode(binding.get("original_binding_base64", ""), validate=True) != original
                     or set(binding.get("projects", {})) != set(config["project_keys"])):
                 raise ValueError("native relocation original authority or projects differ")
-            for key in config["project_keys"]:
-                if hashlib.sha256(files[key + ".relocation"]).hexdigest() != binding["projects"][key].get("snapshot_sha256"):
+            for key in expected_snapshots:
+                snapshot = binding["flat"] if flat else binding["projects"][key]
+                if hashlib.sha256(files[key + ".relocation"]).hexdigest() != snapshot.get("snapshot_sha256"):
                     raise ValueError("native relocation snapshot bytes differ")
             guard()
             if read_installation_package(root)["archive_sha256"] != package["archive_sha256"]:
                 raise ValueError("document source package changed during preparation")
-            item = {"status": "preparation_partial", "image_id": config["image"],
+            item = {"status": "preparation_partial", "journal_layout": "flat" if flat else "per_project", "image_id": config["image"],
                     "output_binding_sha256": hashlib.sha256(str(output).encode()).hexdigest(), "files": {}}
             receipt["providers"].append(item)
             with _root_descriptor(output.parent) as parent_fd:

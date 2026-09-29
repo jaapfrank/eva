@@ -17,7 +17,7 @@ const second = {...first, operation_id:'3'.repeat(64), expected_generation:1, pa
 const flags = fs.constants.O_RDONLY | fs.constants.O_DIRECTORY | fs.constants.O_NOFOLLOW;
 const statId = file => { const s = fs.statSync(file); return {dev:s.dev, ino:s.ino}; };
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-async function fixture(fn) {
+async function fixture(fn, {flat = false, empty = false} = {}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'eva-relocation-'));
   const bin = dir+'/broker';
   const compiled = spawnSync('gcc', ['-std=c17','-O2','-Wall','-Wextra','-Werror','-DEVWW_TEST_PHASE_BARRIERS','-o',bin,new URL('../native/workspace_writer_broker.c',import.meta.url).pathname]);
@@ -26,8 +26,8 @@ async function fixture(fn) {
   const held = [];
   const hold = name => { const fd=fs.openSync(dir+'/'+name,flags); held.push(fd); return fd; };
   const rootFd=hold('source'), journalFd=hold('source-journal');
-  const childFd=resolveProjectJournal(journalFd,first.path); held.push(childFd);
-  const originalBindingBytes=Buffer.from(JSON.stringify({version:2,journal_mode:'per_path_prefix_v1',project_journal_identity:'c'.repeat(64),binary_sha256:hash(fs.readFileSync(bin)),client_sha256:'d'.repeat(64),resolver_sha256:'e'.repeat(64),root:statId(dir+'/source'),journal:statId(dir+'/source-journal')}));
+  const childFd=flat||empty?journalFd:resolveProjectJournal(journalFd,first.path); if(childFd!==journalFd) held.push(childFd);
+  const originalBindingBytes=Buffer.from(JSON.stringify({version:flat?1:2,...(flat?{}:{journal_mode:'per_path_prefix_v1'}),project_journal_identity:'c'.repeat(64),binary_sha256:hash(fs.readFileSync(bin)),client_sha256:'d'.repeat(64),resolver_sha256:'e'.repeat(64),root:statId(dir+'/source'),journal:statId(dir+'/source-journal')}));
   const run=(request,observe=false,relocationFd=null,fds=[rootFd,childFd])=>spawnSync(bin,relocationFd===null?(observe?['--observe']:[]):[observe?'--observe-relocated':'--relocated'],{input:requestFrame(request),stdio:['pipe','pipe','pipe',...fds,...(relocationFd===null?[]:[relocationFd])]});
   async function crash(phase, request=first) {
     const child=spawn(bin,[],{stdio:['pipe','pipe','pipe',rootFd,childFd],env:{PATH:'/usr/bin:/bin',EVWW_TEST_STOP_PHASE:phase}});
@@ -51,7 +51,7 @@ async function fixture(fn) {
     const relocationFd=openRelocationSnapshot(project,authority);held.push(relocationFd);
     return {rootFd:targetRoot,journalFd:targetJournal,childFd:targetChild,relocationFd,project,authority,packageResult,run:(request,observe=false)=>run(request,observe,relocationFd,[targetRoot,targetChild]),unbound:(request,observe=false)=>run(request,observe,null,[targetRoot,targetChild])};
   }
-  try {await fn({dir,bin,rootFd,journalFd,childFd,run,crash,copy,originalBindingBytes});}
+  try {await fn({dir,bin,rootFd,journalFd,childFd,run,crash,copy,originalBindingBytes,hold});}
   finally {held.forEach(fd=>fs.closeSync(fd));fs.rmSync(dir,{recursive:true,force:true});}
 }
 test('read-only preparation recheck preserves exact authority and detects changed project material',()=>fixture(async({dir,run,copy,bin,originalBindingBytes})=>{
@@ -70,6 +70,64 @@ test('read-only preparation recheck preserves exact authority and detects change
   fs.writeFileSync(dir+'/target/'+first.path,'Changed retained result\n');
   assert.throws(recheck,/relocation_snapshot_refused/);
   assert.deepEqual(fs.readFileSync(journal),before);
+}));
+for (const flat of [false,true]) test('empty '+(flat?'flat':'dynamic')+' history preserves identity and permits a first real operation',()=>fixture(async({dir,bin,hold,originalBindingBytes})=>{
+  fs.cpSync(dir+'/source',dir+'/target',{recursive:true});fs.cpSync(dir+'/source-journal',dir+'/target-journal',{recursive:true});
+  for(const name of ['target','target-journal'])fs.chmodSync(dir+'/'+name,0o700);
+  const rootFd=hold('target'),journalFd=hold('target-journal');
+  const prepare=()=>prepareRelocation({executable:bin,rootFd,journalFd,originalBindingBytes,logicalCatalogIdentity:'f'.repeat(64),projectKeys:[]});
+  const result=prepare(),validated=validateRelocationBinding(result.bindingBytes,{executable:bin,rootFd,journalFd});
+  assert.deepEqual(result.snapshots,{});assert.deepEqual(fs.readdirSync(dir+'/target-journal'),[]);
+  assert.equal(validated.binding.logical_provider_identity,hash(originalBindingBytes));
+  assert.equal(validated.binding.logical_catalog_identity,'f'.repeat(64));
+  assert.equal(validated.binding.version,flat?4:3);
+  const selected=flat?journalFd:resolveProjectJournal(journalFd,first.path);
+  try {
+    const created=runBrokerResult({executable:bin,rootFd,journalFd:selected,request:first});assert.equal(created.status,'receipt');
+    const observed=runBrokerResult({executable:bin,rootFd,journalFd:selected,request:first,observe:true});assert.deepEqual(observed,created);
+  } finally {if(!flat)fs.closeSync(selected);}
+  if(!flat)assert.throws(prepare,/project_inventory_refused/);
+  fs.writeFileSync(dir+'/target-journal/unlisted','retained');
+  assert.throws(prepare,/inventory_refused/);
+},{flat,empty:true}));
+test('flat legacy history retains exact receipts and appends without project markers',()=>fixture(async({dir,bin,hold,run,originalBindingBytes})=>{
+  const receipt=run(first);assert.equal(receipt.status,0,String(receipt.stderr));
+  fs.cpSync(dir+'/source',dir+'/target',{recursive:true});fs.cpSync(dir+'/source-journal',dir+'/target-journal',{recursive:true});
+  for(const name of ['target','target-journal'])fs.chmodSync(dir+'/'+name,0o700);
+  const rootFd=hold('target'),journalFd=hold('target-journal');
+  const result=prepareRelocation({executable:bin,rootFd,journalFd,originalBindingBytes,logicalCatalogIdentity:'f'.repeat(64),projectKeys:[]});
+  const validated=validateRelocationBinding(result.bindingBytes,{executable:bin,rootFd,journalFd});
+  assert.equal(validated.binding.logical_provider_identity,hash(originalBindingBytes));assert.deepEqual(Object.keys(result.snapshots),['flat']);
+  const file=dir+'/flat.relocation';fs.writeFileSync(file,result.snapshots.flat,{mode:0o400});
+  const relocationFd=openRelocationSnapshot(validated.binding.flat,file);
+  const journal=dir+'/target-journal/workspace-writer.journal',before=fs.readFileSync(journal);
+  const call=(request,observe)=>spawnSync(bin,[observe?'--observe-relocated':'--relocated'],{input:requestFrame(request),stdio:['pipe','pipe','pipe',rootFd,journalFd,relocationFd]});
+  try {
+    const observed=call(first,true);assert.equal(observed.status,0,String(observed.stderr));assert.deepEqual(observed.stdout,receipt.stdout);assert.deepEqual(fs.readFileSync(journal),before);
+    const next=call(second,false);assert.equal(next.status,0,String(next.stderr));assert.deepEqual(call(second,false).stdout,next.stdout);
+    assert.deepEqual(fs.readFileSync(journal).subarray(0,before.length),before);assert.deepEqual(fs.readdirSync(dir+'/target-journal'),['workspace-writer.journal']);
+  }finally{fs.closeSync(relocationFd);}
+},{flat:true}));
+test('relocation tightens 0755 parent to 0700 while preserving history and rejecting altered owner or wider overlay',()=>fixture(async({dir,run,copy})=>{
+  fs.chmodSync(dir+'/source',0o755);
+  const created=run(first);assert.equal(created.status,0,String(created.stderr));
+  const sourceJournal=dir+'/source-journal/'+key+'/workspace-writer.journal';
+  const sourceBytes=fs.readFileSync(sourceJournal);
+  const target=copy();
+  assert.equal(fs.statSync(dir+'/target').mode&0o777,0o700);
+  const observed=target.run(first,true);assert.equal(observed.status,0,String(observed.stderr));assert.deepEqual(observed.stdout,created.stdout);
+  assert.deepEqual(fs.readFileSync(sourceJournal),sourceBytes);
+  assert.deepEqual(fs.readFileSync(dir+'/target-journal/'+key+'/workspace-writer.journal'),sourceBytes);
+  const original=fs.readFileSync(target.authority);
+  for(const change of [bytes=>bytes.writeUInt32BE(0o40777,124+84),bytes=>bytes.writeUInt32BE(process.getuid()+1,124+96)]) {
+    const altered=Buffer.from(original);change(altered);
+    createHash('sha256').update(altered.subarray(0,-32)).digest().copy(altered,altered.length-32);
+    fs.chmodSync(target.authority,0o600);fs.writeFileSync(target.authority,altered);fs.chmodSync(target.authority,0o400);
+    const denied=target.run(first,true);assert.notEqual(denied.status,0);assert.match(String(denied.stderr),/relocation_parent_mismatch/);
+  }
+  fs.chmodSync(target.authority,0o600);fs.writeFileSync(target.authority,original);fs.chmodSync(target.authority,0o400);
+  assert.equal(target.run(second).status,0);
+  assert.deepEqual(fs.readFileSync(sourceJournal),sourceBytes);
 }));
 test('copied completed project keeps exact receipts and journal prefix; observe writes nothing; only missing step executes once',()=>fixture(async({dir,run,copy,bin,originalBindingBytes})=>{
   const receipt=run(first);assert.equal(receipt.status,0,String(receipt.stderr));

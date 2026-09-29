@@ -80,13 +80,17 @@ def _inspect_network(identifier):
 
 
 def _input_mounts(root, package, preparation, receipt, config):
-    _validate_sources(root, package, preparation)
+    original = _validate_sources(root, package, preparation)
+    flat = json.loads(original).get("version") == 1
     output = Path(preparation["output_directory"])
     if (receipt.get("status") != "prepared_not_connected"
             or receipt.get("image_id") != preparation["image"]
             or receipt.get("output_binding_sha256") != hashlib.sha256(str(output).encode()).hexdigest()):
         raise ValueError("document preparation receipt binding differs")
-    filenames = {"binding.json", *(key + ".relocation" for key in preparation["project_keys"])}
+    keys = ({"flat"} if (root / preparation["journal_directory"] / "workspace-writer.journal").exists() else set()) if flat else set(preparation["project_keys"])
+    filenames = {"binding.json", *(key + ".relocation" for key in keys)}
+    if receipt.get("journal_layout", "per_project") != ("flat" if flat else "per_project"):
+        raise ValueError("document preparation journal layout differs")
     if set(receipt.get("files", {})) != filenames:
         raise ValueError("document preparation receipt inventory differs")
     mounts = {"/workspace": str(root / preparation["document_directory"]),
@@ -162,20 +166,24 @@ try {
   journalFd = fs.openSync('/journal', flags);
   const bindingBytes = readPrivateFile('/run/eva2/atomic-binding.json');
   const {binding, originalBytes} = validateRelocationBinding(bindingBytes, {executable, rootFd, journalFd});
-  const projectKeys = Object.keys(binding.projects);
+  const projectKeys = Object.keys(binding.projects || {});
   const regenerated = prepareRelocation({executable, rootFd, journalFd,
     originalBindingBytes: originalBytes, logicalCatalogIdentity: binding.logical_catalog_identity, projectKeys});
   if (!regenerated.bindingBytes.equals(bindingBytes)) throw Error('retained_binding_differs');
   const projects = {};
-  for (const key of projectKeys) {
+  let flat = null;
+  for (const key of Object.keys(regenerated.snapshots)) {
     const mounted = readPrivateFile('/run/eva2/relocations/' + key + '.relocation');
     const snapshot = regenerated.snapshots[key];
     if (!snapshot || !snapshot.equals(mounted)) throw Error('retained_snapshot_differs');
-    projects[key] = {snapshot_sha256: hash(snapshot), snapshot_bytes: snapshot.length};
+    const item = {snapshot_sha256: hash(snapshot), snapshot_bytes: snapshot.length};
+    if (binding.version === 4) flat = item;
+    else projects[key] = item;
   }
   if (!readPrivateFile('/run/eva2/atomic-binding.json').equals(bindingBytes)) throw Error('retained_binding_changed');
   console.log(JSON.stringify({contract: 'EvaDocumentMaterialVerification/v1',
-    binding_sha256: hash(bindingBytes), project_count: projectKeys.length, projects}));
+    binding_sha256: hash(bindingBytes), project_count: projectKeys.length, projects,
+    ...(binding.version === 4 ? {flat} : {})}));
 } finally {
   if (journalFd !== undefined) fs.closeSync(journalFd);
   fs.closeSync(rootFd);
@@ -184,8 +192,10 @@ try {
 
 
 def _validate_material_report(report, preparation, prepared_receipt):
+    flat = prepared_receipt.get("journal_layout") == "flat"
+    fields = {"contract", "binding_sha256", "project_count", "projects"} | ({"flat"} if flat else set())
     if (not isinstance(report, dict)
-            or set(report) != {"contract", "binding_sha256", "project_count", "projects"}
+            or set(report) != fields
             or report["contract"] != "EvaDocumentMaterialVerification/v1"
             or report["binding_sha256"] != prepared_receipt["files"]["binding.json"]["sha256"]
             or type(report["project_count"]) is not int
@@ -193,7 +203,14 @@ def _validate_material_report(report, preparation, prepared_receipt):
             or not isinstance(report["projects"], dict)
             or set(report["projects"]) != set(preparation["project_keys"])):
         raise ValueError("document material verification report differs")
-    for key, item in report["projects"].items():
+    snapshots = dict(report["projects"])
+    if flat:
+        expected_flat = prepared_receipt["files"].get("flat.relocation")
+        if (expected_flat is None) != (report["flat"] is None):
+            raise ValueError("verified flat journal snapshot presence differs")
+        if expected_flat is not None:
+            snapshots["flat"] = report["flat"]
+    for key, item in snapshots.items():
         expected = prepared_receipt["files"][key + ".relocation"]
         if (not isinstance(item, dict) or set(item) != {"snapshot_sha256", "snapshot_bytes"}
                 or type(item["snapshot_bytes"]) is not int

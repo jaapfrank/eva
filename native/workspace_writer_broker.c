@@ -1373,7 +1373,10 @@ static int apply_relocation(struct broker_state *state) {
       return fail("relocation_history_mismatch");
     encode_parent_identity(old, &operation->parent);
     if (memcmp(old, entry + 32U, 36U) != 0) return fail("relocation_history_mismatch");
-    if (memcmp(entry + 48U, entry + 84U, 20U) != 0)
+    /* Relocation may remove group/other access, never alter owner/type bits. */
+    if ((get_u32(entry + 84U) != get_u32(entry + 48U)
+         && get_u32(entry + 84U) != (get_u32(entry + 48U) & ~077U))
+        || memcmp(entry + 52U, entry + 88U, 16U) != 0)
       return fail("relocation_parent_mismatch");
     encode_prior(old, &operation->prior);
     if (memcmp(old, entry + 104U, 101U) != 0) return fail("relocation_history_mismatch");
@@ -1430,7 +1433,8 @@ static int relocation_snapshot(struct broker_state *state) {
     if (result == 0) result = read_directory_identity(target.parent_descriptor, &parent);
     if (result == 0) result = assert_parent_binding(&target, &parent);
     if (result == 0) result = observe_target(&target, &operation->request, &current);
-    if (result == 0 && (parent.mode != operation->parent.mode
+    if (result == 0 && ((parent.mode != operation->parent.mode
+        && parent.mode != (operation->parent.mode & ~077U))
         || parent.links != operation->parent.links || parent.user != operation->parent.user
         || parent.group != operation->parent.group)) result = fail("relocation_parent_mismatch");
     if (result == 0) {

@@ -8,11 +8,17 @@ De afzonderlijke taken staan in de bestaande dashboardtab **Werk & volgorde → 
 
 Werkregel: één bruikbaar resultaat afmaken; alleen passende gerichte controle, review en installatie bundelen. Een mislukte proef gericht repareren in de ontwikkelversie; niet telkens terugzetten of opnieuw installeren. Nieuwe wensen vergroten de bestaande eindvoorwaarden niet stilzwijgend.
 
+## Laatste oplevering — O2.3 bestaande documentformaten ondersteund
+
+Werkelijke providers hebben oude platte logboeken en lege projectlogboeken; de herstelroute verwachtte gevulde projectmappen. Dit verschil is nu opgelost zonder bronmarkers of geschiedenis te verzinnen. Twaalf native gevallen en zeven operatorgevallen geslaagd; onafhankelijke review GO. Native voorbereiding op echte bestandskopieën behoudt de oorspronkelijke provideridentiteit. Twee operatormodules geïnstalleerd, zeven geïnstalleerde controles geslaagd; nieuwe herstelimage beschikbaar. Draaiende providers en brongegevens ongewijzigd. [Bewijs](evidence/product/o2-document-layouts-installed-20260929.json).
+
+**O2.3 nog open:** één consistente kern/geheugen/gateway/documentkopie en gezamenlijke herstelactie. Volledige echte bronverzameling bestaat nog niet als aangesloten operatorcompositie; bestaande helpers worden hergebruikt. Geen actieve uitvoerder; geen volledige herstel- of eigenaaracceptatieclaim. Nul Eva-modelcalls; credits onbekend.
+
 ## Laatste oplevering — O2.3 volledige pakketkoppeling geïnstalleerd
 
 Bestaand volledig herstelpakket accepteert nu huidige v3-kern en externe identiteitstrust. Dezelfde geheugen-/documentcallbacks blijven in gebruik. Achttien gerichte controles geslaagd, onafhankelijke review GO. Drie operatormodules geïnstalleerd; vier pakket-/wizardgevallen op die installatie geslaagd en moduleherkomst bevestigd. Geen nieuwe grote export, Eva-modelcall, runtimeherstart of rollback; credits onbekend. [Bewijs](evidence/product/o2-runtime-package-installed-20260929.json).
 
-**Nog open binnen O2.3:** één gezamenlijke herstelactie met echte externe geheugen-, gateway- en documentgegevens; aansluitingen en bestaande vrijgaveroute controleren. Pakketbediening met synthetische externe bytes is geen bewijs van die volledige actie. Geen actieve uitvoerder; eerstvolgende actie nog niet gestart.
+**Nog open binnen O2.3:** één gezamenlijke herstelactie met echte externe geheugen-, gateway- en documentgegevens; aansluitingen en bestaande vrijgaveroute controleren. Pakketbediening met synthetische externe bytes is geen bewijs van die volledige actie. De concrete documentformaatverschillen zijn inmiddels opgelost; zie nieuwere oplevering hierboven.
 
 ## Laatste oplevering — O2.3 kernarchief en wizardkoppeling geïnstalleerd
 
