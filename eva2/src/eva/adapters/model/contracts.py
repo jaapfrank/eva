@@ -19,6 +19,10 @@ class ConversationModelError(RuntimeError):
         super().__init__(*args)
 
 
+class ConversationModelRateLimited(ConversationModelError):
+    """The provider refused this request with HTTP 429; no immediate retry."""
+
+
 class ConversationModelDeadlineExceeded(ConversationModelError):
     """The model phase reached its deadline without a usable result."""
 

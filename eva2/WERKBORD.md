@@ -1,3 +1,7 @@
+## Actueel: HTTP429-afhandeling geïnstalleerd — 29 september 2026
+
+C1: providerweigering krijgt geen onmiddellijke tweede aanvraag en wordt op website/Telegram als gebruiks-/snelheidslimiet gemeld. Kern/werker gezond; echte geïnstalleerde foutketen met nagebootste fout gecontroleerd, zonder modelcalls. Onafhankelijke review akkoord. Providerherstel, begroetingssnelheid en echte Telegram-overlap blijven open; geen extra grote functie afgerond.
+
 ## Actueel: provider weigert modelaanvragen — 29 september 2026
 
 Beide eigenaarberichten van21:19 krijgen HTTP429 vóór modelantwoord; geen bewijs van inhoudelijke veiligheidsweigering. Kern/werker gezond. Type providerlimiet nog onbekend; geen nieuwe modelproef gestart. C1 blijft open. Updatehulp volgt nu dezelfde Compose-uitvoering zonder90/120s-afbreking; zes controles en review geslaagd, operatormodule geïnstalleerd zonder Eva-herinstallatie.

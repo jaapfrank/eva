@@ -39,6 +39,7 @@ FailureCategory = Literal[
     "request_too_large",
     "response_too_large",
     "unavailable",
+    "rate_limited",
 ]
 
 
@@ -805,7 +806,9 @@ def _sanitized(error: BaseException) -> CodexProviderError:
         status_code = getattr(current, "status_code", None)
         if status_code in {401, 403}:
             return CodexProviderError("credentials_rejected")
-        if status_code in {408, 429} or (
+        if status_code == 429:
+            return CodexProviderError("rate_limited")
+        if status_code == 408 or (
             type(status_code) is int and 500 <= status_code <= 599
         ):
             return CodexProviderError("unavailable")

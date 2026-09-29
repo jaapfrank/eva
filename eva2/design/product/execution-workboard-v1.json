@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T19:21:43.918773+00:00",
+        "checkedAt": "2026-09-29T19:37:35.937037+00:00",
         "deliveries": [
+          {
+            "title": "Providerweigering zonder dubbele aanvraag of veiligheidsmelding",
+            "date": "29 september",
+            "state": "installed",
+            "result": "HTTP429 wordt één keer afgehandeld met juiste melding op website/Telegram; geïnstalleerde keten gecontroleerd zonder modelverbruik.",
+            "remaining": "Providerbeschikbaarheid en C1-snelheid/overlap niet bewezen.",
+            "source": "eva2/evidence/product/c1-provider-rate-limit-20260929.json"
+          },
           {
             "title": "Onderzoektool legt algemene onderwerpen en productvergelijking gelijk uit",
             "date": "29 september",
@@ -3037,7 +3045,7 @@
         "now": {
           "title": "C1 vlot contact tijdens achtergrondwerk",
           "state": "In uitvoering",
-          "detail": "Updatehulp volgt voortaan dezelfde uitvoering zonder 90/120s-afbreking; geïnstalleerd zonder Eva-herinstallatie. Beide Telegramvragen kregen provider HTTP429, geen modelantwoord; type limiet nog onbekend. Kern/werker gezond. C1 blijft open.",
+          "detail": "HTTP429-afhandeling geïnstalleerd: geen directe tweede modelaanvraag, juiste website/Telegrammelding. Kern/werker gezond; geïnstalleerde foutketen zonder modelcall gecontroleerd. Live snelheid/overlap blijft open.",
           "owner": "/root"
         },
         "next": {
@@ -3054,7 +3062,7 @@
           "linkLabel": "Fout onderzocht"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T19:21:43.918773+00:00"
+        "reviewedAt": "2026-09-29T19:37:35.937037+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13079,6 +13087,25 @@
             "observedAt": "2026-09-29T19:21:43.918773+00:00",
             "affected": "live greeting and requested research; cannot prove latency while rejected",
             "evidence": "eva2/evidence/product/c1-update-wait-provider-429-20260929.json"
+          },
+          "providerFailureCorrection": {
+            "stage": "installed_verified_offline",
+            "existing": "HTTP429 mapped to retryable unavailable; stream hid reason; Telegram called it unsafe.",
+            "change": "Nonretryable typed rate-limit failure and fixed optional stream code; accurate website/Telegram wording.",
+            "files": [
+              "eva2/src/eva/adapters/model/openai_codex_provider.py",
+              "eva2/src/eva/adapters/model/contracts.py",
+              "eva2/src/eva/adapters/model/pydantic_conversation.py",
+              "eva2/src/eva/adapters/api/dashboard_conversation.py",
+              "Bottie/src/integrations/eva2canary.js"
+            ],
+            "finish": "Installed paired core/worker and actual Telegram ingress; offline HTTP429 proof of one model attempt and safe error code; no new provider requests.",
+            "tests": "121 initially passed; one new diagnostic test caught missing category allowlist, corrected; focused9 passed. Telegram17/19 passed,2 old503 failures reproduced on baseline; changed error tests2 passed.",
+            "review": "review_o1_factory GO",
+            "modelCalls": 0,
+            "cost": "development credits unknown",
+            "nonclaim": "Does not remove provider limit or complete C1.",
+            "evidence": "eva2/evidence/product/c1-provider-rate-limit-20260929.json"
           }
         },
         {

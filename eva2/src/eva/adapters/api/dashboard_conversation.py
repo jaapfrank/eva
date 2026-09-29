@@ -12,6 +12,7 @@ from typing import Any, Iterator
 
 from fastapi.responses import StreamingResponse
 from eva.application.conversation_receipt import RECEIVED_INPUT_TEXT
+from eva.adapters.model.contracts import ConversationModelRateLimited
 
 from eva.adapters.api.dashboard_work_return_client import DASHBOARD_WORK_RETURN_CLIENT_JS
 
@@ -91,6 +92,7 @@ async function readReplyStream(response, onDelta) {
         const data=JSON.parse(line);
         if(data.contract==='EvaTextDelta/v1' && typeof data.text==='string')onDelta(data.text);
         else if(data.contract==='EvaInternalGroundedReply/v1' && typeof data.text==='string' && typeof data.message_id==='string')return data;
+        else if(data.contract==='EvaTextStreamError/v1' && data.code==='provider_rate_limited')throw new Error('provider_rate_limited');
         else throw new Error('stream interrupted');
       }
       if(done)throw new Error('stream ended without saved reply');
@@ -110,7 +112,7 @@ async function submitMessage(text,clearInput=true){
     });
     const saved=message('eva',data.text,data.message_id,userNode);pending.replaceWith(saved);
   } catch(_error) {
-    pending.textContent=(draft?draft+'\\n\\n':'')+'Dit antwoord is niet bevestigd. Bekijk de taakstatus voordat je een opdracht opnieuw verstuurt.';
+    pending.textContent=(draft?draft+'\\n\\n':'')+(_error.message==='provider_rate_limited'?'De modelprovider weigert momenteel aanvragen wegens een gebruiks- of snelheidslimiet. Er is geen nieuw antwoord beschikbaar.':'Dit antwoord is niet bevestigd. Bekijk de taakstatus voordat je een opdracht opnieuw verstuurt.');
     pending.classList.add('error');
   } finally {activeRequests--;send.disabled=activeRequests>=8;}
 }
@@ -151,7 +153,7 @@ def dashboard_stream_response(runtime: Any, text: str) -> StreamingResponse:
             runtime.after_response(turn, reply)
         except Exception as error:
             if stage == "respond":
-                queue.put(("error", None))
+                queue.put(("error", "provider_rate_limited" if isinstance(error, ConversationModelRateLimited) else None))
             try:
                 # dashboard_turn can fail before returning its server-bound turn.
                 _record_stream_failure(error, turn if isinstance(turn, ConversationTurn) else None, stage)
@@ -164,7 +166,7 @@ def dashboard_stream_response(runtime: Any, text: str) -> StreamingResponse:
             kind, value = queue.get()
             payload = ({"contract": "EvaTextDelta/v1", "text": value} if kind == "delta"
                        else grounded_reply_wire(value) if kind == "final"
-                       else {"contract": "EvaTextStreamError/v1"})
+                       else {"contract": "EvaTextStreamError/v1", **({"code": value} if value else {})})
             yield json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode() + b"\n"
             if kind != "delta":
                 return
@@ -188,7 +190,7 @@ def conversation_stream_response(runtime: Any, turn: ConversationTurn,
         except Exception as error:
             # Preserve the terminal contract even if the diagnostic sink fails.
             if stage == "respond":
-                queue.put(("error", None))
+                queue.put(("error", "provider_rate_limited" if isinstance(error, ConversationModelRateLimited) else None))
             try:
                 _record_stream_failure(error, turn, stage)
             except Exception:
@@ -200,7 +202,7 @@ def conversation_stream_response(runtime: Any, turn: ConversationTurn,
             kind, value = queue.get()
             payload = ({"contract": "EvaTextDelta/v1", "text": value} if kind == "delta"
                        else grounded_reply_wire(value) if kind == "final"
-                       else {"contract": "EvaTextStreamError/v1"})
+                       else {"contract": "EvaTextStreamError/v1", **({"code": value} if value else {})})
             yield json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode() + b"\n"
             if kind != "delta":
                 return

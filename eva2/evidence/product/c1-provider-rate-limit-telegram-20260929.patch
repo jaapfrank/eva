@@ -1,0 +1,14 @@
+--- a/src/integrations/eva2canary.js
++++ b/src/integrations/eva2canary.js
+@@ -143,7 +143,10 @@
+         if (cumulative) await deadline.wait(onDraft(cumulative));
+       } else if (item?.contract === 'EvaInternalGroundedReply/v1') final = item;
+       else if (item?.contract === 'EvaTextStreamError/v1') {
+-        throw new Error('Eva2 kon haar antwoord niet veilig afronden');
++        if (item.code === 'provider_rate_limited') {
++          throw new Error('De modelprovider weigert momenteel aanvragen wegens een gebruiks- of snelheidslimiet. Er is geen nieuw antwoord beschikbaar');
++        }
++        throw new Error('Eva2 kon haar antwoord niet afronden; de oorzaak is nog onbekend');
+       } else throw new Error('Eva2 gaf een onbekend tekststreambericht');
+     }
+     if (done) { completed = true; break; }

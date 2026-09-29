@@ -515,7 +515,7 @@ def test_sanitization_marks_only_authentication_statuses_as_rejected(
     assert _sanitized(_StatusFailure(status_code)).category == "credentials_rejected"
 
 
-@pytest.mark.parametrize("status_code", [408, 429, 500, 503, 599])
+@pytest.mark.parametrize("status_code", [408, 500, 503, 599])
 def test_sanitization_marks_retryable_http_statuses_as_unavailable(
     status_code: int,
 ) -> None:
@@ -636,3 +636,7 @@ def test_partial_sse_progress_counts_do_not_retain_content_or_accept_completion(
     assert attestor.terminal is None
     with pytest.raises(CodexProviderError, match="protocol"):
         attestor.finish()
+
+
+def test_rate_limit_is_not_a_transient_retryable_failure():
+    assert _sanitized(_StatusFailure(429)).category == "rate_limited"

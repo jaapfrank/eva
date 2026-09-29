@@ -788,6 +788,7 @@ def test_second_pre_output_unavailable_is_not_retried_again(tmp_path: Path) -> N
 @pytest.mark.parametrize(
     "failure",
     [
+        CodexProviderError("rate_limited"),
         CodexProviderError("credentials_rejected"),
         CodexProviderError("deadline"),
         CodexProviderError("protocol"),
@@ -1557,3 +1558,15 @@ def test_failure_diagnostic_includes_available_transport_snapshot(caplog):
     record = json.loads(caplog.records[-1].message.split(" ", 1)[1])
     assert record["transport"] == observed
     assert "private body" not in caplog.text
+
+
+def test_rate_limit_is_typed_and_does_not_repeat_the_request(tmp_path):
+    from eva.adapters.model.contracts import ConversationModelRateLimited
+    scripted = ScriptedPydanticConversation((
+        ScriptedPhase.failure(CodexProviderError("rate_limited")),
+        ScriptedPhase.text("must not run"),
+    ))
+    with pytest.raises(ConversationModelRateLimited):
+        _generate(_adapter(tmp_path, scripted))
+    assert len(scripted.captures) == 1
+    assert scripted.remaining_phases == 1

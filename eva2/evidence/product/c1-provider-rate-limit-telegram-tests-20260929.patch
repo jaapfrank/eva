@@ -1,0 +1,27 @@
+--- a/test/eva2-telegram-canary.test.js
++++ b/test/eva2-telegram-canary.test.js
+@@ -190,7 +190,7 @@
+       `${JSON.stringify({ contract: 'EvaTextStreamError/v1' })}\n`,
+       { headers: { 'content-type': 'application/x-ndjson' }, status: 200 },
+     ),
+-  }), /Eva2 kon haar antwoord niet veilig afronden/u);
++  }), /Eva2 kon haar antwoord niet afronden/u);
+ });
+ 
+ test('B-canary laat Eva2 de groepsconsent server-side bepalen', async () => {
+@@ -306,3 +306,15 @@
+   assert.equal(await sink('Hallo!'), true);
+   assert.equal(calls, 2);
+ });
++
++
++test('provider rate limit is reported without forwarding untrusted messages', async () => {
++  await assert.rejects(askEva2Canary({
++    baseUrl: 'http://127.0.0.1:44674', chatId: 7, messageId: 9299, fromId: 7,
++    text: '/eva2 hello', telegramDate: 1787486400, onDraft: async () => {},
++    fetchImpl: async () => new Response(
++      `${JSON.stringify({ contract: 'EvaTextStreamError/v1', code: 'provider_rate_limited', message: 'private secret' })}\n`,
++      { headers: { 'content-type': 'application/x-ndjson' }, status: 200 },
++    ),
++  }), error => /gebruiks- of snelheidslimiet/u.test(error.message) && !error.message.includes('private secret'));
++});

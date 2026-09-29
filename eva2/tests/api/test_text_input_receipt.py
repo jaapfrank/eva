@@ -13,3 +13,17 @@ def test_both_text_transports_share_receipt_before_model_work():
         assert response.headers["X-Eva-Input-Receipt"] == RECEIVED_INPUT_TEXT
         assert response.headers["Cache-Control"] == "no-store"
         assert response.headers["X-Accel-Buffering"] == "no"
+
+
+def test_rate_limit_stream_exposes_only_a_fixed_code():
+    import asyncio
+    import json
+    from eva.adapters.model.contracts import ConversationModelRateLimited
+    def fail(*args):
+        raise ConversationModelRateLimited("private provider response must stay hidden")
+    runtime = SimpleNamespace(respond=fail)
+    async def read():
+        response = conversation_stream_response(runtime, None, ())
+        return b"".join([chunk async for chunk in response.body_iterator])
+    assert json.loads(asyncio.run(read())) == {
+        "contract": "EvaTextStreamError/v1", "code": "provider_rate_limited"}

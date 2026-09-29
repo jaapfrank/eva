@@ -122,7 +122,7 @@ def _log_model_failure(error: BaseException, request_id: str | None,
         if isinstance(current, CodexProviderError):
             category = current.category
             provider_category = category if category in {
-                "unavailable", "deadline", "credentials_rejected", "configuration",
+                "unavailable", "rate_limited", "deadline", "credentials_rejected", "configuration",
                 "protocol", "response_too_large", "request_too_large",
             } else "other"
         if name == "UsageLimitExceeded":
@@ -1081,6 +1081,9 @@ class PydanticConversationModel:
                         raise ConversationModelDeadlineExceeded(
                             "conversation provider deadline exceeded"
                         ) from error
+                    elif error.category == "rate_limited":
+                        from eva.adapters.model.contracts import ConversationModelRateLimited
+                        raise ConversationModelRateLimited("conversation provider rate limited") from error
                     elif error.category == "credentials_rejected":
                         message = "conversation credentials were rejected"
                     elif error.category == "unavailable":
