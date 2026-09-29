@@ -101,6 +101,67 @@ Deze werkwijze sluit aan op [Inspect scorers](https://inspect.aisi.org.uk/scorer
 (gecontroleerd 7 september); de productdrempels hierboven zijn onze vooraf
 gekozen acceptatiecriteria, niet door Inspect voorgeschreven.
 
+## P1.2 — bounded development inputs, 29 September 2026
+
+The existing participant manifest
+[`p1_participants_20260929.json`](../../benchmark/inspect_ai_v1/p1_participants_20260929.json)
+now freezes the known C01 and C04 conversation cases, their original criteria
+and source hashes, two epochs, and a twenty-sample schedule across Eva1, Eva2,
+OpenClaw, Hermes and Agent Zero. Epoch two reverses participant order. These
+are development cases, never unseen acceptance data. Historical results and
+the full EV-003 acceptance requirements above are unchanged.
+
+| Limit | Per sample | Whole development run |
+| --- | ---: | ---: |
+| Provider attempts, including helpers and retries | 2 | 40 |
+| Provider input tokens | 24,000 | 480,000 |
+| Provider output tokens | 4,096 | 81,920 |
+| Execution time | 120 seconds | 2,400 seconds |
+| Tool dispatches, including native answer protocol calls | 4 | 80 |
+| External action tools / orchestrator retries / paid judge calls | 0 | 0 |
+
+These are requested ceilings, **not proven native enforcement or expected
+consumption**. They retain the earlier small conversation budget and add its
+explicit aggregate bound. They are not a new daily allowance for the owner.
+Credit cost remains unknown. Foreground contact uses exactly Sol/none; every
+model helper, including memory helpers, uses exactly Astra/medium and counts
+inside the same sample limits. The manifest records this role map. No automatic
+model fallback or effort escalation is permitted in this comparison. An
+unsupported role setting prevents admission. No research or action task is
+introduced here.
+
+Run sequentially, with fresh synthetic identity and empty data per sample.
+Use the existing authorized provider route, no live household services or
+private history. Each participant's first C01 sample also serves as its native
+development smoke; it is not an additional free run. Record every failed or
+cancelled provider attempt. Never redistribute unused limits to another sample.
+Missing usage is unknown, not zero. Stop before another sample if usage,
+settings, cancellation or isolation cannot be established. After valid
+admission a product timeout remains a task failure; adapter/access failures
+remain unavailable, not a competitor loss.
+
+**Execution remains disabled.** The native assessment already demonstrates
+that a configured output limit can be removed and that total usage boundaries
+are incomplete. This manifest does not implement enforcement, close P1.1, or
+authorize the large matrix. Native admission must cover all five participants.
+The existing Inspect logs and original semantic criteria own results; two
+independent human raters assess warmth/preference, with no paid AI jury.
+
+Before execution, apply the same C01 interpretation to every participant: a
+protocol-only final-answer envelope without a substantive action or external
+effect is not an action-tool call for the semantic rubric, but still counts
+toward tool dispatch usage. A tool reading or acting on an external service,
+or an unrequested substantive state mutation, fails C01. Internal synthetic
+conversation journal writes needed to return an answer are not external
+actions. The original rubric text remains recorded alongside this explicit
+interpretation; it must not be changed after observing scores.
+
+P1.2 is only partially prepared: final family-specific budgets and independently
+curated unseen tasks require the eventual frozen candidate and development
+evidence. No final budget is extrapolated from these two conversation cases.
+This preparation ends here until native admission is available; it does not
+block independent product deliveries or justify another benchmark framework.
+
 ## Historisch besluit: eerst een open-source evaluatiemotor bewijzen
 
 Gecontroleerd op **4 september 2026**. Inspect AI is de voorkeurskandidaat,

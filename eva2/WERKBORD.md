@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## P1.2 — klein ontwikkelmeetbudget vastgelegd; uitvoering uit
+
+Twee bestaande gesprekstaken, twee herhalingen en vijf deelnemers:20samples, maximaal40providerpogingen,480.000in/81.920uit-tokens en40min totale uitvoertijd. Dit zijn bovengrenzen, geen verbruiksverwachting. Modelrollen, volgorde, bronhashes, stopgrenzen en beoordeling staan in het bestaande [participantmanifest](benchmark/inspect_ai_v1/p1_participants_20260929.json). Geen modelcalls of nieuwe Eva-functie. Native toelating, ongeziene einddataset en definitieve familiebudgetten blijven open; volledige P1.2 niet afgerond.
+
+**Volgende, nog niet gestart:** C1.2 Telegram-tussenvraag tijdens onderzoek. Bestaande route/bewijs gebruiken; geen nieuwe gesprekslaag of herhaalde benchmarkinventarisatie. Geen actieve uitvoerders na review; credits onbekend.
+
 ## P1.1 — native requestvoorbereiding gecontroleerd
 
 Bestaande Agent Zero-configuratie en OAuth-requestvorming daadwerkelijk uitgevoerd in een netwerkloze omgeving. Configuratie `none` wordt `high`; expliciet meegegeven `none` en ingestelde `medium` blijven behouden. De route verwijdert `max_output_tokens`. Onafhankelijke review akkoord; [bewijs](evidence/product/p1-agentzero-request-20260929.json). Geen modelcalls, runtimewijziging of afgeronde Eva-functie. P1.1 blijft open voor native toegang, upstream doorgifte en totale taakgrenzen.

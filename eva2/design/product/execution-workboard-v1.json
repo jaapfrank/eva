@@ -2899,15 +2899,15 @@
           }
         ],
         "now": {
-          "title": "P1.1: native requestinstellingen gecontroleerd",
-          "state": "Deelcontrole afgerond — vergelijking nog open",
-          "detail": "Native OAuth-requestvoorbereiding uitgevoerd. Config-only none wordt high; expliciete none en medium blijven behouden. Uitvoertokenlimiet wordt verwijderd. Volledige native toegang, upstream instellingen en gelijke cumulatieve grenzen blijven open; deze requestproef niet herhalen.",
+          "title": "P1.2: begrensde ontwikkelronde vastgelegd",
+          "state": "Voorbereiding afgerond — uitvoering niet gestart",
+          "detail": "Kleine ontwikkelronde vastgelegd: C01/C04, 2epochs, 5systemen, maximaal40providerpogingen en gedeelde grenzen. Niet uitvoerbaar zolang native toelating ontbreekt. Definitieve ongeziene eindtaken en familiebudgetten blijven open.",
           "owner": "/root"
         },
         "next": {
-          "title": "P1.2: uitvoerbaar vergelijkingsbudget vastleggen",
+          "title": "C1.2: Telegram-tussenvraag tijdens onderzoek",
           "state": "Nog niet gestart",
-          "detail": "Bestaand protocol concretiseren met de aangetoonde native grenzen; onbekende toegang blijft zichtbaar, geen automatische grote modelproef."
+          "detail": "Bestaande geïnstalleerde route en bewijs gebruiken; alleen resterende blokkade of echte kanaalproef oplossen. Geen nieuwe gesprekslaag."
         },
         "ownerAction": {
           "title": "Deel één Chrome-tabblad voor T3.1",
@@ -2921,7 +2921,7 @@
           "linkLabel": "Open bestaande Chrome-bediening"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T10:39:47.883101+00:00"
+        "reviewedAt": "2026-09-29T10:43:42.233435+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12741,7 +12741,7 @@
           ]
         }
       ],
-      "nextAction": "P1.2 concrete bounded development cases and aggregate budget in existing protocol; native access gaps remain explicit, no automatic full matrix.",
+      "nextAction": "C1.2 Telegram foreground question during research: reuse installed route and existing evidence, determine exact remaining channel gap. P1 development inputs frozen; no repeated source audit or model matrix.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -14175,7 +14175,20 @@
               "status": "planned",
               "kind": "voorbereiden",
               "doneWhen": "Bestaande vergelijkingsprotocollen invullen met taken, scorers en eindig budget vóór uitvoering.",
-              "owner": "Codex"
+              "owner": "Codex",
+              "assignment": {
+                "baseCommit": "d3226925",
+                "files": [
+                  "eva2/design/product/comparable-agent-benchmarks-v1.md",
+                  "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json"
+                ],
+                "existing": "EV-003 development cadence, C01/C04 public development cases, existing Inspect runner and native admission observations.",
+                "gap": "Current pins lack a bounded development run manifest with aggregate limits.",
+                "finish": "Freeze two known development cases, order, per-sample and aggregate limits; retain unavailable access and unseen final dataset as open. No model run.",
+                "estimate": "15–25 minutes; zero provider calls; credits unknown."
+              },
+              "remaining": "Kleine ontwikkelronde vastgelegd: C01/C04, 2epochs, 5systemen, maximaal40providerpogingen en gedeelde grenzen. Niet uitvoerbaar zolang native toelating ontbreekt. Definitieve ongeziene eindtaken en familiebudgetten blijven open.",
+              "evidence": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#developmentPlan"
             }
           ],
           "assignment": {
