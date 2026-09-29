@@ -6,7 +6,7 @@ import argparse
 import ipaddress
 import json
 from pathlib import Path
-from typing import Callable
+from typing import Callable, Protocol
 
 import uvicorn
 
@@ -78,11 +78,28 @@ def _private_workspace(path: Path) -> Path:
     return path
 
 
+class InstallerPreparation(Protocol):
+    def __call__(self, plan: dict[str, object]) -> None: ...
+
+    def status(self) -> str: ...
+
+
 def run_installer_wizard(
     argv: list[str] | None = None, *, restore_workflow: InstallerRestorePort | None = None,
     installation_preparer: Callable[[dict[str, object]], None] | None = None,
     installation_preparation_status: Callable[[], str] | None = None,
+    installation_preparation_factory: Callable[..., InstallerPreparation] | None = None,
 ) -> int:
+    """Compose trusted preparation against the wizard's actual persisted state.
+
+    The optional factory receives workspace, secret_store, budget_workflow and
+    plan_reader as keyword arguments. It constructs callbacks only; provisioning
+    remains behind the existing confirmed installation action.
+    """
+    if installation_preparation_factory is not None and (
+        installation_preparer is not None or installation_preparation_status is not None
+    ):
+        raise ValueError("preparation factory cannot be combined with direct callbacks")
     from eva.adapters.api.installer_wizard import (
         InstallerBootstrap,
         create_installer_wizard,
@@ -264,6 +281,27 @@ def run_installer_wizard(
             )
         )
         return 2
+    identity = load_current_identity_pack() if identity_lifecycle is None else None
+
+    def read_current_plan() -> dict[str, object]:
+        return build_installer_installation_plan(
+            preflight=receipt,
+            identity=identity_lifecycle.current_identity() if identity_lifecycle is not None else identity,
+            profile=profile_workflow.status() if profile_workflow is not None else None,
+            capabilities=capability_workflow.status() if capability_workflow is not None else None,
+            secrets=secret_store.status() if secret_store is not None else None,
+            budgets=budget_workflow.status() if budget_workflow is not None else None,
+        )
+
+    if installation_preparation_factory is not None:
+        preparation = installation_preparation_factory(
+            workspace=args.workspace,
+            secret_store=secret_store,
+            budget_workflow=budget_workflow,
+            plan_reader=read_current_plan,
+        )
+        installation_preparer = preparation
+        installation_preparation_status = preparation.status
     bootstrap = InstallerBootstrap.create()
     print(f"Open lokaal: http://{args.host}:{args.port}/bootstrap#{bootstrap.token}")
     uvicorn.run(
@@ -271,9 +309,7 @@ def run_installer_wizard(
             receipt,
             bootstrap,
             restore_workflow=restore_workflow,
-            identity=(
-                load_current_identity_pack() if identity_lifecycle is None else None
-            ),
+            identity=identity,
             identity_lifecycle=identity_lifecycle,
             profile_workflow=profile_workflow,
             capability_workflow=capability_workflow,

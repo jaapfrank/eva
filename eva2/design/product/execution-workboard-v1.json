@@ -2939,15 +2939,15 @@
           }
         ],
         "now": {
-          "title": "C1.1: vertraging nog niet opgelost",
-          "state": "Geen nieuwe functie opgeleverd",
-          "detail": "Broncontrole leverde geen nieuwe oorzaak op. Geen modelproeven, codewijziging of installatie. Bestaande metingen en geheugen blijven behouden.",
+          "title": "O1.1 technische aansluiting geïnstalleerd",
+          "state": "Tussenstap; installatie nog niet af",
+          "detail": "Voorbereiding kan de actuele wizardinstellingen ontvangen. Acht gerichte controles en bronreview akkoord; actueel operatorpakket start. Nog geen volledige nieuwe installatie.",
           "owner": "Geen actieve uitvoerder"
         },
         "next": {
-          "title": "O1.1: bruikbare installatieconfiguratie",
+          "title": "O1.1 pakketinstellingen en nieuwe-installatiestart",
           "state": "Nog niet gestart",
-          "detail": "Bestaande draaiende containercompositie gebruiken om de concrete pakket-/doelversiemismatch op te lossen. Een aangepast supportlabel alleen bewijst niets."
+          "detail": "Bestaande doelvoorbereiding daadwerkelijk samenstellen vanuit pakketgegevens; nieuwe installatie initialiseren en starten. O1 blijft dezelfde lopende opdracht."
         },
         "ownerAction": {
           "title": "Twee Telegram-berichten direct na elkaar",
@@ -2961,7 +2961,7 @@
           "linkLabel": "Gebruik je bestaande Telegram-gesprek met Eva"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T11:59:54.790433+00:00"
+        "reviewedAt": "2026-09-29T12:17:03.233239+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12781,7 +12781,7 @@
           ]
         }
       ],
-      "nextAction": "O1.1: use the actual installed container composition to resolve the existing release-target/package mismatch; do not repeat unchanged preflight or claim support by editing labels.",
+      "nextAction": "O1.1: construct existing InstallerTargetWorkflow from trusted package inputs using installed preparation factory; implement missing fresh initialization/start without pretending restore.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -14194,25 +14194,24 @@
             {
               "id": "O1.1",
               "title": "Installatiewizard zonder handwerk afronden",
-              "status": "blocked",
+              "status": "in_progress",
               "kind": "aansluiten",
               "doneWhen": "Bestaande wizard kan de gekozen doelinstallatie zonder handgeschreven instellingen voorbereiden en starten.",
               "owner": "/root",
               "assignment": {
-                "baseCommit": "2d6de702",
+                "baseCommit": "59709c00",
                 "files": [
                   "eva2/tools/installer_restore_wizard.py",
                   "eva2/src/eva/bootstrap/installer_wizard_cli.py",
-                  "eva2/tests/portable/test_installer_restore_composition.py",
-                  "eva2/tests/api/test_installer_provider_api.py"
+                  "existing preparation and release inputs"
                 ],
-                "existing": "Existing CLI, profile, capability, secret, provider configuration and budget workflows.",
-                "gap": "Package entry point requires restore JSON and separate workspace flags; ordinary setup unavailable.",
-                "finish": "Package starts existing onboarding without restore JSON and persists setup in one private workspace; explicit restore unchanged. Full target bootstrap still required for O1.1.",
-                "estimate": "30–60 minutes, no provider calls; credits unknown."
+                "outcome": "Ordinary installation uses existing provisioning rather than handwritten restore settings.",
+                "estimate": "Bounded connection implementation after exact preparation interface check; no runtime model calls; credit cost unknown.",
+                "doneWhen": "Wizard can prepare/start an actual isolated target through existing provisioning, checked and reviewed; no support-label substitution.",
+                "stage": "composition_seam_installed_next_packaged_factory"
               },
-              "latestEvidence": "eva2/evidence/product/installer-ordinary-start-20260929.json",
-              "remaining": "Pakket start zonder herstel-JSON, maar lokale preflight blokkeert onboarding door platform-/versieverschil. Ondersteunde pakketconfiguratie vaststellen en bestaande doelvoorbereiding aansluiten; nog geen volledige installatie.",
+              "latestEvidence": "eva2/evidence/product/installer-preparation-factory-20260929.json",
+              "remaining": "Factoryaansluiting op actuele wizardinstellingen getest en in actueel operatorpakket geïnstalleerd. Nog: concrete pakketinstellingenfactory, geldige release/doelconfiguratie en initialisatie/start voor nieuwe installatie. Geen volledige O1-afronding.",
               "blocker": "Existing release lock has no validated target or runnable image pins; exact host upgrades alone cannot fix release support. Existing 13 September evidence confirms this prerequisite. No new platform rewrite started."
             },
             {

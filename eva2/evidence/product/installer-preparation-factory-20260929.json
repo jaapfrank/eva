@@ -1,0 +1,37 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-29T12:17:03.233239+00:00",
+  "baseCommit": "59709c00",
+  "task": "O1.1",
+  "status": "composition_seam_tested_installed_not_complete_installation",
+  "change": "Trusted preparation factory receives actual CLI secret/budget stores and a live plan reader; direct callbacks preserved and ambiguous composition rejected.",
+  "tests": {
+    "passed": 8,
+    "deselected": 9,
+    "seconds": 2.74,
+    "selection": "tests/api/test_installer_provider_api.py -k 'launcher or preparation_factory'",
+    "coverage": "Factory/UI plan parity before and after persisted profile confirmation; direct callback compatibility and rejection of mixed wiring."
+  },
+  "review": {
+    "agent": "/root/review_o1_factory",
+    "result": "No concrete source defects; source composition only."
+  },
+  "installation": {
+    "providerCalls": 0,
+    "package": "/home/administrator/project/.eva2-artifacts/installer-document-write-20260924",
+    "historicalPackageMistake": "Two failed starts from an older artifact; own accidental edits there undone. Current package identified by actual preparation API.",
+    "hashes": {
+      "src/eva/bootstrap/installer_wizard_cli.py": "b5779baab6792c1fa8c393cd0bfbaa8ff8fcea5e5eef52589e01a231506ca8cd"
+    },
+    "bootstrapHttpStatus": 200,
+    "smokeServerStopped": true
+  },
+  "limitations": [
+    "No ordinary packaged settings factory yet constructs InstallerTargetWorkflow.",
+    "No fresh installation initialization/start performed; existing start is restore-specific.",
+    "Current platform/release validation remains open; no bypass or support claim.",
+    "Smoke verifies installed module and bootstrap availability, not target provisioning."
+  ],
+  "providerCalls": 0,
+  "creditCost": null
+}

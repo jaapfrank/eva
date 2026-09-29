@@ -548,9 +548,9 @@ def test_wizard_rejects_provider_verifier_from_different_workspaces(
 
 
 @pytest.mark.parametrize("shared_workspace", [False, True])
-@pytest.mark.parametrize("prepared", [False, True])
+@pytest.mark.parametrize("prepared", [False, True, "factory"])
 def test_launcher_opens_model_and_telegram_verification_without_manual_config(
-    prepared: bool,
+    prepared: bool | str,
     shared_workspace: bool,
     private_tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -594,13 +594,27 @@ def test_launcher_opens_model_and_telegram_verification_without_manual_config(
             "--budget-workspace", str(budget_workspace),
         ]
     )
+    class Preparation:
+        def __call__(self, plan):
+            captured["prepared_plan"] = plan
+
+        def status(self):
+            return "prepared"
+
+    def factory(**context):
+        captured["factory_context"] = context
+        return Preparation()
+
+    callbacks = ({
+        "installation_preparation_factory": factory,
+    } if prepared == "factory" else {
+        "installation_preparer": lambda plan: None,
+        "installation_preparation_status": lambda: "prepared",
+    } if prepared else {})
     assert (
         run_installer_wizard(
             ["--platform-lock", str(lock_path), *workspace_arguments],
-            **({
-                "installation_preparer": lambda plan: None,
-                "installation_preparation_status": lambda: "prepared",
-            } if prepared else {}),
+            **callbacks,
         )
         == 0
     )
@@ -632,8 +646,38 @@ def test_launcher_opens_model_and_telegram_verification_without_manual_config(
         "home_assistant": shared_workspace,
         "email": shared_workspace,
     }
+    if prepared == "factory":
+        context = captured["factory_context"]
+        assert all(item.state == "missing" for item in context["secret_store"].status())
+        reader = context["plan_reader"]
+        before = reader()
+        assert before == client.get("/internal/v1/onboarding/install/plan").json()
+        if shared_workspace:
+            staged = client.post(
+                "/internal/v1/onboarding/profile/stage",
+                headers={"origin": "http://127.0.0.1"},
+                json={"installation_name": "Eva test", "owner_label": "Test",
+                      "language": "nl-NL", "time_zone": "Europe/Amsterdam"},
+            )
+            assert staged.status_code == 200
+            current = client.get("/internal/v1/onboarding/profile/status").json()
+            confirmed = client.post(
+                "/internal/v1/onboarding/profile/confirm",
+                headers={"origin": "http://127.0.0.1"},
+                json={"profile_sha256": current["profile_sha256"], "confirmation": "BEVESTIGEN"},
+            )
+            assert confirmed.status_code == 200
+            assert reader() != before
+            assert reader() == client.get("/internal/v1/onboarding/install/plan").json()
     assert captured["kwargs"] == {
         "host": "127.0.0.1",
         "port": 8765,
         "log_level": "warning",
     }
+
+
+@pytest.mark.parametrize("callback", ["installation_preparer", "installation_preparation_status"])
+def test_preparation_factory_rejects_ambiguous_callbacks_before_start(callback):
+    with pytest.raises(ValueError, match="cannot be combined"):
+        run_installer_wizard([], installation_preparation_factory=lambda **kw: None,
+                             **{callback: lambda: None})

@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — O1.1 aansluiting getest en geïnstalleerd; volledige installatie open
+
+Voorbereidingsfactory ontvangt de werkelijke opgeslagen wizardinstellingen en het actuele plan. Acht gerichte controles geslaagd; onafhankelijke bronreview akkoord. Module in het actuele operatorpakket geïnstalleerd, bootstrap HTTP200. Twee eerdere rookproeven wezen op een verkeerd gekozen historisch pakket; die eigen wijzigingen zijn daar ongedaan gemaakt. Geen Eva-runtime, gegevens of huisacties veranderd. Geen nieuwe modelcalls; credits onbekend. [Bewijs](evidence/product/installer-preparation-factory-20260929.json).
+
+**Nog binnen dezelfde O1.1:** concrete pakketfactory en geldige releaseconfiguratie aansluiten, vervolgens nieuwe installatie initialiseren/starten. Dit is een technische tussenstap, geen extra afgeronde functie. Geen actieve uitvoerders.
+
 ## Actueel — C1.1 niet verder opgelost
 
 Bestaande bron en metingen opnieuw bekeken: geen nieuwe aantoonbare oorzaak van vermijdbare vertraging. Geen codewijziging, modelproef of installatie. Dit is geen functievoortgang; C1.1 blijft open. Geen herhaling zonder gewijzigde oorzaak.
