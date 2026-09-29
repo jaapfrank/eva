@@ -620,8 +620,8 @@ class PydanticConversationModel:
             raise ValueError("conversation model is required")
         if not endpoint.startswith("https://") and not endpoint.startswith("http://"):
             raise ValueError("conversation endpoint must be absolute HTTP(S)")
-        if not 1 <= timeout_seconds <= 120:
-            raise ValueError("conversation timeout must be 1..120 seconds")
+        if not 1 <= timeout_seconds <= 300:
+            raise ValueError("conversation timeout must be 1..300 seconds")
         if not 10 <= research_timeout_seconds <= 180:
             raise ValueError("research timeout must be 10..180 seconds")
         if reasoning_effort not in {"none", "low", "medium", "high"}:

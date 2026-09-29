@@ -2867,15 +2867,15 @@
           }
         ],
         "now": {
-          "title": "L2: opgeslagen correctie en vervolg blijven behouden",
-          "state": "Gerichte procesproef afgerond",
-          "detail": "Zeven gevallen geslaagd, waaronder nieuwe schedulerprocessen na een gesimuleerde dag. Bestaande geïnstalleerde code behouden; geen nieuwe productfunctie of modelcalls. Onafhankelijke review akkoord.",
-          "doneWhen": "Deze bewijscontrole is afgerond. Volledige autonome projectuitvoering blijft open; geannuleerd werk blijft geannuleerd."
+          "title": "T2: automatisering zelfstandig afronden",
+          "state": "Correctie getest en beoordeeld; installatie wordt voorbereid",
+          "detail": "Voortijdige120s-modelgrens afgestemd op bestaande300s-taak.43 gerichte controles en onafhankelijke review akkoord. Geen hogere taak-/tokenlimiet; oorspronkelijke mislukte proef blijft bewaard.",
+          "doneWhen": "Create/edit/readback/finalreply without manualresume; inspect and remove only trial object."
         },
         "next": {
-          "title": "T2: algemene Home Assistant-taak afronden",
+          "title": "T2: uitkomst en huishoudroute controleren",
           "state": "Nog niet gestart",
-          "detail": "T2: bestaande algemene HA-taak zonder ontwikkelaarhervatting afronden; eerdere budgetfout vergelijken met inmiddels gewijzigde taakruimte. Fysieke speakeracceptatie blijft apart."
+          "detail": "Na deze taak echte configuraties en zelfstandig eindantwoord beoordelen. Fysieke speaker-/comfortproef blijft apart."
         },
         "ownerAction": {
           "title": "Telegram: tussenvraag tijdens onderzoek",
@@ -2889,7 +2889,7 @@
           "expected": "Tussenvraag vóór het onderzoeksantwoord; onderzoeksantwoord bij de oorspronkelijke vraag."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T08:23:17.196951+00:00"
+        "reviewedAt": "2026-09-29T08:34:15.835566+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13310,7 +13310,7 @@
           ],
           "outcome": "Algemene huisbediening",
           "effort": "M",
-          "status": "planned",
+          "status": "in_progress",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "General HA API for both speakers; real harmless automation created, edited and read back.",
@@ -13323,7 +13323,17 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": null
+          "activeWorker": "/root",
+          "baseCommit": "87c006c2",
+          "owner": "/root",
+          "effortNotice": "One task up to existing5min deadline, then inspection/review/cleanup; approximately15min active work.",
+          "latestEvidence": "eva2/evidence/product/t2-background-phase-candidate-20260929.json",
+          "assignment": {
+            "stage": "reviewed_background_phase_candidate",
+            "outcome": "Complete a general HA automation create/edit/readback task without coordinator resume.",
+            "scope": "3files: delegated_digital_composition.py, pydantic_conversation.py, openai_codex_provider.py; coordinator owns exact overlay and evidence.",
+            "doneWhen": "Create/edit/readback/finalreply without manualresume; inspect and remove only trial object."
+          }
         },
         {
           "id": "T3",
@@ -13800,7 +13810,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": null,
+      "activeSliceId": "T2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

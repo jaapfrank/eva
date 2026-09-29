@@ -201,11 +201,11 @@ def build_digital_runner(settings, store, *, provider_bundle=None, household_aut
     memory, identity = build_private_conversation_resources(settings, engine,
         group_consent=group_consent, household_voice=household_voice,
         identity_pack=identity_pack)
-    # Background phases may use the provider's existing 120-second maximum;
-    # the runner's cancellation signal still enforces the admitted task deadline.
+    # A background phase may use the task's existing time allowance. The runner
+    # still cancels at the original task/grant deadline, including shorter grants.
     model = PydanticConversationModel(auth_file=Path(settings.conversation_auth_file),
         model=settings.conversation_model, reasoning_effort=settings.conversation_reasoning_effort,
-        timeout_seconds=120.0, research_timeout_seconds=120.0,
+        timeout_seconds=float(profile.timeout_seconds), research_timeout_seconds=120.0,
         resource_budget=settings.runtime_resource_budget, conversation_tools=descriptors)
     source_loader = _SourceTurnLoader(engine, SimpleNamespace(
         scope=service.conversation_scope, authorize_turn=service.validate_authority))

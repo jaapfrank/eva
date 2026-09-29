@@ -1,0 +1,27 @@
+{
+  "recordedAt": "2026-09-29T08:24:23.222197+00:00",
+  "baseCommit": "87c006c2",
+  "slice": "T2",
+  "outcome": "Complete a general HA automation create/edit/readback task without coordinator resume.",
+  "reuse": "Installed generic HA API and shared digital worker; no new device functions.",
+  "changedCause": "24September trial failed at71665 input tokens/6tools under prior grant. Current installed profile admits32responses/31tools and per-response65536 limit; first missing end-to-end proof after changed grant. No budget change this turn.",
+  "targetAutomationId": "eva2_delivery_20260929_general",
+  "scope": "New disabled temporary automation with unique event, always-false condition and variable-only action. No existing devices, notifications or automations changed.",
+  "acceptance": [
+    "One ordinary website admission succeeds without coordinator resume.",
+    "Two configurations saved and read back; only description changes.",
+    "Final reply matches stored bytes and disabled state.",
+    "Only identified temporary object cleaned up after independent inspection."
+  ],
+  "limits": {
+    "initialRequests": 1,
+    "unchangedRetries": 0,
+    "existingTaskDeadlineSeconds": 300,
+    "effort": "One task up to existing5min deadline, then inspection/review/cleanup; approximately15min active work.",
+    "credits": "unknown; record actual model/tool/tokens."
+  },
+  "limitations": [
+    "Website route does not prove physical VoicePE audio or broad room/comfort semantics.",
+    "No full T2 completion from one automation case."
+  ]
+}

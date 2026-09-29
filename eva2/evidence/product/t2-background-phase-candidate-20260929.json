@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-09-29T08:34:15.835566+00:00",
+  "status": "reviewed_timeout_alignment_candidate",
+  "baseCommit": "87c006c2",
+  "failedTrial": {
+    "workId": "work:eva-chat:19c7e28b-e50c-51a2-b05c-0c911d56771c",
+    "state": "ambiguous",
+    "error": "timed_out",
+    "haEffects": "Only inventory and configurationGET404; no writes, target absent, no cleanup needed.",
+    "foregroundSeconds": 21.131,
+    "knownWorkerInput": 16680,
+    "knownWorkerOutput": 142,
+    "successfulWorkerResponses": 2,
+    "failedUnmeasuredWorkerRequests": 1,
+    "knownTotalInputIncludingForeground": 23724,
+    "knownTotalOutputIncludingForeground": 461,
+    "usageFieldCaveat": "completed_model_responses=3 includes failed request; not three measured successful responses.",
+    "transport": {
+      "headersReceivedMs": 1159,
+      "httpStatus": 200,
+      "receivedBytes": 103485,
+      "receivedChunks": 88
+    },
+    "timeoutUsage": "unmeasured"
+  },
+  "diagnosis": "Outer ordinary model phase cancelled at120s without valid terminal usage receipt although original task had300s. Partial network data does not prove a completed response. Failure handler already captures valid terminal usage before EOF; no telemetry rebuild required.",
+  "change": "Only digital background ordinary model phase uses profile timeout300. Provider/model validators allow300; existing runner cancellation retains original task deadline and shorter historical grants. Research120, foreground, retries and token grants unchanged.",
+  "tests": "43 selected passed in7.40s; real mock-provider stream closure at taskdeadline/shorter deadline/legacy grant/owner stop/pre-admission expiry.",
+  "review": {
+    "reviewer": "/root/platform_research_20260927",
+    "decision": "GO for exact3-file install; task completion not yet proven"
+  },
+  "limitations": [
+    "Not yet installed at source checkpoint.",
+    "Longer phase may consume more of existing allowance; no cost or task-success guarantee.",
+    "No physical speaker or fullT2 claim."
+  ],
+  "creditCosts": "unknown",
+  "ownerAccepted": false
+}

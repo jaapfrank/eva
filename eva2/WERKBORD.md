@@ -1,5 +1,13 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Nu — T2: automatisering zelfstandig afronden
+
+**Gerichte correctie klaar voor installatie:** gewone achtergrondmodelstap gebruikt de bestaande300s-taakruimte; oorspronkelijke/kortere taakdeadline en stop blijven leidend.43 controles en onafhankelijke review akkoord. Geen token-/taakbudgetverhoging; native research en foreground onveranderd. [Diagnose en kandidaat](evidence/product/t2-background-phase-candidate-20260929.json).
+
+**Actuele proef mislukt:** alleen inventaris en GET404, geen HA-wijzigingen/cleanup. Derde workerrequest na120s afgebroken; HTTP200 en103.485bytes ontvangen, geen voltooid antwoord. Bekend inclusief foreground23.724in/461uit; timeoutverbruik onbekend. Geen automatische herhaling. Gericht fase120s versus bestaande taak300s beoordelen.
+
+Basis87c006c2; coördinator bezit bewijs/werkbord, geen bronwijziging. Eén gewone websiteopdracht via bestaande HA-API: nieuwe uitgeschakelde proefautomatisering maken, beschrijving aanpassen en volledige configuraties teruglezen. Bestaande grant32antwoorden/31tools gecontroleerd; deze beurt geen budgetwijziging. Eindpunt: zelfstandig eindantwoord zonder handmatig hervatten, onafhankelijke controle, uitsluitend proefobject opruimen. Eén aanvraag, maximaal bestaande300s; circa15min actief werk, credits onbekend. [Voorafcriteria](evidence/product/t2-general-ha-criteria-20260929.json).
+
 ## Afgerond — L2: bevestigde correctie over schedulerherstart
 
 **Bestaande werking gecontroleerd:**7 gevallen geslaagd, waaronder nieuwe Python-processen na één gesimuleerde dag. Correctietekst, afhankelijkheden en resultaatoverdracht behouden; één opvolger. Onafhankelijke review akkoord; vijf betrokken bronbestanden gelijk aan geïnstalleerde code. [Bewijs](evidence/product/l2-confirmed-correction-restart-20260929.json). Geen modelcalls, productwijziging of herstart.
