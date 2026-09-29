@@ -1,0 +1,53 @@
+{
+  "recordedAt": "2026-09-29T13:33:23.117183+00:00",
+  "outcome": "Existing forward migration applied to actual current installation after exact-data copy verification",
+  "before": "4e_0007_delegated_private",
+  "after": "4e_0009_restore_hold",
+  "copy_verification": {
+    "tables": 47,
+    "rows": 240120,
+    "all_existing_table_row_multisets_equal": true,
+    "schema_receipt": {
+      "source_revision": "4e_0007_delegated_private",
+      "final_revision": "4e_0009_restore_hold",
+      "route": [
+        "online_empty_admission_or_forward_upgrade_to_head"
+      ],
+      "drift_check": "no_new_upgrade_operations_and_exact_foreign_keys"
+    }
+  },
+  "installation": {
+    "migration": {
+      "source_revision": "4e_0007_delegated_private",
+      "final_revision": "4e_0009_restore_hold",
+      "route": [
+        "online_empty_admission_or_forward_upgrade_to_head"
+      ],
+      "drift_check": "no_new_upgrade_operations_and_exact_foreign_keys"
+    },
+    "restore_hold_rows": 0,
+    "runtime_guard": "passed"
+  },
+  "health": {
+    "eva2-managed-b-slot3-core": {
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "state": "running",
+      "health": "healthy"
+    }
+  },
+  "review": "architecture_audit GO for additive migration, not complete restore",
+  "changes": "Existing0008 backup SELECT grants and0009 empty restore_activation table. No new source implementation, model call, runtime restart or rollback.",
+  "limits": [
+    "Copy verification covers original table row multisets/counts, not external artifacts or sequences",
+    "Complete owner export/restore with current data remains open",
+    "Source may receive ordinary runtime writes; no claim it remained unchanged during read-only snapshot"
+  ],
+  "private_artifacts": "/home/administrator/project/.eva2-artifacts/o2-current-schema-20260929",
+  "usage": {
+    "eva_model_calls": 0,
+    "credit_cost": "unknown"
+  }
+}

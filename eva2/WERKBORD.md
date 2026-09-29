@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — O2.3 huidige gegevensversie aangesloten
+
+Bestaande0007→0009-migratie toegepast op draaiende installatie na één kopieproef:47bestaande tabellen/240120rijen inhoudelijk gelijk; drift/FK-controle geslaagd. Onafhankelijke review GO. Lege restore-holdtabel blokkeert runtime niet; kern/werker gezond. Geen herinstallatie, rollback of modelcall; credits onbekend. [Bewijs](evidence/product/o2-current-schema-20260929.json).
+
+Volledige eigenaar-export/herstel met actuele gegevens blijft open. Volgende: bestaande portable route met ondersteunde0009-data gebruiken; geen nieuw herstelsysteem. Geen actieve uitvoerder.
+
 ## Actueel — O2.2 updatebediening geïnstalleerd
 
 Bestaande installatiewizard toont **Eva bijwerken**, met voorbereid pakket, uitvoerknop en bewaarde status. Private operatorconfiguratie bepaalt het pakket; de browser geeft geen paden of configuratie door. Vijf modules geïnstalleerd in bestaand operatorpakket; drie route-/echte wizardsessiegevallen op geïnstalleerde modules geslaagd; onafhankelijke review GO. [Bewijs](evidence/product/o2-update-wizard-20260929.json).

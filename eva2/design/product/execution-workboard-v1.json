@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Herstelvoorziening en draaiende gegevensversie gelijkgetrokken",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Bestaande migratie toegepast; exacte kopiecontrole geslaagd, kern en werker gezond zonder herinstallatie.",
+            "remaining": "Volledige eigenaar-export/herstel nog open; geen extra afgeronde productcategorie.",
+            "source": "eva2/evidence/product/o2-current-schema-20260929.json"
+          },
+          {
             "title": "Eva bijwerken via bestaande installatiewizard",
             "date": "29 september",
             "state": "installed",
@@ -2971,14 +2979,14 @@
           }
         ],
         "now": {
-          "title": "O2.2 updatebediening geïnstalleerd",
-          "state": "Bediening gereed; echte update nog open",
-          "detail": "Eigenaarbediening nu aangesloten en geïnstalleerd: vooraf voorbereid updatepakket via bestaande wizard uitvoeren en status teruglezen. Nog volgende echte compatibele productie-update met huidige gegevens via deze route uitvoeren; geen nutteloze herinstallatie.",
+          "title": "O2.3 gegevensversie aangesloten op herstel",
+          "state": "Migratie geïnstalleerd; volledige herstelroute open",
+          "detail": "Versiemismatch opgelost: bestaande migratie0007→0009 op actuele installatie toegepast na exacte kopiecontrole van47tabellen/240120rijen. Kern/werker gezond; geen restore-hold. Volledige eigenaar-export/herstel met huidige gegevens blijft open.",
           "owner": "Codex; geen actieve uitvoerder"
         },
         "next": {
-          "title": "Volgende echte update via de aangesloten bediening",
-          "detail": "Geen productieherinstallatie zonder nieuwe functionele wijziging. Huidige gegevensversie behouden en controleren bij de volgende compatibele update."
+          "title": "O2.3 huidige export en herstel afronden",
+          "detail": "Bestaande portable route gebruiken met nu ondersteunde0009-data; bestaande herstelbewijs behouden."
         },
         "ownerAction": {
           "title": "Doorpraten op woonkamerspeaker proberen",
@@ -2992,7 +3000,7 @@
           "linkLabel": "Geef resultaat in deze taak door"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T13:27:41.037492+00:00"
+        "reviewedAt": "2026-09-29T13:33:23.117183+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14372,10 +14380,26 @@
             {
               "id": "O2.3",
               "title": "Herstelroute met werkelijke gegevensversie afronden",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "aansluiten",
               "doneWhen": "Bestaande herstelwizard werkt voor huidige gegevensversie; geen nieuw herstelsysteem bouwen.",
-              "owner": "Codex"
+              "owner": "/root",
+              "assignment": {
+                "baseCommit": "d2c07406",
+                "files": [
+                  "eva2/src/eva/operations/install_schema.py",
+                  "eva2/tools/portable_v2_profile.py",
+                  "eva2/evidence/product/o2-current-schema-20260929.json"
+                ],
+                "existing": "Current restore route proven from0009; existing install_schema forward route supports0007",
+                "gap": "Actual retained0007 data has not passed the existing forward migration needed by portable v2",
+                "outcome": "Isolated copy of actual current0007 data upgraded through existing function; compare original table contents before/after",
+                "estimate": "One local370MB database copy and one forward migration, no model calls, credits unknown",
+                "finish": "Current data preserved through existing0007-to0009 route or concrete defect retained; no production migration or restore-completion claim",
+                "stage": "current_schema_migration_installed"
+              },
+              "latestEvidence": "eva2/evidence/product/o2-current-schema-20260929.json",
+              "remaining": "Versiemismatch opgelost: bestaande migratie0007→0009 op actuele installatie toegepast na exacte kopiecontrole van47tabellen/240120rijen. Kern/werker gezond; geen restore-hold. Volledige eigenaar-export/herstel met huidige gegevens blijft open."
             }
           ]
         },
