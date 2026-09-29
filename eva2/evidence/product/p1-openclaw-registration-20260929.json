@@ -1,0 +1,62 @@
+{
+  "contract": "EvaNativeComparisonAdmissionEvidence/v1",
+  "checkedAt": "2026-09-29T10:21:41.210596+00:00",
+  "participant": "openclaw",
+  "sourceCommit": "eb377ac59e6c9fd6c7705028034812becf00271b",
+  "sourceTag": "v2026.9.6",
+  "installedVersion": "2026.9.6",
+  "npmArtifact": {
+    "resolved": "https://registry.npmjs.org/openclaw/-/openclaw-2026.9.6.tgz",
+    "integrity": "sha512-Ie0kyQSCVfFqixsgVg39vevUDq01Ch5u3+7Yu5Y3qARczmdAe+lzp8bVnO9925rHiW/+CFp70zfORCyPmCH31g=="
+  },
+  "node": {
+    "version": "24.16.0",
+    "archiveSha256": "d804845d34eddc21dc1092b519d643ef40b1f58ec5dec5c22b1f4bd8fabde6c9",
+    "verification": "Matched official nodejs.org SHASUMS256.txt"
+  },
+  "probe": {
+    "entry": "dist/plugins/loader.js loadOpenClawPlugins",
+    "options": {
+      "mode": "full",
+      "onlyPluginIds": [
+        "codex"
+      ],
+      "activate": false,
+      "runtimeSideEffects": false
+    },
+    "isolation": "unshare --user --map-root-user --net; separate HOME and CODEX_HOME; no production credentials",
+    "sourceSha256": "758f7123ee7c5e543c21388f68762d4e5c78ec4c1b832718b4715047201dcfb5",
+    "result": {
+      "harnesses": [
+        {
+          "id": "codex",
+          "pluginId": "codex"
+        }
+      ],
+      "plugins": [
+        {
+          "id": "codex",
+          "status": "loaded"
+        }
+      ],
+      "diagnostics": []
+    },
+    "providerCalls": 0
+  },
+  "scope": "Native Codex plugin/harness registration only. Old EV-002 pre-model registration failure is not reproduced here. No inference, quality result, auth admission, final native run or unchanged old-release repair claim.",
+  "warning": "Native loader warns that plugin settings upgrade remains unfinished; no doctor --fix executed. Registration nevertheless returned codex and no diagnostics.",
+  "remaining": [
+    "Configure same authorized provider/model/effort without ambient credentials.",
+    "Enforce equal task-level budgets and complete usage accounting.",
+    "Bind identical inputs/tools/data/readback and admit controlled development case before full comparison."
+  ],
+  "systemChanges": "None; package and Node runtime isolated under comparison artifact directory. Historical checkout HEAD unchanged.",
+  "artifacts": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929",
+  "creditCost": null,
+  "review": {
+    "decision": "GO for native registration only",
+    "reviewer": "/root/review_installer_cli_wiring",
+    "limitation": "Pinned source and npm-integrity identify separate inputs; exact source-to-npm build provenance is not independently established."
+  },
+  "otherParticipants": "Fresh isolated Hermes and Agent Zero clones now match pinned commits. Historical Hermes lock untouched; native runtimes not yet admitted."
+}

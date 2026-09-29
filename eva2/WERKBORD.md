@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## P1.1 — native OpenClaw-registratie geslaagd; vergelijking nog open
+
+Actuele officiële package2026.9.6 en geïsoleerdeNode24.16.0 voorbereid; systeembasis/Eva ongewijzigd. Bestaande native loader registreert codex-harness in een netwerkloze namespace zonder credentials/modelcalls. Onafhankelijke review akkoord voor alleen registratie. Pluginmigratiewaarschuwing blijft zichtbaar; npm-integriteit is geen onafhankelijk bewezen bron→buildherkomst. [Bewijs](evidence/product/p1-openclaw-registration-20260929.json).
+
+Hermes/Agent Zero afzonderlijke bronkopieën op gepinde commits klaar; historische kopieën behouden. **Volgende, nog niet gestart:** gelijke provider-/taakgrenzen en totaalgebruik aansluiten. P1.1 blijft open, geen productwinstclaim.
+
 ## P1.1 — bronversies vastgelegd; gelijke toegang nog open
 
 Vijf deelnemers hebben een bronpin in [bestaande Inspect-map](benchmark/inspect_ai_v1/p1_participants_20260929.json): Eva1, Eva2, OpenClaw, Hermes en Agent Zero. Officiële tags naar commit gecontroleerd. Gelijke native toegang bij deze pins is nog niet bewezen; geen modelcalls of productwinstclaim. P1.1 blijft open.

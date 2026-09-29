@@ -29,7 +29,14 @@
       "sourceCommit": "eb377ac59e6c9fd6c7705028034812becf00271b",
       "tagObject": "ce5bbdc244ee937246cc1700d1b224d020c3b599",
       "officialRelease": "https://github.com/openclaw/openclaw/releases/tag/v2026.9.6",
-      "admission": "not_admitted"
+      "admission": "not_admitted",
+      "nativeRegistration": {
+        "status": "passed_offline_native_loader",
+        "evidence": "eva2/evidence/product/p1-openclaw-registration-20260929.json",
+        "runtimeAdmission": "not_admitted",
+        "packageVersion": "2026.9.6",
+        "nodeVersion": "24.16.0"
+      }
     },
     {
       "id": "hermes",
@@ -38,7 +45,12 @@
       "sourceCommit": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
       "tagObject": "e3dd27ee2d8b011737a4eea8e3eb3d711ab78690",
       "officialRelease": "https://github.com/NousResearch/hermes-agent/releases/tag/v2026.9.24",
-      "admission": "not_admitted"
+      "admission": "not_admitted",
+      "localSource": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source",
+        "headVerified": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
+        "runtimeInstalled": false
+      }
     },
     {
       "id": "agent_zero",
@@ -47,7 +59,12 @@
       "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
       "tagObject": "90f2a79e22d1e39cab6db79cd622422edaf96152",
       "officialRelease": "https://github.com/agent0ai/agent-zero/releases/tag/v2.13",
-      "admission": "not_admitted"
+      "admission": "not_admitted",
+      "localSource": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/agent-zero-source",
+        "headVerified": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+        "runtimeInstalled": false
+      }
     }
   ],
   "sharedRemainingAdmission": [
