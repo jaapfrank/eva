@@ -42,6 +42,14 @@ def restore_current_archive(connection, directory: Path, *, authority_reader,
                             key_resolver=None):
     """Caller holds a traffic-closed target transaction; no worker is started."""
     archive = read_current_archive(directory)
+    return _restore_archive(connection, archive, directory, authority_reader=authority_reader,
+                            expected_runtime_identity=expected_runtime_identity,
+                            object_store_root=object_store_root, key_resolver=key_resolver)
+
+
+def _restore_archive(connection, archive, directory, *, authority_reader,
+                     expected_runtime_identity, object_store_root, key_resolver=None):
+    """Shared insertion path; callers must fully verify their versioned archive."""
     manifest, raw = archive["manifest"], archive["manifest_raw"]
     if manifest["runtime_identity"] != expected_runtime_identity:
         raise ValueError("archive runtime identity differs from trusted installation configuration")

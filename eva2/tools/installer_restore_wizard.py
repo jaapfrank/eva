@@ -25,7 +25,7 @@ def configured_restore_workflow(config):
     """
     required = {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed", "runtime_guard"}
     if (not isinstance(config, dict) or not required <= set(config)
-            or not set(config) <= required | {"runtime_identity", "recovery_materialization", "external_recovery", "document_recovery", "document_connection", "document_gateway_binding", "gateway_start", "document_write_access", "activation"}
+            or not set(config) <= required | {"runtime_identity", "runtime_identity_restore", "recovery_materialization", "external_recovery", "document_recovery", "document_connection", "document_gateway_binding", "gateway_start", "document_write_access", "activation"}
             or config["traffic_closed"] is not True):
         raise ValueError("restore configuration requires pinned runtime_guard identities and closed traffic")
     if "document_recovery" in config and not {"external_recovery", "recovery_materialization"} <= set(config):
@@ -60,6 +60,17 @@ def configured_restore_workflow(config):
     if keyring_path is not None and not keyring_path.is_absolute():
         raise ValueError("object keyring path must be absolute")
     resolver = FileObjectKeyResolver(keyring_path) if keyring_path else None
+    identity_trust = identity_destination = None
+    if "runtime_identity_restore" in config:
+        from eva.application.identity_verifier import parse_identity_pack_trust_binding
+        selected = config["runtime_identity_restore"]
+        if (not isinstance(selected, dict) or set(selected) != {"trust", "destination"}
+                or any(not isinstance(value, str) or not Path(value).is_absolute()
+                       for value in selected.values())):
+            raise ValueError("runtime identity restore requires absolute trusted paths")
+        identity_trust = parse_identity_pack_trust_binding(read_private_runtime_file_bytes(
+            Path(selected["trust"]), setting_name="runtime identity restore trust"))
+        identity_destination = Path(selected["destination"])
     engine = create_engine(config["dsn"])
     workflow = None
     try:
@@ -143,6 +154,8 @@ def configured_restore_workflow(config):
             document_promote=document_promote,
             verify_components=verify_components,
             start_runtime=start_runtime,
+            identity_trust=identity_trust,
+            identity_destination=identity_destination,
         )
         yield workflow
     finally:

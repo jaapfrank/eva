@@ -1,5 +1,20 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Zo lees je de 24 opdrachten — 29 september 2026
+
+De 24 hoofdopdrachten zijn werkpakketten van het afgesproken bouwplan, niet 24 resterende kleine klusjes. Huidige registratie: 6 hoofdopdrachten technisch afgerond, 18 open. Binnen die open pakketten staan 44 afzonderlijke taken: 6 afgerond en 38 open. Deze aantallen zijn geen percentage van een bruikbaar product.
+
+De afzonderlijke taken staan in de bestaande dashboardtab **Werk & volgorde → Alle taken per onderdeel**, met ID, eigenaar, status en eindvoorwaarde. De enige taakbron blijft `audit.deliveryPlan.implementationSlices[].remainingTasks`. Zeven dagen gezinsgebruik, vergelijking en eindoordeel zitten al in het plan; geen verborgen extra bouwronde na de 24 opdrachten. Technisch klaar en door Jaap geaccepteerd blijven afzonderlijk.
+
+Werkregel: één bruikbaar resultaat afmaken; alleen passende gerichte controle, review en installatie bundelen. Een mislukte proef gericht repareren in de ontwikkelversie; niet telkens terugzetten of opnieuw installeren. Nieuwe wensen vergroten de bestaande eindvoorwaarden niet stilzwijgend.
+
+## Laatste oplevering — O2.3 kernarchief en wizardkoppeling geïnstalleerd
+
+Werkelijke gegevenskopie succesvol geëxporteerd en naar lege afgesloten database hersteld: **170.174 records**, **41 tabeltellingen gelijk**, **69.923 checkpoints** opgebouwd; ondertekende identiteit byte voor byte behouden. Export 457,631 s; herstel 410,588 s. Tien gerichte archiefgevallen en onafhankelijke review GO. Zes modules in bestaand operatorpakket geïnstalleerd, vier gerichte wizardgevallen op dat pakket geslaagd; herkomst gecontroleerd. Geen runtimeherstart, rollback of Eva-modelcall; credits onbekend. [Bewijs](evidence/product/o2-runtime-archive-installed-20260929.json).
+
+**O2.3 blijft open:** volledige herstelpakketroute gebruikt nog v2-kern. Eerstvolgende werk is v3 aansluiten op die bestaande route met geheugen en documenten. Niet-lege evidence-objectopslag wordt expliciet geweigerd; huidige bron bevat geen dergelijke records. Geen volledige herstel- of eigenaaracceptatieclaim. Geen actieve uitvoerder; volgende aansluiting nog niet gestart.
+
+
 ## Actueel — O2.3 actuele export faalt op oude identiteitseis
 
 Eén export van de behouden werkelijke gegevenskopie afgewezen: frozen v1 vereist identiteitsarchiefrecords; huidige installatie bewaart haar identiteit in current.json en heeft lege oude packtabellen. Geen archief gepubliceerd, geen productiegegevens gewijzigd. Onafhankelijke bronreview bevestigt dat bestaande v2/recoverycompositie deze aanname deelt. [Bewijs](evidence/product/o2-current-export-gap-20260929.json).

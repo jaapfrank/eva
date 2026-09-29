@@ -1,0 +1,46 @@
+{
+  "date": "2026-09-29T14:09:42.046472+00:00",
+  "task": "O2.3",
+  "status": "core_runtime_archive_and_wizard_support_installed",
+  "sourceBase": "6e1ad8f0",
+  "existing": "Existing portable specs, current snapshot, restore writer/hold and installer confirmation reused; frozen v1/v2 unchanged.",
+  "change": "Explicit v3 preserves current records with absent legacy identity references and externally verified signed runtime identity. Existing wizard accepts v3 with operator-provided trust/destination.",
+  "verification": {
+    "focused_archive_cases": 10,
+    "authority_cases": 12,
+    "wizard_cases": 4,
+    "independent_review": "GO after correcting raw attention helper input and delegated AttentionWakeV2 validation",
+    "real_data": {
+      "source": "retained isolated copy of actual installation; source production data unchanged",
+      "export_seconds": 457.631,
+      "restore_seconds": 410.588,
+      "restored_records": 170174,
+      "tables_with_matching_counts": 41,
+      "rebuilt_checkpoints": 69923,
+      "identity_bytes_equal": true,
+      "hold_rows": 1,
+      "archive_sha256": "7b257fefc172fe9dfe73faf79dc161dc7439004e1b4533a6fbac2e8dfd2eb30f",
+      "target_activation": "closed",
+      "limit": "Table counts and identity bytes checked; not a claim of byte-identical raw databases. Existing portable credential transforms retained. External components not restored by this trial."
+    }
+  },
+  "installation": {
+    "target": "existing installer-document-write-20260924 operator package",
+    "modules": 6,
+    "installed_wizard_cases": 4,
+    "module_origin_verified": true,
+    "previous_files_retained": true,
+    "runtime_restart": false
+  },
+  "remaining": [
+    "Full installation recovery package still expects v2 core; wire explicitly before claiming complete recovery.",
+    "External memory, documents, provider authorization and activation remain governed by existing full recovery route.",
+    "Nonempty evidence object_refs explicitly unsupported by this bounded v3 profile; actual retained source has none.",
+    "Owner acceptance remains open."
+  ],
+  "consumption": {
+    "eva_model_calls": 0,
+    "credits": "unknown"
+  },
+  "private_artifacts": "/home/administrator/project/.eva2-artifacts/o2-current-schema-20260929/"
+}

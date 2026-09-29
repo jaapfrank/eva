@@ -486,6 +486,7 @@ def authorize_portable_restore(
     if (
         (archive.get("contract"), archive.get("schema_version"))
         not in {("EvaPortableArchive/v1", 1), ("EvaPortableArchive/v2", 2),
+                ("EvaPortableArchive/v3", 3),
                 ("EvaInstallationRecovery/v1", 1)}
     ):
         raise PortableRestoreAuthorityError("archive manifest contract is invalid")

@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-24T20:47:01.434669+00:00",
+        "checkedAt": "2026-09-29T14:09:42.046472+00:00",
         "deliveries": [
+          {
+            "title": "Huidige kerngegevens en identiteit herstelbaar via bestaande wizard",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Echte gegevenskopie geëxporteerd en hersteld:170.174 records,41 tabeltellingen gelijk,69.923 checkpoints opgebouwd, identiteit exact behouden. Zes operatormodules geïnstalleerd; vier wizardcontroles geslaagd.",
+            "remaining": "O2.3 blijft open: volledig herstelpakket met geheugen/documenten gebruikt nog v2-kern; v3 daar aansluiten. Geen eigenaaracceptatie of volledige Eva-herstelclaim.",
+            "source": "eva2/evidence/product/o2-runtime-archive-installed-20260929.json"
+          },
           {
             "title": "Herstelvoorziening en draaiende gegevensversie gelijkgetrokken",
             "date": "29 september",
@@ -2979,14 +2987,14 @@
           }
         ],
         "now": {
-          "title": "O2.3 concrete exportfout gevonden",
-          "state": "Niet afgerond — aansluiting ontbreekt",
-          "detail": "Actuele export faalt doordat portable v2 verplicht oude v1-identiteitstabellen verwacht; die zijn leeg, werkelijke identiteit staat in current.json. Geen archief gepubliceerd. Bestaande exporter/reader uitbreiden met expliciet geversioneerd runtimeprofiel en behouden identiteitsbestand; geen fictieve legacygegevens.",
-          "owner": "Codex; geen actieve uitvoerder"
+          "title": "O2.3 kernarchief en wizardkoppeling geïnstalleerd",
+          "state": "Deelresultaat opgeleverd",
+          "detail": "Echte export/herstel geslaagd; geen actieve uitvoerder. Volledig herstelpakket met externe componenten nog af te maken.",
+          "owner": "/root"
         },
         "next": {
-          "title": "O2.3 werkelijke runtimegegevens en identiteit exporteerbaar maken",
-          "detail": "Bestaande archiefvoorzieningen uitbreiden voor huidige runtime; v1/v2-contracten en eerdere acceptaties behouden."
+          "title": "O2.3 volledig herstelpakket met huidige kern verbinden",
+          "detail": "Bestaande pakketroute expliciet v3 laten gebruiken, samen met de bestaande geheugen-/documentvoorzieningen. Geen tweede herstelsysteem."
         },
         "ownerAction": {
           "title": "Doorpraten op woonkamerspeaker proberen",
@@ -3000,7 +3008,7 @@
           "linkLabel": "Geef resultaat in deze taak door"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T13:40:12.372900+00:00"
+        "reviewedAt": "2026-09-29T14:09:42.046472+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14385,23 +14393,34 @@
               "doneWhen": "Bestaande herstelwizard werkt voor huidige gegevensversie; geen nieuw herstelsysteem bouwen.",
               "owner": "/root",
               "assignment": {
-                "baseCommit": "d2c07406",
+                "baseCommit": "6e1ad8f0",
                 "files": [
-                  "eva2/src/eva/operations/install_schema.py",
-                  "eva2/tools/portable_v2_profile.py",
-                  "eva2/evidence/product/o2-current-schema-20260929.json"
+                  "eva2/tools/portable_runtime_archive.py",
+                  "eva2/tools/portable_runtime_restore.py",
+                  "eva2/tools/portable_v2_restore.py",
+                  "eva2/src/eva/operations/portable_restore_authority.py",
+                  "focused portable tests",
+                  "eva2/tools/installer_portable_restore.py",
+                  "eva2/tools/installer_restore_wizard.py",
+                  "eva2/tests/portable/test_installer_runtime_archive.py"
                 ],
                 "existing": "Current restore route proven from0009; existing install_schema forward route supports0007",
                 "gap": "Actual retained0007 data has not passed the existing forward migration needed by portable v2",
                 "outcome": "Isolated copy of actual current0007 data upgraded through existing function; compare original table contents before/after",
-                "estimate": "One local370MB database copy and one forward migration, no model calls, credits unknown",
+                "estimate": "One bounded current-runtime archive/restore addition reusing record and identity validators; focused cases, independent review, then one actual export if admitted; no model calls planned; credits unknown",
                 "finish": "Current data preserved through existing0007-to0009 route or concrete defect retained; no production migration or restore-completion claim",
-                "stage": "actual_runtime_archive_gap_identified"
+                "stage": "core_runtime_archive_installed",
+                "workers": {
+                  "/root/architecture_audit": "new writer/reader + own tests only",
+                  "/root": "existing restore seam, authority contract, board, integration"
+                },
+                "activeWorkers": []
               },
-              "latestEvidence": "eva2/evidence/product/o2-current-export-gap-20260929.json",
-              "remaining": "Actuele export faalt doordat portable v2 verplicht oude v1-identiteitstabellen verwacht; die zijn leeg, werkelijke identiteit staat in current.json. Geen archief gepubliceerd. Bestaande exporter/reader uitbreiden met expliciet geversioneerd runtimeprofiel en behouden identiteitsbestand; geen fictieve legacygegevens."
+              "latestEvidence": "eva2/evidence/product/o2-runtime-archive-installed-20260929.json",
+              "remaining": "Volledig herstelpakket en bestaande externe componenten met v3-kern aansluiten; kernexport/-herstel en wizardondersteuning geïnstalleerd."
             }
-          ]
+          ],
+          "latestEvidence": "eva2/evidence/product/o2-runtime-archive-installed-20260929.json"
         },
         {
           "id": "P1",

@@ -280,3 +280,15 @@ def test_concurrent_erasure_advances_cannot_overwrite_one_generation(
     authority = __import__("json").loads(read_private_restore_authority(path))
     assert authority["erasure_generation"] == 2
     assert authority["latest_erasure_operation_sha256"] in operations
+
+
+def test_runtime_v3_still_requires_exact_current_erasure_authority():
+    import json
+    manifest = json.loads(_archive(created_at="2026-09-29T12:00:00Z"))
+    manifest.update(contract="EvaPortableArchive/v3", schema_version=3)
+    raw = canonical_json_bytes(manifest)
+    assert authorize_portable_restore(archive_manifest_raw=raw,
+        restore_authority_raw=_authority(raw, generation=0, admit=True)).archive_id == ARCHIVE_ID
+    with pytest.raises(PortableRestoreAuthorityError, match="not authorized"):
+        authorize_portable_restore(archive_manifest_raw=raw,
+            restore_authority_raw=_authority(raw, generation=1, admit=False))

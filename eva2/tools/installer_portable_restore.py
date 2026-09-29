@@ -21,6 +21,7 @@ from typing import Any
 
 from eva.operations.portable_restore_authority import authorize_portable_restore, authorize_installation_recovery
 from eva.application.installer_restore import InactiveRecoveryMaterialRetained
+from eva.application.identity_verifier import IdentityPackTrustBinding
 from tools.portable_transport import open_portable_transport
 from tools.read_eva_portable_archive import validate_and_derive
 from tools.postgres_portable_export import CANONICAL_EXPORT_SPECS
@@ -70,6 +71,8 @@ class InstallerPortableRestore:
         document_promote: Callable[..., dict] | None = None,
         verify_components: Callable[..., dict] | None = None,
         start_runtime: Callable[..., dict] | None = None,
+        identity_trust: IdentityPackTrustBinding | None = None,
+        identity_destination: Path | None = None,
     ):
         # The composition root must provide an isolated, traffic-closed target.
         if (
@@ -85,6 +88,16 @@ class InstallerPortableRestore:
         self.key_resolver = key_resolver
         self.runtime_identity = runtime_identity
         self.runtime_guard = runtime_guard
+        if (identity_trust is None) != (identity_destination is None):
+            raise ValueError("runtime identity restore needs external trust and destination together")
+        if identity_trust is not None and (
+                not isinstance(identity_trust, IdentityPackTrustBinding)
+                or not isinstance(identity_destination, Path)
+                or not identity_destination.is_absolute()
+                or identity_destination.exists() or identity_destination.is_symlink()):
+            raise ValueError("runtime identity restore needs an absolute inactive new destination")
+        self.identity_trust = identity_trust
+        self.identity_destination = identity_destination
         if recovery_materialization is not None:
             from tools.installation_recovery_materializer import _owners
             if (not isinstance(recovery_materialization, dict)
@@ -129,8 +142,7 @@ class InstallerPortableRestore:
             self._pending[0].cleanup()
             self._pending = None
 
-    @staticmethod
-    def _validate_archive(directory: Path):
+    def _validate_archive(self, directory: Path):
         from tools.read_eva_portable_archive import _root_descriptor, _read_regular, _load_canonical_object
         with _root_descriptor(directory) as descriptor:
             header = _load_canonical_object(_read_regular(descriptor, "archive.json"), label="archive manifest")
@@ -140,6 +152,11 @@ class InstallerPortableRestore:
         if header.get("contract") == "EvaPortableArchive/v2":
             from tools.portable_v2_reader import read_current_archive
             return read_current_archive(directory)
+        if header.get("contract") == "EvaPortableArchive/v3":
+            if self.identity_trust is None or self.identity_destination is None:
+                raise ValueError("runtime archive needs externally configured identity trust and destination")
+            from tools.portable_runtime_archive import read_runtime_archive
+            return read_runtime_archive(directory, identity_trust=self.identity_trust)
         return validate_and_derive(directory)
 
     @staticmethod
@@ -176,6 +193,10 @@ class InstallerPortableRestore:
                 "notice": "Huidig werk wordt behouden. Externe geheugenbanken, documentbestanden en providers moeten afzonderlijk worden hersteld voordat Eva wordt gestart.",
                 "target_activation": "closed", "external_requirements": current["external_requirements"],
                 "object_recovery_notice": "Bij een mislukte herstelpoging kunnen versleutelde bestanden in de afgeschermde doelopslag achterblijven. Deze blijven ongeactiveerd en worden niet automatisch verwijderd."}
+            if current["contract"] == "EvaPortableArchive/v3":
+                summary.update(runtime_identity_disposition="preservation_inactive_planned",
+                    notice="De kerngegevens en gecontroleerde runtime-identiteit worden inactief hersteld. Eva wordt niet gestart. Externe onderdelen en activering vereisen afzonderlijke controle.",
+                    object_recovery_notice="Bij een mislukte poging kan een inactief identiteitsbestand achterblijven. Het wordt niet verwijderd of overschreven; controleer het doel vóór een nieuwe poging.")
             if records["eva_evidence.object_refs"]:
                 if self.key_resolver is None:
                     raise ValueError("separately provisioned object keyring is required")
@@ -265,7 +286,7 @@ class InstallerPortableRestore:
                     validator=self._validate_archive,
                 )
                 records, manifest, summary = self._read(directory)
-                current = json.loads(manifest).get("contract") in {"EvaPortableArchive/v2", "EvaInstallationRecovery/v1"}
+                current = json.loads(manifest).get("contract") in {"EvaPortableArchive/v2", "EvaPortableArchive/v3", "EvaInstallationRecovery/v1"}
                 if current:
                     from tools.portable_v2_profile import ALL_SPECS
                     from tools.portable_v2_restore import verify_current_target
@@ -504,6 +525,17 @@ class InstallerPortableRestore:
                             self.runtime_guard(connection)
                         if json.loads(manifest).get("contract") == "EvaInstallationRecovery/v1":
                             installation_result = self._execute_installation(connection, directory, manifest, summary, materialization_state)
+                        elif json.loads(manifest).get("contract") == "EvaPortableArchive/v3":
+                            from tools.portable_runtime_restore import restore_runtime_archive
+                            result = restore_runtime_archive(connection, directory,
+                                identity_trust=self.identity_trust,
+                                identity_destination=self.identity_destination,
+                                authority_reader=self.authority_reader,
+                                expected_runtime_identity=self.runtime_identity,
+                                object_store_root=self.object_store_root, key_resolver=self.key_resolver)
+                            if self.runtime_guard is not None:
+                                self.runtime_guard(connection)
+                            return {**summary, **result}
                         elif json.loads(manifest).get("schema_version") == 2:
                             from tools.portable_v2_restore import restore_current_archive
                             result = restore_current_archive(connection, directory,
