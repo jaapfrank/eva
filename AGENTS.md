@@ -2,76 +2,58 @@
 
 ## Eigenaaropdracht 29 september 2026 — begrensd uitvoeren, resultaat vóór tussenwerk
 
-Deze nieuwste uitvoerafspraak gaat vóór oudere automatische doorbouwregels en
-reparatiewachtrijen. Het volledige productdoel en de negen dashboardonderdelen
-blijven behouden. Deze instructiewijziging hervat het gepauzeerde goal niet.
+Eigenaarcorrectie: de door Codex bedachte60minutengrens is afgewezen. Er geldt
+geen willekeurige tijdgrens, maximaal aantal pogingen of automatische pauze om
+die reden. De opdracht is beter voorbereiden, minder fouten maken en complete
+functies afronden zonder test-/installatie-/herstartlussen. De huidige expliciete
+projectpauze blijft gelden; deze instructiewijziging hervat geen productwerk.
 
-1. **Eén actieve gebruikersuitkomst.** Kies één bestaande kleine taak die een
-   merkbare functie oplevert of een resterend groot onderdeel werkelijk sluit.
-   Noem het bovenliggende onderdeel en welke concrete handeling Jaap na afloop
-   kan doen. Onderhoud, herstel en dashboardwerk krijgen alleen voorrang als ze
-   een aangetoonde noodzakelijke afhankelijkheid van die gekozen uitkomst zijn.
-   Een wachtrij van technische reparaties is geen vervangend productdoel.
-2. **Eerst de noodzakelijke werkelijkheid controleren.** Leg bij die taak vast:
-   bestaande werking en bewijs, het precieze tekort, actuele broncommit én
-   geïnstalleerde versie, benodigde afhankelijkheden/configuratie, kleinste
-   voldoende wijziging, bestandsverantwoordelijkheid en eindvoorwaarden.
-   Controleer alleen de voor deze uitkomst relevante aansluitingen. Geen brede
-   audit, nieuwe nulmeting, platformvervanging of herbouw zonder aangetoond voordeel.
-3. **Een tijdgrens die niet verschuift.** Standaard maximaal60minuten verstreken
-   tijd voor één kleine technische oplevering, inclusief controles, review en
-   noodzakelijke installatie. Dit is een bovengrens voor de poging, geen belofte
-   dat iedere functie in een uur te bouwen is. Splits een grotere opdracht vóór
-   uitvoering in nuttige uitkomsten; verstop het resterende werk niet.
-   Registreer `executionAttempt.startedAt` en `deadlineAt` in de bestaande taak
-   vóór de eerste uitvoering. Bij iedere hervatting en vóór een dure/langlopende
-   actie: actuele tijd en resterende ruimte controleren. Een beurtwisseling,
-   agent, herstart of gewijzigde hypothese reset de deadline niet. Start geen
-   actie die naar verwachting niet binnen de resterende ruimte afloopt.
-4. **Geen stille scopegroei of reparatieketen.** Een onverwachte afhankelijkheid
-   die de afgesproken scope of tijdgrens wezenlijk vergroot betekent stoppen met
-   uitbreiden, de oorzaak en kleinste vervolgmogelijkheid vastleggen en de keuze
-   aan Jaap voorleggen. Gewone fouten binnen dezelfde scope mogen gericht worden
-   opgelost. Na twee mislukte pogingen op dezelfde oorzaak geen derde poging
-   zonder eigenaarbesluit. Nieuwe tests vereisen een concrete wijziging of
-   ontbrekend bewijs; een andere formulering is geen nieuwe hypothese.
-5. **Bij de grens daadwerkelijk stoppen.** Geen nieuwe bouw-, model-, test- of
-   installatieronde starten. Bewaar werk en gegevens; sluit reeds gestarte acties
-   veilig af. Meld resultaat, resterende oorzaak en de keuze om te verkleinen,
-   uit te stellen of een nieuwe begrensde poging toe te staan. Niet automatisch
-   doorschuiven naar ander werk om de grens te omzeilen. Alleen een expliciet
-   nieuw eigenaarbesluit staat een ruimere/nieuwe poging toe. Gebruik de
-   goalstatus-tools uitsluitend volgens hun toegestane statusregels.
-6. **Bestaande code en bewijs eerst.** Geen opnieuw bouwen wegens ontbrekende
-   gebruikersacceptatie. Geen nieuwe infrastructuur om een kleine oplevering te
-   demonstreren. Gebruik standaard één uitvoerder; extra uitvoerders alleen voor
-   aantoonbaar onafhankelijke stukken van dezelfde uitkomst, binnen de bestaande
-   limiet. Hun gezamenlijke verbruik en tijd vallen onder dezelfde poging.
-7. **Eén gerichte controle en gebundelde oplevering.** Review de complete bedoelde
-   gebruikersroute inclusief werkelijk te installeren versie, niet alleen losse
-   bestanden. Hergebruik reeds geldig bewijs; voer ontbrekende gerichte controles
-   uit. Bundel review/installatie rond de bruikbare uitkomst. Geen automatische
-   rollback/herinstallatie na een mislukte ontwikkelproef. Installatie vereist
-   geen opnieuw gevraagde toestemming binnen het bestaande mandaat.
-8. **Klaar is bruikbaar en geïnstalleerd.** Een document, test, exportbestand,
-   succesvolle import of codecommit sluit op zichzelf geen productfunctie.
-   Technische afronding vereist de vooraf vastgelegde gebruikersroute op de
-   geïnstalleerde versie plus passende controle. Echte fysieke bediening en
-   gezinsacceptatie blijven expliciet apart; verzin geen acceptatie en maak
-   bestaande acceptaties niet opnieuw open. Een deels geslaagde poging blijft
-   deels geslaagd; behoud de oorspronkelijke eindvoorwaarden.
-9. **Zichtbare voortgang zonder cosmetische winst.** Werk de echte kleine taak
-   bij bij start, fout, grens en oplevering. Toon geleverd resultaat, resterende
-   handelingen, actieve uitvoerder en eerstvolgende keuze. Verhoog geen teller
-   door opdelen, hernoemen of technisch tussenwerk. Nieuwe wensen staan apart.
-   Rapporteer gemeten modelcalls/tokens/tijd waar beschikbaar; creditkosten die
-   niet meetbaar zijn blijven onbekend. Geen euro-naar-tokenomrekening, nieuw
-   dagquotum of algemene claim dat het weekverbruik volledig aan deze taak ligt.
-10. **Controle vóór elke voortzetting.** Lees de actuele taak en deze regels,
-    controleer scope, deadline, geïnstalleerde toestand en werkelijk lopende
-    processen. Bij een gepauzeerd goal geen productwerk. Deze regels zijn
-    uitvoerinstructies, geen technisch afgedwongen limiet van de Codex-app;
-    claim geen automatische kostenstop of gegarandeerd foutloze uitvoering.
+1. **Eén complete gebruikersuitkomst.** Werk vanuit één bestaande kleine taak
+   naar een concrete handeling die Jaap daarna werkelijk kan uitvoeren. Houd
+   het grote onderdeel en zijn resterende eindvoorwaarden zichtbaar. Onderhoud
+   krijgt alleen voorrang als het aantoonbaar nodig is voor die uitkomst.
+2. **Begrijp de bestaande route vóór wijzigen.** Controleer gericht bronversie,
+   draaiende versie en relevante koppelingen van invoer tot resultaat. Gebruik
+   bestaande werking, bewijs en besluiten. Geen brede audit of herbouw. Ontbrekende
+   acceptatie bewijst geen ontbrekende functie.
+3. **Ontwerp de hele wijziging vóór bouwen.** Leg compact vast wat behouden
+   blijft, wat precies ontbreekt, welke modules/interfaces geraakt worden en hoe
+   de wijziging daadwerkelijk beschikbaar wordt. Beoordeel relevante versies,
+   gegevensformaten, afhankelijkheden, verpakte bestanden, runtimegebruikers en
+   rechten vooraf. Open technische aannames eerst gericht uitzoeken; niet pas
+   tijdens de laatste installatie ontdekken. Geen nieuw omvangrijk plandocument.
+4. **Verifieer vroeg op de werkelijke uitvoerroute.** Controleer de noodzakelijke
+   aansluitingen met de echte te installeren code en representatieve gegevens
+   voordat dure volledige proeven draaien. Een losse test of fixture bewijst
+   niet dat het geheel is aangesloten. Gebruik bestaande testvoorzieningen;
+   bouw geen extra platform voor een kleine oplevering.
+5. **Repareer de oorzaak, niet telkens de hele installatie.** Lokaliseer een fout
+   tot de falende overgang, bepaal de oorzaak en pas de kleinste voldoende
+   correctie toe. Geen speculatieve wijzigingen of ongewijzigde herhalingen.
+   Bewaar bruikbare tussenresultaten; hervat bij de falende stap zodra vaststaat
+   dat eerdere resultaten nog geldig zijn. Begin niet opnieuw zonder concrete
+   reden. Geen automatische rollback of herinstallatie na een ontwikkelfout.
+6. **Bundel controle, review en installatie.** Review de volledige bedoelde
+   gebruikersroute en de werkelijk te installeren versie. Hergebruik geldig
+   bewijs; controleer wijzigingen en relevante combinaties gericht. Installeer
+   een samenhangend bruikbaar resultaat en controleer die installatie. Los
+   gevonden fouten gericht daarin op. Geen brede test- of releaseronde per
+   tussenwijziging en geen nieuwe toestemmingsvraag binnen bestaand mandaat.
+7. **Afronden vóór verbreden.** Maak de gekozen uitkomst af; voeg geen nieuwe
+   doelen, architectuurwerk of onafhankelijke reparatiewachtrij toe. Alleen een
+   aangetoonde afhankelijkheid rechtvaardigt noodzakelijk extra werk; leg die
+   kort bij de bestaande taak vast. Vraag alleen een eigenaarbesluit bij een
+   echte product-/scopekeuze of ontbrekend mandaat, niet vanwege een teller of
+   normale programmeerfout. Gebruik standaard één uitvoerder; extra uitvoerders
+   alleen voor onafhankelijk werk aan dezelfde uitkomst binnen bestaande limiet.
+8. **Resultaat eerlijk zichtbaar.** Technisch klaar betekent dat de afgesproken
+   functie op de geïnstalleerde versie bruikbaar is, met passende controle en
+   concrete gebruiksinstructies. Tests, documenten, commits en exports zijn
+   bewijs of tussenwerk; geen extra afgeronde productfunctie. Bewaar eerdere
+   acceptaties; fysieke proeven en gezinsacceptatie blijven expliciet apart.
+   Werk de kleine taak en het bestaande dashboard bij; verhoog tellers niet door
+   opsplitsen of hernoemen. Rapporteer meetbaar verbruik, onbekende credits blijven
+   onbekend. Geen verzonnen tijd-/creditquota of garantie op foutloos bouwen.
 
 ## Owner instruction 29 September 2026 — individually tracked small outcomes
 

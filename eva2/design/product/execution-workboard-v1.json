@@ -3029,12 +3029,12 @@
         "now": {
           "title": "Gepauzeerd op verzoek van Jaap",
           "state": "Gepauzeerd",
-          "detail": "Gepauzeerd op verzoek. Uitvoerregels aangescherpt: één gebruikersuitkomst, standaard60min totale poging, geen reset of stille reparatieketen. Geen productfunctie toegevoegd; O2.3 blijft open.",
+          "detail": "Gepauzeerd op verzoek. Willekeurige tijdgrens verwijderd. Uitvoeringseis: complete wijziging vooraf begrijpen, echte aansluitingen vroeg controleren, oorzaken gericht oplossen en functies afronden. Geen productfunctie toegevoegd; O2.3 blijft open.",
           "owner": "/root"
         },
         "next": {
           "title": "Alleen na expliciet hervatten: begrensde gebruikersuitkomst kiezen",
-          "detail": "Kies op bestaand bewijs een concrete functionele oplevering of sluitbaar groot onderdeel. Leg relevante installatiebasis, vaste eindvoorwaarden en start/deadline vast vóór uitvoering. Herstelwerk krijgt niet automatisch voorrang."
+          "detail": "Alleen na expliciet hervatten: één bestaande functionele uitkomst afronden met gerichte voorbereiding van de echte installatie en vaste eindvoorwaarden. Geen tijdquota of automatische onderhoudsronde."
         },
         "ownerAction": {
           "title": "Doorpraten op woonkamerspeaker proberen",
@@ -14701,7 +14701,7 @@
       "smallTaskPolicy": {
         "source": "Remainder of existing 24 slices only; completed/accepted scope retained.",
         "statusRule": "Each remaining task owns its status; do not infer completion from its parent, test count or elapsed work.",
-        "executionRule": "Apply boundedExecutionPolicy before every start/resume; one useful outcome, default60min total, focused verification and bundled review/deployment. Preserve accepted scope.",
+        "executionRule": "Apply corrected boundedExecutionPolicy: prepare complete real user route, reuse existing work, fix proven causes, bundle focused verification/review/deployment; no arbitrary time or retry limits. Preserve accepted scope.",
         "completionRule": "All required remaining tasks must be resolved before parent technical closure; final owner acceptance remains separate.",
         "failureRule": "Record concrete cause and next action; no unchanged repeated probe. Research may finish with a documented negative result.",
         "ownerInstruction": "29 September: remaining parent tasks must be split into independently trackable outcomes, each with its own status and finish condition. Finish in order; no repetitive test/rollback/reinstall loops. Family trial and final acceptance are explicitly included, not hidden additional build work."
@@ -14710,25 +14710,25 @@
         "ownerInstructionDate": "2026-09-29",
         "status": "applies_on_explicit_resume",
         "source": "AGENTS.md#eigenaaropdracht-29-september-2026--begrensd-uitvoeren-resultaat-vóór-tussenwerk",
-        "defaultAttemptWallMinutes": 60,
         "scope": "One existing useful user outcome; checks, review and installation included; full product scope preserved.",
         "attemptFields": [
-          "executionAttempt.startedAt",
-          "executionAttempt.deadlineAt",
           "executionAttempt.expectedUserOutcome",
           "executionAttempt.installedBaseline",
+          "executionAttempt.affectedInterfaces",
           "executionAttempt.finishConditions",
-          "executionAttempt.attemptsByCause",
+          "executionAttempt.failureCause",
           "executionAttempt.measuredUsage"
         ],
-        "deadlineRule": "Persist first start/deadline on actual child task; never reset across turns, agents, failures or restarts. Do not start long work beyond remaining allowance.",
-        "stopRule": "At deadline, material scope expansion or two failures for same cause: preserve state, end dependent work and request an explicit next decision; no silent new attempt or task switch. Goal tool status rules still apply.",
         "priorityRule": "Visible product outcome or genuinely closing a large component first; maintenance only as demonstrated prerequisite of selected outcome.",
         "completionRule": "Installed intended user route meets frozen finish conditions. Intermediate engineering evidence is not product completion. Physical and owner acceptance remain explicit.",
         "costRule": "Default one executor, bounded combined work and review. Known time/calls/tokens only; credits unknown unless measured. No invented currency conversion or daily quota.",
         "enforcementLimit": "Instructions, not an app-level automatic spending cap.",
         "resumeAuthorized": false,
-        "recordedAt": "2026-09-29T18:47:45.038054+00:00"
+        "recordedAt": "2026-09-29T18:50:13.829092+00:00",
+        "ownerCorrection": "Owner explicitly rejected the arbitrary60-minute limit. No time/retry-count quota or automatic pause. Improve end-to-end preparation, root-cause fixes and actual functional completion.",
+        "preparationRule": "Understand existing implementation and actual installed input-to-result route; resolve relevant version, data-format, dependency, packaged-file and runtime-access assumptions before expensive execution.",
+        "failureRule": "Localize and explain the failure, correct the smallest sufficient cause and retain valid intermediate results. No speculative repeat, automatic rollback/reinstall or restart from scratch. Ordinary defects do not require owner approval.",
+        "scopeRule": "Finish selected useful outcome before broadening; only demonstrated prerequisites may add necessary work. Ask owner only for actual product/scope decisions or missing mandate."
       }
     },
     "dashboardClarityCorrection20260922": {

@@ -1,10 +1,10 @@
 # Eva 2 — uitvoerbaar werkbord
 
-## Uitvoering begrensd — goal blijft gepauzeerd
+## Uitvoering gecorrigeerd — goal blijft gepauzeerd
 
-Op eigenaarverzoek gelden nu de [bindende uitvoerregels](../AGENTS.md#eigenaaropdracht-29-september-2026--begrensd-uitvoeren-resultaat-vóór-tussenwerk): één concrete gebruikersuitkomst, eerst relevante geïnstalleerde basis controleren, standaard maximaal60minuten per totale poging inclusief controle/review/installatie. Deadline blijft gelijk over beurten en agents. Bij overschrijding, wezenlijke scopegroei of tweemaal dezelfde fout stoppen met uitbreiden en een expliciete vervolgkeuze voorleggen. Geen onderhoudsronde als vervanging van functies afronden.
+De eigenaar heeft de door Codex bedachte60minutengrens afgewezen. Die is verwijderd, inclusief deadline-/pogingentellers en automatische stopregels. De [uitvoerregels](../AGENTS.md#eigenaaropdracht-29-september-2026--begrensd-uitvoeren-resultaat-vóór-tussenwerk) richten zich op complete voorbereiding van de werkelijke gebruikersroute, bestaande werking hergebruiken, vroege controle van noodzakelijke aansluitingen en gerichte oorzaakanalyse. Geen nieuwe test-/installatie-/herstartcyclus per tussenwijziging. Rond de functie af voordat ander werk wordt toegevoegd.
 
-Dit wijzigt geen voortgangsteller of acceptatie en hervat geen productwerk. App-goaltekst kon met de beschikbare tool niet worden gewijzigd; het bestaande goal verwijst al naar PROJECTDOEL/bouwplan/dit werkbord. De aanvullende regels staan bovenaan AGENTS.md en PROJECTDOEL.md en in `audit.deliveryPlan.boundedExecutionPolicy`. Het zijn uitvoerinstructies, geen technische kredietlimiet van de app.
+Dit is uitsluitend een correctie van werkinstructies; geen productoplevering of hervatting. Goaltekst in de app kan met beschikbare tools niet worden gewijzigd. De gecorrigeerde afspraken staan in AGENTS.md, PROJECTDOEL.md en de bestaande `audit.deliveryPlan.boundedExecutionPolicy`.
 
 ## Zo lees je de 24 opdrachten — 29 september 2026
 
