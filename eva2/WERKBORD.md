@@ -1,3 +1,7 @@
+## C1: bestaande Telegram-overlap vastgesteld — 29 september 2026
+
+Modelbegroeting afgerond18:41:57 terwijl onderzoeksaanvraag tot18:41:58 liep. Eén modelaanvraag,0tools, eerste tekst1,641s. Geen bewijs voor totale Telegramtijd of begroeting tijdens succesvol lopend onderzoek; C1 blijft open. Eerdere cacheproef rechtvaardigt geen herbouw. Accountcontrole:zelfde account94% verbruikt, normaal gebruik toegestaan; verklaart eerdere429nog niet. Geen nieuwe modelcalls of reset.
+
 ## Actueel: HTTP429-afhandeling geïnstalleerd — 29 september 2026
 
 C1: providerweigering krijgt geen onmiddellijke tweede aanvraag en wordt op website/Telegram als gebruiks-/snelheidslimiet gemeld. Kern/werker gezond; echte geïnstalleerde foutketen met nagebootste fout gecontroleerd, zonder modelcalls. Onafhankelijke review akkoord. Providerherstel, begroetingssnelheid en echte Telegram-overlap blijven open; geen extra grote functie afgerond.

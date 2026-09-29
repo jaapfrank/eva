@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T19:37:35.937037+00:00",
+        "checkedAt": "2026-09-29T19:41:40.893555+00:00",
         "deliveries": [
           {
             "title": "Providerweigering zonder dubbele aanvraag of veiligheidsmelding",
@@ -3045,7 +3045,7 @@
         "now": {
           "title": "C1 vlot contact tijdens achtergrondwerk",
           "state": "In uitvoering",
-          "detail": "HTTP429-afhandeling geïnstalleerd: geen directe tweede modelaanvraag, juiste website/Telegrammelding. Kern/werker gezond; geïnstalleerde foutketen zonder modelcall gecontroleerd. Live snelheid/overlap blijft open.",
+          "detail": "Bestaande Telegramtijden gecontroleerd: begroeting afgerond terwijl eerdere onderzoeksaanvraag nog liep; eerste modeltekst1,641s. Geen bewijs voor volledige Telegramvertraging of succesvol onderzoeksresultaat tijdens doorpraten. Geen nieuwe modelcalls.",
           "owner": "/root"
         },
         "next": {
@@ -3062,7 +3062,7 @@
           "linkLabel": "Fout onderzocht"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T19:37:35.937037+00:00"
+        "reviewedAt": "2026-09-29T19:41:40.893555+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13027,7 +13027,9 @@
             "failureWorkId": "work:eva-chat:cf79e883-9eb0-5e5f-b3a6-c56a942e5926",
             "cause": "Exact fingerprint confirms comparison-mode source-address matching on descriptive Mars topic; missing background mode guidance.",
             "scope": "Targeted shared tool guidance; no relaxed citations and no guaranteed model-selection claim.",
-            "correction": "Shared guidance installed; 17 focused checks and independent review passed; end-to-end post-change model behavior unmeasured."
+            "correction": "Shared guidance installed; 17 focused checks and independent review passed; end-to-end post-change model behavior unmeasured.",
+            "timelineEvidence": "eva2/evidence/product/c1-telegram-owner-timeline-20260929.json",
+            "finding": "Social model completed18:41:57 while earlier research admission continued until18:41:58. No full queue blockage; successful background-result overlap still unproven."
           },
           "ordinaryRetrievalPerformanceEvidence": "eva2/evidence/product/own-initiative-return-20260928.json",
           "contactInputEvidence": "eva2/evidence/product/contact-guidance-size-20260928.json",
@@ -13086,7 +13088,8 @@
             "type": "not yet distinguished",
             "observedAt": "2026-09-29T19:21:43.918773+00:00",
             "affected": "live greeting and requested research; cannot prove latency while rejected",
-            "evidence": "eva2/evidence/product/c1-update-wait-provider-429-20260929.json"
+            "evidence": "eva2/evidence/product/c1-update-wait-provider-429-20260929.json",
+            "accountStatus": "Same account94% used, ordinary usage permitted; HTTP429 cause remains unresolved, no new request or reset."
           },
           "providerFailureCorrection": {
             "stage": "installed_verified_offline",

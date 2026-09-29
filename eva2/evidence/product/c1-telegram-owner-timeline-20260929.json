@@ -1,0 +1,48 @@
+{
+  "checkedAt": "2026-09-29T19:41:40.893555+00:00",
+  "method": "Existing operational journal metadata and owner supplied transcript only; no new model calls.",
+  "researchInput": "2026-09-29T16:41:33Z",
+  "researchModelIntervals": [
+    {
+      "admitted": "2026-09-29T16:41:37Z",
+      "recorded": "2026-09-29T16:41:50Z"
+    },
+    {
+      "admitted": "2026-09-29T16:41:50Z",
+      "recorded": "2026-09-29T16:41:58Z"
+    }
+  ],
+  "socialInput": "2026-09-29T16:41:53Z",
+  "socialModel": {
+    "admitted": "2026-09-29T16:41:55Z",
+    "recorded": "2026-09-29T16:41:57Z",
+    "firstContentMs": 1641,
+    "completedMs": 2009,
+    "inputTokens": 4232,
+    "outputTokens": 12,
+    "modelAttempts": 1,
+    "toolCalls": 0
+  },
+  "backgroundResearch": {
+    "started": "2026-09-29T16:41:58Z",
+    "ended": "2026-09-29T16:42:24Z",
+    "state": "ambiguous",
+    "failureAlreadyCorrected": "wrong research mode guidance; see c1-research-mode-guidance-20260929.json"
+  },
+  "finding": "Social model turn completed before earlier research admission finished. Existing ingress supports overlap; no queue rebuild justified by this example.",
+  "limits": [
+    "Journal INGRESS_COMMITTED and REPLY_COMMITTED occurred_at reuse original turn timestamp; they do NOT measure reply completion. Only MODEL_ADMITTED/MODEL_RECORDED actual clocks used.",
+    "No Telegram send completion timestamps in this evidence.",
+    "Social answer preceded worker research start, not proven during executing research. Research failed, so successful-result overlap remains unproven.",
+    "No controlled latency improvement comparison."
+  ],
+  "providerAvailability": {
+    "desktopAccountMatchesEva": true,
+    "usedPercent": 94,
+    "ordinaryUsageAllowed": true,
+    "interpretation": "Account is not reported fully exhausted; does not explain prior HTTP429 or prove selected model route available.",
+    "resetInvoked": false
+  },
+  "decision": "Keep C1 open. Preserve working concurrency and cache. No blind provider probe, no cache rebuild. Remaining measurement requires provider availability and genuine overlapping research/social turns.",
+  "newModelCalls": 0
+}
