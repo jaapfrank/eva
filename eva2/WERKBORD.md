@@ -6,7 +6,9 @@
 
 **Bestaande complete bediening behouden:** taakstatussen inclusief wachten, resultaten, stoppen, bijsturen/hervatten en gemeten/ongemeten verbruik hebben gebundeld bewijs. T4 technisch afgerond; eigenaaracceptatie en fysiekeC1/C3 blijven afzonderlijk. Geen modelcalls.
 
-**Volgende, nog niet gestart — I2:** bestaande camera-/agendakoppeling en bewaarde initiatieven gebruiken voor een volledige nuttige initiatiefuitkomst; geen nieuwe cameralaag.
+**I2 blijft open:** huidige4achtergrondreflectieplaatsen verbruikt:1initiatiefbeoordeling,3geheugenreflecties. Geen nieuw initiatief actief. Camerakeuze gevraagd; geen willekeurige cameraronde of verzonnen herinnering. Geen quotareset/verhoging, productwijziging of modelcall. Onafhankelijk bevestigd als bekend budgetgedrag. [Actueel bewijs](evidence/product/initiative-outcome-blocker-20260929.json).
+
+**Volgende, nog niet gestart — L2:** bestaand project/bewijs gebruiken voor ontbrekende zelfstandige voortzetting; afgeronde documentopdracht niet opnieuw uitvoeren.
 
 ## Afgerond — M2: privécontext en gedeelde speakers
 

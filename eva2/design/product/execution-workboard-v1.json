@@ -2852,8 +2852,8 @@
         ],
         "now": {
           "title": "T1: onderzoek volledig afronden",
-          "state": "T4 technisch afgerond: taakbediening en actuele werkerstatus",
-          "detail": "Geïnstalleerd en live gecontroleerd; werkerstatus met meettijd. Resultaten, stoppen, bijsturen, wachten en verbruik behouden. Fysieke spraak/modelkwaliteit afzonderlijk onbekend. I2 volgt, nog niet gestart.",
+          "state": "I2 wacht op camerakeuze en bestaande achtergrondruimte",
+          "detail": "Geen nieuw initiatief uitgevoerd. Eén initiatiefbeoordeling en drie geheugenreflecties gebruikten bestaande4dagplaatsen. Geen reset/verhoging of modelcalls. Alleen deze uitkomst wacht; L2 volgt onafhankelijk.",
           "doneWhen": "Eva bewaart, controleert en meldt het volledige onderzoeksresultaat zelfstandig terug binnen het geldende taakbudget."
         },
         "next": {
@@ -2873,7 +2873,7 @@
           "expected": "Tussenvraag vóór het onderzoeksantwoord; onderzoeksantwoord bij de oorspronkelijke vraag."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T07:56:43.504118+00:00"
+        "reviewedAt": "2026-09-29T08:00:55.127850+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12693,7 +12693,7 @@
           ]
         }
       ],
-      "nextAction": "I2: bestaande camera-/agendakoppeling en bewaarde initiatieven gebruiken om een complete nuttige initiatiefuitkomst af te ronden; geen nieuwe camera- of initiatieflaag.",
+      "nextAction": "L2: gebruik bestaand opgeslagen project en bewijs om uitsluitend ontbrekende zelfstandige vervolgstap na onderbreking vast te stellen; documentopdracht niet opnieuw uitvoeren.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13470,13 +13470,22 @@
             "sourceCommit": "122b91ae12f5c2b12e27c7ba32de305c3eb0702b"
           },
           "evidence": "eva2/evidence/product/local-vision-installed-20260928.json",
-          "remaining": "Useful camera/calendar reminder through existing initiative execution, self-chosen research and appropriate private return; real household usefulness remains open. Camera selection question pending. No complete I1/I2 claim.",
+          "remaining": "Nuttige autonome camera-/agendauitkomst niet geleverd. Bestaande dagruimte4/4verbruikt (1initiatief,3geheugenreflecties), camerakeuze gevraagd. Geen nieuw defect of rechtvaardiging voor quotareset/herbouw.",
           "discoveryEvidence": "eva2/evidence/product/ha-domain-selection-installed-20260928.json",
           "connectionInstalledEvidence": "eva2/evidence/product/initiative-vision-read-installed-20260928.json",
           "reviewPacingEvidence": "eva2/evidence/product/initiative-review-pacing-installed-20260928.json",
           "calendarSourceEvidence": "eva2/evidence/product/initiative-calendar-source-20260928.json",
           "returnServiceEvidence": "eva2/evidence/product/initiative-return-service-installed-20260928.json",
-          "activeWorker": null
+          "activeWorker": null,
+          "latestEvidence": "eva2/evidence/product/initiative-outcome-blocker-20260929.json",
+          "currentAssignment": {
+            "baseCommit": "b2264eaf",
+            "stage": "read_only_check_completed_dependencies_open",
+            "owner": "/root",
+            "endCondition": "Identify existing live initiative and concrete prerequisites without changing budget or manufacturing result",
+            "effort": "One bounded source/current-state check, zero modelcalls; creditcost unknown",
+            "review": "review_directory_connection confirmed documented budget behavior"
+          }
         },
         {
           "id": "L1",
