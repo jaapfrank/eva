@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T20:14:37.622636+00:00",
+        "checkedAt": "2026-09-29T20:24:29.982954+00:00",
         "deliveries": [
+          {
+            "title": "Herhaalde herstelpakketcontrole versneld",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Zelfde pakket binnen één uitvoering:260,8s eerste controle,10,1s herhaling. Bestanden/hashes blijven iedere keer gecontroleerd.",
+            "remaining": "Geen volledige O2.3-afronding; gezamenlijk herstel nog uitvoeren.",
+            "source": "eva2/evidence/product/o2-scoped-package-validation-20260929.json"
+          },
           {
             "title": "Providerweigering zonder dubbele aanvraag of veiligheidsmelding",
             "date": "29 september",
@@ -3043,10 +3051,10 @@
           }
         ],
         "now": {
-          "title": "O2.3: gezamenlijk herstelpakket gereed",
+          "title": "O2.3: herhaalde pakketcontrole versneld en geïnstalleerd",
           "state": "Tussenresultaat gereed",
           "owner": "Codex /root",
-          "detail": "243 bestanden uit dezelfde kopie gevalideerd: kern, geheugen, gateway en documenten. Export en samenstelling voltooid; nog geen volledige herstelclaim."
+          "detail": "Echt pakket: eerste inhoudelijke controle260,8s, herhaalde controle10,1s met alle bestandscontroles behouden.7 gerichte controles, onafhankelijke review en exacte geïnstalleerde bron bevestigd. Gezamenlijk herstel nog open."
         },
         "next": {
           "title": "O2.3: echt gezamenlijk herstel uitvoeren",
@@ -3063,7 +3071,7 @@
           "linkLabel": "Antwoord in deze chat"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T20:14:37.622636+00:00"
+        "reviewedAt": "2026-09-29T20:24:29.982954+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14500,25 +14508,22 @@
               "assignment": {
                 "baseCommit": "6f7e322a",
                 "files": [
-                  "eva2/tools/installer_prepared_restore_config.py",
-                  "eva2/tools/portable_runtime_restore.py",
-                  "eva2/tools/installer_portable_restore.py",
-                  "eva2/tools/installer_restore_wizard.py",
-                  "focused identity restore tests"
+                  "eva2/tools/installation_recovery_package.py",
+                  "eva2/tests/portable/test_installation_runtime_package.py"
                 ],
                 "existing": "Current restore route proven from0009; existing install_schema forward route supports0007",
                 "gap": "Actual retained0007 data has not passed the existing forward migration needed by portable v2",
                 "outcome": "Bevroren echte gegevens via bestaande volledige herstelroute herstellen.",
                 "estimate": "Bestaande kernexport duurt eerder circa8min; één export van deze nieuwe consistente bronkopie, geen nieuwe live snapshot/modelcalls. Credits onbekend.",
                 "finish": "Consistent source copy collected through existing helpers; complete joint restore remains required.",
-                "stage": "same_snapshot_package_validated",
+                "stage": "scoped_validation_reuse_installed",
                 "workers": {},
                 "activeWorkers": [],
                 "endCondition": "Pakket/autoriteit/wizard gebruiken dezelfde v3-kern met bestaande externe stappen; gerichte combinatiecontrole, onafhankelijke review en operatorinstallatie.",
                 "liveExportSession": null
               },
-              "latestEvidence": "eva2/evidence/product/o2-operator-source-alignment-20260929.json",
-              "remaining": "Gezamenlijk pakket met243 bestanden gevalideerd. Werkelijk herstel en aansluiting van vier documentproviders op passend geïsoleerd doel nog open."
+              "latestEvidence": "eva2/evidence/product/o2-scoped-package-validation-20260929.json",
+              "remaining": "Geldig gezamenlijk pakket behouden. Herhaalde controle aantoonbaar versneld en geïnstalleerd. Echt gezamenlijk herstel met vier documentproviders op huidig geïsoleerd doel nog open."
             }
           ],
           "latestEvidence": "eva2/evidence/product/o2-consistent-source-collected-20260929.json"

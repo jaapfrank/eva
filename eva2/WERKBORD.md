@@ -1,3 +1,7 @@
+## Actueel: O2.3 herhaalde pakketcontrole versneld — 29 september 2026
+
+Geïnstalleerde correctie hergebruikt binnen één uitvoering alleen de inhoudelijke kerncontrole; alle bestandshashes/inventarissen blijven per aanroep gecontroleerd. Echt pakket:260,836s eerste controle,10,104s herhaling; gemeten piek2,36GiB.7 gerichte controles en onafhankelijke review akkoord. Geen Eva-modelcalls of runtimeherstart. Gezamenlijk herstel nog open; meting is voltooid en draait niet meer. [Bewijs](evidence/product/o2-scoped-package-validation-20260929.json).
+
 ## Actueel: O2.3 gezamenlijk herstelpakket gereed — 29 september 2026
 
 Kernexport en gezamenlijk pakket volledig gevalideerd:243 bestanden met kern, geheugen, gateway en documenten uit dezelfde kopie. Oude operatorcontracten waren de oorzaak; geen gegevens gerepareerd of verwijderd. Geen modelcalls of Eva-herinstallatie. Volgende stap: werkelijk gezamenlijk herstel op passend geïsoleerd doel, inclusief vier documentproviders. O2.3 nog open; export/samenstelling draaien niet meer. [Bewijs](evidence/product/o2-operator-source-alignment-20260929.json).

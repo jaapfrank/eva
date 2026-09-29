@@ -11,6 +11,7 @@ from __future__ import annotations
 import hashlib
 from contextlib import contextmanager
 from contextvars import ContextVar
+from copy import deepcopy
 import os
 from pathlib import Path
 import re
@@ -26,6 +27,8 @@ from tools.portable_transport import MAX_ARCHIVE_BYTES, MAX_ARCHIVE_FILES
 
 # Scoped by the synchronous operator workflow; never loaded from package content.
 _identity_trust = ContextVar("installation_recovery_identity_trust", default=None)
+# One validated core per synchronous restore scope; never persistent or global.
+_validated_core = ContextVar("installation_recovery_validated_core", default=None)
 
 
 @contextmanager
@@ -39,9 +42,11 @@ def installation_identity_trust(trust):
     if trust is not None and not isinstance(trust, IdentityPackTrustBinding):
         raise ValueError("installation identity trust binding is invalid")
     token = _identity_trust.set(trust)
+    cache_token = _validated_core.set([])
     try:
         yield
     finally:
+        _validated_core.reset(cache_token)
         _identity_trust.reset(token)
 
 
@@ -169,7 +174,15 @@ def _validate(fd, raw, identity_trust=None):
         roles[name] = role
     if _entries(fd, set(entries), roles) != entries:
         raise ValueError("installation component bytes differ")
-    core = _core(fd, identity_trust)
+    trust = identity_trust if identity_trust is not None else _identity_trust.get()
+    cache = _validated_core.get()
+    key = (_sha(raw), trust)
+    cached = cache[0] if cache else None
+    # The entire exact inventory has just been hashed. Reuse only the expensive
+    # semantic core check for identical bytes under the same immutable trust.
+    # Callers receive independent records so restore transformations cannot alter
+    # the saved validation result. Both hash passes below still run every time.
+    core = deepcopy(cached[1]) if cached is not None and cached[0] == key else _core(fd, trust)
     if (manifest["core_archive_sha256"] != core["archive_sha256"]
             or any(manifest[key] != core["manifest"][key] for key in IDENTITY_FIELDS)):
         raise ValueError("installation and core archive provenance differ")
@@ -178,6 +191,8 @@ def _validate(fd, raw, identity_trust=None):
         raise ValueError("installation package changed during validation")
     if _read_regular(fd, "archive.json", maximum=16777216) != raw:
         raise ValueError("installation manifest changed during validation")
+    if cache is not None and (cached is None or cached[0] != key):
+        cache[:] = [(key, deepcopy(core))]
     return {"manifest": manifest, "manifest_raw": raw, "archive_sha256": _sha(raw),
             "core_archive": core}
 

@@ -144,3 +144,56 @@ def test_existing_wizard_package_materialization_reaches_v3_and_external_callbac
             read_installation_package(destination)
     finally:
         wizard.close()
+
+
+def test_scoped_core_reuse_keeps_hash_checks_and_independent_records(runtime_package, monkeypatch):
+    root, _, args, _ = runtime_package
+    import tools.installation_recovery_package as module
+    original = module._core
+    calls = []
+    def count(*arguments):
+        calls.append(1)
+        return original(*arguments)
+    monkeypatch.setattr(module, "_core", count)
+    with installation_identity_trust(args["identity_trust"]):
+        first = read_installation_package(root)
+        first["core_archive"]["manifest"]["source_tenant_id"] = "caller-mutation"
+        second = read_installation_package(root)
+        assert second["core_archive"]["manifest"]["source_tenant_id"] != "caller-mutation"
+        assert len(calls) == 1
+        document = root / "documents/result.txt"
+        document.write_bytes(b"changed-document")
+        with pytest.raises(ValueError, match="component bytes differ"):
+            read_installation_package(root)
+        assert len(calls) == 1
+    with installation_identity_trust(args["identity_trust"]):
+        document.write_bytes(b"retained-document")
+        read_installation_package(root)
+        assert len(calls) == 2
+
+
+def test_scoped_core_reuse_rejects_changed_core_and_inventory(runtime_package):
+    root, _, args, _ = runtime_package
+    with installation_identity_trust(args["identity_trust"]):
+        read_installation_package(root)
+        target = root / "core/runtime/identity.json"
+        original = target.read_bytes()
+        target.write_bytes(original + b" ")
+        with pytest.raises(ValueError, match="component bytes differ"):
+            read_installation_package(root)
+        target.write_bytes(original)
+        extra = root / "core/extra.json"
+        extra.write_text("{}")
+        with pytest.raises(ValueError, match="inventory differs"):
+            read_installation_package(root)
+
+
+def test_explicit_different_trust_cannot_use_cached_core(runtime_package):
+    root, _, args, _ = runtime_package
+    from dataclasses import replace
+    wrong = replace(args["identity_trust"], expected_issuer="different-issuer")
+    with installation_identity_trust(args["identity_trust"]):
+        read_installation_package(root)
+        with pytest.raises(ValueError):
+            read_installation_package(root, identity_trust=wrong)
+        read_installation_package(root)

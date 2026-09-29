@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-09-29T20:24:29.982954+00:00",
+  "task": "O2.3",
+  "existing": "Each package read fully validated the semantic core, repeatedly within the same restore including three reads per document provider.",
+  "change": "Reuse one semantic core result within the existing synchronous identity-trust scope. Every read retains two complete inventory/hash passes, link checks, manifest reread and provenance checks. Different manifest or trust requires full validation. Returned records are independent deep copies.",
+  "verification": {
+    "focusedTests": 7,
+    "independentReview": "GO; content/time semantics and unchanged hash checks reviewed",
+    "actualPackage": {
+      "sourceSha256": "cd0652005eeda46298ffa5505f2be22f40455ab9bd43574ea247aeeb320c758a",
+      "reads": [
+        {
+          "seconds": 260.836,
+          "semanticCoreChecks": 1,
+          "archiveSha256": "1e7f0d2d767f116f70439d0ad58c43e26833d4c18b3cfbefc6410938d4c20f28",
+          "files": 243
+        },
+        {
+          "seconds": 10.104,
+          "semanticCoreChecks": 1,
+          "archiveSha256": "1e7f0d2d767f116f70439d0ad58c43e26833d4c18b3cfbefc6410938d4c20f28",
+          "files": 243
+        }
+      ],
+      "modelCalls": 0
+    },
+    "memory": {
+      "pid": 2972808,
+      "observedPeakRssKiB": 2477312,
+      "method": "Linux process VmHWM sampled until process exit"
+    }
+  },
+  "installation": {
+    "at": "2026-09-29T20:20:41.867474+00:00",
+    "sourceSha256": "cd0652005eeda46298ffa5505f2be22f40455ab9bd43574ea247aeeb320c758a",
+    "installedSha256": "cd0652005eeda46298ffa5505f2be22f40455ab9bd43574ea247aeeb320c758a",
+    "previousModule": "/home/administrator/project/.eva2-artifacts/o2-consistent-source-20260929/installation_recovery_package-before-scoped-cache.py",
+    "runtimeServicesChanged": false
+  },
+  "limitations": [
+    "Measured first/repeated reads in one scope; not total recovery duration.",
+    "One retained parsed core increases memory; incremental memory versus prior implementation was not separately measured.",
+    "Actual combined restore and four provider connections remain open."
+  ],
+  "modelCalls": 0,
+  "creditCost": "unknown"
+}
