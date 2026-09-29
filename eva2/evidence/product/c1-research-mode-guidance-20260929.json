@@ -1,0 +1,51 @@
+{
+  "checkedAt": "2026-09-29T19:18:12.337516+00:00",
+  "outcome": "Installed shared research-mode guidance; not full C1 completion.",
+  "existing": "Direct research had mode guidance; background research enum lacked descriptions. Topic research and strict source validation already existed.",
+  "ownerFailure": {
+    "workId": "work:eva-chat:cf79e883-9eb0-5e5f-b3a6-c56a942e5926",
+    "durationSeconds": 26,
+    "inputTokens": 13418,
+    "outputTokens": 621,
+    "tools": 2,
+    "exactCause": "ConversationModelError: web research lacks a primary source for Mars: heen- en terugvlucht, lanceervensters en wachttijd.",
+    "fingerprint": "cbc7f71e7de3003d15f2b34d1bbe4a6ba47bd733b6469afbe057e15e51cf778d",
+    "outerFailure": "research lacks a verified source artifact"
+  },
+  "ownerRetry": {
+    "workId": "work:eva-chat:507519d3-8d0c-56ba-ab97-a0ddaf54d632",
+    "state": "succeeded",
+    "durationSeconds": 24
+  },
+  "change": "Both tools now share explicit topic versus named-product comparison guidance; background option descriptions added. Citation and explicit URL validation unchanged.",
+  "tests": "17 passed, 123 deselected; runtime image dependencies, network disabled. Two host test collections failed for missing pydantic_ai before runtime-backed run.",
+  "review": "review_o1_factory GO; suggested direct options consistency incorporated.",
+  "installed": {
+    "core": {
+      "image": "sha256:a2c2e76321fea829e890b6b4f4a1dd201830acecf761219149041c964c2fab51",
+      "health": "healthy",
+      "sourceHashes": {
+        "application/research.py": "22dd4658fc0bde89e828029ae04efa31764fbce2c65f5dff61c0ed5cff1a3bb7",
+        "adapters/model/pydantic_conversation.py": "01ff99a7740ef1fb0e9a771057147656d805b05f4b9fd50d267981fa0038e586",
+        "adapters/postgres/delegated_work_actions.py": "78ce3c02d60dda574449d4233254ad65bcbe34884dd4b277c049154887d463e6"
+      }
+    },
+    "worker": {
+      "image": "sha256:fe02fd40253395d9ceeb5ca22787bc761c0641864c76018b1dbda81a48a708a6",
+      "health": "healthy",
+      "sourceHashes": {
+        "application/research.py": "22dd4658fc0bde89e828029ae04efa31764fbce2c65f5dff61c0ed5cff1a3bb7",
+        "adapters/model/pydantic_conversation.py": "01ff99a7740ef1fb0e9a771057147656d805b05f4b9fd50d267981fa0038e586",
+        "adapters/postgres/delegated_work_actions.py": "78ce3c02d60dda574449d4233254ad65bcbe34884dd4b277c049154887d463e6"
+      }
+    }
+  },
+  "deployment": "Paired image update timed out after creation; started retained worker, rebound same household policy to changed research descriptor fingerprint, restarted existing containers. No rollback or repeated rebuild. Policy devices/rights/budgets unchanged.",
+  "limitations": [
+    "No new model call or user acceptance after change. Model selection remains probabilistic; no guaranteed prevention claim.",
+    "Copied Telegram minute-resolution transcript does not establish overlap latency.",
+    "Greeting latency remains open. No additional large component marked complete."
+  ],
+  "modelCallsThisChange": 0,
+  "developmentCreditCost": "unknown"
+}

@@ -21,6 +21,7 @@ from eva.application.conversation import (
 )
 from eva.application.delegated_work_owner import DelegatedWorkOwnerPort
 from eva.contracts.canonical_json import canonical_json_bytes
+from eva.application.research import RESEARCH_MODE_DESCRIPTION, RESEARCH_OPTIONS_DESCRIPTION
 
 
 _OPERATIONS = {
@@ -100,8 +101,10 @@ class PostgresDelegatedWorkActions:
                             "question": {"type":"string", "minLength":1, "maxLength":2000},
                             "title": {"type":"string", "minLength":1, "maxLength":200},
                             "options": {"type":"array", "minItems":1, "maxItems":5,
+                                "description": RESEARCH_OPTIONS_DESCRIPTION,
                                 "items":{"type":"string", "minLength":1, "maxLength":120}},
-                            "research_mode": {"type":"string", "enum":["topic","comparison"]},
+                            "research_mode": {"type":"string", "enum":["topic","comparison"],
+                                "description": RESEARCH_MODE_DESCRIPTION},
                             "public_review": {"type":"string", "const":"public_unlinked"}},
                         "required": ["contract","schema_version","question","title","options","research_mode","public_review"]
                     } if operation == "research" else {

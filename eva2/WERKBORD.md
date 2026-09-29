@@ -1,4 +1,18 @@
+## Actueel: ontvangen Telegramproef — 29 september 2026
+
+C1: eerste Mars/Zon-onderzoek faalde op productnaam/bronadrescontrole; foutvingerafdruk exact herleid. Achtergrondtool miste uitleg over onderzoekmodus. Gedeelde uitleg gecorrigeerd; 17 bestaande gerichte controles en onafhankelijke review geslaagd. Geïnstalleerd in gezonde kern en werker; exacte bron teruggelezen. Geen nieuwe modelcall; geen bewezen snelheidswinst of volledige C1-afronding.
+
 # Eva 2 — uitvoerbaar werkbord
+
+## Actueel — hervat op eigenaaropdracht: C1 vlot contact
+
+Na expliciet “ga verder” hervat op C1, niet op O2.3. Uitvoerder `/root`.
+Bestaand contact/overlapgedrag behouden; vermijdbare vertraging eerst aantonen
+vóór codewijziging of nieuwe modelproef. Gewenste uitkomst: sneller inhoudelijk
+contact met behoud van persoonlijkheid/geheugen, plus juiste Telegram-antwoorden
+tijdens onderzoek. Telegram-praktijkproef opnieuw aan eigenaar gevraagd.
+Eerdere pauzeberichten hieronder zijn historie. Geen tijdquota; credits onbekend.
+
 
 ## Goal herzien — geen hervatting
 

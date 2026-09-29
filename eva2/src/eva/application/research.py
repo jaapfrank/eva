@@ -11,6 +11,21 @@ from urllib.parse import urlparse
 from eva.application.conversation import ConversationModelUsage
 
 
+RESEARCH_MODE_DESCRIPTION = (
+    "Use topic for general knowledge, scientific questions and comparisons of topics "
+    "or scenarios, even when several subjects are requested. Use comparison only for "
+    "named products, services or projects whose official website or repository can "
+    "identify each option. Comparison validates source addresses against option names; "
+    "never use descriptive sentences as product names. Explicit source URLs remain "
+    "bound in both modes."
+)
+RESEARCH_OPTIONS_DESCRIPTION = (
+    "In topic mode: subjects or questions to investigate. In comparison mode: concise "
+    "product/service/project names or explicit official source URLs, not descriptions "
+    "of aspects to investigate. Put those aspects in question."
+)
+
+
 @dataclass(frozen=True, slots=True)
 class ResearchSource:
     """One cited web source returned by the model provider."""

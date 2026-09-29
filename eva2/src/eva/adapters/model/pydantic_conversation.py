@@ -77,7 +77,7 @@ from eva.application.personal_interests import (
     PersonalPrototype,
     PersonalPrototypeClaim,
 )
-from eva.application.research import ResearchArtifact, ResearchSource
+from eva.application.research import ResearchArtifact, ResearchSource, RESEARCH_MODE_DESCRIPTION, RESEARCH_OPTIONS_DESCRIPTION
 from eva.application.repository_improvements import (
     RepositoryImprovementProposal,
     RepositorySnapshot,
@@ -455,7 +455,7 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
             "wezenlijk is."
         ),
         required=("options", "question", "title", "public_review", "research_mode"),
-        research_mode=_schema("topic voor een algemene kennisvraag; comparison voor benoemde producten of routes. Expliciete bron-URLs blijven in beide gevallen gebonden.", enum=("topic", "comparison")),
+        research_mode=_schema(RESEARCH_MODE_DESCRIPTION, enum=("topic", "comparison")),
         public_review=_schema(
             "Bij eigen initiatief: formuleer eerst een abstracte publieke vraag. "
             "Beoordeel namen, privélocaties, tijden, gezin, geheugenfragmenten en indirecte "
@@ -470,10 +470,7 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
             )
         ),
         options=_schema(
-            (
-                "Eén tot vijf onderwerpen bij topic; bij comparison concrete producten, "
-                "projecten of routes die elk een eigen primaire bron vereisen."
-            ),
+            RESEARCH_OPTIONS_DESCRIPTION,
             type_="array",
             items={"type": "string", "minLength": 1, "maxLength": 120},
             maxItems=5,

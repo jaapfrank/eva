@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T15:16:34.726872+00:00",
+        "checkedAt": "2026-09-29T19:18:12.337516+00:00",
         "deliveries": [
+          {
+            "title": "Onderzoektool legt algemene onderwerpen en productvergelijking gelijk uit",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Mars/Zon-fout exact herleid; ontbrekende uitleg in achtergrondtool aangevuld. 17 gerichte controles en review geslaagd; kern en werker gezond.",
+            "remaining": "Modelgedrag na deze wijziging nog niet live beproefd; snelheid en overlap blijven open.",
+            "source": "eva2/evidence/product/c1-research-mode-guidance-20260929.json"
+          },
           {
             "title": "Herstelde identiteit leesbaar voor Eva-runtime",
             "date": "29 september",
@@ -3027,28 +3035,26 @@
           }
         ],
         "now": {
-          "title": "Gepauzeerd op verzoek van Jaap",
-          "state": "Gepauzeerd",
-          "detail": "Gepauzeerd. Goalafspraken herzien: onderzoek vóór bouwkeuzes, dagelijks bruikbare functies eerst en samenhangende installatie. Geen productwerk gestart of voortgangsteller veranderd.",
+          "title": "C1 vlot contact tijdens achtergrondwerk",
+          "state": "In uitvoering",
+          "detail": "Gerichte onderzoekmodus-correctie geïnstalleerd; kern en werker gezond. Begroetingssnelheid en volledige Telegram-overlap nog open; niet als afgeronde C1 geteld.",
           "owner": "/root"
         },
         "next": {
-          "title": "Alleen na expliciet hervatten: begrensde gebruikersuitkomst kiezen",
-          "detail": "Alleen na expliciet hervatten: één bestaande functionele uitkomst afronden met gerichte voorbereiding van de echte installatie en vaste eindvoorwaarden. Geen tijdquota of automatische onderhoudsronde."
+          "title": "C1 gekozen gebruikersuitkomst afmaken",
+          "detail": "Alleen een aangetoonde oorzaak verbeteren en werkelijke reactie controleren; geen nieuw geheugen-, spraak- of installatieproject."
         },
         "ownerAction": {
-          "title": "Doorpraten op woonkamerspeaker proberen",
+          "title": "Geen nieuwe proef nodig voor deze foutdiagnose",
           "steps": [
-            "Zeg Hey Eva, zoek uit wat Home Assistant Cloud voor spraak doet.",
-            "Probeer daarna Hoe gaat het? te vragen terwijl onderzoek loopt.",
-            "Geef door of Eva weer luistert en of het tweede antwoord vóór het onderzoeksresultaat komt."
+            "Je Telegram-uitkomst is ontvangen en gekoppeld aan de echte taakregistratie."
           ],
-          "expected": "Nieuw gesprek mogelijk tijdens aangenomen werk; daadwerkelijke fysieke werking nog niet bevestigd.",
+          "expected": "Eerst de gevonden inconsistentie installeren. Doorpraten en begroetingssnelheid blijven apart open.",
           "url": "",
-          "linkLabel": "Geef resultaat in deze taak door"
+          "linkLabel": "Uitkomst ontvangen"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T15:16:34.726872+00:00"
+        "reviewedAt": "2026-09-29T19:18:12.337516+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13008,28 +13014,42 @@
           },
           "remaining": "Huidige Telegramwaarneming en gewenste reactietijd open. Geen defect bewezen dat geheugenombouw of pollingherbouw rechtvaardigt.",
           "telegramOwnerTrial": {
-            "status": "awaiting_owner_observation",
-            "steps": [
-              "/eva2 Zoek uit wat Home Assistant Cloud doet voor spraak, met bronnen.",
-              "/eva2 Hoe gaat het met jou?"
-            ],
-            "expected": "Social answer before research result; result replies to original research question.",
-            "blocksIndependentWork": false
+            "status": "owner_report_received_partial_failure",
+            "observed": "Mars/Sun first research failed; requested retry succeeded. Copied minute-resolution ordering does not establish concurrent social turn latency.",
+            "failureWorkId": "work:eva-chat:cf79e883-9eb0-5e5f-b3a6-c56a942e5926",
+            "cause": "Exact fingerprint confirms comparison-mode source-address matching on descriptive Mars topic; missing background mode guidance.",
+            "scope": "Targeted shared tool guidance; no relaxed citations and no guaranteed model-selection claim.",
+            "correction": "Shared guidance installed; 17 focused checks and independent review passed; end-to-end post-change model behavior unmeasured."
           },
           "ordinaryRetrievalPerformanceEvidence": "eva2/evidence/product/own-initiative-return-20260928.json",
           "contactInputEvidence": "eva2/evidence/product/contact-guidance-size-20260928.json",
-          "latestEvidence": "eva2/evidence/product/c1-memory-timing-20260929.json",
+          "latestEvidence": "eva2/evidence/product/c1-research-mode-guidance-20260929.json",
           "dashboardComponent": "conversation",
           "remainingTasks": [
             {
               "id": "C1.1",
               "title": "Begroeting versnellen",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "verbeteren",
               "doneWhen": "Eenvoudig hallo sneller dan de huidige circa5s; inhoudelijke antwoordtijd en verbruik vastgelegd.",
               "owner": "Codex",
               "existingTimingFinding": "Existing measured greeting5.191s; model first content3.330s, memory-only0.985s. No new measurement or demonstrated new defect; no speculative memory/transport rebuild.",
-              "remaining": "Bestaande meting verklaart vijf seconden deels door modelroute3,330s en geheugen circa1s. Geen nieuwe concrete vermijdbare wachttijd gevonden. Geen ongewijzigde modelproef of eerder afgewezen geheugenparallelisatie herhalen."
+              "remaining": "Bestaande meting verklaart vijf seconden deels door modelroute3,330s en geheugen circa1s. Geen nieuwe concrete vermijdbare wachttijd gevonden. Geen ongewijzigde modelproef of eerder afgewezen geheugenparallelisatie herhalen.",
+              "assignment": {
+                "owner": "/root",
+                "baseCommit": "6db2229fc4a0f948883116bbd78b35c7fc945f33",
+                "outcome": "Sneller inhoudelijk contact met behoud van persoonlijkheid en geheugen; gesprek beschikbaar tijdens werk.",
+                "existing": "Installed grouped catalog/contact model and verified HTTP overlap; last greeting5.191s includes3.330s model first content and0.985s recall.",
+                "gap": "Current end-to-end greeting remains slow; no proven new causal bottleneck yet.",
+                "files": [
+                  "eva2/src/eva/adapters/model/openai_codex_provider.py",
+                  "eva2/src/eva/adapters/model/pydantic_conversation.py",
+                  "existing focused contact tests and evidence only if a concrete defect is found"
+                ],
+                "finish": "Demonstrated reduction in actual content latency without bypassing shared memory/persona; independent focused review and installed result. Current Telegram overlap remains separate C1.2.",
+                "estimate": "Use retained timings and current source/config first; new provider calls only for a concrete changed hypothesis. Credits unknown.",
+                "stage": "existing_contact_path_cause_check"
+              }
             },
             {
               "id": "C1.2",
@@ -13048,7 +13068,7 @@
                 "finish": "Use current ingress/archive metadata to locate an actual failure or verify a bounded real overlapping pair; do not rebuild tested concurrency.",
                 "estimate": "15–30 minutes initial diagnosis; zero planned replay/model calls; credits unknown."
               },
-              "blocker": "Huidige echte overlappende Telegram-proef ontbreekt. Eigenaar gevraagd twee berichten direct na elkaar te sturen; antwoord nog open. Bestaande concurrency en vraagbinding behouden.",
+              "blocker": "Eigenaarproef ontvangen: eerste onderzoek faalde, herhaling slaagde. Gekopieerde tijdvolgorde bewijst geen tussenvraag vóór voltooiing. Onderzoekmodus-uitleg gecorrigeerd en geïnstalleerd; volledige overlapacceptatie open.",
               "latestEvidence": "eva2/evidence/product/c1-telegram-current-20260929.json",
               "checkedAt": "2026-09-29T10:49:09.405499+00:00"
             }
@@ -14691,7 +14711,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "O2",
+      "activeSliceId": "C1",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
@@ -14708,7 +14728,7 @@
       },
       "boundedExecutionPolicy": {
         "ownerInstructionDate": "2026-09-29",
-        "status": "applies_on_explicit_resume",
+        "status": "active",
         "source": "AGENTS.md#eigenaaropdracht-29-september-2026--begrensd-uitvoeren-resultaat-vóór-tussenwerk",
         "scope": "One existing useful user outcome; checks, review and installation included; full product scope preserved.",
         "attemptFields": [
@@ -14723,7 +14743,7 @@
         "completionRule": "Installed intended user route meets frozen finish conditions. Intermediate engineering evidence is not product completion. Physical and owner acceptance remain explicit.",
         "costRule": "Default one executor, bounded combined work and review. Known time/calls/tokens only; credits unknown unless measured. No invented currency conversion or daily quota.",
         "enforcementLimit": "Instructions, not an app-level automatic spending cap.",
-        "resumeAuthorized": false,
+        "resumeAuthorized": true,
         "recordedAt": "2026-09-29T18:50:13.829092+00:00",
         "ownerCorrection": "Owner explicitly rejected the arbitrary60-minute limit. No time/retry-count quota or automatic pause. Improve end-to-end preparation, root-cause fixes and actual functional completion.",
         "preparationRule": "Understand existing implementation and actual installed input-to-result route; resolve relevant version, data-format, dependency, packaged-file and runtime-access assumptions before expensive execution.",
