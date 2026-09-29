@@ -1,5 +1,15 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Goal herzien — geen hervatting
+
+De resterende uitvoering volgt bestaand onderzoek en echte afhankelijkheden;
+B0 wordt niet opnieuw gestart. Geen brede vergelijking na iedere oplevering.
+Dagelijkse functies blijven voorop; herstel/beheer alleen als noodzakelijke
+afhankelijkheid. Bron/images/pakket/configuratie vormen één wijziging. Kwaliteit,
+snelheid, zelfstandigheid en runtimeverbruik gezamenlijk beoordelen. De volledige
+scope, eindvergelijking, innovatie-eis en gezinsacceptatie blijven behouden.
+Dit is uitsluitend aangescherpte sturing, geen nieuwe productoplevering.
+
 ## Uitvoering gecorrigeerd — goal blijft gepauzeerd
 
 De eigenaar heeft de door Codex bedachte60minutengrens afgewezen. Die is verwijderd, inclusief deadline-/pogingentellers en automatische stopregels. De [uitvoerregels](../AGENTS.md#eigenaaropdracht-29-september-2026--begrensd-uitvoeren-resultaat-vóór-tussenwerk) richten zich op complete voorbereiding van de werkelijke gebruikersroute, bestaande werking hergebruiken, vroege controle van noodzakelijke aansluitingen en gerichte oorzaakanalyse. Geen nieuwe test-/installatie-/herstartcyclus per tussenwijziging. Rond de functie af voordat ander werk wordt toegevoegd.

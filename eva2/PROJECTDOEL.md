@@ -1,5 +1,41 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaarverduidelijking 29 september 2026 — sneller naar een beter geheel
+
+- Het bestaande onderzoek naar Eva1/concurrenten bepaalt vóór bouwen de keuze
+  en concrete eindvoorwaarden. Gebruik de vastgelegde bronnen, verliezen en
+  beperkingen. Vul alleen een ontbrekende beslisvraag aan; herhaal geen brede
+  vergelijking per oplevering. Eén geplande eindvergelijking toetst de bereikte
+  voordelen. Tussentijds aanvullend vergelijken alleen bij een relevante gewijzigde
+  aanname of tegenvallend resultaat. Het onderzoek bewijst nog geen algemene winst.
+- Hervat bij werkelijk resterend werk. B0 en eerdere besluiten/acceptaties niet
+  opnieuw uitvoeren omdat een oude app-goal dat nog noemt. De bestaande volgorde
+  en echte afhankelijkheden zijn leidend: dagelijks gesprek, geheugen, stem en
+  taakuitvoering vóór brede herstel-/verhuis-/beheerverbetering. Eenvoudig werk
+  krijgt geen voorrang uitsluitend omdat het gemakkelijk groen te testen is.
+- Koppel iedere gekozen wijziging aan een bestaande gebruikerssituatie en het
+  concrete verwachte voordeel in kwaliteit, snelheid, zelfstandigheid of
+  runtimeverbruik. Gebruik bestaande criteria; verzin geen nieuwe eisen of
+  willekeurige getallen. Meet uitsluitend wat de verbetering en relevante
+  regressies kan aantonen. Een snelle ontvangst is geen sneller inhoudelijk antwoord.
+- Beschouw broncode, images, meegeleverde bestanden, configuratie, gegevensversie,
+  runtime-toegang en versies tussen kern/werker als één opleverbare wijziging.
+  Controleer relevante aansluitingen vroeg en lever die samen op. Dit vereist
+  geen nieuw verpakkings- of testplatform. Een goed geteste losse module met
+  ontbrekende installatiebestanden voldoet niet.
+- Verbeter intelligent gedrag via gedeelde kern en algemene hulpmiddelen; geen
+  nieuwe apparaat-/vraag-/kanaalspecifieke scripts om een demonstratie te halen.
+  Behoud één identiteit, passend geheugen en taakstatus. Optimaliseer de gemeten
+  vertraging/verspilling; verlaag niet blind context, modelkwaliteit of taakruimte.
+  Behoud de eigenaarafspraken voor snel gespreksmodel versus onderzoeks-/werkmodel.
+- Houd ontwikkelverbruik en Eva-runtimeverbruik apart. Verbeter één aantoonbare
+  bottleneck zonder automatische refactor-/onderzoeksketen. Kosten zijn onderdeel
+  van kwaliteit; onbewezen besparingen en 'nieuwste dus beter' zijn geen argument.
+- Technische innovatie blijft onderdeel van de afgesproken scope. Beoordeel de
+  bestaande hypothese met haar vooraf vastgelegde proef. Een verlies mag worden
+  afgesloten, maar bewijst geen technische voorsprong en schrapt die ambitie niet.
+  Start niet automatisch een eindeloze reeks alternatieve innovatieprojecten.
+
 ## Eigenaaropdracht 29 september 2026 — begrensd uitvoeren, resultaat vóór tussenwerk
 
 Eigenaarcorrectie: de door Codex bedachte60minutengrens is afgewezen. Er geldt

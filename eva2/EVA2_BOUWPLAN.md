@@ -127,6 +127,24 @@ Een nieuwe functie telt pas als bruikbare oplevering na installatie en controle 
 de echte ingang. Het oordeel van jou staat apart. Er komt geen extra punt bij de
 voortgangsteller omdat er een document, reparatie of losse test is gemaakt.
 
+## Onderzoek bepaalt de bouw; eindvergelijking toetst de uitkomst
+
+Gebruik het bestaande Eva1-/concurrentenonderzoek vóór de betreffende bouwkeuze
+om hergebruik en concrete verbetercriteria vast te leggen. Vul uitsluitend een
+beslissend ontbrekend gegeven gericht aan. Herhaal geen brede vergelijking na
+elke kleine oplevering; controleer dan tegen de vastgelegde eindvoorwaarden.
+De geïntegreerde eindkandidaat krijgt de geplande gelijke eindvergelijking.
+Aanvullend vergelijkingsonderzoek tussendoor vereist een relevante veranderde
+aanname of tegenvallend resultaat. Een ontwerpkeuze is nog geen bewezen voorsprong.
+
+Dagelijkse gebruikersfuncties blijven voorop staan. Installatie-/herstelwerk mag
+ze alleen onderbreken bij een concrete noodzakelijke afhankelijkheid; de rest
+blijft in stap6. B0 wordt niet opnieuw uitgevoerd. Bron, images, pakketbestanden,
+configuratie en relevante kern-/werkerversies horen bij één samenhangende wijziging.
+Optimaliseer aantoonbare vertraging en verbruik met behoud van antwoordkwaliteit,
+geheugen en taakzelfstandigheid. Geen nieuwe kanaal-/apparaatscriptjes om een proef
+te halen, geen terugkerende brede audit en geen willekeurige tijd- of poginglimiet.
+
 ## Hoe we rondjes voorkomen
 
 - **Eén opdracht heeft één zichtbare uitkomst.** Bijvoorbeeld een tussenvraag vóór

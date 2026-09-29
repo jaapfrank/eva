@@ -3029,7 +3029,7 @@
         "now": {
           "title": "Gepauzeerd op verzoek van Jaap",
           "state": "Gepauzeerd",
-          "detail": "Gepauzeerd op verzoek. Willekeurige tijdgrens verwijderd. Uitvoeringseis: complete wijziging vooraf begrijpen, echte aansluitingen vroeg controleren, oorzaken gericht oplossen en functies afronden. Geen productfunctie toegevoegd; O2.3 blijft open.",
+          "detail": "Gepauzeerd. Goalafspraken herzien: onderzoek vóór bouwkeuzes, dagelijks bruikbare functies eerst en samenhangende installatie. Geen productwerk gestart of voortgangsteller veranderd.",
           "owner": "/root"
         },
         "next": {
@@ -14728,7 +14728,12 @@
         "ownerCorrection": "Owner explicitly rejected the arbitrary60-minute limit. No time/retry-count quota or automatic pause. Improve end-to-end preparation, root-cause fixes and actual functional completion.",
         "preparationRule": "Understand existing implementation and actual installed input-to-result route; resolve relevant version, data-format, dependency, packaged-file and runtime-access assumptions before expensive execution.",
         "failureRule": "Localize and explain the failure, correct the smallest sufficient cause and retain valid intermediate results. No speculative repeat, automatic rollback/reinstall or restart from scratch. Ordinary defects do not require owner approval.",
-        "scopeRule": "Finish selected useful outcome before broadening; only demonstrated prerequisites may add necessary work. Ask owner only for actual product/scope decisions or missing mandate."
+        "scopeRule": "Finish selected useful outcome before broadening; only demonstrated prerequisites may add necessary work. Ask owner only for actual product/scope decisions or missing mandate.",
+        "researchRule": "Existing EVA1/competitor research informs pre-build decisions and fixed criteria; only decision-relevant missing facts researched. No broad comparison per delivery; one planned integrated final comparison.",
+        "orderingRule": "Resume remaining work, never restart B0. Daily conversation/memory/voice/tasks precede broad maintenance unless concrete dependency requires it. Do not optimize for easiest green technical checkpoint.",
+        "integrationRule": "Deliver relevant source/images/package files/configuration/data schema/runtime access/core-worker pins together; check necessary seams early using existing tooling.",
+        "optimizationRule": "Measure bottleneck and preserve answer quality, memory, privacy, autonomy and owner model-routing decisions. Distinguish receipt latency/content latency and development/runtime cost.",
+        "innovationRule": "Retain agreed bounded innovation comparison; a loss neither proves superiority nor authorizes unbounded new research."
       }
     },
     "dashboardClarityCorrection20260922": {

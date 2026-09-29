@@ -46,8 +46,12 @@ flowchart LR
   U --> Z
 ```
 
-Comparison cases are defined before implementation and collected during relevant
-slices. Step7 combines final results; comparison is not postponed until then.
+Existing EVA1/competitor research informs choices and fixed outcome criteria before
+implementation. Fill only decision-relevant gaps. During slices verify the outcome
+against those criteria; do not rerun a broad comparative study per delivery. New
+comparative work requires a materially changed assumption or a contrary result.
+Step7 applies the planned final comparison to the integrated candidate; a design
+expectation is not evidence of achieved superiority.
 F1 freezes the candidate before the final P2 comparison; family use F2 may run
 alongside that comparison. Both results are required for the complete project decision.
 Existing installation capability is reused by any justified functional change;
