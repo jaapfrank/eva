@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T19:18:12.337516+00:00",
+        "checkedAt": "2026-09-29T19:21:43.918773+00:00",
         "deliveries": [
           {
             "title": "Onderzoektool legt algemene onderwerpen en productvergelijking gelijk uit",
@@ -3037,7 +3037,7 @@
         "now": {
           "title": "C1 vlot contact tijdens achtergrondwerk",
           "state": "In uitvoering",
-          "detail": "Gerichte onderzoekmodus-correctie geïnstalleerd; kern en werker gezond. Begroetingssnelheid en volledige Telegram-overlap nog open; niet als afgeronde C1 geteld.",
+          "detail": "Updatehulp volgt voortaan dezelfde uitvoering zonder 90/120s-afbreking; geïnstalleerd zonder Eva-herinstallatie. Beide Telegramvragen kregen provider HTTP429, geen modelantwoord; type limiet nog onbekend. Kern/werker gezond. C1 blijft open.",
           "owner": "/root"
         },
         "next": {
@@ -3045,16 +3045,16 @@
           "detail": "Alleen een aangetoonde oorzaak verbeteren en werkelijke reactie controleren; geen nieuw geheugen-, spraak- of installatieproject."
         },
         "ownerAction": {
-          "title": "Geen nieuwe proef nodig voor deze foutdiagnose",
+          "title": "Telegramfout ontvangen; niet opnieuw proberen nodig",
           "steps": [
-            "Je Telegram-uitkomst is ontvangen en gekoppeld aan de echte taakregistratie."
+            "Beide berichten zijn onderzocht: de provider retourneerde HTTP429 voordat een modelantwoord kwam."
           ],
-          "expected": "Eerst de gevonden inconsistentie installeren. Doorpraten en begroetingssnelheid blijven apart open.",
+          "expected": "Geen claim dat inhoud onveilig is; nieuwe modelproeven wachten op beschikbare provider.",
           "url": "",
-          "linkLabel": "Uitkomst ontvangen"
+          "linkLabel": "Fout onderzocht"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T19:18:12.337516+00:00"
+        "reviewedAt": "2026-09-29T19:21:43.918773+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13072,7 +13072,14 @@
               "latestEvidence": "eva2/evidence/product/c1-telegram-current-20260929.json",
               "checkedAt": "2026-09-29T10:49:09.405499+00:00"
             }
-          ]
+          ],
+          "providerBlocker": {
+            "status": 429,
+            "type": "not yet distinguished",
+            "observedAt": "2026-09-29T19:21:43.918773+00:00",
+            "affected": "live greeting and requested research; cannot prove latency while rejected",
+            "evidence": "eva2/evidence/product/c1-update-wait-provider-429-20260929.json"
+          }
         },
         {
           "id": "C2",

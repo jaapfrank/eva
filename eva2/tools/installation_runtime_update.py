@@ -125,9 +125,11 @@ def update_runtime(*, project: str, installed: Path, candidate: Path,
             raise ValueError("update inputs changed before dispatch")
         result["status"] = "dispatched_result_unknown"
         save()
+        # Deployment duration is not failure: follow this same Compose process
+        # until it completes or reports an actual error. Never kill it on elapsed time.
         run([*prefix, "--file", str(candidate), "--profile", "*", "up", "--detach",
-             "--no-deps", "--no-build", "--pull", "never", "--wait", "--wait-timeout", "90",
-             *changed], deadline=120)
+             "--no-deps", "--no-build", "--pull", "never", "--wait",
+             *changed], deadline=None)
         for service, entry in containers.items():
             ids = run([*prefix, "--file", str(candidate), "--profile", "*", "ps", "-q", service]).split()
             if len(ids) != 1:

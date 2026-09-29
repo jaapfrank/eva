@@ -82,3 +82,40 @@ def test_mount_order_is_not_identity_but_storage_changes_are():
         changed[0][field] = value
         assert not same_mounts(mounts, changed)
     assert not same_mounts(mounts, [*mounts, mounts[0]])
+
+
+def test_update_follows_same_process_without_elapsed_time_failure(tmp_path):
+    import json
+    baseline = {"services": {"core": {"image": "sha256:" + "a" * 64}}}
+    candidate = deepcopy(baseline)
+    candidate["services"]["core"]["image"] = "sha256:" + "b" * 64
+    dispatched = []
+
+    def run(args, **kwargs):
+        if "config" in args:
+            if "--hash" in args:
+                return "core current-hash"
+            return json.dumps(candidate if "after" in args else baseline)
+        if "ps" in args:
+            return "current-container"
+        if args[:3] == ["docker", "image", "inspect"]:
+            return json.dumps([{"Id": args[-1], "Config": {}}])
+        if args[:2] == ["docker", "inspect"]:
+            return json.dumps([{
+                "Config": {"Labels": {"com.docker.compose.project": "test",
+                    "com.docker.compose.service": "core",
+                    "com.docker.compose.config-hash": "current-hash"}},
+                "Image": (candidate if dispatched else baseline)["services"]["core"]["image"],
+                "Mounts": [],
+            }])
+        if "up" in args:
+            assert kwargs["deadline"] is None
+            assert "--wait" in args and "--wait-timeout" not in args
+            dispatched.append(args)
+            return "completed after an arbitrarily long healthy startup"
+        pytest.fail("unexpected command")
+
+    result = update_runtime(project="test", installed=Path("before"), candidate=Path("after"),
+                            receipt=tmp_path / "receipt", run=run)
+    assert result["status"] == "running_with_retained_mounts"
+    assert len(dispatched) == 1

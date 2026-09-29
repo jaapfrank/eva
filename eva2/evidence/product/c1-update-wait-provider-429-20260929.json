@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-09-29T19:21:43.918773+00:00",
+  "updateCorrection": {
+    "change": "Removed Compose90s and subprocess120s deployment deadlines; existing process awaited without timeout. Actual errors and storage checks retained.",
+    "tests": "6 passed",
+    "review": "review_o1_factory GO",
+    "installedOperator": "/home/administrator/project/.eva2-artifacts/installer-document-write-20260924/tools/installation_runtime_update.py",
+    "runtimeReinstallation": false
+  },
+  "telegramFailure": {
+    "ownerTime": "2026-09-29 21:19 Europe/Amsterdam",
+    "providerStatus": 429,
+    "requests": 2,
+    "attemptsPerRequest": 2,
+    "modelOutputObserved": false,
+    "coreWorkerHealth": "healthy",
+    "causeLimitType": "unknown; current sanitized log does not distinguish rate versus usage limit",
+    "incorrectUserMessage": "not safely completed",
+    "newModelCalls": 0
+  },
+  "remaining": "C1 latency/overlap incomplete; provider refusal must not be reported as a safety refusal. No new large component completed."
+}

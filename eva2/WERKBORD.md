@@ -1,3 +1,7 @@
+## Actueel: provider weigert modelaanvragen — 29 september 2026
+
+Beide eigenaarberichten van21:19 krijgen HTTP429 vóór modelantwoord; geen bewijs van inhoudelijke veiligheidsweigering. Kern/werker gezond. Type providerlimiet nog onbekend; geen nieuwe modelproef gestart. C1 blijft open. Updatehulp volgt nu dezelfde Compose-uitvoering zonder90/120s-afbreking; zes controles en review geslaagd, operatormodule geïnstalleerd zonder Eva-herinstallatie.
+
 ## Actueel: ontvangen Telegramproef — 29 september 2026
 
 C1: eerste Mars/Zon-onderzoek faalde op productnaam/bronadrescontrole; foutvingerafdruk exact herleid. Achtergrondtool miste uitleg over onderzoekmodus. Gedeelde uitleg gecorrigeerd; 17 bestaande gerichte controles en onafhankelijke review geslaagd. Geïnstalleerd in gezonde kern en werker; exacte bron teruggelezen. Geen nieuwe modelcall; geen bewezen snelheidswinst of volledige C1-afronding.
