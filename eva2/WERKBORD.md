@@ -1,5 +1,9 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actuele afronding — gevraagde documentopdracht
+
+Het [einddocument](evidence/product/gezinsweek-l2-resultaat.md) en de [succesvolle eindterugmelding](evidence/product/l2-final-reply-resumed-20260929.json) zijn beschikbaar. Bestaande afronding gecontroleerd; geen nieuwe modelopdracht of herhaling. De tegenstrijdige actuele dashboardkoppen over reeds afgerond T1-onderzoek zijn gelijkgetrokken. Volgende L2-zelfstandigheidswerk is nog niet gestart; deze documentopdracht blijft gesloten.
+
 ## Afgerond — T4: taakbediening, resultaten en actuele status
 
 **Geïnstalleerd:** interne werkercontrole op dezelfde eventloop;16gerichte controles en onafhankelijke review GO. Kern/werker gezond, exacte overlay en interne poort gecontroleerd, terugweg bewaard. Eigenaarpagina toont werker bereikbaar met meettijd; geen model-/voortgangclaim. [Bewijs](evidence/product/worker-liveness-installed-20260929.json).

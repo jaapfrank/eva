@@ -2851,15 +2851,15 @@
           }
         ],
         "now": {
-          "title": "T1: onderzoek volledig afronden",
-          "state": "I2 wacht op camerakeuze en bestaande achtergrondruimte",
-          "detail": "Geen nieuw initiatief uitgevoerd. Eén initiatiefbeoordeling en drie geheugenreflecties gebruikten bestaande4dagplaatsen. Geen reset/verhoging of modelcalls. Alleen deze uitkomst wacht; L2 volgt onafhankelijk.",
-          "doneWhen": "Eva bewaart, controleert en meldt het volledige onderzoeksresultaat zelfstandig terug binnen het geldende taakbudget."
+          "title": "Documentopdracht afgerond",
+          "state": "Einddocument en eindantwoord beschikbaar",
+          "detail": "Bestaand einddocument gecontroleerd: drie activiteiten binnen 30 minuten, mondeling woordspel verwerkt, bronbestanden behouden. Eindantwoord eerder succesvol hervat; geen nieuwe modelopdracht nodig.",
+          "doneWhen": "Het gevraagde einddocument en de bijbehorende terugmelding zijn beschikbaar. Dit sluit de documentopdracht, niet de volledige L2-projectfunctie."
         },
         "next": {
-          "title": "Bewaard onderzoeksresultaat afronden zonder bronnen opnieuw te lezen",
+          "title": "L2: zelfstandige projectvoortzetting",
           "state": "Nog niet gestart",
-          "detail": "Concrete ontbrekende koppeling: bestaande budgetcontext toont geen resterende wandtijd. Gericht afrondingstijd meenemen en bestaande opgeslagen inhoud gebruiken; geen nieuw onderzoek of brede audit."
+          "detail": "L2: gebruik bestaand opgeslagen project en bewijs om uitsluitend ontbrekende zelfstandige vervolgstap na onderbreking vast te stellen; documentopdracht niet opnieuw uitvoeren."
         },
         "ownerAction": {
           "title": "Telegram: tussenvraag tijdens onderzoek",
@@ -2873,7 +2873,7 @@
           "expected": "Tussenvraag vóór het onderzoeksantwoord; onderzoeksantwoord bij de oorspronkelijke vraag."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T08:00:55.127850+00:00"
+        "reviewedAt": "2026-09-29T08:05:14.427667+00:00"
       }
     },
     "pendingTechnicalReview": {
