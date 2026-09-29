@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T22:05:23.160695+00:00",
+        "checkedAt": "2026-09-29T22:08:14.116346+00:00",
         "deliveries": [
           {
             "title": "Herhaalde herstelpakketcontrole versneld",
@@ -3051,14 +3051,14 @@
           }
         ],
         "now": {
-          "title": "P1.1: native opgeslagen modelselectie gecontroleerd",
-          "state": "Deelstap afgerond",
-          "owner": "Codex /root",
-          "detail": "Zes rollen via eigen configuratielader correct; contactprofiel Default als eindstand teruggelezen. Review akkoord, nul modelcalls. Geen volledige P1.1 of nieuwe Eva-functie. Geen proefproces actief."
+          "title": "Uitvoering wacht op toegang en concrete keuzes",
+          "state": "Geblokkeerd",
+          "owner": "Geen actieve uitvoerder",
+          "detail": "Gespreksproeven wachten op providerbeschikbaarheid. Camera-/agendakeuze en behandeling van offline browserdienst bij herstel zijn gevraagd. Native vergelijkingsconfiguratie is voorbereid; geen benchmark of bouwproces actief. Volledig goal blijft onaf."
         },
         "next": {
-          "title": "P1.1: native uitvoering en volledige verbruiksregistratie",
-          "detail": "Authenticatie, daadwerkelijke agentuitvoering en samplebrede helper-/retrymeting plus stoppen ontbreken nog. Geen benchmark starten op basis van alleen correcte instellingen."
+          "title": "Hervatten op beantwoorde afhankelijkheid",
+          "detail": "Na bronkeuze I2 aansluiten; na herstelkeuze O2.3 afmaken; na herstelde providertoegang C1 meten. Bestaande geplande vervolgstap blijft 30 september15:00 Nederlandse tijd; niet handmatig vervroegen."
         },
         "ownerAction": {
           "title": "Kies camera en afvalagenda",
@@ -3071,7 +3071,7 @@
           "linkLabel": "Beantwoord de twee keuzes in deze chat"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T22:05:23.160695+00:00"
+        "reviewedAt": "2026-09-29T22:08:14.116346+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14534,7 +14534,8 @@
                 "liveGatewaySession": null
               },
               "latestEvidence": "eva2/evidence/product/c1-o2-current-blockers-20260929.json",
-              "remaining": "Runtimevrijgave geblokkeerd: oude browser-MCP op 192.168.0.2:8931 is onbereikbaar maar blijft in actuele managed-endpoints-autorisatie. Niet zonder meer als optioneel te negeren. Herstelde gegevens en draaiende documentproviders blijven behouden."
+              "remaining": "Runtimevrijgave geblokkeerd: oude browser-MCP op 192.168.0.2:8931 is onbereikbaar maar blijft in actuele managed-endpoints-autorisatie. Niet zonder meer als optioneel te negeren. Herstelde gegevens en draaiende documentproviders blijven behouden.",
+              "blocker": "Owner asked whether restored Eva may start with preserved but explicitly disabled offline legacy browser, or legacy service must first recover. No entry deleted or disabled while choice pending."
             }
           ],
           "latestEvidence": "eva2/evidence/product/o2-consistent-source-collected-20260929.json"

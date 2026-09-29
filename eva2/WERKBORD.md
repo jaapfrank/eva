@@ -1,3 +1,7 @@
+## Actueel: uitvoering geblokkeerd op toegang en keuzes — 30 september 2026
+
+Geen bouw- of proefproces actief. Providerweigering blokkeert C1 en echte vergelijkingen. Concrete camera-/agendakeuzes staan open. Voor O2.3 is gevraagd of herstel met een bewaarde maar uitgeschakelde offline browserdienst mag starten, of die dienst eerst beschikbaar moet zijn; niets verwijderd of uitgeschakeld. Native vergelijkingsinstellingen zijn voorbereid, geen nieuwe productcategorie afgerond. Geplande projectstap blijft30september15:00 Nederlandse tijd. Goal blijft inhoudelijk volledig en onaf; geen nieuwe automatische voorbereidingsronde zolang deze afhankelijkheden ongewijzigd zijn.
+
 ## Actueel: P1.1 native opgeslagen selectie gecontroleerd — 30 september 2026
 
 Native configuratielader kiest zes modelrollen correct op basis van opgeslagen selectie. Contactprofiel Default staat als eindstand ingesteld en is teruggelezen. Review akkoord, nul providercalls. Geen nieuwe Eva-functie of volledige P1.1. Native uitvoering/OAuth, cumulatieve meting en stoppen blijven open. Geen proefproces actief. [Bewijs](evidence/product/p1-agentzero-persisted-selection-20260930.json).
