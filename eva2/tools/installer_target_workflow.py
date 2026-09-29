@@ -110,7 +110,7 @@ class InstallerTargetWorkflow:
                 materialization_receipt=material, expected_plan_sha256=plan["plan_sha256"],
                 materialized_bind_root=self.material_root,
                 additional_bindings=settings.additional_bindings,
-                network_subnet=settings.network_subnet)
+                network_subnet=settings.network_subnet, current_plan=plan)
             if binding.graph is None or binding.pending:
                 receipt["missing_bindings"] = list(binding.pending)
                 raise ValueError("complete target service bindings required")
@@ -124,7 +124,8 @@ class InstallerTargetWorkflow:
                 raise ValueError("approved runtime inputs changed before provisioning")
             save("resource_preparation")
             prepared = prepare_restore_target(runtime_inputs=inputs, launch_graph=access.graph,
-                namespace=settings.namespace, image_roles=settings.image_roles,
+                namespace=settings.namespace, image_roles={name: settings.image_roles[name]
+                    for name in access.graph["services"]},
                 database_services=settings.database_services, schema_service=settings.schema_service,
                 workspace=self.resources_root, materialized_bind_root=self.access_root)
             if prepared.get("status") != "prepared" or prepared.get("schema_completed") is not True:

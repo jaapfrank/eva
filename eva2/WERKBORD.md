@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Geïnstalleerde koppeling — O1.2 nog afhankelijk van O1.1
+
+Bevestigde overgeslagen Telegram/HA-koppelingen worden weggelaten uit nieuwe doelvoorbereiding.16 gerichte gevallen en onafhankelijke review akkoord; drie exacte modules in bestaand operatorpakket geïnstalleerd en import gecontroleerd. Bestaande runtime/data ongemoeid, geen terugzet-/herinstallatiecyclus of modelcalls. [Bewijs](evidence/product/installer-optional-selection-20260929.json).
+
+**Geen volledige O1.2-claim:** gewone wizardstart mist complete vertrouwde configuratie. O1.1 is de volgende concrete afhankelijkheid; nog niet gestart. T3 blijft wachten op expliciete tabdeling.
+
 ## Wacht op tabdeling — T3.1
 
 Bestaande persoonlijke Chrome-bridge44718 bereikbaar, huidige status disconnected/busy=false. Geen tabblad gedeeld; eigenaar gevraagd één bestaand tabblad te kiezen via **Deel een bestaand tabblad → Allow & select**. De aparte beheerde browser is geen vervanging van deze persoonlijke Chrome-route. Geen browsertaak/modelcall of productwijziging gestart. Dit blokkeert alleen T3.1–T3.3.

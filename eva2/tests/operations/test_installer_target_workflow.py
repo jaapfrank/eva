@@ -14,6 +14,7 @@ def flow(tmp_path, monkeypatch):
     plan = {"plan_sha256": "a" * 64}
     values = {field.name: None for field in fields(module.InstallerTargetSettings)}
     values.update(namespace="new-eva", database_services=("postgres",), schema_service="schema-installer")
+    values["image_roles"] = {"core": "core-image"}
     settings = module.InstallerTargetSettings(**values)
     events = []
     monkeypatch.setattr(module, "bind_installer_runtime_inputs", lambda **kwargs: events.append("inputs") or "bound-inputs")
@@ -26,10 +27,10 @@ def flow(tmp_path, monkeypatch):
         events.append("bindings") or SimpleNamespace(graph={"candidate": True}, pending=()))
     from tools import installer_runtime_access
     monkeypatch.setattr(installer_runtime_access, "establish_installer_runtime_access", lambda **kwargs:
-        events.append("access") or SimpleNamespace(graph={"readable": True}, receipt={}))
+        events.append("access") or SimpleNamespace(graph={"services": {"core": {}}}, receipt={}))
     def provision(**kwargs):
         events.append("resources")
-        assert kwargs["launch_graph"] == {"readable": True}
+        assert kwargs["launch_graph"] == {"services": {"core": {}}}
         kwargs["workspace"].mkdir(mode=0o700)
         receipt={"status": "prepared", "schema_completed": True}
         (kwargs["workspace"] / "preparation-receipt.json").write_text(json.dumps(receipt))

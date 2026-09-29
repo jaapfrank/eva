@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-09-29T09:54:44.361427+00:00",
+  "scope": "Existing installer target preparation now applies confirmed Telegram/HA omission",
+  "installedPackage": "/home/administrator/project/.eva2-artifacts/installer-document-write-20260924",
+  "files": [
+    {
+      "file": "tools/installer_optional_capabilities.py",
+      "sha256": "f5d3e19434c77b493a985e6869d7fc58583be1c934b671a6000f3fe9776cb11a"
+    },
+    {
+      "file": "tools/installer_target_bindings.py",
+      "sha256": "7847276888d1c00cc654b000c0684c57053c9b67a365cd6163f4630375c40cb1"
+    },
+    {
+      "file": "tools/installer_target_workflow.py",
+      "sha256": "37adf5f426fa7e240c43cca36047371c1ff0e8d985e91f7ee38743dae391d3c2"
+    }
+  ],
+  "tests": {
+    "focusedCases": 16,
+    "result": "passed"
+  },
+  "review": "GO: /root/review_optional_selection",
+  "modelCalls": 0,
+  "creditCost": null,
+  "sourceInstallationOnly": true,
+  "existingRuntimeChanged": false,
+  "completeO12": false,
+  "remaining": "Configured ordinary installer bootstrap and complete chosen-module startup still belong to O1.1/O1.2; no full installer or running module-selection claim."
+}

@@ -98,3 +98,18 @@ def test_unresolved_writable_source_is_never_silently_reused(setup,tmp_path):
     extras[("core","/var/lib/eva/restore-authority")]=tmp_path
     with pytest.raises(ValueError,match="source storage"):
         bind_installer_target_graph(**setup,additional_bindings=extras)
+
+
+def test_skipped_providers_do_not_require_tokens_or_ingress(setup, bound):
+    before = deepcopy(setup["rendered_graph"])
+    candidate = bind_installer_target_graph(**setup, current_plan=bound["current_plan"])
+    assert not any("telegram" in item or "home_assistant" in item for item in candidate.pending)
+    completed = bind_installer_target_graph(**setup, current_plan=bound["current_plan"],
+        additional_bindings=fill_remaining(setup, candidate.pending))
+    assert completed.graph is not None
+    assert "telegram-ingress" not in completed.graph["services"]
+    assert "core" in completed.graph["services"]
+    for service in completed.graph["services"].values():
+        assert not any(key.startswith(("EVA_TELEGRAM_", "EVA_HOME_ASSISTANT_"))
+                       for key in service.get("environment", {}))
+    assert setup["rendered_graph"] == before
