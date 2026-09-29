@@ -1,0 +1,48 @@
+{
+  "checkedAt": "2026-09-29T11:28:34.468499+00:00",
+  "baseCommit": "04e9f037",
+  "slice": "M1.1",
+  "status": "technical_case_completed_on_existing_installed_route",
+  "sourceDate": "2026-09-22",
+  "observedDate": "2026-09-29",
+  "case": "Recall one real owner Telegram topic and latest correction through existing private website, without supplying correction in new question.",
+  "result": "Answer matches earlier correction; no new substantive advice or invented action.",
+  "sourceAndPromptRetainedPrivately": true,
+  "privateArtifactDirectory": "/home/administrator/project/.eva2-artifacts/m1-cross-channel-recall-20260929",
+  "artifactHashes": {
+    "criteria.json": "95a7b0cec0f5d3e9d62f51eb6058ecd4ffa551848052b50f6e721a876e854bff",
+    "prompt.txt": "15867a00671f3f87da5bbcba26bf2c8936caeb89fcd31362bdabe8611ea82799",
+    "source.private.json": "f8fa07d813e043930fe8960178fef1ea82717d42eb35c196a50209e5a4a286b2",
+    "reply-context.private.json": "3cb96ba92422eca1836a81d06431901b8f2a536282abd2fd22db3ee8ec14f17a",
+    "project-response.private.json": "573f10609d8b08c91e7a4d52c6287e2e4f500bfd941c3bf72073b5249ac095a1"
+  },
+  "answerSha256": "d28b5e24b455bda42fe7913b89312fb92ce55f6e1521eb118c18ee31da68ef1e",
+  "timing": {
+    "firstTextSeconds": 10.885,
+    "completeSeconds": 12.42
+  },
+  "usage": {
+    "tool_calls": 1,
+    "measurement": "measured",
+    "input_tokens": 12622,
+    "output_tokens": 84,
+    "model_attempts": 2
+  },
+  "usageLimitations": "Conversation attempts only; helper/infrastructure usage and monetary credits unknown.",
+  "review": {
+    "reviewer": "/root/review_l2_autonomous_run",
+    "decision": "GO for one technical M1.1 case; no rapid-response or general memory claim"
+  },
+  "runtimeChanged": false,
+  "installationRequired": false,
+  "installationStatus": "Existing installed route used directly",
+  "memorySeeding": false,
+  "telegramMessagesSent": 0,
+  "ownerAccepted": false,
+  "limitations": [
+    "M1.2 family evaluation remains open.",
+    "One case does not prove all-topic or long-term memory quality.",
+    "Individual recalled memory IDs were not independently traced to this exact source fragment.",
+    "Ordinary conversation retention remains enabled; no claim of zero memory writes."
+  ]
+}

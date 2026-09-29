@@ -1,5 +1,15 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Laatst afgerond — M1.1 onderwerp van vorige week voortzetten
+
+Een echte Telegramcorrectie van22september is op29september via de gewone privéwebsite correct teruggehaald, zonder het antwoord in de vraag te geven. Onafhankelijke review GO. Bestaande installatie gebruikt; geen nieuwe geheugencode of geheugeninjectie. Eerste tekst10,885s, volledig12,42s. Gemeten gespreksusage12.622in/84uit,2modelpogingen; helperverbruik en credits onbekend. [Bewijs zonder privégespreksinhoud](evidence/product/m1-cross-channel-recall-20260929.json).
+
+M1.1 technisch afgerond; 42 van de oorspronkelijke44kleine taken open. M1.2 gezinsbeleving blijft open; geen volledige M1-acceptatie of algemene geheugenkwaliteitsclaim.
+
+**Volgende, nog niet gestart:** M3.1 tijdelijke voorkeur laten verlopen zonder blijvende voorkeur kwijt te raken. Bestaande geheugenwerking hergebruiken; open gezinsbeoordeling blokkeert dit onafhankelijke werk niet. Geen actieve uitvoerders.
+
+## Eerdere voortgang
+
 ## T2.1 — uitleestaak geslaagd; timeoutonderzoek begrensd afgesloten
 
 Eva las 17 automatiseringen:14 aan,1 uit,2 unavailable. De eerste algemene statespagina was onvolledig; de aanvullende uitleestemplate omvatte alle automation-states. Onafhankelijke review bevestigt telling en uitsluitend uitlezen. [Bewijs](evidence/product/t2-readonly-followup-20260929.json). Deels gemeten52.397in/604uit; credits onbekend.
