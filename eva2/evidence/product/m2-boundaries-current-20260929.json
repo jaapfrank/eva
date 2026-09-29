@@ -1,0 +1,102 @@
+{
+  "checkedAt": "2026-09-29T07:43:28.361197+00:00",
+  "status": "technically_completed_independently_reviewed",
+  "baseCommit": "62246d6b",
+  "requirement": "Other people or shared speakers cannot obtain private facts, summaries, hints or private work results; existing general household actions remain available.",
+  "existingEvidence": [
+    "eva2/evidence/product/private-continuity-boundary-installed-20260924.json",
+    "eva2/evidence/product/private-result-return-installed-20260922.json",
+    "eva2/evidence/product/shared-ha-general-installed-20260925.json"
+  ],
+  "change": "One parametrized PostgreSQL regression for indexed private result replay; update obsolete shared test-fixture schema expectation7 to actual current9. No product source change.",
+  "tests": {
+    "uniquePassed": 15,
+    "installedCore": {
+      "passed": 11,
+      "scope": "Native speaker binding, private destination, unrelated/shared memory alias, recent context destination/source, current private alias authority"
+    },
+    "repositoryWithReviewedInstalledDifferences": {
+      "passed": 1,
+      "scope": "Same sponsor private work absent from household list; get/stop/resume rejected",
+      "differences": "Household voice lazy imports; store factors unchanged row validation into helper; no changed household/private decision"
+    },
+    "newIndexedSelection": {
+      "passed": 3,
+      "scope": "Same indexed slot under household audience; other actor; other execution. No private sentinel returned, original replay retained, one provider invocation."
+    },
+    "setupFailures": "Retained logs: initial database prefix guard; two fixtures shared one schema; installed installer mismatched newer repository migration; obsolete expected revision in existing shared fixture. Corrected setup/one-line expectation; reran only affected cases. No behavior failure."
+  },
+  "installedSourceEquality": {
+    "application/memory_audience.py": {
+      "sha256": "4aef5ec9ca0b6467d67a1531bfe7dee2f09a99a48cd2cfdb378325ac5828c9fa",
+      "matchesRepository": true
+    },
+    "application/delegated_work_delivery.py": {
+      "sha256": "ab81a22af06e79544afd449c5ed1e043721d1b047b1366dfc75abd0339629fef",
+      "matchesRepository": true
+    },
+    "bootstrap/native_voice.py": {
+      "sha256": "30dc2b242a3e0f90cdb2003ff52dd1287ef3ebadb968cdd28b5a4a802a04d02b",
+      "matchesRepository": true
+    },
+    "adapters/projection/hindsight.py": {
+      "sha256": "055c8cf9a2313aeb028633b9fb127b736f2906180ac7c6cfee86d37161043b8a",
+      "matchesRepository": true
+    },
+    "adapters/postgres/people_memory_overview.py": {
+      "sha256": "053c997908c8089af7422df489047e9613a1e116496042e235222a87693dfe61",
+      "matchesRepository": true
+    },
+    "bootstrap/private_conversation_resources.py": {
+      "sha256": "2b2456f507fa1cabc4c3c30bd13ec60abe9a9776fc2fd2842971da633f478f65",
+      "matchesRepository": true
+    },
+    "bootstrap/household_work.py": {
+      "sha256": "385b0cab56ead7f079fafa20e0cabac7a106d6dc11f011a63c78355f647d9e80",
+      "matchesRepository": true
+    },
+    "bootstrap/household_voice.py": {
+      "sha256": "34de6a37b91960598f7dc03878679096b452a74001a6f035b34665b64c42b0a3",
+      "matchesRepository": false
+    },
+    "bootstrap/household_research_policy.py": {
+      "sha256": "f71a26202abd021d3b620bd89ced0880a272a7be84fe40b01d318d925da4c120",
+      "matchesRepository": true
+    },
+    "adapters/postgres/delegated_work.py": {
+      "sha256": "f91c3c001e1079d627345069cd7104c6b8a154eb596565e21daf8ce9534259de",
+      "matchesRepository": false
+    },
+    "adapters/postgres/external_conversation_tools.py": {
+      "sha256": "fcd9c2c4414309bfbfd39436122939868b2588199e3374d032a4b69918e95553",
+      "matchesRepository": true
+    },
+    "adapters/postgres/connector_results.py": {
+      "sha256": "56639febdc5f23a3506e850f67374a9c8e094be70c9077baa0bd96d8b534ddf4",
+      "matchesRepository": true
+    }
+  },
+  "installedRuntimeMethodEquality": {
+    "private_work_return": true,
+    "admit_turn_audience": true,
+    "respond": true,
+    "respond_telegram_delegated_work": true
+  },
+  "runtimeModelCalls": 0,
+  "testMessagesSent": 0,
+  "productionChanges": false,
+  "installation": "Existing installed source retained; no restart or release needed for test-only change",
+  "limitations": [
+    "Synthetic records and controlled provider; no physical speaker or new owner acceptance",
+    "No voice biometrics added; household device identity is not a human identity",
+    "M1 long-term continuity and C3 physical experience remain separate",
+    "This is technical evidence of existing privacy boundaries, not a new memory feature"
+  ],
+  "creditCosts": "unknown",
+  "ownerAccepted": false,
+  "independentReview": {
+    "reviewer": "/root/review_directory_connection",
+    "decision": "GO",
+    "scope": "Existing pre-model/private-result boundaries plus newly changed indexed-reader replay; exact test-only schema expectation reviewed"
+  }
+}

@@ -106,7 +106,7 @@ def delegated_engine() -> Engine:
             sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
         )
     receipt = install_schema(dsn, alembic_ini=ROOT / "alembic.ini")
-    assert receipt.final_revision == "4e_0007_delegated_private"
+    assert receipt.final_revision == "4e_0009_restore_hold"
     try:
         yield engine
     finally:

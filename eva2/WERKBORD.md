@@ -1,5 +1,13 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Afgerond — M2: privécontext en gedeelde speakers
+
+**Technisch gecontroleerd, geen herbouw:**15 gerichte gevallen geslaagd; bestaande grenzen en de nieuw gewijzigde opgeslagen-leesroute laten geen privéresultaat terug bij ander publiek, persoon of uitvoering. Oorspronkelijke eigenaar houdt toegang. Onafhankelijke review GO. [Bewijs](evidence/product/m2-boundaries-current-20260929.json). Geen productwijziging, herstart, modelcalls of echte berichten. Eén bestaande testfixture wees nog naar schema7 in plaats van9; alleen die verwachting gecorrigeerd.
+
+**Nog afzonderlijk open:** M1 langdurige continuïteit, C3 fysieke ervaring, eigenaaracceptatie. Dit is bewijs van bestaande bescherming, geen nieuwe functie.
+
+**Volgende, nog niet gestart — T4:** bestaande taakbediening en actuele kanaal-/modulestatus afronden; geen nieuw projectdashboard.
+
 ## Afgerond — T1: onderzoek opslaan, controleren en teruggeven
 
 **Technisch afgerond op geïnstalleerde code:** één nieuwe relevante vraag over de realtime gateway en Voice PE onderzocht, primaire documentatie en broncode gelezen, concreet ontbrekende firmwarebron benoemd. Rapport238woorden opgeslagen, exact teruggelezen en eindantwoord geleverd zonder coördinatorhervatting. Onafhankelijke review GO. [Rapport](evidence/product/voice-gateway-compatibiliteit-20260929.md) · [Bewijs](evidence/product/voice-gateway-research-completed-20260929.json).
@@ -8,7 +16,6 @@
 
 **Geïnstalleerde correcties behouden:** resterende taakduur720e2eff, geïndexeerde lokale leesstappenf118d9de en native onderzoektimeout8f1c9b0d. Geen nieuwe bronwijziging deze ronde. [Contextdiagnose](evidence/product/research-completion-diagnosis-20260929.json): geen dubbele receipt-invoeging; blind lager pagineren kan extra modelrondes veroorzaken en wordt niet zonder voordeel ingevoerd.
 
-**Volgende, nog niet gestart — M2:** bestaande huishoud-/privégrenzen koppelen aan actuele kanaalroutes; uitsluitend ontbrekend combinatiebewijs controleren, geen nieuw geheugensysteem. FysiekeC3 en Telegramacceptatie blokkeren alleen afhankelijk werk.
 
 ## C1 — tekstgesprek tijdens werk
 

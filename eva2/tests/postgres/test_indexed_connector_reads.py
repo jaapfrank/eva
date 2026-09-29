@@ -103,3 +103,58 @@ def test_read_crash_after_page_record_recovers_index_without_reinvocation(timeli
         assert recovered.output["result"]["text"] == "x" * 100
         assert route().pending(turn, step_index=4) == recovered
         assert len(fetches) == 1
+
+
+@pytest.mark.parametrize("changed_boundary", ["audience", "actor", "execution"])
+def test_private_indexed_selection_cannot_replay_across_owner_boundaries(timeline_engine, changed_boundary):
+    from eva.application.memory_audience import HouseholdConsentReference, MemoryAudience
+    sentinel = "PRIVATE_SENTINEL_ONLY_ORIGINAL_READER"
+    conversation_id = "household:fixture:conversation:private-read-" + changed_boundary
+    # Private turns may use arbitrary IDs. Reusing household-shaped IDs lets the
+    # audience case test the owner binding even when the indexed slot is identical.
+    turn = replace(TURN, conversation_id=conversation_id, message_id=conversation_id + ":source")
+    execution_id = "work:private-reader:" + changed_boundary
+    adapter, request, fetches, _ = setup({"text": sentinel + "x" * 90000})
+    authorized = []
+    def route():
+        return PostgresExternalConversationTools(timeline_engine,
+            SimpleNamespace(action_names=("use_connector_tool",)),
+            SimpleNamespace(supports_stored_results=True),
+            authorize_turn=lambda candidate: authorized.append(candidate))
+    with background_execution(BackgroundExecutionScope(turn, execution_id, lambda candidate: None)):
+        timeline = PostgresOperationalTimeline(timeline_engine,
+            external_timeline_scope(turn.tenant_id, turn.installation_id, "test"))
+        capture = ConnectorResults(timeline, turn, lambda candidate: None)
+        with result_capture(capture):
+            reader = asyncio.run(adapter.execute(request)).details["invocation_response"]["reader"]["tool_id"]
+        call = ConversationActionCall("private-read", "use_connector_tool", {
+            "tool_id": reader, "arguments_json": json.dumps({"pointer": "/text", "offset": 0,
+                                                               "limit": 100, "query": None})})
+        original = route().execute(turn, call, step_index=4)
+        assert sentinel in original.output["result"]["text"]
+    other, other_execution = turn, execution_id
+    if changed_boundary == "audience":
+        other = replace(turn, audience=MemoryAudience.household(principal_id=turn.principal_id,
+            household_id="fixture", consent_ref=HouseholdConsentReference(
+                turn.principal_id, "fixture", "household-consent:fixture")))
+    elif changed_boundary == "actor":
+        other = replace(turn, principal_id="another-owner",
+                        audience=MemoryAudience.private_person(principal_id="another-owner"))
+    else:
+        other_execution = execution_id + ":different"
+    with background_execution(BackgroundExecutionScope(other, other_execution, lambda candidate: None)):
+        candidate_route = route()
+        if changed_boundary == "audience":
+            with pytest.raises(ConversationConflict, match="replay differs") as pending_error:
+                candidate_route.pending(other, step_index=4)
+            assert sentinel not in str(pending_error.value)
+        else:
+            assert candidate_route.pending(other, step_index=4) is None
+        with pytest.raises(ConversationConflict) as execute_error:
+            candidate_route.execute(other, call, step_index=4)
+        assert sentinel not in str(execute_error.value)
+    with background_execution(BackgroundExecutionScope(turn, execution_id, lambda candidate: None)):
+        assert route().pending(turn, step_index=4) == original
+        assert route().execute(turn, call, step_index=4) == original
+    assert other in authorized
+    assert len(fetches) == 1

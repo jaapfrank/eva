@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "M2 afgerond: bestaande privé-/huishoudgrenzen gecontroleerd",
+            "date": "29 september",
+            "state": "tested",
+            "result": "Privécontext en resultaten blijven afgescheiden; nieuwe hervatroute ook onder veranderd publiek/persoon gecontroleerd.15 gerichte gevallen, onafhankelijke review GO.",
+            "remaining": "Geen nieuwe geheugenfunctie of fysieke speaker-/persoonsherkenningsproef. M1/C3 en eigenaaracceptatie blijven apart.",
+            "source": "eva2/evidence/product/m2-boundaries-current-20260929.json"
+          },
+          {
             "title": "T1 afgerond: zelfstandig onderzoek met gecontroleerd rapport",
             "date": "29 september",
             "state": "tested",
@@ -2836,8 +2844,8 @@
         ],
         "now": {
           "title": "T1: onderzoek volledig afronden",
-          "state": "T1 technisch afgerond: onderzoek opgeslagen en teruggegeven",
-          "detail": "Eva onderzocht de realtime gateway zelfstandig, bewaarde238woorden, las exact terug en leverde een eindantwoord. Onafhankelijke review akkoord.186s; hoog verbruik blijft zichtbaar. Volgende M2 nog niet gestart.",
+          "state": "M2 technisch afgerond: privégrenzen behouden",
+          "detail": "15 gerichte gevallen geslaagd en onafhankelijk beoordeeld; ook eerder gelezen privéresultaat blijft afgeschermd bij ander publiek/persoon. Geen nieuwe productcode, herstart of modelcalls. T4 volgt, nog niet gestart.",
           "doneWhen": "Eva bewaart, controleert en meldt het volledige onderzoeksresultaat zelfstandig terug binnen het geldende taakbudget."
         },
         "next": {
@@ -2857,7 +2865,7 @@
           "expected": "Tussenvraag vóór het onderzoeksantwoord; onderzoeksantwoord bij de oorspronkelijke vraag."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T07:36:29.148712+00:00"
+        "reviewedAt": "2026-09-29T07:45:25.067443+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12520,7 +12528,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 3,
+      "currentStep": 2,
       "steps": [
         {
           "number": 1,
@@ -12677,7 +12685,7 @@
           ]
         }
       ],
-      "nextAction": "M2: bestaande huishoud-/privégrenzen aan de huidige kanaalroutes koppelen en uitsluitend ontbrekend combinatiebewijs controleren. Geen nieuw geheugensysteem; fysieke C3 en Telegramacceptatie blijven apart open.",
+      "nextAction": "T4: bestaande taakbediening en actuele kanaal-/modulestatus afronden; sluit alleen resterende aangetoonde verschillen, geen nieuw projectdashboard.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13000,7 +13008,7 @@
           ],
           "outcome": "Privé en gedeelde context scheiden",
           "effort": "S",
-          "status": "planned",
+          "status": "completed",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Household/private separation and additional private destination guard already installed.",
@@ -13012,7 +13020,30 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": null
+          "activeWorker": null,
+          "owner": "/root",
+          "baseCommit": "62246d6b",
+          "assignment": {
+            "stage": "completed_independent_review_go",
+            "outcome": "Private material absent from shared-speaker model context and private results unavailable there; general HA remains permitted",
+            "files": [
+              "eva2/tests/postgres/test_indexed_connector_reads.py",
+              "eva2/tests/postgres/test_delegated_work_store.py",
+              "eva2/evidence/product/m2-boundaries-current-20260929.json"
+            ],
+            "reviewer": "/root/review_directory_connection",
+            "endCondition": "Current installed source mapped to exact existing boundary tests; add only a missing combined case if evidence warrants; no physical speaker claim",
+            "effort": "One bounded evidence/test pass, approximately15min; no runtime model calls, credits unknown",
+            "dependencyLimit": "Independent pre-model/result boundaries can be checked now; M1 long-term continuity and C3 physical operation remain separate, no inferred completion",
+            "executor": "/root/background_execution_seam (completed)"
+          },
+          "completedAt": "2026-09-29T07:45:25.067443+00:00",
+          "completion": {
+            "technical": "verified_existing_installed_boundaries",
+            "evidence": "eva2/evidence/product/m2-boundaries-current-20260929.json",
+            "ownerAccepted": false,
+            "remaining": "M1 langdurige continuïteit en C3 fysieke speakerwerking blijven open; geen nieuwe persoonsherkenning of algemene gezinsacceptatie."
+          }
         },
         {
           "id": "M3",
