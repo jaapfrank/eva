@@ -1,0 +1,98 @@
+{
+  "checkedAt": "2026-09-29T11:32:06.670825+00:00",
+  "baseCommit": "9659a9d5",
+  "task": "M3.1",
+  "status": "bounded_technical_task_completed_existing_installation",
+  "priorEvidence": "eva2/evidence/product/m3-retain-recall-chain-20260928.json",
+  "sourceDate": "2026-09-28",
+  "actualRecallDate": "2026-09-29",
+  "result": "Retained source preserved durable coffee preference and one-day tea exception. Current Sol chose coffee on actual next calendar day without being given desired answer.",
+  "observations": [
+    {
+      "stage": "recall",
+      "day": "actual-now",
+      "seconds": 2.4259703520219773,
+      "facts": [
+        {
+          "fact_id": "hindsight:a7c03cf4-f8e8-4738-93b7-c1551e8d1bb8",
+          "subject": "synthetic-m3-retain-20260928",
+          "predicate": "memory.observation",
+          "value": {
+            "context": null,
+            "memory_type": "observation",
+            "semantic_trust": "direct_user",
+            "source_observed_at": "2026-09-28T08:00:00Z",
+            "text": "De gebruiker drinkt normaal gesproken graag koffie."
+          },
+          "source_ref": "synthetic-m3-retain-20260928:source",
+          "evidence_ref": "synthetic-m3-retain-20260928:evidence",
+          "observed_at": "2026-09-28T08:00:00Z",
+          "trust": "direct_user"
+        },
+        {
+          "fact_id": "hindsight:5885ad6e-3cf0-41d6-9b8c-81c545e70ea0",
+          "subject": "synthetic-m3-retain-20260928",
+          "predicate": "memory.observation",
+          "value": {
+            "context": null,
+            "memory_type": "observation",
+            "semantic_trust": "direct_user",
+            "source_observed_at": "2026-09-28T08:00:00Z",
+            "text": "Op 28 september 2026 wilde de gebruiker thee drinken in plaats van koffie; vanaf 29 september 2026 geldt de gewone voorkeur voor koffie weer."
+          },
+          "source_ref": "synthetic-m3-retain-20260928:source",
+          "evidence_ref": "synthetic-m3-retain-20260928:evidence",
+          "observed_at": "2026-09-28T08:00:00Z",
+          "trust": "direct_user"
+        }
+      ]
+    },
+    {
+      "stage": "answer",
+      "day": "actual-now",
+      "seconds": 4.591947621083818,
+      "result": {
+        "text": "Koffie. Dat drink je normaal gesproken graag; de keer dat je liever thee wilde, was alleen op 28 september.",
+        "provider": "chatgpt-codex:gpt-6-sol",
+        "action_call": null,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 1729,
+          "output_tokens": 30
+        },
+        "timing": {
+          "first_content_ms": 2951,
+          "completed_ms": 4174
+        }
+      }
+    }
+  ],
+  "review": {
+    "reviewer": "/root/review_l2_autonomous_run",
+    "decision": "GO for bounded technical M3.1 closure"
+  },
+  "harnessCorrection": "Initial actual timestamp included fractions/offset, rejected by existing20-character contract after recall. Corrected harness to UTC seconds. One additional recall authorized within this bounded diagnosis; no model generation ran on first attempt, no retained memory write. Not an Eva defect.",
+  "usage": {
+    "recallInvocations": 2,
+    "successfulContactGenerations": 1,
+    "inputTokens": 1729,
+    "outputTokens": 30,
+    "memoryProviderTokens": null,
+    "creditCost": null
+  },
+  "newMemoryRetention": 0,
+  "productSourceChanges": false,
+  "installationRequired": false,
+  "installationStatus": "Existing live core memory/provider adapters executed",
+  "ownerAccepted": false,
+  "limits": [
+    "Synthetic isolated person/bank; owner memory untouched.",
+    "Direct adapter route; ordinary ingress queue not exercised.",
+    "One actual calendar transition; no long-term general reliability claim.",
+    "M3.2 style fidelity and M3.3 family personality evaluation remain open."
+  ],
+  "artifacts": "/home/administrator/project/.eva2-artifacts/m3-expired-preference-20260929",
+  "runnerSha256": "dbf56fe43fab295fa142476194d40851dd6f69cebc5c8d8fdfd5f901a40379fd"
+}

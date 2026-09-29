@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "M3.1 afgerond: tijdelijke voorkeur zonder blijvend verlies",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Gisteren opgeslagen uitzondering vandaag verlopen; de normale voorkeur blijft aanwezig en wordt gebruikt. Bestaande installatie, geen nieuwe geheugencode.",
+            "remaining": "Geïsoleerde persoon en directe geheugenroute; gezinsbeleving en algemene stijlkwaliteit blijven apart open.",
+            "source": "eva2/evidence/product/m3-expired-preference-20260929.json"
+          },
+          {
             "title": "M1.1 afgerond: correctie van vorige week op website terughalen",
             "date": "29 september",
             "state": "installed",
@@ -2915,15 +2923,15 @@
           }
         ],
         "now": {
-          "title": "M1.1 afgerond: onderwerp van vorige week voortzetten",
-          "state": "Bestaande geïnstalleerde werking aangetoond",
-          "detail": "Echte Telegramcorrectie correct via privéwebsite teruggehaald. Onafhankelijke review akkoord; gezinsbeleving apart open.",
+          "title": "M3.1 afgerond: tijdelijke voorkeur vervalt",
+          "state": "Bestaande geïnstalleerde werking bevestigd",
+          "detail": "Bewaarde uitzondering van gisteren overschrijft de gewone voorkeur niet. Huidige Sol kiest de blijvende voorkeur; onafhankelijke review akkoord.",
           "owner": "Geen actieve uitvoerder"
         },
         "next": {
-          "title": "M3.1: tijdelijke voorkeur laten verlopen",
+          "title": "M3.2: stijlcorrectie in later antwoord toepassen",
           "state": "Nog niet gestart",
-          "detail": "Bestaande voorkeur- en geheugenwerking gebruiken; tijdelijke uitzondering mag blijvende voorkeur niet overschrijven. Open gezinsbeoordeling blokkeert dit niet."
+          "detail": "Bestaande stijlwerking gebruiken; alleen eerder vastgelegde lengte-/lijstverliezen gericht aanpakken."
         },
         "ownerAction": {
           "title": "Twee Telegram-berichten direct na elkaar",
@@ -2937,7 +2945,7 @@
           "linkLabel": "Gebruik je bestaande Telegram-gesprek met Eva"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T11:28:34.468499+00:00"
+        "reviewedAt": "2026-09-29T11:32:06.670825+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12757,7 +12765,7 @@
           ]
         }
       ],
-      "nextAction": "M3.1: use existing preference/temporal memory implementation to ensure a temporary exception does not overwrite the lasting preference. M1.1 technical case supports this independent work; M1.2 human evaluation remains open.",
+      "nextAction": "M3.2: inspect already recorded style-length/list fidelity failures and existing installed attribution fix. Change only the concrete remaining failure; do not repeat accepted memory or temporary-preference cases.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13288,10 +13296,22 @@
             {
               "id": "M3.1",
               "title": "Tijdelijke voorkeur correct laten verlopen",
-              "status": "planned",
+              "status": "completed",
               "kind": "praktijk",
               "doneWhen": "Een tijdelijke uitzondering overschrijft de blijvende voorkeur niet na afloop.",
-              "owner": "Codex"
+              "owner": "Codex",
+              "assignment": {
+                "baseCommit": "9659a9d5",
+                "outcome": "Preserved temporary preference expires on actual next day without losing enduring preference.",
+                "files": [
+                  "eva2/evidence/product/m3-expired-preference-20260929.json"
+                ],
+                "estimate": "One existing-bank recall and one current contact generation; no seeding or retry; credits unknown.",
+                "doneWhen": "Current Sol returns durable preference from actual retained source after exception ended; bounded independent review."
+              },
+              "completedAt": "2026-09-29T11:32:06.670825+00:00",
+              "latestEvidence": "eva2/evidence/product/m3-expired-preference-20260929.json",
+              "result": "Bewaarde tijdelijke voorkeur eindigt op werkelijke volgende kalenderdag; gewone voorkeur blijft behouden en huidige Sol kiest die. Geïsoleerde proef, review GO."
             },
             {
               "id": "M3.2",
@@ -14416,7 +14436,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "M1",
+      "activeSliceId": "M3",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

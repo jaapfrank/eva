@@ -1,5 +1,15 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Laatst afgerond — M3.1 tijdelijke voorkeur verloopt
+
+De bewaarde proef van28september is op de echte volgende kalenderdag met huidige Sol teruggevraagd. Gewone koffievoorkeur en tijdelijke thee-uitzondering zijn beide behouden; Eva kiest correct koffie. Geen nieuwe opslag, code of installatie nodig. Onafhankelijke review GO. [Bewijs](evidence/product/m3-expired-preference-20260929.json).
+
+Eén geslaagde generatie:1.729in/30uit. Twee recalls wegens hersteld timestampformaat in proefscript; eerste poging had geen modelgeneratie. Geheugenverbruik/credits onbekend. Geïsoleerde persoon en directe adapterroute; gezinsacceptatie blijft open.41 van de oorspronkelijke44kleine taken nog open; hele M3 niet afgesloten.
+
+**Volgende, nog niet gestart:** M3.2 bestaande lengte-/lijstverliezen bij stijlcorrecties gericht oplossen. Geen herhaling van geslaagde voorkeurproeven. Geen actieve uitvoerders.
+
+## Eerdere voortgang
+
 ## Laatst afgerond — M1.1 onderwerp van vorige week voortzetten
 
 Een echte Telegramcorrectie van22september is op29september via de gewone privéwebsite correct teruggehaald, zonder het antwoord in de vraag te geven. Onafhankelijke review GO. Bestaande installatie gebruikt; geen nieuwe geheugencode of geheugeninjectie. Eerste tekst10,885s, volledig12,42s. Gemeten gespreksusage12.622in/84uit,2modelpogingen; helperverbruik en credits onbekend. [Bewijs zonder privégespreksinhoud](evidence/product/m1-cross-channel-recall-20260929.json).
