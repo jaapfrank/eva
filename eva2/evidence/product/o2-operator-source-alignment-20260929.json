@@ -34,5 +34,19 @@
   },
   "modelCalls": 0,
   "creditCost": "unknown",
-  "remaining": "Full archive validation and combined memory/gateway/document restore remain open; not complete O2.3."
+  "remaining": "Actual joint import, four document provider connections and controlled runtime activation on an isolated target; O2.3 not complete.",
+  "sameSnapshotPackage": {
+    "status": "validated",
+    "contract": "EvaInstallationRecovery/v1",
+    "archiveSha256": "1e7f0d2d767f116f70439d0ad58c43e26833d4c18b3cfbefc6410938d4c20f28",
+    "files": 243,
+    "privateDirectory": "/home/administrator/project/.eva2-artifacts/o2-consistent-source-20260929/package-current",
+    "components": [
+      "core",
+      "memory",
+      "gateway",
+      "documents"
+    ],
+    "sourceSnapshotChanged": false
+  }
 }

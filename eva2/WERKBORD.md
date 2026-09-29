@@ -1,6 +1,6 @@
-## Actueel: O2.3 export hervat met passende bron — 29 september 2026
+## Actueel: O2.3 gezamenlijk herstelpakket gereed — 29 september 2026
 
-Oud operatorpakket wees53 geldige taken af. Exacte actuele bron geïnstalleerd, oude bron bewaard;73/73 taakrecords geldig met echte launcherafhankelijkheden. Onafhankelijke review akkoord. Export van dezelfde bevroren kopie geslaagd:159 bestanden, v3-archief volledig gevalideerd. Nu bestaand gezamenlijk pakket samenstellen; geen nieuwe snapshot, datacorrectie, modelcall of Eva-herinstallatie. Volledige gezamenlijke herstelactie blijft open. [Bewijs](evidence/product/o2-operator-source-alignment-20260929.json).
+Kernexport en gezamenlijk pakket volledig gevalideerd:243 bestanden met kern, geheugen, gateway en documenten uit dezelfde kopie. Oude operatorcontracten waren de oorzaak; geen gegevens gerepareerd of verwijderd. Geen modelcalls of Eva-herinstallatie. Volgende stap: werkelijk gezamenlijk herstel op passend geïsoleerd doel, inclusief vier documentproviders. O2.3 nog open; export/samenstelling draaien niet meer. [Bewijs](evidence/product/o2-operator-source-alignment-20260929.json).
 
 ## Actueel: C1 geblokkeerd door provider — 29 september 2026
 

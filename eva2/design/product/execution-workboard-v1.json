@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T20:04:49.647861+00:00",
+        "checkedAt": "2026-09-29T20:14:37.622636+00:00",
         "deliveries": [
           {
             "title": "Providerweigering zonder dubbele aanvraag of veiligheidsmelding",
@@ -3043,14 +3043,14 @@
           }
         ],
         "now": {
-          "title": "O2.3: kernexport geslaagd; gezamenlijk pakket samenstellen",
-          "state": "Bezig",
+          "title": "O2.3: gezamenlijk herstelpakket gereed",
+          "state": "Tussenresultaat gereed",
           "owner": "Codex /root",
-          "detail": "Geldig v3-kernarchief met159 bestanden gepubliceerd uit bewaarde kopie. Nu geheugen, gateway en documenten uit dezelfde kopie toevoegen via bestaande samensteller."
+          "detail": "243 bestanden uit dezelfde kopie gevalideerd: kern, geheugen, gateway en documenten. Export en samenstelling voltooid; nog geen volledige herstelclaim."
         },
         "next": {
-          "title": "C1 hervatten wanneer de providerroute beschikbaar is",
-          "detail": "Geen herhaalde begroetingscalls zonder gewijzigd signaal. Camera-/agendakeuze blijft apart open; geplande volgende-dagtaak blijft staan."
+          "title": "O2.3: echt gezamenlijk herstel uitvoeren",
+          "detail": "Bestaande herstelroute met huidige runtime en vier documentproviders aansluiten op een geïsoleerd doel. Oude testdoelen bevatten oude versies en zijn niet zonder aanpassing bruikbaar."
         },
         "ownerAction": {
           "title": "Welke camera en afvalkalender?",
@@ -3063,7 +3063,7 @@
           "linkLabel": "Antwoord in deze chat"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T20:04:49.647861+00:00"
+        "reviewedAt": "2026-09-29T20:14:37.622636+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14511,16 +14511,14 @@
                 "outcome": "Bevroren echte gegevens via bestaande volledige herstelroute herstellen.",
                 "estimate": "Bestaande kernexport duurt eerder circa8min; één export van deze nieuwe consistente bronkopie, geen nieuwe live snapshot/modelcalls. Credits onbekend.",
                 "finish": "Consistent source copy collected through existing helpers; complete joint restore remains required.",
-                "stage": "assembling_same_snapshot_package",
-                "workers": {
-                  "/root": "existing frozen snapshot export with aligned operator source"
-                },
+                "stage": "same_snapshot_package_validated",
+                "workers": {},
                 "activeWorkers": [],
                 "endCondition": "Pakket/autoriteit/wizard gebruiken dezelfde v3-kern met bestaande externe stappen; gerichte combinatiecontrole, onafhankelijke review en operatorinstallatie.",
                 "liveExportSession": null
               },
               "latestEvidence": "eva2/evidence/product/o2-operator-source-alignment-20260929.json",
-              "remaining": "Kernexport volledig gevalideerd; gezamenlijk pakket samenstellen en echte herstelroute uitvoeren."
+              "remaining": "Gezamenlijk pakket met243 bestanden gevalideerd. Werkelijk herstel en aansluiting van vier documentproviders op passend geïsoleerd doel nog open."
             }
           ],
           "latestEvidence": "eva2/evidence/product/o2-consistent-source-collected-20260929.json"
