@@ -1000,6 +1000,22 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "GLaDOS-visionrapport opgeslagen en inhoudelijk gecontroleerd",
+            "date": "29 september",
+            "state": "tested",
+            "result": "Concrete broncode/documentatieverschillen, lokale beeldverwerking en mogelijke cloudcontext beschreven; rapport onafhankelijk akkoord.",
+            "remaining": "Eigen teruglezing en eindantwoord niet binnen300s afgerond. Geen volledige T1-claim.592.136 invoer-/3.595 uitvoertokens gedeeltelijk gemeten; credits onbekend.",
+            "source": "eva2/evidence/product/glados-vision-research-20260929.json"
+          },
+          {
+            "title": "Onderzoek krijgt de bestaande achtergrondtijd en een juiste timeoutmelding",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Gerichte correctie geïnstalleerd; kern/werker gezond, passende controles en onafhankelijke review akkoord.",
+            "remaining": "Volledig nieuw onderzoeksresultaat nog controleren; geen T1-afronding.",
+            "source": "eva2/evidence/product/native-research-deadline-20260929.json"
+          },
+          {
             "title": "Bewaarde documenttaak hervat en eindantwoord geleverd",
             "date": "29 september",
             "state": "tested",
@@ -2803,15 +2819,15 @@
           }
         ],
         "now": {
-          "title": "T1: onderzoek met bronnen afmaken en opleveren",
-          "state": "Gerichte correctie getest en onafhankelijk beoordeeld; installatie voorbereiden",
-          "detail": "Nieuwe onderzoeksvraag strandde aantoonbaar op oude 55s-toolgrens. Achtergrondonderzoek krijgt bestaande 120s-fasetijd; timeout blijft timeout. 25 unieke gerichte controles geslaagd, onafhankelijke review GO. Geen automatische herhaling.",
-          "doneWhen": "Nieuwe vraag zelfstandig onderzocht met primaire bronnen; bevindingen en concrete grenzen opgeslagen, teruggelezen en volledig teruggekoppeld."
+          "title": "T1: onderzoek volledig afronden",
+          "state": "Rapport geleverd; automatische afronding nog niet klaar",
+          "detail": "GLaDOS-rapport opgeslagen, door coördinator teruggelezen en onafhankelijk inhoudelijk akkoord. Eva bereikte na20 modelantwoorden/19 tools de totale tijdslimiet vóór eigen controle/eindantwoord. Geen modeltaak meer actief.",
+          "doneWhen": "Eva bewaart, controleert en meldt het volledige onderzoeksresultaat zelfstandig terug binnen het geldende taakbudget."
         },
         "next": {
-          "title": "Onderzoeksresultaat onafhankelijk controleren",
+          "title": "Bewaard onderzoeksresultaat afronden zonder bronnen opnieuw te lezen",
           "state": "Nog niet gestart",
-          "detail": "Controleer bronnen, opgeslagen tekst en eindantwoord; alleen een concreet defect repareren. Telegramproef blijft afzonderlijk open."
+          "detail": "Concrete ontbrekende koppeling: bestaande budgetcontext toont geen resterende wandtijd. Gericht afrondingstijd meenemen en bestaande opgeslagen inhoud gebruiken; geen nieuw onderzoek of brede audit."
         },
         "ownerAction": {
           "title": "Telegram: tussenvraag tijdens onderzoek",
@@ -2825,7 +2841,7 @@
           "expected": "Tussenvraag vóór het onderzoeksantwoord; onderzoeksantwoord bij de oorspronkelijke vraag."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T06:51:47.204479+00:00"
+        "reviewedAt": "2026-09-29T07:04:50.463644+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13063,7 +13079,7 @@
           ],
           "concreteChange": "Use the existing configured32 request allowance instead of additional composition cap8/tools6; reserve final response. Historical grants unchanged. Actual core setting32 confirmed read-only.",
           "sourceCommit": "ef59f784",
-          "activeWorker": "/root",
+          "activeWorker": null,
           "latestRealTask": "succeeded; complete concrete task independently checked",
           "diagnosticAssignment": {
             "baseCommit": "855d9ac6",
@@ -13134,7 +13150,7 @@
             "trialWorkId": "work:eva-resume:0046a00f-df03-56fd-aa06-f27bdbfd5584"
           },
           "fullTaskEvidence": "eva2/evidence/product/calendar-learning-completed-20260928.json",
-          "remaining": "General new-question research quality and full original T1 criteria remain separate from this repaired case.",
+          "remaining": "Onderzoeksrapport opgeslagen en onafhankelijk inhoudelijk akkoord; eigen teruglezing/eindantwoord strandden op totale300s. Resterende wandtijd ontbreekt in bestaand budgetcontext. Bewaard resultaat afronden zonder nieuw bronnenonderzoek.",
           "learningTaskCompletionLimitation": {
             "evidence": "eva2/evidence/product/json-patch-learning-result-20260928.json",
             "detail": "Actual correct output saved, but final report timed out after extra self-tests. No full-task success claim. Preserve result and assess completion within task deadline."
@@ -13146,7 +13162,7 @@
             "scope": "One new bounded question, existing runtime only; evidence and primary workboard owned by root",
             "endCondition": "Primary source grounding, saved readback, complete final result without coordinator resume; independent review",
             "effort": "One task within existing limits; 15-25 minutes including source review. Measure usage; credit cost unknown.",
-            "stage": "reviewed_candidate",
+            "stage": "report_delivered_full_task_incomplete",
             "files": [
               "application/conversation.py",
               "application/orchestration.py",
@@ -13156,7 +13172,8 @@
               "bootstrap/background_research.py",
               "bootstrap/delegated_digital_composition.py"
             ],
-            "reviewer": "/root/review_directory_connection"
+            "reviewer": "/root/review_directory_connection",
+            "evidence": "eva2/evidence/product/glados-vision-research-20260929.json"
           }
         },
         {

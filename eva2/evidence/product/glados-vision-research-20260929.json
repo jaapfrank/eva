@@ -1,0 +1,51 @@
+{
+  "checkedAt": "2026-09-29T07:04:50.463644+00:00",
+  "status": "saved_report_independently_verified_task_timed_out",
+  "workId": "work:eva-chat:40548afb-d5d5-578c-a52d-00183e0e6b49",
+  "taskState": "ambiguous",
+  "errorCode": "timed_out",
+  "artifact": {
+    "path": "/proof-state/glados-vision-onderzoek-20260929.md",
+    "sha256": "bd02fa3a3389f6c4f6c4fc1b9ade39411ede6fe931fbfe6c876d780ded82ba31",
+    "bytes": 4049,
+    "localCopy": "eva2/evidence/product/glados-vision-resultaat-20260929.md",
+    "readbackBy": "coordinator",
+    "ownWorkerReadback": false
+  },
+  "independentReview": {
+    "reviewer": "review_directory_connection",
+    "decision": "GO for content only",
+    "frozenUpstreamCommit": "fde319cfb8ceb965e512800b2ffc5b9c0d1574b1",
+    "reviewScope": "Vision source/config, documentation, engine and README; code/doc discrepancies and privacy qualifiers supported",
+    "reportLinks": "main, not pinned by Eva; independent pinned comparison recorded separately"
+  },
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 20,
+    "tool_calls": 19,
+    "input_tokens": 592136,
+    "output_tokens": 3595,
+    "total_tokens": 595731,
+    "cost_usd_micros": null
+  },
+  "precedingInstalledTrial": {
+    "workId": "work:eva-resume:8635c975-6a7a-5c6f-b2df-340a529f2e87",
+    "state": "failed",
+    "errorCode": "incomplete_work",
+    "toolCalls": 0,
+    "inputTokens": 11038,
+    "outputTokens": 251,
+    "foregroundInputTokens": 21136,
+    "foregroundOutputTokens": 223,
+    "interpretation": "Ordinary repeated request resumed closed failed receipt; no new research was executed, so it did not test new native deadline"
+  },
+  "remaining": "Task used primary URL connector reads and saved report, but hit whole-task300s limit before own readback/final. Existing budget context exposes token/tool counts but omits remaining wall time. Continue saved work without repeating research; correct this concrete completion gap.",
+  "limits": [
+    "Native120s research transport not exercised by this fresh task: it selected existing URL tools",
+    "No complete T1 or owner acceptance",
+    "Credit costs unknown; worker usage partial",
+    "No further automatic research retry"
+  ]
+}

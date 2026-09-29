@@ -1,6 +1,6 @@
 {
   "checkedAt": "2026-09-29T06:51:47.204479+00:00",
-  "status": "candidate_tested_reviewed",
+  "status": "installed_followup_saved_report_task_incomplete",
   "workId": "work:eva-chat:6644e31f-751b-5a21-910c-4f623684d4ef",
   "observed": "Native research began06:42:21Z, unmeasured failure06:43:16Z; terminal task budget_exceeded, no saved report",
   "cause": "Native55s clamp and generic timeout swallowed by durable orchestration; unknown usage correctly prevented another model request but masked original failure",
@@ -33,5 +33,43 @@
     "No complete research result yet",
     "Old/restarted failed receipts retain historical classification; transient deadline retention is scoped to active run",
     "No owner acceptance or T1 completion claim"
-  ]
+  ],
+  "sourceCommit": "8f1c9b0d",
+  "installation": {
+    "checkedAt": "2026-09-29T06:55:03.606446+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:43c48ec3a76e6bee190991364145a3c337ef6bff0030c3e6ccd58ae482dcca79",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "85ba7699d760bb1907e237671c1cb74b3dba16d7751c6578aa46a7e2da6614bf",
+          "application/orchestration.py": "569a7b41896a8e87ca42d9c91b5a8ccc70c9fe8fb18313fa4fbf764e21603dc8",
+          "adapters/model/pydantic_conversation.py": "fb55c995d54c6d80291c3de5ba8eb1bb9cc75a400d49d3b50fd10040195e2459",
+          "adapters/model/research_tools.py": "ae2b647eb8d498e10a5cbcabfd9c947013bf64304188167cb5278f85d1c6c9eb",
+          "adapters/model/research_transport.py": "e112e25d26a2c8582594bb162c5aef5c92b68f3cfd1c36708648967b75aee975",
+          "bootstrap/background_research.py": "a71afbac8bab6fb505b50593d568c4552cb114080495df51acce9c8fa9442179",
+          "bootstrap/delegated_digital_composition.py": "434923c0ef659efe3f77c1dd9345f7a2889399cadd84e8d58b0ef724e768ed15"
+        }
+      },
+      "worker": {
+        "image": "sha256:dc792cd6c74e149d09e19eaa1e4896019859b35fbd27aade7c021133a0545ada",
+        "health": "healthy",
+        "sourceHashes": {
+          "application/conversation.py": "85ba7699d760bb1907e237671c1cb74b3dba16d7751c6578aa46a7e2da6614bf",
+          "application/orchestration.py": "569a7b41896a8e87ca42d9c91b5a8ccc70c9fe8fb18313fa4fbf764e21603dc8",
+          "adapters/model/pydantic_conversation.py": "fb55c995d54c6d80291c3de5ba8eb1bb9cc75a400d49d3b50fd10040195e2459",
+          "adapters/model/research_tools.py": "ae2b647eb8d498e10a5cbcabfd9c947013bf64304188167cb5278f85d1c6c9eb",
+          "adapters/model/research_transport.py": "e112e25d26a2c8582594bb162c5aef5c92b68f3cfd1c36708648967b75aee975",
+          "bootstrap/background_research.py": "a71afbac8bab6fb505b50593d568c4552cb114080495df51acce9c8fa9442179",
+          "bootstrap/delegated_digital_composition.py": "434923c0ef659efe3f77c1dd9345f7a2889399cadd84e8d58b0ef724e768ed15"
+        }
+      }
+    },
+    "http": {
+      "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+      "http://localhost:44712/project-state": 200
+    },
+    "rollbackCommand": "docker compose -p eva2-managed-b-slot3 -f /home/administrator/project/.eva2-artifacts/t1-vision-research-20260929/baseline.compose.private.json --profile '*' up -d --no-deps --wait --wait-timeout 60 core delegated-work-worker"
+  },
+  "followupEvidence": "eva2/evidence/product/glados-vision-research-20260929.json"
 }

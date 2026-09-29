@@ -1,8 +1,14 @@
 # Eva 2 — uitvoerbaar werkbord
 
-## Nu — T1: onderzoek afmaken en terugmelden
+## Nu — T1: onderzoek volledig afronden
 
-De GLaDOS-vraag strandde op de oude 55s-onderzoekgrens; de timeout werd daarna als budgetfout getoond. Gerichte correctie gebouwd: achtergrondonderzoek 120s, alleen onderzoekstool 125s; foutreden blijft behouden zonder extra aanvraag. 25 unieke gerichte controles en onafhankelijke review akkoord. Installatie wordt voorbereid; nog geen afgerond onderzoeksresultaat. /root voert uit; geen parallelle bouwer. Eindpunt: primaire bronnen, bewaard en teruggelezen resultaat, volledig eindantwoord zonder ontwikkelaarhervatting, onafhankelijke inhoudscontrole. Raming 15–25 minuten; één opdracht binnen bestaande limieten, meetbaar verbruik vastleggen, creditkosten onbekend. Alleen bewijs/werkbord worden gewijzigd; geen nieuwe planner. De Telegramwaarneming blokkeert dit niet.
+**Geleverd:** [GLaDOS-visionrapport](evidence/product/glados-vision-resultaat-20260929.md), opgeslagen door Eva, door coördinator teruggelezen en onafhankelijk inhoudelijk akkoord. Code/documentatieverschillen en privacygrenzen zijn concreet onderbouwd. [Bewijs](evidence/product/glados-vision-research-20260929.json).
+
+**Geïnstalleerd:** bron8f1c9b0d corrigeert de eerdere55s-onderzoekgrens en behoudt de oorspronkelijke timeoutreden. Kern/werker gezond, bron exact gecontroleerd,25 gerichte controles en onafhankelijke review GO. Bestaande terugweg bewaard. De nieuwe opdracht koos URL-leestools en beproefde de langere native onderzoekstijd niet.
+
+**Nog niet af:** nieuwe volledige opdracht bereikte300s vóór eigen teruglezing/eindantwoord.20 modelantwoorden/19 tools,592.136in/3.595uit gedeeltelijk gemeten; creditkosten onbekend. Geen actieve modeltaak of tweede onderzoek gestart. T1 blijft open.
+
+**Volgende concrete stap:** bestaande taakbudgetcontext mist resterende wandtijd. Die afrondingsinformatie gericht aansluiten en het al bewaarde resultaat afmaken zonder de bronnen opnieuw te onderzoeken. Geen nieuwe planner of budgetverhoging. Telegramproef blijft afzonderlijk open.
 
 ## C1 — tekstgesprek tijdens werk
 
