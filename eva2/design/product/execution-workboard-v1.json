@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "M3.2 afgerond: stijlcorrecties in later antwoord",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Stijlspiegel bewaart verbod op genummerde lijsten. Persoonlijke lagere woordlimiet gaat vóór algemene limiet; proefantwoord39/40woorden. Onafhankelijke review en gezonde installatie.",
+            "remaining": "Bestaande profielen volgen hun normale verversing. Eén gerichte proef, geen algemene foutloosheidsclaim; M3.3 gezinsbeleving open.",
+            "source": "eva2/evidence/product/m3-style-fidelity-20260929.json"
+          },
+          {
             "title": "M3.1 afgerond: tijdelijke voorkeur zonder blijvend verlies",
             "date": "29 september",
             "state": "installed",
@@ -2923,15 +2931,15 @@
           }
         ],
         "now": {
-          "title": "M3.1 afgerond: tijdelijke voorkeur vervalt",
-          "state": "Bestaande geïnstalleerde werking bevestigd",
-          "detail": "Bewaarde uitzondering van gisteren overschrijft de gewone voorkeur niet. Huidige Sol kiest de blijvende voorkeur; onafhankelijke review akkoord.",
+          "title": "M3.2 afgerond: stijlcorrectie behouden",
+          "state": "Geïnstalleerd en gecontroleerd",
+          "detail": "Expliciete opmaakverboden en lagere woordlimieten worden niet afgezwakt. Gerichte proef39/40woorden; gezinsbeleving blijft open.",
           "owner": "Geen actieve uitvoerder"
         },
         "next": {
-          "title": "M3.2: stijlcorrectie in later antwoord toepassen",
+          "title": "I1.1: nuttige huisbijdrage laten aankomen",
           "state": "Nog niet gestart",
-          "detail": "Bestaande stijlwerking gebruiken; alleen eerder vastgelegde lengte-/lijstverliezen gericht aanpakken."
+          "detail": "Bestaande initiatiefroute en bewijs gebruiken; ontbrekende praktische bezorging afmaken zonder nieuw initiatiefsysteem."
         },
         "ownerAction": {
           "title": "Twee Telegram-berichten direct na elkaar",
@@ -2945,7 +2953,7 @@
           "linkLabel": "Gebruik je bestaande Telegram-gesprek met Eva"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T11:32:06.670825+00:00"
+        "reviewedAt": "2026-09-29T11:39:30.288738+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12765,7 +12773,7 @@
           ]
         }
       ],
-      "nextAction": "M3.2: inspect already recorded style-length/list fidelity failures and existing installed attribution fix. Change only the concrete remaining failure; do not repeat accepted memory or temporary-preference cases.",
+      "nextAction": "I1.1: reuse installed initiative composition, admitted household mandate and existing delivery evidence; identify only remaining practical delivery gap. M2 complete and M3 technical subtasks complete; pending owner experience does not block independent work. Respect unresolved T2 dependencies for any concrete HA action.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13316,10 +13324,25 @@
             {
               "id": "M3.2",
               "title": "Stijlcorrectie in later antwoord toepassen",
-              "status": "planned",
+              "status": "completed",
               "kind": "verbeteren",
               "doneWhen": "Bekende lengte-/lijstverliezen gericht opgelost waar reproduceerbaar; eerder geslaagde gevallen niet herhalen.",
-              "owner": "Codex"
+              "owner": "Codex",
+              "assignment": {
+                "baseCommit": "459e5998",
+                "outcome": "Preserve explicit no-numbered-lists correction and stricter word limit in later answer.",
+                "files": [
+                  "eva2/src/eva/adapters/projection/hindsight.py",
+                  "eva2/src/eva/adapters/model/pydantic_conversation.py",
+                  "focused existing tests",
+                  "eva2/evidence/product/m3-style-fidelity-20260929.json"
+                ],
+                "budget": "One changed-cause existing synthetic mirror refresh and one Sol answer; no retention/retry; credits unknown.",
+                "doneWhen": "Refresh preserves max40/no-numbered-list exactly and later desk-organizing answer complies; targeted checks, independent review and install."
+              },
+              "completedAt": "2026-09-29T11:39:30.288738+00:00",
+              "latestEvidence": "eva2/evidence/product/m3-style-fidelity-20260929.json",
+              "result": "Stijlverbod en lagere woordlimiet behouden; gerichte antwoordproef39/40woorden zonder genummerde lijst. Review GO; kern/werker geïnstalleerd en gezond."
             },
             {
               "id": "M3.3",
@@ -13329,7 +13352,8 @@
               "doneWhen": "Jaap beoordeelt eigen oordeel, humor en initiatief; technische test verzint geen gezinsacceptatie.",
               "owner": "Jaap"
             }
-          ]
+          ],
+          "latestEvidence": "eva2/evidence/product/m3-style-fidelity-20260929.json"
         },
         {
           "id": "T1",

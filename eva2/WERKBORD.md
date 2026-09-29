@@ -1,5 +1,15 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Laatst afgerond — M3.2 stijlcorrectie behouden
+
+Expliciet geen genummerde lijst wordt in stijlreflectie niet afgezwakt; een toepasselijke lagere woordlimiet gaat vóór de algemene limiet. Gerichte proef:39woorden bij maximaal40, zonder genummerde lijst. Drie bestaande gerichte controles en onafhankelijke review akkoord. Beide modules geïnstalleerd in gezonde kern/werker; bron gecontroleerd. [Bewijs](evidence/product/m3-style-fidelity-20260929.json).
+
+Eén reflectie en één Solgeneratie:1.839in/49uit voor contact; reflectietokens en credits onbekend. Bestaande persoonsprofielen krijgen de nieuwe query bij normale verversing; geen massaverwerking. Eén synthetische proef is geen algemene foutloosheid.40 van44kleine taken open; M3.3 gezinsbeleving blijft open.
+
+**Volgende, nog niet gestart:** I1.1 bestaande huisinitiatiefroute tot een concrete bijdrage afronden. Bewezen samenstelling hergebruiken; geen nieuw initiatiefsysteem. Geen actieve uitvoerders.
+
+## Eerdere voortgang
+
 ## Laatst afgerond — M3.1 tijdelijke voorkeur verloopt
 
 De bewaarde proef van28september is op de echte volgende kalenderdag met huidige Sol teruggevraagd. Gewone koffievoorkeur en tijdelijke thee-uitzondering zijn beide behouden; Eva kiest correct koffie. Geen nieuwe opslag, code of installatie nodig. Onafhankelijke review GO. [Bewijs](evidence/product/m3-expired-preference-20260929.json).

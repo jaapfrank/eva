@@ -2846,7 +2846,10 @@ class PydanticConversationModel:
             f"Relevante herinneringen:\n{memories}\n\n"
             f"Jouw duurzame eigen toestand:\n{durable_self}\n\n"
             f"Recente gesprekstijdlijn:\n{recent}\n\n"
-            f"Antwoord in maximaal {identity.maximum_reply_words} woorden."
+            f"Antwoord in maximaal {identity.maximum_reply_words} woorden. "
+            "Een lagere, toepasselijke expliciete woordlimiet van deze persoon gaat "
+            "voor deze algemene bovengrens. Houd ook expliciete opmaakverboden aan; "
+            "controleer lengte en opmaak voordat je antwoordt."
         )
 
 

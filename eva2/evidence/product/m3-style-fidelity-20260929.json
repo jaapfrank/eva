@@ -1,0 +1,126 @@
+{
+  "checkedAt": "2026-09-29T11:39:30.288738+00:00",
+  "baseCommit": "459e5998",
+  "task": "M3.2",
+  "status": "bounded_improvement_installed",
+  "existingEvidence": "eva2/evidence/product/grounded-style-mirror-20260928.json",
+  "gap": "Explicit no-numbered-lists softened into lists optional; previous answer47words for max40.",
+  "change": [
+    "Preserve numeric maxima and prohibitions in existing style-mirror source query.",
+    "Applicable lower personal word cap takes precedence over generic answer limit; check length/format without adding model retry."
+  ],
+  "observations": [
+    {
+      "stage": "after",
+      "step": "reuse_retained_correction",
+      "reason": "already acknowledged in original run"
+    },
+    {
+      "stage": "after",
+      "step": "reflected",
+      "seconds": 20.920780005981214,
+      "receipt": {
+        "bank_id": "eva2-m3-style-d7abeda7cb3e0c6170de40ce2057fc5f",
+        "mental_model_id": "eva-style-mirror-v1-2fd32837ba5e1385",
+        "disposition": "refreshed",
+        "operation_id": "35695283-19d1-40ad-b825-1f04e985644b"
+      }
+    },
+    {
+      "stage": "after",
+      "step": "recall",
+      "style_mirror": "Vanaf 28 september 2026 heeft deze persoon een blijvende voorkeur voor korte, vriendelijke antwoorden van maximaal 40 woorden. Genummerde lijsten zijn niet gewenst; een eerdere voorkeur voor uitgebreide antwoorden met genummerde stappen vervalt. Vermeld niet telkens dat je een AI bent of geen lichaam hebt. Over directheid, formaliteit, het stellen van vragen en feitelijke precisie zijn geen onderbouwde voorkeuren bekend. Er zijn geen tijdelijke uitzonderingen vermeld.",
+      "facts": [
+        {
+          "fact_id": "hindsight:c65e4730-fb4a-4a66-beac-0445b969450c",
+          "subject": "synthetic-m3-style-20260928",
+          "predicate": "memory.observation",
+          "value": {
+            "context": null,
+            "memory_type": "observation",
+            "semantic_trust": "direct_user",
+            "source_observed_at": "2026-09-28T11:00:00Z",
+            "text": "Vanaf 28 september 2026 wil de gebruiker korte, vriendelijke antwoorden van maximaal 40 woorden, zonder genummerde lijsten. De eerdere voorkeur voor uitgebreide antwoorden met genummerde stappen vervalt; vermeld niet telkens dat je een AI bent of geen lichaam hebt."
+          },
+          "source_ref": "synthetic-m3-style-20260928:source",
+          "evidence_ref": "synthetic-m3-style-20260928:evidence",
+          "observed_at": "2026-09-28T11:00:00Z",
+          "trust": "direct_user"
+        }
+      ]
+    },
+    {
+      "stage": "after",
+      "step": "answer",
+      "seconds": 4.59830517298542,
+      "result": {
+        "text": "Begin met alles van je bureau af te halen. Gooi afval weg, leg spullen die ergens anders horen apart en zet alleen terug wat je dagelijks gebruikt. Geef losse spullen één vaste plek. Dan blijft het bureau makkelijker netjes.",
+        "provider": "chatgpt-codex:gpt-6-sol",
+        "action_call": null,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 1839,
+          "output_tokens": 49
+        },
+        "timing": {
+          "first_content_ms": 2452,
+          "completed_ms": 4284
+        }
+      }
+    }
+  ],
+  "assessment": {
+    "styleProhibitionPreserved": true,
+    "wordCount": 39,
+    "wordMaximum": 40,
+    "numberedList": false,
+    "passed": true
+  },
+  "tests": "3 existing reflection scheduling/query-migration checks passed in2.45s; no live provider calls in tests.",
+  "review": {
+    "reviewer": "/root/review_l2_autonomous_run",
+    "decision": "GO for bounded improvement and installation"
+  },
+  "installation": [
+    {
+      "service": "core",
+      "image": "sha256:237e63152191231c8139e8edb4560e4314544f6e89d41da08478ff2489486621",
+      "health": "healthy",
+      "sourceMatches": true,
+      "hashes": {
+        "adapters/projection/hindsight.py": "bc0febb9274502bfba9c56461025a0cd6ddc0a0f0d7a940ed1c3cda0b11cbe54",
+        "adapters/model/pydantic_conversation.py": "b17c9f35d2a784a64255469f1317a1048d19aded0f06eadca5321ccfb0bd4659"
+      }
+    },
+    {
+      "service": "delegated-work-worker",
+      "image": "sha256:dc90f1acf657f7841522ef6d90983ac1d41db44e74694ef3bc68d558d381da3a",
+      "health": "healthy",
+      "sourceMatches": true,
+      "hashes": {
+        "adapters/projection/hindsight.py": "bc0febb9274502bfba9c56461025a0cd6ddc0a0f0d7a940ed1c3cda0b11cbe54",
+        "adapters/model/pydantic_conversation.py": "b17c9f35d2a784a64255469f1317a1048d19aded0f06eadca5321ccfb0bd4659"
+      }
+    }
+  ],
+  "httpStatus": 200,
+  "rollbackArtifacts": "/home/administrator/project/.eva2-artifacts/m3-style-fidelity-20260929",
+  "usage": {
+    "styleRefreshes": 1,
+    "contactGenerations": 1,
+    "contactInputTokens": 1839,
+    "contactOutputTokens": 49,
+    "reflectionTokens": null,
+    "credits": null
+  },
+  "rollout": "Existing stored mirrors receive updated query at next normally admitted refresh; no forced owner-bank refresh. Synthetic changed mirror was refreshed once.",
+  "ownerAccepted": false,
+  "limitations": [
+    "Single synthetic direct-adapter case; no guarantee all answers satisfy every word cap.",
+    "Previous response used Luna, current response uses Sol; not a controlled estimate of prompt-only causal improvement.",
+    "Normal ingress, all stored owner mirrors and family experience not newly tested.",
+    "M3.3 family personality evaluation and whole M3 remain open."
+  ]
+}

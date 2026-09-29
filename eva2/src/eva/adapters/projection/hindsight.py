@@ -786,7 +786,10 @@ class HindsightMemoryEngine:
             "Zonder onderbouwde communicatievoorkeuren schrijf je uitsluitend: "
             "Geen onderbouwde communicatievoorkeuren bekend. Neem alleen latere "
             "correcties op die deze communicatievoorkeuren wijzigen. Onderscheid "
-            "tijdelijke uitzonderingen van blijvende voorkeuren. Geen inhoudelijke "
+            "tijdelijke uitzonderingen van blijvende voorkeuren. Behoud expliciete "
+            "bovengrenzen en verboden exact: maak van geen genummerde lijsten "
+            "niet dat lijsten niet verplicht zijn, en van maximaal niet ongeveer. "
+            "Geen inhoudelijke "
             "interesses, vrijetijdskeuzes, projecten, huisfeiten of antwoordtekst; "
             "die blijven in het gewone geheugen. Geen kopjes of lijst."
         )
