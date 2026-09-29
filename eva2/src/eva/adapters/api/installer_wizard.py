@@ -32,6 +32,9 @@ from eva.adapters.api.installer_budget_api import (
     register_installer_budget_routes,
 )
 from eva.adapters.api.installer_identity_ui import INSTALLER_IDENTITY_SCRIPT
+from eva.adapters.api.installer_update_api import (
+    INSTALLER_UPDATE_SECTION, INSTALLER_UPDATE_SCRIPT, register_installer_update_routes,
+)
 from eva.adapters.api.installer_installation_plan_api import (
     INSTALLER_INSTALLATION_PLAN_SCRIPT,
     INSTALLER_INSTALLATION_PLAN_SECTION,
@@ -252,6 +255,7 @@ button:disabled{{opacity:.45}}#soul-result{{white-space:pre-wrap}}
 {INSTALLER_PROVIDER_SECTION}
 {INSTALLER_BUDGET_SECTION}
 {INSTALLER_INSTALLATION_PLAN_SECTION}
+{INSTALLER_UPDATE_SECTION}
 {INSTALLER_RESTORE_SECTION}
 <section><h2>Hoe {name} zich aan jou voorstelt</h2><p><a href="/internal/v1/identity/soul-export" download="SOUL.md">Download de huidige SOUL.md</a></p><p>Plak optioneel een kleine <code>SOUL.md</code>. Je ziet eerst het precieze voorstelverschil.</p><textarea id="soul" maxlength="8192" spellcheck="false" placeholder="# Eva&#10;&#10;## Naam&#10;Eva&#10;&#10;## Temperament&#10;warm, nieuwsgierig"></textarea><button type="button" id="soul-preview">Toon voorstel</button>{controls}<p id="soul-result" role="status"></p></section>
 </main>
@@ -269,6 +273,7 @@ button:disabled{{opacity:.45}}#soul-result{{white-space:pre-wrap}}
         + "</script>\n<script>"
         + INSTALLER_RESTORE_SCRIPT
         + "</script>\n<script>"
+        + INSTALLER_UPDATE_SCRIPT
         + INSTALLER_INSTALLATION_PLAN_SCRIPT
         + "</script>\n<script>"
         + INSTALLER_IDENTITY_SCRIPT
@@ -295,6 +300,7 @@ def create_installer_wizard(
     installation_preparer: Callable[[dict[str, object]], None] | None = None,
     installation_preparation_status: Callable[[], str] | None = None,
     restore_workflow: InstallerRestorePort | None = None,
+    update_workflow=None,
 ) -> FastAPI:
     receipt = _safe_receipt(receipt)
     if identity_lifecycle is not None:
@@ -445,6 +451,10 @@ def create_installer_wizard(
         require_installer_read(request)
         _same_origin_or_absent(request)
 
+    register_installer_update_routes(
+        app, workflow=update_workflow, require_read=require_installer_read,
+        require_write=require_installer_write, security_headers=_SECURITY_HEADERS,
+    )
     register_installer_restore_routes(
         app,
         workflow=restore_workflow if receipt["status"] == "ready" else None,

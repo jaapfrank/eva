@@ -89,6 +89,7 @@ def run_installer_wizard(
     installation_preparer: Callable[[dict[str, object]], None] | None = None,
     installation_preparation_status: Callable[[], str] | None = None,
     installation_preparation_factory: Callable[..., InstallerPreparation] | None = None,
+    update_workflow=None,
 ) -> int:
     """Compose trusted preparation against the wizard's actual persisted state.
 
@@ -309,6 +310,7 @@ def run_installer_wizard(
             receipt,
             bootstrap,
             restore_workflow=restore_workflow,
+            update_workflow=update_workflow,
             identity=identity,
             identity_lifecycle=identity_lifecycle,
             profile_workflow=profile_workflow,

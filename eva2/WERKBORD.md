@@ -1,5 +1,12 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — O2.2 updatebediening geïnstalleerd
+
+Bestaande installatiewizard toont **Eva bijwerken**, met voorbereid pakket, uitvoerknop en bewaarde status. Private operatorconfiguratie bepaalt het pakket; de browser geeft geen paden of configuratie door. Vijf modules geïnstalleerd in bestaand operatorpakket; drie route-/echte wizardsessiegevallen op geïnstalleerde modules geslaagd; onafhankelijke review GO. [Bewijs](evidence/product/o2-update-wizard-20260929.json).
+
+O2.2 blijft open voor de volgende echte compatibele productie-update met huidige gegevens. Geen kunstmatige herinstallatie om een status af te vinken. Geen actieve uitvoerder; nul Eva-modelcalls, credits onbekend.
+
+
 ## Actueel — O2.2 update-uitvoerder geïnstalleerd, bediening open
 
 Bestaande operator uitgebreid met image-only update voor kern/achtergrondwerker. Configuratie en werkelijke opslag worden vóór starten gebonden; nieuwe lokale image wordt één keer toegepast. Vier gerichte controles en echte geïsoleerde Compose-update met behouden voorbeeldgegevens geslaagd, onafhankelijke review GO. CLI geïnstalleerd en import gecontroleerd. Geen productierollback of overbodige herinstallatie. [Bewijs](evidence/product/o2-image-update-20260929.json).

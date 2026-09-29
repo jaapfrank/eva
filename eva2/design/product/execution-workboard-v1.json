@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Eva bijwerken via bestaande installatiewizard",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Voorbereid updatepakket uitvoeren en opgeslagen status bekijken. Geen bestandspaden of configuratie invoeren in het scherm.",
+            "remaining": "Geen volgend productie-updatepakket geselecteerd. O2.2 blijft open voor daadwerkelijke update met huidige gegevens.",
+            "source": "eva2/evidence/product/o2-update-wizard-20260929.json"
+          },
+          {
             "title": "Update-uitvoerder behoudt bestaande gegevensopslag",
             "date": "29 september",
             "state": "installed",
@@ -2963,14 +2971,14 @@
           }
         ],
         "now": {
-          "title": "O2.2 update-uitvoerder geïnstalleerd; bediening nog open",
-          "state": "Onderdeel geleverd",
-          "detail": "Image-update-uitvoerder geïnstalleerd in operatorpakket en echt beproefd met behouden voorbeelddata. Nog aansluiten op eigenaarbediening en volgende echte compatibele update met huidige gegevens uitvoeren; geen nutteloze herinstallatie.",
+          "title": "O2.2 updatebediening geïnstalleerd",
+          "state": "Bediening gereed; echte update nog open",
+          "detail": "Eigenaarbediening nu aangesloten en geïnstalleerd: vooraf voorbereid updatepakket via bestaande wizard uitvoeren en status teruglezen. Nog volgende echte compatibele productie-update met huidige gegevens via deze route uitvoeren; geen nutteloze herinstallatie.",
           "owner": "Codex; geen actieve uitvoerder"
         },
         "next": {
-          "title": "O2.2 aansluiten op bestaande eigenaarbediening",
-          "detail": "Gecontroleerde updatekeuze aan bestaande operator koppelen; daarna volgende echte update via dezelfde gegevensopslag."
+          "title": "Volgende echte update via de aangesloten bediening",
+          "detail": "Geen productieherinstallatie zonder nieuwe functionele wijziging. Huidige gegevensversie behouden en controleren bij de volgende compatibele update."
         },
         "ownerAction": {
           "title": "Doorpraten op woonkamerspeaker proberen",
@@ -2984,7 +2992,7 @@
           "linkLabel": "Geef resultaat in deze taak door"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T13:22:11.206297+00:00"
+        "reviewedAt": "2026-09-29T13:27:41.037492+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14345,18 +14353,21 @@
               "doneWhen": "Bestaande updater werkt met werkelijke gegevensversie en behoud van informatie.",
               "owner": "/root",
               "assignment": {
-                "baseCommit": "120d1177",
+                "baseCommit": "793c9936",
                 "outcome": "Finish existing update path with preservation of current data",
-                "estimate": "Bounded inspection of existing update implementation and evidence, then only demonstrated gap; no model calls planned, credits unknown",
+                "estimate": "One existing wizard integration, focused API/launcher checks and bundled review; zero model calls planned; credits unknown",
                 "files": [
-                  "eva2/tools/installation_runtime_update.py",
-                  "eva2/tests/operations/test_installation_runtime_update.py"
+                  "eva2/src/eva/adapters/api/installer_update_api.py",
+                  "eva2/src/eva/adapters/api/installer_wizard.py",
+                  "eva2/src/eva/bootstrap/installer_wizard_cli.py",
+                  "eva2/tools/installer_restore_wizard.py",
+                  "eva2/tools/installation_runtime_update.py"
                 ],
                 "finish": "Owner can apply an update with current data preserved; no rebuild of release tooling",
-                "stage": "operator_cli_installed_owner_wiring_open"
+                "stage": "owner_update_wiring_installed"
               },
-              "latestEvidence": "eva2/evidence/product/o2-image-update-20260929.json",
-              "remaining": "Image-update-uitvoerder geïnstalleerd in operatorpakket en echt beproefd met behouden voorbeelddata. Nog aansluiten op eigenaarbediening en volgende echte compatibele update met huidige gegevens uitvoeren; geen nutteloze herinstallatie."
+              "latestEvidence": "eva2/evidence/product/o2-update-wizard-20260929.json",
+              "remaining": "Eigenaarbediening nu aangesloten en geïnstalleerd: vooraf voorbereid updatepakket via bestaande wizard uitvoeren en status teruglezen. Nog volgende echte compatibele productie-update met huidige gegevens via deze route uitvoeren; geen nutteloze herinstallatie."
             },
             {
               "id": "O2.3",

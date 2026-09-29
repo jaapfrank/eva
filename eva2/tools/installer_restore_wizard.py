@@ -156,12 +156,18 @@ def configured_restore_workflow(config):
 def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("--restore-config", type=Path)
+    parser.add_argument("--update-config", type=Path)
     parser.add_argument("--workspace", type=Path)
     args, remaining = parser.parse_known_args(argv)
+    update_workflow = None
+    if args.update_config is not None:
+        from tools.installation_runtime_update import InstallerRuntimeUpdate
+        update_workflow = InstallerRuntimeUpdate(json.loads(read_private_runtime_file_bytes(
+            args.update_config, setting_name="installer prepared update")))
     if args.restore_config is None:
         data_home = Path(os.environ.get("XDG_DATA_HOME") or Path.home() / ".local/share")
         workspace = args.workspace or data_home / "eva2/installer"
-        return run_installer_wizard([*remaining, "--workspace", str(workspace)])
+        return run_installer_wizard([*remaining, "--workspace", str(workspace)], update_workflow=update_workflow)
     if args.workspace is not None:
         remaining.extend(["--workspace", str(args.workspace)])
     config = json.loads(
@@ -170,7 +176,7 @@ def main(argv=None):
         )
     )
     with configured_restore_workflow(config) as workflow:
-        return run_installer_wizard(remaining, restore_workflow=workflow)
+        return run_installer_wizard(remaining, restore_workflow=workflow, update_workflow=update_workflow)
 
 
 if __name__ == "__main__":

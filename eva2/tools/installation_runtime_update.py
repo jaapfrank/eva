@@ -139,6 +139,32 @@ def update_runtime(*, project: str, installed: Path, candidate: Path,
         raise
 
 
+class InstallerRuntimeUpdate:
+    """Expose a trusted prepared update without accepting browser file paths."""
+    def __init__(self, config: dict):
+        if set(config) != {"project", "installed", "candidate", "receipt", "label"}:
+            raise ValueError("prepared update configuration differs")
+        if any(not isinstance(value, str) or not value for value in config.values()):
+            raise ValueError("prepared update configuration requires nonempty strings")
+        self.label = config["label"]
+        self.arguments = {key: Path(value) if key != "project" else value
+                          for key, value in config.items() if key != "label"}
+
+    def status(self) -> dict:
+        path = self.arguments["receipt"]
+        state = "ready"
+        if path.exists():
+            try:
+                state = json.loads(path.read_text())["status"]
+            except (OSError, ValueError, KeyError):
+                state = "incomplete_inspect_retained_installation"
+        return {"status": state, "label": self.label, "can_apply": state == "ready"}
+
+    def apply(self) -> dict:
+        update_runtime(**self.arguments)
+        return self.status()
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project", required=True)
