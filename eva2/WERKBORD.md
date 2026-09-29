@@ -1,3 +1,7 @@
+## Actueel: C1 geblokkeerd door provider — 29 september 2026
+
+Eén echte websitebegroeting na de geïnstalleerde correctie: HTTP429 na3,894s, geen antwoordtekst, één aanvraag zonder automatische herhaling. Correcte foutcode live bevestigd; geen snelheidswinst of C1-afronding. [Bewijs](evidence/product/c1-installed-contact-20260929.json). I2-bronkeuze wacht op Jaap; volgende-dagtaak blijft gepland. Geen nieuwe installatie of rollback.
+
 ## Actueel: I2.1 wacht op bronkeuze — 29 september 2026
 
 C1 blijft onaf: geen nieuwe aantoonbare codeoorzaak voor snelheid; echte meting na providerweigering open. Geen speculatieve cache-/geheugenherbouw. Voor I2.1 is de eigenaar gevraagd welke camera de bakken ziet en welke kalender ophaaldagen bevat. Lokale beeldherkenning is nu active/running; eerdere echte kalenderuitlezing blijft geldig als historisch bewijs. Geen connectorbouw of modelproef actief en geen functie afgerond.

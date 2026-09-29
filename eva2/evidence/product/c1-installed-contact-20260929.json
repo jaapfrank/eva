@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-09-29T19:52:50.185912+00:00",
+  "sourceCommit": "e620be6a3e25d4528e5bad936cb6ec8e11f80524",
+  "route": "POST /internal/v1/dashboard/conversation/respond",
+  "input": "Hallo.",
+  "outcome": "provider_rate_limited",
+  "elapsedSeconds": 3.894,
+  "providerHttpStatus": 429,
+  "memoryMs": 966,
+  "providerHeadersMs": 1371,
+  "textDeltas": 0,
+  "observedProviderFailures": 1,
+  "automaticRetry": false,
+  "interpretation": "Installed error correction works on a real request; ordinary contact is currently blocked before answer generation. No latency improvement or C1 completion proven.",
+  "usage": {
+    "conversationRequests": 1,
+    "outputTokens": 0,
+    "inputTokens": "not reported",
+    "creditCost": "unknown"
+  },
+  "privateArtifact": "/home/administrator/project/.eva2-artifacts/c1-installed-contact-20260929/greeting-response.private.json"
+}
