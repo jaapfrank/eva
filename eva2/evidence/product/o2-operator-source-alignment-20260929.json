@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-09-29T19:58:50.745792+00:00",
+  "task": "O2.3",
+  "cause": "Installed operator source was older than current delegated digital work contracts: obsolete capability count/set rejected valid stored tasks.",
+  "sourceDataChanged": false,
+  "validation": {
+    "frozenRows": 73,
+    "oldOperatorRejected": 53,
+    "currentSourceRejected": 0,
+    "portableTransformedRejected": 0,
+    "installedCurrentSourceRejected": 0,
+    "actualLauncherDependencyPrecedence": true
+  },
+  "installation": {
+    "at": "2026-09-29T19:57:32.007363+00:00",
+    "sourceCommit": "7f77d3c9a95b161e6b4de5a0b35118d211ab7563",
+    "files": 349,
+    "priorSource": "/home/administrator/project/.eva2-artifacts/installer-document-write-20260924/src-before-o2-current-20260929",
+    "activeOperatorProcesses": 0,
+    "launcherPrecedenceValidation": {
+      "rows": 73,
+      "failed": 0
+    }
+  },
+  "independentReview": "GO; launcher dependency precedence checked afterwards",
+  "export": {
+    "status": "running",
+    "sessionId": 49774,
+    "source": "existing frozen database; no new snapshot",
+    "destination": "/home/administrator/project/.eva2-artifacts/o2-consistent-source-20260929/runtime-export-current"
+  },
+  "modelCalls": 0,
+  "creditCost": "unknown",
+  "remaining": "Full archive validation and combined memory/gateway/document restore remain open; not complete O2.3."
+}

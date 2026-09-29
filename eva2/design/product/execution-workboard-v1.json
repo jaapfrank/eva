@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T19:52:50.185912+00:00",
+        "checkedAt": "2026-09-29T19:58:50.745792+00:00",
         "deliveries": [
           {
             "title": "Providerweigering zonder dubbele aanvraag of veiligheidsmelding",
@@ -3043,10 +3043,10 @@
           }
         ],
         "now": {
-          "title": "C1: provider blokkeert ook gewone begroeting",
-          "state": "Geblokkeerd",
-          "detail": "Echte websiteaanvraag eindigt na3,894s met HTTP429, zonder antwoordtekst. Eén aanvraag; juiste foutcode, geen automatische herhaling. Geen snelheidswinst of functieafronding.",
-          "owner": "Codex /root"
+          "title": "O2.3: export hervat met passende taakdefinities",
+          "state": "Bezig",
+          "owner": "Codex /root",
+          "detail": "Oud operatorpakket wees53 geldige taken af. Actuele bron geïnstalleerd;73/73 controles slagen. Dezelfde bewaarde kopie wordt geëxporteerd; gezamenlijke herstelactie nog open."
         },
         "next": {
           "title": "C1 hervatten wanneer de providerroute beschikbaar is",
@@ -3063,7 +3063,7 @@
           "linkLabel": "Antwoord in deze chat"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T19:52:50.185912+00:00"
+        "reviewedAt": "2026-09-29T19:58:50.745792+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14511,16 +14511,16 @@
                 "outcome": "Bevroren echte gegevens via bestaande volledige herstelroute herstellen.",
                 "estimate": "Bestaande kernexport duurt eerder circa8min; één export van deze nieuwe consistente bronkopie, geen nieuwe live snapshot/modelcalls. Credits onbekend.",
                 "finish": "Consistent source copy collected through existing helpers; complete joint restore remains required.",
-                "stage": "export_rejected_owner_requested_pause",
+                "stage": "existing_snapshot_export_running",
                 "workers": {
-                  "/root": "frozen database export running; actual package composition next"
+                  "/root": "existing frozen snapshot export with aligned operator source"
                 },
                 "activeWorkers": [],
                 "endCondition": "Pakket/autoriteit/wizard gebruiken dezelfde v3-kern met bestaande externe stappen; gerichte combinatiecontrole, onafhankelijke review en operatorinstallatie.",
-                "liveExportSession": null
+                "liveExportSession": 49774
               },
-              "latestEvidence": "eva2/evidence/product/o2-restored-identity-runtime-owner-20260929.json",
-              "remaining": "Laatste export afgewezen door controle opgeslagen achtergrondwerk (DelegatedWorkStoreError). Oorzaak bron versus exporttransformatie nog niet vastgesteld. Bron en kopie behouden. Eigenaar vraagt stoppen; geen nieuwe reparatie gestart."
+              "latestEvidence": "eva2/evidence/product/o2-operator-source-alignment-20260929.json",
+              "remaining": "Oude operatorcontracten vervangen door exacte actuele bron;73 taken geldig. Export van bestaande kopie loopt; gezamenlijke herstelactie nog open."
             }
           ],
           "latestEvidence": "eva2/evidence/product/o2-consistent-source-collected-20260929.json"
@@ -14753,7 +14753,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "C1",
+      "activeSliceId": "O2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
