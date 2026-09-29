@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T21:20:09.017522+00:00",
+        "checkedAt": "2026-09-29T21:33:08.145142+00:00",
         "deliveries": [
           {
             "title": "Herhaalde herstelpakketcontrole versneld",
@@ -3051,14 +3051,14 @@
           }
         ],
         "now": {
-          "title": "O2.3: bestaande gatewayuitgang aangesloten; providercontrole",
-          "state": "Bezig",
+          "title": "C1: providerweigering; O2.3: browserafhankelijkheid",
+          "state": "Geblokkeerd",
           "owner": "Codex /root",
-          "detail": "Geïnstalleerd na37 gerichte controles en review. Gateway gebruikt eigen interne netwerk plus bestaande expliciet gekozen uitgang. Bestandsprovider gestart op herstelde map. Oude HA-MCP-koppeling slaat verse discovery over; oorzaak controleren vóór kernvrijgave."
+          "detail": "Bestaande log: HTTP429 zonder antwoord. Accountcontrole: weekvenster100%, ordinaryUsageAllowed=true; precieze weigering niet bewezen. Geen nieuwe modelcall of reset. Herstel kan oude geautoriseerde maar onbereikbare browser niet als geverifieerd overslaan. Geen bouwproces actief."
         },
         "next": {
-          "title": "O2.3: teruglezen en vier documentproviders aansluiten",
-          "detail": "Na dezelfde lopende import: gegevens vergelijken, oorspronkelijke toolcatalogi uit bewaarde gatewaykopie aansluiten, daarna documentproviders en gecontroleerde vrijgave. Vier catalogi read-only exact teruggevonden; aansluiting nog niet gebouwd."
+          "title": "Verder met beschikbare huiscontext of herstelde toegang",
+          "detail": "I2.1 kan verder zodra camera en afvalkalender bekend zijn. C1 vereist herstelde providerbeschikbaarheid; geen ongewijzigde herhaalproef. O2.3 bewaart de voorbereide herstelde installatie en blijft open voor browserafhankelijkheid."
         },
         "ownerAction": {
           "title": "Welke camera en afvalkalender?",
@@ -3071,7 +3071,7 @@
           "linkLabel": "Antwoord in deze chat"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T21:20:09.017522+00:00"
+        "reviewedAt": "2026-09-29T21:33:08.145142+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13067,10 +13067,13 @@
                 ],
                 "finish": "Demonstrated reduction in actual content latency without bypassing shared memory/persona; independent focused review and installed result. Current Telegram overlap remains separate C1.2.",
                 "estimate": "Use retained timings and current source/config first; new provider calls only for a concrete changed hypothesis. Credits unknown.",
-                "stage": "live_provider_refusal_confirmed"
+                "stage": "live_provider_refusal_confirmed",
+                "currentAction": "Existing logs and account inspected; HTTP429 remains unresolved, weekly window100%. No active model probe.",
+                "activeWorkers": [],
+                "workers": {}
               },
               "blocker": "Werkelijke geïnstalleerde webbegroeting krijgt nog HTTP429 vóór antwoordtekst; foutafhandeling zonder herhaling bevestigd.",
-              "latestEvidence": "eva2/evidence/product/c1-installed-contact-20260929.json"
+              "latestEvidence": "eva2/evidence/product/c1-o2-current-blockers-20260929.json"
             },
             {
               "id": "C1.2",
@@ -14501,7 +14504,7 @@
             {
               "id": "O2.3",
               "title": "Herstelroute met werkelijke gegevensversie afronden",
-              "status": "in_progress",
+              "status": "blocked",
               "kind": "aansluiten",
               "doneWhen": "Bestaande herstelwizard werkt voor huidige gegevensversie; geen nieuw herstelsysteem bouwen.",
               "owner": "/root",
@@ -14516,10 +14519,8 @@
                 "outcome": "Bevroren echte gegevens via bestaande volledige herstelroute herstellen.",
                 "estimate": "Bestaande kernexport duurt eerder circa8min; één export van deze nieuwe consistente bronkopie, geen nieuwe live snapshot/modelcalls. Credits onbekend.",
                 "finish": "Consistent source copy collected through existing helpers; complete joint restore remains required.",
-                "stage": "existing_gateway_egress_installed_upstream_discovery",
-                "workers": {
-                  "/root": "resolving original unreachable HA-MCP discovery before runtime activation"
-                },
+                "stage": "blocked_legacy_browser_authority",
+                "workers": {},
                 "activeWorkers": [],
                 "endCondition": "Pakket/autoriteit/wizard gebruiken dezelfde v3-kern met bestaande externe stappen; gerichte combinatiecontrole, onafhankelijke review en operatorinstallatie.",
                 "liveExportSession": null,
@@ -14528,8 +14529,8 @@
                 "liveDocumentSession": null,
                 "liveGatewaySession": null
               },
-              "latestEvidence": "eva2/evidence/product/o2-existing-gateway-egress-20260929.json",
-              "remaining": "Vier documentproviders schrijfbaar en gatewayuitgang aangesloten. Algemene bestandsprovider gebruikt herstelde map. Verse providercontrole en runtimevrijgave open; oude HA-MCP-koppeling levert nog geen verse discovery."
+              "latestEvidence": "eva2/evidence/product/c1-o2-current-blockers-20260929.json",
+              "remaining": "Runtimevrijgave geblokkeerd: oude browser-MCP op 192.168.0.2:8931 is onbereikbaar maar blijft in actuele managed-endpoints-autorisatie. Niet zonder meer als optioneel te negeren. Herstelde gegevens en draaiende documentproviders blijven behouden."
             }
           ],
           "latestEvidence": "eva2/evidence/product/o2-consistent-source-collected-20260929.json"

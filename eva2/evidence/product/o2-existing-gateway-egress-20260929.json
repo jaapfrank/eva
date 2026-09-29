@@ -17,5 +17,6 @@
     "modelCalls": 0
   },
   "modelCalls": 0,
-  "limitation": "Gateway upstream discovery still open. HA-MCP refresh returned success but no fresh discovery; source archive already marks this connector unreachable. No runtime activation claim."
+  "limitation": "Gateway upstream discovery still open. Historical browser-MCP refresh returned success but no fresh discovery; source archive already marks this connector unreachable. No runtime activation claim.",
+  "correction": "Endpoint192.168.0.2:8931 serves24 browser_* tools. Earlier HA label was wrong; native HA uses10.0.20.74:8123. One native health check leaves historical browser unreachable; local port8931 not listening."
 }

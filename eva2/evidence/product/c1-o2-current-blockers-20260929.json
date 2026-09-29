@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-09-29T21:33:08.145142+00:00",
+  "contract": "EvaFocusedProgressEvidence/v1",
+  "modelRequestsIssued": 0,
+  "provider": {
+    "observedHttpStatus": 429,
+    "textDeltas": 0,
+    "weeklyUsedPercent": 100,
+    "ordinaryUsageAllowed": true,
+    "resetUsed": false,
+    "conclusion": "Provider refusal persists in existing logs. Weekly limit is fully used, but account flags do not conclusively identify the historical request failure."
+  },
+  "restore": {
+    "status": "blocked",
+    "legacyGatewayEndpoint": "http://192.168.0.2:8931/mcp",
+    "managedByCurrentSourceAndPreparedTarget": true,
+    "currentBrowserControlEndpoint": "http://172.30.0.1:45163",
+    "legacyGatewaySourceReachable": false,
+    "legacyGatewayTargetReachable": false,
+    "decision": "Do not skip discovery or claim optional non-admission. Preserve prepared target and data. No source rollback or reinstallation."
+  },
+  "review": "Independent architecture review permits preserved-unavailable only with proof of non-admission; that proof is absent for this authorized managed endpoint.",
+  "limitations": [
+    "No successful new greeting or end-to-end recovery.",
+    "No additional completed product category."
+  ]
+}

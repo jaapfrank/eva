@@ -1,6 +1,10 @@
+## Actueel: C1 en O2.3 blokkades gecontroleerd — 29 september 2026
+
+Geen bouwproces actief. Bestaande kernlog bevestigt HTTP429 zonder antwoord. Accountcontrole meldt weekvenster100%, maar ook ordinaryUsageAllowed=true; precieze oorzaak blijft onbewezen. Geen nieuwe modelaanvraag of reset. O2.3 blijft geblokkeerd doordat de onbereikbare oude browser nog geautoriseerd is; geen verse verificatie overslaan. Gegevens en voorbereide herstelinstallatie behouden. Review afgerond. Volgende beschikbare stap: I2.1 na keuze van camera/afvalkalender; dagelijkse gesprekproef na herstelde providertoegang. [Bewijs](evidence/product/c1-o2-current-blockers-20260929.json). Geen extra afgeronde productfunctie.
+
 ## Actueel: O2.3 bestaande gatewayuitgang aangesloten — 29 september 2026
 
-Vier documentproviders hebben gecontroleerde schrijftoegang. De bestaande uitgaande gatewayverbinding is expliciet aangesloten en live gecontroleerd, na37 gerichte controles en onafhankelijke review. Algemene bestandsprovider gebruikt herstelde map. Kern/werker staan voorbereid maar uit. Providercontrole nog open: de oude HA-MCP-koppeling stond al onbereikbaar in de kopie en slaat verse discovery over; dit is geen geslaagde providercontrole. Geen volledige O2.3-afronding. [Bewijs](evidence/product/o2-existing-gateway-egress-20260929.json).
+Vier documentproviders hebben gecontroleerde schrijftoegang. De bestaande uitgaande gatewayverbinding is expliciet aangesloten en live gecontroleerd, na37 gerichte controles en onafhankelijke review. Algemene bestandsprovider gebruikt herstelde map. Kern/werker staan voorbereid maar uit. Providercontrole nog open: de oude browser-MCP-koppeling stond al onbereikbaar in de kopie en slaat verse discovery over; dit is geen geslaagde providercontrole. Geen volledige O2.3-afronding. [Bewijs](evidence/product/o2-existing-gateway-egress-20260929.json).
 
 ## Actueel: O2.3 herhaalde pakketcontrole versneld — 29 september 2026
 
