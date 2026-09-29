@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-09-29T08:16:03.158826+00:00",
+  "status": "installed",
+  "sourceCommit": "f1c0775a",
+  "outcome": "Scheduled project steps not admitted before downtime receive their execution time when actually admitted; already admitted attempts retain their original deadline and identity.",
+  "sourceEvidence": "eva2/evidence/product/l2-delayed-admission-20260929.json",
+  "services": {
+    "core": {
+      "image": "sha256:106194c0054781828521dc9c091c7b6cd78cde8cd552fe10ffca09ec80f6cc61",
+      "health": "healthy",
+      "sourceHashes": {
+        "bootstrap/scheduled_admission.py": "720723959ba23557ba6a9bc22ed6362256aa145ee357c22f25aa9ef7ce64d34c",
+        "bootstrap/delegated_work_owner_service.py": "fcf9d373e01a3fe12ff7455c97d2a516cd1779308343a7719fc57d499fb77f52",
+        "bootstrap/household_digital_work.py": "f1f8aba4ef988989d8b73326b2fa21e55bca1be737e3222e014e15fedda8b319"
+      }
+    },
+    "worker": {
+      "image": "sha256:48cb8c2a49d53d66cdfffe4bc37fb382d5c4fdfce55aef82fc019d94524bad66",
+      "health": "healthy",
+      "sourceHashes": {
+        "bootstrap/scheduled_admission.py": "720723959ba23557ba6a9bc22ed6362256aa145ee357c22f25aa9ef7ce64d34c",
+        "bootstrap/delegated_work_owner_service.py": "fcf9d373e01a3fe12ff7455c97d2a516cd1779308343a7719fc57d499fb77f52",
+        "bootstrap/household_digital_work.py": "f1f8aba4ef988989d8b73326b2fa21e55bca1be737e3222e014e15fedda8b319"
+      }
+    }
+  },
+  "http": {
+    "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+    "http://localhost:44712/project-state": 200
+  },
+  "rollbackAvailable": true,
+  "rollbackRecord": "/home/administrator/project/.eva2-artifacts/l2-delayed-admission-20260929/observed.json",
+  "preInstallChecks": "No active delegated work; both HA speakers idle.",
+  "runtimeModelCalls": 0,
+  "creditCosts": "unknown",
+  "ownerAccepted": false,
+  "limitations": [
+    "Database tests use injected interruption and controlled clock.",
+    "No full multi-day autonomous project or physical voice acceptance claim.",
+    "No automatic repeat of existing failed, cancelled or expired admitted attempts."
+  ]
+}

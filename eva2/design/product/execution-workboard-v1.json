@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Projectvervolg blijft uitvoerbaar na uitval vóór de start",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Starttijd van nog niet toegelaten werk volgt de echte toelating. Reeds gestarte pogingen blijven onveranderd; geen dubbele uitvoering.23 gerichte gevallen, onafhankelijke review en gezonde installatie.",
+            "remaining": "Volledige L2-autonomie en eigenaaracceptatie blijven afzonderlijk open.",
+            "source": "eva2/evidence/product/l2-delayed-admission-installed-20260929.json"
+          },
+          {
             "title": "T4 afgerond: taken bedienen en actuele werkerstatus zien",
             "date": "29 september",
             "state": "installed",
@@ -2851,15 +2859,15 @@
           }
         ],
         "now": {
-          "title": "L2: zelfstandig projectwerk voortzetten",
-          "state": "Gerichte controle actief",
-          "detail": "Coördinator controleert bestaande hervatroute; platform_research_20260927 beoordeelt uitsluitend het resterende gat. Afgerond document blijft gesloten. Geen modelcalls.",
-          "doneWhen": "Concrete missing continuation behavior identified and either existing proof linked or smallest demonstrated fix delivered."
+          "title": "L2: vervolgstap na uitval hersteld",
+          "state": "Geïnstalleerd en live gecontroleerd",
+          "detail": "Nog niet gestarte projectstappen verlopen niet langer tijdens uitval vóór toelating.23 gerichte gevallen geslaagd, onafhankelijke review akkoord; kern/werker gezond en exacte bron gecontroleerd. Geen modelcalls.",
+          "doneWhen": "Deze gerichte correctie is technisch opgeleverd. Volledige zelfstandige meerdaagse projectuitvoering blijft open."
         },
         "next": {
-          "title": "L2: ontbrekende vervolgstap afronden",
-          "state": "Afhankelijk van gerichte controle",
-          "detail": "Bestaande planning en opgeslagen resultaten hergebruiken; geen nieuwe planner of herhaalde documentopdracht."
+          "title": "L2: zelfstandige voortzetting afronden",
+          "state": "Nog niet gestart",
+          "detail": "Resterende grens: onderbreking tussen het bewaren van een correctie en het inplannen van de vervolgstap. Bestaand project/bewijs benutten; afgerond document niet opnieuw uitvoeren."
         },
         "ownerAction": {
           "title": "Telegram: tussenvraag tijdens onderzoek",
@@ -2873,7 +2881,7 @@
           "expected": "Tussenvraag vóór het onderzoeksantwoord; onderzoeksantwoord bij de oorspronkelijke vraag."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T08:06:19.052692+00:00"
+        "reviewedAt": "2026-09-29T08:16:03.158826+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12693,7 +12701,7 @@
           ]
         }
       ],
-      "nextAction": "L2: gebruik bestaand opgeslagen project en bewijs om uitsluitend ontbrekende zelfstandige vervolgstap na onderbreking vast te stellen; documentopdracht niet opnieuw uitvoeren.",
+      "nextAction": "Resterende grens: onderbreking tussen het bewaren van een correctie en het inplannen van de vervolgstap. Bestaand project/bewijs benutten; afgerond document niet opnieuw uitvoeren.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13567,17 +13575,17 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "nextAction": "Documentopdracht afgesloten; lange-duur/zelfstandigheidsbewijs blijft afzonderlijk open. Niet opnieuw uitvoeren.",
+          "nextAction": "Resterende grens: onderbreking tussen het bewaren van een correctie en het inplannen van de vervolgstap. Bestaand project/bewijs benutten; afgerond document niet opnieuw uitvoeren.",
           "owner": "/root",
-          "activeWorker": "/root",
+          "activeWorker": null,
           "baseCommit": "29f8fadc",
           "effortNotice": "Eerste gerichte ronde maximaal 20 minuten; geen modelcalls. Alleen aangetoond tekort herstellen, creditkosten onbekend.",
-          "latestEvidence": "eva2/evidence/product/l2-final-reply-resumed-20260929.json",
+          "latestEvidence": "eva2/evidence/product/l2-delayed-admission-installed-20260929.json",
           "assignment": {
-            "stage": "checking_remaining_continuation_gap",
+            "stage": "delayed_admission_fix_installed",
             "outcome": "Bewaard project zelfstandig voortzetten met bestaande afhankelijkheden en correcties.",
             "scope": "Existing scheduled_work.py, work_corrections.py, household_work_corrections.py and matching lifecycle tests; no document rerun.",
-            "ownership": "/root: source and board; /root/platform_research_20260927: bounded read-only gap assessment.",
+            "ownership": "No active executor; bounded correction installed and reviewed.",
             "doneWhen": "Concrete missing continuation behavior identified and either existing proof linked or smallest demonstrated fix delivered."
           }
         },
@@ -13784,7 +13792,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "L2",
+      "activeSliceId": null,
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

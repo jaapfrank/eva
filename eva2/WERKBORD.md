@@ -1,8 +1,10 @@
 # Eva 2 — uitvoerbaar werkbord
 
-## Nu — L2: zelfstandige projectvoortzetting
+## Opgeleverd — L2: vervolgstap na uitval uitvoerbaar houden
 
-Basis29f8fadc. Coördinator controleert bestaande scheduling/correctieroute en bijbehorende lifecycle-proeven; platform_research_20260927 beoordeelt het resterende gat zonder bestandswijzigingen. Eerste ronde maximaal20min, geen modelcalls. Eindpunt: ontbrekend gedrag concreet vaststellen en bestaand bewijs benutten of kleinste noodzakelijke correctie opleveren. Afgeronde documentopdracht blijft gesloten.
+**Geïnstalleerd:** bronf1c0775a op gezonde kern/werker; exacte bron, eigenaarroutes en terugweg gecontroleerd. Uitval vóór toelating verbruikt niet langer de uitvoeringstijd van een nog niet gestarte taak. Bestaande pogingen behouden hun oorspronkelijke deadline en identiteit.23 gerichte gevallen geslaagd; onafhankelijke review GO. [Bewijs](evidence/product/l2-delayed-admission-installed-20260929.json). Geen modelcalls; credits onbekend.
+
+**Volgende, nog niet gestart:** resterende L2-grens bij onderbreking tussen correctieopslag en vervolgplanning gericht beoordelen. Geen nieuwe planner of herhaalde documentopdracht. Volledige autonome meerdaagse uitvoering en eigenaaracceptatie blijven open; dit is één concrete geïnstalleerde verbetering.
 
 ## Actuele afronding — gevraagde documentopdracht
 
