@@ -115,5 +115,11 @@
     "reviewer": "/root/review_installer_cli_wiring",
     "decision": "GO for source registration only; P1.1 remains open",
     "checks": "Official peeled refs match stored ls-remote evidence; matrix arithmetic and provider policy checked; EV-003 unchanged."
+  },
+  "nativeAdmissionAssessment": {
+    "report": "eva2/benchmark/inspect_ai_v1/p1-native-admission.md",
+    "evidence": "eva2/evidence/product/p1-native-limits-20260929.json",
+    "status": "not_admitted",
+    "modelCalls": 0
   }
 }

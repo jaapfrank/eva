@@ -1,0 +1,34 @@
+{
+  "contract": "EvaNativeAdmissionAssessment/v1",
+  "checkedAt": "2026-09-29T10:30:55.785681+00:00",
+  "baseCommit": "4800c7fe",
+  "result": "Five-way equal-budget comparison not admitted; source investigation complete, P1.1 remains open.",
+  "report": "eva2/benchmark/inspect_ai_v1/p1-native-admission.md",
+  "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
+  "readers": {
+    "/root": "Eva1/Eva2/OpenClaw plus two targeted Agent Zero OAuth files",
+    "/root/p1_hermes_limits": "Five Hermes files at pinned commit",
+    "/root/p1_agentzero_limits": "Five Agent Zero files at pinned commit"
+  },
+  "probe": {
+    "participant": "agent_zero",
+    "scope": "Native OAuth request preparation import only",
+    "network": "Disabled with unshare user/network namespace",
+    "result": "Import failed: missing simpleeval; no preparation assertions executed",
+    "sourceSha256": "ee23512d4a991b180a8144963f588d5e83a7359e843ee1c7e5497ed37505c97f",
+    "providerCalls": 0
+  },
+  "nextAction": "Resolve effective native settings/runtime dependencies and equal task-level enforcement through existing adapters; no repeat source audit and no automatic matrix run.",
+  "limits": [
+    "Generic reasoning normalization is not the complete OAuth route.",
+    "Configured caps and per-minute rate limits are not equivalent to enforced per-task budgets.",
+    "Complete memory/helper/retry usage remains unverified.",
+    "No quality, speed, cost or superiority result."
+  ],
+  "creditCost": null,
+  "productRuntimeChanges": false,
+  "independentReview": {
+    "reviewer": "/root/review_installer_cli_wiring",
+    "decision": "GO for bounded source conclusions; no completed P1 or product ranking"
+  }
+}

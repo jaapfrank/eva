@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## P1.1 — begrensde native broncontrole afgerond; toelating open
+
+Vijf systemen hebben een concrete [toelatingsmatrix](benchmark/inspect_ai_v1/p1-native-admission.md). Onafhankelijke review akkoord. Iteratie-/rate-/tijdslimieten zijn niet vanzelf gelijke taakbudgetten; volledige geheugen/helperusage onbekend. Agent Zero heeft een bestaande OAuth-route; zijn native importproef stopt door ontbrekende simpleeval vóór iedere modelcall. Geen productkwaliteitsoordeel of nieuwe afgeronde productfunctie. [Bewijs](evidence/product/p1-native-limits-20260929.json).
+
+**Volgende, nog niet gestart:** concrete native adapter-/runtimeaansluiting voor effectieve instellingen en grenzen. Dit brononderzoek is afgesloten; geen nieuwe brede audit, identieke proefherhaling of automatisch gestarte eindmatrix. Geen actieve uitvoerders of modelcalls.
+
 ## P1.1 — native OpenClaw-registratie geslaagd; vergelijking nog open
 
 Actuele officiële package2026.9.6 en geïsoleerdeNode24.16.0 voorbereid; systeembasis/Eva ongewijzigd. Bestaande native loader registreert codex-harness in een netwerkloze namespace zonder credentials/modelcalls. Onafhankelijke review akkoord voor alleen registratie. Pluginmigratiewaarschuwing blijft zichtbaar; npm-integriteit is geen onafhankelijk bewezen bron→buildherkomst. [Bewijs](evidence/product/p1-openclaw-registration-20260929.json).
