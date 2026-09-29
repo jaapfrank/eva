@@ -6,9 +6,13 @@
 
 **Eigenaarcorrectie uitgevoerd:** geen uren wachten. De09:00-afspraak is bevestigd geannuleerd en heeft geen taak gestart. Eén directe eindtaak heeft het document gemaakt. Geen actieve modeltaak meer; geen blokkerende tijdsafhankelijkheid.
 
-**Resterend concreet tekort:** de laatste modelterugmelding liep na geslaagde opslag/teruglezen tegen timeout; taakstatus ambiguous. Het document is onafhankelijk geleverd, maar betrouwbare automatische taakafsluiting is hiermee niet bewezen. Geen volledigeL2/autonomieclaim of nachtproef. Volgende opdracht nog niet gestart: deze terugmelding gericht herstellen op bestaand bewijs, geen nieuw document maken.
+**Ook het eindantwoord afgerond:** bestaande hervatting d247ce60 is geslaagd: één modelantwoord, nul toolcalls. Alle vier bestanden opnieuw bytegelijk gecontroleerd; onafhankelijke review akkoord. Geen bronbouw nodig. [Bewijs](evidence/product/l2-final-reply-resumed-20260929.json).
 
-**Verbruik eindwerker:** gedeeltelijk gemeten9modelantwoorden,8toolcalls,87.299in/1.307uit; foreground/afgebroken eerdere aanvraag apart. Creditkosten onbekend. Geen nieuwe bronbouw of installatie voor deze documentafronding.
+**Beperkingen:** oorspronkelijke120s-timeout blijft behouden; dit bewijst geholpen hervatting, geen automatische timeoutreparatie, daadwerkelijke ontvangst of volledigeL2. Geen nieuwe documentproef.
+
+**Verbruik hervatting:** gedeeltelijk gemeten15.018in/143uit, één modelantwoord, nul tools. Eerdere eindwerker87.299in/1.307uit blijft apart geregistreerd; creditkosten onbekend.
+
+**Volgende, nog niet gestart:** C1 gesprek tijdens werk via tekst volgens de vaste uitvoervolgorde. Bestaande overlap behouden; alleen resterende reactietijd en Telegramgelijkheid afronden.
 
 ## Afgerond — L1: werkwijze leren en hergebruiken
 

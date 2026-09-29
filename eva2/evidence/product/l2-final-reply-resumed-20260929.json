@@ -1,0 +1,56 @@
+{
+  "checkedAt": "2026-09-29T06:26:51.297872+00:00",
+  "status": "existing_resume_completed_final_reply",
+  "workId": "work:eva-resume:d247ce60-1b56-5f9b-8e65-b57586c79f81",
+  "parentWorkId": "work:eva-chat:b6fae18a-bc25-59de-badd-9f65397e6782",
+  "state": "succeeded",
+  "result": {
+    "output": "De eindversie is opgeslagen en daarna volledig teruggelezen ter controle:\n /proof-state/gezinsweek-l2-eindversie-v1.md\n\nDe avond duurt maximaal 30 minuten, inclusief overgangen: 10 minuten samen lezen, 10 minuten een mondeling woordspel en 10 minuten een fijn dagmoment delen en samen een verhaal maken. Benodigdheden: een boek en een klok; zonder boek kan iemand vertellen. Tekenen is vervangen, meedoen blijft vrijwillig.\n\nIk heb alle drie bronbestanden gelezen en niet gewijzigd. Er is niets ingepland en geen internet gebruikt. Leeftijden en beschikbare materialen zijn onbekend; het document houdt daar rekening mee.",
+    "output_sha256": "a313ed355f23821a686af7fc60b78aed6f9694567b7a9b71c016120ee586ca6c",
+    "completed_at": "2026-09-29T06:26:06Z",
+    "verified": false
+  },
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 1,
+    "tool_calls": 0,
+    "input_tokens": 15018,
+    "output_tokens": 143,
+    "total_tokens": 15161,
+    "cost_usd_micros": null
+  },
+  "filesUnchanged": {
+    "gezinsweek-l2-concept-v1.md": {
+      "sha256": "e963853a1c5e14debb21f7bc424ed9ebd79a14b7acb92db1ac86e49c25b3d83d",
+      "bytes": 459
+    },
+    "gezinsweek-l2-project-v1.md": {
+      "sha256": "3980cd6fc97d6f023ef90d709a7fa39d2b4d3011c9f6a089d8d14f3a65eaec12",
+      "bytes": 1347
+    },
+    "gezinsweek-l2-correctie-v1.md": {
+      "sha256": "56983fcf30dfd7a2a8751f91848738b39fbfbea094a38b23b60209cce5a91315",
+      "bytes": 1125
+    },
+    "gezinsweek-l2-eindversie-v1.md": {
+      "sha256": "2b94c41794dc47767089bec3eadd111386778a300d0c4ac8c572b9e97308777c",
+      "bytes": 1616
+    }
+  },
+  "newToolCalls": 0,
+  "implementationChange": false,
+  "interpretation": "Existing resume reused saved results and produced final reply with one model response and zero tool calls. No document rewrite.",
+  "limitations": [
+    "Manual authorized resumption, not automatic timeout recovery",
+    "Original timeout remains recorded; provider response did not complete within120s",
+    "No overnight completion proof or fullL2 claim"
+  ],
+  "ownerAccepted": false,
+  "independentReview": {
+    "reviewer": "review_directory_connection",
+    "decision": "GO for document plus final reply through assisted resume",
+    "deliveryLimit": "private_route_available does not prove receipt by owner"
+  }
+}

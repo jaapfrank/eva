@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Bewaarde documenttaak hervat en eindantwoord geleverd",
+            "date": "29 september",
+            "state": "tested",
+            "result": "Bestaande hervatting slaagde met één modelantwoord, nul toolcalls en ongewijzigde bron-/eindbestanden. Onafhankelijk gecontroleerd.",
+            "remaining": "Hervatting op eigenaaropdracht; geen automatische timeoutreparatie of volledigeL2-claim.",
+            "source": "eva2/evidence/product/l2-final-reply-resumed-20260929.json"
+          },
+          {
             "title": "Gezinsweek-document afgerond met opgeslagen correctie",
             "date": "29 september",
             "state": "tested",
@@ -2795,15 +2803,15 @@
           }
         ],
         "now": {
-          "title": "L2: één project volledig afmaken",
-          "state": "Documentopdracht afgerond; geen actieve modeltaak",
-          "detail": "Einddocument opgeslagen en onafhankelijk goedgekeurd; drie originelen behouden.09:00-afspraak geannuleerd, niet uitgevoerd. Laatste modelterugmelding eindigde in timeout; document is wel geleverd. Geen volledigeL2-claim.",
+          "title": "Documentopdracht inclusief eindantwoord afgerond",
+          "state": "Afgerond via bestaande hervatting",
+          "detail": "Eva sloot de taak succesvol af met één modelantwoord en nul toolcalls. Alle vier bestanden ongewijzigd. Onafhankelijke controle akkoord. Geen bronbouw of nieuwe installatie nodig; eerdere timeout blijft zichtbaar.",
           "doneWhen": "Concept en projectstaat opgeslagen, één echte afhankelijke vervolgafspraak, correctie en hervatting gebruiken bewaarde inhoud, eindresultaat geleverd zonder dubbele acties."
         },
         "next": {
-          "title": "Betrouwbaar terugmelden na voltooid werk",
+          "title": "C1: gesprek tijdens werk via tekst",
           "state": "Nog niet gestart",
-          "detail": "Concrete tekortkoming: modelcall na gecontroleerde opslag loopt vast. Bestaand document niet opnieuw maken; eerdere meetgegevens gebruiken."
+          "detail": "Terug naar de vaste uitvoervolgorde: bestaande tekstgesprekken en overlap behouden; resterende reactietijd en Telegramgelijkheid gericht afronden. Geen nieuwe documentproef."
         },
         "ownerAction": {
           "title": "Lees het afgeronde document",
@@ -2816,7 +2824,7 @@
           "expected": "Einddocument en benodigdhedenlijst zijn beschikbaar. Geen nieuwe proef nodig."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T06:18:36.042495+00:00"
+        "reviewedAt": "2026-09-29T06:28:45.315058+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12636,7 +12644,7 @@
           ]
         }
       ],
-      "nextAction": "Documentopdracht geleverd. Afzonderlijk concreet tekort: laatste werkermodel-terugmelding loopt na correcte opslag tegen timeout; geen nieuwe documentproef.",
+      "nextAction": "Terug naar de vaste uitvoervolgorde: bestaande tekstgesprekken en overlap behouden; resterende reactietijd en Telegramgelijkheid gericht afronden. Geen nieuwe documentproef.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13371,14 +13379,14 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "nextAction": "Documentopdracht geleverd. Afzonderlijk concreet tekort: laatste werkermodel-terugmelding loopt na correcte opslag tegen timeout; geen nieuwe documentproef.",
+          "nextAction": "Documentopdracht afgesloten; lange-duur/zelfstandigheidsbewijs blijft afzonderlijk open. Niet opnieuw uitvoeren.",
           "owner": "/root",
           "activeWorker": null,
           "baseCommit": "cde5f24d",
           "effortNotice": "Deze beurt circa30min actieve uitvoering; echte vervolgafspraak09:00 lokaal. Gemeten runtimegebruik in bewijs; creditkosten onbekend.",
-          "latestEvidence": "eva2/evidence/product/l2-document-delivered-20260929.json",
+          "latestEvidence": "eva2/evidence/product/l2-final-reply-resumed-20260929.json",
           "assignment": {
-            "stage": "document_delivered_final_reporting_timeout",
+            "stage": "document_and_final_reply_completed_via_assisted_resume",
             "outcome": "One ordinary project preserves goal, dependencies, artifacts and next action overnight; later correction and continuation use saved state without duplicate effects.",
             "scope": "Synthetic household document project, private website route; existing scheduler and artifact tools only",
             "evidence": "eva2/evidence/product/l2-overnight-project-criteria-20260928.json",
