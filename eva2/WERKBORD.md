@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## O1.1 — gewone start geïnstalleerd; platformverschil blokkeert nog
+
+Pakketlauncher opent zonder herstel-JSON en gebruikt één private werkmap voor bestaande workflows.20 gerichte controles en onafhankelijke review GO; geïnstalleerde launcher, bootstrap204 en pagina200. Live onboarding blijft uit: pakket vraagt Python3.12.14/Docker29.7.2 versus lokale3.12.3/29.1.3; servervariant en releaseondersteuning niet bewezen. [Bewijs](evidence/product/installer-ordinary-start-20260929.json). Geen volledige O1.1-claim, geen providercalls of runtime-herstart.
+
+**Volgende, nog niet gestart:** bestaande pakket-/hostconfiguratie passend maken en doelvoorbereiding aansluiten. Geen blinde omzeiling of nieuwe installer.
+
 ## O1.1 — startcorrectie geïnstalleerd, doelbootstrap nog open
 
 CLI-startfout hersteld en bestaande budgetworkflow aangesloten.17 gerichte controles en onafhankelijke review GO. Exacte module in bestaand operatorpakket geïnstalleerd; echte serverstart en bootstrap-pagina HTTP200. Geen providercalls of Eva-runtime-herstart. [Bewijs](evidence/product/installer-cli-wiring-20260929.json).

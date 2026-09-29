@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-29T10:03:30.707332+00:00",
+  "lastUpdated": "2026-09-29T10:07:18.097373+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -999,6 +999,14 @@
       "deliveryOverview": {
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
+          {
+            "title": "Gewone installerstart zonder herstelbestand aangesloten",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Bestaande instelschermen delen één private werkmap; herstel blijft aparte optie. Echte launcher en sessie werken.",
+            "remaining": "Schermen op deze host nog uitgeschakeld door platformcontrole; volledige O1.1 blijft open.",
+            "source": "eva2/evidence/product/installer-ordinary-start-20260929.json"
+          },
           {
             "title": "Startfout installatiewizard en budgetaansluiting hersteld",
             "date": "29 september",
@@ -2891,15 +2899,15 @@
           }
         ],
         "now": {
-          "title": "O1.1: wizardstart hersteld; doelbootstrap nog open",
-          "state": "Deelresultaat geïnstalleerd — vervolg nog niet gestart",
-          "detail": "Bestaande CLI start weer; budgetinstellingen aangesloten.17 gerichte gevallen en onafhankelijke review akkoord; geïnstalleerde bootstrap-pagina HTTP200.",
+          "title": "O1.1: gewone start aangesloten; installatie nog geblokkeerd",
+          "state": "Startcorrectie geïnstalleerd — vervolg nog niet gestart",
+          "detail": "Pakket opent zonder herstelbestand. Live onboarding blijft uit door Python-/Docker-versieverschil en onbewezen platformondersteuning. Geen complete installatieclaim.",
           "doneWhen": "Bestaande wizard kan de gekozen doelinstallatie zonder handgeschreven instellingen voorbereiden en starten."
         },
         "next": {
-          "title": "O1.1: gewone pakketlauncher aansluiten",
-          "state": "Eerstvolgende stap binnen O1.1",
-          "detail": "Verplichte handgeschreven herstelconfiguratie uit de gewone start verwijderen door bestaande configuratiestappen te verbinden."
+          "title": "O1.1: pakket en doelplatform passend maken",
+          "state": "Eerstvolgende open afhankelijkheid",
+          "detail": "Bestaande release-/hostconfiguratie onderbouwen en doelvoorbereiding aansluiten; geen blinde versiecontrole-omzeiling of nieuwe installer."
         },
         "ownerAction": {
           "title": "Deel één Chrome-tabblad voor T3.1",
@@ -2913,7 +2921,7 @@
           "linkLabel": "Open bestaande Chrome-bediening"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T10:03:30.707332+00:00"
+        "reviewedAt": "2026-09-29T10:07:18.097373+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12733,7 +12741,7 @@
           ]
         }
       ],
-      "nextAction": "Gewone pakketlauncher vereist nog herstelconfiguratie; normale doelbootstrap verbinden. CLI-start en budgetaansluiting gerepareerd en geïnstalleerd.",
+      "nextAction": "Pakket start zonder herstel-JSON, maar lokale preflight blokkeert onboarding door platform-/versieverschil. Ondersteunde pakketconfiguratie vaststellen en bestaande doelvoorbereiding aansluiten; nog geen volledige installatie.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -14026,18 +14034,20 @@
               "doneWhen": "Bestaande wizard kan de gekozen doelinstallatie zonder handgeschreven instellingen voorbereiden en starten.",
               "owner": "/root",
               "assignment": {
-                "baseCommit": "eb09174c",
+                "baseCommit": "2d6de702",
                 "files": [
+                  "eva2/tools/installer_restore_wizard.py",
                   "eva2/src/eva/bootstrap/installer_wizard_cli.py",
+                  "eva2/tests/portable/test_installer_restore_composition.py",
                   "eva2/tests/api/test_installer_provider_api.py"
                 ],
-                "existing": "Existing wizard UI, budget workflow and prepared target callback.",
-                "gap": "CLI references an undefined preparation status reader and does not connect the existing required budget workflow.",
-                "estimate": "Bounded composition repair, approximately 30–60 minutes; no provider calls; credit cost unknown.",
-                "finish": "Ordinary and prepared CLI startup reach existing wizard; configured budgets are usable. Full target bootstrap remains part of O1.1."
+                "existing": "Existing CLI, profile, capability, secret, provider configuration and budget workflows.",
+                "gap": "Package entry point requires restore JSON and separate workspace flags; ordinary setup unavailable.",
+                "finish": "Package starts existing onboarding without restore JSON and persists setup in one private workspace; explicit restore unchanged. Full target bootstrap still required for O1.1.",
+                "estimate": "30–60 minutes, no provider calls; credits unknown."
               },
-              "latestEvidence": "eva2/evidence/product/installer-cli-wiring-20260929.json",
-              "remaining": "Gewone pakketlauncher vereist nog herstelconfiguratie; normale doelbootstrap verbinden. CLI-start en budgetaansluiting gerepareerd en geïnstalleerd."
+              "latestEvidence": "eva2/evidence/product/installer-ordinary-start-20260929.json",
+              "remaining": "Pakket start zonder herstel-JSON, maar lokale preflight blokkeert onboarding door platform-/versieverschil. Ondersteunde pakketconfiguratie vaststellen en bestaande doelvoorbereiding aansluiten; nog geen volledige installatie."
             },
             {
               "id": "O1.2",

@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import os
 from functools import partial
 from contextlib import contextmanager
 from pathlib import Path
@@ -154,8 +155,15 @@ def configured_restore_workflow(config):
 
 def main(argv=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument("--restore-config", type=Path, required=True)
+    parser.add_argument("--restore-config", type=Path)
+    parser.add_argument("--workspace", type=Path)
     args, remaining = parser.parse_known_args(argv)
+    if args.restore_config is None:
+        data_home = Path(os.environ.get("XDG_DATA_HOME") or Path.home() / ".local/share")
+        workspace = args.workspace or data_home / "eva2/installer"
+        return run_installer_wizard([*remaining, "--workspace", str(workspace)])
+    if args.workspace is not None:
+        remaining.extend(["--workspace", str(args.workspace)])
     config = json.loads(
         read_private_runtime_file_bytes(
             args.restore_config, setting_name="installer restore target"

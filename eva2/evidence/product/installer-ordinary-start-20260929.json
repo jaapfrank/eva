@@ -1,0 +1,56 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "recordedAt": "2026-09-29T10:07:18.097373+00:00",
+  "baseCommit": "2d6de702",
+  "change": "Ordinary package entry point no longer requires a restore file. Existing workflows share one private workspace. Explicit restore and explicit workspace paths remain supported.",
+  "checks": {
+    "focused": "20 passed in 2.28s",
+    "review": "GO /root/review_installer_cli_wiring",
+    "installedLauncher": {
+      "providerCalls": 0,
+      "entrypoint": "start-installer.py",
+      "restoreConfigurationSupplied": false,
+      "sessionExchange": 204,
+      "homeStatus": 200,
+      "budgets": {
+        "budget": null,
+        "budget_sha256": null,
+        "capability_bound": false,
+        "contract": "EvaInstallerBudgetStatus/v1",
+        "enabled": false,
+        "non_claims": [
+          "Deze limieten installeren of starten nog niets.",
+          "Een bevestigde configuratie bewijst nog niet dat de eindruntime ieder quotum handhaaft.",
+          "Onbekende kosten worden nooit als nul gemeten."
+        ],
+        "phase": "empty",
+        "revision": 0,
+        "updated_at": null
+      },
+      "preparation": {
+        "status": "unavailable",
+        "message": "Automatische doelvoorbereiding is nog niet aangesloten op deze installer."
+      },
+      "createdWorkspaces": [
+        "budgets",
+        "capabilities",
+        "profile",
+        "provider-configuration",
+        "provider-evidence",
+        "secrets"
+      ]
+    }
+  },
+  "installation": "Two exact modules installed in existing operator package; prior files retained.",
+  "result": "Launcher reaches authenticated page without handwritten restore configuration. Live onboarding remains disabled by actual preflight; do not claim usable complete installation.",
+  "preflightBlockers": [
+    "Host Python 3.12.3 versus package requirement 3.12.14",
+    "Host Docker 29.1.3 versus package requirement 29.7.2",
+    "Ubuntu server variant unproven",
+    "Platform lock is selected_for_validation, not supported"
+  ],
+  "remaining": "Resolve actual supported package/host composition and wire existing target preparation/start. O1.1 and O1.2 remain open.",
+  "providerCalls": 0,
+  "creditCost": "unknown",
+  "runtimeChanged": false
+}

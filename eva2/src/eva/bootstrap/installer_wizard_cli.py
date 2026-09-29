@@ -98,6 +98,7 @@ def run_installer_wizard(
     parser.add_argument("--identity-trust", type=Path)
     parser.add_argument("--identity-private-key", type=Path)
     parser.add_argument("--identity-workspace", type=Path)
+    parser.add_argument("--workspace", type=Path)
     parser.add_argument("--profile-workspace", type=Path)
     parser.add_argument("--capability-workspace", type=Path)
     parser.add_argument("--secret-workspace", type=Path)
@@ -107,6 +108,17 @@ def run_installer_wizard(
     parser.add_argument("--home-assistant-url")
     parser.add_argument("--agentmail-inbox-id")
     args = parser.parse_args(argv)
+    if args.workspace is not None:
+        for name, directory in (
+            ("profile_workspace", "profile"),
+            ("capability_workspace", "capabilities"),
+            ("secret_workspace", "secrets"),
+            ("budget_workspace", "budgets"),
+            ("provider_evidence_workspace", "provider-evidence"),
+            ("provider_configuration_workspace", "provider-configuration"),
+        ):
+            if getattr(args, name) is None:
+                setattr(args, name, args.workspace / directory)
     if not 1024 <= args.port <= 65535:
         parser.error("installer port must be between 1024 and 65535")
     identity_paths = (
@@ -170,6 +182,14 @@ def run_installer_wizard(
             )
             return 2
     try:
+        if args.workspace is not None:
+            args.workspace.mkdir(mode=0o700, parents=True, exist_ok=True)
+            from eva.operations.installer_safety import require_owner_only_directory
+            require_owner_only_directory(
+                args.workspace, error=ValueError,
+                unavailable_message="installer workspace is unavailable",
+                invalid_message="installer workspace must be private",
+            )
         if args.profile_workspace is not None:
             profile_workflow = InstallerProfileWorkflow(
                 workspace=_private_workspace(args.profile_workspace)

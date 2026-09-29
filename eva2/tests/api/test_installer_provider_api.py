@@ -547,9 +547,11 @@ def test_wizard_rejects_provider_verifier_from_different_workspaces(
     assert probe.calls == 0
 
 
+@pytest.mark.parametrize("shared_workspace", [False, True])
 @pytest.mark.parametrize("prepared", [False, True])
 def test_launcher_opens_model_and_telegram_verification_without_manual_config(
     prepared: bool,
+    shared_workspace: bool,
     private_tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -583,20 +585,18 @@ def test_launcher_opens_model_and_telegram_verification_without_manual_config(
         captured["kwargs"] = kwargs
 
     monkeypatch.setattr("eva.bootstrap.installer_wizard_cli.uvicorn.run", capture)
+    workspace_arguments = (
+        ["--workspace", str(private_tmp_path / "ordinary-setup")]
+        if shared_workspace else [
+            "--capability-workspace", str(capability_workspace),
+            "--secret-workspace", str(secret_workspace),
+            "--provider-evidence-workspace", str(evidence_workspace),
+            "--budget-workspace", str(budget_workspace),
+        ]
+    )
     assert (
         run_installer_wizard(
-            [
-                "--platform-lock",
-                str(lock_path),
-                "--capability-workspace",
-                str(capability_workspace),
-                "--secret-workspace",
-                str(secret_workspace),
-                "--provider-evidence-workspace",
-                str(evidence_workspace),
-                "--budget-workspace",
-                str(budget_workspace),
-            ],
+            ["--platform-lock", str(lock_path), *workspace_arguments],
             **({
                 "installation_preparer": lambda plan: None,
                 "installation_preparation_status": lambda: "prepared",
@@ -629,8 +629,8 @@ def test_launcher_opens_model_and_telegram_verification_without_manual_config(
     assert availability == {
         "model_provider": True,
         "telegram": True,
-        "home_assistant": False,
-        "email": False,
+        "home_assistant": shared_workspace,
+        "email": shared_workspace,
     }
     assert captured["kwargs"] == {
         "host": "127.0.0.1",

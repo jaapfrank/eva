@@ -60,3 +60,24 @@ def test_cli_uses_same_composition_and_preserves_wizard_arguments(monkeypatch, t
     monkeypatch.setattr(module, "run_installer_wizard", run)
     assert module.main(["--restore-config", str(tmp_path / "target.json"), "--port", "44999"]) == 7
     assert events == ["enter", "wizard", "exit"]
+
+
+@pytest.mark.parametrize("custom_workspace", [False, True])
+def test_ordinary_launcher_needs_no_restore_configuration(monkeypatch, tmp_path, custom_workspace):
+    monkeypatch.setenv("XDG_DATA_HOME", str(tmp_path / "data"))
+    calls = []
+    def run(argv):
+        calls.append(argv)
+        return 0
+    def unexpected(*args, **kwargs):
+        raise AssertionError("ordinary onboarding must not read restore configuration or create a restore target")
+    monkeypatch.setattr(module, "run_installer_wizard", run)
+    monkeypatch.setattr(module, "read_private_runtime_file_bytes", unexpected)
+    monkeypatch.setattr(module, "configured_restore_workflow", unexpected)
+    arguments = ["--port", "44999"]
+    workspace = tmp_path / "data/eva2/installer"
+    if custom_workspace:
+        workspace = tmp_path / "chosen"
+        arguments.extend(["--workspace", str(workspace)])
+    assert module.main(arguments) == 0
+    assert calls == [["--port", "44999", "--workspace", str(workspace)]]
