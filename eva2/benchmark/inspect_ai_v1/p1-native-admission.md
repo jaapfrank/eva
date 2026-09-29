@@ -111,3 +111,21 @@ Agent Zero installation, provider enforcement, or sample-wide accounting.
 P1.1 remains open. This document ends this source-assessment pass; the next step
 must resolve a concrete native admission gap or continue independent product
 work, rather than repeating the same inventory.
+
+## Transport configuration follow-up — 29 September
+
+The actual pinned `ResponsesTransport.from_chat`, LiteLLM 1.88.1 HTTP
+serialization and native OAuth preparer now ran together with mocked HTTP in
+a disabled network namespace. Ordinary `reasoning_effort: none` arrives without
+reasoning and falls back to `high`. The existing configuration
+`extra_body: {reasoning: {effort: none}}` preserves `none` through this chain;
+ordinary `reasoning_effort: medium` preserves `medium`. The participant manifest
+now records these bounded transport presets without modifying Agent Zero.
+
+This resolves the transport shaping question, not persisted settings, the full
+agent loop, OAuth access or cumulative accounting. The initial probe used the
+wrong mock-client type and made one unauthenticated request rejected with 401;
+no model answer was generated. Corrected runs use the actual LiteLLM HTTPHandler,
+network namespace isolation and a socket-connection rejection guard. See
+`../../evidence/product/p1-agentzero-transport-20260929.json`. Native comparison
+admission remains open; do not repeat this shaping probe without changed code.

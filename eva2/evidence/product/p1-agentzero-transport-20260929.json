@@ -1,0 +1,107 @@
+{
+  "checkedAt": "2026-09-29T12:51:40.071474+00:00",
+  "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+  "probe": "eva2/benchmark/inspect_ai_v1/p1_agentzero_transport_probe.py",
+  "probeSha256": "15df2184eb7ea5e6eef9820894351f655f1cbff5251127558835b2f2a4a533da",
+  "status": "transport_configuration_verified_not_native_run_admitted",
+  "observations": {
+    "scope": "Actual Agent Zero ResponsesTransport, LiteLLM HTTP serialization; mocked HTTP fed to actual OAuth preparer",
+    "upstream_calls": 0,
+    "credentials": "dummy only",
+    "cases": [
+      {
+        "case": "ordinary_none",
+        "requested_effort": "none",
+        "wire_reasoning": null,
+        "bridge_reasoning": {
+          "effort": "high",
+          "summary": "auto"
+        },
+        "bridge_model": "gpt-6-sol",
+        "output_limit_preserved": false
+      },
+      {
+        "case": "extra_body_none",
+        "requested_effort": "none",
+        "wire_reasoning": {
+          "effort": "none"
+        },
+        "bridge_reasoning": {
+          "effort": "none",
+          "summary": "auto"
+        },
+        "bridge_model": "gpt-6-sol",
+        "output_limit_preserved": false
+      },
+      {
+        "case": "ordinary_medium",
+        "requested_effort": "medium",
+        "wire_reasoning": {
+          "effort": "medium"
+        },
+        "bridge_reasoning": {
+          "effort": "medium",
+          "summary": "auto"
+        },
+        "bridge_model": "gpt-6-astra",
+        "output_limit_preserved": false
+      }
+    ],
+    "versions": {
+      "litellm": "1.88.1",
+      "openai": "2.54.0",
+      "httpx": "0.28.1",
+      "pillow": "12.3.0"
+    },
+    "limits": [
+      "No agent loop, persisted model configuration, OAuth login, provider response or aggregate accounting verified"
+    ],
+    "transport_sha256": "74cb8cc75f96133c66ffafd2a2a447b4585f9e08d0f85a782e48e5a5d6154b6d"
+  },
+  "execution": {
+    "exitCode": 0,
+    "network": "unshare -Urn plus socket connect/connect_ex rejection",
+    "http": "httpx.MockTransport via LiteLLM HTTPHandler",
+    "credentials": "dummy placeholder only"
+  },
+  "configuration": {
+    "contact": {
+      "model": "gpt-6-sol",
+      "kwargs": {
+        "extra_body": {
+          "reasoning": {
+            "effort": "none"
+          }
+        }
+      }
+    },
+    "work": {
+      "model": "gpt-6-astra",
+      "kwargs": {
+        "reasoning_effort": "medium"
+      }
+    }
+  },
+  "attempts": {
+    "initialMistake": "OpenAI SDK client passed where LiteLLM requires HTTPHandler. Ignored client caused one unauthenticated request to api.openai.com, rejected HTTP401; no model response.",
+    "correction": "Actual LiteLLM HTTPHandler injection and disabled network namespace.",
+    "guardCorrection": "/proc/1/ns/net comparison denied by user-namespace permissions; fail-closed exit before probe. Replaced by socket connection rejection and retained unshare isolation."
+  },
+  "limits": [
+    "Actual native generic transport and wire serialization verified, not a running agent or persisted settings",
+    "Codex bridge still drops output token limit; aggregate budget parity remains open",
+    "No OAuth authentication, tool execution or provider quality comparison",
+    "Preset belongs to comparison inputs only; Eva production unchanged"
+  ],
+  "usage": {
+    "generatedModelResponses": 0,
+    "initialUnauthorizedHttpRequests": 1,
+    "successfulOfflineCases": 3,
+    "credits": "unknown"
+  },
+  "review": {
+    "reviewer": "review_o1_target_binding",
+    "result": "GO for transport configuration evidence only",
+    "scope": "Source and captured output inspected; namespace invocation and initial 401 not independently verified from reviewer inputs."
+  }
+}

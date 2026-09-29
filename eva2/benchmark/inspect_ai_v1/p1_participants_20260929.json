@@ -73,6 +73,27 @@
         "workConfigMedium": "preserved",
         "outputCap": "removed",
         "runtimeAdmission": "not_admitted"
+      },
+      "nativeTransportConfiguration": {
+        "status": "verified_offline_http_serialization",
+        "evidence": "eva2/evidence/product/p1-agentzero-transport-20260929.json",
+        "contact": {
+          "model": "gpt-6-sol",
+          "kwargs": {
+            "extra_body": {
+              "reasoning": {
+                "effort": "none"
+              }
+            }
+          }
+        },
+        "work": {
+          "model": "gpt-6-astra",
+          "kwargs": {
+            "reasoning_effort": "medium"
+          }
+        },
+        "remaining": "Persisted native model configuration, authenticated access and aggregate accounting/cancellation still unverified. No admission."
       }
     }
   ],

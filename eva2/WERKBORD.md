@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — P1.1 transportconfiguratie opgelost
+
+Bestaande Agent Zero-configuratie kan Sol none behouden via extra_body; Astra medium blijft behouden. Werkelijke transportcode en LiteLLM-serialisatie tot de OAuth-bodyvoorbereiding offline uitgevoerd. Configuratie staat in het bestaande deelnemersmanifest; onafhankelijke review GO voor deze beperkte conclusie. [Bewijs](evidence/product/p1-agentzero-transport-20260929.json).
+
+Geen complete vergelijking of productfunctie opgeleverd. Native toegang, opgeslagen agentinstellingen en cumulatieve budgetgrenzen blijven open. Eerste foutieve mockpoging veroorzaakte één ongeauthenticeerd HTTP401-verzoek, geen modelantwoord; de geslaagde proef liep zonder netwerk. Geen actieve uitvoerder, geen productiecode gewijzigd; credits onbekend.
+
 ## Actueel — C3.1 fysieke waarneming gevraagd
 
 Beide speakers staan op Eva2 en zijn idle. HA bewaart één Eva2-trace, van 28 september vóór de bekende reparatie. Geen nieuw defect of geslaagde fysieke proef vastgesteld; geen code/firmware gewijzigd. [Controle](evidence/product/c3-retained-trace-20260929.json). Woonkamerspeakerproef gevraagd; alleen afhankelijk spraakwerk wacht. Geen actieve uitvoerder, nul model-/audiocalls. De L2-vervolgopdracht blijft gepland voor 30 september 15:00.

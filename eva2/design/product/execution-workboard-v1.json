@@ -2947,15 +2947,15 @@
           }
         ],
         "now": {
-          "title": "C3.1 wacht op actuele woonkamerspeakerproef",
-          "state": "Gebruikersproef open",
-          "detail": "Alleen bekende fysieke fout van vóór reparatie bewaard. Actuele woonkamerspeakerproef gevraagd; geen nieuwe fout of succesvolle fysieke werking aangetoond.",
-          "owner": "Jaap voor fysieke waarneming; geen actieve uitvoerder"
+          "title": "P1.1 transportinstelling opgelost; vergelijking nog niet toegelaten",
+          "state": "Begrensde controle afgerond",
+          "detail": "Agent Zero transportinstelling opgelost zonder upstreamwijziging: extra_body reasoning none blijft none; gewone medium blijft medium. Vastgelegd in bestaand deelnemersmanifest. Nog native opgeslagen configuratie, OAuth-toegang en cumulatieve budgetgrenzen. Geen herhaling van deze transportproef.",
+          "owner": "Codex; geen actieve uitvoerder"
         },
         "next": {
-          "title": "Onafhankelijk open productwerk vervolgen",
+          "title": "P1.1 bestaande native toegang en cumulatieve grenzen aansluiten",
           "state": "Nog niet gestart",
-          "detail": "L2 wacht alleen op zijn vastgelegde uitvoertijd; O1 wacht op doelcomputerkeuze. Geen herhaling of handmatige hervatting van de geplande opdracht."
+          "detail": "Geen nieuwe benchmarklaag of betaalde route. Transportproef is afgesloten; geen productcategorie afgevinkt."
         },
         "ownerAction": {
           "title": "Doorpraten op woonkamerspeaker proberen",
@@ -2969,7 +2969,7 @@
           "linkLabel": "Geef resultaat in deze taak door"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T12:45:12.414357+00:00"
+        "reviewedAt": "2026-09-29T12:52:13.184946+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14358,18 +14358,20 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Native OAuth-requestvoorbereiding uitgevoerd. Config-only none wordt high; expliciete none en medium blijven behouden. Uitvoertokenlimiet wordt verwijderd. Volledige native toegang, upstream instellingen en gelijke cumulatieve grenzen blijven open; deze requestproef niet herhalen.",
-              "latestEvidence": "eva2/evidence/product/p1-agentzero-request-20260929.json",
+              "remaining": "Agent Zero transportinstelling opgelost zonder upstreamwijziging: extra_body reasoning none blijft none; gewone medium blijft medium. Vastgelegd in bestaand deelnemersmanifest. Nog native opgeslagen configuratie, OAuth-toegang en cumulatieve budgetgrenzen. Geen herhaling van deze transportproef.",
+              "latestEvidence": "eva2/evidence/product/p1-agentzero-transport-20260929.json",
               "assignment": {
-                "baseCommit": "ceb485f4",
+                "baseCommit": "8322f210",
+                "owner": "Codex",
                 "files": [
-                  "eva2/benchmark/inspect_ai_v1/",
-                  "eva2/evidence/product/p1-agentzero-request-20260929.json"
+                  "eva2/benchmark/inspect_ai_v1/p1_agentzero_transport_probe.py",
+                  "eva2/evidence/product/p1-agentzero-transport-20260929.json"
                 ],
-                "existing": "Pinned native Agent Zero OAuth bridge and existing offline probe.",
-                "gap": "Effective contact/work reasoning settings not established; prior probe could not import simpleeval.",
-                "finish": "Run actual request preparation including actual configuration normalization; record any setting mismatch without model calls.",
-                "estimate": "One bounded dependency setup and one offline run, 15–30 minutes; no provider calls, credits unknown."
+                "existing": "Actual Agent Zero generic Responses transport and native Codex OAuth preparation; isolated dependency environment.",
+                "gap": "Explicit none survives direct bridge but upstream normalizer drops it.",
+                "endCondition": "Execute actual transport plus LiteLLM/SDK serialization to local mocked HTTP and actual bridge; preserve none via existing configuration or record failure. No real auth/provider inference.",
+                "estimate": "One offline three-case run after source inspection; zero upstream calls; credits unknown.",
+                "stage": "transport_configuration_resolved"
               }
             },
             {
