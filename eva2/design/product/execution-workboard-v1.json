@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T19:58:50.745792+00:00",
+        "checkedAt": "2026-09-29T20:04:49.647861+00:00",
         "deliveries": [
           {
             "title": "Providerweigering zonder dubbele aanvraag of veiligheidsmelding",
@@ -3043,10 +3043,10 @@
           }
         ],
         "now": {
-          "title": "O2.3: export hervat met passende taakdefinities",
+          "title": "O2.3: kernexport geslaagd; gezamenlijk pakket samenstellen",
           "state": "Bezig",
           "owner": "Codex /root",
-          "detail": "Oud operatorpakket wees53 geldige taken af. Actuele bron geïnstalleerd;73/73 controles slagen. Dezelfde bewaarde kopie wordt geëxporteerd; gezamenlijke herstelactie nog open."
+          "detail": "Geldig v3-kernarchief met159 bestanden gepubliceerd uit bewaarde kopie. Nu geheugen, gateway en documenten uit dezelfde kopie toevoegen via bestaande samensteller."
         },
         "next": {
           "title": "C1 hervatten wanneer de providerroute beschikbaar is",
@@ -3063,7 +3063,7 @@
           "linkLabel": "Antwoord in deze chat"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T19:58:50.745792+00:00"
+        "reviewedAt": "2026-09-29T20:04:49.647861+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14511,16 +14511,16 @@
                 "outcome": "Bevroren echte gegevens via bestaande volledige herstelroute herstellen.",
                 "estimate": "Bestaande kernexport duurt eerder circa8min; één export van deze nieuwe consistente bronkopie, geen nieuwe live snapshot/modelcalls. Credits onbekend.",
                 "finish": "Consistent source copy collected through existing helpers; complete joint restore remains required.",
-                "stage": "existing_snapshot_export_running",
+                "stage": "assembling_same_snapshot_package",
                 "workers": {
                   "/root": "existing frozen snapshot export with aligned operator source"
                 },
                 "activeWorkers": [],
                 "endCondition": "Pakket/autoriteit/wizard gebruiken dezelfde v3-kern met bestaande externe stappen; gerichte combinatiecontrole, onafhankelijke review en operatorinstallatie.",
-                "liveExportSession": 49774
+                "liveExportSession": null
               },
               "latestEvidence": "eva2/evidence/product/o2-operator-source-alignment-20260929.json",
-              "remaining": "Oude operatorcontracten vervangen door exacte actuele bron;73 taken geldig. Export van bestaande kopie loopt; gezamenlijke herstelactie nog open."
+              "remaining": "Kernexport volledig gevalideerd; gezamenlijk pakket samenstellen en echte herstelroute uitvoeren."
             }
           ],
           "latestEvidence": "eva2/evidence/product/o2-consistent-source-collected-20260929.json"

@@ -24,10 +24,13 @@
   },
   "independentReview": "GO; launcher dependency precedence checked afterwards",
   "export": {
-    "status": "running",
-    "sessionId": 49774,
+    "status": "exported_reader_verified",
+    "sessionId": null,
     "source": "existing frozen database; no new snapshot",
-    "destination": "/home/administrator/project/.eva2-artifacts/o2-consistent-source-20260929/runtime-export-current"
+    "destination": "/home/administrator/project/.eva2-artifacts/o2-consistent-source-20260929/runtime-export-current",
+    "elapsedSeconds": 489.485,
+    "archiveSha256": "ae4dc9c790b521a21cba0106e23c379dbeca661cf23e614b35bf6af49f5d21aa",
+    "files": 159
   },
   "modelCalls": 0,
   "creditCost": "unknown",

@@ -1,6 +1,6 @@
 ## Actueel: O2.3 export hervat met passende bron — 29 september 2026
 
-Oud operatorpakket wees53 geldige taken af. Exacte actuele bron geïnstalleerd, oude bron bewaard;73/73 taakrecords geldig met echte launcherafhankelijkheden. Onafhankelijke review akkoord. Export van dezelfde bevroren kopie loopt; geen nieuwe snapshot, datacorrectie, modelcall of Eva-herinstallatie. Volledige gezamenlijke herstelactie blijft open. [Bewijs](evidence/product/o2-operator-source-alignment-20260929.json).
+Oud operatorpakket wees53 geldige taken af. Exacte actuele bron geïnstalleerd, oude bron bewaard;73/73 taakrecords geldig met echte launcherafhankelijkheden. Onafhankelijke review akkoord. Export van dezelfde bevroren kopie geslaagd:159 bestanden, v3-archief volledig gevalideerd. Nu bestaand gezamenlijk pakket samenstellen; geen nieuwe snapshot, datacorrectie, modelcall of Eva-herinstallatie. Volledige gezamenlijke herstelactie blijft open. [Bewijs](evidence/product/o2-operator-source-alignment-20260929.json).
 
 ## Actueel: C1 geblokkeerd door provider — 29 september 2026
 
