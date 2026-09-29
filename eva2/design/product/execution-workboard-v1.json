@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T14:35:41.159530+00:00",
+        "checkedAt": "2026-09-29T14:49:00.910538+00:00",
         "deliveries": [
+          {
+            "title": "Samenhangende kopie van huidige Eva-gegevens",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Bestaande snapshothelpers verbonden; echte gezamenlijke kopie verzameld met originele diensten hervat. Collector geïnstalleerd in operatorpakket.",
+            "remaining": "Nog geen complete gezamenlijke herstelactie of afgeronde O2.3.",
+            "source": "eva2/evidence/product/o2-consistent-source-collected-20260929.json"
+          },
           {
             "title": "Bestaande documentlogboeken behouden bij herstel",
             "date": "29 september",
@@ -3003,14 +3011,14 @@
           }
         ],
         "now": {
-          "title": "O2.3 compatibiliteit echte documentopslag opgeleverd",
+          "title": "O2.3 gezamenlijke gegevenskopie gereed",
           "state": "Deelresultaat opgeleverd",
-          "detail": "Oude platte/lege logboeken ondersteund; operator geïnstalleerd, herstelimage beschikbaar. Geen actieve uitvoerder.",
+          "detail": "92 bestanden, beide databases en gateway verzameld; twaalf bronservices hervat. Volledige herstelactie nog open; geen actieve uitvoerder.",
           "owner": "/root"
         },
         "next": {
-          "title": "O2.3 consistente gezamenlijke gegevenskopie",
-          "detail": "Werkelijke schrijvende diensten begrensd stilzetten voor één kern/geheugen/gateway/documentkopie; bestaande dump/snapshothelpers gebruiken en oorspronkelijke diensten hervatten. Daarna bestaande herstelroute op geïsoleerd doel."
+          "title": "O2.3 gezamenlijke herstelactie",
+          "detail": "Consistente echte bronkopie verzameld; twaalf diensten hervat. Dezelfde kernkopie naar huidig archief omzetten en samen met geheugen/gateway/documenten via bestaande herstelroute uitvoeren."
         },
         "ownerAction": {
           "title": "Doorpraten op woonkamerspeaker proberen",
@@ -3024,7 +3032,7 @@
           "linkLabel": "Geef resultaat in deze taak door"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T14:35:41.159530+00:00"
+        "reviewedAt": "2026-09-29T14:49:00.910538+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14409,22 +14417,17 @@
               "doneWhen": "Bestaande herstelwizard werkt voor huidige gegevensversie; geen nieuw herstelsysteem bouwen.",
               "owner": "/root",
               "assignment": {
-                "baseCommit": "a402ca4c",
+                "baseCommit": "a9305db9",
                 "files": [
-                  "eva2/deploy/living-core/workspace-create-only/relocation.mjs",
-                  "eva2/deploy/living-core/workspace-create-only/mcp-server.mjs",
-                  "test/workspace-writer-relocation.test.mjs",
-                  "eva2/tools/installation_document_restore.py",
-                  "eva2/tools/installation_document_connection.py",
-                  "eva2/tests/portable/test_document_recovery_layouts.py",
-                  "native/workspace_writer_broker.c"
+                  "eva2/tools/installation_source_snapshot.py",
+                  "eva2/tests/operations/test_installation_source_snapshot.py"
                 ],
                 "existing": "Current restore route proven from0009; existing install_schema forward route supports0007",
                 "gap": "Actual retained0007 data has not passed the existing forward migration needed by portable v2",
-                "outcome": "Actuele kern, geheugen, gateway en documenten samen via bestaande herstelroute behouden.",
-                "estimate": "Eerst begrensde hergebruikcontrole van bestaande voorbereidingsscripts en actuele bronkoppelingen; geen modelcalls of nieuwe snapshot vóór consistente bronkeuze. Credits onbekend.",
-                "finish": "Current data preserved through existing0007-to0009 route or concrete defect retained; no production migration or restore-completion claim",
-                "stage": "actual_document_layout_support_installed",
+                "outcome": "Eén consistente kopie van kern, geheugen, gateway en documenten verzamelen met bestaande helpers.",
+                "estimate": "Eén begrensde operatorcompositie en controle; geen modelcalls. Credits onbekend.",
+                "finish": "Consistent source copy collected through existing helpers; complete joint restore remains required.",
+                "stage": "consistent_source_collected",
                 "workers": {
                   "/root/architecture_audit": "new writer/reader + own tests only",
                   "/root": "existing restore seam, authority contract, board, integration"
@@ -14432,11 +14435,11 @@
                 "activeWorkers": [],
                 "endCondition": "Pakket/autoriteit/wizard gebruiken dezelfde v3-kern met bestaande externe stappen; gerichte combinatiecontrole, onafhankelijke review en operatorinstallatie."
               },
-              "latestEvidence": "eva2/evidence/product/o2-document-layouts-installed-20260929.json",
-              "remaining": "Consistente volledige bronkopie en gezamenlijke herstelactie nog uitvoeren; concrete documentformaatverschillen opgelost."
+              "latestEvidence": "eva2/evidence/product/o2-consistent-source-collected-20260929.json",
+              "remaining": "Consistente echte bronkopie verzameld; twaalf diensten hervat. Dezelfde kernkopie naar huidig archief omzetten en samen met geheugen/gateway/documenten via bestaande herstelroute uitvoeren."
             }
           ],
-          "latestEvidence": "eva2/evidence/product/o2-document-layouts-installed-20260929.json"
+          "latestEvidence": "eva2/evidence/product/o2-consistent-source-collected-20260929.json"
         },
         {
           "id": "P1",

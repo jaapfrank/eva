@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-29T14:49:00.910538+00:00",
+  "task": "O2.3",
+  "status": "source_snapshot_collected_operator_installed",
+  "existing": "Existing PostgreSQL dump and SQLite WAL-aware backup helpers; existing portable runtime and full restore workflow.",
+  "added": "Explicit source collection composition with source before/copy/after inventories and completion receipt; no service manager or restore framework.",
+  "verification": {
+    "focused_tests": 6,
+    "independent_review": "GO after operator resume and read-only healthcheck guard corrections",
+    "actual_collection_seconds": 39.531,
+    "files": 92,
+    "bytes": 41721383,
+    "database_dumps": {
+      "databases/core.dump": {
+        "kind": "file",
+        "size": 34000300,
+        "sha256": "fc23ed609fd76b2e0cd86ae0f83860f2c2320ef47296d2e5e83991e48cf355ed"
+      },
+      "databases/memory.dump": {
+        "kind": "file",
+        "size": 3878900,
+        "sha256": "05140973bc1780eb11d8a5ac17861a81896ced23eea9a14d2abc344159d39587"
+      }
+    },
+    "source_services_resumed": 12,
+    "resume_errors": [],
+    "installed_module_sha256": "63cbc4e7275bed24e4925541bfa3ca951cc61fcee2bf3ce2567e3e9564fe29a5"
+  },
+  "first_attempt": {
+    "status": "incomplete_retained",
+    "cause": "Strict no-client guard collided with database read-only healthcheck; no completion receipt.",
+    "changed_cause": "Permit only local psql SELECT 1 without assigned write transaction ID and without open idle transaction; all other clients remain rejected."
+  },
+  "private_artifacts": "/home/administrator/project/.eva2-artifacts/o2-consistent-source-20260929",
+  "model_calls": 0,
+  "credit_cost": "unknown",
+  "remaining": "Build current-runtime archive from this frozen core dump, compose the same snapshot memory/gateway/documents and execute existing full restore on isolated target. O2.3 remains incomplete; no owner acceptance."
+}

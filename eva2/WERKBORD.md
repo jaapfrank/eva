@@ -8,6 +8,12 @@ De afzonderlijke taken staan in de bestaande dashboardtab **Werk & volgorde → 
 
 Werkregel: één bruikbaar resultaat afmaken; alleen passende gerichte controle, review en installatie bundelen. Een mislukte proef gericht repareren in de ontwikkelversie; niet telkens terugzetten of opnieuw installeren. Nieuwe wensen vergroten de bestaande eindvoorwaarden niet stilzwijgend.
 
+## Laatste resultaat — O2.3 consistente gegevenskopie verzameld
+
+Kern, geheugen, gateway en documenten samen gekopieerd tijdens één gesloten schrijfperiode: 92 bestanden, 41.721.383 bytes; verzameling inclusief dienstenstop/hervatting 39,531 s. Alle twaalf oorspronkelijke diensten hervat met dezelfde IDs en restartinstellingen. Zes gerichte controles en onafhankelijke review; collector geïnstalleerd in bestaand operatorpakket. Eerste poging bleef expliciet onvolledig door een botsing met de read-only databasegezondheidscontrole; alleen die concrete oorzaak gecorrigeerd. Nul Eva-modelcalls; credits onbekend.
+
+**O2.3 blijft open:** uit deze bevroren kernkopie het huidige archief maken en gezamenlijk met de bijbehorende overige gegevens herstellen via de bestaande route. Geen actieve uitvoerder of volledige herstelclaim. [Bewijs](evidence/product/o2-consistent-source-collected-20260929.json).
+
 ## Laatste oplevering — O2.3 bestaande documentformaten ondersteund
 
 Werkelijke providers hebben oude platte logboeken en lege projectlogboeken; de herstelroute verwachtte gevulde projectmappen. Dit verschil is nu opgelost zonder bronmarkers of geschiedenis te verzinnen. Twaalf native gevallen en zeven operatorgevallen geslaagd; onafhankelijke review GO. Native voorbereiding op echte bestandskopieën behoudt de oorspronkelijke provideridentiteit. Twee operatormodules geïnstalleerd, zeven geïnstalleerde controles geslaagd; nieuwe herstelimage beschikbaar. Draaiende providers en brongegevens ongewijzigd. [Bewijs](evidence/product/o2-document-layouts-installed-20260929.json).
