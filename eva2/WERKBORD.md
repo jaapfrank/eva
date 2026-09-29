@@ -8,7 +8,7 @@
 
 **Nog niet af:** nieuwe volledige opdracht bereikte300s vóór eigen teruglezing/eindantwoord.20 modelantwoorden/19 tools,592.136in/3.595uit gedeeltelijk gemeten; creditkosten onbekend. Geen actieve modeltaak of tweede onderzoek gestart. T1 blijft open.
 
-**Volgende concrete stap:** bestaande taakbudgetcontext mist resterende wandtijd. Die afrondingsinformatie gericht aansluiten en het al bewaarde resultaat afmaken zonder de bronnen opnieuw te onderzoeken. Geen nieuwe planner of budgetverhoging. Telegramproef blijft afzonderlijk open.
+**Nu, /root:** bestaande taakbudgetcontext mist resterende wandtijd. Begrensde wijziging in delegated_digital_runner.py plus gerichte test; raming15–20min inclusief review/installatie. Eén bewaarde-resultaatvoortzetting, geen nieuwe bronproef. Die afrondingsinformatie gericht aansluiten en het al bewaarde resultaat afmaken zonder de bronnen opnieuw te onderzoeken. Geen nieuwe planner of budgetverhoging. Telegramproef blijft afzonderlijk open.
 
 ## C1 — tekstgesprek tijdens werk
 

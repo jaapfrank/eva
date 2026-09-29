@@ -33,7 +33,7 @@ class _UnfinishedWorkPlan(ConversationConflict):
     """Preserved progress exists, but this bounded attempt cannot finish it."""
 
 
-def _remaining_budget_context(grant, actual, *, calls, dispatches, response_output_tokens=None, response_input_tokens=None):
+def _remaining_budget_context(grant, actual, *, calls, dispatches, response_output_tokens=None, response_input_tokens=None, remaining_wall_seconds=None):
     """Report known counters; incomplete measurement cannot imply free capacity."""
     limits = {"model_runs": grant.maximum_model_runs, "input_tokens": grant.maximum_input_tokens,
               "output_tokens": grant.maximum_output_tokens, "tool_calls": grant.maximum_tool_calls,
@@ -44,13 +44,19 @@ def _remaining_budget_context(grant, actual, *, calls, dispatches, response_outp
     remaining = {name: (max(0, limits[name] - used[name]) if actual.measurement == "measured" else None)
                  for name in ("model_runs", "input_tokens", "output_tokens")}
     remaining["tool_calls"] = max(0, grant.maximum_tool_calls - max(calls, dispatches))
+    remaining["wall_seconds"] = remaining_wall_seconds
     return ("Resterend budget van deze poging (null = onbekend; gemelde deelmetingen zijn geen volledige meting): "
             + json.dumps({"measurement": actual.measurement, "limits": limits,
                           "used": used, "remaining": remaining}, separators=(",", ":"))
             + " Input telt opnieuw mee bij elke modelcall, inclusief eerdere context en toolresultaten. "
               "Ook een eindantwoord verbruikt een modelcall. Houd daarvoor ruimte naast uitvoering en controle; haal alleen relevante gegevens op. "
               "Sla geen vereiste controle over en claim geen afronding om budget te sparen. "
-              "Bewaar bij een echte blokkade de voortgang; verruim het mandaat of budget niet.")
+              "Bewaar bij een echte blokkade de voortgang; verruim het mandaat of budget niet. "
+              "The remaining wall_seconds is measured at the start of this model response and includes "
+              "model thinking, tool execution, saving, readback and the final reply. Reserve time for "
+              "all required completion steps. Once the question is supported by the gathered evidence, "
+              "finish the result instead of collecting optional additional material. If essential work "
+              "cannot fit, save an honest continuation point; the deadline is not extended.")
 
 
 class _TaskModel:
@@ -495,7 +501,8 @@ class DelegatedDigitalRunner:
                                         calls=actions.calls, dispatches=actions.dispatches,
                                         response_output_tokens=(max(0, spec.grant.maximum_output_tokens - latest_usage.output_tokens)
                                             if latest_usage.measurement == "measured" else None),
-                                        response_input_tokens=self.profile.maximum_response_input_tokens))
+                                        response_input_tokens=self.profile.maximum_response_input_tokens,
+                                        remaining_wall_seconds=max(0, int((deadline - self.clock()).total_seconds()))))
             conversation = LivingConversation(self.memory, task_model, self.identity, actions)
 
             def execute():

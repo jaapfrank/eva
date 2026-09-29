@@ -1201,3 +1201,29 @@ def test_background_research_uses_single_request_context():
     with background_execution(BackgroundExecutionScope(source, "work:research")):
         assert _native_research_context()
     assert not _native_research_context()
+
+
+def test_each_model_turn_observes_remaining_admitted_wall_time():
+    """Time spent in prior model/tool phases is deducted, without extending the grant."""
+    import json
+    _, spec, _, tools, _, runner, _ = fixture()
+    # The host's admitted deadline may be shorter than the ordinary grant.
+    spec = spec.model_copy(update={"deadline": (NOW + timedelta(seconds=180)).strftime("%Y-%m-%dT%H:%M:%SZ")})
+    current = [NOW]
+    runner.clock = lambda: current[0]
+    observed = []
+    base = Model()
+    class ClockAwareModel:
+        def generate(self, *args, **kwargs):
+            context = next(value for value in kwargs["self_context"] if "remaining" in value and "wall_seconds" in value)
+            budget = json.JSONDecoder().raw_decode(context[context.index("{"):])[0]
+            observed.append(budget["remaining"]["wall_seconds"])
+            result = base.generate(*args, **kwargs)
+            current[0] += timedelta(seconds=30)
+            return result
+    runner.model = ClockAwareModel()
+    tools.release.set()
+    result = asyncio.run(runner.run(spec, call_id="call:wall-budget"))
+    assert result.status == "succeeded", result
+    assert observed == [180, 150, 120]
+    assert len(tools.calls) == 2
