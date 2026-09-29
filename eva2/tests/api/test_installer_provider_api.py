@@ -547,10 +547,13 @@ def test_wizard_rejects_provider_verifier_from_different_workspaces(
     assert probe.calls == 0
 
 
+@pytest.mark.parametrize("prepared", [False, True])
 def test_launcher_opens_model_and_telegram_verification_without_manual_config(
+    prepared: bool,
     private_tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    budget_workspace = private_tmp_path / "launcher-budgets"
     capability_workspace = private_tmp_path / "launcher-capabilities"
     secret_workspace = private_tmp_path / "launcher-secrets"
     evidence_workspace = private_tmp_path / "launcher-evidence"
@@ -591,7 +594,13 @@ def test_launcher_opens_model_and_telegram_verification_without_manual_config(
                 str(secret_workspace),
                 "--provider-evidence-workspace",
                 str(evidence_workspace),
-            ]
+                "--budget-workspace",
+                str(budget_workspace),
+            ],
+            **({
+                "installation_preparer": lambda plan: None,
+                "installation_preparation_status": lambda: "prepared",
+            } if prepared else {}),
         )
         == 0
     )
@@ -607,6 +616,12 @@ def test_launcher_opens_model_and_telegram_verification_without_manual_config(
         ).status_code
         == 204
     )
+    budgets = client.get("/internal/v1/onboarding/budgets/status")
+    assert budgets.status_code == 200
+    assert budgets.json()["enabled"] is True
+    preparation = client.get("/internal/v1/onboarding/install/preparation")
+    assert preparation.status_code == 200
+    assert preparation.json()["status"] == ("prepared" if prepared else "unavailable")
     status = client.get("/internal/v1/onboarding/providers/status").json()
     availability = {
         item["slot_id"]: item["available"] for item in status["slots"]

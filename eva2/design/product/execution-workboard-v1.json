@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-23",
+  "lastUpdated": "2026-09-29T10:03:30.707332+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -999,6 +999,14 @@
       "deliveryOverview": {
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
+          {
+            "title": "Startfout installatiewizard en budgetaansluiting hersteld",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Geïnstalleerde CLI bereikt de bootstrap-pagina; bestaande budgetworkflow aangesloten.",
+            "remaining": "Volledige O1.1 blijft open: gewone doelbootstrap ontbreekt.",
+            "source": "eva2/evidence/product/installer-cli-wiring-20260929.json"
+          },
           {
             "title": "Installatievoorbereiding respecteert overgeslagen Telegram en HA",
             "date": "29 september",
@@ -2883,15 +2891,15 @@
           }
         ],
         "now": {
-          "title": "O1.2: overgeslagen koppelingen doorgegeven",
-          "state": "Deelresultaat geïnstalleerd; volledige taak nog open",
-          "detail": "De doelvoorbereiding laat overgeslagen Telegram-/HA-configuratie weg.16 gerichte gevallen en onafhankelijke review akkoord. Gewone wizardstart O1.1 ontbreekt nog.",
-          "doneWhen": "Volledige gekozen-module-installatie via gewone wizard; nog niet bereikt."
+          "title": "O1.1: wizardstart hersteld; doelbootstrap nog open",
+          "state": "Deelresultaat geïnstalleerd — vervolg nog niet gestart",
+          "detail": "Bestaande CLI start weer; budgetinstellingen aangesloten.17 gerichte gevallen en onafhankelijke review akkoord; geïnstalleerde bootstrap-pagina HTTP200.",
+          "doneWhen": "Bestaande wizard kan de gekozen doelinstallatie zonder handgeschreven instellingen voorbereiden en starten."
         },
         "next": {
-          "title": "O1.1: gewone wizardstart aansluiten",
-          "state": "Eerstvolgende uitvoerbare taak; nog niet gestart",
-          "detail": "Bestaande installer heeft doelvoorbereiding, maar nog geen complete gewone startconfiguratie. Die verbinding afmaken; geen nieuwe installer."
+          "title": "O1.1: gewone pakketlauncher aansluiten",
+          "state": "Eerstvolgende stap binnen O1.1",
+          "detail": "Verplichte handgeschreven herstelconfiguratie uit de gewone start verwijderen door bestaande configuratiestappen te verbinden."
         },
         "ownerAction": {
           "title": "Deel één Chrome-tabblad voor T3.1",
@@ -2905,7 +2913,7 @@
           "linkLabel": "Open bestaande Chrome-bediening"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T09:55:25.361893+00:00"
+        "reviewedAt": "2026-09-29T10:03:30.707332+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12725,7 +12733,7 @@
           ]
         }
       ],
-      "nextAction": "O1.1 ordinary configured wizard startup is the actual dependency for complete O1.2. Reuse existing preparation; no new installer or restore cycle.",
+      "nextAction": "Gewone pakketlauncher vereist nog herstelconfiguratie; normale doelbootstrap verbinden. CLI-start en budgetaansluiting gerepareerd en geïnstalleerd.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -14016,7 +14024,20 @@
               "status": "planned",
               "kind": "aansluiten",
               "doneWhen": "Bestaande wizard kan de gekozen doelinstallatie zonder handgeschreven instellingen voorbereiden en starten.",
-              "owner": "Codex"
+              "owner": "/root",
+              "assignment": {
+                "baseCommit": "eb09174c",
+                "files": [
+                  "eva2/src/eva/bootstrap/installer_wizard_cli.py",
+                  "eva2/tests/api/test_installer_provider_api.py"
+                ],
+                "existing": "Existing wizard UI, budget workflow and prepared target callback.",
+                "gap": "CLI references an undefined preparation status reader and does not connect the existing required budget workflow.",
+                "estimate": "Bounded composition repair, approximately 30–60 minutes; no provider calls; credit cost unknown.",
+                "finish": "Ordinary and prepared CLI startup reach existing wizard; configured budgets are usable. Full target bootstrap remains part of O1.1."
+              },
+              "latestEvidence": "eva2/evidence/product/installer-cli-wiring-20260929.json",
+              "remaining": "Gewone pakketlauncher vereist nog herstelconfiguratie; normale doelbootstrap verbinden. CLI-start en budgetaansluiting gerepareerd en geïnstalleerd."
             },
             {
               "id": "O1.2",

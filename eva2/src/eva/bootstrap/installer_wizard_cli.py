@@ -21,6 +21,10 @@ from eva.adapters.connectors.installer_telegram_probe import (
     TelegramInstallerReadOnlyProbe,
 )
 from eva.operations.identity_pack_lifecycle import IdentityPackLifecycleError
+from eva.operations.installer_budget_workflow import (
+    InstallerBudgetWorkflow,
+    InstallerBudgetWorkflowError,
+)
 from eva.operations.installer_capability_workflow import (
     InstallerCapabilityWorkflow,
     InstallerCapabilityWorkflowError,
@@ -76,7 +80,8 @@ def _private_workspace(path: Path) -> Path:
 
 def run_installer_wizard(
     argv: list[str] | None = None, *, restore_workflow: InstallerRestorePort | None = None,
-    installation_preparer: Callable[[dict[str, object]], None] | None = None
+    installation_preparer: Callable[[dict[str, object]], None] | None = None,
+    installation_preparation_status: Callable[[], str] | None = None,
 ) -> int:
     from eva.adapters.api.installer_wizard import (
         InstallerBootstrap,
@@ -96,6 +101,7 @@ def run_installer_wizard(
     parser.add_argument("--profile-workspace", type=Path)
     parser.add_argument("--capability-workspace", type=Path)
     parser.add_argument("--secret-workspace", type=Path)
+    parser.add_argument("--budget-workspace", type=Path)
     parser.add_argument("--provider-evidence-workspace", type=Path)
     parser.add_argument("--provider-configuration-workspace", type=Path)
     parser.add_argument("--home-assistant-url")
@@ -129,6 +135,8 @@ def run_installer_wizard(
         parser.error(
             "provider endpoint input requires a provider configuration workspace"
         )
+    if args.budget_workspace is not None and args.capability_workspace is None:
+        parser.error("budget configuration requires a capability workspace")
     try:
         receipt = preflight(load_platform_lock(args.platform_lock), inspect_host())
     except InstallerPreflightError as error:
@@ -142,6 +150,7 @@ def run_installer_wizard(
     provider_verifier = None
     provider_configuration_store = None
     secret_lifecycle = None
+    budget_workflow = None
     if all(path is not None for path in identity_paths):
         assert args.identity_workspace is not None
         try:
@@ -168,6 +177,12 @@ def run_installer_wizard(
         if args.capability_workspace is not None:
             capability_workflow = InstallerCapabilityWorkflow(
                 workspace=_private_workspace(args.capability_workspace)
+            )
+        if args.budget_workspace is not None:
+            assert capability_workflow is not None
+            budget_workflow = InstallerBudgetWorkflow(
+                workspace=_private_workspace(args.budget_workspace),
+                capability_workflow=capability_workflow,
             )
         if args.secret_workspace is not None:
             secret_store = InstallerSecretStore(
@@ -214,6 +229,7 @@ def run_installer_wizard(
     except (
         InstallerProfileWorkflowError,
         InstallerCapabilityWorkflowError,
+        InstallerBudgetWorkflowError,
         InstallerSecretStoreError,
         InstallerProviderVerificationError,
         InstallerProviderConfigurationError,
@@ -246,6 +262,7 @@ def run_installer_wizard(
             provider_configuration_store=provider_configuration_store,
             configured_probe_factory=configured_installer_probe,
             secret_lifecycle=secret_lifecycle,
+            budget_workflow=budget_workflow,
             installation_plan_builder=build_installer_installation_plan,
             installation_preparer=installation_preparer,
             installation_preparation_status=installation_preparation_status,

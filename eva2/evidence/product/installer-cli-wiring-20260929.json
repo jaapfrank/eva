@@ -1,0 +1,23 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "recordedAt": "2026-09-29T10:03:30.707332+00:00",
+  "scope": "Partial O1.1: existing CLI startup and budget workflow connection",
+  "baseCommit": "eb09174c",
+  "change": "Declare preparation status callback and connect existing budget workflow via --budget-workspace.",
+  "checks": {
+    "focused": "17 passed in 2.46s",
+    "review": "GO /root/review_installer_cli_wiring",
+    "installedServer": {
+      "installed_sha256": "2f57a025efbd1f3eba209dc8eedb0fce5316288d2f7acde2b2c1bd2c49d3856d",
+      "provider_calls": 0,
+      "running_at_check": true,
+      "http_status": 200,
+      "page_bytes": 393
+    }
+  },
+  "installedPackage": "/home/administrator/project/.eva2-artifacts/installer-document-write-20260924",
+  "providerCalls": 0,
+  "creditCost": "unknown",
+  "remaining": "Normal package launcher still requires restore-config. Complete target bootstrap without handwritten settings is not delivered. O1.1 stays open.",
+  "rollback": "Previous exact module retained in installer-cli-wiring-20260929; no runtime rollback performed."
+}

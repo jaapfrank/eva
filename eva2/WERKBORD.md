@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## O1.1 — startcorrectie geïnstalleerd, doelbootstrap nog open
+
+CLI-startfout hersteld en bestaande budgetworkflow aangesloten.17 gerichte controles en onafhankelijke review GO. Exacte module in bestaand operatorpakket geïnstalleerd; echte serverstart en bootstrap-pagina HTTP200. Geen providercalls of Eva-runtime-herstart. [Bewijs](evidence/product/installer-cli-wiring-20260929.json).
+
+**Volgende, nog niet gestart:** gewone pakketlauncher vereist nog handgeschreven herstelconfiguratie. Bestaande configuratie en doelvoorbereiding verbinden; volledige O1.1 niet afgerond.
+
 ## Geïnstalleerde koppeling — O1.2 nog afhankelijk van O1.1
 
 Bevestigde overgeslagen Telegram/HA-koppelingen worden weggelaten uit nieuwe doelvoorbereiding.16 gerichte gevallen en onafhankelijke review akkoord; drie exacte modules in bestaand operatorpakket geïnstalleerd en import gecontroleerd. Bestaande runtime/data ongemoeid, geen terugzet-/herinstallatiecyclus of modelcalls. [Bewijs](evidence/product/installer-optional-selection-20260929.json).
