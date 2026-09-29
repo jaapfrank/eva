@@ -1172,7 +1172,7 @@ def test_task_boundary_closes_blocked_provider_with_longer_phase_limit(tmp_path,
     monkeypatch.setattr("eva.adapters.model.pydantic_conversation.OpenAICodexProvider", LocalProvider)
     journal = DurableJournal()
     runner.journal_factory = lambda *_: journal
-    runner.model = PydanticConversationModel(auth_file=tmp_path / "unused.json", timeout_seconds=300,
+    runner.model = PydanticConversationModel(auth_file=tmp_path / "unused.json", timeout_seconds=120,
         resource_budget=_runtime_budget(max_input_tokens=65_536))
     tools.available_for = lambda turn: False
     async def run():
@@ -1189,7 +1189,7 @@ def test_task_boundary_closes_blocked_provider_with_longer_phase_limit(tmp_path,
     asyncio.run(run())
     expected_calls = 0 if boundary == "expired_before_admission" else 1
     assert len(requests) == len(admissions) == len(journal.usages) == expected_calls
-    assert provider_limits == [300] * expected_calls
+    assert provider_limits == [120] * expected_calls
     assert tools.calls == [] and spec.grant.to_payload() == grant_before
     if expected_calls:
         assert closed.is_set() and sessions[0].local_stream_closed is True

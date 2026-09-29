@@ -1,0 +1,64 @@
+{
+  "checkedAt": "2026-09-29T08:50:30.080163+00:00",
+  "status": "live_trial_failed_candidate_rolled_back",
+  "criteria": "eva2/evidence/product/t2-general-ha-criteria-20260929.json",
+  "candidateSourceCommit": "4804ed27",
+  "firstTrial": "eva2/evidence/product/t2-background-phase-candidate-20260929.json",
+  "secondTrial": {
+    "workId": "work:eva-chat:6f0910de-e088-5ffc-99c9-aea221d942a7",
+    "state": "ambiguous",
+    "error": "timed_out",
+    "originalTaskDeadlineHonored": true,
+    "taskDeadline": "2026-09-29T08:44:50Z",
+    "foregroundSeconds": 22.476,
+    "successfulWorkerResponses": 1,
+    "failedUnmeasuredWorkerRequests": 1,
+    "workerKnownInput": 6608,
+    "workerKnownOutput": 62,
+    "foregroundKnownInput": 7270,
+    "foregroundKnownOutput": 346,
+    "knownTotalInputIncludingForeground": 13878,
+    "knownTotalOutputIncludingForeground": 408,
+    "terminalFailedModelRecordConfirmed": true,
+    "haEffects": "One inventory read; no write requests. Target configurationGET404.",
+    "cleanup": "None required; no trial object created.",
+    "transport": {
+      "responseStatus": 200,
+      "headersReceivedMs": 808,
+      "receivedBytes": 84394,
+      "receivedChunks": 47
+    }
+  },
+  "combinedKnownUsage": {
+    "inputTokens": 37602,
+    "outputTokens": 869,
+    "unmeasuredFailedRequests": 2,
+    "creditCosts": null,
+    "caveat": "Known values exclude unmeasured timed-out generation; not total account usage or a cost estimate."
+  },
+  "decision": "No delivery benefit demonstrated by longer phase; restore previous120s phase instead of retaining larger waiting allowance. Do not attribute provider failure or exact extra token cost causally to the extension.",
+  "rollback": {
+    "checkedAt": "2026-09-29T08:49:13.310390+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:106194c0054781828521dc9c091c7b6cd78cde8cd552fe10ffca09ec80f6cc61",
+        "health": "healthy",
+        "baselineSourceExact": true
+      },
+      "worker": {
+        "image": "sha256:48cb8c2a49d53d66cdfffe4bc37fb382d5c4fdfce55aef82fc019d94524bad66",
+        "health": "healthy",
+        "baselineSourceExact": true
+      }
+    }
+  },
+  "sourceRestoration": "Three production files and their two changed tests restored byte-for-byte from87c006c2; prior fixes retained.",
+  "independentReview": {
+    "reviewer": "/root/platform_research_20260927",
+    "decision": "NO-GO for task outcome; GO for rollback. No HA writes/no cleanup independently confirmed.",
+    "accountingNote": "Root refreshed terminal eventexport after reviewer noted the missing final event; failed unmeasured record now confirmed."
+  },
+  "remaining": "Find why ordinary Astra tool-followup fails to reach a valid terminal response; use bounded isolated evidence without real HA effects, no third unchanged task or quota increase. Physical room/comfort/speaker proof remains separate.",
+  "ownerAccepted": false,
+  "fullT2Complete": false
+}

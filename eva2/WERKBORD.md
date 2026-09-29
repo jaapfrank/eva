@@ -1,12 +1,12 @@
 # Eva 2 — uitvoerbaar werkbord
 
-## Nu — T2: automatisering zelfstandig afronden
+## T2 — nog niet afgerond; vorige runtime hersteld
 
-**Gerichte correctie klaar voor installatie:** gewone achtergrondmodelstap gebruikt de bestaande300s-taakruimte; oorspronkelijke/kortere taakdeadline en stop blijven leidend.43 controles en onafhankelijke review akkoord. Geen token-/taakbudgetverhoging; native research en foreground onveranderd. [Diagnose en kandidaat](evidence/product/t2-background-phase-candidate-20260929.json).
+**Twee gewone HA-proeven mislukt:** eerste bij120s-modelgrens, tweede na gerichte verlenging binnen bestaande300s-taak. Beide zonder eindresultaat of configuratieschrijfactie; proef-ID404, geen cleanup nodig. Langere fase leverde geen aantoonbaar oplevervoordeel en is teruggezet. Exacte eerdere bron op gezonde kern/werker gecontroleerd; geen actieve modeltaak. [Bewijs](evidence/product/t2-general-ha-failed-20260929.json).
 
-**Actuele proef mislukt:** alleen inventaris en GET404, geen HA-wijzigingen/cleanup. Derde workerrequest na120s afgebroken; HTTP200 en103.485bytes ontvangen, geen voltooid antwoord. Bekend inclusief foreground23.724in/461uit; timeoutverbruik onbekend. Geen automatische herhaling. Gericht fase120s versus bestaande taak300s beoordelen.
+**Verbruik:** bekend inclusief foreground37.602in/869uit; twee mislukte modelrequests ongemeten, creditkosten onbekend. Geen derde ongewijzigde poging.43 grenscontroles en bronreview waren akkoord maar bewijzen geen geslaagde huisopdracht; onafhankelijke praktijkreview NO-GO, rollback GO.
 
-Basis87c006c2; coördinator bezit bewijs/werkbord, geen bronwijziging. Eén gewone websiteopdracht via bestaande HA-API: nieuwe uitgeschakelde proefautomatisering maken, beschrijving aanpassen en volledige configuraties teruglezen. Bestaande grant32antwoorden/31tools gecontroleerd; deze beurt geen budgetwijziging. Eindpunt: zelfstandig eindantwoord zonder handmatig hervatten, onafhankelijke controle, uitsluitend proefobject opruimen. Eén aanvraag, maximaal bestaande300s; circa15min actief werk, credits onbekend. [Voorafcriteria](evidence/product/t2-general-ha-criteria-20260929.json).
+**Volgende, nog niet gestart:** modelverwerking na toolantwoord gericht isoleren zonder echte HA-effecten. De ontvangenHTTP200-stream bereikte geen geldige terminalreceipt. Geen nieuwe quota, apparaat-scriptjes of verdere timeoutverhoging. T2 en fysieke speaker-/comfortbeoordeling blijven open.
 
 ## Afgerond — L2: bevestigde correctie over schedulerherstart
 

@@ -120,8 +120,7 @@ def test_runner_factory_reuses_resource_factory_and_exposes_only_connector_tools
     assert runner.connector_tools[-1].action_names == ("get_delegated_work",)
     assert observed["model"]["resource_budget"].max_output_tokens == 1200
     assert observed["model"]["resource_budget"].max_input_tokens == 12000
-    assert observed["model"]["timeout_seconds"] == runner.profile.timeout_seconds == 300.0
-    assert observed["model"]["research_timeout_seconds"] == 120.0
+    assert observed["model"]["timeout_seconds"] == 120.0
     assert runner.profile.grant().timeout_seconds == 300
     assert observed["model"]["model"] == settings.conversation_model
     assert observed["model"]["conversation_tools"] == composition.digital_tools(bundle)[0]

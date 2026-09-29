@@ -85,8 +85,8 @@ class OpenAICodexProviderSettings:
         )
         if not self.model_name.strip() or len(self.model_name) > 120:
             raise ValueError("Codex model name is invalid")
-        if not 1 <= self.timeout_seconds <= 300:
-            raise ValueError("Codex phase timeout must be 1..300 seconds")
+        if not 1 <= self.timeout_seconds <= 120:
+            raise ValueError("Codex phase timeout must be 1..120 seconds")
         if self.reasoning_effort not in {"none", "low", "medium", "high"}:
             raise ValueError("Codex reasoning effort is invalid")
         for value in (self.maximum_request_bytes, self.maximum_response_bytes):

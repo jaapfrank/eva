@@ -1,0 +1,37 @@
+{
+  "checkedAt": "2026-09-29T08:39:46.535450+00:00",
+  "status": "installed",
+  "sourceCommit": "4804ed27",
+  "sourceEvidence": "eva2/evidence/product/t2-background-phase-candidate-20260929.json",
+  "services": {
+    "core": {
+      "image": "sha256:7034ae87533265e3ac60204cd07c40de67bb7d12b4f40c684bbaf82a2c5b14be",
+      "health": "healthy",
+      "sourceHashes": {
+        "bootstrap/delegated_digital_composition.py": "58cb46f09121f8498ba80a20efc9d46eddaf295ee44097f2a9873c0517151847",
+        "adapters/model/pydantic_conversation.py": "6a7d165cff69260787974035d1ff8bdeca1edf32fec753aaedd3167eb633008c",
+        "adapters/model/openai_codex_provider.py": "8df29703900e1fa1e79f897f947ffc7f640a5b6712e80a2f48392c44e4036e04"
+      }
+    },
+    "worker": {
+      "image": "sha256:e82e896922538df20cf8e59e9217752406dd0fbe8d05a9f56928020bc8c5e24a",
+      "health": "healthy",
+      "sourceHashes": {
+        "bootstrap/delegated_digital_composition.py": "58cb46f09121f8498ba80a20efc9d46eddaf295ee44097f2a9873c0517151847",
+        "adapters/model/pydantic_conversation.py": "6a7d165cff69260787974035d1ff8bdeca1edf32fec753aaedd3167eb633008c",
+        "adapters/model/openai_codex_provider.py": "8df29703900e1fa1e79f897f947ffc7f640a5b6712e80a2f48392c44e4036e04"
+      }
+    }
+  },
+  "http": {
+    "http://localhost:44711/internal/v1/dashboard/conversation": 200,
+    "http://localhost:44712/project-state": 200
+  },
+  "rollbackAvailable": true,
+  "rollbackRecord": "/home/administrator/project/.eva2-artifacts/t2-general-ha-completion-20260929/observed.json",
+  "targetStillAbsent": true,
+  "liveTaskProof": "Not yet repeated at this installation checkpoint.",
+  "ownerAccepted": false,
+  "currentStatus": "rolled_back",
+  "supersededBy": "eva2/evidence/product/t2-general-ha-failed-20260929.json"
+}
