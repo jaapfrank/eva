@@ -346,6 +346,8 @@ def connect_document_providers(package_root, *, preparation_configuration,
             _verify_running(container_id, config, prep, mounts, alias=alias)
             receipt["services_started"] = True
             observed = json.loads(_command(["docker", "exec", container_id, "python3", "-c", _CATALOG], deadline=40))
+            if isinstance(observed, list) and "catalog_gateway_id" in prep:
+                observed = sorted(observed, key=lambda tool: tool["name"])
             if not isinstance(observed, list) or canonical_sha256(observed) != prep["logical_catalog_sha256"]:
                 raise ValueError("running document provider catalog differs from preserved catalog")
             guard()

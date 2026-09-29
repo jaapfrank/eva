@@ -1,6 +1,6 @@
-## Actueel: O2.3 gezamenlijk herstel loopt — 29 september 2026
+## Actueel: O2.3 gegevens hersteld; documentaansluiting afmaken — 29 september 2026
 
-Geldig pakket door geïnstalleerde wizard geaccepteerd. Werkelijke import naar apart intern doel loopt; geheugenservice blijft uit en runtime blijft gesloten. Dezelfde kopie, geen nieuwe export of oorspronkelijke dienstenwijziging. Daarna teruglezen, vier documentproviders aansluiten en gecontroleerde vrijgave. De vier oorspronkelijke toolcatalogi zijn uit de bewaarde gatewaygegevens exact te reconstrueren; aansluiting daarvan op de herstelinterface ontbreekt nog (read-only gecontroleerd, geen modelcalls). Geen volledige herstelclaim. [Bewijs](evidence/product/o2-joint-data-restore-20260929.json).
+De bestaande wizard heeft dezelfde gezamenlijke kopie succesvol geïmporteerd. Teruglezen geslaagd: alle73 achtergrondwerkrecords geldig; gateway en identiteit bytegelijk, runtime nog gesloten. Documentcatalogi uit bestaande gatewaykopie aangesloten in operatorcode:26 gerichte controles en onafhankelijke review geslaagd; geïnstalleerd. Uitvoering voor vier providers op hetzelfde doel loopt, daarna gecontroleerde vrijgave. Geen volledige O2.3-afronding; import draait niet meer.
 
 ## Actueel: O2.3 herhaalde pakketcontrole versneld — 29 september 2026
 

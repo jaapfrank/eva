@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T20:44:49.302802+00:00",
+        "checkedAt": "2026-09-29T20:52:35.113757+00:00",
         "deliveries": [
           {
             "title": "Herhaalde herstelpakketcontrole versneld",
@@ -3051,10 +3051,10 @@
           }
         ],
         "now": {
-          "title": "O2.3: gezamenlijk herstel loopt op apart doel",
+          "title": "O2.3: gegevens hersteld; documentaansluiting afmaken",
           "state": "Bezig",
           "owner": "Codex /root",
-          "detail": "Pakket door geïnstalleerde wizard geaccepteerd. Kern, geheugen, gateway en documenten worden geïmporteerd; uitvoering blijft gesloten. Geen nieuwe export of wijziging aan oorspronkelijke Eva."
+          "detail": "Gegevensimport en teruglezen geslaagd. Catalogus-/layoutaansluiting geïnstalleerd na26 gerichte controles en onafhankelijke review. Vier documentproviders worden nu op hetzelfde herstelde doel aangesloten; runtime blijft gesloten."
         },
         "next": {
           "title": "O2.3: teruglezen en vier documentproviders aansluiten",
@@ -3071,7 +3071,7 @@
           "linkLabel": "Antwoord in deze chat"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T20:44:49.302802+00:00"
+        "reviewedAt": "2026-09-29T20:52:35.113757+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14506,28 +14506,32 @@
               "doneWhen": "Bestaande herstelwizard werkt voor huidige gegevensversie; geen nieuw herstelsysteem bouwen.",
               "owner": "/root",
               "assignment": {
-                "baseCommit": "6f7e322a",
+                "baseCommit": "b97becc9",
                 "files": [
-                  "eva2/tools/installation_recovery_package.py",
-                  "eva2/tests/portable/test_installation_runtime_package.py"
+                  "eva2/tools/installation_document_restore.py",
+                  "eva2/tools/installation_document_connection.py",
+                  "eva2/tests/portable/test_document_recovery_layouts.py",
+                  "eva2/tools/installer_document_components.py",
+                  "eva2/tests/operations/test_installer_document_components.py"
                 ],
                 "existing": "Current restore route proven from0009; existing install_schema forward route supports0007",
                 "gap": "Actual retained0007 data has not passed the existing forward migration needed by portable v2",
                 "outcome": "Bevroren echte gegevens via bestaande volledige herstelroute herstellen.",
                 "estimate": "Bestaande kernexport duurt eerder circa8min; één export van deze nieuwe consistente bronkopie, geen nieuwe live snapshot/modelcalls. Credits onbekend.",
                 "finish": "Consistent source copy collected through existing helpers; complete joint restore remains required.",
-                "stage": "installed_wizard_joint_restore_running",
+                "stage": "installed_document_connection_running",
                 "workers": {
-                  "/root": "following same installed wizard execution"
+                  "/root": "following actual four-provider connection on restored target"
                 },
                 "activeWorkers": [],
                 "endCondition": "Pakket/autoriteit/wizard gebruiken dezelfde v3-kern met bestaande externe stappen; gerichte combinatiecontrole, onafhankelijke review en operatorinstallatie.",
                 "liveExportSession": null,
-                "liveRestoreSession": 54933,
-                "catalogFinding": "Four native catalogs recoverable exactly from preserved gateway rows; standalone catalog interface still requires connection. Evidence: eva2/evidence/product/o2-preserved-document-catalog-20260929.json"
+                "liveRestoreSession": null,
+                "catalogFinding": "Four native catalogs recoverable exactly from preserved gateway rows; standalone catalog interface still requires connection. Evidence: eva2/evidence/product/o2-preserved-document-catalog-20260929.json",
+                "liveDocumentSession": 54532
               },
-              "latestEvidence": "eva2/evidence/product/o2-joint-data-restore-20260929.json",
-              "remaining": "Lopende import afwachten en teruglezen. Vier documentcatalogi uit bestaande gatewaykopie aansluiten op herstelroute; daarna providers aansluiten en gecontroleerde vrijgave. Geen nieuwe export nodig voor catalogusgegevens."
+              "latestEvidence": "eva2/evidence/product/o2-document-catalog-installed-20260929.json",
+              "remaining": "Gezamenlijke import en teruglezen geslaagd; vier documentproviders aansluiten en gecontroleerde vrijgave blijven open."
             }
           ],
           "latestEvidence": "eva2/evidence/product/o2-consistent-source-collected-20260929.json"

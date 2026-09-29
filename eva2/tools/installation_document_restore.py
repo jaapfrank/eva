@@ -14,6 +14,9 @@ import os
 from pathlib import Path, PurePosixPath
 import re
 import stat
+import sqlite3
+import tempfile
+from contextlib import closing
 import uuid
 
 from eva.contracts.canonical_json import canonical_sha256
@@ -45,17 +48,26 @@ def validate_document_configuration(configuration):
             or not isinstance(configuration["providers"], list)
             or not 1 <= len(configuration["providers"]) <= 16):
         raise ValueError("document relocation configuration differs")
-    outputs, source_pairs = set(), set()
+    outputs, source_pairs, journals = set(), set(), set()
     for config in configuration["providers"]:
-        if not isinstance(config, dict) or set(config) != _FIELDS:
+        if not isinstance(config, dict) or set(config) not in (_FIELDS, _FIELDS | {"catalog_gateway_id"}):
             raise ValueError("document relocation provider fields differ")
-        for key in ("original_binding", "catalog_path"):
-            _relative(config[key], "config")
+        _relative(config["original_binding"], "config")
+        if "catalog_gateway_id" in config:
+            if (config["catalog_path"] != "gateway/contextforge.sqlite"
+                    or not isinstance(config["catalog_gateway_id"], str)
+                    or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,35}", config["catalog_gateway_id"])):
+                raise ValueError("document preserved gateway catalog selection differs")
+        else:
+            _relative(config["catalog_path"], "config")
         for key in ("document_directory", "journal_directory"):
             _relative(config[key], "documents")
         a, b = config["document_directory"], config["journal_directory"]
         if a == b or a.startswith(b + "/") or b.startswith(a + "/"):
             raise ValueError("document and journal directory scopes overlap")
+        if any(b == prior or b.startswith(prior + "/") or prior.startswith(b + "/") for prior in journals):
+            raise ValueError("document journal directories overlap")
+        journals.add(b)
         if (not isinstance(config["logical_catalog_sha256"], str)
                 or not _HEX.fullmatch(config["logical_catalog_sha256"])
                 or not isinstance(config["image"], str)
@@ -112,9 +124,45 @@ def _empty_journal(root, relative, config):
             os.close(fd)
 
 
+def _preserved_gateway_catalog(raw: bytes, gateway_id: str) -> list[dict]:
+    """Read native tool definitions from authenticated ContextForge snapshot bytes."""
+    with tempfile.TemporaryDirectory(prefix="eva-document-catalog-") as temporary:
+        snapshot = Path(temporary) / "catalog.sqlite"
+        snapshot.write_bytes(raw)
+        snapshot.chmod(0o400)
+        with closing(sqlite3.connect(snapshot.as_uri() + "?mode=ro&immutable=1", uri=True)) as database:
+            database.execute("PRAGMA query_only=ON")
+            database.execute("PRAGMA trusted_schema=OFF")
+            database.set_progress_handler(lambda: 1, 1_000_000)
+            if database.execute("SELECT id FROM gateways WHERE id=?", (gateway_id,)).fetchall() != [(gateway_id,)]:
+                raise ValueError("document catalog gateway is missing or ambiguous")
+            rows = database.execute(
+                "SELECT original_name,original_description,description,input_schema,output_schema,annotations "
+                "FROM tools WHERE gateway_id=? ORDER BY original_name", (gateway_id,)).fetchall()
+    if not rows or len(rows) > 256:
+        raise ValueError("preserved document catalog inventory differs")
+    tools, names = [], set()
+    for name, original_description, description, input_schema, output_schema, annotations in rows:
+        if not isinstance(name, str) or not name or name in names:
+            raise ValueError("preserved document tool name is missing or duplicated")
+        names.add(name)
+        tool = {"name": name, "inputSchema": json.loads(input_schema)}
+        description = original_description if original_description is not None else description
+        if description is not None:
+            tool["description"] = description
+        # ContextForge persists absent MCP optional fields as null/empty objects.
+        for key, value in (("outputSchema", output_schema), ("annotations", annotations)):
+            decoded = json.loads(value) if value is not None else None
+            if decoded is not None and not (key == "annotations" and decoded == {}):
+                tool[key] = decoded
+        tools.append(tool)
+    return tools
+
+
 def _validate_sources(root, package, config):
     entries = package["manifest"]["files"]
-    for key, role in (("original_binding", "provider_binding"), ("catalog_path", "provider_catalog")):
+    catalog_role = "gateway_database" if "catalog_gateway_id" in config else "provider_catalog"
+    for key, role in (("original_binding", "provider_binding"), ("catalog_path", catalog_role)):
         if entries.get(config[key], {}).get("role") != role:
             raise ValueError("document relocation authority file role differs")
     with _root_descriptor(root) as fd:
@@ -123,7 +171,9 @@ def _validate_sources(root, package, config):
     for name, raw in ((config["original_binding"], original), (config["catalog_path"], catalog)):
         if len(raw) != entries[name]["size"] or hashlib.sha256(raw).hexdigest() != entries[name]["sha256"]:
             raise ValueError("document authority source bytes changed")
-    if canonical_sha256(json.loads(catalog)) != config["logical_catalog_sha256"]:
+    catalog_value = (_preserved_gateway_catalog(catalog, config["catalog_gateway_id"])
+                     if "catalog_gateway_id" in config else json.loads(catalog))
+    if canonical_sha256(catalog_value) != config["logical_catalog_sha256"]:
         raise ValueError("document relocation logical catalog pin differs")
     binding = json.loads(original)
     flat = binding.get("version") == 1

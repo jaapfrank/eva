@@ -10,7 +10,7 @@ import json
 from eva.contracts.canonical_json import canonical_sha256
 from tools.installation_recovery_package import read_installation_package
 from tools.read_eva_portable_archive import _root_descriptor, _read_regular
-from tools.installation_document_restore import validate_document_configuration, _relative
+from tools.installation_document_restore import validate_document_configuration, _relative, _preserved_gateway_catalog
 from tools.installation_document_connection import validate_document_connection_configuration
 from tools.installation_document_promotion import validate_document_promotion_configuration
 from tools.installation_gateway_binding import validate_gateway_binding_configuration
@@ -40,29 +40,49 @@ def build_document_components(*, package_root, layouts, runtime_image, runtime_u
     entries = package["manifest"]["files"]
     preparation, connections, bindings, promotion = [], [], [], []
     covered = set()
+    document_roots = set()
     for index, layout in enumerate(layouts):
         if not isinstance(layout, dict) or set(layout) != _LAYOUT_FIELDS:
             raise ValueError("saved document layout differs")
-        for key in ("original_binding", "catalog_path"):
-            _relative(layout[key], "config")
+        _relative(layout["original_binding"], "config")
+        gateway_catalog = layout["catalog_path"] == "gateway/contextforge.sqlite"
+        if not gateway_catalog:
+            _relative(layout["catalog_path"], "config")
         for key in ("document_directory", "journal_directory"):
             _relative(layout[key], "documents")
-        for key, role in (("original_binding", "provider_binding"), ("catalog_path", "provider_catalog")):
+        catalog_role = "gateway_database" if gateway_catalog else "provider_catalog"
+        for key, role in (("original_binding", "provider_binding"), ("catalog_path", catalog_role)):
             if entries.get(layout[key], {}).get("role") != role:
                 raise ValueError("saved document authority role differs")
+        with _root_descriptor(root) as fd:
+            binding = json.loads(_read_regular(fd, layout["original_binding"]))
+        flat = binding.get("version") == 1
+        if not flat and not (binding.get("version") == 2 and binding.get("journal_mode") == "per_path_prefix_v1"):
+            raise ValueError("saved document journal layout is unsupported")
         project_keys = set()
         for key, roles in (("document_directory", {"document_artifact"}),
                            ("journal_directory", {"document_journal", "document_marker"})):
             prefix = layout[key] + "/"
             selected = {name for name in entries if name.startswith(prefix)}
-            if not selected or selected & covered or any(entries[name]["role"] not in roles for name in selected):
+            shared_documents = key == "document_directory" and layout[key] in document_roots
+            if ((not selected and key != "journal_directory")
+                    or (selected & covered and not shared_documents)
+                    or any(entries[name]["role"] not in roles for name in selected)):
                 raise ValueError("document layout coverage differs")
             covered.update(selected)
-            if key == "journal_directory":
+            if key == "document_directory":
+                document_roots.add(layout[key])
+            elif flat:
+                if {name[len(prefix):] for name in selected} not in (set(), {"workspace-writer.journal"}):
+                    raise ValueError("saved flat document journal inventory differs")
+            else:
                 project_keys = {name[len(prefix):].split("/")[0] for name in selected}
         with _root_descriptor(root) as fd:
-            catalog = json.loads(_read_regular(fd, layout["catalog_path"]))
+            raw_catalog = _read_regular(fd, layout["catalog_path"])
+            catalog = (_preserved_gateway_catalog(raw_catalog, layout["gateway_id"])
+                       if gateway_catalog else json.loads(raw_catalog))
         preparation.append({**{key: layout[key] for key in ("original_binding", "catalog_path", "document_directory", "journal_directory")},
+            **({"catalog_gateway_id": layout["gateway_id"]} if gateway_catalog else {}),
             "logical_catalog_sha256": canonical_sha256(catalog), "project_keys": sorted(project_keys),
             "runtime_uid": runtime_uid, "runtime_gid": runtime_gid, "image": runtime_image,
             "output_directory": str(target / f"document-{index}-relocation")})

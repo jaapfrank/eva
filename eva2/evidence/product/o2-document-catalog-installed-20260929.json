@@ -1,0 +1,198 @@
+{
+  "checkedAt": "2026-09-29T20:52:35.113757+00:00",
+  "status": "installed_document_connection_running",
+  "existing": "Installed joint restore has successfully imported same retained core, memory and gateway snapshot; source unchanged.",
+  "added": "Optional preserved ContextForge catalog selection; existing layout builder supports shared documents with distinct flat or empty journals. Exact or nested journal overlap rejected.",
+  "verification": {
+    "focusedTestsPassed": 26,
+    "independentReview": "GO after fixing empty-journal overlap",
+    "jointReadback": {
+      "status": "joint_data_readback_passed",
+      "tables": {
+        "eva_core.tenants": {
+          "expected": 1,
+          "actual": 1
+        },
+        "eva_core.installations": {
+          "expected": 1,
+          "actual": 1
+        },
+        "eva_core.identity_pack_versions": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.policy_pack_versions": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.principals": {
+          "expected": 1,
+          "actual": 1
+        },
+        "eva_core.principal_bindings": {
+          "expected": 1,
+          "actual": 1
+        },
+        "eva_core.relationships": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.conversations": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.messages": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.ingress_requests": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.episodes": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.episode_generations": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.episode_events": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.episode_outcomes": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.commitments": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.consent_grants": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.model_attempts": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.plans": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.plan_steps": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.attention_items": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.connector_bindings": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.capability_manifests": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.capability_activations": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_effects.read_intents": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_effects.read_attempts": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_effects.read_observations": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_effects.effect_intents": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_effects.effect_attempts": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_effects.effect_receipts": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_effects.effect_readbacks": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_effects.deliveries": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_effects.circuit_breakers": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_memory.source_events": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_memory.fact_assertions": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_memory.current_facts": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_memory.erasure_tombstones": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_evidence.evidence_envelopes": {
+          "expected": 1,
+          "actual": 1
+        },
+        "eva_evidence.evidence_links": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_evidence.object_refs": {
+          "expected": 0,
+          "actual": 0
+        },
+        "eva_core.operational_events": {
+          "expected": 170414,
+          "actual": 170414
+        },
+        "eva_core.delegated_work_runs": {
+          "expected": 73,
+          "actual": 73
+        }
+      },
+      "validatedDelegatedWorkRows": 73,
+      "restoreHeld": true,
+      "gatewayByteEqual": true,
+      "identityByteEqual": true,
+      "modelCalls": 0,
+      "limitations": [
+        "Inactive import only; document connections and runtime activation remain open."
+      ]
+    },
+    "installedModules": {
+      "installation_document_restore.py": "0109ffa9b94acee060911609270bf2d061001d4b466a1dbcac64e41d0bbe3507",
+      "installation_document_connection.py": "23d273f4d6ff3bc2be2bd5d04269fda890f18fa3912b21d4394af4b4b710d5b2",
+      "installer_document_components.py": "d3d7654d0aeed19c692cc9305446108e43f71b0d3b0f5ddee86ecd6a0502f524"
+    }
+  },
+  "activeSession": 54532,
+  "modelCalls": 0,
+  "limitations": [
+    "Four document providers are being connected; no result yet.",
+    "Runtime activation and complete O2.3 remain open."
+  ]
+}
