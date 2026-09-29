@@ -1,5 +1,13 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Afgerond — L2: bevestigde correctie over schedulerherstart
+
+**Bestaande werking gecontroleerd:**7 gevallen geslaagd, waaronder nieuwe Python-processen na één gesimuleerde dag. Correctietekst, afhankelijkheden en resultaatoverdracht behouden; één opvolger. Onafhankelijke review akkoord; vijf betrokken bronbestanden gelijk aan geïnstalleerde code. [Bewijs](evidence/product/l2-confirmed-correction-restart-20260929.json). Geen modelcalls, productwijziging of herstart.
+
+**Geen extra herstelbouw:** bevestigde correcties hebben al een duurzame vervolgplanning. De eerdere onzekere opslagstatus belooft geen automatische hervatting. De geannuleerde09:00-documentplanning blijft geannuleerd. Volledige autonome uitvoering blijft technisch onbewezen: de procesproef voert een gecontroleerd workerresultaat in. Dat is niet alleen een open eigenaaracceptatie.
+
+**Volgende, nog niet gestart — T2:** bestaande algemene HA-taak zonder ontwikkelaarhervatting afronden. Eerst de eerdere budgetfout relateren aan de inmiddels gewijzigde taakruimte; geen apparaat-scriptjes. Fysieke speakeracceptatie blijft afzonderlijk.
+
 ## Opgeleverd — L2: vervolgstap na uitval uitvoerbaar houden
 
 **Geïnstalleerd:** bronf1c0775a op gezonde kern/werker; exacte bron, eigenaarroutes en terugweg gecontroleerd. Uitval vóór toelating verbruikt niet langer de uitvoeringstijd van een nog niet gestarte taak. Bestaande pogingen behouden hun oorspronkelijke deadline en identiteit.23 gerichte gevallen geslaagd; onafhankelijke review GO. [Bewijs](evidence/product/l2-delayed-admission-installed-20260929.json). Geen modelcalls; credits onbekend.

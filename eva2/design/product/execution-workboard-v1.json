@@ -1008,6 +1008,14 @@
             "source": "eva2/evidence/product/l2-delayed-admission-installed-20260929.json"
           },
           {
+            "title": "Bestaande projectcorrectie over procesherstart gecontroleerd",
+            "date": "29 september",
+            "state": "tested",
+            "result": "Correctietekst, afhankelijkheid en resultaat behouden; één opvolger vanuit nieuwe schedulerprocessen.7 controles en onafhankelijke beoordeling akkoord.",
+            "remaining": "Gecontroleerde workeruitkomst en gesimuleerde dag; geen volledige autonome L2-oplevering. Geen nieuwe bouw/installatie.",
+            "source": "eva2/evidence/product/l2-confirmed-correction-restart-20260929.json"
+          },
+          {
             "title": "T4 afgerond: taken bedienen en actuele werkerstatus zien",
             "date": "29 september",
             "state": "installed",
@@ -2859,15 +2867,15 @@
           }
         ],
         "now": {
-          "title": "L2: vervolgstap na uitval hersteld",
-          "state": "Geïnstalleerd en live gecontroleerd",
-          "detail": "Nog niet gestarte projectstappen verlopen niet langer tijdens uitval vóór toelating.23 gerichte gevallen geslaagd, onafhankelijke review akkoord; kern/werker gezond en exacte bron gecontroleerd. Geen modelcalls.",
-          "doneWhen": "Deze gerichte correctie is technisch opgeleverd. Volledige zelfstandige meerdaagse projectuitvoering blijft open."
+          "title": "L2: opgeslagen correctie en vervolg blijven behouden",
+          "state": "Gerichte procesproef afgerond",
+          "detail": "Zeven gevallen geslaagd, waaronder nieuwe schedulerprocessen na een gesimuleerde dag. Bestaande geïnstalleerde code behouden; geen nieuwe productfunctie of modelcalls. Onafhankelijke review akkoord.",
+          "doneWhen": "Deze bewijscontrole is afgerond. Volledige autonome projectuitvoering blijft open; geannuleerd werk blijft geannuleerd."
         },
         "next": {
-          "title": "L2: zelfstandige voortzetting afronden",
+          "title": "T2: algemene Home Assistant-taak afronden",
           "state": "Nog niet gestart",
-          "detail": "Resterende grens: onderbreking tussen het bewaren van een correctie en het inplannen van de vervolgstap. Bestaand project/bewijs benutten; afgerond document niet opnieuw uitvoeren."
+          "detail": "T2: bestaande algemene HA-taak zonder ontwikkelaarhervatting afronden; eerdere budgetfout vergelijken met inmiddels gewijzigde taakruimte. Fysieke speakeracceptatie blijft apart."
         },
         "ownerAction": {
           "title": "Telegram: tussenvraag tijdens onderzoek",
@@ -2881,7 +2889,7 @@
           "expected": "Tussenvraag vóór het onderzoeksantwoord; onderzoeksantwoord bij de oorspronkelijke vraag."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T08:16:03.158826+00:00"
+        "reviewedAt": "2026-09-29T08:23:17.196951+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12701,7 +12709,7 @@
           ]
         }
       ],
-      "nextAction": "Resterende grens: onderbreking tussen het bewaren van een correctie en het inplannen van de vervolgstap. Bestaand project/bewijs benutten; afgerond document niet opnieuw uitvoeren.",
+      "nextAction": "T2: bestaande algemene HA-taak zonder ontwikkelaarhervatting afronden; eerdere budgetfout vergelijken met inmiddels gewijzigde taakruimte. Fysieke speakeracceptatie blijft apart.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13575,18 +13583,18 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "nextAction": "Resterende grens: onderbreking tussen het bewaren van een correctie en het inplannen van de vervolgstap. Bestaand project/bewijs benutten; afgerond document niet opnieuw uitvoeren.",
+          "nextAction": "One meaningful autonomous project execution across continuation without coordinator resume remains unproven. This cannot be replaced by controlled scheduler tests or user acceptance alone. Geen herhaling van afgerond document of geannuleerde planning.",
           "owner": "/root",
           "activeWorker": null,
-          "baseCommit": "29f8fadc",
-          "effortNotice": "Eerste gerichte ronde maximaal 20 minuten; geen modelcalls. Alleen aangetoond tekort herstellen, creditkosten onbekend.",
-          "latestEvidence": "eva2/evidence/product/l2-delayed-admission-installed-20260929.json",
+          "baseCommit": "9b7bd6da",
+          "effortNotice": "Maximaal10min beoordeling; geen modelcalls, geen bronbouw zonder aangetoond gebruikstekort.",
+          "latestEvidence": "eva2/evidence/product/l2-confirmed-correction-restart-20260929.json",
           "assignment": {
-            "stage": "delayed_admission_fix_installed",
+            "stage": "confirmed_scheduler_process_continuation_verified",
             "outcome": "Bewaard project zelfstandig voortzetten met bestaande afhankelijkheden en correcties.",
-            "scope": "Existing scheduled_work.py, work_corrections.py, household_work_corrections.py and matching lifecycle tests; no document rerun.",
-            "ownership": "No active executor; bounded correction installed and reviewed.",
-            "doneWhen": "Concrete missing continuation behavior identified and either existing proof linked or smallest demonstrated fix delivered."
+            "scope": "tests/postgres/test_scheduled_work_corrections.py only; installed source unchanged.",
+            "ownership": "No active executor; review complete.",
+            "doneWhen": "Correctie, resultaat en volgende stap behouden, één opvolger, onafhankelijke beoordeling van het bewijs."
           }
         },
         {

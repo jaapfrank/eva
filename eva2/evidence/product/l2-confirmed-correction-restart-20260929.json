@@ -1,0 +1,56 @@
+{
+  "checkedAt": "2026-09-29T08:23:17.196951+00:00",
+  "status": "existing_continuation_verified_across_scheduler_processes",
+  "baseCommit": "9b7bd6da",
+  "scope": "L2 confirmed correction, durable dependency and one-time successor admission after scheduler process replacement.",
+  "checks": {
+    "command": "pytest tests/postgres/test_scheduled_work_corrections.py",
+    "result": "7 passed in33.02s",
+    "newCases": 2,
+    "newCaseDetails": "Direct-work and scheduled predecessors; accepted correction_saved, advance clock1day, fresh Python interpreter per subsequent scheduler run. Only DB DSN/scope/profile/clock configuration is passed, no task/correction/result.",
+    "assertions": [
+      "Original correction text retained under resumed execution.",
+      "Dependent step waits until corrected predecessor result exists.",
+      "Corrected result and successor ID reach dependent task.",
+      "Exactly original, corrected successor and child exist; no duplicate dispatch.",
+      "Explicit stop/cancel cases remain stopped."
+    ],
+    "clock": "simulated elapsed day, not an actual overnight wait",
+    "worker": "Controlled predecessor output recorded by test parent; no real model execution."
+  },
+  "installedSource": {
+    "adapters/postgres/scheduled_work.py": {
+      "matchesRepository": true,
+      "sha256": "18a85a70f2183fbb46455e41220f1a101d5ff8d64a51e4a80f0a723e614bd6be"
+    },
+    "adapters/postgres/work_corrections.py": {
+      "matchesRepository": true,
+      "sha256": "0002ffa9f92387e39007a8843054378da1367d5f0ba9ef58477a203b257e70dd"
+    },
+    "bootstrap/household_work_corrections.py": {
+      "matchesRepository": true,
+      "sha256": "62f237e013eb50357914d233e312b5b8fd474e7b1fafba18fce4fee68b1253df"
+    },
+    "bootstrap/delegated_work_owner_service.py": {
+      "matchesRepository": true,
+      "sha256": "fcf9d373e01a3fe12ff7455c97d2a516cd1779308343a7719fc57d499fb77f52"
+    },
+    "bootstrap/scheduled_admission.py": {
+      "matchesRepository": true,
+      "sha256": "720723959ba23557ba6a9bc22ed6362256aa145ee357c22f25aa9ef7ce64d34c"
+    }
+  },
+  "independentReview": {
+    "reviewer": "/root/platform_research_20260927",
+    "decision": "GO for test scope; complete autonomous L2 not proven",
+    "correction": "Old07:00schedule is cancelled on owner instruction and must never be revived."
+  },
+  "decision": "No transaction/intent refactor: correction_saved is returned only after durable resume scheduling. Earlier unconfirmed outcomes do not promise continuation.",
+  "preservedResult": "Existing household document and final reply remain completed via assisted resume; not rerun.",
+  "remaining": "One meaningful autonomous project execution across continuation without coordinator resume remains unproven. This cannot be replaced by controlled scheduler tests or user acceptance alone.",
+  "productChanges": false,
+  "installationRequired": false,
+  "evaModelCalls": 0,
+  "creditCosts": "unknown",
+  "ownerAccepted": false
+}

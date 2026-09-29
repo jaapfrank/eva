@@ -13,8 +13,9 @@ from tests.postgres.test_private_work_return import setup
 
 
 @pytest.mark.parametrize("via_schedule", [False, True])
-def test_corrected_dependency_waits_and_transfers_result_once(database, monkeypatch, via_schedule):
-    service, turn, clock = setup(database, "l2-correction-dependency-"+str(via_schedule), False)
+@pytest.mark.parametrize("fresh_process", [False, True])
+def test_corrected_dependency_waits_and_transfers_result_once(database, monkeypatch, via_schedule, fresh_process):
+    service, turn, clock = setup(database, "l2-correction-dependency-"+str(via_schedule)+str(fresh_process), False)
     root = Path(__file__).resolve().parents[2] / "src/eva"
     source = "bootstrap/delegated_digital_runner.py"
     service.digital_profile = DelegatedDigitalProfile("model:controlled", "a"*64, "b"*64,
@@ -47,12 +48,18 @@ def test_corrected_dependency_waits_and_transfers_result_once(database, monkeypa
         correction = service.execute("revise_digital", replace(turn, message_id="correct"),
             request_key="correct", revision={"work_id":first, "instruction":"Use the corrected title"})
     assert correction["status"] == "correction_saved"
-    assert ScheduledOwnerWork(service).run_once() == "dispatched"
+    if fresh_process:
+        clock[0] += timedelta(days=1)
+    dispatch = (lambda: _run_scheduler_process(service, clock[0])) if fresh_process else (lambda: ScheduledOwnerWork(service).run_once())
+    assert dispatch() == "dispatched"
     rows = {row["schedule_id"]:row for row in ScheduledOwnerWork(service).list()["schedules"]}
     assert rows[second["schedule_id"]]["state"] == "scheduled"
     successor = rows[correction["schedule"]["schedule_id"]]["work_id"]
     assert successor != first
-    assert ScheduledOwnerWork(service).run_once() == "idle"
+    from eva.adapters.postgres.work_corrections import work_corrections
+    resumed = service.store.load(successor, **service._owner)
+    assert [item["instruction"] for item in work_corrections(database, resumed.spec)] == ["Use the corrected title"]
+    assert dispatch() == "idle"
     clock[0] += timedelta(seconds=1)
     claim = service.store.claim_next(worker_id="worker:corrected-dependency", release=service.digital_profile.release, now=clock[0])
     assert claim.spec.work_id == successor
@@ -63,12 +70,12 @@ def test_corrected_dependency_waits_and_transfers_result_once(database, monkeypa
         output=output, output_sha256=hashlib.sha256(output.encode()).hexdigest(),
         usage=_usage().to_payload(), completed_at=clock[0].strftime("%Y-%m-%dT%H:%M:%SZ"))
     service.store.record_success(call, result, now=clock[0])
-    assert ScheduledOwnerWork(service).run_once() == "dispatched"
+    assert dispatch() == "dispatched"
     rows = {row["schedule_id"]:row for row in ScheduledOwnerWork(service).list()["schedules"]}
     child_id = rows[second["schedule_id"]]["work_id"]
     child = service.store.load(child_id, **service._owner)
     assert output in child.spec.task and successor in child.spec.task
-    assert ScheduledOwnerWork(service).run_once() == "idle"
+    assert dispatch() == "idle"
     assert len(service.store.list_owned(**service._owner, limit=10)) == 3
 
 
@@ -97,3 +104,52 @@ def test_explicit_stop_does_not_restart_project(database, stop_kind):
     child = rows[second["schedule_id"]]
     assert child["state"] == ("cancelled" if stop_kind == "cancel_dependent" else "blocked")
     assert child["work_id"] is None
+
+
+def _run_scheduler_process(service, now):
+    """Reconstruct only configuration in a fresh interpreter; all work comes from DB."""
+    import json
+    import os
+    import subprocess
+    import sys
+    from dataclasses import asdict
+    values = {"dsn": service.store._engine.url.render_as_string(hide_password=False),
+        "tenant_id": str(service.store.scope.tenant_id),
+        "installation_id": str(service.store.scope.installation_id),
+        "owner": str(service.owner_principal_id), "binding": str(service.principal_binding_id),
+        "now": now.isoformat(), "profile": asdict(service.digital_profile)}
+    result = subprocess.run([sys.executable, "-c",
+        "from tests.postgres.test_scheduled_work_corrections import _scheduler_process_main; _scheduler_process_main()"],
+        input=json.dumps(values), capture_output=True, text=True, timeout=20)
+    assert result.returncode == 0, result.stderr
+    result = json.loads(result.stdout)
+    assert result["pid"] != os.getpid()
+    return result["state"]
+
+
+def _scheduler_process_main():
+    import json
+    import os
+    import sys
+    from datetime import datetime
+    from uuid import UUID
+    import sqlalchemy as sa
+    from sqlalchemy.pool import NullPool
+    from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
+    from eva.adapters.postgres.operational_timeline import TimelineScope
+    from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
+    values = json.load(sys.stdin)
+    engine = sa.create_engine(values["dsn"], poolclass=NullPool)
+    try:
+        store = PostgresDelegatedWorkStore(engine,
+            TimelineScope(UUID(values["tenant_id"]), UUID(values["installation_id"])))
+        profile = values["profile"]
+        profile["capability_ids"] = tuple(profile["capability_ids"])
+        profile["execution_source_sha256"] = tuple(tuple(item) for item in profile["execution_source_sha256"])
+        profile["historical_grants"] = tuple(profile["historical_grants"])
+        service = DelegatedWorkOwnerService(store,
+            owner_principal_id=UUID(values["owner"]), principal_binding_id=UUID(values["binding"]),
+            clock=lambda: datetime.fromisoformat(values["now"]), digital_profile=DelegatedDigitalProfile(**profile))
+        print(json.dumps({"pid": os.getpid(), "state": ScheduledOwnerWork(service).run_once()}))
+    finally:
+        engine.dispose()
