@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-09-29T20:44:20.130246+00:00",
+  "scope": "Read-only source catalog inspection while same joint restore remains running",
+  "providers": [
+    {
+      "provider": "eva2-document-workspace-au006",
+      "toolCount": 2,
+      "reconstructedCatalogMatches": true
+    },
+    {
+      "provider": "eva2-document-task-slot-1-20260913",
+      "toolCount": 2,
+      "reconstructedCatalogMatches": true
+    },
+    {
+      "provider": "eva2-document-task-slot-2-20260913",
+      "toolCount": 2,
+      "reconstructedCatalogMatches": true
+    },
+    {
+      "provider": "eva2-document-projects-20260922",
+      "toolCount": 2,
+      "reconstructedCatalogMatches": true
+    }
+  ],
+  "finding": "All four preserved gateway registrations contain the native catalog fields. ContextForge stores absent annotations as an empty object. Reconstructed catalogs exactly match current native tools/list in this observation. Existing relocation expects a standalone provider_catalog JSON; preserved package instead contains consumer catalogs and gateway SQLite. No catalog adapter implemented yet.",
+  "modelCalls": 0,
+  "writesToSourceProviders": 0,
+  "restoreComplete": false
+}

@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T20:37:37.795804+00:00",
+        "checkedAt": "2026-09-29T20:44:49.302802+00:00",
         "deliveries": [
           {
             "title": "Herhaalde herstelpakketcontrole versneld",
@@ -3057,8 +3057,8 @@
           "detail": "Pakket door geïnstalleerde wizard geaccepteerd. Kern, geheugen, gateway en documenten worden geïmporteerd; uitvoering blijft gesloten. Geen nieuwe export of wijziging aan oorspronkelijke Eva."
         },
         "next": {
-          "title": "O2.3: echt gezamenlijk herstel uitvoeren",
-          "detail": "Bestaande herstelroute met huidige runtime en vier documentproviders aansluiten op een geïsoleerd doel. Oude testdoelen bevatten oude versies en zijn niet zonder aanpassing bruikbaar."
+          "title": "O2.3: teruglezen en vier documentproviders aansluiten",
+          "detail": "Na dezelfde lopende import: gegevens vergelijken, oorspronkelijke toolcatalogi uit bewaarde gatewaykopie aansluiten, daarna documentproviders en gecontroleerde vrijgave. Vier catalogi read-only exact teruggevonden; aansluiting nog niet gebouwd."
         },
         "ownerAction": {
           "title": "Welke camera en afvalkalender?",
@@ -3071,7 +3071,7 @@
           "linkLabel": "Antwoord in deze chat"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T20:37:37.795804+00:00"
+        "reviewedAt": "2026-09-29T20:44:49.302802+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14523,10 +14523,11 @@
                 "activeWorkers": [],
                 "endCondition": "Pakket/autoriteit/wizard gebruiken dezelfde v3-kern met bestaande externe stappen; gerichte combinatiecontrole, onafhankelijke review en operatorinstallatie.",
                 "liveExportSession": null,
-                "liveRestoreSession": 54933
+                "liveRestoreSession": 54933,
+                "catalogFinding": "Four native catalogs recoverable exactly from preserved gateway rows; standalone catalog interface still requires connection. Evidence: eva2/evidence/product/o2-preserved-document-catalog-20260929.json"
               },
               "latestEvidence": "eva2/evidence/product/o2-joint-data-restore-20260929.json",
-              "remaining": "Geldig gezamenlijk pakket behouden. Herhaalde controle aantoonbaar versneld en geïnstalleerd. Echt gezamenlijk herstel met vier documentproviders op huidig geïsoleerd doel nog open."
+              "remaining": "Lopende import afwachten en teruglezen. Vier documentcatalogi uit bestaande gatewaykopie aansluiten op herstelroute; daarna providers aansluiten en gecontroleerde vrijgave. Geen nieuwe export nodig voor catalogusgegevens."
             }
           ],
           "latestEvidence": "eva2/evidence/product/o2-consistent-source-collected-20260929.json"
