@@ -1,0 +1,146 @@
+{
+  "checkedAt": "2026-09-29T09:04:07.606091+00:00",
+  "baseCommit": "d8acd379",
+  "scope": "Isolated model follow-ups only; no HA tool dispatch, deployment, or production source change.",
+  "cases": [
+    {
+      "case": "ha",
+      "status": "completed",
+      "elapsedSeconds": 9.623,
+      "usage": {
+        "input": 3228,
+        "output": 164
+      },
+      "events": {
+        "response.created": 1,
+        "response.in_progress": 1,
+        "response.output_item.added": 3,
+        "response.output_item.done": 3,
+        "response.function_call_arguments.delta": 128,
+        "response.function_call_arguments.done": 1,
+        "response.completed": 1
+      },
+      "inputBytes": 13163,
+      "terminal": true,
+      "toolCount": 2
+    },
+    {
+      "case": "catalog",
+      "status": "completed",
+      "elapsedSeconds": 11.605,
+      "usage": {
+        "input": 3501,
+        "output": 170
+      },
+      "events": {
+        "response.created": 1,
+        "response.in_progress": 1,
+        "response.output_item.added": 3,
+        "response.output_item.done": 3,
+        "response.function_call_arguments.delta": 134,
+        "response.function_call_arguments.done": 1,
+        "response.completed": 1
+      },
+      "inputBytes": 25758,
+      "terminal": true,
+      "toolCount": 17
+    },
+    {
+      "case": "instructions",
+      "status": "completed",
+      "elapsedSeconds": 11.556,
+      "usage": {
+        "input": 6230,
+        "output": 170
+      },
+      "events": {
+        "response.created": 1,
+        "response.in_progress": 1,
+        "response.output_item.added": 3,
+        "response.output_item.done": 3,
+        "response.function_call_arguments.delta": 131,
+        "response.function_call_arguments.done": 1,
+        "response.completed": 1
+      },
+      "inputBytes": 36307,
+      "terminal": true,
+      "toolCount": 17
+    },
+    {
+      "case": "strict",
+      "status": "completed",
+      "elapsedSeconds": 10.853,
+      "usage": {
+        "input": 6216,
+        "output": 170
+      },
+      "events": {
+        "response.created": 1,
+        "response.in_progress": 1,
+        "response.output_item.added": 3,
+        "response.output_item.done": 3,
+        "response.function_call_arguments.delta": 131,
+        "response.function_call_arguments.done": 1,
+        "response.completed": 1
+      },
+      "inputBytes": 36672,
+      "terminal": true,
+      "toolCount": 17
+    },
+    {
+      "case": "handler",
+      "status": "completed",
+      "elapsedSeconds": 12.371,
+      "usage": {
+        "input": 6216,
+        "output": 170
+      },
+      "events": {
+        "response.created": 1,
+        "response.in_progress": 1,
+        "response.output_item.added": 3,
+        "response.output_item.done": 3,
+        "response.function_call_arguments.delta": 131,
+        "response.function_call_arguments.done": 1,
+        "response.completed": 1
+      },
+      "inputBytes": 36672,
+      "terminal": true,
+      "toolCount": 17
+    },
+    {
+      "case": "phase",
+      "status": "completed",
+      "elapsedSeconds": 11.251,
+      "usage": {
+        "input": 6216,
+        "output": 170
+      },
+      "events": {
+        "response.created": 1,
+        "response.in_progress": 1,
+        "response.output_item.added": 3,
+        "response.output_item.done": 3,
+        "response.function_call_arguments.delta": 131,
+        "response.function_call_arguments.done": 1,
+        "response.completed": 1
+      },
+      "inputBytes": 36672,
+      "terminal": true,
+      "toolCount": 17
+    }
+  ],
+  "knownUsage": {
+    "input": 31607,
+    "output": 1014,
+    "creditCost": "unknown"
+  },
+  "conclusion": "All six bounded differential cases complete, including the actual installed _run_pydantic_phase. The general schemas, full 17-tool catalog, reconstructed task instructions, strict mode and stream handler do not independently reproduce the failure.",
+  "limits": [
+    "Reconstructed input omits original memory, conversation history, browser/budget context, and live worker process conditions.",
+    "Cannot reconstruct exact historical wire request from saved model journal.",
+    "Successful next tool selection does not complete an HA task."
+  ],
+  "next": "Capture the exact production request and stream event categories at the next bounded real-worker execution. Compare that captured request against the successful isolated phase; no further approximate differential retries.",
+  "independentReview": "platform_research_20260927 inspected namespace/history and strict schemas; no concrete defect or justified schema change found."
+}

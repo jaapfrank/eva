@@ -1,5 +1,18 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## T2 — oorspronkelijke fout nog niet gereproduceerd
+
+Zes gerichte geïsoleerde vervolgstappen slagen in 9,6–12,4 seconden: echte HA-schema’s, volledige catalogus, gereconstrueerde werkinstructies, strict-modus, streamhandler en de geïnstalleerde modeladapter. Geen HA-uitvoering, productwijziging of installatie. Bekend 31.607 invoer-/1.014 uitvoertokens; credits onbekend. Onafhankelijke broninspectie vond geen namespace-/schemafout. [Bewijs](evidence/product/t2-worker-differential-20260929.json).
+
+De echte HA-opdracht is nog niet afgerond. Oorspronkelijke herinneringen, tijdlijn en volledige wire-request zijn niet vastgelegd; deze reconstructies zijn niet historisch identiek. Geen verdere benaderingsproeven. Volgende: exacte request en streamgebeurtenissen bij één gerichte echte werkeruitvoering vastleggen. Geen modeltaak actief; doorbouwen zonder terugzetcyclus.
+
+
+## T2 — gerichte diagnose en aangepaste uitvoering
+
+Eén kleine toolvervolgstap via de geïnstalleerde Astra/medium-provider slaagt in 4,321 seconden; 479 invoer-/16 uitvoertokens, creditkosten onbekend. Geen HA-effecten, bronwijziging of installatie. Dit sluit een algemene onmogelijkheid om toolantwoorden te verwerken uit voor deze proef; grotere HA-opdracht blijft onopgelost. [Bewijs](evidence/product/t2-tool-followup-isolation-20260929.json).
+
+Volgende: grotere opdracht en toolschema’s offline vergelijken; geen identieke HA-herhaling. Geen modeltaak actief. Eigenaarcorrectie: doorbouwen in ontwikkelversie; mislukte proef alleen is geen reden voor rollback. Ook tijdelijke uitval van bestaande Eva2-functies is toegestaan: Eva2 wordt nog niet gebruikt. Behoud gegevens en voorkom onbedoelde echte huisacties. Een diagnose is geen afgeronde functie.
+
 ## T2 — nog niet afgerond; vorige runtime hersteld
 
 **Twee gewone HA-proeven mislukt:** eerste bij120s-modelgrens, tweede na gerichte verlenging binnen bestaande300s-taak. Beide zonder eindresultaat of configuratieschrijfactie; proef-ID404, geen cleanup nodig. Langere fase leverde geen aantoonbaar oplevervoordeel en is teruggezet. Exacte eerdere bron op gezonde kern/werker gecontroleerd; geen actieve modeltaak. [Bewijs](evidence/product/t2-general-ha-failed-20260929.json).

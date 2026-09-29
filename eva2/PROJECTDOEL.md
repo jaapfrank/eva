@@ -1,5 +1,17 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaarcorrectie 29 september 2026 — doorbouwen in de ontwikkelversie
+
+Eva2 is nog in ontwikkeling. Een mislukte functieproef is op zichzelf geen reden
+om de installatie terug te zetten en daarna opnieuw dezelfde installatiecyclus
+te doorlopen. Los fouten gericht op in de ontwikkelversie; bundel installatie en
+controles rond een bruikbare uitkomst. Tijdelijke uitval van bestaande Eva2-functies is tijdens deze ontwikkeling
+toegestaan en is ook geen reden voor rollback: Eva2 wordt nog niet gebruikt.
+Behoud gegevens; bescherm tegen onbedoelde echte huisacties. Een afgesloten proef of bijgewerkt dashboard heet geen afgeronde
+functie. Houd Git en het bestaande werkbord compact actueel, zonder aparte brede
+opleverronde per tussenwijziging.
+
+
 ## Eigenaarbesluit 28 september 2026 — Sol voor contact, Astra voor inhoudelijk werk
 
 Gebruik `gpt-6-sol` met reasoning `none` uitsluitend voor eenvoudige, snelle

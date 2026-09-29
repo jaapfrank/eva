@@ -1,5 +1,17 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Eigenaarcorrectie 29 september 2026 — doorbouwen in de ontwikkelversie
+
+Eva2 is nog in ontwikkeling. Een mislukte functieproef is op zichzelf geen reden
+om de installatie terug te zetten en daarna opnieuw dezelfde installatiecyclus
+te doorlopen. Los fouten gericht op in de ontwikkelversie; bundel installatie en
+controles rond een bruikbare uitkomst. Tijdelijke uitval van bestaande Eva2-functies is tijdens deze ontwikkeling
+toegestaan en is ook geen reden voor rollback: Eva2 wordt nog niet gebruikt.
+Behoud gegevens; bescherm tegen onbedoelde echte huisacties. Een afgesloten proef of bijgewerkt dashboard heet geen afgeronde
+functie. Houd Git en het bestaande werkbord compact actueel, zonder aparte brede
+opleverronde per tussenwijziging.
+
+
 ## Eigenaarcorrectie 28 september 2026 — bestaand resultaat vóór elke bouwopdracht
 
 Voor alle onderdelen geldt: koppel de geplande opdracht aan de bestaande Eva1/Eva2-

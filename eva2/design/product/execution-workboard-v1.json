@@ -2867,15 +2867,15 @@
           }
         ],
         "now": {
-          "title": "T2: algemene HA-taak nog niet afgerond",
-          "state": "Twee proeven mislukt; vorige versie hersteld",
-          "detail": "Alleen inventaris/leescontroles, geen automatisering gemaakt. Langere modelwachttijd hielp niet en is teruggezet. Kern/werker gezond. Bekend37.602in/869uit; twee timeoutrequests en credits onbekend. Geen actieve modeltaak.",
-          "doneWhen": "Zelfstandig een algemene huisopdracht afronden; dat is in deze proeven niet gehaald."
+          "title": "T2: echte HA-uitvoering nog niet afgerond",
+          "state": "Diagnose afgebakend; geen modeltaak actief",
+          "detail": "Zes geïsoleerde vervolgstappen slagen, inclusief de echte modeladapter (9,6–12,4 s). Oorspronkelijk vastlopen niet gereproduceerd. Geen bronwijziging, installatie of huisactie. Bekend 31.607 invoer-/1.014 uitvoertokens; credits onbekend.",
+          "doneWhen": "De echte algemene HA-opdracht zelfstandig afmaken; nog niet gehaald."
         },
         "next": {
-          "title": "T2: vastlopende modelvervolgstap isoleren",
+          "title": "T2: exacte werkerinvoer vastleggen",
           "state": "Nog niet gestart",
-          "detail": "Onderzoek tool-followup/streamafhandeling zonder echte huisacties. Geen derde ongewijzigde proef, hogere quota of apparaat-scriptjes."
+          "detail": "Bij volgende gerichte echte uitvoering exacte request en streamgebeurtenissen vastleggen; de oorspronkelijke request is niet uit de bestaande journal te reconstrueren. Geen verdere benaderingsproeven of terugzetcyclus."
         },
         "ownerAction": {
           "title": "Telegram: tussenvraag tijdens onderzoek",
@@ -2889,7 +2889,7 @@
           "expected": "Tussenvraag vóór het onderzoeksantwoord; onderzoeksantwoord bij de oorspronkelijke vraag."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T08:50:30.080163+00:00"
+        "reviewedAt": "2026-09-29T09:04:07.606091+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13335,7 +13335,7 @@
             "doneWhen": "Create/edit/readback/finalreply without manualresume; inspect and remove only trial object.",
             "ownership": "No active executor; review and rollback completed."
           },
-          "nextAction": "Find why ordinary Astra tool-followup fails to reach a valid terminal response; use bounded isolated evidence without real HA effects, no third unchanged task or quota increase. Physical room/comfort/speaker proof remains separate."
+          "nextAction": "Bij volgende gerichte echte uitvoering exacte request en streamgebeurtenissen vastleggen; de oorspronkelijke request is niet uit de bestaande journal te reconstrueren. Geen verdere benaderingsproeven of terugzetcyclus."
         },
         {
           "id": "T3",

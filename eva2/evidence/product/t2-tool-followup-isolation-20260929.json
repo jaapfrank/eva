@@ -1,0 +1,46 @@
+{
+  "checkedAt": "2026-09-29T08:56:40.187336+00:00",
+  "baseCommit": "d8acd379",
+  "scope": "One synthetic tool follow-up through the installed shared Codex/Pydantic provider, Astra medium, no HA operations or runtime changes.",
+  "result": {
+    "events": {
+      "response.created": 1,
+      "response.in_progress": 1,
+      "response.output_item.added": 1,
+      "response.content_part.added": 1,
+      "response.output_text.delta": 12,
+      "response.output_text.done": 1,
+      "response.content_part.done": 1,
+      "response.output_item.done": 1,
+      "response.completed": 1
+    },
+    "deltaChars": {
+      "response.output_text.delta": 53
+    },
+    "terminal": true,
+    "inputBytes": 1139,
+    "inputTypes": [
+      "message",
+      "function_call",
+      "function_call_output"
+    ],
+    "usage": {
+      "input": 479,
+      "output": 16
+    },
+    "output": "There is 1 automation, and the inventory is complete.",
+    "observation": {
+      "network_started_ms": 692,
+      "headers_received_ms": 1531,
+      "response_status": 200,
+      "received_bytes": 11369,
+      "received_chunks": 21
+    },
+    "status": "completed",
+    "elapsedSeconds": 4.321
+  },
+  "conclusion": "The small tool follow-up completes through the same provider and namespace projection. This contradicts a general inability to process tool returns; it does not locate the failure in the larger HA task.",
+  "next": "Inspect the exact larger task request and tool schema offline, then diagnose only the material difference. No unchanged HA replay or timeout increase.",
+  "creditCost": "unknown",
+  "ownerCorrection": "Fix forward in the development version. Failed trials and temporary loss of existing Eva2 functionality are not rollback reasons: Eva2 is not in use. Preserve data and prevent unintended real household actions."
+}
