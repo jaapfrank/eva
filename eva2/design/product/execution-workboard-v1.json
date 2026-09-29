@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T14:09:42.046472+00:00",
+        "checkedAt": "2026-09-29T14:15:56.982789+00:00",
         "deliveries": [
+          {
+            "title": "Volledig herstelpakket accepteert huidige Eva-kern",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Pakketlezer en bestaande wizard gebruiken v3-kern met externe identiteitscontrole. Bestaande geheugen-/documentstappen behouden. Gerichte combinatiecontroles en onafhankelijke review geslaagd; drie operatormodules geïnstalleerd.",
+            "remaining": "Gezamenlijke herstelactie met echte externe gegevens en aansluitingen nog uitvoeren; O2.3 niet volledig klaar.",
+            "source": "eva2/evidence/product/o2-runtime-package-installed-20260929.json"
+          },
           {
             "title": "Huidige kerngegevens en identiteit herstelbaar via bestaande wizard",
             "date": "29 september",
@@ -2987,14 +2995,14 @@
           }
         ],
         "now": {
-          "title": "O2.3 kernarchief en wizardkoppeling geïnstalleerd",
+          "title": "O2.3 volledige pakketkoppeling geïnstalleerd",
           "state": "Deelresultaat opgeleverd",
-          "detail": "Echte export/herstel geslaagd; geen actieve uitvoerder. Volledig herstelpakket met externe componenten nog af te maken.",
+          "detail": "Pakket en wizard ondersteunen huidige kern; geen actieve uitvoerder. Gezamenlijke herstelactie met echte externe gegevens nog open.",
           "owner": "/root"
         },
         "next": {
-          "title": "O2.3 volledig herstelpakket met huidige kern verbinden",
-          "detail": "Bestaande pakketroute expliciet v3 laten gebruiken, samen met de bestaande geheugen-/documentvoorzieningen. Geen tweede herstelsysteem."
+          "title": "O2.3 echte gezamenlijke herstelactie",
+          "detail": "Huidige kern met bestaand geheugen, gateway en documenten via één bestaande herstelroute terugbrengen en aansluitingen controleren. Eerdere kernproef hergebruiken."
         },
         "ownerAction": {
           "title": "Doorpraten op woonkamerspeaker proberen",
@@ -3008,7 +3016,7 @@
           "linkLabel": "Geef resultaat in deze taak door"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T14:09:42.046472+00:00"
+        "reviewedAt": "2026-09-29T14:15:56.982789+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14393,7 +14401,7 @@
               "doneWhen": "Bestaande herstelwizard werkt voor huidige gegevensversie; geen nieuw herstelsysteem bouwen.",
               "owner": "/root",
               "assignment": {
-                "baseCommit": "6e1ad8f0",
+                "baseCommit": "be08c9f9",
                 "files": [
                   "eva2/tools/portable_runtime_archive.py",
                   "eva2/tools/portable_runtime_restore.py",
@@ -14406,21 +14414,22 @@
                 ],
                 "existing": "Current restore route proven from0009; existing install_schema forward route supports0007",
                 "gap": "Actual retained0007 data has not passed the existing forward migration needed by portable v2",
-                "outcome": "Isolated copy of actual current0007 data upgraded through existing function; compare original table contents before/after",
-                "estimate": "One bounded current-runtime archive/restore addition reusing record and identity validators; focused cases, independent review, then one actual export if admitted; no model calls planned; credits unknown",
+                "outcome": "Volledig bestaand herstelpakket kan de huidige v3-kern gebruiken met externe identiteitstrust.",
+                "estimate": "Eén begrensde koppeling, bestaande echte kernproef hergebruiken; geen herhaalde volledige export, geen modelcalls, credits onbekend.",
                 "finish": "Current data preserved through existing0007-to0009 route or concrete defect retained; no production migration or restore-completion claim",
-                "stage": "core_runtime_archive_installed",
+                "stage": "full_package_runtime_core_installed",
                 "workers": {
                   "/root/architecture_audit": "new writer/reader + own tests only",
                   "/root": "existing restore seam, authority contract, board, integration"
                 },
-                "activeWorkers": []
+                "activeWorkers": [],
+                "endCondition": "Pakket/autoriteit/wizard gebruiken dezelfde v3-kern met bestaande externe stappen; gerichte combinatiecontrole, onafhankelijke review en operatorinstallatie."
               },
-              "latestEvidence": "eva2/evidence/product/o2-runtime-archive-installed-20260929.json",
-              "remaining": "Volledig herstelpakket en bestaande externe componenten met v3-kern aansluiten; kernexport/-herstel en wizardondersteuning geïnstalleerd."
+              "latestEvidence": "eva2/evidence/product/o2-runtime-package-installed-20260929.json",
+              "remaining": "Eén gezamenlijke herstelactie met echte externe geheugen-/gateway-/documentgegevens en aansluitingen nog open."
             }
           ],
-          "latestEvidence": "eva2/evidence/product/o2-runtime-archive-installed-20260929.json"
+          "latestEvidence": "eva2/evidence/product/o2-runtime-package-installed-20260929.json"
         },
         {
           "id": "P1",

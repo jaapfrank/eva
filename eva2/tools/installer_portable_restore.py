@@ -148,7 +148,7 @@ class InstallerPortableRestore:
             header = _load_canonical_object(_read_regular(descriptor, "archive.json"), label="archive manifest")
         if header.get("contract") == "EvaInstallationRecovery/v1":
             from tools.installation_recovery_package import read_installation_package
-            return read_installation_package(directory)
+            return read_installation_package(directory, identity_trust=self.identity_trust)
         if header.get("contract") == "EvaPortableArchive/v2":
             from tools.portable_v2_reader import read_current_archive
             return read_current_archive(directory)
@@ -352,10 +352,19 @@ class InstallerPortableRestore:
                 except Exception:
                     pass
             raise
-        result = restore_current_archive(connection, directory / "core",
-            authority_reader=self.authority_reader,
-            expected_runtime_identity=self.runtime_identity,
-            object_store_root=self.object_store_root, key_resolver=self.key_resolver)
+        if package["core_archive"]["manifest"]["contract"] == "EvaPortableArchive/v3":
+            if self.identity_trust is None or self.identity_destination is None:
+                raise ValueError("runtime package needs configured identity trust and destination")
+            from tools.portable_runtime_restore import restore_runtime_archive
+            result = restore_runtime_archive(connection, directory / "core",
+                identity_trust=self.identity_trust, identity_destination=self.identity_destination,
+                authority_reader=self.authority_reader, expected_runtime_identity=self.runtime_identity,
+                object_store_root=self.object_store_root, key_resolver=self.key_resolver)
+        else:
+            result = restore_current_archive(connection, directory / "core",
+                authority_reader=self.authority_reader,
+                expected_runtime_identity=self.runtime_identity,
+                object_store_root=self.object_store_root, key_resolver=self.key_resolver)
         # The inner restore remains independently authorized. Only its newly
         # created held row is bound to the outer package, in this transaction.
         changed = connection.execute(sa.text("""
@@ -502,7 +511,8 @@ class InstallerPortableRestore:
                 "De kern is hersteld en de bestanden staan inactief klaar. Eva blijft uit. Importeer eerst geheugen- en gatewaydatabases, koppel en controleer documentproviders en laat de operator daarna afzonderlijk vrijgeven.")}
 
     def execute(self, confirmation: str) -> dict[str, object]:
-        with self._lock:
+        from tools.installation_recovery_package import installation_identity_trust
+        with self._lock, installation_identity_trust(self.identity_trust):
             pending = self._pending
             if pending is None or not secrets.compare_digest(confirmation, pending[1]):
                 raise ValueError("restore confirmation is invalid")

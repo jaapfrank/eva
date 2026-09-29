@@ -8,11 +8,17 @@ De afzonderlijke taken staan in de bestaande dashboardtab **Werk & volgorde → 
 
 Werkregel: één bruikbaar resultaat afmaken; alleen passende gerichte controle, review en installatie bundelen. Een mislukte proef gericht repareren in de ontwikkelversie; niet telkens terugzetten of opnieuw installeren. Nieuwe wensen vergroten de bestaande eindvoorwaarden niet stilzwijgend.
 
+## Laatste oplevering — O2.3 volledige pakketkoppeling geïnstalleerd
+
+Bestaand volledig herstelpakket accepteert nu huidige v3-kern en externe identiteitstrust. Dezelfde geheugen-/documentcallbacks blijven in gebruik. Achttien gerichte controles geslaagd, onafhankelijke review GO. Drie operatormodules geïnstalleerd; vier pakket-/wizardgevallen op die installatie geslaagd en moduleherkomst bevestigd. Geen nieuwe grote export, Eva-modelcall, runtimeherstart of rollback; credits onbekend. [Bewijs](evidence/product/o2-runtime-package-installed-20260929.json).
+
+**Nog open binnen O2.3:** één gezamenlijke herstelactie met echte externe geheugen-, gateway- en documentgegevens; aansluitingen en bestaande vrijgaveroute controleren. Pakketbediening met synthetische externe bytes is geen bewijs van die volledige actie. Geen actieve uitvoerder; eerstvolgende actie nog niet gestart.
+
 ## Laatste oplevering — O2.3 kernarchief en wizardkoppeling geïnstalleerd
 
 Werkelijke gegevenskopie succesvol geëxporteerd en naar lege afgesloten database hersteld: **170.174 records**, **41 tabeltellingen gelijk**, **69.923 checkpoints** opgebouwd; ondertekende identiteit byte voor byte behouden. Export 457,631 s; herstel 410,588 s. Tien gerichte archiefgevallen en onafhankelijke review GO. Zes modules in bestaand operatorpakket geïnstalleerd, vier gerichte wizardgevallen op dat pakket geslaagd; herkomst gecontroleerd. Geen runtimeherstart, rollback of Eva-modelcall; credits onbekend. [Bewijs](evidence/product/o2-runtime-archive-installed-20260929.json).
 
-**O2.3 blijft open:** volledige herstelpakketroute gebruikt nog v2-kern. Eerstvolgende werk is v3 aansluiten op die bestaande route met geheugen en documenten. Niet-lege evidence-objectopslag wordt expliciet geweigerd; huidige bron bevat geen dergelijke records. Geen volledige herstel- of eigenaaracceptatieclaim. Geen actieve uitvoerder; volgende aansluiting nog niet gestart.
+**O2.3 blijft open:** volledige herstelpakketroute gebruikt nog v2-kern. Eerstvolgende werk is v3 aansluiten op die bestaande route met geheugen en documenten. Niet-lege evidence-objectopslag wordt expliciet geweigerd; huidige bron bevat geen dergelijke records. Geen volledige herstel- of eigenaaracceptatieclaim. Deze aansluiting is inmiddels geïnstalleerd; zie de nieuwere oplevering hierboven.
 
 
 ## Actueel — O2.3 actuele export faalt op oude identiteitseis

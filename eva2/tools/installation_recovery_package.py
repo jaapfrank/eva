@@ -9,6 +9,8 @@ does not chmod or restore any component.
 from __future__ import annotations
 
 import hashlib
+from contextlib import contextmanager
+from contextvars import ContextVar
 import os
 from pathlib import Path
 import re
@@ -21,6 +23,27 @@ from tools.read_eva_portable_archive import (
 )
 from tools.portable_v2_reader import read_current_archive
 from tools.portable_transport import MAX_ARCHIVE_BYTES, MAX_ARCHIVE_FILES
+
+# Scoped by the synchronous operator workflow; never loaded from package content.
+_identity_trust = ContextVar("installation_recovery_identity_trust", default=None)
+
+
+@contextmanager
+def installation_identity_trust(trust):
+    """Bind operator trust to this call context and restore it even on failure.
+
+    Synchronous component callbacks inherit this binding. A separate thread must
+    explicitly receive trust; callers must not spawn detached work in this scope.
+    """
+    from eva.application.identity_verifier import IdentityPackTrustBinding
+    if trust is not None and not isinstance(trust, IdentityPackTrustBinding):
+        raise ValueError("installation identity trust binding is invalid")
+    token = _identity_trust.set(trust)
+    try:
+        yield
+    finally:
+        _identity_trust.reset(token)
+
 
 CONTRACT = "EvaInstallationRecovery/v1"
 IDENTITY_FIELDS = ("created_at", "source_tenant_id", "source_installation_id", "runtime_identity")
@@ -111,13 +134,19 @@ def _entries(fd, names, roles):
     return result
 
 
-def _core(fd):
+def _core(fd, identity_trust=None):
     # The parent descriptor stays held. The existing validator refuses links in
     # the final core directory and validates all nested canonical/current files.
-    return read_current_archive(Path(f"/proc/self/fd/{fd}/core"))
+    directory = Path(f"/proc/self/fd/{fd}/core")
+    header = _load_canonical_object(_read_regular(fd, "core/archive.json"), label="core manifest")
+    if header.get("contract") == "EvaPortableArchive/v3":
+        from tools.portable_runtime_archive import read_runtime_archive
+        trust = identity_trust if identity_trust is not None else _identity_trust.get()
+        return read_runtime_archive(directory, identity_trust=trust)
+    return read_current_archive(directory)
 
 
-def _validate(fd, raw):
+def _validate(fd, raw, identity_trust=None):
     manifest = _load_canonical_object(raw, label="installation recovery manifest")
     if (set(manifest) != FIELDS or manifest["contract"] != CONTRACT
             or type(manifest["schema_version"]) is not int or manifest["schema_version"] != 1
@@ -140,7 +169,7 @@ def _validate(fd, raw):
         roles[name] = role
     if _entries(fd, set(entries), roles) != entries:
         raise ValueError("installation component bytes differ")
-    core = _core(fd)
+    core = _core(fd, identity_trust)
     if (manifest["core_archive_sha256"] != core["archive_sha256"]
             or any(manifest[key] != core["manifest"][key] for key in IDENTITY_FIELDS)):
         raise ValueError("installation and core archive provenance differ")
@@ -153,14 +182,14 @@ def _validate(fd, raw):
             "core_archive": core}
 
 
-def read_installation_package(root: Path):
+def read_installation_package(root: Path, *, identity_trust=None):
     """Validate an exact inventory; do not infer authorization or quiescence."""
     with _root_descriptor(root) as fd:
         _private_root(fd)
-        return _validate(fd, _read_regular(fd, "archive.json", maximum=16777216))
+        return _validate(fd, _read_regular(fd, "archive.json", maximum=16777216), identity_trust)
 
 
-def write_installation_package(root: Path, *, file_roles, source_components, key_references):
+def write_installation_package(root: Path, *, file_roles, source_components, key_references, identity_trust=None):
     """Seal already staged components with a new manifest, without overwriting.
 
     file_roles maps each documents/ or config/ file to one role in ROLES.
@@ -177,7 +206,7 @@ def write_installation_package(root: Path, *, file_roles, source_components, key
         if not isinstance(file_roles, dict) or set(file_roles) != additional:
             raise ValueError("installation file roles must cover all additional files")
         entries = _entries(fd, names, file_roles)
-        core = _core(fd)
+        core = _core(fd, identity_trust)
         if _entries(fd, names, file_roles) != entries or _files(fd) != names:
             raise ValueError("installation components changed during preparation")
         manifest = {"contract": CONTRACT, "schema_version": 1, "archive_id": str(uuid4()),
@@ -194,4 +223,4 @@ def write_installation_package(root: Path, *, file_roles, source_components, key
             stream.flush()
             os.fsync(stream.fileno())
         os.fsync(fd)
-        return _validate(fd, raw)
+        return _validate(fd, raw, identity_trust)

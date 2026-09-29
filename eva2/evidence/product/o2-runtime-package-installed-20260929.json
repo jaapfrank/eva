@@ -1,0 +1,33 @@
+{
+  "date": "2026-09-29T14:15:56.982789+00:00",
+  "task": "O2.3",
+  "sourceBase": "be08c9f9",
+  "status": "current_runtime_core_in_full_package_route_installed",
+  "existing": "Existing package inventory/materializer, component callbacks, restore authorization and wizard confirmation reused.",
+  "change": "Package core dispatch accepts v3 with explicit external identity trust. Trusted synchronous execution scope propagates identity authority to unchanged external component readers; nested, concurrent and failed scopes reset independently. Inner and outer manifests remain separately authorized.",
+  "verification": {
+    "focused_cases": 18,
+    "independent_review": "GO by independent source reviewer",
+    "installed_package_cases": 4,
+    "installed_module_origin_verified": true,
+    "limit": "Synthetic external component bytes and mocked DB dispatch for package wiring; prior real v3 core export/restore proof reused, not rerun. No live external database import or complete recovery claimed."
+  },
+  "installation": {
+    "modules": 3,
+    "target": "existing installer-document-write-20260924 operator package",
+    "previous_files_retained": true,
+    "runtime_restarted": false
+  },
+  "remaining": [
+    "One full coordinated recovery with actual external memory, gateway and document data using current runtime identity.",
+    "Verify external component attachment and controlled activation through existing route before O2.3 technical closure.",
+    "Real family acceptance remains separate."
+  ],
+  "consumption": {
+    "eva_model_calls": 0,
+    "new_full_exports": 0,
+    "credits": "unknown"
+  },
+  "previousCoreEvidence": "eva2/evidence/product/o2-runtime-archive-installed-20260929.json",
+  "private_install_receipt": "/home/administrator/project/.eva2-artifacts/o2-current-schema-20260929/package-operator-install.private.json"
+}

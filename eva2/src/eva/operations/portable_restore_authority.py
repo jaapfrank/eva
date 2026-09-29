@@ -535,7 +535,7 @@ def authorize_installation_recovery(*, package_manifest_raw: bytes,
     package = _canonical_object(package_manifest_raw, label="installation package")
     core = _canonical_object(core_manifest_raw, label="core manifest")
     if ((package.get("contract"), package.get("schema_version")) != ("EvaInstallationRecovery/v1", 1)
-            or (core.get("contract"), core.get("schema_version")) != ("EvaPortableArchive/v2", 2)):
+            or (core.get("contract"), core.get("schema_version")) not in {("EvaPortableArchive/v2", 2), ("EvaPortableArchive/v3", 3)}):
         raise PortableRestoreAuthorityError("installation recovery contract differs")
     digest = hashlib.sha256(core_manifest_raw).hexdigest()
     files = package.get("files")
