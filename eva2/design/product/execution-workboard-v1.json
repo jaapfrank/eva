@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "L2.2 afgerond: zelfstandig projectresultaat terug op website",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Na procesherstart zelfstandig de gewijzigde opdracht afgerond. Concept behouden, één einddocument en één terugmelding. Opgehoopte meldingen worden na bevestiging sneller opgehaald.",
+            "remaining": "Heel L2 blijft open voor werkelijk meerdaags gebruik en de T3-afhankelijkheid; eigenaaracceptatie apart.",
+            "source": "eva2/evidence/product/l2-autonomous-weekend-20260929.json"
+          },
+          {
             "title": "Gewone installerstart zonder herstelbestand aangesloten",
             "date": "29 september",
             "state": "installed",
@@ -2899,15 +2907,15 @@
           }
         ],
         "now": {
-          "title": "C1.2: wacht op echte Telegram-overlapproef",
-          "state": "Gebruikersproef open",
-          "detail": "Twaalfseconden-begroeting was vóór bestaande correctie; huidige code bevestigd. Geen bewezen nieuw concurrencydefect.",
-          "owner": "Jaap voor de proef; Codex voor logcontrole"
+          "title": "L2.2 afgerond: projectresultaat één keer terug",
+          "state": "Geïnstalleerd en onafhankelijk gecontroleerd",
+          "detail": "Concept behouden; na herstart en correctie zelfstandig einddocument gemaakt en één keer op website teruggebracht. Werkelijk meerdaags gebruik blijft open.",
+          "owner": "Geen actieve uitvoerder"
         },
         "next": {
-          "title": "L2: zelfstandig projectvervolg",
+          "title": "T2.1: resterende HA-timeout",
           "state": "Nog niet gestart",
-          "detail": "Bestaande scheduler en opgeslagen projectresultaten gebruiken; concrete resterende afhankelijkheid bepalen. Telegramproef blokkeert dit niet."
+          "detail": "Eerdere timeout vergelijken met de later geslaagde algemene HA-uitvoering; alleen een aangetoond resterend tekort oplossen."
         },
         "ownerAction": {
           "title": "Twee Telegram-berichten direct na elkaar",
@@ -2921,7 +2929,7 @@
           "linkLabel": "Gebruik je bestaande Telegram-gesprek met Eva"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T10:49:09.405499+00:00"
+        "reviewedAt": "2026-09-29T11:12:52.855058+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12741,7 +12749,7 @@
           ]
         }
       ],
-      "nextAction": "L2: continue existing autonomous project route from retained results; inspect concrete existing dependency without rebuilding scheduler. C1.2 awaits actual owner pair; no duplicate concurrency tests.",
+      "nextAction": "T2.1: inspect the concrete earlier HA timeout and use the later successful general HA execution to isolate any remaining gap; no repeat broad probe or reinstall cycle.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13883,36 +13891,49 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "nextAction": "One meaningful autonomous project execution across continuation without coordinator resume remains unproven. This cannot be replaced by controlled scheduler tests or user acceptance alone. Geen herhaling van afgerond document of geannuleerde planning.",
+          "nextAction": "Retain completed autonomous continuation and one-time return; actual multi-day use and T3-dependent breadth remain open. Do not repeat the completed six-minute case.",
           "owner": "/root",
           "activeWorker": null,
-          "baseCommit": "9b7bd6da",
+          "baseCommit": "7eb72025",
           "effortNotice": "Maximaal10min beoordeling; geen modelcalls, geen bronbouw zonder aangetoond gebruikstekort.",
-          "latestEvidence": "eva2/evidence/product/l2-confirmed-correction-restart-20260929.json",
+          "latestEvidence": "eva2/evidence/product/l2-autonomous-weekend-20260929.json",
           "assignment": {
-            "stage": "confirmed_scheduler_process_continuation_verified",
-            "outcome": "Bewaard project zelfstandig voortzetten met bestaande afhankelijkheden en correcties.",
-            "scope": "tests/postgres/test_scheduled_work_corrections.py only; installed source unchanged.",
-            "ownership": "No active executor; review complete.",
-            "doneWhen": "Correctie, resultaat en volgende stap behouden, één opvolger, onafhankelijke beoordeling van het bewijs."
+            "outcome": "Een nieuw klein documentproject na procesonderbreking zelfstandig afronden met bewaarde correctie.",
+            "scope": "Existing project route plus bounded dashboard result-queue fix: adapters/api/dashboard_work_return_client.py and tests/api/test_dashboard_work_return_client.py.",
+            "doneWhen": "One autonomous successor, preserved draft, correct final document and no manual resume.",
+            "estimate": "Original10–20min,2 conversation requests plus1 rejected nonmodel control; no automatic retry. Partial actual tokens recorded; credits unknown.",
+            "stage": "bounded_delivery_completed",
+            "actualUsage": {
+              "reportedInputTokens": 176825,
+              "reportedOutputTokens": 4351,
+              "reportedAttemptsOrCompletedResponses": 20,
+              "reportedToolCalls": 16,
+              "measurement": "partial; combines foreground measured usage with two partial worker records, not all memory/infrastructure calls",
+              "creditCost": null
+            }
           },
           "dashboardComponent": "projects",
           "remainingTasks": [
             {
               "id": "L2.1",
               "title": "Project na onderbreking zelfstandig vervolgen",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "praktijk",
               "doneWhen": "Bewaard resultaat en correctie leiden zonder ontwikkelaarhervatting tot de volgende uitvoerstap.",
-              "owner": "Codex"
+              "owner": "Codex",
+              "latestEvidence": "eva2/evidence/product/l2-autonomous-weekend-20260929.json",
+              "remaining": "Zelfstandig vervolg na herstart en correctie aangetoond; daadwerkelijk meerdaags gebruik binnen L2 nog open. Geen nieuwe scheduler nodig."
             },
             {
               "id": "L2.2",
               "title": "Eindresultaat één keer terugmelden",
-              "status": "planned",
+              "status": "completed",
               "kind": "praktijk",
               "doneWhen": "Vervolgproject levert eindresultaat zonder dubbele acties of dubbele terugmelding.",
-              "owner": "Codex"
+              "owner": "Codex",
+              "latestEvidence": "eva2/evidence/product/l2-autonomous-weekend-20260929.json",
+              "completedAt": "2026-09-29T11:12:52.855058+00:00",
+              "result": "Autonoom vervolg na procesherstart en correctie: één definitief document en één terugmelding; websiteverbetering geïnstalleerd, onafhankelijke review GO. Eigenaaracceptatie open."
             }
           ]
         },

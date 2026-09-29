@@ -1,5 +1,15 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Laatst afgerond — L2.2 projectresultaat één keer terug
+
+Na procesherstart en een gewone gesprekscorrectie heeft Eva zelfstandig het definitieve zondagplan gemaakt: drie activiteiten, maximaal €10. Het oorspronkelijke concept bleef bytegelijk; één opslag en één gekoppelde terugmelding op de website. De correctie voor achterstallige websitemeldingen is geïnstalleerd en onafhankelijk beoordeeld. [Resultaat](evidence/product/l2-weekend-resultaat-20260929.md) · [Bewijs](evidence/product/l2-autonomous-weekend-20260929.json).
+
+L2.2 afgerond; 43 van de oorspronkelijke 44 kleine taken blijven open. Zes van 24 hoofdopdrachten afgerond; hele L2 blijft open voor daadwerkelijk meerdaags gebruik en T3. Eigenaaracceptatie niet aangenomen. Deels gemeten:176.825 invoer-/4.351 uitvoertokens; creditkosten onbekend. Geen herhaling van deze geslaagde proef.
+
+**Eerstvolgende, nog niet gestart:** T2.1 concrete eerdere HA-timeout vergelijken met de later geslaagde algemene uitvoering; alleen een resterend aangetoond tekort oplossen. Geen actieve uitvoerders.
+
+## Eerdere voortgang (historisch; onderstaande volgende-stappen zijn vervangen)
+
 ## C1.2 — actuele kanaaldiagnose klaar; echte proef open
 
 Begroeting van28september16:38UTC duurde12.209ms: twee modelpogingen, één onnodige `manage_connected_services`, eindproviderAstra;12.742in/65uit deels gemeten. Dit was vóór de bestaande correctie van17:00UTC. Huidige kern/werker bevatten dezelfde modeladapter als de bron. Geen nieuwe ombouw, modelcall of acceptatie. [Bewijs](evidence/product/c1-telegram-current-20260929.json).

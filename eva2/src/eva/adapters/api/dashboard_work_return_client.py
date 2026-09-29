@@ -60,6 +60,7 @@ DASHBOARD_WORK_RETURN_CLIENT_JS = r"""
     async poll() {
       if(this.running || this.closed || !this.visible()) return;
       this.cancel(this.timer); this.running=true; const generation=this.generation;
+      let nextPollDelay=5000;
       const controller=new AbortController(); this.controller=controller;
       const timeout=this.schedule(()=>controller.abort(),10000);
       const current=()=>!this.closed && this.visible() && generation===this.generation;
@@ -85,12 +86,15 @@ DASHBOARD_WORK_RETURN_CLIENT_JS = r"""
           this.display(result);
           const ack=await this.request('ack',{work_id:result.work_id,operation_id:result.operation_id},controller.signal);
           if(ack.status!=='acknowledged') throw new Error('return acknowledgement');
+          // Drain queued results without charging the idle delay per result.
+          // A failed or unacknowledged delivery retains the normal backoff.
+          if(current()) nextPollDelay=250;
         }
       } catch(error) {
         if(current()) { this.clear(); this.seen.clear(); this.needsHistory=true; this.failed(); }
       } finally {
         this.cancel(timeout); this.running=false;
-        if(!this.closed && this.visible()) this.timer=this.schedule(()=>this.poll(),5000);
+        if(!this.closed && this.visible()) this.timer=this.schedule(()=>this.poll(),nextPollDelay);
       }
     }
   }

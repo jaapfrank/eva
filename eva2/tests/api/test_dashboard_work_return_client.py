@@ -19,11 +19,11 @@ const result={work_id:'work-one',operation_id:'a'.repeat(64),output,
  output_sha256:createHash('sha256').update(output).digest('hex')};
 const reply=data=>({ok:true,json:async()=>({contract:'EvaPrivateWorkReturn/v1',...data})});
 function setup(fetch){
- const rendered=[],observed=[],failures=[],timers=new Map();let id=0,visible=true,clears=0;
+ const rendered=[],observed=[],failures=[],timers=new Map(),delays=new Map();let id=0,visible=true,clears=0;
  const client=new EvaWorkReturns({fetch,visible:()=>visible,render:r=>{rendered.push(r);observed.push(r)},
  clear:()=>{clears++;rendered.length=0},failed:()=>failures.push(true),digest,
- schedule:fn=>{timers.set(++id,fn);return id},cancel:id=>timers.delete(id)});
- return {client,rendered,observed,failures,timers,setVisible:v=>visible=v,clears:()=>clears};
+ schedule:(fn,delay)=>{timers.set(++id,fn);delays.set(id,delay);return id},cancel:id=>{timers.delete(id);delays.delete(id)}});
+ return {client,rendered,observed,failures,timers,delays,setVisible:v=>visible=v,clears:()=>clears};
 }
 const historyReply=results=>reply({status:'history',results});
 const emptyHistory=fetch=>(url,options)=>url.endsWith('/history')?historyReply([]):fetch(url,options);
@@ -38,7 +38,10 @@ const emptyHistory=fetch=>(url,options)=>url.endsWith('/history')?historyReply([
  };
  const count=operation=>calls.filter(c=>c[0].endsWith('/'+operation)).length;
  const a=setup(server);
- await a.client.poll();await a.client.poll();
+ await a.client.poll();
+ assert.deepEqual([...a.delays.values()],[250]);
+ await a.client.poll();
+ assert.deepEqual([...a.delays.values()],[5000]);
  assert.equal(a.rendered.length,1);assert.equal(a.rendered[0].output,output);
  assert.equal(count('ack'),1);assert.equal(count('history'),1);
  assert.ok(calls.filter(c=>!c[0].endsWith('/ack')).every(c=>Object.keys(c[1]).length===0));
@@ -95,9 +98,11 @@ const emptyHistory=fetch=>(url,options)=>url.endsWith('/history')?historyReply([
  let n=0;
  const d=setup(emptyHistory(async()=>{n++;return n===1?reply({status:'claimed',result}):{ok:false};}));
  await d.client.poll();assert.equal(d.rendered.length,0);assert.equal(d.failures.length,1);
+ assert.deepEqual([...d.delays.values()],[5000], 'failed acknowledgement must not accelerate polling');
 
  const e=setup(emptyHistory(async()=>reply({status:'idle',result:null})));
  await e.client.poll();assert.equal(e.rendered.length,0);assert.equal(e.failures.length,0);
+ assert.deepEqual([...e.delays.values()],[5000]);
  // Reject the entire history before rendering any part, with bounded result sizes.
  for(const data of [
   {status:'claimed',results:[result]},

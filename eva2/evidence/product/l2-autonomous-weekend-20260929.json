@@ -1,0 +1,122 @@
+{
+  "checkedAt": "2026-09-29T11:05:49.243079+00:00",
+  "baseCommit": "7eb72025",
+  "status": "installed_real_autonomous_continuation_and_private_return",
+  "firstWorkId": "work:eva-chat:ecf1405f-d294-5122-aaa0-0f2cabfa2c3e",
+  "finalWorkId": "work:eva-chat:57ffd82f-7771-5999-8a0c-a77fed015a83",
+  "source": "Existing conversation, dependency scheduler, document tools and private website return; no new planner.",
+  "ownerRequests": {
+    "conversation": 2,
+    "rejectedDirectControl": 1,
+    "amendment": "Original two-request budget increased by one nonmodel control rejection before the second conversation call. Direct revise is for active work; ordinary conversation cancelled/replaced the future step. No manual resume/dispatch."
+  },
+  "restart": {
+    "before": {
+      "startedAt": "2026-09-29T09:25:57.431814719Z",
+      "image": "sha256:106194c0054781828521dc9c091c7b6cd78cde8cd552fe10ffca09ec80f6cc61"
+    },
+    "after": {
+      "startedAt": "2026-09-29T10:54:55.918130925Z",
+      "image": "sha256:106194c0054781828521dc9c091c7b6cd78cde8cd552fe10ffca09ec80f6cc61",
+      "running": true
+    },
+    "activeWorkBeforeRestart": 0
+  },
+  "schedule": {
+    "originalCancelled": true,
+    "correctedSuccessorsObserved": 1,
+    "dependency": "work:eva-chat:ecf1405f-d294-5122-aaa0-0f2cabfa2c3e",
+    "evidence": "schedule-current.private.json and schedule-after-due.private.json in private artifact directory"
+  },
+  "documents": {
+    "originalSha256": "ca40cff3c9783de4761cd14e7d1148488f3260329bca95de1de1c43303d34fcb",
+    "originalUnchanged": true,
+    "finalSha256": "7e37a8b3605a0e4ba8805a94d0fbe4805121ff196ba57a767852bb2f6da2edb8",
+    "finalWords": 151,
+    "verifiedContent": "Sunday, three activities, 3+5+2=10 euro budget ceilings, under180 words; no claim of verified shopping prices.",
+    "resultFile": "eva2/evidence/product/l2-weekend-resultaat-20260929.md"
+  },
+  "writeEvents": [
+    {
+      "at": "2026-09-29T10:55:48+00:00",
+      "type": "TOOL_REQUEST_ADMITTED",
+      "thread": "tool:external-tool:bce659fa1cd2fcc64558a91bf3a6e4d1"
+    },
+    {
+      "at": "2026-09-29T10:58:29+00:00",
+      "type": "TOOL_PREPARED",
+      "thread": "tool:external-tool:bce659fa1cd2fcc64558a91bf3a6e4d1"
+    },
+    {
+      "at": "2026-09-29T10:58:29+00:00",
+      "type": "TOOL_EXECUTED",
+      "thread": "tool:external-tool:bce659fa1cd2fcc64558a91bf3a6e4d1"
+    },
+    {
+      "at": "2026-09-29T10:58:29+00:00",
+      "type": "STATE_VERIFIED",
+      "thread": "tool:external-tool:bce659fa1cd2fcc64558a91bf3a6e4d1"
+    }
+  ],
+  "returnEvents": [
+    {
+      "at": "2026-09-29T11:02:16+00:00",
+      "type": "PRIVATE_WORK_RETURN_CLAIMED"
+    },
+    {
+      "at": "2026-09-29T11:02:16+00:00",
+      "type": "PRIVATE_WORK_RETURN_ACKNOWLEDGED"
+    }
+  ],
+  "ui": {
+    "route": "http://localhost:44711/internal/v1/dashboard/conversation",
+    "observed": "Final Sunday result visibly rendered in real in-app browser; after reload restored exactly once from history. Initial immediate post-reload snapshot preceded async history; subsequent loaded snapshot confirmed one.",
+    "copiesAfterHistoryLoaded": 1,
+    "ownerAccepted": false
+  },
+  "returnClientChange": {
+    "gap": "Each old acknowledged result delayed next item by5s.",
+    "change": "Poll after250ms only following a valid acknowledged result in current visible session; idle/error5s and request timeout10s unchanged.",
+    "test": "pytest -q tests/api/test_dashboard_work_return_client.py:1 passed in1.22s, executable Node lifecycle/integrity/ack and delay assertions.",
+    "installation": {
+      "image": "sha256:07786f246fae2eea0512eaa5c0d99bd9df5e4190cf95ef1c7df8848b02021c96",
+      "health": "healthy",
+      "sourceMatches": true,
+      "moduleSha256": "0ffeb9365d0abf902f2dbdc58f6a10cf318c461a4511ded305822f6495cac6c8",
+      "httpStatus": 200,
+      "servedFastDrain": true,
+      "rollbackCompose": "/home/administrator/project/.eva2-artifacts/l2-autonomous-weekend-20260929/baseline.compose.private.json",
+      "runtimeWorkerUnchanged": true
+    },
+    "liveBoundary": "New code is served and actual page reload restores the result; no live backlog speed benchmark after install, since prior client had drained the queue."
+  },
+  "usage": {
+    "reportedInputTokens": 176825,
+    "reportedOutputTokens": 4351,
+    "reportedAttemptsOrCompletedResponses": 20,
+    "reportedToolCalls": 16,
+    "measurement": "partial; combines foreground measured usage with two partial worker records, not all memory/infrastructure calls",
+    "creditCost": null
+  },
+  "limitations": [
+    "Continuation was scheduled six minutes later, not elapsed multi-day use. L2.1 and full L2 remain open for that scope.",
+    "Exact subsecond not-before input is not established: schedule stores whole seconds. No claim of fractional scheduling precision.",
+    "T3 browser project dependency and owner acceptance remain open.",
+    "One bounded real document project is not general task-performance superiority.",
+    "Runtime work.result.verified remains false; document correctness was independently checked separately."
+  ],
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/l2-autonomous-weekend-20260929",
+  "review": {
+    "reviewer": "/root/review_l2_autonomous_run",
+    "status": "GO for bounded L2.2 outcome and installed return-client correction; full L2 remains open",
+    "reviewedAt": "2026-09-29T11:12:52.855058+00:00"
+  },
+  "returnBinding": {
+    "workId": "work:eva-chat:57ffd82f-7771-5999-8a0c-a77fed015a83",
+    "threadId": "private-work-return:b05cc8b249a30763f449aafb0750f77108a36ede6d577d44da2c0f8ae80e371f:work:eva-chat:57ffd82f-7771-5999-8a0c-a77fed015a83",
+    "operationId": "79c5286fa262797516145e1dbbc7a0e0322ca39b3c5967b577f0a741f52cd452",
+    "claimedAndAcknowledgedSameIdentity": true,
+    "source": "return-events-linked.json; exact work ID suffix filter"
+  },
+  "writeTimestampMeaning": "TOOL_REQUEST_ADMITTED inherits ConversationTurn.occurred_at via external_conversation_tools._timestamp; it is not wall-clock execution start. TOOL_PREPARED and TOOL_EXECUTED occurred at10:58:29."
+}
