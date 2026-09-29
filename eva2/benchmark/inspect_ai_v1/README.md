@@ -1,5 +1,21 @@
 # Inspect AI-evalomgeving
 
+## Current participant inputs — 29 September 2026
+
+`p1_participants_20260929.json` pins Eva2, Eva1/Bottie, OpenClaw, Hermes
+and Agent Zero for the existing EV-003 protocol. Official release tags were
+resolved to commit objects. Source pins do not establish runtime provenance
+or native admission. No model comparison may start from this file alone.
+P1.2 must bind equal access and per-task and aggregate limits before execution.
+Historical EV-002 inputs and results remain unchanged. Missing access is
+unknown, never a competitor loss.
+
+The full existing acceptance matrix contains 864 samples for Eva2 and three
+competitors, or 1,080 if Eva1 runs every case too. These are sample counts, not
+model calls or prices. Do not launch the full matrix during participant setup.
+Use existing small development cases for admission; final unseen cases remain
+independently curated after candidate freeze.
+
 Deze map is alleen voor eerlijke productvergelijkingen. Zij wordt niet in
 Eva's runtime-image geïnstalleerd en voegt geen productfunctionaliteit toe.
 

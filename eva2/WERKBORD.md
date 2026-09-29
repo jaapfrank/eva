@@ -1,5 +1,13 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## P1.1 — bronversies vastgelegd; gelijke toegang nog open
+
+Vijf deelnemers hebben een bronpin in [bestaande Inspect-map](benchmark/inspect_ai_v1/p1_participants_20260929.json): Eva1, Eva2, OpenClaw, Hermes en Agent Zero. Officiële tags naar commit gecontroleerd. Gelijke native toegang bij deze pins is nog niet bewezen; geen modelcalls of productwinstclaim. P1.1 blijft open.
+
+**Volgende, nog niet gestart:** bestaande native toelatingsroutes bij deze versies verbinden; daarna P1.2 taak-/totaalbudget vastzetten. Volledige oude EV-003 matrix telt864samples, met volledige Eva1-deelname1080; geen automatische run of kostenclaim.
+
+O1.1 wacht op werkelijk gevalideerde releasecompositie. Bestaand13septemberbewijs noemt nul ondersteunde targets en18 onopgeloste imageplaatsen; hostupgrade alleen lost dat niet op. T3.1 nog disconnected bij huidige controle.
+
 ## O1.1 — gewone start geïnstalleerd; platformverschil blokkeert nog
 
 Pakketlauncher opent zonder herstel-JSON en gebruikt één private werkmap voor bestaande workflows.20 gerichte controles en onafhankelijke review GO; geïnstalleerde launcher, bootstrap204 en pagina200. Live onboarding blijft uit: pakket vraagt Python3.12.14/Docker29.7.2 versus lokale3.12.3/29.1.3; servervariant en releaseondersteuning niet bewezen. [Bewijs](evidence/product/installer-ordinary-start-20260929.json). Geen volledige O1.1-claim, geen providercalls of runtime-herstart.

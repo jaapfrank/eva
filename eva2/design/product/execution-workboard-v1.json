@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-29T10:07:18.097373+00:00",
+  "lastUpdated": "2026-09-29T10:13:30.333426+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -2899,15 +2899,15 @@
           }
         ],
         "now": {
-          "title": "O1.1: gewone start aangesloten; installatie nog geblokkeerd",
-          "state": "Startcorrectie geïnstalleerd — vervolg nog niet gestart",
-          "detail": "Pakket opent zonder herstelbestand. Live onboarding blijft uit door Python-/Docker-versieverschil en onbewezen platformondersteuning. Geen complete installatieclaim.",
-          "doneWhen": "Bestaande wizard kan de gekozen doelinstallatie zonder handgeschreven instellingen voorbereiden en starten."
+          "title": "P1.1: vijf bronversies vastgelegd; toegang nog open",
+          "state": "Voorbereiding vastgelegd — vervolg nog niet gestart",
+          "detail": "Eva1, Eva2 en drie officiële concurrentreleases gepind. Dit is geen productfunctie of uitgevoerde vergelijking. Geen modelcalls.",
+          "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar."
         },
         "next": {
-          "title": "O1.1: pakket en doelplatform passend maken",
-          "state": "Eerstvolgende open afhankelijkheid",
-          "detail": "Bestaande release-/hostconfiguratie onderbouwen en doelvoorbereiding aansluiten; geen blinde versiecontrole-omzeiling of nieuwe installer."
+          "title": "P1.1: bestaande native vergelijkingsroutes aansluiten",
+          "state": "Nog niet gestart",
+          "detail": "Echte gelijke toegang en meetgrenzen controleren vóór modelgebruik; ontbrekende toegang telt niet als verlies."
         },
         "ownerAction": {
           "title": "Deel één Chrome-tabblad voor T3.1",
@@ -2921,7 +2921,7 @@
           "linkLabel": "Open bestaande Chrome-bediening"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T10:07:18.097373+00:00"
+        "reviewedAt": "2026-09-29T10:13:30.333426+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12741,7 +12741,7 @@
           ]
         }
       ],
-      "nextAction": "Pakket start zonder herstel-JSON, maar lokale preflight blokkeert onboarding door platform-/versieverschil. Ondersteunde pakketconfiguratie vaststellen en bestaande doelvoorbereiding aansluiten; nog geen volledige installatie.",
+      "nextAction": "P1.1: bestaande native toelating bij de vastgelegde vijf bronversies afronden. P1.2 daarna; geen modelcalls totdat gelijke toegang en grenzen vaststaan.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -14029,7 +14029,7 @@
             {
               "id": "O1.1",
               "title": "Installatiewizard zonder handwerk afronden",
-              "status": "planned",
+              "status": "blocked",
               "kind": "aansluiten",
               "doneWhen": "Bestaande wizard kan de gekozen doelinstallatie zonder handgeschreven instellingen voorbereiden en starten.",
               "owner": "/root",
@@ -14047,7 +14047,8 @@
                 "estimate": "30–60 minutes, no provider calls; credits unknown."
               },
               "latestEvidence": "eva2/evidence/product/installer-ordinary-start-20260929.json",
-              "remaining": "Pakket start zonder herstel-JSON, maar lokale preflight blokkeert onboarding door platform-/versieverschil. Ondersteunde pakketconfiguratie vaststellen en bestaande doelvoorbereiding aansluiten; nog geen volledige installatie."
+              "remaining": "Pakket start zonder herstel-JSON, maar lokale preflight blokkeert onboarding door platform-/versieverschil. Ondersteunde pakketconfiguratie vaststellen en bestaande doelvoorbereiding aansluiten; nog geen volledige installatie.",
+              "blocker": "Existing release lock has no validated target or runnable image pins; exact host upgrades alone cannot fix release support. Existing 13 September evidence confirms this prerequisite. No new platform rewrite started."
             },
             {
               "id": "O1.2",
@@ -14130,7 +14131,7 @@
           ],
           "outcome": "Vergelijkingsvoorwaarden vastleggen",
           "effort": "M",
-          "status": "planned",
+          "status": "in_progress",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "EV-003 protocol, prior controlled runs and Inspect/accounting scaffolding exist.",
@@ -14152,7 +14153,9 @@
               "status": "planned",
               "kind": "voorbereiden",
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
-              "owner": "Codex"
+              "owner": "Codex",
+              "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
+              "remaining": "Vijf bronversies vastgelegd; daadwerkelijke gelijkwaardige native toegang nog niet toegelaten. Volgende: bestaande admission-adapters aansluiten bij deze pins. Geen modelbenchmark gestart."
             },
             {
               "id": "P1.2",
@@ -14162,7 +14165,17 @@
               "doneWhen": "Bestaande vergelijkingsprotocollen invullen met taken, scorers en eindig budget vóór uitvoering.",
               "owner": "Codex"
             }
-          ]
+          ],
+          "assignment": {
+            "baseCommit": "880c1292",
+            "files": [
+              "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
+              "eva2/benchmark/inspect_ai_v1/README.md"
+            ],
+            "outcome": "Pin actual participant sources and explicit remaining native-access gaps using existing protocol. No model runs or new runner.",
+            "estimate": "20–40 minutes, zero runtime model calls, credits unknown.",
+            "endCondition": "Five intended participants have exact checked source pins or explicit unavailable status, same provider requirement and concrete admission gaps."
+          }
         },
         {
           "id": "P2",
@@ -14308,7 +14321,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "O1",
+      "activeSliceId": "P1",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

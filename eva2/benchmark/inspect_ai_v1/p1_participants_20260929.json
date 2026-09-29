@@ -1,0 +1,102 @@
+{
+  "contract": "EvaComparisonParticipantInputs/v1",
+  "checkedAt": "2026-09-29",
+  "stage": "source_pins_recorded_access_not_admitted",
+  "protocol": "eva2/design/product/comparable-agent-benchmarks-v1.md#ev-003",
+  "scope": "Inputs for existing Inspect runner; not results, a new runtime or a new scorer.",
+  "participants": [
+    {
+      "id": "eva2",
+      "sourceCommit": "880c1292797e11acd925baa1dc592e6099de2cb7",
+      "sourceKind": "local_checkpoint",
+      "runtimeProvenance": "not_bound_to_this_comparison",
+      "admission": "not_admitted",
+      "nativeAdapter": "cp001_native.py"
+    },
+    {
+      "id": "eva1-bottie",
+      "sourceCommit": "909bff513d7d7fd653d6a7f270d9e73facce430d",
+      "sourceKind": "local_checkout_head_not_runtime_provenance",
+      "workingTreeClean": null,
+      "runtimeProvenance": "not_bound_to_this_comparison",
+      "admission": "not_admitted",
+      "nativeAdapter": "cp001_native.py"
+    },
+    {
+      "id": "openclaw",
+      "sourceRepository": "https://github.com/openclaw/openclaw.git",
+      "sourceTag": "v2026.9.6",
+      "sourceCommit": "eb377ac59e6c9fd6c7705028034812becf00271b",
+      "tagObject": "ce5bbdc244ee937246cc1700d1b224d020c3b599",
+      "officialRelease": "https://github.com/openclaw/openclaw/releases/tag/v2026.9.6",
+      "admission": "not_admitted"
+    },
+    {
+      "id": "hermes",
+      "sourceRepository": "https://github.com/NousResearch/hermes-agent.git",
+      "sourceTag": "v2026.9.24",
+      "sourceCommit": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
+      "tagObject": "e3dd27ee2d8b011737a4eea8e3eb3d711ab78690",
+      "officialRelease": "https://github.com/NousResearch/hermes-agent/releases/tag/v2026.9.24",
+      "admission": "not_admitted"
+    },
+    {
+      "id": "agent_zero",
+      "sourceRepository": "https://github.com/agent0ai/agent-zero.git",
+      "sourceTag": "v2.13",
+      "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+      "tagObject": "90f2a79e22d1e39cab6db79cd622422edaf96152",
+      "officialRelease": "https://github.com/agent0ai/agent-zero/releases/tag/v2.13",
+      "admission": "not_admitted"
+    }
+  ],
+  "sharedRemainingAdmission": [
+    "Bind a disposable native instance to the pinned source, image and configuration.",
+    "Use the existing authorized provider route; verify identical models and reasoning within each case.",
+    "Enforce equal cumulative model, tool and time budgets, including memory, helpers and retries.",
+    "Bind equal task inputs, tools, data, hardware class, independent readback and interruption access.",
+    "Complete existing offline admission before any model calls; old-release failures do not prove current-release failure."
+  ],
+  "providerPolicy": {
+    "route": "existing authorized subscription route only",
+    "simpleContact": {
+      "model": "gpt-6-sol",
+      "reasoning": "none"
+    },
+    "researchExecutionLearning": {
+      "model": "gpt-6-astra",
+      "reasoning": "medium"
+    },
+    "nativePrompts": "May differ; record exact configurations."
+  },
+  "readiness": {
+    "mayStartModelComparison": false,
+    "reason": "No five-way native admission at these pins; no frozen unseen dataset or final candidate.",
+    "missingAccessCountsAs": "unknown_not_loss",
+    "historicalResults": "EV-002 remains unchanged; no current ranking inferred."
+  },
+  "budget": {
+    "thisAssignmentModelCalls": 0,
+    "paidJudgeCalls": 0,
+    "nextModelRuns": 0,
+    "creditCost": null,
+    "notice": "P1.2 must freeze executable per-task and aggregate limits before admission."
+  },
+  "acceptanceScale": {
+    "casesPerFamily": 12,
+    "families": 6,
+    "epochs": 3,
+    "samplesPerParticipant": 216,
+    "competitorMatrixSamples": 864,
+    "eva1AdditionalSamplesIfFullParity": 216,
+    "fullFiveWaySamples": 1080,
+    "notice": "Existing EV-003 sample counts, not model calls or costs. Eva1 remains an additional mandatory baseline. No automatic full-matrix run."
+  },
+  "resultOwner": "Inspect native logs and official scorers",
+  "expiry": "Recheck upstream releases at final candidate freeze. Changed pins require affected admission checks, never score-driven reruns.",
+  "review": {
+    "reviewer": "/root/review_installer_cli_wiring",
+    "decision": "GO for source registration only; P1.1 remains open",
+    "checks": "Official peeled refs match stored ls-remote evidence; matrix arithmetic and provider policy checked; EV-003 unchanged."
+  }
+}
