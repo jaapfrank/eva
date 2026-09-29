@@ -1,0 +1,60 @@
+{
+  "checkedAt": "2026-09-29T06:18:36.042495+00:00",
+  "status": "document_delivered_worker_report_timed_out",
+  "workId": "work:eva-chat:b6fae18a-bc25-59de-badd-9f65397e6782",
+  "finalArtifact": "/proof-state/gezinsweek-l2-eindversie-v1.md",
+  "localCopy": "eva2/evidence/product/gezinsweek-l2-resultaat.md",
+  "hashes": {
+    "gezinsweek-l2-concept-v1.md": {
+      "sha256": "e963853a1c5e14debb21f7bc424ed9ebd79a14b7acb92db1ac86e49c25b3d83d",
+      "bytes": 459
+    },
+    "gezinsweek-l2-project-v1.md": {
+      "sha256": "3980cd6fc97d6f023ef90d709a7fa39d2b4d3011c9f6a089d8d14f3a65eaec12",
+      "bytes": 1347
+    },
+    "gezinsweek-l2-correctie-v1.md": {
+      "sha256": "56983fcf30dfd7a2a8751f91848738b39fbfbea094a38b23b60209cce5a91315",
+      "bytes": 1125
+    },
+    "gezinsweek-l2-eindversie-v1.md": {
+      "sha256": "2b94c41794dc47767089bec3eadd111386778a300d0c4ac8c572b9e97308777c",
+      "bytes": 1616
+    }
+  },
+  "originalsUnchanged": true,
+  "oldSchedule": {
+    "scheduleId": "scheduled-work:33333333-3333-3333-8333-333333333333:96db0818b3b41b394d44dd9b4a407033daa7a0f1cce604f40e16f540377b9fae",
+    "state": "cancelled",
+    "dispatchedWorkId": null
+  },
+  "workerState": "ambiguous",
+  "workerError": "timed_out",
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 9,
+    "tool_calls": 8,
+    "input_tokens": 87299,
+    "output_tokens": 1307,
+    "total_tokens": 88606,
+    "cost_usd_micros": null
+  },
+  "independentReview": {
+    "reviewer": "review_directory_connection",
+    "decision": "GO for document",
+    "checks": [
+      "Three activities within30min including transitions",
+      "Oral wordgame replaces drawing",
+      "Materials list",
+      "All three original artifacts unchanged"
+    ]
+  },
+  "limitations": [
+    "No successful final worker reply; timed out after file readback",
+    "No overnight execution proof: owner requested immediate completion",
+    "No full L2/autonomy or owner acceptance claim"
+  ],
+  "ownerAccepted": false
+}

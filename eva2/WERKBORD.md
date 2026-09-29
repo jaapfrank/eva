@@ -1,20 +1,14 @@
 # Eva 2 — uitvoerbaar werkbord
 
-## Wacht op09:00 — uitsluitend L2: één project volledig afmaken
+## Afgerond — Gezinsweek-document met bewaarde correctie
 
-**Laatste bruikbare resultaat:** Eva heeft Gezinsweek L2 opgeslagen, na een herstart teruggelezen en een correctie apart bewaard: maximaal30min en een mondeling woordspel in plaats van tekenen. De oorspronkelijke concept- en projectbestanden zijn byte voor byte behouden. Onafhankelijke controle akkoord.
+**Geleverd:** het einddocument bevat drie schermvrije activiteiten binnen30min, een mondeling woordspel in plaats van tekenen en een benodigdhedenlijst. Daadwerkelijke bestandbytes teruggelezen; alle drie bronbestanden ongewijzigd. Onafhankelijke controle akkoord. [Lees einddocument](evidence/product/gezinsweek-l2-resultaat.md) · [Bewijs](evidence/product/l2-document-delivered-20260929.json).
 
-**Uitvoeringswacht:** het ontwikkelgoal is geblokkeerd op het geplande tijdstip, na drie opeenvolgende doelbeurten met dezelfde tijdsafhankelijkheid. Dit stopt herhaalde wachtbeurten, niet Eva’s scheduler. Na09:00 het bestaande resultaat controleren; geen nieuwe opdracht starten.
+**Eigenaarcorrectie uitgevoerd:** geen uren wachten. De09:00-afspraak is bevestigd geannuleerd en heeft geen taak gestart. Eén directe eindtaak heeft het document gemaakt. Geen actieve modeltaak meer; geen blokkerende tijdsafhankelijkheid.
 
-**Werkelijke planning:** precies één vervolgafspraak voor29 september2026 om09:00 Europe/Amsterdam (07:00UTC), afhankelijk van de geslaagde correctietaak453ee52a. Afhankelijkheid is gereed. Dan moet Eva de opgeslagen bestanden opnieuw lezen, de eindversie met benodigdhedenlijst bewaren en controleren. Geen nieuwe modelopdracht vóór dit moment; geen andere bouwtaak gestart.
+**Resterend concreet tekort:** de laatste modelterugmelding liep na geslaagde opslag/teruglezen tegen timeout; taakstatus ambiguous. Het document is onafhankelijk geleverd, maar betrouwbare automatische taakafsluiting is hiermee niet bewezen. Geen volledigeL2/autonomieclaim of nachtproef. Volgende opdracht nog niet gestart: deze terugmelding gericht herstellen op bestaand bewijs, geen nieuw document maken.
 
-**Nog open — L2 blijft open:** daadwerkelijke latere uitvoering, einddocument, geen dubbele effecten en eigenaaracceptatie. Eerdere pogingen vereisten ontwikkelaarhulp; dit is geen onbegeleide eerste-pogingclaim of nieuw afgerond groot productonderdeel. [Actueel bewijs](evidence/product/l2-corrected-project-scheduled-20260929.json).
-
-**Geïnstalleerde gerichte wijzigingen:** extra mapfunctie via bestaande gateway; eenmalig herstel van ongeldige projectinvoer; null-ontvangst voor digitale vervolgplanning in het strikte modelschema. Laatste broncde5f24d,73 gerichte controles en onafhankelijke review akkoord; gezonde kern/werker en exacte bron gecontroleerd. Bestaande planner, gegevens en andere routes behouden. [Installatie](evidence/product/project-null-acceptance-installed-20260929.json).
-
-**Verbruik/beperkingen:** succesvolle correctiewerker8 modelantwoorden/7 toolcalls,86.827in/1.222uit (gedeeltelijke meting, foreground apart). Vorige opgeslagen maar onvoltooide projectfase90.494in/1.717uit; eerdere afwijzingen blijven in bewijs. Creditkosten onbekend. Circa30min actieve uitvoering deze beurt; de latere geplande uitvoering is nog geen geleverd resultaat.
-
-**Zelf bekijken:** open http://localhost:44711/internal/v1/dashboard en lees de afgeronde taak over het bestaande documentproject Gezinsweek L2. Je hoeft de proef niet te herhalen. Verwacht de bevestiging van het afzonderlijke correctiebestand; de eindversie volgt pas uit de geplande stap.
+**Verbruik eindwerker:** gedeeltelijk gemeten9modelantwoorden,8toolcalls,87.299in/1.307uit; foreground/afgebroken eerdere aanvraag apart. Creditkosten onbekend. Geen nieuwe bronbouw of installatie voor deze documentafronding.
 
 ## Afgerond — L1: werkwijze leren en hergebruiken
 
