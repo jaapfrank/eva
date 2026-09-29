@@ -1,6 +1,6 @@
-## Actueel: O2.3 vier documentproviders hersteld; gateway aansluiten — 29 september 2026
+## Actueel: O2.3 gateway hersteld; documentenschrijftoegang afronden — 29 september 2026
 
-De gezamenlijke import is geslaagd en teruggelezen. Alle vier documentproviders draaien op hetzelfde geïsoleerde doel; oorspronkelijke toolcatalogi, bewaarde documenten en logboeken zijn gecontroleerd. De beoordeelde bestaande route start nu de herstelde gateway en herstelt documentenschrijftoegang. Daarna runtimevrijgave; kern nog gesloten. Geen volledige O2.3-afronding. [Bewijs](evidence/product/o2-four-documents-connected-20260929.json).
+Gezamenlijke import en vier documentproviders zijn teruggelezen. Gateway gezond: 9 koppelingen en 61 tools exact behouden. Verkeerde omgeving in controletoken gecorrigeerd; teruglezen hervat op dezelfde draaiende gateway, zonder herstart of import. Bestaande documentenschrijftoegang wordt nu hersteld. Alle-upstreamcontrole en runtimevrijgave blijven open; geen volledige O2.3-afronding. [Bewijs](evidence/product/o2-restored-gateway-running-20260929.json).
 
 ## Actueel: O2.3 herhaalde pakketcontrole versneld — 29 september 2026
 
