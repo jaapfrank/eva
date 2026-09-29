@@ -11,6 +11,10 @@ class AccountedResearch:
         if not input_bound or not output_bound:
             raise ValueError("research requires configured per-response bounds")
         self.input_bound, self.output_bound = input_bound, output_bound
+        self.deadline_failure = None
+
+    def native_research_timeout_seconds(self):
+        return self.research.native_research_timeout_seconds()
 
     def research_request_payload(self, **kwargs):
         return self.research.research_request_payload(**kwargs)
@@ -39,6 +43,9 @@ class AccountedResearch:
             if not isinstance(usage, ConversationModelUsage):
                 usage = ConversationModelUsage.unmeasured()
             self.journal.complete_model_request(self.turn, request_id, usage, outcome="failed")
+            from eva.adapters.model.contracts import ConversationModelDeadlineExceeded
+            if isinstance(error, ConversationModelDeadlineExceeded):
+                self.deadline_failure = error
             raise
         # Complete once, before any subsequent validation or cancellation can fail.
         self.journal.complete_model_request(self.turn, request_id, artifact.usage)
@@ -63,4 +70,19 @@ def task_research_tools(engine, model, *, turn, journal, authorize, grant, profi
         grant=grant, input_bound=profile.maximum_response_input_tokens,
         output_bound=profile.maximum_response_output_tokens)
     adapter = OwnerResearchContinuationTool(research, PostgresConversationActions._validated_research_arguments)
-    return PostgresExternalConversationTools(engine, adapter, adapter, authorize_turn=authorize)
+    class TaskResearchTools(PostgresExternalConversationTools):
+        # The generic orchestrator first persists its failed tool receipt. Surface
+        # the original deadline before unknown usage can mask it as budget failure.
+        def execute(self, *args, **kwargs):
+            result = super().execute(*args, **kwargs)
+            if research.deadline_failure is not None:
+                raise research.deadline_failure
+            return result
+
+        def pending(self, *args, **kwargs):
+            result = super().pending(*args, **kwargs)
+            if research.deadline_failure is not None:
+                raise research.deadline_failure
+            return result
+
+    return TaskResearchTools(engine, adapter, adapter, authorize_turn=authorize)

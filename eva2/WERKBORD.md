@@ -1,5 +1,9 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Nu — T1: onderzoek afmaken en terugmelden
+
+De GLaDOS-vraag strandde op de oude 55s-onderzoekgrens; de timeout werd daarna als budgetfout getoond. Gerichte correctie gebouwd: achtergrondonderzoek 120s, alleen onderzoekstool 125s; foutreden blijft behouden zonder extra aanvraag. 25 unieke gerichte controles en onafhankelijke review akkoord. Installatie wordt voorbereid; nog geen afgerond onderzoeksresultaat. /root voert uit; geen parallelle bouwer. Eindpunt: primaire bronnen, bewaard en teruggelezen resultaat, volledig eindantwoord zonder ontwikkelaarhervatting, onafhankelijke inhoudscontrole. Raming 15–25 minuten; één opdracht binnen bestaande limieten, meetbaar verbruik vastleggen, creditkosten onbekend. Alleen bewijs/werkbord worden gewijzigd; geen nieuwe planner. De Telegramwaarneming blokkeert dit niet.
+
 ## C1 — tekstgesprek tijdens werk
 
 Bestaande website-overlap en Telegramconcurrency behouden. Gerichte geheugenmeting1,038s (geen gesprekmodelcalls) rechtvaardigt geen geheugenombouw. Actuele Telegramwaarneming gevraagd; alleen afhankelijke acceptatie wacht hierop. Geen actieve bouw of modelproef. [Bevinding](evidence/product/c1-memory-timing-20260929.json). Dit is diagnose, geen nieuwe functie of bewezen snelheidswinst.

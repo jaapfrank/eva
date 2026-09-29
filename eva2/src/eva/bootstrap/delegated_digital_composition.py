@@ -205,7 +205,7 @@ def build_digital_runner(settings, store, *, provider_bundle=None, household_aut
     # the runner's cancellation signal still enforces the admitted task deadline.
     model = PydanticConversationModel(auth_file=Path(settings.conversation_auth_file),
         model=settings.conversation_model, reasoning_effort=settings.conversation_reasoning_effort,
-        timeout_seconds=120.0,
+        timeout_seconds=120.0, research_timeout_seconds=120.0,
         resource_budget=settings.runtime_resource_budget, conversation_tools=descriptors)
     source_loader = _SourceTurnLoader(engine, SimpleNamespace(
         scope=service.conversation_scope, authorize_turn=service.validate_authority))

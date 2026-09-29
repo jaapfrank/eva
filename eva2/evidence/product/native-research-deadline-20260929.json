@@ -1,0 +1,37 @@
+{
+  "checkedAt": "2026-09-29T06:51:47.204479+00:00",
+  "status": "candidate_tested_reviewed",
+  "workId": "work:eva-chat:6644e31f-751b-5a21-910c-4f623684d4ef",
+  "observed": "Native research began06:42:21Z, unmeasured failure06:43:16Z; terminal task budget_exceeded, no saved report",
+  "cause": "Native55s clamp and generic timeout swallowed by durable orchestration; unknown usage correctly prevented another model request but masked original failure",
+  "changes": [
+    "Use configured background120s research phase and matching fingerprint; foreground/initiative55 retained",
+    "Only research.public_sources tool admits125s including existing5s margin; other tools60",
+    "Retain typed deadline after durable failed receipt; no automatic replay or extra response"
+  ],
+  "validation": {
+    "uniqueTestsPassed": 25,
+    "independentReview": "review_directory_connection GO",
+    "installedSourceMatchesHeadBeforeChange": true
+  },
+  "usage": {
+    "foreground": {
+      "inputTokens": 6954,
+      "outputTokens": 270,
+      "modelResponses": 1
+    },
+    "workerPartial": {
+      "inputTokens": 12330,
+      "outputTokens": 374,
+      "completedModelResponses": 3,
+      "toolCalls": 2
+    },
+    "failedResearchUsage": "unmeasured",
+    "creditCosts": "unknown"
+  },
+  "limitations": [
+    "No complete research result yet",
+    "Old/restarted failed receipts retain historical classification; transient deadline retention is scoped to active run",
+    "No owner acceptance or T1 completion claim"
+  ]
+}

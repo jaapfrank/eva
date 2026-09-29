@@ -607,7 +607,8 @@ class ConversationToolPreparation:
             raise ValueError("prepared conversation tool configuration is invalid")
         if set(self.receipt_output) & {"contract", "durable", "proof", "status"}:
             raise ValueError("prepared conversation receipt uses reserved fields")
-        if not 1 <= self.execution_timeout_seconds <= 60:
+        maximum_execution_seconds = 125 if self.tool_name == "research.public_sources" else 60
+        if not 1 <= self.execution_timeout_seconds <= maximum_execution_seconds:
             raise ValueError("prepared conversation execution timeout is invalid")
         if not 1 <= self.verification_timeout_seconds <= 60:
             raise ValueError("prepared conversation verification timeout is invalid")

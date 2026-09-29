@@ -14,7 +14,7 @@ import pytest
 
 from eva.adapters.model import research_transport as transport
 from eva.adapters.model import pydantic_conversation as model_module
-from eva.adapters.model.contracts import ConversationModelError
+from eva.adapters.model.contracts import ConversationModelError, ConversationModelDeadlineExceeded
 from eva.adapters.model.research_tools import NativeResearchTool
 from eva.application.cancellation import CancellationSignal, WorkInterrupted, cancellation_scope
 
@@ -86,7 +86,7 @@ def test_absolute_deadline_closes_dripping_sse_or_blocked_headers(monkeypatch, h
     stream = Stream(delay=0.02, chunks=(b": keepalive\n",)*100)
     state = install(monkeypatch, stream, header_delay=10 if headers else 0)
     started = monotonic()
-    with pytest.raises(ConversationModelError, match="deadline"):
+    with pytest.raises(ConversationModelDeadlineExceeded, match="deadline"):
         transport.open_research_response(request(), deadline=started+0.06, maximum_bytes=10000)
     assert monotonic()-started < 0.8
     assert state.closed and not state.headers_active and not stream.active
@@ -197,7 +197,7 @@ def test_real_loopback_connection_closes_on_deadline(send_headers):
         async with server:
             port = server.sockets[0].getsockname()[1]
             local_request = urllib.request.Request(f"http://127.0.0.1:{port}/offline-fixture")
-            with pytest.raises(ConversationModelError, match="deadline"):
+            with pytest.raises(ConversationModelDeadlineExceeded, match="deadline"):
                 await asyncio.to_thread(transport.open_research_response, local_request,
                     deadline=monotonic()+0.15, maximum_bytes=1000)
             await asyncio.wait_for(peer_closed.wait(),1)

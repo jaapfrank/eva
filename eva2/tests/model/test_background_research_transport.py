@@ -24,3 +24,37 @@ def test_background_research_makes_one_network_attempt_on_credential_rejection(t
                 options=("https://docs.example/specification",), research_mode="topic",
                 researched_at=turn.occurred_at)
     assert len(calls) == 1
+
+
+def test_background_research_deadline_and_fingerprint_match_host_phase(tmp_path, monkeypatch):
+    model = PydanticConversationModel(auth_file=tmp_path / "unused", research_timeout_seconds=120)
+    observed = []
+    monkeypatch.setattr(model, "_request_using", lambda *args, **kwargs: observed.append(kwargs))
+    assert model.native_research_timeout_seconds() == 55
+    turn = ConversationTurn.private("t", "i", "p", "c", "m", "Research", "2026-09-29T06:00:00Z")
+    with background_execution(BackgroundExecutionScope(turn, "work:test")):
+        assert model.native_research_timeout_seconds() == 120
+        model._request_research({})
+    assert observed[0]["timeout_seconds"] == 120
+    assert model.native_research_timeout_seconds() == 55
+
+
+@pytest.mark.parametrize("name,seconds,allowed", [
+    ("research.public_sources", 125, True),
+    ("research.public_sources", 126, False),
+    ("other.tool", 61, False),
+    ("other.tool", 60, True),
+])
+def test_only_research_accepts_extended_tool_deadline(name, seconds, allowed):
+    from eva.application.conversation import ConversationToolPreparation
+    from eva.application.orchestration import ToolRequest
+    def construct():
+        ConversationToolPreparation(tool_name=name, arguments={}, expected_proof={}, receipt_output={},
+            execution_timeout_seconds=seconds)
+        ToolRequest(thread_id="t", operation_id="o", checkpoint_prefix="p", tool_name=name,
+            arguments={}, expected_proof={}, execution_timeout_seconds=seconds)
+    if allowed:
+        construct()
+    else:
+        with pytest.raises(ValueError):
+            construct()

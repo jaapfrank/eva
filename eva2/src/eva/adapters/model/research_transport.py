@@ -9,7 +9,7 @@ import urllib.request
 
 import httpx2
 
-from eva.adapters.model.contracts import ConversationModelError
+from eva.adapters.model.contracts import ConversationModelError, ConversationModelDeadlineExceeded
 from eva.application.cancellation import run_cancellable
 
 
@@ -59,6 +59,6 @@ def open_research_response(
     try:
         return BytesIO(asyncio.run(run_cancellable(read)))
     except (TimeoutError, httpx2.TimeoutException) as error:
-        raise ConversationModelError("research provider deadline expired") from error
+        raise ConversationModelDeadlineExceeded("research provider deadline expired") from error
     except httpx2.TransportError as error:
         raise urllib.error.URLError("research provider transport unavailable") from error

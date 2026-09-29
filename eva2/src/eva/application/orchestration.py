@@ -113,8 +113,9 @@ class ToolRequest:
             raise ValueError("tool configuration hash is invalid")
         if not 1 <= self.verification_timeout_seconds <= 60:
             raise ValueError("verification timeout must be within 1..60 seconds")
-        if not 1 <= self.execution_timeout_seconds <= 60:
-            raise ValueError("execution timeout must be within 1..60 seconds")
+        maximum_execution_seconds = 125 if self.tool_name == "research.public_sources" else 60
+        if not 1 <= self.execution_timeout_seconds <= maximum_execution_seconds:
+            raise ValueError("execution timeout exceeds the tool deadline")
         if not 25 <= self.poll_interval_milliseconds <= 2_000:
             raise ValueError("poll interval must be within 25..2000 milliseconds")
 

@@ -1492,6 +1492,12 @@ class PydanticConversationModel:
             )
         return proposal
 
+    def native_research_timeout_seconds(self) -> float:
+        """Use the admitted background phase without extending foreground research."""
+        from eva.application.background_execution import has_background_execution
+        ceiling = 120.0 if has_background_execution() else 55.0
+        return min(self._research_timeout_seconds, ceiling)
+
     def research_configuration_sha256(self) -> str:
         from dataclasses import asdict
         if self._resource_budget is None or self.autonomous_admission_blocker() is not None:
@@ -1504,7 +1510,7 @@ class PydanticConversationModel:
             "reasoning_effort": self._reasoning_effort,
             "instructions": _CURRENT_RESEARCH_INSTRUCTIONS,
             "tools": [{"search_context_size": "low", "type": "web_search"}],
-            "timeout_milliseconds": int(min(self._research_timeout_seconds, 55.0) * 1000),
+            "timeout_milliseconds": int(self.native_research_timeout_seconds() * 1000),
             "authentication_attempts": 1,
             "budget": asdict(self._resource_budget),
         })).hexdigest()
@@ -1952,7 +1958,7 @@ class PydanticConversationModel:
         return self._request_using(
             body,
             self._parse_research_sse,
-            timeout_seconds=(min(self._research_timeout_seconds, 55.0)
+            timeout_seconds=(self.native_research_timeout_seconds()
                 if _native_research_context() else self._research_timeout_seconds),
             include_usage=True,
             provider_managed_research_input=True,
