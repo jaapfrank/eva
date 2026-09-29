@@ -11,7 +11,6 @@ from eva.application.free_will import SensoryDecisionWorker
 from eva.application.household_initiative import HouseholdInitiativeBinding, HouseholdInitiativeContext
 from eva.application.resident_attention import _inside_quiet_hours
 from eva.bootstrap.household_initiative_delivery import HouseholdInitiativeDelivery
-from eva.bootstrap.native_work_delivery import NativeWorkDelivery
 from eva.contracts.canonical_json import canonical_sha256
 
 
@@ -21,13 +20,12 @@ class HouseholdInitiativeLoop:
         self.engine, self.voice, self.server, self.provider = engine, voice, server, provider
         self.model, self.memory, self.identity, self.budget = model, memory, identity, budget
         self.principal_id, self.authorize_initiative = principal_id, authorize_initiative
-        self.destinations = NativeWorkDelivery(server, provider)
         self._components = {}
         self._timezone = ZoneInfo("Europe/Amsterdam")
 
     def _selected(self):
         # One recent live session, never a broadcast to every configured speaker.
-        return next(self.destinations._sessions(), None)
+        return self.server.sessions.latest_native()
 
     def _authorize(self):
         self.voice.validate_current()

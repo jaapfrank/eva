@@ -1,5 +1,15 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## I1.1 — speakerkeuze hersteld en geïnstalleerd; bijdrage open
+
+Initiatief gebruikte ten onrechte de bestemmingenlijst voor openstaande onderzoeksresultaten. Nieuwe selectie gebruikt bestaande sessieautoriteit: native, passend apparaat, open en niet verlopen.8 gerichte PostgreSQL-controles en onafhankelijke review akkoord. Kern gezond en bron gecontroleerd; worker niet gewijzigd. [Bewijs](evidence/product/i1-native-destination-20260929.json).
+
+Live selectie werkt maar er is nu geen actuele native sessie. Geen modelcalls, aankondigingen of huisacties; credits onbekend. I1.1 blijft open voor werkelijke nuttige/hoorbare bijdrage; stiltebeleid en bestaande budgetten behouden. Geen nieuwe afgeronde hoofd- of kleine taak geclaimd.
+
+**Volgende, nog niet gestart:** L3.1 bestaande begrensde AIDE-proef en concrete fout oppakken, binnen resterend proefbudget. Geen nieuw platform of ongewijzigde herhaling. Geen actieve uitvoerders.
+
+## Eerdere voortgang
+
 ## Laatst afgerond — M3.2 stijlcorrectie behouden
 
 Expliciet geen genummerde lijst wordt in stijlreflectie niet afgezwakt; een toepasselijke lagere woordlimiet gaat vóór de algemene limiet. Gerichte proef:39woorden bij maximaal40, zonder genummerde lijst. Drie bestaande gerichte controles en onafhankelijke review akkoord. Beide modules geïnstalleerd in gezonde kern/werker; bron gecontroleerd. [Bewijs](evidence/product/m3-style-fidelity-20260929.json).

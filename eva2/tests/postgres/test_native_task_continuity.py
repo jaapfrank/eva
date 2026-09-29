@@ -225,3 +225,23 @@ def test_retained_native_work_controls_and_original_output_once(database, monkey
         output.current()
     with pytest.raises(ValueError):
         later.service.execute("get", later.turn, request_key="revoked", work_id=second_id)
+
+
+def test_initiative_destination_needs_live_native_session_not_pending_work(database):
+    from eva.bootstrap.household_initiative import HouseholdInitiativeLoop
+    x = setup(database, "initiative-live-native")
+    assert x.server.sessions.latest_native() is None  # Ordinary audio is not native.
+    first = native(x, "first-empty")
+    loop = object.__new__(HouseholdInitiativeLoop)
+    loop.server = x.server
+    assert loop._selected() == first.service.binding  # No task was admitted.
+    x.clock[0] += timedelta(seconds=1)
+    second = native(x, "second-empty", satellite="assist_satellite.office", device="b" * 32)
+    assert loop._selected() == second.service.binding
+    second.service.current("close")
+    assert loop._selected() == first.service.binding
+    x.clock[0] += timedelta(minutes=31)
+    assert loop._selected() is None
+    x.policies[0] = x.policies[0].model_copy(update={"state": "revoked"})
+    with pytest.raises(ValueError):
+        loop._selected()

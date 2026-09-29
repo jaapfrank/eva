@@ -169,6 +169,43 @@ class HouseholdWorkSessions:
             )
         return binding
 
+    def latest_native(self):
+        """Select a current native destination independently of pending task output."""
+        self.authority.validate_current()
+        policy = self.authority.policy
+        current = {name: getattr(policy, name) for name in (
+            "tenant_id", "installation_id", "household_id", "consent_operation_id",
+            "household_policy_sha256")}
+        current["research_policy_sha256"] = self.authority.sha256
+        data = events.c.payload["data"]
+        devices = [data["binding"].contains({"satellite_id": satellite,
+            "device_id": device, "actor_id": "household-device:" + device})
+            for satellite, device in policy.devices.items()]
+        if not devices:
+            return None
+        with self.store._engine.begin() as connection:
+            self.store._scope(connection)
+            binding = connection.execute(sa.select(data["binding"]).select_from(
+                events.join(checkpoints, sa.and_(
+                    events.c.tenant_id == checkpoints.c.tenant_id,
+                    events.c.installation_id == checkpoints.c.installation_id,
+                    events.c.thread_id == checkpoints.c.thread_id))
+            ).where(
+                events.c.tenant_id == self.store.scope.tenant_id,
+                events.c.installation_id == self.store.scope.installation_id,
+                events.c.event_type == "HOUSEHOLD_WORK_SESSION_OPENED",
+                events.c.sequence == 1,
+                data["native_conversation_key"].astext.is_not(None),
+                data["binding"].contains(current), sa.or_(*devices),
+                checkpoints.c.phase == "open",
+                checkpoints.c.deadline > self.authority.clock(),
+            ).order_by(events.c.occurred_at.desc(), events.c.thread_id.desc())
+                .limit(1)).scalar_one_or_none()
+        if binding is None:
+            return None
+        # Recheck durable provenance and session validity after selection.
+        return self.read(binding["session_id"], binding["satellite_id"], binding["device_id"])
+
     def native(self, satellite_id, device_id, conversation_id):
         """Reuse a bounded HTTP conversation session without a media heartbeat.
 

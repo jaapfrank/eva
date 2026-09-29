@@ -1,0 +1,54 @@
+{
+  "checkedAt": "2026-09-29T11:47:14.874509+00:00",
+  "baseCommit": "fbc789e6",
+  "status": "destination_wiring_fixed_installed_contribution_open",
+  "gap": "HouseholdInitiativeLoop reused NativeWorkDelivery._sessions, which only selects destinations with pending task output and allows retained expired task sessions. This prevented ordinary initiative selection without pending work.",
+  "change": "Use current scoped native open/unexpired session selection in existing household session authority, then revalidate via read. Task result delivery query unchanged.",
+  "tests": {
+    "command": "pytest -q tests/postgres/test_native_task_continuity.py",
+    "passed": 8,
+    "seconds": 27.48,
+    "environment": "Disposable isolated PostgreSQL; no production database changes or network access beyond local test database.",
+    "coverage": [
+      "Destination without pending task",
+      "Exclude nonnative sessions",
+      "Newest open destination",
+      "Closed session excluded",
+      "Expired sessions excluded",
+      "Revoked authority denied",
+      "Existing task continuity preserved"
+    ]
+  },
+  "review": {
+    "reviewer": "/root/review_l2_autonomous_run",
+    "decision": "GO for bounded destination wiring; recent session is not human presence; another open session may remain selectable after closing one."
+  },
+  "installation": {
+    "image": "sha256:e858ec568ae1da1b78e060389ba19e669401b88653c56fb90aedb0a53052cf99",
+    "health": "healthy",
+    "sourceHashes": {
+      "adapters/postgres/household_work_sessions.py": "9c612858a480ee20aebcc0f266a90f8a205592c2890ce2ddbb13ee68df92dc51",
+      "bootstrap/household_initiative.py": "f1adbe83be1533eccdd8a62496419a87616917eb7d10d76a853ade2375bfbb07"
+    },
+    "liveSelection": {
+      "composed": true,
+      "selectionReadSucceeded": true,
+      "liveNativeDestinationAvailable": false,
+      "modelCalls": 0,
+      "announcements": 0
+    },
+    "http": 200,
+    "workerUnchanged": true
+  },
+  "rollbackArtifact": "/home/administrator/project/.eva2-artifacts/i1-native-destination-20260929/baseline.compose.private.json",
+  "modelCalls": 0,
+  "announcements": 0,
+  "credits": null,
+  "ownerAccepted": false,
+  "remaining": [
+    "No live native destination during read-only check.",
+    "No real useful/heard household contribution established.",
+    "Existing quiet hours, idle check, current authority, delivery caps and reflection budgets unchanged.",
+    "Whole I1 remains open."
+  ]
+}
