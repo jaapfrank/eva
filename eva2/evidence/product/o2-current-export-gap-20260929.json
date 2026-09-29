@@ -1,0 +1,27 @@
+{
+  "recordedAt": "2026-09-29T13:40:12.372900+00:00",
+  "status": "actual_data_export_failed",
+  "source": "Previously verified isolated copy of current installation, migrated through existing0007-to0009 route",
+  "failure": "standalone generic reader rejected staged archive: archive.json.identity_pack_sha256s: array is too short",
+  "verified_structure": {
+    "installations": 1,
+    "identity_pack_versions": 0,
+    "policy_pack_versions": 0,
+    "installation_identity_references": "NULL",
+    "runtime_identity_location": "existing mounted current.json; not invented legacy table rows"
+  },
+  "impact": "Current v2 requires frozen v1 subarchive and cannot export this actual installed runtime. Earlier synthetic full-route success does not prove this case.",
+  "review": "architecture_audit independently inspected4 exporter/reader/recoverypackage files; no existing complete compatible fallback in those files",
+  "next_implementation": "Add explicitly versioned current-runtime profile within existing archive machinery preserving actual rows and verified runtime identity file. Retain v1/v2 contracts; extend existing recovery composition and identity materialization only as required.",
+  "non_claims": [
+    "No archive published",
+    "No restore performed",
+    "No production data changed by this export",
+    "No completed O2.3 or new product category"
+  ],
+  "usage": {
+    "eva_model_calls": 0,
+    "credits": "unknown"
+  },
+  "private_artifacts": "/home/administrator/project/.eva2-artifacts/o2-current-schema-20260929"
+}

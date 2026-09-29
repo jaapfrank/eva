@@ -1,5 +1,12 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — O2.3 actuele export faalt op oude identiteitseis
+
+Eén export van de behouden werkelijke gegevenskopie afgewezen: frozen v1 vereist identiteitsarchiefrecords; huidige installatie bewaart haar identiteit in current.json en heeft lege oude packtabellen. Geen archief gepubliceerd, geen productiegegevens gewijzigd. Onafhankelijke bronreview bevestigt dat bestaande v2/recoverycompositie deze aanname deelt. [Bewijs](evidence/product/o2-current-export-gap-20260929.json).
+
+Volgende concrete bouwstap binnen O2.3: expliciet current-runtimeprofiel in bestaande archiefvoorzieningen, werkelijke records plus geverifieerd identiteitsbestand behouden. Geen fictieve legacyrecords of stille v1/v2-contractwijziging. O2.3 niet afgerond; geen actieve uitvoerder, nul Eva-modelcalls.
+
+
 ## Actueel — O2.3 huidige gegevensversie aangesloten
 
 Bestaande0007→0009-migratie toegepast op draaiende installatie na één kopieproef:47bestaande tabellen/240120rijen inhoudelijk gelijk; drift/FK-controle geslaagd. Onafhankelijke review GO. Lege restore-holdtabel blokkeert runtime niet; kern/werker gezond. Geen herinstallatie, rollback of modelcall; credits onbekend. [Bewijs](evidence/product/o2-current-schema-20260929.json).
