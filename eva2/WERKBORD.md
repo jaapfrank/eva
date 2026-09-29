@@ -1,5 +1,12 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — O2.2 update-uitvoerder geïnstalleerd, bediening open
+
+Bestaande operator uitgebreid met image-only update voor kern/achtergrondwerker. Configuratie en werkelijke opslag worden vóór starten gebonden; nieuwe lokale image wordt één keer toegepast. Vier gerichte controles en echte geïsoleerde Compose-update met behouden voorbeeldgegevens geslaagd, onafhankelijke review GO. CLI geïnstalleerd en import gecontroleerd. Geen productierollback of overbodige herinstallatie. [Bewijs](evidence/product/o2-image-update-20260929.json).
+
+Nog afmaken: bestaande eigenaarbediening aansluiten en volgende echte compatibele update met huidige gegevens uitvoeren. Geen schema-migratieclaim; actuele schema4e_0007. O2.2 blijft open. Geen actieve uitvoerder; nul Eva-modelcalls, credits onbekend.
+
+
 ## Actueel — O2.1 MCP-pauze en hervatten geïnstalleerd
 
 Algemene MCP-module kan via bestaande eigenaarbediening tijdelijk pauzeren en hervatten. Registraties en gegevens blijven behouden; een al toegelaten aanroep kan afronden. Kern en achtergrondwerker gezond. Gerichte controles (9 adaptergevallen, 3 databasegevallen), onafhankelijke review GO en één lifecycleproef op de geïnstalleerde image geslaagd. Geen Eva-modelcalls; credits onbekend. [Bewijs](evidence/product/o2-mcp-pause-20260929.json).

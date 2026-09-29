@@ -1,0 +1,25 @@
+{
+  "recordedAt": "2026-09-29T13:22:11.206297+00:00",
+  "scope": "O2.2 bounded image-only update execution for existing core/delegated worker",
+  "existing": "Compose deployment, image inspection, A/B recording, restore/fresh start retained. No complete ordinary in-place executor in scoped existing routes.",
+  "added": "tools/installation_runtime_update.py; applies only image changes using prepared Compose inputs, verifies live baseline config/storage, exact local candidate and retained mounts, records uncertain dispatch and forbids replay of existing receipt",
+  "verification": {
+    "focused_tests": "4 passed",
+    "actual_compose": "Image replaced in disposable core service; identical data bytes and mount retained; service healthy. Final run includes config-hash and resolved-storage guards.",
+    "review": "architecture_audit GO after stale config and top-level named-volume defects fixed",
+    "installation": "Installed in existing operator package; CLI import/help passed"
+  },
+  "limits": [
+    "Owner wizard update entry not connected yet; O2.2 remains open",
+    "No schema migration; production is 4e_0007_delegated_private",
+    "Actual Compose proof uses sample file data, not full current production database",
+    "Core/delegated worker only; database image updates rejected",
+    "No routine rollback or production reinstallation performed"
+  ],
+  "usage": {
+    "eva_model_calls": 0,
+    "credits": "unknown"
+  },
+  "private_receipts": "/home/administrator/project/.eva2-artifacts/o2-image-update-20260929",
+  "next": "Connect prepared update selection to the existing owner operator entry, then apply next real compatible update through this route without artificial reinstall"
+}

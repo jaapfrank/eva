@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Update-uitvoerder behoudt bestaande gegevensopslag",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Alleen kern/werkerimages wijzigen; afwijkende configuratie of opslag vóór starten weigeren. Werkelijke geïsoleerde Compose-update geslaagd.",
+            "remaining": "Eigenaarbediening en volgende echte update met huidige gegevens nog open; O2.2 niet afgerond.",
+            "source": "eva2/evidence/product/o2-image-update-20260929.json"
+          },
+          {
             "title": "MCP-koppelingen tijdelijk pauzeren en hervatten",
             "date": "29 september",
             "state": "installed",
@@ -2955,14 +2963,14 @@
           }
         ],
         "now": {
-          "title": "O2.1 MCP-pauze en hervatten geïnstalleerd",
-          "state": "Technisch afgerond",
-          "detail": "Nieuwe MCP-aanroepen tijdelijk weigeren en later hervatten zonder registraties te verwijderen. Kern en werker gezond. Geen actieve uitvoerder; update/herstel blijven open.",
-          "owner": "Codex"
+          "title": "O2.2 update-uitvoerder geïnstalleerd; bediening nog open",
+          "state": "Onderdeel geleverd",
+          "detail": "Image-update-uitvoerder geïnstalleerd in operatorpakket en echt beproefd met behouden voorbeelddata. Nog aansluiten op eigenaarbediening en volgende echte compatibele update met huidige gegevens uitvoeren; geen nutteloze herinstallatie.",
+          "owner": "Codex; geen actieve uitvoerder"
         },
         "next": {
-          "title": "O2.2 bestaande updater met huidige gegevensversie",
-          "detail": "Bestaande updatevoorziening en bewijs gebruiken; alleen het resterende aansluitingsgat aanpakken. Nog niet gestart."
+          "title": "O2.2 aansluiten op bestaande eigenaarbediening",
+          "detail": "Gecontroleerde updatekeuze aan bestaande operator koppelen; daarna volgende echte update via dezelfde gegevensopslag."
         },
         "ownerAction": {
           "title": "Doorpraten op woonkamerspeaker proberen",
@@ -2976,7 +2984,7 @@
           "linkLabel": "Geef resultaat in deze taak door"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T13:13:47.185422+00:00"
+        "reviewedAt": "2026-09-29T13:22:11.206297+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14332,10 +14340,23 @@
             {
               "id": "O2.2",
               "title": "Gewone update met bestaande gegevens afronden",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "aansluiten",
               "doneWhen": "Bestaande updater werkt met werkelijke gegevensversie en behoud van informatie.",
-              "owner": "Codex"
+              "owner": "/root",
+              "assignment": {
+                "baseCommit": "120d1177",
+                "outcome": "Finish existing update path with preservation of current data",
+                "estimate": "Bounded inspection of existing update implementation and evidence, then only demonstrated gap; no model calls planned, credits unknown",
+                "files": [
+                  "eva2/tools/installation_runtime_update.py",
+                  "eva2/tests/operations/test_installation_runtime_update.py"
+                ],
+                "finish": "Owner can apply an update with current data preserved; no rebuild of release tooling",
+                "stage": "operator_cli_installed_owner_wiring_open"
+              },
+              "latestEvidence": "eva2/evidence/product/o2-image-update-20260929.json",
+              "remaining": "Image-update-uitvoerder geïnstalleerd in operatorpakket en echt beproefd met behouden voorbeelddata. Nog aansluiten op eigenaarbediening en volgende echte compatibele update met huidige gegevens uitvoeren; geen nutteloze herinstallatie."
             },
             {
               "id": "O2.3",
