@@ -8,6 +8,14 @@ De afzonderlijke taken staan in de bestaande dashboardtab **Werk & volgorde → 
 
 Werkregel: één bruikbaar resultaat afmaken; alleen passende gerichte controle, review en installatie bundelen. Een mislukte proef gericht repareren in de ontwikkelversie; niet telkens terugzetten of opnieuw installeren. Nieuwe wensen vergroten de bestaande eindvoorwaarden niet stilzwijgend.
 
+## Nu — O2.3 export van consistente gegevenskopie loopt
+
+Werkelijke export draait op afgesloten kopiedatabase, sessie63174. Eerdere export stopte door ontbrekende leesrechten na portable dump en daarna door ontbrekende schemas in operatorpakket. Alleen kopierechten hersteld;193 bestaande schemas exact geïnstalleerd, schema-preflight slaagt. Geen nieuwe live snapshot/modelcalls. Uitvoerder `/root`; credits onbekend.
+
+Bestaande identiteitsherstelstap nu aangesloten op echte runtime-UID/GID met private rechten en afzonderlijke directorymount.30 gerichte tests, zes finale ownershipgevallen (inclusief echt lezen als UID65532), onafhankelijke review GO. Vier modules geïnstalleerd; zes geïnstalleerde gevallen geslaagd. [Bewijs](evidence/product/o2-restored-identity-runtime-owner-20260929.json).
+
+**Volgende:** na succesvolle export dezelfde geheugen/gateway/documentkopie verpakken en bestaande volledige herstelroute uitvoeren. O2.3 niet afgerond. Gateway-overlaycode blijft afzonderlijke, gepinde installatie-invoer; pakket alleen reconstrueert die code niet.
+
 ## Afgerond — O2.2 werkelijke update met bestaande gegevens
 
 Kern en achtergrondwerker via bestaande updater bijgewerkt naar dezelfde0009-aansluiting. Beide gezond, taakprogrammahash gelijk, exact dezelfde opslagkoppelingen en bestaande resultaat-aantallen behouden. Onjuiste controle op de volgorde van Docker-mounts gericht gecorrigeerd: vijf controles en onafhankelijke review GO; module geïnstalleerd, oorspronkelijke foutreceipts bewaard en gecontroleerd aangevuld. Geen tweede installatie of rollback. Nul Eva-modelcalls; credits onbekend.

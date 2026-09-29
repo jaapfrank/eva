@@ -1,6 +1,9 @@
 """Existing wizard dispatches verified v3 archives using operator identity policy."""
 from contextlib import nullcontext
 from pathlib import Path
+import os
+import subprocess
+import sys
 
 import pytest
 
@@ -124,3 +127,47 @@ def test_identity_restore_needs_both_values_and_absent_destination(runtime_archi
     with pytest.raises(ValueError, match="inactive new destination"):
         InstallerPortableRestore(**base, identity_destination=destination)
     assert destination.read_text() == "retained"
+
+
+def test_foreign_owner_is_refused_before_database_effects(runtime_archive, tmp_path, monkeypatch):
+    from tools import portable_runtime_restore as restore
+    args, _ = runtime_archive
+    parent = tmp_path / "identity-owner"
+    parent.mkdir(mode=0o700)
+    monkeypatch.setattr(restore.os, "geteuid", lambda: 1000)
+    monkeypatch.setattr(restore, "_restore_archive", lambda *a, **k: pytest.fail("database insertion must not begin"))
+    with pytest.raises(ValueError, match="lacks authority"):
+        restore.restore_runtime_archive(type("Connection", (), {"in_transaction": lambda self: True})(),
+            args["destination"], identity_trust=args["identity_trust"], identity_destination=parent / "identity.json",
+            identity_runtime_owner={"uid":65532,"gid":65532}, authority_reader=lambda:b"",
+            expected_runtime_identity=args["runtime_identity"], object_store_root=tmp_path / "objects")
+
+
+def test_private_identity_is_readable_by_actual_different_runtime_uid(tmp_path):
+    if subprocess.run(["sudo", "-n", "true"], capture_output=True).returncode:
+        pytest.skip("requires existing noninteractive root authority for uid transition")
+    script = """
+import os,sys
+from pathlib import Path
+from tools.portable_runtime_restore import _preserve_identity
+parent=Path(sys.argv[1]);parent.mkdir(mode=0o700)
+try:
+    target=parent/'identity.json'
+    _preserve_identity(b'verified-test-identity',target,{'uid':65532,'gid':65532})
+    assert target.stat().st_uid==parent.stat().st_uid==65532
+    assert target.stat().st_mode&0o777==0o600
+    assert parent.stat().st_mode&0o777==0o700
+    child=os.fork()
+    if child==0:
+        os.chdir(parent);os.setgroups([]);os.setgid(65532);os.setuid(65532)
+        assert Path('identity.json').read_bytes()==b'verified-test-identity'
+        os._exit(0)
+    assert os.waitpid(child,0)[1]==0
+finally:
+    for path in parent.iterdir():path.unlink()
+    parent.rmdir()
+"""
+    done = subprocess.run(["sudo", "-n", "env", "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=" + os.pathsep.join(sys.path), sys.executable, "-c", script,
+        str(tmp_path / "runtime-private")], capture_output=True, text=True)
+    assert done.returncode == 0, done.stderr

@@ -73,6 +73,7 @@ class InstallerPortableRestore:
         start_runtime: Callable[..., dict] | None = None,
         identity_trust: IdentityPackTrustBinding | None = None,
         identity_destination: Path | None = None,
+        identity_runtime_owner: dict | None = None,
     ):
         # The composition root must provide an isolated, traffic-closed target.
         if (
@@ -98,6 +99,12 @@ class InstallerPortableRestore:
             raise ValueError("runtime identity restore needs an absolute inactive new destination")
         self.identity_trust = identity_trust
         self.identity_destination = identity_destination
+        if identity_runtime_owner is not None:
+            if identity_destination is None:
+                raise ValueError("runtime identity owner requires a destination")
+            from tools.portable_runtime_restore import validate_identity_destination
+            validate_identity_destination(identity_destination, identity_runtime_owner)
+        self.identity_runtime_owner = identity_runtime_owner
         if recovery_materialization is not None:
             from tools.installation_recovery_materializer import _owners
             if (not isinstance(recovery_materialization, dict)
@@ -358,6 +365,7 @@ class InstallerPortableRestore:
             from tools.portable_runtime_restore import restore_runtime_archive
             result = restore_runtime_archive(connection, directory / "core",
                 identity_trust=self.identity_trust, identity_destination=self.identity_destination,
+                identity_runtime_owner=self.identity_runtime_owner,
                 authority_reader=self.authority_reader, expected_runtime_identity=self.runtime_identity,
                 object_store_root=self.object_store_root, key_resolver=self.key_resolver)
         else:
@@ -540,6 +548,7 @@ class InstallerPortableRestore:
                             result = restore_runtime_archive(connection, directory,
                                 identity_trust=self.identity_trust,
                                 identity_destination=self.identity_destination,
+                                identity_runtime_owner=self.identity_runtime_owner,
                                 authority_reader=self.authority_reader,
                                 expected_runtime_identity=self.runtime_identity,
                                 object_store_root=self.object_store_root, key_resolver=self.key_resolver)

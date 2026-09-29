@@ -1,6 +1,8 @@
 import json
+import os
 from copy import deepcopy
 from types import SimpleNamespace
+from pathlib import Path
 import pytest
 from sqlalchemy.engine import make_url
 
@@ -130,3 +132,43 @@ def test_activation_cannot_omit_a_prepared_writer(setup):
     del args["activation_settings"]["writers"]["telegram-ingress"]
     with pytest.raises(ValueError, match="coverage"):
         module.build_prepared_restore_config(**args)
+
+
+def identity_restore_inputs(args, rows):
+    private = args["preparation_workspace"] / "identity"
+    private.mkdir(mode=0o700)
+    trust = private / "trust.json"
+    trust.write_bytes((Path(__file__).resolve().parents[2] /
+        "src/eva/application/default_identity_pack_trust.json").read_bytes())
+    trust.chmod(0o600)
+    args["runtime_identity_restore"] = {"trust": str(trust), "destination": str(private / "restored.json")}
+    core = rows["1" * 64]
+    core["Config"]["User"] = f"{os.geteuid()}:{os.getegid()}"
+    core["Config"]["Env"] += ["EVA_IDENTITY_PACK_FILE=/run/identity/restored.json",
+                               "EVA_IDENTITY_PACK_TRUST_FILE=/run/identity/trust.json"]
+    core["Mounts"].append({"Source": str(private), "Destination": "/run/identity", "Type": "bind", "RW": False})
+    return private
+
+
+def test_operator_identity_restore_is_bound_to_actual_core_mounts(setup):
+    args, rows, _, _ = setup
+    private = identity_restore_inputs(args, rows)
+    selected = deepcopy(args["runtime_identity_restore"])
+    result = module.build_prepared_restore_config(**args)
+    assert result.config["runtime_identity_restore"] == {**selected, "runtime_owner": {"uid": os.geteuid(), "gid": os.getegid()}}
+    assert result.config["runtime_identity_restore"] is not args["runtime_identity_restore"]
+    assert not (private / "restored.json").exists()
+    assert result.receipt["restore_executed"] is False
+
+
+@pytest.mark.parametrize("change", ["existing", "relative", "missing_trust", "different_mount", "writable", "invalid_trust"])
+def test_identity_restore_cannot_adopt_an_existing_or_different_core_identity(setup, change):
+    args, rows, _, _ = setup
+    private = identity_restore_inputs(args, rows)
+    if change == "existing": (private / "restored.json").write_text("preserved")
+    elif change == "relative": args["runtime_identity_restore"]["destination"] = "relative.json"
+    elif change == "missing_trust": del args["runtime_identity_restore"]["trust"]
+    elif change == "different_mount": rows["1" * 64]["Mounts"][-1]["Source"] = str(private.parent)
+    elif change == "writable": rows["1" * 64]["Mounts"][-1]["RW"] = True
+    else: (private / "trust.json").write_text("{}")
+    with pytest.raises(ValueError): module.build_prepared_restore_config(**args)

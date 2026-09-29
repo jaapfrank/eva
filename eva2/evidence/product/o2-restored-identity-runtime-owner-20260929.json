@@ -1,0 +1,33 @@
+{
+  "date": "2026-09-29T15:11:16.509921+00:00",
+  "task": "O2.3",
+  "status": "installed_operator_connection",
+  "existing": "Existing signed runtime identity restoration and prepared target builder.",
+  "added": "Optional trusted identity restoration propagated from prepared target; derive runtime UID/GID from actual core; preserve identity in new dedicated private directory readable by that runtime.",
+  "verification": {
+    "focused_tests": 30,
+    "final_ownership_tests": 6,
+    "installed_portable_tests": 6,
+    "independent_review": "GO; use direct dedicated-directory mount",
+    "real_readability": "test subprocess changes to UID65532 and reads restored identity",
+    "no_overwrite": true,
+    "failure_before_database_writes": "missing authority for foreign owner rejected"
+  },
+  "installation": {
+    "operator_modules": 4,
+    "existing_schema_files_added": 193,
+    "source_services_changed": false
+  },
+  "export": {
+    "frozen_database": "eva2_living_disposable_o2_consistent_20260929",
+    "session": 63174,
+    "status": "running_at_record_time",
+    "first_failures": [
+      "portable dump omits archive-reader ACLs; only isolated copy read grants restored",
+      "operator package missing existing schemas; all193 copied with exact hashes before corrected export"
+    ],
+    "model_calls": 0
+  },
+  "credit_cost": "unknown",
+  "remaining": "Current actual full export still running; full installation package and combined restore remain unproven. No O2.3 completion or owner acceptance."
+}

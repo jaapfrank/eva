@@ -60,17 +60,20 @@ def configured_restore_workflow(config):
     if keyring_path is not None and not keyring_path.is_absolute():
         raise ValueError("object keyring path must be absolute")
     resolver = FileObjectKeyResolver(keyring_path) if keyring_path else None
-    identity_trust = identity_destination = None
+    identity_trust = identity_destination = identity_runtime_owner = None
     if "runtime_identity_restore" in config:
         from eva.application.identity_verifier import parse_identity_pack_trust_binding
         selected = config["runtime_identity_restore"]
-        if (not isinstance(selected, dict) or set(selected) != {"trust", "destination"}
+        if (not isinstance(selected, dict) or not {"trust", "destination"} <= set(selected)
+                or set(selected) - {"trust", "destination", "runtime_owner"}
                 or any(not isinstance(value, str) or not Path(value).is_absolute()
-                       for value in selected.values())):
+                       for key, value in selected.items() if key != "runtime_owner")):
             raise ValueError("runtime identity restore requires absolute trusted paths")
+        trust_path = Path(selected["trust"])
         identity_trust = parse_identity_pack_trust_binding(read_private_runtime_file_bytes(
-            Path(selected["trust"]), setting_name="runtime identity restore trust"))
+            trust_path, setting_name="runtime identity restore trust", effective_uid=trust_path.stat().st_uid))
         identity_destination = Path(selected["destination"])
+        identity_runtime_owner = selected.get("runtime_owner")
     engine = create_engine(config["dsn"])
     workflow = None
     try:
@@ -156,6 +159,7 @@ def configured_restore_workflow(config):
             start_runtime=start_runtime,
             identity_trust=identity_trust,
             identity_destination=identity_destination,
+            identity_runtime_owner=identity_runtime_owner,
         )
         yield workflow
     finally:

@@ -2,6 +2,9 @@
 from copy import deepcopy
 from dataclasses import dataclass, field
 import json
+import os
+import stat
+import re
 from pathlib import Path
 from sqlalchemy.engine import make_url
 
@@ -62,6 +65,7 @@ def _database(pin, service):
 def build_prepared_restore_config(*, preparation_workspace, connection, target_dsn,
                                   approved_source, authority, workspace, objects, keyring,
                                   runtime_identity=None, component_configuration=None, activation_settings=None,
+                                  runtime_identity_restore=None,
                                   core_service="core",
                                   writer_services=("core","durable-goal-worker","telegram-ingress")):
     """Use explicit source approval and actual target identities, never archive pins.
@@ -91,6 +95,41 @@ def build_prepared_restore_config(*, preparation_workspace, connection, target_d
         raise ValueError("private target DSN differs from supplied connection")
     core_pin=pin(core_service);actual_core=_actual(core_pin)
     env=dict(item.split("=",1) for item in actual_core["Config"]["Env"] if "=" in item)
+    identity_restore = None
+    if runtime_identity_restore is not None:
+        from eva.application.identity_verifier import parse_identity_pack_trust_binding
+        selected = runtime_identity_restore
+        if (not isinstance(selected, dict) or set(selected) != {"trust", "destination"}
+                or any(not isinstance(value, str) for value in selected.values())):
+            raise ValueError("runtime identity restore requires explicit trusted paths")
+        trust, destination = (_absolute(selected[key]) for key in ("trust", "destination"))
+        user = actual_core["Config"].get("User", "")
+        if not isinstance(user, str) or not re.fullmatch(r"[0-9]+:[0-9]+", user):
+            raise ValueError("prepared identity restore requires explicit numeric core uid and gid")
+        uid, gid = map(int, user.split(":"))
+        runtime_owner = {"uid": uid, "gid": gid}
+        from tools.portable_runtime_restore import validate_identity_destination
+        validate_identity_destination(destination, runtime_owner)
+        trust_info = trust.stat()
+        parse_identity_pack_trust_binding(read_private_runtime_file_bytes(
+            trust, setting_name="prepared runtime identity trust", effective_uid=trust_info.st_uid))
+        if uid != 0 and (trust_info.st_uid != uid or not trust_info.st_mode & stat.S_IRUSR):
+            raise ValueError("private identity trust must be readable by the prepared core owner")
+        parent = destination.parent.stat()
+        if (destination.exists() or destination.is_symlink() or not stat.S_ISDIR(parent.st_mode)
+                or parent.st_uid != os.geteuid() or stat.S_IMODE(parent.st_mode) != 0o700):
+            raise ValueError("runtime identity destination must be new in a private operator directory")
+        for setting, expected in (("EVA_IDENTITY_PACK_FILE", destination),
+                                  ("EVA_IDENTITY_PACK_TRUST_FILE", trust)):
+            container_path = env.get(setting)
+            if not isinstance(container_path, str) or not container_path.startswith("/"):
+                raise ValueError("prepared core requires explicit runtime identity routes")
+            host, mount = _host_file(container_path, actual_core["Mounts"], readonly=True)
+            if host != expected:
+                raise ValueError("prepared core identity mount differs from restore configuration")
+            if setting == "EVA_IDENTITY_PACK_FILE" and not Path(mount["Source"]).is_dir():
+                raise ValueError("new runtime identity requires an existing directory bind")
+        identity_restore = {**deepcopy(selected), "runtime_owner": runtime_owner}
     dsn_path=env.get("EVA_DATABASE_DSN_FILE")
     if dsn_path!="/run/secrets/database_dsn":
         raise ValueError("maintained core database file route required")
@@ -159,6 +198,7 @@ def build_prepared_restore_config(*, preparation_workspace, connection, target_d
             "objects":str(_absolute(objects)),"keyring":str(_absolute(keyring)) if keyring else None,
             "traffic_closed":True,"runtime_guard":guard,**components}
     if runtime_identity is not None:config["runtime_identity"]=deepcopy(runtime_identity)
+    if identity_restore is not None:config["runtime_identity_restore"]=identity_restore
     pending=tuple(sorted(_COMPONENT_KEYS-set(components)))
     return PreparedRestoreConfiguration(config,{
         "contract":"EvaPreparedRestoreConfiguration/v1","namespace":workflow["namespace"],

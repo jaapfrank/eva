@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T14:59:21.311750+00:00",
+        "checkedAt": "2026-09-29T15:11:16.509921+00:00",
         "deliveries": [
+          {
+            "title": "Herstelde identiteit leesbaar voor Eva-runtime",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Bestaande herstelwizard verbindt identiteit met echte runtimegebruiker; private rechten behouden. Gerichte tests, echte UID-leesproef en review geslaagd.",
+            "remaining": "Geen volledige gezamenlijke herstelactie; O2.3 blijft open.",
+            "source": "eva2/evidence/product/o2-restored-identity-runtime-owner-20260929.json"
+          },
           {
             "title": "O2.2 echte update met behoud van gegevens afgerond",
             "date": "29 september",
@@ -3019,9 +3027,9 @@
           }
         ],
         "now": {
-          "title": "O2.2 bijwerken met bestaande gegevens afgerond",
-          "state": "Technisch afgerond en geïnstalleerd",
-          "detail": "Werkelijke kern-/werkerupdate uitgevoerd via bestaande updater; opslag en bestaande werkresultaten behouden, beide gezond en taakversies gelijk. Geen actieve uitvoerder.",
+          "title": "O2.3 export van bevroren gegevenskopie loopt",
+          "state": "In uitvoering",
+          "detail": "Werkelijk exportproces actief (sessie63174). Identiteitskoppeling geïnstalleerd; geen nieuwe live snapshot of modelcalls.",
           "owner": "/root"
         },
         "next": {
@@ -3040,7 +3048,7 @@
           "linkLabel": "Geef resultaat in deze taak door"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T14:59:21.311750+00:00"
+        "reviewedAt": "2026-09-29T15:11:16.509921+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14428,26 +14436,31 @@
               "doneWhen": "Bestaande herstelwizard werkt voor huidige gegevensversie; geen nieuw herstelsysteem bouwen.",
               "owner": "/root",
               "assignment": {
-                "baseCommit": "a9305db9",
+                "baseCommit": "6f7e322a",
                 "files": [
-                  "eva2/tools/installation_source_snapshot.py",
-                  "eva2/tests/operations/test_installation_source_snapshot.py"
+                  "eva2/tools/installer_prepared_restore_config.py",
+                  "eva2/tools/portable_runtime_restore.py",
+                  "eva2/tools/installer_portable_restore.py",
+                  "eva2/tools/installer_restore_wizard.py",
+                  "focused identity restore tests"
                 ],
                 "existing": "Current restore route proven from0009; existing install_schema forward route supports0007",
                 "gap": "Actual retained0007 data has not passed the existing forward migration needed by portable v2",
-                "outcome": "Eén consistente kopie van kern, geheugen, gateway en documenten verzamelen met bestaande helpers.",
-                "estimate": "Eén begrensde operatorcompositie en controle; geen modelcalls. Credits onbekend.",
+                "outcome": "Bevroren echte gegevens via bestaande volledige herstelroute herstellen.",
+                "estimate": "Bestaande kernexport duurt eerder circa8min; één export van deze nieuwe consistente bronkopie, geen nieuwe live snapshot/modelcalls. Credits onbekend.",
                 "finish": "Consistent source copy collected through existing helpers; complete joint restore remains required.",
-                "stage": "consistent_source_collected",
+                "stage": "identity_runtime_connection_installed_export_running",
                 "workers": {
-                  "/root/architecture_audit": "new writer/reader + own tests only",
-                  "/root": "existing restore seam, authority contract, board, integration"
+                  "/root": "frozen database export running; actual package composition next"
                 },
-                "activeWorkers": [],
-                "endCondition": "Pakket/autoriteit/wizard gebruiken dezelfde v3-kern met bestaande externe stappen; gerichte combinatiecontrole, onafhankelijke review en operatorinstallatie."
+                "activeWorkers": [
+                  "/root"
+                ],
+                "endCondition": "Pakket/autoriteit/wizard gebruiken dezelfde v3-kern met bestaande externe stappen; gerichte combinatiecontrole, onafhankelijke review en operatorinstallatie.",
+                "liveExportSession": 63174
               },
-              "latestEvidence": "eva2/evidence/product/o2-consistent-source-collected-20260929.json",
-              "remaining": "Consistente echte bronkopie verzameld; twaalf diensten hervat. Dezelfde kernkopie naar huidig archief omzetten en samen met geheugen/gateway/documenten via bestaande herstelroute uitvoeren."
+              "latestEvidence": "eva2/evidence/product/o2-restored-identity-runtime-owner-20260929.json",
+              "remaining": "Identiteitsherstel op daadwerkelijke runtimegebruiker aangesloten en geïnstalleerd; export van consistente bevroren kopie loopt. Volledig pakket en gezamenlijke herstelactie nog open."
             }
           ],
           "latestEvidence": "eva2/evidence/product/o2-consistent-source-collected-20260929.json"

@@ -80,6 +80,7 @@ def test_configuration_builder_joins_components_once_and_checks_lineage_first(tm
     monkeypatch.setattr(sqlalchemy, "create_engine", lambda dsn: engine)
     def build(**kwargs):
         calls.append("complete" if "component_configuration" in kwargs else "preflight")
+        assert kwargs["runtime_identity_restore"] == {"trust": "/operator/trust.json", "destination": "/operator/new.json"}
         return SimpleNamespace(pending=(), config={"joined": True})
     monkeypatch.setattr(installer_prepared_restore_config, "build_prepared_restore_config", build)
     def components(**kwargs):
@@ -88,7 +89,8 @@ def test_configuration_builder_joins_components_once_and_checks_lineage_first(tm
     monkeypatch.setattr(installer_prepared_components, "prepare_installer_components", components)
     preparation = SimpleNamespace(workspace=tmp_path, status=lambda: "prepared")
     builder = module.PreparedRestoreConfigurationBuilder(component_settings={"prepared_workspace": tmp_path},
-        restore_settings={"preparation_workspace": tmp_path, "target_dsn": "private", "runtime_identity": {}, "activation_settings": {}})
+        restore_settings={"preparation_workspace": tmp_path, "target_dsn": "private", "runtime_identity": {}, "activation_settings": {},
+                          "runtime_identity_restore": {"trust": "/operator/trust.json", "destination": "/operator/new.json"}})
     assert builder(preparation) == {"joined": True}
     assert builder(preparation) == {"joined": True}
     assert calls == ["preflight", "components", "complete", "dispose"]
