@@ -1,14 +1,14 @@
 # Eva 2 — uitvoerbaar werkbord
 
-## Nu — T1: onderzoek volledig afronden
+## Afgerond — T1: onderzoek opslaan, controleren en teruggeven
 
-**Afgerond:** de gewone leesopdracht heeft het bestaande [GLaDOS-rapport](evidence/product/glados-vision-resultaat-20260929.md) volledig gelezen en het eindantwoord opgeslagen. Geen nieuw onderzoek of bestandswijziging. Werker49s,4 modelantwoorden/3 tools,38.407in/428uit gedeeltelijk gemeten; ontvangst13,225s met7.529in/198uit. Credits onbekend. [Bewijs](evidence/product/glados-saved-report-return-20260929.json).
+**Technisch afgerond op geïnstalleerde code:** één nieuwe relevante vraag over de realtime gateway en Voice PE onderzocht, primaire documentatie en broncode gelezen, concreet ontbrekende firmwarebron benoemd. Rapport238woorden opgeslagen, exact teruggelezen en eindantwoord geleverd zonder coördinatorhervatting. Onafhankelijke review GO. [Rapport](evidence/product/voice-gateway-compatibiliteit-20260929.md) · [Bewijs](evidence/product/voice-gateway-research-completed-20260929.json).
 
-**Geïnstalleerd:** f118d9de bewaart lokaal gelezen bronfragmenten in hun oorspronkelijke uitvoerstap, zodat hervatting niet tegen latere acties botst. Eén productbestand,104 gerichte controles waaronder3 echte databasegevallen; onafhankelijke review akkoord. Kern/werker gezond, exacte bron gecontroleerd en terugweg bewaard. Oude stappen zonder opgeslagen index worden niet achteraf geraden.
+**Grenzen en verbruik:**186s,14modelantwoorden/13tools,383.998in/2.427uit gedeeltelijk gemeten; credits onbekend. Geen algemene betrouwbaarheid-/snelheidsclaim, fysiekeVoicePE-proef of eigenaaracceptatie. Eerdere GLaDOS-timeout en mislukte hervatting blijven bewaard; de afzonderlijke rapportteruggave slaagde wel. Grote categorie Tools en diensten wacht ook op T2/T3.
 
-**Ook geïnstalleerd:** 720e2eff toont resterende taakduur aan het werkmodel;8f1c9b0d corrigeert de eerdere55s-onderzoekgrens. Geen nieuwe budgetten of betaalde route.
+**Geïnstalleerde correcties behouden:** resterende taakduur720e2eff, geïndexeerde lokale leesstappenf118d9de en native onderzoektimeout8f1c9b0d. Geen nieuwe bronwijziging deze ronde. [Contextdiagnose](evidence/product/research-completion-diagnosis-20260929.json): geen dubbele receipt-invoeging; blind lager pagineren kan extra modelrondes veroorzaken en wordt niet zonder voordeel ingevoerd.
 
-**T1 blijft open:** de oorspronkelijke onderzoekstaak bereikte300s vóór eigen teruglezing/eindantwoord; de historische hervatting liep vast. Het goede rapport is behouden en afzonderlijk teruggegeven, maar dit bewijst geen volledig zelfstandig afgerond onderzoek. De actuele leesopdracht beproefde geen lokale selectie; de hervatcorrectie is daarvoor met echte databasegevallen gecontroleerd.49s voor alleen lezen blijft traag. Geen actieve modeltaak of herhaalde onderzoeksproef.
+**Volgende, nog niet gestart — M2:** bestaande huishoud-/privégrenzen koppelen aan actuele kanaalroutes; uitsluitend ontbrekend combinatiebewijs controleren, geen nieuw geheugensysteem. FysiekeC3 en Telegramacceptatie blokkeren alleen afhankelijk werk.
 
 ## C1 — tekstgesprek tijdens werk
 

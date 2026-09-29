@@ -1,0 +1,56 @@
+{
+  "checkedAt": "2026-09-29T07:35:20.104090+00:00",
+  "status": "technically_completed_independently_reviewed",
+  "workId": "work:eva-chat:fe2023f4-50f7-5b43-a0cd-70c091de81ec",
+  "sourceCommit": "2e18a38f",
+  "createdAt": "2026-09-29T07:31:10Z",
+  "completedAt": "2026-09-29T07:34:16Z",
+  "elapsedSeconds": 186,
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 14,
+    "tool_calls": 13,
+    "input_tokens": 383998,
+    "output_tokens": 2427,
+    "total_tokens": 386425,
+    "cost_usd_micros": null
+  },
+  "report": "eva2/evidence/product/voice-gateway-compatibiliteit-20260929.md",
+  "reportSha256": "ccedc48b907642f132bb749d3c6233c012e915ba71c8f687cce0e28871e93c9e",
+  "reportBytes": 2361,
+  "reportWords": 238,
+  "result": "Mijn advies: niet kiezen als kant-en-klare upgrade voor je bestaande Voice PE. De gateway heeft servercode voor gelijktijdige audio en onderbreken, maar vereist aangepaste ESPHome-firmware met directe PCM-audio via WebSocket. De firmwarelink is een placeholder; daadwerkelijke Voice PE-werking is daarmee niet bewezen. Dit is geen browser/WebRTC-oplossing.\n\nGemini Live is de geïmplementeerde modeldienst; OpenAI nog niet. Mijn eigen gesprekskern zou een nieuw te bouwen backendadapter vereisen.\n\nHet brononderbouwde rapport is opgeslagen en volledig teruggelezen:\n /proof-state/voice-gateway-compatibiliteit-20260929.md",
+  "sourceUrls": [
+    "https://github.com/rw4lll/ha-realtime-voice-gateway",
+    "https://raw.githubusercontent.com/rw4lll/ha-realtime-voice-gateway/main/docs/STREAMING_GATEWAY_PROTOCOL.md",
+    "https://raw.githubusercontent.com/rw4lll/ha-realtime-voice-gateway/main/cmd/gateway/main.go",
+    "https://raw.githubusercontent.com/rw4lll/ha-realtime-voice-gateway/main/internal/pipeline/pipeline.go",
+    "https://raw.githubusercontent.com/rw4lll/ha-realtime-voice-gateway/main/internal/session/handler.go"
+  ],
+  "limitations": [
+    "Source main snapshots captured during task, no immutable upstream commit verified",
+    "No physical Voice PE test or firmware installation",
+    "Success on this task does not prove lower latency, general reliability or competitor superiority",
+    "Historical GLaDOS failure retained; no claim old task itself succeeded",
+    "Website work result available; owner receipt/acceptance not inferred"
+  ],
+  "creditCosts": "unknown",
+  "foregroundUsage": [
+    {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 6720,
+      "output_tokens": 322,
+      "model_attempts": 1
+    }
+  ],
+  "foregroundResponseSeconds": 13.216,
+  "independentReview": {
+    "reviewer": "/root/review_directory_connection",
+    "decision": "GO",
+    "basis": "Primary source conclusions supported; saved report equals sealed readback capture exactly; final result includes conclusion and path; no coordinator resume",
+    "scope": "Bounded T1 research end condition, not physical Voice PE or general efficiency"
+  }
+}

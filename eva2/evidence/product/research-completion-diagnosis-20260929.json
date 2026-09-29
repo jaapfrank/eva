@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-09-29T07:31:09.195614+00:00",
+  "baseCommit": "2e18a38f",
+  "sourceWorkId": "work:eva-chat:40548afb-d5d5-578c-a52d-00183e0e6b49",
+  "findings": {
+    "measuredResponses": 19,
+    "unmeasuredResponses": 1,
+    "inputTokens": 592136,
+    "firstInputTokens": 6213,
+    "lastInputTokens": 52211,
+    "finalWriteCallGeneratedAt": "2026-09-29T07:01:50Z",
+    "deadline": "2026-09-29T07:01:53Z",
+    "duplicateReceiptInsertionFound": false,
+    "existingExactProofDeduplication": true,
+    "sourceHistoryRetainedEachTurn": true
+  },
+  "sources": [
+    "eva2/src/eva/application/conversation.py:1064",
+    "eva2/src/eva/adapters/model/pydantic_conversation.py:676",
+    "eva2/src/eva/adapters/model/pydantic_conversation.py:865",
+    "eva2/src/eva/adapters/postgres/connector_results.py:79"
+  ],
+  "offlineCounterfactual": {
+    "method": "Decode saved capture chunks; verify exact length and SHA256; count ceil(text characters/8192) for newly paged complete text. This is not a model timing measurement.",
+    "threshold16384": {
+      "newlyPagedTexts": 2,
+      "additionalSelectionsForFullText": 7
+    },
+    "threshold8192": {
+      "newlyPagedTexts": 6,
+      "additionalSelectionsForFullText": 15
+    }
+  },
+  "decision": "Do not lower paging threshold or discard historical evidence without demonstrated net benefit. Existing remaining-time guidance has not yet been exercised in a complete fresh research task. One separate useful voice-gateway compatibility question will supply missing evidence; no repeat GLaDOS research.",
+  "runtimeModelCalls": 0,
+  "creditCosts": "unknown",
+  "independentReview": "review_directory_connection agreed: historical data supports diagnosis, no lower paging threshold without demonstrated net benefit"
+}
