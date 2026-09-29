@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Wacht op tabdeling — T3.1
+
+Bestaande persoonlijke Chrome-bridge44718 bereikbaar, huidige status disconnected/busy=false. Geen tabblad gedeeld; eigenaar gevraagd één bestaand tabblad te kiezen via **Deel een bestaand tabblad → Allow & select**. De aparte beheerde browser is geen vervanging van deze persoonlijke Chrome-route. Geen browsertaak/modelcall of productwijziging gestart. Dit blokkeert alleen T3.1–T3.3.
+
+C1.1bestaande metingen geraadpleegd:5,191s totale begroeting,3,330s tot modelinhoud en0,985s aparte geheugenmeting. Geen nieuw geheugen-/transportdefect aangetoond; geen nieuwe proef of speculatieve ombouw. Basis b1f46ebd, creditkosten onbekend.
+
 ## Opgeleverd — concrete taken per onderdeel
 
 Projectdashboard 44712 heeft nu **Taken per onderdeel**: 24 hoofdopdrachten, 6 technisch afgerond en 18 open, met 44 afzonderlijke resterende taken. Iedere taak heeft een eigen ID, status, verantwoordelijke en eindvoorwaarde in dezelfde JSON-werkbron. Geen nieuwe productscope of gewijzigde acceptatie. Build, echte browsercontrole (zoeken en afgerondfilter) en onafhankelijke review akkoord; geïnstalleerd. Geen Eva-modelcalls.

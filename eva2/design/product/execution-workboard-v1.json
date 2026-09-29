@@ -2875,10 +2875,10 @@
           }
         ],
         "now": {
-          "title": "Takenlijst opgesplitst en geïnstalleerd",
-          "state": "Afgerond: geen producttaak actief tijdens deze dashboardwijziging",
-          "detail": "24 hoofdopdrachten:6 technisch afgerond,18 open. Het resterende werk staat als44 afzonderlijke taken met status en eindvoorwaarde in Taken per onderdeel.",
-          "doneWhen": "Geïnstalleerd; zoeken en afgerondfilter in echte browser gecontroleerd, onafhankelijke review akkoord."
+          "title": "T3.1: Chrome-koppeling bereikbaar; tabdeling ontbreekt",
+          "state": "Wacht op tabkeuze; geen browsertaak actief",
+          "detail": "Bestaande persoonlijke bridge meldt disconnected, busy=false. Geen nieuwe browsercode nodig. De aparte beheerde browser is niet de gevraagde persoonlijke Chrome-route.",
+          "doneWhen": "Eén door Jaap gekozen bestaand tabblad via de Eva-bridge bereikbaar."
         },
         "next": {
           "title": "T3.1: bestaand Chrome-tabblad met Eva verbinden",
@@ -2886,18 +2886,18 @@
           "detail": "Bestaande bridge gebruiken en beschikbaar tabblad bevestigen. Daarna pas T3.2 browseropdracht en T3.3 overnemen/doorgaan."
         },
         "ownerAction": {
-          "title": "Telegram: tussenvraag tijdens onderzoek",
-          "url": "https://web.telegram.org/",
-          "linkLabel": "Open Telegram",
+          "title": "Deel één Chrome-tabblad voor T3.1",
           "steps": [
-            "Alleen als nog niet uitgevoerd na de laatste update: /eva2 Zoek uit wat Home Assistant Cloud doet voor spraak, met bronnen.",
-            "Meteen daarna: /eva2 Hoe gaat het met jou?",
-            "Meld welke vraag eerst antwoord kreeg."
+            "Open http://127.0.0.1:44718 in Google Chrome.",
+            "Klik Deel een bestaand tabblad en kies Allow & select bij het bedoelde tabblad.",
+            "Geef hier Gedeeld door."
           ],
-          "expected": "Tussenvraag vóór het onderzoeksantwoord; onderzoeksantwoord bij de oorspronkelijke vraag."
+          "expected": "Eva krijgt toegang tot uitsluitend het gekozen tabblad; daarna kunnen T3.2 en T3.3 verder.",
+          "url": "http://127.0.0.1:44718",
+          "linkLabel": "Open bestaande Chrome-bediening"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T09:43:42.270529+00:00"
+        "reviewedAt": "2026-09-29T09:47:06.879417+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12876,7 +12876,8 @@
               "status": "planned",
               "kind": "verbeteren",
               "doneWhen": "Eenvoudig hallo sneller dan de huidige circa5s; inhoudelijke antwoordtijd en verbruik vastgelegd.",
-              "owner": "Codex"
+              "owner": "Codex",
+              "existingTimingFinding": "Existing measured greeting5.191s; model first content3.330s, memory-only0.985s. No new measurement or demonstrated new defect; no speculative memory/transport rebuild."
             },
             {
               "id": "C1.2",
@@ -13531,22 +13532,25 @@
           },
           "activeWorker": null,
           "assignment": {
-            "stage": "existing_browser_recovery_required",
+            "stage": "T3.1_waiting_explicit_tab_selection",
             "owner": "/root",
-            "scope": "Read-only installed browser availability; no takeover, no model calls",
-            "effort": "One status request and existing source inspection; credits unknown",
+            "scope": "Existing personal Chrome bridge on44718; availability and explicit tab-sharing only",
+            "effort": "One status check and tab connection; no Eva model calls; credits unknown",
             "doneWhen": "Select an executable existing browser outcome or record the exact access prerequisite",
-            "result": "Docker active; owner route and worker ready. Browser reports recovery_required with preserved profile."
+            "result": "Docker active; owner route and worker ready. Browser reports recovery_required with preserved profile.",
+            "baseCommit": "b1f46ebd"
           },
           "dashboardComponent": "browser",
           "remainingTasks": [
             {
               "id": "T3.1",
               "title": "Bestaand Chrome-tabblad met Eva verbinden",
-              "status": "planned",
+              "status": "blocked",
               "kind": "aansluiten",
               "doneWhen": "Gedeeld tabblad via bestaande bridge beschikbaar; geen nieuwe browserlaag.",
-              "owner": "Codex"
+              "owner": "Codex",
+              "blocker": "De bestaande bridge is bereikbaar, maar geen Chrome-tabblad gedeeld. Jaap kiest één tabblad via44718; instructie gevraagd.",
+              "checkedAt": "2026-09-29T09:47:06.879417+00:00"
             },
             {
               "id": "T3.2",
