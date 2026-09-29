@@ -1,0 +1,98 @@
+{
+  "checkedAt": "2026-09-29T10:38:44.837092+00:00",
+  "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+  "scope": "Offline native request shaping only; not full model transport or comparison admission",
+  "probe": "eva2/benchmark/inspect_ai_v1/p1_agentzero_request_probe.py",
+  "probeSha256": "2c468fc96a2f77fb42d760bb0d017c5dc0c878f0c1e121f46ce5648e9de4d63f",
+  "execution": {
+    "exit_code": 0,
+    "elapsed_seconds": 0.5738492750097066,
+    "network": "unshare --net",
+    "home": "isolated empty path",
+    "credentials": "not provided"
+  },
+  "dependencies": {
+    "requests": "2.31.0",
+    "PyYAML": "6.0.1",
+    "simpleeval": "1.0.3",
+    "regex": "2026.9.29",
+    "GitPython": "3.1.43",
+    "giturlparse": "0.14.0",
+    "webcolors": "24.6.0",
+    "watchdog": "6.0.0",
+    "pydantic": "2.11.7",
+    "pydantic_core": "2.33.2",
+    "annotated-types": "0.8.0",
+    "typing-extensions": "4.16.0",
+    "typing-inspection": "0.4.4"
+  },
+  "observations": {
+    "scope": "Native configuration normalization and OAuth request preparation only",
+    "provider_calls": 0,
+    "source_sha256": {
+      "codex.py": "bcc9244bc2abc852aaf65a56c796abb8ec4bf93adfd2b3fc3b665312cd1b53db",
+      "config.py": "ca714c648533a067d8b26d69f33437eda6cffc9898f295ed6d6647e7836af5f3"
+    },
+    "cases": [
+      {
+        "case": "contact_config_only",
+        "requested_effort": "none",
+        "normalized_config_effort": "high",
+        "prepared_model": "gpt-6-sol",
+        "prepared_reasoning": {
+          "effort": "high"
+        },
+        "max_output_tokens_preserved": false,
+        "original_output_limit_unchanged": true
+      },
+      {
+        "case": "contact_explicit_effort",
+        "requested_effort": "none",
+        "normalized_config_effort": "high",
+        "prepared_model": "gpt-6-sol",
+        "prepared_reasoning": {
+          "effort": "none"
+        },
+        "max_output_tokens_preserved": false,
+        "original_output_limit_unchanged": true
+      },
+      {
+        "case": "contact_explicit_reasoning",
+        "requested_effort": "none",
+        "normalized_config_effort": "high",
+        "prepared_model": "gpt-6-sol",
+        "prepared_reasoning": {
+          "effort": "none"
+        },
+        "max_output_tokens_preserved": false,
+        "original_output_limit_unchanged": true
+      },
+      {
+        "case": "work_config_only",
+        "requested_effort": "medium",
+        "normalized_config_effort": "medium",
+        "prepared_model": "gpt-6-astra",
+        "prepared_reasoning": {
+          "effort": "medium"
+        },
+        "max_output_tokens_preserved": false,
+        "original_output_limit_unchanged": true
+      }
+    ]
+  },
+  "practicalConsequence": "Do not use config-only reasoning none for contact parity. Explicit body none is supported at this boundary; upstream propagation remains to verify. Do not treat max_output_tokens as enforced on this OAuth route.",
+  "limitations": [
+    "Configuration lookup supplied in memory after actual native normalization; persisted plugin settings not exercised.",
+    "No credentials, provider response, agent loop, cumulative accounting or cancellation exercised.",
+    "Host system libraries plus isolated Python dependencies; not a full Agent Zero deployment."
+  ],
+  "priorAttempts": "Initial import failed on simpleeval in previous turn; current setup exposed regex and pydantic imports and user-site dependency leakage under empty HOME. Installed isolated dependencies with PYTHONNOUSERSITE=1; final offline run passed.",
+  "modelCalls": 0,
+  "creditCost": null,
+  "runtimeChanged": false,
+  "review": {
+    "status": "GO for limited offline request shaping only",
+    "reviewer": "/root/review_p1_request_shape",
+    "correction": "Renamed input_body_unchanged to original_output_limit_unchanged to describe its actual scope; reran offline after field rename."
+  }
+}

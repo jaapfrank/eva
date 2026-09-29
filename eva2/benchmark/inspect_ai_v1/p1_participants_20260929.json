@@ -64,6 +64,15 @@
         "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/agent-zero-source",
         "headVerified": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
         "runtimeInstalled": false
+      },
+      "nativeRequestPreparation": {
+        "status": "executed_offline",
+        "evidence": "eva2/evidence/product/p1-agentzero-request-20260929.json",
+        "contactConfigNone": "normalizes_to_high",
+        "explicitRequestNone": "preserved_at_bridge_boundary",
+        "workConfigMedium": "preserved",
+        "outputCap": "removed",
+        "runtimeAdmission": "not_admitted"
       }
     }
   ],

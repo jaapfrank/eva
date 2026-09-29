@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## P1.1 — native requestvoorbereiding gecontroleerd
+
+Bestaande Agent Zero-configuratie en OAuth-requestvorming daadwerkelijk uitgevoerd in een netwerkloze omgeving. Configuratie `none` wordt `high`; expliciet meegegeven `none` en ingestelde `medium` blijven behouden. De route verwijdert `max_output_tokens`. Onafhankelijke review akkoord; [bewijs](evidence/product/p1-agentzero-request-20260929.json). Geen modelcalls, runtimewijziging of afgeronde Eva-functie. P1.1 blijft open voor native toegang, upstream doorgifte en totale taakgrenzen.
+
+**Volgende, nog niet gestart:** P1.2 beperkt ontwikkelmeetbudget concretiseren binnen bestaand protocol. Geen nieuwe broninventarisatie of herhaling van deze requestproef. Geen actieve uitvoerders. Credits onbekend.
+
 ## P1.1 — begrensde native broncontrole afgerond; toelating open
 
 Vijf systemen hebben een concrete [toelatingsmatrix](benchmark/inspect_ai_v1/p1-native-admission.md). Onafhankelijke review akkoord. Iteratie-/rate-/tijdslimieten zijn niet vanzelf gelijke taakbudgetten; volledige geheugen/helperusage onbekend. Agent Zero heeft een bestaande OAuth-route; zijn native importproef stopt door ontbrekende simpleeval vóór iedere modelcall. Geen productkwaliteitsoordeel of nieuwe afgeronde productfunctie. [Bewijs](evidence/product/p1-native-limits-20260929.json).

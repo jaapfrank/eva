@@ -2899,15 +2899,15 @@
           }
         ],
         "now": {
-          "title": "P1.1: verschillen in taakgrenzen vastgelegd",
-          "state": "Brononderzoek afgerond — uitvoering nog niet toegelaten",
-          "detail": "Vijf systemen onderzocht met bestaande code. Geen eerlijk gemeten totaalkosten of gelijke taaklimieten bewezen; geen modelrun of winnaar. P1.1 blijft open.",
-          "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar."
+          "title": "P1.1: native requestinstellingen gecontroleerd",
+          "state": "Deelcontrole afgerond — vergelijking nog open",
+          "detail": "Native OAuth-requestvoorbereiding uitgevoerd. Config-only none wordt high; expliciete none en medium blijven behouden. Uitvoertokenlimiet wordt verwijderd. Volledige native toegang, upstream instellingen en gelijke cumulatieve grenzen blijven open; deze requestproef niet herhalen.",
+          "owner": "/root"
         },
         "next": {
-          "title": "P1.1: concrete native aansluitingen oplossen",
+          "title": "P1.2: uitvoerbaar vergelijkingsbudget vastleggen",
           "state": "Nog niet gestart",
-          "detail": "Effectieve modelinstellingen en grenzen aansluiten met bestaande adapters. Geen nieuwe audit of benchmarkplatform."
+          "detail": "Bestaand protocol concretiseren met de aangetoonde native grenzen; onbekende toegang blijft zichtbaar, geen automatische grote modelproef."
         },
         "ownerAction": {
           "title": "Deel één Chrome-tabblad voor T3.1",
@@ -2921,7 +2921,7 @@
           "linkLabel": "Open bestaande Chrome-bediening"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T10:31:28.882865+00:00"
+        "reviewedAt": "2026-09-29T10:39:47.883101+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12741,7 +12741,7 @@
           ]
         }
       ],
-      "nextAction": "P1.1 concrete native adapter/runtimeaansluiting voor gelijke taakgrenzen; source investigation closed, no unchanged repeated audit or modelmatrix.",
+      "nextAction": "P1.2 concrete bounded development cases and aggregate budget in existing protocol; native access gaps remain explicit, no automatic full matrix.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -14155,8 +14155,19 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Begrensde broncontrole afgerond: routes aanwezig, maar geen gelijkwaardige cumulatieve taakgrenzen en volledig totaalgebruik aangetoond. AgentZero OAuth-route gevonden; native import geblokkeerd door ontbrekende simpleeval. Geen modelcalls. Volgende: concrete adapter-/runtimeaansluiting, geen nieuwe inventarisatie.",
-              "latestEvidence": "eva2/evidence/product/p1-native-limits-20260929.json"
+              "remaining": "Native OAuth-requestvoorbereiding uitgevoerd. Config-only none wordt high; expliciete none en medium blijven behouden. Uitvoertokenlimiet wordt verwijderd. Volledige native toegang, upstream instellingen en gelijke cumulatieve grenzen blijven open; deze requestproef niet herhalen.",
+              "latestEvidence": "eva2/evidence/product/p1-agentzero-request-20260929.json",
+              "assignment": {
+                "baseCommit": "ceb485f4",
+                "files": [
+                  "eva2/benchmark/inspect_ai_v1/",
+                  "eva2/evidence/product/p1-agentzero-request-20260929.json"
+                ],
+                "existing": "Pinned native Agent Zero OAuth bridge and existing offline probe.",
+                "gap": "Effective contact/work reasoning settings not established; prior probe could not import simpleeval.",
+                "finish": "Run actual request preparation including actual configuration normalization; record any setting mismatch without model calls.",
+                "estimate": "One bounded dependency setup and one offline run, 15–30 minutes; no provider calls, credits unknown."
+              }
             },
             {
               "id": "P1.2",

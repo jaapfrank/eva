@@ -77,16 +77,30 @@ bridge and Agent-Zero-owned credentials; rotating credentials must not be shared
 with another client. `plugins/_oauth/helpers/codex.py:674–714,978–979` preserves
 explicit reasoning or supplies the bridge setting (default `high`). Therefore
 generic transport omission alone does not prove the final effort is wrong.
-A network-isolated import/probe stopped before request preparation because the
-current host environment lacks `simpleeval`. No assertion or provider call ran.
-Do not turn this host dependency failure into an Agent Zero quality failure.
+The initial import stopped on missing `simpleeval`. A follow-up installed only
+the required import dependencies in an isolated Python environment and executed
+the actual native configuration normalizer and request preparation without
+network access or credentials. Four cases establish:
+
+- Config-only `none` normalizes to `high`; it cannot establish contact parity.
+- Explicit `reasoning_effort: none` or `reasoning.effort: none` survives at the
+  bridge boundary. Upstream propagation through the agent remains unverified.
+- Config-only `medium` survives for work requests.
+- The bridge removes `max_output_tokens` in every case. It is not an enforced
+  response limit at this boundary.
+
+See `p1_agentzero_request_probe.py` and
+`../../evidence/product/p1-agentzero-request-20260929.json`. Independent review
+accepted these limited conclusions. This is not authenticated inference, a full
+Agent Zero installation, provider enforcement, or sample-wide accounting.
 
 ## Remaining work, without a platform detour
 
 1. Bind effective model/provider/tool settings and native runtime provenance for
    each participant using existing adapters. Agent Zero's native subscription
-   route exists; exact effective reasoning and local runtime dependencies still
-   need a targeted check before any model use.
+   route exists and its request preparation now executes locally; full upstream
+   propagation and runtime access remain open before any model use. Do not
+   repeat the completed bridge-shaping probe.
 2. For each native control, establish the enforcement boundary and readback.
    Record unsupported equal-budget cases as unavailable; do not silently relax
    one participant's constraints or add an alternative paid route.
