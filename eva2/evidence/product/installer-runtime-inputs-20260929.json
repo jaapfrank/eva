@@ -1,0 +1,102 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-29T12:21:39.328362+00:00",
+  "sourceCommit": "eb5ff599",
+  "task": "O1.1",
+  "status": "actual_runtime_image_inputs_identified_not_release_verified",
+  "services": [
+    {
+      "service": "core",
+      "imageId": "sha256:e858ec568ae1da1b78e060389ba19e669401b88653c56fb90aedb0a53052cf99",
+      "imageReference": "eva2-i1-native-destination:20260929",
+      "architecture": "amd64",
+      "os": "linux",
+      "localSizeBytes": 128207447,
+      "state": "running",
+      "dockerRecordedRepoDigests": [
+        "eva2-i1-native-destination@sha256:e858ec568ae1da1b78e060389ba19e669401b88653c56fb90aedb0a53052cf99"
+      ]
+    },
+    {
+      "service": "delegated-work-worker",
+      "imageId": "sha256:dc90f1acf657f7841522ef6d90983ac1d41db44e74694ef3bc68d558d381da3a",
+      "imageReference": "eva2-style-fidelity-delegated-work-worker:20260929",
+      "architecture": "amd64",
+      "os": "linux",
+      "localSizeBytes": 128170707,
+      "state": "running",
+      "dockerRecordedRepoDigests": [
+        "eva2-style-fidelity-delegated-work-worker@sha256:dc90f1acf657f7841522ef6d90983ac1d41db44e74694ef3bc68d558d381da3a"
+      ]
+    },
+    {
+      "service": "hindsight",
+      "imageId": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+      "imageReference": "eva2/distroless-hindsight-api-file-secret@sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+      "architecture": "amd64",
+      "os": "linux",
+      "localSizeBytes": 809046754,
+      "state": "running",
+      "dockerRecordedRepoDigests": [
+        "eva2/distroless-hindsight-api-file-secret@sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710"
+      ]
+    },
+    {
+      "service": "hindsight-access-lease",
+      "imageId": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "imageReference": "eva2.local/conversation@sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "architecture": "amd64",
+      "os": "linux",
+      "localSizeBytes": 59535596,
+      "state": "running",
+      "dockerRecordedRepoDigests": [
+        "eva2.local/conversation@sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e"
+      ]
+    },
+    {
+      "service": "hindsight-postgres",
+      "imageId": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "imageReference": "eva2/chainguard-pgvector18-offline-candidate@sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "architecture": "amd64",
+      "os": "linux",
+      "localSizeBytes": 143613890,
+      "state": "running",
+      "dockerRecordedRepoDigests": [
+        "eva2/chainguard-pgvector18-offline-candidate@sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1"
+      ]
+    },
+    {
+      "service": "model-access-lease",
+      "imageId": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "imageReference": "eva2.local/conversation@sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "architecture": "amd64",
+      "os": "linux",
+      "localSizeBytes": 59535596,
+      "state": "running",
+      "dockerRecordedRepoDigests": [
+        "eva2.local/conversation@sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e"
+      ]
+    },
+    {
+      "service": "postgres",
+      "imageId": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "imageReference": "eva2/chainguard-pgvector18-offline-candidate@sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "architecture": "amd64",
+      "os": "linux",
+      "localSizeBytes": 143613890,
+      "state": "running",
+      "dockerRecordedRepoDigests": [
+        "eva2/chainguard-pgvector18-offline-candidate@sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1"
+      ]
+    }
+  ],
+  "limitations": [
+    "No container environment, credentials, user files or volumes exported.",
+    "Image identities are actual Docker records, not signed release approval or SBOM completeness.",
+    "Local image IDs without registry digests require portable artifact packaging; do not invent registry references.",
+    "Target choice between existing Windows/WSL and old Ubuntu Server target requested; no platform compatibility bypass.",
+    "Docker RepoDigests do not establish registry availability. These include local repository names; no remote pullability check was performed."
+  ],
+  "providerCalls": 0,
+  "creditCost": null
+}

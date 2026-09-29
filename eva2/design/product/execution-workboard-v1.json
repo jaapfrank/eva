@@ -2939,29 +2939,27 @@
           }
         ],
         "now": {
-          "title": "O1.1 doelvoorbereiding verbonden met wizard",
-          "state": "Technische tussenstap; volledige installatie open",
-          "detail": "Bestaande voorbereiding gebruikt actuele keuzes en credentials. Zes gerichte controles/review akkoord; module geïnstalleerd. Geen nieuwe Eva gestart.",
+          "title": "O1.1 doelcomputer kiezen",
+          "state": "Wacht op eigenaarantwoord",
+          "detail": "Werkelijke zeven runtime-services en image-identiteiten vastgelegd. Oude installer ondersteunt alleen vastgelegde Ubuntu Server-combinatie; Windows/WSL staat daar niet in.",
           "owner": "Geen actieve uitvoerder"
         },
         "next": {
-          "title": "O1.1 concrete pakketgegevens en nieuwe start",
-          "state": "Nog niet gestart",
-          "detail": "Goedgekeurde release/doelgegevens leveren aan gekoppelde voorbereiding; nieuwe installatie initialiseren en starten."
+          "title": "O1.1 gekozen doel en pakket concreet afmaken",
+          "state": "Afhankelijk van doelcomputer",
+          "detail": "Werkelijke image-identiteiten hergebruiken; registrybeschikbaarheid en releasegoedkeuring zijn nog niet bewezen door Docker-metadata."
         },
         "ownerAction": {
-          "title": "Twee Telegram-berichten direct na elkaar",
+          "title": "Kies de eerste doelcomputer voor installatie",
           "steps": [
-            "Stuur /eva2 Zoek uit wat Home Assistant Cloud voor spraak doet, met bronnen.",
-            "Stuur direct daarna /eva2 Hoe gaat het met jou?",
-            "Meld hier Beide verstuurd; Codex controleert volgorde en vraagbinding."
+            "Beantwoord de vraag in deze taak: huidige Windows/WSL-computer of aparte Ubuntu Server-computer."
           ],
-          "expected": "De gewone tussenvraag wordt vóór het onderzoeksresultaat beantwoord; beide antwoorden verwijzen naar hun oorspronkelijke vraag.",
+          "expected": "Codex maakt de concrete installatie voor de gekozen computer af; bestaande gegevens blijven behouden.",
           "url": "",
-          "linkLabel": "Gebruik je bestaande Telegram-gesprek met Eva"
+          "linkLabel": "Antwoord in deze taak"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T12:20:07.335103+00:00"
+        "reviewedAt": "2026-09-29T12:22:26.698607+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14194,7 +14192,7 @@
             {
               "id": "O1.1",
               "title": "Installatiewizard zonder handwerk afronden",
-              "status": "in_progress",
+              "status": "blocked",
               "kind": "aansluiten",
               "doneWhen": "Bestaande wizard kan de gekozen doelinstallatie zonder handgeschreven instellingen voorbereiden en starten.",
               "owner": "/root",
@@ -14209,9 +14207,9 @@
                 "doneWhen": "Wizard can prepare/start an actual isolated target through existing provisioning, checked and reviewed; no support-label substitution.",
                 "stage": "target_composition_installed_package_inputs_open"
               },
-              "latestEvidence": "eva2/evidence/product/installer-target-binding-20260929.json",
+              "latestEvidence": "eva2/evidence/product/installer-runtime-inputs-20260929.json",
               "remaining": "Bestaande InstallerTargetWorkflow gekoppeld aan wizardstores/actueel plan; zes controles en review akkoord, module geïnstalleerd. Nog concrete goedgekeurde pakketinstellingen, valide doelversie en initialisatie/start. Standaardlauncher levert die instellingen nog niet.",
-              "blocker": "Existing release lock has no validated target or runnable image pins; exact host upgrades alone cannot fix release support. Existing 13 September evidence confirms this prerequisite. No new platform rewrite started."
+              "blocker": "Doelcomputerkeuze gevraagd: huidige Windows/WSL versus geplande Ubuntu Server. Huidig PlatformLock/v3 accepteert uitsluitend Ubuntu Server met vaste versies; geen WSL-supportclaim of controle omzeild."
             },
             {
               "id": "O1.2",

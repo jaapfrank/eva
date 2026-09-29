@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — O1.1 doelcomputerkeuze open
+
+Zeven werkelijke runtime-services met exacte Docker-image-identiteiten vastgelegd. Docker RepoDigests bewijzen niet dat deze lokale namen elders te downloaden zijn. Geen secrets, gegevensvolumes of configuratiewaarden geëxporteerd. [Inventaris voor pakket](evidence/product/installer-runtime-inputs-20260929.json).
+
+**Eigenaarvraag:** eerste installer voor de huidige Windows/WSL-machine of een aparte Ubuntu Server? Het oude PlatformLock/v3 kan uitsluitend vastgelegde Ubuntu Server-versies toelaten. Geen labelwijziging of omzeiling als vervanging voor echte ondersteuning. O1.1 wacht op deze keuze; volledige goal blijft open. Geen actieve uitvoerder, geen modelcalls; credits onbekend.
+
 ## Actueel — O1.1 bestaande doelvoorbereiding verbonden
 
 De gewone wizard kan de bestaande InstallerTargetWorkflow samenstellen met actuele secret-/budgetstores en plan. Zes gerichte controles en onafhankelijke review akkoord; module in actueel operatorpakket geïnstalleerd en import gecontroleerd. Geen nieuwe Eva gestart, geen modelcalls; credits onbekend. [Bewijs](evidence/product/installer-target-binding-20260929.json).
