@@ -1,0 +1,38 @@
+- name: Default
+  chat:
+    provider: codex_oauth
+    name: gpt-6-sol
+    kwargs:
+      extra_body:
+        reasoning:
+          effort: none
+  vision:
+    provider: codex_oauth
+    name: gpt-6-astra
+    kwargs:
+      reasoning_effort: medium
+  utility:
+    provider: codex_oauth
+    name: gpt-6-astra
+    kwargs:
+      reasoning_effort: medium
+  embedding:
+    provider: huggingface
+    name: sentence-transformers/all-MiniLM-L6-v2
+    kwargs: {}
+- name: Eva Research
+  chat:
+    provider: codex_oauth
+    name: gpt-6-astra
+    kwargs:
+      reasoning_effort: medium
+  vision:
+    provider: codex_oauth
+    name: gpt-6-astra
+    kwargs:
+      reasoning_effort: medium
+  utility:
+    provider: codex_oauth
+    name: gpt-6-astra
+    kwargs:
+      reasoning_effort: medium

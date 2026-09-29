@@ -1,0 +1,105 @@
+{
+  "checkedAt": "2026-09-29T22:01:17.561327+00:00",
+  "status": "native_presets_saved_and_resolved_not_runtime_admission",
+  "probe": "eva2/benchmark/inspect_ai_v1/p1_agentzero_preset_probe.py",
+  "probeSha256": "aeb3dd22a6aed3d052671f60b54bad56f21a669e5c023fe229620aacbd38c1b0",
+  "sourceTrackedTreeClean": true,
+  "observations": {
+    "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+    "savedPresetSha256": "3d2d2bc22c2adf950478e33886325eb7e48dc55ef39e0d7061e57b97c40e446e",
+    "savedPreset": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/preset-user-data/plugins/_model_config/presets.yaml",
+    "observations": [
+      {
+        "preset": "Default",
+        "slot": "chat_model",
+        "provider": "codex_oauth",
+        "model": "gpt-6-sol",
+        "kwargs": {
+          "extra_body": {
+            "reasoning": {
+              "effort": "none"
+            }
+          }
+        }
+      },
+      {
+        "preset": "Default",
+        "slot": "utility_model",
+        "provider": "codex_oauth",
+        "model": "gpt-6-astra",
+        "kwargs": {
+          "reasoning_effort": "medium"
+        }
+      },
+      {
+        "preset": "Default",
+        "slot": "vision_model",
+        "provider": "codex_oauth",
+        "model": "gpt-6-astra",
+        "kwargs": {
+          "reasoning_effort": "medium"
+        }
+      },
+      {
+        "preset": "Eva Research",
+        "slot": "chat_model",
+        "provider": "codex_oauth",
+        "model": "gpt-6-astra",
+        "kwargs": {
+          "reasoning_effort": "medium"
+        }
+      },
+      {
+        "preset": "Eva Research",
+        "slot": "utility_model",
+        "provider": "codex_oauth",
+        "model": "gpt-6-astra",
+        "kwargs": {
+          "reasoning_effort": "medium"
+        }
+      },
+      {
+        "preset": "Eva Research",
+        "slot": "vision_model",
+        "provider": "codex_oauth",
+        "model": "gpt-6-astra",
+        "kwargs": {
+          "reasoning_effort": "medium"
+        }
+      }
+    ],
+    "providerCalls": 0,
+    "scope": "Native persisted preset save/load and ModelConfig construction only",
+    "limits": [
+      "No agent loop, authentication, helper execution or cumulative accounting verified",
+      "Embedding model is a schema identity only; not loaded or admitted"
+    ]
+  },
+  "execution": {
+    "exitCode": 0,
+    "isolation": "unshare -Urn, socket connect/connect_ex rejection, offline HF flags",
+    "dependencies": {
+      "langchain": "0.3.22",
+      "langchain-community": "0.3.19",
+      "langchain-core": "0.3.49",
+      "litellm": "1.88.1",
+      "openai": "2.54.0",
+      "sentence-transformers": "3.0.1",
+      "torch": "2.14.0+cpu",
+      "transformers": "4.57.6"
+    },
+    "earlierImportFailures": [
+      "langchain_core missing",
+      "sentence_transformers missing"
+    ],
+    "correction": "Installed native pinned LangChain and sentence-transformers in disposable probe environment; CPU torch dependency only. No source changes or model downloads."
+  },
+  "review": {
+    "reviewer": "/root/review_o1_factory",
+    "result": "GO for offline native configuration scope",
+    "limits": "Selected preset persistence, actual agent execution, authentication and aggregate accounting remain unverified."
+  },
+  "evaRuntimeChanged": false,
+  "modelCalls": 0,
+  "productCategoryCompleted": false
+}

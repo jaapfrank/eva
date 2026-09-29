@@ -1,3 +1,7 @@
+## Actueel: P1.1 native presets opgeslagen en teruggelezen — 30 september 2026
+
+Agent Zero leest zes contact-/werkmodelrollen correct terug via eigen opslag en configuratielader. Geïsoleerde proef, nul providercalls, onafhankelijke review akkoord. Presetbestand herbruikbaar vastgelegd; Eva-runtime ongewijzigd. Geen volledige P1.1 of productcategorie afgerond. Actieve selectie, native uitvoering/OAuth en samplebrede meting blijven open. Geen proefproces meer actief. [Bewijs](evidence/product/p1-agentzero-persisted-presets-20260930.json).
+
 ## Actueel: I2.1 concrete bronkeuze gevraagd — 29 september 2026
 
 Bestaande bronregistratie bevat G5 garage deur, G5 tuin en G4 Doorbell Pro, plus twee afvalagenda’s (Afvalwijzer Calendar en afval). Twee concrete keuzevragen staan open bij Jaap. Bestaand bewijs voor camera-/agendatoegang hergebruikt; geen nieuwe connector, modelaanvraag of camera-opname. C1-providerweigering en O2.3-browserafhankelijkheid blijven open zoals hieronder.

@@ -94,6 +94,14 @@
           }
         },
         "remaining": "Persisted native model configuration, authenticated access and aggregate accounting/cancellation still unverified. No admission."
+      },
+      "nativePersistedPresets": {
+        "status": "saved_and_resolved_offline",
+        "evidence": "eva2/evidence/product/p1-agentzero-persisted-presets-20260930.json",
+        "configuration": "eva2/benchmark/inspect_ai_v1/p1_agentzero_presets.yaml",
+        "sha256": "3d2d2bc22c2adf950478e33886325eb7e48dc55ef39e0d7061e57b97c40e446e",
+        "admission": "not_admitted",
+        "remaining": "Persisted active preset selection, actual native agent, OAuth access and aggregate accounting/cancellation remain unverified."
       }
     }
   ],
