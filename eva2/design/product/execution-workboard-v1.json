@@ -2947,15 +2947,15 @@
           }
         ],
         "now": {
-          "title": "O1.1 startkoppeling geïnstalleerd; doelkeuze open",
-          "state": "Wacht op doelcomputer",
-          "detail": "Nieuwe start op bestaande wizard aangesloten, 15 workflow/API-controles geslaagd en onafhankelijke review GO. Drie modules geïnstalleerd in operatorpakket; import gecontroleerd. Echte nieuwe installatie nog niet gestart: concrete doelcomputer en goedgekeurd pakket ontbreken.",
-          "owner": "Codex; geen actieve uitvoerder"
+          "title": "L2.1 vervolg voor morgen opgeslagen",
+          "state": "Gepland voor 30 september 15:00",
+          "detail": "Echte vervolgstap opgeslagen voor 30 september 15:00 Nederlandse tijd. Checkpoint scheduled, nog geen uitvoer-ID. Werkelijke uitvoering/resultaat en onafhankelijke beoordeling na dat tijdstip open.",
+          "owner": "Eva scheduler; Codex beoordeelt na uitvoering"
         },
         "next": {
-          "title": "O1.1 gekozen doel en pakket concreet afmaken",
-          "state": "Afhankelijk van doelcomputer",
-          "detail": "Werkelijke image-identiteiten hergebruiken; registrybeschikbaarheid en releasegoedkeuring zijn nog niet bewezen door Docker-metadata."
+          "title": "Onafhankelijk open productwerk vervolgen",
+          "state": "Nog niet gestart",
+          "detail": "L2 wacht alleen op zijn vastgelegde uitvoertijd; O1 wacht op doelcomputerkeuze. Geen herhaling of handmatige hervatting van de geplande opdracht."
         },
         "ownerAction": {
           "title": "Kies de eerste doelcomputer voor installatie",
@@ -2967,7 +2967,7 @@
           "linkLabel": "Antwoord in deze taak"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T12:37:39.603793+00:00"
+        "reviewedAt": "2026-09-29T12:41:04.859043+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14030,8 +14030,25 @@
               "kind": "praktijk",
               "doneWhen": "Bewaard resultaat en correctie leiden zonder ontwikkelaarhervatting tot de volgende uitvoerstap.",
               "owner": "Codex",
-              "latestEvidence": "eva2/evidence/product/l2-autonomous-weekend-20260929.json",
-              "remaining": "Zelfstandig vervolg na herstart en correctie aangetoond; daadwerkelijk meerdaags gebruik binnen L2 nog open. Geen nieuwe scheduler nodig."
+              "latestEvidence": "eva2/evidence/product/l2-next-day-20260929.json",
+              "remaining": "Echte vervolgstap opgeslagen voor 30 september 15:00 Nederlandse tijd. Checkpoint scheduled, nog geen uitvoer-ID. Werkelijke uitvoering/resultaat en onafhankelijke beoordeling na dat tijdstip open.",
+              "assignment": {
+                "baseCommit": "500bc8ea",
+                "owner": "Codex",
+                "files": [
+                  "eva2/evidence/product/l2-next-day-20260929.json"
+                ],
+                "outcome": "Werkelijke volgende-daguitvoering van bewaard document via bestaande scheduler",
+                "endCondition": [
+                  "Stored future step at requested real date",
+                  "No manual resume or synthetic clock",
+                  "Original draft unchanged",
+                  "New document contains Sunday/three activities/at most 10 euro and 180 words",
+                  "Exactly one result returned to private website"
+                ],
+                "estimate": "Eén planningsvraag, één bestaande begrensde uitvoerstap; geen herhaling. Credits onbekend.",
+                "stage": "scheduled_waiting_until_due"
+              }
             },
             {
               "id": "L2.2",

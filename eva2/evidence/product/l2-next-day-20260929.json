@@ -1,0 +1,45 @@
+{
+  "checkedAt": "2026-09-29T12:41:04.859043+00:00",
+  "baseCommit": "500bc8ea",
+  "status": "scheduled_real_next_day_not_completed",
+  "scheduleId": "scheduled-work:33333333-3333-3333-8333-333333333333:a3bb02b27222d848a85669f8e582a5ef0862cdbd8b6627b934bf7e5ef12553c9",
+  "runAt": "2026-09-30T13:00:00Z",
+  "observedPhase": "scheduled",
+  "operationId": null,
+  "criteria": {
+    "baseCommit": "500bc8ea",
+    "recordedAt": "2026-09-29T12:39:27.057696+00:00",
+    "dueAt": "2026-09-30T13:00:00Z",
+    "existing": "Existing saved draft and existing project scheduler; earlier six-minute continuation retained.",
+    "gap": "Actual next-day autonomous execution not yet observed.",
+    "budget": {
+      "foregroundRequests": 1,
+      "scheduledSteps": 1,
+      "automaticRepeat": false,
+      "runtimeLimits": "Existing provider/task limits unchanged",
+      "credits": "unknown"
+    },
+    "finish": [
+      "Stored future step at requested real date",
+      "No manual resume or synthetic clock",
+      "Original draft unchanged",
+      "New document contains Sunday/three activities/at most 10 euro and 180 words",
+      "Exactly one result returned to private website"
+    ],
+    "limits": [
+      "No model trial restart if observation times out",
+      "No real household actions or communication to others",
+      "Scheduling alone is not completion"
+    ]
+  },
+  "verification": "Read exact scheduler checkpoint and original event from running PostgreSQL. Due time/task/private_session return binding match request. No manually dispatched work.",
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/l2-next-day-20260929",
+  "initialResponseSeconds": 18.554,
+  "usage": {
+    "foregroundRequests": 1,
+    "providerTokens": "not reported by this response; unknown",
+    "credits": "unknown"
+  },
+  "remaining": "Observe real next-day dispatch and independent document/readback/once-only result. No completed L2 claim.",
+  "ownerAction": "None required to dispatch; use existing private conversation to read returned result after due time."
+}

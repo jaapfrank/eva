@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — L2.1 echt vervolg voor morgen opgeslagen
+
+Eén gewone websitevraag heeft een vervolgstap opgeslagen voor **30 september om 15:00 Nederlandse tijd**. Exact checkpoint, opdracht en privéterugmelding in de draaiende database gecontroleerd; nog geen uitvoering gestart. Bestaand concept blijft behouden, apart zondagplan met drie activiteiten en maximaal 10 euro wordt gevraagd. Geen huisacties, aankopen of externe berichten. [Bewijs](evidence/product/l2-next-day-20260929.json).
+
+Nog open: werkelijke uitvoering na een dag, resultaatcontrole en één terugmelding. Niet handmatig hervatten of de planningsvraag herhalen. Eén planningsvraag, 18,554s totaal; tokens/credits onbekend. Geen actieve ontwikkelagent; de bestaande Eva-scheduler bewaart de opdracht. Ander werk kan doorgaan.
+
 ## Actueel — O1.1 startkoppeling geïnstalleerd; doelkeuze open
 
 Bestaande wizard kan na voorbereiding de nieuwe eigenaar initialiseren en diensten starten. Startcode en aansluiting onafhankelijk gereviewd; 15 gerichte workflow/API-controles geslaagd. Drie modules in het bestaande operatorpakket geïnstalleerd en imports gecontroleerd. Geen echte nieuwe installatie gestart en geen extra productonderdeel afgerond. [Bewijs](evidence/product/installer-fresh-start-20260929.json).
