@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-09-29T06:36:51.888374+00:00",
+  "kind": "bounded_read_only_diagnosis",
+  "baseCommit": "d7a0847d",
+  "measurement": {
+    "totalSeconds": 1.038,
+    "recallSeconds": 0.985,
+    "styleReadSeconds": 0.008,
+    "conversationModelCalls": 0
+  },
+  "method": "Installed private resource factory and live private alias resolver; configured background tenant/installation used by dashboard_turn; same hello query and warmed known-bank cache. GET style and POST recall only.",
+  "excluded": "Initial wrong dashboard authority UUID scope produced0.082s; explicitly not a valid runtime baseline. Two constructor errors made no recall call.",
+  "existingEvidence": [
+    "eva2/evidence/product/contact-grouped-catalog-20260928.json",
+    "eva2/evidence/product/contact-procedure-overlap-20260928.json",
+    "eva2/evidence/product/telegram-runtime-overlap-20260924.json"
+  ],
+  "decision": "No memory rewrite justified. Existing overlap preserved. Actual current Telegram owner observation requested; no test messages sent.",
+  "limitations": [
+    "One memory-only measurement, not total greeting latency or a controlled speed comparison",
+    "Installed Telegram transport belongs to Bottie checkout; main Eva2 checkout does not include that adapter. No overwrite or synchronization performed.",
+    "Source awaits draft callbacks, but no observed slow draft call: do not claim cause of11s or build speculative repair."
+  ],
+  "productionChanged": false,
+  "credits": "unknown; no conversational model request"
+}

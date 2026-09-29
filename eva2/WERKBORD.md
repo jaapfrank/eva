@@ -1,5 +1,9 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## C1 — tekstgesprek tijdens werk
+
+Bestaande website-overlap en Telegramconcurrency behouden. Gerichte geheugenmeting1,038s (geen gesprekmodelcalls) rechtvaardigt geen geheugenombouw. Actuele Telegramwaarneming gevraagd; alleen afhankelijke acceptatie wacht hierop. Geen actieve bouw of modelproef. [Bevinding](evidence/product/c1-memory-timing-20260929.json). Dit is diagnose, geen nieuwe functie of bewezen snelheidswinst.
+
 ## Afgerond — Gezinsweek-document met bewaarde correctie
 
 **Geleverd:** het einddocument bevat drie schermvrije activiteiten binnen30min, een mondeling woordspel in plaats van tekenen en een benodigdhedenlijst. Daadwerkelijke bestandbytes teruggelezen; alle drie bronbestanden ongewijzigd. Onafhankelijke controle akkoord. [Lees einddocument](evidence/product/gezinsweek-l2-resultaat.md) · [Bewijs](evidence/product/l2-document-delivered-20260929.json).

@@ -2803,9 +2803,9 @@
           }
         ],
         "now": {
-          "title": "Documentopdracht inclusief eindantwoord afgerond",
-          "state": "Afgerond via bestaande hervatting",
-          "detail": "Eva sloot de taak succesvol af met één modelantwoord en nul toolcalls. Alle vier bestanden ongewijzigd. Onafhankelijke controle akkoord. Geen bronbouw of nieuwe installatie nodig; eerdere timeout blijft zichtbaar.",
+          "title": "C1: gesprek tijdens werk via tekst",
+          "state": "Bestaande tekstwerking behouden; Telegramwaarneming gevraagd",
+          "detail": "Gerichte leesmeting: geheugen1,038s, geen gesprekmodelcall. Geen bewezen geheugen- of wachtrijdefect dat ombouw rechtvaardigt. Website-overlap bestaand bewezen; actuele Telegramwaarneming gevraagd. Geen actieve bouw of modelproef.",
           "doneWhen": "Concept en projectstaat opgeslagen, één echte afhankelijke vervolgafspraak, correctie en hervatting gebruiken bewaarde inhoud, eindresultaat geleverd zonder dubbele acties."
         },
         "next": {
@@ -2814,17 +2814,18 @@
           "detail": "Terug naar de vaste uitvoervolgorde: bestaande tekstgesprekken en overlap behouden; resterende reactietijd en Telegramgelijkheid gericht afronden. Geen nieuwe documentproef."
         },
         "ownerAction": {
-          "title": "Lees het afgeronde document",
-          "url": "http://localhost:44711/internal/v1/dashboard",
-          "linkLabel": "Bekijk Eva’s taken",
+          "title": "Telegram: tussenvraag tijdens onderzoek",
+          "url": "https://web.telegram.org/",
+          "linkLabel": "Open Telegram",
           "steps": [
-            "Open de afgeronde documentoplevering of het gelinkte resultaatbestand.",
-            "De avond duurt maximaal30min; tekenen is vervangen door een mondeling woordspel."
+            "Alleen als nog niet uitgevoerd na de laatste update: /eva2 Zoek uit wat Home Assistant Cloud doet voor spraak, met bronnen.",
+            "Meteen daarna: /eva2 Hoe gaat het met jou?",
+            "Meld welke vraag eerst antwoord kreeg."
           ],
-          "expected": "Einddocument en benodigdhedenlijst zijn beschikbaar. Geen nieuwe proef nodig."
+          "expected": "Tussenvraag vóór het onderzoeksantwoord; onderzoeksantwoord bij de oorspronkelijke vraag."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T06:28:45.315058+00:00"
+        "reviewedAt": "2026-09-29T06:36:51.898361+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12644,7 +12645,7 @@
           ]
         }
       ],
-      "nextAction": "Terug naar de vaste uitvoervolgorde: bestaande tekstgesprekken en overlap behouden; resterende reactietijd en Telegramgelijkheid gericht afronden. Geen nieuwe documentproef.",
+      "nextAction": "C1: verwerk actuele Telegramwaarneming indien beschikbaar; blokkeer daarmee alleen afhankelijke acceptatie, geen onafhankelijk productwerk.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -12780,7 +12781,7 @@
             "workerCommit": "b4b88c6446f2979c11e748e0b8606c6c35e892a6",
             "review": "GO; independent source and test diff review"
           },
-          "remaining": "Unnecessary greeting status/tool handoff removed in observed website cases. Fast response/Telegram parity and fullC1 acceptance remain open.",
+          "remaining": "Huidige Telegramwaarneming en gewenste reactietijd open. Geen defect bewezen dat geheugenombouw of pollingherbouw rechtvaardigt.",
           "telegramOwnerTrial": {
             "status": "awaiting_owner_observation",
             "steps": [
@@ -12791,7 +12792,8 @@
             "blocksIndependentWork": false
           },
           "ordinaryRetrievalPerformanceEvidence": "eva2/evidence/product/own-initiative-return-20260928.json",
-          "contactInputEvidence": "eva2/evidence/product/contact-guidance-size-20260928.json"
+          "contactInputEvidence": "eva2/evidence/product/contact-guidance-size-20260928.json",
+          "latestEvidence": "eva2/evidence/product/c1-memory-timing-20260929.json"
         },
         {
           "id": "C2",
@@ -13596,7 +13598,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "L2",
+      "activeSliceId": "C1",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
