@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-09-29T11:24:30.386971+00:00",
+  "baseCommit": "ec315626",
+  "workId": "work:eva-chat:e81f0bf2-e67a-5cd0-8def-e2a04ae70625",
+  "status": "read_only_task_succeeded_timeout_not_reproduced",
+  "result": {
+    "automationTotal": 17,
+    "on": 14,
+    "off": 1,
+    "unavailable": 2,
+    "finalReplyMatches": true,
+    "haMutations": 0
+  },
+  "scope": "GET /api/states first page50/1319 was incomplete; subsequent POST /api/template read all states.automation and counted17. No claim first page was complete.",
+  "completedAt": "2026-09-29T11:22:30Z",
+  "foregroundSeconds": 14.065,
+  "review": {
+    "reviewer": "/root/review_l2_autonomous_run",
+    "decision": "GO for read-only task and count; no historical timeout fix claim"
+  },
+  "usage": {
+    "inputTokens": 52397,
+    "outputTokens": 604,
+    "reportedModelAttemptsOrResponses": 4,
+    "reportedTools": 3,
+    "measurement": "Partial combined foreground and worker; not all memory/infrastructure",
+    "creditCost": null
+  },
+  "remaining": "Historical timeout cause not established. Do not repeat a successful read-only probe to pursue failure by chance. Keep installed failure telemetry; investigate a new concrete failure when recorded. Physical speakers and full T2 remain open.",
+  "runtimeChange": false,
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/t2-readonly-followup-20260929",
+  "ownerAccepted": false
+}

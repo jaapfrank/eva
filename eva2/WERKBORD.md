@@ -1,10 +1,12 @@
 # Eva 2 — uitvoerbaar werkbord
 
-## Nu — T2.1 timeoutdiagnose geïnstalleerd, functie open
+## T2.1 — uitleestaak geslaagd; timeoutonderzoek begrensd afgesloten
 
-Eerdere HA-uitlezing leverde een modelstream zonder afgerond antwoord; precieze oorzaak ontbreekt in oude logs. Vaste tellers toegevoegd zonder inhoud of toolnamen.38 gerichte controles geslaagd, onafhankelijke review GO; kern/werker gezond en bron gelijk aan geïnstalleerd. Geen Eva-modelcalls of HA-mutaties. [Bewijs](evidence/product/t2-timeout-diagnosis-20260929.json).
+Eva las 17 automatiseringen:14 aan,1 uit,2 unavailable. De eerste algemene statespagina was onvolledig; de aanvullende uitleestemplate omvatte alle automation-states. Onafhankelijke review bevestigt telling en uitsluitend uitlezen. [Bewijs](evidence/product/t2-readonly-followup-20260929.json). Deels gemeten52.397in/604uit; credits onbekend.
 
-**Volgende:** één begrensde alleen-lezen HA-opvolging met de nieuwe meting. Geen identieke schrijfproef, nieuwe timeoutverhoging of rollbackcyclus. T2.1 blijft open; geen nieuwe afgeronde productfunctie. Geen actieve uitvoerders. Credits onbekend.
+T2.1 blijft open: de eerdere timeout is niet gereproduceerd of verklaard. Geen nieuwe identieke proef; geïnstalleerde foutmeting gebruiken wanneer een concrete fout optreedt. Geen nieuwe functie of installatie in deze proef.
+
+**Volgende, nog niet gestart:** M1.1 eerder onderwerp op privéwebsite voortzetten vanuit toegestane persoonscontext en correctie. Bestaand geheugen behouden. Geen actieve uitvoerders.
 
 ## Laatst afgerond — L2.2 projectresultaat één keer terug
 
