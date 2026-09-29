@@ -73,8 +73,11 @@ class DelegatedWorkServiceSettings:
     worker_id: str
     poll_interval_seconds: float = 0.25
     concurrency: int = 1
+    health_port: int | None = None
 
     def __post_init__(self) -> None:
+        if self.health_port is not None and (type(self.health_port) is not int or not 1 <= self.health_port <= 65535):
+            raise ValueError("delegated worker health port must be 1..65535")
         if not os.path.isabs(self.database_dsn_file):
             raise ValueError("delegated worker DSN file must be absolute")
         if not self.worker_id or len(self.worker_id) > 120:
@@ -116,6 +119,8 @@ class DelegatedWorkServiceSettings:
                 )
             interval = float(values.get("EVA_DELEGATED_WORK_POLL_SECONDS", "0.25"))
             concurrency = int(values.get("EVA_DELEGATED_WORK_CONCURRENCY", "1"))
+            raw_health_port = values.get("EVA_DELEGATED_WORK_HEALTH_PORT", "").strip()
+            health_port = int(raw_health_port) if raw_health_port else None
         except ValueError as error:
             raise RuntimeError("delegated worker process settings are invalid") from error
         return cls(
@@ -124,6 +129,7 @@ class DelegatedWorkServiceSettings:
             worker_id=required("EVA_DELEGATED_WORKER_ID"),
             poll_interval_seconds=interval,
             concurrency=concurrency,
+            health_port=health_port,
         )
 
 
@@ -221,11 +227,15 @@ class DelegatedWorkService:
         *,
         poll_interval_seconds: float,
         additional_workers: tuple[DelegatedWorkWorker, ...] = (),
+        health_port: int | None = None,
     ) -> None:
         if not 0.05 <= poll_interval_seconds <= 5:
             raise ValueError("delegated worker poll interval must be 0.05..5 seconds")
         if len(additional_workers) > 1 or any(item is worker for item in additional_workers):
             raise ValueError("delegated service needs at most two distinct workers")
+        if health_port is not None and (type(health_port) is not int or not 1 <= health_port <= 65535):
+            raise ValueError("delegated worker health port must be 1..65535")
+        self._health_port = health_port
         self._worker = worker
         self._workers = (worker, *additional_workers)
         self._poll_interval_seconds = poll_interval_seconds
@@ -268,7 +278,12 @@ class DelegatedWorkService:
         group = asyncio.gather(*tasks)
         try:
             try:
-                await asyncio.shield(group)
+                if self._health_port is None:
+                    await asyncio.shield(group)
+                else:
+                    from eva.bootstrap.worker_liveness import worker_liveness
+                    async with worker_liveness(port=self._health_port, stop=stop, lanes=tuple(tasks)):
+                        await asyncio.shield(group)
             except BaseException:
                 stop.set()
                 # Join every lane before disposing the shared engine/provider.
@@ -353,6 +368,7 @@ async def serve_delegated_work_service(
             workers[0],
             additional_workers=tuple(workers[1:]),
             poll_interval_seconds=selected.poll_interval_seconds,
+            health_port=selected.health_port,
         )
         return await service.serve(once=once)
     finally:

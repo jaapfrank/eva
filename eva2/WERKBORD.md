@@ -6,7 +6,8 @@
 
 **Nog afzonderlijk open:** M1 langdurige continuïteit, C3 fysieke ervaring, eigenaaracceptatie. Dit is bewijs van bestaande bescherming, geen nieuwe functie.
 
-**Volgende, nog niet gestart — T4:** bestaande taakbediening en actuele kanaal-/modulestatus afronden; geen nieuw projectdashboard.
+**Nu — T4, /root:** interne werkerstatus gebouwd en16gerichte controles geslaagd; onafhankelijke review akkoord. Installatie met precieze overlay op bestaande service, geen nieuwe hostpoort. Actieve werklussen bewijzen geen modeltoegang of taakvoortgang; fysieke spraak blijft afzonderlijk onbekend.
+
 
 ## Afgerond — T1: onderzoek opslaan, controleren en teruggeven
 
