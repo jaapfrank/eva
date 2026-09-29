@@ -1,5 +1,12 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — R1.1 leerreferentie past niet ongewijzigd
+
+Bestaande JSON Patch-leerproef vergde13modelantwoorden; R1 laat maximaal12per run toe. Geen herhaling, kandidaat of vergelijking gestart. Dit wijst alleen deze volledige herhaling af, niet de hypothese of een kleinere eerlijke proef. Gewone geleerde werkwijzen blijven beschikbaar. R1 en technische onderscheiding blijven open. [Bewijs](evidence/product/r1-existing-reference-admission-20260929.json). Nul nieuwe modelcalls; credits onbekend.
+
+**Volgende, nog niet gestart:** C1.1 bestaande begroetingsvertraging gericht verbeteren op basis van de beschikbare meting. Geen actieve uitvoerders na deze broncontrole.
+
+
 ## Concrete resterende taken — overzicht 29 september
 
 De 24 hoofdopdrachten zijn het volledige afgesproken traject, niet 24 extra functies. Zes hoofdopdrachten zijn technisch afgesloten. De overige 18 zijn uitgesplitst in 44 kleine taken: vijf gesloten, 39 open. Eén van die vijf is een mislukte onderzoeksproef, geen functieoplevering. De negen productonderdelen hebben een afzonderlijke afronding; daarvan blijven er twee klaar.

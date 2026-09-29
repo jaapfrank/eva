@@ -1,0 +1,35 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-09-29T11:56:41.211307+00:00",
+  "sourceCommit": "724e0c57",
+  "task": "R1.1",
+  "outcome": "existing_full_learning_replay_not_admitted",
+  "existingCapability": "Ordinary learned JSON Patch procedure and unchanged different-input reuse already verified; do not rebuild.",
+  "sources": [
+    "eva2/design/blueprint-2026-09-28/learning-and-initiative.md#9-finite-evidence-and-promotion-protocol",
+    "eva2/evidence/product/json-patch-learning-result-20260928.json",
+    "eva2/evidence/product/json-patch-learning-reuse-20260928.json"
+  ],
+  "observed": {
+    "learningCompletedModelResponses": 13,
+    "protocolMaximumResponsesPerRun": 12,
+    "learningRecordedInputTokens": 190899,
+    "learningRecordedOutputTokens": 5875,
+    "learningUsageMeasurement": "partial",
+    "learningFinalState": "ambiguous_timed_out",
+    "reuseIncludingForegroundInputTokens": 47088,
+    "reuseIncludingForegroundOutputTokens": 1273
+  },
+  "decision": "Do not replay the full learning task for R1: the observed reference already exceeds the per-run response envelope. This does not establish that every narrower R1 experiment is infeasible, or that a candidate loses.",
+  "nextRequiredForResearch": "Before new calls, select a genuinely narrower changed-assumption task using existing learned artifacts, with baseline and candidate construction/maintenance accounted equally, independent hidden cases and enforced aggregate budget. Do not reset the historical learning cost to zero for a savings claim.",
+  "productDisposition": "Optional research parked; existing ordinary skills remain usable. R1 and technical distinction remain open. Resume executable product work C1.1.",
+  "newRuntimeModelCalls": 0,
+  "newToolTrials": 0,
+  "runtimeChanged": false,
+  "installed": false,
+  "creditCost": null,
+  "review": {
+    "reviewer": "/root/review_r1_admission",
+    "result": "Source counts and bounded conclusion verified. No candidate-loss or R1-completion claim. Closure owner label corrected."
+  }
+}
