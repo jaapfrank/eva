@@ -8,15 +8,19 @@ from fastapi.testclient import TestClient
 from eva.adapters.api.installer_installation_plan_api import register_installer_installation_plan_routes
 
 
-def client_for(prepare, plan=None, stored_status="available"):
+def client_for(prepare, plan=None, stored_status="available", final_status="prepared"):
     plan = plan or {"plan_sha256": "a" * 64, "status": "ready_for_release_preparation", "blockers": []}
     app = FastAPI()
     def write(request):
         if request.headers.get("x-owner") != "yes":
             raise HTTPException(403)
+    state = [stored_status]
+    def execute(plan):
+        prepare(plan)
+        state[0] = final_status
     register_installer_installation_plan_routes(app, build_plan=lambda: dict(plan),
         require_read=lambda request: None, require_write=write,
-        prepare_target=prepare, read_preparation_status=lambda: stored_status, security_headers={"Cache-Control": "no-store"})
+        prepare_target=execute if prepare is not None else None, read_preparation_status=lambda: state[0], security_headers={"Cache-Control": "no-store"})
     return TestClient(app), plan
 
 
@@ -86,8 +90,18 @@ def test_second_request_does_not_start_while_preparation_runs():
 
 def test_restart_reads_retained_preparation_before_enabling_actions():
     calls = []
-    for status in ("prepared", "needs_inspection", "running"):
+    for status in ("prepared", "runtime_ready", "needs_inspection", "running"):
         client, _ = client_for(calls.append, stored_status=status)
         assert client.get("/internal/v1/onboarding/install/preparation").json()["status"] == status
         assert post(client).status_code == 409
     assert not calls
+
+
+def test_fresh_start_result_is_visible_without_claiming_channel_acceptance():
+    calls = []
+    client, _ = client_for(calls.append, final_status="runtime_ready")
+    result = post(client).json()
+    assert result["status"] == "runtime_ready"
+    assert "gebruiksproef staat nog open" in result["message"]
+    assert post(client).status_code == 409
+    assert len(calls) == 1

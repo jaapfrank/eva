@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-24T20:47:01.434669+00:00",
         "deliveries": [
           {
+            "title": "Nieuwe installatiestart aangesloten op bestaande wizard",
+            "date": "29 september",
+            "state": "installed",
+            "result": "Voorbereiding kan overgaan in eigenaarinitialisatie en starten. Gereed/onzekere start apart bewaard; gerichte controles en review akkoord. Modules in operatorpakket geïnstalleerd.",
+            "remaining": "Geen volledige nieuwe installatie aangetoond. O1.1 en O1.2 blijven open voor gekozen doelcomputer en concrete pakketconfiguratie.",
+            "source": "eva2/evidence/product/installer-fresh-start-20260929.json"
+          },
+          {
             "title": "Speakerkeuze voor eigen initiatief hersteld",
             "date": "29 september",
             "state": "installed",
@@ -2939,10 +2947,10 @@
           }
         ],
         "now": {
-          "title": "O1.1 doelcomputer kiezen",
-          "state": "Wacht op eigenaarantwoord",
-          "detail": "Werkelijke zeven runtime-services en image-identiteiten vastgelegd. Oude installer ondersteunt alleen vastgelegde Ubuntu Server-combinatie; Windows/WSL staat daar niet in.",
-          "owner": "Geen actieve uitvoerder"
+          "title": "O1.1 startkoppeling geïnstalleerd; doelkeuze open",
+          "state": "Wacht op doelcomputer",
+          "detail": "Nieuwe start op bestaande wizard aangesloten, 15 workflow/API-controles geslaagd en onafhankelijke review GO. Drie modules geïnstalleerd in operatorpakket; import gecontroleerd. Echte nieuwe installatie nog niet gestart: concrete doelcomputer en goedgekeurd pakket ontbreken.",
+          "owner": "Codex; geen actieve uitvoerder"
         },
         "next": {
           "title": "O1.1 gekozen doel en pakket concreet afmaken",
@@ -2959,7 +2967,7 @@
           "linkLabel": "Antwoord in deze taak"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T12:22:26.698607+00:00"
+        "reviewedAt": "2026-09-29T12:37:39.603793+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14197,18 +14205,21 @@
               "doneWhen": "Bestaande wizard kan de gekozen doelinstallatie zonder handgeschreven instellingen voorbereiden en starten.",
               "owner": "/root",
               "assignment": {
-                "baseCommit": "c81727b2",
+                "baseCommit": "36a4e53a",
+                "owner": "/root",
                 "files": [
-                  "eva2/tools/installer_target_workflow.py",
-                  "eva2/tests/operations/test_installer_target_workflow.py"
+                  "eva2/tools/installation_fresh_start.py",
+                  "eva2/tests/operations/test_installation_fresh_start.py"
                 ],
-                "outcome": "Ordinary installation uses existing provisioning rather than handwritten restore settings.",
-                "estimate": "Six offline focused tests; zero runtime model calls; credits unknown.",
-                "doneWhen": "Wizard can prepare/start an actual isolated target through existing provisioning, checked and reviewed; no support-label substitution.",
-                "stage": "target_composition_installed_package_inputs_open"
+                "existing": "Existing schema preparation, dashboard authority initializer and restored runtime starter.",
+                "gap": "Restored startup requires archive activation; fresh target has none. Reuse existing owner initializer, no fabricated restore.",
+                "outcome": "Fresh prepared target can initialize and start through a bounded trusted callable; actual target integration remains dependent on package/host.",
+                "doneWhen": "Exact prepared target binding, existing initializer reuse, readiness and no source-data change; focused review/checks. Not full O1 completion.",
+                "estimate": "One bounded source implementation and focused tests, zero provider calls; credits unknown.",
+                "stage": "reviewed_installed_operator_modules"
               },
-              "latestEvidence": "eva2/evidence/product/installer-runtime-inputs-20260929.json",
-              "remaining": "Bestaande InstallerTargetWorkflow gekoppeld aan wizardstores/actueel plan; zes controles en review akkoord, module geïnstalleerd. Nog concrete goedgekeurde pakketinstellingen, valide doelversie en initialisatie/start. Standaardlauncher levert die instellingen nog niet.",
+              "latestEvidence": "eva2/evidence/product/installer-fresh-start-20260929.json",
+              "remaining": "Nieuwe start op bestaande wizard aangesloten, 15 workflow/API-controles geslaagd en onafhankelijke review GO. Drie modules geïnstalleerd in operatorpakket; import gecontroleerd. Echte nieuwe installatie nog niet gestart: concrete doelcomputer en goedgekeurd pakket ontbreken.",
               "blocker": "Doelcomputerkeuze gevraagd: huidige Windows/WSL versus geplande Ubuntu Server. Huidig PlatformLock/v3 accepteert uitsluitend Ubuntu Server met vaste versies; geen WSL-supportclaim of controle omzeild."
             },
             {

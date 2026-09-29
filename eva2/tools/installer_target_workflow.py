@@ -15,6 +15,14 @@ from tools.installation_target_provisioning import prepare_restore_target
 
 
 @dataclass(frozen=True)
+class InstallerFreshStartSettings:
+    database_service: str
+    core_service: str
+    writer_services: tuple
+    authority: dict
+
+
+@dataclass(frozen=True)
 class InstallerTargetSettings:
     release_manifest: dict
     release_verification: object
@@ -33,6 +41,7 @@ class InstallerTargetSettings:
     schema_service: str = "schema-installer"
     model_authority_file: Path | None = None
     network_subnet: str | None = None
+    fresh_start: InstallerFreshStartSettings | None = None
 
 
 class InstallerTargetWorkflow:
@@ -40,8 +49,8 @@ class InstallerTargetWorkflow:
 
     Settings are installer-owned, never request data. The plan reader rebuilds
     current confirmed choices. Effective image reader identities must include
-    entrypoint privilege changes. This prepares a target; it does not import a
-    backup, start Eva, move traffic or approve a source installation.
+    entrypoint privilege changes. Fresh-start settings additionally initialize
+    and start the prepared target. This never imports a backup or moves traffic.
     """
     def __init__(self, *, workspace, settings, plan_reader):
         self.workspace = Path(workspace)
@@ -67,6 +76,8 @@ class InstallerTargetWorkflow:
             receipt = json.loads(read_private_artifact(self.receipt_path, label="target preparation receipt"))
             if receipt.get("contract") != "EvaInstallerTargetWorkflow/v1":
                 return "needs_inspection"
+            if receipt.get("status") == "runtime_ready" and receipt.get("eva_started") is True:
+                return "runtime_ready"
             return "prepared" if receipt.get("status") == "prepared" else "needs_inspection"
         except Exception:
             return "needs_inspection"
@@ -133,6 +144,32 @@ class InstallerTargetWorkflow:
             receipt["preparation_receipt"] = str(self.resources_root / "preparation-receipt.json")
             receipt["status"] = "prepared"
             save("prepared")
+            if settings.fresh_start is not None:
+                from tools.installation_fresh_start import start_fresh_runtime, FreshRuntimeStartError
+                start = settings.fresh_start
+                if bind() != inputs:
+                    raise ValueError("approved choices changed before fresh startup")
+                receipt["status"] = "running"
+                receipt["eva_started"] = None
+                save("fresh_start")
+                try:
+                    startup = start_fresh_runtime(runtime_inputs=inputs, launch_graph=access.graph,
+                        preparation=prepared, image_roles={name: settings.image_roles[name]
+                            for name in access.graph["services"]},
+                        database_services=settings.database_services,
+                        database_service=start.database_service, schema_service=settings.schema_service,
+                        core_service=start.core_service, writer_services=start.writer_services,
+                        authority=start.authority, materialized_bind_root=self.access_root)
+                except FreshRuntimeStartError as error:
+                    receipt["startup"] = error.receipt
+                    receipt["eva_started"] = error.receipt.get("runtime_started")
+                    raise
+                receipt["startup"] = startup
+                if startup.get("status") != "runtime_started_verified" or startup.get("runtime_started") is not True:
+                    raise ValueError("fresh startup was not confirmed")
+                receipt["eva_started"] = True
+                receipt["status"] = "runtime_ready"
+                save("runtime_ready")
         except Exception as error:
             receipt["status"] = "needs_inspection"
             receipt["failure_type"] = type(error).__name__

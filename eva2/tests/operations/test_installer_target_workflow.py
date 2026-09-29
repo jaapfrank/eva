@@ -123,3 +123,35 @@ def test_ordinary_launcher_uses_live_wizard_stores_and_current_plan(flow, tmp_pa
     monkeypatch.setattr(installer_wizard_cli, "run_installer_wizard", wizard)
     assert module.run_target_installer_wizard(settings=template, argv=["--workspace", str(tmp_path)]) == 0
     assert template.secret_store is None
+
+
+@pytest.mark.parametrize("fail", [False, True])
+def test_fresh_start_is_durable_and_never_reprovisions(flow, monkeypatch, fail):
+    from dataclasses import replace
+    from tools import installation_fresh_start
+    new, plan, events = flow
+    workflow = new()
+    start = module.InstallerFreshStartSettings("postgres", "core", ("core",), {"access_token": "private-token"})
+    workflow.settings = replace(workflow.settings, fresh_start=start)
+    def run(**kwargs):
+        events.append("start")
+        assert json.loads(workflow.receipt_path.read_text())["eva_started"] is None
+        assert kwargs["launch_graph"] == {"services": {"core": {}}}
+        assert kwargs["materialized_bind_root"] == workflow.access_root
+        assert kwargs["authority"] is start.authority
+        if fail:
+            raise installation_fresh_start.FreshRuntimeStartError({"runtime_started": None, "started": []})
+        return {"status": "runtime_started_verified", "runtime_started": True}
+    monkeypatch.setattr(installation_fresh_start, "start_fresh_runtime", run)
+    if fail:
+        with pytest.raises(RuntimeError, match="inspect retained"):
+            workflow(plan)
+    else:
+        workflow(plan)
+    assert new().status() == ("needs_inspection" if fail else "runtime_ready")
+    saved = json.loads(workflow.receipt_path.read_text())
+    assert saved["eva_started"] is (None if fail else True)
+    assert "private-token" not in workflow.receipt_path.read_text()
+    with pytest.raises(ValueError, match="already attempted"):
+        new()(plan)
+    assert events.count("resources") == events.count("start") == 1

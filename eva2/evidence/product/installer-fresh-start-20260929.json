@@ -1,0 +1,29 @@
+{
+  "recordedAt": "2026-09-29T12:37:39.603793+00:00",
+  "baseCommit": "36a4e53a",
+  "outcome": "Existing wizard can invoke trusted fresh initialization/start after preparation and persist distinct runtime-ready state.",
+  "existing": "Target preparation and authority initialization reused; restore remains separate.",
+  "added": [
+    "tools/installation_fresh_start.py",
+    "Optional fresh-start settings in existing target workflow",
+    "Durable uncertain/ready state and accurate installer presentation"
+  ],
+  "verification": {
+    "starterAndNeighbors": "Author: 53 focused mocked cases passed in 1.40s",
+    "workflowAndApi": "15 passed in 1.72s on operator host dependencies",
+    "initialContainerCheck": "Two import failures: runtime container lacks libsqlite3; host operator environment used instead.",
+    "review": "review_o1_target_binding GO after fixing misleading UI text and uncertain-start durable state",
+    "installation": "Three exact source modules copied to installer-document-write-20260924; old modules privately backed up; installed imports/UI text checked."
+  },
+  "limits": [
+    "No real fresh database/runtime started",
+    "No complete O1.1 delivery",
+    "Concrete supported target/release package remains open",
+    "Starter requires operator reachability to prepared Docker database IPv4",
+    "No channel or owner acceptance claimed"
+  ],
+  "usage": {
+    "runtimeModelCalls": 0,
+    "credits": "unknown"
+  }
+}

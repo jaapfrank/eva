@@ -12,7 +12,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 
 
-INSTALLER_INSTALLATION_PLAN_SECTION = """<section><h2>Installatieplan</h2><div id="installation-plan"><p>Het plan wordt veilig geladen…</p></div><p><small>Het plan bekijken verandert niets. Doelinstallatie voorbereiden maakt opslag en start de databasevoorbereiding. Eva zelf blijft uit.</small></p><button id="installation-prepare" type="button" disabled>Doelinstallatie voorbereiden</button><p id="installation-preparation-status" role="status"></p></section>"""
+INSTALLER_INSTALLATION_PLAN_SECTION = """<section><h2>Installatieplan</h2><div id="installation-plan"><p>Het plan wordt veilig geladen…</p></div><p><small>Het plan bekijken verandert niets. Installatie uitvoeren maakt opslag en bereidt de databases voor. Een pakket voor nieuwe installatie start daarna Eva; een herstelpakket wacht op herstel.</small></p><button id="installation-prepare" type="button" disabled>Installatie uitvoeren</button><p id="installation-preparation-status" role="status"></p></section>"""
 
 
 INSTALLER_INSTALLATION_PLAN_SCRIPT = r"""
@@ -60,7 +60,7 @@ INSTALLER_INSTALLATION_PLAN_SCRIPT = r"""
   prepare.onclick = async () => {
     if (prepare.disabled || !currentPlan) return;
     attempted = true; prepare.disabled = true;
-    preparationStatus.textContent = 'Doelinstallatie wordt voorbereid. Sluit dit venster niet.';
+    preparationStatus.textContent = 'Installatie wordt uitgevoerd volgens de startroute van dit pakket. Sluit dit venster niet.';
     try {
       const response = await fetch('/internal/v1/onboarding/install/prepare', {
         method: 'POST', credentials: 'same-origin', cache: 'no-store',
@@ -109,9 +109,10 @@ def register_installer_installation_plan_routes(
     preparation_state = "available" if prepare_target is not None and require_write is not None and read_preparation_status is not None else "unavailable"
     messages = {
         "unavailable": "Automatische doelvoorbereiding is nog niet aangesloten op deze installer.",
-        "available": "Bereid de nieuwe doelinstallatie voor met de getoonde keuzes. Eva wordt daarmee nog niet gestart.",
+        "available": "Voer de installatie uit met de getoonde keuzes en de startroute van dit pakket.",
         "running": "Doelvoorbereiding loopt. Start geen tweede poging.",
         "prepared": "Doelinstallatie voorbereid. Eva is nog niet gestart; ga verder met de herstelroute.",
+        "runtime_ready": "De nieuwe Eva-diensten zijn gestart en technisch bereikbaar. De kanaal- en gebruiksproef staat nog open.",
         "needs_inspection": "Voorbereiding niet bevestigd. Gedeeltelijke resultaten blijven bewaard. Laat de toestand controleren voordat je verdergaat.",
     }
 
@@ -171,7 +172,11 @@ def register_installer_installation_plan_routes(
             except Exception:
                 preparation_state = "needs_inspection"
                 return JSONResponse(preparation_payload(), status_code=409, headers=security_headers)
-            preparation_state = "prepared"
+            try:
+                stored = read_preparation_status() if read_preparation_status is not None else "prepared"
+                preparation_state = stored if stored in {"prepared", "runtime_ready"} else "needs_inspection"
+            except Exception:
+                preparation_state = "needs_inspection"
             return JSONResponse(preparation_payload(), headers=security_headers)
         finally:
             preparation_lock.release()

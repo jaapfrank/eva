@@ -1,5 +1,15 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — O1.1 startkoppeling geïnstalleerd; doelkeuze open
+
+Bestaande wizard kan na voorbereiding de nieuwe eigenaar initialiseren en diensten starten. Startcode en aansluiting onafhankelijk gereviewd; 15 gerichte workflow/API-controles geslaagd. Drie modules in het bestaande operatorpakket geïnstalleerd en imports gecontroleerd. Geen echte nieuwe installatie gestart en geen extra productonderdeel afgerond. [Bewijs](evidence/product/installer-fresh-start-20260929.json).
+
+**Resteert:** eerste doelcomputer kiezen (Windows/WSL of Ubuntu Server), concrete goedgekeurde pakketconfiguratie leveren en werkelijke installatie afronden. O1.1 wacht daarop; geen actieve uitvoerders. Geen nieuwe modelcalls; credits onbekend. Onafhankelijk ander productwerk blijft uitvoerbaar.
+
+## Historisch — O1.1 nieuwe-installatiestart in uitvoering
+
+Doelcomputerkeuze blijft open. Uitvoerder o1_fresh_start bouwt het onafhankelijke ontbrekende startstuk met hergebruik van bestaande eigenaarinitialisatie en voorbereidingsbewijs. Geen herstelarchief nabootsen; geen werkelijke huisacties of modelcalls. Bestanden: tools/installation_fresh_start.py en gerichte tests. Basis36a4e53a. Codex coördineert; volledige O1-afronding blijft open.
+
 ## Actueel — O1.1 doelcomputerkeuze open
 
 Zeven werkelijke runtime-services met exacte Docker-image-identiteiten vastgelegd. Docker RepoDigests bewijzen niet dat deze lokale namen elders te downloaden zijn. Geen secrets, gegevensvolumes of configuratiewaarden geëxporteerd. [Inventaris voor pakket](evidence/product/installer-runtime-inputs-20260929.json).
