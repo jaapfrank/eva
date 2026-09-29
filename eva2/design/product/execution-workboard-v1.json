@@ -2939,15 +2939,15 @@
           }
         ],
         "now": {
-          "title": "R1.1: volledige leerproef niet gestart",
-          "state": "Broncontrole afgerond; R1 blijft gepland",
-          "detail": "Bestaande referentie13modelantwoorden, afgesproken maximum12. Geen extra modelcalls. Kleiner eerlijk vergelijkingsontwerp nodig; R1 blijft open.",
+          "title": "C1.1: vertraging nog niet opgelost",
+          "state": "Geen nieuwe functie opgeleverd",
+          "detail": "Broncontrole leverde geen nieuwe oorzaak op. Geen modelproeven, codewijziging of installatie. Bestaande metingen en geheugen blijven behouden.",
           "owner": "Geen actieve uitvoerder"
         },
         "next": {
-          "title": "C1.1: begroeting versnellen",
+          "title": "O1.1: bruikbare installatieconfiguratie",
           "state": "Nog niet gestart",
-          "detail": "Bestaande meting gebruiken om concrete vermijdbare wachttijd te vinden; geen nieuwe geheugencode of blinde meetherhaling."
+          "detail": "Bestaande draaiende containercompositie gebruiken om de concrete pakket-/doelversiemismatch op te lossen. Een aangepast supportlabel alleen bewijst niets."
         },
         "ownerAction": {
           "title": "Twee Telegram-berichten direct na elkaar",
@@ -2961,7 +2961,7 @@
           "linkLabel": "Gebruik je bestaande Telegram-gesprek met Eva"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T11:56:41.211307+00:00"
+        "reviewedAt": "2026-09-29T11:59:54.790433+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12781,7 +12781,7 @@
           ]
         }
       ],
-      "nextAction": "C1.1: inspect the existing measured greeting path for one concrete avoidable delay; reuse timing evidence, no blind repeated calls or memory bypass.",
+      "nextAction": "O1.1: use the actual installed container composition to resolve the existing release-target/package mismatch; do not repeat unchanged preflight or claim support by editing labels.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -12941,7 +12941,8 @@
               "kind": "verbeteren",
               "doneWhen": "Eenvoudig hallo sneller dan de huidige circa5s; inhoudelijke antwoordtijd en verbruik vastgelegd.",
               "owner": "Codex",
-              "existingTimingFinding": "Existing measured greeting5.191s; model first content3.330s, memory-only0.985s. No new measurement or demonstrated new defect; no speculative memory/transport rebuild."
+              "existingTimingFinding": "Existing measured greeting5.191s; model first content3.330s, memory-only0.985s. No new measurement or demonstrated new defect; no speculative memory/transport rebuild.",
+              "remaining": "Bestaande meting verklaart vijf seconden deels door modelroute3,330s en geheugen circa1s. Geen nieuwe concrete vermijdbare wachttijd gevonden. Geen ongewijzigde modelproef of eerder afgewezen geheugenparallelisatie herhalen."
             },
             {
               "id": "C1.2",
@@ -14511,7 +14512,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "R1",
+      "activeSliceId": "O1",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

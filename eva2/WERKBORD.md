@@ -1,5 +1,11 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — C1.1 niet verder opgelost
+
+Bestaande bron en metingen opnieuw bekeken: geen nieuwe aantoonbare oorzaak van vermijdbare vertraging. Geen codewijziging, modelproef of installatie. Dit is geen functievoortgang; C1.1 blijft open. Geen herhaling zonder gewijzigde oorzaak.
+
+**Volgende, nog niet gestart:** O1.1 werkelijke draaiende containercompositie koppelen aan bruikbare installatieconfiguratie. Geen ongewijzigde preflightherhaling of supportclaim door labels te veranderen. Geen actieve uitvoerders.
+
 ## Actueel — R1.1 leerreferentie past niet ongewijzigd
 
 Bestaande JSON Patch-leerproef vergde13modelantwoorden; R1 laat maximaal12per run toe. Geen herhaling, kandidaat of vergelijking gestart. Dit wijst alleen deze volledige herhaling af, niet de hypothese of een kleinere eerlijke proef. Gewone geleerde werkwijzen blijven beschikbaar. R1 en technische onderscheiding blijven open. [Bewijs](evidence/product/r1-existing-reference-admission-20260929.json). Nul nieuwe modelcalls; credits onbekend.
