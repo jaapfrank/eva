@@ -1,3 +1,7 @@
+## Actueel: I2.1 wacht op bronkeuze — 29 september 2026
+
+C1 blijft onaf: geen nieuwe aantoonbare codeoorzaak voor snelheid; echte meting na providerweigering open. Geen speculatieve cache-/geheugenherbouw. Voor I2.1 is de eigenaar gevraagd welke camera de bakken ziet en welke kalender ophaaldagen bevat. Lokale beeldherkenning is nu active/running; eerdere echte kalenderuitlezing blijft geldig als historisch bewijs. Geen connectorbouw of modelproef actief en geen functie afgerond.
+
 ## C1: bestaande Telegram-overlap vastgesteld — 29 september 2026
 
 Modelbegroeting afgerond18:41:57 terwijl onderzoeksaanvraag tot18:41:58 liep. Eén modelaanvraag,0tools, eerste tekst1,641s. Geen bewijs voor totale Telegramtijd of begroeting tijdens succesvol lopend onderzoek; C1 blijft open. Eerdere cacheproef rechtvaardigt geen herbouw. Accountcontrole:zelfde account94% verbruikt, normaal gebruik toegestaan; verklaart eerdere429nog niet. Geen nieuwe modelcalls of reset.

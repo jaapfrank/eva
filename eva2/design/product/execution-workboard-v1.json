@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T19:41:40.893555+00:00",
+        "checkedAt": "2026-09-29T19:43:41.600081+00:00",
         "deliveries": [
           {
             "title": "Providerweigering zonder dubbele aanvraag of veiligheidsmelding",
@@ -3043,26 +3043,27 @@
           }
         ],
         "now": {
-          "title": "C1 vlot contact tijdens achtergrondwerk",
-          "state": "In uitvoering",
-          "detail": "Bestaande Telegramtijden gecontroleerd: begroeting afgerond terwijl eerdere onderzoeksaanvraag nog liep; eerste modeltekst1,641s. Geen bewijs voor volledige Telegramvertraging of succesvol onderzoeksresultaat tijdens doorpraten. Geen nieuwe modelcalls.",
-          "owner": "/root"
+          "title": "Camera en afvalkalender kiezen — I2.1",
+          "state": "Wacht op antwoord",
+          "detail": "Bestaande lokale beeldherkenning draait; agenda-aansluiting bestaat. Vraag naar bedoelde camera/kalender staat open. Geen nieuwe connectorbouw of modelproef actief. C1-snelheidsproef blijft apart open.",
+          "owner": "Jaap: bronkeuze; Codex: bestaande koppeling vervolgen"
         },
         "next": {
-          "title": "C1 gekozen gebruikersuitkomst afmaken",
-          "detail": "Alleen een aangetoonde oorzaak verbeteren en werkelijke reactie controleren; geen nieuw geheugen-, spraak- of installatieproject."
+          "title": "Bestaande camera-/agendaroute gericht afronden",
+          "detail": "Na bronkeuze bestaande aansluiting gebruiken; werkelijke waarneming en ophaaldatum moeten de melding dragen. Geen vooraf geschreven vuilnisbakregel of verzonnen afspraak."
         },
         "ownerAction": {
-          "title": "Telegramfout ontvangen; niet opnieuw proberen nodig",
+          "title": "Welke camera en afvalkalender?",
           "steps": [
-            "Beide berichten zijn onderzocht: de provider retourneerde HTTP429 voordat een modelantwoord kwam."
+            "Geef de gewone naam van de camera die de vuilnisbakken ziet.",
+            "Geef de naam van de agenda of afvalkalender met de ophaaldagen."
           ],
-          "expected": "Geen claim dat inhoud onveilig is; nieuwe modelproeven wachten op beschikbare provider.",
+          "expected": "De bedoelde bronnen gebruiken zonder de bestaande koppelingen opnieuw te bouwen.",
           "url": "",
-          "linkLabel": "Fout onderzocht"
+          "linkLabel": "Antwoord in deze chat"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T19:41:40.893555+00:00"
+        "reviewedAt": "2026-09-29T19:43:41.600081+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13039,7 +13040,7 @@
             {
               "id": "C1.1",
               "title": "Begroeting versnellen",
-              "status": "in_progress",
+              "status": "blocked",
               "kind": "verbeteren",
               "doneWhen": "Eenvoudig hallo sneller dan de huidige circa5s; inhoudelijke antwoordtijd en verbruik vastgelegd.",
               "owner": "Codex",
@@ -13058,8 +13059,9 @@
                 ],
                 "finish": "Demonstrated reduction in actual content latency without bypassing shared memory/persona; independent focused review and installed result. Current Telegram overlap remains separate C1.2.",
                 "estimate": "Use retained timings and current source/config first; new provider calls only for a concrete changed hypothesis. Credits unknown.",
-                "stage": "existing_contact_path_cause_check"
-              }
+                "stage": "awaiting_provider_supported_measurement"
+              },
+              "blocker": "Live latency proof remains unavailable after observed HTTP429; no demonstrated additional code bottleneck. Cached-prefix route already exists; incompatible explicit-cache experiment must not be repeated. No speculative rebuild."
             },
             {
               "id": "C1.2",
@@ -14053,10 +14055,12 @@
             {
               "id": "I2.1",
               "title": "Bedoelde camera en agenda kiezen",
-              "status": "planned",
+              "status": "blocked",
               "kind": "keuze",
               "doneWhen": "De bestaande koppelingen gebruiken de bedoelde bronnen; nog open camerakeuze expliciet vastgelegd.",
-              "owner": "Jaap"
+              "owner": "Jaap",
+              "blocker": "Owner asked which camera sees bins and which existing calendar holds collection dates; answer pending. Existing local vision service active/running; prior real calendar read already retained.",
+              "checkedAt": "2026-09-29T19:43:41.600081+00:00"
             },
             {
               "id": "I2.2",
@@ -14748,7 +14752,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "C1",
+      "activeSliceId": "I2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
