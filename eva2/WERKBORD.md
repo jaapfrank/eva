@@ -1,3 +1,7 @@
+## Actueel: P1.1 native opgeslagen selectie gecontroleerd — 30 september 2026
+
+Native configuratielader kiest zes modelrollen correct op basis van opgeslagen selectie. Contactprofiel Default staat als eindstand ingesteld en is teruggelezen. Review akkoord, nul providercalls. Geen nieuwe Eva-functie of volledige P1.1. Native uitvoering/OAuth, cumulatieve meting en stoppen blijven open. Geen proefproces actief. [Bewijs](evidence/product/p1-agentzero-persisted-selection-20260930.json).
+
 ## Actueel: P1.1 native presets opgeslagen en teruggelezen — 30 september 2026
 
 Agent Zero leest zes contact-/werkmodelrollen correct terug via eigen opslag en configuratielader. Geïsoleerde proef, nul providercalls, onafhankelijke review akkoord. Presetbestand herbruikbaar vastgelegd; Eva-runtime ongewijzigd. Geen volledige P1.1 of productcategorie afgerond. Actieve selectie, native uitvoering/OAuth en samplebrede meting blijven open. Geen proefproces meer actief. [Bewijs](evidence/product/p1-agentzero-persisted-presets-20260930.json).

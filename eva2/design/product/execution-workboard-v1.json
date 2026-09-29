@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T22:01:17.561327+00:00",
+        "checkedAt": "2026-09-29T22:05:23.160695+00:00",
         "deliveries": [
           {
             "title": "Herhaalde herstelpakketcontrole versneld",
@@ -3051,14 +3051,14 @@
           }
         ],
         "now": {
-          "title": "P1.1: native modelinstellingen opgeslagen en gecontroleerd",
+          "title": "P1.1: native opgeslagen modelselectie gecontroleerd",
           "state": "Deelstap afgerond",
           "owner": "Codex /root",
-          "detail": "Zes modelrollen correct uit Agent Zero’s eigen opgeslagen presets teruggelezen. Onafhankelijke review akkoord; nul modelcalls. Geen nieuwe Eva-productfunctie, geen vergelijking gestart. Geen proefproces meer actief."
+          "detail": "Zes rollen via eigen configuratielader correct; contactprofiel Default als eindstand teruggelezen. Review akkoord, nul modelcalls. Geen volledige P1.1 of nieuwe Eva-functie. Geen proefproces actief."
         },
         "next": {
-          "title": "P1.1: native selectie en gezamenlijke verbruiksmeting",
-          "detail": "Bestaande vergelijkingsadapter verbinden met de opgeslagen presets en cumulatieve meetcontracten. Providergebruik pas na toelating; camera-/agendakeuze blijft bij Jaap open."
+          "title": "P1.1: native uitvoering en volledige verbruiksregistratie",
+          "detail": "Authenticatie, daadwerkelijke agentuitvoering en samplebrede helper-/retrymeting plus stoppen ontbreken nog. Geen benchmark starten op basis van alleen correcte instellingen."
         },
         "ownerAction": {
           "title": "Kies camera en afvalagenda",
@@ -3071,7 +3071,7 @@
           "linkLabel": "Beantwoord de twee keuzes in deze chat"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T22:01:17.561327+00:00"
+        "reviewedAt": "2026-09-29T22:05:23.160695+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14571,8 +14571,8 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Agent Zero leest opgeslagen native contact-/werkpresets correct terug:6modelrollen,0providercalls. Actieve presetselectie, native agent, OAuth-toegang en samplebrede meting nog open; vergelijking niet toegelaten.",
-              "latestEvidence": "eva2/evidence/product/p1-agentzero-persisted-presets-20260930.json",
+              "remaining": "Native opgeslagen presets en selectie gelezen:6rollen correct, contactprofiel Default actief. Native uitvoering/OAuth en samplebrede meting/stop nog open; geen vergelijkingsrun toegelaten.",
+              "latestEvidence": "eva2/evidence/product/p1-agentzero-persisted-selection-20260930.json",
               "assignment": {
                 "baseCommit": "8322f210",
                 "owner": "Codex",
@@ -14583,7 +14583,7 @@
                 "gap": "Explicit none survives direct bridge but upstream normalizer drops it.",
                 "endCondition": "Disposable native preset save/load resolves exact contact/helper models through pinned Agent Zero code, no provider calls. Live comparison remains blocked.",
                 "estimate": "One offline three-case run after source inspection; zero upstream calls; credits unknown.",
-                "stage": "native_presets_verified",
+                "stage": "native_selection_verified",
                 "activeWorkers": []
               },
               "blocker": "Native vergelijking nog niet uitvoerbaar: bestaande cp001_native/preflight en cp001_accounting geven live_enabled=false. Requestinstelling bewijst geen samplebrede begrenzing inclusief geheugen/helpers/retries, native toegang of annulering. Geen gate omzetten of modelrun starten op basis van alleen de nieuwe preset.",

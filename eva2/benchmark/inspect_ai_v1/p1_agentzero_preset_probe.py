@@ -24,11 +24,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--verify-selection", action="store_true", help="Reuse saved presets and verify native selection lookup")
     args = parser.parse_args()
     source, output = args.source.resolve(), args.output.resolve()
     if subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=source, text=True).strip() != PIN:
         raise ValueError("Agent Zero source pin differs")
-    if output == source or source in output.parents or (output.exists() and any(output.iterdir())):
+    if subprocess.run(["git", "diff", "--quiet", "HEAD", "--"], cwd=source).returncode:
+        raise ValueError("Agent Zero tracked source differs from its pin")
+    if output == source or source in output.parents or (not args.verify_selection and output.exists() and any(output.iterdir())):
         raise ValueError("Use a separate empty output directory")
     os.umask(0o077)
     output.mkdir(parents=True, exist_ok=True)
@@ -51,14 +54,30 @@ def main():
     presets = [{"name": "Default", "chat": contact, "utility": work,
                 "vision": work, "embedding": embedding},
                {"name": "Eva Research", "chat": work, "utility": work, "vision": work}]
-    native.save_presets(presets)
+    if not args.verify_selection:
+        native.save_presets(presets)
     native.cache.clear(native.PRESETS_CACHE_AREA)
     saved = Path(native._get_presets_path()).resolve()
     if output not in saved.parents:
         raise ValueError("Native preset was saved outside isolated user data")
     observations = []
     for name, expected in [("Default", contact), ("Eva Research", work)]:
-        resolved = native.resolve_config_settings({"model_preset": name})
+        if args.verify_selection:
+            from helpers import plugins
+            # Native runtime consumes this selection-only config. Validate its
+            # shape with the plugin hook without starting the agent/UI layer.
+            selection = plugins.call_plugin_hook("_model_config", "save_plugin_config",
+                settings={"model_preset": name})
+            assert selection == {"model_preset": name}
+            selected_path = Path(plugins.determine_plugin_asset_path(
+                "_model_config", "", "", plugins.CONFIG_FILE_NAME)).resolve()
+            if output not in selected_path.parents:
+                raise ValueError("Selected config escaped isolated user data")
+            files.write_file(str(selected_path), json.dumps(selection))
+            resolved = native.get_config()
+            assert resolved["model_preset"] == name
+        else:
+            resolved = native.resolve_config_settings({"model_preset": name})
         for slot, wanted in [("chat_model", expected), ("utility_model", work), ("vision_model", work)]:
             config = native.build_model_config(resolved[slot], models.ModelType.CHAT)
             assert config.provider == wanted["provider"]
@@ -66,9 +85,13 @@ def main():
             assert config.kwargs == wanted["kwargs"]
             observations.append({"preset": name, "slot": slot, "provider": config.provider,
                                  "model": config.name, "kwargs": config.kwargs})
-    print(json.dumps({"sourceCommit": PIN, "savedPresetSha256": hashlib.sha256(saved.read_bytes()).hexdigest(),
+    if args.verify_selection:
+        files.write_file(str(selected_path), json.dumps({"model_preset": "Default"}))
+        assert native.get_config()["model_preset"] == "Default"
+    print(json.dumps({"activePreset": "Default" if args.verify_selection else None, "sourceCommit": PIN, "savedPresetSha256": hashlib.sha256(saved.read_bytes()).hexdigest(),
         "savedPreset": str(saved), "observations": observations, "providerCalls": 0,
-        "scope": "Native persisted preset save/load and ModelConfig construction only",
+        "scope": ("Native persisted selection lookup and ModelConfig construction" if args.verify_selection
+                  else "Native persisted preset save/load and ModelConfig construction only"),
         "limits": ["No agent loop, authentication, helper execution or cumulative accounting verified",
                    "Embedding model is a schema identity only; not loaded or admitted"]}, indent=2))
 
