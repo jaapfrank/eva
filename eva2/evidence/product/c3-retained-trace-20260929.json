@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-09-29T12:45:12.414357+00:00",
+  "baseCommit": "eef04676",
+  "scope": "Read current HA speaker selections and retained Eva2 pipeline traces. No audio/model/firmware actions.",
+  "speakerSelections": {
+    "0a16e0": "Eva2",
+    "0a5035": "Eva2",
+    "bothState": "idle"
+  },
+  "traceCount": 1,
+  "latestTraceAt": "2026-09-28T11:05:12.277836+00:00",
+  "latestTraceId": "01M3KV1CTN6D1YF7T8NAP5SVNS",
+  "finding": "Only retained trace is the known unreachable response preceding research-input repair. No newer physical conversation is retained. This adds no new defect or passed speaker test.",
+  "existingRepair": "eva2/evidence/product/research-input-recovery-20260928.json",
+  "nextAction": "Owner asked to use living-room speaker once and try a social follow-up during work. Only dependent physical tasks wait.",
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/c3-trace-20260929",
+  "apiSource": "https://raw.githubusercontent.com/home-assistant/core/2026.9.2/homeassistant/components/assist_pipeline/websocket_api.py",
+  "limitations": [
+    "Trace retention does not prove nobody used another route",
+    "Selections do not prove physical audio or full duplex",
+    "No justification for repeating installed code repairs"
+  ],
+  "usage": {
+    "modelCalls": 0,
+    "audioCalls": 0,
+    "credits": "unknown"
+  }
+}

@@ -2947,10 +2947,10 @@
           }
         ],
         "now": {
-          "title": "L2.1 vervolg voor morgen opgeslagen",
-          "state": "Gepland voor 30 september 15:00",
-          "detail": "Echte vervolgstap opgeslagen voor 30 september 15:00 Nederlandse tijd. Checkpoint scheduled, nog geen uitvoer-ID. Werkelijke uitvoering/resultaat en onafhankelijke beoordeling na dat tijdstip open.",
-          "owner": "Eva scheduler; Codex beoordeelt na uitvoering"
+          "title": "C3.1 wacht op actuele woonkamerspeakerproef",
+          "state": "Gebruikersproef open",
+          "detail": "Alleen bekende fysieke fout van vóór reparatie bewaard. Actuele woonkamerspeakerproef gevraagd; geen nieuwe fout of succesvolle fysieke werking aangetoond.",
+          "owner": "Jaap voor fysieke waarneming; geen actieve uitvoerder"
         },
         "next": {
           "title": "Onafhankelijk open productwerk vervolgen",
@@ -2958,16 +2958,18 @@
           "detail": "L2 wacht alleen op zijn vastgelegde uitvoertijd; O1 wacht op doelcomputerkeuze. Geen herhaling of handmatige hervatting van de geplande opdracht."
         },
         "ownerAction": {
-          "title": "Kies de eerste doelcomputer voor installatie",
+          "title": "Doorpraten op woonkamerspeaker proberen",
           "steps": [
-            "Beantwoord de vraag in deze taak: huidige Windows/WSL-computer of aparte Ubuntu Server-computer."
+            "Zeg Hey Eva, zoek uit wat Home Assistant Cloud voor spraak doet.",
+            "Probeer daarna Hoe gaat het? te vragen terwijl onderzoek loopt.",
+            "Geef door of Eva weer luistert en of het tweede antwoord vóór het onderzoeksresultaat komt."
           ],
-          "expected": "Codex maakt de concrete installatie voor de gekozen computer af; bestaande gegevens blijven behouden.",
+          "expected": "Nieuw gesprek mogelijk tijdens aangenomen werk; daadwerkelijke fysieke werking nog niet bevestigd.",
           "url": "",
-          "linkLabel": "Antwoord in deze taak"
+          "linkLabel": "Geef resultaat in deze taak door"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T12:41:04.859043+00:00"
+        "reviewedAt": "2026-09-29T12:45:12.414357+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13063,10 +13065,22 @@
             {
               "id": "C3.1",
               "title": "Doorpraten via woonkamer-speaker",
-              "status": "planned",
+              "status": "blocked",
               "kind": "aansluiten",
               "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
-              "owner": "Codex"
+              "owner": "Codex",
+              "blocker": "Alleen bekende fysieke fout van vóór reparatie bewaard. Actuele woonkamerspeakerproef gevraagd; geen nieuwe fout of succesvolle fysieke werking aangetoond.",
+              "latestEvidence": "eva2/evidence/product/c3-retained-trace-20260929.json",
+              "assignment": {
+                "baseCommit": "eef04676",
+                "owner": "Codex",
+                "files": [
+                  "eva2/evidence/product/c3-retained-trace-20260929.json"
+                ],
+                "outcome": "Actuele fysieke fout onderscheiden van reeds gerepareerde oude fout",
+                "endCondition": "Nieuwe bewaarde fysieke waarneming of expliciet ontbrekend bewijs; geen ongewijzigde modelproef",
+                "actual": "Read-only HA status en één bewaarde trace; nul model/audio-calls; credits onbekend."
+              }
             },
             {
               "id": "C3.2",

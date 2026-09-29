@@ -1,5 +1,9 @@
 # Eva 2 — uitvoerbaar werkbord
 
+## Actueel — C3.1 fysieke waarneming gevraagd
+
+Beide speakers staan op Eva2 en zijn idle. HA bewaart één Eva2-trace, van 28 september vóór de bekende reparatie. Geen nieuw defect of geslaagde fysieke proef vastgesteld; geen code/firmware gewijzigd. [Controle](evidence/product/c3-retained-trace-20260929.json). Woonkamerspeakerproef gevraagd; alleen afhankelijk spraakwerk wacht. Geen actieve uitvoerder, nul model-/audiocalls. De L2-vervolgopdracht blijft gepland voor 30 september 15:00.
+
 ## Actueel — L2.1 echt vervolg voor morgen opgeslagen
 
 Eén gewone websitevraag heeft een vervolgstap opgeslagen voor **30 september om 15:00 Nederlandse tijd**. Exact checkpoint, opdracht en privéterugmelding in de draaiende database gecontroleerd; nog geen uitvoering gestart. Bestaand concept blijft behouden, apart zondagplan met drie activiteiten en maximaal 10 euro wordt gevraagd. Geen huisacties, aankopen of externe berichten. [Bewijs](evidence/product/l2-next-day-20260929.json).
