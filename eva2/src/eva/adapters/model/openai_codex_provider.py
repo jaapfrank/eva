@@ -101,6 +101,7 @@ class _RawSseUsageAttestor:
         self._pending = bytearray()
         self._terminal: RawUsageAttestation | None = None
         self._completed = False
+        self.event_counts = dict.fromkeys(("sse_events", "text_deltas", "tool_argument_deltas", "reasoning_deltas", "completed_events"), 0)
 
     def feed(self, chunk: bytes) -> None:
         self._pending.extend(chunk)
@@ -142,6 +143,17 @@ class _RawSseUsageAttestor:
         if not isinstance(event, dict):
             raise CodexProviderError("protocol")
         kind = event.get("type")
+        # Fixed counters only: never retain content, tool names or upstream labels.
+        self.event_counts["sse_events"] += 1
+        counter = {
+            "response.output_text.delta": "text_deltas",
+            "response.function_call_arguments.delta": "tool_argument_deltas",
+            "response.reasoning_text.delta": "reasoning_deltas",
+            "response.reasoning_summary_text.delta": "reasoning_deltas",
+            "response.completed": "completed_events",
+        }.get(kind) if isinstance(kind, str) else None
+        if counter is not None:
+            self.event_counts[counter] += 1
         if kind == "error" or kind in {
             "response.cancelled",
             "response.failed",
@@ -295,6 +307,10 @@ class _CodexTransport(httpx2.AsyncBaseTransport):
             "response_status": self._response_status,
             "received_bytes": sum(body.received_bytes for body in self._streams),
             "received_chunks": sum(body.received_chunks for body in self._streams),
+            **{key: sum(body._attestor.event_counts[key] for body in self._streams
+                        if body._attestor is not None)
+               for key in ("sse_events", "text_deltas", "tool_argument_deltas",
+                           "reasoning_deltas", "completed_events")},
         }
 
     @property

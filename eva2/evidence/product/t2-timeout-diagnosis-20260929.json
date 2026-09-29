@@ -1,0 +1,45 @@
+{
+  "checkedAt": "2026-09-29T11:21:01.839805+00:00",
+  "baseCommit": "0237c98c",
+  "status": "diagnostic_installed_not_timeout_resolved",
+  "finding": "Earlier timed-out model followup received HTTP200 and streaming bytes after an HA inventory read; no recorded HA mutation. Existing metadata cannot distinguish argument/text/reasoning stream or prove cause. Later automation task completed successfully; not proof failures fixed.",
+  "priorEvidence": [
+    "eva2/evidence/product/t2-general-ha-failed-20260929.json",
+    "eva2/evidence/product/t2-ha-delivered-20260929.json"
+  ],
+  "change": "Fixed content-free SSE counters in existing raw stream attestor and provider observation. No timeouts, retries, model roles or HA rights changed.",
+  "tests": "38 focused provider tests passed in3.78s in network-disabled existing runtime with existing test dependencies. Host collection lacked httpx2; bare runtime lacked pytest; no package installation or repeated model trial.",
+  "review": {
+    "reviewer": "/root/review_l2_autonomous_run",
+    "decision": "GO for bounded diagnostics only"
+  },
+  "interpretation": [
+    "completed_events counts observed completed labels, not validated completion.",
+    "No reasoning delta does not prove absence of internal reasoning.",
+    "This installs diagnosis only, not a finished HA function."
+  ],
+  "installation": [
+    {
+      "service": "core",
+      "image": "sha256:e2caf7985e218020d59249879b308951cb0df020958dbd72402c2e92210d3ebf",
+      "health": "healthy",
+      "sourceSha256": "ac8ec0b1f16d5067c4beed11e59db076aec330ffd88a21e85acaadfef6edb99f",
+      "sourceMatches": true
+    },
+    {
+      "service": "delegated-work-worker",
+      "image": "sha256:a29aef088aa3abc9fa0a887bc9b357d333d8265c24fd227b62724589d474fe1d",
+      "health": "healthy",
+      "sourceSha256": "ac8ec0b1f16d5067c4beed11e59db076aec330ffd88a21e85acaadfef6edb99f",
+      "sourceMatches": true
+    }
+  ],
+  "conversationHttpStatus": 200,
+  "rollbackArtifacts": "/home/administrator/project/.eva2-artifacts/t2-stream-progress-20260929",
+  "usage": {
+    "evaModelCalls": 0,
+    "haMutations": 0,
+    "creditCost": null
+  },
+  "next": "One bounded read-only HA model-followup observation using installed counters; no repetition of automation writes or timeout increase. Stop after evidence separates provider progress from local cancellation."
+}

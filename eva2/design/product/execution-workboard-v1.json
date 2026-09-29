@@ -2907,15 +2907,15 @@
           }
         ],
         "now": {
-          "title": "L2.2 afgerond: projectresultaat één keer terug",
-          "state": "Geïnstalleerd en onafhankelijk gecontroleerd",
-          "detail": "Concept behouden; na herstart en correctie zelfstandig einddocument gemaakt en één keer op website teruggebracht. Werkelijk meerdaags gebruik blijft open.",
+          "title": "T2.1: timeoutdiagnose beschikbaar",
+          "state": "Meetvoorziening geïnstalleerd; functie nog open",
+          "detail": "Kern en werker gezond; vaste voortgangstellers onderscheiden tekst/toolargumenten/zichtbare reasoningevents. Nog geen bewezen timeoutoplossing.",
           "owner": "Geen actieve uitvoerder"
         },
         "next": {
-          "title": "T2.1: resterende HA-timeout",
+          "title": "T2.1: één begrensde uitleesproef",
           "state": "Nog niet gestart",
-          "detail": "Eerdere timeout vergelijken met de later geslaagde algemene HA-uitvoering; alleen een aangetoond resterend tekort oplossen."
+          "detail": "Bestaande HA-route alleen uitlezen; modelopvolging met nieuwe tellers volgen. Geen automatiseringen opnieuw maken of timeout verhogen."
         },
         "ownerAction": {
           "title": "Twee Telegram-berichten direct na elkaar",
@@ -2929,7 +2929,7 @@
           "linkLabel": "Gebruik je bestaande Telegram-gesprek met Eva"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T11:12:52.855058+00:00"
+        "reviewedAt": "2026-09-29T11:21:01.839805+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -12749,7 +12749,7 @@
           ]
         }
       ],
-      "nextAction": "T2.1: inspect the concrete earlier HA timeout and use the later successful general HA execution to isolate any remaining gap; no repeat broad probe or reinstall cycle.",
+      "nextAction": "One bounded read-only HA model-followup observation using installed counters; no repetition of automation writes or timeout increase. Stop after evidence separates provider progress from local cancellation.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13522,10 +13522,24 @@
             {
               "id": "T2.1",
               "title": "Resterende HA-timeout gericht oplossen",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "verbeteren",
               "doneWhen": "Een concrete falende uitvoerstap verklaard en verbeterd; geen ongewijzigde proefherhaling of timeoutverhoging zonder bewijs.",
-              "owner": "Codex"
+              "owner": "Codex",
+              "assignment": {
+                "baseCommit": "0237c98c",
+                "outcome": "Identify the failed Astra tool-followup boundary and fix only a demonstrated remaining cause.",
+                "files": [
+                  "eva2/src/eva/adapters/model/openai_codex_provider.py",
+                  "focused provider tests",
+                  "eva2/evidence/product/t2-timeout-diagnosis-20260929.json"
+                ],
+                "estimate": "One bounded source/retained-stream diagnosis; zero planned model calls or HA mutations; credits unknown.",
+                "doneWhen": "Concrete failure linked to recorded request/stream and smallest sufficient correction, or explicit evidence gap with no speculative timeout increase.",
+                "stage": "diagnostics_installed_observation_next"
+              },
+              "latestEvidence": "eva2/evidence/product/t2-timeout-diagnosis-20260929.json",
+              "remaining": "Meetvoorziening geïnstalleerd; oorzaak en verbetering van eerdere modeltimeout nog niet bewezen."
             },
             {
               "id": "T2.2",
@@ -14381,7 +14395,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "P1",
+      "activeSliceId": "T2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

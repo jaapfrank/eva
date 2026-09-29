@@ -617,3 +617,22 @@ def test_cancelled_request_retains_content_free_transport_observation(stage: str
             assert session.model_requests == 1
 
     asyncio.run(run())
+
+
+def test_partial_sse_progress_counts_do_not_retain_content_or_accept_completion() -> None:
+    from eva.adapters.model.openai_codex_provider import _RawSseUsageAttestor
+
+    attestor = _RawSseUsageAttestor()
+    kinds = ["response.output_text.delta", "response.function_call_arguments.delta",
+             "response.reasoning_summary_text.delta", "private-unknown-event"]
+    wire = b"".join(b"data: " + json.dumps({"type": kind, "delta": "secret-content"}).encode()
+                    + b"\n\n" for kind in kinds)
+    for offset in range(0, len(wire), 7):
+        attestor.feed(wire[offset:offset + 7])
+    assert attestor.event_counts == {"sse_events": 4, "text_deltas": 1,
+        "tool_argument_deltas": 1, "reasoning_deltas": 1, "completed_events": 0}
+    assert "secret" not in json.dumps(attestor.event_counts)
+    assert "private" not in json.dumps(attestor.event_counts)
+    assert attestor.terminal is None
+    with pytest.raises(CodexProviderError, match="protocol"):
+        attestor.finish()
