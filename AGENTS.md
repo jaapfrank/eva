@@ -1,5 +1,17 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Owner instruction 29 September 2026 — individually tracked small outcomes
+
+Use `audit.deliveryPlan.implementationSlices[].remainingTasks` in the existing
+workboard for the current remaining work. Each item has its own ID, status, owner
+and finish condition. Update the actual small task when starting, blocked or done;
+parent status must not invent child completion. Finish one useful outcome with
+appropriate focused verification and bundled review/deployment. Do not run a new
+full test, rollback or reinstallation cycle for every item. Preserve earlier
+acceptance; do not silently grow scope. Final comparison and family acceptance
+are already explicit work, not hidden additional build rounds.
+
+
 ## Eigenaarcorrectie 29 september 2026 — doorbouwen in de ontwikkelversie
 
 Eva2 is nog in ontwikkeling. Een mislukte functieproef is op zichzelf geen reden

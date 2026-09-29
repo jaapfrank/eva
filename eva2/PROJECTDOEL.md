@@ -1,5 +1,18 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaaropdracht 29 september 2026 — kleine, zichtbare afrondtaken
+
+De 24bestaande hoofdopdrachten blijven de scope. De 18open opdrachten zijn in het
+bestaande werkbord opgesplitst in 44resterende taken met eigen ID, status,
+verantwoordelijke en eindvoorwaarde (`implementationSlices[].remainingTasks`).
+Werk per kleine taak bij vóór starten en bij resultaat/blokkade. Eén bruikbare
+uitkomst afronden; geen nieuwe eisen toevoegen zonder eigenaarbesluit of concrete
+afhankelijkheid. Bestaand bewijs gebruiken; gerichte controle en gebundelde review,
+installeren waar nodig. Geen automatische test-/rollback-/herinstallatiecyclus.
+De eindkandidaat, vergelijking en gezinsacceptatie staan als expliciete taken in
+dezelfde lijst. Nieuwe ideeën zijn vervolgwerk, geen stilzwijgende uitbreiding.
+
+
 ## Eigenaaropdracht 29 september 2026 — gerichte zelfverbetering, eerst bruikbare opleveringen
 
 Neem de aanpak van AIDE en AIDE² op binnen L3: enkele codevarianten vergelijken,

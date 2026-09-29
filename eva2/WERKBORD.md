@@ -1,8 +1,10 @@
 # Eva 2 — uitvoerbaar werkbord
 
-## Actueel — T3: bewaarde browsersessie herstellen
+## Opgeleverd — concrete taken per onderdeel
 
-Docker en Eva zijn weer bereikbaar. Bestaande browser meldt recovery_required, profiel behouden. Coördinator gebruikt bestaande herstelbediening; geen nieuwe browserlaag, geen modeltaak gestart. Daarna kleinste bruikbare browseruitkomst afronden. AIDE blijft gepland.
+Projectdashboard 44712 heeft nu **Taken per onderdeel**: 24 hoofdopdrachten, 6 technisch afgerond en 18 open, met 44 afzonderlijke resterende taken. Iedere taak heeft een eigen ID, status, verantwoordelijke en eindvoorwaarde in dezelfde JSON-werkbron. Geen nieuwe productscope of gewijzigde acceptatie. Build, echte browsercontrole (zoeken en afgerondfilter) en onafhankelijke review akkoord; geïnstalleerd. Geen Eva-modelcalls.
+
+**Eerstvolgend:** T3.1 bestaand Chrome-tabblad met Eva verbinden. Nog niet gestart; daarna T3.2 opdracht afronden en T3.3 overname. Werk voortaan per kleine taak bij. Alleen passende gerichte controles; brede integratiecontrole bij F1, geen automatische terugzet-/herinstallatiecyclus per taak.
 
 ## Geïnstalleerd en gecontroleerd — zelfstandig een HA-automatisering maken en wijzigen
 
