@@ -209,3 +209,14 @@ cleanup. Do not claim successful SDK/cloud stop, deploy the comparison based on
 this checkpoint, or count it as an Eva function. The native source is unchanged.
 Earlier monologue cases were retained rather than replayed. No external inference.
 See `../../evidence/product/p1-agentzero-native-bridge-20261001.json`.
+
+## Explicit comparison stream ownership — 1 October 2026
+
+The opt-in `--bind-stream` comparison binding now closes its own SDK HTTP
+response on cancellation before fixture cleanup. The real SDK/native-route
+fixture records zero active bound attempts and unknown incomplete usage. Three
+focused HTTPX checks preserve another sample's request, completed bytes/usage
+and failure truth. Native source remains unchanged. The unguarded failure above
+is retained: this guard is explicit comparison assistance, not stock Agent Zero
+behavior or cloud cancellation. No full admission follows. See
+`../../evidence/product/p1-agentzero-native-stream-stop-20261001.json`.

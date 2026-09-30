@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-30T22:45:29.721903+00:00",
+        "checkedAt": "2026-09-30T23:18:12.289011+00:00",
         "deliveries": [
+          {
+            "title": "Vergelijking: stoppen sluit eigen SDK-verbinding",
+            "date": "1 oktober",
+            "state": "tested",
+            "result": "Expliciete vergelijkingsbinding sluit native upstream vóór proefopruiming: actieve pogingen1→0, afgebroken verbruik onbekend. Normaal antwoord behouden;3 gerichte controles en onafhankelijke review akkoord.",
+            "remaining": "Dit is vergelijkingsvoorbereiding, geen extra Eva-functie of stock-concurrentievoorsprong. Geen cloudstop of volledige P1.1; Eva-installatie ongewijzigd.",
+            "source": "eva2/evidence/product/p1-agentzero-native-stream-stop-20261001.json"
+          },
           {
             "title": "Vergelijking: echte SDK/native proxy verbonden; stopgat gevonden",
             "date": "1 oktober",
@@ -3115,14 +3123,14 @@
           }
         ],
         "now": {
-          "title": "P1.1: SDK/native checkpoint vastgelegd",
+          "title": "P1.1: stopbinding vastgelegd en beoordeeld",
           "state": "Gedeeltelijk opgeleverd",
           "owner": "Codex /root",
-          "detail": "Review akkoord. Echte stream en werkantwoord in geïsoleerde proef gecontroleerd; stopgat eerlijk open. Geen proefproces actief of extra productfunctie; Eva-installatie ongewijzigd."
+          "detail": "Eigen SDK/native verbinding sluit nu bij vergelijkingstop, vóór proefopruiming. Review GO; geen proefproces actief. Geen nieuwe Eva-functie of volledige native toelating."
         },
         "next": {
-          "title": "P1.1: native upstream sluiten bij stoppen",
-          "detail": "Volgende uitvoering nog niet gestart. Alleen de gevonden stopovergang uitzoeken vóór afhankelijke live vergelijking; overige deelnemerdekking blijft apart open. Telegram-/speakerproeven en eigenaarkeuzes blijven apart gevraagd."
+          "title": "P1.1: werkelijke native uitvoerbinding en overige dekking",
+          "detail": "Volgende uitvoering nog niet gestart. Bestaande meting/stop aansluiten op echte deelnemer; provider/helper/sync/tooldekking en overige gelijkwaardige toegang blijven open. Eerdere proeven behouden; geen nieuw testplatform."
         },
         "ownerAction": {
           "title": "Telegram: tussenvraag tijdens onderzoek",
@@ -3136,7 +3144,7 @@
           "linkLabel": "Open Telegram"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-30T22:45:29.721903+00:00",
+        "reviewedAt": "2026-09-30T23:18:12.289011+00:00",
         "previousOwnerAction": {
           "title": "Lees het afgeronde zondagplan",
           "steps": [
@@ -14703,28 +14711,28 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Checkpoint onafhankelijk akkoord: echte SDK/native route voor Sol/none-SSE en Astra/medium zonder stream. Stop beëindigt modeltaak maar native upstream bleef open vóór expliciete proefopruiming. Bron en bewijs vastgelegd; geen proefproces actief. Volledige P1.1/toelating blijft open.",
-              "latestEvidence": "eva2/evidence/product/p1-agentzero-native-bridge-20261001.json",
+              "remaining": "Onafhankelijk GO: expliciete vergelijkingsbinding sluit eigen SDK/native upstream vóór proefopruiming bij stop; actieve pogingen0, onvolledig verbruik onbekend. Normaal streamantwoord behouden.3 gerichte controles geslaagd. Geen proefproces actief, geen extra Eva-functie of volledige P1.1.",
+              "latestEvidence": "eva2/evidence/product/p1-agentzero-native-stream-stop-20261001.json",
               "assignment": {
-                "baseCommit": "7afe465a",
+                "baseCommit": "20c7b2db",
                 "owner": "/root",
                 "files": [
+                  "eva2/benchmark/inspect_ai_v1/cp001_accounting.py",
                   "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py",
-                  "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-                  "eva2/evidence/product/p1-agentzero-native-bridge-20261001.json",
-                  "eva2/benchmark/inspect_ai_v1/p1_agentzero_litellm_capabilities.json"
+                  "eva2/evidence/product/p1-agentzero-native-stream-stop-20261001.json",
+                  "eva2/tests/benchmark/test_cp001_stream_control.py"
                 ],
-                "existing": "Native OAuth routes and saved provider/preset settings exist; actual login/model catalog readback and native full-loop/mock/stop evidence retained.",
-                "gap": "Actual SDK request/response parsing has not traversed registered native proxy routes using the owned authenticated store. Prior transport shaping bypassed those routes.",
-                "outcome": "Connect the existing native configuration, real SDK and registered OAuth proxy routes in one isolated fixture, with provider responses mocked at the upstream HTTP boundary.",
-                "finish": "Sol/none stream, Astra/medium nonstream and partial-stream closure run through actual native routes; record profile/body/usage/cleanup observations and remaining limitations. Do not repeat native monologue or inference.",
-                "estimate": "Existing isolated environment; only newly connected route cases. Zero external model calls, development credits unknown.",
-                "stage": "native_bridge_checkpoint_delivered_with_stop_gap",
+                "existing": "Real native proxy/SDK fixture and sample ledger exist. Stock pinned SDK iterator has no close API; normal partial cancellation leaves its owned HTTPX response open. Prior negative result retained.",
+                "gap": "Native stream-finally cannot close the raw SDK iterator. Cancelling a task alone does not close the admitted provider connection.",
+                "outcome": "Reuse the existing comparison-side binding with an explicitly owned async stream wrapper: preserve SDK events, bind the consuming task, close its real response on cancellation and keep incomplete usage unknown. Native source/pin unchanged; no content/personality or provider change.",
+                "finish": "Changed partial-stop case reaches native upstream close before any fixture cleanup, settles bound task/ledger with null usage; completed stream remains same output/usage. Retain baseline failure and label this comparison guard, not stock native stop or cloud cancellation.",
+                "estimate": "Only affected real SDK/native stream cases and focused ownership/error checks, bundled review. No external inference or production restart; development credits unknown.",
+                "stage": "native_stream_guard_checkpoint_delivered",
                 "activeWorkers": []
               },
-              "blocker": "Toegang aanwezig. Native upstreamsluiting bij modelstop nog niet aangetoond; testopruiming sluit pas daarna. Live vergelijkingsgate blijft uit; overige sync/tool/helper/retry/providerdekking en deelnemerpariteit blijven open.",
-              "nextImplementation": "Retain actual SDK/proxy output and explicit stop gap. Resolve native upstream closure only before dependent live comparisons; other participant coverage remains separate.",
-              "checkedAt": "2026-09-30T22:45:29.721903+00:00"
+              "blocker": "Native eigen toegang en expliciete streamsluiting in geïsoleerde proef aanwezig. Werkelijk gedeployde native runtime/proxy, real-providergebruik/quiescentie, volledige sync/tool/helper/retrydekking en gelijkwaardige overige deelnemertoegang blijven open. Stock Agent Zero-fout behouden; geen live vergelijking toegelaten.",
+              "nextImplementation": "Attach existing sample ledger/owned-stream binding to the actual native participant execution and cover remaining provider/helper/sync/tool entrypoints before dependent live comparison; preserve current cases, no new evaluator.",
+              "checkedAt": "2026-09-30T23:18:12.289011+00:00"
             },
             {
               "id": "P1.2",

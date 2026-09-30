@@ -1,0 +1,181 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "task": "P1.1",
+  "checkedAt": "2026-09-30T23:06:05.546379+00:00",
+  "outcome": "Explicit comparison-side SDK stream ownership closes the native upstream on sample cancellation before fixture cleanup; completed output and synthetic usage retained. This is not stock Agent Zero stop or cloud cancellation.",
+  "existing": "Pinned native route/proxy, saved selection, independent owned auth and existing sample ledger reused. Original unguarded stop failure remains in p1-agentzero-native-bridge-20261001.json.",
+  "before": {
+    "evidence": "eva2/evidence/product/p1-agentzero-native-bridge-20261001.json",
+    "stockModelTaskCancelled": true,
+    "nativeUpstreamClosedBeforeFixtureCleanup": false,
+    "activeAttemptsBeforeFixtureCleanup": 1,
+    "usage": null
+  },
+  "change": "Added SampleAsyncStream to existing comparison accounting: forward identical SDK events, bind actual consuming task and close SDK iterator or its own exposed HTTP response. Failed closure does not settle the attempt; no provider/model/content or native source change.",
+  "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+  "nativeSourceHashes": {
+    "plugins/_oauth/helpers/codex.py": "bcc9244bc2abc852aaf65a56c796abb8ec4bf93adfd2b3fc3b665312cd1b53db",
+    "plugins/_oauth/helpers/routes.py": "26f4708c40e1a673918ce796ffc6c4ff6f0168c11248e1eb215029ffa8a6c325",
+    "plugins/_model_config/helpers/model_config.py": "c4a46fb05ccfc176734e626d74a5b5bf6a9b1fe539f04d1bd35e6213b808b8d0"
+  },
+  "nativeTrackedSourceDiffReturnCode": 0,
+  "cases": [
+    {
+      "case": "native-bridge-contact-stream",
+      "comparisonGuardEnabled": true,
+      "outcome": "observed_route_completed",
+      "sdkRequest": {
+        "model": "gpt-6-sol",
+        "stream": true,
+        "native_content_type": "text/event-stream",
+        "native_status": 200
+      },
+      "upstreamRequest": {
+        "model": "gpt-6-sol",
+        "effort": "none",
+        "forced_stream": true,
+        "owned_auth_forwarded": true
+      },
+      "guardedStreamsClosed": [
+        true
+      ],
+      "upstreamClosedBeforeFixtureCleanup": [
+        true
+      ],
+      "activeAttemptsBeforeFixtureCleanup": 0,
+      "usageBeforeFixtureCleanup": {
+        "input_tokens": 21,
+        "output_tokens": 9,
+        "total_tokens": 30
+      },
+      "attemptStatus": "completed",
+      "activeAttemptsAfterFixtureCleanup": 0
+    },
+    {
+      "case": "native-bridge-partial-stop",
+      "comparisonGuardEnabled": true,
+      "outcome": "model_cancelled_upstream_close_observed",
+      "sdkRequest": {
+        "model": "gpt-6-sol",
+        "stream": true,
+        "native_content_type": "text/event-stream",
+        "native_status": 200
+      },
+      "upstreamRequest": {
+        "model": "gpt-6-sol",
+        "effort": "none",
+        "forced_stream": true,
+        "owned_auth_forwarded": true
+      },
+      "guardedStreamsClosed": [
+        true
+      ],
+      "upstreamClosedBeforeFixtureCleanup": [
+        true
+      ],
+      "activeAttemptsBeforeFixtureCleanup": 0,
+      "usageBeforeFixtureCleanup": {
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null
+      },
+      "attemptStatus": "native_upstream_closed_usage_unknown",
+      "activeAttemptsAfterFixtureCleanup": 0
+    }
+  ],
+  "verification": {
+    "focusedTests": {
+      "command": "agent-zero-probe-env/bin/python -m pytest eva2/tests/benchmark/test_cp001_stream_control.py -q",
+      "passed": 3,
+      "durationSeconds": 0.05,
+      "scope": "Two concurrent independent HTTPX streams: stop affects only owned response; completion preserves bytes/usage; failed close remains unknown on repeated close."
+    },
+    "nativeCaseSelection": "stream-cases --bind-stream",
+    "nativeHandle": null,
+    "failedPreRefreshHandle": 48982,
+    "successfulNativeExitCode": 0,
+    "successfulNativeExecution": "native-bridge-v7",
+    "guardedCases": 2,
+    "fullMonologueRerun": false,
+    "successfulNativeProcessFinishedDuringExec": true
+  },
+  "failureHistory": [
+    {
+      "execution": "native-bridge-v6",
+      "result": "Owned auth required refresh in disabled namespace before any mocked upstream was admitted. Test transport assumed an upstream existed and masked the early proxy failure with IndexError. Freshness preflight and sanitized HTTP status boundary added. No model call.",
+      "authRefreshNeedConfirmed": true
+    },
+    {
+      "stage": "refresh helper launch",
+      "result": "runuser without root failed before execution. WSL default administrator used directly; no auth call in failed launch."
+    }
+  ],
+  "nativeAuthRefresh": {
+    "checkedAt": "2026-09-30T23:01:41.604526+00:00",
+    "scope": "Native refresh of the independent owned auth store only.",
+    "allowedEndpoint": "https://auth.openai.com/oauth/token",
+    "nativeRefreshHTTPCalls": 1,
+    "externalInferenceRequests": 0,
+    "credentialsCopied": false,
+    "productionRuntimeChanges": 0,
+    "refreshRequiredBefore": true,
+    "refreshRequiredAfter": false,
+    "ownedStoreReadback": true,
+    "credentialMode": "0o600",
+    "result": "native_refresh_complete"
+  },
+  "upstreamReuseDecision": {
+    "checkedAt": "2026-09-30T23:06:05.546379+00:00",
+    "installedSDK": "litellm 1.88.1",
+    "installedResponsesIteratorCloseMethods": [],
+    "officialSourceInspected": "https://raw.githubusercontent.com/BerriAI/litellm/main/litellm/responses/streaming_iterator.py",
+    "finding": "The inspected official async Responses iterator still exposes its HTTP response and no aclose method. No SDK upgrade was undertaken for this gap; reuse a small explicit comparison-side ownership guard. This is a scoped source observation, not an exhaustive SDK assessment."
+  },
+  "executedSourceHashes": {
+    "p1_agentzero_bridge_probe.py": "340e5271e5ceaecc3baae8be18af2c7b2f8e6ec76aeb74ff029e391fd5bbde4d",
+    "cp001_accounting.py": "fcb5b496b4510ceb779315b2827b2b1a3686829ec6c4b9816794db20634b389d"
+  },
+  "publicationSourceHashes": {
+    "eva2/benchmark/inspect_ai_v1/cp001_accounting.py": "fcb5b496b4510ceb779315b2827b2b1a3686829ec6c4b9816794db20634b389d",
+    "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py": "376524eb04112f816ec69ded430254e2e2ba63c5cb641b72692d074df779e898",
+    "eva2/tests/benchmark/test_cp001_stream_control.py": "c6189e3f8bb5ee4f46605372d75da7b0e2d9625a408cc4ee0ab596b4e6001bd9"
+  },
+  "postExecutionChange": "Reporting metadata nativeBehaviorChanged replaced with nativeSourceModified and explicit comparisonStopAssistance; no executable-path change or native replay.",
+  "artifacts": {
+    "directory": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/native-bridge-v7",
+    "report": "native-bridge-report.json",
+    "reportSha256": "67b9c53b2056fab47a58df5469d817f802321d048a91193ec7e77f728d07cd84",
+    "sourceRecord": "execution-source.json",
+    "sourceRecordSha256": "2ea600d0e25cbd65cc717bced8be647613225bb2579f43524473b6efa63288c8",
+    "partialBoundary": "partial-boundary.json"
+  },
+  "consumption": {
+    "externalInferenceRequests": 0,
+    "evaRuntimeInferenceTokens": 0,
+    "mockedProviderAttempts": 2,
+    "nativeTokenRefreshHTTPRequests": 1,
+    "developmentCredits": null,
+    "developmentTokens": null,
+    "syntheticTokensNotRuntimeConsumption": true,
+    "developmentGoalAccounting": {
+      "counter": "active thread goal tokensUsed",
+      "before": 4985746,
+      "beforeBasis": "Automatic goal-continuation snapshot",
+      "observedAtCheckpoint": 5512869,
+      "differenceThroughCheckpoint": 527123,
+      "scope": "Cumulative app goal accounting between snapshot and pre-publication checkpoint; not billable credits or per-function cost. Cache/category/agent split unavailable; later publication not included."
+    }
+  },
+  "productionRuntimeChanges": 0,
+  "review": "eva2/reviews/p1-agentzero-native-stream-stop-20261001.md",
+  "admission": "not_admitted",
+  "productFunctionCompleted": false,
+  "limitations": [
+    "In-process native WSGI route, not a deployed proxy/network-disconnect or provider cancellation proof.",
+    "Measured usage is synthetic and observed at the mocked upstream seam; full real provider/helper/retry/sync/tool accounting remains open.",
+    "Comparison guard adds explicit assistance; do not attribute its stopping behavior to stock Agent Zero or score it as a competitor advantage.",
+    "Other participant parity and full P1.1 remain open.",
+    "Earlier SDK cost-map lookup is blocked in namespace; synthetic usage adaptation warning retained."
+  ],
+  "reviewDisposition": "GO for bounded comparison-side ownership fix; no native/cloud stop or P1.1/product completion claim."
+}

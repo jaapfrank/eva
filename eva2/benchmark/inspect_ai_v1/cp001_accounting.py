@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import hashlib
+import inspect
 import json
 import threading
 from pathlib import Path
@@ -272,6 +273,58 @@ class ProviderSampleLedger:
                 "attempts": [dict(x) for x in self.attempts],
                 "coverage": "Only native entrypoints actually bound by the caller",
                 "live_admission": False}
+
+
+class SampleAsyncStream:
+    """Own a bound SDK stream without changing its events or reported usage.
+
+    This comparison-side guard is explicit assistance, not native agent behavior.
+    Some SDK iterators expose only their HTTP response rather than a close API.
+    Cancellation must close that exact response before settling an incomplete row.
+    """
+
+    def __init__(self, ledger, attempt, stream):
+        self.ledger, self.attempt = ledger, attempt
+        self.stream = stream.__aiter__()
+        self.closed = False
+        self._close_error = None
+        self._close = getattr(stream, "aclose", None) or getattr(stream, "close", None)
+        if not callable(self._close):
+            self._close = getattr(getattr(stream, "response", None), "aclose", None)
+        if not callable(self._close):
+            raise TypeError("Bound SDK stream has no owned close operation")
+
+    def __aiter__(self):
+        return self
+
+    async def __anext__(self):
+        # The SDK request carrier can finish before a different task consumes it.
+        # Bind the actual consumer only while this attempt is still pending.
+        with self.ledger.lock:
+            if self.ledger.attempts[self.attempt]["status"] == "pending":
+                self.ledger.track_async_attempt(self.attempt)
+        try:
+            return await self.stream.__anext__()
+        except BaseException:
+            await self.aclose()
+            raise
+
+    async def aclose(self):
+        if self.closed:
+            return
+        if self._close_error is not None:
+            # HTTPX can mark a response closed before its byte-stream close fails.
+            # A second no-op close must not falsely settle that failed operation.
+            raise self._close_error
+        try:
+            result = self._close()
+            if inspect.isawaitable(result):
+                await result
+        except BaseException as error:
+            self._close_error = error
+            raise
+        self.closed = True
+        self.ledger.incomplete(self.attempt, "comparison_stream_closed_usage_unknown")
 
 def preflight(exports=None, root=None):
     """Compare known observations. Equal nulls never satisfy an equality gate."""

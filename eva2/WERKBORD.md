@@ -1,5 +1,13 @@
 # EVA2 werkbord
 
+## Actueel: P1.1 — stopbinding vastgelegd en beoordeeld
+
+De expliciete vergelijkingsbinding sluit bij stoppen nu de eigen SDK/native upstream vóór proefopruiming. Actieve pogingen1→0, verbruik bij afbreken onbekend; het gewone streamantwoord en synthetische verbruik blijven gelijk.3 gerichte HTTPX-controles en onafhankelijke review GO. Alleen eigen aanvraag gestopt; mislukte sluiting wordt niet als succes gerapporteerd. Native bron/pin behouden; stock-stopfout blijft geregistreerd. Geen extra Eva-functie, cloudstopbewijs of volledige P1.1.
+
+Alle proefprocessen beëindigd; geen eerdere agentlusproef herhaald. De eigen native aanmeldsessie eenmaal normaal ververst:1authaanvraag,0inferentieaanvragen,0Eva-runtimeverbruik. Eerste routeproef bleef vóór modelstart steken op nodige refresh in netwerkisolatie; preflight hersteld. Geen Eva-herinstallatie; ontwikkelcredits onbekend. App-goaladministratie tot checkpoint:527123tokens sinds de automatisch aangeleverde startstand; geen credit-/geldkosten of functietoerekening, cache-/agentverdeling onbekend. [Bewijs](evidence/product/p1-agentzero-native-stream-stop-20261001.json) · [Review](reviews/p1-agentzero-native-stream-stop-20261001.md).
+
+Volgende uitvoering: bestaande bindings aansluiten op werkelijke native deelnemer, overige provider/helper/sync/tooldekking en gelijkwaardige toegang. Nog niet gestart. Het volledige goal blijft actief; productacceptaties en tellers ongewijzigd.
+
 ## Actueel: P1.1 — SDK/native proxycheckpoint vastgelegd
 
 Native eigen login en modelcatalogus zijn bevestigd. De echte SDK/native route levert Sol/none-SSE en het bewaarde Astra/medium-antwoord zonder stream in netwerkisolatie. De lokale SDK-catalogus miste de modellen en koos eerst nagebootste streaming; kleine expliciete streamingmetadata herstelt deze aansluiting in de proef, geen live-providerbewijs.

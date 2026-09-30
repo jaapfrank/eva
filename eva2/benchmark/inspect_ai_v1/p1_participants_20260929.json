@@ -166,6 +166,19 @@
         "externalInferenceRequests": 0,
         "admission": "not_admitted",
         "remaining": "Partial-stop upstream closure, deployed native proxy, actual provider usage/retry/helper/sync/tool coverage and equal access remain open."
+      },
+      "comparisonStreamOwnership": {
+        "status": "verified_offline_native_proxy_fixture",
+        "evidence": "eva2/evidence/product/p1-agentzero-native-stream-stop-20261001.json",
+        "review": "eva2/reviews/p1-agentzero-native-stream-stop-20261001.md",
+        "binding": "SampleAsyncStream in cp001_accounting.py, explicit --bind-stream",
+        "stockNativeStopGapRetained": true,
+        "comparisonStopAssistance": true,
+        "nativeSourceModified": false,
+        "closure": "Guard closes own SDK HTTP response and native upstream before fixture cleanup; task cancelled, active attempts zero, incomplete usage null.",
+        "nativeAccountRefresh": "One normal native auth refresh; owned store retained. No inference.",
+        "admission": "not_admitted",
+        "remaining": "Deployed proxy, real provider cancellation/usage and full sync/tool/helper/retry coverage, other participant equal access."
       }
     }
   ],
