@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-09-30T20:04:09.875396+00:00",
+  "taskId": "C1.2",
+  "scope": "One read-only retained Telegram metadata check after C1.1 delivery; no private content emitted",
+  "since": "2026-09-30T17:44:01Z",
+  "eva2RowsSince": 0,
+  "eva2InboundSince": 0,
+  "latestEva2At": "2026-09-29T19:19:54.000Z",
+  "modelCalls": 0,
+  "telegramMessagesSent": 0,
+  "runtimeChanged": false,
+  "credits": "unknown; developer usage separate",
+  "finding": "No genuine post-delivery pair available",
+  "ownerAcceptance": false
+}

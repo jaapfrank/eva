@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-30T19:55:51.157676+00:00",
+  "lastUpdated": "2026-09-30T20:06:38.349322+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -3083,14 +3083,14 @@
           }
         ],
         "now": {
-          "title": "R1-proef afgesloten zonder vergelijkingsbewijs",
-          "state": "Afgesloten; functie niet afgerond",
-          "owner": "Codex /root",
-          "detail": "Onafhankelijke beoordeling: eerste referentiedeel geslaagd, tweede onvolledig. Geen privacy-/bevoegdheidsfout; kandidaat niet gemeten.30.226input/5.057output inclusief leren. Geen installatie of extra afgeronde productfunctie."
+          "title": "C1: echte Telegramproef nog open",
+          "state": "Wacht op gebruikersproef",
+          "owner": "Jaap voor echte proef; Codex voor onafhankelijk vervolg",
+          "detail": "C1.1 technisch geleverd; geen nieuwe echte Telegramberichten na oplevering bewaard. DaardoorC1.2 nog niet bewezen. R1-ronde afgeslotenUNKNOWN: geen kandidaatvoordeel of nieuwe productfunctie. Volledige goal actief; overige uitvoering niet gepauzeerd."
         },
         "next": {
-          "title": "C1: gemeten voorbereiding verbeteren en tekstgesprek afronden",
-          "detail": "Behoud identiteit/geheugen/werkroute. Alleen een aantoonbare oorzaak aanpassen. Succesvolle echte Telegram-tussenvraag en websitecontact blijven open."
+          "title": "P1: native vergelijkingstoegang aansluiten",
+          "detail": "Bestaande native aanroep-/helper-/stoproute verbinden met de bestaande vergelijkingsmeting. Eén concrete aansluiting kiezen; nog niet gestart. Geen nieuwe brede platformaudit of modelrun vóór toelating."
         },
         "ownerAction": {
           "title": "Telegram: tussenvraag tijdens onderzoek",
@@ -3104,7 +3104,7 @@
           "linkLabel": "Open Telegram"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-30T19:55:51.157676+00:00",
+        "reviewedAt": "2026-09-30T20:06:38.349322+00:00",
         "previousOwnerAction": {
           "title": "Lees het afgeronde zondagplan",
           "steps": [
@@ -13127,22 +13127,24 @@
               "status": "blocked",
               "kind": "praktijk",
               "doneWhen": "Gewone tussenvraag komt vóór onderzoek terug en beide antwoorden horen bij hun eigen vraag.",
-              "owner": "Codex",
+              "owner": "Codex /root",
               "assignment": {
-                "baseCommit": "9226c7ae",
+                "baseCommit": "c6b5002a",
                 "files": [
-                  "eva2/evidence/product/c1-telegram-current-20260929.json"
+                  "eva2/evidence/product/c1-latest-ingress-20260930.json"
                 ],
                 "existing": "Installed concurrent Bottie polling, original-message reply binding and shared runtime overlap proof.",
                 "gap": "Current real Telegram ordering after installed corrections not established.",
                 "finish": "Use current ingress/archive metadata to locate an actual failure or verify a bounded real overlapping pair; do not rebuild tested concurrency.",
                 "estimate": "15–30 minutes initial diagnosis; zero planned replay/model calls; credits unknown.",
-                "currentAction": "Owner asked to send research then social question on current installed route; awaiting real ordering and original-question observations. No new concurrency implementation because existing current source/tests already provide the route.",
-                "stage": "awaiting_owner_current_telegram_trial"
+                "currentAction": "One read-only archive check completed; no newer genuine pair. No messages/model calls sent; retain existing route and await only dependent owner observation.",
+                "stage": "awaiting_owner_current_telegram_trial",
+                "owner": "/root",
+                "activeWorkers": []
               },
-              "blocker": "Eigenaarproef ontvangen: eerste onderzoek faalde, herhaling slaagde. Gekopieerde tijdvolgorde bewijst geen tussenvraag vóór voltooiing. Onderzoekmodus-uitleg gecorrigeerd en geïnstalleerd; volledige overlapacceptatie open.",
-              "latestEvidence": "eva2/evidence/product/c1-telegram-current-20260929.json",
-              "checkedAt": "2026-09-29T10:49:09.405499+00:00"
+              "blocker": "Geen nieuwe echte Eva2-Telegramberichten ná huidige oplevering bewaard; nieuwste29september19:19UTC. Echte overlapproef gevraagd. Geen nieuwe codefout vastgesteld.",
+              "latestEvidence": "eva2/evidence/product/c1-latest-ingress-20260930.json",
+              "checkedAt": "2026-09-30T20:06:38.349322+00:00"
             }
           ],
           "providerBlocker": {

@@ -6,10 +6,10 @@ Het volledige goal blijft actief. De onafhankelijke beoordeling bevestigt: eerst
 
 Gemeten experimenteel modelgebruik inclusief beide syntheses:30.226invoer- en5.057uitvoertokens,14aanvragen. Kredietprijs en afzonderlijk ontwikkelverbruik onbekend. [Bewijs](evidence/product/r1-incomplete-comparison-20260930.json) en [kort verslag](experiments/r1-executable-experience-20260930/RESULTS.md). Gewone werkwijzen behouden; technische onderscheiding blijft open.
 
-C1.1 en L2 zijn technisch opgeleverd; echte Telegram-/speakerproeven en I2-bronkeuze blijven expliciet open. Volgende onafhankelijke opdracht: bestaandeP1-native vergelijkingstoegang en meetaansluiting afronden; niet actief voordat bronroute en concrete aansluiting zijn gekozen.
+C1.1 en L2 zijn technisch opgeleverd; echte Telegram-/speakerproeven en I2-bronkeuze blijven expliciet open. C1.2 gericht gecontroleerd: geen nieuwe echte Eva2-Telegramberichten sinds de huidige oplevering; nieuwste29september19:19UTC. [Metadata](evidence/product/c1-latest-ingress-20260930.json). De gevraagde eigenaarproef blijft open. Geen berichten verstuurd, modelcalls of codewijziging. P1-native vergelijkingstoegang is onafhankelijk vervolgwerk, nog niet gestart.
 
 
-## Actueel: C1.1 technisch opgeleverd; C1.2 Telegramproef open
+## Eerder opgeleverd: C1.1; C1.2 Telegramproef open
 
 Het volledige app-goal blijft actief. C1.1 is technisch afgerond op zijn bestaande kleine eindvoorwaarde: nieuwe native begroeting eerste inhoud4,084s, volledig opgeslagen5,008s;1modelaanvraag3121input/14output/0tools. Onafhankelijke review GO, geïnstalleerde dienst gezond. Dit is geen instantreactie, algemene snelheidszekerheid of gemeten Telegramnetwerktijd. De eigenaarproef voor een tussenvraag tijdens onderzoek is gevraagd; C1.2 en hoofdopdrachtC1 blijven open. Geen grote productcategorie extra afgevinkt. [Bewijs](evidence/product/c1-context-latency-20260930.json).
 
