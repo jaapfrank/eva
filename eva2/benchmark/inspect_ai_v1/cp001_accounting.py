@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import threading
 from pathlib import Path
 
 PARTICIPANTS = ("eva2", "eva1-bottie")
@@ -146,6 +147,80 @@ def normalize(participant: str, export: dict) -> dict:
         "blockers": blockers,
     }
 
+
+
+class SampleStopped(BaseException):
+    """Leave a native retry/repair loop when sample control rejects further work."""
+
+
+class ProviderSampleLedger:
+    """Observe every bound SDK attempt, including helpers and incomplete calls.
+
+    This is a comparison-side control, not a product quota or live admission.
+    Completed SDK usage can be checked only after return; do not claim a provider
+    output cap. Callers must bind all native provider entrypoints before inference.
+    """
+
+    def __init__(self, sample_id, limits, profiles):
+        self.sample_id = sample_id
+        self.limits = dict(limits)
+        self.profiles = dict(profiles)
+        self.attempts = []
+        self.stopped = None
+        self.lock = threading.RLock()
+
+    def begin(self, role, model, effort):
+        with self.lock:
+            if self.stopped:
+                raise SampleStopped(self.stopped)
+            if (model, effort) != self.profiles.get(role):
+                self.stopped = "wrong native model/effort or unbound role"
+                raise SampleStopped(self.stopped)
+            if len(self.attempts) >= self.limits["providerAttempts"]:
+                self.stopped = "declared sample attempts reached"
+                raise SampleStopped(self.stopped)
+            self.attempts.append({"id": len(self.attempts), "sample_id": self.sample_id,
+                "role": role, "model": model, "reasoning_effort": effort,
+                "status": "pending", "usage": None})
+            return len(self.attempts) - 1
+
+    def finish(self, attempt, usage):
+        with self.lock:
+            row = self.attempts[attempt]
+            if row["status"] != "pending":
+                raise ValueError("Attempt already settled")
+            fields = {key: count(obj(usage).get(key))
+                for key in ("input_tokens", "output_tokens", "total_tokens")}
+            if None in fields.values() or fields["total_tokens"] != fields["input_tokens"] + fields["output_tokens"]:
+                row["status"] = "unattested"
+                self.stopped = "incomplete or incoherent SDK usage"
+                raise SampleStopped(self.stopped)
+            row.update(status="completed", usage=fields)
+            known = [x["usage"] for x in self.attempts if x["usage"] is not None]
+            if sum(x["input_tokens"] for x in known) > self.limits["providerInputTokens"] or sum(x["output_tokens"] for x in known) > self.limits["providerOutputTokens"]:
+                self.stopped = "observed sample token envelope exceeded"
+                raise SampleStopped(self.stopped)
+
+    def incomplete(self, attempt, status):
+        with self.lock:
+            row = self.attempts[attempt]
+            if row["status"] == "pending":
+                row["status"] = status
+                self.stopped = "SDK attempt did not yield complete usage"
+
+    def report(self):
+        with self.lock:
+            complete = bool(self.attempts) and all(x["status"] == "completed" for x in self.attempts)
+            known = [x["usage"] for x in self.attempts if x["usage"] is not None]
+            return {"sample_id": self.sample_id, "provider_attempts": len(self.attempts),
+                "complete": complete, "stop": self.stopped,
+                "total_usage": {key: sum(x[key] for x in known) if complete else None
+                    for key in ("input_tokens", "output_tokens", "total_tokens")},
+                "known_partial_usage": {key: sum(x[key] for x in known)
+                    for key in ("input_tokens", "output_tokens", "total_tokens")},
+                "attempts": [dict(x) for x in self.attempts],
+                "coverage": "Only native entrypoints actually bound by the caller",
+                "live_admission": False}
 
 def preflight(exports=None, root=None):
     """Compare known observations. Equal nulls never satisfy an equality gate."""

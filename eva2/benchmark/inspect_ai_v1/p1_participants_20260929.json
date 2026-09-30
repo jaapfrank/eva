@@ -1,6 +1,6 @@
 {
   "contract": "EvaComparisonParticipantInputs/v1",
-  "checkedAt": "2026-09-29",
+  "checkedAt": "2026-09-30T21:13:28.732946+00:00",
   "stage": "source_pins_recorded_access_not_admitted",
   "protocol": "eva2/design/product/comparable-agent-benchmarks-v1.md#ev-003",
   "scope": "Inputs for existing Inspect runner; not results, a new runtime or a new scorer.",
@@ -99,9 +99,11 @@
         "status": "saved_and_resolved_offline",
         "evidence": "eva2/evidence/product/p1-agentzero-persisted-presets-20260930.json",
         "configuration": "eva2/benchmark/inspect_ai_v1/p1_agentzero_presets.yaml",
-        "sha256": "3d2d2bc22c2adf950478e33886325eb7e48dc55ef39e0d7061e57b97c40e446e",
+        "sha256": "69dfdd770a66faa3f8f6e643b36791bbb0bfc415e6f4d0613129369a9863dd65",
         "admission": "not_admitted",
-        "remaining": "Persisted active preset selection, actual native agent, OAuth access and aggregate accounting/cancellation remain unverified."
+        "remaining": "Persisted active preset selection, actual native agent, OAuth access and aggregate accounting/cancellation remain unverified.",
+        "historicalVerifiedSha256": "3d2d2bc22c2adf950478e33886325eb7e48dc55ef39e0d7061e57b97c40e446e",
+        "change": "Public local embedding revision pinned for the native loop; previous six-role proof retained as historical evidence."
       },
       "nativePersistedSelection": {
         "status": "native_lookup_verified",
@@ -109,6 +111,17 @@
         "configuration": "eva2/benchmark/inspect_ai_v1/p1_agentzero_selection.json",
         "activePreset": "Default",
         "admission": "not_admitted"
+      },
+      "nativeLoopBinding": {
+        "status": "partial_offline_native_execution",
+        "evidence": "eva2/evidence/product/p1-agentzero-native-binding-20260930.json",
+        "review": "eva2/reviews/p1-agentzero-native-binding-20260930.md",
+        "foreground": "Full native monologue/response tool with mocked SDK: Sol/none",
+        "helper": "Native utility path observed: Astra/medium; extra helper rejected by unchanged sample envelope",
+        "cancellation": "Separate direct-call parent plus registered utility child cancelled locally; incomplete usage null",
+        "externalProviderRequests": 0,
+        "admission": "not_admitted",
+        "remaining": "Native OAuth, full helper/retry/embedding/tool coverage, real provider cancellation and equal access to all participants."
       }
     }
   ],

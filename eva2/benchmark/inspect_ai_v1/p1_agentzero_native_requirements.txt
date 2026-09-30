@@ -1,0 +1,10 @@
+# Additions to the existing isolated P1 probe environment for the native loop.
+# Direct runtime dependencies are compatible with pinned Agent Zero requirements.txt.
+pathspec==0.12.1
+crontab==1.0.1
+flask[async]==3.0.3
+python-socketio==5.14.2
+faiss-cpu==1.11.0
+mcp==1.27.0
+fastmcp==3.2.4
+json-repair==0.63.4

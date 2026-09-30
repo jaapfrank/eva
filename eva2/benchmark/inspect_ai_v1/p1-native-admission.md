@@ -129,3 +129,28 @@ no model answer was generated. Corrected runs use the actual LiteLLM HTTPHandler
 network namespace isolation and a socket-connection rejection guard. See
 `../../evidence/product/p1-agentzero-transport-20260929.json`. Native comparison
 admission remains open; do not repeat this shaping probe without changed code.
+
+
+## Native loop binding checkpoint — 30 September
+
+The pinned full foreground monologue now reaches the actual response tool with
+mocked SDK Responses, using Sol/none and a native Astra/medium utility call.
+Original AgentContext ownership survives late helpers; stream closure keeps
+missing usage unknown. A separate native direct-call parent and registered
+utility child stop locally. Eight focused ledger/control checks passed; bundled
+independent review accepted this **partial offline evidence**.
+
+Native co-located startup (`--dockerized=1`) runs as the administrator inside a
+disabled network namespace. Writable `usr`, `tmp` and `logs` paths are redirected;
+upstream orchestration and memory are retained. The local public MiniLM model is
+pinned to `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`. Prerequisite failures and
+runtime package versions are retained in the evidence; no cloud inference ran.
+
+The native extra naming/helper call was rejected by the unchanged sample
+envelope. Settled mock usage does not mean all native sample work completed.
+Cancellation does not cover detached memory, the full monologue or cloud calls.
+An ignored knowledge directory remained unreadable; the isolated Python setup
+is not a full Agent Zero Docker install. Full coverage, authentication, equal
+access and P1.1 stay open. No comparison outcome or product function is claimed.
+
+Evidence: `../../evidence/product/p1-agentzero-native-binding-20260930.json`.

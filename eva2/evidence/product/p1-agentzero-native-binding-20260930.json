@@ -1,0 +1,268 @@
+{
+  "task": "P1.1",
+  "kind": "Isolated native adapter binding, not a product function or live comparison",
+  "disposition": "GO for partial offline native-binding evidence; not live admission or P1.1 completion",
+  "nativeReport": {
+    "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+    "scope": "Native full foreground monologue with helpers, and separate direct-call/registered-child stop fixture; SDK is mocked and writable usr/tmp/logs paths are redirected",
+    "externalProviderRequests": 0,
+    "mockProviderAttempts": 4,
+    "productionEffects": 0,
+    "nativeRuntimeMode": "Co-located --dockerized=1 in a network-isolated host process, not a full Docker installation",
+    "cases": [
+      {
+        "case": "native_foreground_and_utility",
+        "response": "Native protocol fixture completed.",
+        "helperObserved": true,
+        "ledger": {
+          "sample_id": "native-mock-complete",
+          "provider_attempts": 2,
+          "complete": true,
+          "stop": "declared sample attempts reached",
+          "total_usage": {
+            "input_tokens": 42,
+            "output_tokens": 18,
+            "total_tokens": 60
+          },
+          "known_partial_usage": {
+            "input_tokens": 42,
+            "output_tokens": 18,
+            "total_tokens": 60
+          },
+          "attempts": [
+            {
+              "id": 0,
+              "sample_id": "native-mock-complete",
+              "role": "foreground_contact",
+              "model": "gpt-6-sol",
+              "reasoning_effort": "none",
+              "status": "completed",
+              "usage": {
+                "input_tokens": 21,
+                "output_tokens": 9,
+                "total_tokens": 30
+              }
+            },
+            {
+              "id": 1,
+              "sample_id": "native-mock-complete",
+              "role": "helper",
+              "model": "gpt-6-astra",
+              "reasoning_effort": "medium",
+              "status": "completed",
+              "usage": {
+                "input_tokens": 21,
+                "output_tokens": 9,
+                "total_tokens": 30
+              }
+            }
+          ],
+          "coverage": "Only native entrypoints actually bound by the caller",
+          "live_admission": false
+        },
+        "requests": [
+          {
+            "role": "foreground_contact",
+            "model": "gpt-6-sol",
+            "effort": "none",
+            "mode": "responses",
+            "stream": true
+          },
+          {
+            "role": "helper",
+            "model": "gpt-6-astra",
+            "effort": "medium",
+            "mode": "responses",
+            "stream": false
+          }
+        ]
+      },
+      {
+        "case": "native_direct_call_parent_and_registered_utility_cancellation",
+        "quiescentLocalSDK": true,
+        "ledger": {
+          "sample_id": "native-mock-cancel",
+          "provider_attempts": 2,
+          "complete": false,
+          "stop": "SDK attempt did not yield complete usage",
+          "total_usage": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "total_tokens": null
+          },
+          "known_partial_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "attempts": [
+            {
+              "id": 0,
+              "sample_id": "native-mock-cancel",
+              "role": "foreground_contact",
+              "model": "gpt-6-sol",
+              "reasoning_effort": "none",
+              "status": "cancelled_usage_unknown",
+              "usage": null
+            },
+            {
+              "id": 1,
+              "sample_id": "native-mock-cancel",
+              "role": "helper",
+              "model": "gpt-6-astra",
+              "reasoning_effort": "medium",
+              "status": "cancelled_usage_unknown",
+              "usage": null
+            }
+          ],
+          "coverage": "Only native entrypoints actually bound by the caller",
+          "live_admission": false
+        },
+        "requests": [
+          {
+            "role": "foreground_contact",
+            "model": "gpt-6-sol",
+            "effort": "none",
+            "mode": "responses",
+            "stream": false
+          },
+          {
+            "role": "helper",
+            "model": "gpt-6-astra",
+            "effort": "medium",
+            "mode": "responses",
+            "stream": false
+          }
+        ]
+      }
+    ],
+    "liveAdmission": false,
+    "remaining": [
+      "Native OAuth login and actual provider usage",
+      "All unregistered/background/embedding provider paths and tool dispatch coverage",
+      "Real provider cancellation and full sample budget admission",
+      "Other participants and complete P1 access"
+    ],
+    "sourceFiles": {
+      "agent.py": "4914f5c70a9257f7042367b7cc785439870ed5a222e9e053d417a25b21f6cffe",
+      "models.py": "4b9d9c530d9516710a6deb3956361a135386a0802d6240f05c0bd536314a94ef",
+      "helpers/defer.py": "04089d6059c6e9711eb4094775b3763f25830cc7c0394dec23b8d1b3db7dadd2",
+      "helpers/litellm_transport.py": "74cb8cc75f96133c66ffafd2a2a447b4585f9e08d0f85a782e48e5a5d6154b6d"
+    }
+  },
+  "reportSha256": "0119edb42e80875028396ee3ac3ef8d87ead41982f94d412bc819063ddcc8a9d",
+  "probeArtifacts": {
+    "cp001_accounting.py": "f5350491b10103b5c2271ab2e56211847c54eca75508573a2aee61709a5019a7",
+    "p1_agentzero_native_probe.py": "827376cbce8e68973bf86d2ee148630f51015898e7dcdb60bb8a5c6e8ec6b932",
+    "p1_agentzero_native_requirements.txt": "97fb68eb6b5947051f31dc44b8ab7ef65edd450e429f6b2813994a4fac5c6523",
+    "p1_agentzero_presets.yaml": "69dfdd770a66faa3f8f6e643b36791bbb0bfc415e6f4d0613129369a9863dd65",
+    "p1_agentzero_selection.json": "3a12a8cbe5fd0434c7f9beb29a1b192e9851e38ba25c7c18b9ab2f13c9940352"
+  },
+  "environment": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "packages": {
+      "litellm": "1.88.1",
+      "torch": "2.14.0+cpu",
+      "sentence-transformers": "3.0.1",
+      "langchain": "0.3.22",
+      "langchain-core": "0.3.49",
+      "pathspec": "0.12.1",
+      "crontab": "1.0.1",
+      "flask": "3.0.3",
+      "python-socketio": "5.14.2",
+      "faiss-cpu": "1.11.0",
+      "mcp": "1.27.0",
+      "fastmcp": "3.2.4",
+      "pydantic": "2.11.7",
+      "pydantic-settings": "2.13.1",
+      "json-repair": "0.63.4"
+    }
+  },
+  "dependencyFreezeSha256": "b7fc3b1afedf2787b778f3497b4ff6ade9f3a9c73bbb5f754b8d92bf5016e74e",
+  "publicEmbedding": {
+    "repository": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "snapshot": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/public-embedding-cache/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "scope": "Public native embedding prerequisite only; no Eva memory or credentials"
+  },
+  "focusedChecks": {
+    "command": "pytest -q eva2/tests/benchmark/test_cp001_accounting.py -k \"native_sample or native_mock\"",
+    "passed": 8,
+    "deselected": 52,
+    "seconds": 0.1,
+    "scope": "Shared ledger, incomplete usage, concurrency, stream closure, original-context ownership and unbound-call refusal"
+  },
+  "priorFailedPreparations": [
+    {
+      "attempt": 2,
+      "error": "ModuleNotFoundError",
+      "detail": "No module named 'faiss'",
+      "sdkMockAttempts": 0,
+      "externalProviderRequests": 0,
+      "traceSha256": "e3fbfc51a38ae022b0d5d71d473b132a45d08e22692a725043ee9fd258ff6bb7"
+    },
+    {
+      "attempt": 3,
+      "error": "TimeoutError",
+      "detail": "The task did not complete within the specified timeout.",
+      "sdkMockAttempts": 0,
+      "externalProviderRequests": 0,
+      "traceSha256": "61c60f1b98b98dbc51bdd1da7b62431e9631b9cbb7715012c671d6f2282eae0a"
+    },
+    {
+      "attempt": 4,
+      "error": "HandledException",
+      "detail": "No module named 'pydantic_settings'",
+      "sdkMockAttempts": 1,
+      "externalProviderRequests": 0,
+      "traceSha256": "73f4675cd0c0316526d367c8956af5f6e06ecf82b95116662fa6b8519bbf988d"
+    },
+    {
+      "attempt": 5,
+      "error": "HandledException",
+      "detail": "[Errno 13] Permission denied: '/home/administrator/project/.eva2-artifacts/p1-participants-20260929/agent-zero-source/usr/memory/default'",
+      "sdkMockAttempts": 2,
+      "externalProviderRequests": 0,
+      "traceSha256": "4c9407f41dad425324d05aae28cab5572745aad15d0c47784ced06e8af81646d"
+    },
+    {
+      "attempt": 6,
+      "error": "HandledException",
+      "detail": "No RFC password, cannot handle RFC calls.",
+      "sdkMockAttempts": 2,
+      "externalProviderRequests": 0,
+      "traceSha256": "ff08c25783266658b6c8a934ef6332f97fdf9b87eb0a3949acb0923ace4617b6"
+    },
+    {
+      "attempt": 7,
+      "error": "HandledException",
+      "detail": "No module named 'json_repair'",
+      "sdkMockAttempts": 2,
+      "externalProviderRequests": 0,
+      "traceSha256": "b7ccbd5258f5e43dcd615689aa607282db686d0281b1a3f4f523de0da3a8f1cd"
+    }
+  ],
+  "importantLimits": [
+    "Observed usage values are synthetic SDK fixture counts, not measured inference tokens or credits.",
+    "Native extra chat-naming/helper admission was denied by the unchanged sample envelope. Incomplete whole-helper execution is not a competitor quality loss.",
+    "Cancellation proves only native direct-call parent and registered helper at local mocked SDK; detached memory, full-monologue, tools and cloud cancellation remain unadmitted.",
+    "Sync SDK and external embeddings are not bound; OAuth ownership remains open.",
+    "Runtime is a reused isolated Python environment, not a full Agent Zero Docker install. Native mode and writable path redirection are explicit.",
+    "Ignored knowledge/fragments created in earlier root preparation remained unreadable; no quality comparison follows."
+  ],
+  "productRuntimeChanges": 0,
+  "externalProviderRequests": 0,
+  "evaRuntimeInferenceTokens": 0,
+  "creditCost": null,
+  "developmentCodexUsage": "Separate, not measured by this probe",
+  "noRanking": true,
+  "liveAdmission": false,
+  "independentReview": {
+    "reviewer": "/root/review_telegram_draft_lane",
+    "disposition": "GO, bounded evidence only",
+    "reportSha256": "0119edb42e80875028396ee3ac3ef8d87ead41982f94d412bc819063ddcc8a9d",
+    "additionalRun": false,
+    "remaining": "Full helper coverage, real provider cancellation, live admission and P1.1 completion remain open."
+  },
+  "checkedAt": "2026-09-30T21:13:28.732946+00:00"
+}

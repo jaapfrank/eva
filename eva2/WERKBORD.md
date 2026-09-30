@@ -1,13 +1,12 @@
 # EVA2 werkbord
 
-## Actueel: R1-proef afgesloten zonder geldige vergelijking —30september2026
+## Actueel: P1.1-aansluiting gedeeltelijk opgeleverd — 30 september 2026
 
-Het volledige goal blijft actief. De onafhankelijke beoordeling bevestigt: eerste referentiedeel met juiste terugmelding geslaagd, tweede deel onvolledig door het vastgelegde onderzoeksbudget. Geen hard grensverlies; kandidaat, B en herhalingen niet uitgevoerd. UitkomstUNKNOWN, geen adoptie, geen extra afgeronde productfunctie. R1.1 blijft onvoltooid; R1.2 heeft adoptie afgewezen. Geen automatische proefherhaling of ruimere ronde.
+Het volledige goal blijft actief. De echte Agent Zero-lus en helperroute lopen nu door de bestaande meting met oorspronkelijke taakbinding; een afzonderlijke lokale stopproef beëindigt de directe aanvraag en geregistreerde helper. Acht gerichte controles en gebundelde onafhankelijke review akkoord. Nul externe modelcalls; Eva-runtime ongewijzigd. [Bewijs](evidence/product/p1-agentzero-native-binding-20260930.json).
 
-Gemeten experimenteel modelgebruik inclusief beide syntheses:30.226invoer- en5.057uitvoertokens,14aanvragen. Kredietprijs en afzonderlijk ontwikkelverbruik onbekend. [Bewijs](evidence/product/r1-incomplete-comparison-20260930.json) en [kort verslag](experiments/r1-executable-experience-20260930/RESULTS.md). Gewone werkwijzen behouden; technische onderscheiding blijft open.
+Dit is een vergelijkingsaansluiting, geen nieuwe productfunctie of volledige P1.1. Dezelfde proefgrens wees extra helperwerk af; volledige helperdekking, OAuth, echte providermeting/annulering en de andere deelnemers blijven open. Er draait geen proefproces. Echte Telegram-/speakerproeven en de camera-/agendakeuze blijven gevraagd; ontbrekende eigenaaracceptatie is geen ontbrekende implementatie.
 
-C1.1 en L2 zijn technisch opgeleverd; echte Telegram-/speakerproeven en I2-bronkeuze blijven expliciet open. C1.2 gericht gecontroleerd: geen nieuwe echte Eva2-Telegramberichten sinds de huidige oplevering; nieuwste29september19:19UTC. [Metadata](evidence/product/c1-latest-ingress-20260930.json). De gevraagde eigenaarproef blijft open. Geen berichten verstuurd, modelcalls of codewijziging. P1-native vergelijkingstoegang is onafhankelijk vervolgwerk, nog niet gestart.
-
+De vorige R1-ronde eindigde UNKNOWN, zonder kandidaatadoptie of extra productfunctie. [Verslag](experiments/r1-executable-experience-20260930/RESULTS.md). Geen automatische herhaling van gesloten of ongewijzigde proeven.
 
 ## Eerder opgeleverd: C1.1; C1.2 Telegramproef open
 

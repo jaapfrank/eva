@@ -176,3 +176,134 @@ def test_cli_export_and_missing_source(tmp_path):
         text=True,
     )
     assert result.returncode == 2 and not result.stdout
+
+
+SAMPLE_LIMITS = {"providerAttempts": 2, "providerInputTokens": 50, "providerOutputTokens": 10}
+SAMPLE_PROFILES = {"contact": ("fast", "none"), "helper": ("work", "medium")}
+
+
+def test_native_sample_combines_foreground_and_helper_usage_once():
+    ledger = accounting.ProviderSampleLedger("bound-sample", SAMPLE_LIMITS, SAMPLE_PROFILES)
+    contact = ledger.begin("contact", "fast", "none")
+    helper = ledger.begin("helper", "work", "medium")
+    ledger.finish(helper, {"input_tokens": 20, "output_tokens": 3, "total_tokens": 23})
+    ledger.finish(contact, {"input_tokens": 15, "output_tokens": 2, "total_tokens": 17})
+    report = ledger.report()
+    assert report["complete"] and report["provider_attempts"] == 2
+    assert report["total_usage"] == {"input_tokens": 35, "output_tokens": 5, "total_tokens": 40}
+    assert {x["sample_id"] for x in report["attempts"]} == {"bound-sample"}
+    assert not report["live_admission"]
+
+
+def test_native_sample_cancelled_helper_is_not_zero_or_complete():
+    ledger = accounting.ProviderSampleLedger("bound-sample", SAMPLE_LIMITS, SAMPLE_PROFILES)
+    contact = ledger.begin("contact", "fast", "none")
+    helper = ledger.begin("helper", "work", "medium")
+    ledger.finish(contact, {"input_tokens": 15, "output_tokens": 2, "total_tokens": 17})
+    ledger.incomplete(helper, "cancelled_usage_unknown")
+    report = ledger.report()
+    assert not report["complete"] and set(report["total_usage"].values()) == {None}
+    assert report["known_partial_usage"]["input_tokens"] == 15
+    with pytest.raises(accounting.SampleStopped):
+        ledger.begin("contact", "fast", "none")
+
+
+def test_native_sample_rejects_wrong_profile_before_sdk_attempt():
+    ledger = accounting.ProviderSampleLedger("bound-sample", SAMPLE_LIMITS, SAMPLE_PROFILES)
+    with pytest.raises(accounting.SampleStopped):
+        ledger.begin("contact", "fast", "high")
+    assert ledger.report()["provider_attempts"] == 0
+    assert not ledger.report()["complete"]
+
+
+def test_native_sample_concurrent_admission_cannot_exceed_shared_attempts():
+    from concurrent.futures import ThreadPoolExecutor
+    import threading
+    ledger = accounting.ProviderSampleLedger("bound-sample", SAMPLE_LIMITS, SAMPLE_PROFILES)
+    barrier = threading.Barrier(3)
+    def begin():
+        barrier.wait()
+        try:
+            return ledger.begin("helper", "work", "medium")
+        except accounting.SampleStopped:
+            return None
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        values = list(pool.map(lambda _: begin(), range(3)))
+    assert sum(x is not None for x in values) == 2
+    assert ledger.report()["provider_attempts"] == 2
+    assert ledger.report()["stop"]
+
+
+def test_native_sample_observed_overrun_stops_next_call_without_output_cap_claim():
+    ledger = accounting.ProviderSampleLedger("bound-sample", SAMPLE_LIMITS, SAMPLE_PROFILES)
+    call = ledger.begin("helper", "work", "medium")
+    with pytest.raises(accounting.SampleStopped):
+        ledger.finish(call, {"input_tokens": 25, "output_tokens": 11, "total_tokens": 36})
+    with pytest.raises(accounting.SampleStopped):
+        ledger.begin("contact", "fast", "none")
+    assert ledger.report()["attempts"][0]["usage"]["output_tokens"] == 11
+
+
+def test_native_mock_stream_close_keeps_missing_usage_unknown():
+    import asyncio
+    import p1_agentzero_native_probe as probe
+    limits = {"providerAttempts": 2, "providerInputTokens": 100, "providerOutputTokens": 100}
+    ledger = accounting.ProviderSampleLedger("stream-close", limits, probe.PROFILES)
+    mock = probe.MockSDK(ledger)
+
+    async def close_after_text():
+        token = probe.ROLE.set("helper")
+        try:
+            stream = await mock.completion(model="openai/gpt-6-astra", reasoning_effort="medium", stream=True)
+            await anext(stream)
+            await stream.aclose()
+        finally:
+            probe.ROLE.reset(token)
+    asyncio.run(close_after_text())
+    report = ledger.report()
+    assert report["provider_attempts"] == 1 and not report["complete"]
+    assert set(report["total_usage"].values()) == {None}
+    assert report["attempts"][0]["status"] == "stream_closed_usage_unknown"
+
+
+def test_native_mock_late_helper_stays_with_original_context():
+    import asyncio
+    from types import SimpleNamespace
+    import p1_agentzero_native_probe as probe
+    limits = {"providerAttempts": 2, "providerInputTokens": 100, "providerOutputTokens": 100}
+    first = accounting.ProviderSampleLedger("first", limits, probe.PROFILES)
+    second = accounting.ProviderSampleLedger("second", limits, probe.PROFILES)
+    saved = dict(probe.MOCKS)
+    probe.MOCKS.clear()
+    probe.MOCKS.update(first=probe.MockSDK(first), second=probe.MockSDK(second))
+
+    async def interleave():
+        release = asyncio.Event()
+        async def helper(self):
+            await release.wait()
+            return await probe.native_completion(model="openai/gpt-6-astra", reasoning_effort="medium")
+        tagged = probe.tag_method(helper, "helper")
+        late = asyncio.create_task(tagged(SimpleNamespace(context=SimpleNamespace(id="first"))))
+        await asyncio.sleep(0)
+        release.set()
+        await tagged(SimpleNamespace(context=SimpleNamespace(id="second")))
+        await late
+    try:
+        asyncio.run(interleave())
+    finally:
+        probe.MOCKS.clear()
+        probe.MOCKS.update(saved)
+    assert first.report()["provider_attempts"] == second.report()["provider_attempts"] == 1
+    assert first.report()["attempts"][0]["sample_id"] == "first"
+    assert second.report()["attempts"][0]["sample_id"] == "second"
+
+
+def test_native_mock_unbound_context_is_rejected_before_sdk():
+    import asyncio
+    import p1_agentzero_native_probe as probe
+    token = probe.CONTEXT.set(None)
+    try:
+        with pytest.raises(accounting.SampleStopped, match="no bound AgentContext"):
+            asyncio.run(probe.native_completion(model="openai/gpt-6-sol", reasoning_effort="none"))
+    finally:
+        probe.CONTEXT.reset(token)

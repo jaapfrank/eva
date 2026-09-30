@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-30T20:06:38.349322+00:00",
+  "lastUpdated": "2026-09-30T20:10:39.408936+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -999,6 +999,14 @@
       "deliveryOverview": {
         "checkedAt": "2026-09-30T18:11:31.122539+00:00",
         "deliveries": [
+          {
+            "title": "Native vergelijkingsaansluiting gecontroleerd",
+            "date": "30 september",
+            "state": "tested",
+            "result": "Geïsoleerde echte agentlus en helpermeting, oorspronkelijke taakbinding en lokale stop gecontroleerd. Review akkoord; nul externe modelcalls.",
+            "remaining": "Dit is vergelijkingsvoorbereiding, geen extra afgeronde Eva-functie. Live vergelijking/P1.1 en volledige dekking blijven open. Eva-installatie ongewijzigd.",
+            "source": "eva2/evidence/product/p1-agentzero-native-binding-20260930.json"
+          },
           {
             "title": "C1.1 begroetingsoptimalisatie technisch afgerond",
             "date": "30 september",
@@ -3083,14 +3091,14 @@
           }
         ],
         "now": {
-          "title": "C1: echte Telegramproef nog open",
-          "state": "Wacht op gebruikersproef",
-          "owner": "Jaap voor echte proef; Codex voor onafhankelijk vervolg",
-          "detail": "C1.1 technisch geleverd; geen nieuwe echte Telegramberichten na oplevering bewaard. DaardoorC1.2 nog niet bewezen. R1-ronde afgeslotenUNKNOWN: geen kandidaatvoordeel of nieuwe productfunctie. Volledige goal actief; overige uitvoering niet gepauzeerd."
+          "title": "P1.1: gedeeltelijke vergelijkingsaansluiting opgeleverd",
+          "state": "Gedeeltelijk opgeleverd",
+          "owner": "Codex /root",
+          "detail": "Echte Agent Zero-lus en helperroute met nagebootst SDK-transport gecontroleerd; onafhankelijke review akkoord. Nul externe modelcalls. Geen nieuwe Eva-functie of volledige P1.1. Live toegang en volledige dekking blijven open; geen proefproces actief."
         },
         "next": {
-          "title": "P1: native vergelijkingstoegang aansluiten",
-          "detail": "Bestaande native aanroep-/helper-/stoproute verbinden met de bestaande vergelijkingsmeting. Eén concrete aansluiting kiezen; nog niet gestart. Geen nieuwe brede platformaudit of modelrun vóór toelating."
+          "title": "Resterende dagelijkse proeven en native toegang",
+          "detail": "Echte Telegram-/speakeruitkomst en camera-/agendakeuze blijven gevraagd. Native OAuth/toegang en alle helperroutes zijn nog niet gelijkwaardig aangesloten. Volgende uitvoering nog niet gestart; geen ongewijzigde herhaalproef."
         },
         "ownerAction": {
           "title": "Telegram: tussenvraag tijdens onderzoek",
@@ -3104,7 +3112,7 @@
           "linkLabel": "Open Telegram"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-30T20:06:38.349322+00:00",
+        "reviewedAt": "2026-09-30T21:13:28.732946+00:00",
         "previousOwnerAction": {
           "title": "Lees het afgeronde zondagplan",
           "steps": [
@@ -14666,28 +14674,31 @@
             {
               "id": "P1.1",
               "title": "Vergelijkbare versies en toegang vastleggen",
-              "status": "blocked",
+              "status": "in_progress",
               "kind": "voorbereiden",
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
-              "owner": "Codex",
+              "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Native opgeslagen presets en selectie gelezen:6rollen correct, contactprofiel Default actief. Native uitvoering/OAuth en samplebrede meting/stop nog open; geen vergelijkingsrun toegelaten.",
-              "latestEvidence": "eva2/evidence/product/p1-agentzero-persisted-selection-20260930.json",
+              "remaining": "Native agentlus en helper-/metingsaansluiting geïsoleerd gecontroleerd, review akkoord; geen externe modelcalls. Volledige helperdekking, OAuth, echte providermeting/annulering en gelijkwaardige toegang van alle deelnemers blijven open.",
+              "latestEvidence": "eva2/evidence/product/p1-agentzero-native-binding-20260930.json",
               "assignment": {
-                "baseCommit": "8322f210",
-                "owner": "Codex",
+                "baseCommit": "d991ab1c",
+                "owner": "/root",
                 "files": [
-                  "eva2/benchmark/inspect_ai_v1/p1_agentzero_preset_probe.py"
+                  "eva2/benchmark/inspect_ai_v1/Agent Zero native binding and existing participant manifest"
                 ],
-                "existing": "Actual Agent Zero generic Responses transport and native Codex OAuth preparation; isolated dependency environment.",
-                "gap": "Explicit none survives direct bridge but upstream normalizer drops it.",
-                "endCondition": "Disposable native preset save/load resolves exact contact/helper models through pinned Agent Zero code, no provider calls. Live comparison remains blocked.",
-                "estimate": "One offline three-case run after source inspection; zero upstream calls; credits unknown.",
-                "stage": "native_selection_verified",
-                "activeWorkers": []
+                "existing": "Persisted presets, selection, exact request shaping and isolated Python environment are already available. Existing Inspect runner and sample readback contracts retained.",
+                "gap": "Full native Agent/context loop and helper usage/cancellation have not run through the comparison binding.",
+                "endCondition": "A disposable native participant actually runs foreground/helper calls with observed binding and controlled cancellation; false/unknown coverage stays visible and prevents live admission.",
+                "estimate": "One focused native integration in the existing isolated environment; mocked provider first, zero external model calls before admission, credits unknown.",
+                "stage": "native_binding_checkpoint_delivered",
+                "activeWorkers": [],
+                "outcome": "Bind the pinned native Agent Zero foreground and utility routes to the existing sample accounting/control boundary, without changing upstream orchestration or production runtime.",
+                "finish": "A disposable native participant actually runs foreground/helper calls with observed binding and controlled cancellation; false/unknown coverage stays visible and prevents live admission."
               },
               "blocker": "Native vergelijking nog niet uitvoerbaar: bestaande cp001_native/preflight en cp001_accounting geven live_enabled=false. Requestinstelling bewijst geen samplebrede begrenzing inclusief geheugen/helpers/retries, native toegang of annulering. Geen gate omzetten of modelrun starten op basis van alleen de nieuwe preset.",
-              "nextImplementation": "Bind disposable native participant and existing per-sample measurement/control contracts before any comparison run; do not create a second benchmark framework."
+              "nextImplementation": "Bind disposable native participant and existing per-sample measurement/control contracts before any comparison run; do not create a second benchmark framework.",
+              "checkedAt": "2026-09-30T21:13:28.732946+00:00"
             },
             {
               "id": "P1.2",
