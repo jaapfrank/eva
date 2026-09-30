@@ -1,0 +1,293 @@
+{
+  "taskId": "C1.1",
+  "state": "installed_native_batching_verified_contact_remains_slow",
+  "checkedAt": "2026-09-30T17:05:24.704896+00:00",
+  "baseCommit": "437e6fb2",
+  "existing": "Full Telegram/native contact route and installed draft lane; same shared persona, memory and contact provider.",
+  "reference": {
+    "evidence": "eva2/evidence/product/c1-telegram-draft-lane-20260930.json",
+    "initialMemoryMs": 3926,
+    "hindsightHandlerSeconds": 3.877,
+    "firstModelPhaseContentMs": 4653,
+    "firstNativeContentMs": 9503,
+    "nativeSavedReplyMs": 10341,
+    "cpuFallback": true
+  },
+  "decision": "Investigate exact existing recall stages before changing semantics, models or configuration. Thread-oversubscription hypothesis not established: installed PyTorch intra-op already2. No thread setting change or comparison trial justified yet.",
+  "nextProbe": {
+    "kind": "One readonly Hindsight trace of the greeting query within original owner principal tag; existing types/budget/source-facts envelope.",
+    "scope": "Service-stage latency profile; one primary-person tag may differ from full private alias union and is not end-to-end comparison.",
+    "hardConditions": [
+      "No private scope widening",
+      "No data writes or model/provider switch",
+      "No paid LLM requests",
+      "Keep source facts and typed results intact"
+    ],
+    "usage": "Local existing embedding/rerank inference only; development credits unknown."
+  },
+  "officialReference": "https://docs.pytorch.org/docs/2.10/threading_environment_variables.html",
+  "readonlyTrace": {
+    "elapsedMs": 1807,
+    "resultCount": 19,
+    "aliasScope": "primary owner only; full alias union can yield a different candidate set",
+    "embeddingSeconds": 0.0163038,
+    "retrievalSeconds": 0.0368261,
+    "rerankingSeconds": 1.7106745,
+    "traceTotalSeconds": 1.7755609,
+    "candidateCount": 32,
+    "memoryWrites": 0,
+    "paidModelRequests": 0
+  },
+  "boundedComparison": {
+    "state": "completed_native_cpu_measurement",
+    "existingCapability": "Hindsight LocalSTCrossEncoder already supports length-sorted bucket batching and explicit batch_size; current settings false/32,2 intra-op threads,4 CPU limit.",
+    "changeUnderComparison": "Only built-in batching controls. Same installed local model/weights/precision, source facts, retrieval and scopes.",
+    "reference": {
+      "bucket_batching": false,
+      "batch_size": 32
+    },
+    "candidates": [
+      {
+        "bucket_batching": true,
+        "batch_size": 16
+      },
+      {
+        "bucket_batching": true,
+        "batch_size": 8
+      }
+    ],
+    "tasks": [
+      "Greeting",
+      "Continue a planned topic",
+      "Correct an appointment"
+    ],
+    "fixture": "Frozen32 memory candidate texts from authorized private trace, kept private; three fixed query texts.",
+    "criteria": "Select only faster native reranking with unchanged full ranking for every query and numerically equivalent scores; no general quality claim.",
+    "budget": "One local process, baseline/two existing settings,three repeated timings per task to distinguish timing noise;zero provider calls. No optimization platform or changed evaluator.",
+    "results": {
+      "fixtureSha256": "908fcfacf2798ff496dee2116cbd23dec860129b873d407e4e1698706cd86f6e",
+      "candidateCount": 32,
+      "queries": 3,
+      "torchVersion": "2.10.0+cu128",
+      "intraopThreads": 2,
+      "settings": [
+        {
+          "name": "baseline",
+          "bucketBatching": false,
+          "batchSize": 32,
+          "tasks": [
+            {
+              "queryIndex": 0,
+              "runsMs": [
+                1418.994,
+                1383.972,
+                1319.063
+              ],
+              "medianMs": 1383.972,
+              "sameFullRanking": true,
+              "maximumScoreDifference": 0.0
+            },
+            {
+              "queryIndex": 1,
+              "runsMs": [
+                1393.258,
+                1410.523,
+                1250.531
+              ],
+              "medianMs": 1393.258,
+              "sameFullRanking": true,
+              "maximumScoreDifference": 0.0
+            },
+            {
+              "queryIndex": 2,
+              "runsMs": [
+                1558.644,
+                1671.624,
+                1460.006
+              ],
+              "medianMs": 1558.644,
+              "sameFullRanking": true,
+              "maximumScoreDifference": 0.0
+            }
+          ]
+        },
+        {
+          "name": "bucket16",
+          "bucketBatching": true,
+          "batchSize": 16,
+          "tasks": [
+            {
+              "queryIndex": 0,
+              "runsMs": [
+                935.21,
+                950.156,
+                952.114
+              ],
+              "medianMs": 950.156,
+              "sameFullRanking": true,
+              "maximumScoreDifference": 1.9073486328125e-06
+            },
+            {
+              "queryIndex": 1,
+              "runsMs": [
+                1291.996,
+                983.464,
+                1034.165
+              ],
+              "medianMs": 1034.165,
+              "sameFullRanking": true,
+              "maximumScoreDifference": 1.9073486328125e-06
+            },
+            {
+              "queryIndex": 2,
+              "runsMs": [
+                1042.387,
+                1156.996,
+                1004.628
+              ],
+              "medianMs": 1042.387,
+              "sameFullRanking": true,
+              "maximumScoreDifference": 1.9073486328125e-06
+            }
+          ]
+        },
+        {
+          "name": "bucket8",
+          "bucketBatching": true,
+          "batchSize": 8,
+          "tasks": [
+            {
+              "queryIndex": 0,
+              "runsMs": [
+                837.26,
+                954.45,
+                903.947
+              ],
+              "medianMs": 903.947,
+              "sameFullRanking": true,
+              "maximumScoreDifference": 1.9073486328125e-06
+            },
+            {
+              "queryIndex": 1,
+              "runsMs": [
+                882.755,
+                919.241,
+                875.63
+              ],
+              "medianMs": 882.755,
+              "sameFullRanking": true,
+              "maximumScoreDifference": 1.9073486328125e-06
+            },
+            {
+              "queryIndex": 2,
+              "runsMs": [
+                929.08,
+                1012.553,
+                989.917
+              ],
+              "medianMs": 989.917,
+              "sameFullRanking": true,
+              "maximumScoreDifference": 1.9073486328125e-06
+            }
+          ]
+        }
+      ],
+      "providerRequests": 0
+    },
+    "selected": "bucket8",
+    "conclusion": "Across three fixed queries, median reranking1384/1393/1559ms→904/883/990ms. Complete32-item ranking identical; maximum raw score difference1.907e-6. Select built-in sorted8-item batches for current CPU fallback.",
+    "limits": [
+      "Private frozen candidate set, three queries, one installed model/hardware state; not general memory-quality superiority.",
+      "Warm process measurements; source snapshot and equivalent ranks retained.",
+      "GPU throughput unavailable and unmeasured; device selection/model/precision unchanged.",
+      "End-to-end contact latency must be measured after actual deployment."
+    ]
+  },
+  "proposedDeployment": {
+    "source": "eva2/deploy/living-core/hindsight-reranker-batching.compose.yml",
+    "target": "Existing Hindsight service only, same immutable image/database/CUDA bundle and full recall envelope",
+    "state": "installed_verified",
+    "review": "GO; activation match and live contact conditions satisfied",
+    "activationMatch": {
+      "checkedAt": "2026-09-30T16:58:43.082150+00:00",
+      "checks": {
+        "image": true,
+        "cpu": true,
+        "memory": true,
+        "swap": true,
+        "readonly": true,
+        "user": true,
+        "caps": true,
+        "security": true,
+        "device": true,
+        "onlyTwoEnvironmentChanges": true,
+        "sameBindMounts": true
+      },
+      "numericNormalization": "Compose renders byte values as strings; normalized to integers for comparison. No actual resource difference.",
+      "imageId": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+      "profileSha256": "504b38ecdc314d37dd029b8d78aeb8a17afb455cf0d71c90112545aba5b3a5e6"
+    },
+    "activation": {
+      "checkedAt": "2026-09-30T17:05:24.704896+00:00",
+      "profile": "/home/administrator/project/Eva2/eva2/deploy/living-core/hindsight-reranker-batching.compose.yml",
+      "profileSha256": "504b38ecdc314d37dd029b8d78aeb8a17afb455cf0d71c90112545aba5b3a5e6",
+      "command": [
+        "docker",
+        "compose",
+        "-p",
+        "eva2-managed-b-slot3",
+        "-f",
+        "/home/administrator/project/.eva2-artifacts/c1-provider-rate-limit-20260929/candidate.private.json",
+        "-f",
+        "/home/administrator/project/Eva2/eva2/deploy/living-core/hindsight-reranker-batching.compose.yml",
+        "up",
+        "-d",
+        "--no-deps",
+        "hindsight"
+      ],
+      "baseCompose": "/home/administrator/project/.eva2-artifacts/c1-provider-rate-limit-20260929/candidate.private.json",
+      "imageId": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+      "containerStartedAt": "2026-09-30T16:58:58.912448714Z",
+      "settings": {
+        "HINDSIGHT_API_RERANKER_LOCAL_BUCKET_BATCHING": "true",
+        "HINDSIGHT_API_RERANKER_LOCAL_BATCH_SIZE": "8"
+      },
+      "health": "healthy",
+      "review": "review_telegram_draft_lane GO; activation matched and native contact succeeded",
+      "recovery": "Retained pre-change inspect and original base compose; restore only these two batching settings in Hindsight if needed, retaining all data. No rollback performed."
+    }
+  },
+  "liveContact": {
+    "state": "succeeded",
+    "startedAt": "2026-09-30T17:00:02.795Z",
+    "completedAt": "2026-09-30T17:00:08.485Z",
+    "firstNativeContentMs": 5039,
+    "nativeSavedReplyMs": 5690,
+    "initialMemoryMs": 2246,
+    "hindsightHandlerMs": 2211,
+    "rerankingMs": 2097,
+    "modelFirstContentMs": 2403,
+    "modelCompletedMs": 2983,
+    "usage": {
+      "input_tokens": 3120,
+      "output_tokens": 14,
+      "model_attempts": 1,
+      "tool_calls": 0
+    },
+    "originalQuestionBinding": true,
+    "telegramNetworkRequests": 0,
+    "scope": "Installed native adapter and actual existing provider route; draft sink captured locally, Telegram network excluded.",
+    "receiptMs": 42,
+    "receiptIsContent": false
+  },
+  "interpretation": "After activation the native greeting succeeded: first content5.039s, saved5.690s, versus prior9.503/10.341s. Memory3926→2246ms and model phase4653→2403ms both varied. This single before/after run does not attribute total improvement solely to batching. Controlled warm reranking comparison supports35–37% local improvement only. C1.1 faster-than-about5s finish condition is not established; owner Telegram network experience and C1.2 overlap remain open.",
+  "runtimeUsage": {
+    "paidModelAttemptsThisDelivery": 1,
+    "inputTokens": 3120,
+    "outputTokens": 14,
+    "toolCalls": 0,
+    "localBenchmarkProviderCalls": 0,
+    "credits": "unknown",
+    "developmentUsage": "Separate from Eva runtime; credits unknown."
+  }
+}

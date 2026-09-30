@@ -34,3 +34,20 @@ een afzonderlijke databaseclone. Gebruik dat script niet blind na een latere
 Compose-wijziging; het weigert dan terecht de nieuwe configuratie te overschrijven.
 
 [Productbewijs](../../evidence/product/voice-memory-cuda-2026-09-11.json).
+
+## Native reranker batching — 30 September 2026
+
+The optional `hindsight-reranker-batching.compose.yml` enables the existing
+length-sorted batches of eight. Include this overlay in the complete active
+Compose file list, including any later Hindsight activation. It changes only
+`HINDSIGHT_API_RERANKER_LOCAL_BUCKET_BATCHING` and
+`HINDSIGHT_API_RERANKER_LOCAL_BATCH_SIZE`; preserve the existing image, CUDA
+bundle, device selection, memory database and access scopes. The existing
+activation receipt records its exact command and hash. The prior materialized
+base remains available for recovery; no database restore is involved.
+
+The fixed warm CPU comparison preserved all 32 candidate positions for three
+queries and improved median reranking by 35–37%. GPU/concurrent throughput is
+unmeasured. A successful native contact after activation took 5.039 seconds to
+first content; this does not establish completion of C1 or actual Telegram
+network latency. See [measurement](../../evidence/product/c1-context-latency-20260930.json).

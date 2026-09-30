@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-30T16:11:18.957326+00:00",
+        "checkedAt": "2026-09-30T17:05:24.704896+00:00",
         "deliveries": [
+          {
+            "title": "Snellere native geheugenrangschikking geïnstalleerd",
+            "date": "30 september",
+            "state": "installed",
+            "result": "Bestaande Hindsight-batching ingeschakeld:35–37% sneller in de vaste CPU-proef, identieke32-delige volgorde. Onafhankelijke review, gezonde dienst en werkende native begroeting. Geen nieuw model of privégrens.",
+            "remaining": "Eerste begroetingsinhoud5,039s; volledig antwoord5,690s. Gewenste snelheid nog niet gehaald. Geen bewijs dat de totale verbetering alleen door batching komt; echte Telegramnetwerktijd niet gemeten. C1.1 en C1.2 open.",
+            "source": "eva2/evidence/product/c1-context-latency-20260930.json"
+          },
           {
             "title": "Telegramconcepten blokkeren modelstream niet meer per fragment",
             "date": "30 september",
@@ -3067,10 +3075,10 @@
           }
         ],
         "now": {
-          "title": "C1: oorzaak trage inhoudelijke begroeting bepalen",
+          "title": "C1: resterende begroetingsvertraging oplossen",
           "state": "Bezig",
           "owner": "Codex /root",
-          "detail": "Eva antwoordt weer na gericht geheugenherstel. Native eerste inhoud9,503s; opgeslagen10,341s. Geen snelheidswinst bewezen. Bestaande trace en voorbereiding gericht bekijken; geen identieke modelherhaling."
+          "detail": "Geheugenbatching geïnstalleerd en gecontroleerd. Nieuwe native begroeting: eerste inhoud5,039s, opgeslagen5,690s; geheugen2,246s/model2,403s. C1.1 nog open. De bestaande meting bepaalt de volgende gerichte wijziging; geen ongewijzigde proefherhaling."
         },
         "next": {
           "title": "C1: gemeten voorbereiding verbeteren en tekstgesprek afronden",
@@ -3088,7 +3096,7 @@
           "linkLabel": "Open Praten met Eva"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-30T16:11:18.957326+00:00"
+        "reviewedAt": "2026-09-30T17:05:24.704896+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13073,25 +13081,25 @@
               "remaining": "C1.1 niet klaar: native eerste antwoord9,503s/opgeslagen10,341s, één modelaanvraag3312input/12output, nul tools. Snelle ontvangst56ms is geen inhoudelijk antwoord. Transportcorrectie geïnstalleerd; CPU-geheugenfallback werkt maar WSL-GPU blijft weg.",
               "assignment": {
                 "owner": "/root",
-                "baseCommit": "0eae18e09a02b65e7beee51c7b09208830eb4078",
+                "baseCommit": "437e6fb2",
                 "outcome": "Sneller inhoudelijk contact met behoud van persoonlijkheid en geheugen; gesprek beschikbaar tijdens werk.",
                 "existing": "Installed grouped catalog/contact model and verified HTTP overlap; last greeting5.191s includes3.330s model first content and0.985s recall.",
                 "gap": "Native adapter awaited every draft; confirmed offline. Model/website greeting remains slow.",
                 "files": [
-                  "eva2/deploy/telegram-bridge/src/integrations/eva2canary.js",
-                  "eva2/deploy/telegram-bridge/telegram-draft-wiring.patch",
-                  "eva2/tests/support/telegram_draft_lane.test.mjs"
+                  "eva2/deploy/living-core/hindsight-reranker-batching.compose.yml",
+                  "eva2/tests/support/hindsight_reranker_batching.py",
+                  "eva2/evidence/product/c1-context-latency-20260930.json"
                 ],
                 "finish": "Read model stream independently from slow transient drafts; one in-flight draft plus latest pending update; final/error closes lane. Measure adapter delay with unchanged response, review complete version and install in existing service. Does not by itself prove faster website model response.",
                 "estimate": "Use retained timings and current source/config first; new provider calls only for a concrete changed hypothesis. Credits unknown.",
-                "stage": "initial_context_latency_analysis",
-                "currentAction": "Transport fix installed; same original greeting now succeeds on actual provider route. First content9.503s, saved10.341s under built-in CPU memory fallback. Locate latency before/inside model preparation from existing trace/source; no identical provider repeat.",
+                "stage": "installed_batching_contact_latency_remaining",
+                "currentAction": "Native batching installed and healthy; actual greeting first content5.039s/saved5.690s. Memory2246ms and contact model2403ms remain delays. Reuse these measurements to select one further justified improvement; no unchanged rerun. C1.1 finish condition not established.",
                 "activeWorkers": [
                   "/root"
                 ],
                 "workers": {}
               },
-              "latestEvidence": "eva2/evidence/product/c1-telegram-draft-lane-20260930.json"
+              "latestEvidence": "eva2/evidence/product/c1-context-latency-20260930.json"
             },
             {
               "id": "C1.2",
