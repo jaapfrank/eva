@@ -1,0 +1,58 @@
+{
+  "task": "R1.1",
+  "outcome": "incomplete_round_no_comparison_no_promotion",
+  "classification": "Isolated research evidence; no delivered product function",
+  "sourceCommit": "01348edb",
+  "sourceFreeze": "eva2/experiments/r1-executable-experience-20260930/freeze.json",
+  "report": "eva2/experiments/r1-executable-experience-20260930/comparison-report.json",
+  "reportSha256": "a963d08acf58d7c7decd8e2efb23e856a7a43d32644009cc84e254541f7c451f",
+  "execution": {
+    "completedTaskRuns": 0,
+    "startedTaskRuns": 1,
+    "plannedTaskRuns": 8,
+    "referenceEpisodesCompleted": 1,
+    "referenceEpisodesPartial": 1,
+    "candidateRuns": 0,
+    "caseBRuns": 0,
+    "repeatBlocksCompleted": 0,
+    "seconds": 55.282094137975946,
+    "modelResponses": 12,
+    "toolOperations": 10,
+    "termination": "Predeclared research response envelope reached; no automatic replay or ceiling increase"
+  },
+  "experimentalModelUse": {
+    "construction": {
+      "inputTokens": 2345,
+      "outputTokens": 4578,
+      "responses": 2
+    },
+    "evaluation": {
+      "inputTokens": 27881,
+      "outputTokens": 479,
+      "responses": 12
+    },
+    "aggregate": {
+      "inputTokens": 30226,
+      "outputTokens": 5057,
+      "responses": 14
+    },
+    "credits": "unknown",
+    "developerAssistantUse": "Not included in runtime experiment counters; separate unallocated development usage"
+  },
+  "observations": {
+    "firstEpisode": "Reference reserved, observed and returned original household booking; pending private task unchanged",
+    "secondEpisode": "Fresh correction observed; obsolete shared reservation released, read back; relocation/delivery not reached",
+    "contactSeconds": 3.2157603499945253,
+    "contactMeaning": "Complete content time of an isolated shared request; not native Telegram/Voice PE latency",
+    "experimentalProductionEffects": 0
+  },
+  "conclusion": "Candidate benefit, loss, speedup, reliability gain, amortized savings and competitor superiority remain unmeasured. No candidate installation; ordinary skills retained. Technical distinction requirement remains open.",
+  "independentGrading": {
+    "curator": "/root/review_telegram_draft_lane",
+    "path": "eva2/experiments/r1-executable-experience-20260930/heldout-grading.json",
+    "sha256": "2edfbcd9bcec5962db9ca72b50e28f4a8adb3a74b149b1687f34387c3c48d87f",
+    "decision": "UNKNOWN: existing R1.1 finish condition not met; incomplete ordinary A run; no hard boundary or stale/invalid action; no promotion",
+    "frozenCommitmentsMatched": true
+  },
+  "reviewedAt": "2026-09-30T19:55:51.157676+00:00"
+}

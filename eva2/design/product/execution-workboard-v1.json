@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-30T19:45:22.338031+00:00",
+  "lastUpdated": "2026-09-30T19:55:51.157676+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -3083,10 +3083,10 @@
           }
         ],
         "now": {
-          "title": "R1.1: afgeschermde vergelijking loopt",
-          "state": "In uitvoering",
-          "owner": "Codex /root; onafhankelijke beoordelaar",
-          "detail": "Afgeschermde vergelijking gestart na onafhankelijkeGO;2gevallen×2herhalingen×2armen. Kosten bevatten beide syntheses. Geen extra productfunctie of voordeel bewezen."
+          "title": "R1-proef afgesloten zonder vergelijkingsbewijs",
+          "state": "Afgesloten; functie niet afgerond",
+          "owner": "Codex /root",
+          "detail": "Onafhankelijke beoordeling: eerste referentiedeel geslaagd, tweede onvolledig. Geen privacy-/bevoegdheidsfout; kandidaat niet gemeten.30.226input/5.057output inclusief leren. Geen installatie of extra afgeronde productfunctie."
         },
         "next": {
           "title": "C1: gemeten voorbereiding verbeteren en tekstgesprek afronden",
@@ -3104,7 +3104,7 @@
           "linkLabel": "Open Telegram"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-30T19:45:22.338031+00:00",
+        "reviewedAt": "2026-09-30T19:55:51.157676+00:00",
         "previousOwnerAction": {
           "title": "Lees het afgeronde zondagplan",
           "steps": [
@@ -14399,7 +14399,7 @@
           ],
           "outcome": "Uitvoerbare ervaring vergelijken",
           "effort": "M research",
-          "status": "in_progress",
+          "status": "blocked",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Ordinary procedure reuse is the comparison baseline; task-model concept has prior art and no Eva implementation evidence.",
@@ -14412,48 +14412,51 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": "/root",
+          "activeWorker": null,
           "dashboardComponent": "projects",
           "remainingTasks": [
             {
               "id": "R1.1",
               "title": "Ervaringsmodel begrensd vergelijken",
-              "status": "in_progress",
+              "status": "blocked",
               "kind": "onderzoek",
               "doneWhen": "Eén passende geïsoleerde vergelijking met gewone bestaande werkwijzen, inclusief leerverbruik.",
               "owner": "Codex /root",
-              "latestEvidence": "eva2/evidence/product/r1-narrow-reference-20260929.json",
+              "latestEvidence": "eva2/evidence/product/r1-incomplete-comparison-20260930.json",
               "assignment": {
                 "owner": "/root",
                 "baseCommit": "2e17f72a",
-                "stage": "frozen_heldout_comparison_running",
+                "stage": "frozen_round_closed_inconclusive",
                 "outcome": "Determine a distinct, bounded intervention for change-aware reuse before comparing it with the existing ordinary skill route.",
                 "existing": "JSON Patch learning and different-input reuse already work; copy execution and precondition checks are not a new task model. Full learning replay is not admitted by the existing experiment envelope.",
                 "gap": "Held-out benefit and promotion decision not measured; development candidate is available.",
                 "files": [
                   "eva2/experiments/r1-executable-experience-20260930/"
                 ],
-                "currentAction": "Model-generated advisory transition predictor versus unchanged ordinary sequence-on-copy method. Initial public schema omission found and corrected before hidden inputs; one revised candidate, all construction cost retained. Independent curator owns hidden cases/scoring; no real house effects.",
+                "currentAction": "No active model runs or automatic replay. Preserve UNKNOWN and independent grading; comparison finish condition remains unmet.",
                 "finish": "Existing R1.1 finish condition retained: isolated comparison with ordinary methods, including learning cost. Source preparation alone does not complete R1 or technical distinction.",
                 "estimate": "Two synthesis responses measured:2345input/4578output. Existing frozen eight-run envelope includes construction and all helpers; unknown credit cost.",
-                "activeWorkers": [
-                  "/root"
-                ]
+                "activeWorkers": []
               },
-              "remaining": "Afgeschermde vergelijking gestart na onafhankelijkeGO;2gevallen×2herhalingen×2armen. Kosten bevatten beide syntheses. Geen extra productfunctie of voordeel bewezen.",
-              "checkedAt": "2026-09-30T19:45:22.338031+00:00"
+              "remaining": "Geen bewijs van kandidaatvoordeel; geen installatie. Technische onderscheiding blijft open; gewone werkwijzen behouden.",
+              "checkedAt": "2026-09-30T19:55:51.157676+00:00",
+              "blocker": "Vaste proef onvolledig: referentie bereikte12modelreacties vóór tweede deelresultaat. Kandidaat/B/herhalingen niet gemeten; eindvoorwaarde vergelijking niet gehaald. Deze ronde afgeslotenUNKNOWN zonder automatische vervolgproef."
             },
             {
               "id": "R1.2",
               "title": "Meerwaarde beslissen",
-              "status": "planned",
+              "status": "completed",
               "kind": "besluit",
               "doneWhen": "Aantoonbare winst behouden of kandidaat afwijzen; geen verplichte nieuwe techniek.",
-              "owner": "Codex"
+              "owner": "Codex /root",
+              "completedAt": "2026-09-30T19:55:51.157676+00:00",
+              "latestEvidence": "eva2/evidence/product/r1-incomplete-comparison-20260930.json",
+              "result": "Adoptie afgewezen wegens ontbrekend vergelijkingsbewijs; geen bewezen verlies van kandidaat. Onvolledige rondeUNKNOWN, geen extra productfunctie."
             }
           ],
           "owner": "/root",
-          "reviewer": "/root/review_telegram_draft_lane"
+          "reviewer": "/root/review_telegram_draft_lane",
+          "disposition": "Optional frozen round closed inconclusive; R1.1 comparison unmet and technical distinction open."
         },
         {
           "id": "O1",

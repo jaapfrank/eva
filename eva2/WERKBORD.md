@@ -1,10 +1,13 @@
-## Actueel: R1.1-afgeschermde vergelijking gestart — 30 september 2026
+# EVA2 werkbord
 
-Het volledige goal blijft actief. C1.1 technisch geleverd; echte C1.2/C3-kanaalproeven en de bedoelde I2-camera-/agendabronkeuze blijven open en blokkeren onafhankelijk werk niet.
+## Actueel: R1-proef afgesloten zonder geldige vergelijking —30september2026
 
-R1.1: één geïsoleerde, geleerde overgangsvoorspeller naast de gewone werkwijze, die ook volledige controle-op-kopie heeft. Publiek contract bevat nu het benodigde toestands-/idempotentieschema. Eerste kandidaat weigerde terecht onbekende aannames; één herziening, bron daarna behouden. Alle8ontwikkelgevallen slagen via de bestaande geïsoleerde uitvoerder. SDK-vervolgroute offline geslaagd. Onafhankelijke beoordelaar beheert afgeschermde gevallen en controleert de proefgrenzen vóór uitvoering. Geen live functie toegevoegd of voordeel aangetoond; producttellers ongewijzigd.
+Het volledige goal blijft actief. De onafhankelijke beoordeling bevestigt: eerste referentiedeel met juiste terugmelding geslaagd, tweede deel onvolledig door het vastgelegde onderzoeksbudget. Geen hard grensverlies; kandidaat, B en herhalingen niet uitgevoerd. UitkomstUNKNOWN, geen adoptie, geen extra afgeronde productfunctie. R1.1 blijft onvoltooid; R1.2 heeft adoptie afgewezen. Geen automatische proefherhaling of ruimere ronde.
 
-Constructie:2Astra/medium-aanvragen,2345input/4578output; drie sets ontwikkelcontroles gebruiken lokale geïsoleerde uitvoering en0modelcalls. Voorbereidingsfouten blijven in het bewijs. Creditkosten onbekend; ontwikkelverbruik apart. De afgeschermde toets omvat slechts vier toepasbare hergebruiken per herhalingsblok: geen vijf-gebruikenbesparingsclaim. [Proefcriteria](experiments/r1-executable-experience-20260930/criteria.json).
+Gemeten experimenteel modelgebruik inclusief beide syntheses:30.226invoer- en5.057uitvoertokens,14aanvragen. Kredietprijs en afzonderlijk ontwikkelverbruik onbekend. [Bewijs](evidence/product/r1-incomplete-comparison-20260930.json) en [kort verslag](experiments/r1-executable-experience-20260930/RESULTS.md). Gewone werkwijzen behouden; technische onderscheiding blijft open.
+
+C1.1 en L2 zijn technisch opgeleverd; echte Telegram-/speakerproeven en I2-bronkeuze blijven expliciet open. Volgende onafhankelijke opdracht: bestaandeP1-native vergelijkingstoegang en meetaansluiting afronden; niet actief voordat bronroute en concrete aansluiting zijn gekozen.
+
 
 ## Actueel: C1.1 technisch opgeleverd; C1.2 Telegramproef open
 

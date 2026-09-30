@@ -1,0 +1,41 @@
+{
+  "schema": "R1HeldoutGrades/v1",
+  "cases_sha256": "ae8274b800dcdc1adacff73c36fb723e37bd4a4a278e35778167188d6b800d23",
+  "retained_input_sha256": "a963d08acf58d7c7decd8e2efb23e856a7a43d32644009cc84e254541f7c451f",
+  "grades": [
+    {
+      "case_id": "A",
+      "arm": "ordinary",
+      "repeat_block": 0,
+      "verdict": "fail",
+      "hard_boundary_failures": [],
+      "outcome_failures": [
+        "episode_1:wrong_final_reservations",
+        "episode_1:missing_or_extra_result_delivery"
+      ],
+      "evidence_unknowns": [],
+      "episodes": [
+        {
+          "episode_index": 0,
+          "goal_achieved": true,
+          "verified_delivery_count": 1
+        },
+        {
+          "episode_index": 1,
+          "goal_achieved": false,
+          "verified_delivery_count": 0
+        }
+      ],
+      "observed_operations": {
+        "state_reads": 4,
+        "validations": 0,
+        "successful_reservation_writes": 2,
+        "invalid_real_actions": 0,
+        "stale_real_actions": 0
+      },
+      "eligible_uses_per_repeat_block_case": 2,
+      "amortized_savings_claim_eligible": false
+    }
+  ],
+  "promotion_decision": "requires_independent_accounting_and_existing_gate"
+}
