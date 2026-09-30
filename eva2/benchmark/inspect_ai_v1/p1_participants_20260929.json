@@ -179,6 +179,19 @@
         "nativeAccountRefresh": "One normal native auth refresh; owned store retained. No inference.",
         "admission": "not_admitted",
         "remaining": "Deployed proxy, real provider cancellation/usage and full sync/tool/helper/retry coverage, other participant equal access."
+      },
+      "nativeLoopSDKComposition": {
+        "status": "observed_offline_not_admitted",
+        "evidence": "eva2/evidence/product/p1-agentzero-loop-sdk-composition-20261001.json",
+        "review": "eva2/reviews/p1-agentzero-loop-sdk-composition-20261001.md",
+        "binding": "Existing native AgentContext loop and role hooks, real async SDK/native OAuth route, sample ledger/owned stream. Explicit comparison assistance; native source unchanged.",
+        "foreground": "Actual native monologue returns response protocol through Sol/none SSE.",
+        "helper": "Actual native utility through Astra/medium nonstream, SDK-consumed synthetic usage.",
+        "tools": "Actual protocol response dispatch counted; modern/legacy permissions hooks present. Other tools not exercised.",
+        "budget": "Two admitted calls42input/18output synthetic usage; extra native helper requests refused before SDK execution. Complete native sample not established.",
+        "remaining": "Running network proxy, real inference/usage/cancellation, sync/alternative SDK/tool/retry coverage and equal access to other participants.",
+        "externalInferenceRequests": 0,
+        "admission": "not_admitted"
       }
     }
   ],

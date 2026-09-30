@@ -1,0 +1,354 @@
+{
+  "task": "P1.1",
+  "date": "2026-10-01T01:39:34.525965+02:00",
+  "scope": "Existing native AgentContext monologue and helpers composed with real async LiteLLM/HTTPX, native OAuth Flask routes and existing independent auth. Upstream provider HTTP mocked. Explicit comparison assistance; native source unchanged.",
+  "before": "Full native loop and real SDK/proxy were separately observed. Prior mock settled usage at upstream generation; legacy JSON tool dispatch bypassed modern tool hook.",
+  "added": [
+    "Opt-in native-loop case reuses current presets, source pin, local embedding/cache, OAuth route and owned stream guard.",
+    "Bind actual native role/context at SDK admission before awaiting the SDK; preserve real serialized model/effort checks at upstream boundary.",
+    "Consume final SDK usage instead of settling it while the mock upstream generates data; callback failure closes its own response.",
+    "Guard native modern/legacy tool request paths before tool construction; count actual native tool_execute_before dispatch.",
+    "Retain sanitized failure reports and exact source hashes; no inference or production installation."
+  ],
+  "observed": {
+    "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+    "scope": "Native model, real async SDK, registered native OAuth routes and owned auth lookup; upstream provider HTTP mocked.",
+    "cases": [
+      {
+        "case": "native-loop-sdk-composition",
+        "requests": [
+          {
+            "model": "gpt-6-sol",
+            "effort": "none",
+            "forced_stream": true,
+            "owned_auth_forwarded": true,
+            "role": "foreground_contact"
+          },
+          {
+            "model": "gpt-6-astra",
+            "effort": "medium",
+            "forced_stream": true,
+            "owned_auth_forwarded": true,
+            "role": "helper"
+          }
+        ],
+        "sdk_requests": [
+          {
+            "model": "gpt-6-sol",
+            "stream": true,
+            "native_content_type": "text/event-stream",
+            "native_status": 200
+          },
+          {
+            "model": "gpt-6-astra",
+            "stream": false,
+            "native_content_type": "application/json",
+            "native_status": 200
+          }
+        ],
+        "native_response": "Native bridge fixture completed.",
+        "tools": [
+          {
+            "name": "response",
+            "protocol_only": true
+          }
+        ],
+        "ledger": {
+          "sample_id": "native-loop-sdk-composition",
+          "provider_attempts": 2,
+          "complete": true,
+          "stop": "declared sample attempts reached",
+          "stop_requested": false,
+          "active_async_attempts": 0,
+          "cancel_errors": [],
+          "total_usage": {
+            "input_tokens": 42,
+            "output_tokens": 18,
+            "total_tokens": 60
+          },
+          "known_partial_usage": {
+            "input_tokens": 42,
+            "output_tokens": 18,
+            "total_tokens": 60
+          },
+          "attempts": [
+            {
+              "id": 0,
+              "sample_id": "native-loop-sdk-composition",
+              "role": "foreground_contact",
+              "model": "gpt-6-sol",
+              "reasoning_effort": "none",
+              "status": "completed",
+              "usage": {
+                "input_tokens": 21,
+                "output_tokens": 9,
+                "total_tokens": 30
+              }
+            },
+            {
+              "id": 1,
+              "sample_id": "native-loop-sdk-composition",
+              "role": "helper",
+              "model": "gpt-6-astra",
+              "reasoning_effort": "medium",
+              "status": "completed",
+              "usage": {
+                "input_tokens": 21,
+                "output_tokens": 9,
+                "total_tokens": 30
+              }
+            }
+          ],
+          "coverage": "Only native entrypoints actually bound by the caller",
+          "live_admission": false
+        },
+        "sample_completion": "not_established; ledger covers admitted SDK attempts only",
+        "refused_sdk": [
+          {
+            "role": "helper",
+            "model": "gpt-6-astra",
+            "effort": "medium",
+            "before_sdk_execution": true
+          },
+          {
+            "role": "helper",
+            "model": "gpt-6-astra",
+            "effort": "medium",
+            "before_sdk_execution": true
+          }
+        ],
+        "usage_observation": "SDK-consumed response.completed/nonstream response, synthetic upstream",
+        "native_upstream_closed": [
+          true,
+          false
+        ],
+        "bound_streams_closed": [
+          true
+        ],
+        "outcome": "native_loop_real_sdk_routes_observed_not_admitted",
+        "fixture_cleanup": {
+          "explicit_native_response_close": true,
+          "ledger": {
+            "sample_id": "native-loop-sdk-composition",
+            "provider_attempts": 2,
+            "complete": true,
+            "stop": "declared sample attempts reached",
+            "stop_requested": true,
+            "active_async_attempts": 0,
+            "cancel_errors": [],
+            "total_usage": {
+              "input_tokens": 42,
+              "output_tokens": 18,
+              "total_tokens": 60
+            },
+            "known_partial_usage": {
+              "input_tokens": 42,
+              "output_tokens": 18,
+              "total_tokens": 60
+            },
+            "attempts": [
+              {
+                "id": 0,
+                "sample_id": "native-loop-sdk-composition",
+                "role": "foreground_contact",
+                "model": "gpt-6-sol",
+                "reasoning_effort": "none",
+                "status": "completed",
+                "usage": {
+                  "input_tokens": 21,
+                  "output_tokens": 9,
+                  "total_tokens": 30
+                }
+              },
+              {
+                "id": 1,
+                "sample_id": "native-loop-sdk-composition",
+                "role": "helper",
+                "model": "gpt-6-astra",
+                "reasoning_effort": "medium",
+                "status": "completed",
+                "usage": {
+                  "input_tokens": 21,
+                  "output_tokens": 9,
+                  "total_tokens": 30
+                }
+              }
+            ],
+            "coverage": "Only native entrypoints actually bound by the caller",
+            "live_admission": false
+          },
+          "refused_sdk": [
+            {
+              "role": "helper",
+              "model": "gpt-6-astra",
+              "effort": "medium",
+              "before_sdk_execution": true
+            },
+            {
+              "role": "helper",
+              "model": "gpt-6-astra",
+              "effort": "medium",
+              "before_sdk_execution": true
+            }
+          ]
+        }
+      }
+    ],
+    "externalInferenceRequests": 0,
+    "productionRuntimeChanges": 0,
+    "nativeClientVersion": "0.159.2",
+    "admission": "not_admitted",
+    "configuredStreamingCapabilities": {
+      "gpt-6-sol": {
+        "before": false,
+        "configured": true
+      },
+      "gpt-6-astra": {
+        "before": false,
+        "configured": true
+      }
+    },
+    "comparisonStreamGuard": {
+      "enabled": true,
+      "nativeSourceModified": false,
+      "comparisonStopAssistance": true,
+      "scope": "Explicit comparison-side ownership/close assistance; stock stop limitation retained."
+    },
+    "sourceHashes": {
+      "plugins/_oauth/helpers/codex.py": "bcc9244bc2abc852aaf65a56c796abb8ec4bf93adfd2b3fc3b665312cd1b53db",
+      "plugins/_oauth/helpers/routes.py": "26f4708c40e1a673918ce796ffc6c4ff6f0168c11248e1eb215029ffa8a6c325",
+      "plugins/_model_config/helpers/model_config.py": "c4a46fb05ccfc176734e626d74a5b5bf6a9b1fe539f04d1bd35e6213b808b8d0"
+    },
+    "limitations": [
+      "Not a deployed UI/proxy. Full monologue is observed only in the explicit native-loop case.",
+      "Synthetic usage only; no provider inference or cloud cancellation.",
+      "Streaming capability metadata is a configured declaration, not a live-provider observation; the pinned local SDK catalog lacked these models.",
+      "Only observed async SDK routes; sync/tools and other participant parity remain open."
+    ]
+  },
+  "attemptHistory": [
+    {
+      "version": "v1",
+      "description": "Native main/helper SDK routes observed, then tool-count assertion failed: legacy JSON dispatcher bypassed the selected modern dispatcher. Full ledger snapshot was not retained.",
+      "exitCode": 1,
+      "executionSource": {
+        "files": {
+          "p1_agentzero_bridge_probe.py": "aadf2f032524bc724c397bd53f6fa6eb5bf6a0c677aa79ea10001aabb0d6d6f1",
+          "cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f"
+        },
+        "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+        "selectedCase": "native-loop",
+        "comparisonStreamGuard": true
+      },
+      "artifacts": {
+        "sdk-request-boundary.json": "94e0d0bf2ddc781755e55e2b25f8d82afbc0db8559b25fbb498c31fcf0eda7a5",
+        "execution-source.json": "5662fafa84da68ff60540d7920c6841bc0b53e55b1b9ad200cf5cc915a0da2cb"
+      }
+    },
+    {
+      "version": "v2",
+      "description": "Keyword agent dispatch failed at the extension decorator before any SDK/native upstream admission. Fixed wrapper preserves positional and keyword arguments.",
+      "exitCode": 1,
+      "executionSource": {
+        "files": {
+          "p1_agentzero_bridge_probe.py": "43d62af62b14d78b1d3cb3117c55f6dfe4da8ba1609ef497c58ac8bd55d9ddce",
+          "cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f"
+        },
+        "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+        "selectedCase": "native-loop",
+        "comparisonStreamGuard": true
+      },
+      "artifacts": {
+        "native-case-failure.json": "0e1fc39a928d29f51ba52a358ba4919067744ba5357ee7c335f35f026f3bc924",
+        "execution-source.json": "4870d8605e96238d0128d9b6f7734378e970fdb758a51b759945048365028c4a"
+      }
+    },
+    {
+      "version": "v3",
+      "description": "Native response and two SDK usages observed, but a third helper entered the SDK before upstream admission. This is not whole-sample accounting; prompted admission before SDK execution.",
+      "exitCode": 0,
+      "executionSource": {
+        "files": {
+          "p1_agentzero_bridge_probe.py": "aa19f2912111682c5f030c1b8b336ff6c73ae6b1ead0936e5c43bd92bbb87df7",
+          "cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f"
+        },
+        "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+        "selectedCase": "native-loop",
+        "comparisonStreamGuard": true
+      },
+      "artifacts": {
+        "native-bridge-report.json": "35b3e481866beb54f5901bd4554762a1399b9b80eac44cbe73365c521bdb9bd4",
+        "completed-cases.json": "fc6825decca263858813d4e936fbd1352330d488ac1198d96ab6f33f523582ee",
+        "sdk-request-boundary.json": "94e0d0bf2ddc781755e55e2b25f8d82afbc0db8559b25fbb498c31fcf0eda7a5",
+        "execution-source.json": "596c74918f2075174b5cd273080ee2e1b3e9ea8eff928520b8aa431dcb0a6ede"
+      }
+    },
+    {
+      "version": "v4",
+      "description": "SDK admission now occurs before actual execution. Two native role requests consumed, response protocol counted; extra native helper calls refused by unchanged sample envelope. Whole sample remains not admitted.",
+      "exitCode": 0,
+      "executionSource": {
+        "files": {
+          "p1_agentzero_bridge_probe.py": "4ae7c048a6186d25d1a618871e056f47e5e9d363f294d5fff9c7af11e8c61be1",
+          "cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f"
+        },
+        "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+        "selectedCase": "native-loop",
+        "comparisonStreamGuard": true
+      },
+      "artifacts": {
+        "native-bridge-report.json": "051544b17b4c2b196e01c87315b1e399b6a749e08652fefa2c6d29bce788ed87",
+        "completed-cases.json": "d15d1157f1b93b1345783f4ea37b3c20005be5a3f03c6b1f4adadeccb5101177",
+        "sdk-request-boundary.json": "94e0d0bf2ddc781755e55e2b25f8d82afbc0db8559b25fbb498c31fcf0eda7a5",
+        "execution-source.json": "710e948752e54b4ba0f6ad50e9f0ba4757a151b0c89643ce1cf86ead269f65c3"
+      }
+    }
+  ],
+  "focusedChecks": {
+    "command": "agent-zero-probe-env/bin/python -m pytest eva2/tests/benchmark/test_cp001_stream_control.py -q",
+    "passed": 5,
+    "elapsedSeconds": 0.05,
+    "scope": "Actual HTTPX response ownership, cancellation, completed byte/usage preservation, failed-close truth, SDK consumption callback and missing-usage closure. Original three tests repeated only because their stream implementation changed."
+  },
+  "publicationHashes": {
+    "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py": "4ae7c048a6186d25d1a618871e056f47e5e9d363f294d5fff9c7af11e8c61be1",
+    "eva2/benchmark/inspect_ai_v1/cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f",
+    "eva2/tests/benchmark/test_cp001_stream_control.py": "4184681559bd9660dec0895dc49a5a64cd7058b0e5b35b8a7daa09656b8ceca1"
+  },
+  "limits": [
+    "This is an in-process Flask route fixture, not a deployed native proxy or live inference.",
+    "42 input/18 output tokens are synthetic usage for two admitted SDK calls, not Eva runtime consumption or full native sample usage.",
+    "Ledger complete refers only to admitted SDK usage; native naming/other helper calls were refused before SDK execution. It does not prove whole-sample completion.",
+    "Observed upstream closure before cleanup was true for foreground SSE and false for mocked nonstream helper; explicit cleanup is separate. Neither proves cloud cancellation.",
+    "Synchronous SDK, alternative transports, all tools and provider retries still unverified; no complete native or five-participant admission.",
+    "Native public knowledge fragment directory unreadable; cost-map DNS blocked in disabled namespace, serializer/deferred callback warnings retained. No native quality score."
+  ],
+  "consumption": {
+    "externalInferenceRequests": 0,
+    "nativeAuthRefreshRequests": 0,
+    "evaRuntimeChanges": 0,
+    "evaRuntimeModelUsage": 0,
+    "developmentCreditCost": null,
+    "syntheticAdmittedAttemptsAcrossV3V4": 4,
+    "v1SDKRouteRequests": 2,
+    "v1FullUsageRetained": false,
+    "v2SDKRequests": 0,
+    "paidJudgeCalls": 0,
+    "appGoalTokenCounter": {
+      "start": 5752028,
+      "throughReviewCheckpoint": 5867384,
+      "difference": 115356,
+      "scope": "App goal counter only; not credit/billable/currency cost or Eva runtime. Includes unknown cache/agent categories. Later review/publication excluded."
+    }
+  },
+  "independentReview": {
+    "status": "GO for bounded checkpoint",
+    "reviewer": "/root/review_telegram_draft_lane",
+    "path": "eva2/reviews/p1-agentzero-loop-sdk-composition-20261001.md",
+    "sha256": "a3c157bbca941b3f35074c5ffaa3e9d32d268316e1e70574558fd8356049910b",
+    "scope": "Source/retained-report review, no rerun. Full native completion/live admission/P1.1 remain unproved."
+  },
+  "productFunctionCompleted": false,
+  "P1Completed": false,
+  "admission": "not_admitted"
+}

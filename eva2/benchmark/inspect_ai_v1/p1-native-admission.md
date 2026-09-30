@@ -220,3 +220,25 @@ and failure truth. Native source remains unchanged. The unguarded failure above
 is retained: this guard is explicit comparison assistance, not stock Agent Zero
 behavior or cloud cancellation. No full admission follows. See
 `../../evidence/product/p1-agentzero-native-stream-stop-20261001.json`.
+
+## Full native loop/real SDK composition — 1 October 2026
+
+The existing full AgentContext route now traverses the actual async SDK and
+registered native OAuth route with upstream provider HTTP mocked. SDK admission
+precedes execution, roles/context are checked and final usage is consumed at
+the SDK boundary. The native JSON and modern tool paths are protected before
+construction; actual protocol dispatch is counted at the shared native hook.
+
+Two admitted calls report synthetic42input/18output tokens. Additional native
+helper calls are refused by the unchanged envelope before SDK execution. The
+foreground result therefore does **not** establish complete native sample work.
+Foreground SSE closes before cleanup; mocked nonstream upstream close is false
+at that boundary and explicit cleanup is separate. Full admission remains open;
+do not disable native helpers or silently increase the budget to call this a win.
+
+Three earlier executions are retained: legacy counting assertion failure, keyword
+forwarding error before SDK entry, and the observed late helper SDK-entry gap.
+The corrected execution closes that admission gap without another evaluator or
+external inference. Five focused HTTPX/callback checks passed. No quality result,
+cloud cancellation or new Eva product function follows. Evidence:
+`../../evidence/product/p1-agentzero-loop-sdk-composition-20261001.json`.

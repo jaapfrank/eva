@@ -8,7 +8,7 @@ import httpx
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "benchmark/inspect_ai_v1"))
-from cp001_accounting import ProviderSampleLedger, SampleAsyncStream  # noqa: E402
+from cp001_accounting import ProviderSampleLedger, SampleAsyncStream, SampleStopped  # noqa: E402
 
 
 def ledger(sample):
@@ -101,5 +101,36 @@ def test_failed_response_close_never_turns_into_success_on_retry():
         with pytest.raises(OSError):
             await stream.aclose()
         assert body.close_calls == 1
+        assert book.report()["total_usage"]["output_tokens"] is None
+    asyncio.run(scenario())
+
+
+def test_consumed_event_records_usage_before_return_without_changing_bytes():
+    async def scenario():
+        book, body = ledger("observed"), Body(block=False)
+        attempt = book.begin("contact", "model", "none")
+        seen = []
+        def observe(event):
+            seen.append(event)
+            book.finish(attempt, {"input_tokens": 21, "output_tokens": 9, "total_tokens": 30})
+        stream = SampleAsyncStream(book, attempt, IteratorWithoutClose(body), on_event=observe)
+        assert await anext(stream) == b"unchanged SDK bytes"
+        assert seen == [b"unchanged SDK bytes"] and book.report()["complete"]
+        await stream.aclose()
+        assert body.close_calls == 1 and book.report()["total_usage"]["output_tokens"] == 9
+    asyncio.run(scenario())
+
+
+def test_invalid_consumed_usage_closes_owned_response_and_remains_unknown():
+    async def scenario():
+        book, body = ledger("missing-usage"), Body(block=False)
+        attempt = book.begin("contact", "model", "none")
+        raw = IteratorWithoutClose(body)
+        stream = SampleAsyncStream(book, attempt, raw, on_event=lambda event: book.finish(attempt, None))
+        with pytest.raises(SampleStopped):
+            await anext(stream)
+        assert raw.response.is_closed and body.close_calls == 1
+        assert book.report()["active_async_attempts"] == 0
+        assert book.report()["attempts"][0]["status"] == "unattested"
         assert book.report()["total_usage"]["output_tokens"] is None
     asyncio.run(scenario())

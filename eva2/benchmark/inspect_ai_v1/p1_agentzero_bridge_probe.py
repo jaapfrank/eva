@@ -19,8 +19,9 @@ import shutil
 import socket
 import subprocess
 import sys
+import threading
 
-from cp001_accounting import ProviderSampleLedger, SampleAsyncStream
+from cp001_accounting import ProviderSampleLedger, SampleAsyncStream, SampleStopped
 
 PIN = "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec"
 PROFILES = {"foreground_contact": ("gpt-6-sol", "none"),
@@ -33,9 +34,12 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--auth-store", type=Path, required=True)
     parser.add_argument("--dockerized", choices=["1"], required=True)
-    parser.add_argument("--case", choices=["all", "stream-cases", "contact-stream", "work-nonstream", "partial-stop"], default="all")
+    parser.add_argument("--case", choices=["all", "stream-cases", "contact-stream", "work-nonstream", "partial-stop", "native-loop"], default="all")
+    parser.add_argument("--embedding-cache", type=Path, help="Existing pinned local cache, required for native-loop")
     parser.add_argument("--bind-stream", action="store_true", help="Use the explicit comparison-side SDK stream guard")
     args = parser.parse_args()
+    if args.case == "native-loop" and (not args.bind_stream or args.embedding_cache is None):
+        parser.error("native-loop requires --bind-stream and the existing --embedding-cache")
     source, output = args.source.resolve(), args.output.resolve()
     assert subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=source, text=True).strip() == PIN
     assert subprocess.run(["git", "diff", "--quiet", "HEAD", "--"], cwd=source).returncode == 0
@@ -50,6 +54,10 @@ def main() -> None:
     }, indent=2) + "\n")
     sys.dont_write_bytecode = True
     sys.path.insert(0, str(source))
+    if args.embedding_cache is not None:
+        os.environ["HF_HUB_OFFLINE"] = "1"
+        os.environ["TRANSFORMERS_OFFLINE"] = "1"
+        os.environ["HF_HUB_CACHE"] = str(args.embedding_cache.resolve())
 
     def reject_connection(*args, **kwargs):
         raise RuntimeError("External network is disabled in this native bridge fixture")
@@ -105,39 +113,56 @@ def main() -> None:
     limits = json.loads((here / "p1_participants_20260929.json").read_text())["developmentPlan"]["perSampleLimits"]
     results = []
 
-    async def case(name, role, *, stream, partial=False):
+    async def case(name, role, *, stream, partial=False, native_loop=False):
         ledger = ProviderSampleLedger(name, limits, PROFILES)
         model_name, effort = PROFILES[role]
         upstreams, requests_seen, sdk_requests, native_responses, stream_bindings = [], [], [], [], []
         waiting = asyncio.Event()
+        wire_attempt = contextvars.ContextVar("p1_wire_attempt", default=None)
+        sdk_attempts = contextvars.ContextVar("p1_sdk_attempts", default=None)
+        helper_settled = threading.Event()
+        tools = []
+        refused_sdk = []
+        native_context = None
+        restore_native = []
+
+        def sdk_usage(response):
+            usage = response.get("usage") if isinstance(response, dict) else getattr(response, "usage", None)
+            return usage if isinstance(usage, dict) else usage.model_dump() if hasattr(usage, "model_dump") else None
 
         class Upstream(requests.Response):
-            def __init__(self, attempt):
+            def __init__(self, attempt, request_role, requested_model):
                 super().__init__()
                 self.attempt = attempt
+                self.request_role, self.requested_model = request_role, requested_model
                 self.status_code = 200
                 self.headers["Content-Type"] = "text/event-stream"
                 self.native_closed = False
 
             def iter_content(self, chunk_size=1, decode_unicode=False):
                 text = "Native bridge fixture completed."
+                if native_loop:
+                    text = (json.dumps({"thoughts": ["Offline native protocol check"], "tool_name": "response",
+                                        "tool_args": {"text": "Native bridge fixture completed."}})
+                            if self.request_role == "foreground_contact" else "[]")
                 events = [
                     {"type": "response.output_text.delta", "delta": text, "output_index": 0, "content_index": 0},
                     {"type": "response.completed", "response": {
                         "id": "resp_bridge_fixture", "object": "response", "created_at": 0,
-                        "model": model_name, "status": "completed", "usage": {
+                        "model": self.requested_model, "status": "completed", "usage": {
                             "input_tokens": 21, "output_tokens": 9, "total_tokens": 30},
                         "output": [{"type": "message", "id": "msg_fixture", "role": "assistant",
                                     "status": "completed", "content": [{"type": "output_text",
                                     "text": text, "annotations": []}]}]}}]
                 for event in events:
-                    if event["type"] == "response.completed":
+                    if event["type"] == "response.completed" and not native_loop:
                         ledger.finish(self.attempt, event["response"]["usage"])
                     yield ("event: " + event["type"] + "\ndata: " + json.dumps(event) + "\n\n").encode()
 
             def close(self):
                 self.native_closed = True
-                ledger.incomplete(self.attempt, "native_upstream_closed_usage_unknown")
+                if not native_loop:
+                    ledger.incomplete(self.attempt, "native_upstream_closed_usage_unknown")
 
         def upstream_request(method, url, **kwargs):
             assert method == "POST" and url.endswith("/responses")
@@ -145,12 +170,31 @@ def main() -> None:
             assert headers["Authorization"] == "Bearer " + auth.access_token
             assert headers["chatgpt-account-id"] == auth.account_id
             wire = json.loads(kwargs["data"])
-            assert wire["model"] == model_name and wire["reasoning"]["effort"] == effort
-            attempt = ledger.begin(role, wire["model"], wire["reasoning"]["effort"])
-            ledger.track_async_attempt(attempt)
+            request_role = role
+            if native_loop:
+                from p1_agentzero_native_probe import ROLE, CONTEXT
+                request_role = ROLE.get()
+                assert CONTEXT.get() == name, "Upstream call escaped its native AgentContext"
+            else:
+                assert wire["model"] == model_name and wire["reasoning"]["effort"] == effort
+            if native_loop:
+                assert len(sdk_attempts.get() or []) == 1, "Native upstream has no single admitted SDK owner"
+                attempt = sdk_attempts.get()[0]
+                assert ledger.attempts[attempt]["model"] == wire["model"]
+                assert ledger.attempts[attempt]["reasoning_effort"] == wire["reasoning"]["effort"]
+            else:
+                attempt = ledger.begin(request_role, wire["model"], wire["reasoning"]["effort"])
+                ledger.track_async_attempt(attempt)
+            wire_attempt.set(attempt)
+            if sdk_attempts.get() is not None:
+                if native_loop:
+                    assert not any(x.attempt == attempt for x in upstreams), "Repeated SDK upstream is not admitted"
+                else:
+                    sdk_attempts.get().append(attempt)
             requests_seen.append({"model": wire["model"], "effort": wire["reasoning"]["effort"],
-                                  "forced_stream": wire["stream"], "owned_auth_forwarded": True})
-            response = Upstream(attempt)
+                                  "forced_stream": wire["stream"], "owned_auth_forwarded": True,
+                                  "role": request_role})
+            response = Upstream(attempt, request_role, wire["model"])
             upstreams.append(response)
             return response
 
@@ -178,7 +222,7 @@ def main() -> None:
                 wire = json.loads(request.content)
                 sdk_request = {"model": wire.get("model"), "stream": wire.get("stream")}
                 sdk_requests.append(sdk_request)
-                context = contextvars.Context()
+                context = contextvars.copy_context()
                 response = context.run(app.test_client().post, request.url.path, data=request.content,
                                        content_type="application/json", buffered=False)
                 native_responses.append((context, response))
@@ -190,7 +234,7 @@ def main() -> None:
                     raise RuntimeError("Native proxy failed before a bound SDK response; raw diagnostics withheld")
                 return httpx.Response(response.status_code, headers=dict(response.headers),
                                       stream=BridgeStream(response, context), request=request,
-                                      extensions={"comparison_attempt": upstreams[-1].attempt})
+                                      extensions={"comparison_attempt": context.get(wire_attempt)})
 
         class BridgeHTTPHandler(AsyncHTTPHandler):
             def create_client(self, *args, **kwargs):
@@ -201,19 +245,118 @@ def main() -> None:
         codex._UPSTREAM_SESSION.request = upstream_request
 
         async def bound_responses(**request):
-            iterator = await original_responses(**request)
+            attempts = []
+            if native_loop:
+                from p1_agentzero_native_probe import ROLE, CONTEXT
+                assert CONTEXT.get() == name, "SDK call escaped its native AgentContext"
+                model_name = request["model"].removeprefix("openai/")
+                reasoning = request.get("extra_body", {}).get("reasoning", request.get("reasoning", {}))
+                effort = reasoning.get("effort") or request.get("reasoning_effort")
+                try:
+                    attempt = ledger.begin(ROLE.get(), model_name, effort)
+                except SampleStopped:
+                    refused_sdk.append({"role": ROLE.get(), "model": model_name, "effort": effort,
+                                        "before_sdk_execution": True})
+                    raise
+                attempts.append(attempt)
+                ledger.track_async_attempt(attempt)
+            token = sdk_attempts.set(attempts)
+            try:
+                iterator = await original_responses(**request)
+            except BaseException:
+                if native_loop:
+                    ledger.incomplete(attempt, "sdk_failed_usage_unknown")
+                raise
+            finally:
+                sdk_attempts.reset(token)
+            if native_loop:
+                assert len(attempts) == 1, "SDK call has missing or repeated native upstream attempts"
             if request.get("stream"):
                 # The fixture binds the actual response to its observed upstream
                 # attempt. This is not an attestation of deployed proxy coverage.
                 attempt = iterator.response.extensions["comparison_attempt"]
-                bound = SampleAsyncStream(ledger, attempt, iterator)
+                if native_loop:
+                    assert attempt == attempts[0], "SDK response belongs to another native attempt"
+                def observe_usage(event):
+                    event_type = event.get("type") if isinstance(event, dict) else getattr(event, "type", None)
+                    if event_type == "response.completed":
+                        response = event.get("response") if isinstance(event, dict) else getattr(event, "response", None)
+                        ledger.finish(attempt, sdk_usage(response))
+                        if ledger.attempts[attempt]["role"] == "helper":
+                            helper_settled.set()
+                bound = SampleAsyncStream(ledger, attempt, iterator,
+                                          on_event=observe_usage if native_loop else None)
                 stream_bindings.append(bound)
                 return bound
+            if native_loop:
+                attempt = attempts[0]
+                ledger.finish(attempt, sdk_usage(iterator))
+                if ledger.attempts[attempt]["role"] == "helper":
+                    helper_settled.set()
             return iterator
 
         if args.bind_stream:
             litellm_transport.aresponses = bound_responses
         client = BridgeHTTPHandler()
+        if native_loop:
+            import agent
+            import initialize
+            from p1_agentzero_native_probe import tag_method
+            for method, model_role in (("call_chat_model_turn", "foreground_contact"),
+                                       ("call_chat_model", "foreground_contact"),
+                                       ("call_utility_model", "helper")):
+                original = getattr(agent.Agent, method)
+                restore_native.append((agent.Agent, method, original))
+                setattr(agent.Agent, method, tag_method(original, model_role))
+            for builder in ("build_chat_model", "build_utility_model"):
+                original = getattr(model_config, builder)
+                restore_native.append((model_config, builder, original))
+                def build(*positional, _original=original, **kwargs):
+                    result = _original(*positional, **kwargs)
+                    result.kwargs["client"] = client
+                    return result
+                setattr(model_config, builder, build)
+            original_tool = agent.Agent._execute_tool_request
+            restore_native.append((agent.Agent, "_execute_tool_request", original_tool))
+            def check_tool(actor, tool_name):
+                assert actor.context.id == name
+                if ledger.stopped or tool_name != "response":
+                    ledger.stop_async_attempts("Native comparison tool is not admitted")
+                    raise SampleStopped(ledger.stopped)
+            async def execute_tool(actor, tool_name, *positional, **kwargs):
+                check_tool(actor, tool_name)
+                return await original_tool(actor, tool_name, *positional, **kwargs)
+            agent.Agent._execute_tool_request = execute_tool
+            original_legacy = agent.Agent.process_tools
+            restore_native.append((agent.Agent, "process_tools", original_legacy))
+            async def process_tools(actor, message):
+                from helpers import extract_tools
+                parsed = extract_tools.extract_tool_request(message)
+                if parsed is not None:
+                    tool_name, _arguments = extract_tools.normalize_tool_request(parsed)
+                    check_tool(actor, tool_name)
+                return await original_legacy(actor, message)
+            agent.Agent.process_tools = process_tools
+            from helpers import extension
+            original_extensions = extension.call_extensions_async
+            restore_native.append((extension, "call_extensions_async", original_extensions))
+            async def call_extensions(point, *positional, **kwargs):
+                if point == "tool_execute_before":
+                    actor = positional[0] if positional else kwargs["agent"]
+                    tool_name = kwargs["tool_name"]
+                    check_tool(actor, tool_name)
+                    tools.append({"name": tool_name, "protocol_only": tool_name == "response"})
+                    if len(tools) > limits["toolDispatches"]:
+                        ledger.stop_async_attempts("Native comparison tool envelope reached")
+                        raise SampleStopped(ledger.stopped)
+                return await original_extensions(point, *positional, **kwargs)
+            extension.call_extensions_async = call_extensions
+            workdir = output / "usr/workdir"
+            workdir.mkdir(parents=True)
+            (output / "usr/settings.json").write_text(json.dumps({"workdir_path": str(workdir)}))
+            config = initialize.initialize_agent({"mcp_servers": ""})
+            model_config.build_embedding_model().embed_query("Synthetic native memory prerequisite")
+            native_context = agent.AgentContext(config=config, id=name)
         model = model_config.build_chat_model() if role == "foreground_contact" else model_config.build_utility_model()
         model.kwargs["client"] = client
         observed = []
@@ -224,6 +367,26 @@ def main() -> None:
         task = None
         result = None
         try:
+            if native_loop:
+                native_task = native_context.communicate(agent.UserMessage("Complete the offline native protocol check. No external tools."))
+                response = native_task.result_sync(timeout=limits["wallSeconds"])
+                assert response == "Native bridge fixture completed."
+                assert helper_settled.wait(limits["wallSeconds"]), "Native helper did not settle"
+                assert [x["role"] for x in requests_seen].count("foreground_contact") == 1
+                assert [x["role"] for x in requests_seen].count("helper") == 1
+                assert tools == [{"name": "response", "protocol_only": True}]
+                assert ledger.report()["active_async_attempts"] == 0
+                assert ledger.report()["total_usage"]["output_tokens"] == 18
+                result = {"case": name, "requests": requests_seen, "sdk_requests": sdk_requests,
+                          "native_response": response, "tools": tools, "ledger": ledger.report(),
+                          "sample_completion": "not_established; ledger covers admitted SDK attempts only",
+                          "refused_sdk": refused_sdk,
+                          "usage_observation": "SDK-consumed response.completed/nonstream response, synthetic upstream",
+                          "native_upstream_closed": [x.native_closed for x in upstreams],
+                          "bound_streams_closed": [x.closed for x in stream_bindings],
+                          "outcome": "native_loop_real_sdk_routes_observed_not_admitted"}
+                results.append(result)
+                return
             task = asyncio.create_task(model.unified_call(user_message="Isolated native route fixture.",
                                       response_callback=observe if stream else None))
             if partial:
@@ -263,7 +426,23 @@ def main() -> None:
                                         else "model_cancelled_upstream_close_unverified") if partial
                                        else "observed_route_completed"}
             results.append(result)
+        except BaseException as error:
+            (output / "native-case-failure.json").write_text(json.dumps({
+                "error_type": type(error).__name__, "case": name,
+                "requests": requests_seen, "sdk_requests": sdk_requests,
+                "tools": tools, "ledger": ledger.report(),
+                "externalInferenceRequests": 0, "admission": "not_admitted",
+            }, indent=2) + "\n")
+            raise
         finally:
+            if native_context is not None:
+                native_context.kill_process()
+                ledger.stop_async_attempts("Explicit native fixture cleanup")
+                from helpers.defer import DeferredTask, EventLoopThread
+                for thread_name in list(EventLoopThread._instances):
+                    DeferredTask(thread_name=thread_name).kill(terminate_thread=True)
+            for target, attribute, original in reversed(restore_native):
+                setattr(target, attribute, original)
             if task is not None and not task.done():
                 task.cancel()
                 try:
@@ -279,10 +458,12 @@ def main() -> None:
             litellm_transport.aresponses = original_responses
             if result is not None:
                 result["fixture_cleanup"] = {"explicit_native_response_close": True,
-                                             "ledger": ledger.report()}
+                                             "ledger": ledger.report(), "refused_sdk": list(refused_sdk)}
                 (output / "completed-cases.json").write_text(json.dumps(results, indent=2) + "\n")
 
     async def run():
+        if args.case == "native-loop":
+            await case("native-loop-sdk-composition", "foreground_contact", stream=True, native_loop=True)
         if args.case in {"all", "stream-cases", "contact-stream"}:
             await case("native-bridge-contact-stream", "foreground_contact", stream=True)
         if args.case in {"all", "work-nonstream"}:
@@ -300,7 +481,7 @@ def main() -> None:
                                         "scope": "Explicit comparison-side ownership/close assistance; stock stop limitation retained."},
               "sourceHashes": {str(Path(module.__file__).relative_to(source)): hashlib.sha256(Path(module.__file__).read_bytes()).hexdigest()
                                for module in (codex, routes, model_config)},
-              "limitations": ["Not a deployed UI/proxy or full monologue run.", "Synthetic usage only; no provider inference or cloud cancellation.",
+              "limitations": ["Not a deployed UI/proxy. Full monologue is observed only in the explicit native-loop case.", "Synthetic usage only; no provider inference or cloud cancellation.",
                               "Streaming capability metadata is a configured declaration, not a live-provider observation; the pinned local SDK catalog lacked these models.",
                               "Only observed async SDK routes; sync/tools and other participant parity remain open."]}
     (output / "native-bridge-report.json").write_text(json.dumps(report, indent=2) + "\n")

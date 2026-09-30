@@ -1,5 +1,11 @@
 # EVA2 werkbord
 
+## Actueel: P1.1 — native agentroute aangesloten en beoordeeld
+
+Onafhankelijke review GO; alle proefprocessen beëindigd. Native agentlus en helper lopen nu door echte SDK/native proxy met bestaande eigen login. Sol/none en Astra/medium teruggelezen; protocoltool bij werkelijke dispatch geteld. Twee aangenomen aanvragen synthetisch42input/18output; extra helpers vóór SDK geweigerd binnen dezelfde proefgrenzen. Dit bewijst geen volledige native sample of vergelijking; nul externe inferentie, geen Eva-installatiewijziging of extra productfunctie. Niet-streamende nagebootste upstream was vóór proefopruiming niet expliciet gesloten; cloudstop onbekend.
+
+Vier gewijzigde uitvoeringen bewaard: eerste tooltelling miste legacyroute; tweede had fout in keyworddoorgifte; derde legde late SDK-instap van helper bloot; vierde weigert extra helpers vóór SDK.5 passende stream/callbackcontroles geslaagd; geen eerdere brede proef herhaald. App-goalverschil tot reviewcheckpoint115356tokens, geen credit-/geldclaim. [Bewijs](evidence/product/p1-agentzero-loop-sdk-composition-20261001.json). [Review](reviews/p1-agentzero-loop-sdk-composition-20261001.md) GO; volledige P1.1 en het volledige goal blijven open. Volgende uitvoering nog niet gestart: overige native deelnemers met bestaande pins/adapters aansluiten. Agent Zero blijft binnen vaste proefgrenzen onvolledig; geen automatische herhaalronde of quota-uitbreiding.
+
 ## Actueel: P1.1 — stopbinding vastgelegd en beoordeeld
 
 De expliciete vergelijkingsbinding sluit bij stoppen nu de eigen SDK/native upstream vóór proefopruiming. Actieve pogingen1→0, verbruik bij afbreken onbekend; het gewone streamantwoord en synthetische verbruik blijven gelijk.3 gerichte HTTPX-controles en onafhankelijke review GO. Alleen eigen aanvraag gestopt; mislukte sluiting wordt niet als succes gerapporteerd. Native bron/pin behouden; stock-stopfout blijft geregistreerd. Geen extra Eva-functie, cloudstopbewijs of volledige P1.1.

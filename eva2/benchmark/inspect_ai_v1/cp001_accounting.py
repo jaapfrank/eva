@@ -283,9 +283,10 @@ class SampleAsyncStream:
     Cancellation must close that exact response before settling an incomplete row.
     """
 
-    def __init__(self, ledger, attempt, stream):
+    def __init__(self, ledger, attempt, stream, *, on_event=None):
         self.ledger, self.attempt = ledger, attempt
         self.stream = stream.__aiter__()
+        self.on_event = on_event
         self.closed = False
         self._close_error = None
         self._close = getattr(stream, "aclose", None) or getattr(stream, "close", None)
@@ -304,7 +305,10 @@ class SampleAsyncStream:
             if self.ledger.attempts[self.attempt]["status"] == "pending":
                 self.ledger.track_async_attempt(self.attempt)
         try:
-            return await self.stream.__anext__()
+            event = await self.stream.__anext__()
+            if self.on_event is not None:
+                self.on_event(event)
+            return event
         except BaseException:
             await self.aclose()
             raise
