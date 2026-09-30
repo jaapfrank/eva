@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-30T17:44:01.124099+00:00",
+        "checkedAt": "2026-09-30T18:11:31.122539+00:00",
         "deliveries": [
           {
             "title": "C1.1 begroetingsoptimalisatie technisch afgerond",
@@ -3083,16 +3083,29 @@
           }
         ],
         "now": {
-          "title": "C1: echte Telegram-tussenvraag nog beoordelen",
+          "title": "C1/C3: actuele kanaalproeven gevraagd",
           "state": "Wacht op gebruikersproef",
-          "owner": "Jaap; Codex bewaakt vervolg",
-          "detail": "C1.1 technisch opgeleverd: eerste native inhoud4,084s, volledig5,008s; geen instantclaim. Voor C1.2 is gevraagd onderzoek en een tussenvraag direct na elkaar te sturen. Bestaande route wordt behouden; ontbrekende beoordeling is geen ontbrekende implementatie."
+          "owner": "Jaap; Codex bewaakt technisch vervolg",
+          "detail": "C1.1 technisch opgeleverd. Telegramvolgorde en woonkamerspeaker gevraagd te proberen. Native speakerterugmelding is al aangesloten; bron/runtime en beide bindings gecontroleerd, geen nieuwe codefout gevonden. Readiness is geen bewijs van hoorbare terugmelding."
         },
         "next": {
           "title": "C1: gemeten voorbereiding verbeteren en tekstgesprek afronden",
           "detail": "Behoud identiteit/geheugen/werkroute. Alleen een aantoonbare oorzaak aanpassen. Succesvolle echte Telegram-tussenvraag en websitecontact blijven open."
         },
         "ownerAction": {
+          "title": "Telegram: tussenvraag tijdens onderzoek",
+          "steps": [
+            "Stuur /eva2 Zoek uit wat Home Assistant Cloud voor spraak doet, met bronnen.",
+            "Stuur meteen daarna /eva2 Hoe gaat het met jou?",
+            "Meld of het korte antwoord vóór het onderzoeksresultaat komt en ieder antwoord bij zijn eigen vraag staat."
+          ],
+          "expected": "De tussenvraag wordt tijdens het onderzoek beantwoord. Voor de woonkamer is dezelfde wakewordproef apart gevraagd; het websitepaneel is geen Voice PE-proef.",
+          "url": "https://web.telegram.org/",
+          "linkLabel": "Open Telegram"
+        },
+        "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
+        "reviewedAt": "2026-09-30T18:11:31.122539+00:00",
+        "previousOwnerAction": {
           "title": "Lees het afgeronde zondagplan",
           "steps": [
             "Open Praten met Eva via onderstaande link.",
@@ -3102,9 +3115,7 @@
           "expected": "Een zondagplan met3activiteiten en maximaal8euro aan voorgestelde materialen. Geef desgewenst je oordeel; acceptatie is nog open.",
           "url": "http://localhost:44711/internal/v1/dashboard/conversation",
           "linkLabel": "Open Praten met Eva"
-        },
-        "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-30T17:44:01.124099+00:00"
+        }
       }
     },
     "pendingTechnicalReview": {
@@ -13288,10 +13299,28 @@
             {
               "id": "C3.3",
               "title": "Onderzoeksresultaat terug op juiste speaker",
-              "status": "planned",
+              "status": "blocked",
               "kind": "aansluiten",
               "doneWhen": "Werkelijke uitkomst komt terug bij de oorspronkelijke speaker; geen privé-inhoud.",
-              "owner": "Codex"
+              "owner": "Codex /root",
+              "assignment": {
+                "owner": "/root",
+                "baseCommit": "52ed18b8",
+                "stage": "installed_route_retained_actual_playback_missing",
+                "outcome": "Public research result returns to the originating registered speaker, with private content excluded.",
+                "existing": "Existing registered native speaker sessions, durable household result delivery and voice media-agent return code.",
+                "gap": "Earlier source/installed media-agent difference was irrelevant to private website voice; determine whether it leaves the household result route disconnected. Missing physical acceptance alone is not a defect.",
+                "files": [
+                  "eva2/src/eva/voice_service/agent.py",
+                  "current media-agent packaging and focused return tests only if a real gap is found"
+                ],
+                "finish": "Reuse current working return path or correct a demonstrated missing source-to-installed transition, then verify preserved speaker binding/privacy and real return separately from physical family acceptance.",
+                "estimate": "Use existing installed source/hashes/evidence first; no model/audio calls planned for this targeted diagnosis. Credits unknown.",
+                "currentAction": "Existing native adapter matches installed core; both registered devices advertise household result returns. No current announce failure established. Await genuine original-speaker research/result observation; do not rebuild website media path.",
+                "activeWorkers": []
+              },
+              "latestEvidence": "eva2/evidence/product/c3-native-return-route-20260930.json",
+              "blocker": "Bestaande native route geïnstalleerd, bron gelijk en beide apparaatbindings gereed. Hoorbare werkelijke onderzoeksuitkomst op de oorspronkelijke speaker nog niet waargenomen; eigenaarproef gevraagd. Geen codefout bewezen."
             }
           ]
         },
