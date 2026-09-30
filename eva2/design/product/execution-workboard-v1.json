@@ -13081,7 +13081,7 @@
             {
               "id": "C1.1",
               "title": "Begroeting versnellen",
-              "status": "done",
+              "status": "completed",
               "kind": "verbeteren",
               "doneWhen": "Eenvoudig hallo sneller dan de huidige circa5s; inhoudelijke antwoordtijd en verbruik vastgelegd.",
               "owner": "Codex",
