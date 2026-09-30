@@ -1,0 +1,13 @@
+--- a/src/integrations/telegram.js
++++ b/src/integrations/telegram.js
+@@ -2606,9 +2606,7 @@
+             fromId: ctx.from.id,
+             text: ctx.message.text,
+             telegramDate: ctx.message.date,
+-            onDraft: draftSink
+-              ? async (text) => draftSink(labelEva2TelegramReply(text))
+-              : null,
++            onDraft: draftSink ? draftSink.map(labelEva2TelegramReply) : null,
+             onReceipt: draftSink ? (text) => draftSink.receipt(text) : null,
+           });
+           await sendTelegramText(ctx.chat.id, labelEva2TelegramReply(answer.text), {

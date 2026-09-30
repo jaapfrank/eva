@@ -1,8 +1,18 @@
+## Actueel: C1 — Telegramcorrectie geïnstalleerd, echte antwoordtijd meten
+
+Het volledige app-goal is actief. Uitvoerder `/root`. De echte Telegramaansluiting gebruikt nu één lopende conceptupdate en de nieuwste wachtende tekst; concepttransport blokkeert het lezen van het modelantwoord niet meer per fragment. Vijf gerichte controles op de geïnstalleerde code en onafhankelijke review geslaagd; bestaande `eva.service` eenmaal herstart en actief. Geïsoleerde transportproef:356→94ms, geen model-/Telegramnetwerkcalls. [Bewijs](evidence/product/c1-telegram-draft-lane-20260930.json).
+
+Nu: de gemeten vertraging in context-/modelvoorbereiding gericht herleiden. Dezelfde oorspronkelijke begroeting werkt na geheugenherstel weer: eerste inhoud9,503s, opgeslagen antwoord10,341s, één gespreksmodelaanvraag3312input/12output en nul tools. De56ms ontvangst is geen inhoudelijk antwoord; er is geen gewenste snelheidswinst bewezen en geen echte Telegramnetwerktijd gemeten. Eerste poging faalde vóór model op CUDA; Hindsight is eenmaal herstart met ongewijzigde code/configuratie en gebruikt zijn bestaande CPU-fallback doordat WSL de GPU niet ziet. C1.1 en C1.2 blijven open. L2 is technisch afgerond; eigenaaracceptatie blijft afzonderlijk open. Geen extra grote productcategorie afgerond.
+
 ## Laatste oplevering: Hoofdopdracht L2 technisch afgerond — 30 september2026
 
 Eva startte de gisteren geplande vervolgstap vandaag zelfstandig om15:00 en rondde die om15:01:29 af. Het concept bleef behouden; nieuw zondagplan155woorden/3activiteiten/maximaal8euro aan budgetplafonds. Eén terugmelding op de privéwebsite, ook na verversen. Onafhankelijke review GO. [Resultaat](evidence/product/l2-weekend-resultaat-20260930.md) · [Bewijs](evidence/product/l2-next-day-completed-20260930.json). Geen nieuwe installatie of heruitvoering nodig. L2.1 en L2.2 klaar; hoofdopdracht L2 technisch afgerond. De exacte eindvoorwaarde is gehaald door herstart/correctie/dependency plus werkelijke volgende-daguitvoering. Eigenaaracceptatie en eindvergelijking apart; T3 blijft zijn eigen open opdracht. Geen volledige projectcategorie afgevinkt.
 
-Gedeeltelijk Eva-runtimeverbruik van deze taak:88424input,1196output,8modelantwoorden,7tools; creditkosten onbekend. Ontwikkelverbruik apart en niet gemeten. Volgende gebruikersuitkomst C1: begroeting slaagt na accountwijziging, maar5,249s is geen winst;4537input/14output/1aanvraag. Geen ongewijzigde herhaalproef. Cachecontrole gaf geen onderbouwde wijziging; eerdere endpointafwijzing behouden. Geen lopend bouw-/proefproces; activering van het nog geblokkeerde app-goal gevraagd, geen nieuwe toestemming voor uitvoering. [Meting](evidence/product/c1-resumed-contact-20260930.json).
+Gedeeltelijk Eva-runtimeverbruik van deze taak:88424input,1196output,8modelantwoorden,7tools; creditkosten onbekend. Ontwikkelverbruik apart en niet gemeten. Volgende gebruikersuitkomst C1: begroeting slaagt na accountwijziging, maar5,249s is geen winst;4537input/14output/1aanvraag. Geen ongewijzigde herhaalproef. Cachecontrole gaf geen onderbouwde wijziging; eerdere endpointafwijzing behouden. Historische stand vóór hervatting: er liep toen geen bouw-/proefproces. Het app-goal is inmiddels actief; C1 hierboven is de actuele opdracht. [Meting](evidence/product/c1-resumed-contact-20260930.json).
+
+## Historische voortgang — eerdere uitvoeringsstanden
+
+De onderstaande actueel-/blokkademeldingen zijn historische registraties. De actuele opdracht staat bovenaan en in het dashboard.
 
 ## Actueel: hervat op C1 na gewijzigde providertoegang — 30 september 2026
 

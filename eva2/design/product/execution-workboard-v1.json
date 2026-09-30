@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-30T14:15:43.982769+00:00",
+        "checkedAt": "2026-09-30T16:11:18.957326+00:00",
         "deliveries": [
+          {
+            "title": "Telegramconcepten blokkeren modelstream niet meer per fragment",
+            "date": "30 september",
+            "state": "installed",
+            "result": "Echte Telegramaansluiting en wachtrij samen geïnstalleerd. Vijf gerichte controles op geïnstalleerde code, onafhankelijke review en actieve dienst. Nagebootst transport356→94ms, identiek antwoord en vraagbinding.",
+            "remaining": "Echte providerbegroeting werkt: eerste inhoud9,503s, opgeslagen10,341s zonder Telegramnetwerk. Geen gewenste snelheidswinst; C1 blijft open. Hindsight gebruikt bestaande CPU-fallback wegens WSL-GPU-uitval.",
+            "source": "eva2/evidence/product/c1-telegram-draft-lane-20260930.json"
+          },
           {
             "title": "Documentproject werkelijk de volgende dag zelfstandig afgerond",
             "date": "30 september",
@@ -3059,14 +3067,14 @@
           }
         ],
         "now": {
-          "title": "L2 technisch afgerond: meerdaags project vervolgen",
-          "state": "Afgerond",
+          "title": "C1: oorzaak trage inhoudelijke begroeting bepalen",
+          "state": "Bezig",
           "owner": "Codex /root",
-          "detail": "Concept, correctie en afhankelijkheden behouden; na herstart én werkelijk de volgende dag autonoom afgerond, eenmaal privé teruggemeld. Onafhankelijke review GO. Eigenaaracceptatie apart."
+          "detail": "Eva antwoordt weer na gericht geheugenherstel. Native eerste inhoud9,503s; opgeslagen10,341s. Geen snelheidswinst bewezen. Bestaande trace en voorbereiding gericht bekijken; geen identieke modelherhaling."
         },
         "next": {
-          "title": "C1: inhoudelijk contact versnellen",
-          "detail": "Begroeting werkt maar duurt5,249s; geen bewezen snelheidsfix. C1 is eerstvolgend. Geen lopend bouw-/proefproces; app-goalactivering gevraagd. Telegram- en fysieke stemproeven blijven apart."
+          "title": "C1: gemeten voorbereiding verbeteren en tekstgesprek afronden",
+          "detail": "Behoud identiteit/geheugen/werkroute. Alleen een aantoonbare oorzaak aanpassen. Succesvolle echte Telegram-tussenvraag en websitecontact blijven open."
         },
         "ownerAction": {
           "title": "Lees het afgeronde zondagplan",
@@ -3080,7 +3088,7 @@
           "linkLabel": "Open Praten met Eva"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-30T14:15:43.982769+00:00"
+        "reviewedAt": "2026-09-30T16:11:18.957326+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13016,7 +13024,7 @@
             "evidence": "eva2/evidence/product/contact-grouped-catalog-20260928.json",
             "remaining": "Greeting5.191s/retrieval15.399s; desired latency and Telegram parity remain open."
           },
-          "activeWorker": null,
+          "activeWorker": "/root",
           "contactDuringReuseAssignment": {
             "stage": "installed_http_overlap_pass",
             "outcome": "Locate existing admission/contact routing responsible for55.742s first text during procedure task; propose smallest general change only if needed.",
@@ -13051,7 +13059,7 @@
           },
           "ordinaryRetrievalPerformanceEvidence": "eva2/evidence/product/own-initiative-return-20260928.json",
           "contactInputEvidence": "eva2/evidence/product/contact-guidance-size-20260928.json",
-          "latestEvidence": "eva2/evidence/product/c1-research-mode-guidance-20260929.json",
+          "latestEvidence": "eva2/evidence/product/c1-telegram-draft-lane-20260930.json",
           "dashboardComponent": "conversation",
           "remainingTasks": [
             {
@@ -13062,26 +13070,28 @@
               "doneWhen": "Eenvoudig hallo sneller dan de huidige circa5s; inhoudelijke antwoordtijd en verbruik vastgelegd.",
               "owner": "Codex",
               "existingTimingFinding": "Existing measured greeting5.191s; model first content3.330s, memory-only0.985s. No new measurement or demonstrated new defect; no speculative memory/transport rebuild.",
-              "remaining": "Geïnstalleerde begroeting slaagt nu: eerste tekst4,349s, opgeslagen antwoord5,249s; één modelaanvraag4537input/14output, geen tools. Geen snelheidswinst. Vermijdbare oorzaak gericht vaststellen, geen ongewijzigde herhaalproef.",
+              "remaining": "C1.1 niet klaar: native eerste antwoord9,503s/opgeslagen10,341s, één modelaanvraag3312input/12output, nul tools. Snelle ontvangst56ms is geen inhoudelijk antwoord. Transportcorrectie geïnstalleerd; CPU-geheugenfallback werkt maar WSL-GPU blijft weg.",
               "assignment": {
                 "owner": "/root",
-                "baseCommit": "6db2229fc4a0f948883116bbd78b35c7fc945f33",
+                "baseCommit": "0eae18e09a02b65e7beee51c7b09208830eb4078",
                 "outcome": "Sneller inhoudelijk contact met behoud van persoonlijkheid en geheugen; gesprek beschikbaar tijdens werk.",
                 "existing": "Installed grouped catalog/contact model and verified HTTP overlap; last greeting5.191s includes3.330s model first content and0.985s recall.",
-                "gap": "Current end-to-end greeting remains slow; no proven new causal bottleneck yet.",
+                "gap": "Native adapter awaited every draft; confirmed offline. Model/website greeting remains slow.",
                 "files": [
-                  "eva2/src/eva/adapters/model/openai_codex_provider.py",
-                  "eva2/src/eva/adapters/model/pydantic_conversation.py",
-                  "existing focused contact tests and evidence only if a concrete defect is found"
+                  "eva2/deploy/telegram-bridge/src/integrations/eva2canary.js",
+                  "eva2/deploy/telegram-bridge/telegram-draft-wiring.patch",
+                  "eva2/tests/support/telegram_draft_lane.test.mjs"
                 ],
-                "finish": "Demonstrated reduction in actual content latency without bypassing shared memory/persona; independent focused review and installed result. Current Telegram overlap remains separate C1.2.",
+                "finish": "Read model stream independently from slow transient drafts; one in-flight draft plus latest pending update; final/error closes lane. Measure adapter delay with unchanged response, review complete version and install in existing service. Does not by itself prove faster website model response.",
                 "estimate": "Use retained timings and current source/config first; new provider calls only for a concrete changed hypothesis. Credits unknown.",
-                "stage": "next_execution_queued",
-                "currentAction": "No product probe or build process running. Latest content latency retained; unsupported cache tweak rejected. App-goal reactivation requested because goal tool cannot reactivate blocked status.",
-                "activeWorkers": [],
+                "stage": "initial_context_latency_analysis",
+                "currentAction": "Transport fix installed; same original greeting now succeeds on actual provider route. First content9.503s, saved10.341s under built-in CPU memory fallback. Locate latency before/inside model preparation from existing trace/source; no identical provider repeat.",
+                "activeWorkers": [
+                  "/root"
+                ],
                 "workers": {}
               },
-              "latestEvidence": "eva2/evidence/product/c1-resumed-contact-20260930.json"
+              "latestEvidence": "eva2/evidence/product/c1-telegram-draft-lane-20260930.json"
             },
             {
               "id": "C1.2",
@@ -13098,7 +13108,9 @@
                 "existing": "Installed concurrent Bottie polling, original-message reply binding and shared runtime overlap proof.",
                 "gap": "Current real Telegram ordering after installed corrections not established.",
                 "finish": "Use current ingress/archive metadata to locate an actual failure or verify a bounded real overlapping pair; do not rebuild tested concurrency.",
-                "estimate": "15–30 minutes initial diagnosis; zero planned replay/model calls; credits unknown."
+                "estimate": "15–30 minutes initial diagnosis; zero planned replay/model calls; credits unknown.",
+                "currentAction": "Inspect installed actual Telegram ingress and existing concurrent route for missing successful research/social overlap; reuse provider and question bindings.",
+                "stage": "current_native_route_analysis"
               },
               "blocker": "Eigenaarproef ontvangen: eerste onderzoek faalde, herhaling slaagde. Gekopieerde tijdvolgorde bewijst geen tussenvraag vóór voltooiing. Onderzoekmodus-uitleg gecorrigeerd en geïnstalleerd; volledige overlapacceptatie open.",
               "latestEvidence": "eva2/evidence/product/c1-telegram-current-20260929.json",
@@ -13132,6 +13144,13 @@
             "cost": "development credits unknown",
             "nonclaim": "Does not remove provider limit or complete C1.",
             "evidence": "eva2/evidence/product/c1-provider-rate-limit-20260929.json"
+          },
+          "transportCorrection": {
+            "state": "installed_verified",
+            "evidence": "eva2/evidence/product/c1-telegram-draft-lane-20260930.json",
+            "measurement": "Offline native-wiring fixture356→94ms; not real provider/network latency.",
+            "review": "GO",
+            "restartCount": 1
           }
         },
         {

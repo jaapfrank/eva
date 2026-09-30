@@ -1,0 +1,166 @@
+{
+  "contract": "EvaBoundedDeliveryEvidence/v1",
+  "taskId": "C1.1",
+  "state": "installed_verified",
+  "checkedAt": "2026-09-30T16:11:18.957326+00:00",
+  "userOutcome": "Telegram draft transport no longer serializes every streamed answer fragment; saved reply retains original question binding.",
+  "existing": "Native concurrent Telegram polling, shared Eva2 model/conversation route, saved reply binding and optional drafts already existed.",
+  "added": [
+    "One in-flight preview and latest pending cumulative preview",
+    "Presentation wrapper preserves enqueue/finish/cancel lifecycle",
+    "Failure closes and aborts transient preview lane; successful saved reply waits only for the one active preview"
+  ],
+  "source": {
+    "integrationBase": "0eae18e09a02b65e7beee51c7b09208830eb4078",
+    "installedBottieBase": "909bff513d7d7fd653d6a7f270d9e73facce430d",
+    "candidateAdapterSha256": "5388e7fca2ab670efa33400da59126231ff6eb0ce963831868df6639e4add382",
+    "baselineAdapterSha256": "417d9cf07c6797124e9acc9fdd7d784cf7a216609517ce461395bda36160f876",
+    "unchangedHelperSha256": "06ef18434ce25ece98c3806d50af9f9b319fe0ed77e565ebeb2060b2c5ad746e",
+    "wiringPatch": "eva2/deploy/telegram-bridge/telegram-draft-wiring.patch"
+  },
+  "measurement": {
+    "baseline": {
+      "elapsedMs": 356,
+      "draftCalls": 6,
+      "rowsRead": 7,
+      "answerLength": 384,
+      "finalMessageId": "telegram:7:9401",
+      "providerRequests": 0,
+      "telegramRequests": 0,
+      "wiring": "native label wrapper",
+      "fixture": "6x64-character chunks, 50ms draft transport, identical saved reply"
+    },
+    "candidate": {
+      "elapsedMs": 94,
+      "draftCalls": 1,
+      "rowsRead": 7,
+      "answerLength": 384,
+      "finalMessageId": "telegram:7:9401",
+      "providerRequests": 0,
+      "telegramRequests": 0,
+      "wiring": "native label wrapper",
+      "fixture": "6x64-character chunks, 50ms draft transport, identical saved reply"
+    },
+    "scope": "One deterministic offline fixture, six 64-character chunks and 50ms simulated draft API delay. Not real Telegram/network/model latency."
+  },
+  "verification": {
+    "focusedTests": {
+      "passed": 5,
+      "failed": 0,
+      "path": "eva2/tests/support/telegram_draft_lane.test.mjs"
+    },
+    "independentReview": {
+      "reviewer": "/root/review_telegram_draft_lane",
+      "result": "GO after two concrete wiring/EOF findings were corrected; actual mapped route and patch reviewed."
+    }
+  },
+  "usage": {
+    "evaModelRequests": 1,
+    "telegramNetworkRequests": 0,
+    "developmentCredits": "unknown",
+    "measuredContactInputTokens": 3312,
+    "measuredContactOutputTokens": 12,
+    "contactToolCalls": 0,
+    "usageScope": "Contact model only; memory-background/helper usage excluded; failed initial recall reached no contact model."
+  },
+  "limitations": [
+    "Still waits for one in-flight draft before final saved reply, preserving presentation order.",
+    "Website greeting remains measured at5.249s; no model-speed improvement shown.",
+    "Successful live research/social overlap and owner acceptance remain open.",
+    "This is a transport correction within C1, not a newly completed product category."
+  ],
+  "installation": {
+    "target": "Existing /home/administrator/project/Bottie eva.service",
+    "state": "installed_verified",
+    "rollback": "Private pre-change adapter and telegram.js retained; apply a targeted restoration only if actually needed, no automatic rollback.",
+    "service": "eva.service",
+    "mainPid": 632710,
+    "installedAtLocal": "2026-09-30T17:45:42+02:00",
+    "restartCountForDelivery": 1,
+    "adapterSha256": "5388e7fca2ab670efa33400da59126231ff6eb0ce963831868df6639e4add382",
+    "wiringSha256": "d9c390612cbba3b82b63f87e0a40abd3f6f0783f9c8d50ccdf1e945533fa75b0",
+    "checks": [
+      "Service active after restart; no module/syntax/unhandled startup failure in10 log records",
+      "Installed source matches reviewed candidate and lifecycle wiring",
+      "Five focused route-shaped tests passed against the actual installed module with no network"
+    ],
+    "liveModelOrTelegramObservation": "Not performed for this transport-only correction; real user/network timings remain open."
+  },
+  "installedProviderProbe": {
+    "startedAt": "2026-09-30T15:55:26.246Z",
+    "completedAt": "2026-09-30T15:55:27.431Z",
+    "state": "failed",
+    "totalMs": 1185,
+    "requestCount": 1,
+    "error": "Eva2 kon haar antwoord niet afronden; de oorzaak is nog onbekend",
+    "telegramNetworkRequests": 0,
+    "cause": "Initial Hindsight recall failed with torch.AcceleratorError: CUDA error: unknown error; before contact model generation.",
+    "modelRequests": 0,
+    "cudaEvidenceWindow": "2026-09-30T15:55:24Z–15:55:31Z"
+  },
+  "memoryDependencyRecovery": {
+    "state": "healthy_cpu_fallback",
+    "checkedAt": "2026-09-30T16:08:28.691664+00:00",
+    "observed": "Windows nvidia-smi succeeds; WSL nvidia-smi crashes and a fresh container CUDA process reports no driver. Existing long-running embedding context failed with AcceleratorError. Cause of WSL GPU loss not established.",
+    "action": "Restart only existing Hindsight container once with same source/config/database; built-in hardware selection initializes local embedding model on CPU.",
+    "hindsightStartedAt": "2026-09-30T16:05:38.244447979Z",
+    "gpuAcceleration": "currently unavailable in WSL",
+    "dataChanged": false,
+    "sourceOrConfigChanged": false,
+    "greetingResume": "Same original message ID and occurred_at, after diagnosed dependency state changed; first attempt reached no contact model."
+  },
+  "recoveredProviderProbe": {
+    "startedAt": "2026-09-30T16:07:07.534Z",
+    "completedAt": "2026-09-30T16:07:17.875Z",
+    "state": "succeeded",
+    "totalMs": 10341,
+    "firstAnswerDraftMs": 9503,
+    "drafts": [
+      {
+        "kind": "receipt",
+        "atMs": 56,
+        "textLength": 13
+      },
+      {
+        "kind": "answer",
+        "atMs": 9503,
+        "textLength": 9
+      },
+      {
+        "kind": "answer",
+        "atMs": 9812,
+        "textLength": 29
+      }
+    ],
+    "requestCount": 1,
+    "answerText": "Hoi Jaap! Hoe gaat het?",
+    "responseKeys": [
+      "contract",
+      "conversation_id",
+      "evidence_memory_ids",
+      "generated_at",
+      "message_id",
+      "provider",
+      "text",
+      "text_sha256",
+      "fromId"
+    ],
+    "originalQuestionBinding": true,
+    "telegramNetworkRequests": 0,
+    "scope": "Installed native adapter and actual existing provider route; draft sink captured locally, Telegram network excluded.",
+    "modelTiming": {
+      "first_content_ms": 4653,
+      "completed_ms": 5350
+    },
+    "modelUsage": {
+      "input_tokens": 3312,
+      "output_tokens": 12,
+      "model_attempts": 1,
+      "tool_calls": 0,
+      "measurement": "measured"
+    },
+    "provider": "chatgpt-codex:gpt-6-sol",
+    "finding": "Actual greeting works again but9.503s first content/10.341s saved reply is not desired speed and not a controlled gain comparison.56ms receipt is not a content answer.",
+    "sameOriginalMessageAndTimestamp": true
+  }
+}
