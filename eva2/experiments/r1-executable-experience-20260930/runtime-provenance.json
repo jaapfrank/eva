@@ -1,0 +1,21 @@
+{
+  "versions": {
+    "pydantic-ai-slim": "2.37.0",
+    "openai": "3.6.0",
+    "httpx2": "2.12.0"
+  },
+  "sourceHashes": {
+    "adapters/model/openai_codex_provider.py": "efdaf9e083ef15ee77b16a1015b7cfb1ac5cd82538e47840404fa5a290ca843f",
+    "adapters/model/pydantic_conversation.py": "866ac19df1387fb75e495897b7891d3c6033ef918e5385c6cc31120e3d1381fc",
+    "adapters/connectors/procedure_execution.py": "9099a5f4daec4329afb2f1fca44819b3c3dd628efcc1e3ef70bf0a390b372a02"
+  },
+  "coreImage": "sha256:35eba561f26f4745b7995ae849c9341c441361a74106326308781e7e3ffc7a69",
+  "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+  "requestedWorkModel": "gpt-6-astra",
+  "requestedWorkReasoning": "medium",
+  "requestedContactModel": "gpt-6-sol",
+  "requestedContactReasoning": "none",
+  "providerRoute": "existing subscription/access lease, no new API key or account",
+  "modelWeightRevision": "not exposed by existing provider; aliases frozen, underlying weight revision unknown",
+  "checkedAt": "2026-09-30T19:27:37.906046+00:00"
+}

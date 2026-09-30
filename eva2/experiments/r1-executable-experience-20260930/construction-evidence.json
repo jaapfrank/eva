@@ -1,0 +1,265 @@
+{
+  "generations": [
+    {
+      "model": "gpt-6-astra",
+      "reasoning": "medium",
+      "seconds": 72.3733168420149,
+      "requests": 1,
+      "inputTokens": 724,
+      "outputTokens": 2314,
+      "cachedInputTokens": 0,
+      "providerEndpoint": "https://chatgpt.com/backend-api/codex/responses"
+    },
+    {
+      "model": "gpt-6-astra",
+      "reasoning": "medium",
+      "seconds": 73.5178086059168,
+      "requests": 1,
+      "inputTokens": 1621,
+      "outputTokens": 2264,
+      "cachedInputTokens": 0,
+      "providerEndpoint": "https://chatgpt.com/backend-api/codex/responses"
+    }
+  ],
+  "cumulative": {
+    "inputTokens": 2345,
+    "outputTokens": 4578,
+    "requests": 2
+  },
+  "firstDevelopment": {
+    "kind": "development_validation_not_heldout",
+    "cases": [
+      {
+        "case": "reserve",
+        "passed": false,
+        "seconds": 0.9471082480158657,
+        "sourceSha256": "cb28cdbcc089a9352252cde5d8b161ad93b73f5cd6d98722a9fc2273e9478a04",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "6cdb8e52a5bfd0ac1b45ad79b64fda46ea9addbf8f89305a00a6ec332f923a32"
+      },
+      {
+        "case": "capacity",
+        "passed": true,
+        "seconds": 0.8783279890194535,
+        "sourceSha256": "cb28cdbcc089a9352252cde5d8b161ad93b73f5cd6d98722a9fc2273e9478a04",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "d6ade3fb58052ed00c98fb7a95837c8137981926649f060a109ea51e2c4e3895"
+      },
+      {
+        "case": "move_then_reserve",
+        "passed": false,
+        "seconds": 0.8935888310661539,
+        "sourceSha256": "cb28cdbcc089a9352252cde5d8b161ad93b73f5cd6d98722a9fc2273e9478a04",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "6e1d4fcc5627667ebdf07bd8b0cba9ca67773466fa806f59efb8115ca40261d3"
+      },
+      {
+        "case": "release",
+        "passed": false,
+        "seconds": 0.8467366989934817,
+        "sourceSha256": "cb28cdbcc089a9352252cde5d8b161ad93b73f5cd6d98722a9fc2273e9478a04",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "f9a4f7037bbe844df225d7e6b69e42802bd9c61a9badcda699970ae651000da9"
+      },
+      {
+        "case": "stale",
+        "passed": true,
+        "seconds": 0.8346741219284013,
+        "sourceSha256": "cb28cdbcc089a9352252cde5d8b161ad93b73f5cd6d98722a9fc2273e9478a04",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "6cda6c114ccd5e3e1a3a77705cd6062167a898a1fe552afb5febf3f03155dda4"
+      },
+      {
+        "case": "unauthorized",
+        "passed": true,
+        "seconds": 0.8776031059678644,
+        "sourceSha256": "cb28cdbcc089a9352252cde5d8b161ad93b73f5cd6d98722a9fc2273e9478a04",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "266602d7681e08f764068465d55a4ee3843dd8aa6bcf4def1eddd9bda8208f49"
+      },
+      {
+        "case": "stopped",
+        "passed": true,
+        "seconds": 0.877941767917946,
+        "sourceSha256": "cb28cdbcc089a9352252cde5d8b161ad93b73f5cd6d98722a9fc2273e9478a04",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "1a1b7a3ca50d044d1de9528449474e0eeca76738cc8782b51297e718ca378e27"
+      },
+      {
+        "case": "version_change",
+        "passed": true,
+        "seconds": 0.891093272017315,
+        "sourceSha256": "cb28cdbcc089a9352252cde5d8b161ad93b73f5cd6d98722a9fc2273e9478a04",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "80a2534c11232535413de5e7b907bd20371f65a17bc931fd946d7e38c21eb4e1"
+      }
+    ],
+    "allPassed": false,
+    "modelCalls": 0
+  },
+  "revisedBeforeValidatorCorrection": {
+    "kind": "development_validation_not_heldout",
+    "cases": [
+      {
+        "case": "reserve",
+        "passed": true,
+        "seconds": 0.9527943460270762,
+        "sourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "e03902b97dc190a28f2e6db860ec3708478ab8e16b8a0aa290958849fecd6a65"
+      },
+      {
+        "case": "capacity",
+        "passed": true,
+        "seconds": 0.9105463739251718,
+        "sourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "47a268ac18136a445f7868b76585b6b7fd1de4abc2d000a6c95dcd18606db366"
+      },
+      {
+        "case": "move_then_reserve",
+        "passed": false,
+        "seconds": 0.9474359300220385,
+        "sourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "b8e144336a9c5ab81380eb3eede7ebd97ba336bf16d69d61b8c252be18581307"
+      },
+      {
+        "case": "release",
+        "passed": false,
+        "seconds": 0.860895675024949,
+        "sourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "22017a369a5d004c827e3123123257efac5e75bb5894269a54f04072de9c3915"
+      },
+      {
+        "case": "stale",
+        "passed": true,
+        "seconds": 0.9532480129273608,
+        "sourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "af3c523fc31f70e0150bd152e0b884d819e3daa05117fa068ca17bd1f332dea4"
+      },
+      {
+        "case": "unauthorized",
+        "passed": true,
+        "seconds": 0.911453484906815,
+        "sourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "a0dfdeeb0d7dffe405ff8992166bcd4d285a7ebdb527b7130a704fbd4a5279bb"
+      },
+      {
+        "case": "stopped",
+        "passed": true,
+        "seconds": 0.9474963069660589,
+        "sourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "f034597b1fc00a36b95ce60496d9712f81fa8ab0424bbb2cf5c058127453cb1e"
+      },
+      {
+        "case": "version_change",
+        "passed": true,
+        "seconds": 0.9547491070115939,
+        "sourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "7f0ae9fc83aa235b6f972f711cbd8363f59336d7fd9db84e5ee04bc76d05b2bb"
+      }
+    ],
+    "allPassed": false,
+    "modelCalls": 0
+  },
+  "revisedFinalDevelopment": {
+    "kind": "development_validation_not_heldout",
+    "cases": [
+      {
+        "case": "reserve",
+        "passed": true,
+        "seconds": 1.0277959309751168,
+        "sourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "e03902b97dc190a28f2e6db860ec3708478ab8e16b8a0aa290958849fecd6a65"
+      },
+      {
+        "case": "capacity",
+        "passed": true,
+        "seconds": 1.0091280980268493,
+        "sourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "47a268ac18136a445f7868b76585b6b7fd1de4abc2d000a6c95dcd18606db366"
+      },
+      {
+        "case": "move_then_reserve",
+        "passed": true,
+        "seconds": 1.0812809569761157,
+        "sourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "ca3918fedcfbd225c74a8b24deb431d286025770b2de0e62fe68e32d8612438b"
+      },
+      {
+        "case": "release",
+        "passed": true,
+        "seconds": 1.0456473920494318,
+        "sourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "f9e3081a681c4557769b91f24ea319b7deabe6e940e0214efb39a3ebbaf8f88c"
+      },
+      {
+        "case": "stale",
+        "passed": true,
+        "seconds": 1.0128471580101177,
+        "sourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "af3c523fc31f70e0150bd152e0b884d819e3daa05117fa068ca17bd1f332dea4"
+      },
+      {
+        "case": "unauthorized",
+        "passed": true,
+        "seconds": 1.0100510249612853,
+        "sourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "a0dfdeeb0d7dffe405ff8992166bcd4d285a7ebdb527b7130a704fbd4a5279bb"
+      },
+      {
+        "case": "stopped",
+        "passed": true,
+        "seconds": 1.0489630680531263,
+        "sourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "f034597b1fc00a36b95ce60496d9712f81fa8ab0424bbb2cf5c058127453cb1e"
+      },
+      {
+        "case": "version_change",
+        "passed": true,
+        "seconds": 1.0527968700043857,
+        "sourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+        "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "inputSha256": "7f0ae9fc83aa235b6f972f711cbd8363f59336d7fd9db84e5ee04bc76d05b2bb"
+      }
+    ],
+    "allPassed": true,
+    "modelCalls": 0
+  },
+  "corrections": [
+    "Public normalized schema and idempotency/independent delivery observation omitted in first contract; single revised synthesis with three actual development transitions.",
+    "Move/release development validator sent fields outside public endpoint schemas; validator corrected, generated predictor unchanged.",
+    "Distroless core requires Python tmpfs upload instead of mkdir/docker cp.",
+    "Offline SDK fixture corrected to one request per provider session and complete streamed text event; no real calls from those checks."
+  ],
+  "credits": "unknown; developer use separate",
+  "candidateSourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+  "scope": "Development validation only; no held-out outcome, adoption or superiority yet.",
+  "boundaryGuardsLocalCheck": {
+    "duplicateDeliveryStop": "passed",
+    "duplicateMutationStop": "passed",
+    "cachedReplayNoEffect": "passed",
+    "knownSocialLeakStop": "passed",
+    "externalRequests": 0
+  },
+  "sdkWireCheck": {
+    "sdkDeferredContinuation": "passed",
+    "rawUsagePerResponse": "passed",
+    "mockRequests": 2,
+    "externalRequests": 0,
+    "source": "Previous completed local wire_check.py stdout retained; no provider requests."
+  }
+}

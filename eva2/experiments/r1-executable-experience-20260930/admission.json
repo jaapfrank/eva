@@ -1,0 +1,11 @@
+{
+  "admittedAt": "2026-09-30T19:45:22.338031+00:00",
+  "curator": "/root/review_telegram_draft_lane",
+  "decision": "GO for bounded comparison",
+  "checks": [
+    "episode-scoped duplicate stop with harmless cached replay",
+    "completed social privacy failure surfaces before next work call/tool dispatch",
+    "candidate and hidden commitments unchanged; freeze precedes hidden release"
+  ],
+  "promotion": "Requires independent grading and complete accounting; no product superiority established"
+}

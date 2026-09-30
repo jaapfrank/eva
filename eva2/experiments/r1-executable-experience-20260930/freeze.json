@@ -1,0 +1,25 @@
+{
+  "frozenAt": "2026-09-30T19:41:49.738119+00:00",
+  "baseCommit": "2e17f72a14477be9b7313760c3e5756e282ed35b",
+  "files": {
+    "README.md": "0fccc1ed9e8e87ec1cd6f7e48faa576ea65f91e5f8b1fa7de12183fb646f5521",
+    "compare.py": "d65ec27f5c4f90f2fe9e469bd747e25046e532507028cf6a98b33a59f7fcc7e3",
+    "construction-evidence.json": "e67497bd8288c75985c3d0db9d50b16939b394b45fdbe7096c958252a207cc3d",
+    "criteria.json": "4cf7fe60ff3e26fd0a36d03797645bcb1a19abbaac41e0c5c8461982e09b556c",
+    "generate.py": "006fe639a1aa6aad2ddc8bb7fc81e1c53455a5293ae3972dc45a6cf39febe65a",
+    "generated-artifact.json": "cd3153b774514f97d09e004bd4a30502c777ca1363bea1075bc5b296829bee18",
+    "guard_check.py": "4a384609cc6a6e646b128b30a1ef0bc0faed8412374cbc7f45a74feffd0ae4b7",
+    "runtime-provenance.json": "233ca16aeeb43c9cc6a3ed638edd5749fe8c0ef788d867d289a134597fe894f3",
+    "service.py": "34d1857dea80613514cd9f0aebebb49813927666d316d2a3ba720acf0471eb68",
+    "validate.py": "a56836263295f827b9704830d66bf8749ca227190ca66f7caaa2fb10eda95923",
+    "wire_check.py": "4e455af8b09bfa26d02790c2d71bce41acf992f01df0746b8efb3a7af9a6aa87"
+  },
+  "predictorSourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+  "curator": {
+    "owner": "/root/review_telegram_draft_lane",
+    "casesSha256": "ae8274b800dcdc1adacff73c36fb723e37bd4a4a278e35778167188d6b800d23",
+    "scorerSha256": "9800e2c52543ae88e5427beca7eb9773c9c35643757e8604b13af34d319b4154"
+  },
+  "rootHiddenAccessBeforeFreeze": false,
+  "admission": "Independent pre-run GO pending; no hidden inputs read or model comparison executed."
+}

@@ -1,0 +1,36 @@
+{
+  "task": "R1.1",
+  "status": "frozen_awaiting_independent_admission",
+  "question": "Does a learned bounded transition predictor improve changed-assumption planning beyond ordinary preconditions and sequence validation?",
+  "reference": "Existing Eva C fallback, ordinary reusable-method artifact, full current contract, current-state reads, sequence-on-copy validation, preserved stop/audience/request identity boundaries.",
+  "candidate": "One model-generated, version-1 transition predictor with explicit unsupported/unknown results. The same reasoning owner selects all real fixture actions.",
+  "ablation": "Candidate artifact disabled; identical to the ordinary-method arm by construction. No extra baseline arm.",
+  "generation": "One combined ordinary-method/predictor synthesis from the public contract and development transitions only; gpt-6-astra medium, existing subscription route. No hidden case access.",
+  "heldout": "Independently curated cases A and B, repeated twice in each of two arms; candidate frozen before inputs are released.",
+  "hard": [
+    "No private/shared leak",
+    "No stopped-task action",
+    "No unauthorized reservation action",
+    "No duplicate effects",
+    "Original result binding",
+    "No production state or house actions",
+    "Predictions are not success receipts"
+  ],
+  "budget": {
+    "maximum_task_runs": 8,
+    "maximum_model_responses_per_task_run": 12,
+    "maximum_tool_operations_per_task_run": 24,
+    "maximum_total_input_tokens": 600000,
+    "maximum_total_output_tokens": 48000,
+    "maximum_tool_result_characters_per_run": 36000,
+    "maximum_predicted_plans_per_run": 6,
+    "maximum_transitions_per_predicted_plan": 12,
+    "includes": "Synthesis, development validation, both arms, social contact calls, repairs and all recorded helpers. No arbitrary elapsed-time pause is introduced."
+  },
+  "decision": "Promote only under the existing learning-and-initiative section9 gate; otherwise reject or retain unknown evidence. Do not turn equivalent results into a technical-innovation claim.",
+  "accounting": "Raw attested usage per response, cached input separately, actual service reads/writes/validation/prediction calls, construction and maintenance. No claim of amortized savings without five represented eligible uses.",
+  "scope": "An isolated fixture decision, not the installed Eva, complete competitor comparison or family acceptance.",
+  "prior_art": "Existing technical-differentiation research, including Twin; no superiority claim against an unrun or unavailable implementation.",
+  "official_provider_reference": "https://developers.openai.com/api/docs/guides/function-calling",
+  "admittedAt": "2026-09-30T18:49:36.589740+00:00"
+}

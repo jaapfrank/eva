@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-29T10:31:28.882865+00:00",
+  "lastUpdated": "2026-09-30T19:45:22.338031+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -3083,10 +3083,10 @@
           }
         ],
         "now": {
-          "title": "R1.1: gerichte vergelijking voorbereiden",
+          "title": "R1.1: afgeschermde vergelijking loopt",
           "state": "In uitvoering",
-          "owner": "Codex /root",
-          "detail": "Het volledige goal is actief. C1.1 technisch geleverd; echte Telegram- en speakerproeven blijven open. Onafhankelijk vervolg: een werkelijk andere, begrensde proef voor slimmer hergebruik bij gewijzigde aannames voorbereiden. Bestaande JSON Patch-werking wordt niet opnieuw gebouwd. Nog geen kandidaat, modelproef of extra productfunctie afgerond."
+          "owner": "Codex /root; onafhankelijke beoordelaar",
+          "detail": "Afgeschermde vergelijking gestart na onafhankelijkeGO;2gevallen×2herhalingen×2armen. Kosten bevatten beide syntheses. Geen extra productfunctie of voordeel bewezen."
         },
         "next": {
           "title": "C1: gemeten voorbereiding verbeteren en tekstgesprek afronden",
@@ -3104,7 +3104,7 @@
           "linkLabel": "Open Telegram"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-30T18:33:11.462910+00:00",
+        "reviewedAt": "2026-09-30T19:45:22.338031+00:00",
         "previousOwnerAction": {
           "title": "Lees het afgeronde zondagplan",
           "steps": [
@@ -14425,23 +14425,23 @@
               "latestEvidence": "eva2/evidence/product/r1-narrow-reference-20260929.json",
               "assignment": {
                 "owner": "/root",
-                "baseCommit": "565a8bfd",
-                "stage": "narrow_changed_assumption_design",
+                "baseCommit": "2e17f72a",
+                "stage": "frozen_heldout_comparison_running",
                 "outcome": "Determine a distinct, bounded intervention for change-aware reuse before comparing it with the existing ordinary skill route.",
                 "existing": "JSON Patch learning and different-input reuse already work; copy execution and precondition checks are not a new task model. Full learning replay is not admitted by the existing experiment envelope.",
-                "gap": "No distinct candidate or changed-assumption case has yet been established. A paused owner channel trial must not stop independent research preparation.",
+                "gap": "Held-out benefit and promotion decision not measured; development candidate is available.",
                 "files": [
-                  "existing R1 evidence and a bounded experiment manifest once a genuinely distinct candidate is established"
+                  "eva2/experiments/r1-executable-experience-20260930/"
                 ],
-                "currentAction": "Select a genuinely narrower changed-assumption intervention, then freeze baseline/candidate, independent hidden cases and complete accounting before any new inference. Do not replay the existing JSON Patch learning or weaken its checks.",
+                "currentAction": "Model-generated advisory transition predictor versus unchanged ordinary sequence-on-copy method. Initial public schema omission found and corrected before hidden inputs; one revised candidate, all construction cost retained. Independent curator owns hidden cases/scoring; no real house effects.",
                 "finish": "Existing R1.1 finish condition retained: isolated comparison with ordinary methods, including learning cost. Source preparation alone does not complete R1 or technical distinction.",
-                "estimate": "One executor; use existing source/evidence first. No new model calls in this preparation. Credit cost unknown.",
+                "estimate": "Two synthesis responses measured:2345input/4578output. Existing frozen eight-run envelope includes construction and all helpers; unknown credit cost.",
                 "activeWorkers": [
                   "/root"
                 ]
               },
-              "remaining": "Bestaande geleerde JSON Patch-code heeft al uitvoering-op-kopie en preconditiecontrole. Dezelfde semantiek nogmaals als taakmodel uitvoeren biedt geen onderscheiden kandidaat. Geen proef gestart; concrete andere interventie en gewijzigde-aannamecasus nog nodig. Dit is geen gemeten verlies of afgeronde R1.",
-              "checkedAt": "2026-09-30T18:33:11.462910+00:00"
+              "remaining": "Afgeschermde vergelijking gestart na onafhankelijkeGO;2gevallen×2herhalingen×2armen. Kosten bevatten beide syntheses. Geen extra productfunctie of voordeel bewezen.",
+              "checkedAt": "2026-09-30T19:45:22.338031+00:00"
             },
             {
               "id": "R1.2",
@@ -14452,7 +14452,8 @@
               "owner": "Codex"
             }
           ],
-          "owner": "/root"
+          "owner": "/root",
+          "reviewer": "/root/review_telegram_draft_lane"
         },
         {
           "id": "O1",

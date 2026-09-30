@@ -1,8 +1,10 @@
-## Actueel: goal actief; R1.1 wordt voorbereid — 30 september 2026
+## Actueel: R1.1-afgeschermde vergelijking gestart — 30 september 2026
 
-Er is geen projectpauze. C1.1 is technisch geleverd; C1.2 en C3 wachten uitsluitend op de gevraagde echte Telegram-/speakerwaarnemingen. Die gebruikersproeven blokkeren onafhankelijk werk niet. De bestaande lokale beeldherkenning is al geïnstalleerd en de dienst draait; voor de camera-/agendauitkomst is de bedoelde bronkeuze opnieuw gevraagd. Geen beeldmodule opnieuw bouwen.
+Het volledige goal blijft actief. C1.1 technisch geleverd; echte C1.2/C3-kanaalproeven en de bedoelde I2-camera-/agendabronkeuze blijven open en blokkeren onafhankelijk werk niet.
 
-Codex /root bereidt nu R1.1 voor: één werkelijk onderscheiden ingreep voor hergebruik na een gewijzigde aanname, met de bestaande gewone vaardigheid als ongewijzigde referentie. Bestaande JSON Patch-precondities en uitvoering-op-kopie zijn geen nieuwe techniek. Eerst kandidaat, gewijzigde-aannamecasus, onafhankelijke beoordeling en volledige verbruiksregistratie vastleggen; geen volledige leerproef herhalen. Deze voorbereiding is geen afgeronde vergelijking of productfunctie en verhoogt geen productteller. Nieuwe Eva-modelcalls in deze voortzetting:0; ontwikkelcredits onbekend.
+R1.1: één geïsoleerde, geleerde overgangsvoorspeller naast de gewone werkwijze, die ook volledige controle-op-kopie heeft. Publiek contract bevat nu het benodigde toestands-/idempotentieschema. Eerste kandidaat weigerde terecht onbekende aannames; één herziening, bron daarna behouden. Alle8ontwikkelgevallen slagen via de bestaande geïsoleerde uitvoerder. SDK-vervolgroute offline geslaagd. Onafhankelijke beoordelaar beheert afgeschermde gevallen en controleert de proefgrenzen vóór uitvoering. Geen live functie toegevoegd of voordeel aangetoond; producttellers ongewijzigd.
+
+Constructie:2Astra/medium-aanvragen,2345input/4578output; drie sets ontwikkelcontroles gebruiken lokale geïsoleerde uitvoering en0modelcalls. Voorbereidingsfouten blijven in het bewijs. Creditkosten onbekend; ontwikkelverbruik apart. De afgeschermde toets omvat slechts vier toepasbare hergebruiken per herhalingsblok: geen vijf-gebruikenbesparingsclaim. [Proefcriteria](experiments/r1-executable-experience-20260930/criteria.json).
 
 ## Actueel: C1.1 technisch opgeleverd; C1.2 Telegramproef open
 
