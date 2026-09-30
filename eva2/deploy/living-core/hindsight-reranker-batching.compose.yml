@@ -1,10 +1,14 @@
 # Optional native Hindsight batching profile. Measured on the current CPU fallback
 # with the existing model/weights/precision and unchanged complete rankings.
+# Four native CPU threads improve the fixed single-query comparison; two concurrent
+# reranking calls preserve aggregate latency. The existing four-CPU allowance is unchanged.
 # GPU throughput is unmeasured; this does not alter device selection or memory scope.
 services:
   hindsight:
     environment:
       HINDSIGHT_API_RERANKER_LOCAL_BUCKET_BATCHING: "true"
       HINDSIGHT_API_RERANKER_LOCAL_BATCH_SIZE: "8"
+      OMP_NUM_THREADS: "4"
+      MKL_NUM_THREADS: "4"
     labels:
-      io.eva2.reranker-batching-profile: length-buckets-8
+      io.eva2.reranker-batching-profile: length-buckets-8-threads-4

@@ -51,3 +51,12 @@ queries and improved median reranking by 35–37%. GPU/concurrent throughput is
 unmeasured. A successful native contact after activation took 5.039 seconds to
 first content; this does not establish completion of C1 or actual Telegram
 network latency. See [measurement](../../evidence/product/c1-context-latency-20260930.json).
+
+The same overlay now sets `OMP_NUM_THREADS` and `MKL_NUM_THREADS` to four
+within the unchanged four-CPU cap. These variables affect embeddings too.
+The separate frozen full-recall comparison therefore includes embeddings and
+two concurrent API recalls: median 3350→2878ms with identical ordered facts
+and source-fact hashes in every run. A fresh native greeting took 4.084 seconds
+to first content and 5.008 seconds to saved completion. Provider timing also
+varied; these observations do not attribute all conversation gain to threads
+or establish instant response or actual Telegram transport performance.

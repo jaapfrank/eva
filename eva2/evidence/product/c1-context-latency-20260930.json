@@ -1,7 +1,7 @@
 {
   "taskId": "C1.1",
-  "state": "installed_native_batching_verified_contact_remains_slow",
-  "checkedAt": "2026-09-30T17:05:24.704896+00:00",
+  "state": "installed_scoped_c1_1_technical_condition_met",
+  "checkedAt": "2026-09-30T17:44:01.124099+00:00",
   "baseCommit": "437e6fb2",
   "existing": "Full Telegram/native contact route and installed draft lane; same shared persona, memory and contact provider.",
   "reference": {
@@ -228,9 +228,9 @@
       "profileSha256": "504b38ecdc314d37dd029b8d78aeb8a17afb455cf0d71c90112545aba5b3a5e6"
     },
     "activation": {
-      "checkedAt": "2026-09-30T17:05:24.704896+00:00",
+      "checkedAt": "2026-09-30T17:38:45.072019+00:00",
       "profile": "/home/administrator/project/Eva2/eva2/deploy/living-core/hindsight-reranker-batching.compose.yml",
-      "profileSha256": "504b38ecdc314d37dd029b8d78aeb8a17afb455cf0d71c90112545aba5b3a5e6",
+      "profileSha256": "4c10ed26751089e0bc74043ebd2bbeadc0e66890e506e2a33b78c849b6e8d8f7",
       "command": [
         "docker",
         "compose",
@@ -247,17 +247,283 @@
       ],
       "baseCompose": "/home/administrator/project/.eva2-artifacts/c1-provider-rate-limit-20260929/candidate.private.json",
       "imageId": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
-      "containerStartedAt": "2026-09-30T16:58:58.912448714Z",
+      "containerStartedAt": "2026-09-30T17:30:43.303910451Z",
       "settings": {
         "HINDSIGHT_API_RERANKER_LOCAL_BUCKET_BATCHING": "true",
-        "HINDSIGHT_API_RERANKER_LOCAL_BATCH_SIZE": "8"
+        "HINDSIGHT_API_RERANKER_LOCAL_BATCH_SIZE": "8",
+        "OMP_NUM_THREADS": "4",
+        "MKL_NUM_THREADS": "4"
       },
       "health": "healthy",
       "review": "review_telegram_draft_lane GO; activation matched and native contact succeeded",
-      "recovery": "Retained pre-change inspect and original base compose; restore only these two batching settings in Hindsight if needed, retaining all data. No rollback performed."
-    }
+      "recovery": "Prior two-thread overlay and pre-change inspect retained privately. Restore only native thread settings if needed; preserve image, all data and scope. No rollback performed.",
+      "effectiveIntraopThreads": 4,
+      "cudaAvailable": false,
+      "sourceBaseCommit": "913c08d5"
+    },
+    "previousActivations": [
+      {
+        "checkedAt": "2026-09-30T17:05:24.704896+00:00",
+        "profile": "/home/administrator/project/Eva2/eva2/deploy/living-core/hindsight-reranker-batching.compose.yml",
+        "profileSha256": "504b38ecdc314d37dd029b8d78aeb8a17afb455cf0d71c90112545aba5b3a5e6",
+        "command": [
+          "docker",
+          "compose",
+          "-p",
+          "eva2-managed-b-slot3",
+          "-f",
+          "/home/administrator/project/.eva2-artifacts/c1-provider-rate-limit-20260929/candidate.private.json",
+          "-f",
+          "/home/administrator/project/Eva2/eva2/deploy/living-core/hindsight-reranker-batching.compose.yml",
+          "up",
+          "-d",
+          "--no-deps",
+          "hindsight"
+        ],
+        "baseCompose": "/home/administrator/project/.eva2-artifacts/c1-provider-rate-limit-20260929/candidate.private.json",
+        "imageId": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+        "containerStartedAt": "2026-09-30T16:58:58.912448714Z",
+        "settings": {
+          "HINDSIGHT_API_RERANKER_LOCAL_BUCKET_BATCHING": "true",
+          "HINDSIGHT_API_RERANKER_LOCAL_BATCH_SIZE": "8"
+        },
+        "health": "healthy",
+        "review": "review_telegram_draft_lane GO; activation matched and native contact succeeded",
+        "recovery": "Retained pre-change inspect and original base compose; restore only these two batching settings in Hindsight if needed, retaining all data. No rollback performed."
+      }
+    ]
   },
   "liveContact": {
+    "state": "succeeded",
+    "startedAt": "2026-09-30T17:33:55.893Z",
+    "completedAt": "2026-09-30T17:34:00.900Z",
+    "firstNativeContentMs": 4084,
+    "nativeSavedReplyMs": 5008,
+    "initialMemoryMs": 1929,
+    "modelFirstContentMs": 1564,
+    "modelCompletedMs": 2428,
+    "usage": {
+      "input_tokens": 3121,
+      "output_tokens": 14,
+      "model_attempts": 1,
+      "tool_calls": 0
+    },
+    "originalQuestionBinding": true,
+    "telegramNetworkRequests": 0,
+    "receiptMs": 71,
+    "receiptIsContent": false,
+    "scope": "Installed native adapter and actual existing provider route; draft sink captured locally, Telegram network excluded."
+  },
+  "interpretation": "After activation the native greeting succeeded: first content5.039s, saved5.690s, versus prior9.503/10.341s. Memory3926→2246ms and model phase4653→2403ms both varied. This single before/after run does not attribute total improvement solely to batching. Controlled warm reranking comparison supports35–37% local improvement only. C1.1 faster-than-about5s finish condition is not established; owner Telegram network experience and C1.2 overlap remain open.",
+  "runtimeUsage": {
+    "toolCalls": 0,
+    "localBenchmarkProviderCalls": 0,
+    "credits": "unknown",
+    "developmentUsage": "Separate from Eva runtime; credits unknown.",
+    "fourThreadIteration": {
+      "model_attempts": 1,
+      "input_tokens": 3121,
+      "output_tokens": 14,
+      "tool_calls": 0,
+      "localComparisonProviderCalls": 0,
+      "credits": "unknown"
+    },
+    "priorTwoThreadIteration": {
+      "model_attempts": 1,
+      "input_tokens": 3120,
+      "output_tokens": 14,
+      "tool_calls": 0
+    },
+    "paidModelAttemptsThisEvidence": 2,
+    "inputTokensThisEvidence": 6241,
+    "outputTokensThisEvidence": 28,
+    "paidModelAttemptsLatestRun": 1,
+    "inputTokensLatestRun": 3121,
+    "outputTokensLatestRun": 14
+  },
+  "remainingDecision": {
+    "checkedAt": "2026-09-30T17:16:22.921766+00:00",
+    "gap": "Actual native recall still2246ms on CPU, despite native sorted batches; contact first content5.039s fails faster-than-about5s condition.",
+    "existingAlternative": "Native FlashRank0.2.10/ONNX Runtime1.20.1 is installed, but its available MiniLM is L12, while current weights are L6. No model download or replacement: availability does not establish equivalent Dutch personal recall.",
+    "officialReference": "https://github.com/PrithivirajDamodaran/FlashRank",
+    "nextHypothesis": "Current native local reranker uses2 intra-op threads inside an existing4-CPU allowance. Compare2 versus4 threads with the already selected sorted8 batching on the frozen fixture. This tests CPU underuse, not the earlier unconfirmed oversubscription hypothesis.",
+    "scope": "No models, precision, candidate pool, privacy envelope, outputs or CPU/memory resource limits changed. No provider calls.",
+    "conditions": "Faster same-model single-query latency, identical full ranking for all three frozen queries, and no worse aggregate latency for two concurrent recalls. Retain2 on loss/tie; no model/backend tour.",
+    "budget": "Two thread settings, same frozen three query pairs; one warmup and three timed runs per query and concurrent pair to distinguish noise. Isolated native process, no memory writes.",
+    "result": {
+      "checkedAt": "2026-09-30T17:20:26.722698+00:00",
+      "state": "candidate4_selected_for_review",
+      "fixtureSha256": "908fcfacf2798ff496dee2116cbd23dec860129b873d407e4e1698706cd86f6e",
+      "torchVersion": "2.10.0+cu128",
+      "candidateCount": 32,
+      "singleQuery": [
+        {
+          "queryIndex": 0,
+          "baselineMedianMs": 768.31,
+          "candidateMedianMs": 706.24,
+          "baselineRunsMs": [
+            723.302,
+            832.007,
+            768.31
+          ],
+          "candidateRunsMs": [
+            707.898,
+            706.24,
+            678.893
+          ],
+          "sameFullRanking": true,
+          "maximumScoreDifference": 0.0,
+          "baselineEffectiveCpuCores": 1.778,
+          "candidateEffectiveCpuCores": 3.085
+        },
+        {
+          "queryIndex": 1,
+          "baselineMedianMs": 828.548,
+          "candidateMedianMs": 590.931,
+          "baselineRunsMs": [
+            903.472,
+            755.8,
+            828.548
+          ],
+          "candidateRunsMs": [
+            664.049,
+            590.931,
+            533.24
+          ],
+          "sameFullRanking": true,
+          "maximumScoreDifference": 0.0,
+          "baselineEffectiveCpuCores": 1.794,
+          "candidateEffectiveCpuCores": 3.016
+        },
+        {
+          "queryIndex": 2,
+          "baselineMedianMs": 1032.485,
+          "candidateMedianMs": 574.065,
+          "baselineRunsMs": [
+            1032.485,
+            1030.398,
+            1069.383
+          ],
+          "candidateRunsMs": [
+            560.555,
+            574.065,
+            603.651
+          ],
+          "sameFullRanking": true,
+          "maximumScoreDifference": 0.0,
+          "baselineEffectiveCpuCores": 1.792,
+          "candidateEffectiveCpuCores": 3.122
+        }
+      ],
+      "concurrent": {
+        "baseline": {
+          "runsMs": [
+            1228.137,
+            1164.103,
+            1172.811
+          ],
+          "medianMs": 1172.811,
+          "effectiveCpuCores": 2.677,
+          "sameIndividualRankings": true
+        },
+        "candidate": {
+          "runsMs": [
+            1144.044,
+            1162.168,
+            1150.777
+          ],
+          "medianMs": 1150.777,
+          "effectiveCpuCores": 3.178,
+          "sameIndividualRankings": true
+        },
+        "conclusion": "Two concurrent reranking calls only; candidate median not worse here. This excludes embeddings/full recall and does not establish the predeclared full-recall condition."
+      },
+      "providerRequests": 0,
+      "limits": "Warm frozen local CPU reranking, not end-to-end proof. Current model weights/precision/batches retained; all32 positions identical."
+    },
+    "review": "Final GO for scoped optimization and C1.1 technical closure; review_telegram_draft_lane independently verified actual whole-recall fingerprints, numerical medians, current activation and native greeting/usage. Real Telegram overlap experience and full C1 remain open.",
+    "fullRecallComparison": {
+      "state": "installed_candidate_passed_complete_recall",
+      "method": "Existing authorized Hindsight read-only API, same frozen timestamp, full current owner aliases, same two fixed queries and types/budget/source-facts envelope. One warmup plus3 paired runs for each effective setting; compare selected result IDs/text fingerprints as well as total times. No new source texts leave local service.",
+      "hardConditions": "No changed scope/data/models. Complete recall candidate must preserve ordered result fingerprints for both questions and not worsen paired median. No claim of broader throughput.",
+      "baseline": {
+        "pairedMedianMs": 3350.416,
+        "pairedRunsMs": [
+          3140.763,
+          3478.067,
+          3350.416
+        ],
+        "callMediansMs": [
+          2024.656,
+          3349.756
+        ],
+        "resultCounts": [
+          26,
+          15
+        ],
+        "resultSignatures": [
+          "4101f9ad8da68c6ee31cfe2ea8f655f78ad94c66ec9ad97cf2d792fb50eb6678",
+          "f7e85c578b1a0a3b4f5d15abee8ccc8c89144a034d01ca631ee40fc6aa7a729c"
+        ],
+        "baselineSignaturesStable": true,
+        "requestConfigSha256": "781e7eb6d7eea5587c38184929602bc1968c97183728e9712ae785b873509ef5"
+      },
+      "signatureDefinition": "SHA256 of ordered result id/text/type/metadata/document_id/source_fact_ids plus source_facts map and truncation flag; excludes scores and diagnostic trace/timing. All3 baseline pairs identical.",
+      "candidate": {
+        "pairedMedianMs": 2878.383,
+        "pairedRunsMs": [
+          2878.383,
+          2985.714,
+          2836.54
+        ],
+        "callMediansMs": [
+          1877.12,
+          2877.75
+        ],
+        "resultCounts": [
+          26,
+          15
+        ],
+        "resultSignatures": [
+          "4101f9ad8da68c6ee31cfe2ea8f655f78ad94c66ec9ad97cf2d792fb50eb6678",
+          "f7e85c578b1a0a3b4f5d15abee8ccc8c89144a034d01ca631ee40fc6aa7a729c"
+        ],
+        "sameOrderedResultsAndSourceFacts": true,
+        "requestConfigSha256": "781e7eb6d7eea5587c38184929602bc1968c97183728e9712ae785b873509ef5"
+      },
+      "conclusion": "Same complete ordered facts and source-facts signatures in all3 candidate pairs. Paired median3350→2878ms,14.1% lower in this frozen actual recall route. Effective4threads confirmed; no provider calls. No broad concurrency claim."
+    },
+    "state": "installed_scoped_condition_met_review_go",
+    "interpretation": "New installed native greeting first content4.084s/saved5.008s, versus prior5.039/5.690s. Both memory1929vs2246ms and model1564vs2403ms varied; do not attribute all gain to CPU threads. Controlled complete paired recall supports14.1% local improvement with identical complete facts/source facts. This is not instant response, a network Telegram measurement, general speed guarantee, or full C1 completion.",
+    "configurationHashes": {
+      "currentSourceSha256": "4c10ed26751089e0bc74043ebd2bbeadc0e66890e506e2a33b78c849b6e8d8f7",
+      "activationReceiptSha256": "4c10ed26751089e0bc74043ebd2bbeadc0e66890e506e2a33b78c849b6e8d8f7",
+      "earlyPreActivationCheckSha256": "16cccfa3d31cefff5cc01f525fbabd83e5750e0735269e974e27c8ed2f7be251",
+      "explanation": "The early check preceded correction of a comment from concurrent recalls to concurrent reranking calls. Service parameters did not change. Compose activation ran after that correction; current activation receipt and source hashes match. No extra reinstall."
+    }
+  },
+  "afterFourThreadsLiveContact": {
+    "state": "succeeded",
+    "startedAt": "2026-09-30T17:33:55.893Z",
+    "completedAt": "2026-09-30T17:34:00.900Z",
+    "firstNativeContentMs": 4084,
+    "nativeSavedReplyMs": 5008,
+    "initialMemoryMs": 1929,
+    "modelFirstContentMs": 1564,
+    "modelCompletedMs": 2428,
+    "usage": {
+      "input_tokens": 3121,
+      "output_tokens": 14,
+      "model_attempts": 1,
+      "tool_calls": 0
+    },
+    "originalQuestionBinding": true,
+    "telegramNetworkRequests": 0,
+    "receiptMs": 71,
+    "receiptIsContent": false,
+    "scope": "Installed native adapter and actual existing provider route; draft sink captured locally, Telegram network excluded."
+  },
+  "priorTwoThreadLiveContact": {
     "state": "succeeded",
     "startedAt": "2026-09-30T17:00:02.795Z",
     "completedAt": "2026-09-30T17:00:08.485Z",
@@ -280,14 +546,12 @@
     "receiptMs": 42,
     "receiptIsContent": false
   },
-  "interpretation": "After activation the native greeting succeeded: first content5.039s, saved5.690s, versus prior9.503/10.341s. Memory3926→2246ms and model phase4653→2403ms both varied. This single before/after run does not attribute total improvement solely to batching. Controlled warm reranking comparison supports35–37% local improvement only. C1.1 faster-than-about5s finish condition is not established; owner Telegram network experience and C1.2 overlap remain open.",
-  "runtimeUsage": {
-    "paidModelAttemptsThisDelivery": 1,
-    "inputTokens": 3120,
-    "outputTokens": 14,
-    "toolCalls": 0,
-    "localBenchmarkProviderCalls": 0,
-    "credits": "unknown",
-    "developmentUsage": "Separate from Eva runtime; credits unknown."
+  "smallTaskClosure": {
+    "id": "C1.1",
+    "doneWhenUnchanged": "Eenvoudig hallo sneller dan de huidige circa5s; inhoudelijke antwoordtijd en verbruik vastgelegd.",
+    "status": "technically_done",
+    "basis": "This installed measured run first content4.084s, saved5.008s and recorded usage. Independent GO; no general consistency/instant claim.",
+    "ownerAcceptance": "not established by this local transport capture",
+    "remaining": "C1.2 owner Telegram overlap trial, broader C1 and natural near-instant contact are not established."
   }
 }
