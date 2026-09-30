@@ -1,3 +1,9 @@
+## Actueel: goal actief; R1.1 wordt voorbereid — 30 september 2026
+
+Er is geen projectpauze. C1.1 is technisch geleverd; C1.2 en C3 wachten uitsluitend op de gevraagde echte Telegram-/speakerwaarnemingen. Die gebruikersproeven blokkeren onafhankelijk werk niet. De bestaande lokale beeldherkenning is al geïnstalleerd en de dienst draait; voor de camera-/agendauitkomst is de bedoelde bronkeuze opnieuw gevraagd. Geen beeldmodule opnieuw bouwen.
+
+Codex /root bereidt nu R1.1 voor: één werkelijk onderscheiden ingreep voor hergebruik na een gewijzigde aanname, met de bestaande gewone vaardigheid als ongewijzigde referentie. Bestaande JSON Patch-precondities en uitvoering-op-kopie zijn geen nieuwe techniek. Eerst kandidaat, gewijzigde-aannamecasus, onafhankelijke beoordeling en volledige verbruiksregistratie vastleggen; geen volledige leerproef herhalen. Deze voorbereiding is geen afgeronde vergelijking of productfunctie en verhoogt geen productteller. Nieuwe Eva-modelcalls in deze voortzetting:0; ontwikkelcredits onbekend.
+
 ## Actueel: C1.1 technisch opgeleverd; C1.2 Telegramproef open
 
 Het volledige app-goal blijft actief. C1.1 is technisch afgerond op zijn bestaande kleine eindvoorwaarde: nieuwe native begroeting eerste inhoud4,084s, volledig opgeslagen5,008s;1modelaanvraag3121input/14output/0tools. Onafhankelijke review GO, geïnstalleerde dienst gezond. Dit is geen instantreactie, algemene snelheidszekerheid of gemeten Telegramnetwerktijd. De eigenaarproef voor een tussenvraag tijdens onderzoek is gevraagd; C1.2 en hoofdopdrachtC1 blijven open. Geen grote productcategorie extra afgevinkt. [Bewijs](evidence/product/c1-context-latency-20260930.json).

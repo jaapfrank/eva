@@ -3083,10 +3083,10 @@
           }
         ],
         "now": {
-          "title": "C1/C3: actuele kanaalproeven gevraagd",
-          "state": "Wacht op gebruikersproef",
-          "owner": "Jaap; Codex bewaakt technisch vervolg",
-          "detail": "C1.1 technisch opgeleverd. Telegramvolgorde en woonkamerspeaker gevraagd te proberen. Native speakerterugmelding is al aangesloten; bron/runtime en beide bindings gecontroleerd, geen nieuwe codefout gevonden. Readiness is geen bewijs van hoorbare terugmelding."
+          "title": "R1.1: gerichte vergelijking voorbereiden",
+          "state": "In uitvoering",
+          "owner": "Codex /root",
+          "detail": "Het volledige goal is actief. C1.1 technisch geleverd; echte Telegram- en speakerproeven blijven open. Onafhankelijk vervolg: een werkelijk andere, begrensde proef voor slimmer hergebruik bij gewijzigde aannames voorbereiden. Bestaande JSON Patch-werking wordt niet opnieuw gebouwd. Nog geen kandidaat, modelproef of extra productfunctie afgerond."
         },
         "next": {
           "title": "C1: gemeten voorbereiding verbeteren en tekstgesprek afronden",
@@ -3104,7 +3104,7 @@
           "linkLabel": "Open Telegram"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-30T18:11:31.122539+00:00",
+        "reviewedAt": "2026-09-30T18:33:11.462910+00:00",
         "previousOwnerAction": {
           "title": "Lees het afgeronde zondagplan",
           "steps": [
@@ -13097,7 +13097,7 @@
               "doneWhen": "Eenvoudig hallo sneller dan de huidige circa5s; inhoudelijke antwoordtijd en verbruik vastgelegd.",
               "owner": "Codex",
               "existingTimingFinding": "Existing measured greeting5.191s; model first content3.330s, memory-only0.985s. No new measurement or demonstrated new defect; no speculative memory/transport rebuild.",
-              "remaining": "C1.1 niet klaar: native eerste antwoord9,503s/opgeslagen10,341s, één modelaanvraag3312input/12output, nul tools. Snelle ontvangst56ms is geen inhoudelijk antwoord. Transportcorrectie geïnstalleerd; CPU-geheugenfallback werkt maar WSL-GPU blijft weg.",
+              "remaining": "Technische kleine eindvoorwaarde voltooid met eerste inhoud4,084s en volledig5,008s. Geen instant- of algemene snelheidsclaim. Actuele Telegramgebruikerservaring en C1.2-overlap blijven apart open.",
               "assignment": {
                 "owner": "/root",
                 "baseCommit": "913c08d5",
@@ -14399,7 +14399,7 @@
           ],
           "outcome": "Uitvoerbare ervaring vergelijken",
           "effort": "M research",
-          "status": "planned",
+          "status": "in_progress",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Ordinary procedure reuse is the comparison baseline; task-model concept has prior art and no Eva implementation evidence.",
@@ -14412,27 +14412,36 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": null,
+          "activeWorker": "/root",
           "dashboardComponent": "projects",
           "remainingTasks": [
             {
               "id": "R1.1",
               "title": "Ervaringsmodel begrensd vergelijken",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "onderzoek",
               "doneWhen": "Eén passende geïsoleerde vergelijking met gewone bestaande werkwijzen, inclusief leerverbruik.",
-              "owner": "Codex",
+              "owner": "Codex /root",
               "latestEvidence": "eva2/evidence/product/r1-narrow-reference-20260929.json",
               "assignment": {
-                "baseCommit": "724e0c57",
-                "outcome": "Check the existing reference against the frozen R1 envelope before spending runtime tokens.",
+                "owner": "/root",
+                "baseCommit": "565a8bfd",
+                "stage": "narrow_changed_assumption_design",
+                "outcome": "Determine a distinct, bounded intervention for change-aware reuse before comparing it with the existing ordinary skill route.",
+                "existing": "JSON Patch learning and different-input reuse already work; copy execution and precondition checks are not a new task model. Full learning replay is not admitted by the existing experiment envelope.",
+                "gap": "No distinct candidate or changed-assumption case has yet been established. A paused owner channel trial must not stop independent research preparation.",
                 "files": [
-                  "eva2/evidence/product/r1-existing-reference-admission-20260929.json"
+                  "existing R1 evidence and a bounded experiment manifest once a genuinely distinct candidate is established"
                 ],
-                "estimate": "Bounded source/evidence comparison, zero model calls; credits unknown.",
-                "doneWhen": "Replay admissibility decided from recorded counts; do not claim comparison or R1 completed."
+                "currentAction": "Select a genuinely narrower changed-assumption intervention, then freeze baseline/candidate, independent hidden cases and complete accounting before any new inference. Do not replay the existing JSON Patch learning or weaken its checks.",
+                "finish": "Existing R1.1 finish condition retained: isolated comparison with ordinary methods, including learning cost. Source preparation alone does not complete R1 or technical distinction.",
+                "estimate": "One executor; use existing source/evidence first. No new model calls in this preparation. Credit cost unknown.",
+                "activeWorkers": [
+                  "/root"
+                ]
               },
-              "remaining": "Bestaande geleerde JSON Patch-code heeft al uitvoering-op-kopie en preconditiecontrole. Dezelfde semantiek nogmaals als taakmodel uitvoeren biedt geen onderscheiden kandidaat. Geen proef gestart; concrete andere interventie en gewijzigde-aannamecasus nog nodig. Dit is geen gemeten verlies of afgeronde R1."
+              "remaining": "Bestaande geleerde JSON Patch-code heeft al uitvoering-op-kopie en preconditiecontrole. Dezelfde semantiek nogmaals als taakmodel uitvoeren biedt geen onderscheiden kandidaat. Geen proef gestart; concrete andere interventie en gewijzigde-aannamecasus nog nodig. Dit is geen gemeten verlies of afgeronde R1.",
+              "checkedAt": "2026-09-30T18:33:11.462910+00:00"
             },
             {
               "id": "R1.2",
@@ -14442,7 +14451,8 @@
               "doneWhen": "Aantoonbare winst behouden of kandidaat afwijzen; geen verplichte nieuwe techniek.",
               "owner": "Codex"
             }
-          ]
+          ],
+          "owner": "/root"
         },
         {
           "id": "O1",
