@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-29T22:08:14.116346+00:00",
+        "checkedAt": "2026-09-30T14:06:47.502031+00:00",
         "deliveries": [
+          {
+            "title": "Documentproject werkelijk de volgende dag zelfstandig afgerond",
+            "date": "30 september",
+            "state": "installed",
+            "result": "Werkelijk volgende dag autonoom gestart15:00 en afgerond15:01:29. Concept behouden; zondagplan155woorden/3activiteiten/maximaal8euro opgeslagen en eenmaal op privéwebsite teruggekomen. Onafhankelijke review GO; eigenaaracceptatie apart.",
+            "remaining": "Eigenaaracceptatie en algemene/T3-projectbreedte blijven open; L2.1 technisch klaar.",
+            "source": "eva2/evidence/product/l2-next-day-completed-20260930.json"
+          },
           {
             "title": "Herhaalde herstelpakketcontrole versneld",
             "date": "29 september",
@@ -3051,27 +3059,28 @@
           }
         ],
         "now": {
-          "title": "Uitvoering wacht op toegang en concrete keuzes",
-          "state": "Geblokkeerd",
-          "owner": "Geen actieve uitvoerder",
-          "detail": "Gespreksproeven wachten op providerbeschikbaarheid. Camera-/agendakeuze en behandeling van offline browserdienst bij herstel zijn gevraagd. Native vergelijkingsconfiguratie is voorbereid; geen benchmark of bouwproces actief. Volledig goal blijft onaf."
+          "title": "L2.1 technisch afgerond: volgende-dagdocument",
+          "state": "Afgerond",
+          "owner": "Codex /root",
+          "detail": "Werkelijk volgende dag autonoom gestart15:00 en afgerond15:01:29. Concept behouden; zondagplan155woorden/3activiteiten/maximaal8euro opgeslagen en eenmaal op privéwebsite teruggekomen. Onafhankelijke review GO; eigenaaracceptatie apart."
         },
         "next": {
-          "title": "Hervatten op beantwoorde afhankelijkheid",
-          "detail": "Na bronkeuze I2 aansluiten; na herstelkeuze O2.3 afmaken; na herstelde providertoegang C1 meten. Bestaande geplande vervolgstap blijft 30 september15:00 Nederlandse tijd; niet handmatig vervroegen."
+          "title": "C1: inhoudelijk contact versnellen",
+          "detail": "Begroeting werkt maar duurt5,249s; geen snelheidswinst. Resterende oorzaak gericht vaststellen. Telegram-overlap en fysieke stem blijven afzonderlijk open."
         },
         "ownerAction": {
-          "title": "Kies camera en afvalagenda",
+          "title": "Lees het afgeronde zondagplan",
           "steps": [
-            "Camera: G5 garage deur, G5 tuin of G4 Doorbell Pro?",
-            "Agenda: Afvalwijzer Calendar of afval?"
+            "Open Praten met Eva via onderstaande link.",
+            "Lees de eenmalige terugmelding van de geplande vervolgstap; er is geen nieuwe opdracht nodig.",
+            "Bekijk het document via Opgeslagen opdrachten of de resultaatlink."
           ],
-          "expected": "De bestaande beeld-/agendaroute op de bedoelde bronnen richten; geen nieuwe connector nodig.",
-          "url": "",
-          "linkLabel": "Beantwoord de twee keuzes in deze chat"
+          "expected": "Een zondagplan met3activiteiten en maximaal8euro aan voorgestelde materialen. Geef desgewenst je oordeel; acceptatie is nog open.",
+          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
+          "linkLabel": "Open Praten met Eva"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-29T22:08:14.116346+00:00"
+        "reviewedAt": "2026-09-30T14:06:47.502031+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -13048,12 +13057,12 @@
             {
               "id": "C1.1",
               "title": "Begroeting versnellen",
-              "status": "blocked",
+              "status": "in_progress",
               "kind": "verbeteren",
               "doneWhen": "Eenvoudig hallo sneller dan de huidige circa5s; inhoudelijke antwoordtijd en verbruik vastgelegd.",
               "owner": "Codex",
               "existingTimingFinding": "Existing measured greeting5.191s; model first content3.330s, memory-only0.985s. No new measurement or demonstrated new defect; no speculative memory/transport rebuild.",
-              "remaining": "Bestaande meting verklaart vijf seconden deels door modelroute3,330s en geheugen circa1s. Geen nieuwe concrete vermijdbare wachttijd gevonden. Geen ongewijzigde modelproef of eerder afgewezen geheugenparallelisatie herhalen.",
+              "remaining": "Geïnstalleerde begroeting slaagt nu: eerste tekst4,349s, opgeslagen antwoord5,249s; één modelaanvraag4537input/14output, geen tools. Geen snelheidswinst. Vermijdbare oorzaak gericht vaststellen, geen ongewijzigde herhaalproef.",
               "assignment": {
                 "owner": "/root",
                 "baseCommit": "6db2229fc4a0f948883116bbd78b35c7fc945f33",
@@ -13067,13 +13076,12 @@
                 ],
                 "finish": "Demonstrated reduction in actual content latency without bypassing shared memory/persona; independent focused review and installed result. Current Telegram overlap remains separate C1.2.",
                 "estimate": "Use retained timings and current source/config first; new provider calls only for a concrete changed hypothesis. Credits unknown.",
-                "stage": "live_provider_refusal_confirmed",
-                "currentAction": "Existing logs and account inspected; HTTP429 remains unresolved, weekly window100%. No active model probe.",
+                "stage": "measured_contact_delay_remains",
+                "currentAction": "Use current successful receipt and existing source to isolate avoidable delay; no speculative memory cache or repeated identical greeting.",
                 "activeWorkers": [],
                 "workers": {}
               },
-              "blocker": "Werkelijke geïnstalleerde webbegroeting krijgt nog HTTP429 vóór antwoordtekst; foutafhandeling zonder herhaling bevestigd.",
-              "latestEvidence": "eva2/evidence/product/c1-o2-current-blockers-20260929.json"
+              "latestEvidence": "eva2/evidence/product/c1-resumed-contact-20260930.json"
             },
             {
               "id": "C1.2",
@@ -13098,12 +13106,13 @@
             }
           ],
           "providerBlocker": {
-            "status": 429,
+            "status": "historical_429_not_reproduced_on_resumed_probe",
             "type": "not yet distinguished",
             "observedAt": "2026-09-29T19:21:43.918773+00:00",
             "affected": "live greeting and requested research; cannot prove latency while rejected",
             "evidence": "eva2/evidence/product/c1-update-wait-provider-429-20260929.json",
-            "accountStatus": "Same account94% used, ordinary usage permitted; HTTP429 cause remains unresolved, no new request or reset."
+            "accountStatus": "Same account94% used, ordinary usage permitted; HTTP429 cause remains unresolved, no new request or reset.",
+            "currentEvidence": "eva2/evidence/product/c1-resumed-contact-20260930.json"
           },
           "providerFailureCorrection": {
             "stage": "installed_verified_offline",
@@ -14170,12 +14179,12 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "nextAction": "Retain completed autonomous continuation and one-time return; actual multi-day use and T3-dependent breadth remain open. Do not repeat the completed six-minute case.",
+          "nextAction": "Begrensde echte volgende-daguitvoering en eenmalige privéterugmelding technisch afgerond. Algemene projectbreedte via bestaande T3-afhankelijkheid en eigenaaracceptatie blijven open; geslaagde documentproef niet herhalen.",
           "owner": "/root",
           "activeWorker": null,
           "baseCommit": "7eb72025",
           "effortNotice": "Maximaal10min beoordeling; geen modelcalls, geen bronbouw zonder aangetoond gebruikstekort.",
-          "latestEvidence": "eva2/evidence/product/l2-autonomous-weekend-20260929.json",
+          "latestEvidence": "eva2/evidence/product/l2-next-day-completed-20260930.json",
           "assignment": {
             "outcome": "Een nieuw klein documentproject na procesonderbreking zelfstandig afronden met bewaarde correctie.",
             "scope": "Existing project route plus bounded dashboard result-queue fix: adapters/api/dashboard_work_return_client.py and tests/api/test_dashboard_work_return_client.py.",
@@ -14196,12 +14205,11 @@
             {
               "id": "L2.1",
               "title": "Project na onderbreking zelfstandig vervolgen",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "praktijk",
               "doneWhen": "Bewaard resultaat en correctie leiden zonder ontwikkelaarhervatting tot de volgende uitvoerstap.",
               "owner": "Codex",
-              "latestEvidence": "eva2/evidence/product/l2-next-day-20260929.json",
-              "remaining": "Echte vervolgstap opgeslagen voor 30 september 15:00 Nederlandse tijd. Checkpoint scheduled, nog geen uitvoer-ID. Werkelijke uitvoering/resultaat en onafhankelijke beoordeling na dat tijdstip open.",
+              "latestEvidence": "eva2/evidence/product/l2-next-day-completed-20260930.json",
               "assignment": {
                 "baseCommit": "500bc8ea",
                 "owner": "Codex",
@@ -14217,8 +14225,10 @@
                   "Exactly one result returned to private website"
                 ],
                 "estimate": "Eén planningsvraag, één bestaande begrensde uitvoerstap; geen herhaling. Credits onbekend.",
-                "stage": "scheduled_waiting_until_due"
-              }
+                "stage": "installed_existing_route_verified"
+              },
+              "completedAt": "2026-09-30T14:06:47.502031+00:00",
+              "result": "Werkelijk volgende dag autonoom gestart15:00 en afgerond15:01:29. Concept behouden; zondagplan155woorden/3activiteiten/maximaal8euro opgeslagen en eenmaal op privéwebsite teruggekomen. Onafhankelijke review GO; eigenaaracceptatie apart."
             },
             {
               "id": "L2.2",

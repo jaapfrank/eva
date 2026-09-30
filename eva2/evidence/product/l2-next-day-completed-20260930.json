@@ -1,0 +1,81 @@
+{
+  "checkedAt": "2026-09-30T14:00:51.755939+00:00",
+  "baseCommit": "8e6c0c5e0f5699903305b77cb81b5bfb9b44dc10",
+  "status": "installed_real_next_day_continuation_and_private_return",
+  "taskId": "L2.1",
+  "priorCriteria": "eva2/evidence/product/l2-next-day-20260929.json",
+  "scheduleId": "scheduled-work:33333333-3333-3333-8333-333333333333:a3bb02b27222d848a85669f8e582a5ef0862cdbd8b6627b934bf7e5ef12553c9",
+  "dueAt": "2026-09-30T13:00:00Z",
+  "workId": "work:eva-chat:3a0d3f9e-2921-59d4-8ce9-cededb78f354",
+  "execution": {
+    "createdAt": "2026-09-30T13:00:00+00:00",
+    "startedAt": "2026-09-30T13:00:00+00:00",
+    "completedAt": "2026-09-30T13:01:29+00:00",
+    "state": "succeeded",
+    "claims": 1,
+    "schedulerPhase": "dispatched",
+    "schedulerRetries": 0,
+    "manualResume": false,
+    "syntheticClock": false
+  },
+  "documents": {
+    "originalSha256": "ca40cff3c9783de4761cd14e7d1148488f3260329bca95de1de1c43303d34fcb",
+    "originalUnchanged": true,
+    "finalSha256": "c654a25ac0447d236c81f50570291e26c7b86378ea6e2cbcae48bf1770ae462e",
+    "finalWords": 155,
+    "verifiedContent": "Sunday; exactly three numbered activities; 3+5=8 euro maximum material budget; under180 words. Budget ceilings, not verified retail prices.",
+    "resultFile": "eva2/evidence/product/l2-weekend-resultaat-20260930.md",
+    "verification": "Read real native filesystem-provider volume; compare original SHA with retained29September evidence. No replacement of data."
+  },
+  "return": {
+    "threadId": "private-work-return:b05cc8b249a30763f449aafb0750f77108a36ede6d577d44da2c0f8ae80e371f:work:eva-chat:3a0d3f9e-2921-59d4-8ce9-cededb78f354",
+    "operationId": "5507cacd07e6c378a18125b460eb7b1a5f9bbf2ec35393c7e02d31cef736a5ef",
+    "phase": "acknowledged",
+    "revision": 2,
+    "events": [
+      {
+        "event_type": "PRIVATE_WORK_RETURN_CLAIMED",
+        "operation_id": "5507cacd07e6c378a18125b460eb7b1a5f9bbf2ec35393c7e02d31cef736a5ef",
+        "occurred_at": "2026-09-30T13:57:26+00:00"
+      },
+      {
+        "event_type": "PRIVATE_WORK_RETURN_ACKNOWLEDGED",
+        "operation_id": "5507cacd07e6c378a18125b460eb7b1a5f9bbf2ec35393c7e02d31cef736a5ef",
+        "occurred_at": "2026-09-30T13:57:26+00:00"
+      }
+    ],
+    "uiRoute": "http://localhost:44711/internal/v1/dashboard/conversation",
+    "visiblyRendered": true,
+    "copiesAfterReloadHistoryLoaded": 1,
+    "ownerAccepted": false
+  },
+  "runtimeUsage": {
+    "contract": "DelegatedWorkUsage/v1",
+    "tool_calls": 7,
+    "measurement": "partial",
+    "input_tokens": 88424,
+    "total_tokens": 89620,
+    "output_tokens": 1196,
+    "schema_version": 1,
+    "cost_usd_micros": null,
+    "completed_model_responses": 8
+  },
+  "observationUsage": {
+    "newConversationRequests": 0,
+    "newWorkRequests": 0,
+    "creditCost": null
+  },
+  "limitations": [
+    "One real next-day document continuation does not prove general multi-day project performance or superiority.",
+    "T3-dependent browser-project breadth and owner acceptance remain open; do not mark the full projects category complete.",
+    "Partial token accounting, not a complete cost measurement. Eight completed model responses and seven tools are expensive for this small document task.",
+    "No new product code or installation required for this existing scheduled functionality.",
+    "Temporary website unavailability after WSL/service startup resolved when the existing local-owner service became available; no product rollback or task rerun."
+  ],
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/l2-next-day-20260929",
+  "review": {
+    "reviewer": "/root/review_l2_next_day",
+    "status": "GO for L2.1 technical completion; full L2 and owner acceptance remain open",
+    "reviewedAt": "2026-09-30T14:06:47.502031+00:00"
+  }
+}

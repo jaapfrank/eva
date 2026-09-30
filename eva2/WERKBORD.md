@@ -1,3 +1,13 @@
+## Laatste oplevering: L2.1 technisch afgerond — 30 september2026
+
+Eva startte de gisteren geplande vervolgstap vandaag zelfstandig om15:00 en rondde die om15:01:29 af. Het concept bleef behouden; nieuw zondagplan155woorden/3activiteiten/maximaal8euro aan budgetplafonds. Eén terugmelding op de privéwebsite, ook na verversen. Onafhankelijke review GO. [Resultaat](evidence/product/l2-weekend-resultaat-20260930.md) · [Bewijs](evidence/product/l2-next-day-completed-20260930.json). Geen nieuwe installatie of heruitvoering nodig. L2.1 klaar; algemene/T3-projectbreedte en eigenaaracceptatie open. Geen volledige projectcategorie afgevinkt.
+
+Gedeeltelijk Eva-runtimeverbruik van deze taak:88424input,1196output,8modelantwoorden,7tools; creditkosten onbekend. Ontwikkelverbruik apart en niet gemeten. Volgende actieve gebruikersuitkomst C1: begroeting slaagt na accountwijziging, maar5,249s is geen winst;4537input/14output/1aanvraag. Geen ongewijzigde herhaalproef. [Meting](evidence/product/c1-resumed-contact-20260930.json).
+
+## Actueel: hervat op C1 na gewijzigde providertoegang — 30 september 2026
+
+Eigenaar zegt ga door. Accountcontrole nu1% weekverbruik en gebruik toegestaan. Eén nieuwe echte websitebegroeting volgt wegens deze gewijzigde omstandigheid; geen identieke429-herhaalronde. Uitvoerder `/root`; geen benchmarkwerk. Het app-goal staat nog geblokkeerd; beschikbare goaltool kan alleen pauzeren, blokkeren of afronden, niet reactiveren. De uitvoering is op eigenaaropdracht hervat.
+
 ## Actueel: uitvoering geblokkeerd op toegang en keuzes — 30 september 2026
 
 Geen bouw- of proefproces actief. Providerweigering blokkeert C1 en echte vergelijkingen. Concrete camera-/agendakeuzes staan open. Voor O2.3 is gevraagd of herstel met een bewaarde maar uitgeschakelde offline browserdienst mag starten, of die dienst eerst beschikbaar moet zijn; niets verwijderd of uitgeschakeld. Native vergelijkingsinstellingen zijn voorbereid, geen nieuwe productcategorie afgerond. Geplande projectstap blijft30september15:00 Nederlandse tijd. Goal blijft inhoudelijk volledig en onaf; geen nieuwe automatische voorbereidingsronde zolang deze afhankelijkheden ongewijzigd zijn.

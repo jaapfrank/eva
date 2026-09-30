@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-09-30T14:06:47.502031+00:00",
+  "status": "installed_greeting_succeeds_no_latency_improvement",
+  "method": "One actual website greeting after account availability changed; existing installed route, not a new installation.",
+  "firstTextSeconds": 4.349,
+  "savedReplySeconds": 5.249,
+  "provider": "chatgpt-codex:gpt-6-sol",
+  "messageId": "dashboard:50c0b6de-6473-4745-855a-8a07e94e1b99",
+  "modelTiming": {
+    "completed_ms": 3510,
+    "first_content_ms": 2685
+  },
+  "runtimeUsage": {
+    "tool_calls": 0,
+    "measurement": "measured",
+    "input_tokens": 4537,
+    "output_tokens": 14,
+    "model_attempts": 1
+  },
+  "initialMemoryMs": 1109,
+  "baselineSeconds": 5.191,
+  "conclusion": "Provider no longer rejected this request;5.249s saved reply does not improve5.191s baseline. C1.1 remains open. One model attempt, no tools; no standard greeting script or new memory bypass.",
+  "limitations": [
+    "One sample with different permitted context; not a controlled speed comparison.",
+    "Model timing includes adapter preparation.",
+    "Initial recall and concurrent context timings cannot all be summed.",
+    "Credit costs unknown; excludes automatic memory processing and development."
+  ],
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/c1-contact-resumed-20260930"
+}
