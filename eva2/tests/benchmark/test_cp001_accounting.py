@@ -307,3 +307,90 @@ def test_native_mock_unbound_context_is_rejected_before_sdk():
             asyncio.run(probe.native_completion(model="openai/gpt-6-sol", reasoning_effort="none"))
     finally:
         probe.CONTEXT.reset(token)
+
+
+def test_native_sample_stop_cancels_only_its_pending_helper_across_threads():
+    import asyncio
+    from concurrent.futures import ThreadPoolExecutor
+    import p1_agentzero_native_probe as probe
+    limits = {"providerAttempts": 2, "providerInputTokens": 100, "providerOutputTokens": 100}
+    first = accounting.ProviderSampleLedger("first-stop", limits, probe.PROFILES)
+    second = accounting.ProviderSampleLedger("second-live", limits, probe.PROFILES)
+    mocks = [probe.MockSDK(first, block=True), probe.MockSDK(second, block=True)]
+    def run(mock):
+        async def pending():
+            token = probe.ROLE.set("helper")
+            try:
+                await mock.completion(model="openai/gpt-6-astra", reasoning_effort="medium")
+            except asyncio.CancelledError:
+                return "cancelled"
+            finally:
+                probe.ROLE.reset(token)
+        return asyncio.run(pending())
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        futures = [pool.submit(run, m) for m in mocks]
+        try:
+            assert all(m.started["helper"].wait(5) for m in mocks)
+            first.stop_async_attempts("stop first only")
+            assert futures[0].result(timeout=5) == "cancelled"
+            assert not futures[1].done() and not second.report()["stop_requested"]
+            assert first.report()["active_async_attempts"] == 0
+            assert second.report()["active_async_attempts"] == 1
+            assert first.report()["stop"] == "stop first only"
+            assert first.report()["total_usage"]["output_tokens"] is None
+        finally:
+            first.stop_async_attempts()
+            second.stop_async_attempts()
+        assert futures[1].result(timeout=5) == "cancelled"
+
+
+def test_native_sample_stop_between_admission_and_task_binding_is_preserved():
+    import asyncio
+    ledger = accounting.ProviderSampleLedger("stop-race", SAMPLE_LIMITS, SAMPLE_PROFILES)
+    attempt = ledger.begin("helper", "work", "medium")
+    ledger.stop_async_attempts("requested before task binding")
+    async def bind_after_stop():
+        try:
+            ledger.track_async_attempt(attempt)
+            await asyncio.Future()
+        except asyncio.CancelledError:
+            ledger.incomplete(attempt, "cancelled_usage_unknown")
+    asyncio.run(bind_after_stop())
+    report = ledger.report()
+    assert report["active_async_attempts"] == 0 and not report["cancel_errors"]
+    assert report["stop"] == "requested before task binding"
+    assert report["total_usage"]["input_tokens"] is None
+    with pytest.raises(accounting.SampleStopped):
+        ledger.begin("helper", "work", "medium")
+
+
+def test_native_sample_closed_loop_is_unknown_cancellation_not_quiescence():
+    import asyncio
+    ledger = accounting.ProviderSampleLedger("closed-loop", SAMPLE_LIMITS, SAMPLE_PROFILES)
+    attempt = ledger.begin("helper", "work", "medium")
+    async def bind_without_settlement():
+        ledger.track_async_attempt(attempt)
+    asyncio.run(bind_without_settlement())
+    ledger.stop_async_attempts()
+    report = ledger.report()
+    assert report["cancel_errors"] and report["active_async_attempts"] == 1
+    assert not report["complete"] and report["total_usage"]["output_tokens"] is None
+
+
+def test_native_sample_settled_attempt_cannot_cancel_later_work_in_same_task():
+    import asyncio
+    first = accounting.ProviderSampleLedger("settles-before-stop-callback", SAMPLE_LIMITS, SAMPLE_PROFILES)
+    second = accounting.ProviderSampleLedger("later-work", SAMPLE_LIMITS, SAMPLE_PROFILES)
+    async def continue_after_settlement():
+        earlier = first.begin("helper", "work", "medium")
+        first.track_async_attempt(earlier)
+        first.stop_async_attempts()
+        first.finish(earlier, {"input_tokens": 2, "output_tokens": 1, "total_tokens": 3})
+        later = second.begin("helper", "work", "medium")
+        second.track_async_attempt(later)
+        await asyncio.sleep(0)  # Execute the queued stop for the already settled call.
+        second.finish(later, {"input_tokens": 3, "output_tokens": 1, "total_tokens": 4})
+    asyncio.run(continue_after_settlement())
+    assert first.report()["complete"] and first.report()["stop_requested"]
+    assert second.report()["complete"] and not second.report()["stop_requested"]
+    assert second.report()["total_usage"]["total_tokens"] == 4

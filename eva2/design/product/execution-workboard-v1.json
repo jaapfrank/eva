@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-30T18:11:31.122539+00:00",
         "deliveries": [
           {
+            "title": "Vergelijkingsproef kan los gestarte helper stoppen",
+            "date": "30 september",
+            "state": "tested",
+            "result": "Een werkelijke native helper bleef in de geïsoleerde mockproef na de hoofdtaak actief. Samplegebonden stoppen beëindigt uitsluitend de eigen nog lopende SDK-aanvraag; timingcorrectie onafhankelijk beoordeeld.",
+            "remaining": "Geen nieuwe productfunctie, geen volledige vergelijking/P1.1. Echte provider-/tool-/syncdekking en toegang blijven open. Eva-installatie ongewijzigd.",
+            "source": "eva2/evidence/product/p1-agentzero-detached-stop-20260930.json"
+          },
+          {
             "title": "Native vergelijkingsaansluiting gecontroleerd",
             "date": "30 september",
             "state": "tested",
@@ -3091,14 +3099,14 @@
           }
         ],
         "now": {
-          "title": "P1.1: gedeeltelijke vergelijkingsaansluiting opgeleverd",
+          "title": "P1.1: stop voor los achtergrondwerk aangesloten",
           "state": "Gedeeltelijk opgeleverd",
           "owner": "Codex /root",
-          "detail": "Echte Agent Zero-lus en helperroute met nagebootst SDK-transport gecontroleerd; onafhankelijke review akkoord. Nul externe modelcalls. Geen nieuwe Eva-functie of volledige P1.1. Live toegang en volledige dekking blijven open; geen proefproces actief."
+          "detail": "Nieuwe native mockproef toont lopende helper na hoofdtaakstop; samplebinding beëindigt die aanvraag.12gerichte controles en review akkoord. Geen externe modelcalls of extra afgeronde Eva-functie. P1.1 blijft open; geen proefproces actief."
         },
         "next": {
-          "title": "Resterende dagelijkse proeven en native toegang",
-          "detail": "Echte Telegram-/speakeruitkomst en camera-/agendakeuze blijven gevraagd. Native OAuth/toegang en alle helperroutes zijn nog niet gelijkwaardig aangesloten. Volgende uitvoering nog niet gestart; geen ongewijzigde herhaalproef."
+          "title": "P1.1: resterende native toegang en dekking",
+          "detail": "Werkelijke authenticatie, sync-/tool-/providerdekking en gelijkwaardige toegang van de deelnemers blijven open. Volgende uitvoering nog niet gestart. Echte Telegram-/speakerproeven en camera-/agendakeuze blijven apart gevraagd."
         },
         "ownerAction": {
           "title": "Telegram: tussenvraag tijdens onderzoek",
@@ -3112,7 +3120,7 @@
           "linkLabel": "Open Telegram"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-30T21:13:28.732946+00:00",
+        "reviewedAt": "2026-09-30T21:33:23.309456+00:00",
         "previousOwnerAction": {
           "title": "Lees het afgeronde zondagplan",
           "steps": [
@@ -14679,26 +14687,27 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Native agentlus en helper-/metingsaansluiting geïsoleerd gecontroleerd, review akkoord; geen externe modelcalls. Volledige helperdekking, OAuth, echte providermeting/annulering en gelijkwaardige toegang van alle deelnemers blijven open.",
-              "latestEvidence": "eva2/evidence/product/p1-agentzero-native-binding-20260930.json",
+              "remaining": "Native agentlus/helpermeting en samplegebonden stoppen van los gestarte SDK-hulpaanvragen geïsoleerd gecontroleerd; review akkoord. Volledige sync-/tool-/providerdekking, OAuth, echte providermeting/annulering en gelijkwaardige toegang van alle deelnemers blijven open.",
+              "latestEvidence": "eva2/evidence/product/p1-agentzero-detached-stop-20260930.json",
               "assignment": {
-                "baseCommit": "d991ab1c",
+                "baseCommit": "59b42ce6",
                 "owner": "/root",
                 "files": [
-                  "eva2/benchmark/inspect_ai_v1/Agent Zero native binding and existing participant manifest"
+                  "eva2/benchmark/inspect_ai_v1/cp001_accounting.py",
+                  "eva2/benchmark/inspect_ai_v1/p1_agentzero_native_probe.py",
+                  "eva2/tests/benchmark/test_cp001_accounting.py"
                 ],
-                "existing": "Persisted presets, selection, exact request shaping and isolated Python environment are already available. Existing Inspect runner and sample readback contracts retained.",
-                "gap": "Full native Agent/context loop and helper usage/cancellation have not run through the comparison binding.",
-                "endCondition": "A disposable native participant actually runs foreground/helper calls with observed binding and controlled cancellation; false/unknown coverage stays visible and prevents live admission.",
-                "estimate": "One focused native integration in the existing isolated environment; mocked provider first, zero external model calls before admission, credits unknown.",
-                "stage": "native_binding_checkpoint_delivered",
-                "activeWorkers": [],
-                "outcome": "Bind the pinned native Agent Zero foreground and utility routes to the existing sample accounting/control boundary, without changing upstream orchestration or production runtime.",
-                "finish": "A disposable native participant actually runs foreground/helper calls with observed binding and controlled cancellation; false/unknown coverage stays visible and prevents live admission."
+                "existing": "Native full monologue/helper model routing and registered child stop have offline evidence. Existing ledger and ContextVar task identity retained.",
+                "gap": "Native detached memory/naming helper is not covered by parent registered-child kill; sample accounting/control must own pending SDK work.",
+                "outcome": "Stop pending detached native helper calls belonging to one comparison sample, without cancelling another sample or changing native product orchestration.",
+                "finish": "One new native full-monologue/detached-helper stop fixture verifies original sample cancellation and unknown usage, plus focused concurrent ownership/stop checks. Previous passed cases retained; no full replay or inference. Live/cloud/tool/sync coverage remains unadmitted.",
+                "estimate": "One focused binding in the existing isolated environment; only newly affected native case, zero external model calls; credit cost unknown.",
+                "stage": "detached_sdk_stop_checkpoint_delivered",
+                "activeWorkers": []
               },
               "blocker": "Native vergelijking nog niet uitvoerbaar: bestaande cp001_native/preflight en cp001_accounting geven live_enabled=false. Requestinstelling bewijst geen samplebrede begrenzing inclusief geheugen/helpers/retries, native toegang of annulering. Geen gate omzetten of modelrun starten op basis van alleen de nieuwe preset.",
               "nextImplementation": "Bind disposable native participant and existing per-sample measurement/control contracts before any comparison run; do not create a second benchmark framework.",
-              "checkedAt": "2026-09-30T21:13:28.732946+00:00"
+              "checkedAt": "2026-09-30T21:33:23.309456+00:00"
             },
             {
               "id": "P1.2",

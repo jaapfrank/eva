@@ -59,11 +59,12 @@ class MockSDK:
         model = request["model"].split("/")[-1]
         effort = request.get("reasoning_effort") or request.get("reasoning", {}).get("effort") or request.get("extra_body", {}).get("reasoning", {}).get("effort")
         attempt = self.ledger.begin(role, model, effort)
+        self.ledger.track_async_attempt(attempt)
         self.requests.append({"role": role, "model": model, "effort": effort,
             "mode": mode, "stream": bool(request.get("stream"))})
         self.started[role].set()
         try:
-            if self.block:
+            if self.block is True or (isinstance(self.block, set) and role in self.block):
                 await asyncio.Future()
             text = (json.dumps({"thoughts": [], "tool_name": "response", "tool_args": {"text": "Native protocol fixture completed."}})
                 if role == "foreground_contact" else "[]")
@@ -135,6 +136,7 @@ def main():
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--embedding-cache", required=True, type=Path)
     parser.add_argument("--dockerized", required=True, choices=["1"])
+    parser.add_argument("--case", choices=["previous", "detached-stop"], default="previous")
     args = parser.parse_args()
     source, output = args.source.resolve(), args.output.resolve()
     if subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=source, text=True).strip() != PIN:
@@ -196,54 +198,79 @@ def main():
     transport.aresponses, transport.acompletion = native_responses, native_completion
     results = []
     try:
-        ledger = ProviderSampleLedger("native-mock-complete", limits, PROFILES)
-        mock = MockSDK(ledger)
-        MOCKS["eva-p1-native-complete"] = mock
-        context = agent.AgentContext(config=config, id="eva-p1-native-complete")
-        # Import the actual active loop extension classes together before work.
-        from helpers import extension
-        for point in ("monologue_start", "message_loop_start", "system_prompt",
-            "message_loop_prompts_after", "before_main_llm_call", "response_stream_chunk",
-            "reasoning_stream_chunk", "response_stream_end", "reasoning_stream_end",
-            "message_loop_result", "message_loop_end", "monologue_end"):
-            extension._get_extension_classes(point, agent=context.agent0)
-        task = context.communicate(agent.UserMessage("Complete the offline native protocol check. No external tools."))
-        response = task.result_sync(timeout=limits["wallSeconds"])
-        assert response == "Native protocol fixture completed.", str(response)
-        # Reuse a naturally occurring memory helper if the native loop invoked it.
-        # Do not add a third call or disable helpers to fit the declared envelope.
-        if not mock.started["helper"].is_set():
-            utility = context.run_task(context.agent0.call_utility_model, "Offline utility check", "Return a short fixture result")
-            assert utility.result_sync(timeout=limits["wallSeconds"]) == "[]"
-        assert mock.settled["helper"].wait(limits["wallSeconds"])
-        assert ledger.report()["complete"] and ledger.report()["provider_attempts"] == 2
-        results.append({"case": "native_foreground_and_utility", "response": response,
-            "helperObserved": True, "ledger": ledger.report(), "requests": mock.requests})
-        ledger = ProviderSampleLedger("native-mock-cancel", limits, PROFILES)
-        mock = MockSDK(ledger, block=True)
-        MOCKS["eva-p1-native-cancel"] = mock
-        context = agent.AgentContext(config=config, id="eva-p1-native-cancel")
-        from langchain_core.messages import HumanMessage
-        # Native direct call control fixture; this does not prove full-monologue
-        # or unregistered memory-background cancellation.
-        context.run_task(context.agent0.call_chat_model,
-            [HumanMessage(content="Wait in the offline control fixture")])
-        assert mock.started["foreground_contact"].wait(limits["wallSeconds"])
-        child = DeferredTask(thread_name="P1OwnedUtility")
-        context.task.add_child_task(child, terminate_thread=True)
-        child.start_task(context.agent0.call_utility_model, "Offline helper", "Wait with the parent", background=True)
-        assert mock.started["helper"].wait(limits["wallSeconds"])
-        context.kill_process()
-        assert mock.cancelled["foreground_contact"].wait(limits["wallSeconds"])
-        assert mock.cancelled["helper"].wait(limits["wallSeconds"])
-        assert not context.is_running() and not child.is_alive()
-        assert ledger.report()["total_usage"]["output_tokens"] is None
-        results.append({"case": "native_direct_call_parent_and_registered_utility_cancellation",
-            "quiescentLocalSDK": True, "ledger": ledger.report(), "requests": mock.requests})
-        report = {"sourceCommit": PIN, "scope": "Native full foreground monologue with helpers, and separate direct-call/registered-child stop fixture; SDK is mocked and writable usr/tmp/logs paths are redirected",
+        if args.case == "previous":
+            ledger = ProviderSampleLedger("native-mock-complete", limits, PROFILES)
+            mock = MockSDK(ledger)
+            MOCKS["eva-p1-native-complete"] = mock
+            context = agent.AgentContext(config=config, id="eva-p1-native-complete")
+            # Import the actual active loop extension classes together before work.
+            from helpers import extension
+            for point in ("monologue_start", "message_loop_start", "system_prompt",
+                "message_loop_prompts_after", "before_main_llm_call", "response_stream_chunk",
+                "reasoning_stream_chunk", "response_stream_end", "reasoning_stream_end",
+                "message_loop_result", "message_loop_end", "monologue_end"):
+                extension._get_extension_classes(point, agent=context.agent0)
+            task = context.communicate(agent.UserMessage("Complete the offline native protocol check. No external tools."))
+            response = task.result_sync(timeout=limits["wallSeconds"])
+            assert response == "Native protocol fixture completed.", str(response)
+            # Reuse a naturally occurring memory helper if the native loop invoked it.
+            # Do not add a third call or disable helpers to fit the declared envelope.
+            if not mock.started["helper"].is_set():
+                utility = context.run_task(context.agent0.call_utility_model, "Offline utility check", "Return a short fixture result")
+                assert utility.result_sync(timeout=limits["wallSeconds"]) == "[]"
+            assert mock.settled["helper"].wait(limits["wallSeconds"])
+            assert ledger.report()["complete"] and ledger.report()["provider_attempts"] == 2
+            results.append({"case": "native_foreground_and_utility", "response": response,
+                "helperObserved": True, "ledger": ledger.report(), "requests": mock.requests})
+            ledger = ProviderSampleLedger("native-mock-cancel", limits, PROFILES)
+            mock = MockSDK(ledger, block=True)
+            MOCKS["eva-p1-native-cancel"] = mock
+            context = agent.AgentContext(config=config, id="eva-p1-native-cancel")
+            from langchain_core.messages import HumanMessage
+            # Native direct call control fixture; this does not prove full-monologue
+            # or unregistered memory-background cancellation.
+            context.run_task(context.agent0.call_chat_model,
+                [HumanMessage(content="Wait in the offline control fixture")])
+            assert mock.started["foreground_contact"].wait(limits["wallSeconds"])
+            child = DeferredTask(thread_name="P1OwnedUtility")
+            context.task.add_child_task(child, terminate_thread=True)
+            child.start_task(context.agent0.call_utility_model, "Offline helper", "Wait with the parent", background=True)
+            assert mock.started["helper"].wait(limits["wallSeconds"])
+            context.kill_process()
+            assert mock.cancelled["foreground_contact"].wait(limits["wallSeconds"])
+            assert mock.cancelled["helper"].wait(limits["wallSeconds"])
+            assert not context.is_running() and not child.is_alive()
+            assert ledger.report()["total_usage"]["output_tokens"] is None
+            results.append({"case": "native_direct_call_parent_and_registered_utility_cancellation",
+                "quiescentLocalSDK": True, "ledger": ledger.report(), "requests": mock.requests})
+        else:
+            ledger = ProviderSampleLedger("native-mock-detached-stop", limits, PROFILES)
+            mock = MockSDK(ledger, block={"helper"})
+            MOCKS["eva-p1-native-detached"] = mock
+            context = agent.AgentContext(config=config, id="eva-p1-native-detached")
+            task = context.communicate(agent.UserMessage("Complete the offline protocol fixture. No external tools."))
+            response = task.result_sync(timeout=limits["wallSeconds"])
+            assert response == "Native protocol fixture completed."
+            assert mock.started["helper"].wait(limits["wallSeconds"])
+            # Native monologue_end spawned this helper outside parent.children.
+            context.kill_process()
+            before_stop = ledger.report()
+            assert not mock.cancelled["helper"].is_set()
+            assert before_stop["active_async_attempts"] == 1
+            ledger.stop_async_attempts()
+            assert mock.cancelled["helper"].wait(limits["wallSeconds"])
+            after_stop = ledger.report()
+            assert after_stop["active_async_attempts"] == 0
+            assert not after_stop["cancel_errors"]
+            assert after_stop["total_usage"]["output_tokens"] is None
+            results.append({"case": "native_detached_helper_sample_stop",
+                "response": response, "nativeParentKillLeftHelperPending": True,
+                "beforeSampleStop": before_stop, "ledger": after_stop,
+                "quiescentBoundLocalSDK": True, "requests": mock.requests})
+        report = {"sourceCommit": PIN, "scope": "Only listed native fixture cases ran; SDK is mocked and writable usr/tmp/logs paths are redirected",
             "externalProviderRequests": 0, "mockProviderAttempts": sum(x["ledger"]["provider_attempts"] for x in results), "productionEffects": 0,
             "nativeRuntimeMode": "Co-located --dockerized=1 in a network-isolated host process, not a full Docker installation",
-            "cases": results, "liveAdmission": False,
+            "cases": results, "selectedCase": args.case, "liveAdmission": False,
             "remaining": ["Native OAuth login and actual provider usage", "All unregistered/background/embedding provider paths and tool dispatch coverage", "Real provider cancellation and full sample budget admission", "Other participants and complete P1 access"],
             "sourceFiles": {name: hashlib.sha256((source/name).read_bytes()).hexdigest() for name in ["agent.py", "models.py", "helpers/defer.py", "helpers/litellm_transport.py"]}}
         (output / "native-report.json").write_text(json.dumps(report, indent=2)+"\n")

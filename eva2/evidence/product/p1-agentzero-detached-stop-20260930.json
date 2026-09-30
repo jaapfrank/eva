@@ -1,0 +1,189 @@
+{
+  "task": "P1.1",
+  "disposition": "GO for bounded offline detached SDK stop binding; live admission and P1.1 remain open",
+  "nativeReport": {
+    "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+    "scope": "Only listed native fixture cases ran; SDK is mocked and writable usr/tmp/logs paths are redirected",
+    "externalProviderRequests": 0,
+    "mockProviderAttempts": 2,
+    "productionEffects": 0,
+    "nativeRuntimeMode": "Co-located --dockerized=1 in a network-isolated host process, not a full Docker installation",
+    "cases": [
+      {
+        "case": "native_detached_helper_sample_stop",
+        "response": "Native protocol fixture completed.",
+        "nativeParentKillLeftHelperPending": true,
+        "beforeSampleStop": {
+          "sample_id": "native-mock-detached-stop",
+          "provider_attempts": 2,
+          "complete": false,
+          "stop": "declared sample attempts reached",
+          "stop_requested": false,
+          "active_async_attempts": 1,
+          "cancel_errors": [],
+          "total_usage": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "total_tokens": null
+          },
+          "known_partial_usage": {
+            "input_tokens": 21,
+            "output_tokens": 9,
+            "total_tokens": 30
+          },
+          "attempts": [
+            {
+              "id": 0,
+              "sample_id": "native-mock-detached-stop",
+              "role": "foreground_contact",
+              "model": "gpt-6-sol",
+              "reasoning_effort": "none",
+              "status": "completed",
+              "usage": {
+                "input_tokens": 21,
+                "output_tokens": 9,
+                "total_tokens": 30
+              }
+            },
+            {
+              "id": 1,
+              "sample_id": "native-mock-detached-stop",
+              "role": "helper",
+              "model": "gpt-6-astra",
+              "reasoning_effort": "medium",
+              "status": "pending",
+              "usage": null
+            }
+          ],
+          "coverage": "Only native entrypoints actually bound by the caller",
+          "live_admission": false
+        },
+        "ledger": {
+          "sample_id": "native-mock-detached-stop",
+          "provider_attempts": 2,
+          "complete": false,
+          "stop": "declared sample attempts reached",
+          "stop_requested": true,
+          "active_async_attempts": 0,
+          "cancel_errors": [],
+          "total_usage": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "total_tokens": null
+          },
+          "known_partial_usage": {
+            "input_tokens": 21,
+            "output_tokens": 9,
+            "total_tokens": 30
+          },
+          "attempts": [
+            {
+              "id": 0,
+              "sample_id": "native-mock-detached-stop",
+              "role": "foreground_contact",
+              "model": "gpt-6-sol",
+              "reasoning_effort": "none",
+              "status": "completed",
+              "usage": {
+                "input_tokens": 21,
+                "output_tokens": 9,
+                "total_tokens": 30
+              }
+            },
+            {
+              "id": 1,
+              "sample_id": "native-mock-detached-stop",
+              "role": "helper",
+              "model": "gpt-6-astra",
+              "reasoning_effort": "medium",
+              "status": "cancelled_usage_unknown",
+              "usage": null
+            }
+          ],
+          "coverage": "Only native entrypoints actually bound by the caller",
+          "live_admission": false
+        },
+        "quiescentBoundLocalSDK": true,
+        "requests": [
+          {
+            "role": "foreground_contact",
+            "model": "gpt-6-sol",
+            "effort": "none",
+            "mode": "responses",
+            "stream": true
+          },
+          {
+            "role": "helper",
+            "model": "gpt-6-astra",
+            "effort": "medium",
+            "mode": "responses",
+            "stream": false
+          }
+        ]
+      }
+    ],
+    "selectedCase": "detached-stop",
+    "liveAdmission": false,
+    "remaining": [
+      "Native OAuth login and actual provider usage",
+      "All unregistered/background/embedding provider paths and tool dispatch coverage",
+      "Real provider cancellation and full sample budget admission",
+      "Other participants and complete P1 access"
+    ],
+    "sourceFiles": {
+      "agent.py": "4914f5c70a9257f7042367b7cc785439870ed5a222e9e053d417a25b21f6cffe",
+      "models.py": "4b9d9c530d9516710a6deb3956361a135386a0802d6240f05c0bd536314a94ef",
+      "helpers/defer.py": "04089d6059c6e9711eb4094775b3763f25830cc7c0394dec23b8d1b3db7dadd2",
+      "helpers/litellm_transport.py": "74cb8cc75f96133c66ffafd2a2a447b4585f9e08d0f85a782e48e5a5d6154b6d"
+    }
+  },
+  "reportSha256": "b484fccbbc7068c9959c0b4808456526e0be19fdac0b8a77412caa8697907b10",
+  "executedArtifacts": {
+    "cp001_accounting.py": "3dd16a9d842656e22380a5d9ede305a5958b4ffe818a0b0ed904271a306420d9",
+    "p1_agentzero_native_probe.py": "23024b9b6326195689dc7f84ef6b10d83df1d6213f190b44e1db4a7925f3d8f3"
+  },
+  "previousNativeEvidence": "eva2/evidence/product/p1-agentzero-native-binding-20260930.json",
+  "previousCasesRerun": false,
+  "externalProviderRequests": 0,
+  "productionRuntimeChanges": 0,
+  "runtimeInferenceTokens": 0,
+  "creditCost": null,
+  "liveAdmission": false,
+  "checkedAt": "2026-09-30T21:33:23.309456+00:00",
+  "currentArtifacts": {
+    "cp001_accounting.py": "30c491d135840efad9f10d4cf84e916ab8cb2f6a4947f6903722bf7855d3775a",
+    "p1_agentzero_native_probe.py": "23024b9b6326195689dc7f84ef6b10d83df1d6213f190b44e1db4a7925f3d8f3"
+  },
+  "focusedChecks": {
+    "passed": 12,
+    "deselected": 52,
+    "seconds": 0.09,
+    "command": "pytest -q eva2/tests/benchmark/test_cp001_accounting.py -k \"native_sample or native_mock\"",
+    "newCoverage": [
+      "Independent SDK sample ownership across event-loop threads",
+      "Requested stop between admission and task binding",
+      "Closed event-loop cancellation remains unknown",
+      "Queued cancellation cannot interrupt later unrelated work after SDK settlement"
+    ]
+  },
+  "reviewCorrection": {
+    "issue": "Queued callback could cancel a settled SDK task after it moved to other work.",
+    "fix": "Callback rechecks exact attempt binding and pending status under ledger lock.",
+    "nativeCaseRepeated": false,
+    "provenance": "executedArtifacts are hashes of actual native run; currentArtifacts include the later narrowly verified settlement correction."
+  },
+  "importantLimits": [
+    "Only pending async SDK tasks admitted and bound by the caller are cancelled; scheduling is not global task/cloud cancellation.",
+    "Native extra naming/helper call was refused by unchanged sample envelope; no competitor quality loss inferred.",
+    "Raw usage in this run is mocked, not real model inference/cost. Cancelled helper usage remains null.",
+    "Sync SDK, tool dispatch, actual provider cancellation, OAuth ownership and equal comparison access remain open.",
+    "Unchanged isolated native bootstrap/environment limitations are retained in previousNativeEvidence. No Eva runtime installation or source replacement."
+  ],
+  "independentReview": {
+    "reviewer": "/root/review_telegram_draft_lane",
+    "disposition": "GO",
+    "scope": "Exact pending attempt recheck and retained native evidence; no new run",
+    "nativeReplayRequired": false,
+    "remaining": "Live admission, full task/cloud quiescence and P1.1 completion remain open."
+  }
+}

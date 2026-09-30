@@ -1,12 +1,12 @@
 # EVA2 werkbord
 
-## Actueel: P1.1-aansluiting gedeeltelijk opgeleverd — 30 september 2026
+## Actueel: P1.1 — samplegebonden stop aangesloten
 
-Het volledige goal blijft actief. De echte Agent Zero-lus en helperroute lopen nu door de bestaande meting met oorspronkelijke taakbinding; een afzonderlijke lokale stopproef beëindigt de directe aanvraag en geregistreerde helper. Acht gerichte controles en gebundelde onafhankelijke review akkoord. Nul externe modelcalls; Eva-runtime ongewijzigd. [Bewijs](evidence/product/p1-agentzero-native-binding-20260930.json).
+Het volledige goal blijft actief. Alleen de nieuwe native stopproef uitgevoerd: na de echte monologue bleef een los gestarte helper aan de mock-SDK wachten. De samplebinding beëindigt nu uitsluitend de nog lopende eigen aanvraag; actieve gebonden SDK-aanvragen1→0, onbekend verbruik blijft onbekend.12gerichte controles en gebundelde review akkoord. Eerdere native proeven behouden, geen herhaling; nul externe modelcalls en geen Eva-herinstallatie. [Bewijs](evidence/product/p1-agentzero-detached-stop-20260930.json).
 
-Dit is een vergelijkingsaansluiting, geen nieuwe productfunctie of volledige P1.1. Dezelfde proefgrens wees extra helperwerk af; volledige helperdekking, OAuth, echte providermeting/annulering en de andere deelnemers blijven open. Er draait geen proefproces. Echte Telegram-/speakerproeven en de camera-/agendakeuze blijven gevraagd; ontbrekende eigenaaracceptatie is geen ontbrekende implementatie.
+Dit is vergelijkingsvoorbereiding, geen extra afgeronde Eva-functie of volledige P1.1. Werkelijke authenticatie, volledige sync-/tool-/providerdekking en vergelijkingstoegang blijven open. Er draait geen proefproces; vervolg nog niet gestart. Echte Telegram-/speakerproeven en camera-/agendakeuze blijven gevraagd.
 
-De vorige R1-ronde eindigde UNKNOWN, zonder kandidaatadoptie of extra productfunctie. [Verslag](experiments/r1-executable-experience-20260930/RESULTS.md). Geen automatische herhaling van gesloten of ongewijzigde proeven.
+De vorige R1-ronde eindigde UNKNOWN, zonder kandidaatadoptie. [Verslag](experiments/r1-executable-experience-20260930/RESULTS.md). Geen automatische herhaling van gesloten of ongewijzigde proeven.
 
 ## Eerder opgeleverd: C1.1; C1.2 Telegramproef open
 

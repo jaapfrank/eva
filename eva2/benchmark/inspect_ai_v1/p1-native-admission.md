@@ -154,3 +154,23 @@ is not a full Agent Zero Docker install. Full coverage, authentication, equal
 access and P1.1 stay open. No comparison outcome or product function is claimed.
 
 Evidence: `../../evidence/product/p1-agentzero-native-binding-20260930.json`.
+
+
+## Detached helper stop checkpoint — 30 September
+
+Only the new `--case detached-stop` ran. Prior native cases were retained.
+The actual full native monologue returned the mock foreground fixture; a detached
+native helper stayed pending after the parent kill. The existing sample ledger
+now owns admitted async SDK tasks across native threads and cancels only pending
+calls bound to that sample. Bound active SDK calls changed one to zero; cancelled
+helper usage stayed unknown. Another native helper was refused by the unchanged
+sample envelope.
+
+Twelve focused checks passed, including cross-sample isolation, admission/binding
+races, closed-loop unknown cancellation and SDK settlement before a queued stop.
+Bundled independent review accepted the correction. Executed and corrected hashes
+are distinct in the evidence; no native replay followed the narrowly tested race
+fix. This is not full task/cloud quiescence, sync/tool coverage, OAuth access or
+P1.1 completion. Zero external model requests and no production runtime change.
+
+Evidence: `../../evidence/product/p1-agentzero-detached-stop-20260930.json`.

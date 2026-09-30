@@ -7,6 +7,7 @@ interfaces cannot attest complete sample accounting or server-wide limits.
 from __future__ import annotations
 
 import argparse
+import asyncio
 import hashlib
 import json
 import threading
@@ -167,6 +168,9 @@ class ProviderSampleLedger:
         self.profiles = dict(profiles)
         self.attempts = []
         self.stopped = None
+        self.async_attempts = {}
+        self.stop_requested = False
+        self.cancel_errors = []
         self.lock = threading.RLock()
 
     def begin(self, role, model, effort):
@@ -184,11 +188,54 @@ class ProviderSampleLedger:
                 "status": "pending", "usage": None})
             return len(self.attempts) - 1
 
+    def track_async_attempt(self, attempt):
+        """Bind the admitted SDK call to its actual task, across native threads."""
+        loop, task = asyncio.get_running_loop(), asyncio.current_task()
+        if task is None:
+            raise RuntimeError("SDK attempt must belong to an asyncio task")
+        with self.lock:
+            if self.attempts[attempt]["status"] != "pending":
+                raise ValueError("Cannot track an already settled attempt")
+            self.async_attempts[attempt] = (loop, task)
+            cancel_now = self.stop_requested
+        if cancel_now:
+            self._cancel_task(attempt, loop, task)
+
+    def _cancel_task(self, attempt, loop, task):
+        def cancel_if_still_owned():
+            with self.lock:
+                # The SDK call may settle before this queued callback executes.
+                # The same task can then be doing unrelated work; leave it alone.
+                if (self.async_attempts.get(attempt) == (loop, task)
+                    and self.attempts[attempt]["status"] == "pending"
+                    and not task.done()):
+                    task.cancel()
+        try:
+            loop.call_soon_threadsafe(cancel_if_still_owned)
+        except RuntimeError as error:
+            # A closed loop is unknown cancellation, never successful quiescence.
+            with self.lock:
+                self.cancel_errors.append(str(error))
+
+    def stop_async_attempts(self, reason="comparison sample stopped"):
+        """Reject future calls and cancel only this sample's bound pending SDK tasks.
+
+        Scheduling cancellation is not proof of cloud or task quiescence. Callers
+        must observe the bound attempts settle before claiming local completion.
+        """
+        with self.lock:
+            self.stop_requested = True
+            self.stopped = self.stopped or reason
+            active = list(self.async_attempts.items())
+        for attempt, (loop, task) in active:
+            self._cancel_task(attempt, loop, task)
+
     def finish(self, attempt, usage):
         with self.lock:
             row = self.attempts[attempt]
             if row["status"] != "pending":
                 raise ValueError("Attempt already settled")
+            self.async_attempts.pop(attempt, None)
             fields = {key: count(obj(usage).get(key))
                 for key in ("input_tokens", "output_tokens", "total_tokens")}
             if None in fields.values() or fields["total_tokens"] != fields["input_tokens"] + fields["output_tokens"]:
@@ -206,7 +253,8 @@ class ProviderSampleLedger:
             row = self.attempts[attempt]
             if row["status"] == "pending":
                 row["status"] = status
-                self.stopped = "SDK attempt did not yield complete usage"
+                self.async_attempts.pop(attempt, None)
+                self.stopped = self.stopped or "SDK attempt did not yield complete usage"
 
     def report(self):
         with self.lock:
@@ -214,6 +262,9 @@ class ProviderSampleLedger:
             known = [x["usage"] for x in self.attempts if x["usage"] is not None]
             return {"sample_id": self.sample_id, "provider_attempts": len(self.attempts),
                 "complete": complete, "stop": self.stopped,
+                "stop_requested": self.stop_requested,
+                "active_async_attempts": len(self.async_attempts),
+                "cancel_errors": list(self.cancel_errors),
                 "total_usage": {key: sum(x[key] for x in known) if complete else None
                     for key in ("input_tokens", "output_tokens", "total_tokens")},
                 "known_partial_usage": {key: sum(x[key] for x in known)

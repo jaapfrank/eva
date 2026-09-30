@@ -1,6 +1,6 @@
 {
   "contract": "EvaComparisonParticipantInputs/v1",
-  "checkedAt": "2026-09-30T21:13:28.732946+00:00",
+  "checkedAt": "2026-09-30T21:33:23.309456+00:00",
   "stage": "source_pins_recorded_access_not_admitted",
   "protocol": "eva2/design/product/comparable-agent-benchmarks-v1.md#ev-003",
   "scope": "Inputs for existing Inspect runner; not results, a new runtime or a new scorer.",
@@ -122,6 +122,17 @@
         "externalProviderRequests": 0,
         "admission": "not_admitted",
         "remaining": "Native OAuth, full helper/retry/embedding/tool coverage, real provider cancellation and equal access to all participants."
+      },
+      "nativeDetachedSDKStop": {
+        "status": "verified_offline_mock",
+        "evidence": "eva2/evidence/product/p1-agentzero-detached-stop-20260930.json",
+        "review": "eva2/reviews/p1-agentzero-detached-stop-20260930.md",
+        "nativeCase": "Full monologue completes fixture; detached native helper remains pending after parent kill, then sample-bound SDK cancellation settles it.",
+        "boundActiveCallsBefore": 1,
+        "boundActiveCallsAfter": 0,
+        "externalProviderRequests": 0,
+        "admission": "not_admitted",
+        "remaining": "Sync SDK, tool dispatch, authenticated provider coverage/cancellation and equal comparison access remain open."
       }
     }
   ],
