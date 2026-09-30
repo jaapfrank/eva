@@ -1000,6 +1000,14 @@
         "checkedAt": "2026-09-30T18:11:31.122539+00:00",
         "deliveries": [
           {
+            "title": "Vergelijking: native login en Sol/Astra-modelcatalogus aangesloten",
+            "date": "30 september",
+            "state": "tested",
+            "result": "Eigen native abonnementlogin ontvangen, configuratie opgeslagen en teruggelezen. Juiste bestaande versie-instelling toont afgesproken modellen; onafhankelijke review akkoord. Geen extra Eva-modelcalls.",
+            "remaining": "Vergelijkingsvoorbereiding; geen nieuwe Eva-functie of volledige P1.1. Native uitvoerroute/dekking blijven open. Eva-installatie ongewijzigd.",
+            "source": "eva2/evidence/product/p1-agentzero-native-access-20260930.json"
+          },
+          {
             "title": "Vergelijkingsproef kan los gestarte helper stoppen",
             "date": "30 september",
             "state": "tested",
@@ -3099,14 +3107,14 @@
           }
         ],
         "now": {
-          "title": "P1.1: stop voor los achtergrondwerk aangesloten",
+          "title": "P1.1: native login en juiste modelcatalogus vastgelegd",
           "state": "Gedeeltelijk opgeleverd",
           "owner": "Codex /root",
-          "detail": "Nieuwe native mockproef toont lopende helper na hoofdtaakstop; samplebinding beëindigt die aanvraag.12gerichte controles en review akkoord. Geen externe modelcalls of extra afgeronde Eva-functie. P1.1 blijft open; geen proefproces actief."
+          "detail": "Echte login, eigen opslag, dezelfde account en native configuratieteruglezing bevestigd. Oude WSL-versie verklaart beperkt modeloverzicht; ingestelde werkelijk aanwezige desktopversie toont Sol/Astra. Review akkoord. Geen extra productfunctie, modelproef of draaiend proces; P1.1 blijft open."
         },
         "next": {
-          "title": "P1.1: resterende native toegang en dekking",
-          "detail": "Werkelijke authenticatie, sync-/tool-/providerdekking en gelijkwaardige toegang van de deelnemers blijven open. Volgende uitvoering nog niet gestart. Echte Telegram-/speakerproeven en camera-/agendakeuze blijven apart gevraagd."
+          "title": "P1.1: native uitvoerroute en volledige meting",
+          "detail": "Authenticatieblokkade opgelost. Resterend: native proxy, sync-/tool-/helper-/providerdekking en gelijkwaardige overige deelnemertoegang. Deze volgende uitvoering is nog niet gestart; fysieke Telegram-/speakerproeven en eigenaarkeuzes blijven apart open."
         },
         "ownerAction": {
           "title": "Telegram: tussenvraag tijdens onderzoek",
@@ -14687,27 +14695,26 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Native agentlus/helpermeting en samplegebonden stoppen van los gestarte SDK-hulpaanvragen geïsoleerd gecontroleerd; review akkoord. Volledige sync-/tool-/providerdekking, OAuth, echte providermeting/annulering en gelijkwaardige toegang van alle deelnemers blijven open.",
-              "latestEvidence": "eva2/evidence/product/p1-agentzero-detached-stop-20260930.json",
+              "remaining": "Native login/eigen opslag en opgeslagen configuratie onafhankelijk gecontroleerd. Juiste modelcatalogus met daadwerkelijke desktop-CLI0.159.2: Sol/Astra zichtbaar. Geen nieuwe modelproef of volledige P1.1. Native proxy, werkelijke providermeting/stop, sync-/tool-/helperdekking en toegang van overige deelnemers blijven open.",
+              "latestEvidence": "eva2/evidence/product/p1-agentzero-native-access-20260930.json",
               "assignment": {
-                "baseCommit": "59b42ce6",
+                "baseCommit": "943f2c6e",
                 "owner": "/root",
                 "files": [
-                  "eva2/benchmark/inspect_ai_v1/cp001_accounting.py",
-                  "eva2/benchmark/inspect_ai_v1/p1_agentzero_native_probe.py",
-                  "eva2/tests/benchmark/test_cp001_accounting.py"
+                  "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
+                  "eva2/evidence/product/p1-agentzero-native-access-20260930.json"
                 ],
-                "existing": "Native full monologue/helper model routing and registered child stop have offline evidence. Existing ledger and ContextVar task identity retained.",
-                "gap": "Native detached memory/naming helper is not covered by parent registered-child kill; sample accounting/control must own pending SDK work.",
-                "outcome": "Stop pending detached native helper calls belonging to one comparison sample, without cancelling another sample or changing native product orchestration.",
-                "finish": "One new native full-monologue/detached-helper stop fixture verifies original sample cancellation and unknown usage, plus focused concurrent ownership/stop checks. Previous passed cases retained; no full replay or inference. Live/cloud/tool/sync coverage remains unadmitted.",
-                "estimate": "One focused binding in the existing isolated environment; only newly affected native case, zero external model calls; credit cost unknown.",
-                "stage": "detached_sdk_stop_checkpoint_delivered",
+                "existing": "Pinned native OAuth helper supports a separate subscription device login. Native mocked execution and detached-stop evidence are retained.",
+                "gap": "Authenticated native participant access has not been established; rotating Eva/Codex credentials must not be shared.",
+                "outcome": "Resolve the actual native subscription login/readback for the isolated participant without changing Eva or enabling comparison inference.",
+                "finish": "Read native access state, use the existing device flow if needed, retain sanitized access/provenance evidence and remaining admission gaps. Actual login may require owner browser interaction.",
+                "estimate": "Reuse native OAuth functions and the existing isolated environment; no external model inference, credit cost unknown.",
+                "stage": "native_access_checkpoint_delivered",
                 "activeWorkers": []
               },
-              "blocker": "Native vergelijking nog niet uitvoerbaar: bestaande cp001_native/preflight en cp001_accounting geven live_enabled=false. Requestinstelling bewijst geen samplebrede begrenzing inclusief geheugen/helpers/retries, native toegang of annulering. Geen gate omzetten of modelrun starten op basis van alleen de nieuwe preset.",
+              "blocker": "Native toegang is nu aanwezig, maar de bestaande vergelijkingsgate blijft uit: volledige provider-, helper-, retry-, sync- en toolmeting/stop en deelnemerpariteit zijn nog niet aangetoond. Geen modelrun op basis van alleen login/catalogus.",
               "nextImplementation": "Bind disposable native participant and existing per-sample measurement/control contracts before any comparison run; do not create a second benchmark framework.",
-              "checkedAt": "2026-09-30T21:33:23.309456+00:00"
+              "checkedAt": "2026-09-30T21:59:48.151225+00:00"
             },
             {
               "id": "P1.2",

@@ -1,0 +1,123 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "task": "P1.1",
+  "checkedAt": "2026-09-30T21:59:48.151225+00:00",
+  "outcome": "Native Agent Zero subscription connection and current-client catalog configuration recorded. Comparison preparation only.",
+  "existing": "Pinned native model/loop/mock/stop evidence retained. Native OAuth helper and configuration APIs reused; no new provider or evaluator.",
+  "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+  "sourceHashes": {
+    "plugins/_oauth/helpers/codex.py": "bcc9244bc2abc852aaf65a56c796abb8ec4bf93adfd2b3fc3b665312cd1b53db",
+    "plugins/_oauth/helpers/config.py": "ca714c648533a067d8b26d69f33437eda6cffc9898f295ed6d6647e7836af5f3"
+  },
+  "nativeAuthentication": {
+    "loginCompletedByOwner": true,
+    "credentialReadback": true,
+    "ownPrivateStore": true,
+    "credentialMode": "0o600",
+    "sameAuthenticatedAccountAsEva": true,
+    "credentialsCopied": false,
+    "rawCredentialOrChallengeInRepository": false
+  },
+  "catalogReadback": {
+    "oldNativeClientVersion": "0.144.1",
+    "oldCatalogModels": [
+      "gpt-reserve",
+      "gpt-5.6-sol",
+      "gpt-5.6-terra",
+      "gpt-5.6-luna",
+      "gpt-5.5",
+      "codex-auto-review"
+    ],
+    "currentNativeClientVersion": "0.159.2",
+    "versionSource": "C:/Users/jaapf/AppData/Local/OpenAI/Codex/bin/c6fe824d725f02d7/codex.exe --version",
+    "currentCatalogModels": [
+      "gpt-6.1-sol",
+      "gpt-6-astra",
+      "gpt-6-sol",
+      "gpt-6-luna",
+      "gpt-reserve",
+      "gpt-5.6-sol",
+      "gpt-5.6-terra",
+      "gpt-5.6-luna",
+      "gpt-5.5",
+      "codex-auto-review"
+    ],
+    "requestedModelsVisible": {
+      "gpt-6-sol": true,
+      "gpt-6-astra": true
+    },
+    "interpretation": "Catalog absence with old client was not proof of request rejection. Native version field with actual installed desktop CLI version lists both selected models; inference acceptance is not tested."
+  },
+  "persistedNativeConfiguration": {
+    "checkedAt": "2026-09-30T21:52:02.478942+00:00",
+    "nativeSaveLoadVerified": true,
+    "nativeClientVersion": "0.159.2",
+    "nativeAuthReadbackVerified": true,
+    "modelCatalogConfiguredOverride": false,
+    "configurationTemplateSha256": "6cb70e4fe315fd7fa159f7b2171d41b7567908f9f73b985c7244ac1010e26f32",
+    "externalInferenceRequests": 0,
+    "externalNetworkRequests": 0,
+    "productionRuntimeChanges": 0,
+    "admission": "not_admitted"
+  },
+  "configurationTemplate": "eva2/benchmark/inspect_ai_v1/p1_agentzero_oauth.json",
+  "privateArtifacts": {
+    "directory": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/native-auth-access-v1",
+    "reports": [
+      "access-report.json",
+      "access-report-scoped.json",
+      "native-model-catalog-readback.json",
+      "native-current-client-catalog.json",
+      "persisted-native-oauth.json",
+      "account-parity.json",
+      "preparation-failure.json"
+    ],
+    "currentDriverSha256": "06b83137336022200d3e8e871f8d426d87de203d331fd2292e7af33f74044722"
+  },
+  "execution": {
+    "nativeLoginHandle": 1217,
+    "nativeLoginExitCode": 0,
+    "nativeSaveLoadHandle": 57234,
+    "nativeSaveLoadExitCode": 0,
+    "noProcessRunning": true,
+    "nativeSourceModified": false,
+    "productionRuntimeChanges": 0,
+    "comparisonInferenceStarted": false,
+    "previousNativeCasesRerun": false
+  },
+  "consumption": {
+    "externalModelInferenceRequests": 0,
+    "runtimeInferenceTokens": 0,
+    "initialDriverNativeFunctionInvocations": 41,
+    "initialDriverCounterScope": "Direct device-login/model-catalog native function invocations only; native token exchanges or refresh HTTP requests were not measured.",
+    "additionalModelCatalogReadbacks": 2,
+    "nativeHTTPRequests": null,
+    "developmentTokens": null,
+    "credits": null
+  },
+  "preparationFailure": {
+    "state": "local_preparation_failed",
+    "authRequests": 0,
+    "externalInferenceRequests": 0,
+    "failure": "Native OAuth lock path remained in source usr owned by earlier root probe; driver missing auth initialization masked report. Redirect only source usr to private writable directory; retain source and credentials unchanged.",
+    "sourceChanged": false
+  },
+  "reviewCorrections": {
+    "rawAuthErrorReporting": "Replaced upstream exception text by exception type/stage and a constant sanitized summary. Successful login not replayed.",
+    "usageCounter": "Original executed report retained; nativeFunctionCalls is scoped to direct driver calls, with unmeasured total HTTP count null."
+  },
+  "limitations": [
+    "No authenticated inference or real-provider cancellation tested.",
+    "Sync/tool/full helper/retry/embedding coverage and equal participant admission remain open.",
+    "Saved independent native plugin settings do not prove a running native OAuth proxy/agent deployment.",
+    "Network-disabled saved-config check reported a blocked LiteLLM cost-map DNS attempt with local fallback; zero external network calls does not mean zero attempted lookups.",
+    "Executed driver hash was not recorded before the reporting correction; current driver hash and raw/scoped execution reports are retained."
+  ],
+  "independentReview": {
+    "status": "GO",
+    "path": "eva2/reviews/p1-agentzero-native-access-20260930.md"
+  },
+  "productCategoryCompleted": false,
+  "P1_1Completed": false,
+  "accountReadbackCorrection": "Default lease path was absent; actual configured EVA_CONVERSATION_AUTH_FILE was used for successful account-parity readback. No credentials copied, external call or runtime change."
+}

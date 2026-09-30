@@ -133,6 +133,26 @@
         "externalProviderRequests": 0,
         "admission": "not_admitted",
         "remaining": "Sync SDK, tool dispatch, authenticated provider coverage/cancellation and equal comparison access remain open."
+      },
+      "nativeSubscriptionAccess": {
+        "status": "authenticated_native_readback_and_catalog_verified",
+        "evidence": "eva2/evidence/product/p1-agentzero-native-access-20260930.json",
+        "review": "eva2/reviews/p1-agentzero-native-access-20260930.md",
+        "configuration": "eva2/benchmark/inspect_ai_v1/p1_agentzero_oauth.json",
+        "configurationSha256": "6cb70e4fe315fd7fa159f7b2171d41b7567908f9f73b985c7244ac1010e26f32",
+        "nativeClientVersion": "0.159.2",
+        "versionSource": "C:/Users/jaapf/AppData/Local/OpenAI/Codex/bin/c6fe824d725f02d7/codex.exe --version",
+        "oldClientVersionCatalogMissingSelectedModels": "0.144.1",
+        "sameAccountAsEva": true,
+        "privateIndependentAuthStore": true,
+        "nativeSaveLoadVerified": true,
+        "selectedModelsListed": {
+          "gpt-6-sol": true,
+          "gpt-6-astra": true
+        },
+        "externalInferenceRequests": 0,
+        "admission": "not_admitted",
+        "remaining": "Real inference and provider cancellation, complete sync/tool/helper/retry/embedding coverage, running native proxy, equal admission for all participants. Prior OAuth-pending observations are historical."
       }
     }
   ],

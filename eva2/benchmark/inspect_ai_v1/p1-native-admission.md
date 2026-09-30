@@ -174,3 +174,23 @@ fix. This is not full task/cloud quiescence, sync/tool coverage, OAuth access or
 P1.1 completion. Zero external model requests and no production runtime change.
 
 Evidence: `../../evidence/product/p1-agentzero-detached-stop-20260930.json`.
+
+
+## Native subscription access checkpoint — 30 September
+
+The owner completed the pinned native device flow. Native credentials read back
+from a separate0600 Agent Zero-owned store; account-fingerprint equality confirms
+the same account as Eva without copying credentials. The default native catalog
+used installed WSL Codex CLI0.144.1 and omitted Sol/Astra. The existing native
+`codex_version` setting, bound to actual desktop CLI0.159.2, lists both selected
+models. No model was substituted and no inference request was made.
+
+Native plugin save/load and credential lookup retain that configuration in a
+network-disabled process. The credential-free template is
+`p1_agentzero_oauth.json`. Reporting corrections sanitize all auth exceptions and
+scope the driver counter to direct native function invocations; total HTTP use
+is unknown. A local lock-path preparation failure and blocked cost-map lookup
+remain visible. This is access preparation, not running-proxy proof, inference
+eligibility, full native coverage, P1.1 completion or a product function.
+
+Evidence: `../../evidence/product/p1-agentzero-native-access-20260930.json`.

@@ -1,0 +1,9 @@
+{
+  "codex": {
+    "enabled": true,
+    "auth_file_path": "",
+    "codex_version": "0.159.2",
+    "reasoning_effort": "medium",
+    "models": []
+  }
+}

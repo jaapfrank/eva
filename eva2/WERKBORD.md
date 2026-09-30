@@ -1,12 +1,21 @@
 # EVA2 werkbord
 
-## Actueel: P1.1 — samplegebonden stop aangesloten
+## Actueel: P1.1 — native login en modelcatalogus vastgelegd
 
-Het volledige goal blijft actief. Alleen de nieuwe native stopproef uitgevoerd: na de echte monologue bleef een los gestarte helper aan de mock-SDK wachten. De samplebinding beëindigt nu uitsluitend de nog lopende eigen aanvraag; actieve gebonden SDK-aanvragen1→0, onbekend verbruik blijft onbekend.12gerichte controles en gebundelde review akkoord. Eerdere native proeven behouden, geen herhaling; nul externe modelcalls en geen Eva-herinstallatie. [Bewijs](evidence/product/p1-agentzero-detached-stop-20260930.json).
+Jaap heeft de echte login voltooid. Native eigen0600opslag en dezelfde account
+teruggelezen zonder credentials te delen. Oude WSL-CLI0.144.1 gaf beperkt
+overzicht; bestaande versie-instelling met werkelijk geïnstalleerde desktop-CLI
+0.159.2 toont Sol/Astra. Configuratie via native opslag en lookup bevestigd in
+netwerkisolatie; onafhankelijke review GO. Geen model-/loginproef meer actief.
+[Bewijs](evidence/product/p1-agentzero-native-access-20260930.json).
 
-Dit is vergelijkingsvoorbereiding, geen extra afgeronde Eva-functie of volledige P1.1. Werkelijke authenticatie, volledige sync-/tool-/providerdekking en vergelijkingstoegang blijven open. Er draait geen proefproces; vervolg nog niet gestart. Echte Telegram-/speakerproeven en camera-/agendakeuze blijven gevraagd.
-
-De vorige R1-ronde eindigde UNKNOWN, zonder kandidaatadoptie. [Verslag](experiments/r1-executable-experience-20260930/RESULTS.md). Geen automatische herhaling van gesloten of ongewijzigde proeven.
+Dit is vergelijkingsvoorbereiding, geen nieuwe Eva-functie of volledige P1.1.
+Geen Eva-installatie/rollback of eerdere native proef herhaald. Verbruik:
+0extra Eva-inferentieaanvragen; directe login/catalogusfunctie-aanroepen41,
+2aanvullende catalogusteruglezingen; daadwerkelijke HTTP-aanroepen en
+ontwikkelcreditkosten onbekend. Lokale lockmapfout, standaardleasepadfout en
+geblokkeerde cost-maplookup zichtbaar behouden. Volgende uitvoering: native
+proxy en volledige sync-/tool-/helper-/providermeting; nog niet gestart.
 
 ## Eerder opgeleverd: C1.1; C1.2 Telegramproef open
 
