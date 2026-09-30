@@ -194,3 +194,18 @@ remain visible. This is access preparation, not running-proxy proof, inference
 eligibility, full native coverage, P1.1 completion or a product function.
 
 Evidence: `../../evidence/product/p1-agentzero-native-access-20260930.json`.
+
+## Native SDK/proxy checkpoint — 1 October 2026
+
+The real SDK now traverses the registered OAuth Responses route using the owned
+login, with only upstream provider HTTP mocked. Sol/none SSE output and retained
+Astra/medium nonstream output are observed. The pinned local LiteLLM catalog lacks
+the selected models and silently chooses fake streaming; the small capability
+JSON is a declared transport configuration, not a live provider observation.
+
+Partial stop cancels the model task, but does **not** close the native upstream
+before explicit fixture cleanup. The pending attempt remains unknown until that
+cleanup. Do not claim successful SDK/cloud stop, deploy the comparison based on
+this checkpoint, or count it as an Eva function. The native source is unchanged.
+Earlier monologue cases were retained rather than replayed. No external inference.
+See `../../evidence/product/p1-agentzero-native-bridge-20261001.json`.

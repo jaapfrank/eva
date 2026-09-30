@@ -1,0 +1,12 @@
+{
+  "gpt-6-sol": {
+    "litellm_provider": "openai",
+    "mode": "responses",
+    "supports_native_streaming": true
+  },
+  "gpt-6-astra": {
+    "litellm_provider": "openai",
+    "mode": "responses",
+    "supports_native_streaming": true
+  }
+}

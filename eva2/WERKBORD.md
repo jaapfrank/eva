@@ -1,21 +1,12 @@
 # EVA2 werkbord
 
-## Actueel: P1.1 — native login en modelcatalogus vastgelegd
+## Actueel: P1.1 — SDK/native proxycheckpoint vastgelegd
 
-Jaap heeft de echte login voltooid. Native eigen0600opslag en dezelfde account
-teruggelezen zonder credentials te delen. Oude WSL-CLI0.144.1 gaf beperkt
-overzicht; bestaande versie-instelling met werkelijk geïnstalleerde desktop-CLI
-0.159.2 toont Sol/Astra. Configuratie via native opslag en lookup bevestigd in
-netwerkisolatie; onafhankelijke review GO. Geen model-/loginproef meer actief.
-[Bewijs](evidence/product/p1-agentzero-native-access-20260930.json).
+Native eigen login en modelcatalogus zijn bevestigd. De echte SDK/native route levert Sol/none-SSE en het bewaarde Astra/medium-antwoord zonder stream in netwerkisolatie. De lokale SDK-catalogus miste de modellen en koos eerst nagebootste streaming; kleine expliciete streamingmetadata herstelt deze aansluiting in de proef, geen live-providerbewijs.
 
-Dit is vergelijkingsvoorbereiding, geen nieuwe Eva-functie of volledige P1.1.
-Geen Eva-installatie/rollback of eerdere native proef herhaald. Verbruik:
-0extra Eva-inferentieaanvragen; directe login/catalogusfunctie-aanroepen41,
-2aanvullende catalogusteruglezingen; daadwerkelijke HTTP-aanroepen en
-ontwikkelcreditkosten onbekend. Lokale lockmapfout, standaardleasepadfout en
-geblokkeerde cost-maplookup zichtbaar behouden. Volgende uitvoering: native
-proxy en volledige sync-/tool-/helper-/providermeting; nog niet gestart.
+Stoppen beëindigt de modeltaak, maar de native upstream bleef open tot expliciete proefopruiming. Dat is een resterend tekort, geen geslaagde providerstop. Onafhankelijke review GO; alle proefprocessen beëindigd. Geen eerdere agentlusproef herhaald, nul externe inferentie of Eva-installatiewijziging. Geen extra productfunctie of volledige P1.1. [Bewijs](evidence/product/p1-agentzero-native-bridge-20261001.json) · [Review](reviews/p1-agentzero-native-bridge-20261001.md).
+
+De eerdere eigen login, configuratieteruglezing en dezelfde account blijven behouden. [Loginbewijs](evidence/product/p1-agentzero-native-access-20260930.json). Ontwikkelcreditkosten onbekend; de zeven nagebootste aanvragen zijn geen Eva-runtimeverbruik. Volgende uitvoering: alleen gevonden upstreamsluiting bij stoppen, nog niet gestart. Live vergelijking en overige deelnemerdekking blijven open. Het volledige goal blijft actief; eerdere productacceptaties ongewijzigd.
 
 ## Eerder opgeleverd: C1.1; C1.2 Telegramproef open
 

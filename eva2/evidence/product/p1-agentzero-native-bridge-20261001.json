@@ -1,0 +1,367 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "task": "P1.1",
+  "checkedAt": "2026-09-30T22:37:39.469413+00:00",
+  "outcome": "Real SDK/native OAuth bridge exercised with owned auth and mocked upstream. Streaming serialization connected; partial model stop did not close the native upstream before explicit fixture cleanup. No full native admission or product delivery.",
+  "existing": "Native pinned source, saved presets/selection and independent login reused; native monologue/helper evidence retained without replay.",
+  "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+  "sourceHashes": {
+    "plugins/_oauth/helpers/codex.py": "bcc9244bc2abc852aaf65a56c796abb8ec4bf93adfd2b3fc3b665312cd1b53db",
+    "plugins/_oauth/helpers/routes.py": "26f4708c40e1a673918ce796ffc6c4ff6f0168c11248e1eb215029ffa8a6c325",
+    "plugins/_model_config/helpers/model_config.py": "c4a46fb05ccfc176734e626d74a5b5bf6a9b1fe539f04d1bd35e6213b808b8d0"
+  },
+  "additionalSourceHashes": {
+    "models.py": "4b9d9c530d9516710a6deb3956361a135386a0802d6240f05c0bd536314a94ef",
+    "helpers/litellm_transport.py": "74cb8cc75f96133c66ffafd2a2a447b4585f9e08d0f85a782e48e5a5d6154b6d"
+  },
+  "sdkVersion": "litellm 1.88.1",
+  "sdkSourceHashes": {
+    "utils.py": "2c003fcdc88a595ae8e179b11b92168db1948ae7bbdf9898d4f724523528f472",
+    "llms/openai/responses/transformation.py": "f138f6680e5188c38ad4e852c828d173d227d873b1dd0a1c6104c1b1d41a3f59",
+    "responses/streaming_iterator.py": "d36d54ca9345b329d120cefe264b979ac136e0ca4689db2988a30286cd3bb88b"
+  },
+  "candidateFiles": {
+    "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py": "6b8a5018df9de5c537a4495f5d1174bd7e2129f1f671c6147c892b175a12b86a",
+    "eva2/benchmark/inspect_ai_v1/p1_agentzero_litellm_capabilities.json": "6f98bd8afc21330f3e8c30297bf252555b52af42abc8d9c040c64362ce8602c3"
+  },
+  "route": "Native saved model factory -> real LiteLLM AsyncHTTPHandler/httpx serialization -> registered Flask OAuth response route -> owned-auth lookup/forwarding -> mocked requests upstream -> actual SDK event/output parser.",
+  "configuredCapabilities": {
+    "gpt-6-sol": {
+      "before": false,
+      "configured": true
+    },
+    "gpt-6-astra": {
+      "before": false,
+      "configured": true
+    }
+  },
+  "capabilityBoundary": "The native OAuth model catalog lists these models, but the local LiteLLM catalog lacks them and selects fake streaming. register_model metadata is a declared bridge configuration, not proof from a live provider. No prices, token context lengths or model identities fabricated.",
+  "cases": [
+    {
+      "case": "native-bridge-contact-stream",
+      "requests": [
+        {
+          "model": "gpt-6-sol",
+          "effort": "none",
+          "forced_stream": true,
+          "owned_auth_forwarded": true
+        }
+      ],
+      "sdk_requests": [
+        {
+          "model": "gpt-6-sol",
+          "stream": true,
+          "native_content_type": "text/event-stream"
+        }
+      ],
+      "stream": true,
+      "partial": false,
+      "native_upstream_closed": [
+        true
+      ],
+      "ledger": {
+        "sample_id": "native-bridge-contact-stream",
+        "provider_attempts": 1,
+        "complete": true,
+        "stop": null,
+        "stop_requested": false,
+        "active_async_attempts": 0,
+        "cancel_errors": [],
+        "total_usage": {
+          "input_tokens": 21,
+          "output_tokens": 9,
+          "total_tokens": 30
+        },
+        "known_partial_usage": {
+          "input_tokens": 21,
+          "output_tokens": 9,
+          "total_tokens": 30
+        },
+        "attempts": [
+          {
+            "id": 0,
+            "sample_id": "native-bridge-contact-stream",
+            "role": "foreground_contact",
+            "model": "gpt-6-sol",
+            "reasoning_effort": "none",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 21,
+              "output_tokens": 9,
+              "total_tokens": 30
+            }
+          }
+        ],
+        "coverage": "Only native entrypoints actually bound by the caller",
+        "live_admission": false
+      },
+      "fixture_output_observed": true,
+      "outcome": "observed_route_completed",
+      "fixture_cleanup": {
+        "explicit_native_response_close": true,
+        "ledger": {
+          "sample_id": "native-bridge-contact-stream",
+          "provider_attempts": 1,
+          "complete": true,
+          "stop": null,
+          "stop_requested": false,
+          "active_async_attempts": 0,
+          "cancel_errors": [],
+          "total_usage": {
+            "input_tokens": 21,
+            "output_tokens": 9,
+            "total_tokens": 30
+          },
+          "known_partial_usage": {
+            "input_tokens": 21,
+            "output_tokens": 9,
+            "total_tokens": 30
+          },
+          "attempts": [
+            {
+              "id": 0,
+              "sample_id": "native-bridge-contact-stream",
+              "role": "foreground_contact",
+              "model": "gpt-6-sol",
+              "reasoning_effort": "none",
+              "status": "completed",
+              "usage": {
+                "input_tokens": 21,
+                "output_tokens": 9,
+                "total_tokens": 30
+              }
+            }
+          ],
+          "coverage": "Only native entrypoints actually bound by the caller",
+          "live_admission": false
+        }
+      }
+    },
+    {
+      "case": "native-bridge-partial-stop",
+      "requests": [
+        {
+          "model": "gpt-6-sol",
+          "effort": "none",
+          "forced_stream": true,
+          "owned_auth_forwarded": true
+        }
+      ],
+      "sdk_requests": [
+        {
+          "model": "gpt-6-sol",
+          "stream": true,
+          "native_content_type": "text/event-stream"
+        }
+      ],
+      "stream": true,
+      "partial": true,
+      "native_upstream_closed": [
+        false
+      ],
+      "ledger": {
+        "sample_id": "native-bridge-partial-stop",
+        "provider_attempts": 1,
+        "complete": false,
+        "stop": "fixture sample stop",
+        "stop_requested": true,
+        "active_async_attempts": 1,
+        "cancel_errors": [],
+        "total_usage": {
+          "input_tokens": null,
+          "output_tokens": null,
+          "total_tokens": null
+        },
+        "known_partial_usage": {
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0
+        },
+        "attempts": [
+          {
+            "id": 0,
+            "sample_id": "native-bridge-partial-stop",
+            "role": "foreground_contact",
+            "model": "gpt-6-sol",
+            "reasoning_effort": "none",
+            "status": "pending",
+            "usage": null
+          }
+        ],
+        "coverage": "Only native entrypoints actually bound by the caller",
+        "live_admission": false
+      },
+      "fixture_output_observed": true,
+      "outcome": "model_cancelled_upstream_close_unverified",
+      "fixture_cleanup": {
+        "explicit_native_response_close": true,
+        "ledger": {
+          "sample_id": "native-bridge-partial-stop",
+          "provider_attempts": 1,
+          "complete": false,
+          "stop": "fixture sample stop",
+          "stop_requested": true,
+          "active_async_attempts": 0,
+          "cancel_errors": [],
+          "total_usage": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "total_tokens": null
+          },
+          "known_partial_usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          },
+          "attempts": [
+            {
+              "id": 0,
+              "sample_id": "native-bridge-partial-stop",
+              "role": "foreground_contact",
+              "model": "gpt-6-sol",
+              "reasoning_effort": "none",
+              "status": "native_upstream_closed_usage_unknown",
+              "usage": null
+            }
+          ],
+          "coverage": "Only native entrypoints actually bound by the caller",
+          "live_admission": false
+        }
+      }
+    },
+    {
+      "case": "native-bridge-work-nonstream",
+      "requests": [
+        {
+          "model": "gpt-6-astra",
+          "effort": "medium",
+          "forced_stream": true,
+          "owned_auth_forwarded": true
+        }
+      ],
+      "stream": false,
+      "partial": false,
+      "native_upstream_closed": [
+        false
+      ],
+      "ledger": {
+        "sample_id": "native-bridge-work-nonstream",
+        "provider_attempts": 1,
+        "complete": true,
+        "stop": null,
+        "stop_requested": false,
+        "active_async_attempts": 0,
+        "cancel_errors": [],
+        "total_usage": {
+          "input_tokens": 21,
+          "output_tokens": 9,
+          "total_tokens": 30
+        },
+        "known_partial_usage": {
+          "input_tokens": 21,
+          "output_tokens": 9,
+          "total_tokens": 30
+        },
+        "attempts": [
+          {
+            "id": 0,
+            "sample_id": "native-bridge-work-nonstream",
+            "role": "helper",
+            "model": "gpt-6-astra",
+            "reasoning_effort": "medium",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 21,
+              "output_tokens": 9,
+              "total_tokens": 30
+            }
+          }
+        ],
+        "coverage": "Only native entrypoints actually bound by the caller",
+        "live_admission": false
+      },
+      "fixture_output_observed": false,
+      "outcome": "retained_nonstream_output_verified",
+      "provenance": "native-bridge-v2 before capability metadata configuration; unchanged Astra/medium nonstream route not rerun"
+    }
+  ],
+  "partialStopObservation": {
+    "modelTaskCancelled": true,
+    "beforeFixtureCleanup": {
+      "nativeUpstreamClosed": false,
+      "activeAttempts": 1,
+      "usage": null
+    },
+    "afterExplicitFixtureCleanup": {
+      "activeAttempts": 0,
+      "status": "native_upstream_closed_usage_unknown",
+      "usage": null
+    },
+    "interpretation": "Local model cancellation observed. Automatic native upstream closure was not observed. Explicit fixture cleanup is not attributed to normal SDK stop, and no cloud cancellation is claimed."
+  },
+  "failureHistory": [
+    {
+      "artifact": "native-bridge-v1/native-failure.json",
+      "result": "Fixture setup used a sync-only client constructor argument; corrected based on installed AsyncHTTPHandler source. No upstream request."
+    },
+    {
+      "artifact": "native-bridge-v2/partial-stop-observation.json",
+      "result": "Two complete cases retained. Partial fixture failed to settle after sample stop; isolated process interrupted. Completed usage seen in assertion, no valid partial-stream observation."
+    },
+    {
+      "artifact": "native-bridge-v3/partial-boundary.json",
+      "result": "Targeted diagnostic: SDK wire stream absent, native JSON response already completed. Failed stop precondition; no unchanged replay."
+    },
+    {
+      "artifact": "native-bridge-v4/native-bridge-report.json",
+      "result": "Configured metadata produced true SSE; model cancel settled, but pre-cleanup upstream remained open. WSGI cleanup ContextVar warning; corrected test transport to use one request context."
+    }
+  ],
+  "isolatedExecution": {
+    "networkNamespaceDisabled": true,
+    "socketConnectRejected": true,
+    "successfulExternalTraffic": 0,
+    "nativeSourceModified": false,
+    "nativeSourceTrackedDiffReturnCode": 0,
+    "processesTerminal": true,
+    "nativeClientVersion": "0.159.2",
+    "priorMonologueCasesReplayed": false,
+    "productionRuntimeChanges": 0,
+    "sameContextWSGITransport": true
+  },
+  "consumption": {
+    "externalModelInferenceRequests": 0,
+    "evaRuntimeInferenceTokens": 0,
+    "mockedProviderAttempts": 7,
+    "mockedAttemptsBasis": "v2 three (including failed partial), v3 one, v4 one, v5 two; setup v1 zero. Synthetic fixture usage is not runtime consumption.",
+    "developmentCredits": null,
+    "developmentTokens": null
+  },
+  "artifacts": {
+    "directory": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929",
+    "retainedReports": [
+      "native-bridge-v1/native-failure.json",
+      "native-bridge-v2/completed-cases.json",
+      "native-bridge-v2/partial-stop-observation.json",
+      "native-bridge-v3/partial-boundary.json",
+      "native-bridge-v4/native-bridge-report.json",
+      "native-bridge-v5/native-bridge-report.json",
+      "native-bridge-v5/partial-boundary.json"
+    ]
+  },
+  "review": "eva2/reviews/p1-agentzero-native-bridge-20261001.md",
+  "admission": "not_admitted",
+  "productFunctionCompleted": false,
+  "limitations": [
+    "Not a deployed UI/proxy or full monologue run.",
+    "Synthetic usage only; no provider inference or cloud cancellation.",
+    "Streaming capability metadata is a configured declaration, not a live-provider observation; the pinned local SDK catalog lacked these models.",
+    "Only observed async SDK routes; sync/tools and other participant parity remain open.",
+    "SDK cancellation leaves upstream closure unverified before explicit fixture cleanup.",
+    "Test transport is in-process WSGI, not a deployed HTTP proxy or real network disconnect.",
+    "Synthetic SDK usage adaptation emits a Pydantic serialization warning; real provider usage/parity not established."
+  ],
+  "next": "Retain authenticated configuration and this narrowed stop limitation. Native live admission still needs a working stop/usage route plus other participant coverage; no automatic external model run or broad rebuild.",
+  "executedProbeSha256": "8ab1ce02bec96f2897e8c2f923914f1fa35dec9892d73943a96dc3899a6145ef",
+  "postExecutionChange": "Independent review corrected only the reporting label for a hypothetical cancelled partial sample whose upstream does close. Retained v5 negative branch/output unchanged; no replay. Executed and publication source hashes recorded separately."
+}

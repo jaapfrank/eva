@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-30T18:11:31.122539+00:00",
+        "checkedAt": "2026-09-30T22:45:29.721903+00:00",
         "deliveries": [
+          {
+            "title": "Vergelijking: echte SDK/native proxy verbonden; stopgat gevonden",
+            "date": "1 oktober",
+            "state": "tested",
+            "result": "Sol/none-SSE en Astra/medium-antwoord via native routes in netwerkisolatie. Configuratiemetadata maakt ontbrekende streaming zichtbaar. Onafhankelijke review akkoord; nul externe modelcalls.",
+            "remaining": "Geen extra Eva-functie of volledige P1.1. Modelstop sluit native upstream nog niet vóór expliciete proefopruiming. Eva-installatie ongewijzigd; live vergelijking niet toegelaten.",
+            "source": "eva2/evidence/product/p1-agentzero-native-bridge-20261001.json"
+          },
           {
             "title": "Vergelijking: native login en Sol/Astra-modelcatalogus aangesloten",
             "date": "30 september",
@@ -3107,14 +3115,14 @@
           }
         ],
         "now": {
-          "title": "P1.1: native login en juiste modelcatalogus vastgelegd",
+          "title": "P1.1: SDK/native checkpoint vastgelegd",
           "state": "Gedeeltelijk opgeleverd",
           "owner": "Codex /root",
-          "detail": "Echte login, eigen opslag, dezelfde account en native configuratieteruglezing bevestigd. Oude WSL-versie verklaart beperkt modeloverzicht; ingestelde werkelijk aanwezige desktopversie toont Sol/Astra. Review akkoord. Geen extra productfunctie, modelproef of draaiend proces; P1.1 blijft open."
+          "detail": "Review akkoord. Echte stream en werkantwoord in geïsoleerde proef gecontroleerd; stopgat eerlijk open. Geen proefproces actief of extra productfunctie; Eva-installatie ongewijzigd."
         },
         "next": {
-          "title": "P1.1: native uitvoerroute en volledige meting",
-          "detail": "Authenticatieblokkade opgelost. Resterend: native proxy, sync-/tool-/helper-/providerdekking en gelijkwaardige overige deelnemertoegang. Deze volgende uitvoering is nog niet gestart; fysieke Telegram-/speakerproeven en eigenaarkeuzes blijven apart open."
+          "title": "P1.1: native upstream sluiten bij stoppen",
+          "detail": "Volgende uitvoering nog niet gestart. Alleen de gevonden stopovergang uitzoeken vóór afhankelijke live vergelijking; overige deelnemerdekking blijft apart open. Telegram-/speakerproeven en eigenaarkeuzes blijven apart gevraagd."
         },
         "ownerAction": {
           "title": "Telegram: tussenvraag tijdens onderzoek",
@@ -3128,7 +3136,7 @@
           "linkLabel": "Open Telegram"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-30T21:33:23.309456+00:00",
+        "reviewedAt": "2026-09-30T22:45:29.721903+00:00",
         "previousOwnerAction": {
           "title": "Lees het afgeronde zondagplan",
           "steps": [
@@ -14695,26 +14703,28 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Native login/eigen opslag en opgeslagen configuratie onafhankelijk gecontroleerd. Juiste modelcatalogus met daadwerkelijke desktop-CLI0.159.2: Sol/Astra zichtbaar. Geen nieuwe modelproef of volledige P1.1. Native proxy, werkelijke providermeting/stop, sync-/tool-/helperdekking en toegang van overige deelnemers blijven open.",
-              "latestEvidence": "eva2/evidence/product/p1-agentzero-native-access-20260930.json",
+              "remaining": "Checkpoint onafhankelijk akkoord: echte SDK/native route voor Sol/none-SSE en Astra/medium zonder stream. Stop beëindigt modeltaak maar native upstream bleef open vóór expliciete proefopruiming. Bron en bewijs vastgelegd; geen proefproces actief. Volledige P1.1/toelating blijft open.",
+              "latestEvidence": "eva2/evidence/product/p1-agentzero-native-bridge-20261001.json",
               "assignment": {
-                "baseCommit": "943f2c6e",
+                "baseCommit": "7afe465a",
                 "owner": "/root",
                 "files": [
+                  "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py",
                   "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-                  "eva2/evidence/product/p1-agentzero-native-access-20260930.json"
+                  "eva2/evidence/product/p1-agentzero-native-bridge-20261001.json",
+                  "eva2/benchmark/inspect_ai_v1/p1_agentzero_litellm_capabilities.json"
                 ],
-                "existing": "Pinned native OAuth helper supports a separate subscription device login. Native mocked execution and detached-stop evidence are retained.",
-                "gap": "Authenticated native participant access has not been established; rotating Eva/Codex credentials must not be shared.",
-                "outcome": "Resolve the actual native subscription login/readback for the isolated participant without changing Eva or enabling comparison inference.",
-                "finish": "Read native access state, use the existing device flow if needed, retain sanitized access/provenance evidence and remaining admission gaps. Actual login may require owner browser interaction.",
-                "estimate": "Reuse native OAuth functions and the existing isolated environment; no external model inference, credit cost unknown.",
-                "stage": "native_access_checkpoint_delivered",
+                "existing": "Native OAuth routes and saved provider/preset settings exist; actual login/model catalog readback and native full-loop/mock/stop evidence retained.",
+                "gap": "Actual SDK request/response parsing has not traversed registered native proxy routes using the owned authenticated store. Prior transport shaping bypassed those routes.",
+                "outcome": "Connect the existing native configuration, real SDK and registered OAuth proxy routes in one isolated fixture, with provider responses mocked at the upstream HTTP boundary.",
+                "finish": "Sol/none stream, Astra/medium nonstream and partial-stream closure run through actual native routes; record profile/body/usage/cleanup observations and remaining limitations. Do not repeat native monologue or inference.",
+                "estimate": "Existing isolated environment; only newly connected route cases. Zero external model calls, development credits unknown.",
+                "stage": "native_bridge_checkpoint_delivered_with_stop_gap",
                 "activeWorkers": []
               },
-              "blocker": "Native toegang is nu aanwezig, maar de bestaande vergelijkingsgate blijft uit: volledige provider-, helper-, retry-, sync- en toolmeting/stop en deelnemerpariteit zijn nog niet aangetoond. Geen modelrun op basis van alleen login/catalogus.",
-              "nextImplementation": "Bind disposable native participant and existing per-sample measurement/control contracts before any comparison run; do not create a second benchmark framework.",
-              "checkedAt": "2026-09-30T21:59:48.151225+00:00"
+              "blocker": "Toegang aanwezig. Native upstreamsluiting bij modelstop nog niet aangetoond; testopruiming sluit pas daarna. Live vergelijkingsgate blijft uit; overige sync/tool/helper/retry/providerdekking en deelnemerpariteit blijven open.",
+              "nextImplementation": "Retain actual SDK/proxy output and explicit stop gap. Resolve native upstream closure only before dependent live comparisons; other participant coverage remains separate.",
+              "checkedAt": "2026-09-30T22:45:29.721903+00:00"
             },
             {
               "id": "P1.2",

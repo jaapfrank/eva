@@ -153,6 +153,19 @@
         "externalInferenceRequests": 0,
         "admission": "not_admitted",
         "remaining": "Real inference and provider cancellation, complete sync/tool/helper/retry/embedding coverage, running native proxy, equal admission for all participants. Prior OAuth-pending observations are historical."
+      },
+      "nativeSDKProxyBridge": {
+        "status": "mocked_native_routes_observed_with_partial_stop_gap",
+        "evidence": "eva2/evidence/product/p1-agentzero-native-bridge-20261001.json",
+        "review": "eva2/reviews/p1-agentzero-native-bridge-20261001.md",
+        "fixture": "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py",
+        "streamingCapabilityDeclaration": "eva2/benchmark/inspect_ai_v1/p1_agentzero_litellm_capabilities.json",
+        "contact": "Sol/none actual SDK SSE and native route; completed output/usage and natural upstream close observed",
+        "work": "Retained Astra/medium actual SDK nonstream/native-route output and synthetic usage",
+        "stop": "Model task cancelled; native upstream still open before explicit fixture cleanup. No cloud cancellation or live admission.",
+        "externalInferenceRequests": 0,
+        "admission": "not_admitted",
+        "remaining": "Partial-stop upstream closure, deployed native proxy, actual provider usage/retry/helper/sync/tool coverage and equal access remain open."
       }
     }
   ],
