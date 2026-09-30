@@ -67,15 +67,16 @@
   },
   "limitations": [
     "One real next-day document continuation does not prove general multi-day project performance or superiority.",
-    "T3-dependent browser-project breadth and owner acceptance remain open; do not mark the full projects category complete.",
     "Partial token accounting, not a complete cost measurement. Eight completed model responses and seven tools are expensive for this small document task.",
     "No new product code or installation required for this existing scheduled functionality.",
-    "Temporary website unavailability after WSL/service startup resolved when the existing local-owner service became available; no product rollback or task rerun."
+    "Temporary website unavailability after WSL/service startup resolved when the existing local-owner service became available; no product rollback or task rerun.",
+    "T3 remains its own open delivery. No additional L2 browser probe is required by its recorded finish condition; owner acceptance and final comparison remain separate."
   ],
   "privateArtifacts": "/home/administrator/project/.eva2-artifacts/l2-next-day-20260929",
   "review": {
     "reviewer": "/root/review_l2_next_day",
-    "status": "GO for L2.1 technical completion; full L2 and owner acceptance remain open",
-    "reviewedAt": "2026-09-30T14:06:47.502031+00:00"
+    "status": "GO for L2.1 and parent L2 technical completion; owner acceptance and general superiority remain separate",
+    "reviewedAt": "2026-09-30T14:15:43.982769+00:00",
+    "scopeCorrection": "delivery-plan.md L2 finish condition is met by retained29September restart/correction/dependency proof plus actual30September autonomous continuation. T3 dependency adds no unstated browser-specific L2 criterion."
   }
 }

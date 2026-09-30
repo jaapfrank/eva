@@ -997,14 +997,14 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-30T14:06:47.502031+00:00",
+        "checkedAt": "2026-09-30T14:15:43.982769+00:00",
         "deliveries": [
           {
             "title": "Documentproject werkelijk de volgende dag zelfstandig afgerond",
             "date": "30 september",
             "state": "installed",
             "result": "Werkelijk volgende dag autonoom gestart15:00 en afgerond15:01:29. Concept behouden; zondagplan155woorden/3activiteiten/maximaal8euro opgeslagen en eenmaal op privéwebsite teruggekomen. Onafhankelijke review GO; eigenaaracceptatie apart.",
-            "remaining": "Eigenaaracceptatie en algemene/T3-projectbreedte blijven open; L2.1 technisch klaar.",
+            "remaining": "Eigenaaracceptatie blijft open; hoofdopdracht L2 technisch klaar. Algemene prestatievoorsprong wordt in de geplande eindvergelijking beoordeeld.",
             "source": "eva2/evidence/product/l2-next-day-completed-20260930.json"
           },
           {
@@ -3059,10 +3059,10 @@
           }
         ],
         "now": {
-          "title": "L2.1 technisch afgerond: volgende-dagdocument",
+          "title": "L2 technisch afgerond: meerdaags project vervolgen",
           "state": "Afgerond",
           "owner": "Codex /root",
-          "detail": "Werkelijk volgende dag autonoom gestart15:00 en afgerond15:01:29. Concept behouden; zondagplan155woorden/3activiteiten/maximaal8euro opgeslagen en eenmaal op privéwebsite teruggekomen. Onafhankelijke review GO; eigenaaracceptatie apart."
+          "detail": "Concept, correctie en afhankelijkheden behouden; na herstart én werkelijk de volgende dag autonoom afgerond, eenmaal privé teruggemeld. Onafhankelijke review GO. Eigenaaracceptatie apart."
         },
         "next": {
           "title": "C1: inhoudelijk contact versnellen",
@@ -3080,7 +3080,7 @@
           "linkLabel": "Open Praten met Eva"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-09-30T14:06:47.502031+00:00"
+        "reviewedAt": "2026-09-30T14:15:43.982769+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -14166,7 +14166,7 @@
           ],
           "outcome": "Meerdaags project hervatten",
           "effort": "M",
-          "status": "in_progress",
+          "status": "completed",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Durable tasks/effects, resume and project artifacts exist; prior document project was a prepared two-step case.",
@@ -14179,7 +14179,7 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "nextAction": "Begrensde echte volgende-daguitvoering en eenmalige privéterugmelding technisch afgerond. Algemene projectbreedte via bestaande T3-afhankelijkheid en eigenaaracceptatie blijven open; geslaagde documentproef niet herhalen.",
+          "nextAction": "L2 technisch afgerond: behoud/dependency, herstart, expliciete correctie en echte volgende-daguitvoering zonder dubbele effecten samen gecontroleerd. Eigenaaracceptatie en eindvergelijking apart; T3 blijft zijn eigen opdracht. Geen extra L2-scope toevoegen.",
           "owner": "/root",
           "activeWorker": null,
           "baseCommit": "7eb72025",
@@ -14190,7 +14190,7 @@
             "scope": "Existing project route plus bounded dashboard result-queue fix: adapters/api/dashboard_work_return_client.py and tests/api/test_dashboard_work_return_client.py.",
             "doneWhen": "One autonomous successor, preserved draft, correct final document and no manual resume.",
             "estimate": "Original10–20min,2 conversation requests plus1 rejected nonmodel control; no automatic retry. Partial actual tokens recorded; credits unknown.",
-            "stage": "bounded_delivery_completed",
+            "stage": "technical_outcome_completed",
             "actualUsage": {
               "reportedInputTokens": 176825,
               "reportedOutputTokens": 4351,
@@ -14198,7 +14198,8 @@
               "reportedToolCalls": 16,
               "measurement": "partial; combines foreground measured usage with two partial worker records, not all memory/infrastructure calls",
               "creditCost": null
-            }
+            },
+            "activeWorkers": []
           },
           "dashboardComponent": "projects",
           "remainingTasks": [
@@ -14241,6 +14242,13 @@
               "completedAt": "2026-09-29T11:12:52.855058+00:00",
               "result": "Autonoom vervolg na procesherstart en correctie: één definitief document en één terugmelding; websiteverbetering geïnstalleerd, onafhankelijke review GO. Eigenaaracceptatie open."
             }
+          ],
+          "completedAt": "2026-09-30T14:15:43.982769+00:00",
+          "technicalComplete": true,
+          "ownerAccepted": false,
+          "completionEvidencePaths": [
+            "eva2/evidence/product/l2-autonomous-weekend-20260929.json",
+            "eva2/evidence/product/l2-next-day-completed-20260930.json"
           ]
         },
         {
