@@ -3066,7 +3066,7 @@
         },
         "next": {
           "title": "C1: inhoudelijk contact versnellen",
-          "detail": "Begroeting werkt maar duurt5,249s; geen snelheidswinst. Resterende oorzaak gericht vaststellen. Telegram-overlap en fysieke stem blijven afzonderlijk open."
+          "detail": "Begroeting werkt maar duurt5,249s; geen bewezen snelheidsfix. C1 is eerstvolgend. Geen lopend bouw-/proefproces; app-goalactivering gevraagd. Telegram- en fysieke stemproeven blijven apart."
         },
         "ownerAction": {
           "title": "Lees het afgeronde zondagplan",
@@ -13076,8 +13076,8 @@
                 ],
                 "finish": "Demonstrated reduction in actual content latency without bypassing shared memory/persona; independent focused review and installed result. Current Telegram overlap remains separate C1.2.",
                 "estimate": "Use retained timings and current source/config first; new provider calls only for a concrete changed hypothesis. Credits unknown.",
-                "stage": "measured_contact_delay_remains",
-                "currentAction": "Use current successful receipt and existing source to isolate avoidable delay; no speculative memory cache or repeated identical greeting.",
+                "stage": "next_execution_queued",
+                "currentAction": "No product probe or build process running. Latest content latency retained; unsupported cache tweak rejected. App-goal reactivation requested because goal tool cannot reactivate blocked status.",
                 "activeWorkers": [],
                 "workers": {}
               },

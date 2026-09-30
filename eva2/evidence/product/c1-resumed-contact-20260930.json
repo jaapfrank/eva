@@ -26,5 +26,14 @@
     "Initial recall and concurrent context timings cannot all be summed.",
     "Credit costs unknown; excludes automatic memory processing and development."
   ],
-  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/c1-contact-resumed-20260930"
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/c1-contact-resumed-20260930",
+  "cacheDecision": {
+    "status": "no_new_patch_or_provider_trial",
+    "officialSource": "https://developers.openai.com/api/docs/guides/prompt-caching",
+    "checkedAt": "2026-09-30T14:25:04.796893+00:00",
+    "existing": "generate passes stable tenant/installation/person/project cache key to all model phases. Provider projector retains it.",
+    "negativeEvidence": "eva2/evidence/product/prompt-cache-provenance-20260922.json",
+    "finding": "Earlier same Codex endpoint rejected prompt_cache_breakpoint. Official public API guidance does not establish support for that field on the permitted Codex subscription endpoint. No observed change justifies an identical repeat.",
+    "limits": "No cached-token counter or before/after benefit from current greeting; do not attribute5.249s to a cache miss or claim the stable key guarantees cache reuse."
+  }
 }
