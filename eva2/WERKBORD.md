@@ -1,6 +1,23 @@
 # EVA2 werkbord
 
-## Actueel: M1.2 door Jaap bevestigd; M1 afgerond
+## Actueel: Voice PE — stotterende spraak en ontbrekende antwoorden
+
+Jaap meldt dat direct doorpraten/full duplex lijkt te werken, maar de spraak is
+onverstaanbaar/stotterend, de blauwe ring draait snel en soms ontbreekt antwoord.
+C3.1 blijft open; apparaat nog te bevestigen. Codex controleert de bestaande
+firmware-, transport-, media- en antwoordovergangen vóór een gerichte correctie.
+Geen nieuwe spraakengine of herinstallatie gepland. C3.3 en M1-acceptaties behouden.
+
+Huidige Woonkamer-firmware/native verbinding en mute uit bevestigd. Serverlogs
+tonen eerdere transport-/bevestigingsfouten; oorzaak van huidig stotteren nog niet
+vastgesteld. Blauwe luisterfase is geen bewijs van overbelasting. Twee passieve
+logmetingen tijdens stilte leverden geen events op. Eén gewone actuele reactie
+gevraagd; apparaatidentiteit nog te bevestigen. Geen wijziging of nieuwe afgeronde
+functie, geen modelcalls/huisacties/herstart/OTA. Geen bouwuitvoerder actief tijdens
+wachten; de tijdelijke apparaatlogmeting loopt.
+[Waarneming](evidence/product/c3-audio-stutter-observation-20261001.json).
+
+## Vorige oplevering: M1.2 door Jaap bevestigd; M1 afgerond
 
 Jaap bevestigt: **M1.2 werkt.** Later verder praten zonder alles opnieuw uit te
 leggen is geaccepteerd. M1.1 was al technisch aangetoond; daarmee is de bestaande

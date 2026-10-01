@@ -1,0 +1,30 @@
+{
+  "taskId": "C3.1",
+  "checkedAt": "2026-10-01T14:08:56.310098+00:00",
+  "status": "audio_failure_unresolved",
+  "ownerStatement": "Gesprekken via de voice pe lijken nu wel full duplex te zijn. Alleen het apparaat lijkt overbelast ofzo? Hetgeen dat eva zegt is niet echt te verstaan ze stottert en het lijkt op overbelasting. Ook blijft hij continue snel rond spinnen blauw. Er komt ook niet altijd antwoord.",
+  "ownerAcceptance": "Partial report only; no full duplex or reliable playback acceptance.",
+  "readOnlyChecks": {
+    "deviceName": "home-assistant-voice-0a16e0",
+    "compilationTime": "2026-10-01 14:50:20 +0200",
+    "nativeTcpConnected": true,
+    "mute": false,
+    "serverImage": "sha256:59adf4ade692929e0f8387eb84ed5492ea089cbfc79491c0a3e50793790f71aa",
+    "serverRestartCount": 0,
+    "passiveSubscriptions": 2,
+    "idleLogEvents": 0
+  },
+  "findings": [
+    "Existing server logs contain microphone/output transport failures and an unconfirmed speaker operation. They do not establish the cause of the current audible stutter.",
+    "Firmware maps active continuous capture to its existing listening LED phase; blue activity alone is not evidence of resource overload."
+  ],
+  "nextAction": "One current ordinary spoken reply, linked to device and transport logs; avoid speculative audio/firmware changes.",
+  "privateLogDirectory": "/home/administrator/project/.eva2-artifacts/c3-audio-stutter-20261001",
+  "usage": {
+    "developmentModelCalls": 0,
+    "houseActions": 0,
+    "firmwareUploads": 0,
+    "serviceRestarts": 0,
+    "developmentCreditCost": null
+  }
+}

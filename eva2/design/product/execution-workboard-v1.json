@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-01T13:58:56.478055+00:00",
+  "lastUpdated": "2026-10-01T14:08:56.310098+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T13:58:56.478055+00:00",
+        "checkedAt": "2026-10-01T14:08:56.310098+00:00",
         "deliveries": [
           {
             "title": "M1.2 — later verder praten door Jaap bevestigd",
@@ -3267,27 +3267,24 @@
           }
         ],
         "now": {
-          "title": "M1 — onderwerpen later voortzetten afgerond",
-          "state": "installed",
-          "detail": "Jaap bevestigt M1.2. Samen met bestaande M1.1 is deze opdracht afgerond: 14 van 44 kleine taken klaar, 30 open. Grote productstand blijft 2/9; geen andere acceptaties afgeleid. Geen actieve uitvoerder voor deze registratie."
+          "title": "Voice PE: actuele stotterende reactie meten",
+          "state": "awaiting_owner_observation",
+          "detail": "Direct doorpraten lijkt te werken, maar spraak en antwoorden zijn niet betrouwbaar. Woonkamer-firmware/verbinding gecontroleerd; geen overbelasting bewezen en geen correctie geïnstalleerd. Eén korte fysieke meting gevraagd; geen bouwuitvoerder actief tijdens wachten."
         },
         "next": {
-          "title": "Resterende technische blokkade: O2.3 bij Codex",
-          "detail": "De bewaarde herstelinstallatie correct laten omgaan met de offline browserkoppeling. Geen nieuwe eigenaarkeuze nodig. Dagelijks gesprek en open fysieke beoordelingen staan daar los van."
+          "title": "Dezelfde route op tweede speaker",
+          "detail": "Eerst de fout in de huidige directe spraak herstellen; daarna dezelfde bewezen route hergebruiken. Geen nieuwe spraakengine."
         },
         "ownerAction": {
-          "title": "Concrete handelingen staan bij de taak",
+          "title": "Eén actuele spraakmeting",
           "steps": [
-            "C3.1: zeg op Woonkamer Hey Eva, hallo zonder knopbediening; meld antwoord of herstart.",
-            "T3.1: open de Chrome-deelproef op deze computer en deel het proef-tabblad; meld Gedeeld.",
-            "P1.1: meld wanneer je twee verse browseraanmeldingen voor de eindvergelijking kunt bevestigen. Codex start ze dan."
+            "Bevestig op welke speaker het stottert: Woonkamer, Overkapping of beide.",
+            "Voor de huidige Woonkamer-meting: zeg Hey Eva, vertel een kort verhaaltje en laat haar even praten. Meld Gedaan zodra het stottert."
           ],
-          "url": "http://127.0.0.1:44718/proef",
-          "linkLabel": "Open Chrome-deelproef op deze computer",
-          "expected": "Bij iedere taak staan actuele of latere proefstappen, verwacht resultaat en wat je hier terugmeldt. Technisch herstelwerk en vervolgonderzoek blijven bij Codex."
+          "expected": "Eén actuele stotterende reactie koppelen aan apparaat- en verbindingslog; nog geen oplossing of nieuwe acceptatie geclaimd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T13:58:56.478055+00:00",
+        "reviewedAt": "2026-10-01T14:08:56.310098+00:00",
         "previousOwnerAction": {
           "title": "Probeer onderbreken op je telefoon",
           "steps": [
@@ -13446,11 +13443,11 @@
             "replacementJustified": false
           },
           "owner": "/root",
-          "activeWorker": "/root",
-          "baseCommit": "63b45309",
+          "activeWorker": null,
+          "baseCommit": "5f583226",
           "assignment": {
-            "stage": "installed_native_task_correction_physical_greeting_pending",
-            "scope": "C3.1 physical native start failure only; executor read-only lifecycle check",
+            "stage": "awaiting_current_stutter_observation",
+            "scope": "C3.1 intelligible reliable direct speech; actual target identity to be confirmed before any device update.",
             "outcome": "Direct verder praten tijdens denken en spreken zonder herhaald wakeword; geen vaste transportzin bij iedere vraag.",
             "activeWorkers": [],
             "effort": "Reuse retained candidate and current diagnostics. Focused verification only; unknown development credits, no model calls so far.",
@@ -13458,13 +13455,16 @@
           },
           "evidence": "eva2/evidence/product/c3-existing-candidate-session-20260928.json",
           "ownerTrial": {
-            "status": "requested_after_targeted_correction",
+            "status": "partial_with_audio_failure",
             "steps": [
               "Zeg Hey Eva, hallo, zonder knopbediening; meldt antwoord of herstart."
             ],
             "expected": "Het gesprek blijft open tijdens denken en spreken; nieuwe vraag krijgt haar eigen antwoord, aangenomen onderzoek blijft lopen.",
             "blocksIndependentWork": false,
-            "report": "Fresh observed attempt: mute true then false, Hey Eva recognized probability1.00, API reset by peer; owner reports restart/no reply."
+            "report": "Gesprekken via de voice pe lijken nu wel full duplex te zijn. Alleen het apparaat lijkt overbelast ofzo? Hetgeen dat eva zegt is niet echt te verstaan ze stottert en het lijkt op overbelasting. Ook blijft hij continue snel rond spinnen blauw. Er komt ook niet altijd antwoord.",
+            "reportedAt": "2026-10-01T14:00:10.348297+00:00",
+            "speakerIdentity": "not yet specified",
+            "scope": "Direct continuation seems possible; intelligibility and reliable replies are not accepted."
           },
           "remaining": "C3.3 onderzoeksresultaat terug op oorspronkelijke speaker is door Jaap bevestigd en afgerond. C3.1 direct doorpraten en C3.2 tweede speaker blijven open.",
           "reviewer": "/root/platform_research_20260927",
@@ -13478,49 +13478,48 @@
               "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
               "owner": "Codex /root",
               "blocker": null,
-              "latestEvidence": "eva2/evidence/product/c3-native-input-task-20261001.json",
+              "latestEvidence": "eva2/evidence/product/c3-audio-stutter-observation-20261001.json",
               "assignment": {
-                "baseCommit": "cb28e404",
+                "baseCommit": "5f583226",
                 "owner": "/root",
                 "files": [
-                  "eva2/deploy/home-assistant/custom_components/eva2_voice/conversation.py",
-                  "eva2/src/eva/voice_service/agent.py",
-                  "existing continuous speaker startup route only if a concrete gap is established",
-                  "eva2/experiments/native-duplex-v1/eva_input_driver.cpp",
-                  "eva2/tests/operations/test_native_duplex_input_firmware.py"
+                  "eva2/experiments/native-duplex-v1/",
+                  "existing native speaker/media service and focused tests only if a measured fault requires a correction"
                 ],
                 "outcome": "Direct verder praten tijdens denken en spreken zonder herhaald wakeword; geen vaste transportzin bij iedere vraag.",
                 "endCondition": "Nieuwe bewaarde fysieke waarneming of expliciet ontbrekend bewijs; geen ongewijzigde modelproef",
                 "actual": "2 HA adapter tests,17 shared-source tests,17 packaged native and17 older owner-module tests;2 C++ host cases. No new model/audio/house-action request before owner trial; credits unknown.",
                 "activeWorkers": [],
-                "stage": "installed_native_task_correction_physical_greeting_pending",
-                "currentAction": "Reviewed task-dispatch correction installed once; correct device/new compile and native peer verified, mute off. Await genuine greeting/direct-speech result; no fullC3 claim.",
-                "finding": "ARMED capture deliberately buffers early speech but cannot drain before CAPTURE. Existing 16KiB queue incorrectly treats about 0.5s of admission delay as fatal overflow. Source hazard established; historical physical failure attribution remains unknown.",
+                "stage": "awaiting_current_stutter_observation",
+                "currentAction": "Passive device log collecting for one ordinary spoken answer; identify current underrun, connection fault or repeated interruption before correcting code.",
+                "finding": "Current Woonkamer firmware and native connection verified. Existing server logs contain transport/confirmation failures; current stutter cause not isolated. Two passive subscriptions while idle had no log events. No firmware/model change made.",
                 "result": "Actual compiled native entry1312→32bytes,1280overhead removed; stack allocation4096unchanged.2host tests3.46s and independent source/build GO. One targeted OTA18.852s, no rollback."
               },
               "checkedAt": "2026-10-01T13:04:32.018573+00:00",
-              "remaining": "Werkelijk antwoord op wakepoging en daarna direct doorpraten tijdens denken/spreken nog te bevestigen. Eerdere mislukte proef behouden.",
+              "remaining": "Eigenaar meldt dat full duplex lijkt te werken, maar spraak stottert/onverstaanbaar, blauwe ring draait snel en antwoorden ontbreken soms. Niet afgerond.",
               "installation": "installed_native_continuous_candidate_woonkamer",
               "ownerTrial": {
-                "status": "requested_after_targeted_correction",
+                "status": "partial_with_audio_failure",
                 "steps": [
                   "Zeg Hey Eva, hallo, zonder knopbediening; meldt antwoord of herstart."
                 ],
                 "expected": "Het gesprek blijft open tijdens denken en spreken; nieuwe vraag krijgt haar eigen antwoord, aangenomen onderzoek blijft lopen.",
                 "blocksIndependentWork": false,
-                "report": "Fresh observed attempt: mute true then false, Hey Eva recognized probability1.00, API reset by peer; owner reports restart/no reply."
+                "report": "Gesprekken via de voice pe lijken nu wel full duplex te zijn. Alleen het apparaat lijkt overbelast ofzo? Hetgeen dat eva zegt is niet echt te verstaan ze stottert en het lijkt op overbelasting. Ook blijft hij continue snel rond spinnen blauw. Er komt ook niet altijd antwoord.",
+                "reportedAt": "2026-10-01T14:00:10.348297+00:00",
+                "speakerIdentity": "not yet specified",
+                "scope": "Direct continuation seems possible; intelligibility and reliable replies are not accepted."
               },
-              "nextAction": "Eerst de nieuwe firmware in gewoon spreken bevestigen. Bij geen antwoord/herstart lokaliseert Codex de falende overgang.",
+              "nextAction": "Codex controleert de bestaande audiostroom en antwoordroute; stotteren en ontbrekende antwoorden gericht herstellen.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": true,
                 "steps": [
-                  "Zeg op Woonkamer alleen Hey Eva, hallo, zonder knop- of mutebediening.",
-                  "Als ze normaal antwoordt: zeg Zoek met bronnen uit wat Home Assistant Cloud voor spraak doet. Zeg tijdens nadenken direct Hoe gaat het met jou?, zonder nieuw wakeword.",
-                  "Bij geen antwoord/herstart: stop de proef en meld wat je hoort en de ringkleur."
+                  "Bevestig op welke speaker het stottert: Woonkamer, Overkapping of beide.",
+                  "Voor de huidige Woonkamer-meting: zeg Hey Eva, vertel een kort verhaaltje en laat haar even praten. Meld Gedaan zodra het stottert."
                 ],
-                "expected": "Begroeting en eigen antwoord op tussenvraag terwijl onderzoek doorgaat.",
-                "reportBack": "Antwoord of herstart; wordt directe tussenspraak gehoord?",
+                "expected": "Eén actuele stotterende reactie koppelen aan apparaat- en verbindingslog; nog geen oplossing of nieuwe acceptatie geclaimd.",
+                "reportBack": "Apparaat en Gedaan zodra het stottert.",
                 "blocksIndependentWork": false
               }
             },
