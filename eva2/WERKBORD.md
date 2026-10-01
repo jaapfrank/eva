@@ -1,34 +1,30 @@
 # EVA2 werkbord
 
-## Actueel: O2.3 — bewaarde herstelroute afmaken
+## Laatst opgeleverd: O2.3 — herstelroute opgelost en geïnstalleerd
 
-Codex hervat de bestaande herstelinstallatie bij de offline-browserafhankelijkheid.
-Bewaarde export, gegevens, registraties en geslaagde stappen blijven behouden.
-Eerst de falende gateway-overgang herstellen; daarna dezelfde wizard afmaken en
-de herstelde installatie controleren. Eén uitvoerder, basis `c5502367`; geen nieuwe
-brede audit, export of herinstallatieronde. Geen eigenaarhandeling nodig.
-Stand blijft 15/44 kleine taken en 2/9 grote onderdelen; O2.3 is nog niet afgerond.
+**O2.3 technisch afgerond; O2 is klaar.** De bestaande wizard heeft de bewaarde
+werkelijke gegevensversie volledig hersteld: geheugen, vier documentproviders,
+gatewayregistraties, databasevrijgave en gezonde kern-/werkerstart. Daarna is
+opgeslagen geheugeninhoud via de echte herstelde eigenaars-API teruggelezen.
+De correcties staan in de bestaande operatorinstallatie; onafhankelijke eindreview
+**GO**. De vier oorspronkelijke diensten draaien weer gezond. De geïsoleerde
+herstelinstallatie en gegevens blijven bewaard en gestopt. Geen eigenaarhandeling nodig.
 
-Gerichte echte controle: twee browserkoppelingen/31 tools alleen in de herstelversie
-uitgeschakeld; alle 61 registraties behouden. Geheugenvergelijking gecorrigeerd voor
-grote echte tabellen: 27.899 rijen in 23 tabellen gelijk aan de bewaarde export.
-Geheugen-API gestart: 21 bewaarde banken bereikbaar. De gereviewde correcties
-staan in de bestaande hersteltool. Volledige activatie en runtimecontrole lopen;
-de bestaande kern staat daarvoor
-tijdelijk stil. Geen nieuwe import, export, huisactie of modelproef.
+27.899 geheugenrijen in 23 tabellen gelijk vóór API-start; 21 geheugenbanken
+bereikbaar. Normale Hindsight-retentie van 79 oude model-logregels na starten staat
+apart vermeld. Beide tijdelijk uitgeschakelde browserkoppelingen blijven bewaard;
+alle 31 bijbehorende tools worden door de herstelde kern geweigerd. Geen overdracht
+of intrekking van de huidige Chrome-deeltoegang.
 
-Alle 7 actieve gatewayroutes geven een verse native controle (1 eerste en
-6 overige probes). De bewaarde bron-IP-pins zijn gericht naar de vijf werkelijke
-herstelproviders omgezet; geen ruimer netwerkbeleid. Alleen de gatewayconfiguratie
-vervangen, met dezelfde image en opslag; oorspronkelijke container behouden.
-Onafhankelijke controle bevestigd. Volledige activatie blijft lopen.
+**Stand: 16/44 kleine taken klaar, 28 open. Grote productstand blijft 2/9**;
+O1.2 optionele modules en eindoplevering blijven open. Geen gezinsacceptatie of
+volledige model-/fysieke kanaalproef verzonnen. Na deze oplevering geen uitvoerder
+actief. Volgende geplande werk: **C3.1 verstaanbare spraak en betrouwbare antwoorden**
+via de bestaande continue route. Nog niet gestart.
 
-Bij de hervatting is de geheugen-API gericht gestopt voor de bestaande
-isolatiecontrole. Alleen 79 oude model-logregels waren door native retentie
-opgeruimd; de overige 22 tabellen zijn gelijk. Die ene tabel is uit hetzelfde
-goedgekeurde archief teruggezet voor de controle vóór starten. Geen volledige
-herimport. Normale retentie na starten wordt apart vermeld; O2.3 blijft open.
-
+[Bewijs](evidence/product/o2-actual-restore-20261001.json) ·
+[Review](reviews/o2-actual-restore-20261001.md). Implementatiecheckpunt `0cbd329a`.
+Geen modelcalls of huisacties door de herstelproef aangevraagd; creditkosten onbekend.
 
 ## Vorige oplevering: T3.1 — gedeeld Chrome-tabblad verbonden en vers gelezen
 

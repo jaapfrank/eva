@@ -1,0 +1,333 @@
+{
+  "task_id": "O2.3",
+  "date": "2026-10-01T15:35:27.936839+00:00",
+  "status": "technically_completed_installed",
+  "outcome": "Existing restore route completes on the preserved real schema0007 source, through native component verification, committed release, healthy core and worker and owner-memory API readback. Existing operator corrections installed; isolated trial closed and exact source services resumed.",
+  "implementation_commit": "0cbd329a",
+  "restore_id": "18711af1-f2a1-4163-8ab3-9f374e956185",
+  "archive_sha256": "1e7f0d2d767f116f70439d0ad58c43e26833d4c18b3cfbefc6410938d4c20f28",
+  "source_snapshot_date": "2026-09-29",
+  "source_core_schema": "0007",
+  "target_migration": "Existing forward installation schema route; no fresh restore subsystem.",
+  "existing_work_reused": [
+    "Saved full-installation archive and prepared core/external restore targets.",
+    "Existing source-version migration, document preparation/connection/promotion, native MCP lifecycle, runtime authorization, committed database release and runtime start."
+  ],
+  "corrections": [
+    "Explicit trusted selection suspends retained unavailable gateway registrations through native state APIs; IDs, schemas and credential history remain.",
+    "Native reconnect is allowed only for an already enabled gateway with all retained tools enabled; fresh authenticated discovery and exact catalog checks remain mandatory.",
+    "Bounded memory row-multiset hashing handles large real tables without the generic JSON list limit, retaining duplicates and row count.",
+    "Only the exact core restore-authority state file may use its intended writable bind; model leases and other credentials remain read-only."
+  ],
+  "installation": {
+    "status": "installed_bytes_equal",
+    "module_count": 6,
+    "modules": [
+      {
+        "module": "installation_gateway_verification.py",
+        "source_sha256": "8bdff40c32cd9e93b21ea4f68f4287057700553dcea92cdc22091aad6ac5c646",
+        "installed_sha256": "8bdff40c32cd9e93b21ea4f68f4287057700553dcea92cdc22091aad6ac5c646",
+        "prior_sha256": "413d764a1eaa41f5ebe8138863f956675e9854ad5a9b92d50a733ea52903c611"
+      },
+      {
+        "module": "installation_restore_verification.py",
+        "source_sha256": "8939fc1be696fa72cd669500f0c7e57588cce375e5046e795eeafbd303c76d87",
+        "installed_sha256": "8939fc1be696fa72cd669500f0c7e57588cce375e5046e795eeafbd303c76d87",
+        "prior_sha256": "4de2b9ce16741b9d2c94b2157e05c72a3e5928b727d7e85fe66000fffe9f4d59"
+      },
+      {
+        "module": "installer_restore_wizard.py",
+        "source_sha256": "d48e7bb49ba38626de2cc7f0d03be0258c806752a4e4e6dcafbc3bc4c0248143",
+        "installed_sha256": "d48e7bb49ba38626de2cc7f0d03be0258c806752a4e4e6dcafbc3bc4c0248143",
+        "prior_sha256": "664ec9be9d935502fea7bd282c139c238e315343238addeb99ccd0222e0ccd74"
+      },
+      {
+        "module": "installer_prepared_restore_config.py",
+        "source_sha256": "721c65a29182075ee5bb054d6a5bcab7425d4ead061eeee769747fc2e8b24e40",
+        "installed_sha256": "721c65a29182075ee5bb054d6a5bcab7425d4ead061eeee769747fc2e8b24e40",
+        "prior_sha256": "2c116d17d2a60c52338a915e458e5f72b69712036228aa096fbbf977bf0cd23c"
+      },
+      {
+        "module": "installation_runtime_authorization.py",
+        "source_sha256": "cf192c49497c6f42bd4cfa78849fe13f81a327a6b0366d0c86200bbaf94af7e2",
+        "installed_sha256": "cf192c49497c6f42bd4cfa78849fe13f81a327a6b0366d0c86200bbaf94af7e2",
+        "prior_sha256": "f360fa76415b429fdfa6bdaa43bdeee2088bdef3d4debd8539b8b79e6bb7cab9"
+      },
+      {
+        "module": "installation_memory_verification.py",
+        "source_sha256": "07de87513938e6719d8ed36d76bf8d46b40aa5679151f5df1c6dd1e8da98fcf7",
+        "installed_sha256": "07de87513938e6719d8ed36d76bf8d46b40aa5679151f5df1c6dd1e8da98fcf7",
+        "prior_sha256": "cb04d4094a44467acf4e820460ad341c3379eac53bbfa51fcd25b4090d720588"
+      }
+    ],
+    "restart_required": false,
+    "launcher": "existing per-invocation operator Python"
+  },
+  "real_verification": {
+    "core_restore_records": 170492,
+    "memory_tables_before_api_start": 23,
+    "memory_rows_before_api_start": 27899,
+    "largest_memory_table_rows": 17093,
+    "memory_banks_reachable": 21,
+    "document_providers_verified": 4,
+    "gateway_registrations_preserved": 9,
+    "tool_registrations_preserved": 61,
+    "active_gateways_freshly_discovered": 7,
+    "explicitly_suspended_gateways": 2,
+    "disabled_tools_rejected_by_restored_core": 31,
+    "components": {
+      "contract": "EvaRestoreActivationComponents/v1",
+      "restore_id": "18711af1-f2a1-4163-8ab3-9f374e956185",
+      "archive_sha256": "1e7f0d2d767f116f70439d0ad58c43e26833d4c18b3cfbefc6410938d4c20f28",
+      "target_database_oid": 16384,
+      "verified_requirements": [
+        "native_document_artifacts_and_journals_require_separate_verified_relocation",
+        "hindsight_semantic_banks_require_separate_verified_restore_or_rebuild",
+        "credentials_and_provider_bindings_require_fresh_authorization",
+        "target_traffic_remains_closed_until_external_dependencies_are_reconciled"
+      ],
+      "verified_components": {
+        "documents": "f0ea04deeb089cc7cc48c59b982adc42de03482fb2283c60dc2831a7a8d5f314",
+        "gateway": "36498461cf9a3bf22973aff4445e6935028e1d3f688afc428a5a9fe681b785f2",
+        "memory": "1049a0a96aeb13a32724a7138157a60b5d8097b03422fc22033b395ce110334e"
+      }
+    },
+    "committed_release": {
+      "contract": "EvaRestoreActivationRelease/v1",
+      "restore_id": "18711af1-f2a1-4163-8ab3-9f374e956185",
+      "archive_sha256": "1e7f0d2d767f116f70439d0ad58c43e26833d4c18b3cfbefc6410938d4c20f28",
+      "target_database_oid": 16384,
+      "status": "released_pending_commit",
+      "closed_voice_sessions": 7,
+      "release_authority_sha256": "211c64edbb1e90403706148398c36deb115544360d262b4c153607ed44f623ba",
+      "components_receipt_sha256": "1f7928b1358dbb46cb88a04ad9d410a87923e96b31d050b6666a028f43eb5420",
+      "runtime_started": false
+    },
+    "runtime_start": {
+      "contract": "EvaRestoredRuntimeStart/v1",
+      "status": "runtime_started_verified",
+      "restore_id": "18711af1-f2a1-4163-8ab3-9f374e956185",
+      "archive_sha256": "1e7f0d2d767f116f70439d0ad58c43e26833d4c18b3cfbefc6410938d4c20f28",
+      "attempted": [
+        {
+          "name": "eva-o2-joint-20260929-core",
+          "id": "c66e281976409dd2e80bd0581d88a35842681d5987ec67178f18574a19aabec5",
+          "image": "sha256:35eba561f26f4745b7995ae849c9341c441361a74106326308781e7e3ffc7a69"
+        },
+        {
+          "name": "eva-o2-joint-20260929-worker",
+          "id": "9d6eea598db4f9431e9ebc9c7c7398a51251de7f1537c4f3728f1a4ccc928896",
+          "image": "sha256:bd95a3cec8a3afb7b77a5a9e4161006f7f7ba0ed3c73f0a6a60d50a72d9f6f8f"
+        }
+      ],
+      "started": [
+        {
+          "name": "eva-o2-joint-20260929-core",
+          "id": "c66e281976409dd2e80bd0581d88a35842681d5987ec67178f18574a19aabec5",
+          "image": "sha256:35eba561f26f4745b7995ae849c9341c441361a74106326308781e7e3ffc7a69"
+        },
+        {
+          "name": "eva-o2-joint-20260929-worker",
+          "id": "9d6eea598db4f9431e9ebc9c7c7398a51251de7f1537c4f3728f1a4ccc928896",
+          "image": "sha256:bd95a3cec8a3afb7b77a5a9e4161006f7f7ba0ed3c73f0a6a60d50a72d9f6f8f"
+        }
+      ],
+      "ready": [
+        {
+          "name": "eva-o2-joint-20260929-core",
+          "id": "c66e281976409dd2e80bd0581d88a35842681d5987ec67178f18574a19aabec5",
+          "image": "sha256:35eba561f26f4745b7995ae849c9341c441361a74106326308781e7e3ffc7a69"
+        },
+        {
+          "name": "eva-o2-joint-20260929-worker",
+          "id": "9d6eea598db4f9431e9ebc9c7c7398a51251de7f1537c4f3728f1a4ccc928896",
+          "image": "sha256:bd95a3cec8a3afb7b77a5a9e4161006f7f7ba0ed3c73f0a6a60d50a72d9f6f8f"
+        }
+      ],
+      "runtime_started": true,
+      "verification_scope": "Pinned writer Docker healthchecks only; no restored user-flow or channel acceptance"
+    },
+    "owner_memory_readback": {
+      "status": "post_start_native_readback_verified",
+      "core_api": {
+        "runtime_ready": true,
+        "memory_page_contract": "EvaOwnerMemorySources/v1",
+        "memory_page_keys": [
+          "contract",
+          "meaning",
+          "read_only",
+          "sources",
+          "next_cursor"
+        ],
+        "memory_visible_count": 1,
+        "stored_memory_detail_read": true,
+        "stored_memory_detail_sha256": "b6df07be1ea965048253d7fff4f59a071ce46593a3c4514bea74049cc81e8237"
+      },
+      "catalog_admission": {
+        "disabled_tools_rejected_by_restored_core": 31,
+        "tools_called": 0
+      },
+      "model_calls_submitted": 0,
+      "house_actions_submitted": 0,
+      "scope": "Actual restored core owner readback and disabled catalog rejection; no model recall or physical channel acceptance."
+    },
+    "source_resumption": {
+      "status": "isolated_trial_closed_source_resumed",
+      "source_exact_pins_policies_preserved": true,
+      "source_states": [
+        {
+          "name": "eva2-managed-b-slot3-core",
+          "id": "bcdee5a403cccebdce4eb3c7d20b619dd2422c70733673dc465370dff5a684db",
+          "image": "sha256:20d41fdf3506a21c111767d85d58be49453a8d8dc0e32db679992436e992940f",
+          "running": true,
+          "health": "healthy",
+          "restart": "unless-stopped"
+        },
+        {
+          "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "id": "e7882e2c0fc51e57c9fadb90dbbcf0b1b5ec8fd790f6a873293460875aaddc89",
+          "image": "sha256:a2e0e0ff0e72a2ad9bfbd692eaaed1d9abff848cc29c7852b07a82f0010a38e4",
+          "running": true,
+          "health": "healthy",
+          "restart": "unless-stopped"
+        },
+        {
+          "name": "eva2-managed-b-slot3-hindsight-1",
+          "id": "79a292a4c8a48266fc7f0ddfdb2048c95bcdb25c6d9e74ab384ba10adc4cfc13",
+          "image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+          "running": true,
+          "health": "healthy",
+          "restart": "unless-stopped"
+        },
+        {
+          "name": "eva2-document-goal-worker-au006",
+          "id": "e8179c5e54a3e4797d629a573dc5ce5bb907e765bbad3deb76d12a578954a0d0",
+          "image": "sha256:8e620f3df65d3b9631f87c10c2db620357046228a5b1219ef4d8c34d66a1d013",
+          "running": true,
+          "health": "healthy",
+          "restart": "unless-stopped"
+        }
+      ],
+      "targets_retained_stopped": [
+        {
+          "name": "eva-o2-joint-20260929-core",
+          "id": "c66e281976409dd2e80bd0581d88a35842681d5987ec67178f18574a19aabec5",
+          "image": "sha256:35eba561f26f4745b7995ae849c9341c441361a74106326308781e7e3ffc7a69"
+        },
+        {
+          "name": "eva-o2-joint-20260929-worker",
+          "id": "9d6eea598db4f9431e9ebc9c7c7398a51251de7f1537c4f3728f1a4ccc928896",
+          "image": "sha256:bd95a3cec8a3afb7b77a5a9e4161006f7f7ba0ed3c73f0a6a60d50a72d9f6f8f"
+        },
+        {
+          "name": "eva-o2-joint-20260929-memory",
+          "id": "a6fd21d6ec7354d2ca66bde2512f9cbc96c721816ad355ac05baa2e0c3a3a5c1",
+          "image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710"
+        },
+        {
+          "name": "eva-o2-joint-20260929-gateway",
+          "id": "7f4e4d18968b700ed52ecd218ca173e01351be9b51445ad29f3bc322f11532ed",
+          "image": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd"
+        },
+        {
+          "name": "eva-o2-joint-20260929-documents-0-rw",
+          "id": "036f9cfcaf763322f9b22dcdb6bc2ee040d3989c911d01bb39d7a852b805c456",
+          "image": "sha256:56945913eacf31a47d4e2df5ad8f5ecced8bfd7c6cddcf249b49d60ba7d4210c"
+        },
+        {
+          "name": "eva-o2-joint-20260929-documents-1-rw",
+          "id": "f1ba5fbde9d526dc18dca9a234f2a32e35dff3baffe15905c9829cde0abea760",
+          "image": "sha256:56945913eacf31a47d4e2df5ad8f5ecced8bfd7c6cddcf249b49d60ba7d4210c"
+        },
+        {
+          "name": "eva-o2-joint-20260929-documents-2-rw",
+          "id": "41c90d79e0fa4ec366fa6d2df97d82e2f26060df7222dae466e0bfeb10bb5b14",
+          "image": "sha256:56945913eacf31a47d4e2df5ad8f5ecced8bfd7c6cddcf249b49d60ba7d4210c"
+        },
+        {
+          "name": "eva-o2-joint-20260929-documents-3-rw",
+          "id": "c487c687a110e65f35ef2080c1edebb5fa680b43ce8ae22f0b4a3c5748728fb5",
+          "image": "sha256:56945913eacf31a47d4e2df5ad8f5ecced8bfd7c6cddcf249b49d60ba7d4210c"
+        },
+        {
+          "name": "eva-o2-joint-20260929-filesystem",
+          "id": "35c45a3dda4fc0dc59460335afb04a7ec3b4b91b15211b31fd88cdafa85a4908",
+          "image": "sha256:bd31ea2dde76561fe662a551756f939e9007048956c300e54ad49a8c18ddfdc4"
+        },
+        {
+          "name": "eva-o2-joint-20260929-postgres",
+          "id": "0942c8078457316c27f57967b1320c955566f00363b31aa83da4f1eb3a353363",
+          "image": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1"
+        }
+      ],
+      "images_rebuilt": 0,
+      "data_deleted": false
+    }
+  },
+  "directed_environment_corrections": {
+    "gateway": "Five existing private document/filesystem endpoint IP pins rebound to actual isolated providers; same image/storage/network ranges and preserved old container.",
+    "prepared_writers": "The private preparation script converted direct Python healthchecks to CMD-SHELL despite a shell-free image. Corrected native writer configs retain image/command/credentials/mounts/HostConfig; same exact Python probes execute directly. New IDs/profiles independently reauthorized against the unchanged committed release. Core IP/aliases preserved; worker gets its first native IP on the same intended network.",
+    "data_retention": "All23tables/27899rows matched before memory API startup. Native Hindsight retention removes79expired historical llm_requests telemetry rows after startup. The other22tables/sequences/versions matched in the directed diagnosis; one-table replay restored exact pre-start verification state without a whole reimport. Persistent post-start telemetry equality is not claimed."
+  },
+  "focused_checks": [
+    {
+      "scope": "Gateway/prepared configuration/runtime authorization/component composition before native reconnect delta",
+      "passed": 94,
+      "duration_seconds": 1.15
+    },
+    {
+      "scope": "Memory inventory and row-multiset scale/permutation/duplicate behavior",
+      "passed": 14,
+      "duration_seconds": 1.25
+    },
+    {
+      "scope": "Final gateway/native reconnect and disabled-tool refusal",
+      "passed": 20,
+      "duration_seconds": 1.11
+    }
+  ],
+  "independent_review": {
+    "reviewer": "/root/open_questions_triage",
+    "status": "GO",
+    "source_review": "GO",
+    "health_and_current_authorization_review": "GO",
+    "path": "eva2/reviews/o2-actual-restore-20261001.md",
+    "final_scope": "Actual committed release, current corrected writer authorization, healthy startup, retained owner-memory readback and exact source resumption independently inspected."
+  },
+  "receipt_hashes": {
+    "restore-result.json": "771f6f6f7ddb7637bb3545d8e996080d275f7dda7ca60d8abee9b25dbabc326f",
+    "external-result.json": "02a5a98605960f51e9ef618f13d5f71416e0b4102540a4a7c7b0fec6d4aa9ec9",
+    "document-preparation-result.json": "8b083e20e5bb2d27e166f75e3ba07e249fb9066b2e0279cbd41ad59d9b2148a3",
+    "document-connection-result.json": "6913b239f82ab1c35c99c230b292a8cace07e39f17cd804460c5ab58b1db95e6",
+    "document-promotion-result.json": "8bab92d115ac8b091164f422c425146453ccfce8462ad045440a0504846c5b81",
+    "activation-component-result.json": "e111daa1bf330d38a52ea044e8c326b8110c57bd2b2436bce60d58b4006a7269",
+    "activation-release-result.json": "283bc2087e4ade84e088e0dc1ead268b84141602001346678bc5737872808fa9",
+    "memory-api-start-result.json": "5fa03eff10c8b783811ff26134bb8e3cef1b140866c9fa902ce0a148bb159e23",
+    "writer-health-correction-20261001.json": "5a470ea078a91dd7735de6eaf6a3710771f9380eac969607d89967798267c0bc",
+    "runtime-start-result.json": "d5e06ce6ce1eb9948bc2ae26ce4eb79b927125c6ee8bb4fdd5cc5ac5f3be85f7",
+    "post-start-native-readback-20261001.json": "ee5ff64382b57484fbc4f33ad07b2dc1c3358b43c6ec5f819f72d856153e2c74",
+    "source-resumed-20261001.json": "de8b52de73d4b833c57b8c20ee355816cfb8d4c67b36ef3dffb9b1ec8c3531a9",
+    "operator-installation-20261001.json": "360ec21861b2f78a77f1156c5e1b4e9eed4dc614955ced67fd8e507dfb43e53e",
+    "actual-memory-comparison-20261001.json": "5b71317c8d93d9f318e46441e66c370bd84760a7b1f1ec72120c657c64a7b41f",
+    "native-credential-history-preservation-20261001.json": "d7ab72c196eeb9b9703465ca0e9d7b667b9460cdfb10b43616ee2fd8c9b86173",
+    "gateway-network-reconfiguration-20261001.json": "abdcd52f05d761aaf2a451d805c3ae672dc1744f72f318958f89539e9ed93d76"
+  },
+  "private_receipt_directory": "/home/administrator/project/.eva2-artifacts/o2-consistent-source-20260929/joint-target",
+  "consumption": {
+    "model_calls_submitted_by_trial": 0,
+    "house_actions_submitted_by_trial": 0,
+    "development_credits": "unknown",
+    "runtime_credit_cost": "unknown",
+    "corrected_runtime_start_seconds": 37.683,
+    "whole_archive_reimports_this_resume": 0
+  },
+  "owner_action_required": false,
+  "owner_acceptance": "separate; not invented",
+  "limitations": [
+    "Uses preserved real29September source snapshot, not a new1October export.",
+    "An isolated installed restoration and native owner API readback; no general model recall, task behavior or physical-channel acceptance claim.",
+    "Retained browser registrations remain disabled only in the isolated clone; current production Chrome grant was not transferred or revoked.",
+    "Prepared target is retained stopped after proof; original source services run. No silent production cutover.",
+    "No new large Eva component completed; O1.2 and other installation/product work remain open."
+  ]
+}
