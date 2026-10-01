@@ -1,41 +1,41 @@
 # EVA2 werkbord
 
-## Nu: beide gecorrigeerde audioroutes geïnstalleerd; gesprekstest open
+## Nu: eerst een betrouwbaar gesprek op Woonkamer
 
-De bestaande gedeelde luisterroute blijft open bij lege HA-spraakherkenning.
-De native audioaanvoer van 3 s is verbeterd van minimaal 8,66 s naar 2,39 s;
-werkelijk afspelen en volledige bevestiging duren 3,43 s. Bestaande HA-spraak
-(4,536s audio) speelt volledig af. Expliciet stoppen op het apparaat duurt 203 ms;
-het volgende antwoord heeft opnieuw exacte afspeelbevestiging.
+**Eerstvolgende spraaktaak: C3.1, Codex /root.** De eigenaar meldt dat de eerste speaker nog niet
+het verwachte gesprek biedt. Codex heeft de passieve apparaatstatus gecontroleerd. De luister-/gespreksroute
+moet gericht verder worden onderzocht;
+het actuele symptoom wordt verduidelijkt zonder uitgebreide nieuwe proef.
+Outputmetingen bewijzen geen verstaanbaar gesprek of microfoononderbreking.
+De passieve apparaatcontrole bevestigt bereikbaarheid, huidige firmware en mute uit.
+Er kwamen geen loggebeurtenissen binnen; de actuele faalovergang is daarmee nog
+niet vastgesteld. Geen model-/STT-/TTS-aanvraag, OTA of herinstallatie hiervoor.
+Geen uitvoerder actief na deze gerichte controle; geen verborgen telefoonwerk.
+De eerdere melding van stotteren, snel blauw draaien en gemiste antwoorden blijft
+bewaard; geen nieuwe regressie of geslaagde conversatie verondersteld.
 
-De oorzaak van de ontbrekende eindbevestiging was een niet-geflushte FIR-staart.
-Acht echte stiltesamples, afgeleid van de gepinde 16-tapsresampler, lossen dat op;
-antwoordtellingen en fysieke stopbarrière blijven intact. Gedeelde media en
-native Python-output zijn geïnstalleerd; Woonkamer heeft de gerichte firmware.
-/root/open_questions_triage reviewde media/transport en leverde firmware;
-root reviewde die onafhankelijk en controleerde de echte geïnstalleerde route.
+**Voor jou nu:** geen tweede-speakerproef en geen HA-telefoon-/laptopproef.
+Speakers en Telegram zijn de primaire routes. Eerst Woonkamer oplossen; daarna
+een korte beoordeling daar en pas daarna dezelfde beoordeling op Overkapping.
+De geïnstalleerde paneel-/webmogelijkheid blijft optioneel; C4.3 is geen vereiste
+voor deze primaire oplevering en wordt niet als afgerond of geaccepteerd geteld.
+Concrete statische Telegramantwoorden blijven bruikbaar als feedback voor M3.3.
+P1.1-aanmelding is alleen nodig voor de eindvergelijking.
 
-**Jij kunt nu:** op Woonkamer een onderzoeksopdracht stellen, tijdens denken
-zonder wakeword Hoe gaat het met jou? zeggen, en tijdens spraak direct spreken.
-Meld verstaanbaarheid en of zij de tussenvraag hoort. Geen technische herstelactie.
-Dit is fysieke beoordeling; de outputmeting bewijst geen microfoonbarge-in.
+**Bestaand resultaat behouden:** dezelfde audiocorrectie is op beide speakers
+geïnstalleerd. Echte 3 s audio en HA-spraak hebben volledige afspeelbevestiging;
+expliciet transportstoppen en het volgende antwoord slagen. Dit betreft uitvoer,
+geen volledige gesprekken. Overkapping blijft op de oorspronkelijke mute-stand.
+Broncheckpoint `890f0bef` staat op GitHub. Geen nieuwe OTA of herinstallatie
+alleen vanwege ontbrekende menselijke beoordeling.
 
-**Andere eigenaaracties:** P1.1 wanneer aanwezig voor OpenClaw/Hermes-aanmelding;
-C4.3 telefoon via http://10.0.20.74:8123/eva-owner-voice, Begin gesprek en tijdens
-haar antwoord spreken; M3.3 concrete statische antwoorden terugmelden. Browserovername,
-initiatief en gezinsweek volgen pas als de betreffende route gereed is. O2.3 klaar.
-
-**Stand blijft 16/44 kleine taken, 2/9 grote onderdelen.** C3.1 blijft open voor
-het volledige gewone gesprek; C3.2 tweede speaker volgt. M1/C3.3-acceptaties behouden.
-Broncheckpoint 44d1a728 staat op GitHub. Overkapping heeft nu exact dezelfde
-gecorrigeerde module: 72000 frames en echte HA-spraak volledig bevestigd,
-expliciet stoppen 197 ms en volgend antwoord slagen. Eén OTA; identiteit,
-instellingen en mute-aan behouden. Haal die speaker van mute voor gesprek.
-Geen uitvoerder actief na deze installatiecontrole; T2 algemene HA-opdracht is
-de volgende bouwtaak, nog niet gestart. Geen overige verborgen bouwtaken.
-[Bewijs](evidence/product/c3-audio-stutter-fix-20261001.json) ·
-[Review](reviews/c3-audio-stutter-fix-20261001.md).
-Eva-modelcalls: 0; werkelijk 3 STT- en 2 TTS-aanvragen voor controle. Credits onbekend.
+**Stand ongewijzigd: 16/44 kleine taken, 2/9 grote onderdelen.** M1 en C3.3 blijven
+geaccepteerd; O2.3 is afgerond. Na Woonkamer/Overkapping volgt de bestaande
+algemene HA-opdracht T2 via dezelfde kern; geen nieuwe kanaalspecifieke logica.
+[Woonkamerbewijs](evidence/product/c3-audio-stutter-fix-20261001.json) ·
+[Tweede-speakerbewijs](evidence/product/c3-second-speaker-20261001.json).
+Deze scope-/volgordecorrectie is geen nieuwe Eva-functie. Eva-modelcalls voor deze
+correctie: 0; ontwikkelcredits onbekend.
 
 ## Laatst opgeleverd: O2.3 — herstelroute opgelost en geïnstalleerd
 

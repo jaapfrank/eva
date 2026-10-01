@@ -1,5 +1,17 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaarcorrectie 1 oktober 2026 — eerst werkend gesprek via speakers en Telegram
+
+Speakers en Telegram zijn de primaire gebruiksroutes voor deze oplevering.
+Een gesprek via het HA-paneel op telefoon of laptop is geen verplichte
+gebruikersproef en blokkeert deze oplevering niet. De bestaande paneel-/webroute
+blijft behouden als optionele mogelijkheid; geen nieuwe bouwronde voor die route.
+Vraag geen tweede-speakerproef zolang de gewone woonkamerconversatie nog faalt.
+Codex onderzoekt eerst de bestaande woonkamerfout; daarna volgt een korte fysieke
+beoordeling, en pas daarna dezelfde beoordeling op de tweede speaker.
+Outputmetingen en expliciet transportstoppen bewijzen geen verstaanbaar gesprek
+of onderbreken met de microfoon. Bestaande acceptaties blijven behouden.
+
 ## Eigenaarverduidelijking 1 oktober 2026 — gedeelde kern en gerichte kanaalcontrole
 
 Algemene huisbediening, automatiseringen en andere taakfuncties moeten via chat,
