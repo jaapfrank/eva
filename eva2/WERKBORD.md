@@ -2,6 +2,8 @@
 
 ## Actueel: P1.1 — Hermes-start klaar; eigen login ontbreekt
 
+Nu: native aanvraagopbouw leest Sol/none en Astra/medium correct terug, zonder inferentie. De configuratie alleen bewees deze aansluiting nog niet; twee gerichte gevallen toegevoegd en onafhankelijke review GO. De native aanmeldsessie is beëindigd met `device_code_timeout`; geen toegang bevestigd, geen proces meer actief, geen nieuwe aanmelding automatisch gestart. [Aanvraagbewijs](evidence/product/p1-hermes-native-request-20261001.json) · [Review](reviews/p1-hermes-native-request-20261001.md). SDK-/provideracceptatie en volledige P1.1 blijven open; geen nieuwe agentlus, evaluator of extra Eva-functie.
+
 Vastgelegde native bron schoon; core geïnstalleerd uit ongewijzigde lock in aparte proefomgeving. Echte constructor leest Sol/none en Astra/medium terug via Codex Responses. Twee gerichte gevallen in OS-netwerkisolatie geslaagd, nul externe model- of authaanvragen tijdens deze startcontrole. Inerte startsleutel en lege toolsets: dit bewijst geen toegang, agentlus of vergelijking. Eigen Hermes-auth ontbreekt (`codex_auth_missing`); eigen native aanmelding gevraagd en nog niet ontvangen, geen overgenomen tokens. Onafhankelijke review GO voor startvoorbereiding/aanmeldroute; geen Eva-installatiewijziging of extra productfunctie. [Bewijs](evidence/product/p1-hermes-native-startup-20261001.json) · [Review](reviews/p1-hermes-native-startup-20261001.md). Ontwikkelcredits onbekend; Eva-runtimeverbruik nul.
 
 ## Actueel: P1.1 — native agentroute aangesloten en beoordeeld

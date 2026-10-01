@@ -28,6 +28,8 @@ def main() -> None:
     parser.add_argument("--profile", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--role", choices=MODELS, required=True)
+    parser.add_argument("--request-readback", action="store_true",
+                        help="Also inspect native request assembly; never invoke the SDK")
     args = parser.parse_args()
     source = args.source.resolve()
     profile = args.profile.resolve()
@@ -97,6 +99,21 @@ def main() -> None:
                 "reasoning": agent.reasoning_config, "toolCount": len(agent.tools or [])}
             assert agent.model == model and agent.reasoning_config == {"effort": effort}
             assert agent.api_mode == "codex_responses" and not report["externalLoginAdoption"]
+            if args.request_readback:
+                prepared = agent._build_api_kwargs([
+                    {"role": "system", "content": "Native request configuration check."},
+                    {"role": "user", "content": "Synthetic input; do not execute."},
+                ])
+                report["nativeRequestReadback"] = {
+                    "model": prepared.get("model"), "reasoning": prepared.get("reasoning"),
+                    "toolCount": len(prepared.get("tools") or []),
+                    "store": prepared.get("store"), "stream": prepared.get("stream"),
+                    "inputItemCount": len(prepared.get("input") or []),
+                    "sdkInvoked": False,
+                }
+                assert prepared.get("model") == model
+                assert (prepared.get("reasoning") or {}).get("effort") == effort
+                report["requestStatus"] = "native_request_settings_passed"
             agent.client.close()
             report["status"] = "constructor_readback_passed"
     except Exception as exc:

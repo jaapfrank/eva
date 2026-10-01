@@ -1,0 +1,157 @@
+{
+  "contract": "EvaHermesNativeRequestReadbackEvidence/v1",
+  "checkedAt": "2026-10-01T00:14:44.785327+00:00",
+  "assignment": "P1.1",
+  "baseCommit": "035d4488",
+  "status": "native_request_settings_passed_access_not_confirmed",
+  "method": "Existing constructor probe with --request-readback. Real AIAgent._build_api_kwargs over synthetic local messages; no SDK request, native source unchanged.",
+  "existing": "Prior startup/readback and isolated frozen-lock core installation retained; own login remains separate.",
+  "gapAddressed": "Constructor configuration did not establish actual request assembly model/reasoning.",
+  "cases": [
+    {
+      "contract": "HermesNativeStartupReadback/v1",
+      "role": "contact",
+      "sourceCommit": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
+      "sourceDirty": false,
+      "lockSha256": "5b3798f326209475abca8ef7cbf7c9406f12e687c28c0b540dfe597466f48590",
+      "packages": {
+        "hermes-agent": "0.21.5",
+        "openai": "2.24.0",
+        "httpx": "0.28.1",
+        "pydantic": "2.13.4"
+      },
+      "externalInferenceRequests": 0,
+      "authRequests": 0,
+      "networkIsolation": "Caller must use unshare -n; no provider transport invoked",
+      "constructorCredential": "Inert explicit startup key; not native authentication",
+      "tools": "Empty constructor toolsets; no tool execution or comparison admission",
+      "admission": "not_admitted",
+      "externalLoginAdoption": false,
+      "auth": {
+        "state": "missing_or_unavailable",
+        "code": "codex_auth_missing"
+      },
+      "nativeReadback": {
+        "model": "gpt-6-sol",
+        "provider": "openai-codex",
+        "apiMode": "codex_responses",
+        "baseUrl": "https://chatgpt.com/backend-api/codex",
+        "reasoning": {
+          "effort": "none"
+        },
+        "toolCount": 0
+      },
+      "nativeRequestReadback": {
+        "model": "gpt-6-sol",
+        "reasoning": {
+          "effort": "none",
+          "summary": "auto"
+        },
+        "toolCount": 0,
+        "store": false,
+        "stream": null,
+        "inputItemCount": 1,
+        "sdkInvoked": false
+      },
+      "requestStatus": "native_request_settings_passed",
+      "status": "constructor_readback_passed",
+      "durationSeconds": 10.404
+    },
+    {
+      "contract": "HermesNativeStartupReadback/v1",
+      "role": "work",
+      "sourceCommit": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
+      "sourceDirty": false,
+      "lockSha256": "5b3798f326209475abca8ef7cbf7c9406f12e687c28c0b540dfe597466f48590",
+      "packages": {
+        "hermes-agent": "0.21.5",
+        "openai": "2.24.0",
+        "httpx": "0.28.1",
+        "pydantic": "2.13.4"
+      },
+      "externalInferenceRequests": 0,
+      "authRequests": 0,
+      "networkIsolation": "Caller must use unshare -n; no provider transport invoked",
+      "constructorCredential": "Inert explicit startup key; not native authentication",
+      "tools": "Empty constructor toolsets; no tool execution or comparison admission",
+      "admission": "not_admitted",
+      "externalLoginAdoption": false,
+      "auth": {
+        "state": "missing_or_unavailable",
+        "code": "codex_auth_missing"
+      },
+      "nativeReadback": {
+        "model": "gpt-6-astra",
+        "provider": "openai-codex",
+        "apiMode": "codex_responses",
+        "baseUrl": "https://chatgpt.com/backend-api/codex",
+        "reasoning": {
+          "effort": "medium"
+        },
+        "toolCount": 0
+      },
+      "nativeRequestReadback": {
+        "model": "gpt-6-astra",
+        "reasoning": {
+          "effort": "medium",
+          "summary": "auto"
+        },
+        "toolCount": 0,
+        "store": false,
+        "stream": null,
+        "inputItemCount": 1,
+        "sdkInvoked": false
+      },
+      "requestStatus": "native_request_settings_passed",
+      "status": "constructor_readback_passed",
+      "durationSeconds": 9.989
+    }
+  ],
+  "execution": {
+    "osNetworkIsolation": true,
+    "externalInferenceRequests": 0,
+    "authRequests": 0,
+    "toolExecutions": 0,
+    "nativeLoopExecuted": false,
+    "changedCause": "New request-assembly observation only; no unmodified replay."
+  },
+  "limitations": [
+    "Request assembly is before SDK submission, middleware final dispatch and provider acceptance; no final HTTP serialization claimed",
+    "Native request includes reasoning summary auto, including effort none; provider acceptance not tested",
+    "Inert startup key, empty tools, disabled constructor memory/background review are recorded restrictions, not comparison admission",
+    "Not an answer speed/quality/cost comparison; no extra Eva function or P1.1 completion"
+  ],
+  "remaining": [
+    "Independent native Hermes auth and actual SDK/provider wiring",
+    "Helper/tool/retry/memory/budget/stop coverage and other equal participant access"
+  ],
+  "review": {
+    "decision": "GO for native request assembly only",
+    "path": "eva2/reviews/p1-hermes-native-request-20261001.md",
+    "reviewer": "/root/review_telegram_draft_lane",
+    "sha256": "0aefc37a1c01a6f15c96c7e8ceb5f641b215d7103b65ad9fd389b1e911f41216"
+  },
+  "nativeLoginTerminal": {
+    "observedAt": "2026-10-01T00:15:59+00:00",
+    "sessionHandle": 72241,
+    "exitCode": 1,
+    "status": "native_login_failed",
+    "errorCode": "device_code_timeout",
+    "loginConfirmed": false,
+    "processActive": false,
+    "restarted": false,
+    "authRequestCount": null
+  },
+  "developmentCreditCost": null,
+  "evaRuntimeModelRequests": 0,
+  "historicalStartupEvidence": {
+    "path": "eva2/evidence/product/p1-hermes-native-startup-20261001.json",
+    "probeSourceCommit": "035d4488",
+    "currentProbeChangesAreNotCoveredByOldStartupReview": true
+  },
+  "sha256": {
+    "probe": "f4ccdf836e7f42034ccc59f693707f5ba587747aac1c9eb5ee0ddeff386a416d",
+    "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-request-v1-contact.json": "737c12032a0e303267c6c0bceb85db9595248397ff46620fe10a987e5d976542",
+    "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-request-v1-work.json": "a6f0ba0b93a1b4669807a33e0fb39125aad2748c8e000299e62aed4d0bca972d"
+  }
+}

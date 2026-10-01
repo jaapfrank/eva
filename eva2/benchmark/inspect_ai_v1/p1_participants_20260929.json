@@ -52,7 +52,7 @@
         "runtimeInstalled": true
       },
       "nativeStartup": {
-        "status": "constructor_readback_passed_own_login_pending",
+        "status": "constructor_readback_passed_own_login_missing",
         "reviewDecision": "GO for startup preparation/login driver only",
         "evidence": "eva2/evidence/product/p1-hermes-native-startup-20261001.json",
         "review": "eva2/reviews/p1-hermes-native-startup-20261001.md",
@@ -61,10 +61,22 @@
         "contact": "gpt-6-sol / none / codex_responses",
         "work": "gpt-6-astra / medium / codex_responses",
         "startupCredential": "Inert explicit key only; no authenticated request",
-        "auth": "Independent native device login awaiting user; no external rotating token import",
+        "auth": "Independent native device login ended with device_code_timeout; no saved session confirmed, no external rotating token import",
         "externalInferenceRequests": 0,
         "admission": "not_admitted",
         "remaining": "Own native access, full provider/helper/tool/budget/stop admission and equal comparison inputs remain open."
+      },
+      "nativeRequestPreparation": {
+        "status": "native_request_settings_passed_access_missing",
+        "evidence": "eva2/evidence/product/p1-hermes-native-request-20261001.json",
+        "review": "eva2/reviews/p1-hermes-native-request-20261001.md",
+        "contact": "Native AIAgent assembly: gpt-6-sol, reasoning effort none, summary auto",
+        "work": "Native AIAgent assembly: gpt-6-astra, reasoning effort medium, summary auto",
+        "sdkInvoked": false,
+        "externalInferenceRequests": 0,
+        "nativeLoginState": "device_code_timeout; no active process or confirmed login",
+        "admission": "not_admitted",
+        "remaining": "Authenticated SDK/final dispatch/provider acceptance, native helper/tool/stop/budget coverage and equal inputs remain open."
       }
     },
     {

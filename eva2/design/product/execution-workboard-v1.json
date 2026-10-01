@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T00:05:56+00:00",
+        "checkedAt": "2026-10-01T00:18:43+00:00",
         "deliveries": [
+          {
+            "title": "Vergelijking: Hermes-aanvraaginstellingen doorgegeven",
+            "date": "1 oktober",
+            "state": "tested",
+            "result": "Echte native aanvraagopbouw behoudt Sol/none en Astra/medium. Twee gerichte gevallen en onafhankelijke review GO; nul SDK-/inferentieaanvragen.",
+            "remaining": "Native login niet voltooid; aanmeldproces beëindigd. Provideracceptatie, volledige vergelijking en P1.1 open. Geen extra Eva-functie.",
+            "source": "eva2/evidence/product/p1-hermes-native-request-20261001.json"
+          },
           {
             "title": "Vergelijking: Hermes-native start en instellingen gecontroleerd",
             "date": "1 oktober",
@@ -3139,10 +3147,10 @@
           }
         ],
         "now": {
-          "title": "P1.1: eigen Hermes-aanmelding wacht op gebruiker",
+          "title": "P1.1: Hermes-aanvraaginstellingen gecontroleerd; login ontbreekt",
           "state": "Wacht op aanmelding",
           "owner": "Codex /root",
-          "detail": "Beide native modelinstellingen gecontroleerd; onafhankelijke review akkoord. Eigen aanmelding gevraagd en nog niet ontvangen. Geen inferentie of nieuwe Eva-functie."
+          "detail": "Native aanvraagopbouw geeft Sol/none en Astra/medium door; onafhankelijke review GO, nul inferentie. Aanmeldproces beëindigd met device_code_timeout; geen sessie bevestigd of proces actief. Nieuwe aanmelding wacht op gebruiker."
         },
         "next": {
           "title": "Eigen Hermes-login verbinden",
@@ -3152,15 +3160,15 @@
           "title": "Meld Hermes aan voor de vergelijking",
           "steps": [
             "Open de OpenAI-apparaataanmelding.",
-            "Vul de code uit de huidige Codex-vraag in en meld aan met hetzelfde account.",
-            "Bevestig hier zodra Hermes is aangemeld."
+            "Laat in Codex weten wanneer je kunt aanmelden; de vorige native aanmeldsessie is afgelopen.",
+            "Gebruik dan de nieuwe aanmeldcode met hetzelfde account."
           ],
           "expected": "Een eigen Hermes-sessie binnen het bestaande abonnement; geen gekopieerde tokens of betaalde modelaanvraag. De volledige vergelijking is nog open.",
           "url": "https://auth.openai.com/codex/device",
           "linkLabel": "Open aanmelding"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T00:05:56+00:00",
+        "reviewedAt": "2026-10-01T00:18:43+00:00",
         "previousOwnerAction": {
           "title": "Lees het afgeronde zondagplan",
           "steps": [
@@ -14727,8 +14735,8 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Hermes native core geïsoleerd geïnstalleerd; echte constructor leest Sol/none en Astra/medium via Codex Responses. Eigen Hermes-login ontbreekt nog; Agent Zero-bewijs behouden. Geen volledige vergelijkingsroute of extra Eva-functie.",
-              "latestEvidence": "eva2/evidence/product/p1-hermes-native-startup-20261001.json",
+              "remaining": "Hermes start én native aanvraagopbouw onafhankelijk GO; eigen login ontbreekt. Aanmeldproces beëindigd met device_code_timeout; geen actieve proef of aanmelding. Agent Zero-bewijs behouden. Volledige vergelijkingsroute/P1.1 en extra Eva-functie niet afgerond.",
+              "latestEvidence": "eva2/evidence/product/p1-hermes-native-request-20261001.json",
               "assignment": {
                 "baseCommit": "1d490929",
                 "owner": "/root",
@@ -14742,12 +14750,10 @@
                 "outcome": "Install declared locked native core in isolated artifact environment; read actual native model/effort/route settings without inference or copied credentials. Prepare independent native login only if required.",
                 "finish": "Pinned native constructor/configuration loads for Sol/none and Astra/medium in clean private profile, with SDK/auth state safely described. Missing access remains explicit. No native loop/model calls or new evaluator.",
                 "estimate": "Existing declared dependency lock and one native startup/readback probe; no external inference or Eva installation. Development credits unknown.",
-                "stage": "hermes_own_login_pending_review_passed",
-                "activeWorkers": [
-                  "/root"
-                ]
+                "stage": "hermes_native_request_reviewed_login_terminal",
+                "activeWorkers": []
               },
-              "blocker": "Eigen Hermes-auth ontbreekt; aparte native aanmelding nodig. Model-/helper-/tool-/stopdekking en gelijkwaardige overige toegang blijven open.",
+              "blocker": "Eigen Hermes-auth ontbreekt; native aanmeldproces beëindigd met device_code_timeout. Geen actieve aanmeldsessie; nieuwe aanmelding vereist gebruiker. Model-/helper-/tool-/stopdekking en gelijkwaardige overige toegang blijven open.",
               "nextImplementation": "Resolve remaining native participant startup/access using existing pinned sources and adapters. Agent Zero fixed-envelope helper refusal remains unavailable; no automatic native rerun, hidden helper disabling or quota increase. Deployed/native/all-path parity still required before live comparison.",
               "checkedAt": "2026-10-01T00:01:16.695228+00:00"
             },
