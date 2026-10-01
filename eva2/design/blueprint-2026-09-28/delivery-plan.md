@@ -240,7 +240,7 @@ success cannot claim all desktop software. Required login is visible human assis
 | Slice | Usable outcome and end condition | Responsibility | Effort |
 |---|---|---|---|
 | I1 | Eva chooses a useful household action or observation from real context, completes authorized work and reports to the appropriate audience; irrelevant events cause silence | Platform scheduler, event/intention policy and existing HA/doorbell access | M |
-| I2 | Camera/calendar context supports a useful reminder, and self-chosen research produces a source-backed proposal; suggestions are not repeatedly resurfaced | Same initiative pipeline, perception/calendar modules and retained decisions | M |
+| I2 | Eva discovers relevant camera/calendar sources and creates an observation/reminder automation from an ordinary request using general tools; self-chosen research produces a source-backed proposal without repeatedly resurfacing suggestions. Bin monitoring is an example, not a core feature or prerequisite owner source selection (owner clarification 1 October). | Existing discovery, perception/calendar modules, general HA automation tools, initiative pipeline and retained decisions | M |
 
 I1 must preserve valued Eva1 doorbell/home presence. Examples are evaluation cases,
 not hardcoded rules. Warmth, humor, useful curiosity and independent judgment are

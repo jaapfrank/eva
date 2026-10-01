@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-01T08:29:24.012467+00:00",
+  "lastUpdated": "2026-10-01T09:01:39.597591+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T08:29:24.012467+00:00",
+        "checkedAt": "2026-10-01T09:01:39.597591+00:00",
         "deliveries": [
           {
             "title": "Gewone wizard: nieuwe lokale Eva bereikbaar",
@@ -3195,27 +3195,25 @@
           }
         ],
         "now": {
-          "title": "O1.1 — eerste lokale installatie technisch opgeleverd",
-          "state": "installed",
-          "detail": "Gewone wizard start nieuwe Windows/WSL-tekstinstallatie; echte browserlink en twee opgeslagen gespreksturns gecontroleerd, onafhankelijke review GO. O1 nog open; vervolg O1.2 nog niet gestart."
+          "title": "O1.2 — gekozen modules aansluiten",
+          "state": "in_progress",
+          "detail": "Eén uitvoerder; tekstinstallatie O1.1 opgeleverd. Gekozen HA-aansluiting gebouwd en gericht gecontroleerd, nog niet op de doelinstallatie bevestigd. Spraak/browser blijven open. I2-bronkeuzeblokkade vervallen: algemene automatiseringsvaardigheid gevraagd."
         },
         "next": {
-          "title": "O1.2 — gekozen optionele modules aansluiten",
-          "detail": "Basis zonder Telegram/HA/e-mail/adaptive werkt. Verbind gekozen providers met dezelfde gewone installatie; geen nieuwe installatiecyclus of publieke supportclaim."
+          "title": "Gekozen modules als bruikbaar geheel afronden",
+          "detail": "Bestaande O1.2 afmaken met daadwerkelijke gekozen moduleaansluiting. I2 daarna via algemene bronontdekking en automatiseringen; geen aparte vuilnisbakfunctie of verplichte bronkeuze."
         },
         "ownerAction": {
-          "title": "OpenClaw apart aanmelden voor vergelijking",
+          "title": "Aanmelding gemeld; geen nieuwe camerakeuze nodig",
           "steps": [
-            "Laat hier in Codex weten wanneer je klaarzit voor een korte aanmelding.",
-            "Ik maak daarna een nieuwe native code voor de eigen OpenClaw-proefomgeving.",
-            "Gebruik hetzelfde bestaande account; er worden geen tokens uit Eva of Agent Zero gekopieerd."
+            "Je hebt gemeld dat je bent aangemeld; de eigen vergelijkingskoppeling moet nog worden bevestigd.",
+            "Voor I2 hoef je geen camera of afvalagenda vooraf te kiezen: Eva moet passende bronnen zelf ontdekken.",
+            "De bestaande hoorbare speaker- en telefoonproeven blijven apart open."
           ],
-          "expected": "Echte eigen toegang en catalogus controleren; geen modelwerk alleen voor aanmelding. Hermes heeft ook nog geen eigen login; vorige sessie is verlopen.",
-          "url": "https://auth.openai.com/codex/device",
-          "linkLabel": "Open native aanmelding"
+          "expected": "Geen nieuwe aanmeldpoging of vooraf gekozen broncombinatie eisen zonder actuele controle. Aangemeld zijn is nog geen bewezen native modeltoegang."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T08:29:24.012467+00:00",
+        "reviewedAt": "2026-10-01T09:01:39.597591+00:00",
         "previousOwnerAction": {
           "title": "Probeer onderbreken op je telefoon",
           "steps": [
@@ -13046,7 +13044,7 @@
           ]
         }
       ],
-      "nextAction": "O1.2: reuse optional capability projection; connect selected providers to ordinary confirmed installation without hardcoded owner paths. Not started yet.",
+      "nextAction": "O1.2 connect chosen modules to ordinary package preparation, starting with existing verified HA input/graph boundary; retain full voice/HA/browser scope.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -14284,8 +14282,8 @@
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Camera/HA perception, retained initiative decisions, research and result storage exist.",
-            "remainingGap": "Confirmed visual-input gap: existing API is JSON/text, not image inference. Calendar list access works; authorized event selection and visual-calendar correlation remain open.",
-            "nextAction": "Reuse Eva1 snapshot access pattern, current HA credential and sensory event authority. Add only optional visual-observation adapter after model/hardware selection and a bounded recorded-image comparison; preserve original image timestamp/provenance, do not put private calendar contents into shared speaker context.",
+            "remainingGap": "Existing source access, optional vision and initiative/result routes have evidence; self-directed source selection and creation/execution of a useful observation automation are not yet established as a complete outcome. No new camera sweep or dedicated bin connector is justified.",
+            "nextAction": "Reuse installed discovery, image/calendar access and general HA/automation tools. Check the whole ordinary request-to-created-automation-to-result route; change only a proven missing generic transition. Ask the owner only when discovery leaves a genuine ambiguity.",
             "evidencePaths": [
               "eva2/evidence/product/household-presence-gap-20260924.json",
               "eva2/evidence/product/household-initiative-installed-20260924.json"
@@ -14313,7 +14311,7 @@
             "sourceCommit": "122b91ae12f5c2b12e27c7ba32de305c3eb0702b"
           },
           "evidence": "eva2/evidence/product/local-vision-installed-20260928.json",
-          "remaining": "Nuttige autonome camera-/agendauitkomst niet geleverd. Bestaande dagruimte4/4verbruikt (1initiatief,3geheugenreflecties), camerakeuze gevraagd. Geen nieuw defect of rechtvaardiging voor quotareset/herbouw.",
+          "remaining": "Algemene vaardigheid nog afmaken: passende bestaande bronnen zelfstandig ontdekken, de gevraagde waarneming als automatisering instellen en met een nuttig resultaat terugkomen. Geen verplichte vuilnisbakfunctie of voorafgaande bronkeuze van Jaap.",
           "discoveryEvidence": "eva2/evidence/product/ha-domain-selection-installed-20260928.json",
           "connectionInstalledEvidence": "eva2/evidence/product/initiative-vision-read-installed-20260928.json",
           "reviewPacingEvidence": "eva2/evidence/product/initiative-review-pacing-installed-20260928.json",
@@ -14333,25 +14331,31 @@
           "remainingTasks": [
             {
               "id": "I2.1",
-              "title": "Bedoelde camera en agenda kiezen",
-              "status": "blocked",
-              "kind": "keuze",
-              "doneWhen": "De bestaande koppelingen gebruiken de bedoelde bronnen; nog open camerakeuze expliciet vastgelegd.",
-              "owner": "Jaap",
-              "blocker": "Concrete owner choice pending: G5 garage deur, G5 tuin or G4 Doorbell Pro; Afvalwijzer Calendar or afval. Existing source evidence confirms availability; no new connector or camera sweep needed.",
-              "checkedAt": "2026-09-29T21:34:52.725734+00:00",
+              "title": "Relevante bronnen zelfstandig ontdekken en kiezen",
+              "status": "planned",
+              "kind": "aansluiten",
+              "doneWhen": "Eva ontdekt en kiest via bestaande algemene hulpmiddelen de camera-/agendabronnen die bij een gewone waarnemingsopdracht passen; alleen echte onduidelijkheid vraagt een vervolgvraag.",
+              "owner": "Codex /root",
+              "blocker": null,
+              "checkedAt": "2026-10-01T09:01:39.597591+00:00",
               "sourceEvidence": [
                 "eva2/evidence/product/ha-domain-selection-installed-20260928.json",
                 "eva2/evidence/product/initiative-calendar-source-20260928.json"
-              ]
+              ],
+              "ownerClarification": {
+                "date": "2026-10-01",
+                "source": "Owner message in this chat",
+                "decision": "Bins were an example of general intelligence: discover suitable sources and create the required automation using general tools, not a built-in bin function. A named camera/calendar choice is not a project prerequisite.",
+                "previousBlocker": "Superseded owner-choice requirement; no completed user capability inferred."
+              }
             },
             {
               "id": "I2.2",
-              "title": "Waarneming tot herinnering afmaken",
+              "title": "Waarnemingsopdracht zelf automatiseren en terugmelden",
               "status": "planned",
               "kind": "aansluiten",
-              "doneWhen": "Echte beeld-/agendacontext leidt tot een nuttige terugmelding binnen bestaand mandaat en verbruiksbudget.",
-              "owner": "Codex"
+              "doneWhen": "Eva stelt de gevraagde waarneming en terugmelding zelf in via bestaande algemene hulpmiddelen en passende automatisering, zonder vraag-/apparaatspecifieke kernregel; de werkelijke terugmelding blijft binnen het bestaande mandaat.",
+              "owner": "Codex /root"
             }
           ]
         },
@@ -14671,7 +14675,7 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": null,
+          "activeWorker": "/root",
           "dashboardComponent": "installation",
           "remainingTasks": [
             {
@@ -14746,14 +14750,35 @@
             {
               "id": "O1.2",
               "title": "Optionele modules kunnen weglaten",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "aansluiten",
               "doneWhen": "Dezelfde installatie werkt met gekozen modules; geen hardcoded eigenaarpaden.",
-              "owner": "Codex",
+              "owner": "Codex /root",
               "blocker": null,
               "evidence": "eva2/evidence/product/installer-optional-selection-20260929.json",
-              "checkedAt": "2026-10-01T08:29:24.012467+00:00",
-              "remaining": "Basis zonder optionele providers werkt. Factory accepteert nog alleen expliciet overslaan; gekozen providers op bestaande selectie/voorbereiding aansluiten is het resterende O1.2-werk."
+              "checkedAt": "2026-10-01T08:39:36.283951+00:00",
+              "remaining": "Basis zonder optionele providers werkt. Factory accepteert nog alleen expliciet overslaan; gekozen providers op bestaande selectie/voorbereiding aansluiten is het resterende O1.2-werk.",
+              "assignment": {
+                "baseCommit": "854014862daf80830d18b167a1c8a42460a60ed6",
+                "owner": "/root",
+                "activeWorkers": [
+                  "/root"
+                ],
+                "stage": "selected_module_wiring",
+                "existing": "O1.1 actual text target and omission proof complete. Existing capability/secret/provider verification, HA URL configuration, maintained optional graph projection and HA runtime connector already exist.",
+                "gap": "Ordinary factory rejects selected providers. Existing v4 verification receipts already bind non-secret configuration and secret generation; reuse them in preparation. Voice/HA/browser add/omit remain the original full O1.2 scope.",
+                "outcome": "Dezelfde installatie werkt met gekozen modules; geen hardcoded eigenaarpaden.",
+                "design": "Reuse confirmed plan, actual provider configuration/secret generations and optional projection. Supply selected HA inputs into maintained runtime graph and actual starter, preserve skipped providers. Inspect existing voice/browser module boundaries before their installation wiring; no independent installer/framework or repeated deployment of current Eva.",
+                "files": [
+                  "eva2/tools/packaged_installer_target.py",
+                  "eva2/src/eva/bootstrap/installer_wizard_cli.py",
+                  "eva2/src/eva/operations/installer_installation_plan.py",
+                  "eva2/tools/installer_runtime_materialization.py",
+                  "relevant existing module wiring and focused tests"
+                ],
+                "estimate": "One executor, existing route and focused actual selected-module verification. No planned paid research or real house mutation. Development credits unknown; provider/model usage recorded if invoked.",
+                "finishScope": "Original task finish retained. O1 parent cannot close until voice/HA/browser module additions/omissions are available through ordinary owner choices; unsupported channels must remain explicit."
+              }
             }
           ],
           "assignment": {
@@ -15155,6 +15180,10 @@
         "integrationRule": "Deliver relevant source/images/package files/configuration/data schema/runtime access/core-worker pins together; check necessary seams early using existing tooling.",
         "optimizationRule": "Measure bottleneck and preserve answer quality, memory, privacy, autonomy and owner model-routing decisions. Distinguish receipt latency/content latency and development/runtime cost.",
         "innovationRule": "Retain agreed bounded innovation comparison; a loss neither proves superiority nor authorizes unbounded new research."
+      },
+      "ownerClarification20261001": {
+        "date": "2026-10-01T09:01:39.597591+00:00",
+        "decision": "I2 is a general discover/observe/automate capability, not a hardcoded bins use case or required advance owner selection. Existing 24 slices, task IDs and completion counters remain unchanged."
       }
     },
     "dashboardClarityCorrection20260922": {

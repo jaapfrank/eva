@@ -1,5 +1,24 @@
 # EVA2 werkbord
 
+## Actueel: eigenaarcorrectie I2 — algemene intelligentie, geen vuilnisbakfunctie
+
+**I2.1 wacht niet meer op Jaap.** Het voorbeeld met vuilnisbakken bedoelt dat Eva
+zelf geschikte bronnen ontdekt en een passende automatisering maakt. I2.1/I2.2
+blijven als algemene bouw-/aansluittaken open, onder dezelfde IDs; geen nieuwe
+functie afgerond en geen grote teller verhoogd. Bestaande camera-, agenda-,
+beeld- en HA-tools hergebruiken; alleen een aangetoond ontbrekende algemene
+koppeling aanpassen. Alleen echte onduidelijkheid leidt tot een vervolgvraag.
+
+**Stand:** O1.1 tekstinstallatiewizard en L2 meerdaags documentproject technisch
+opgeleverd. Onderbrekingsaanpassing staat op beide speakers, hoorbare proef open.
+Geen nieuw volledig groot onderdeel afgerond; huidige 2-van-9-teller behouden.
+O1.2 gekozen modules blijft de lopende uitvoering; deze correctie is planonderhoud.
+
+
+## Actueel: O1.2 — gekozen modules aansluiten
+
+**Nu:** één uitvoerder, integratiebasis `85401486`. Weglaten werkt op de nieuwe O1.1-tekstinstallatie; de gewone factory weigert gekozen providers nog. Bestaande keuze, privétoegang, providercontrole en HA-configuratie hergebruiken; gekozen HA aan de bestaande doelgraph koppelen en op de echte route controleren. Geen fysieke huisactie of nieuwe betaalde providerroute gepland. Spraak/HA/browser toevoegen of weglaten blijven de volledige O1-scope; O1.2 en grote onderdeel nog open.
+
 ## Actueel: O1.1 technisch opgeleverd — O1.2 hierna
 
 **Opgeleverd:** de gewone wizard heeft een afzonderlijke lokale Windows/WSL-tekstinstallatie voorbereid en gestart zonder handgeschreven instellingen. De browserknop **Open de nieuwe Eva en begin een gesprek** opent de echte gesprekpagina. Twee modelantwoorden zijn opgeslagen; de tweede vraag haalde de eerdere begroeting correct terug. Onafhankelijke review **GO**, inclusief de uiteindelijke pakketbestanden en de echte browseringang. [Bewijs](evidence/product/installer-ordinary-target-20261001.json) · [Review](reviews/installer-ordinary-target-20261001.md).
@@ -8,7 +27,7 @@ Volledige antwoorden4,962s/3,086s; ontvangstmelding tweede vraag0,024s. Twee ges
 
 Eén gewone voorbereidingsaanvraag; concrete schema/configuratieproblemen gericht hersteld in dezelfde nieuwe installatie. Alleen de falende kerncontainer vervangen, databases/gegevens behouden. Laatste browsercorrectie herstartte uitsluitend de wizard. Geen volledige herinstallatie/terugzetlus. Python3.12.14 en bestaande immutable images gebruikt; lokale ontwikkelkandidaat, geen gevalideerde publieke release.
 
-**Hierna:** O1.2 verbindt gekozen optionele providers met dezelfde installatie. Deze target slaat Telegram, HA, e-mail en adaptive bewust over. Publieke release/platformsupport en menselijke acceptatie blijven open. O1 als geheel en grote productteller ongewijzigd. O1.2 nog niet gestart; volledig goal actief.
+**Hierna:** O1.2 verbindt gekozen optionele providers met dezelfde installatie. Deze target slaat Telegram, HA, e-mail en adaptive bewust over. Publieke release/platformsupport en menselijke acceptatie blijven open. O1 als geheel en grote productteller ongewijzigd. O1.2 is nu gestart; volledig goal actief.
 
 ## Actueel: P1.1 — persistente native configuraties beoordeeld; toegang open
 
@@ -104,13 +123,13 @@ Native configuratielader kiest zes modelrollen correct op basis van opgeslagen s
 
 Agent Zero leest zes contact-/werkmodelrollen correct terug via eigen opslag en configuratielader. Geïsoleerde proef, nul providercalls, onafhankelijke review akkoord. Presetbestand herbruikbaar vastgelegd; Eva-runtime ongewijzigd. Geen volledige P1.1 of productcategorie afgerond. Actieve selectie, native uitvoering/OAuth en samplebrede meting blijven open. Geen proefproces meer actief. [Bewijs](evidence/product/p1-agentzero-persisted-presets-20260930.json).
 
-## Actueel: I2.1 concrete bronkeuze gevraagd — 29 september 2026
+## Historisch: I2.1 bronkeuze gevraagd — vervallen op 1 oktober 2026
 
-Bestaande bronregistratie bevat G5 garage deur, G5 tuin en G4 Doorbell Pro, plus twee afvalagenda’s (Afvalwijzer Calendar en afval). Twee concrete keuzevragen staan open bij Jaap. Bestaand bewijs voor camera-/agendatoegang hergebruikt; geen nieuwe connector, modelaanvraag of camera-opname. C1-providerweigering en O2.3-browserafhankelijkheid blijven open zoals hieronder.
+Bestaande bronregistratie bevat G5 garage deur, G5 tuin en G4 Doorbell Pro, plus twee afvalagenda’s (Afvalwijzer Calendar en afval). Die twee voorafgaande keuzevragen zijn door de eigenaarcorrectie van 1 oktober vervallen; Eva moet bronnen zelf ontdekken. Bestaand bewijs voor camera-/agendatoegang hergebruikt; geen nieuwe connector, modelaanvraag of camera-opname. C1-providerweigering en O2.3-browserafhankelijkheid blijven open zoals hieronder.
 
 ## Actueel: C1 en O2.3 blokkades gecontroleerd — 29 september 2026
 
-Geen bouwproces actief. Bestaande kernlog bevestigt HTTP429 zonder antwoord. Accountcontrole meldt weekvenster100%, maar ook ordinaryUsageAllowed=true; precieze oorzaak blijft onbewezen. Geen nieuwe modelaanvraag of reset. O2.3 blijft geblokkeerd doordat de onbereikbare oude browser nog geautoriseerd is; geen verse verificatie overslaan. Gegevens en voorbereide herstelinstallatie behouden. Review afgerond. Volgende beschikbare stap: I2.1 na keuze van camera/afvalkalender; dagelijkse gesprekproef na herstelde providertoegang. [Bewijs](evidence/product/c1-o2-current-blockers-20260929.json). Geen extra afgeronde productfunctie.
+Geen bouwproces actief. Bestaande kernlog bevestigt HTTP429 zonder antwoord. Accountcontrole meldt weekvenster100%, maar ook ordinaryUsageAllowed=true; precieze oorzaak blijft onbewezen. Geen nieuwe modelaanvraag of reset. O2.3 blijft geblokkeerd doordat de onbereikbare oude browser nog geautoriseerd is; geen verse verificatie overslaan. Gegevens en voorbereide herstelinstallatie behouden. Review afgerond. Historische vervolgstap vervallen: I2.1 vraagt geen vooraf gekozen camera/afvalkalender. De actuele uitvoervolgorde staat bovenaan. [Bewijs](evidence/product/c1-o2-current-blockers-20260929.json). Geen extra afgeronde productfunctie.
 
 ## Actueel: O2.3 bestaande gatewayuitgang aangesloten — 29 september 2026
 
@@ -126,11 +145,11 @@ Kernexport en gezamenlijk pakket volledig gevalideerd:243 bestanden met kern, ge
 
 ## Actueel: C1 geblokkeerd door provider — 29 september 2026
 
-Eén echte websitebegroeting na de geïnstalleerde correctie: HTTP429 na3,894s, geen antwoordtekst, één aanvraag zonder automatische herhaling. Correcte foutcode live bevestigd; geen snelheidswinst of C1-afronding. [Bewijs](evidence/product/c1-installed-contact-20260929.json). I2-bronkeuze wacht op Jaap; volgende-dagtaak blijft gepland. Geen nieuwe installatie of rollback.
+Eén echte websitebegroeting na de geïnstalleerde correctie: HTTP429 na3,894s, geen antwoordtekst, één aanvraag zonder automatische herhaling. Correcte foutcode live bevestigd; geen snelheidswinst of C1-afronding. [Bewijs](evidence/product/c1-installed-contact-20260929.json). Historische I2-bronkeuzeblokkade vervallen op 1 oktober; de toen geplande volgende-dagtaak is inmiddels onder L2 afgerond. Geen nieuwe installatie of rollback.
 
-## Actueel: I2.1 wacht op bronkeuze — 29 september 2026
+## Historisch: I2.1 bronkeuzeblokkade — vervallen op 1 oktober 2026
 
-C1 blijft onaf: geen nieuwe aantoonbare codeoorzaak voor snelheid; echte meting na providerweigering open. Geen speculatieve cache-/geheugenherbouw. Voor I2.1 is de eigenaar gevraagd welke camera de bakken ziet en welke kalender ophaaldagen bevat. Lokale beeldherkenning is nu active/running; eerdere echte kalenderuitlezing blijft geldig als historisch bewijs. Geen connectorbouw of modelproef actief en geen functie afgerond.
+C1 blijft onaf: geen nieuwe aantoonbare codeoorzaak voor snelheid; echte meting na providerweigering open. Geen speculatieve cache-/geheugenherbouw. Destijds is voor I2.1 ten onrechte vooraf een camera/kalenderkeuze gevraagd; de eigenaar heeft dit op 1 oktober gecorrigeerd naar algemene bronontdekking en automatisering. Lokale beeldherkenning is nu active/running; eerdere echte kalenderuitlezing blijft geldig als historisch bewijs. Geen connectorbouw of modelproef actief en geen functie afgerond.
 
 ## C1: bestaande Telegram-overlap vastgesteld — 29 september 2026
 
@@ -337,7 +356,7 @@ Elke kleine taak heeft in het bestaande dashboard een eigen status en eindvoorwa
 | T2 — Algemene huisbediening | T2.1 Resterende HA-timeout gericht oplossen; T2.2 Gewone huisvraag via woonkamer uitvoeren; T2.3 Gewone huisvraag via tweede speaker uitvoeren; T2.4 Automatisering via spraak maken en wijzigen |
 | T3 — Browser- en diensttaak met overname | T3.1 Bestaand Chrome-tabblad met Eva verbinden (wacht op blokkade); T3.2 Een browseropdracht volledig afmaken; T3.3 Overnemen en correct doorgaan |
 | I1 — Huisaanwezigheid en initiatief | I1.1 Een nuttige huisbijdrage laten aankomen (wacht op blokkade); I1.2 Stilte en passendheid beoordelen (wacht op Jaap) |
-| I2 — Camera, agenda en eigen onderzoek | I2.1 Bedoelde camera en agenda kiezen (wacht op Jaap); I2.2 Waarneming tot herinnering afmaken |
+| I2 — Camera, agenda en eigen onderzoek | I2.1 Relevante bronnen zelfstandig ontdekken en kiezen; I2.2 Waarnemingsopdracht zelf automatiseren en terugmelden |
 | L2 — Meerdaags project hervatten | L2.1 Project na onderbreking zelfstandig vervolgen |
 | L3 — Eigen verbetering beoordelen | L3.2 Kandidaat onafhankelijk vergelijken (wacht op blokkade); L3.3 Verbetering integreren of afwijzen |
 | R1 — Uitvoerbare ervaring vergelijken | R1.1 Ervaringsmodel begrensd vergelijken; R1.2 Meerwaarde beslissen |

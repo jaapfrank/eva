@@ -1,5 +1,18 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Eigenaarcorrectie 1 oktober 2026 — voorbeelden zijn algemene vaardigheden
+
+Het voorbeeld van vuilnisbakken, camera en ophaalagenda is geen opdracht om een
+vaste vuilnisbakfunctie of vooraf gekozen broncombinatie in Eva te bouwen. Eva
+moet een gewone opdracht zelf vertalen naar bronontdekking, beeld-/agendagebruik
+en een passende automatisering met de bestaande algemene hulpmiddelen. Zij kiest
+relevante bronnen op basis van de opdracht en vraagt alleen door bij echte
+onduidelijkheid. Een ontbrekende voorafgaande camerakeuze van Jaap blokkeert deze
+algemene vaardigheid niet. Geen vraag-, apparaat- of vuilnisbakspecifieke kernregel.
+I2 blijft open tot de algemene gebruikersuitkomst werkt; deze plancorrectie is
+geen nieuwe afgeronde functie en wijzigt geen eerdere acceptaties.
+
+
 ## Eigenaarverduidelijking 29 september 2026 — sneller naar een beter geheel
 
 - Het bestaande onderzoek naar Eva1/concurrenten bepaalt vóór bouwen de keuze
