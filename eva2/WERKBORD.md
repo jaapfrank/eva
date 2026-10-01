@@ -1,5 +1,22 @@
 # EVA2 werkbord
 
+## Actueel: kleine takenlijst opgeleverd — O1.2 hervat
+
+**Live op http://localhost:44712:** alle 44 bestaande kleine taken direct zichtbaar,
+11 technisch afgerond groen en 33 nog open rood. Zoeken en Alles/Open/Afgerond,
+eindvoorwaarde, eigenaar, blokkade en geregistreerde proefinstructies per taak.
+Automatische bronverversing gecontroleerd, inclusief een rood kind onder een
+afgeronde ouder; desktop en 390 px telefoon zonder afsnijden. Onafhankelijke review
+**GO**. [Bewijs](evidence/product/dashboard-small-task-checklist-20261001.json) ·
+[Review](reviews/dashboard-small-task-checklist-20261001.md). Alleen projectservice
+éénmaal herstart; geen Eva-model/huisactie, runtimeherstart of nieuwe productfunctie.
+
+O1.2 hervat: gekozen HA/configuratie daadwerkelijk in de wizard geverifieerd,
+bronaansluiting conditioneel goedgekeurd. Geselecteerde doelinstallatie nog niet
+voorbereid/gestart; bevestigde keuzes bewaard. Spraak/browser blijven open.
+Grote productteller en menselijke acceptaties ongewijzigd.
+
+
 ## Actueel: eigenaarcorrectie I2 — algemene intelligentie, geen vuilnisbakfunctie
 
 **I2.1 wacht niet meer op Jaap.** Het voorbeeld met vuilnisbakken bedoelt dat Eva
@@ -650,7 +667,7 @@ Bestaande website-overlap en Telegramconcurrency behouden. Gerichte geheugenmeti
 
 **T4 inspectie afgerond:** bestaande eigenaarpagina toont echt resultaat/verbruik en vindt oudere opdrachten; onafhankelijk bevestigd dat kanaal-/modulestatus nog ontbreekt. Bestaande taakbediening behouden. Volgende, nog niet gebouwd: beschermde statusprojectie en UI aansluiten met afzonderlijke waarnemingen/tijd en expliciet onbekend; daarna ontbrekende bijstuur-/hervatbediening beproeven. Geen modelcalls. [Bewijs](evidence/product/task-controls-live-20260928.json).
 
-**Nu — T4 taakbediening, basis6b5aa125:** coördinator controleert bestaande eigenaarpagina/taakprojecties en maakt alleen aangetoonde ontbrekende bediening af. C2 afgerond; geen nieuw dashboard of modelproeven. Eerste inspectie15min. C1 blijft open: bestaande begroetingslog718ms geheugen en3330ms tot modeltekst; extra cache maakt dat niet instant. [Diagnose](evidence/product/contact-latency-boundary-20260928.json).
+**Nu — T4 taakbediening, basis6b5aa125:** coördinator controleert bestaande eigenaarpagina/taakprojecties en maakt alleen aangetoonde ontbrekende bediening af. C2 afgerond; geen nieuw dashboard of modelproeven. Eerste inspectie15min. C1 blijft open: bestaande begroetingslog718ms geheugen en 3330ms tot modeltekst; extra cache maakt dat niet instant. [Diagnose](evidence/product/contact-latency-boundary-20260928.json).
 
 **Nu — C1 resterende wachttijd, basis6b5aa125:** coördinator koppelt bestaande logs aan geheugenvoorbereiding en modeltijd. Maximaal tien minuten, geen nieuwe modelcalls of speculatieve cache; eindpunt is één onderbouwde vervolgactie. Vorige beurt was voortgang: bron geïnstalleerd en echte uitkomsten geregistreerd.
 
@@ -1699,7 +1716,7 @@ afgerond of door de eigenaar geaccepteerd. De eerdere mislukkingen blijven staan
 Het aangeleverde A-bewijs9a457bae vermeldt één HTTP200-beurt van160,339s,
 acht geverifieerde acties en een gemaakte/teruggelezen procedure, VTT en
 controlerapport. De externe Python-check slaagt; die check is niet door Eva
-uitgevoerd. Gemeten:137693 input- en3373 outputtokens over10 modelpogingen.
+uitgevoerd. Gemeten:137693 input- en 3373 outputtokens over10 modelpogingen.
 Dit is aangeleverd bewijs in review, nog niet geïntegreerd of onafhankelijk
 goedgekeurd. B en ongeldige invoer zijn nog niet uitgevoerd.
 

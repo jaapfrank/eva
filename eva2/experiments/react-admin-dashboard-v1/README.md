@@ -84,3 +84,13 @@ of engineering progress. Polling still refreshes the stored source every 5 secon
 Validate with `node --test project-freshness.test.mjs project-completion.test.mjs`
 and `npm run build -- --mode project`. The existing preview serves project-dist;
 rollback the UI with its prior committed source and rebuild in project mode.
+
+### Small-task checklist
+
+The project Overview and Tasks pages show every existing
+`deliveryPlan.implementationSlices[].remainingTasks` item directly. Only a child's
+`completed` status is green; all remaining work is red, including pending physical
+trials. Search and All/Open/Completed filters do not change the workboard. Open a
+row for its finish condition, owner, blocker and recorded trial steps. The normal
+five-second source refresh updates the list; child completion is never inferred
+from its parent's state. This is independent of the nine product-component counter.

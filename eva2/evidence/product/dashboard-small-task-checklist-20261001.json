@@ -1,0 +1,60 @@
+{
+  "contract": "EvaDashboardSmallTaskChecklistEvidence/v1",
+  "checkedAt": "2026-10-01T10:19:01.757206+00:00",
+  "baseCommit": "b60880497be753fa22ff8f18214220d7f35ba1b7",
+  "outcome": "All existing small tasks directly visible with child-owned red/green state, filters and actual finish conditions.",
+  "sourceFiles": {
+    "eva2/experiments/react-admin-dashboard-v1/src/project-work-list.jsx": "3031dc38cd9547c07fa952cc8903a4d6af2667d3e4e0c8700fc96b4fd062cf64",
+    "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx": "ff38ec1ad1f4e803bd3292034b934e9d94ca9aa76b33ea1fcf8882aea51ba600",
+    "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.css": "488ce5f1c3693b05c75e3faaad32bde37e9f5765c03e341a2b03f6cfc8bb683e"
+  },
+  "build": {
+    "command": "npm run build -- --mode project",
+    "status": "passed",
+    "servedIndexMatchesBuiltIndex": true,
+    "httpStatus": 200,
+    "assets": [
+      "/assets/index-BDTMsGPy.js",
+      "/assets/index-BegAmF91.css"
+    ]
+  },
+  "browser": {
+    "status": "passed",
+    "origin": "http://127.0.0.1:44712",
+    "total": 44,
+    "completed": 11,
+    "open": 33,
+    "exact_live_ids_and_child_states": true,
+    "filters_and_search": true,
+    "finish_blocker_and_owner_trial": true,
+    "completed_parent_does_not_hide_open_child": true,
+    "refresh_observed_with_browser_only_fixture": true,
+    "fixture_not_saved_to_workboard": true,
+    "mobile_no_overflow": true,
+    "javascript_errors": [],
+    "external_browser_requests": [],
+    "model_requests": 0,
+    "house_actions": 0
+  },
+  "screenshots": {
+    "desktopSha256": "390c9931a32dd391ad4df963384307e0470aac24fc91a60bc36497acfb351a82",
+    "mobileSha256": "7b619d04ee18e6f2c15f28929a0353ccf4cf7fac5129ad9b28301a771081eb29",
+    "visualInspection": "Desktop and390px phone screenshots inspected; distinct red/green labels and no clipping."
+  },
+  "corrections": [
+    {
+      "cause": "Initial build used packaged mode, so the first served-page observation still showed the old project bundle.",
+      "resolution": "Built the documented project mode and restarted only the existing project-dashboard user service once. No Eva runtime, data, house action or module installation changed."
+    }
+  ],
+  "review": {
+    "path": "eva2/reviews/dashboard-small-task-checklist-20261001.md",
+    "status": "final_installed_UI_GO"
+  },
+  "developmentCreditCost": "unknown",
+  "nonClaims": [
+    "No additional Eva product functionality or large component completed.",
+    "Green means existing technical child completion, not family acceptance.",
+    "Browser-only refresh fixture never writes the workboard or becomes displayed owner proof."
+  ]
+}

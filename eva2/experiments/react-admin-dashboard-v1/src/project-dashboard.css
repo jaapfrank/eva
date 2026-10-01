@@ -221,3 +221,23 @@
 .small-task{padding:12px 14px;margin:10px 0;background:#f8faf7;border:1px solid #e0e5dd;border-radius:8px}.small-task>div{display:flex;gap:12px;align-items:baseline}.small-task strong{font-size:14px}.small-task-state{font-size:12px;white-space:nowrap;color:#806013}.small-task p{font-size:13px;color:#41594c}.small-task small{font-size:12px;color:#667368}.small-task.completed{background:#eaf5ed}.small-task.blocked{background:#fff0ed}.small-task.in_progress{background:#edf3ff}@media(max-width:650px){.small-task>div{flex-direction:column;gap:5px}}
 
 .concrete-work>header{display:block!important}.concrete-work>header h2{margin:0 0 10px}.concrete-work>header p{margin:0}.work-list-controls input{color:#20392c;background:white}.work-list-controls button{color:#20392c}.work-list-controls button[aria-pressed=true]{color:white}.concrete-task .small-task{color:#20392c}.concrete-work .work-list-controls input{box-sizing:border-box;width:100%}
+
+/* The same small-task state is visible without opening parent work packages. */
+.small-checklist{margin:28px 0;background:#fff;border:1px solid #dbe3dc;border-radius:16px;padding:24px}
+.small-checklist>header{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:16px}
+.small-checklist h2{margin:5px 0 9px;font-size:25px;color:#20392c}.small-checklist header p{margin:0;color:#52655a;font-size:14px}
+.checklist-totals{display:flex;flex-wrap:wrap;gap:9px;flex-shrink:0}.checklist-totals span{padding:11px 15px;border-radius:10px;font-size:14px}
+.checklist-total-done{background:#dff2e4;color:#126335}.checklist-total-open{background:#ffe7e4;color:#a22520}.checklist-totals b{font-size:23px}
+.checklist-controls{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-top:18px}.checklist-controls label{flex:1;min-width:220px;color:#42594b;font-size:13px}
+.checklist-controls input{display:block;margin-top:6px;width:100%;box-sizing:border-box;border:1px solid #bacabd;border-radius:8px;padding:12px;font:inherit;background:white;color:#20392c}
+.checklist-filters{display:flex;gap:7px;flex-wrap:wrap}.checklist-filters button{padding:11px 13px;border:1px solid #becabf;border-radius:8px;background:#fff;color:#20392c;font:inherit;font-size:13px;cursor:pointer}
+.checklist-filters button[aria-pressed=true]{background:#20392c;color:white;border-color:#20392c}.checklist-note{font-size:12px;color:#67786b;line-height:1.5;margin:16px 0}
+.checklist-rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;align-items:start}.checklist-task{border:1px solid;border-left-width:5px;border-radius:9px;overflow:hidden}
+.checklist-task.is-done{background:#eff9f1;border-color:#93cda2}.checklist-task.is-open{background:#fff3f1;border-color:#e5a49f}
+.checklist-task summary{display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer;list-style:none}.checklist-task summary::-webkit-details-marker{display:none}
+.checklist-mark{font-size:21px;font-weight:700}.is-done .checklist-mark,.is-done .checklist-status{color:#166334}.is-open .checklist-mark,.is-open .checklist-status{color:#aa2821}
+.checklist-task-heading{flex:1;min-width:0}.checklist-task-heading strong{display:block;color:#243b2d;font-size:14px;line-height:1.4}.checklist-task-heading small{display:block;color:#5c6a5d;font-size:11px;margin-top:3px}
+.checklist-status{font-size:11px;font-weight:700;text-align:right;max-width:100px}.checklist-task-detail{border-top:1px solid #d4ddd4;padding:0 15px 12px;font-size:13px;color:#294031;overflow-wrap:anywhere}.checklist-task-detail p{line-height:1.5}.checklist-task-detail ol{padding-left:22px}.checklist-task-detail li{margin-bottom:7px}.checklist-blocker{color:#9b2820}
+.checklist-task summary:focus-visible,.checklist-filters button:focus-visible{outline:3px solid #4b77b4;outline-offset:2px}
+@media(max-width:1000px){.small-checklist>header{flex-direction:column}.checklist-rows{grid-template-columns:1fr}}
+@media(max-width:600px){.small-checklist{padding:15px;margin:18px 0}.checklist-controls{gap:12px}.checklist-status{max-width:78px}.checklist-task summary{padding:10px;gap:8px}.checklist-task-heading strong{font-size:13px}.checklist-totals span{padding:9px 12px}}

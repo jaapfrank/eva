@@ -1,5 +1,58 @@
 import React, { useState } from 'react';
 
+export function SmallTaskChecklist({ project, stale = false }) {
+  const [query, setQuery] = useState('');
+  const [filter, setFilter] = useState('all');
+  const tasks = (project.deliveryPlan?.implementationSlices || []).flatMap(slice =>
+    (slice.remainingTasks || []).map(task => ({ ...task, section: slice.outcome })));
+  const finished = tasks.filter(task => task.status === 'completed').length;
+  const visible = tasks.filter(task => {
+    const done = task.status === 'completed';
+    return (filter === 'all' || (filter === 'done') === done) &&
+      `${task.id} ${task.title} ${task.section} ${task.doneWhen}`.toLocaleLowerCase('nl')
+        .includes(query.toLocaleLowerCase('nl'));
+  });
+  const label = task => task.status === 'completed' ? 'Technisch afgerond' :
+    task.ownerTrial?.status === 'pending' ? 'Gebruiksproef open' :
+    task.status === 'blocked' ? 'Geblokkeerd' :
+    task.status === 'in_progress' ? 'Nog open · gestart' :
+    task.status === 'rejected' ? 'Niet ingevoerd' : 'Nog te doen';
+  return <section id="small-tasks" className="small-checklist" aria-label="Alle kleine taken">
+    <header><div><span className="eyebrow">CONCREET RESTEREND WERK</span><h2>Alle kleine taken</h2>
+      <p>Groen = technisch afgerond. Rood = nog niet afgerond. Klik een taak voor de eindvoorwaarde.</p></div>
+      <div className="checklist-totals" aria-label="Stand van kleine taken">
+        <span className="checklist-total-done">✓ <b>{finished}</b> afgerond</span>
+        <span className="checklist-total-open">● <b>{tasks.length - finished}</b> nog open</span>
+      </div></header>
+    {stale && <p role="alert">Verbinding onderbroken: hieronder staat de laatst ontvangen takenlijst.</p>}
+    <div className="checklist-controls"><label>Zoek een kleine taak<input type="search" value={query}
+      onChange={event => setQuery(event.target.value)} placeholder="Taaknummer, speakers, automatisering…" /></label>
+      <div className="checklist-filters" role="group" aria-label="Filter kleine taken">
+        {[['all', 'Alles'], ['open', 'Rood · nog open'], ['done', 'Groen · afgerond']].map(([value, title]) =>
+          <button key={value} type="button" aria-pressed={filter === value}
+            onClick={() => setFilter(value)}>{title}</button>)}
+      </div></div>
+    <p className="checklist-note">{tasks.length} bestaande kleine taken. De grote productonderdelen en jouw acceptatie staan daar los van.
+      De lijst wordt iedere vijf seconden uit het werkbord bijgewerkt; gestart betekent niet automatisch dat nu een agent werkt.</p>
+    <div className="checklist-rows">{visible.map(task => {
+      const done = task.status === 'completed';
+      return <details key={task.id} className={`checklist-task ${done ? 'is-done' : 'is-open'}`}
+        data-checklist-task-id={task.id} data-checklist-state={done ? 'done' : 'open'}>
+        <summary><span className="checklist-mark" aria-hidden="true">{done ? '✓' : '●'}</span>
+          <span className="checklist-task-heading"><strong>{task.id} · {task.title}</strong><small>{task.section}</small></span>
+          <span className="checklist-status">{label(task)}</span></summary>
+        <div className="checklist-task-detail"><p><b>Klaar wanneer:</b> {task.doneWhen}</p>
+          <p><b>Verantwoordelijke:</b> {task.owner || 'Niet vastgelegd'}</p>
+          {task.blocker && <p className="checklist-blocker"><b>Blokkade:</b> {task.blocker}</p>}
+          {task.ownerTrial?.status === 'pending' && <div><b>Zo kun jij dit proberen:</b>
+            <ol>{(task.ownerTrial.steps || []).map((step, index) => <li key={index}>{step}</li>)}</ol>
+            <p><b>Verwacht:</b> {task.ownerTrial.expected}</p></div>}
+        </div></details>;
+    })}</div>
+    {!visible.length && <p role="status">Geen kleine taken in dit filter.</p>}
+  </section>;
+}
+
 export default function ProjectWorkList({ project }) {
   const [query, setQuery] = useState('');
   const [mode, setMode] = useState('open');
