@@ -1,0 +1,208 @@
+{
+  "task": "P1.1",
+  "checkedAt": "2026-10-01T04:01:00.817343+00:00",
+  "scope": "Persisted main-role configuration accepted by installed native OpenClaw CLI, not native turn/runtime admission.",
+  "existing": "Reviewed direct native request builder and managed unauthenticated catalog; pinned runtime and plugin already installed.",
+  "added": "Two owned canonical host configuration files with model-scoped Codex runtime pins, contact Sol/off and work Astra/medium; one bounded native CLI validation/readback per role.",
+  "versions": {
+    "openclaw": "2026.9.6",
+    "codexPlugin": "2026.9.6",
+    "managedCodex": "0.155.1 (previous independent catalog evidence; not relaunched)"
+  },
+  "roles": {
+    "contact": {
+      "configPath": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/contact.json",
+      "sha256Before": "b59a1b86fcaa20df5b16fe515fa64c9d5be9a4cc2fbde9ad8f9279a98adeffc0",
+      "sha256After": "b59a1b86fcaa20df5b16fe515fa64c9d5be9a4cc2fbde9ad8f9279a98adeffc0",
+      "valid": true,
+      "defaultsReadbackMatches": false,
+      "authoredFieldsMatch": true,
+      "readback": {
+        "model": {
+          "primary": "openai/gpt-6-sol",
+          "fallbacks": []
+        },
+        "models": {
+          "openai/gpt-6-sol": {
+            "params": {
+              "thinking": "off"
+            },
+            "agentRuntime": {
+              "id": "codex"
+            }
+          },
+          "openai/gpt-6-astra": {
+            "params": {
+              "thinking": "medium"
+            },
+            "agentRuntime": {
+              "id": "codex"
+            }
+          }
+        },
+        "workspace": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/workspace",
+        "thinkingDefault": "off",
+        "maxConcurrent": 72,
+        "subagents": {
+          "maxConcurrent": 8,
+          "archiveAfterMinutes": 60
+        },
+        "compaction": {
+          "mode": "safeguard"
+        }
+      },
+      "addedRuntimeDefaults": {
+        "maxConcurrent": 72,
+        "subagents": {
+          "maxConcurrent": 8,
+          "archiveAfterMinutes": 60
+        },
+        "compaction": {
+          "mode": "safeguard"
+        }
+      },
+      "validation": {
+        "valid": true,
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/contact.json",
+        "warnings": []
+      }
+    },
+    "work": {
+      "configPath": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/work.json",
+      "sha256Before": "77c3dfb2a122acf5e1908406d9600791c9645d526e39d03795c49470542f64e8",
+      "sha256After": "77c3dfb2a122acf5e1908406d9600791c9645d526e39d03795c49470542f64e8",
+      "valid": true,
+      "defaultsReadbackMatches": false,
+      "authoredFieldsMatch": true,
+      "readback": {
+        "model": {
+          "primary": "openai/gpt-6-astra",
+          "fallbacks": []
+        },
+        "models": {
+          "openai/gpt-6-sol": {
+            "params": {
+              "thinking": "off"
+            },
+            "agentRuntime": {
+              "id": "codex"
+            }
+          },
+          "openai/gpt-6-astra": {
+            "params": {
+              "thinking": "medium"
+            },
+            "agentRuntime": {
+              "id": "codex"
+            }
+          }
+        },
+        "workspace": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/workspace",
+        "thinkingDefault": "medium",
+        "maxConcurrent": 72,
+        "subagents": {
+          "maxConcurrent": 8,
+          "archiveAfterMinutes": 60
+        },
+        "compaction": {
+          "mode": "safeguard"
+        }
+      },
+      "addedRuntimeDefaults": {
+        "maxConcurrent": 72,
+        "subagents": {
+          "maxConcurrent": 8,
+          "archiveAfterMinutes": 60
+        },
+        "compaction": {
+          "mode": "safeguard"
+        }
+      },
+      "validation": {
+        "valid": true,
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/work.json",
+        "warnings": []
+      }
+    }
+  },
+  "commands": [
+    {
+      "role": "contact",
+      "operation": "validate",
+      "exitCode": 0,
+      "elapsedSeconds": 1.925,
+      "stderrEmpty": true
+    },
+    {
+      "role": "contact",
+      "operation": "get agents.defaults",
+      "exitCode": 0,
+      "elapsedSeconds": 1.514,
+      "stderrEmpty": true
+    },
+    {
+      "role": "work",
+      "operation": "validate",
+      "exitCode": 0,
+      "elapsedSeconds": 1.058,
+      "stderrEmpty": true
+    },
+    {
+      "role": "work",
+      "operation": "get agents.defaults",
+      "exitCode": 0,
+      "elapsedSeconds": 1.795,
+      "stderrEmpty": true
+    }
+  ],
+  "isolation": {
+    "launcher": [
+      "unshare",
+      "--user",
+      "--map-root-user",
+      "--net"
+    ],
+    "ownedEmptyProfile": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1",
+    "cleanChildEnvironment": true,
+    "readonlyConfig": true,
+    "capturedNetworkNamespace": "net:[4026532785]",
+    "outsideNetworkNamespace": "net:[4026531833]",
+    "differentNetworkNamespaces": true,
+    "limitation": "Raw networkInterfaces came from host-shared sysfs and is not an isolation measurement. No external network successes possible in this fresh namespace; attempted calls not instrumented."
+  },
+  "provenance": {
+    "probePath": "eva2/benchmark/inspect_ai_v1/p1_openclaw_host_config_probe.py",
+    "probeSha256": "6d48370321a0e3968436e4a8436a22f7b6093efd03f21ac53888f91b74dc8272",
+    "packageManifestSha256": "53e483cf761dfe5d773b1b1a3f26a07146c6d5d1f7c2ead25e8a2e422c4d3cbf",
+    "pluginManifestSha256": "487c9e30a10e22b167be27884eba958e5204296ae799caa16138090e489a5315",
+    "cliEntrySha256": "4dd36d2ed0cb154456c4a09a951a2e8f2508a5dd6ff2fe0688d4e1c8f773fcb5",
+    "rawResultPath": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/result.json",
+    "rawResultSha256": "6b53dcd2d10de9a091f28f4f735f0db4dbb34eadd79826983ad61f6019b3c9b5"
+  },
+  "consumption": {
+    "nativeConfigCommands": 4,
+    "nativeCliSeconds": 6.292,
+    "authCommands": 0,
+    "threadCommands": 0,
+    "turnCommands": 0,
+    "inferenceResponses": 0,
+    "providerAttempts": "not instrumented; no inference command and network namespace isolated",
+    "evaRuntimeCalls": 0,
+    "evaInstallChanges": 0,
+    "developerCredits": "unknown"
+  },
+  "limitations": [
+    "Readback adds maxConcurrent72, subagent concurrency8/archive60 and safeguard compaction defaults: whole-dict equality is false; all authored fields match. These defaults are not an approved benchmark budget.",
+    "No native gateway/agent turn started; schema acceptance does not prove harness selection, entitlement, native supported effort none, quality, latency, helper/tool/stop coverage or all-path admission.",
+    "Contact still absent from managed unauthenticated catalog; do not replace selected model or fabricate compatibility metadata.",
+    "Own OpenClaw and Hermes authentication still missing. Agent Zero prior login retained.",
+    "No extra Eva product category, full P1.1 completion or owner acceptance."
+  ],
+  "next": "Own OpenClaw sign-in when owner is ready, then actual catalog and native selection/access. No automatic repeated validation.",
+  "review": {
+    "status": "GO for configuration acceptance/readback only",
+    "path": "eva2/reviews/p1-openclaw-host-config-20261001.md"
+  },
+  "runtimeAdmission": "not_admitted",
+  "ownerAcceptance": false
+}

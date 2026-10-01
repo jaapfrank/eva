@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T03:33:38.872684+00:00",
+        "checkedAt": "2026-10-01T04:06:28.120681+00:00",
         "deliveries": [
+          {
+            "title": "Vergelijking: OpenClaw-configuraties persistent aangesloten",
+            "date": "1 oktober",
+            "state": "tested",
+            "result": "Echte gepinde CLI valideert en leest beide canonieke hoofdmodelconfiguraties correct terug; bestanden ongewijzigd.4 lokale opdrachten,6,292s, onafhankelijke review GO; geen auth/inferentie of Eva-installatiewijziging.",
+            "remaining": "Native selectie, daadwerkelijke none/toegang en volledige helper/tool/stopdekking open. Dit is vergelijkingsvoorbereiding; geen extra Eva-functie of volledige P1.1.",
+            "source": "eva2/evidence/product/p1-openclaw-host-config-20261001.json"
+          },
           {
             "title": "Vergelijking: echte OpenClaw-catalogus vastgelegd",
             "date": "1 oktober",
@@ -3179,14 +3187,13 @@
           }
         ],
         "now": {
-          "title": "P1.1: catalogus beoordeeld; eigen aanmelding nodig",
-          "state": "Wacht op native aanmeldingen · geen uitvoerder actief",
-          "owner": "Codex /root",
-          "detail": "OpenClaw-mapping en beheerde catalogus onafhankelijk GO. Sol ontbreekt in niet-aangemelde catalogus; geen ander model ingevuld. OpenClaw en Hermes vragen eigen login. Geen auth-/modelproces actief; volledige vergelijking blijft open."
+          "title": "P1.1 — configuratie klaar; eigen toegang ontbreekt",
+          "state": "blocked",
+          "detail": "Persistente OpenClaw-hoofdmodelconfiguraties door echte CLI geaccepteerd en onafhankelijk GO. Geen uitvoerder of loginproces actief. Eigen OpenClaw/Hermes-aanmelding nodig voor volgende native controle; Agent Zero-aanmelding behouden. Volledige vergelijking en producttellers ongewijzigd."
         },
         "next": {
-          "title": "Eigen login verwerken en catalogus actualiseren",
-          "detail": "Nieuwe OpenClaw-code pas starten wanneer Jaap klaarzit. Hetzelfde bestaande abonnement en eigen native opslag; geen gekopieerde credentials of nieuwe betaalde route. Telefoon-/speakerproeven blijven open en geïnstalleerde werking behouden."
+          "title": "Werkelijke native toegang controleren",
+          "detail": "Nieuwe OpenClaw-code wanneer Jaap klaarzit; vervolgens aangemelde catalogus en native selectie. Geen herhaling van deze geslaagde configuratiecontrole. Fysieke telefoon/speaker- en Telegramproeven blijven afzonderlijk open."
         },
         "ownerAction": {
           "title": "OpenClaw apart aanmelden voor vergelijking",
@@ -3200,7 +3207,7 @@
           "linkLabel": "Open native aanmelding"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T03:33:38.872684+00:00",
+        "reviewedAt": "2026-10-01T04:06:28.120681+00:00",
         "previousOwnerAction": {
           "title": "Probeer onderbreken op je telefoon",
           "steps": [
@@ -13147,7 +13154,7 @@
             "evidence": "eva2/evidence/product/contact-grouped-catalog-20260928.json",
             "remaining": "Greeting5.191s/retrieval15.399s; desired latency and Telegram parity remain open."
           },
-          "activeWorker": "/root",
+          "activeWorker": null,
           "contactDuringReuseAssignment": {
             "stage": "installed_http_overlap_pass",
             "outcome": "Locate existing admission/contact routing responsible for55.742s first text during procedure task; propose smallest general change only if needed.",
@@ -13227,20 +13234,21 @@
               "assignment": {
                 "baseCommit": "c6b5002a",
                 "files": [
-                  "eva2/evidence/product/c1-latest-ingress-20260930.json"
+                  "eva2/evidence/product/c1-latest-ingress-20261001.json"
                 ],
                 "existing": "Installed concurrent Bottie polling, original-message reply binding and shared runtime overlap proof.",
                 "gap": "Current real Telegram ordering after installed corrections not established.",
                 "finish": "Use current ingress/archive metadata to locate an actual failure or verify a bounded real overlapping pair; do not rebuild tested concurrency.",
                 "estimate": "15–30 minutes initial diagnosis; zero planned replay/model calls; credits unknown.",
-                "currentAction": "One read-only archive check completed; no newer genuine pair. No messages/model calls sent; retain existing route and await only dependent owner observation.",
-                "stage": "awaiting_owner_current_telegram_trial",
+                "currentAction": "Check authoritative live Bottie archive after installed corrections for new real Eva2 turns; no messages, model calls or fixture replay.",
+                "stage": "current_ingress_checked_no_new_pair",
                 "owner": "/root",
-                "activeWorkers": []
+                "activeWorkers": [],
+                "finding": "Authoritative live Bottie archive: zero new real Eva2 turns since installed correction; latest retained turn29September. No new failure or acceptance inferred."
               },
               "blocker": "Geen nieuwe echte Eva2-Telegramberichten ná huidige oplevering bewaard; nieuwste29september19:19UTC. Echte overlapproef gevraagd. Geen nieuwe codefout vastgesteld.",
-              "latestEvidence": "eva2/evidence/product/c1-latest-ingress-20260930.json",
-              "checkedAt": "2026-09-30T20:06:38.349322+00:00"
+              "latestEvidence": "eva2/evidence/product/c1-latest-ingress-20261001.json",
+              "checkedAt": "2026-10-01T03:57:47.198861+00:00"
             }
           ],
           "providerBlocker": {
@@ -13444,7 +13452,7 @@
             "replacementJustified": false
           },
           "owner": "/root",
-          "activeWorker": "/root",
+          "activeWorker": null,
           "baseCommit": "7ab5b01d",
           "assignment": {
             "stage": "both_installed_physical_observation_pending",
@@ -14846,31 +14854,31 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "OpenClaw-aanvraagmapping en echte beheerde0.155.1-catalogus onafhankelijk GO: Astra/medium aanwezig, Sol niet in niet-aangemelde catalogus. Eigen native aanmelding en daarna werkelijke catalogus nodig. Hermes eigen login ontbreekt; geen actieve aanmeldprocessen. Volledige host-/helper-/tool-/stopdekking en gelijkwaardige toegang blijven open. Geen volledige P1.1 of extra Eva-functie.",
-              "latestEvidence": "eva2/evidence/product/p1-openclaw-native-catalog-20261001.json",
+              "remaining": "Echte CLI accepteert twee canonieke persistente hoofdmodelconfiguraties; onafhankelijke review GO voor validatie/readback. Eigen OpenClaw/Hermes-login en actuele catalogus/toegang ontbreken. Native hostselectie, helper/tool/stopdekking en volledige P1.1 blijven open; geen modelvervanging of extra Eva-functie.",
+              "latestEvidence": "eva2/evidence/product/p1-openclaw-host-config-20261001.json",
               "assignment": {
-                "baseCommit": "d1871744",
+                "baseCommit": "a4524901",
                 "owner": "/root",
-                "files": [
-                  "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-                  "eva2/evidence/product/p1-openclaw-native-catalog-20261001.json",
-                  "eva2/benchmark/inspect_ai_v1/p1_openclaw_catalog_probe.py"
-                ],
-                "existing": "OpenClaw2026.9.6 with native Codex plugin and its already installed managed Codex0.155.1. Request mapping reviewed; none is conditional on actual catalog metadata. Native source, previous admission gaps and all product acceptance retained.",
-                "gap": "No actual managed native model/list metadata or own agent authentication observed. Direct fixture params do not establish native startup selection.",
-                "outcome": "Obtain real native catalog/settings for equal Sol/none and Astra/medium preparation; identify unavailable models or auth boundary without replacement or inference.",
-                "finish": "One actual managed app-server metadata session in an explicit empty owned profile, network namespace disabled. Read initialize/account/model metadata only; no thread/start, turn/start, copied credentials or invented catalog. Record actual results and gaps.",
-                "design": "Resolve already installed package entry/binary first, verify exact0.155.1, launch with clean child environment and isolated HOME/CODEX_HOME. Reuse existing RPC driver if suitable. Keep native package unchanged, no extra evaluator or quotas. Review bounded metadata evidence and publish existing board/manifest.",
-                "estimate": "One local managed metadata session; zero inference; no Eva installation; developer credits unknown.",
-                "stage": "managed_catalog_reviewed_awaiting_own_native_signin",
                 "activeWorkers": [],
-                "finding": "Codex0.155.1 verified. Native account null; managed unauthenticated catalog lists9models including Astra/medium, omits Sol. No native login/inference or replacement. Authenticated catalog and outer host startup remain open.",
+                "files": [
+                  "eva2/benchmark/inspect_ai_v1/p1_openclaw_host_config_probe.py",
+                  "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
+                  "eva2/evidence/product/p1-openclaw-host-config-20261001.json"
+                ],
+                "existing": "Pinned OpenClaw2026.9.6 and native Codex plugin/managed0.155.1; reviewed direct builder and actual unauthenticated catalog. Existing registration, authentication gaps and product acceptance retained.",
+                "gap": "Direct builder fixture is not persistent canonical host configuration. The actual CLI has not validated/read back the two intended main-role configurations.",
+                "outcome": "Persist correct openai/model references with model-scoped codex runtime policy, and verify the installed OpenClaw CLI accepts and reads them.",
+                "finish": "Two role configurations validated and read back once through the real installed CLI in an empty owned profile with network namespace disabled. Record exact failures or success; no gateway, model thread, auth, inference, copied credentials or native patch.",
+                "design": "Keep separate contact Sol/off and work Astra/medium files in one owned comparison profile; explicit native plugin load path, immutable config environment, shared owned workspace. Preserve both model-scoped runtime pins; no provider metadata fabrication or helper-coverage claim. Source/package hashes and unchanged-file checks join focused independent review.",
+                "estimate": "Four local CLI reads, zero intended model/provider calls; no Eva service changes; development credits unknown.",
+                "stage": "persistent_host_config_reviewed_awaiting_own_native_signin",
+                "finding": "Both persisted main-role configurations validated and authored fields read back unchanged through actual CLI. Additional native defaults visible; no auth, inference or runtime selection.",
                 "reviewer": "/root/review_telegram_draft_lane",
-                "reviewResult": "GO for unauthenticated managed metadata only"
+                "reviewResult": "GO for configuration acceptance/readback only"
               },
               "blocker": "Eigen OpenClaw- en Hermes-aanmeldingen ontbreken. Nieuwe native code pas starten wanneer Jaap klaarzit; verlopen code niet hergebruiken. Niet-aangemelde catalogus bewijst geen modelafwijzing.",
-              "nextImplementation": "Resolve remaining native participant startup/access using existing pinned sources and adapters. Agent Zero fixed-envelope helper refusal remains unavailable; no automatic native rerun, hidden helper disabling or quota increase. Deployed/native/all-path parity still required before live comparison.",
-              "checkedAt": "2026-10-01T03:33:38.872684+00:00"
+              "nextImplementation": "Use these owned persisted configurations for native startup after own authentication. No repeated config/catalog probe without a changed cause or new evidence. Prior Agent Zero helper-envelope refusal remains unavailable; no hidden helper disable, auth-token copying or quota increase.",
+              "checkedAt": "2026-10-01T04:06:28.120681+00:00"
             },
             {
               "id": "P1.2",

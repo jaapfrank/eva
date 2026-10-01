@@ -80,6 +80,30 @@
         "runtimeAdmission": "not_admitted",
         "review": "eva2/reviews/p1-openclaw-native-catalog-20261001.md",
         "reviewResult": "GO for unauthenticated metadata; not admitted"
+      },
+      "nativeHostConfiguration": {
+        "checkedAt": "2026-10-01T04:01:00.817343+00:00",
+        "status": "schema_valid_authored_role_fields_read_back_native_selection_unverified",
+        "evidence": "eva2/evidence/product/p1-openclaw-host-config-20261001.json",
+        "configProfile": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1",
+        "contact": {
+          "model": "openai/gpt-6-sol",
+          "thinkingDefault": "off",
+          "agentRuntime": "codex",
+          "configSha256": "b59a1b86fcaa20df5b16fe515fa64c9d5be9a4cc2fbde9ad8f9279a98adeffc0",
+          "authoredFieldsMatch": true
+        },
+        "work": {
+          "model": "openai/gpt-6-astra",
+          "thinkingDefault": "medium",
+          "agentRuntime": "codex",
+          "configSha256": "77c3dfb2a122acf5e1908406d9600791c9645d526e39d03795c49470542f64e8",
+          "authoredFieldsMatch": true
+        },
+        "boundary": "Persisted configs accepted/read back by actual CLI; no gateway or native turn. Derived concurrency/helper defaults not an approved comparison envelope.",
+        "runtimeAdmission": "not_admitted",
+        "review": "eva2/reviews/p1-openclaw-host-config-20261001.md",
+        "reviewResult": "GO for configuration acceptance/readback only; not admitted"
       }
     },
     {

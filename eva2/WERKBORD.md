@@ -1,5 +1,13 @@
 # EVA2 werkbord
 
+## Actueel: P1.1 — persistente native configuraties beoordeeld; toegang open
+
+Basis `a4524901`; geen uitvoerder of loginproces actief. Bestaande echte OpenClaw-CLI accepteert beide eigen configuraties en leest alle bedoelde velden ongewijzigd terug: canonieke `openai/`-modelrefs, modelgebonden Codex-runtime, Sol/off voor contact en Astra/medium voor werk. Vier lokale opdrachten, samen6,292s; geen auth/thread/turn, modelantwoord, gateway of Eva-installatiewijziging. Onafhankelijke review GO voor deze beperkte grens. Readback voegt normale concurrency-/subagent-/compactiedefaults toe; dit is geen goedgekeurd vergelijkingsbudget. [Bewijs](evidence/product/p1-openclaw-host-config-20261001.json) · [Review](reviews/p1-openclaw-host-config-20261001.md).
+
+P1.1 blijft open: eigen OpenClaw/Hermes-login, actuele catalogus/toegang, native hostselectie en volledige helper/tool/stopdekking ontbreken. Agent Zero-aanmelding behouden. Geen nieuwe Eva-functie of tellerverhoging; ontwikkelcredits onbekend. Volgende native aanmelding alleen wanneer Jaap klaarzit; geen ongewijzigde herhaling van dit bewijs. Het volledige projectgoal blijft actief.
+
+C1.2-readcheck afgerond: werkelijk Bottie-archief bevat nul nieuwe Eva2-beurten sinds de geïnstalleerde correctie. Laatste bewaarde beurt blijft29september. [Metadata](evidence/product/c1-latest-ingress-20261001.json). Geen nieuwe fout of acceptatie afgeleid; fysieke/Telegramproeven blijven open. Definitieve P1.2-invoer wacht volgens bestaand protocol op ontwikkeluitkomsten en eindkandidaat.
+
 ## Actueel: P1.1 — echte catalogus beoordeeld; eigen aanmelding nodig
 
 Basis `d1871744`; geen uitvoerder of aanmeldproces actief. Al aanwezig beheerd Codex0.155.1 geïdentificeerd en één echte metadata-sessie in lege eigen opslag/netwerkisolatie uitgevoerd. Account leeg, complete niet-aangemelde catalogus9modellen: Astra/medium aanwezig, gpt-6-sol ontbreekt. Catalogus kan een gebundelde terugval zijn; dit bewijst geen toegang, afwijzing of snelheid. Geen modelvervanging, native bronwijziging, installatie of login-/inferentie-RPC. Onafhankelijke review GO voor deze beperkte metadata. [Bewijs](evidence/product/p1-openclaw-native-catalog-20261001.json) · [Review](reviews/p1-openclaw-native-catalog-20261001.md).

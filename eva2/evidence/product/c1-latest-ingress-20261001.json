@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-10-01T03:43:30.595586+00:00",
+  "taskId": "C1.2",
+  "scope": "Read-only actual live Telegram archive metadata; no content, chat/person IDs emitted",
+  "since": "2026-09-30T17:44:01Z",
+  "eva2RowsSince": 0,
+  "eva2InboundSince": 0,
+  "latestEva2At": "2026-09-29T19:19:54.000Z",
+  "roleStatusCounts": [],
+  "modelCalls": 0,
+  "telegramMessagesSent": 0,
+  "runtimeChanged": false,
+  "credits": "unknown; development usage separate",
+  "finding": "No genuine post-delivery pair available",
+  "ownerAcceptance": false
+}
