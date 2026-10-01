@@ -13,13 +13,15 @@ juiste apparaat/nieuwe compile14:50:20/mute uit/native verbinding bevestigd.
 verbinding weg en herstart/geen antwoord. Opgeslagen crashpad bevat stack-overloop;
 de precieze taak is niet bewezen. Alleen softwaremute uitzetten was onvoldoende.
 Nieuwe hoorbare begroeting is gevraagd; daarna direct praten tijdens denken en
-spreken, juiste tussenantwoord en later onderzoeksresultaat. Geen volledige
+spreken en juiste tussenantwoord. C3.3 onderzoeksresultaat terug op juiste speaker is hieronder geaccepteerd. Geen volledige
 C3/C4 of grote functieafronding. Geen bouwuitvoerder actief tijdens deze proef.
 
 **Behouden:** bestaande PCM/LiveKit-route, ARMED-pre-roll, echte Eva-antwoorden,
 mute/stop/tokens/volgorde en gegevens. Vaste transportzin wordt niet meer door
 HA/media uitgesproken. Overkapping blijft gewone route; geen rollback of volledige
-herinstallatie.44 kleine taken,11 technisch groen/33 open ongewijzigd.
+herinstallatie.44 kleine taken,12 technisch groen/32 open; grote productteller ongewijzigd.
+
+**C3.3 afgerond en door Jaap bevestigd:** onderzoeksresultaat komt terug op de juiste speaker. Bestaande geïnstalleerde route behouden; geen nieuwe bouw/test/installatie. [Eigenaarbevestiging](evidence/product/c3-speaker-result-owner-accepted-20261001.json). C3.1/C3.2 blijven afzonderlijk open.
 
 ## Vorige oplevering: C1.2 — bevindingen bij geblokkeerd onderzoek geïnstalleerd
 

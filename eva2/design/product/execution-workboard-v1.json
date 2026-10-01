@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T13:04:32.018573+00:00",
+        "checkedAt": "2026-10-01T13:11:10.342083+00:00",
         "deliveries": [
+          {
+            "title": "C3.3 — onderzoeksresultaat op juiste speaker bevestigd",
+            "date": "1 oktober",
+            "state": "installed",
+            "result": "Jaap bevestigt dat het echte onderzoeksresultaat terugkomt op de juiste speaker. Bestaande geïnstalleerde route behouden; deze kleine taak is afgerond.",
+            "remaining": "Doorpraten tijdens denken/spreken en de tweede speaker blijven afzonderlijk open. Geen volledig C3 of extra groot onderdeel geclaimd.",
+            "source": "eva2/evidence/product/c3-speaker-result-owner-accepted-20261001.json"
+          },
           {
             "title": "Woonkamer: native inputtaak zonder onnodig legacy-buffer",
             "date": "1 oktober",
@@ -3241,7 +3249,7 @@
         },
         "next": {
           "title": "Direct doorpraten via Woonkamer afmaken",
-          "detail": "Eerst hoorbare begroeting na wake; daarna nieuwe vraag zonder wakeword tijdens denken/spreken en later onderzoeksresultaat. Overkapping volgt dezelfde bewezen route."
+          "detail": "C3.3 resultaatterugmelding is bevestigd. Nog C3.1 werkelijk begroeten/direct doorpraten tijdens denken en spreken, daarna C3.2 dezelfde route op Overkapping."
         },
         "ownerAction": {
           "title": "Zeg Hey Eva, hallo",
@@ -3252,7 +3260,7 @@
           "expected": "Een werkelijk hoorbaar antwoord; dit alleen rondt full duplex nog niet af."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T13:04:32.018573+00:00",
+        "reviewedAt": "2026-10-01T13:11:10.342083+00:00",
         "previousOwnerAction": {
           "title": "Probeer onderbreken op je telefoon",
           "steps": [
@@ -13398,7 +13406,7 @@
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "General HA, registered speaker identities, native sessions and later result delivery.",
-            "remainingGap": "Werkelijk antwoord op wakepoging en daarna direct doorpraten tijdens denken/spreken nog te bevestigen. Eerdere mislukte proef behouden.",
+            "remainingGap": "C3.3 onderzoeksresultaat terug op oorspronkelijke speaker is door Jaap bevestigd en afgerond. C3.1 direct doorpraten en C3.2 tweede speaker blijven open.",
             "nextAction": "Finish actual direct-speech outcome on Woonkamer, then reuse the same verified route on Overkapping; no new speech engine.",
             "evidencePaths": [
               "eva2/evidence/product/household-result-continuity-installed-20260925.json",
@@ -13428,7 +13436,7 @@
             "blocksIndependentWork": false,
             "report": "Fresh observed attempt: mute true then false, Hey Eva recognized probability1.00, API reset by peer; owner reports restart/no reply."
           },
-          "remaining": "Werkelijk antwoord op wakepoging en daarna direct doorpraten tijdens denken/spreken nog te bevestigen. Eerdere mislukte proef behouden.",
+          "remaining": "C3.3 onderzoeksresultaat terug op oorspronkelijke speaker is door Jaap bevestigd en afgerond. C3.1 direct doorpraten en C3.2 tweede speaker blijven open.",
           "reviewer": "/root/platform_research_20260927",
           "dashboardComponent": "voice",
           "remainingTasks": [
@@ -13484,14 +13492,14 @@
             {
               "id": "C3.3",
               "title": "Onderzoeksresultaat terug op juiste speaker",
-              "status": "blocked",
+              "status": "completed",
               "kind": "aansluiten",
               "doneWhen": "Werkelijke uitkomst komt terug bij de oorspronkelijke speaker; geen privé-inhoud.",
               "owner": "Codex /root",
               "assignment": {
                 "owner": "/root",
                 "baseCommit": "52ed18b8",
-                "stage": "installed_route_retained_actual_playback_missing",
+                "stage": "completed_existing_route_owner_confirmed",
                 "outcome": "Public research result returns to the originating registered speaker, with private content excluded.",
                 "existing": "Existing registered native speaker sessions, durable household result delivery and voice media-agent return code.",
                 "gap": "Earlier source/installed media-agent difference was irrelevant to private website voice; determine whether it leaves the household result route disconnected. Missing physical acceptance alone is not a defect.",
@@ -13501,11 +13509,20 @@
                 ],
                 "finish": "Reuse current working return path or correct a demonstrated missing source-to-installed transition, then verify preserved speaker binding/privacy and real return separately from physical family acceptance.",
                 "estimate": "Use existing installed source/hashes/evidence first; no model/audio calls planned for this targeted diagnosis. Credits unknown.",
-                "currentAction": "Existing native adapter matches installed core; both registered devices advertise household result returns. No current announce failure established. Await genuine original-speaker research/result observation; do not rebuild website media path.",
-                "activeWorkers": []
+                "currentAction": "Owner confirmed actual result playback; retain installed route, no new build or repeat test.",
+                "activeWorkers": [],
+                "result": "Actual research result return accepted by owner; earlier technical evidence and private-content boundaries retained."
               },
-              "latestEvidence": "eva2/evidence/product/c3-native-return-route-20260930.json",
-              "blocker": "Bestaande native route geïnstalleerd, bron gelijk en beide apparaatbindings gereed. Hoorbare werkelijke onderzoeksuitkomst op de oorspronkelijke speaker nog niet waargenomen; eigenaarproef gevraagd. Geen codefout bewezen."
+              "latestEvidence": "eva2/evidence/product/c3-speaker-result-owner-accepted-20261001.json",
+              "blocker": null,
+              "completedAt": "2026-10-01T13:11:10.342083+00:00",
+              "checkedAt": "2026-10-01T13:11:10.342083+00:00",
+              "ownerTrial": {
+                "status": "accepted",
+                "acceptedAt": "2026-10-01T13:11:10.342083+00:00",
+                "report": "C3.3 · Onderzoeksresultaat terug op juiste speaker Dit werkt wel.",
+                "scope": "Research result returns to original speaker; no full-duplex or second-speaker inference."
+              }
             }
           ]
         },

@@ -1,0 +1,27 @@
+{
+  "taskId": "C3.3",
+  "status": "completed_owner_accepted",
+  "checkedAt": "2026-10-01T13:11:10.342083+00:00",
+  "source": "Direct owner statement in current chat",
+  "ownerStatement": "C3.3 · Onderzoeksresultaat terug op juiste speaker Dit werkt wel.",
+  "acceptedOutcome": "Actual research result returns audibly to the originating speaker.",
+  "retainedTechnicalEvidence": [
+    "eva2/evidence/product/c3-native-return-route-20260930.json",
+    "eva2/evidence/product/household-result-continuity-installed-20260925.json"
+  ],
+  "implementation": "Existing installed household return path retained; no new code, provider call, test, restart or installation required.",
+  "limits": [
+    "Owner did not specify which physical speaker; do not infer both continuous-conversation trials passed.",
+    "C3.1/C3.2 and full-duplex behavior remain separate open work.",
+    "Existing private-content exclusion remains required; this owner statement is not a new privacy probe."
+  ],
+  "ownerAcceptance": {
+    "accepted": true,
+    "statementRecordedAt": "2026-10-01T13:11:10.342083+00:00"
+  },
+  "newDevelopmentProbeUsage": {
+    "modelCalls": 0,
+    "toolHouseActions": 0,
+    "credits": null
+  }
+}
