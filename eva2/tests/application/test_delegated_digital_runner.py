@@ -1229,3 +1229,41 @@ def test_each_model_turn_observes_remaining_admitted_wall_time():
     assert result.status == "succeeded", result
     assert observed == [180, 150, 120]
     assert len(tools.calls) == 2
+
+
+@pytest.mark.parametrize("verified_observation", [True, False])
+@pytest.mark.parametrize("later_failure", ["none", "ha", "read"])
+def test_blocked_plan_keeps_returned_findings_only_after_verified_work(monkeypatch, verified_observation, later_failure):
+    """A blocked investigation retains its explanation, never a successful result."""
+    from types import SimpleNamespace
+    import eva.bootstrap.delegated_digital_runner as module
+    import eva.adapters.postgres.work_corrections as corrections
+    _, spec, _, _, _, runner, _ = fixture()
+    monkeypatch.setattr(module, "BackgroundWorkProgress", lambda *a: SimpleNamespace(action_names=()))
+    monkeypatch.setattr(module, "ComponentImprovementActions", lambda *a: SimpleNamespace(action_names=()))
+    monkeypatch.setattr(module, "load_work_progress", lambda *a: {
+        "work_id": spec.work_id, "steps": [{"state": "blocked"}]})
+    monkeypatch.setattr(corrections, "work_corrections", lambda *a: ())
+    class ControlledConversation:
+        def __init__(self, memory, model, identity, actions): self.actions = actions
+        def respond(self, turn, **kwargs):
+            if verified_observation:
+                self.actions.receipts.append(ConversationActionReceipt(
+                    ConversationActionCall("read", "read_home_assistant_inventory", {}),
+                    {"status": "verified"}))
+            if later_failure == "ha":
+                self.actions.receipts.append(ConversationActionReceipt(
+                    ConversationActionCall("unavailable", "home_assistant_request", {}),
+                    {"status": "verified", "result": {"success": False}}))
+            elif later_failure == "read":
+                self.actions.receipts.append(ConversationActionReceipt(
+                    ConversationActionCall("unavailable", "use_connector_tool", {}),
+                    {"status": "failed", "recoverable_read_error": True,
+                     "proof": {"evidence": {"source": "mcp_gateway_read_error", "operation_kind": "read"}}}))
+            return SimpleNamespace(text="Observed provider error. Further access is unavailable.")
+    monkeypatch.setattr(module, "LivingConversation", ControlledConversation)
+    outcome = asyncio.run(runner.run(spec, call_id="call:blocked-report"))
+    assert outcome.status == "incomplete_work" and outcome.result is None
+    assert outcome.retryable is False
+    assert outcome.failure_report == ("Observed provider error. Further access is unavailable."
+                                      if verified_observation else None)

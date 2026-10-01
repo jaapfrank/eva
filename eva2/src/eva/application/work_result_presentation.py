@@ -28,7 +28,7 @@ def work_failure_description(error_code: str | None, failure_report: str | None 
         "timed_out": "De uitvoering heeft de tijdslimiet bereikt. Eerdere acties kunnen al uitgevoerd zijn; controleer die voordat je hervat.",
     }.get(error_code)
 
-    if error_code == "budget_exceeded" and failure_report is not None:
+    if error_code in {"budget_exceeded", "incomplete_work"} and failure_report is not None:
         return (description + "\n\nBewaard antwoord — niet als afgerond resultaat bevestigd:\n"
                 + failure_report)
     return description

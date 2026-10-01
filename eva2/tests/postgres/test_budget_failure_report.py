@@ -34,12 +34,13 @@ def setup(engine, label):
     return store, profile, service, work_id, clock
 
 
-def test_atomic_report_replay_retention_and_old_failure_path(database, monkeypatch):
-    store, profile, service, identifier, clock = setup(database, "budget-report")
+@pytest.mark.parametrize("error_code", ["budget_exceeded", "incomplete_work"])
+def test_atomic_report_replay_retention_and_old_failure_path(database, monkeypatch, error_code):
+    store, profile, service, identifier, clock = setup(database, "budget-report-"+error_code)
     claim = store.claim_next(worker_id="worker:report", release=profile.release, now=NOW+timedelta(seconds=1))
     call = store.start_call(claim, now=NOW+timedelta(seconds=2))
     report = "Already returned report. " * 400
-    kwargs = dict(usage=_usage(), error_code="budget_exceeded", error_fingerprint="d"*64,
+    kwargs = dict(usage=_usage(), error_code=error_code, error_fingerprint="d"*64,
                   ambiguous=False, now=NOW+timedelta(seconds=3), failure_report=report)
     original = module.insert_initial_timeline_thread
     def failed_insert(*args, **kwargs): raise RuntimeError("report persistence failure")
@@ -69,22 +70,23 @@ def test_atomic_report_replay_retention_and_old_failure_path(database, monkeypat
                    principal_binding_id=service.principal_binding_id)
     clock[0] += timedelta(days=8)
     assert store.load(identifier, **service._owner).failure_report is None
-    other_store, other_profile, other_service, other_id, _ = setup(database, "budget-no-report")
+    other_store, other_profile, other_service, other_id, _ = setup(database, "budget-no-report-"+error_code)
     other_claim = other_store.claim_next(worker_id="worker:old", release=other_profile.release, now=NOW+timedelta(seconds=1))
     other_call = other_store.start_call(other_claim, now=NOW+timedelta(seconds=2))
     old = other_store.record_failure(other_call, **{k:v for k,v in kwargs.items() if k != "failure_report"})
     assert old.failure_report is None and old.result is None
 
 
-def test_worker_passes_budget_report_and_stop_wins(database):
+@pytest.mark.parametrize("error_code", ["budget_exceeded", "incomplete_work"])
+def test_worker_passes_budget_report_and_stop_wins(database, error_code):
     for stop in (False, True):
-        store, profile, service, identifier, clock = setup(database, "budget-worker-"+str(stop))
+        store, profile, service, identifier, clock = setup(database, "budget-worker-"+error_code+str(stop))
         class Runner:
             async def run(self, spec, **kwargs):
                 if stop:
                     store.request_stop(identifier, **service._owner, now=NOW+timedelta(seconds=2))
                 clock[0] = NOW+timedelta(seconds=3)
-                return ToolFreeChildOutcome("budget_exceeded", None, _usage(), False, "d"*64,
+                return ToolFreeChildOutcome(error_code, None, _usage(), False, "d"*64,
                                             failure_report="Returned report")
         worker = DelegatedWorkWorker(store, Runner(), worker_id="worker:report",
                                      release=profile.release, clock=lambda: clock[0])
@@ -94,7 +96,7 @@ def test_worker_passes_budget_report_and_stop_wins(database):
         assert saved.failure_report == (None if stop else "Returned report")
 
 
-@pytest.mark.parametrize("status,text", [("incomplete_work", "report"), ("budget_exceeded", ""),
+@pytest.mark.parametrize("status,text", [("internal_error", "report"), ("budget_exceeded", ""),
     ("budget_exceeded", "x"*65537), ("budget_exceeded", "é"*32769)])
 def test_outcome_rejects_other_failures_or_unbounded_reports(status, text):
     with pytest.raises(ValueError, match="failure report"):

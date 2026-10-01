@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T10:22:42.263798+00:00",
+        "checkedAt": "2026-10-01T10:55:07.859961+00:00",
         "deliveries": [
+          {
+            "title": "Geblokkeerd onderzoek: bevindingen blijven in de terugmelding",
+            "date": "1 oktober",
+            "state": "installed",
+            "result": "Complete teruggegeven uitleg na geverifieerd werk behouden via bestaande private verslagroute, ook bij een latere leesfout. Mislukt blijft mislukt; stoppen en bewaartermijn behouden. Kern/werker eenmaal samen bijgewerkt, gezond; gerichte controles en onafhankelijke eindreview GO.",
+            "remaining": "C1.2/C1 nog open: alternatieve bronselectie en volledige bruikbare onderzoeksuitkomst. Geen nieuw groot onderdeel of eigenaaracceptatie.",
+            "source": "eva2/evidence/product/c1-incomplete-work-report-20261001.json"
+          },
           {
             "title": "Alle 44 kleine taken direct rood/groen zichtbaar",
             "date": "1 oktober",
@@ -3203,13 +3211,13 @@
           }
         ],
         "now": {
-          "title": "O1.2 — gekozen modules op de doelinstallatie aansluiten",
-          "state": "in_progress",
-          "detail": "Takenlijst geïnstalleerd en onafhankelijk beoordeeld. O1.2 hervat: gekozen HA/configuratie geverifieerd, bronreview akkoord voor voorbereiding; daadwerkelijke geselecteerde doelinstallatie nog niet gestart. Spraak/browser blijven open."
+          "title": "C1.2 — juiste bron en bruikbare onderzoeksuitkomst nog open",
+          "state": "planned",
+          "detail": "Tussenvragen komen volgens eigenaar correct vóór onderzoek terug. Terugmelding van bewaarde bevindingen bij geblokkeerd onderzoek is geïnstalleerd en onafhankelijk goedgekeurd. Andere afvalagenda bevat volgens eigenaar data; de juiste bron vinden en een volledig resultaat blijven open. Er staat nu geen extra uitvoerder aan."
         },
         "next": {
-          "title": "Echte geselecteerde moduleaansluiting bevestigen",
-          "detail": "Bestaande bevestigde keuzes behouden; geselecteerde image en bestanden vóór resourcevoorbereiding controleren. Geen fysieke huisactie, herbouw of tellerverhoging voor deelbewijs."
+          "title": "C1.2 — onvolledige bronselectie gericht controleren",
+          "detail": "Bestaande algemene inventaris-/agenda- en onderzoeksroutes hergebruiken. Geen Circulus-herhaling, vaste afvalfunctie of nieuwe installatieketen."
         },
         "ownerAction": {
           "title": "Aanmelding gemeld; geen nieuwe camerakeuze nodig",
@@ -3221,7 +3229,7 @@
           "expected": "Geen nieuwe aanmeldpoging of vooraf gekozen broncombinatie eisen zonder actuele controle. Aangemeld zijn is nog geen bewezen native modeltoegang."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T10:22:42.263798+00:00",
+        "reviewedAt": "2026-10-01T10:55:07.859961+00:00",
         "previousOwnerAction": {
           "title": "Probeer onderbreken op je telefoon",
           "steps": [
@@ -13241,28 +13249,41 @@
             {
               "id": "C1.2",
               "title": "Telegram-tussenvraag vóór onderzoeksresultaat",
-              "status": "blocked",
+              "status": "in_progress",
               "kind": "praktijk",
               "doneWhen": "Gewone tussenvraag komt vóór onderzoek terug en beide antwoorden horen bij hun eigen vraag.",
               "owner": "Codex /root",
               "assignment": {
-                "baseCommit": "c6b5002a",
+                "baseCommit": "c9c784e0",
                 "files": [
-                  "eva2/evidence/product/c1-latest-ingress-20261001.json"
+                  "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+                  "eva2/src/eva/adapters/subagents/tool_free_child.py",
+                  "eva2/src/eva/adapters/postgres/delegated_work.py",
+                  "eva2/src/eva/application/work_result_presentation.py",
+                  "eva2/src/eva/application/work_failure_notice.py"
                 ],
                 "existing": "Installed concurrent Bottie polling, original-message reply binding and shared runtime overlap proof.",
                 "gap": "Current real Telegram ordering after installed corrections not established.",
                 "finish": "Use current ingress/archive metadata to locate an actual failure or verify a bounded real overlapping pair; do not rebuild tested concurrency.",
                 "estimate": "15–30 minutes initial diagnosis; zero planned replay/model calls; credits unknown.",
-                "currentAction": "Check authoritative live Bottie archive after installed corrections for new real Eva2 turns; no messages, model calls or fixture replay.",
-                "stage": "current_ingress_checked_no_new_pair",
+                "currentAction": "No current executor after this delivery. Next: inspect the existing general source-selection route for the owner-reported alternate calendar; reuse current source, no removed-provider replay.",
+                "stage": "report_preservation_installed_review_GO_remaining_source_selection",
                 "owner": "/root",
                 "activeWorkers": [],
-                "finding": "Authoritative live Bottie archive: zero new real Eva2 turns since installed correction; latest retained turn29September. No new failure or acceptance inferred."
+                "finding": "Correct owner ordering/binding. Exact stored blocker hid collected diagnosis; ordinary source selection also missed owner-reported alternative calendar. No broad source absence established.",
+                "design": "Reuse existing bounded failure report persistence and authorized delivery; preserve complete returned reply after verified work despite a blocker; success/stop/privacy contracts unchanged.",
+                "result": "Returned findings survive an unfinished task after verified work; exact core/worker source bytes installed, focused runner/real PostgreSQL verification and final independent GO. No task success or automatic retry."
               },
-              "blocker": "Geen nieuwe echte Eva2-Telegramberichten ná huidige oplevering bewaard; nieuwste29september19:19UTC. Echte overlapproef gevraagd. Geen nieuwe codefout vastgesteld.",
-              "latestEvidence": "eva2/evidence/product/c1-latest-ingress-20261001.json",
-              "checkedAt": "2026-10-01T03:57:47.198861+00:00"
+              "blocker": null,
+              "latestEvidence": "eva2/evidence/product/c1-incomplete-work-report-20261001.json",
+              "checkedAt": "2026-10-01T10:55:07.859961+00:00",
+              "remaining": "Tussenvragen komen volgens eigenaar correct vóór onderzoek terug. Bevindingen bij geblokkeerd onderzoek worden nu behouden en teruggegeven; technisch geïnstalleerd en eindreview GO. Andere afvalagenda bevat volgens eigenaar data, Circulus verwijderd: relevante bron vinden en een volledige onderzoeksuitkomst blijven te bewijzen. Geen nieuwe snelheidsmeting.",
+              "ownerTrial": {
+                "status": "partial",
+                "reportedAt": "2026-10-01",
+                "outcome": "Tussenvragen op eigen berichten vóór onderzoeksreacties. Onderzoek mislukt; andere afvalagenda bevat volgens eigenaar wel data. Circulus verwijderd.",
+                "expected": "Volledige bruikbare onderzoeksuitkomst met juiste berichtkoppeling; eventuele echte blokkade met concrete bevindingen."
+              }
             }
           ],
           "providerBlocker": {
@@ -14769,10 +14790,8 @@
               "assignment": {
                 "baseCommit": "854014862daf80830d18b167a1c8a42460a60ed6",
                 "owner": "/root",
-                "activeWorkers": [
-                  "/root"
-                ],
-                "stage": "source_review_complete_before_selected_target",
+                "activeWorkers": [],
+                "stage": "source_review_complete_waiting_after_C1_owner_failure",
                 "existing": "O1.1 actual text target and omission proof complete. Existing capability/secret/provider verification, HA URL configuration, maintained optional graph projection and HA runtime connector already exist.",
                 "gap": "Ordinary factory rejects selected providers. Existing v4 verification receipts already bind non-secret configuration and secret generation; reuse them in preparation. Voice/HA/browser add/omit remain the original full O1.2 scope.",
                 "outcome": "Dezelfde installatie werkt met gekozen modules; geen hardcoded eigenaarpaden.",

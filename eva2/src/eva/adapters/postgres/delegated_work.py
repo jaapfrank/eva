@@ -730,9 +730,9 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         if failure_report is not None:
             from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec
             if (not isinstance(call.spec, DelegatedDigitalWorkSpec) or ambiguous
-                    or error_code != "budget_exceeded" or not isinstance(failure_report, str)
+                    or error_code not in {"budget_exceeded", "incomplete_work"} or not isinstance(failure_report, str)
                     or not failure_report.strip() or len(failure_report.encode("utf-8")) > 65_536):
-                raise ValueError("failure report requires private digital budget exhaustion")
+                raise ValueError("failure report requires non-ambiguous private digital unfinished work")
         error_code = _bounded_text(error_code, maximum=80, label="error code")
         if re.fullmatch(r"[0-9a-f]{64}", error_fingerprint) is None:
             raise ValueError("error fingerprint is invalid")
@@ -1469,7 +1469,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         return self._validated(connection, row)
 
     def _read_failure_report(self, connection, work):
-        if work.state != "failed" or work.error_code != "budget_exceeded":
+        if work.state != "failed" or work.error_code not in {"budget_exceeded", "incomplete_work"}:
             return None
         thread = "work-failure-report:" + canonical_sha256({"work_id": work.spec.work_id})
         row = connection.execute(sa.select(operational_events).where(

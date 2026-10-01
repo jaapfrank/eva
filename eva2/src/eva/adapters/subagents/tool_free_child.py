@@ -95,10 +95,10 @@ class ToolFreeChildOutcome:
     failure_report: str | None = None
 
     def __post_init__(self) -> None:
-        if self.failure_report is not None and (self.status != "budget_exceeded"
+        if self.failure_report is not None and (self.status not in {"budget_exceeded", "incomplete_work"}
                 or not isinstance(self.failure_report, str) or not self.failure_report.strip()
                 or len(self.failure_report.encode("utf-8")) > 65_536):
-            raise ValueError("failure report requires bounded budget-exhaustion text")
+            raise ValueError("failure report requires bounded non-ambiguous unfinished-work text")
         if (self.status == "succeeded") != (self.result is not None):
             raise ValueError("child success and result presence differ")
         if (self.status == "succeeded") == (self.error_fingerprint is not None):

@@ -36,8 +36,9 @@ def delivery_outcome(work):
     if work.state not in FAILURE_STATES:
         return None
     report = getattr(work, "failure_report", None)
-    if work.state == "failed" and getattr(work, "error_code", None) == "budget_exceeded" and report is not None:
-        text = work_failure_description("budget_exceeded", report)
+    error_code = getattr(work, "error_code", None)
+    if work.state == "failed" and error_code in {"budget_exceeded", "incomplete_work"}:
+        text = work_failure_description(error_code, report)
     elif work.state == "ambiguous":
         text = ("Ik kan niet bevestigen hoe je opdracht is afgelopen. Een begonnen "
                 "handeling kan al uitgevoerd zijn. Ik herhaal die niet automatisch. "

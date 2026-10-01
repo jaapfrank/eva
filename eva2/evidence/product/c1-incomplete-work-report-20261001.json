@@ -1,0 +1,108 @@
+{
+  "contract": "EvaIncompleteWorkReportEvidence/v1",
+  "checkedAt": "2026-10-01T10:51:17.898895+00:00",
+  "taskId": "C1.2",
+  "baseCommit": "c9c784e0",
+  "ownerTrial": {
+    "reportedAt": "2026-10-01",
+    "socialTurnsBeforeResearchReplies": true,
+    "originalMessageBindingCorrect": true,
+    "latencySeconds": null,
+    "researchCompleted": false,
+    "acceptance": "partial; end-to-end C1 still open",
+    "laterCorrection": "Owner reports another waste calendar has data and Circulus integration was removed. Original source selection did not establish absence across available calendars."
+  },
+  "failedAttempt": {
+    "workId": "work:eva-chat:0d551827-6c2f-5178-b062-850e13d72d36",
+    "state": "failed",
+    "errorCode": "incomplete_work",
+    "errorFingerprint": "00b36797c8d248812b83afbe4c699e356138bc5cf93c5b719b5c3c144a7ef73b",
+    "exactMatchedCause": "_UnfinishedWorkPlan:task plan contains a recorded blocker",
+    "durationSeconds": 144,
+    "runtimeUsage": {
+      "measurement": "partial",
+      "completedModelResponses": 14,
+      "toolCalls": 13,
+      "inputTokens": 245418,
+      "outputTokens": 1800,
+      "totalTokens": 247218,
+      "subscriptionCreditCost": "unknown"
+    },
+    "savedProgress": "Verified HA observations and collector error explanation were retained in task progress; deeper access blocked. Complete returned model explanation was discarded before terminal delivery."
+  },
+  "change": "Retain only a complete returned explanation for non-ambiguous incomplete work after verified tool evidence, including a later failed read. Reuse existing atomic, bound failure-report persistence and private delivery. No result/success or automatic retry; cancellation and audience/retention checks remain.",
+  "sourceHashes": {
+    "bootstrap/delegated_digital_runner.py": "97505b774729e6f0ba12d4db5b6d893d98e7e57c7218b2f5bc58380faa2f1c26",
+    "adapters/subagents/tool_free_child.py": "0cf7e78de1e45eb2dc770773a260f070da1f9608e8cf382ba1ae4dfbfe853e6d",
+    "adapters/postgres/delegated_work.py": "658c74e6359ac145ec1ee2728ef360938e0cc74da727a0cfb04fce05c6868fb4",
+    "application/work_result_presentation.py": "92b0c64e37922cd75739b373d3cd1828a6e1052d220b327fbcf7abcabc767264",
+    "application/work_failure_notice.py": "3948d023507601f05c79bc3d582ffdac0d1e4ae02401434911991a2bd77c484d"
+  },
+  "verification": {
+    "focusedRun": "20 passed, 78 deselected in 5.55s; actual isolated PostgreSQL atomic persistence/replay/retention/stop and runner/report cases",
+    "laterReadFailureRun": "6 passed, 85 deselected in 2.39s; after guard refinement",
+    "environment": "Python3.12.14 and exact installed runtime image dependencies; disposable PostgreSQL with network isolation. No production data writes, provider/model/tool/Telegram sends.",
+    "setupCorrections": "Test-only missing Pygments path and Eva import precedence corrected before tests collected; no product restart or test success claimed for setup failures."
+  },
+  "review": {
+    "path": "eva2/reviews/c1-incomplete-work-report-20261001.md",
+    "status": "final_installed_GO"
+  },
+  "installed": {
+    "status": "running_with_retained_mounts",
+    "services": {
+      "core": {
+        "image": "sha256:af5cd147ff900310100cb6a52f2cdd8b2d91b2f7a062cb875f5bf1db1f8e0771",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_runner.py": "97505b774729e6f0ba12d4db5b6d893d98e7e57c7218b2f5bc58380faa2f1c26",
+          "adapters/subagents/tool_free_child.py": "0cf7e78de1e45eb2dc770773a260f070da1f9608e8cf382ba1ae4dfbfe853e6d",
+          "adapters/postgres/delegated_work.py": "658c74e6359ac145ec1ee2728ef360938e0cc74da727a0cfb04fce05c6868fb4",
+          "application/work_result_presentation.py": "92b0c64e37922cd75739b373d3cd1828a6e1052d220b327fbcf7abcabc767264",
+          "application/work_failure_notice.py": "3948d023507601f05c79bc3d582ffdac0d1e4ae02401434911991a2bd77c484d"
+        },
+        "checks": {
+          "failed_notice_report_present": true,
+          "stop_suppressed": true,
+          "model_calls": 0
+        }
+      },
+      "worker": {
+        "image": "sha256:51cd21f37ec57c9bf1d0456ff40bc77ab99ca751fcbd58ca4d9d46b446e428d7",
+        "health": "healthy",
+        "sourceHashes": {
+          "bootstrap/delegated_digital_runner.py": "97505b774729e6f0ba12d4db5b6d893d98e7e57c7218b2f5bc58380faa2f1c26",
+          "adapters/subagents/tool_free_child.py": "0cf7e78de1e45eb2dc770773a260f070da1f9608e8cf382ba1ae4dfbfe853e6d",
+          "adapters/postgres/delegated_work.py": "658c74e6359ac145ec1ee2728ef360938e0cc74da727a0cfb04fce05c6868fb4",
+          "application/work_result_presentation.py": "92b0c64e37922cd75739b373d3cd1828a6e1052d220b327fbcf7abcabc767264",
+          "application/work_failure_notice.py": "3948d023507601f05c79bc3d582ffdac0d1e4ae02401434911991a2bd77c484d"
+        },
+        "checks": {
+          "failed_notice_report_present": true,
+          "stop_suppressed": true,
+          "model_calls": 0
+        }
+      }
+    },
+    "http": {
+      "http://127.0.0.1:44711/internal/v1/dashboard/conversation": 200,
+      "http://127.0.0.1:44712/project-state": 200
+    },
+    "originalTaskNotRestarted": true,
+    "configurationAndMountsRetained": true,
+    "imageOnlyPairedUpdateCount": 1,
+    "automaticRollbackCount": 0,
+    "schemaMigrationCount": 0,
+    "rollback": "Retained baseline compose and local baseline images in private experiment directory; not invoked."
+  },
+  "modelCallsThisChange": 0,
+  "telegramMessagesSent": 0,
+  "houseMutations": 0,
+  "developmentCreditCost": "unknown",
+  "limitations": [
+    "This change delivers existing findings when a task is blocked; it does not complete blocked research.",
+    "The owner report establishes order/binding, not instant response or complete cross-channel parity.",
+    "Alternative calendar discovery and source completeness remain unproved; no task-specific calendar fallback added.",
+    "No replay of the removed Circulus integration or automatic restart of the owner task."
+  ]
+}

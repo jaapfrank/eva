@@ -506,6 +506,7 @@ class DelegatedDigitalRunner:
             conversation = LivingConversation(self.memory, task_model, self.identity, actions)
 
             def execute():
+                nonlocal reply
                 # Continue the same admitted attempt, accounting identity and
                 # budgets. Never admit another task or retry an uncertain effect.
                 prompted_states = set()
@@ -590,7 +591,10 @@ class DelegatedDigitalRunner:
                 else "internal_error")
             # Preserve only a complete returned reply, never streamed fragments or
             # an extra model attempt. Failure and measured usage remain unchanged.
-            report = (reply.text if status == "budget_exceeded" and reply is not None
+            report = (reply.text if reply is not None
+                      and (status == "budget_exceeded" or (status == "incomplete_work"
+                           and actions is not None
+                           and any(_has_completed_tool_evidence([receipt]) for receipt in actions.receipts)))
                       and len(reply.text.encode("utf-8")) <= 65_536 else None)
             return ToolFreeChildOutcome(status, None, usage, False,
                 hashlib.sha256((type(error).__name__ + ":" + str(error)).encode()).hexdigest(),

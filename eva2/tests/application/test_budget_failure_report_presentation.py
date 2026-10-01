@@ -2,6 +2,8 @@
 from datetime import UTC, datetime
 from types import SimpleNamespace
 
+import pytest
+
 from eva.application.work_failure_notice import delivery_outcome, WorkFailureNotice
 from eva.application.work_result_presentation import work_failure_description
 
@@ -15,8 +17,9 @@ def test_budget_description_retains_complete_report_without_marking_success():
     assert report not in work_failure_description("internal_error", report)
 
 
-def test_failure_delivery_reuses_report_and_respects_stop():
-    work = SimpleNamespace(state="failed", error_code="budget_exceeded", failure_report="Saved draft.",
+@pytest.mark.parametrize("error_code", ["budget_exceeded", "incomplete_work"])
+def test_failure_delivery_reuses_report_and_respects_stop(error_code):
+    work = SimpleNamespace(state="failed", error_code=error_code, failure_report="Saved draft.",
         title="Example", stop_requested_at=None, result=None, updated_at=datetime(2026,9,24,tzinfo=UTC),
         spec=SimpleNamespace(work_id="work:one", sha256="a"*64))
     notice = delivery_outcome(work)

@@ -1,6 +1,31 @@
 # EVA2 werkbord
 
-## Actueel: kleine takenlijst opgeleverd — O1.2 hervat
+## Actueel: C1.2 — bevindingen bij geblokkeerd onderzoek geïnstalleerd
+
+De echte Telegramproef toont korte tussenvragen vóór de onderzoeksreactie,
+gekoppeld aan hun eigen bericht. De achtergrondopdracht draaide 144 seconden
+(14 modelantwoorden, 13 tools, gedeeltelijk gemeten 245.418 input/1.800 output)
+en eindigde zonder resultaat. Exacte oorzaak: geregistreerde blokkade in het
+plan; de volledige teruggegeven uitleg werd daarna door de afrondingsroute
+weggegooid. Voortgang bleef wel bewaard. Geen nieuwe modelproef nodig voor diagnose.
+
+**Geïnstalleerde correctie:** bewaarde complete bevindingen bij onafgerond werk
+teruggeven, ook na een latere mislukte leesactie. Taak blijft mislukt, geen
+succesclaim of automatische herhaling. Eén gebundelde image-update voor kern en
+werker; configuratie/gegevens behouden, beide gezond en HTTP 200. Gerichte runner-
+en echte geïsoleerde databasecontroles geslaagd; onafhankelijke eindreview **GO**.
+[Bewijs](evidence/product/c1-incomplete-work-report-20261001.json) ·
+[Review](reviews/c1-incomplete-work-report-20261001.md).
+
+Eigenaarcorrectie: de andere afvalagenda had wel data; Circulus is verwijderd.
+De oorspronkelijke bronselectie was daardoor onvoldoende. Algemene bronontdekking
+en een volledige bruikbare onderzoeksuitkomst blijven open; geen vaste
+vuilnisbakfunctie of hardcoded kalender. C1.2/C1 nog niet afgerond. O1.2-bronwerk
+wacht en blijft bewaard; eerdere acceptaties en grote productteller ongewijzigd.
+Geen uitvoerder actief na deze deelcorrectie. Volgende gerichte stap: bestaande
+bronselectie voor de alternatieve agenda controleren, zonder Circulus-herhaling.
+
+## Vorige oplevering: kleine takenlijst — O1.2 bronwerk bewaard
 
 **Live op http://localhost:44712:** alle 44 bestaande kleine taken direct zichtbaar,
 11 technisch afgerond groen en 33 nog open rood. Zoeken en Alles/Open/Afgerond,
