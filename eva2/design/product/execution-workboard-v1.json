@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-01T14:11:23.025053+00:00",
+  "lastUpdated": "2026-10-01T14:14:41.201360+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -988,7 +988,7 @@
           "Werkwijzen zoeken/uitvoeren, planning en verbeterkandidaten zijn gebouwd; zelfstandig FLUXNOTE-hergebruik zonder nieuwe hulp nu gecontroleerd. Algemene zelfstandigheid, meerdaagse praktijk en brede toegepaste verbetering blijven open."
         ],
         "browser": [
-          "Jouw bestaande Chrome-route met zichtbaar meekijken en overnemen werkend bevestigen.",
+          "Bestaand Chrome-tabblad is verbonden en vers gelezen (T3.1). Een volledige browseropdracht afmaken en overnemen/vers doorgaan blijven T3.2/T3.3.",
           "Na computerherstart herstellen met behouden gegevens, nieuwe toegang en zonder oude acties te herhalen."
         ],
         "installation": [
@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T14:11:23.025053+00:00",
+        "checkedAt": "2026-10-01T14:14:41.201360+00:00",
         "deliveries": [
+          {
+            "title": "T3.1 — bestaand Chrome-tabblad echt gelezen",
+            "date": "1 oktober",
+            "state": "installed",
+            "result": "Jaap deelt een bestaand Chrome-tabblad. De echte gateway/proxy/bridge-route leest een verse waarneming van het gedeelde projectdashboard http://localhost:44712/. Geen herverbinding, navigatie of nieuwe browser.",
+            "remaining": "T3.2 browseropdracht en T3.3 overnemen nog open; geen volledige browserfunctie of extra groot productonderdeel geclaimd.",
+            "source": "eva2/evidence/product/t3-owner-shared-tab-connected-20261001.json"
+          },
           {
             "title": "M1.2 — later verder praten door Jaap bevestigd",
             "date": "1 oktober",
@@ -3267,24 +3275,24 @@
           }
         ],
         "now": {
-          "title": "Voice PE: actuele stotterende reactie meten",
-          "state": "awaiting_owner_observation",
-          "detail": "Direct doorpraten lijkt te werken, maar spraak en antwoorden zijn niet betrouwbaar. Woonkamer-firmware/verbinding gecontroleerd; geen overbelasting bewezen en geen correctie geïnstalleerd. Eén korte fysieke meting gevraagd; geen bouwuitvoerder actief tijdens wachten. Huisbediening T2 wordt via de gedeelde kern/tekstroute beoordeeld; geen volledige HA-testreeks per speaker."
+          "title": "T3.1 — bestaand Chrome-tabblad verbonden",
+          "state": "installed",
+          "detail": "Jaap heeft het projectdashboard op localhost:44712 gedeeld. De bestaande gateway/proxy/bridge-route heeft het tabblad vers gelezen. 15 van 44 kleine taken klaar, 29 open; geen actieve uitvoerder voor deze afgeronde aansluiting."
         },
         "next": {
-          "title": "Dezelfde route op tweede speaker",
-          "detail": "Eerst de fout in de huidige directe spraak herstellen; daarna dezelfde bewezen route hergebruiken. Geen nieuwe spraakengine."
+          "title": "T3.2 — gewone browseropdracht afmaken",
+          "detail": "De verbinding is beschikbaar; één concrete opdracht via de gedeelde route uitvoeren en het echte resultaat controleren. T3.3 overnemen blijft apart open."
         },
         "ownerAction": {
-          "title": "Eén actuele spraakmeting",
+          "title": "Chrome gedeeld; geen nieuwe deelhandeling nodig",
           "steps": [
-            "Bevestig op welke speaker het stottert: Woonkamer, Overkapping of beide.",
-            "Voor de huidige Woonkamer-meting: zeg Hey Eva, vertel een kort verhaaltje en laat haar even praten. Meld Gedaan zodra het stottert."
+            "Laat het gedeelde tabblad open voor de volgende browseropdracht.",
+            "P1.1: meld wanneer je de verse OpenClaw/Hermes-aanmeldingen kunt bevestigen."
           ],
-          "expected": "Eén actuele stotterende reactie koppelen aan apparaat- en verbindingslog; nog geen oplossing of nieuwe acceptatie geclaimd."
+          "expected": "T3.1 is klaar. Alleen P1.1 vraagt nog toegang van jou; O2.3 blijft technisch Codex-werk. Speaker-audio blijft afzonderlijk open."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T14:11:23.025053+00:00",
+        "reviewedAt": "2026-10-01T14:14:41.201360+00:00",
         "previousOwnerAction": {
           "title": "Probeer onderbreken op je telefoon",
           "steps": [
@@ -14412,8 +14420,8 @@
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Isolated browser and shared Chrome, takeover and fresh-observation recovery exist.",
-            "remainingGap": "**Evidence/access:** last existing bridge check had no shared tab; no missing recovery link found. General desktop capability unknown.",
-            "nextAction": "Reuse browser/file adapters; verify the real shared-tab case when available. Add an adapter only for a concrete unsupported task.",
+            "remainingGap": "Tabtoegang is daadwerkelijk geverifieerd op 1 oktober. T3.2 volledige browseropdracht en T3.3 overnemen/vers doorgaan blijven open; geen algemene desktopvaardigheid geclaimd.",
+            "nextAction": "Use the currently owner-shared existing tab for the next bounded browser task; retain existing adapter and takeover controls.",
             "evidencePaths": [
               "eva2/evidence/product/personal-chrome-controls-installed-20260922.json",
               "eva2/evidence/product/chrome-inflight-recovery-2026-09-12.json",
@@ -14424,27 +14432,28 @@
           },
           "activeWorker": null,
           "assignment": {
-            "stage": "T3.1_waiting_explicit_tab_selection",
+            "stage": "shared_tab_verified_next_browser_task_open",
             "owner": "/root",
             "scope": "Existing personal Chrome bridge on44718; availability and explicit tab-sharing only",
             "effort": "One status check and tab connection; no Eva model calls; credits unknown",
             "doneWhen": "Select an executable existing browser outcome or record the exact access prerequisite",
-            "result": "Docker active; owner route and worker ready. Browser reports recovery_required with preserved profile.",
-            "baseCommit": "b1f46ebd"
+            "result": "Jaap deelt een bestaand Chrome-tabblad. De echte gateway/proxy/bridge-route leest een verse waarneming van het gedeelde projectdashboard http://localhost:44712/. Geen herverbinding, navigatie of nieuwe browser.",
+            "baseCommit": "2e89b9d5",
+            "activeWorkers": []
           },
           "dashboardComponent": "browser",
           "remainingTasks": [
             {
               "id": "T3.1",
               "title": "Bestaand Chrome-tabblad met Eva verbinden",
-              "status": "blocked",
+              "status": "completed",
               "kind": "aansluiten",
               "doneWhen": "Gedeeld tabblad via bestaande bridge beschikbaar; geen nieuwe browserlaag.",
               "owner": "Codex",
-              "blocker": "Er is nog geen Chrome-tabblad gedeeld. Jij kiest het bestaande tabblad; de werkende deelpagina staat hieronder.",
-              "checkedAt": "2026-10-01T13:44:09.424387+00:00",
-              "ownerActionRequired": true,
-              "nextAction": "Jij deelt het proef-tabblad; Codex controleert daarna de verse waarneming en bestaande browserbridge.",
+              "blocker": null,
+              "checkedAt": "2026-10-01T14:14:41.201360+00:00",
+              "ownerActionRequired": false,
+              "nextAction": "Afgerond; tabblad beschikbaar. T3.2 opdracht uitvoeren en T3.3 overnemen blijven afzonderlijk open.",
               "ownerInstructions": {
                 "availableNow": true,
                 "purpose": "access",
@@ -14460,7 +14469,31 @@
                 "reportBack": "Gedeeld, of de getoonde foutmelding.",
                 "blocksIndependentWork": false,
                 "localComputerOnly": true
-              }
+              },
+              "ownerTrial": {
+                "status": "accepted",
+                "reportedAt": "2026-10-01T14:13:18.207187+00:00",
+                "report": "T3.1 · Chrome verbinden: Gedeeld.",
+                "source": "Direct owner statement in current chat",
+                "acceptedAt": "2026-10-01T14:14:41.201360+00:00",
+                "scope": "Owner-selected tab access only; no full browser task or takeover acceptance inferred."
+              },
+              "assignment": {
+                "owner": "/root",
+                "baseCommit": "2e89b9d5",
+                "files": [
+                  "eva2/design/product/execution-workboard-v1.json",
+                  "eva2/WERKBORD.md",
+                  "connection evidence only unless a concrete route defect is found"
+                ],
+                "stage": "completed_shared_tab_verified",
+                "activeWorkers": [],
+                "outcome": "Verify the owner-selected tab through the existing bridge and registered proxy route; no reconnection or new browser.",
+                "estimate": "One read-only snapshot plus status; no model call, navigation or house action planned; credits unknown."
+              },
+              "completedAt": "2026-10-01T14:14:41.201360+00:00",
+              "latestEvidence": "eva2/evidence/product/t3-owner-shared-tab-connected-20261001.json",
+              "result": "Jaap deelt een bestaand Chrome-tabblad. De echte gateway/proxy/bridge-route leest een verse waarneming van het gedeelde projectdashboard http://localhost:44712/. Geen herverbinding, navigatie of nieuwe browser."
             },
             {
               "id": "T3.2",
@@ -14499,7 +14532,9 @@
                 "blocksIndependentWork": false
               }
             }
-          ]
+          ],
+          "latestEvidence": "eva2/evidence/product/t3-owner-shared-tab-connected-20261001.json",
+          "nextAction": "T3.2: één concrete browseropdracht via de bestaande gedeelde route afmaken en controleren; daarna T3.3 overname."
         },
         {
           "id": "T4",

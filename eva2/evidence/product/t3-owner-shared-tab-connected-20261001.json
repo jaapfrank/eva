@@ -1,0 +1,39 @@
+{
+  "taskId": "T3.1",
+  "status": "completed_shared_tab_verified",
+  "checkedAt": "2026-10-01T14:14:41.201360+00:00",
+  "ownerStatement": "T3.1 · Chrome verbinden: Gedeeld.",
+  "bridgeStatus": {
+    "contract": "EvaSharedChrome/v1",
+    "state": "eva",
+    "epoch": "83ee2a00-d1eb-4ab9-b24c-dbddf6857540",
+    "busy": false,
+    "connected": true,
+    "visibleIn": "Google Chrome",
+    "freshObservationRequired": false
+  },
+  "readOnlyVerification": {
+    "route": "Existing gateway container -> registered shared-Chrome proxy -> host bridge -> owner-selected Windows Chrome tab",
+    "method": "tools/call chrome_snapshot",
+    "httpStatus": 200,
+    "isError": false,
+    "freshObservation": true,
+    "pageUrl": "http://localhost:44712/",
+    "pageTitle": "Eva beheer",
+    "privateSnapshot": "/home/administrator/project/.eva2-artifacts/t3-owner-shared-tab-20261001/snapshot.private.json"
+  },
+  "scope": "Existing shared tab is available; no new browser layer.",
+  "limits": [
+    "Owner selected the project dashboard instead of the suggested proof tab; this is a valid existing-tab grant.",
+    "No model-planned complete browser task, takeover or general desktop capability established.",
+    "T3.2/T3.3 and the complete browser product remain open."
+  ],
+  "usage": {
+    "browserSnapshots": 1,
+    "modelCalls": 0,
+    "browserMutations": 0,
+    "houseActions": 0,
+    "serviceRestarts": 0,
+    "developmentCredits": null
+  }
+}

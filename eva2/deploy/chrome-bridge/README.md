@@ -1,5 +1,11 @@
 # Bestaand Chrome-tabblad: bewaakte Eva-koppeling
 
+> Current, 1 October 2026: the owner shared the existing project dashboard tab.
+> One fresh snapshot through the existing gateway/proxy/bridge route succeeded.
+> T3.1 is complete; T3.2 (complete task) and T3.3 (takeover) remain open.
+> Earlier unshared-tab findings below retain their historical scope.
+> See [connection evidence](../../evidence/product/t3-owner-shared-tab-connected-20261001.json).
+
 Gebouwd en technisch beproefd op 11 september 2026. **Nog niet afgerond:**
 de echte gekozen Chrome-tabdeling en Jaaps beoordeling zijn niet bewezen.
 Registratie, ontdekking van zeven tools en één geweigerde paginawaarneming zonder

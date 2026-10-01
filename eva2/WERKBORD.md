@@ -1,6 +1,22 @@
 # EVA2 werkbord
 
-## Actueel: Voice PE — stotterende spraak en ontbrekende antwoorden
+## Actueel: T3.1 — gedeeld Chrome-tabblad verbonden en vers gelezen
+
+Jaap meldt **Gedeeld**. De bestaande gateway/proxy/bridge-route heeft één verse
+waarneming gelezen van het gekozen projectdashboard op http://localhost:44712/.
+De bridge meldt verbonden, Eva-bediening en verse waarneming beschikbaar. Geen
+nieuwe browser, herverbinding, navigatie, modelcall, herstart of huisactie.
+**T3.1 afgerond**; T3.2 volledige browseropdracht en T3.3 overnemen blijven open.
+[Bewijs](evidence/product/t3-owner-shared-tab-connected-20261001.json).
+
+**Stand:** 15 van 44 kleine taken klaar, 29 open. Twee echte blokkades: P1.1 eigen
+aanmeldingen voor de eindvergelijking, O2.3 technische herstelafhankelijkheid bij
+Codex. Grote productstand blijft 2/9; geen volledige browserfunctie geclaimd.
+Volgende browsertaak T3.2 staat gepland, geen uitvoerder actief na deze aansluiting.
+M1 en C3.3 blijven geaccepteerd; onverstaanbare speaker-audio blijft afzonderlijk open.
+Ontwikkelcreditkosten onbekend.
+
+## Vorige voortgang: Voice PE — stotterende spraak en ontbrekende antwoorden
 
 **T2 kanaalverduidelijking:** algemene huisvragen en automatiseringen gebruiken
 één kern voor chat, Telegram en spraak. T2.2 wordt via de gedeelde tekstroute
