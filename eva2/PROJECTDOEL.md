@@ -1,5 +1,17 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaarverduidelijking 1 oktober 2026 — gedeelde kern en gerichte kanaalcontrole
+
+Algemene huisbediening, automatiseringen en andere taakfuncties moeten via chat,
+Telegram en spraak dezelfde uitvoering gebruiken. Beoordeel de gedeelde engine via
+één passende echte geïnstalleerde route, bijvoorbeeld tekst. Hergebruik geldig,
+versiegebonden bewijs; geen volledige functietest opnieuw via iedere speaker.
+Controleer relevante kanaalaansluitingen afzonderlijk. Fysieke spraakproeven zijn
+nodig voor verstaanbaarheid, luisteren, onderbreken en hoorbare terugmelding.
+Een geslaagde tekstproef bewijst die audio-eigenschappen niet, en een ontbrekende
+spraakproef blokkeert algemene kernuitvoering via tekst niet. Geen nieuwe
+kanaalspecifieke planners of scripts; geen afronding door alleen taken te hernoemen.
+
 ## Eigenaarcorrectie 1 oktober 2026 — voorbeelden zijn algemene vaardigheden
 
 Het voorbeeld van vuilnisbakken, camera en ophaalagenda is geen opdracht om een

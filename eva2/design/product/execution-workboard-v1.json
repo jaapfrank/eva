@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-01T14:08:56.310098+00:00",
+  "lastUpdated": "2026-10-01T14:11:23.025053+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T14:08:56.310098+00:00",
+        "checkedAt": "2026-10-01T14:11:23.025053+00:00",
         "deliveries": [
           {
             "title": "M1.2 — later verder praten door Jaap bevestigd",
@@ -3269,7 +3269,7 @@
         "now": {
           "title": "Voice PE: actuele stotterende reactie meten",
           "state": "awaiting_owner_observation",
-          "detail": "Direct doorpraten lijkt te werken, maar spraak en antwoorden zijn niet betrouwbaar. Woonkamer-firmware/verbinding gecontroleerd; geen overbelasting bewezen en geen correctie geïnstalleerd. Eén korte fysieke meting gevraagd; geen bouwuitvoerder actief tijdens wachten."
+          "detail": "Direct doorpraten lijkt te werken, maar spraak en antwoorden zijn niet betrouwbaar. Woonkamer-firmware/verbinding gecontroleerd; geen overbelasting bewezen en geen correctie geïnstalleerd. Eén korte fysieke meting gevraagd; geen bouwuitvoerder actief tijdens wachten. Huisbediening T2 wordt via de gedeelde kern/tekstroute beoordeeld; geen volledige HA-testreeks per speaker."
         },
         "next": {
           "title": "Dezelfde route op tweede speaker",
@@ -3284,7 +3284,7 @@
           "expected": "Eén actuele stotterende reactie koppelen aan apparaat- en verbindingslog; nog geen oplossing of nieuwe acceptatie geclaimd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T14:08:56.310098+00:00",
+        "reviewedAt": "2026-10-01T14:11:23.025053+00:00",
         "previousOwnerAction": {
           "title": "Probeer onderbreken op je telefoon",
           "steps": [
@@ -14270,17 +14270,15 @@
         {
           "id": "T2",
           "parentStep": 3,
-          "dependsOn": [
-            "C3"
-          ],
+          "dependsOn": [],
           "outcome": "Algemene huisbediening",
           "effort": "M",
           "status": "in_progress",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "General HA API for both speakers; real harmless automation created, edited and read back.",
-            "remainingGap": "Physical semantic requests and general reliability remain open. One ordinary automation task now completed without manual resume.",
-            "nextAction": "Reuse HA discovery/API/effect verification; address execution gap and speaker wiring. No device-specific functions or second HA planner.",
+            "remainingGap": "Gedeelde semantische huisbediening en algemene betrouwbaarheid via tekst beoordelen; speaker-adapters apart controleren. Bestaande automatiseringsproef en gegevens blijven behouden.",
+            "nextAction": "Use existing HA discovery/API/effect verification through the shared core and installed text route. Reuse valid core evidence for speech; only verify actual adapter wiring/audio gaps separately.",
             "evidencePaths": [
               "eva2/evidence/product/shared-ha-general-installed-20260925.json",
               "eva2/evidence/product/ha-configuration-readback-installed-20260924.json"
@@ -14300,7 +14298,7 @@
             "doneWhen": "Create/edit/readback/finalreply without manualresume; inspect and remove only trial object.",
             "ownership": "Coordinator delivery record; independent review complete"
           },
-          "nextAction": "Physical semantic speaker requests remain in C3/T2. Earlier timeout cause unresolved; no unchanged repeat.",
+          "nextAction": "Algemene huisbediening via chat of Telegram beoordelen; bestaand HA-bewijs hergebruiken. Spraakkwaliteit en onderbreken horen bij C3/C4.",
           "dashboardComponent": "tools",
           "remainingTasks": [
             {
@@ -14336,68 +14334,71 @@
             },
             {
               "id": "T2.2",
-              "title": "Gewone huisvraag via woonkamer uitvoeren",
+              "title": "Gewone huisvraag via gedeelde kern uitvoeren",
               "status": "planned",
               "kind": "praktijk",
-              "doneWhen": "Bestaande algemene HA-route kiest passende apparaten/diensten uit context, zonder exacte namen te eisen.",
+              "doneWhen": "De bestaande algemene HA-route kiest passende apparaten/diensten uit context en controleert het echte resultaat via chat of Telegram, zonder exacte namen te eisen.",
               "owner": "Codex",
-              "nextAction": "Codex controleert algemene HA-bron-/doelkeuze, inclusief de gemelde andere agenda; daarna een gewone huisvraag op Woonkamer.",
+              "nextAction": "Codex gebruikt bestaande HA-bewijzen en controleert de algemene bron-/doelkeuze via een echte tekstroute; geen volledige herhaling via alle speakers.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
-                "readyWhen": "Codex controleert eerst algemene HA-aansluiting en bron-/doelkeuze. Deze proef wordt pas actief gemeld bij technische gereedheid.",
+                "readyWhen": "Codex controleert eerst het bestaande HA-bewijs en de gedeelde tekstroute. Een spraakproef is hiervoor geen voorwaarde.",
                 "steps": [
-                  "Gebruik op Woonkamer het gewone wakeword en een normale huisvraag, bijvoorbeeld Doe de lampen in de woonkamer aan.",
-                  "Gebruik je gewone omschrijving; geen exacte entiteits-ID."
+                  "Gebruik, wanneer de proef beschikbaar is, chat of Telegram. Zet in Telegram /eva2 vóór je gewone huisvraag, bijvoorbeeld Doe de lampen in de woonkamer aan.",
+                  "Gebruik je gewone omschrijving; controleer of de gewenste handeling echt gebeurt. Geen exacte entiteits-ID nodig."
                 ],
-                "expected": "Eva kiest passende bestaande apparaten en meldt het echte resultaat.",
+                "expected": "De gedeelde kern kiest passende bestaande apparaten en meldt het gecontroleerde resultaat, ongeacht tekst of spraak.",
                 "reportBack": "Vraag, antwoord en of de gewenste handeling echt gebeurde.",
                 "blocksIndependentWork": false
               }
             },
             {
               "id": "T2.3",
-              "title": "Gewone huisvraag via tweede speaker uitvoeren",
+              "title": "Dezelfde huisbediening op beide speaker-ingangen aansluiten",
               "status": "planned",
               "kind": "praktijk",
-              "doneWhen": "Dezelfde algemene route werkt ook op de tweede speaker.",
+              "doneWhen": "Beide speaker-adapters geven de huisvraag door aan dezelfde bewezen HA-kern met de juiste huishoudbinding; geen tweede opdrachtinterpretatie of volledige dubbele HA-testreeks.",
               "owner": "Codex",
-              "nextAction": "Codex bevestigt dezelfde algemene HA-route op Overkapping; geen exacte entiteitsnamen als standaardvereiste.",
+              "nextAction": "Codex controleert de aansluiting en huishoudbinding van beide adapters. Geldig bewijs van algemene HA-uitvoering hergebruiken; alleen gewijzigde kanaalovergangen gericht controleren.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
-                "readyWhen": "Codex controleert eerst algemene HA-aansluiting en bron-/doelkeuze. Deze proef wordt pas actief gemeld bij technische gereedheid.",
+                "readyWhen": "Codex controleert de aansluiting. Geen volledige huisfunctietest opnieuw nodig via beide speakers; fysieke audio blijft bij C3/C4.",
                 "steps": [
-                  "Gebruik op Overkapping het gewone wakeword en een normale huisvraag, bijvoorbeeld Doe de lampen in de woonkamer aan.",
-                  "Gebruik je gewone omschrijving; geen exacte entiteits-ID."
+                  "Alleen als een hoorbare aansluitingsproef nodig blijkt: stel één gewone huisvraag op de betreffende speaker en meld of vraag/antwoord goed doorkomen."
                 ],
-                "expected": "Eva kiest passende bestaande apparaten en meldt het echte resultaat.",
+                "expected": "De speaker gebruikt dezelfde HA-kern; de volledige slimme uitvoering is niet per kanaal opnieuw gebouwd of getest.",
                 "reportBack": "Vraag, antwoord en of de gewenste handeling echt gebeurde.",
                 "blocksIndependentWork": false
               }
             },
             {
               "id": "T2.4",
-              "title": "Automatisering via spraak maken en wijzigen",
+              "title": "Automatisering via gedeelde kern maken en wijzigen",
               "status": "planned",
               "kind": "aansluiten",
-              "doneWhen": "Via bestaande HA-route maken/wijzigen/teruglezen en resultaat terugmelden; reeds bewezen websitewerking behouden.",
+              "doneWhen": "Via de gedeelde algemene HA-route maken, wijzigen, teruglezen en gecontroleerd terugmelden; geldig bestaand websitebewijs behouden en chat/Telegram/spraak aansluiten op dezelfde uitvoering.",
               "owner": "Codex",
-              "nextAction": "Codex rondt automatisering maken, wijzigen en teruglezen via spraak af; bestaande websitewerking behouden.",
+              "nextAction": "Codex hergebruikt de bewezen maak-/wijzig-/terugleesroute en controleert ontbrekende tekstaansluiting. Geen aparte spraakautomatiseringsfunctie of volledige herhaalde proef per kanaal.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
-                "readyWhen": "Eerst maakt Codex de algemene automatiseringsroute via spraak technisch gereed. Nu geen extra proef.",
+                "readyWhen": "Codex controleert welke aansluitingsstap nog ontbreekt. Een speakerproef is geen voorwaarde om de algemene automatiseringsfunctie af te ronden.",
                 "steps": [
-                  "Vraag via spraak een uitgeschakelde testautomatisering te maken.",
-                  "Vraag één wijziging en laat Eva de bewaarde automatisering teruglezen."
+                  "Als nog een gebruiksproef nodig is: vraag in chat of met /eva2 in Telegram een uitgeschakelde testautomatisering te maken.",
+                  "Vraag één wijziging en laat Eva de bewaarde automatisering teruglezen. Bestaand geldig bewijs hoeft niet opnieuw."
                 ],
-                "expected": "Werkelijk gemaakt, gewijzigd en teruggelezen via gewone HA-route.",
+                "expected": "Dezelfde automatisering wordt werkelijk gemaakt, gewijzigd en gecontroleerd; de invoeringang verandert de uitvoering niet.",
                 "reportBack": "Of de automatisering en wijziging in HA aanwezig zijn.",
                 "blocksIndependentWork": false
               }
             }
-          ]
+          ],
+          "previousDependsOn": [
+            "C3"
+          ],
+          "dependencyClarification": "Een werkende spraakinvoer is geen voorwaarde voor algemene HA-kernuitvoering via tekst. Speaker-aansluiting blijft apart te verifiëren; C3/C4 blijven verantwoordelijk voor audio."
         },
         {
           "id": "T3",
@@ -15715,6 +15716,13 @@
       "ownerClarification20261001": {
         "date": "2026-10-01T09:01:39.597591+00:00",
         "decision": "I2 is a general discover/observe/automate capability, not a hardcoded bins use case or required advance owner selection. Existing 24 slices, task IDs and completion counters remain unchanged."
+      },
+      "ownerChannelTestingClarification20261001": {
+        "recordedAt": "2026-10-01T14:11:23.025053+00:00",
+        "source": "Direct owner clarification in current chat",
+        "ownerStatement": "Het lijkt net alsof je alles voor spraak maakt echter moet dit alles natuurlijk ook gewoon via chat/telegram werken. Dus niet alles hoeft toch via spraak getest te worden zolang de achterliggende engine maar goed is.",
+        "policy": "Verify shared HA interpretation, discovery, execution and result checking through an actual installed text route. Reuse valid version-bound core evidence across channels; verify changed adapter wiring separately. Physical speech checks cover audio, listening and interruption, not a repeated full HA feature suite.",
+        "doesNotClaimCompletion": true
       }
     },
     "dashboardClarityCorrection20260922": {

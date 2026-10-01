@@ -2,6 +2,13 @@
 
 ## Actueel: Voice PE — stotterende spraak en ontbrekende antwoorden
 
+**T2 kanaalverduidelijking:** algemene huisvragen en automatiseringen gebruiken
+één kern voor chat, Telegram en spraak. T2.2 wordt via de gedeelde tekstroute
+beoordeeld; T2.3 controleert de bestaande aansluitingen van beide speakers.
+T2.4 hergebruikt de algemene automatiseringsroute. Geen volledige HA-testreeks
+per kanaal, geen C3-afhankelijkheid voor tekstuitvoering. Audio en onderbreken
+blijven C3/C4. Geen taak afgerond door deze verduidelijking; stand blijft 14/44.
+
 Jaap meldt dat direct doorpraten/full duplex lijkt te werken, maar de spraak is
 onverstaanbaar/stotterend, de blauwe ring draait snel en soms ontbreekt antwoord.
 C3.1 blijft open; apparaat nog te bevestigen. Codex controleert de bestaande

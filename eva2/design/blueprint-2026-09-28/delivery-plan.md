@@ -224,7 +224,7 @@ in the family trial; fabricated timestamps alone do not prove lived continuity.
 | Slice | Usable outcome and end condition | Responsibility | Effort |
 |---|---|---|---|
 | T1 | Research a new question, use appropriate sources, resolve missing material facts or report the concrete exhausted access gap, save and deliver the result | Selected platform + existing search/document tools/result store | M |
-| T2 | Discover HA devices/services/automations by meaning; complete a room/comfort request and create/change/read back an automation through either speaker | Existing general HA API, no entity-specific core functions | M |
+| T2 | Discover HA devices/services/automations by meaning; complete a room/comfort request and create/change/read back an automation through the shared core, available to chat, Telegram and both speakers | Existing general HA API, no entity- or channel-specific core functions | M |
 | T3 | Complete a browser/file/service task, preserve a saved artifact, allow owner takeover and resume from fresh observation | Existing isolated/shared browser and tool adapters | L |
 | T4 | Owner page shows queued/running/waiting/done/failed/stopped, result and stop/steer controls, with measured usage and channel/module health | Current dashboard framework and canonical task projection | M |
 
@@ -232,6 +232,12 @@ T1 does not turn unverifiable facts into invented certainty. It tries relevant
 available primary sources and alternate permitted evidence; its report records what
 was actually checked. Financial analysis distinguishes observations from predictions.
 T2 retains all authorized HA capability types, not a preselected lamp list.
+Owner clarification, 1 October: evaluate semantic selection and actual execution
+through a suitable installed text route, reusing valid version-bound evidence.
+Verify changed channel adapters and household bindings separately; do not repeat
+the whole HA capability suite on every speaker. C3/C4 retain physical audio,
+listening, interruption and audible delivery checks. Text-based core work does
+not depend on the continuous speech route being finished.
 T3 includes a native application only where required by the declared case; browser
 success cannot claim all desktop software. Required login is visible human assistance.
 
