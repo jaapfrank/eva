@@ -1,5 +1,11 @@
 # EVA2 werkbord
 
+## Actueel: P1.1 — echte catalogus beoordeeld; eigen aanmelding nodig
+
+Basis `d1871744`; geen uitvoerder of aanmeldproces actief. Al aanwezig beheerd Codex0.155.1 geïdentificeerd en één echte metadata-sessie in lege eigen opslag/netwerkisolatie uitgevoerd. Account leeg, complete niet-aangemelde catalogus9modellen: Astra/medium aanwezig, gpt-6-sol ontbreekt. Catalogus kan een gebundelde terugval zijn; dit bewijst geen toegang, afwijzing of snelheid. Geen modelvervanging, native bronwijziging, installatie of login-/inferentie-RPC. Onafhankelijke review GO voor deze beperkte metadata. [Bewijs](evidence/product/p1-openclaw-native-catalog-20261001.json) · [Review](reviews/p1-openclaw-native-catalog-20261001.md).
+
+P1.1 geblokkeerd op eigen OpenClaw/Hermes-aanmeldingen; volledige native hostselectie en gelijkwaardige uitvoering blijven open. Nieuwe OpenClaw-code pas starten wanneer Jaap klaarzit; vraag staat open. Agent Zero-aanmelding en eerdere resultaten behouden. Geen extra Eva-functie of tellerverhoging. Ontwikkelcredits onbekend; telefoon- en speakerproeven blijven afzonderlijk open. Het volledige projectgoal blijft actief.
+
 ## Actueel: P1.1 — OpenClaw-aanvraagmapping beoordeeld; toegang open
 
 Basis `b703c8f4`; bestaande gepinde installatie en registratie behouden. Echte native aanvraagbouwer éénmaal offline met twee gedeclareerde fixtures uitgevoerd: Astra/medium expliciet, Sol/off geeft null zonder echte catalogus. De bestaande resolver kan none gebruiken wanneer waargenomen modelmetadata dat aanbiedt; geen native patch of verzonnen metadata. Onafhankelijke review GO voor deze beperkte uitkomst. [Bewijs](evidence/product/p1-openclaw-config-20261001.json) · [Review](reviews/p1-openclaw-config-20261001.md).

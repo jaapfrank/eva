@@ -57,6 +57,29 @@
         "runtimeAdmission": "not_admitted",
         "review": "eva2/reviews/p1-openclaw-config-20261001.md",
         "reviewResult": "GO for direct request construction; not admitted"
+      },
+      "nativeCatalog": {
+        "checkedAt": "2026-10-01T03:26:10.850019+00:00",
+        "status": "managed_unauthenticated_catalog_missing_selected_contact_model",
+        "evidence": "eva2/evidence/product/p1-openclaw-native-catalog-20261001.json",
+        "binaryVersion": "codex-cli 0.155.1",
+        "profileAuthentication": "account_null_requires_auth",
+        "modelCount": 9,
+        "catalogComplete": true,
+        "selectedModels": {
+          "gpt-6-astra": {
+            "visible": true,
+            "mediumListed": true
+          },
+          "gpt-6-sol": {
+            "visible": false,
+            "supportedEffortsObserved": false
+          }
+        },
+        "boundary": "Direct managed package metadata; possible bundled fallback. No OpenClaw host startup, account entitlement or inference rejection proven.",
+        "runtimeAdmission": "not_admitted",
+        "review": "eva2/reviews/p1-openclaw-native-catalog-20261001.md",
+        "reviewResult": "GO for unauthenticated metadata; not admitted"
       }
     },
     {

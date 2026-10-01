@@ -1,0 +1,159 @@
+{
+  "contract": "EvaNativeComparisonAdmissionEvidence/v1",
+  "participant": "openclaw",
+  "checkedAt": "2026-10-01T03:26:10.850019+00:00",
+  "baseCommit": "d1871744",
+  "status": "managed_native_catalog_observed_auth_and_host_selection_open",
+  "existing": "Existing OpenClaw2026.9.6 native plugin and its already installed managed Codex0.155.1; no reinstall/upgrade or repeated request-mapping fixture.",
+  "nativeRuntime": {
+    "packageVersion": "0.155.1",
+    "binaryVersion": "codex-cli 0.155.1",
+    "packageJsonSha256": "98862962c00eef34e3946f14a4345c26efbaaa733f8c6188069654a234adeee0",
+    "entrySha256": "61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70",
+    "binaryPath": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+    "binarySha256": "0753dfe1d8b87a52436deb13eb1c549661ef4c84fee2c5aa688385eebeccb761"
+  },
+  "probe": {
+    "script": "eva2/benchmark/inspect_ai_v1/p1_openclaw_catalog_probe.py",
+    "scriptSha256": "ad486923d1de1e3cd75c3541758c0574ba982020b2af4a95f263c99cd8d4af4e",
+    "privateArtifact": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-native-catalog-v1",
+    "rawResultSha256": "919ffe607d65a042c378513e7b0a87c34c35dded885098d3ad7439b9948942d0",
+    "stderrSha256": "7f18e3a0149a699f54f2acfb1841564327196887558fd2f27d3b6ba86e319aa1",
+    "isolation": "unshare user/map-root-user/net; fresh0700 profile and explicit clean child environment; no auth/config adoption",
+    "rpcMethods": [
+      "initialize",
+      "initialized",
+      "account/read",
+      "model/list"
+    ],
+    "nativeInitialize": {
+      "userAgent": "eva_native_catalog_probe/0.155.1 (Ubuntu 24.4.0; x86_64) unknown (eva_native_catalog_probe; 1)",
+      "codexHome": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-native-catalog-v1/.codex",
+      "platformFamily": "unix",
+      "platformOs": "linux"
+    },
+    "account": {
+      "account": null,
+      "requiresOpenaiAuth": true
+    },
+    "modelCount": 9,
+    "nextCursor": null,
+    "selectedCatalogEntries": {
+      "gpt-6-sol": null,
+      "gpt-6-astra": {
+        "id": "gpt-6-astra",
+        "model": "gpt-6-astra",
+        "upgrade": null,
+        "upgradeInfo": null,
+        "availabilityNux": null,
+        "displayName": "GPT-6-Astra",
+        "description": "Our most capable model for complex, demanding work.",
+        "modelSpecialty": null,
+        "hidden": false,
+        "supportedReasoningEfforts": [
+          {
+            "reasoningEffort": "low",
+            "description": "Fast responses with lighter reasoning"
+          },
+          {
+            "reasoningEffort": "medium",
+            "description": "Balances speed and reasoning depth for everyday tasks"
+          },
+          {
+            "reasoningEffort": "high",
+            "description": "Greater reasoning depth for complex problems"
+          },
+          {
+            "reasoningEffort": "xhigh",
+            "description": "Extra high reasoning depth for complex problems"
+          },
+          {
+            "reasoningEffort": "max",
+            "description": "Maximum reasoning depth for the hardest problems"
+          },
+          {
+            "reasoningEffort": "ultra",
+            "description": "Maximum reasoning with automatic task delegation"
+          }
+        ],
+        "defaultReasoningEffort": "low",
+        "inputModalities": [
+          "text",
+          "image"
+        ],
+        "supportsPersonality": false,
+        "multiAgentVersion": "v2",
+        "additionalSpeedTiers": [
+          "fast"
+        ],
+        "serviceTiers": [
+          {
+            "id": "priority",
+            "name": "Fast",
+            "description": "2x speed, increased usage"
+          }
+        ],
+        "defaultServiceTier": null,
+        "isDefault": true
+      }
+    },
+    "observedModelIds": [
+      "gpt-6-astra",
+      "gpt-5.6-sol",
+      "gpt-5.6-terra",
+      "gpt-5.6-luna",
+      "gpt-daybreak-blue-latest",
+      "gpt-daybreak-red-latest",
+      "gpt-5.5",
+      "gpt-5.4",
+      "codex-auto-review"
+    ]
+  },
+  "finding": [
+    "Managed catalog lists Astra with medium. Sol is absent from this complete unauthenticated catalog; no Sol supported-effort metadata observed.",
+    "Native account is null and requiresOpenaiAuth is true. No native login was started. Catalog availability is not inference entitlement.",
+    "Startup logs warn external bubblewrap is absent on the explicit PATH and native bundled fallback is used. No tool/sandbox execution was tested; do not install another dependency for this metadata checkpoint."
+  ],
+  "decision": [
+    "Keep the native managed pin/source unchanged; no substitute model, invented catalog, external Windows command, credential copy or inference.",
+    "Record stock managed unauthenticated contact catalog gap. Own native login and actual refreshed catalog remain necessary; absence here does not prove authenticated model rejection.",
+    "Full host startup selection/configuration, equal access/helper/tool/accounting/stop and P1.1 stay open; no Eva function or comparative win."
+  ],
+  "limitations": [
+    "Direct managed package metadata, not OpenClaw host startup or full harness execution.",
+    "Fresh profile catalog can be bundled fallback; no account entitlement, refreshed authenticated catalog, model response or latency measured.",
+    "Network namespace prevents external network success; individual native connection attempts are not measured.",
+    "No source-to-build provenance or functioning sandbox/tool claim from npm identity/version/hash."
+  ],
+  "consumption": {
+    "nativeAppServerSessions": 1,
+    "nativeVersionReadbacks": 1,
+    "authRPCs": 0,
+    "inferenceRPCs": 0,
+    "modelResponses": 0,
+    "externalNetworkAttempts": "unknown; success prevented by network namespace",
+    "productionChanged": false,
+    "developerCredits": "unknown"
+  },
+  "review": {
+    "file": "eva2/reviews/p1-openclaw-native-catalog-20261001.md",
+    "result": "GO for unauthenticated managed metadata only",
+    "sha256": "cf3731ff05e24d472615b176380888ff1f63be11aa129884e742a68eafc8f0a9"
+  },
+  "execution": {
+    "launcher": "unshare --user --map-root-user --net python3",
+    "toolReportedExitCode": 0,
+    "nativeProcessCleanup": "stdin closed; termination requested; wait returned. Native process exit code not captured; not a cloud-stop claim.",
+    "retainedCommand": [
+      "unshare",
+      "--user",
+      "--map-root-user",
+      "--net",
+      "python3",
+      "eva2/benchmark/inspect_ai_v1/p1_openclaw_catalog_probe.py",
+      "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/runtime/node-v24.16.0-linux-x64/bin/node",
+      "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openai/codex",
+      "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-native-catalog-v1"
+    ]
+  }
+}

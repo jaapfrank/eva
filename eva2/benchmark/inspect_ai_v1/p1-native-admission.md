@@ -264,3 +264,22 @@ The fixture's `codex/` config prefix was not validated or persisted; bundled
 host documentation requires canonical `openai/` references. Native harness
 params passed directly to the builder do not validate that outer configuration.
 See `../../evidence/product/p1-openclaw-config-20261001.json`.
+
+## OpenClaw managed native catalog — 1 October 2026
+
+The already installed managed Codex0.155.1 binary was identified by its package,
+entrypoint, executable hash and actual version output. One stdio app-server
+metadata session then ran in a fresh private profile with a clean environment
+and disabled network namespace. Only initialize, initialized, account/read and
+model/list were sent; no login, thread, turn or inference was started.
+
+Native account/read returns account null and requiresOpenaiAuth true. The
+complete unauthenticated catalog lists nine models, including Astra with medium,
+but omits the selected Sol. It may be a bundled fallback: absence does not prove
+authenticated rejection, and catalog visibility does not prove entitlement.
+Keep native source/pins unchanged. Own native sign-in and its actual refreshed
+catalog remain open; do not inject support or silently substitute another model.
+This direct package session does not validate OpenClaw host configuration,
+full harness execution, tools/sandbox behavior, latency or comparison admission.
+No Eva installation changed. See
+`../../evidence/product/p1-openclaw-native-catalog-20261001.json`.
