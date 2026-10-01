@@ -13701,16 +13701,17 @@
           "ownerTrial": {
             "status": "technical_case_completed_owner_family_evaluation_open",
             "steps": [
-              "Discuss an ordinary subject privately with Eva via Telegram. No special remember command is required.",
-              "Later open the private website conversation and ask to continue that subject without repeating its details.",
-              "Check whether Eva recalls the relevant subject and latest correction; report missing or invented details."
+              "Gebruik in Telegram bij elk bericht /eva2. Kies een echt onderwerp waarover je al met Eva praat; een normale vraag of gesprek is genoeg.",
+              "Kom later op de dag of een andere dag terug: /eva2 We hadden het eerder over [onderwerp]. Wat hadden we daarover besproken? Vertel de eerdere details niet opnieuw.",
+              "Beoordeel of Eva passend verder praat en de laatste wijziging/correctie meeneemt. Meld alleen wat ontbreekt, verkeerd onthouden of verzonnen is, of dat het goed doorloopt."
             ],
-            "expected": "Relevant continuity for the verified owner; no private recall on shared speakers.",
-            "url": "http://localhost:44711/internal/v1/dashboard/conversation",
-            "doesNotRepeatAcceptedTests": true
+            "expected": "Een later gesprek sluit aan zonder dat je de hele voorgeschiedenis opnieuw moet vertellen. Geen foutloos woordelijk geheugen vereist.",
+            "clarification": "Dit is jouw oordeel tijdens gewoon gebruik, geen nieuwe technische geheugentest. Er is geen vaste extra testduur. Je kunt het privé via Telegram beoordelen; gedeelde speakers zijn hiervoor niet nodig.",
+            "doesNotRepeatAcceptedTests": true,
+            "blocksIndependentWork": false
           },
           "evidence": "eva2/evidence/product/m1-existing-delivery-20260928.json",
-          "remaining": "M1.1 technisch aangetoond op echte bestaande routes; M1.2 gezinsbeleving en langere continuïteit blijven open.",
+          "remaining": "M1.1 technisch aangetoond en eerdere geheugenacceptaties behouden. M1.2 vraagt alleen beoordeling van natuurlijk later verder praten tijdens gewoon gebruik; dit blokkeert onafhankelijk bouwen niet.",
           "dashboardComponent": "conversation",
           "remainingTasks": [
             {
@@ -13736,11 +13737,24 @@
             },
             {
               "id": "M1.2",
-              "title": "Continuïteit tijdens gezinsgebruik beoordelen",
+              "title": "Later verder praten zonder alles opnieuw uit te leggen",
               "status": "planned",
               "kind": "gebruikersproef",
-              "doneWhen": "Langere onderwerpvoortzetting beoordeeld; ontbrekende of verzonnen details apart geregistreerd.",
-              "owner": "Jaap"
+              "doneWhen": "Jaap heeft latere onderwerpvoortzetting tijdens gewoon gebruik beoordeeld; eventuele ontbrekende of verzonnen details zijn apart geregistreerd.",
+              "owner": "Jaap",
+              "ownerTrial": {
+                "status": "open",
+                "steps": [
+                  "Gebruik in Telegram bij elk bericht /eva2. Kies een echt onderwerp waarover je al met Eva praat; een normale vraag of gesprek is genoeg.",
+                  "Kom later op de dag of een andere dag terug: /eva2 We hadden het eerder over [onderwerp]. Wat hadden we daarover besproken? Vertel de eerdere details niet opnieuw.",
+                  "Beoordeel of Eva passend verder praat en de laatste wijziging/correctie meeneemt. Meld alleen wat ontbreekt, verkeerd onthouden of verzonnen is, of dat het goed doorloopt."
+                ],
+                "expected": "Een later gesprek sluit aan zonder dat je de hele voorgeschiedenis opnieuw moet vertellen. Geen foutloos woordelijk geheugen vereist.",
+                "clarification": "Dit is jouw oordeel tijdens gewoon gebruik, geen nieuwe technische geheugentest. Er is geen vaste extra testduur. Je kunt het privé via Telegram beoordelen; gedeelde speakers zijn hiervoor niet nodig.",
+                "doesNotRepeatAcceptedTests": true,
+                "blocksIndependentWork": false
+              },
+              "instructionsClarifiedAt": "2026-10-01T13:13:19.197859+00:00"
             }
           ],
           "latestEvidence": "eva2/evidence/product/m1-cross-channel-recall-20260929.json"

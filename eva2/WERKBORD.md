@@ -23,6 +23,8 @@ herinstallatie.44 kleine taken,12 technisch groen/32 open; grote productteller o
 
 **C3.3 afgerond en door Jaap bevestigd:** onderzoeksresultaat komt terug op de juiste speaker. Bestaande geïnstalleerde route behouden; geen nieuwe bouw/test/installatie. [Eigenaarbevestiging](evidence/product/c3-speaker-result-owner-accepted-20261001.json). C3.1/C3.2 blijven afzonderlijk open.
 
+**M1.2 proef verduidelijkt:** kom tijdens normaal privégebruik via Telegram later terug op een echt besproken onderwerp, zonder de details opnieuw te vertellen. Beoordeel of Eva passend aansluit en de laatste correctie onthoudt; meld ontbrekende/verzonnen details of dat het goed doorloopt. Geen nieuwe technische geheugenronde of vaste testduur. M1.2 blijft open; C3-uitvoering en eerdere acceptaties blijven behouden. De concrete stappen staan bij M1.2 op het dashboard.
+
 ## Vorige oplevering: C1.2 — bevindingen bij geblokkeerd onderzoek geïnstalleerd
 
 De echte Telegramproef toont korte tussenvragen vóór de onderzoeksreactie,
