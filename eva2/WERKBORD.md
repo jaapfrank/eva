@@ -1,6 +1,6 @@
 # EVA2 werkbord
 
-## Nu: C3.1 audiocorrectie geïnstalleerd; fysieke conversatie open
+## Nu: beide gecorrigeerde audioroutes geïnstalleerd; gesprekstest open
 
 De bestaande gedeelde luisterroute blijft open bij lege HA-spraakherkenning.
 De native audioaanvoer van 3 s is verbeterd van minimaal 8,66 s naar 2,39 s;
@@ -27,7 +27,12 @@ initiatief en gezinsweek volgen pas als de betreffende route gereed is. O2.3 kla
 
 **Stand blijft 16/44 kleine taken, 2/9 grote onderdelen.** C3.1 blijft open voor
 het volledige gewone gesprek; C3.2 tweede speaker volgt. M1/C3.3-acceptaties behouden.
-Broncheckpoint wordt afgerond; alleen root voert dat uit. Geen overige verborgen bouwtaken.
+Broncheckpoint 44d1a728 staat op GitHub. Overkapping heeft nu exact dezelfde
+gecorrigeerde module: 72000 frames en echte HA-spraak volledig bevestigd,
+expliciet stoppen 197 ms en volgend antwoord slagen. Eén OTA; identiteit,
+instellingen en mute-aan behouden. Haal die speaker van mute voor gesprek.
+Geen uitvoerder actief na deze installatiecontrole; T2 algemene HA-opdracht is
+de volgende bouwtaak, nog niet gestart. Geen overige verborgen bouwtaken.
 [Bewijs](evidence/product/c3-audio-stutter-fix-20261001.json) ·
 [Review](reviews/c3-audio-stutter-fix-20261001.md).
 Eva-modelcalls: 0; werkelijk 3 STT- en 2 TTS-aanvragen voor controle. Credits onbekend.

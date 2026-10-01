@@ -1,0 +1,70 @@
+{
+  "taskId": "C3.2",
+  "checkedAt": "2026-10-01T16:46:33.165947+00:00",
+  "status": "installed_native_route_owner_conversation_open",
+  "sourceCommit": "44d1a728",
+  "scope": "Reuse the reviewed existing continuous speaker component/service on Overkapping; no second speech engine or question-specific behavior.",
+  "existing": "Retained second-device wrapper, credentials, controls, CA and current household grant.",
+  "change": "Shared component updated byte-for-byte to reviewed Woonkamer implementation, including input task and FIR EOF corrections. Target YAML/native controls unchanged.",
+  "review": {
+    "reviewer": "/root/open_questions_triage",
+    "result": "GO",
+    "checks": [
+      "All10shared component files match current Woonkamer source",
+      "Six repo-owned modules match published44d1a728",
+      "Current service configuration matches retained authority snapshot",
+      "Exactly one credential digest matches second household device grant",
+      "Target settings, mute/STOP/arbitration and common core preserved"
+    ]
+  },
+  "installation": {
+    "target": "home-assistant-voice-0a5035",
+    "sdk": "ESPHome2026.6.2",
+    "compiled": "2026-10-01 18:38:22 +0200",
+    "wrapperSha256": "4c6addbd6564b5c1c79018b8bd89e7b36fdbe08a7577e8a261a246f5876de71b",
+    "controlsSha256": "e567353da1452c1ce9bb9a24c2d26ef02fd12bc9c735a5c00810112223dd8dcc",
+    "otaSha256": "d1e28aed857d2ef2b99925fd13b21225254507453ec9c17709309be093539e2d",
+    "buildSeconds": 288.227,
+    "uploadSeconds": 17.628,
+    "authenticatedTargetReadback": true,
+    "muteBefore": true,
+    "muteAfter": true,
+    "sameServiceImage": "sha256:b8001798c65f79e44b5a659ea7295103a633f63f03efc39106114bcc8208894f",
+    "buildIssue": "Retained CMake cache referenced another PlatformIO runtime and generated duplicate target. Old cache preserved; regenerate only that cache, no repeated installation or rollback."
+  },
+  "actualDeviceOutput": {
+    "threeSecondsPCM": {
+      "confirmedFrames": 72000,
+      "feedSeconds": 2.306821,
+      "completedSeconds": 3.423154
+    },
+    "existingHATTS": {
+      "confirmedFrames": 108864,
+      "audioSeconds": 4.536,
+      "completedSeconds": 5.49139
+    },
+    "explicitPhysicalStop": {
+      "confirmedFrames": 21592,
+      "seconds": 0.197041
+    },
+    "nextGeneration": {
+      "confirmedFrames": 4800,
+      "completed": true
+    },
+    "status": "passed"
+  },
+  "limits": [
+    "Output-only and explicit wire STOP are not physical microphone barge-in proof.",
+    "Owner hearing/ordinary conversation remains open; not full C3/C4 completion.",
+    "Second-device mute state retained; owner unmutes for conversation.",
+    "No individual recognition or private memory on shared speaker."
+  ],
+  "usage": {
+    "evaModelCalls": 0,
+    "houseActions": 0,
+    "actualTTSRequests": 1,
+    "newProviderRoutes": 0,
+    "developmentCreditCost": null,
+    "speechProviderCreditCost": null
+  }
+}

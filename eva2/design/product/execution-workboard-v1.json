@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T16:32:22.419945+00:00",
+        "checkedAt": "2026-10-01T16:46:33.165947+00:00",
         "deliveries": [
+          {
+            "title": "Overkapping op dezelfde gecorrigeerde continue route aangesloten",
+            "date": "1 oktober",
+            "state": "installed",
+            "result": "Dezelfde module, identiteit en huishoudtoegang. Eén gerichte OTA; echt afspelen, HA-spraak, stoppen197ms en volgende antwoord op tweede apparaat geslaagd. Apparaatinstellingen en mute behouden. Onafhankelijke GO.",
+            "remaining": "C3.2 gewone fysieke conversatie en verstaanbaarheid nog open; haal apparaat van mute voor gebruik. Geen volledige C3/C4 of extra groot onderdeel geclaimd.",
+            "source": "eva2/evidence/product/c3-second-speaker-20261001.json"
+          },
           {
             "title": "Woonkamer-audio en lege herkenning gericht gecorrigeerd",
             "date": "1 oktober",
@@ -3291,14 +3299,14 @@
           }
         ],
         "now": {
-          "title": "Woonkamer-audiocorrectie geïnstalleerd",
-          "state": "in_progress",
-          "detail": "Echte spraak speelt volledig af; stoppen en volgende antwoord bevestigd op het apparaat. Fysieke gesprekservaring nog open. Broncheckpoint wordt afgerond; daarna dezelfde route op Overkapping.",
+          "title": "Beide speaker-audiocorrecties geïnstalleerd",
+          "state": "installed",
+          "detail": "Echte audio, stoppen en volgende antwoord werken op beide apparaten. Gewone fysieke gesprekstest blijft open. Geen Codex-uitvoerder actief na deze installatiecontrole; volgende bouwtaak is T2 algemene HA-opdracht.",
           "owner": "Codex /root"
         },
         "next": {
-          "title": "Daarna: tweede speaker aansluiten",
-          "detail": "Na werkende woonkamerroute volgt dezelfde continue route op Overkapping. HA, browser en modules staan apart gepland."
+          "title": "Volgende bouwtaak: algemene Home Assistant-opdracht",
+          "detail": "T2 gebruikt dezelfde kern via tekst, Telegram en spraak. Open speaker-/telefoonbeoordeling blokkeert dat onafhankelijke werk niet."
         },
         "ownerAction": {
           "title": "Wat jij nog kunt doen — geen technische herstelactie",
@@ -3306,12 +3314,12 @@
             "P1.1: meld Start de aanmeldingen wanneer je OpenClaw/Hermes kunt aanmelden; alleen de eindvergelijking wacht daarop.",
             "C4.3: open Praten met Eva op je telefoon, Begin gesprek, vraag een verhaal en spreek tijdens haar antwoord.",
             "M3.3: plak een concreet statisch antwoord uit gewoon /eva2-Telegramgebruik.",
-            "Woonkamer nu: Hey Eva, zoek wat Home Assistant Cloud voor spraak doet; direct Hoe gaat het met jou? zonder wakeword. Spreek tijdens antwoord en meld verstaanbaarheid/horen. Browserovername, initiatief en gezinsweek later."
+            "C3/C4 nu: Woonkamer-proef hierboven; Overkapping van mute en dezelfde directe conversatie. Geen nieuw wakeword tijdens denken/spreken. Browserovername, initiatief en gezinsweek later."
           ],
           "expected": "Geaccepteerd geheugen en C3.3 hoef je niet opnieuw te testen. O2.3 is opgelost; geen handeling van jou nodig."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T16:32:22.419945+00:00",
+        "reviewedAt": "2026-10-01T16:46:33.165947+00:00",
         "previousOwnerAction": {
           "title": "Probeer onderbreken op je telefoon",
           "steps": [
@@ -13472,14 +13480,14 @@
           },
           "owner": "/root",
           "activeWorker": null,
-          "baseCommit": "aacea704",
+          "baseCommit": "44d1a728",
           "assignment": {
-            "stage": "installed_audio_fix_owner_conversation_open",
+            "stage": "both_native_routes_installed_owner_conversation_open",
             "scope": "C3.1: existing continuous speech input and native output, minimal EOF firmware correction; no new engine.",
             "outcome": "Direct verder praten tijdens denken en spreken zonder herhaald wakeword; geen vaste transportzin bij iedere vraag.",
             "activeWorkers": [],
             "effort": "Reuse retained candidate and current diagnostics. Focused verification only; unknown development credits, no model calls so far.",
-            "result": "Shared empty-STT correction and bounded native output installed. Actual3s72000-frame and HA TTS108864-frame playback complete; physical STOP203ms and following4800frames pass. No owner microphone/voice-quality acceptance invented.",
+            "result": "Both actual devices complete real TTS, exact playback, physical wire STOP and following generation. Physical microphone/quality conversation still open; no full C3/C4 claim.",
             "fileResponsibilities": {
               "/root": [
                 "shared speech input",
@@ -13569,22 +13577,50 @@
             {
               "id": "C3.2",
               "title": "Doorpraten via tweede speaker",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "aansluiten",
               "doneWhen": "Dezelfde volledige gespreksroute werkt op de tweede fysieke speaker.",
               "owner": "Codex",
-              "nextAction": "Codex sluit dezelfde continue gespreksroute op Overkapping aan nadat Woonkamer werkt.",
+              "nextAction": "Owner can unmute Overkapping and try ordinary direct continuation; no technical owner recovery required.",
               "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Codex moet eerst de continue route op Overkapping aansluiten. Nu geen nieuwe proef nodig.",
+                "availableNow": true,
+                "purpose": "evaluation",
                 "steps": [
-                  "Na aansluiting: stel een onderzoeksopdracht en tijdens nadenken een korte tussenvraag, zonder nieuw wakeword."
+                  "Haal Overkapping van mute; de eerdere mute-stand is behouden.",
+                  "Zeg Hey Eva en stel een vraag; praat daarna direct verder zonder nieuw wakeword, ook tijdens haar antwoord.",
+                  "Meld of zij verstaanbaar is, de tussenvraag hoort en antwoordt."
                 ],
-                "expected": "Dezelfde continue route als op Woonkamer.",
-                "reportBack": "Of directe tussenspraak werkt.",
+                "expected": "Dezelfde continue Eva-route als Woonkamer; directe tussenspraak.",
+                "reportBack": "Verstaanbaarheid en direct doorpraten op Overkapping.",
                 "blocksIndependentWork": false
-              }
+              },
+              "blocker": null,
+              "checkedAt": "2026-10-01T16:46:33.165947+00:00",
+              "assignment": {
+                "baseCommit": "44d1a728",
+                "owner": "/root",
+                "activeWorkers": [],
+                "stage": "installed_actual_output_verified_owner_conversation_open",
+                "existing": "Both native speaker grants and previous Overkapping candidate already exist. Shared input and actual Woonkamer output/stop now corrected and installed.",
+                "gap": "Second device remains on ordinary route; old native candidate needs current shared component and current target/auth/CA binding verified.",
+                "outcome": "Same continuous Eva route on second physical speaker; preserve device identity, controls, data and private boundaries.",
+                "files": [
+                  "existing private Overkapping firmware wrapper/component only if needed",
+                  "eva2/evidence/product/c3-second-speaker-20261001.json",
+                  "existing canonical dashboard"
+                ],
+                "finish": "Existing C3.2 condition unchanged; actual second device native connection and output; physical conversation evaluation remains distinct.",
+                "estimate": "Reuse exact reviewed shared component/service; no new engine, model trial or whole installation. Credit costs unknown.",
+                "finding": "Encrypted live target0a5035/MAC0A:50:35 verified. Existing credential matches current grant; CA/URL/mic/speaker/phase callbacks identical to Woonkamer. Target wrapper and controls unchanged; same reviewed module copied.",
+                "reviewer": "/root/open_questions_triage",
+                "buildIssue": "Old retained CMake cache mixed /root/.platformio framework paths with current administrator PlatformIO environment. Old build cache preserved separately; regenerate only this cache, no target source/firmware changes.",
+                "reviewResult": "Independent transfer GO; exact current shared source, target settings/credentials and current household grant checked.",
+                "result": "One target OTA; actual72000-frame output, actual HA TTS108864frames, STOP197ms and following4800frames pass. Encrypted target version/unchanged mute confirmed."
+              },
+              "latestEvidence": "eva2/evidence/product/c3-second-speaker-20261001.json",
+              "installation": "installed_native_continuous_route_overkapping",
+              "remaining": "Dezelfde continue route geïnstalleerd en echte afspeel-/stopcontrole geslaagd. Gewone fysieke conversatie en verstaanbaarheid nog te beoordelen; oorspronkelijke mute staat nog aan."
             },
             {
               "id": "C3.3",
