@@ -3,6 +3,7 @@ from uuid import uuid4
 from livekit import rtc
 from livekit.agents import stt, tts, tokenize
 from livekit.agents.types import DEFAULT_API_CONNECT_OPTIONS
+from eva.adapters.connectors.home_assistant_voice import NoSpeechRecognized
 
 class HomeAssistantSTT(stt.STT):
     def __init__(self, source, check=lambda: None, *, vad=None):
@@ -31,7 +32,12 @@ class HomeAssistantSTT(stt.STT):
                 data = bytes(output.data)
                 for offset in range(0, len(data), 3200):
                     yield data[offset:offset + 3200]
-        text = await self.source.transcribe(chunks())
+        try:
+            text = await self.source.transcribe(chunks())
+        except NoSpeechRecognized:
+            # A VAD segment may contain noise rather than speech. LiveKit
+            # discards an empty recognition and keeps the same input stream.
+            text = ""
         self.check()
         return stt.SpeechEvent(type=stt.SpeechEventType.FINAL_TRANSCRIPT,
             alternatives=[stt.SpeechData(language="nl", text=text)])

@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-01T15:37:04.611986+00:00",
+  "lastUpdated": "2026-10-01T16:17:54.897173+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T15:37:04.611986+00:00",
+        "checkedAt": "2026-10-01T16:32:22.419945+00:00",
         "deliveries": [
+          {
+            "title": "Woonkamer-audio en lege herkenning gericht gecorrigeerd",
+            "date": "1 oktober",
+            "state": "installed",
+            "result": "Continue input blijft open na lege herkenning.3sPCM heeft nu volledige echte afspeelbevestiging; HA-spraak108864frames compleet. Expliciet stoppen203ms en volgende antwoord slagen op apparaat. Gerichte bronreview en geïnstalleerde versie gecontroleerd.",
+            "remaining": "C3.1 fysieke conversatie/intelligibiliteit nog te beoordelen; C3.2 tweede speaker volgt. Geen volledige C3/C4 of extra groot onderdeel geclaimd.",
+            "source": "eva2/evidence/product/c3-audio-stutter-fix-20261001.json"
+          },
           {
             "title": "O2.3 — echte herstelroute afgemaakt en geïnstalleerd",
             "date": "1 oktober",
@@ -3283,21 +3291,27 @@
           }
         ],
         "now": {
-          "title": "O2.3 — herstelroute afgerond",
-          "state": "completed",
-          "detail": "Werkelijke gegevens hersteld, kern/werker gezond gestart en bewaarde inhoud teruggelezen. Correcties geïnstalleerd en onafhankelijk goedgekeurd. Oorspronkelijke diensten weer gezond; nu geen bouwuitvoerder actief."
+          "title": "Woonkamer-audiocorrectie geïnstalleerd",
+          "state": "in_progress",
+          "detail": "Echte spraak speelt volledig af; stoppen en volgende antwoord bevestigd op het apparaat. Fysieke gesprekservaring nog open. Broncheckpoint wordt afgerond; daarna dezelfde route op Overkapping.",
+          "owner": "Codex /root"
         },
         "next": {
-          "title": "C3.1 — verstaanbare spraak en betrouwbare antwoorden",
-          "detail": "Bestaande continue route gericht afmaken. Stotteren en ontbrekende antwoorden blijven open. Gepland; nog niet gestart na deze hersteloplevering."
+          "title": "Daarna: tweede speaker aansluiten",
+          "detail": "Na werkende woonkamerroute volgt dezelfde continue route op Overkapping. HA, browser en modules staan apart gepland."
         },
         "ownerAction": {
-          "title": "O2.3 vraagt geen handeling van jou",
-          "steps": [],
-          "expected": "Technisch opgelost en geïnstalleerd. Andere open gebruiksbeoordelingen blijven apart; daarvoor gelden hun eigen instructies."
+          "title": "Wat jij nog kunt doen — geen technische herstelactie",
+          "steps": [
+            "P1.1: meld Start de aanmeldingen wanneer je OpenClaw/Hermes kunt aanmelden; alleen de eindvergelijking wacht daarop.",
+            "C4.3: open Praten met Eva op je telefoon, Begin gesprek, vraag een verhaal en spreek tijdens haar antwoord.",
+            "M3.3: plak een concreet statisch antwoord uit gewoon /eva2-Telegramgebruik.",
+            "Woonkamer nu: Hey Eva, zoek wat Home Assistant Cloud voor spraak doet; direct Hoe gaat het met jou? zonder wakeword. Spreek tijdens antwoord en meld verstaanbaarheid/horen. Browserovername, initiatief en gezinsweek later."
+          ],
+          "expected": "Geaccepteerd geheugen en C3.3 hoef je niet opnieuw te testen. O2.3 is opgelost; geen handeling van jou nodig."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T15:37:04.611986+00:00",
+        "reviewedAt": "2026-10-01T16:32:22.419945+00:00",
         "previousOwnerAction": {
           "title": "Probeer onderbreken op je telefoon",
           "steps": [
@@ -3310,7 +3324,7 @@
           "linkLabel": "Open HA-telefoonpaneel"
         }
       },
-      "reviewedAt": "2026-10-01T15:37:04.611986+00:00"
+      "reviewedAt": "2026-10-01T15:52:21.323198+00:00"
     },
     "pendingTechnicalReview": {
       "reason": "Historische CO-003-kandidaat van 7 september: het oorspronkelijke bewijs bevat geen commitgebonden definitieve review of livegang. Deze oude kaart wordt daarom niet alsnog afgevinkt. De gebruikersuitkomst is later opgenomen in CO-004/CO-005, live opgeleverd en door Jaap via GE-02 geaccepteerd op 12 september. Het gekozen geheugenonderdeel blijft afgesloten; deze historische registratie is geen actuele bouw- of acceptatieblokkade.",
@@ -13458,14 +13472,24 @@
           },
           "owner": "/root",
           "activeWorker": null,
-          "baseCommit": "5f583226",
+          "baseCommit": "aacea704",
           "assignment": {
-            "stage": "awaiting_current_stutter_observation",
-            "scope": "C3.1 intelligible reliable direct speech; actual target identity to be confirmed before any device update.",
+            "stage": "installed_audio_fix_owner_conversation_open",
+            "scope": "C3.1: existing continuous speech input and native output, minimal EOF firmware correction; no new engine.",
             "outcome": "Direct verder praten tijdens denken en spreken zonder herhaald wakeword; geen vaste transportzin bij iedere vraag.",
             "activeWorkers": [],
             "effort": "Reuse retained candidate and current diagnostics. Focused verification only; unknown development credits, no model calls so far.",
-            "result": "One Woonkamer native OTA; encrypted identity and native peer connection verified. One media image update per route, runtime settings/mounts retained. Focused existing tests passed; no unmodified retries or rollback."
+            "result": "Shared empty-STT correction and bounded native output installed. Actual3s72000-frame and HA TTS108864-frame playback complete; physical STOP203ms and following4800frames pass. No owner microphone/voice-quality acceptance invented.",
+            "fileResponsibilities": {
+              "/root": [
+                "shared speech input",
+                "native Python output",
+                "installation and evidence"
+              ],
+              "/root/open_questions_triage": [
+                "native output protocol/driver and focused host EOF regression"
+              ]
+            }
           },
           "evidence": "eva2/evidence/product/c3-existing-candidate-session-20260928.json",
           "ownerTrial": {
@@ -13492,30 +13516,33 @@
               "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
               "owner": "Codex /root",
               "blocker": null,
-              "latestEvidence": "eva2/evidence/product/c3-audio-stutter-observation-20261001.json",
+              "latestEvidence": "eva2/evidence/product/c3-audio-stutter-fix-20261001.json",
               "assignment": {
-                "baseCommit": "5f583226",
+                "baseCommit": "aacea704",
                 "owner": "/root",
                 "files": [
                   "eva2/experiments/native-duplex-v1/",
                   "existing native speaker/media service and focused tests only if a measured fault requires a correction"
                 ],
-                "outcome": "Direct verder praten tijdens denken en spreken zonder herhaald wakeword; geen vaste transportzin bij iedere vraag.",
-                "endCondition": "Nieuwe bewaarde fysieke waarneming of expliciet ontbrekend bewijs; geen ongewijzigde modelproef",
+                "outcome": "Resolve the observed stutter and missing responses on the existing continuous speaker route.",
+                "endCondition": "Onderzoeksopdracht aannemen, weer luisteren en nieuwe vraag beantwoorden terwijl werk loopt; actuele verstaanbaarheid en werkelijke afspeelbevestiging ontbreken nog.",
                 "actual": "2 HA adapter tests,17 shared-source tests,17 packaged native and17 older owner-module tests;2 C++ host cases. No new model/audio/house-action request before owner trial; credits unknown.",
                 "activeWorkers": [],
-                "stage": "awaiting_current_stutter_observation",
-                "currentAction": "Passive device log collecting for one ordinary spoken answer; identify current underrun, connection fault or repeated interruption before correcting code.",
-                "finding": "Current Woonkamer firmware and native connection verified. Existing server logs contain transport/confirmation failures; current stutter cause not isolated. Two passive subscriptions while idle had no log events. No firmware/model change made.",
-                "result": "Actual compiled native entry1312→32bytes,1280overhead removed; stack allocation4096unchanged.2host tests3.46s and independent source/build GO. One targeted OTA18.852s, no rollback."
+                "stage": "installed_audio_fix_owner_conversation_open",
+                "currentAction": "Bundled source checkpoint and dashboard delivery; owner can retry Woonkamer conversation. Second speaker route follows independently.",
+                "finding": "After graceful EOF actual written72000+prime1440, played73432; source stopped with8-frame deficit.3s feed2.257s. Current resampler retains FIR tail; no FINISHED claimed.",
+                "result": "Shared empty-STT correction and bounded native output installed. Actual3s72000-frame and HA TTS108864-frame playback complete; physical STOP203ms and following4800frames pass. No owner microphone/voice-quality acceptance invented.",
+                "estimate": "Focused diagnosis, directed correction, review and installation; unknown credits. No new speech engine."
               },
-              "checkedAt": "2026-10-01T13:04:32.018573+00:00",
-              "remaining": "Eigenaar meldt dat full duplex lijkt te werken, maar spraak stottert/onverstaanbaar, blauwe ring draait snel en antwoorden ontbreken soms. Niet afgerond.",
+              "checkedAt": "2026-10-01T16:32:22.419945+00:00",
+              "remaining": "Audiostaart en lege herkenning gecorrigeerd en geïnstalleerd; echte TTS/afspelen/stoppen gecontroleerd. Nog één gewone fysieke conversatie voor verstaanbaarheid/direct doorpraten; geen technische eigenaarherstelactie.",
               "installation": "installed_native_continuous_candidate_woonkamer",
               "ownerTrial": {
-                "status": "partial_with_audio_failure",
+                "status": "retry_ready_after_installed_audio_correction",
                 "steps": [
-                  "Zeg Hey Eva, hallo, zonder knopbediening; meldt antwoord of herstart."
+                  "Zeg op Woonkamer: Hey Eva, zoek met bronnen uit wat Home Assistant Cloud voor spraak doet.",
+                  "Zeg tijdens nadenken direct Hoe gaat het met jou?, zonder nieuw wakeword.",
+                  "Spreek ook tijdens haar antwoord; meld verstaanbaarheid, horen van tussenvraag en terugkeer van onderzoek."
                 ],
                 "expected": "Het gesprek blijft open tijdens denken en spreken; nieuwe vraag krijgt haar eigen antwoord, aangenomen onderzoek blijft lopen.",
                 "blocksIndependentWork": false,
@@ -13524,16 +13551,18 @@
                 "speakerIdentity": "not yet specified",
                 "scope": "Direct continuation seems possible; intelligibility and reliable replies are not accepted."
               },
-              "nextAction": "Codex controleert de bestaande audiostroom en antwoordroute; stotteren en ontbrekende antwoorden gericht herstellen.",
+              "nextAction": "Codex herstelt de nog ontbrekende eindbevestiging met daadwerkelijke apparaat-/decoderlog; daarna één verstaanbare directe gespreksproef.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": true,
+                "purpose": "evaluation",
                 "steps": [
-                  "Bevestig op welke speaker het stottert: Woonkamer, Overkapping of beide.",
-                  "Voor de huidige Woonkamer-meting: zeg Hey Eva, vertel een kort verhaaltje en laat haar even praten. Meld Gedaan zodra het stottert."
+                  "Zeg op Woonkamer: Hey Eva, zoek met bronnen uit wat Home Assistant Cloud voor spraak doet.",
+                  "Zeg tijdens nadenken direct Hoe gaat het met jou?, zonder nieuw wakeword.",
+                  "Spreek ook tijdens haar antwoord; meld verstaanbaarheid, horen van tussenvraag en terugkeer van onderzoek."
                 ],
-                "expected": "Eén actuele stotterende reactie koppelen aan apparaat- en verbindingslog; nog geen oplossing of nieuwe acceptatie geclaimd.",
-                "reportBack": "Apparaat en Gedaan zodra het stottert.",
+                "expected": "Verstaanbare spraak, direct doorpraten zonder opnieuw wekken en later terugmelding op juiste speaker.",
+                "reportBack": "Werkt het gesprek; stottert zij nog of ontbreken antwoorden?",
                 "blocksIndependentWork": false
               }
             },
@@ -14528,7 +14557,7 @@
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
-                "readyWhen": "Eerst T3.1 tabblad delen en T3.2 gewone opdracht aansluiten. Nu nog niet overnemen.",
+                "readyWhen": "T3.1 is al afgerond; je gedeelde tabblad blijft behouden. Codex moet eerst T3.2 volledige opdracht afmaken. Nu nog geen overnameproef nodig.",
                 "steps": [
                   "Wanneer Codex meldt dat de echte opdracht loopt: kies Jij neemt over op de bestaande Chrome-bediening.",
                   "Doe zelf een handeling en geef de bediening daarna terug aan Eva."
@@ -15150,7 +15179,7 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": "/root",
+          "activeWorker": null,
           "dashboardComponent": "installation",
           "remainingTasks": [
             {
@@ -15403,7 +15432,8 @@
             }
           ],
           "latestEvidence": "eva2/evidence/product/o2-actual-restore-20261001.json",
-          "completedAt": "2026-10-01T15:37:04.611986+00:00"
+          "completedAt": "2026-10-01T15:37:04.611986+00:00",
+          "activeWorker": null
         },
         {
           "id": "P1",
@@ -15721,7 +15751,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": null,
+      "activeSliceId": "C3",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

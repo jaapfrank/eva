@@ -10,6 +10,7 @@ from websockets.asyncio.server import serve
 
 from eva.adapters.connectors.home_assistant_voice import (
     HomeAssistantSpeechInput, HomeAssistantVoiceReplyGuard, VoiceMediaError,
+    NoSpeechRecognized,
 )
 
 
@@ -223,7 +224,7 @@ def test_real_wire_stt_only_stream_and_final_text():
     asyncio.run(run())
 
 
-@pytest.mark.parametrize("unexpected", ["intent-start", "intent-end", "tts-start", "error"])
+@pytest.mark.parametrize("unexpected", ["intent-start", "intent-end", "tts-start"])
 def test_native_intent_and_provider_errors_never_return_transcript(unexpected):
     async def run():
         async def handler(socket):
@@ -236,6 +237,28 @@ def test_native_intent_and_provider_errors_never_return_transcript(unexpected):
                                                token="synthetic", pipeline_id="test-pipeline")
             with pytest.raises(VoiceMediaError, match="STT-only"):
                 await adapter.transcribe(_audio(b"12"))
+    asyncio.run(run())
+
+
+@pytest.mark.parametrize("code", ["stt-no-text-recognized", "stt-stream-failed", "cloud-auth-failed", None])
+@pytest.mark.parametrize("started", [True, False])
+def test_only_admitted_empty_recognition_is_recoverable(code, started):
+    async def run():
+        async def handler(socket):
+            await _handshake(socket)
+            if started:
+                await _event(socket, "stt-start")
+            await _event(socket, "error", {"code": code, "message": "private provider detail"})
+            await socket.wait_closed()
+        async with serve(handler, "127.0.0.1", 0) as server:
+            adapter = HomeAssistantSpeechInput(
+                base_url=f"http://127.0.0.1:{server.sockets[0].getsockname()[1]}",
+                token="synthetic", pipeline_id="test-pipeline")
+            with pytest.raises(VoiceMediaError) as caught:
+                await adapter.transcribe(_audio(b"12"))
+            assert isinstance(caught.value, NoSpeechRecognized) == (
+                started and code == "stt-no-text-recognized")
+            assert "private provider detail" not in str(caught.value)
     asyncio.run(run())
 
 

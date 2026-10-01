@@ -25,20 +25,26 @@ inline void vTaskDelay(uint32_t ticks) { host_task_delay(ticks); }
 namespace esphome::va_pipecat {
 struct HostSpeaker {
   bool stopped=true, start_pending=false, stop_pending=false;
+  bool finish_pending=false;
+  uint32_t finish_requests=0;
+  size_t play_limit=4800;
   std::vector<uint8_t> queued;
   std::function<void()> during_play;
   bool is_stopped() const { return stopped; }
   bool has_buffered_data() const { return !queued.empty(); }
   void start() { start_pending=true; }
   void stop() { stop_pending=true; }
+  void finish() { finish_pending=true; ++finish_requests; }
   void commands() {
-    if (stop_pending) { stopped=true; queued.clear(); start_pending=false; stop_pending=false; }
+    if (stop_pending) { stopped=true; queued.clear(); start_pending=false; stop_pending=false; finish_pending=false; }
     else if (start_pending) { stopped=false; start_pending=false; }
+    else if (finish_pending && queued.empty()) { stopped=true; finish_pending=false; }
   }
   size_t play(const uint8_t *data, size_t size) {
     if (stopped) return 0;
     if (during_play) during_play();
     size=std::min(size, size_t(4800)-queued.size());
+    size=std::min(size, play_limit);
     queued.insert(queued.end(), data, data+size);
     return size;
   }

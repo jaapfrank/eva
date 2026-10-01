@@ -17,6 +17,9 @@ struct EvaReceipt {
 
 struct EvaOutputAction {
   bool stop{false};
+  bool finish{false};
+  bool finish_diagnostic{false};
+  uint8_t tail_frames{0};
   bool reset_frames{false};
   bool append_pcm{false};
   bool hold_pcm{false};
@@ -28,6 +31,11 @@ class EvaOutputProtocol {
  public:
   static constexpr size_t HEADER = 28, MAX_PCM = 960, MAX_RECORD = HEADER + MAX_PCM;
   static constexpr uint32_t MAX_FRAMES = 24000 * 180;
+  // ESPHome 2026.6.2 / esp-audio-libs 3.2.1: the configured 16-tap
+  // 24-to-48 kHz ART resampler advances by half its taps and requires that
+  // many silent input frames at EOF (art_resampler.cpp, processing note 2).
+  // These frames flush the FIR history; they are not accepted answer audio.
+  static constexpr uint8_t EOF_TAIL_FRAMES = 8;
   enum Kind : uint8_t { OPEN=1, BEGIN=2, AUDIO=3, END=4, STOP=5,
     OPENED=129, BEGUN=130, ACCEPTED=131, FINISHED=132, STOPPED=133, ERROR=134 };
   enum class State { FRESH, OPENING, IDLE, ACTIVE, DRAINING, FINISHING, STOPPING, LOCAL_STOPPING, FAILED };
@@ -101,6 +109,9 @@ class EvaOutputProtocol {
       if (state_ != State::IDLE) return fail();
       maximum_=current_=generation;
       frames_=sequence_=0;
+      finish_requested_=false;
+      finish_diagnostics_=0;
+      tail_written_=0;
       state_=State::ACTIVE;
       action.reset_frames=true;
       action.receipt=receipt_(BEGUN, generation, 0);
@@ -124,18 +135,41 @@ class EvaOutputProtocol {
     return action;
   }
 
+  EvaOutputAction record_tail(uint32_t frames) {
+    if (state_ != State::DRAINING || frames > static_cast<uint32_t>(EOF_TAIL_FRAMES-tail_written_)) return fail();
+    tail_written_+=frames;
+    return EvaOutputAction{};
+  }
+
   EvaOutputAction poll(bool stopped_confirmed, bool ring_empty, uint32_t written_frames,
-                       uint32_t played_frames, uint32_t prime_frames) {
+                       uint32_t played_frames, uint32_t prime_frames, uint32_t now_ms=0) {
     EvaOutputAction action;
     if (state_ == State::OPENING && stopped_confirmed) {
       state_=State::IDLE;
       action.receipt=receipt_(OPENED, 0, 0);
-    } else if (state_ == State::DRAINING && ring_empty && written_frames == frames_ &&
-               played_frames >= prime_frames+frames_) {
-      // All answer frames have a downstream callback. Quiesce the owned source
-      // as well before acknowledging completion or resetting its counters.
-      state_=State::FINISHING;
-      action.stop=true;
+    } else if (state_ == State::DRAINING && ring_empty && written_frames == frames_) {
+      if (tail_written_ < EOF_TAIL_FRAMES) {
+        action.tail_frames=EOF_TAIL_FRAMES-tail_written_;
+        return action;
+      }
+      // Signal downstream EOF before waiting for its final DAC callbacks.
+      // Graceful finish does not prove playback or replace the stop barrier.
+      if (!finish_requested_) {
+        finish_requested_=true;
+        action.finish=true;
+      }
+      if (action.finish || (finish_diagnostics_<8 &&
+          static_cast<uint32_t>(now_ms-finish_diagnostic_ms_)>=500)) {
+        action.finish_diagnostic=true;
+        ++finish_diagnostics_;
+        finish_diagnostic_ms_=now_ms;
+      }
+      if (played_frames >= prime_frames+frames_) {
+        // All answer frames have a downstream callback. Quiesce the owned source
+        // before acknowledging completion or resetting its counters.
+        state_=State::FINISHING;
+        action.stop=true;
+      }
     } else if (state_ == State::FINISHING && stopped_confirmed) {
       state_=State::IDLE;
       remember_(current_, frames_);
@@ -181,6 +215,10 @@ class EvaOutputProtocol {
   std::array<uint8_t,8> session_{};
   bool session_set_{false};
   uint32_t maximum_{0}, current_{0}, frames_{0}, sequence_{0};
+  bool finish_requested_{false};
+  uint8_t finish_diagnostics_{0};
+  uint8_t tail_written_{0};
+  uint32_t finish_diagnostic_ms_{0};
   std::array<uint32_t,8> stops_{};
   size_t stop_count_{0};
   std::array<std::array<uint32_t,2>,8> history_{};

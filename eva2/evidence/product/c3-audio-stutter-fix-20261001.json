@@ -1,0 +1,121 @@
+{
+  "taskId": "C3.1",
+  "status": "installed_output_barrier_verified_owner_trial_open",
+  "scope": "Existing shared HA speech input and authenticated Woonkamer native output; no new engine or personality scripts.",
+  "baseline": {
+    "sourceCommit": "aacea704",
+    "speakerImage": "sha256:59adf4ade692929e0f8387eb84ed5492ea089cbfc79491c0a3e50793790f71aa",
+    "firmwareOtaSha256": "91b723d3e4c3469b013aadf3daba842105dd67ba4520704172861b54274130ac"
+  },
+  "speechInput": {
+    "cause": "Admitted HA STT-only empty recognition reports stt-no-text-recognized; the old adapter treated it as a fatal protocol transition.",
+    "correction": "Only admitted empty recognition is recoverable; the same stream remains open, complete input and current authority still required.",
+    "installedOn": [
+      "household speaker media",
+      "owner phone media"
+    ],
+    "actualLiveProof": {
+      "emptyRecognitions": 2,
+      "sameStream": true,
+      "finalTranscripts": 0,
+      "provider": "Existing HA Cloud STT"
+    },
+    "focusedPackagedTests": {
+      "passed": 71,
+      "seconds": 6.56,
+      "route": "Exact phone image preserving its local SpeechAudioChunk compatibility"
+    },
+    "installedPhoneImage": "sha256:2e9092a057dbcaa089bc91b00f27c9abd7feff429257d54f7a90a642917e69f6"
+  },
+  "nativeOutput": {
+    "cause": "One outstanding20ms packet waited for each actual ACCEPTED receipt; mean57.717ms,149/150 packets exceeded20ms.",
+    "reference": {
+      "audioSeconds": 3,
+      "ackWaitSumSeconds": 8.657567,
+      "meanAckMs": 57.717113,
+      "p95AckMs": 76.116,
+      "completedPlayback": false
+    },
+    "correction": "Four bounded outstanding packets with two-second realtime PCM prefetch budget; cumulative counts, END and physical stop barriers retained.",
+    "candidate": {
+      "audioSeconds": 3,
+      "feedSeconds": 2.391458,
+      "totalPlaybackSeconds": 3.4284,
+      "completedPlayback": true,
+      "confirmedFrames": 72000
+    },
+    "focusedTests": {
+      "passed": 34,
+      "seconds": 4.19,
+      "covers": "Delayed receipts, window bound, wrong cumulative count, STOP during receipts/pacing, limited realtime receiver and existing LiveKit playback barriers"
+    },
+    "installedImage": "sha256:b8001798c65f79e44b5a659ea7295103a633f63f03efc39106114bcc8208894f",
+    "next": "Physical owner conversation on Woonkamer; same reviewed route transfer to Overkapping.",
+    "firmwareEOF": {
+      "installed": true,
+      "otaSha256": "b13db634acfec61c4d4772b063e7180f68a3350fd650a66027de30854efd557c",
+      "compileSeconds": 37.89,
+      "uploadSeconds": 18.214,
+      "actualFrames": {
+        "confirmedOriginalAnswerFrames": 72000,
+        "referenceDeficitBeforeTailCorrection": 8
+      },
+      "finishedReceived": true,
+      "next": "Actual owner microphone/interrupt/intelligibility observation; same verified route reuse on second speaker.",
+      "installedCompilation": "2026-10-01 18:28:29 +0200",
+      "tailCorrection": "Eight real silent input frames flush the configured16-tap24→48kHz FIR. Original written/accepted/prime counts unchanged; physical played and STOP barrier remain required.",
+      "codec": {
+        "library": "esp-audio-libs3.2.1",
+        "commit": "3079cd0576d563c955e412937a91782ab4eaf516",
+        "taps": 16,
+        "source": "src/resample/art_resampler.cpp processing note2 and initialized half-tap advance"
+      },
+      "targetedCompileSeconds": [
+        37.89,
+        36.0
+      ],
+      "targetedUploadSeconds": [
+        18.214,
+        18.63
+      ]
+    },
+    "actualHATTS": {
+      "completedPlayback": true,
+      "confirmedFrames": 108864,
+      "audioSeconds": 4.536,
+      "totalSeconds": 5.325942,
+      "provider": "Existing HA Cloud TTS, actual installed LiveKit decoder"
+    },
+    "actualStopAndResume": {
+      "generation3": "interrupted",
+      "confirmedFramesBeforeStop": 19680,
+      "stopSeconds": 0.203295,
+      "generation4": "completed",
+      "confirmedFrames": 4800,
+      "scope": "Explicit wire STOP on actual device and next answer; not a microphone barge-in test."
+    }
+  },
+  "review": {
+    "reviewer": "/root/open_questions_triage",
+    "speechInput": "GO",
+    "nativeOutputWindow": "GO after adding bounded realtime prefetch; earlier unpaced candidate not installed",
+    "firmwareReviewer": "/root (independent of author /root/open_questions_triage)",
+    "firmwareResult": "GO: source-derived finite tail, partial-write/STOP/new-generation bounds, real device FINISHED/STOPPED and actual HA TTS completion."
+  },
+  "limits": [
+    "No full C3/C4 completion or physical owner acceptance claimed.",
+    "Faster transport does not prove model answer speed.",
+    "Output-only measurements do not exercise microphone uplink or simultaneous interruption.",
+    "Wall-clock pacing is not evidence of audible playback; exact hardware FINISHED/STOPPED remain required."
+  ],
+  "usage": {
+    "evaModelCalls": 0,
+    "houseActions": 0,
+    "newProviderRoutes": 0,
+    "developmentCreditCost": null,
+    "speechProviderCreditCost": null,
+    "actualSTTRecognitionRequests": 3,
+    "actualTTSRequests": 2
+  },
+  "checkedAt": "2026-10-01T16:32:22.419945+00:00"
+}

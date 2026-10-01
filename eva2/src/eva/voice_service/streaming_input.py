@@ -5,6 +5,7 @@ import time
 from livekit import rtc
 from livekit.agents import stt, utils, vad
 from livekit.agents.types import APIConnectOptions
+from eva.adapters.connectors.home_assistant_voice import NoSpeechRecognized
 
 
 class HomeAssistantInputStream(stt.RecognizeStream):
@@ -101,6 +102,14 @@ class HomeAssistantInputStream(stt.RecognizeStream):
                 self._closed_input = True
                 self._failed.set()
 
+        async def transcribe_segment(segment):
+            try:
+                return await self._stt.source.transcribe(chunks(segment))
+            except NoSpeechRecognized:
+                # Noise can pass local VAD without containing recognizable
+                # speech. Keep listening after the complete segment is consumed.
+                return ""
+
         async def recognize():
             nonlocal queue, recognition, input_consumed
             async for event in detector:
@@ -116,7 +125,7 @@ class HomeAssistantInputStream(stt.RecognizeStream):
                     queue = asyncio.Queue(maxsize=128)
                     input_consumed = False
                     enqueue(event.frames)
-                    recognition = asyncio.create_task(self._stt.source.transcribe(chunks(queue)))
+                    recognition = asyncio.create_task(transcribe_segment(queue))
                     recognition.add_done_callback(provider_done)
                     self._event_ch.send_nowait(stt.SpeechEvent(stt.SpeechEventType.START_OF_SPEECH))
                 elif event.type == vad.VADEventType.END_OF_SPEECH:
@@ -131,6 +140,8 @@ class HomeAssistantInputStream(stt.RecognizeStream):
                     if self._closed_input or not input_consumed:
                         raise RuntimeError("speech provider ended before consuming the local segment")
                     queue = recognition = None
+                    if not text:
+                        continue
                     self._event_ch.send_nowait(stt.SpeechEvent(
                         stt.SpeechEventType.FINAL_TRANSCRIPT,
                         alternatives=[stt.SpeechData(language="nl", text=text)],

@@ -24,6 +24,10 @@ class VoiceMediaError(RuntimeError):
     """A sanitized media failure, without credentials, frames or transcripts."""
 
 
+class NoSpeechRecognized(VoiceMediaError):
+    """The admitted STT provider finished without recognizing any words."""
+
+
 @dataclass(frozen=True, slots=True)
 class HomeAssistantVoiceQuery:
     """An admitted transport query; this does not authenticate its speaker."""
@@ -333,6 +337,11 @@ class HomeAssistantSpeechInput:
                             or (on_speech_end is not None and not speech_ended)):
                         raise VoiceMediaError("speech provider ended without final text")
                     return transcript
+                elif kind == "error":
+                    if (acknowledged and started and transcript is None
+                            and data.get("code") == "stt-no-text-recognized"):
+                        raise NoSpeechRecognized("speech input contained no recognized words")
+                    raise VoiceMediaError("speech provider failed during STT")
                 else:
                     # In particular, never accept HA native intent or TTS here.
                     raise VoiceMediaError("speech provider left the STT-only route")

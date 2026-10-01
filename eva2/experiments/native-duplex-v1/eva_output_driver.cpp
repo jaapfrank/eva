@@ -109,6 +109,10 @@ void VaPipecat::eva_ws_data_(uint8_t opcode, bool fin, int offset, int total,
 void VaPipecat::eva_service_output_() {
   // Called by audio_task_ after polling PlaybackStopBarrier. Checking pending
   // again under the same mutex as command admission closes the receipt race.
+  bool finish=false, diagnostic=false;
+  uint8_t tail_frames=0;
+  uint32_t generation=0;
+  uint32_t written=0, played=0, prime=0, ring_bytes=0, state=0;
   portENTER_CRITICAL(&this->ring_mux_);
   if (this->playback_stop_.failed()) {
     this->eva_apply_locked_(this->eva_output_.fail(), nullptr, 0);
@@ -122,10 +126,42 @@ void VaPipecat::eva_service_output_() {
     }
     const bool quiet=!this->playback_stop_.pending() && this->speaker_->is_stopped();
     auto action=this->eva_output_.poll(quiet, this->audio_fill_==0 && this->eva_held_size_==0,
-      this->eva_written_frames_, this->eva_played_frames_, this->eva_prime_frames_);
+      this->eva_written_frames_, this->eva_played_frames_, this->eva_prime_frames_, millis());
+    finish=action.finish;
+    diagnostic=action.finish_diagnostic;
+    tail_frames=action.tail_frames;
+    generation=this->audio_generation_;
+    if (diagnostic) {
+      written=this->eva_written_frames_;
+      played=this->eva_played_frames_;
+      prime=this->eva_prime_frames_;
+      ring_bytes=this->audio_fill_;
+      state=static_cast<uint32_t>(this->eva_output_.state());
+    }
     this->eva_apply_locked_(action, nullptr, 0);
   }
   portEXIT_CRITICAL(&this->ring_mux_);
+  // The owned audio task alone operates the speaker, outside the ring mutex.
+  // A concurrent STOP still takes priority in the downstream command handler.
+  if (tail_frames) {
+    static const uint8_t kEOFTail[EvaOutputProtocol::EOF_TAIL_FRAMES*2]={0};
+    const size_t bytes=tail_frames*2;
+    const size_t accepted=this->speaker_->play(kEOFTail, bytes);
+    portENTER_CRITICAL(&this->ring_mux_);
+    // STOP/disconnect invalidate an in-flight tail just like answer PCM.
+    // Only the same draining generation can retry or proceed to finish.
+    if (this->audio_generation_==generation && this->eva_output_.state()==EvaOutputProtocol::State::DRAINING) {
+      auto action=(accepted>bytes || accepted%2) ? this->eva_output_.fail() :
+        this->eva_output_.record_tail(accepted/2);
+      this->eva_apply_locked_(action,nullptr,0);
+    }
+    portEXIT_CRITICAL(&this->ring_mux_);
+  }
+  if (finish) this->speaker_->finish();
+  if (diagnostic)
+    ESP_LOGD("va_pipecat", "native output finish: request=%u state=%u written=%u played=%u prime=%u ring=%u",
+      static_cast<unsigned>(finish), static_cast<unsigned>(state), static_cast<unsigned>(written),
+      static_cast<unsigned>(played), static_cast<unsigned>(prime), static_cast<unsigned>(ring_bytes));
 }
 
 void VaPipecat::eva_output_frames_(uint32_t frames, int64_t timestamp) {

@@ -38,7 +38,14 @@ int main() {
     P p; ready(p);
     assert(send(p,P::AUDIO,1,1,960).append_pcm);
     send(p,P::END,1,1);
-    assert(!p.poll(true,true,480,479,0).receipt.size);
+    auto pad=p.poll(true,true,480,479,0,100);
+    assert(pad.tail_frames==8 && !pad.finish && !pad.receipt.size);
+    assert(!p.record_tail(3).failed);
+    assert(p.poll(true,true,480,479,0,100).tail_frames==5);
+    assert(!p.record_tail(5).failed);
+    auto tail=p.poll(true,true,480,479,0,100);
+    assert(tail.finish && tail.finish_diagnostic && !tail.stop && !tail.receipt.size);
+    assert(!p.poll(true,true,480,479,0,101).finish);
     assert(!p.poll(true,true,479,480,0).stop);
     assert(!p.poll(true,false,480,480,0).stop);
     assert(!p.poll(true,true,480,500,40).stop); // priming silence is not answer audio
@@ -46,6 +53,45 @@ int main() {
     assert(!p.poll(false,true,480,520,40).receipt.size);
     auto done=p.poll(true,true,480,520,40).receipt;
     assert(done.bytes[4]==P::FINISHED && P::read32(done.bytes.data()+28)==480);
+  }
+  { // EOF is one-shot, diagnostic-only retries are bounded, and STOP wins.
+    P p; ready(p); send(p,P::AUDIO,1,1,960); send(p,P::END,1,1);
+    assert(!p.poll(false,false,480,479,0,50).finish);
+    assert(!p.poll(false,true,479,479,0,99).finish);
+    assert(p.poll(false,true,480,479,0,100).tail_frames==8);
+    assert(!p.record_tail(8).failed);
+    auto first=p.poll(false,true,480,479,0,100);
+    assert(first.finish && first.finish_diagnostic && !first.receipt.size);
+    assert(!p.poll(true,true,480,479,0,599).finish_diagnostic);
+    for (uint32_t now=600; now<=3600; now+=500) {
+      auto waiting=p.poll(true,true,480,479,0,now);
+      assert(!waiting.finish && waiting.finish_diagnostic && !waiting.receipt.size);
+      assert(p.state()==P::State::DRAINING); // even stopped cannot substitute for played
+    }
+    auto bounded=p.poll(true,true,480,479,0,4100);
+    assert(!bounded.finish && !bounded.finish_diagnostic && !bounded.receipt.size);
+    assert(send(p,P::STOP,1).stop);
+    auto stopped=p.poll(true,true,480,479,0,4600);
+    assert(!stopped.finish && !stopped.finish_diagnostic);
+    assert(stopped.receipt.bytes[4]==P::STOPPED);
+    assert(P::read32(stopped.receipt.bytes.data()+28)==479);
+    assert(send(p,P::BEGIN,2).reset_frames);
+    send(p,P::AUDIO,2,1,960); send(p,P::END,2,1);
+    assert(p.poll(false,true,480,0,0,4601).tail_frames==8);
+    assert(!p.record_tail(8).failed);
+    auto next=p.poll(false,true,480,0,0,4601);
+    assert(next.finish && next.finish_diagnostic && !next.receipt.size);
+  }
+  { // A malformed tail result fails; a cancelled tail cannot advance a new reply.
+    P p; ready(p); send(p,P::AUDIO,1,1,960); send(p,P::END,1,1);
+    assert(p.record_tail(9).failed);
+    P q; ready(q); send(q,P::AUDIO,1,1,960); send(q,P::END,1,1);
+    assert(!q.record_tail(3).failed); assert(send(q,P::STOP,1).stop);
+    auto stopped=q.poll(true,true,480,470,0);
+    assert(stopped.receipt.bytes[4]==P::STOPPED);
+    assert(send(q,P::BEGIN,2).reset_frames);
+    send(q,P::AUDIO,2,1,960); send(q,P::END,2,1);
+    assert(q.poll(false,true,480,0,0).tail_frames==8);
   }
   { // A backpressured batch cannot block STOP or survive its tombstone.
     P p; ready(p);

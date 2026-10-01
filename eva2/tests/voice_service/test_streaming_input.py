@@ -6,6 +6,7 @@ from livekit import rtc
 from livekit.agents import stt, utils, vad
 
 from eva.voice_service.media import HomeAssistantSTT
+from eva.adapters.connectors.home_assistant_voice import NoSpeechRecognized
 
 
 class Detector:
@@ -229,3 +230,69 @@ def test_provider_failure_during_speech_does_not_wait_for_silence():
         assert not any(e.type == stt.SpeechEventType.FINAL_TRANSCRIPT for e in events)
         await stream.aclose()
     asyncio.run(run())
+
+
+@pytest.mark.parametrize("streaming", [True, False])
+def test_empty_recognition_keeps_same_stream_for_next_utterance(streaming):
+    async def run():
+        detector = Detector()
+        captured = []
+        empty_finished = asyncio.Event()
+
+        async def transcribe(chunks):
+            captured.append(b"".join([chunk async for chunk in chunks]))
+            if len(captured) == 1:
+                empty_finished.set()
+                raise NoSpeechRecognized("no recognized words")
+            return "Hallo Eva"
+
+        adapter = HomeAssistantSTT(SimpleNamespace(transcribe=transcribe), vad=detector if streaming else None)
+        if not streaming:
+            adapter = stt.StreamAdapter(stt=adapter, vad=detector)
+        stream = adapter.stream()
+        events = []
+        consumer = asyncio.create_task(collect(stream, events))
+        detector.emit(vad.VADEventType.START_OF_SPEECH, [frame(1)])
+        detector.emit(vad.VADEventType.END_OF_SPEECH, [frame(1)])
+        await asyncio.wait_for(empty_finished.wait(), 1)
+        detector.emit(vad.VADEventType.START_OF_SPEECH, [frame(2)])
+        detector.emit(vad.VADEventType.END_OF_SPEECH, [frame(2)])
+        stream.end_input()
+        await asyncio.wait_for(consumer, 1)
+        assert len(captured) == 2 and all(captured)
+        if streaming:
+            assert captured == [bytes(frame(1).data), bytes(frame(2).data)]
+        assert [e.alternatives[0].text for e in events
+                if e.type == stt.SpeechEventType.FINAL_TRANSCRIPT] == ["Hallo Eva"]
+        await stream.aclose()
+    asyncio.run(run())
+
+
+def test_empty_recognition_cannot_bypass_complete_input_or_current_authority():
+    async def run(early):
+        detector = Detector()
+        active = True
+
+        async def transcribe(chunks):
+            nonlocal active
+            if not early:
+                async for _ in chunks:
+                    pass
+                active = False
+            raise NoSpeechRecognized("no recognized words")
+
+        def check():
+            if not active:
+                raise RuntimeError("authority revoked")
+
+        stream = HomeAssistantSTT(SimpleNamespace(transcribe=transcribe), check, vad=detector).stream()
+        events = []
+        consumer = asyncio.create_task(collect(stream, events))
+        detector.emit(vad.VADEventType.START_OF_SPEECH, [frame(1)])
+        detector.emit(vad.VADEventType.END_OF_SPEECH)
+        with pytest.raises(RuntimeError, match="before consuming" if early else "authority revoked"):
+            await asyncio.wait_for(consumer, 1)
+        assert not any(e.type == stt.SpeechEventType.FINAL_TRANSCRIPT for e in events)
+        await stream.aclose()
+    asyncio.run(run(True))
+    asyncio.run(run(False))

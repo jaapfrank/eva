@@ -1,5 +1,37 @@
 # EVA2 werkbord
 
+## Nu: C3.1 audiocorrectie geïnstalleerd; fysieke conversatie open
+
+De bestaande gedeelde luisterroute blijft open bij lege HA-spraakherkenning.
+De native audioaanvoer van 3 s is verbeterd van minimaal 8,66 s naar 2,39 s;
+werkelijk afspelen en volledige bevestiging duren 3,43 s. Bestaande HA-spraak
+(4,536s audio) speelt volledig af. Expliciet stoppen op het apparaat duurt 203 ms;
+het volgende antwoord heeft opnieuw exacte afspeelbevestiging.
+
+De oorzaak van de ontbrekende eindbevestiging was een niet-geflushte FIR-staart.
+Acht echte stiltesamples, afgeleid van de gepinde 16-tapsresampler, lossen dat op;
+antwoordtellingen en fysieke stopbarrière blijven intact. Gedeelde media en
+native Python-output zijn geïnstalleerd; Woonkamer heeft de gerichte firmware.
+/root/open_questions_triage reviewde media/transport en leverde firmware;
+root reviewde die onafhankelijk en controleerde de echte geïnstalleerde route.
+
+**Jij kunt nu:** op Woonkamer een onderzoeksopdracht stellen, tijdens denken
+zonder wakeword Hoe gaat het met jou? zeggen, en tijdens spraak direct spreken.
+Meld verstaanbaarheid en of zij de tussenvraag hoort. Geen technische herstelactie.
+Dit is fysieke beoordeling; de outputmeting bewijst geen microfoonbarge-in.
+
+**Andere eigenaaracties:** P1.1 wanneer aanwezig voor OpenClaw/Hermes-aanmelding;
+C4.3 telefoon via http://10.0.20.74:8123/eva-owner-voice, Begin gesprek en tijdens
+haar antwoord spreken; M3.3 concrete statische antwoorden terugmelden. Browserovername,
+initiatief en gezinsweek volgen pas als de betreffende route gereed is. O2.3 klaar.
+
+**Stand blijft 16/44 kleine taken, 2/9 grote onderdelen.** C3.1 blijft open voor
+het volledige gewone gesprek; C3.2 tweede speaker volgt. M1/C3.3-acceptaties behouden.
+Broncheckpoint wordt afgerond; alleen root voert dat uit. Geen overige verborgen bouwtaken.
+[Bewijs](evidence/product/c3-audio-stutter-fix-20261001.json) ·
+[Review](reviews/c3-audio-stutter-fix-20261001.md).
+Eva-modelcalls: 0; werkelijk 3 STT- en 2 TTS-aanvragen voor controle. Credits onbekend.
+
 ## Laatst opgeleverd: O2.3 — herstelroute opgelost en geïnstalleerd
 
 **O2.3 technisch afgerond; O2 is klaar.** De bestaande wizard heeft de bewaarde
@@ -265,7 +297,7 @@ C4.3 en het stemonderdeel blijven op hun oorspronkelijke eindvoorwaarde open. Pr
 
 Dezelfde bestaande wakeword-onderbrekingsoverlay op beide gewone HA-routes hergebruikt. Bronreview behouden en tweede-profielbeoordeling gebundeld; eenmaal per apparaat via OTA geïnstalleerd. Beide apparaten verbinden met de nieuwe evententity; Eva2, Hey Eva en mute-on bleven behouden. Geen nieuwe engine, afgewezen continue firmware, model-/audio-/huisaanvraag, dependencyherinstallatie of automatische rollback. [Bewijs](evidence/product/c4-device-boundary-20261001.json) · [Review](reviews/c4-wakeword-relisten-20261001.md).
 
-Nog nodig: tijdens Eva's antwoord één wakeword en daarna een nieuwe vraag op elk apparaat. Daarom C4.1/C4.2 en groot stemonderdeel niet afgevinkt. Originele overkappingsbronfirmware ook bewaard; niet uit apparaatflash gehaald of fysiek opnieuw geflasht. C4.3 telefoonroute is hierboven aangesloten; fysieke proef blijft open. Hermes blijft op eigen aanmelding wachten; geen authproces actief. Ontwikkelcredits onbekend; Eva-runtime-modelcalls0. Geen uitvoerder/modelproef actief voor de wachtende speakerwaarnemingen.
+Nog nodig: tijdens Eva's antwoord één wakeword en daarna een nieuwe vraag op elk apparaat. Daarom C4.1/C4.2 en groot stemonderdeel niet afgevinkt. Originele overkappingsbronfirmware ook bewaard; niet uit apparaatflash gehaald of fysiek opnieuw geflasht. C4.3 telefoonroute is hierboven aangesloten; fysieke proef blijft open. Hermes blijft op eigen aanmelding wachten; geen authproces actief. Ontwikkelcredits onbekend; Eva-runtime-modelcalls: 0. Geen uitvoerder/modelproef actief voor de wachtende speakerwaarnemingen.
 
 ## Eerder: P1.1 — Hermes-start klaar; eigen login ontbreekt
 

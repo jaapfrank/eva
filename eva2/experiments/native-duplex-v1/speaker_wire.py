@@ -14,6 +14,7 @@ from enum import IntEnum
 import secrets
 import math
 import struct
+from time import monotonic
 from typing import Protocol
 
 from eva.application.audio_playback import AudioPlaybackResult
@@ -43,6 +44,8 @@ class Kind(IntEnum):
 
 HEADER = struct.Struct("!4sB3x8sIII")
 MAX_PCM_BYTES = 960  # 20 ms PCM16 mono at 24 kHz
+PCM_WINDOW_BATCHES = 4  # Below the device's eight-receipt queue capacity.
+PCM_PREFETCH_SECONDS = 2  # Match the existing LiveKit output queue's PCM budget.
 MAX_REPLY_FRAMES = 24_000 * 180
 
 
@@ -52,6 +55,29 @@ class WireError(RuntimeError):
 
 class PlaybackInterrupted(WireError):
     pass
+
+
+class _PCMPrefetch:
+    """Limit ready PCM ahead of real time without claiming hardware playback.
+
+    Idle time cannot accumulate credit. FINISHED/STOPPED remain the only
+    playback evidence; a stalled device still fails the existing barriers.
+    """
+
+    def __init__(self):
+        self._ahead = 0.0
+        self._updated = monotonic()
+
+    async def wait(self, frames: int):
+        duration = frames / 24_000
+        now = monotonic()
+        ahead = max(0.0, self._ahead - (now - self._updated))
+        delay = ahead + duration - PCM_PREFETCH_SECONDS
+        if delay > 0:
+            await asyncio.sleep(delay)
+            now = monotonic()
+        self._ahead = max(0.0, self._ahead - (now - self._updated)) + duration
+        self._updated = now
 
 
 @dataclass(frozen=True)
@@ -108,7 +134,8 @@ class Socket(Protocol):
 class FramedSpeakerOutput:
     """MediaOutput: synthesize through the supplied existing HA PCM adapter.
 
-    One PCM batch is outstanding at a time. Acceptance is flow control only;
+    A bounded window keeps PCM flowing despite per-packet network latency.
+    Acceptance is flow control only;
     speak returns only on FINISHED with the exact supplied PCM frame count.
     The receiver must issue that receipt from actual downstream playback and
     must reject every late batch of a stopped generation indefinitely.
@@ -336,6 +363,15 @@ class FramedSpeakerOutput:
     async def _render(self, generation: int, pcm_source: AsyncIterator[bytes]) -> None:
         # A previous incomplete physical stop must never be bypassed.
         source = None
+        pending = deque()
+        prefetch = _PCMPrefetch()
+
+        async def accepted():
+            task, expected_frames = pending.popleft()
+            reply = await task
+            if struct.unpack("!I", reply.payload)[0] != expected_frames:
+                raise WireError("speaker accepted frame count differs")
+
         try:
             await asyncio.gather(*(asyncio.shield(t) for t in self._stops.values()))
             await self._exchange(Packet(Kind.BEGIN, self.session, generation), Kind.BEGUN)
@@ -347,9 +383,13 @@ class FramedSpeakerOutput:
                     raise WireError("reply audio exceeds its duration bound")
                 sequence += 1
                 self._sent_frames[generation] = frames
-                reply = await self._exchange(Packet(Kind.AUDIO, self.session, generation, sequence, chunk), Kind.ACCEPTED)
-                if struct.unpack("!I", reply.payload)[0] != frames:
-                    raise WireError("speaker accepted frame count differs")
+                await prefetch.wait(len(chunk) // 2)
+                pending.append((asyncio.create_task(self._exchange(
+                    Packet(Kind.AUDIO, self.session, generation, sequence, chunk), Kind.ACCEPTED)), frames))
+                if len(pending) >= PCM_WINDOW_BATCHES:
+                    await accepted()
+            while pending:
+                await accepted()
             if not frames:
                 raise WireError("reply audio is empty")
             # Queue acceptance may run ahead of the DAC. Allow the known audio
@@ -361,6 +401,12 @@ class FramedSpeakerOutput:
             if self.playback_result(generation).status != "completed":
                 raise PlaybackInterrupted("answer completion arrived after interruption")
         finally:
+            # STOP/cancellation cannot leave queued sends or receipt futures
+            # alive beyond this generation. The writer also checks retirement.
+            for task, _ in pending:
+                if not task.done():
+                    task.cancel()
+            await asyncio.gather(*(task for task, _ in pending), return_exceptions=True)
             if source is not None and hasattr(source, "aclose"):
                 await source.aclose()
 

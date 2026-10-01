@@ -62,6 +62,88 @@ void driver_boundaries() {
     d.eva_output_frames_(24,d.eva_epoch_us_);
     assert(d.eva_played_frames_==24);
   }
+  { // Graceful EOF precedes the final callback; stopping alone proves no playback.
+    VaPipecat d; ready(d); send(d,EvaOutputProtocol::AUDIO,1,1,960);
+    d.eva_ack_count_=0;
+    d.eva_reprime_=false; d.last_fed_ms_=host_ms; d.sp.stopped=false;
+    d.drain_audio_();
+    assert(d.eva_written_frames_==480 && !d.audio_fill_ && d.sp.queued.size()==960);
+    send(d,EvaOutputProtocol::END,1,1); tick(d); tick(d);
+    assert(d.sp.queued.size()==976 && d.eva_written_frames_==480 && !d.eva_prime_frames_);
+    assert(d.sp.finish_requests==1 && d.sp.finish_pending && !d.eva_ack_count_);
+    tick(d); assert(d.sp.finish_requests==1 && !d.eva_ack_count_);
+    d.sp.queued.clear(); // A stopped source without a callback cannot yield FINISHED.
+    tick(d); assert(d.sp.stopped && !d.eva_ack_count_);
+    assert(d.eva_output_.state()==EvaOutputProtocol::State::DRAINING);
+    d.eva_output_frames_(480,d.eva_epoch_us_);
+    for (int i=0;i<4;++i) tick(d);
+    assert(d.sp.finish_requests==1 && d.eva_ack_count_==1);
+    const auto receipt=d.eva_ack_queue_[d.eva_ack_head_];
+    assert(receipt.bytes[4]==EvaOutputProtocol::FINISHED);
+    assert(EvaOutputProtocol::read32(receipt.bytes.data()+28)==480);
+  }
+  { // STOP cancels a pending graceful EOF, without finishing the old generation.
+    VaPipecat d; ready(d); send(d,EvaOutputProtocol::AUDIO,1,1,960);
+    d.eva_ack_count_=0;
+    d.eva_reprime_=false; d.last_fed_ms_=host_ms; d.sp.stopped=false;
+    d.drain_audio_(); send(d,EvaOutputProtocol::END,1,1); tick(d); tick(d);
+    assert(d.sp.finish_requests==1 && d.sp.finish_pending);
+    d.eva_output_frames_(120,d.eva_epoch_us_);
+    send(d,EvaOutputProtocol::STOP,1);
+    for (int i=0;i<4;++i) tick(d);
+    assert(d.eva_ack_count_==1 && !d.sp.finish_pending && d.sp.queued.empty());
+    const auto stopped=d.eva_ack_queue_[d.eva_ack_head_];
+    assert(stopped.bytes[4]==EvaOutputProtocol::STOPPED);
+    assert(EvaOutputProtocol::read32(stopped.bytes.data()+28)==120);
+    d.eva_ack_count_=0; send(d,EvaOutputProtocol::BEGIN,2); d.eva_ack_count_=0;
+    send(d,EvaOutputProtocol::AUDIO,2,1,960); d.eva_ack_count_=0;
+    d.eva_reprime_=false; d.last_fed_ms_=host_ms; d.sp.stopped=false;
+    d.drain_audio_(); send(d,EvaOutputProtocol::END,2,1); tick(d); tick(d);
+    assert(d.sp.finish_requests==2 && !d.eva_ack_count_);
+  }
+  { // Downstream backpressure retries only the remaining finite silent tail.
+    VaPipecat d; ready(d); send(d,EvaOutputProtocol::AUDIO,1,1,960);
+    d.eva_ack_count_=0;
+    d.eva_reprime_=false; d.last_fed_ms_=host_ms; d.sp.stopped=false;
+    d.drain_audio_(); send(d,EvaOutputProtocol::END,1,1);
+    d.sp.play_limit=0; tick(d);
+    assert(d.sp.queued.size()==960 && !d.sp.finish_requests && !d.eva_ack_count_);
+    d.sp.play_limit=6;
+    tick(d); assert(d.sp.queued.size()==966 && !d.sp.finish_requests);
+    tick(d); assert(d.sp.queued.size()==972 && !d.sp.finish_requests);
+    tick(d); assert(d.sp.queued.size()==976 && !d.sp.finish_requests);
+    tick(d); assert(d.sp.queued.size()==976 && d.sp.finish_requests==1);
+    assert(d.eva_written_frames_==480 && !d.eva_prime_frames_ && !d.eva_ack_count_);
+    d.eva_output_frames_(479,d.eva_epoch_us_);
+    d.sp.queued.clear(); tick(d);
+    assert(!d.eva_ack_count_ && d.eva_output_.state()==EvaOutputProtocol::State::DRAINING);
+    d.eva_output_frames_(1,d.eva_epoch_us_);
+    for (int i=0;i<4;++i) tick(d);
+    assert(d.eva_ack_count_==1);
+    const auto done=d.eva_ack_queue_[d.eva_ack_head_];
+    assert(done.bytes[4]==EvaOutputProtocol::FINISHED && EvaOutputProtocol::read32(done.bytes.data()+28)==480);
+  }
+  { // A STOP racing the actual EOF play invalidates it before any finish call.
+    VaPipecat d; ready(d); send(d,EvaOutputProtocol::AUDIO,1,1,960);
+    d.eva_ack_count_=0;
+    d.eva_reprime_=false; d.last_fed_ms_=host_ms; d.sp.stopped=false;
+    d.drain_audio_(); send(d,EvaOutputProtocol::END,1,1);
+    bool raced=false;
+    d.sp.during_play=[&]() {
+      raced=true; send(d,EvaOutputProtocol::STOP,1); d.eva_service_output_();
+      assert(!d.eva_ack_count_ && !d.sp.finish_requests);
+    };
+    tick(d); d.sp.during_play={};
+    assert(raced && !d.sp.finish_requests);
+    for (int i=0;i<4;++i) tick(d);
+    assert(d.sp.queued.empty() && d.eva_ack_count_==1);
+    assert(d.eva_ack_queue_[d.eva_ack_head_].bytes[4]==EvaOutputProtocol::STOPPED);
+    d.eva_ack_count_=0; send(d,EvaOutputProtocol::BEGIN,2); d.eva_ack_count_=0;
+    send(d,EvaOutputProtocol::AUDIO,2,1,960); d.eva_ack_count_=0;
+    d.eva_reprime_=false; d.last_fed_ms_=host_ms; d.sp.stopped=false;
+    d.drain_audio_(); send(d,EvaOutputProtocol::END,2,1); tick(d); tick(d);
+    assert(d.sp.queued.size()==976 && d.sp.finish_requests==1 && !d.eva_ack_count_);
+  }
 }
 
 int main(int argc, char **) {

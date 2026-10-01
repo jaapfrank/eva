@@ -115,6 +115,143 @@ async def test_acceptance_does_not_finish_playback():
         assert output.playback_result(1) == result
 
 
+@pytest.mark.parametrize("ending", ["finished", "interrupted", "wrong_count"])
+@run_async
+async def test_pcm_window_crosses_delayed_receipts_without_bypassing_stop(ending):
+    class DelayedPeer(SpeakerPeer):
+        def __init__(self):
+            super().__init__()
+            self.window_received = asyncio.Event()
+            self.release = asyncio.Event()
+
+        async def handle(self, socket):
+            self.connection = socket
+            async def accepted(packet, frames):
+                await self.release.wait()
+                if ending == "wrong_count" and packet.sequence == 2:
+                    frames += 1
+                await socket.send(Packet(Kind.ACCEPTED, packet.session, packet.generation,
+                    packet.sequence, struct.pack("!I", frames)).encode())
+            try:
+                async for raw in socket:
+                    p = Packet.decode(raw)
+                    self.packets.append(p)
+                    if p.kind == Kind.AUDIO:
+                        self.frames[p.generation] = self.frames.get(p.generation, 0) + len(p.payload)//2
+                        self.tasks.add(asyncio.create_task(accepted(p, self.frames[p.generation])))
+                        if sum(x.kind == Kind.AUDIO for x in self.packets) == wire.PCM_WINDOW_BATCHES:
+                            self.window_received.set()
+                        continue
+                    if p.kind == Kind.OPEN:
+                        kind, payload = Kind.OPENED, b""
+                    elif p.kind == Kind.BEGIN:
+                        kind, payload = Kind.BEGUN, b""
+                    elif p.kind == Kind.END:
+                        self.end_received.set()
+                        kind, payload = Kind.FINISHED, struct.pack("!I", self.frames[p.generation])
+                    elif p.kind == Kind.STOP:
+                        self.stop_received.set()
+                        kind, payload = Kind.STOPPED, struct.pack("!I", self.frames.get(p.generation, 0))
+                    else:
+                        raise AssertionError("Unexpected output packet")
+                    await socket.send(Packet(kind, p.session, p.generation, p.sequence, payload).encode())
+            finally:
+                for task in self.tasks:
+                    task.cancel()
+                await asyncio.gather(*self.tasks, return_exceptions=True)
+
+    async def source(text):
+        for _ in range(wire.PCM_WINDOW_BATCHES + 2):
+            yield bytes(960)
+
+    peer = DelayedPeer()
+    async with opened(peer, source=source, timeout=1) as output:
+        reply = asyncio.create_task(output.speak(generation=1, text="Transport test"))
+        await asyncio.wait_for(peer.window_received.wait(), 1)
+        await asyncio.sleep(.02)
+        assert sum(p.kind == Kind.AUDIO for p in peer.packets) == wire.PCM_WINDOW_BATCHES
+        assert not peer.end_received.is_set() and not reply.done()
+        if ending == "interrupted":
+            await output.interrupt(generation=1)
+            with pytest.raises(wire.PlaybackInterrupted):
+                await reply
+            assert not peer.end_received.is_set()
+            assert sum(p.kind == Kind.AUDIO for p in peer.packets) == wire.PCM_WINDOW_BATCHES
+            assert output.playback_result(1).status == "interrupted"
+        elif ending == "wrong_count":
+            peer.release.set()
+            with pytest.raises(wire.WireError, match="accepted frame count differs"):
+                await asyncio.wait_for(reply, 1)
+            assert not peer.end_received.is_set()
+            assert output.playback_result(1).status == "interrupted"
+        else:
+            peer.release.set()
+            await asyncio.wait_for(reply, 1)
+            assert output.playback_result(1).confirmed_frames == (wire.PCM_WINDOW_BATCHES + 2) * 480
+        assert not output._pending
+
+
+@pytest.mark.parametrize("interrupt", [False, True])
+@run_async
+async def test_ready_long_pcm_does_not_fill_realtime_receiver_buffer(interrupt):
+    """A smaller simulated receiver exercises pacing, not physical playback."""
+    class LimitedPeer(SpeakerPeer):
+        def __init__(self):
+            super().__init__()
+            self.prefetched = asyncio.Event()
+
+        async def handle(self, socket):
+            self.connection = socket
+            queued = 0.0
+            updated = wire.monotonic()
+            try:
+                async for raw in socket:
+                    p = Packet.decode(raw)
+                    self.packets.append(p)
+                    if p.kind == Kind.AUDIO:
+                        now = wire.monotonic()
+                        queued = max(0.0, queued - (now - updated) * 24_000) + len(p.payload)//2
+                        updated = now
+                        # One packet of margin for network arrival jitter; the
+                        # physical receiver has over40s more capacity.
+                        assert queued <= wire.PCM_PREFETCH_SECONDS * 24_000 + 480
+                        self.frames[p.generation] = self.frames.get(p.generation, 0) + len(p.payload)//2
+                        if p.sequence >= 100:
+                            self.prefetched.set()
+                        kind, payload = Kind.ACCEPTED, struct.pack("!I", self.frames[p.generation])
+                    elif p.kind == Kind.OPEN:
+                        kind, payload = Kind.OPENED, b""
+                    elif p.kind == Kind.BEGIN:
+                        kind, payload = Kind.BEGUN, b""
+                    elif p.kind == Kind.END:
+                        kind, payload = Kind.FINISHED, struct.pack("!I", self.frames[p.generation])
+                    elif p.kind == Kind.STOP:
+                        kind, payload = Kind.STOPPED, struct.pack("!I", self.frames.get(p.generation, 0))
+                    else:
+                        raise AssertionError("Unexpected output packet")
+                    await socket.send(Packet(kind, p.session, p.generation, p.sequence, payload).encode())
+            finally:
+                self.finished.set()
+
+    async def ready(text):
+        for _ in range(150):
+            yield bytes(960)
+
+    peer = LimitedPeer()
+    async with opened(peer, source=ready, timeout=1) as output:
+        reply = asyncio.create_task(output.speak(generation=1, text="Long ready PCM"))
+        await asyncio.wait_for(peer.prefetched.wait(), 1)
+        if interrupt:
+            await output.interrupt(generation=1)
+            with pytest.raises(wire.PlaybackInterrupted):
+                await reply
+            assert not any(p.kind == Kind.END for p in peer.packets)
+            assert output.playback_result(1).status == "interrupted"
+        else:
+            await asyncio.wait_for(reply, 3)
+            assert output.playback_result(1).confirmed_frames == 72_000
+
+
 @run_async
 async def test_playback_duration_extends_finish_deadline_but_not_stop():
     peer = SpeakerPeer()
