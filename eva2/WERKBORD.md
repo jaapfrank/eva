@@ -1,5 +1,11 @@
 # EVA2 werkbord
 
+## Actueel: P1.1 — OpenClaw-aanvraagmapping beoordeeld; toegang open
+
+Basis `b703c8f4`; bestaande gepinde installatie en registratie behouden. Echte native aanvraagbouwer éénmaal offline met twee gedeclareerde fixtures uitgevoerd: Astra/medium expliciet, Sol/off geeft null zonder echte catalogus. De bestaande resolver kan none gebruiken wanneer waargenomen modelmetadata dat aanbiedt; geen native patch of verzonnen metadata. Onafhankelijke review GO voor deze beperkte uitkomst. [Bewijs](evidence/product/p1-openclaw-config-20261001.json) · [Review](reviews/p1-openclaw-config-20261001.md).
+
+Geen persistente hostconfiguratie of provideracceptatie bewezen; fixtureprefix niet als geldige startupconfiguratie aangemerkt. Nul app-servers/modelcalls/Eva-installatiewijzigingen; ontwikkelcredits onbekend. P1.1, eindvergelijking en producttellers blijven open. Eigen OpenClaw-aanmelding/catalogus en Hermes-login ontbreken. Geen uitvoerder of loginproces actief. Volgende concrete stap: bestaande beheerde Codex0.155.1 en native agentopslag voor OpenClaw aansluiten; nog niet gestart. Telefoon- en speakerproeven blijven afzonderlijk open.
+
 ## Actueel: C4.3 — telefoonresultaten aangesloten; fysieke proef open
 
 Een uitvoerder, basis `78348a1e`. De bestaande ontvanger voor opgeslagen werkresultaten is nu in het HA-telefoonpaneel geïnstalleerd. Alleen `panel.js` en zijn samengestelde hashmanifest vervangen; gepinde SDK, HA Python, spraakdiensten en kern behouden. Review vond lokale deeltoestand die een volgend gesprek kon beïnvloeden; alleen die toestand bij de bestaande stopgrens gewist. Echte geïnstalleerde producent en volledige gegenereerde UI gericht gecontroleerd, inclusief nieuw bezoek; in-memory DOM/SDK/auth is geen fysieke telefoonproef. Alle10 geïnstalleerde hashes, exacte backups, aangeboden asset en readiness200 bevestigd.0 herstarts/rollbacks. Twee oude manifestregistraties gecorrigeerd naar reeds actuele HA-bestanden; geen herinstallatie. [Bewijs](evidence/product/c4-phone-route-20261001.json) · [Review](reviews/c4-phone-saved-result-20261001.md) · [Telefoon proberen](deploy/home-assistant/owner-phone.md).

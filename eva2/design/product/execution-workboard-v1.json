@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T02:18:30.483950+00:00",
+        "checkedAt": "2026-10-01T03:18:19.344095+00:00",
         "deliveries": [
+          {
+            "title": "Vergelijking: OpenClaw-modelmapping vastgelegd",
+            "date": "1 oktober",
+            "state": "tested",
+            "result": "Echte gepinde native aanvraagbouwer: Astra/medium expliciet; Sol/off geeft null zonder catalogus. Onafhankelijke review GO voor deze beperkte uitkomst. Geen native codepatch, app-server of modelcall.",
+            "remaining": "Eigen OpenClaw-auth/catalogus, persistente selectie en volledige toelating nog open. Geen nieuwe Eva-functie of P1.1-afronding.",
+            "source": "eva2/evidence/product/p1-openclaw-config-20261001.json"
+          },
           {
             "title": "Telefoon: opgeslagen taakresultaten zichtbaar",
             "date": "1 oktober",
@@ -3163,14 +3171,14 @@
           }
         ],
         "now": {
-          "title": "C4.3: telefoonresultaten aangesloten",
-          "state": "Geïnstalleerd · telefoonproef open",
+          "title": "P1.1: aanvraagmapping afgerond; native toegang open",
+          "state": "Voorbereiding beoordeeld · vervolg nog niet gestart",
           "owner": "Codex /root",
-          "detail": "Bestaande ontvanger toont opgeslagen werkresultaten; oude deeltoestand verdwijnt bij afsluiten. Alleen2 bestanden geleverd, exacte versie/gereedheid gecontroleerd,0 herstarts. Echt stoppen/doorpraten op telefoon nog niet waargenomen; geen C4-afronding."
+          "detail": "Review GO voor de twee directe OpenClaw-aanvragen. Geen uitvoerder of aanmeldproces actief. Eigen OpenClaw-auth/catalogus en Hermes-login ontbreken; volledige vergelijking en producttellers blijven open."
         },
         "next": {
-          "title": "Volgende bestaande gebruikersopdracht kiezen",
-          "detail": "De fysieke telefoon- en speakerproeven blijven apart open. Geen herhaling van dezelfde bron-/installatiecontrole; hervat alleen een werkelijk resterende taak en registreer haar vóór starten."
+          "title": "OpenClaws eigen native aanmelding en catalogus",
+          "detail": "Bestaand beheerd Codex-pakket0.155.1 gebruiken in aparte agentopslag. Geen credentials kopiëren, nieuwe betaalde route, modelwissel of ongewijzigde proefherhaling. Eerst de werkelijke native opstartinstellingen verbinden."
         },
         "ownerAction": {
           "title": "Probeer onderbreken op je telefoon",
@@ -3184,7 +3192,7 @@
           "linkLabel": "Open HA-telefoonpaneel"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T02:18:30.483950+00:00",
+        "reviewedAt": "2026-10-01T03:18:19.344095+00:00",
         "previousOwnerAction": {
           "title": "Meld Hermes aan voor de vergelijking",
           "steps": [
@@ -14830,27 +14838,31 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Hermes start én native aanvraagopbouw onafhankelijk GO; eigen login ontbreekt. Aanmeldproces beëindigd met device_code_timeout; geen actieve proef of aanmelding. Agent Zero-bewijs behouden. Volledige vergelijkingsroute/P1.1 en extra Eva-functie niet afgerond.",
-              "latestEvidence": "eva2/evidence/product/p1-hermes-native-request-20261001.json",
+              "remaining": "OpenClaw-aanvraagmapping onafhankelijk GO: Astra/medium expliciet, Sol/off geeft null zonder echte catalogus. Native bron behouden. OpenClaw-auth/catalogus en persistente hostselectie ontbreken. Hermes-auth ontbreekt; eerdere sessie beëindigd. Agent Zero-bewijs en vaste helpergrenzen behouden. Volledige P1.1 en vergelijking blijven open.",
+              "latestEvidence": "eva2/evidence/product/p1-openclaw-config-20261001.json",
               "assignment": {
-                "baseCommit": "1d490929",
+                "baseCommit": "b703c8f4",
                 "owner": "/root",
                 "files": [
+                  "eva2/benchmark/inspect_ai_v1/p1_openclaw_config_probe.mjs",
                   "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-                  "eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py",
-                  "eva2/benchmark/inspect_ai_v1/p1_hermes_login.py"
+                  "eva2/evidence/product/p1-openclaw-config-20261001.json"
                 ],
-                "existing": "Hermes v2026.9.24 source/pin and Codex Responses adapter are present; no isolated installed runtime or native settings readback. Native OAuth has independent Hermes-owned storage.",
-                "gap": "Native startup/configuration and independent access are not connected to comparison.",
-                "outcome": "Install declared locked native core in isolated artifact environment; read actual native model/effort/route settings without inference or copied credentials. Prepare independent native login only if required.",
-                "finish": "Pinned native constructor/configuration loads for Sol/none and Astra/medium in clean private profile, with SDK/auth state safely described. Missing access remains explicit. No native loop/model calls or new evaluator.",
-                "estimate": "Existing declared dependency lock and one native startup/readback probe; no external inference or Eva installation. Development credits unknown.",
-                "stage": "hermes_native_request_reviewed_login_terminal",
-                "activeWorkers": []
+                "existing": "Pinned OpenClaw source/npm/Node and offline native Codex harness registration already passed; no repeated registration or version upgrade. Agent Zero access retained; Hermes auth remains missing.",
+                "gap": "No readback of native model/reasoning/provider settings at the actual harness request boundary.",
+                "outcome": "Bind native OpenClaw comparison settings to Sol/none and Astra/medium, preserving existing subscription route and displaying unsupported cases. This is comparison preparation, not an Eva product function.",
+                "finish": "Execute existing native configuration/request builder offline in isolated HOME/CODEX_HOME with no credentials/network/model calls; record exact propagation or a concrete unsupported boundary. No evaluator rebuild, helper disabling or quota change.",
+                "estimate": "One existing pinned native runtime and targeted source/request-shaping probe; zero provider calls, no Eva installation; developer credits unknown.",
+                "design": "Inspect actual installed harness/config exports first. Reuse native plugin/request construction, isolated profile and network namespace. Do not copy credentials or run native inference. Bundle focused readback and independent review; preserve native source and all owner trials.",
+                "stage": "request_mapping_reviewed_native_auth_catalog_pending",
+                "activeWorkers": [],
+                "finding": "Astra/medium explicit. Off->null without native catalog; native none branch already exists. No code change justified; own catalog/auth needed. Outer native host selection unproved.",
+                "reviewer": "/root/review_telegram_draft_lane",
+                "reviewResult": "GO for bounded request mapping; no full admission"
               },
-              "blocker": "Eigen Hermes-auth ontbreekt; native aanmeldproces beëindigd met device_code_timeout. Geen actieve aanmeldsessie; nieuwe aanmelding vereist gebruiker. Model-/helper-/tool-/stopdekking en gelijkwaardige overige toegang blijven open.",
+              "blocker": "OpenClaw eigen native aanmelding en catalogus nog niet waargenomen. Hermes-aanmeldsessie beëindigd; geen actieve login. Overige model-/helper-/tool-/stopdekking en gelijkwaardige toegang blijven open.",
               "nextImplementation": "Resolve remaining native participant startup/access using existing pinned sources and adapters. Agent Zero fixed-envelope helper refusal remains unavailable; no automatic native rerun, hidden helper disabling or quota increase. Deployed/native/all-path parity still required before live comparison.",
-              "checkedAt": "2026-10-01T00:01:16.695228+00:00"
+              "checkedAt": "2026-10-01T03:18:19.344095+00:00"
             },
             {
               "id": "P1.2",

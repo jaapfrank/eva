@@ -1,0 +1,237 @@
+{
+  "contract": "EvaNativeComparisonAdmissionEvidence/v1",
+  "checkedAt": "2026-10-01T03:07:46.426487+00:00",
+  "participant": "openclaw",
+  "baseCommit": "b703c8f4",
+  "status": "native_turn_request_mapping_observed_catalog_and_auth_open",
+  "existing": "Previously installed/pinned OpenClaw and native Codex plugin; registration retained without a new registration test.",
+  "nativePackage": {
+    "name": "@openclaw/codex",
+    "version": "2026.9.6",
+    "resolved": "https://registry.npmjs.org/@openclaw/codex/-/codex-2026.9.6.tgz",
+    "integrity": "sha512-PB78Z4YV7+XQxw2Y8ahVB8VQRuIcwYwZVCqd3x1XDs8c8n8noTibzIIhnKhnBVb8XWqvmHAmwjEMQdvNAroqJg==",
+    "packageJsonSha256": "487c9e30a10e22b167be27884eba958e5204296ae799caa16138090e489a5315",
+    "builderSha256": "d278e65190cb7e9a9187962fd413187bdd09e5e431454e9287f29ab15f6d9bce",
+    "root": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex"
+  },
+  "probe": {
+    "script": "eva2/benchmark/inspect_ai_v1/p1_openclaw_config_probe.mjs",
+    "scriptSha256": "7a452aa8924865a07e8877fa8a684cff65d0a77b11c25c727be5596b032e402e",
+    "artifact": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-config-v1",
+    "rawResultSha256": "af412da2463a6bb2ee5fc43fee7758e421c3b611f425fd755ed82e2f715d4967",
+    "nativeBuilder": "buildTurnStartParams in native thread-lifecycle-B3mfz1TG.mjs; called by run-attempt-BHu11r7h.mjs before client.request(turn/start)",
+    "isolation": "unshare user/map-root-user/net; explicit empty HOME/CODEX_HOME/state; clean subprocess environment, no production credentials; network and child-process guards",
+    "attempts": {
+      "network": 0,
+      "childProcess": 0
+    },
+    "cases": [
+      {
+        "selection": {
+          "role": "contact",
+          "model": "gpt-6-sol",
+          "nativeThinkLevel": "off",
+          "requiredEffort": "none"
+        },
+        "config": {
+          "agents": {
+            "defaults": {
+              "model": {
+                "primary": "codex/gpt-6-sol"
+              },
+              "thinkingDefault": "off"
+            }
+          },
+          "plugins": {
+            "allow": [
+              "codex"
+            ],
+            "entries": {
+              "codex": {
+                "enabled": true,
+                "config": {
+                  "sessionCatalog": {
+                    "enabled": false
+                  },
+                  "appServer": {
+                    "homeScope": "agent"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "nativeCapability": {
+          "supported": true,
+          "priority": 100
+        },
+        "request": {
+          "threadId": "fixture",
+          "turnTrigger": "user",
+          "input": [
+            {
+              "type": "text",
+              "text": "Public configuration fixture.",
+              "text_elements": []
+            }
+          ],
+          "additionalContext": {
+            "openclaw_temporal_context": {
+              "kind": "application",
+              "value": "## Temporal Context\nCurrent date: 2026-10-01\nTime zone: Europe/Amsterdam"
+            },
+            "openclaw_active_computer": {
+              "kind": "application",
+              "value": "Current active computer: active_node=unknown (host presence unavailable)"
+            },
+            "openclaw_source_delivery": {
+              "kind": "application",
+              "value": "Current source-delivery policy for this turn (replaces earlier source-delivery guidance):\nFor the current source conversation, reply normally in your final assistant message; OpenClaw will deliver it through the active source conversation."
+            }
+          },
+          "cwd": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-config-v1",
+          "approvalPolicy": "never",
+          "sandboxPolicy": {
+            "type": "readOnly",
+            "networkAccess": false
+          },
+          "model": "gpt-6-sol",
+          "personality": "none",
+          "effort": null,
+          "collaborationMode": {
+            "mode": "default",
+            "settings": {
+              "model": "gpt-6-sol",
+              "reasoning_effort": null,
+              "developer_instructions": null
+            }
+          }
+        },
+        "matches": false,
+        "authAdmission": "not observed",
+        "providerAcceptance": "not observed"
+      },
+      {
+        "selection": {
+          "role": "work",
+          "model": "gpt-6-astra",
+          "nativeThinkLevel": "medium",
+          "requiredEffort": "medium"
+        },
+        "config": {
+          "agents": {
+            "defaults": {
+              "model": {
+                "primary": "codex/gpt-6-astra"
+              },
+              "thinkingDefault": "medium"
+            }
+          },
+          "plugins": {
+            "allow": [
+              "codex"
+            ],
+            "entries": {
+              "codex": {
+                "enabled": true,
+                "config": {
+                  "sessionCatalog": {
+                    "enabled": false
+                  },
+                  "appServer": {
+                    "homeScope": "agent"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "nativeCapability": {
+          "supported": true,
+          "priority": 100
+        },
+        "request": {
+          "threadId": "fixture",
+          "turnTrigger": "user",
+          "input": [
+            {
+              "type": "text",
+              "text": "Public configuration fixture.",
+              "text_elements": []
+            }
+          ],
+          "additionalContext": {
+            "openclaw_temporal_context": {
+              "kind": "application",
+              "value": "## Temporal Context\nCurrent date: 2026-10-01\nTime zone: Europe/Amsterdam"
+            },
+            "openclaw_active_computer": {
+              "kind": "application",
+              "value": "Current active computer: active_node=unknown (host presence unavailable)"
+            },
+            "openclaw_source_delivery": {
+              "kind": "application",
+              "value": "Current source-delivery policy for this turn (replaces earlier source-delivery guidance):\nFor the current source conversation, reply normally in your final assistant message; OpenClaw will deliver it through the active source conversation."
+            }
+          },
+          "cwd": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-config-v1",
+          "approvalPolicy": "never",
+          "sandboxPolicy": {
+            "type": "readOnly",
+            "networkAccess": false
+          },
+          "model": "gpt-6-astra",
+          "personality": "none",
+          "effort": "medium",
+          "collaborationMode": {
+            "mode": "default",
+            "settings": {
+              "model": "gpt-6-astra",
+              "reasoning_effort": "medium",
+              "developer_instructions": null
+            }
+          }
+        },
+        "matches": true,
+        "authAdmission": "not observed",
+        "providerAcceptance": "not observed"
+      }
+    ]
+  },
+  "findings": [
+    "Astra/medium is explicit in model, effort and collaborationMode settings at the real native request-builder boundary.",
+    "Without observed supportedReasoningEfforts metadata, native off maps to null at both effort fields. This does not prove a wrong provider default or slow response.",
+    "Native resolver already returns none for off when supportedReasoningEfforts includes none. That branch was inspected in the pinned source, not exercised with an authenticated catalog."
+  ],
+  "decision": [
+    "Keep native source unchanged. Do not inject invented catalog support, replace requested models, share credentials or run inference to bypass admission.",
+    "Keep the fast preset not admitted until its own native model catalog and auth are observed. Config/default selection through the outer host and whole native loop remain unproved.",
+    "P1.1, final comparison and product categories remain open; this is comparison preparation only."
+  ],
+  "remaining": [
+    "Native OpenClaw-owned auth and actual catalog with supportedReasoningEfforts.",
+    "Same selected model/effort propagation through persisted native startup and complete harness, including helpers.",
+    "Equal tool/data access, cumulative accounting/stopping and provider acceptance."
+  ],
+  "limitations": [
+    "Direct native builder receives declared fixture params; it does not prove the outer host selects them from persistent agent config.",
+    "Harness supports returns capability metadata only; it is not authentication/model admission.",
+    "Npm lock integrity and exact installed-file hashes identify inputs, not independently verified source-to-build provenance.",
+    "No reply/latency/model quality/tool result or competitor win measured.",
+    "The unvalidated fixture config uses a codex/ model prefix; bundled current host documentation requires canonical openai/ refs and an effective runtime policy. No fixture config was persisted or endorsed as startup configuration."
+  ],
+  "consumption": {
+    "providerCalls": 0,
+    "modelResponses": 0,
+    "nativeAppServersStarted": 0,
+    "productionChanged": false,
+    "developmentCredits": "unknown",
+    "executorCount": 1,
+    "reviewerCount": 1
+  },
+  "review": {
+    "file": "eva2/reviews/p1-openclaw-config-20261001.md",
+    "result": "GO for direct request construction only",
+    "sha256": "c679bbf701ccdeed974e6defdf266537414516c9fef98d206ae88a15b91cc1e7"
+  }
+}

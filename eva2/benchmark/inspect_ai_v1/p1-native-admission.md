@@ -242,3 +242,25 @@ The corrected execution closes that admission gap without another evaluator or
 external inference. Five focused HTTPX/callback checks passed. No quality result,
 cloud cancellation or new Eva product function follows. Evidence:
 `../../evidence/product/p1-agentzero-loop-sdk-composition-20261001.json`.
+
+## OpenClaw native request mapping — 1 October 2026
+
+The existing pinned `@openclaw/codex`2026.9.6 installation was reused, without
+repeating registration. Its actual `buildTurnStartParams` receives two declared
+fixture selections in an empty profile and disabled network namespace.
+`gpt-6-astra`/`medium` is explicit in the request and collaboration settings.
+`gpt-6-sol` with native `off` yields `null` in both effort fields when no native
+supported-effort catalog is supplied. This does not establish a wrong provider
+default, latency or quality loss.
+
+The pinned native resolver already selects `none` when its real model metadata
+advertises that effort. That branch was inspected, not established through an
+authenticated catalog; no metadata was invented to make the fixture pass.
+Keep native source unchanged. The two direct-builder fixtures do not establish
+outer-host selection from persistent config, own authentication, provider
+acceptance, full native execution or comparison admission. No app-server,
+external model request or Eva installation change occurred. P1.1 stays open.
+The fixture's `codex/` config prefix was not validated or persisted; bundled
+host documentation requires canonical `openai/` references. Native harness
+params passed directly to the builder do not validate that outer configuration.
+See `../../evidence/product/p1-openclaw-config-20261001.json`.

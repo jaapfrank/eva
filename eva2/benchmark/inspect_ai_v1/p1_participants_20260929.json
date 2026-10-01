@@ -36,6 +36,27 @@
         "runtimeAdmission": "not_admitted",
         "packageVersion": "2026.9.6",
         "nodeVersion": "24.16.0"
+      },
+      "nativeConfiguration": {
+        "checkedAt": "2026-10-01T03:07:46.426487+00:00",
+        "status": "native_request_mapping_observed_missing_auth_catalog",
+        "evidence": "eva2/evidence/product/p1-openclaw-config-20261001.json",
+        "work": {
+          "model": "gpt-6-astra",
+          "thinkLevel": "medium",
+          "nativeEffort": "medium",
+          "boundary": "actual native turn/start builder, no provider acceptance"
+        },
+        "contact": {
+          "model": "gpt-6-sol",
+          "thinkLevel": "off",
+          "nativeEffort": null,
+          "explicitNoneObserved": false,
+          "requires": "own actual native supportedReasoningEfforts catalog"
+        },
+        "runtimeAdmission": "not_admitted",
+        "review": "eva2/reviews/p1-openclaw-config-20261001.md",
+        "reviewResult": "GO for direct request construction; not admitted"
       }
     },
     {
