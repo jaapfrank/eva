@@ -1,3 +1,19 @@
+> Update 1 October 2026 — C4.1: the existing `voice-pe-interruption.yaml`
+> overlay is installed on Woonkamer's ordinary HA firmware. The exact reviewed
+> OTA SHA256 is `81f70fae82f3ce6d631fe651511e85ce856fc8a0f1309d00362717c8140b18aa`.
+> Authenticated device readback confirms the new event entity; Eva2/Hey Eva and
+> mute-on remain selected. The second speaker is unchanged. One physical wakeword
+> during speech followed by a new question still needs observation; this does
+> not establish arbitrary-speech full duplex or complete C4.
+>
+> The template event is optional telemetry for this transport: pinned
+> aioesphomeapi 46.2.0 maps `VoiceAssistantRequest(start=False)` to HA pipeline
+> abort. No accepted background-task stop command is added. The retained ordinary
+> recovery image is available without an automatic rollback instruction. See
+> `../../evidence/product/c4-device-boundary-20261001.json` and
+> `../../reviews/c4-wakeword-relisten-20261001.md` for source, installation and
+> remaining proof. Candidate-only descriptions below are historical.
+
 > Update 25 September 2026: the existing Eva conversation entity now explicitly
 > advertises `supports_streaming` to Home Assistant. HA 2026.9.2 otherwise reports
 > `stream_response: false` to the satellite even while ChatLog deltas arrive.

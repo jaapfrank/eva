@@ -1,5 +1,11 @@
 # EVA2 werkbord
 
+## Actueel: C4.1 — onderbreking geïnstalleerd; fysieke proef open
+
+Bestaande onderbrekingsoverlay op gewone HA-woonkamerroute hergebruikt, onafhankelijk beoordeeld en eenmaal via OTA geïnstalleerd. Apparaat verbindt opnieuw en biedt de nieuwe evententity; Eva2, Hey Eva en mute-on bleven behouden. Geen afgewezen continue firmware herhaald, nieuwe engine of model-/audio-/huisaanvraag. Bouwconflict in oude gegenereerde outputs gericht opgelost met behoud van die outputs; geen dependencyherinstallatie of rollback. [Bewijs](evidence/product/c4-device-boundary-20261001.json) · [Review](reviews/c4-wakeword-relisten-20261001.md).
+
+Nog nodig: hoorbaar één wakeword tijdens Eva's antwoord en daarna een nieuwe vraag op de woonkamerspeaker. Daarom C4.1/groot stemonderdeel niet afgevinkt. Tweede speaker volgt met dezelfde module maar is nog niet gestart. Hermes blijft op eigen aanmelding wachten; geen authproces actief. Ontwikkelcredits onbekend; Eva-runtime-modelcalls0.
+
 ## Actueel: P1.1 — Hermes-start klaar; eigen login ontbreekt
 
 Nu: native aanvraagopbouw leest Sol/none en Astra/medium correct terug, zonder inferentie. De configuratie alleen bewees deze aansluiting nog niet; twee gerichte gevallen toegevoegd en onafhankelijke review GO. De native aanmeldsessie is beëindigd met `device_code_timeout`; geen toegang bevestigd, geen proces meer actief, geen nieuwe aanmelding automatisch gestart. [Aanvraagbewijs](evidence/product/p1-hermes-native-request-20261001.json) · [Review](reviews/p1-hermes-native-request-20261001.md). SDK-/provideracceptatie en volledige P1.1 blijven open; geen nieuwe agentlus, evaluator of extra Eva-functie.

@@ -1,0 +1,289 @@
+{
+  "taskId": "C4.1",
+  "checkedAt": "2026-10-01T00:37:37.628176+00:00",
+  "baseCommit": "c5b9cacd",
+  "status": "current_device_metadata_read_physical_interruption_unproved",
+  "scope": "One current native speaker/device readback; no firmware/audio/model/house actions.",
+  "source": "Installed native speaker template and existing HA token used in memory; no credentials copied or emitted.",
+  "speakerServiceImage": "sha256:cca850f14f3323382c0ef307f75cb5ede21c593a3acf065dd34766e0690c6123",
+  "templateSha256": "4ef0fdad626adcf720d9a285e7db0f5c964061ad67110b0611139895b3d19ea5",
+  "devices": [
+    {
+      "id": "9e877ca00f57b1b75e0c2e3318abc704",
+      "model": "esp32-s3-devkitc-1",
+      "sw_version": "2026.6.2 (2026-09-09 09:46:28 +0200)",
+      "hw_version": null
+    },
+    {
+      "id": "f075b8ba2b711d74fff7d4756c620d64",
+      "model": "esp32-s3-devkitc-1",
+      "sw_version": "2026.6.2 (2026-06-21 21:08:16 +0200)",
+      "hw_version": null
+    }
+  ],
+  "selectedStates": [
+    {
+      "entity": "select.home_assistant_voice_0a5035_assistant",
+      "state": "Eva2"
+    },
+    {
+      "entity": "select.home_assistant_voice_0a5035_assistant_2",
+      "state": "Eva"
+    },
+    {
+      "entity": "select.home_assistant_voice_0a5035_finished_speaking_detection",
+      "state": "default"
+    },
+    {
+      "entity": "select.home_assistant_voice_0a5035_wake_word",
+      "state": "Hey Eva"
+    },
+    {
+      "entity": "select.home_assistant_voice_0a5035_wake_word_2",
+      "state": "Hey Eva"
+    },
+    {
+      "entity": "switch.home_assistant_voice_0a5035_mute",
+      "state": "on"
+    },
+    {
+      "entity": "switch.home_assistant_voice_0a5035_wake_sound",
+      "state": "on"
+    },
+    {
+      "entity": "select.home_assistant_voice_0a5035_wake_word_sensitivity",
+      "state": "Slightly sensitive"
+    },
+    {
+      "entity": "select.home_assistant_voice_0a16e0_assistant",
+      "state": "Eva2"
+    },
+    {
+      "entity": "select.home_assistant_voice_0a16e0_assistant_2",
+      "state": "Eva"
+    },
+    {
+      "entity": "select.home_assistant_voice_0a16e0_finished_speaking_detection",
+      "state": "default"
+    },
+    {
+      "entity": "select.home_assistant_voice_0a16e0_wake_word",
+      "state": "Hey Eva"
+    },
+    {
+      "entity": "select.home_assistant_voice_0a16e0_wake_word_2",
+      "state": "Hey Eva"
+    },
+    {
+      "entity": "switch.home_assistant_voice_0a16e0_mute",
+      "state": "on"
+    },
+    {
+      "entity": "switch.home_assistant_voice_0a16e0_wake_sound",
+      "state": "on"
+    },
+    {
+      "entity": "select.home_assistant_voice_0a16e0_wake_word_sensitivity",
+      "state": "Slightly sensitive"
+    },
+    {
+      "entity": "assist_satellite.home_assistant_voice_0a16e0_assist_satellite",
+      "state": "idle"
+    },
+    {
+      "entity": "assist_satellite.home_assistant_voice_0a5035_assist_satellite",
+      "state": "idle"
+    }
+  ],
+  "usage": {
+    "status": "pending",
+    "steps": [
+      "Haal de woonkamerspeaker van mute en vraag Hey Eva, vertel kort iets over Mars.",
+      "Zeg tijdens het antwoord één keer Hey Eva; stel Hoe gaat het met jou? zodra ze luistert.",
+      "Bevestig of het oude antwoord stopt en Eva op de nieuwe vraag antwoordt."
+    ],
+    "expected": "Eén wakeword onderbreekt spraak en hervat luisteren; gewone spraak, Stop en mute blijven werken.",
+    "blocksIndependentWork": false
+  },
+  "observerPreparationFailures": [
+    {
+      "stage": "assumed filename",
+      "error": "Mounted source is template.json, not config.json; no API calls"
+    },
+    {
+      "stage": "root observer import",
+      "error": "Root interpreter lacks user-installed websockets; no API calls",
+      "correction": "Existing user Python/runtime, narrow root file read retained in memory; no package installed"
+    }
+  ],
+  "limitations": [
+    "Registry firmware metadata and assistant selection do not prove live microphone capture, audible barge-in or continuous conversation.",
+    "Retained server-only native candidate check is not physical device acceptance."
+  ],
+  "ownerAccepted": false,
+  "decision": {
+    "useCase": "C4.1: interrupt Eva while she is speaking and continue with a new question",
+    "retained": "Ordinary HA voice pipeline, current wake model, original device audio and controls, shared Eva core; no native-WebSocket firmware replay",
+    "confirmedGap": "Retained recovery source stops VA or announcement on wakeword and does not restart listening. Authenticated current device readback matches retained recovery build. Source provenance is retained configuration/build record, not device flash extraction.",
+    "smallestSolution": "Reuse the exact existing voice-pe-interruption.yaml overlay on the saved private ordinary device config",
+    "overlaySha256": "be88d9e2e995748de7fcbac9d8a5024e7c8749aae720addc6e018f1e5b7f15b8",
+    "installed": true,
+    "physicalResult": "pending owner observation; metadata proves upload/connection/event availability, not audible stop or successful new question",
+    "notClaimed": [
+      "arbitrary-speech full duplex",
+      "complete C3/C4",
+      "faster model inference",
+      "family acceptance"
+    ]
+  },
+  "resolvedConfiguration": {
+    "esphome": "2026.6.2",
+    "framework": "5.5.4",
+    "externalVoicePeCommit": "7c6eb245b1d5253ee8672fbbdb604767e59a8ee9",
+    "handlerOuterActions": 1,
+    "hasResumeScript": true,
+    "apiCredentialMatchedDevice": true,
+    "deviceBuild": "2026-09-09 09:46:28 +0200",
+    "configurationPreservedExceptExistingOverlay": true,
+    "patchedSourceDifference": "Existing patched source adds only WiFi ssid/password; no new credential change by this work"
+  },
+  "preparationFailures": [
+    {
+      "cause": "Direct ESPHome read_config helper supplied string rather than pathlib.Path to CORE.config_path",
+      "effect": "Read-only helper AttributeError before device call; second diagnostic identified open attribute",
+      "correction": "Use pathlib.Path; resolved config and native API device readback succeeded"
+    },
+    {
+      "cause": "Stale PlatformIO bootloader target contains two source paths for the same esp_efuse_fields.c.o",
+      "effect": "Compile failed55.336s; no new firmware/OTA",
+      "correction": "Preserve and detach only generated .pioenv target; same pinned source/environment recompiling, no dependency reinstall or product rollback"
+    }
+  ],
+  "primarySourceFindings": [
+    {
+      "url": "https://raw.githubusercontent.com/home-assistant/core/2026.9.2/homeassistant/components/esphome/assist_satellite.py",
+      "finding": "First matching wake-word selection chooses primary Eva2. Secondary Eva with same Hey Eva is not evidence of ordinary wakeword misrouting.",
+      "limit": "Source behavior and current select metadata only; no physical transcript proof"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/esphome/aioesphomeapi/v46.2.0/aioesphomeapi/client.py",
+      "finding": "start=False VoiceAssistantRequest maps to stop handler abort=True; VoiceAssistantAudio.end maps abort=False. Review corrected an earlier inference that examined only HA stop handler.",
+      "limit": "Exact pinned source trace, not observed active model/cloud cancellation on the physical device"
+    }
+  ],
+  "compile": {
+    "exitCode": 0,
+    "seconds": 212.472,
+    "sourceOverlaySha256": "be88d9e2e995748de7fcbac9d8a5024e7c8749aae720addc6e018f1e5b7f15b8",
+    "firmwareSha256": "81f70fae82f3ce6d631fe651511e85ce856fc8a0f1309d00362717c8140b18aa",
+    "bytes": 2911760,
+    "generatedCppSha256": "133dbf8b18290dbb514d5878be131c1aabc4f08a47f55b800cdc36440634c92c",
+    "matchesRetainedUninstalledCandidate": true,
+    "oldGeneratedBuildRetained": true,
+    "dependencyReinstalled": false
+  },
+  "deploymentPlan": {
+    "method": "Existing ESPHome authenticated native OTA; private wrapper and exact binary, no bootloader or partition writes",
+    "speaker": "Woonkamer only for C4.1",
+    "configurationReadbackBeforeFlash": "Native API credential verified with actual device; primary Eva2/Hey Eva, mute on",
+    "recoverySha256": "222b87eefca70de27af8db210c06156c0f2dd34c82558ff2614d7173a93040bc",
+    "automaticRollback": false,
+    "postInstallChecks": [
+      "authenticated native API device info",
+      "new interruption event entity available",
+      "HA actual firmware, assistant, wakeword and mute states"
+    ],
+    "physicalTrial": "While Eva speaks say Hey Eva once; after listening begins ask a new question. Silence and new answer must be observed by owner.",
+    "privacy": "Household route only, no private-person identity inferred",
+    "acceptedBackgroundWork": "No explicit task-stop command added by overlay"
+  },
+  "postInstall": {
+    "native": {
+      "authenticated": true,
+      "name": "home-assistant-voice-0a16e0",
+      "mac": "20:F8:3B:0A:16:E0",
+      "version": "2026.6.2",
+      "compilationTime": "2026-09-08 22:28:23 +0200",
+      "interruptionEventPresent": true,
+      "entityCount": 8,
+      "serviceNames": []
+    },
+    "ha": [
+      {
+        "entity_id": "select.home_assistant_voice_0a5035_assistant",
+        "state": "Eva2"
+      },
+      {
+        "entity_id": "select.home_assistant_voice_0a5035_assistant_2",
+        "state": "Eva"
+      },
+      {
+        "entity_id": "select.home_assistant_voice_0a5035_wake_word",
+        "state": "Hey Eva"
+      },
+      {
+        "entity_id": "select.home_assistant_voice_0a5035_wake_word_2",
+        "state": "Hey Eva"
+      },
+      {
+        "entity_id": "switch.home_assistant_voice_0a5035_mute",
+        "state": "on"
+      },
+      {
+        "entity_id": "select.home_assistant_voice_0a16e0_assistant",
+        "state": "Eva2"
+      },
+      {
+        "entity_id": "select.home_assistant_voice_0a16e0_assistant_2",
+        "state": "Eva"
+      },
+      {
+        "entity_id": "select.home_assistant_voice_0a16e0_wake_word",
+        "state": "Hey Eva"
+      },
+      {
+        "entity_id": "select.home_assistant_voice_0a16e0_wake_word_2",
+        "state": "Hey Eva"
+      },
+      {
+        "entity_id": "switch.home_assistant_voice_0a16e0_mute",
+        "state": "on"
+      }
+    ]
+  },
+  "ota": {
+    "stage": "ota",
+    "exitCode": 0,
+    "seconds": 18.595,
+    "completedAt": "2026-10-01T01:07:22.829948+00:00",
+    "firmwareSha256": "81f70fae82f3ce6d631fe651511e85ce856fc8a0f1309d00362717c8140b18aa",
+    "bootloaderWritten": false,
+    "partitionTableWritten": false,
+    "otherSpeakerChanged": false,
+    "audioOrModelRequested": false
+  },
+  "review": {
+    "file": "eva2/reviews/c4-wakeword-relisten-20261001.md",
+    "sha256": "39b8e870732d9886476d507d8edba8570b1e85e0adff2c3203b0f3d245b80c2b",
+    "result": "GO for exact source/ordinary-HA planned installation route; postupload and physical proof outside preinstall review"
+  },
+  "consumption": {
+    "developmentCredits": "unknown",
+    "evaRuntimeModelRequests": 0,
+    "agentExecutorCount": 1,
+    "reviewerCount": 1,
+    "compilerAttempts": [
+      {
+        "result": "stale_generated_target_failure",
+        "seconds": 55.336
+      },
+      {
+        "result": "success_after_only_generated_target_preserved",
+        "seconds": 212.472
+      }
+    ],
+    "otaUploads": 1,
+    "otaSeconds": 18.595,
+    "automaticRollback": false
+  }
+}

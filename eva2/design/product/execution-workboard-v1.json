@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T00:18:43+00:00",
+        "checkedAt": "2026-10-01T01:10:58.187706+00:00",
         "deliveries": [
+          {
+            "title": "Woonkamerspeaker: onderbreken en opnieuw luisteren geïnstalleerd",
+            "date": "1 oktober",
+            "state": "installed",
+            "result": "Bestaande wakeword-overlay op gewone HA-route hergebruikt, onafhankelijk beoordeeld en eenmaal geflasht. Apparaat verbindt weer; nieuwe evententity en Eva2/Hey Eva/mute-instellingen gecontroleerd.",
+            "remaining": "Eén Hey Eva tijdens echte spraak en nieuwe vraag nog fysiek proberen. Geen volledige C4-afronding, willekeurige-spraak-duplex of snelheidsclaim. Tweede speaker nog niet aangepast.",
+            "source": "eva2/evidence/product/c4-device-boundary-20261001.json"
+          },
           {
             "title": "Vergelijking: Hermes-aanvraaginstellingen doorgegeven",
             "date": "1 oktober",
@@ -3147,16 +3155,29 @@
           }
         ],
         "now": {
-          "title": "P1.1: Hermes-aanvraaginstellingen gecontroleerd; login ontbreekt",
-          "state": "Wacht op aanmelding",
-          "owner": "Codex /root",
-          "detail": "Native aanvraagopbouw geeft Sol/none en Astra/medium door; onafhankelijke review GO, nul inferentie. Aanmeldproces beëindigd met device_code_timeout; geen sessie bevestigd of proces actief. Nieuwe aanmelding wacht op gebruiker."
+          "title": "C4.1: geïnstalleerd, fysieke proef open",
+          "state": "Wacht op fysieke waarneming",
+          "owner": "Jaap voor hoorbare proef; Codex voor vervolg",
+          "detail": "Woonkamer verbindt met onderbrekingsoverlay; mute bleef aan. Geen uitvoerder doet nu een spraak-/modelproef. C4.1 en grote stemonderdeel nog niet afgevinkt."
         },
         "next": {
-          "title": "Eigen Hermes-login verbinden",
-          "detail": "Native sessie zonder overgenomen tokens; daarna ontbrekende vergelijkingsaansluitingen. Volledige vergelijking blijft open."
+          "title": "Dezelfde onderbreking op tweede speaker aansluiten",
+          "detail": "Dezelfde bestaande module en gewone HA-route; nog niet gestart. De fysieke woonkamertest en Hermes-aanmelding blijven afzonderlijk open."
         },
         "ownerAction": {
+          "title": "Probeer onderbreken op de woonkamerspeaker",
+          "steps": [
+            "Haal de woonkamerspeaker van mute en vraag Hey Eva, vertel kort iets over Mars.",
+            "Zeg tijdens het antwoord één keer Hey Eva; stel Hoe gaat het met jou? zodra ze luistert.",
+            "Bevestig of het oude antwoord stopt en Eva op de nieuwe vraag antwoordt."
+          ],
+          "expected": "Eén wakeword onderbreekt spraak en hervat luisteren; gewone spraak, Stop en mute blijven werken.",
+          "url": "http://localhost:44712/",
+          "linkLabel": "Open projectoverzicht"
+        },
+        "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
+        "reviewedAt": "2026-10-01T01:10:58.187706+00:00",
+        "previousOwnerAction": {
           "title": "Meld Hermes aan voor de vergelijking",
           "steps": [
             "Open de OpenAI-apparaataanmelding.",
@@ -3166,19 +3187,6 @@
           "expected": "Een eigen Hermes-sessie binnen het bestaande abonnement; geen gekopieerde tokens of betaalde modelaanvraag. De volledige vergelijking is nog open.",
           "url": "https://auth.openai.com/codex/device",
           "linkLabel": "Open aanmelding"
-        },
-        "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T00:18:43+00:00",
-        "previousOwnerAction": {
-          "title": "Lees het afgeronde zondagplan",
-          "steps": [
-            "Open Praten met Eva via onderstaande link.",
-            "Lees de eenmalige terugmelding van de geplande vervolgstap; er is geen nieuwe opdracht nodig.",
-            "Bekijk het document via Opgeslagen opdrachten of de resultaatlink."
-          ],
-          "expected": "Een zondagplan met3activiteiten en maximaal8euro aan voorgestelde materialen. Geef desgewenst je oordeel; acceptatie is nog open.",
-          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
-          "linkLabel": "Open Praten met Eva"
         }
       }
     },
@@ -13415,21 +13423,49 @@
           "activeWorker": null,
           "baseCommit": "7ab5b01d",
           "assignment": {
-            "stage": "retained_existing_private_route",
-            "scope": "eva2/src/eva/voice_service/agent.py, test_agent.py, test_private_work_return.py and installed media agent; read-only.",
-            "outcome": "Determine whether known source/runtime household-return difference blocks current website voice or is irrelevant to its private route.",
-            "endCondition": "One concrete retained/missing connection decision, no speculative rewrite.",
-            "effort": "One source-to-installed pass; no model/audio calls; credits unknown"
+            "stage": "installed_wakeword_overlay_physical_observation_pending",
+            "scope": "C4.1 existing ordinary HA Woonkamer firmware only",
+            "outcome": "Install existing wakeword stop-and-relisten overlay on ordinary HA route while retaining device audio, wake model, settings and shared Eva core.",
+            "result": "Existing exact overlay compiled, independently reviewed and uploaded once. Native authentication, new event entity and preserved HA selections/mute verified. Physical silence/new question unobserved; original doneWhen unchanged.",
+            "effort": "1failed stale-output compile55.336s; same-source fresh compile212.472s;1OTA18.595s; model/audio/house requests0; development credits unknown"
           },
           "dashboardComponent": "voice",
           "remainingTasks": [
             {
               "id": "C4.1",
               "title": "Onderbreken op woonkamer-speaker",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "verbeteren",
               "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
-              "owner": "Codex"
+              "owner": "Codex /root",
+              "assignment": {
+                "baseCommit": "c5b9cacd",
+                "owner": "/root",
+                "files": [
+                  "eva2/deploy/home-assistant/voice-pe-interruption.yaml",
+                  "eva2/evidence/product/c4-device-boundary-20261001.json"
+                ],
+                "existing": "Existing stock/recovery firmware, native voice transport, prepared continuous candidate, retained physical failure and server-only pass. Laptop interruption remains accepted.",
+                "gap": "Retained recovery source, matched by firmware build readback, stops voice/media at wakeword without re-listening. Existing uninstalled overlay supplies stop-and-relisten; no new speech engine.",
+                "outcome": "Install existing wakeword stop-and-relisten overlay on ordinary HA route while retaining device audio, wake model, settings and shared Eva core.",
+                "finish": "Existing small task end condition unchanged: during Eva speech interrupt and continue with a new question. Installed transport/source checks do not replace physical proof.",
+                "estimate": "Reuse exact overlay and cached pinned ESPHome2026.6.2 build; focused compile/config/cancellation checks and independent review, then authorized OTA. No planned model/audio/house action; development credits unknown.",
+                "stage": "installed_waiting_physical_observation",
+                "activeWorkers": [],
+                "result": "Existing exact overlay compiled, independently reviewed and uploaded once. Native authentication, new event entity and preserved HA selections/mute verified. Physical silence/new question unobserved; original doneWhen unchanged."
+              },
+              "latestEvidence": "eva2/evidence/product/c4-device-boundary-20261001.json",
+              "installation": "installed_woonkamer",
+              "ownerTrial": {
+                "status": "pending",
+                "steps": [
+                  "Haal de woonkamerspeaker van mute en vraag Hey Eva, vertel kort iets over Mars.",
+                  "Zeg tijdens het antwoord één keer Hey Eva; stel Hoe gaat het met jou? zodra ze luistert.",
+                  "Bevestig of het oude antwoord stopt en Eva op de nieuwe vraag antwoordt."
+                ],
+                "expected": "Eén wakeword onderbreekt spraak en hervat luisteren; gewone spraak, Stop en mute blijven werken.",
+                "blocksIndependentWork": false
+              }
             },
             {
               "id": "C4.2",
