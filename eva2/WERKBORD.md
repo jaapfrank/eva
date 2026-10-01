@@ -1,6 +1,32 @@
 # EVA2 werkbord
 
-## Actueel: C3.1 — inputtaakcorrectie geïnstalleerd; fysieke begroeting open
+## Actueel: M3.3 — instructie geïnstalleerd; persoonlijkheid nog niet geaccepteerd
+
+**Jouw negatieve beoordeling blijft staan.** De gedeelde identiteit was correct
+geladen. De instructie voor humor gaf onnodig één patroon op en het verbod op
+ongevraagde vragen was te algemeen. Dat is gericht verduidelijkt: relevante
+sociale nieuwsgierigheid en passende humor mogen; geen verplichte slotvraag,
+hulpaanbod, vaste sociale antwoorden of verzonnen belevenissen. Korte feitelijke
+herinneringsantwoorden, woord-/opmaakvoorkeuren en privégrenzen blijven behouden.
+
+**Beschikbaar:** dezelfde correctie is op kern en taakwerker geïnstalleerd; beide
+gezond en bronhash gelijk. Twee bestaande gerichte controles en onafhankelijke
+review GO. Eén gebundelde image-update; gegevens, configuratie en andere diensten
+behouden. Geen uitvoerder actief voor deze wijziging.
+[Bewijs](evidence/product/m3-social-guidance-20261001.json).
+
+**Nog niet bewezen:** één geïsoleerde voor/na-voorbeeldproef gaf vrijwel hetzelfde
+antwoord. Geen aantoonbare persoonlijkheids- of snelheidswinst geclaimd. Gebruik
+Eva gewoon en plak een antwoord dat nog statisch voelt, met de gebruikte ingang;
+je hoeft geen aparte testreeks te doen. M3.3 blijft open, ook voor eigen oordeel,
+humor en initiatief in werkelijk gebruik.
+
+**Verbruik:** twee Sol/none-modelcalls, 2.658 invoer- en 38 uitvoertokens, geen tools.
+Runtime- en ontwikkelcreditkosten onbekend. M3.1/M3.2, geheugenacceptaties en C3.3
+blijven staan. C3.1/C3.2 fysieke proeven blijven open; 12 van 44 kleine taken
+voltooid en 2 van 9 grote onderdelen afgerond, ongewijzigd.
+
+## Vorige oplevering: C3.1 — inputtaakcorrectie geïnstalleerd; fysieke begroeting open
 
 **Laatste geïnstalleerd:** native taak direct naar haar bestaande inputloop,
 zonder ongebruikt legacybuffer. Echte ELF:1312→32byte entry,1280byte overhead weg;

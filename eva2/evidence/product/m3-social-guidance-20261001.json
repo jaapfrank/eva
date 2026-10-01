@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "taskId": "M3.3",
+  "recordedAt": "2026-10-01T13:27:44.009532+00:00",
+  "ownerFeedback": {
+    "status": "not_accepted",
+    "quote": "Ik vind haar antwoorden en dergelijke nog niet echt als een persoon klinken die een eigen persoonlijkheid heeft. Ze is nogal statisch."
+  },
+  "existingCapability": {
+    "sharedIdentityLoaded": true,
+    "baselineRuntimeSourceMatchedCheckout": true,
+    "baselineModuleSha256": "866ac19df1387fb75e495897b7891d3c6033ef918e5385c6cc31120e3d1381fc",
+    "interpretation": "The signed identity was present. Static behavior was not traced to a missing identity pack."
+  },
+  "change": {
+    "module": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+    "sha256": "5eb31eb57b0959d29919e5b3b7e053f588752ce9559433b16c47ef0ac5db2e23",
+    "scope": [
+      "Permit context-appropriate IdentityPack humor without one mandatory construction.",
+      "Scope the ban on unsolicited follow-up questions to brief factual-memory answers.",
+      "Permit relevant social curiosity; no mandatory closing question or generic help offer."
+    ],
+    "preserved": [
+      "Personal word/format constraints",
+      "Authorized memory and latest corrections",
+      "Evidence for actions and own state",
+      "No invented human experiences",
+      "Existing Sol/none contact provider and Astra work policy"
+    ]
+  },
+  "focusedVerification": {
+    "result": "passed",
+    "testsPassed": 2,
+    "elapsedSeconds": 1.61,
+    "selection": "tests/model/test_conversation_model.py -k direct_model",
+    "limitation": "These existing scripted tests verify instruction/identity plumbing, not natural personality."
+  },
+  "independentReview": {
+    "reviewer": "/root/open_questions_triage",
+    "decision": "GO",
+    "reviewed": [
+      "Shared policy and corresponding existing assertions",
+      "Retained memory/privacy/word-limit/own-state constraints"
+    ],
+    "limitation": "Source review; not family acceptance."
+  },
+  "illustrativeComparison": {
+    "kind": "isolated_illustrative_before_after",
+    "model": "gpt-6-sol",
+    "reasoning_effort": "none",
+    "prompt": "Met mij gaat het goed.",
+    "fixture": {
+      "recent_assistant": "Hoi Jaap! Hoe is het?",
+      "personal_memory": "none",
+      "own_state": "none"
+    },
+    "limitations": [
+      "One sample per instruction version; no general personality or speed claim.",
+      "No production conversation or memory writes; no tools."
+    ],
+    "samples": [
+      {
+        "version": "before",
+        "text": "Fijn om te horen, Jaap. Wat houdt je vandaag bezig?",
+        "wall_seconds": 6.866,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 1300,
+          "output_tokens": 19
+        },
+        "timing": {
+          "first_content_ms": 6042,
+          "completed_ms": 6535
+        },
+        "instructions_sha256": "4630fa7b95d810ac9c5131742d820d69bc47a5f90c70b461c233aa37cc6f14c3",
+        "instructions_bytes": 5921
+      },
+      {
+        "version": "candidate",
+        "text": "Fijn om te horen, Jaap! Wat houdt je vandaag bezig?",
+        "wall_seconds": 2.419,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 1328,
+          "output_tokens": 19
+        },
+        "timing": {
+          "first_content_ms": 1679,
+          "completed_ms": 2417
+        },
+        "instructions_sha256": "54903fbd754150acd36eb188767dc4c6e1a0b2cff58b3b6ea639c39e74a34502",
+        "instructions_bytes": 6090
+      }
+    ]
+  },
+  "comparisonConclusion": "Both variants produced essentially the same answer. This sample does not demonstrate better personality or a speed improvement; no new variants were generated to chase a win.",
+  "usage": {
+    "runtimeModelAttempts": 2,
+    "runtimeToolCalls": 0,
+    "inputTokens": 2628,
+    "outputTokens": 38,
+    "runtimeCreditCost": null,
+    "developmentCreditCost": null
+  },
+  "technicalDelivery": {
+    "status": "installed",
+    "services": [
+      "core",
+      "delegated-work-worker"
+    ],
+    "configuration": "Only two image pins change; all other settings/mounts/services preserved.",
+    "dataMigration": false,
+    "automaticRollback": false,
+    "verifiedAt": "2026-10-01T13:28:53.128152+00:00",
+    "liveChecks": [
+      {
+        "container": "eva2-managed-b-slot3-core",
+        "image": "sha256:20d41fdf3506a21c111767d85d58be49453a8d8dc0e32db679992436e992940f",
+        "state": "running",
+        "health": "healthy",
+        "loaded": {
+          "module_sha256": "5eb31eb57b0959d29919e5b3b7e053f588752ce9559433b16c47ef0ac5db2e23",
+          "contact_model": "gpt-6-sol",
+          "contact_effort": "none",
+          "identity_name": "Eva",
+          "identity_pack_loaded": true,
+          "scoped_memory_question_rule": true,
+          "social_curiosity_rule": true
+        }
+      },
+      {
+        "container": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "image": "sha256:a2e0e0ff0e72a2ad9bfbd692eaaed1d9abff848cc29c7852b07a82f0010a38e4",
+        "state": "running",
+        "health": "healthy",
+        "loaded": {
+          "module_sha256": "5eb31eb57b0959d29919e5b3b7e053f588752ce9559433b16c47ef0ac5db2e23",
+          "contact_model": "gpt-6-sol",
+          "contact_effort": "none",
+          "identity_name": "Eva",
+          "identity_pack_loaded": true,
+          "scoped_memory_question_rule": true,
+          "social_curiosity_rule": true
+        }
+      }
+    ],
+    "retainedImagePins": {
+      "core": "sha256:af5cd147ff900310100cb6a52f2cdd8b2d91b2f7a062cb875f5bf1db1f8e0771",
+      "delegated-work-worker": "sha256:51cd21f37ec57c9bf1d0456ff40bc77ab99ca751fcbd58ca4d9d46b446e428d7"
+    },
+    "rollback": "Previous image pins and complete private compose retained; rollback not performed."
+  },
+  "acceptance": {
+    "status": "open",
+    "who": "Jaap",
+    "scope": "Personality in ordinary use; initiative remains separate real product work."
+  }
+}
