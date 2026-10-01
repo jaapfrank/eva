@@ -31,3 +31,13 @@ Artifact identifiers:
 - Coordinator-retained ordinary recovery binary SHA256: `222b87eefca70de27af8db210c06156c0f2dd34c82558ff2614d7173a93040bc`.
 
 The retained recovery artifact provides a known route back; it is not an automatic rollback instruction. A successful source build and authenticated post-upload metadata check still do not prove that one physical “Hey Eva” silences the old speech and captures the new question. That trial, actual audibility and broader C4 acceptance remain explicitly open.
+
+## Second-speaker target transfer
+
+**The existing source/install GO transfers to the second speaker's exact OTA candidate** `0ff67e201a1bb4693a29a6e2fd6b2f686c8a2516e8de375fa1322cf9224b8491` (2,911,760 bytes). This appendix uses only `secondSpeaker` and `wakeModelAvailabilitySourceCheck` in `c4-device-boundary-20261001.json`; no new source review, test round or live request was performed.
+
+The coordinator's evidence records successful compilation in 203.332 seconds, the identical reviewed overlay body/hash, one outer handler action and the resume script. Framework 5.5.4 and external voice-pe pin `7c6eb245b1d5253ee8672fbbdb604767e59a8ee9` are unchanged. Authenticated pre-install metadata binds the target to `home-assistant-voice-0a5035`, MAC `20:F8:3B:0A:50:35`, ESPHome 2026.6.2 and build `2026-06-21 21:08:16 +0200`. Planned ordinary OTA to `10.0.20.53`, followed by API event/HA selection/mute readback, adds no bootloader, partition or core change.
+
+The saved-source check reports that the regular wake model stays enabled during spoken playback; only the separate Stop model is toggled around announcements/timers. This supports reuse of the reviewed transition, but does not measure echo, microphone sampling or physical detection of “Hey Eva”. Installation and physical outcome remain unobserved for this target.
+
+Original-source recovery `c51dbff95df7ce1ac619b5f26d99ad372b35dc0bc66b8b8125def571c37bfff8` compiled successfully and is retained. It was neither extracted from current device flash nor physically reflashed. It is a retained recovery candidate, not proof of recovery operation or an automatic rollback instruction. The physical outcome and cloud-cancellation limits of the original review continue to apply.

@@ -997,14 +997,14 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T01:10:58.187706+00:00",
+        "checkedAt": "2026-10-01T01:36:08.488049+00:00",
         "deliveries": [
           {
-            "title": "Woonkamerspeaker: onderbreken en opnieuw luisteren geïnstalleerd",
+            "title": "Beide speakers: onderbreken en opnieuw luisteren geïnstalleerd",
             "date": "1 oktober",
             "state": "installed",
-            "result": "Bestaande wakeword-overlay op gewone HA-route hergebruikt, onafhankelijk beoordeeld en eenmaal geflasht. Apparaat verbindt weer; nieuwe evententity en Eva2/Hey Eva/mute-instellingen gecontroleerd.",
-            "remaining": "Eén Hey Eva tijdens echte spraak en nieuwe vraag nog fysiek proberen. Geen volledige C4-afronding, willekeurige-spraak-duplex of snelheidsclaim. Tweede speaker nog niet aangepast.",
+            "result": "Dezelfde bestaande wakeword-overlay op beide gewone HA-routes hergebruikt, onafhankelijk beoordeeld en eenmaal per apparaat geflasht. Beide apparaten verbinden met nieuwe evententity; Eva2/Hey Eva en mute-on behouden.",
+            "remaining": "Eén wakeword tijdens echte spraak en daarna de nieuwe vraag per speaker nog fysiek proberen. Geen volledig C4, willekeurige-spraak-duplex of snelheidsclaim. Telefoonproef blijft open.",
             "source": "eva2/evidence/product/c4-device-boundary-20261001.json"
           },
           {
@@ -3155,28 +3155,28 @@
           }
         ],
         "now": {
-          "title": "C4.1: geïnstalleerd, fysieke proef open",
+          "title": "C4.1/C4.2: geïnstalleerd, hoorbare proeven open",
           "state": "Wacht op fysieke waarneming",
           "owner": "Jaap voor hoorbare proef; Codex voor vervolg",
-          "detail": "Woonkamer verbindt met onderbrekingsoverlay; mute bleef aan. Geen uitvoerder doet nu een spraak-/modelproef. C4.1 en grote stemonderdeel nog niet afgevinkt."
+          "detail": "Beide apparaten verbinden met onderbrekingsoverlay. Er loopt nu geen model-/audioproef of uitvoerder voor deze taak; beide mutes bleven aan. Kleine eindvoorwaarden en groot stemonderdeel niet afgevinkt."
         },
         "next": {
-          "title": "Dezelfde onderbreking op tweede speaker aansluiten",
-          "detail": "Dezelfde bestaande module en gewone HA-route; nog niet gestart. De fysieke woonkamertest en Hermes-aanmelding blijven afzonderlijk open."
+          "title": "C4.3: bestaande telefoonroute controleren",
+          "detail": "Geaccepteerde laptoponderbreking behouden. Alleen resterende telefoonroute en relevante verbindingen controleren; fysieke telefoonproef apart. Nog niet gestart; geen nieuwe engine of brede herstelronde."
         },
         "ownerAction": {
-          "title": "Probeer onderbreken op de woonkamerspeaker",
+          "title": "Probeer onderbreken op beide speakers",
           "steps": [
-            "Haal de woonkamerspeaker van mute en vraag Hey Eva, vertel kort iets over Mars.",
+            "Haal telkens de speaker van mute en vraag Hey Eva, vertel kort iets over Mars.",
             "Zeg tijdens het antwoord één keer Hey Eva; stel Hoe gaat het met jou? zodra ze luistert.",
-            "Bevestig of het oude antwoord stopt en Eva op de nieuwe vraag antwoordt."
+            "Geef per speaker door: stopt het oude antwoord en antwoordt Eva op de nieuwe vraag?"
           ],
-          "expected": "Eén wakeword onderbreekt spraak en hervat luisteren; gewone spraak, Stop en mute blijven werken.",
+          "expected": "Woonkamer en Overkapping stoppen de lopende spraak en hervatten luisteren na één wakeword. Nog geen gemeten fysieke uitkomst.",
           "url": "http://localhost:44712/",
           "linkLabel": "Open projectoverzicht"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T01:10:58.187706+00:00",
+        "reviewedAt": "2026-10-01T01:36:08.488049+00:00",
         "previousOwnerAction": {
           "title": "Meld Hermes aan voor de vergelijking",
           "steps": [
@@ -13423,11 +13423,11 @@
           "activeWorker": null,
           "baseCommit": "7ab5b01d",
           "assignment": {
-            "stage": "installed_wakeword_overlay_physical_observation_pending",
-            "scope": "C4.1 existing ordinary HA Woonkamer firmware only",
+            "stage": "both_installed_physical_observation_pending",
+            "scope": "C4.1/C4.2 same ordinary HA wakeword stop/relisten module on both devices",
             "outcome": "Install existing wakeword stop-and-relisten overlay on ordinary HA route while retaining device audio, wake model, settings and shared Eva core.",
-            "result": "Existing exact overlay compiled, independently reviewed and uploaded once. Native authentication, new event entity and preserved HA selections/mute verified. Physical silence/new question unobserved; original doneWhen unchanged.",
-            "effort": "1failed stale-output compile55.336s; same-source fresh compile212.472s;1OTA18.595s; model/audio/house requests0; development credits unknown"
+            "result": "Both exact reviewed target binaries uploaded once per device and authenticated after reboot. Both Eva2/Hey Eva selections and mute-on preserved. Physical speaking interruption/new question remain unobserved.",
+            "effort": "Same source reused; existing reviewer checked target transfer, no new source/test round. Two target uploads18.595s/17.468s; zero model/audio/house-action requests; credits unknown."
           },
           "dashboardComponent": "voice",
           "remainingTasks": [
@@ -13470,10 +13470,39 @@
             {
               "id": "C4.2",
               "title": "Onderbreken op tweede speaker",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "verbeteren",
               "doneWhen": "Hetzelfde gedrag werkt op het tweede apparaat.",
-              "owner": "Codex"
+              "owner": "Codex /root",
+              "assignment": {
+                "baseCommit": "9f5e3350",
+                "owner": "/root",
+                "files": [
+                  "existing private overkapping wrapper/firmware",
+                  "eva2/evidence/product/c4-device-boundary-20261001.json"
+                ],
+                "stage": "installed_waiting_physical_observation",
+                "activeWorkers": [],
+                "existing": "Same reviewed general stop/relisten overlay, ordinary HA path and saved second-device configuration already validated historically. Woonkamer upload/authentication verified; physical trial open.",
+                "gap": "Reviewed overlay not installed on Overkapping; its actual configuration and credential/target match must be confirmed before reuse.",
+                "outcome": "Use the same wakeword interruption/relisten capability on the second existing speaker, without new behavior logic.",
+                "finish": "Hetzelfde gedrag werkt op het tweede apparaat.",
+                "estimate": "Two build configurations for same target: original-source recovery then incremental identical reviewed overlay. One bundled source/target review and OTA; no model/audio/house actions; development credits unknown.",
+                "dependency": "No retained OTA binary for the second-device profile exists in the known speaker artifacts. Preserve a compiled original-source recovery alongside the new overlay; no rollback flash or new recovery platform.",
+                "result": "Saved original-source recovery and exact same overlay compiled; existing source review reused with second-target GO. One OTA, authenticated new-event readback and preserved assistant/wake/mute verified. No physical interruption/answer observed; finish unchanged."
+              },
+              "latestEvidence": "eva2/evidence/product/c4-device-boundary-20261001.json",
+              "installation": "installed_overkapping",
+              "ownerTrial": {
+                "status": "pending",
+                "steps": [
+                  "Haal de overkappingspeaker van mute en vraag Hey Eva, vertel kort iets over Mars.",
+                  "Zeg tijdens haar antwoord één keer Hey Eva; stel Hoe gaat het met jou? zodra ze luistert.",
+                  "Bevestig of het oude antwoord stopt en de nieuwe vraag wordt beantwoord."
+                ],
+                "expected": "Dezelfde wakeword-onderbreking en hervat luisteren als op Woonkamer; hoorbare proef nog open.",
+                "blocksIndependentWork": false
+              }
             },
             {
               "id": "C4.3",

@@ -1,10 +1,10 @@
 # EVA2 werkbord
 
-## Actueel: C4.1 — onderbreking geïnstalleerd; fysieke proef open
+## Actueel: C4.1/C4.2 — beide geïnstalleerd; hoorbare proeven open
 
-Bestaande onderbrekingsoverlay op gewone HA-woonkamerroute hergebruikt, onafhankelijk beoordeeld en eenmaal via OTA geïnstalleerd. Apparaat verbindt opnieuw en biedt de nieuwe evententity; Eva2, Hey Eva en mute-on bleven behouden. Geen afgewezen continue firmware herhaald, nieuwe engine of model-/audio-/huisaanvraag. Bouwconflict in oude gegenereerde outputs gericht opgelost met behoud van die outputs; geen dependencyherinstallatie of rollback. [Bewijs](evidence/product/c4-device-boundary-20261001.json) · [Review](reviews/c4-wakeword-relisten-20261001.md).
+Dezelfde bestaande wakeword-onderbrekingsoverlay op beide gewone HA-routes hergebruikt. Bronreview behouden en tweede-profielbeoordeling gebundeld; eenmaal per apparaat via OTA geïnstalleerd. Beide apparaten verbinden met de nieuwe evententity; Eva2, Hey Eva en mute-on bleven behouden. Geen nieuwe engine, afgewezen continue firmware, model-/audio-/huisaanvraag, dependencyherinstallatie of automatische rollback. [Bewijs](evidence/product/c4-device-boundary-20261001.json) · [Review](reviews/c4-wakeword-relisten-20261001.md).
 
-Nog nodig: hoorbaar één wakeword tijdens Eva's antwoord en daarna een nieuwe vraag op de woonkamerspeaker. Daarom C4.1/groot stemonderdeel niet afgevinkt. Tweede speaker volgt met dezelfde module maar is nog niet gestart. Hermes blijft op eigen aanmelding wachten; geen authproces actief. Ontwikkelcredits onbekend; Eva-runtime-modelcalls0.
+Nog nodig: tijdens Eva's antwoord één wakeword en daarna een nieuwe vraag op elk apparaat. Daarom C4.1/C4.2 en groot stemonderdeel niet afgevinkt. Originele overkappingsbronfirmware ook bewaard; niet uit apparaatflash gehaald of fysiek opnieuw geflasht. C4.3 telefoonroute volgt, nog niet gestart. Hermes blijft op eigen aanmelding wachten; geen authproces actief. Ontwikkelcredits onbekend; Eva-runtime-modelcalls0. Geen uitvoerder/modelproef actief voor de wachtende speakerwaarnemingen.
 
 ## Actueel: P1.1 — Hermes-start klaar; eigen login ontbreekt
 

@@ -1,15 +1,18 @@
 > Update 1 October 2026 — C4.1: the existing `voice-pe-interruption.yaml`
-> overlay is installed on Woonkamer's ordinary HA firmware. The exact reviewed
-> OTA SHA256 is `81f70fae82f3ce6d631fe651511e85ce856fc8a0f1309d00362717c8140b18aa`.
-> Authenticated device readback confirms the new event entity; Eva2/Hey Eva and
-> mute-on remain selected. The second speaker is unchanged. One physical wakeword
-> during speech followed by a new question still needs observation; this does
+> overlay is installed on both speakers' ordinary HA firmware. Reviewed OTA hashes:
+> Woonkamer `81f70fae82f3ce6d631fe651511e85ce856fc8a0f1309d00362717c8140b18aa`;
+> Overkapping `0ff67e201a1bb4693a29a6e2fd6b2f686c8a2516e8de375fa1322cf9224b8491`.
+> Authenticated device readbacks confirm the new event entity; Eva2/Hey Eva and
+> mute-on remain selected. One physical wakeword during speech followed by a new
+> question still needs observation on each speaker; this does
 > not establish arbitrary-speech full duplex or complete C4.
 >
 > The template event is optional telemetry for this transport: pinned
 > aioesphomeapi 46.2.0 maps `VoiceAssistantRequest(start=False)` to HA pipeline
 > abort. No accepted background-task stop command is added. The retained ordinary
-> recovery image is available without an automatic rollback instruction. See
+> recovery image is available without an automatic rollback instruction.
+> Overkapping's fallback is a compiled saved-source candidate, not an extracted
+> device image or a physically tested reflash. See
 > `../../evidence/product/c4-device-boundary-20261001.json` and
 > `../../reviews/c4-wakeword-relisten-20261001.md` for source, installation and
 > remaining proof. Candidate-only descriptions below are historical.

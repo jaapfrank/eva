@@ -264,8 +264,9 @@
   },
   "review": {
     "file": "eva2/reviews/c4-wakeword-relisten-20261001.md",
-    "sha256": "39b8e870732d9886476d507d8edba8570b1e85e0adff2c3203b0f3d245b80c2b",
-    "result": "GO for exact source/ordinary-HA planned installation route; postupload and physical proof outside preinstall review"
+    "sha256": "35ca064f320c2c5663d7a794f6a35252103de733c106e8be1d47947e0400919f",
+    "result": "GO for exact source/ordinary-HA planned installation route; postupload and physical proof outside preinstall review",
+    "priorReviewSha256AtWoonkamerUpload": "39b8e870732d9886476d507d8edba8570b1e85e0adff2c3203b0f3d245b80c2b"
   },
   "consumption": {
     "developmentCredits": "unknown",
@@ -282,8 +283,158 @@
         "seconds": 212.472
       }
     ],
-    "otaUploads": 1,
-    "otaSeconds": 18.595,
-    "automaticRollback": false
+    "otaUploads": 2,
+    "otaSeconds": [
+      18.595,
+      17.468
+    ],
+    "automaticRollback": false,
+    "secondTargetCompile": [
+      {
+        "stage": "original_saved_source_recovery",
+        "seconds": 215.491
+      },
+      {
+        "stage": "same_reviewed_overlay",
+        "seconds": 203.332
+      }
+    ]
+  },
+  "secondSpeaker": {
+    "preparation": {
+      "wrapperBodyMatchesReviewedOverlay": true,
+      "wrapperSha256": "24c890f7951fd0c2a8b5622b4e61ae940e70a315cc1baf97273c3b75d8237f32",
+      "sourceSha256": "94c281fca6a73172bee78e8b0d7df6258c764cc4689cf9d0191c2bdf5a8c744a",
+      "overlaySha256": "be88d9e2e995748de7fcbac9d8a5024e7c8749aae720addc6e018f1e5b7f15b8",
+      "handlerOuterActions": 1,
+      "hasResumeScript": true,
+      "framework": "5.5.4",
+      "externalVoicePeSources": [
+        {
+          "url": "https://github.com/esphome/home-assistant-voice-pe",
+          "ref": "7c6eb245b1d5253ee8672fbbdb604767e59a8ee9"
+        }
+      ],
+      "nativeBefore": {
+        "authenticated": true,
+        "name": "home-assistant-voice-0a5035",
+        "mac": "20:F8:3B:0A:50:35",
+        "version": "2026.6.2",
+        "compilationTime": "2026-06-21 21:08:16 +0200",
+        "interruptionEventPresent": false
+      }
+    },
+    "installed": true,
+    "physicalResult": "pending owner observation; API/selection/mute verification does not prove audible interruption or new question",
+    "compile": [
+      {
+        "stage": "original_source_recovery",
+        "exitCode": 0,
+        "seconds": 215.491,
+        "firmwareSha256": "c51dbff95df7ce1ac619b5f26d99ad372b35dc0bc66b8b8125def571c37bfff8",
+        "bytes": 2908080,
+        "generatedCppSha256": "2902702804f76ad235c45d05e97fb67c3d883eadf819186d5096d94ee2537ce3"
+      },
+      {
+        "stage": "reviewed_overlay",
+        "exitCode": 0,
+        "seconds": 203.332,
+        "firmwareSha256": "0ff67e201a1bb4693a29a6e2fd6b2f686c8a2516e8de375fa1322cf9224b8491",
+        "bytes": 2911760,
+        "generatedCppSha256": "dee9858074416c46a65242bdfd1a548894280a50ac2864de87c0188de5c338bd"
+      }
+    ],
+    "recoveryLimit": "Original saved-source recovery compiled and retained; not extracted from current device flash and not physically reflashed. Current working OTA slot retained by ordinary upload; no automatic rollback.",
+    "review": "Existing module review reused; exact second-profile OTA GO appendix, no new source/test round",
+    "postInstall": {
+      "native": {
+        "authenticated": true,
+        "name": "home-assistant-voice-0a5035",
+        "mac": "20:F8:3B:0A:50:35",
+        "version": "2026.6.2",
+        "compilationTime": "2026-10-01 03:22:13 +0200",
+        "interruptionEventPresent": true,
+        "entityCount": 8
+      },
+      "ha": [
+        {
+          "entity_id": "select.home_assistant_voice_0a5035_assistant",
+          "state": "Eva2"
+        },
+        {
+          "entity_id": "select.home_assistant_voice_0a5035_assistant_2",
+          "state": "Eva"
+        },
+        {
+          "entity_id": "select.home_assistant_voice_0a5035_wake_word",
+          "state": "Hey Eva"
+        },
+        {
+          "entity_id": "select.home_assistant_voice_0a5035_wake_word_2",
+          "state": "Hey Eva"
+        },
+        {
+          "entity_id": "switch.home_assistant_voice_0a5035_mute",
+          "state": "on"
+        },
+        {
+          "entity_id": "select.home_assistant_voice_0a16e0_assistant",
+          "state": "Eva2"
+        },
+        {
+          "entity_id": "select.home_assistant_voice_0a16e0_assistant_2",
+          "state": "Eva"
+        },
+        {
+          "entity_id": "select.home_assistant_voice_0a16e0_wake_word",
+          "state": "Hey Eva"
+        },
+        {
+          "entity_id": "select.home_assistant_voice_0a16e0_wake_word_2",
+          "state": "Hey Eva"
+        },
+        {
+          "entity_id": "switch.home_assistant_voice_0a16e0_mute",
+          "state": "on"
+        }
+      ]
+    },
+    "ota": {
+      "stage": "ota",
+      "exitCode": 0,
+      "seconds": 17.468,
+      "completedAt": "2026-10-01T01:29:24.771563+00:00",
+      "firmwareSha256": "0ff67e201a1bb4693a29a6e2fd6b2f686c8a2516e8de375fa1322cf9224b8491",
+      "bootloaderWritten": false,
+      "partitionTableWritten": false,
+      "audioOrModelRequested": false
+    },
+    "usage": {
+      "status": "pending",
+      "steps": [
+        "Haal de overkappingspeaker van mute en vraag Hey Eva, vertel kort iets over Mars.",
+        "Zeg tijdens haar antwoord één keer Hey Eva; stel Hoe gaat het met jou? zodra ze luistert.",
+        "Bevestig of het oude antwoord stopt en de nieuwe vraag wordt beantwoord."
+      ],
+      "expected": "Dezelfde wakeword-onderbreking en hervat luisteren als op Woonkamer; hoorbare proef nog open.",
+      "blocksIndependentWork": false
+    }
+  },
+  "wakeModelAvailabilitySourceCheck": {
+    "finding": "Saved firmware starts microWakeWord when the native voice-assistant client connects. It toggles only the separate Stop model around announcements/timers, and does not disable the regular wake model during spoken playback. Ordinary API disconnect updates LEDs; VA-client disconnect separately stops VA. Metadata probes did not register a voice-assistant client.",
+    "source": "saved patched private device configuration",
+    "limit": "Source inspection only; echo, microphone sampling and detected physical Hey Eva are not measured"
+  },
+  "overallResult": {
+    "installedTargets": [
+      "Woonkamer",
+      "Overkapping"
+    ],
+    "physicalTrials": "pending",
+    "C4_1_Completed": false,
+    "C4_2_Completed": false,
+    "parentC4Completed": false,
+    "goalCompleted": false,
+    "nextTask": "C4.3 not started"
   }
 }
