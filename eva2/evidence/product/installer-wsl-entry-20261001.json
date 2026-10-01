@@ -118,7 +118,14 @@
   "usage": {
     "evaModelCalls": 0,
     "houseActions": 0,
-    "developmentCreditCost": null
+    "developmentCreditCost": null,
+    "developmentGoalCounter": {
+      "start": 8129829,
+      "observed": 9097820,
+      "delta": 967991,
+      "unit": "app goal accounted tokens",
+      "scope": "Current continuation, not allocation to one function; cache/agent attribution and credit billing unknown"
+    }
   },
   "privateArtifacts": "/home/administrator/project/.eva2-artifacts/installer-wsl-20261001",
   "sourceHashes": {
@@ -144,5 +151,10 @@
     "result": "GO for partial source/package checkpoint only",
     "path": "eva2/reviews/installer-wsl-entry-20261001.md",
     "fullInstallationApproved": false
+  },
+  "sourceCheckpoint": {
+    "commit": "ad296fde2a44d0d035fad2326a7e6cc6d528e4e6",
+    "publishedRemote": "origin/main",
+    "runtimeRelease": false
   }
 }

@@ -3189,7 +3189,7 @@
         "now": {
           "title": "O1.1 — afgesproken Windows/WSL-installatie aansluiten",
           "state": "in_progress",
-          "detail": "Pakketlauncher en automatische WSL-selectie via echte wizard gecontroleerd; bronreview GO voor deze aansluiting. O1.1 blijft lopend: nog kandidaat-/releasegegevens en gewone voorbereiding/start met werkende model- en uitvoerroute aansluiten. Geen nieuwe Eva gestart."
+          "detail": "Pakketlauncher en automatische WSL-selectie via echte wizard gecontroleerd; beperkte bronreview GO en broncheckpoint ad296fde op GitHub. O1.1 blijft lopend: kandidaat-/releasegegevens en gewone voorbereiding/start met werkende model- en uitvoerroute ontbreken nog. Geen nieuwe Eva gestart."
         },
         "next": {
           "title": "Volledige gewone installatie controleren",
@@ -14708,7 +14708,8 @@
                   ],
                   "scope": "Continue the same O1.1 finish condition, preserve existing installation/data. No new workboard, general installer platform or parent completion."
                 },
-                "review": "GO partial source/package only; no complete O1 installation or support approval"
+                "review": "GO partial source/package only; no complete O1 installation or support approval",
+                "latestSourceCheckpoint": "ad296fde2a44d0d035fad2326a7e6cc6d528e4e6"
               },
               "latestEvidence": "eva2/evidence/product/installer-wsl-entry-20261001.json",
               "remaining": "Pakket start automatisch op juiste WSL-lock met gepinde interpreter; echte wizard gecontroleerd. O1.1 blijft open: betrouwbare kandidaat-/releasegegevens, gewone targetfactory en bruikbare model-/uitvoerroute moeten voorbereiding/start verbinden.",
