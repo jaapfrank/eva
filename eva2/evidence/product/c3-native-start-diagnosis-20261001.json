@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "task": "C3.1",
+  "checkedAt": "2026-10-01T12:37:33.105611+00:00",
+  "status": "installed_diagnostics_physical_conversation_unconfirmed",
+  "ownerReport": "After mute cycle/wake about20s white then blue then red; no reply.",
+  "observations": {
+    "priorBootCrash": "Exact current ELF decodes saved backtrace through vApplicationStackOverflowHook; task and attribution to latest owner attempt unknown.",
+    "apiMuteBefore": true,
+    "apiMuteAfterGuardedSoftwareUnmute": false,
+    "physicalMuteOverridden": false,
+    "nativeConnection": "Reconnected and logged stable30s; no conversation success inferred."
+  },
+  "diagnosticChange": {
+    "kind": "structural_diagnostics_in_existing_development_service",
+    "image": "sha256:59adf4ade692929e0f8387eb84ed5492ea089cbfc79491c0a3e50793790f71aa",
+    "sourceSha256": "650a266224f97221c32fb6340b2425a30ad8258c1c91a00be57ca5dedecfdaab",
+    "installedSha256": "650a266224f97221c32fb6340b2425a30ad8258c1c91a00be57ca5dedecfdaab",
+    "configurationAndDataRetained": true,
+    "serviceUpdateCount": 1,
+    "firmwareChanged": false,
+    "modelCalls": 0,
+    "review": "bounded GO /root/open_questions_triage",
+    "focusedCheck": "1 passed0.08s; no private error strings"
+  },
+  "verification": {
+    "focusedTest": "1 passed0.08s",
+    "independentReview": "bounded GO /root/open_questions_triage; structural causes only, no raw error text"
+  },
+  "limits": [
+    "Software unmute is an operational correction, not proven durable root-cause repair.",
+    "Current physical greeting/direct-speech result still required.",
+    "Legacy HA voice subscription also couples native stop/mute; independent source finding, not attributed as cause of API mute state."
+  ],
+  "usage": {
+    "newModelCallsByThisDiagnosis": 0,
+    "developmentCredits": null
+  },
+  "productCountsChanged": false
+}

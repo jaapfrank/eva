@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "task": "C3.1",
+  "checkedAt": "2026-10-01T13:04:32.018573+00:00",
+  "status": "installed_physical_greeting_pending",
+  "problem": "Detected Hey Eva was followed by connection reset/restart; saved exact-firmware backtrace includes stack-overflow hook.",
+  "change": "Native task enters existing input loop directly instead of a legacy function reserving an unused1280-byte chunk. No task-stack increase or changed input semantics.",
+  "build": {
+    "elfSha256": "d55410a2c750e6e0f7b50b8af36fb3ef4cb65df191aa99129e197876e4b3f612",
+    "otaSha256": "91b723d3e4c3469b013aadf3daba842105dd67ba4520704172861b54274130ac",
+    "otaBytes": 2936064,
+    "frames": {
+      "42018910 <esphome::va_pipecat::VaPipecat::eva_pump_input_()>:": "42018910:\t064136        \tentry\ta1, 0x320",
+      "42018b84 <esphome::va_pipecat::VaPipecat::eva_input_task_()>:": "42018b84:\t004136        \tentry\ta1, 32",
+      "4201a5dc <esphome::va_pipecat::VaPipecat::mic_tx_task_()>:": "4201a5dc:\t0a4136        \tentry\ta1, 0x520"
+    },
+    "hostChecks": "2passed3.46s",
+    "sourceReview": "GO /root/open_questions_triage",
+    "stackAllocationUnchanged": 4096
+  },
+  "staticDifference": {
+    "oldNativeEntryBytes": 1312,
+    "newNativeEntryBytes": 32,
+    "removedBytes": 1280,
+    "inputPumpFrameBytes": 800,
+    "taskStackBytes": 4096,
+    "totalRuntimeStackMeasured": false
+  },
+  "installation": {
+    "exitCode": 0,
+    "seconds": 18.852,
+    "otaSha256": "91b723d3e4c3469b013aadf3daba842105dd67ba4520704172861b54274130ac",
+    "target": "Woonkamer",
+    "rollbackPerformed": false,
+    "targetVerified": true,
+    "name": "home-assistant-voice-0a16e0",
+    "compilationTime": "2026-10-01 14:50:20 +0200",
+    "mute": false,
+    "physicalMuteOverride": false,
+    "nativePeerConnected": true,
+    "configurationSha256": "070f725dd32c916adfcf19f806a0f8288b03747e98c40ceca7ce4bfbf3eab75b"
+  },
+  "review": "eva2/reviews/c3-native-input-task-20261001.md",
+  "limitations": [
+    "Exact failing task not conclusively identified from saved crash metadata.",
+    "Greeting and direct speech during thinking/playback must still be observed.",
+    "No fullC3/C4 or new large function completion."
+  ],
+  "usage": {
+    "newModelCallsByDevelopmentProbe": 0,
+    "developmentCredits": null
+  },
+  "dataRetained": true,
+  "ownerAcceptance": null
+}

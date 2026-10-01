@@ -1,0 +1,53 @@
+{
+  "schema": "eva2-bounded-delivery-evidence-v1",
+  "taskId": "C3.1",
+  "checkedAt": "2026-10-01T11:23:23.899596+00:00",
+  "basisCommit": "cb28e404734a80ace476396537ee44f7452eb3e2",
+  "scope": "Remove HA transport status from canonical spoken answers; direct speech while thinking remains open.",
+  "ownerFeedback": "Every answer starts with Een momentje; the owner speaks directly without repeating Hey Eva while Eva is thinking.",
+  "cause": "The HA adapter placed X-Eva-Input-Receipt into both ChatLog answer deltas and final TTS independently of the model answer.",
+  "change": "Keep the transport receipt in the client API; the HA entity subscribes only to canonical answer deltas and uses answer.text for final speech.",
+  "verification": {
+    "focusedAdapterTests": {
+      "passed": 2,
+      "seconds": 0.48,
+      "runtimeImage": "sha256:cca850f14f3323382c0ef307f75cb5ede21c593a3acf065dd34766e0690c6123",
+      "network": "none",
+      "cases": [
+        "Streaming speech contains only canonical answer and awaits bound final response",
+        "Cancelled stream never emits late final speech"
+      ],
+      "boundary": "HA API boundary stubbed; not physical speaker audibility"
+    },
+    "localTestSetupFailure": "The local host lacked aiohttp. Reused the installed speaker image dependencies; no package installation.",
+    "installation": {
+      "path": "/config/custom_components/eva2_voice/conversation.py",
+      "sha256": "0ccb8f9fd6d9de043ec35a6ed017a0f039b0e037562689ef8e42294e2eae9c37",
+      "shaMatchesReviewedSource": true,
+      "priorSourceVerified": true,
+      "atomicReplace": true,
+      "haCoreRestarts": 1,
+      "haCoreVersion": "2026.9.2",
+      "haAuthenticatedStatesRequestSucceeded": true,
+      "bothSatellitesIdleAfterRestart": true,
+      "firmwareChanged": false
+    }
+  },
+  "remaining": [
+    "Physical confirmation that replies have no automatic transport prefix",
+    "Continuous arbitrary-speech capture while thinking/speaking via the intended physical device"
+  ],
+  "status": {
+    "presentationFix": "installed",
+    "C3.1": "in_progress",
+    "fullDuplex": "not demonstrated",
+    "ownerAcceptance": "open",
+    "largeProductCounterChanged": false
+  },
+  "usage": {
+    "newModelCalls": 0,
+    "newHouseActions": 0,
+    "developmentCredits": "unknown"
+  },
+  "recovery": "Private previous adapter bytes retained; no automatic rollback performed."
+}

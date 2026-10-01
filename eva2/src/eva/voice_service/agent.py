@@ -460,14 +460,10 @@ class EvaAgent(Agent):
                 if kind == "request_acknowledged":
                     if message_id not in state.receipts_offered and message_id not in state.suppressed:
                         state.receipts_offered.add(message_id)
-                        # A receipt is a short, separate utterance. Interrupting
-                        # it must not suppress the eventual background result.
-                        try:
-                            state.receipt_deliveries[message_id] = ctx.session.say(
-                                event["text"], allow_interruptions=True, add_to_chat_ctx=False)
-                            state.notify({**event, "message_id": message_id})
-                        except RuntimeError:
-                            state.notify({"type": "voice_delivery_failed", "message_id": message_id})
+                        # HTTP acceptance is transport status, not Eva's reply.
+                        # Keep the UI notification without synthesizing filler
+                        # before every greeting, question or stop request.
+                        state.notify({**event, "message_id": message_id})
                     continue
                 if kind == "spoken_update":
                     if not spoken_update_seen:

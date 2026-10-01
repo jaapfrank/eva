@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-10-01T11:32:00+00:00",
+  "taskId": "P1.1",
+  "scope": "Existing owned native auth status, network isolated; not model acceptance",
+  "participants": {
+    "OpenClaw": {
+      "status": "unauthenticated",
+      "evidence": "Codex 0.155.1 owned profile login status exit 1: Not logged in"
+    },
+    "Hermes": {
+      "status": "unauthenticated",
+      "evidence": "Native read_only credential resolution: codex_auth_missing; prior login device_code_timeout"
+    },
+    "AgentZero": {
+      "status": "saved_authenticated_session",
+      "evidence": "Native load_auth(ensure_fresh=False) succeeded",
+      "refreshRequired": true,
+      "refreshCredentialPresent": true,
+      "authFileUnchanged": true
+    }
+  },
+  "ownerCompletedLogin": "Agent Zero retained independent owner-completed login evidence; not current OpenClaw/Hermes profiles",
+  "usage": {
+    "localStatusCommands": 3,
+    "newLoginRequests": 0,
+    "refreshRequests": 0,
+    "modelCalls": 0,
+    "developmentCredits": "unknown"
+  },
+  "productWorkBlocked": false,
+  "comparisonComplete": false
+}

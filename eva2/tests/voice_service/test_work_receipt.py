@@ -45,8 +45,9 @@ async def test_receipt_requires_http_acceptance_and_precedes_body(monkeypatch, s
 
 
 @pytest.mark.asyncio
-async def test_native_receipt_interrupt_allows_second_turn_and_later_result():
+async def test_silent_transport_receipt_allows_second_turn_and_later_result():
     first_audio = asyncio.Event()
+    acknowledged = asyncio.Event()
     release = asyncio.Event()
     synthesized = []
     class Source:
@@ -83,7 +84,12 @@ async def test_native_receipt_interrupt_allows_second_turn_and_later_result():
                 text = "Je tweede vraag is ontvangen."
             yield {"type": "final", "reply": {"text": text}}
     backend = Backend()
-    state = BridgeState(backend)
+    notifications = []
+    def notify(event):
+        notifications.append(event)
+        if event.get("type") == "request_acknowledged":
+            acknowledged.set()
+    state = BridgeState(backend, notify)
     adapter = streaming_speech_output(Source())
     heard = []
     async with AgentSession(tts=adapter) as session:
@@ -97,12 +103,14 @@ async def test_native_receipt_interrupt_allows_second_turn_and_later_result():
         async def run(text): await session.run(user_input=text)
         first = asyncio.create_task(run("Onderzoek dit"))
         try:
-            await asyncio.wait_for(first_audio.wait(), 3)
+            await asyncio.wait_for(acknowledged.wait(), 3)
             assert not release.is_set()
             first_id = backend.calls[0]["message_id"]
-            receipt = state.receipt_deliveries[first_id]
+            assert not first_audio.is_set()
+            assert not synthesized
+            assert not state.receipt_deliveries
+            assert sum(e["type"] == "request_acknowledged" for e in notifications) == 1
             await asyncio.wait_for(session.interrupt(), 3)
-            assert receipt.interrupted
             await asyncio.wait_for(run("Hoe gaat het?"), 5)
             for _ in range(300):
                 if any("tweede vraag" in text for text in heard): break
@@ -118,8 +126,8 @@ async def test_native_receipt_interrupt_allows_second_turn_and_later_result():
                 await asyncio.sleep(.01)
             assert any("echte resultaat" in text for text in heard), heard
             assert sink.frames > frames_before_result
-            assert state.deliveries[first_id] is not receipt
-            assert sum("Een momentje." in text for text in synthesized) == 1
+            assert first_id in state.deliveries
+            assert all("Een momentje." not in text for text in synthesized)
         finally:
             release.set()
             await asyncio.wait_for(first, 5)
@@ -127,17 +135,11 @@ async def test_native_receipt_interrupt_allows_second_turn_and_later_result():
 
 
 @pytest.mark.asyncio
-async def test_stop_interrupts_receipt_and_suppresses_final():
-    class Handle:
-        interrupted = False
-        def interrupt(self): self.interrupted = True
+async def test_stop_keeps_transport_receipt_silent_and_suppresses_final():
     class Session:
         def __init__(self): self.handles = []
         def say(self, text, **kwargs):
-            assert kwargs.get("add_to_chat_ctx") is False
-            handle = Handle()
-            self.handles.append(handle)
-            return handle
+            pytest.fail("A transport receipt or suppressed answer must not be spoken")
     class Backend:
         async def events(self, payload):
             yield {"type": "request_acknowledged", "text": "Een momentje."}
@@ -149,6 +151,5 @@ async def test_stop_interrupts_receipt_and_suppresses_final():
     context = Context()
     state = BridgeState(Backend())
     await EvaAgent(state).eva_turn(context, "target", "Onderzoek dit")
-    assert len(context.session.handles) == 1
-    assert context.session.handles[0].interrupted
+    assert not context.session.handles
     assert "target" in state.suppressed

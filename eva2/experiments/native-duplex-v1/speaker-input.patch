@@ -20,12 +20,13 @@
    void start_session();
    void send_interrupt();
    void end_session();
-@@ -102,6 +107,16 @@
+@@ -102,6 +108,17 @@
    void eva_service_output_();
    void eva_output_frames_(uint32_t frames, int64_t timestamp);
    void eva_pump_receipts_();
 +  void eva_update_microphone_();
 +  void eva_pump_input_();
++  void eva_input_task_();
 +  uint64_t eva_capture_token_();
 +  void eva_mic_data_(uint64_t token,const std::vector<uint8_t> &samples);
 +  std::string eva_phase_;
@@ -39,7 +40,18 @@
    EvaOutputProtocol eva_output_;
 --- a/va_pipecat.cpp
 +++ b/va_pipecat.cpp
-@@ -212,8 +212,14 @@
+@@ -197,5 +197,9 @@
++  TaskFunction_t mic_task_entry = [](void *arg) { static_cast<VaPipecat *>(arg)->mic_tx_task_(); };
++  if (this->eva_pcm_protocol_) {
++    mic_task_entry = [](void *arg) { static_cast<VaPipecat *>(arg)->eva_input_task_(); };
++  }
+   task_ok = xTaskCreatePinnedToCore(
+-      [](void *arg) { static_cast<VaPipecat *>(arg)->mic_tx_task_(); },
++      mic_task_entry,
+       "va_mic_tx", 4096, this, 6, &this->mic_tx_task_handle_, tskNO_AFFINITY);
+   if (task_ok != pdPASS) {
+     this->mic_tx_task_handle_ = nullptr;
+@@ -212,8 +216,14 @@
      return;
    }
  
@@ -56,23 +68,7 @@
    this->setup_complete_ = true;
    this->connect_();
  }
-@@ -423,6 +429,15 @@
- }
- 
- void VaPipecat::mic_tx_task_() {
-+  if (this->eva_pcm_protocol_) {
-+    while (true) {
-+      if (this->ws_connected_ && this->ws_handle_) {
-+        this->eva_pump_receipts_();
-+        this->eva_pump_input_();
-+      }
-+      vTaskDelay(pdMS_TO_TICKS(1));
-+    }
-+  }
-   uint8_t chunk[kMicTxChunkBytes];
-   while (true) {
-     if (!this->streaming_ || !this->ws_connected_ || this->ws_handle_ == nullptr) {
-@@ -457,7 +472,7 @@
+@@ -457,7 +467,7 @@
  void VaPipecat::loop() {
    this->playback_main_loop_.fetch_add(1, std::memory_order_release);
    if (this->eva_pcm_protocol_) {
@@ -81,7 +77,7 @@
      return;  // Legacy followup/has_buffered_data completion cannot emit wire receipts.
    }
    this->publish_audio_levels_();
-@@ -1546,6 +1561,7 @@
+@@ -1546,6 +1556,7 @@
  }
  
  void VaPipecat::start_session() {
@@ -89,7 +85,7 @@
    // Open the streaming window. on_mic_data_ will start forwarding frames to
    // the backend until the conversation reaches a terminal phase.
  
-@@ -1922,10 +1938,12 @@
+@@ -1922,10 +1933,12 @@
  }
  
  void VaPipecat::send_interrupt() {

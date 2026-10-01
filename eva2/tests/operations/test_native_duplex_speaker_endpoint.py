@@ -174,6 +174,26 @@ def test_duplicate_credentials_or_devices_cannot_create_ambiguous_binding():
         SpeakerEndpoint(grants=endpoint._grants * 2, pcm=pcm, session=session)
 
 
+def test_failure_diagnostics_keep_structural_cause_without_private_error_text(capsys):
+    async def session(binding, output):
+        pass
+    endpoint, _, _ = configured(session)
+    try:
+        try:
+            raise RuntimeError("private credential and transcript")
+        except RuntimeError as cause:
+            raise wire.WireError("private microphone details") from cause
+    except wire.WireError as error:
+        endpoint._record_failure("conversation", error)
+    failure = endpoint.diagnostics()["recentFailures"][0]
+    assert failure["type"] == "WireError"
+    assert failure["causes"][0]["type"] == "RuntimeError"
+    assert failure["causes"][0]["frames"][-1]["file"] == __file__.split("/")[-1]
+    emitted = capsys.readouterr().out
+    assert "private credential and transcript" not in emitted
+    assert "private microphone details" not in emitted
+
+
 @run_async
 async def test_expiry_during_playback_keeps_transport_until_stop_receipt(tls_pair):
     cleaned = asyncio.Event()

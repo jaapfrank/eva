@@ -90,6 +90,38 @@ int main() {
   receive(v,6,1);
   assert(v.eva_output_.state()==EvaOutputProtocol::State::FAILED);
 
+  // Delayed admission retains the latest pre-roll, in order, across CAPTURE.
+  v.eva_set_muted(false); open(v); v.eva_local_wake(); v.eva_pump_input_();
+  v.eva_update_microphone_();
+  const auto delayed=v.eva_capture_token_();
+  std::vector<uint8_t> preroll(640*30);
+  for (size_t i=0;i<preroll.size();++i) preroll[i]=uint8_t(i/640);
+  v.eva_mic_data_(delayed,preroll);
+  v.eva_pump_input_();
+  assert(v.eva_input_.state()==EvaInputProtocol::State::ARMED);
+  assert(v.eva_mic_fill_==VaPipecat::kMicTxMaxQueuedBytes);
+  capture(v,1);
+  assert(v.eva_capture_token_()==delayed);
+  for (size_t i=0;i<VaPipecat::kMicTxMaxQueuedBytes/640;++i) v.eva_pump_input_();
+  assert(v.eva_mic_fill_==VaPipecat::kMicTxMaxQueuedBytes%640);
+  v.eva_mic_data_(delayed,std::vector<uint8_t>(256,30));
+  v.eva_pump_input_();
+  assert(v.eva_mic_fill_==0 && !v.eva_input_.failed());
+
+  // The native task uses one writer and leaves queued PCM intact while offline.
+  int delays=0;
+  host_task_delay=[&](uint32_t ticks) { assert(ticks==1); throw ++delays; };
+  v.eva_mic_data_(delayed,std::vector<uint8_t>(640,31));
+  try { v.eva_input_task_(); assert(false); } catch (int count) { assert(count==1); }
+  assert(v.eva_mic_fill_==0);
+  v.ws_connected_=false;
+  v.eva_mic_data_(delayed,std::vector<uint8_t>(640,32));
+  try { v.eva_input_task_(); assert(false); } catch (int count) { assert(count==2); }
+  assert(v.eva_mic_fill_==640);
+  v.ws_connected_=true;
+  try { v.eva_input_task_(); assert(false); } catch (int count) { assert(count==3); }
+  assert(v.eva_mic_fill_==0 && !v.eva_input_.failed());
+
   // Local stop must not fabricate a physical STOPPED before quiescence.
   EvaOutputProtocol out;
   uint8_t p[28]{}; std::memcpy(p,"EVA2",4); std::memcpy(p+8,"session!",8); p[4]=1;
@@ -122,6 +154,15 @@ int main() {
         ("CAPTURE_ENDED", 2, 0),
     ]
     assert [p.payload for p in before_reconnect if p.kind==wire.Kind.MICROPHONE] == [bytes([3])*640, bytes([4])*640]
+    last_open = max(i for i, packet in enumerate(packets) if packet.kind == wire.Kind.OPENED)
+    delayed = packets[last_open:]
+    assert [(p.kind.name, p.generation, p.sequence) for p in delayed] == [
+        ("OPENED", 0, 0), ("WAKE", 0, 0), ("CAPTURED", 1, 0),
+        *(("MICROPHONE", 1, sequence) for sequence in range(1, 29)),
+    ]
+    recorded = b"".join(bytes([frame])*640 for frame in range(30))
+    retained = recorded[-16384:] + bytes([30])*256 + bytes([31])*640 + bytes([32])*640
+    assert b"".join(p.payload for p in delayed if p.kind == wire.Kind.MICROPHONE) == retained
 
 
 def test_raw_microphone_callback_keeps_token_across_conversion_and_stop(tmp_path):

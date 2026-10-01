@@ -83,7 +83,7 @@ def entity_and_input(module, client):
     return entity, user_input
 
 
-def test_receipt_and_answer_stream_before_bound_final_response(integration):
+def test_answer_stream_excludes_transport_receipt_before_bound_final_response(integration):
     module, spoken = integration
 
     async def run():
@@ -96,7 +96,7 @@ def test_receipt_and_answer_stream_before_bound_final_response(integration):
                 "satellite_id": "assist_satellite.room", "device_id": "a" * 32,
                 "conversation_id": "bound-conversation", "text": "A household question", "language": "nl",
             }
-            await request["on_receipt"]("Received.")
+            assert request.get("on_receipt") is None
             await request["on_delta"]("The answer ")
             await release.wait()
             await request["on_delta"]("is ready.")
@@ -110,7 +110,7 @@ def test_receipt_and_answer_stream_before_bound_final_response(integration):
             await asyncio.wait_for(log.answer_seen.wait(), 2)
             assert not task.done() and spoken == []
             assert log.deltas == [
-                {"role": "assistant"}, {"content": "Received. "}, {"content": "The answer "},
+                {"role": "assistant"}, {"content": "The answer "},
             ]
             release.set()
             result = await asyncio.wait_for(task, 2)
@@ -120,8 +120,8 @@ def test_receipt_and_answer_stream_before_bound_final_response(integration):
         assert result.conversation_id == "bound-conversation"
         assert result.continue_conversation is True
         assert result.response.language == "nl"
-        assert result.response.speech == {"plain": {"speech": "Received. The answer is ready."}}
-        assert spoken == ["Received. The answer is ready."]
+        assert result.response.speech == {"plain": {"speech": "The answer is ready."}}
+        assert spoken == ["The answer is ready."]
         assert "".join(delta.get("content", "") for delta in log.deltas) == spoken[0]
 
     asyncio.run(run())
@@ -134,7 +134,7 @@ def test_cancellation_drops_late_client_output_without_final_utterance(integrati
         cancelled = asyncio.Event()
 
         async def respond(**request):
-            await request["on_receipt"]("Received.")
+            assert request.get("on_receipt") is None
             await request["on_delta"]("The answer ")
             try:
                 await asyncio.Event().wait()
@@ -158,7 +158,7 @@ def test_cancellation_drops_late_client_output_without_final_utterance(integrati
         assert cancelled.is_set()
         assert spoken == []
         assert log.deltas == [
-            {"role": "assistant"}, {"content": "Received. "}, {"content": "The answer "},
+            {"role": "assistant"}, {"content": "The answer "},
         ]
 
     asyncio.run(run())

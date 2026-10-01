@@ -997,8 +997,32 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T10:55:07.859961+00:00",
+        "checkedAt": "2026-10-01T13:04:32.018573+00:00",
         "deliveries": [
+          {
+            "title": "Woonkamer: native inputtaak zonder onnodig legacy-buffer",
+            "date": "1 oktober",
+            "state": "installed",
+            "result": "Gepinde build bevestigd:1312→32byte native entry; geen grotere taakstack.2hostcontroles en onafhankelijke review GO; één OTA, juiste apparaat/nieuwe compile/mute uit/native verbinding.",
+            "remaining": "Echte begroeting en direct-spraakproef nog open; exacte falende taak niet uit de opgeslagen crash bewezen.",
+            "source": "eva2/evidence/product/c3-native-input-task-20261001.json"
+          },
+          {
+            "title": "Woonkamer: continue audioroute aangesloten met startbuffercorrectie",
+            "date": "1 oktober",
+            "state": "installed",
+            "result": "Bestaande native route hergebruikt; ARMED-buffer stopt de verbinding niet meer bij vertraagde start. Eén OTA, exacte target/source/binary-binding en werkelijke native verbinding gecontroleerd. HA/media spreken transportstatus niet meer uit.",
+            "remaining": "Eigenaarproef mislukt: circa20s wit/blauw/rood, geen antwoord. Native startfout wordt gericht hersteld; C3/C4 en producttellers blijven open.",
+            "source": "eva2/evidence/product/c3-native-preroll-20261001.json"
+          },
+          {
+            "title": "Automatische Een momentje uit HA-spraak verwijderd",
+            "date": "1 oktober",
+            "state": "installed",
+            "result": "Transportstatus niet meer in ChatLog/TTS; echte modelreacties blijven behouden. Twee gerichte controles, onafhankelijke eindreview GO en exact geïnstalleerde bron/HA-bereikbaarheid bevestigd.",
+            "remaining": "Direct spreken zonder nieuw wakeword tijdens denken/spreken nog open; geen volledige C3 of extra grote functie.",
+            "source": "eva2/evidence/product/c3-natural-speech-receipt-20261001.json"
+          },
           {
             "title": "Geblokkeerd onderzoek: bevindingen blijven in de terugmelding",
             "date": "1 oktober",
@@ -3211,25 +3235,24 @@
           }
         ],
         "now": {
-          "title": "C1.2 — juiste bron en bruikbare onderzoeksuitkomst nog open",
-          "state": "planned",
-          "detail": "Tussenvragen komen volgens eigenaar correct vóór onderzoek terug. Terugmelding van bewaarde bevindingen bij geblokkeerd onderzoek is geïnstalleerd en onafhankelijk goedgekeurd. Andere afvalagenda bevat volgens eigenaar data; de juiste bron vinden en een volledig resultaat blijven open. Er staat nu geen extra uitvoerder aan."
+          "title": "C3.1 — startcorrectie geïnstalleerd; echte begroeting controleren",
+          "state": "in_progress",
+          "detail": "Native inputtaak gebruikt1280byte minder onnodige stackruimte. Bron/binary gericht gecontroleerd en éénmaal op Woonkamer geïnstalleerd; apparaat terug verbonden en mute uit. Werkelijk antwoord nog niet bevestigd."
         },
         "next": {
-          "title": "C1.2 — onvolledige bronselectie gericht controleren",
-          "detail": "Bestaande algemene inventaris-/agenda- en onderzoeksroutes hergebruiken. Geen Circulus-herhaling, vaste afvalfunctie of nieuwe installatieketen."
+          "title": "Direct doorpraten via Woonkamer afmaken",
+          "detail": "Eerst hoorbare begroeting na wake; daarna nieuwe vraag zonder wakeword tijdens denken/spreken en later onderzoeksresultaat. Overkapping volgt dezelfde bewezen route."
         },
         "ownerAction": {
-          "title": "Aanmelding gemeld; geen nieuwe camerakeuze nodig",
+          "title": "Zeg Hey Eva, hallo",
           "steps": [
-            "Je hebt gemeld dat je bent aangemeld; de eigen vergelijkingskoppeling moet nog worden bevestigd.",
-            "Voor I2 hoef je geen camera of afvalagenda vooraf te kiezen: Eva moet passende bronnen zelf ontdekken.",
-            "De bestaande hoorbare speaker- en telefoonproeven blijven apart open."
+            "Laat mute uit en kom niet aan de knop; zeg Hey Eva, hallo.",
+            "Meld of ze antwoordt of opnieuw herstart."
           ],
-          "expected": "Geen nieuwe aanmeldpoging of vooraf gekozen broncombinatie eisen zonder actuele controle. Aangemeld zijn is nog geen bewezen native modeltoegang."
+          "expected": "Een werkelijk hoorbaar antwoord; dit alleen rondt full duplex nog niet af."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T10:55:07.859961+00:00",
+        "reviewedAt": "2026-10-01T13:04:32.018573+00:00",
         "previousOwnerAction": {
           "title": "Probeer onderbreken op je telefoon",
           "steps": [
@@ -13060,7 +13083,7 @@
           ]
         }
       ],
-      "nextAction": "O1.2 connect chosen modules to ordinary package preparation, starting with existing verified HA input/graph boundary; retain full voice/HA/browser scope.",
+      "nextAction": "C3.1: retain continuous native audio/session code, diagnose its physical startup boundary, and support direct speech without another wakeword during thinking and speaking; no new speech platform.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13375,8 +13398,8 @@
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "General HA, registered speaker identities, native sessions and later result delivery.",
-            "remainingGap": "**Defect:** pinned HA pipeline does not flush short acknowledgement segments. **Evidence:** complete behavior on both physical devices.",
-            "nextAction": "Retain bindings; solve the named transport gap only if required by the end condition. Verify actual speakers; no assumed firmware rebuild.",
+            "remainingGap": "Werkelijk antwoord op wakepoging en daarna direct doorpraten tijdens denken/spreken nog te bevestigen. Eerdere mislukte proef behouden.",
+            "nextAction": "Finish actual direct-speech outcome on Woonkamer, then reuse the same verified route on Overkapping; no new speech engine.",
             "evidencePaths": [
               "eva2/evidence/product/household-result-continuity-installed-20260925.json",
               "eva2/evidence/product/ha-short-receipt-boundary-20260925.json"
@@ -13385,48 +13408,69 @@
             "replacementJustified": false
           },
           "owner": "/root",
-          "activeWorker": null,
+          "activeWorker": "/root",
           "baseCommit": "63b45309",
           "assignment": {
-            "stage": "server_boundary_verified_device_observation_missing",
-            "scope": "Existing speaker endpoint, LiveKit session and retained service logs; no firmware changes.",
-            "outcome": "Determine whether existing open-source device audio can serve both Voice PEs with the same Eva core.",
-            "endCondition": "Locate reproducible failing boundary and make only the necessary correction, or identify the missing physical observation.",
-            "effort": "One scoped source/log diagnosis; no new Eva model calls planned; credit cost unknown",
-            "result": "Real installed TLS wake/capture/mute exchange passed without audio/model calls; both device core bindings ready. Historical candidate failure not reproduced."
+            "stage": "installed_native_task_correction_physical_greeting_pending",
+            "scope": "C3.1 physical native start failure only; executor read-only lifecycle check",
+            "outcome": "Direct verder praten tijdens denken en spreken zonder herhaald wakeword; geen vaste transportzin bij iedere vraag.",
+            "activeWorkers": [],
+            "effort": "Reuse retained candidate and current diagnostics. Focused verification only; unknown development credits, no model calls so far.",
+            "result": "One Woonkamer native OTA; encrypted identity and native peer connection verified. One media image update per route, runtime settings/mounts retained. Focused existing tests passed; no unmodified retries or rollback."
           },
           "evidence": "eva2/evidence/product/c3-existing-candidate-session-20260928.json",
           "ownerTrial": {
-            "status": "failed_owner_report",
+            "status": "requested_after_targeted_correction",
             "steps": [
-              "On each speaker use Hey Eva and ask for research about Home Assistant Cloud speech, with sources.",
-              "When it listens again ask Hoe gaat het met jou?",
-              "Report speaker, whether another wakeword was needed, interim response and later research return."
+              "Zeg Hey Eva, hallo, zonder knopbediening; meldt antwoord of herstart."
             ],
-            "blocksIndependentWork": false
+            "expected": "Het gesprek blijft open tijdens denken en spreken; nieuwe vraag krijgt haar eigen antwoord, aangenomen onderzoek blijft lopen.",
+            "blocksIndependentWork": false,
+            "report": "Fresh observed attempt: mute true then false, Hey Eva recognized probability1.00, API reset by peer; owner reports restart/no reply."
           },
-          "remaining": "Physical full-duplex candidate failed after wakeword and was rolled back. Current HTTP research admission succeeds but is slow; physical speech and interruption remain open.",
+          "remaining": "Werkelijk antwoord op wakepoging en daarna direct doorpraten tijdens denken/spreken nog te bevestigen. Eerdere mislukte proef behouden.",
           "reviewer": "/root/platform_research_20260927",
           "dashboardComponent": "voice",
           "remainingTasks": [
             {
               "id": "C3.1",
               "title": "Doorpraten via woonkamer-speaker",
-              "status": "blocked",
+              "status": "in_progress",
               "kind": "aansluiten",
               "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
-              "owner": "Codex",
-              "blocker": "Alleen bekende fysieke fout van vóór reparatie bewaard. Actuele woonkamerspeakerproef gevraagd; geen nieuwe fout of succesvolle fysieke werking aangetoond.",
-              "latestEvidence": "eva2/evidence/product/c3-retained-trace-20260929.json",
+              "owner": "Codex /root",
+              "blocker": null,
+              "latestEvidence": "eva2/evidence/product/c3-native-input-task-20261001.json",
               "assignment": {
-                "baseCommit": "eef04676",
-                "owner": "Codex",
+                "baseCommit": "cb28e404",
+                "owner": "/root",
                 "files": [
-                  "eva2/evidence/product/c3-retained-trace-20260929.json"
+                  "eva2/deploy/home-assistant/custom_components/eva2_voice/conversation.py",
+                  "eva2/src/eva/voice_service/agent.py",
+                  "existing continuous speaker startup route only if a concrete gap is established",
+                  "eva2/experiments/native-duplex-v1/eva_input_driver.cpp",
+                  "eva2/tests/operations/test_native_duplex_input_firmware.py"
                 ],
-                "outcome": "Actuele fysieke fout onderscheiden van reeds gerepareerde oude fout",
+                "outcome": "Direct verder praten tijdens denken en spreken zonder herhaald wakeword; geen vaste transportzin bij iedere vraag.",
                 "endCondition": "Nieuwe bewaarde fysieke waarneming of expliciet ontbrekend bewijs; geen ongewijzigde modelproef",
-                "actual": "Read-only HA status en één bewaarde trace; nul model/audio-calls; credits onbekend."
+                "actual": "2 HA adapter tests,17 shared-source tests,17 packaged native and17 older owner-module tests;2 C++ host cases. No new model/audio/house-action request before owner trial; credits unknown.",
+                "activeWorkers": [],
+                "stage": "installed_native_task_correction_physical_greeting_pending",
+                "currentAction": "Reviewed task-dispatch correction installed once; correct device/new compile and native peer verified, mute off. Await genuine greeting/direct-speech result; no fullC3 claim.",
+                "finding": "ARMED capture deliberately buffers early speech but cannot drain before CAPTURE. Existing 16KiB queue incorrectly treats about 0.5s of admission delay as fatal overflow. Source hazard established; historical physical failure attribution remains unknown.",
+                "result": "Actual compiled native entry1312→32bytes,1280overhead removed; stack allocation4096unchanged.2host tests3.46s and independent source/build GO. One targeted OTA18.852s, no rollback."
+              },
+              "checkedAt": "2026-10-01T13:04:32.018573+00:00",
+              "remaining": "Werkelijk antwoord op wakepoging en daarna direct doorpraten tijdens denken/spreken nog te bevestigen. Eerdere mislukte proef behouden.",
+              "installation": "installed_native_continuous_candidate_woonkamer",
+              "ownerTrial": {
+                "status": "requested_after_targeted_correction",
+                "steps": [
+                  "Zeg Hey Eva, hallo, zonder knopbediening; meldt antwoord of herstart."
+                ],
+                "expected": "Het gesprek blijft open tijdens denken en spreken; nieuwe vraag krijgt haar eigen antwoord, aangenomen onderzoek blijft lopen.",
+                "blocksIndependentWork": false,
+                "report": "Fresh observed attempt: mute true then false, Hey Eva recognized probability1.00, API reset by peer; owner reports restart/no reply."
               }
             },
             {
@@ -13517,20 +13561,20 @@
                 "outcome": "Install existing wakeword stop-and-relisten overlay on ordinary HA route while retaining device audio, wake model, settings and shared Eva core.",
                 "finish": "Existing small task end condition unchanged: during Eva speech interrupt and continue with a new question. Installed transport/source checks do not replace physical proof.",
                 "estimate": "Reuse exact overlay and cached pinned ESPHome2026.6.2 build; focused compile/config/cancellation checks and independent review, then authorized OTA. No planned model/audio/house action; development credits unknown.",
-                "stage": "installed_waiting_physical_observation",
+                "stage": "native_installed_direct_speech_observation_pending",
                 "activeWorkers": [],
-                "result": "Existing exact overlay compiled, independently reviewed and uploaded once. Native authentication, new event entity and preserved HA selections/mute verified. Physical silence/new question unobserved; original doneWhen unchanged."
+                "result": "Earlier wakeword/relisten install remains historical evidence. Woonkamer now has existing continuous candidate plus ARMED pre-roll fix; physical direct speech/interrupt outcome pending."
               },
-              "latestEvidence": "eva2/evidence/product/c4-device-boundary-20261001.json",
-              "installation": "installed_woonkamer",
+              "latestEvidence": "eva2/evidence/product/c3-native-preroll-20261001.json",
+              "installation": "native_continuous_candidate_replaced_prior_wakeword_overlay",
               "ownerTrial": {
-                "status": "pending",
+                "status": "requested",
                 "steps": [
-                  "Haal de woonkamerspeaker van mute en vraag Hey Eva, vertel kort iets over Mars.",
-                  "Zeg tijdens het antwoord één keer Hey Eva; stel Hoe gaat het met jou? zodra ze luistert.",
-                  "Bevestig of het oude antwoord stopt en Eva op de nieuwe vraag antwoordt."
+                  "Op Woonkamer eenmaal Hey Eva, zoek met bronnen uit wat Home Assistant Cloud voor spraak doet.",
+                  "Tijdens nadenken direct Hoe gaat het met jou? Zonder nieuw wakeword.",
+                  "Tijdens gesproken antwoord direct iets zeggen. Geef door of ze luistert, de tussenvraag beantwoordt en het onderzoek later terugbrengt."
                 ],
-                "expected": "Eén wakeword onderbreekt spraak en hervat luisteren; gewone spraak, Stop en mute blijven werken.",
+                "expected": "Het gesprek blijft open tijdens denken en spreken; nieuwe vraag krijgt haar eigen antwoord, aangenomen onderzoek blijft lopen.",
                 "blocksIndependentWork": false
               }
             },
@@ -13666,7 +13710,8 @@
                   "eva2/evidence/product/m1-cross-channel-recall-20260929.json"
                 ],
                 "budget": "One ordinary question; no seeded memory or repeat; credits unknown.",
-                "doneWhen": "Response compared against prior Telegram text, no correction supplied in question; private-channel boundaries retained."
+                "doneWhen": "Response compared against prior Telegram text, no correction supplied in question; private-channel boundaries retained.",
+                "activeWorkers": []
               },
               "completedAt": "2026-09-29T11:28:34.468499+00:00",
               "latestEvidence": "eva2/evidence/product/m1-cross-channel-recall-20260929.json",
@@ -13788,7 +13833,8 @@
                   "eva2/evidence/product/m3-expired-preference-20260929.json"
                 ],
                 "estimate": "One existing-bank recall and one current contact generation; no seeding or retry; credits unknown.",
-                "doneWhen": "Current Sol returns durable preference from actual retained source after exception ended; bounded independent review."
+                "doneWhen": "Current Sol returns durable preference from actual retained source after exception ended; bounded independent review.",
+                "activeWorkers": []
               },
               "completedAt": "2026-09-29T11:32:06.670825+00:00",
               "latestEvidence": "eva2/evidence/product/m3-expired-preference-20260929.json",
@@ -13811,7 +13857,8 @@
                   "eva2/evidence/product/m3-style-fidelity-20260929.json"
                 ],
                 "budget": "One changed-cause existing synthetic mirror refresh and one Sol answer; no retention/retry; credits unknown.",
-                "doneWhen": "Refresh preserves max40/no-numbered-list exactly and later desk-organizing answer complies; targeted checks, independent review and install."
+                "doneWhen": "Refresh preserves max40/no-numbered-list exactly and later desk-organizing answer complies; targeted checks, independent review and install.",
+                "activeWorkers": []
               },
               "completedAt": "2026-09-29T11:39:30.288738+00:00",
               "latestEvidence": "eva2/evidence/product/m3-style-fidelity-20260929.json",
@@ -14074,7 +14121,8 @@
                 ],
                 "estimate": "One ordinary owner request, existing task/provider caps, no automatic repeat; credits unknown.",
                 "doneWhen": "Concrete failure linked to recorded request/stream and smallest sufficient correction, or explicit evidence gap with no speculative timeout increase.",
-                "stage": "bounded_diagnosis_finished_cause_unproven"
+                "stage": "bounded_diagnosis_finished_cause_unproven",
+                "activeWorkers": []
               },
               "latestEvidence": "eva2/evidence/product/t2-readonly-followup-20260929.json",
               "remaining": "Timeout niet gereproduceerd; uitleestaak geslaagd. Oorzaak nog onbekend. Geen ongewijzigde proefherhaling; nieuwe concrete fout met geïnstalleerde meting nodig voor gerichte reparatie."
@@ -14282,7 +14330,8 @@
                 ],
                 "doneWhen": "Live native session selected without pending task; closed/expired/nonnative excluded; delivery gates unchanged; reviewed installed correction. Audible/useful delivery remains separate.",
                 "estimate": "One focused PostgreSQL regression and bounded review; zero planned model calls or announcements; credits unknown.",
-                "stage": "destination_fix_installed_real_contribution_open"
+                "stage": "destination_fix_installed_real_contribution_open",
+                "activeWorkers": []
               },
               "latestEvidence": "eva2/evidence/product/i1-native-destination-20260929.json",
               "blocker": "Geen actuele native speakersessie bij livecontrole; echte bijdrage en hoorbare bruikbaarheid nog niet aangetoond. Koppelfout technisch opgelost en geïnstalleerd; bestaand reflectiebudget blijft gelden."
@@ -14517,7 +14566,8 @@
                   "Exactly one result returned to private website"
                 ],
                 "estimate": "Eén planningsvraag, één bestaande begrensde uitvoerstap; geen herhaling. Credits onbekend.",
-                "stage": "installed_existing_route_verified"
+                "stage": "installed_existing_route_verified",
+                "activeWorkers": []
               },
               "completedAt": "2026-09-30T14:06:47.502031+00:00",
               "result": "Werkelijk volgende dag autonoom gestart15:00 en afgerond15:01:29. Concept behouden; zondagplan155woorden/3activiteiten/maximaal8euro opgeslagen en eenmaal op privéwebsite teruggekomen. Onafhankelijke review GO; eigenaaracceptatie apart."
@@ -14590,7 +14640,8 @@
                   "eva2/evidence/product/aide-bounded-outcome-20260929.json"
                 ],
                 "estimate": "Existing offline evaluator only; zero new provider calls; credits unknown.",
-                "doneWhen": "Frozen development baseline reported, no candidate/holdout claim, independent review, current board and Git."
+                "doneWhen": "Frozen development baseline reported, no candidate/holdout claim, independent review, current board and Git.",
+                "activeWorkers": []
               },
               "completedAt": "2026-09-29T11:51:14.972842+00:00",
               "outcome": "failed_trial_closed_not_product_delivery",
@@ -14861,7 +14912,8 @@
                 ],
                 "baseCommit": "e0521808",
                 "estimate": "One bounded implementation, focused database/adapter checks and bundled review; no planned model calls; credits unknown",
-                "finish": "Durable pause blocks new invocations; resume retains registration; revoke and host disable cannot be bypassed"
+                "finish": "Durable pause blocks new invocations; resume retains registration; revoke and host disable cannot be bypassed",
+                "activeWorkers": []
               },
               "completedAt": "2026-09-29T13:13:47.185422+00:00",
               "latestEvidence": "eva2/evidence/product/o2-mcp-pause-20260929.json",
@@ -14961,8 +15013,8 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Echte CLI accepteert twee canonieke persistente hoofdmodelconfiguraties; onafhankelijke review GO voor validatie/readback. Eigen OpenClaw/Hermes-login en actuele catalogus/toegang ontbreken. Native hostselectie, helper/tool/stopdekking en volledige P1.1 blijven open; geen modelvervanging of extra Eva-functie.",
-              "latestEvidence": "eva2/evidence/product/p1-openclaw-host-config-20261001.json",
+              "remaining": "Eigen profielstatus gecontroleerd. OpenClaw/Hermes-aanmelding ontbreekt; Agent Zero opgeslagen aanmelding aanwezig, gewone verversing vóór echt gebruik vereist. Volledige native selectie/helper/tool/stopdekking en P1.1 open.",
+              "latestEvidence": "eva2/evidence/product/p1-native-auth-status-20261001.json",
               "assignment": {
                 "baseCommit": "a4524901",
                 "owner": "/root",
@@ -14983,9 +15035,9 @@
                 "reviewer": "/root/review_telegram_draft_lane",
                 "reviewResult": "GO for configuration acceptance/readback only"
               },
-              "blocker": "Eigen OpenClaw- en Hermes-aanmeldingen ontbreken. Nieuwe native code pas starten wanneer Jaap klaarzit; verlopen code niet hergebruiken. Niet-aangemelde catalogus bewijst geen modelafwijzing.",
+              "blocker": "Actueel lokaal gecontroleerd zonder netwerk: OpenClaw Not logged in; Hermes codex_auth_missing. Agent Zero heeft eigen opgeslagen aanmelding met refreshmogelijkheid; geen nieuwe login nodig. Eigen OpenClaw/Hermes-aanmelding pas voor vergelijking, blokkeert C3 niet.",
               "nextImplementation": "Use these owned persisted configurations for native startup after own authentication. No repeated config/catalog probe without a changed cause or new evidence. Prior Agent Zero helper-envelope refusal remains unavailable; no hidden helper disable, auth-token copying or quota increase.",
-              "checkedAt": "2026-10-01T04:06:28.120681+00:00"
+              "checkedAt": "2026-10-01T11:32:00+00:00"
             },
             {
               "id": "P1.2",
@@ -15003,7 +15055,8 @@
                 "existing": "EV-003 development cadence, C01/C04 public development cases, existing Inspect runner and native admission observations.",
                 "gap": "Current pins lack a bounded development run manifest with aggregate limits.",
                 "finish": "Freeze two known development cases, order, per-sample and aggregate limits; retain unavailable access and unseen final dataset as open. No model run.",
-                "estimate": "15–25 minutes; zero provider calls; credits unknown."
+                "estimate": "15–25 minutes; zero provider calls; credits unknown.",
+                "activeWorkers": []
               },
               "remaining": "Kleine ontwikkelronde vastgelegd: C01/C04, 2epochs, 5systemen, maximaal40providerpogingen en gedeelde grenzen. Niet uitvoerbaar zolang native toelating ontbreekt. Definitieve ongeziene eindtaken en familiebudgetten blijven open.",
               "evidence": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#developmentPlan"
@@ -15165,7 +15218,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "O1",
+      "activeSliceId": "C3",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

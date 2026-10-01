@@ -1,0 +1,79 @@
+{
+  "taskId": "C3.1",
+  "scope": "Keep HTTP acceptance status available to UI without speaking fixed filler for every input, through existing shared media agent.",
+  "sourceReview": "eva2/reviews/c3-media-transport-status-20261001.md",
+  "installed": [
+    {
+      "route": "native",
+      "image": "sha256:5c403643e6fc0504b2ec90c5e3b4d11fbc709ad320aae5ad9ace86043c001914",
+      "sourceSha256": "2de5e47c993bd2094fcf735e0b3c71e18cda9199e8b5c2debb3864ced6194c53",
+      "running": true,
+      "runtimeConfigurationPreserved": true,
+      "hostConfigurationPreserved": true,
+      "hostNormalization": [
+        "Mount/Binds order",
+        "empty DNS list vs null"
+      ],
+      "mountsPreserved": true,
+      "starts": 1,
+      "rollbackPerformed": false
+    },
+    {
+      "route": "owner",
+      "image": "sha256:4bd59183eb14cc9f99e402498664ae127b9c588960aaf0f02b8ccf3bd4d48184",
+      "sourceSha256": "a99cd54ddc99584f92f07dbe93e961e670d6f28fbe58d11ea36d0dd131b80d58",
+      "running": true,
+      "runtimeConfigurationPreserved": true,
+      "hostConfigurationPreserved": true,
+      "hostNormalization": [
+        "Mount/Binds order",
+        "empty DNS list vs null"
+      ],
+      "mountsPreserved": true,
+      "starts": 1,
+      "rollbackPerformed": false
+    }
+  ],
+  "packagedCandidateTests": [
+    {
+      "route": "native",
+      "image": "sha256:5c403643e6fc0504b2ec90c5e3b4d11fbc709ad320aae5ad9ace86043c001914",
+      "exit": 0,
+      "seconds": 8.237,
+      "passed": 17,
+      "privateLog": "candidate-native-receipt-tests.log"
+    },
+    {
+      "route": "owner",
+      "image": "sha256:4bd59183eb14cc9f99e402498664ae127b9c588960aaf0f02b8ccf3bd4d48184",
+      "exit": 0,
+      "seconds": 10.689,
+      "passed": 17,
+      "privateLog": "candidate-owner-receipt-tests.log"
+    }
+  ],
+  "ownerModule": {
+    "beforeSha256": "b77050d809440386b0357037bafef26000dda3a7e8cde6f005cf18aafe259259",
+    "afterSha256": "a99cd54ddc99584f92f07dbe93e961e670d6f28fbe58d11ea36d0dd131b80d58",
+    "onlyAcknowledgementBranchChanged": true,
+    "olderUnrelatedModuleContentPreserved": true
+  },
+  "nativeReadinessAfterUpdate": {
+    "registeredDevices": 2,
+    "bothReady": true,
+    "bothWorkReturnsEnabled": true
+  },
+  "householdFirmwareStatus": "Woonkamer native pre-roll candidate installed; TLS peer connection and encrypted API identity observed, physical conversation open",
+  "limits": [
+    "No speech/model/house-action request used for installation check",
+    "A silent transport receipt is not a faster model answer or a physical full-duplex pass"
+  ],
+  "usage": {
+    "newModelCalls": 0,
+    "newAudioCalls": 0,
+    "newHouseActions": 0,
+    "developmentCredits": "unknown"
+  },
+  "recovery": "Previous immutable images, private compose and module bytes retained; no rollback performed",
+  "ownerCoreReadyAfterUpdate": true
+}

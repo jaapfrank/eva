@@ -1,0 +1,89 @@
+{
+  "taskId": "C3.1",
+  "status": "installed_physical_trial_failed",
+  "sourceHazard": "ARMED starts pre-roll but cannot transmit before CAPTURE. A fixed 16KiB queue treated delayed admission above about 0.512s as fatal, including silence.",
+  "historicalPhysicalCause": "not established",
+  "correction": "Only ARMED uses a rolling pre-roll queue in existing storage. CAPTURE retains exact epoch/order. STARTING/ACTIVE overflow and stop/mute/reconnect enforcement remain unchanged.",
+  "sourceSha256": "4c90e13ff636dd50d602ed1afc97f6dc86982fb632e24c4ea99d0290ed823b14",
+  "tests": {
+    "passed": 2,
+    "seconds": 3.87,
+    "route": "Actual C++ input driver and mic wrapper on existing host fixtures with UBSan",
+    "delayedCaptureBytes": 19200,
+    "retainedBytes": 16384,
+    "verified": "Retained PCM exact chronological bytes, same capture token, epoch1 PCM sequences1-26, active overflow and stop/mute/reconnect/conversion guards"
+  },
+  "firmwareBuild": {
+    "exit": 0,
+    "seconds": 82.413,
+    "sourceSha256": "4c90e13ff636dd50d602ed1afc97f6dc86982fb632e24c4ea99d0290ed823b14",
+    "firmwareUploaded": false,
+    "platformioCache": "original_administrator_cache",
+    "binarySha256": "80c03833bb3108ad2651aa27cf6de82cfa81289def7f23d4d4df73ff0c6a8c14",
+    "binaryBytes": 2936032
+  },
+  "runtimeChecks": {
+    "continuousServiceSourceMatches": true,
+    "bothHouseholdCoreBindingsReady": true,
+    "bothWorkReturnsEnabled": true,
+    "firmwareCredentialMatchesService": true,
+    "firmwareCAValidForActualServer": true,
+    "enabledHyperVRuleMatchesBothSpeakers": true,
+    "physicalNativeSessionObserved": true,
+    "physicalConversationSucceeded": false
+  },
+  "limits": [
+    "Only latest ~0.512s retained before CAPTURE; no promise to retain an entire utterance under long admission delay",
+    "Code hazard corrected, not proven physical full duplex or historical fault attribution"
+  ],
+  "usage": {
+    "modelCalls": 0,
+    "audioActions": 0,
+    "houseActions": 0,
+    "developmentCredits": "unknown"
+  },
+  "target": {
+    "name": "home-assistant-voice-0a16e0",
+    "ip": "10.0.20.202",
+    "macSuffix": "0A:16:E0",
+    "encryptedApiAuthenticated": true,
+    "nameAndMacMatchIntendedWoonkamer": true,
+    "checkedBeforeUpload": true
+  },
+  "compiledBindingChecks": {
+    "compiledDriverMatchesReviewedSource": true,
+    "wrapperConfigUnchanged": true,
+    "binaryContainsProvisionedEndpoint": true,
+    "binaryContainsProvisionedCredential": true,
+    "binaryContainsPinnedCA": true
+  },
+  "generatedMainSha256": "2dc9ff42ef3425b0b798a02a7bac3cc34e7acf93c0d6dbea2a9ed61317ee5d46",
+  "generatedMainMatchesHistoricalReceipt": false,
+  "generatedMainNote": "Generated main hash differs from historical build. Actual wrapper remains unchanged, exact driver copied, intended endpoint/credential/CA checked in OTA bytes and current encrypted device identity verified; no assumption that old binary hash applies.",
+  "checkedAt": "2026-10-01T11:59:11.892254+00:00",
+  "installation": {
+    "exit": 0,
+    "seconds": 18.967,
+    "binarySha256": "80c03833bb3108ad2651aa27cf6de82cfa81289def7f23d4d4df73ff0c6a8c14",
+    "intendedDevice": "home-assistant-voice-0a16e0",
+    "uploads": 1,
+    "automaticRollback": false,
+    "postUpdateDevice": {
+      "name": "home-assistant-voice-0a16e0",
+      "macSuffix": "0A:16:E0",
+      "apiAuthentication": "passed",
+      "version": "2026.6.2",
+      "compilationTime": "2026-10-01 13:42:40 +0200",
+      "currentNativeTcpConnection": true
+    },
+    "nativePeerConnected": "10.0.20.202 to 10.0.20.46:44715",
+    "previousBinaryPreserved": true,
+    "otherSpeakerFirmwareChanged": false
+  },
+  "ownerTrial": {
+    "status": "failed",
+    "scope": "Woonkamer: one Hey Eva, direct next question during thinking, direct interruption while speaking, later original research return",
+    "physicalConversationPassed": false,
+    "report": "After physical mute on/off and Hey Eva, about20s then white, blue lights, red; no successful answer."
+  }
+}

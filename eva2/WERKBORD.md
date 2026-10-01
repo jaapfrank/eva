@@ -1,6 +1,27 @@
 # EVA2 werkbord
 
-## Actueel: C1.2 — bevindingen bij geblokkeerd onderzoek geïnstalleerd
+## Actueel: C3.1 — inputtaakcorrectie geïnstalleerd; fysieke begroeting open
+
+**Laatste geïnstalleerd:** native taak direct naar haar bestaande inputloop,
+zonder ongebruikt legacybuffer. Echte ELF:1312→32byte entry,1280byte overhead weg;
+4096byte taakstack blijft gelijk. Gepinde build en kandidaatbytes gecontroleerd,
+2hostcontroles3,46s; onafhankelijke bron-/buildreview GO. Eén gerichte OTA18,852s,
+juiste apparaat/nieuwe compile14:50:20/mute uit/native verbinding bevestigd.
+[Bewijs](evidence/product/c3-native-input-task-20261001.json) · [Review](reviews/c3-native-input-task-20261001.md).
+
+**Aanleiding/eerlijk open:** echte eerdere poging herkende Hey Eva, daarna
+verbinding weg en herstart/geen antwoord. Opgeslagen crashpad bevat stack-overloop;
+de precieze taak is niet bewezen. Alleen softwaremute uitzetten was onvoldoende.
+Nieuwe hoorbare begroeting is gevraagd; daarna direct praten tijdens denken en
+spreken, juiste tussenantwoord en later onderzoeksresultaat. Geen volledige
+C3/C4 of grote functieafronding. Geen bouwuitvoerder actief tijdens deze proef.
+
+**Behouden:** bestaande PCM/LiveKit-route, ARMED-pre-roll, echte Eva-antwoorden,
+mute/stop/tokens/volgorde en gegevens. Vaste transportzin wordt niet meer door
+HA/media uitgesproken. Overkapping blijft gewone route; geen rollback of volledige
+herinstallatie.44 kleine taken,11 technisch groen/33 open ongewijzigd.
+
+## Vorige oplevering: C1.2 — bevindingen bij geblokkeerd onderzoek geïnstalleerd
 
 De echte Telegramproef toont korte tussenvragen vóór de onderzoeksreactie,
 gekoppeld aan hun eigen bericht. De achtergrondopdracht draaide 144 seconden
@@ -42,7 +63,7 @@ voorbereid/gestart; bevestigde keuzes bewaard. Spraak/browser blijven open.
 Grote productteller en menselijke acceptaties ongewijzigd.
 
 
-## Actueel: eigenaarcorrectie I2 — algemene intelligentie, geen vuilnisbakfunctie
+## Eerder: eigenaarcorrectie I2 — algemene intelligentie, geen vuilnisbakfunctie
 
 **I2.1 wacht niet meer op Jaap.** Het voorbeeld met vuilnisbakken bedoelt dat Eva
 zelf geschikte bronnen ontdekt en een passende automatisering maakt. I2.1/I2.2
@@ -57,11 +78,11 @@ Geen nieuw volledig groot onderdeel afgerond; huidige 2-van-9-teller behouden.
 O1.2 gekozen modules blijft de lopende uitvoering; deze correctie is planonderhoud.
 
 
-## Actueel: O1.2 — gekozen modules aansluiten
+## Eerder: O1.2 — gekozen modules aansluiten
 
 **Nu:** één uitvoerder, integratiebasis `85401486`. Weglaten werkt op de nieuwe O1.1-tekstinstallatie; de gewone factory weigert gekozen providers nog. Bestaande keuze, privétoegang, providercontrole en HA-configuratie hergebruiken; gekozen HA aan de bestaande doelgraph koppelen en op de echte route controleren. Geen fysieke huisactie of nieuwe betaalde providerroute gepland. Spraak/HA/browser toevoegen of weglaten blijven de volledige O1-scope; O1.2 en grote onderdeel nog open.
 
-## Actueel: O1.1 technisch opgeleverd — O1.2 hierna
+## Eerder: O1.1 technisch opgeleverd — O1.2 hierna
 
 **Opgeleverd:** de gewone wizard heeft een afzonderlijke lokale Windows/WSL-tekstinstallatie voorbereid en gestart zonder handgeschreven instellingen. De browserknop **Open de nieuwe Eva en begin een gesprek** opent de echte gesprekpagina. Twee modelantwoorden zijn opgeslagen; de tweede vraag haalde de eerdere begroeting correct terug. Onafhankelijke review **GO**, inclusief de uiteindelijke pakketbestanden en de echte browseringang. [Bewijs](evidence/product/installer-ordinary-target-20261001.json) · [Review](reviews/installer-ordinary-target-20261001.md).
 
@@ -71,7 +92,7 @@ Eén gewone voorbereidingsaanvraag; concrete schema/configuratieproblemen gerich
 
 **Hierna:** O1.2 verbindt gekozen optionele providers met dezelfde installatie. Deze target slaat Telegram, HA, e-mail en adaptive bewust over. Publieke release/platformsupport en menselijke acceptatie blijven open. O1 als geheel en grote productteller ongewijzigd. O1.2 is nu gestart; volledig goal actief.
 
-## Actueel: P1.1 — persistente native configuraties beoordeeld; toegang open
+## Eerder: P1.1 — persistente native configuraties beoordeeld; toegang open
 
 Basis `a4524901`; geen uitvoerder of loginproces actief. Bestaande echte OpenClaw-CLI accepteert beide eigen configuraties en leest alle bedoelde velden ongewijzigd terug: canonieke `openai/`-modelrefs, modelgebonden Codex-runtime, Sol/off voor contact en Astra/medium voor werk. Vier lokale opdrachten, samen6,292s; geen auth/thread/turn, modelantwoord, gateway of Eva-installatiewijziging. Onafhankelijke review GO voor deze beperkte grens. Readback voegt normale concurrency-/subagent-/compactiedefaults toe; dit is geen goedgekeurd vergelijkingsbudget. [Bewijs](evidence/product/p1-openclaw-host-config-20261001.json) · [Review](reviews/p1-openclaw-host-config-20261001.md).
 
@@ -79,43 +100,43 @@ P1.1 blijft open: eigen OpenClaw/Hermes-login, actuele catalogus/toegang, native
 
 C1.2-readcheck afgerond: werkelijk Bottie-archief bevat nul nieuwe Eva2-beurten sinds de geïnstalleerde correctie. Laatste bewaarde beurt blijft29september. [Metadata](evidence/product/c1-latest-ingress-20261001.json). Geen nieuwe fout of acceptatie afgeleid; fysieke/Telegramproeven blijven open. Definitieve P1.2-invoer wacht volgens bestaand protocol op ontwikkeluitkomsten en eindkandidaat.
 
-## Actueel: P1.1 — echte catalogus beoordeeld; eigen aanmelding nodig
+## Eerder: P1.1 — echte catalogus beoordeeld; eigen aanmelding nodig
 
 Basis `d1871744`; geen uitvoerder of aanmeldproces actief. Al aanwezig beheerd Codex0.155.1 geïdentificeerd en één echte metadata-sessie in lege eigen opslag/netwerkisolatie uitgevoerd. Account leeg, complete niet-aangemelde catalogus9modellen: Astra/medium aanwezig, gpt-6-sol ontbreekt. Catalogus kan een gebundelde terugval zijn; dit bewijst geen toegang, afwijzing of snelheid. Geen modelvervanging, native bronwijziging, installatie of login-/inferentie-RPC. Onafhankelijke review GO voor deze beperkte metadata. [Bewijs](evidence/product/p1-openclaw-native-catalog-20261001.json) · [Review](reviews/p1-openclaw-native-catalog-20261001.md).
 
 P1.1 geblokkeerd op eigen OpenClaw/Hermes-aanmeldingen; volledige native hostselectie en gelijkwaardige uitvoering blijven open. Nieuwe OpenClaw-code pas starten wanneer Jaap klaarzit; vraag staat open. Agent Zero-aanmelding en eerdere resultaten behouden. Geen extra Eva-functie of tellerverhoging. Ontwikkelcredits onbekend; telefoon- en speakerproeven blijven afzonderlijk open. Het volledige projectgoal blijft actief.
 
-## Actueel: P1.1 — OpenClaw-aanvraagmapping beoordeeld; toegang open
+## Eerder: P1.1 — OpenClaw-aanvraagmapping beoordeeld; toegang open
 
 Basis `b703c8f4`; bestaande gepinde installatie en registratie behouden. Echte native aanvraagbouwer éénmaal offline met twee gedeclareerde fixtures uitgevoerd: Astra/medium expliciet, Sol/off geeft null zonder echte catalogus. De bestaande resolver kan none gebruiken wanneer waargenomen modelmetadata dat aanbiedt; geen native patch of verzonnen metadata. Onafhankelijke review GO voor deze beperkte uitkomst. [Bewijs](evidence/product/p1-openclaw-config-20261001.json) · [Review](reviews/p1-openclaw-config-20261001.md).
 
 Geen persistente hostconfiguratie of provideracceptatie bewezen; fixtureprefix niet als geldige startupconfiguratie aangemerkt. Nul app-servers/modelcalls/Eva-installatiewijzigingen; ontwikkelcredits onbekend. P1.1, eindvergelijking en producttellers blijven open. Eigen OpenClaw-aanmelding/catalogus en Hermes-login ontbreken. Geen uitvoerder of loginproces actief. Volgende concrete stap: bestaande beheerde Codex0.155.1 en native agentopslag voor OpenClaw aansluiten; nog niet gestart. Telefoon- en speakerproeven blijven afzonderlijk open.
 
-## Actueel: C4.3 — telefoonresultaten aangesloten; fysieke proef open
+## Eerder: C4.3 — telefoonresultaten aangesloten; fysieke proef open
 
 Een uitvoerder, basis `78348a1e`. De bestaande ontvanger voor opgeslagen werkresultaten is nu in het HA-telefoonpaneel geïnstalleerd. Alleen `panel.js` en zijn samengestelde hashmanifest vervangen; gepinde SDK, HA Python, spraakdiensten en kern behouden. Review vond lokale deeltoestand die een volgend gesprek kon beïnvloeden; alleen die toestand bij de bestaande stopgrens gewist. Echte geïnstalleerde producent en volledige gegenereerde UI gericht gecontroleerd, inclusief nieuw bezoek; in-memory DOM/SDK/auth is geen fysieke telefoonproef. Alle10 geïnstalleerde hashes, exacte backups, aangeboden asset en readiness200 bevestigd.0 herstarts/rollbacks. Twee oude manifestregistraties gecorrigeerd naar reeds actuele HA-bestanden; geen herinstallatie. [Bewijs](evidence/product/c4-phone-route-20261001.json) · [Review](reviews/c4-phone-saved-result-20261001.md) · [Telefoon proberen](deploy/home-assistant/owner-phone.md).
 
 C4.3 en het stemonderdeel blijven op hun oorspronkelijke eindvoorwaarde open. Probeer in de HA-app Praten met Eva na verversen: Begin gesprek, laat Eva een kort verhaaltje vertellen en zeg tijdens het antwoord zonder wakeword Hoe gaat het met jou? Oude spraak moet stoppen; nieuwe vraag krijgt antwoord. Eindig gesprek sluit audio en is geen taakstop. Nog geen uitvoerder actief voor deze fysieke waarneming. Eva-runtime-model/audio/huisaanvragen0; één assetlevering, twee gerichte UI-runs na concrete broncorrectie; ontwikkelcredits onbekend. Volgende bestaande taak nog niet gestart; niet wachten op gezinsacceptatie als onafhankelijk werk resteert.
 
-## Actueel: C4.1/C4.2 — beide geïnstalleerd; hoorbare proeven open
+## Eerder: C4.1/C4.2 — beide geïnstalleerd; hoorbare proeven open
 
 Dezelfde bestaande wakeword-onderbrekingsoverlay op beide gewone HA-routes hergebruikt. Bronreview behouden en tweede-profielbeoordeling gebundeld; eenmaal per apparaat via OTA geïnstalleerd. Beide apparaten verbinden met de nieuwe evententity; Eva2, Hey Eva en mute-on bleven behouden. Geen nieuwe engine, afgewezen continue firmware, model-/audio-/huisaanvraag, dependencyherinstallatie of automatische rollback. [Bewijs](evidence/product/c4-device-boundary-20261001.json) · [Review](reviews/c4-wakeword-relisten-20261001.md).
 
 Nog nodig: tijdens Eva's antwoord één wakeword en daarna een nieuwe vraag op elk apparaat. Daarom C4.1/C4.2 en groot stemonderdeel niet afgevinkt. Originele overkappingsbronfirmware ook bewaard; niet uit apparaatflash gehaald of fysiek opnieuw geflasht. C4.3 telefoonroute is hierboven aangesloten; fysieke proef blijft open. Hermes blijft op eigen aanmelding wachten; geen authproces actief. Ontwikkelcredits onbekend; Eva-runtime-modelcalls0. Geen uitvoerder/modelproef actief voor de wachtende speakerwaarnemingen.
 
-## Actueel: P1.1 — Hermes-start klaar; eigen login ontbreekt
+## Eerder: P1.1 — Hermes-start klaar; eigen login ontbreekt
 
 Nu: native aanvraagopbouw leest Sol/none en Astra/medium correct terug, zonder inferentie. De configuratie alleen bewees deze aansluiting nog niet; twee gerichte gevallen toegevoegd en onafhankelijke review GO. De native aanmeldsessie is beëindigd met `device_code_timeout`; geen toegang bevestigd, geen proces meer actief, geen nieuwe aanmelding automatisch gestart. [Aanvraagbewijs](evidence/product/p1-hermes-native-request-20261001.json) · [Review](reviews/p1-hermes-native-request-20261001.md). SDK-/provideracceptatie en volledige P1.1 blijven open; geen nieuwe agentlus, evaluator of extra Eva-functie.
 
 Vastgelegde native bron schoon; core geïnstalleerd uit ongewijzigde lock in aparte proefomgeving. Echte constructor leest Sol/none en Astra/medium terug via Codex Responses. Twee gerichte gevallen in OS-netwerkisolatie geslaagd, nul externe model- of authaanvragen tijdens deze startcontrole. Inerte startsleutel en lege toolsets: dit bewijst geen toegang, agentlus of vergelijking. Eigen Hermes-auth ontbreekt (`codex_auth_missing`); eigen native aanmelding gevraagd en nog niet ontvangen, geen overgenomen tokens. Onafhankelijke review GO voor startvoorbereiding/aanmeldroute; geen Eva-installatiewijziging of extra productfunctie. [Bewijs](evidence/product/p1-hermes-native-startup-20261001.json) · [Review](reviews/p1-hermes-native-startup-20261001.md). Ontwikkelcredits onbekend; Eva-runtimeverbruik nul.
 
-## Actueel: P1.1 — native agentroute aangesloten en beoordeeld
+## Eerder: P1.1 — native agentroute aangesloten en beoordeeld
 
 Onafhankelijke review GO; alle proefprocessen beëindigd. Native agentlus en helper lopen nu door echte SDK/native proxy met bestaande eigen login. Sol/none en Astra/medium teruggelezen; protocoltool bij werkelijke dispatch geteld. Twee aangenomen aanvragen synthetisch42input/18output; extra helpers vóór SDK geweigerd binnen dezelfde proefgrenzen. Dit bewijst geen volledige native sample of vergelijking; nul externe inferentie, geen Eva-installatiewijziging of extra productfunctie. Niet-streamende nagebootste upstream was vóór proefopruiming niet expliciet gesloten; cloudstop onbekend.
 
 Vier gewijzigde uitvoeringen bewaard: eerste tooltelling miste legacyroute; tweede had fout in keyworddoorgifte; derde legde late SDK-instap van helper bloot; vierde weigert extra helpers vóór SDK.5 passende stream/callbackcontroles geslaagd; geen eerdere brede proef herhaald. App-goalverschil tot reviewcheckpoint115356tokens, geen credit-/geldclaim. [Bewijs](evidence/product/p1-agentzero-loop-sdk-composition-20261001.json). [Review](reviews/p1-agentzero-loop-sdk-composition-20261001.md) GO; volledige P1.1 en het volledige goal blijven open. Volgende uitvoering nog niet gestart: overige native deelnemers met bestaande pins/adapters aansluiten. Agent Zero blijft binnen vaste proefgrenzen onvolledig; geen automatische herhaalronde of quota-uitbreiding.
 
-## Actueel: P1.1 — stopbinding vastgelegd en beoordeeld
+## Eerder: P1.1 — stopbinding vastgelegd en beoordeeld
 
 De expliciete vergelijkingsbinding sluit bij stoppen nu de eigen SDK/native upstream vóór proefopruiming. Actieve pogingen1→0, verbruik bij afbreken onbekend; het gewone streamantwoord en synthetische verbruik blijven gelijk.3 gerichte HTTPX-controles en onafhankelijke review GO. Alleen eigen aanvraag gestopt; mislukte sluiting wordt niet als succes gerapporteerd. Native bron/pin behouden; stock-stopfout blijft geregistreerd. Geen extra Eva-functie, cloudstopbewijs of volledige P1.1.
 
@@ -123,7 +144,7 @@ Alle proefprocessen beëindigd; geen eerdere agentlusproef herhaald. De eigen na
 
 Volgende uitvoering: bestaande bindings aansluiten op werkelijke native deelnemer, overige provider/helper/sync/tooldekking en gelijkwaardige toegang. Nog niet gestart. Het volledige goal blijft actief; productacceptaties en tellers ongewijzigd.
 
-## Actueel: P1.1 — SDK/native proxycheckpoint vastgelegd
+## Eerder: P1.1 — SDK/native proxycheckpoint vastgelegd
 
 Native eigen login en modelcatalogus zijn bevestigd. De echte SDK/native route levert Sol/none-SSE en het bewaarde Astra/medium-antwoord zonder stream in netwerkisolatie. De lokale SDK-catalogus miste de modellen en koos eerst nagebootste streaming; kleine expliciete streamingmetadata herstelt deze aansluiting in de proef, geen live-providerbewijs.
 
@@ -149,19 +170,19 @@ Gedeeltelijk Eva-runtimeverbruik van deze taak:88424input,1196output,8modelantwo
 
 De onderstaande actueel-/blokkademeldingen zijn historische registraties. De actuele opdracht staat bovenaan en in het dashboard.
 
-## Actueel: hervat op C1 na gewijzigde providertoegang — 30 september 2026
+## Eerder: hervat op C1 na gewijzigde providertoegang — 30 september 2026
 
 Eigenaar zegt ga door. Accountcontrole nu1% weekverbruik en gebruik toegestaan. Eén nieuwe echte websitebegroeting volgt wegens deze gewijzigde omstandigheid; geen identieke429-herhaalronde. Uitvoerder `/root`; geen benchmarkwerk. Het app-goal staat nog geblokkeerd; beschikbare goaltool kan alleen pauzeren, blokkeren of afronden, niet reactiveren. De uitvoering is op eigenaaropdracht hervat.
 
-## Actueel: uitvoering geblokkeerd op toegang en keuzes — 30 september 2026
+## Eerder: uitvoering geblokkeerd op toegang en keuzes — 30 september 2026
 
 Geen bouw- of proefproces actief. Providerweigering blokkeert C1 en echte vergelijkingen. Concrete camera-/agendakeuzes staan open. Voor O2.3 is gevraagd of herstel met een bewaarde maar uitgeschakelde offline browserdienst mag starten, of die dienst eerst beschikbaar moet zijn; niets verwijderd of uitgeschakeld. Native vergelijkingsinstellingen zijn voorbereid, geen nieuwe productcategorie afgerond. Geplande projectstap blijft30september15:00 Nederlandse tijd. Goal blijft inhoudelijk volledig en onaf; geen nieuwe automatische voorbereidingsronde zolang deze afhankelijkheden ongewijzigd zijn.
 
-## Actueel: P1.1 native opgeslagen selectie gecontroleerd — 30 september 2026
+## Eerder: P1.1 native opgeslagen selectie gecontroleerd — 30 september 2026
 
 Native configuratielader kiest zes modelrollen correct op basis van opgeslagen selectie. Contactprofiel Default staat als eindstand ingesteld en is teruggelezen. Review akkoord, nul providercalls. Geen nieuwe Eva-functie of volledige P1.1. Native uitvoering/OAuth, cumulatieve meting en stoppen blijven open. Geen proefproces actief. [Bewijs](evidence/product/p1-agentzero-persisted-selection-20260930.json).
 
-## Actueel: P1.1 native presets opgeslagen en teruggelezen — 30 september 2026
+## Eerder: P1.1 native presets opgeslagen en teruggelezen — 30 september 2026
 
 Agent Zero leest zes contact-/werkmodelrollen correct terug via eigen opslag en configuratielader. Geïsoleerde proef, nul providercalls, onafhankelijke review akkoord. Presetbestand herbruikbaar vastgelegd; Eva-runtime ongewijzigd. Geen volledige P1.1 of productcategorie afgerond. Actieve selectie, native uitvoering/OAuth en samplebrede meting blijven open. Geen proefproces meer actief. [Bewijs](evidence/product/p1-agentzero-persisted-presets-20260930.json).
 
@@ -169,23 +190,23 @@ Agent Zero leest zes contact-/werkmodelrollen correct terug via eigen opslag en 
 
 Bestaande bronregistratie bevat G5 garage deur, G5 tuin en G4 Doorbell Pro, plus twee afvalagenda’s (Afvalwijzer Calendar en afval). Die twee voorafgaande keuzevragen zijn door de eigenaarcorrectie van 1 oktober vervallen; Eva moet bronnen zelf ontdekken. Bestaand bewijs voor camera-/agendatoegang hergebruikt; geen nieuwe connector, modelaanvraag of camera-opname. C1-providerweigering en O2.3-browserafhankelijkheid blijven open zoals hieronder.
 
-## Actueel: C1 en O2.3 blokkades gecontroleerd — 29 september 2026
+## Eerder: C1 en O2.3 blokkades gecontroleerd — 29 september 2026
 
 Geen bouwproces actief. Bestaande kernlog bevestigt HTTP429 zonder antwoord. Accountcontrole meldt weekvenster100%, maar ook ordinaryUsageAllowed=true; precieze oorzaak blijft onbewezen. Geen nieuwe modelaanvraag of reset. O2.3 blijft geblokkeerd doordat de onbereikbare oude browser nog geautoriseerd is; geen verse verificatie overslaan. Gegevens en voorbereide herstelinstallatie behouden. Review afgerond. Historische vervolgstap vervallen: I2.1 vraagt geen vooraf gekozen camera/afvalkalender. De actuele uitvoervolgorde staat bovenaan. [Bewijs](evidence/product/c1-o2-current-blockers-20260929.json). Geen extra afgeronde productfunctie.
 
-## Actueel: O2.3 bestaande gatewayuitgang aangesloten — 29 september 2026
+## Eerder: O2.3 bestaande gatewayuitgang aangesloten — 29 september 2026
 
 Vier documentproviders hebben gecontroleerde schrijftoegang. De bestaande uitgaande gatewayverbinding is expliciet aangesloten en live gecontroleerd, na37 gerichte controles en onafhankelijke review. Algemene bestandsprovider gebruikt herstelde map. Kern/werker staan voorbereid maar uit. Providercontrole nog open: de oude browser-MCP-koppeling stond al onbereikbaar in de kopie en slaat verse discovery over; dit is geen geslaagde providercontrole. Geen volledige O2.3-afronding. [Bewijs](evidence/product/o2-existing-gateway-egress-20260929.json).
 
-## Actueel: O2.3 herhaalde pakketcontrole versneld — 29 september 2026
+## Eerder: O2.3 herhaalde pakketcontrole versneld — 29 september 2026
 
 Geïnstalleerde correctie hergebruikt binnen één uitvoering alleen de inhoudelijke kerncontrole; alle bestandshashes/inventarissen blijven per aanroep gecontroleerd. Echt pakket:260,836s eerste controle,10,104s herhaling; gemeten piek2,36GiB.7 gerichte controles en onafhankelijke review akkoord. Geen Eva-modelcalls of runtimeherstart. Gezamenlijk herstel nog open; meting is voltooid en draait niet meer. [Bewijs](evidence/product/o2-scoped-package-validation-20260929.json).
 
-## Actueel: O2.3 gezamenlijk herstelpakket gereed — 29 september 2026
+## Eerder: O2.3 gezamenlijk herstelpakket gereed — 29 september 2026
 
 Kernexport en gezamenlijk pakket volledig gevalideerd:243 bestanden met kern, geheugen, gateway en documenten uit dezelfde kopie. Oude operatorcontracten waren de oorzaak; geen gegevens gerepareerd of verwijderd. Geen modelcalls of Eva-herinstallatie. Volgende stap: werkelijk gezamenlijk herstel op passend geïsoleerd doel, inclusief vier documentproviders. O2.3 nog open; export/samenstelling draaien niet meer. [Bewijs](evidence/product/o2-operator-source-alignment-20260929.json).
 
-## Actueel: C1 geblokkeerd door provider — 29 september 2026
+## Eerder: C1 geblokkeerd door provider — 29 september 2026
 
 Eén echte websitebegroeting na de geïnstalleerde correctie: HTTP429 na3,894s, geen antwoordtekst, één aanvraag zonder automatische herhaling. Correcte foutcode live bevestigd; geen snelheidswinst of C1-afronding. [Bewijs](evidence/product/c1-installed-contact-20260929.json). Historische I2-bronkeuzeblokkade vervallen op 1 oktober; de toen geplande volgende-dagtaak is inmiddels onder L2 afgerond. Geen nieuwe installatie of rollback.
 
@@ -197,15 +218,15 @@ C1 blijft onaf: geen nieuwe aantoonbare codeoorzaak voor snelheid; echte meting 
 
 Modelbegroeting afgerond18:41:57 terwijl onderzoeksaanvraag tot18:41:58 liep. Eén modelaanvraag,0tools, eerste tekst1,641s. Geen bewijs voor totale Telegramtijd of begroeting tijdens succesvol lopend onderzoek; C1 blijft open. Eerdere cacheproef rechtvaardigt geen herbouw. Accountcontrole:zelfde account94% verbruikt, normaal gebruik toegestaan; verklaart eerdere429nog niet. Geen nieuwe modelcalls of reset.
 
-## Actueel: HTTP429-afhandeling geïnstalleerd — 29 september 2026
+## Eerder: HTTP429-afhandeling geïnstalleerd — 29 september 2026
 
 C1: providerweigering krijgt geen onmiddellijke tweede aanvraag en wordt op website/Telegram als gebruiks-/snelheidslimiet gemeld. Kern/werker gezond; echte geïnstalleerde foutketen met nagebootste fout gecontroleerd, zonder modelcalls. Onafhankelijke review akkoord. Providerherstel, begroetingssnelheid en echte Telegram-overlap blijven open; geen extra grote functie afgerond.
 
-## Actueel: provider weigert modelaanvragen — 29 september 2026
+## Eerder: provider weigert modelaanvragen — 29 september 2026
 
 Beide eigenaarberichten van21:19 krijgen HTTP429 vóór modelantwoord; geen bewijs van inhoudelijke veiligheidsweigering. Kern/werker gezond. Type providerlimiet nog onbekend; geen nieuwe modelproef gestart. C1 blijft open. Updatehulp volgt nu dezelfde Compose-uitvoering zonder90/120s-afbreking; zes controles en review geslaagd, operatormodule geïnstalleerd zonder Eva-herinstallatie.
 
-## Actueel: ontvangen Telegramproef — 29 september 2026
+## Eerder: ontvangen Telegramproef — 29 september 2026
 
 C1: eerste Mars/Zon-onderzoek faalde op productnaam/bronadrescontrole; foutvingerafdruk exact herleid. Achtergrondtool miste uitleg over onderzoekmodus. Gedeelde uitleg gecorrigeerd; 17 bestaande gerichte controles en onafhankelijke review geslaagd. Geïnstalleerd in gezonde kern en werker; exacte bron teruggelezen. Geen nieuwe modelcall; geen bewezen snelheidswinst of volledige C1-afronding.
 

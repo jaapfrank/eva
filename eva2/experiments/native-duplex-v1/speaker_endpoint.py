@@ -91,6 +91,19 @@ class SpeakerEndpoint:
             "frames": [{"file": Path(frame.filename).name, "function": frame.name,
                         "line": frame.lineno}
                        for frame in traceback.extract_tb(error.__traceback__)[-5:]]}
+        # A microphone failure wraps its reader error. Retain bounded structural
+        # causes so the failed transition is visible without exposing error text.
+        causes, seen = [], {id(error)}
+        cause = error.__cause__
+        while cause is not None and id(cause) not in seen and len(causes) < 3:
+            seen.add(id(cause))
+            causes.append({"type": type(cause).__name__[:64],
+                "frames": [{"file": Path(frame.filename).name, "function": frame.name,
+                            "line": frame.lineno}
+                           for frame in traceback.extract_tb(cause.__traceback__)[-5:]]})
+            cause = cause.__cause__
+        if causes:
+            failure["causes"] = causes
         self._failures.append(failure)
         # Emit only the already sanitized record: device-side failures must be
         # diagnosable after the socket closes, without retaining audio or secrets.

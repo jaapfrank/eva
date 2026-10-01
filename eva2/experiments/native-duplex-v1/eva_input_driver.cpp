@@ -3,6 +3,17 @@
 
 namespace esphome::va_pipecat {
 
+void VaPipecat::eva_input_task_() {
+  // The native task never enters the legacy task's stack-resident chunk buffer.
+  while (true) {
+    if (this->ws_connected_ && this->ws_handle_) {
+      this->eva_pump_receipts_();
+      this->eva_pump_input_();
+    }
+    vTaskDelay(pdMS_TO_TICKS(1));
+  }
+}
+
 bool VaPipecat::eva_session_active() {
   portENTER_CRITICAL(&this->ring_mux_);
   auto state=this->eva_input_.state();
@@ -68,9 +79,16 @@ void VaPipecat::eva_mic_data_(uint64_t token,const std::vector<uint8_t> &samples
       return;
     }
     if (this->eva_mic_fill_+count>kMicTxMaxQueuedBytes) {
-      this->eva_apply_locked_(this->eva_output_.fail(),nullptr,0);
-      portEXIT_CRITICAL(&this->ring_mux_);
-      return;
+      if (this->eva_input_.state()!=EvaInputProtocol::State::ARMED) {
+        this->eva_apply_locked_(this->eva_output_.fail(),nullptr,0);
+        portEXIT_CRITICAL(&this->ring_mux_);
+        return;
+      }
+      // Before CAPTURE, keep the most recent pre-roll without sending PCM.
+      // Once capture starts, overflow remains a fatal loss of admitted audio.
+      const size_t discarded=this->eva_mic_fill_+count-kMicTxMaxQueuedBytes;
+      this->eva_mic_head_=(this->eva_mic_head_+discarded)%kMicTxMaxQueuedBytes;
+      this->eva_mic_fill_-=discarded;
     }
     for (size_t i=0;i<count;++i) {
       this->mic_tx_buf_[this->eva_mic_tail_]=samples[offset+i];

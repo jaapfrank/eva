@@ -19,6 +19,8 @@
 extern uint32_t host_ms;
 extern bool host_closed;
 inline uint32_t millis() { return host_ms; }
+inline std::function<void(uint32_t)> host_task_delay=[](uint32_t) {};
+inline void vTaskDelay(uint32_t ticks) { host_task_delay(ticks); }
 
 namespace esphome::va_pipecat {
 struct HostSpeaker {
@@ -90,6 +92,7 @@ class VaPipecat {
   void eva_set_muted(bool);
   void eva_update_microphone_();
   void eva_pump_input_();
+  void eva_input_task_();
   uint64_t eva_capture_token_();
   void eva_mic_data_(uint64_t,const std::vector<uint8_t> &);
   EvaOutputProtocol eva_output_;

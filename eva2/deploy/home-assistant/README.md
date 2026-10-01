@@ -231,3 +231,13 @@ unexpected contents. File digests cover exact bytes, including token newlines;
 the runtime policy token digest covers the stripped token used on the wire.
 This overlay is tested but still needs admission into a complete release input
 set and actual HA/hardware verification before production use.
+
+
+### Spoken answers and transport status
+
+The ordinary Home Assistant conversation adapter streams only Eva's canonical
+answer. An HTTP input-receipt header is transport status; it is not appended to
+ChatLog or TTS. Model-authored acknowledgements for actually admitted work remain
+part of Eva's answer. This presentation change does not create full-duplex audio
+or keep speech recognition active during model thinking. The installed wakeword
+interruption overlay and physical C3/C4 trials remain separate.
