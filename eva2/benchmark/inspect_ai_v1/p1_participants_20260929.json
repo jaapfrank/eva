@@ -1,6 +1,6 @@
 {
   "contract": "EvaComparisonParticipantInputs/v1",
-  "checkedAt": "2026-09-30T21:33:23.309456+00:00",
+  "checkedAt": "2026-10-01T00:01:16.695228+00:00",
   "stage": "source_pins_recorded_access_not_admitted",
   "protocol": "eva2/design/product/comparable-agent-benchmarks-v1.md#ev-003",
   "scope": "Inputs for existing Inspect runner; not results, a new runtime or a new scorer.",
@@ -49,7 +49,22 @@
       "localSource": {
         "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source",
         "headVerified": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
-        "runtimeInstalled": false
+        "runtimeInstalled": true
+      },
+      "nativeStartup": {
+        "status": "constructor_readback_passed_own_login_pending",
+        "reviewDecision": "GO for startup preparation/login driver only",
+        "evidence": "eva2/evidence/product/p1-hermes-native-startup-20261001.json",
+        "review": "eva2/reviews/p1-hermes-native-startup-20261001.md",
+        "installation": "Frozen native core only in private artifact venv; optional tools/native loop not exercised",
+        "configuration": "Hermes-owned config.yaml; external auth adoption false",
+        "contact": "gpt-6-sol / none / codex_responses",
+        "work": "gpt-6-astra / medium / codex_responses",
+        "startupCredential": "Inert explicit key only; no authenticated request",
+        "auth": "Independent native device login awaiting user; no external rotating token import",
+        "externalInferenceRequests": 0,
+        "admission": "not_admitted",
+        "remaining": "Own native access, full provider/helper/tool/budget/stop admission and equal comparison inputs remain open."
       }
     },
     {

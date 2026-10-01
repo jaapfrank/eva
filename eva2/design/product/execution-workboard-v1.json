@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-30T23:18:12.289011+00:00",
+        "checkedAt": "2026-10-01T00:05:56+00:00",
         "deliveries": [
+          {
+            "title": "Vergelijking: Hermes-native start en instellingen gecontroleerd",
+            "date": "1 oktober",
+            "state": "tested",
+            "result": "Eigen proefomgeving geïnstalleerd uit bestaande lock; constructor Sol/none en Astra/medium leest juiste Responses-route terug. Onafhankelijke review akkoord; nul inferentie.",
+            "remaining": "Native login wacht op gebruiker; inerte startsleutel en lege toolsets. Geen volledige P1.1, vergelijking of extra Eva-functie.",
+            "source": "eva2/evidence/product/p1-hermes-native-startup-20261001.json"
+          },
           {
             "title": "Vergelijking: agentlus op echte SDK-meting aangesloten",
             "date": "1 oktober",
@@ -3131,28 +3139,28 @@
           }
         ],
         "now": {
-          "title": "P1.1: native agentroute aangesloten en beoordeeld",
-          "state": "Gedeeltelijk opgeleverd",
+          "title": "P1.1: eigen Hermes-aanmelding wacht op gebruiker",
+          "state": "Wacht op aanmelding",
           "owner": "Codex /root",
-          "detail": "Agentlus/helper → echte SDK/native proxy → meting aangesloten. Review GO; extra helpers worden vóór SDK geweigerd. Geen complete vergelijking of nieuwe Eva-functie; geen proefproces actief."
+          "detail": "Beide native modelinstellingen gecontroleerd; onafhankelijke review akkoord. Eigen aanmelding gevraagd en nog niet ontvangen. Geen inferentie of nieuwe Eva-functie."
         },
         "next": {
-          "title": "P1.1: overige native deelnemers aansluiten",
-          "detail": "Nog niet gestart. Bestaande pins en adapters gebruiken voor overige toegang/uitvoering. Agent Zero-tekort bij vaste proefgrenzen blijft zichtbaar; geen automatische herhaal- of herstelronde."
+          "title": "Eigen Hermes-login verbinden",
+          "detail": "Native sessie zonder overgenomen tokens; daarna ontbrekende vergelijkingsaansluitingen. Volledige vergelijking blijft open."
         },
         "ownerAction": {
-          "title": "Telegram: tussenvraag tijdens onderzoek",
+          "title": "Meld Hermes aan voor de vergelijking",
           "steps": [
-            "Stuur /eva2 Zoek uit wat Home Assistant Cloud voor spraak doet, met bronnen.",
-            "Stuur meteen daarna /eva2 Hoe gaat het met jou?",
-            "Meld of het korte antwoord vóór het onderzoeksresultaat komt en ieder antwoord bij zijn eigen vraag staat."
+            "Open de OpenAI-apparaataanmelding.",
+            "Vul de code uit de huidige Codex-vraag in en meld aan met hetzelfde account.",
+            "Bevestig hier zodra Hermes is aangemeld."
           ],
-          "expected": "De tussenvraag wordt tijdens het onderzoek beantwoord. Voor de woonkamer is dezelfde wakewordproef apart gevraagd; het websitepaneel is geen Voice PE-proef.",
-          "url": "https://web.telegram.org/",
-          "linkLabel": "Open Telegram"
+          "expected": "Een eigen Hermes-sessie binnen het bestaande abonnement; geen gekopieerde tokens of betaalde modelaanvraag. De volledige vergelijking is nog open.",
+          "url": "https://auth.openai.com/codex/device",
+          "linkLabel": "Open aanmelding"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T01:46:03.241018+02:00",
+        "reviewedAt": "2026-10-01T00:05:56+00:00",
         "previousOwnerAction": {
           "title": "Lees het afgeronde zondagplan",
           "steps": [
@@ -14719,26 +14727,29 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Onafhankelijk GO: native agentlus en helper door echte SDK/proxy waargenomen; gebruik bij SDK-consumptie gemeten en protocoltool geteld. Extra helpers vóór SDK geweigerd. Geen complete native sample, live toelating, extra productfunctie of volledige P1.1. Geen proefproces actief.",
-              "latestEvidence": "eva2/evidence/product/p1-agentzero-loop-sdk-composition-20261001.json",
+              "remaining": "Hermes native core geïsoleerd geïnstalleerd; echte constructor leest Sol/none en Astra/medium via Codex Responses. Eigen Hermes-login ontbreekt nog; Agent Zero-bewijs behouden. Geen volledige vergelijkingsroute of extra Eva-functie.",
+              "latestEvidence": "eva2/evidence/product/p1-hermes-native-startup-20261001.json",
               "assignment": {
-                "baseCommit": "00266408",
+                "baseCommit": "1d490929",
                 "owner": "/root",
                 "files": [
-                  "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py",
-                  "eva2/benchmark/inspect_ai_v1/cp001_accounting.py"
+                  "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
+                  "eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py",
+                  "eva2/benchmark/inspect_ai_v1/p1_hermes_login.py"
                 ],
-                "existing": "Pinned full native monologue and detached helpers were observed with mocked SDK; real SDK/native proxy and owned stream closure were observed separately.",
-                "gap": "These paths are not composed. Previous synthetic upstream settled usage before SDK consumption; full native tool dispatch was not counted.",
-                "outcome": "Compose existing full AgentContext execution with real SDK/native routes and owned-stream binding; observe completed usage at SDK consumption and count/reject tool dispatch at native boundary. No provider/model/source replacement.",
-                "finish": "New composition reaches the actual native response tool, records foreground/helper requests and usage/stop truth under unchanged envelope. Retain refusal/unknown if native helpers exceed it; no inference or live admission claim.",
-                "estimate": "Only the changed composition and needed SDK-usage checks; existing cases retained. No external inference; development credit cost unknown.",
-                "stage": "native_loop_sdk_checkpoint_delivered",
-                "activeWorkers": []
+                "existing": "Hermes v2026.9.24 source/pin and Codex Responses adapter are present; no isolated installed runtime or native settings readback. Native OAuth has independent Hermes-owned storage.",
+                "gap": "Native startup/configuration and independent access are not connected to comparison.",
+                "outcome": "Install declared locked native core in isolated artifact environment; read actual native model/effort/route settings without inference or copied credentials. Prepare independent native login only if required.",
+                "finish": "Pinned native constructor/configuration loads for Sol/none and Astra/medium in clean private profile, with SDK/auth state safely described. Missing access remains explicit. No native loop/model calls or new evaluator.",
+                "estimate": "Existing declared dependency lock and one native startup/readback probe; no external inference or Eva installation. Development credits unknown.",
+                "stage": "hermes_own_login_pending_review_passed",
+                "activeWorkers": [
+                  "/root"
+                ]
               },
-              "blocker": "Native eigen toegang en samengesteld offline pad aanwezig. Vast samplebudget weigert extra native helpers; complete native werking/gebruik ontbreekt. Werkelijk netwerk/proxy, sync/retry/overige tools en gelijkwaardige overige toegang open. Geen live vergelijking toegelaten.",
+              "blocker": "Eigen Hermes-auth ontbreekt; aparte native aanmelding nodig. Model-/helper-/tool-/stopdekking en gelijkwaardige overige toegang blijven open.",
               "nextImplementation": "Resolve remaining native participant startup/access using existing pinned sources and adapters. Agent Zero fixed-envelope helper refusal remains unavailable; no automatic native rerun, hidden helper disabling or quota increase. Deployed/native/all-path parity still required before live comparison.",
-              "checkedAt": "2026-10-01T01:46:03.241018+02:00"
+              "checkedAt": "2026-10-01T00:01:16.695228+00:00"
             },
             {
               "id": "P1.2",
