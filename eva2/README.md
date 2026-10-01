@@ -17,6 +17,23 @@ De broncode staat in `src/eva/`, tests in `tests/` en installatiecode in
 voortgang te volgen.
 
 <details>
+<summary>Developer packaging: first WSL candidate</summary>
+
+From this directory, `python3 -m tools.stage_installer_package --source-root
+/absolute/source/eva2 --target-root /absolute/new/package --runtime-image
+sha256:EXACT_LOCAL_IMAGE_ID` stages Git-controlled project inputs and exports
+`python-runtime` from the specified local Linux amd64 image without running it.
+Run `python3 /absolute/new/package/start-installer.py` to open the existing
+loopback wizard with the bundled Python 3.12.14. The assembler-selected platform
+lock is bound automatically; an explicit operator override remains available.
+
+The WSL lock is still a candidate. Opening the wizard does not validate platform
+support or complete installation. Trusted release data and ordinary target/start
+wiring remain tracked under O1.1; no production trust authority is generated.
+
+</details>
+
+<details>
 <summary>Historische technische toelichting en eerdere ontwikkelcontroles</summary>
 
 Onderstaande tekst beschrijft eerdere ontwikkelfasen. Versies, routes en

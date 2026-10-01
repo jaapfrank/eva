@@ -1556,6 +1556,19 @@ def valid_examples() -> dict[str, dict[str, Any]]:
         }
     )
     add("valid-platform-lock-v3", platform_lock_v3)
+    platform_lock_v4 = deepcopy(platform_lock_v3)
+    platform_lock_v4.update({
+        **_meta("PlatformLock/v4"),
+        "lock_id": "platform-lock:wsl2:001",
+        "tier1_targets": [{
+            **platform_target,
+            "operating_system": "Ubuntu 24.04.4 LTS (WSL2)",
+            "architecture": "amd64",
+            "container_engine": "Docker Engine 29.1.3",
+        }],
+        "compatibility_targets": [],
+    })
+    add("valid-platform-lock-v4", platform_lock_v4)
     add("valid-policy-pack", policy)
     add("valid-presence-context", presence_context)
     add(
@@ -3286,6 +3299,7 @@ def _apply_schema_cross_field_rules(
         "PlatformLock/v1",
         "PlatformLock/v2",
         "PlatformLock/v3",
+        "PlatformLock/v4",
         "InstallationManifest/v1",
         "PromotionDecision/v1",
     }:
@@ -3464,6 +3478,7 @@ HOST_CONFORMANCE_RULES = {
     "PlatformLock/v1": ["target set equals the sealed platform matrix"],
     "PlatformLock/v2": ["target set equals the sealed platform matrix"],
     "PlatformLock/v3": ["target set equals the sealed platform matrix"],
+    "PlatformLock/v4": ["first WSL2 amd64 target; selected profiles cannot claim support; validated target and immutable image evidence required"],
     "PresenceContext/v1": [
         "embedded IdentityPack hash and relationship/consent scope equal the enclosing context"
     ],

@@ -1,5 +1,13 @@
 # EVA2 werkbord
 
+## Actueel: O1.1 — eerste Windows/WSL-installatie afmaken
+
+Het goedgekeurde bouwplan kiest de huidige Windows/WSL-opstelling als eerste doel; hiervoor is geen nieuw computerbesluit nodig. De bronvaste pakketlauncher gebruikt Python 3.12.14 uit de bestaande gepinde image en kiest automatisch de WSL-kandidaat. Lokale gebruikerspackages, dependencies en browsercaches worden niet meegepakt. Bestaande v1/v2/v3-contracten en hun bewijs blijven behouden.
+
+Gecontroleerd: 30 preflightgevallen; de eerste pakketlauncher samen met die controles 35 geslaagd; na de gewijzigde automatische lockkeuze 7 gerichte launchercontroles geslaagd. De echte pakketwizard geeft HTTP200 en toont passende host-/Python-/Docker-controles. Platformondersteuning blijft ongevalideerd; profiel/installatie zijn geblokkeerd. Onafhankelijke bronreview GO voor dit beperkte pakketcheckpoint; Git-checkpoint wordt gepubliceerd. [Bewijs](evidence/product/installer-wsl-entry-20261001.json) · [Review](reviews/installer-wsl-entry-20261001.md).
+
+**Nog geen complete O1.1-installatie.** De gewone pakketfactory, betrouwbare kandidaat-/releasegegevens en voorbereiding/start met een daadwerkelijk werkende model- en uitvoerroute moeten nog aangesloten worden. De bestaande fresh-starter gebruikt een intern, gesloten herstelnetwerk; alleen gezonde containers bewijzen geen bruikbare nieuwe Eva. Benodigde operatorrechten worden vóór provisioning gecontroleerd. Deze aansluitingen blijven onder dezelfde O1.1-eindvoorwaarde; geen extra productteller, nieuwe installer of installatielus. Bestaande Eva en gegevens behouden; geen modelcalls of huisacties in dit checkpoint. Het volledige goal blijft actief.
+
 ## Actueel: P1.1 — persistente native configuraties beoordeeld; toegang open
 
 Basis `a4524901`; geen uitvoerder of loginproces actief. Bestaande echte OpenClaw-CLI accepteert beide eigen configuraties en leest alle bedoelde velden ongewijzigd terug: canonieke `openai/`-modelrefs, modelgebonden Codex-runtime, Sol/off voor contact en Astra/medium voor werk. Vier lokale opdrachten, samen6,292s; geen auth/thread/turn, modelantwoord, gateway of Eva-installatiewijziging. Onafhankelijke review GO voor deze beperkte grens. Readback voegt normale concurrency-/subagent-/compactiedefaults toe; dit is geen goedgekeurd vergelijkingsbudget. [Bewijs](evidence/product/p1-openclaw-host-config-20261001.json) · [Review](reviews/p1-openclaw-host-config-20261001.md).

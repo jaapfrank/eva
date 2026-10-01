@@ -85,6 +85,7 @@ from .platform import (
     PlatformLock,
     PlatformLockV2,
     PlatformLockV3,
+    PlatformLockV4,
     PromotionDecision,
     ReleaseManifest,
 )
@@ -151,6 +152,7 @@ _CONTRACT_TYPES: dict[str, type[ContractModel]] = {
     "PlatformLock/v1": PlatformLock,
     "PlatformLock/v2": PlatformLockV2,
     "PlatformLock/v3": PlatformLockV3,
+    "PlatformLock/v4": PlatformLockV4,
     "PolicyPack/v1": PolicyPack,
     "PresenceContext/v1": PresenceContext,
     "PresenceReply/v1": PresenceReply,

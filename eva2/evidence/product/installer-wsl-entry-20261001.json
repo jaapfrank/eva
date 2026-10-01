@@ -1,0 +1,148 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-10-01T06:08:34.867641+00:00",
+  "task": "O1.1",
+  "baseCommit": "d6f3b983",
+  "status": "packaged_entry_verified_full_installation_not_delivered",
+  "existing": "Existing ordinary wizard and target/fresh starter retained. Approved plan names current Windows/WSL first target. Installed artifact-only entry selected host Python3.12.3 although pyproject requires exact3.12.14.",
+  "added": [
+    "Separate PlatformLock/v4 WSL2 selected candidate; v1/v2/v3 and Python pin unchanged",
+    "Actual WSL kernel/guest detection; default support gate remains closed until real platform evidence",
+    "Canonical package entry and Git-controlled source staging; interpreter exported from an exact local image without executing it or importing host user packages"
+  ],
+  "runtime": {
+    "image": "sha256:35eba561f26f4745b7995ae849c9341c441361a74106326308781e7e3ffc7a69",
+    "python": "3.12.14",
+    "pydantic": "2.12.5",
+    "hostGuest": "Ubuntu24.04.4",
+    "hostKernel": "6.18.33.2-microsoft-standard-WSL2",
+    "dockerServer": "29.1.3"
+  },
+  "checks": {
+    "focused": "35 passed in0.65s with actual packaged pinned interpreter",
+    "packagedWizard": {
+      "scope": "exact packaged ordinary entry; no target preparation or provider operation",
+      "pid": 572475,
+      "bootstrap_http_status": 200,
+      "alive_at_check": true,
+      "bootstrap_bytes": 393,
+      "authenticated_http_status": 200,
+      "wsl_kernel_present": false,
+      "profile_enabled": false,
+      "unvalidated_support_visible": true,
+      "installation_started": false,
+      "provider_calls": 0,
+      "own_smoke_server_stopped": true
+    },
+    "stagedProjectFileCount": 1199,
+    "allStagedHashesMatch": true,
+    "privateCachesIncluded": false,
+    "historicalPlatformSchemasChanged": false,
+    "selectedLockChangeFocused": "7 passed in0.08s with actual packaged pinned interpreter; unchanged30 preflight results retained",
+    "packagedWizardDefault": {
+      "scope": "exact packaged ordinary entry with no explicit platform-lock path",
+      "pid": 643177,
+      "bootstrap_http_status": 200,
+      "authenticated_http_status": 200,
+      "preflight": {
+        "contract": "EvaInstallerPreflight/v1",
+        "read_only": true,
+        "status": "blocked",
+        "platform_lock_claim_state": "selected_for_validation",
+        "host": {
+          "operating_system": "Ubuntu 24.04.4 LTS",
+          "architecture": "amd64",
+          "python_version": "3.12.14",
+          "docker_version": "29.1.3",
+          "os_id": "ubuntu",
+          "version_id": "24.04",
+          "os_version": "24.04.4 LTS (Noble Numbat)",
+          "variant_id": null,
+          "kernel_release": "6.18.33.2-microsoft-standard-WSL2"
+        },
+        "checks": [
+          {
+            "id": "python",
+            "state": "passed",
+            "detail": "Python-versie klopt"
+          },
+          {
+            "id": "host",
+            "state": "passed",
+            "detail": "Besturingssysteem en processor passen bij een gekozen Eva-target"
+          },
+          {
+            "id": "container_engine",
+            "state": "passed",
+            "detail": "Docker Engine-versie klopt"
+          },
+          {
+            "id": "release_support",
+            "state": "blocked",
+            "detail": "Deze release heeft dit platform nog niet als ondersteund bewezen"
+          }
+        ],
+        "next": "Er is niets geïnstalleerd of gewijzigd. Los eerst de geblokkeerde controle op.",
+        "non_claims": [
+          "Deze preflight opent geen secret, database, volume, connector of gebruikersdata.",
+          "Deze preflight downloadt niets en start of wijzigt geen Docker-container.",
+          "Een groene lokale versiecontrole is geen installatie-, connector- of gebruikersacceptatiebewijs."
+        ]
+      },
+      "default_package_selection_verified": true,
+      "installation_started": false,
+      "provider_calls": 0,
+      "own_smoke_server_stopped": true
+    }
+  },
+  "packageCorrection": {
+    "reason": "Two historical Git-controlled browser observation caches excluded by explicit source-package rule",
+    "removed_paths": [
+      "deploy/chrome-bridge/.playwright-mcp/page-2026-09-11T19-04-36-766Z.yml",
+      "deploy/chrome-bridge/.playwright-mcp/page-2026-09-11T19-04-37-658Z.yml"
+    ],
+    "runtime_reexported": false,
+    "existing_services_changed": false,
+    "changed_source_files": [
+      "tools/stage_installer_package.py",
+      "tools/launch_packaged_installer.py"
+    ],
+    "selected_lock_default": "Assembler-selected WSL candidate auto-bound by canonical entry; v3 source/default direct wizard unchanged"
+  },
+  "schemaAlignment": "Generated delegated-work schema counters aligned to already-existing unchanged source (3200000/3300000); no runtime budget changed.",
+  "limitations": [
+    "This package entry opens the actual wizard but profile/install actions remain blocked by unvalidated support.",
+    "No trusted ordinary target settings factory or approved release manifest/trust authority in this package yet. Existing source release/trust-root-slot.json is explicitly unusable.",
+    "No fresh database/runtime start, full O1.1/O1.2 completion, physical acceptance or platform support claimed."
+  ],
+  "usage": {
+    "evaModelCalls": 0,
+    "houseActions": 0,
+    "developmentCreditCost": null
+  },
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/installer-wsl-20261001",
+  "sourceHashes": {
+    "eva2/src/eva/contracts/platform.py": "ef966d84bb2dc4891ec2d6f86e140e9d05cada2131344dcf2eec825b487b9d0f",
+    "eva2/src/eva/contracts/registry.py": "89ed864d7553fb3f779e553845d8311d57e69a4c929e200af3d00350d26c38b4",
+    "eva2/src/eva/operations/installer_preflight.py": "7a3de6eb94836335d5549b6c729993f2031d078d2cf4dd00f929e5ac53bc9532",
+    "eva2/tools/generate_contract_schemas.py": "e4943d62f06d82d1c4b75780a1312c0fc1da02a48f7283788be7ce374bf45dc0",
+    "eva2/tools/launch_packaged_installer.py": "1630ba69f9a78d8d320263d76b9fd866da5cfd687e120960d73288959a6e7e1d",
+    "eva2/tools/stage_installer_package.py": "e48f9bce8461c378df0a4c2f90347223adf346ec87aaec6db9bcf61c54b581e2",
+    "eva2/start-installer.py": "82eb06f63747b332c6125e30d49c7b5ac0fb278a44d507b10c70b150a597173c",
+    "eva2/tests/operations/test_installer_preflight.py": "374c333ce18d0006e40ae3b4224e723fbc76edba2595c74eb862850f8241dd9a",
+    "eva2/tests/operations/test_launch_packaged_installer.py": "58afc73c324c1da828fa0beaf748fe84a3734af0a90af49d9ee5d6874837216c",
+    "eva2/release/platform-lock-wsl-candidate.json": "545836dde8b73d087a2280e19b934a6b1006254a4db7bf74bf9ca488c6c639b0",
+    "eva2/README.md": "f3f62743f8fb72e8d3da1dbace1b619de1ce25eeb3eef0a86c450a085b6debf4"
+  },
+  "nextRouteDiagnosis": [
+    "Ordinary launcher still composes CLI without a target preparation factory; existing factory seam/fresh starter remain reusable.",
+    "Source production trust-root slot unusable; prior target preparation used a synthetic signed test authority, not an approved current release.",
+    "Existing fresh starter prepares an internal traffic-closed restore graph; healthy containers alone would not prove a usable model-backed ordinary installation."
+  ],
+  "review": {
+    "agent": "/root/review_telegram_draft_lane",
+    "result": "GO for partial source/package checkpoint only",
+    "path": "eva2/reviews/installer-wsl-entry-20261001.md",
+    "fullInstallationApproved": false
+  }
+}

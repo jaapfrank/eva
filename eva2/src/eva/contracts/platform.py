@@ -146,6 +146,48 @@ class PlatformLockV3(Version3Contract):
         return self
 
 
+class WslPlatformTarget(PlatformTarget):
+    """The approved first installer target, distinct from Ubuntu Server."""
+
+    operating_system: Literal["Ubuntu 24.04.4 LTS (WSL2)"]
+    architecture: Literal["amd64"]
+    execution_mode: Literal["containerized"]
+    target_class: Literal["tier1_release_gate"]
+    container_engine: str = Field(pattern=r"^Docker Engine 29\.[0-9]+\.[0-9]+$")
+
+
+class PlatformLockV4(PlatformLockV3):
+    """First WSL target without rewriting the sealed server matrices.
+
+    Python remains the exact package runtime requirement. A bootstrap must
+    supply that interpreter; it must not relax the pin to match host Python.
+    """
+
+    schema_version: Literal[4]
+    contract: Literal["PlatformLock/v4"]
+    tier1_targets: list[WslPlatformTarget] = Field(min_length=1, max_length=1)
+    compatibility_targets: list[PlatformTarget] = Field(max_length=0)
+
+    @model_validator(mode="after")
+    def _validate_claims(self) -> "PlatformLockV4":
+        target = self.tier1_targets[0]
+        if any(image.architecture != "amd64" for image in self.oci_images):
+            raise ValueError("first WSL lock only selects amd64 OCI images")
+        if self.claim_state == "selected_for_validation":
+            if (target.validation_state != "unvalidated"
+                    or target.support_status != "unsupported"
+                    or target.validation_receipt_sha256 is not None
+                    or any(image.validation_state != "selected_for_validation"
+                           for image in self.oci_images)):
+                raise ValueError("selected WSL lock cannot claim support or validation")
+        elif (target.validation_state != "validated"
+              or target.support_status != "tier1"
+              or target.validation_receipt_sha256 is None
+              or any(image.validation_state != "validated" for image in self.oci_images)):
+            raise ValueError("validated WSL lock requires target and resolved image evidence")
+        return self
+
+
 def _check_platform_lock_claims(
     lock: PlatformLock | PlatformLockV2 | PlatformLockV3,
 ) -> None:

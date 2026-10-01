@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from eva.contracts.platform import PlatformLock, PlatformLockV2, PlatformLockV3
+from eva.contracts.platform import PlatformLock, PlatformLockV2, PlatformLockV3, PlatformLockV4
 from eva.operations.installer_preflight import (
     HostFacts,
     InstallerPreflightError,
@@ -19,6 +19,53 @@ from eva.operations.installer_preflight import (
 
 
 ROOT = Path(__file__).resolve().parents[2]
+
+
+def _wsl_lock() -> PlatformLockV4:
+    return PlatformLockV4.model_validate_json(
+        (ROOT / "release/platform-lock-wsl-candidate.json").read_bytes()
+    )
+
+
+def test_real_wsl_shape_is_selected_without_inventing_release_support():
+    facts = _facts(variant_id=None, docker_version="29.1.3",
+                   kernel_release="6.18.33.2-microsoft-standard-WSL2")
+    receipt = preflight(_wsl_lock(), facts)
+    checks = {row["id"]: row["state"] for row in receipt["checks"]}
+    assert checks == {"python": "passed", "host": "passed",
+                      "container_engine": "passed", "release_support": "blocked"}
+    assert receipt["status"] == "blocked"
+
+
+@pytest.mark.parametrize("changes", [
+    {"kernel_release": "6.8.0-generic"},
+    {"kernel_release": "4.4.0-microsoft"},
+    {"kernel_release": None},
+    {"os_id": "debian"},
+    {"version_id": "22.04"},
+    {"architecture": "arm64"},
+])
+def test_wsl_profile_requires_matching_actual_guest_and_kernel(changes):
+    facts = _facts(variant_id=None, docker_version="29.1.3",
+                   kernel_release="6.18.33.2-microsoft-standard-WSL2")
+    receipt = preflight(_wsl_lock(), replace(facts, **changes))
+    assert next(row for row in receipt["checks"] if row["id"] == "host")["state"] == "blocked"
+
+
+def test_wsl_bootstrap_must_supply_exact_package_python():
+    facts = _facts(variant_id=None, docker_version="29.1.3", python_version="3.12.3",
+                   kernel_release="6.18.33.2-microsoft-standard-WSL2")
+    receipt = preflight(_wsl_lock(), facts)
+    assert next(row for row in receipt["checks"] if row["id"] == "python")["state"] == "blocked"
+
+
+def test_wsl_profile_loads_separately_and_cannot_self_declare_support():
+    path = ROOT / "release/platform-lock-wsl-candidate.json"
+    assert isinstance(load_platform_lock(path), PlatformLockV4)
+    value = json.loads(path.read_text())
+    value["claim_state"] = "validated"
+    with pytest.raises(ValueError, match="requires target and resolved image evidence"):
+        PlatformLockV4.model_validate(value)
 
 
 def _lock() -> PlatformLockV3:

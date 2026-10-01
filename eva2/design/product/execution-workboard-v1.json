@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T04:06:28.120681+00:00",
+        "checkedAt": "2026-10-01T04:24:44.475905+00:00",
         "deliveries": [
           {
             "title": "Vergelijking: OpenClaw-configuraties persistent aangesloten",
@@ -3187,13 +3187,13 @@
           }
         ],
         "now": {
-          "title": "P1.1 — configuratie klaar; eigen toegang ontbreekt",
-          "state": "blocked",
-          "detail": "Persistente OpenClaw-hoofdmodelconfiguraties door echte CLI geaccepteerd en onafhankelijk GO. Geen uitvoerder of loginproces actief. Eigen OpenClaw/Hermes-aanmelding nodig voor volgende native controle; Agent Zero-aanmelding behouden. Volledige vergelijking en producttellers ongewijzigd."
+          "title": "O1.1 — afgesproken Windows/WSL-installatie aansluiten",
+          "state": "in_progress",
+          "detail": "Pakketlauncher en automatische WSL-selectie via echte wizard gecontroleerd; bronreview GO voor deze aansluiting. O1.1 blijft lopend: nog kandidaat-/releasegegevens en gewone voorbereiding/start met werkende model- en uitvoerroute aansluiten. Geen nieuwe Eva gestart."
         },
         "next": {
-          "title": "Werkelijke native toegang controleren",
-          "detail": "Nieuwe OpenClaw-code wanneer Jaap klaarzit; vervolgens aangemelde catalogus en native selectie. Geen herhaling van deze geslaagde configuratiecontrole. Fysieke telefoon/speaker- en Telegramproeven blijven afzonderlijk open."
+          "title": "Volledige gewone installatie controleren",
+          "detail": "Werkelijke pakket/wizard/target-aansluitingen eerst; daarna één samengestelde verse installatie met gekozen modules. Geen tweede installer of herinstallatie van huidige Eva. OpenClaw/Hermes-login en fysieke gesprekproeven blijven afzonderlijk open."
         },
         "ownerAction": {
           "title": "OpenClaw apart aanmelden voor vergelijking",
@@ -3207,7 +3207,7 @@
           "linkLabel": "Open native aanmelding"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T04:06:28.120681+00:00",
+        "reviewedAt": "2026-10-01T06:18:39.409483+00:00",
         "previousOwnerAction": {
           "title": "Probeer onderbreken op je telefoon",
           "steps": [
@@ -14663,33 +14663,57 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": null,
+          "activeWorker": "/root",
           "dashboardComponent": "installation",
           "remainingTasks": [
             {
               "id": "O1.1",
               "title": "Installatiewizard zonder handwerk afronden",
-              "status": "blocked",
+              "status": "in_progress",
               "kind": "aansluiten",
               "doneWhen": "Bestaande wizard kan de gekozen doelinstallatie zonder handgeschreven instellingen voorbereiden en starten.",
-              "owner": "/root",
+              "owner": "Codex /root",
               "assignment": {
-                "baseCommit": "36a4e53a",
+                "baseCommit": "d6f3b983",
                 "owner": "/root",
-                "files": [
-                  "eva2/tools/installation_fresh_start.py",
-                  "eva2/tests/operations/test_installation_fresh_start.py"
+                "activeWorkers": [
+                  "/root"
                 ],
-                "existing": "Existing schema preparation, dashboard authority initializer and restored runtime starter.",
-                "gap": "Restored startup requires archive activation; fresh target has none. Reuse existing owner initializer, no fabricated restore.",
-                "outcome": "Fresh prepared target can initialize and start through a bounded trusted callable; actual target integration remains dependent on package/host.",
-                "doneWhen": "Exact prepared target binding, existing initializer reuse, readiness and no source-data change; focused review/checks. Not full O1 completion.",
-                "estimate": "One bounded source implementation and focused tests, zero provider calls; credits unknown.",
-                "stage": "reviewed_installed_operator_modules"
+                "stage": "source_checkpoint_reviewed_continuing_ordinary_target_wiring",
+                "files": [
+                  "eva2/src/eva/contracts/platform.py",
+                  "eva2/src/eva/contracts/registry.py",
+                  "eva2/src/eva/operations/installer_preflight.py",
+                  "eva2/tools/generate_contract_schemas.py",
+                  "eva2/tests/operations/test_installer_preflight.py",
+                  "eva2/start-installer.py",
+                  "eva2/tools/launch_packaged_installer.py",
+                  "eva2/tools/stage_installer_package.py",
+                  "eva2/tests/operations/test_launch_packaged_installer.py"
+                ],
+                "existing": "Ordinary wizard, confirmed module choices, source factory, target preparation and fresh starter installed. Sealed platform locks v1/v2/v3 model only server release gates; their historical evidence remains intact. Actual guest Ubuntu24.04.4, WSL2 kernel and Docker29.1.3 verified read-only.",
+                "gap": "Approved first WSL target absent from v3. Generated launcher hardcodes host /usr/bin/python3 while project requires exact3.12.14. Native pinned image already contains that interpreter. No honest complete WSL package/target validation yet.",
+                "outcome": "Existing ordinary wizard can prepare/start its first approved Linux/WSL installation with optional modules, without handwritten configuration. Existing small-task finish unchanged.",
+                "design": "Add v4 WSL first-target registration without changing v1/v2/v3 or Python3.12.14 pin. Detect WSL2 from real kernel and guest metadata. Supply installer interpreter from already pinned image; launcher/source packaging presently artifact-only and must join canonical source. Reuse existing wizard/target starter; candidate unvalidated until actual package/target proof. No host Docker upgrade or fake server variant.",
+                "estimate": "One executor, focused source/host checks and one composed target preparation/start after early bindings are verified; no planned model or house actions, development credits unknown.",
+                "finding": "Actual canonical package entry opens ordinary wizard HTTP200 under bundled Python3.12.14/Pydantic2.12.5; host user packages excluded.35 focused checks passed. Support remains blocked honestly. Ordinary target factory and approved release authority still absent; no fresh runtime started.",
+                "nextWiringDesign": {
+                  "existingRoute": "Canonical package entry -> ordinary CLI -> actual confirmed profile/capability/secret/budget plan. Existing preparation factory/target workflow/fresh starter remain source integration points.",
+                  "missingInputs": "Current real release images/provenance and trusted package settings are absent from the ordinary entry. Historical production trust-root slot remains unusable; the older composed preparation proof used synthetic test release authority.",
+                  "earlyChecks": [
+                    "Choose an honest development-candidate authority/validation path compatible with owner instruction that full release gate belongs to the complete candidate; never invent supported-platform or public release receipts.",
+                    "Derive package-owned target settings and fresh identities/storage from actual confirmed UI choices, not browser graph/paths or hand-edited owner files.",
+                    "Account for actual operator ownership-setting privilege before provisioning.",
+                    "Existing internal restore graph must not be called a usable ordinary installation merely because health passes; actual model route and local owner output must be connected before O1.1 completion."
+                  ],
+                  "scope": "Continue the same O1.1 finish condition, preserve existing installation/data. No new workboard, general installer platform or parent completion."
+                },
+                "review": "GO partial source/package only; no complete O1 installation or support approval"
               },
-              "latestEvidence": "eva2/evidence/product/installer-fresh-start-20260929.json",
-              "remaining": "Nieuwe start op bestaande wizard aangesloten, 15 workflow/API-controles geslaagd en onafhankelijke review GO. Drie modules geïnstalleerd in operatorpakket; import gecontroleerd. Echte nieuwe installatie nog niet gestart: concrete doelcomputer en goedgekeurd pakket ontbreken.",
-              "blocker": "Doelcomputerkeuze gevraagd: huidige Windows/WSL versus geplande Ubuntu Server. Huidig PlatformLock/v3 accepteert uitsluitend Ubuntu Server met vaste versies; geen WSL-supportclaim of controle omzeild."
+              "latestEvidence": "eva2/evidence/product/installer-wsl-entry-20261001.json",
+              "remaining": "Pakket start automatisch op juiste WSL-lock met gepinde interpreter; echte wizard gecontroleerd. O1.1 blijft open: betrouwbare kandidaat-/releasegegevens, gewone targetfactory en bruikbare model-/uitvoerroute moeten voorbereiding/start verbinden.",
+              "blocker": "WSL-keuze is al goedgekeurd. Hardware/preflight-aansluiting nu gecontroleerd. Volledige installatie mist nog betrouwbare release-/pakketgegevens en de gewone targetfactory; geen extra computerbesluit gevraagd.",
+              "checkedAt": "2026-10-01T05:56:54.632087+00:00"
             },
             {
               "id": "O1.2",

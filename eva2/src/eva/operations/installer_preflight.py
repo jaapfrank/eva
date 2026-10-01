@@ -20,7 +20,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Literal
 
-from eva.contracts.platform import PlatformLockV3, PlatformTarget
+from eva.contracts.platform import PlatformLockV3, PlatformLockV4, PlatformTarget
 
 
 class InstallerPreflightError(RuntimeError):
@@ -48,6 +48,7 @@ class HostFacts:
     version_id: str | None = None
     os_version: str | None = None
     variant_id: str | None = None
+    kernel_release: str | None = None
 
 
 def _regular_read(path: Path, *, label: str, maximum: int) -> bytes:
@@ -68,13 +69,16 @@ def _regular_read(path: Path, *, label: str, maximum: int) -> bytes:
     return raw
 
 
-def load_platform_lock(path: Path) -> PlatformLockV3:
+def load_platform_lock(path: Path) -> PlatformLockV3 | PlatformLockV4:
     """Load one local, small, non-linked platform lock."""
 
     raw = _regular_read(path, label="platform lock", maximum=_MAX_PLATFORM_LOCK_BYTES)
     try:
         value = json.loads(raw)
-        return PlatformLockV3.model_validate(value)
+        if not isinstance(value, dict):
+            raise ValueError("platform lock must be an object")
+        model = PlatformLockV4 if value.get("contract") == "PlatformLock/v4" else PlatformLockV3
+        return model.model_validate(value)
     except ValueError as error:
         raise InstallerPreflightError("platform lock is invalid") from error
 
@@ -164,6 +168,7 @@ def inspect_host(
         version_id=metadata.get("VERSION_ID"),
         os_version=metadata.get("VERSION"),
         variant_id=metadata.get("VARIANT_ID"),
+        kernel_release=host_platform.release(),
     )
 
 
@@ -176,8 +181,11 @@ def _candidate_target(lock: PlatformLockV3, facts: HostFacts) -> PlatformTarget 
     if facts.version_id != version.rsplit(".", 1)[0]:
         return None
     for candidate in lock.tier1_targets:
+        expected_os = (f"Ubuntu {version} LTS (WSL2)"
+                       if isinstance(lock, PlatformLockV4)
+                       else f"Ubuntu Server {version} LTS")
         if (
-            candidate.operating_system == f"Ubuntu Server {version} LTS"
+            candidate.operating_system == expected_os
             and candidate.architecture == facts.architecture
             and candidate.execution_mode == "containerized"
         ):
@@ -186,6 +194,10 @@ def _candidate_target(lock: PlatformLockV3, facts: HostFacts) -> PlatformTarget 
 
 
 def _target(lock: PlatformLockV3, facts: HostFacts) -> PlatformTarget | None:
+    if isinstance(lock, PlatformLockV4):
+        # Kernel metadata, never an environment variable or a display label.
+        kernel = (facts.kernel_release or "").lower()
+        return _candidate_target(lock, facts) if "microsoft" in kernel and kernel.endswith("wsl2") else None
     return _candidate_target(lock, facts) if facts.variant_id == "server" else None
 
 
@@ -214,8 +226,10 @@ def preflight(lock: PlatformLockV3, facts: HostFacts) -> dict[str, object]:
         "Besturingssysteem en processor passen bij een gekozen Eva-target"
         if target is not None
         else (
-            "Ubuntu-versie en processor passen; servervariant is niet bewezen in de hostmetadata"
-            if candidate is not None and facts.variant_id is None
+            ("Ubuntu-versie en processor passen; WSL2-kernel is niet bewezen"
+             if isinstance(lock, PlatformLockV4)
+             else "Ubuntu-versie en processor passen; servervariant is niet bewezen in de hostmetadata")
+            if candidate is not None and (isinstance(lock, PlatformLockV4) or facts.variant_id is None)
             else "Deze computer is geen gekozen Eva-target"
         ),
     )
@@ -267,6 +281,8 @@ def preflight(lock: PlatformLockV3, facts: HostFacts) -> dict[str, object]:
             "version_id": facts.version_id,
             "os_version": facts.os_version,
             "variant_id": facts.variant_id,
+            **({"kernel_release": facts.kernel_release}
+               if isinstance(lock, PlatformLockV4) else {}),
         },
         "checks": checks,
         "next": (
