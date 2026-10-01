@@ -1,0 +1,184 @@
+{
+  "taskId": "C4.3",
+  "checkedAt": "2026-10-01T02:18:30.483950+00:00",
+  "baseCommit": "78348a1e",
+  "status": "existing_phone_result_receiver_installed_physical_trial_open",
+  "scope": "Connect the existing saved-result UI receiver to the installed HA phone asset; retain current phone stop/continue route. No new speech engine, authentication or interpretation.",
+  "existing": {
+    "haPanel": "/eva-owner-voice",
+    "haConfigEntry": "01M21R8KNJ7HCF4W3M6BP8V5JS",
+    "haConfigEntryState": "loaded",
+    "ready": {
+      "status": 200,
+      "body": {
+        "ready": true
+      }
+    },
+    "initialPhoneEvidence": "eva2/evidence/product/voice-phone-installation-2026-09-12.json",
+    "retainedLifecycleEvidence": "eva2/evidence/product/voice-client-lifecycle-2026-09-12.json"
+  },
+  "gap": "Actual installed media emits background_result_part/background_result_unavailable. Installed panel cb4cd020 ignores both; existing source receiver was not materialized into the HA asset.",
+  "source": {
+    "client": "eva2/src/eva/voice_service/client.html",
+    "clientSha256": "d395589169732e6a9d350b45eeed334d077f6604bcdd8d4f1221c10adedaf80c",
+    "generator": "eva2/tools/build_ha_phone_panel.py",
+    "generatorSha256": "dd6244f098949f3a7936067c55bd76f74b1b9ba30499765ad123b5802dedfc45",
+    "sdkVersion": "2.22.3",
+    "sdkSha256": "7fa17e37af5e996d8a25f15a637dcc0620215bc01b394e5d209f726afe7dc04d"
+  },
+  "candidate": {
+    "panelSha256": "d078f20f9d4ad51129f2f8cb08c1f23d4de7453952239d5872a4bebeedffda4c",
+    "panelBytes": 13056,
+    "previousPanelSha256": "cb4cd0204505187ef709d092e3657f74962a1f5a55fd7ff7acadb158be6e4b2e",
+    "previousPanelBytes": 10949,
+    "manifestSha256": "8c4bc5661f2cdbf8ca17131b64cafede0a141416addd3b77ac2d98ab68c33a3e",
+    "onlyChangedManifestEntry": "panel.js is the only changed installed code file; client.py/conversation.py metadata corrected to their already installed hashes",
+    "installedNonPanelEntriesPreserved": true
+  },
+  "checks": {
+    "route": "Installed private producer -> generated HA panel DataReceived handler",
+    "checks": [
+      "previous panel ignores actual saved-result packets",
+      "current panel renders exact joined bytes from out-of-order actual packets",
+      "actual unavailable event removes and prevents queued result restoration",
+      "changed hash and other participant never render",
+      "ended conversation ignores late packets and closes session without work-stop request",
+      "fresh visit cannot join previous partial bytes and can receive a newly authorized previously unavailable operation"
+    ],
+    "scope": "Real installed producer and generated UI; in-memory SDK/DOM/authorization fixtures. No physical phone, provider call, room, TTS or house action.",
+    "artifactScriptSha256": "1fbed09c72d59c6316f1cda9ca386f7104ea10b18dc657bd307e7285eac7da86"
+  },
+  "installationPlan": {
+    "files": [
+      "/config/custom_components/eva2_voice/phone-assets/panel.js",
+      "/config/custom_components/eva2_voice/phone-build.json"
+    ],
+    "backup": "/config/.eva2-phone-saved-result-20261001",
+    "verifyCurrentFullManifestBeforeWriting": true,
+    "atomicSftpRename": true,
+    "verifyRemoteBytesAndServedAsset": true,
+    "verifyReadyAndExistingServiceIdentity": true,
+    "serviceRestarts": 0
+  },
+  "review": {
+    "file": "eva2/reviews/c4-phone-saved-result-20261001.md",
+    "result": "GO for same corrected panel and amended actual-installed composite receipt",
+    "finding": "attempt objects stringify identically; result stores survived stop and could suppress/combine parts in a fresh visit",
+    "correction": "Clear only both saved-result receiver stores at existing stopConversation boundary; digest/current(attempt) checks retained.",
+    "sha256": "52e14fc837370e7737741cb3af8fc796cf92012875abfbd0dbfb00954ddf0602"
+  },
+  "preparationFailures": [
+    {
+      "stage": "observer dependency import",
+      "cause": "System Python has no paramiko; no remote request made by that failed invocation. Existing sshpass/OpenSSH and retained host key used; no dependency installation."
+    },
+    {
+      "stage": "prewrite full installed-file check",
+      "cause": "Existing September12 manifest retained old hashes for later client.py/conversation.py updates; actual modules match current source. No remote writes occurred. Preserve actual modules and amend receipt only."
+    }
+  ],
+  "consumption": {
+    "evaRuntimeModelRequests": 0,
+    "audioSessions": 0,
+    "realRoomsCreated": 0,
+    "realHouseActions": 0,
+    "developmentCredits": "unknown",
+    "executorCount": 1,
+    "reviewerCount": 1,
+    "uiSyntaxChecks": 2,
+    "focusedTransportRun": 2,
+    "installs": 1,
+    "rollbacks": 0,
+    "prewriteCheckStops": 1
+  },
+  "limitations": [
+    "In-memory DOM/SDK/authorization checks are not a physical phone microphone, echo, interruption or screen-lock trial.",
+    "No latency or full-duplex performance measurement.",
+    "C4.3, C4 overall and family acceptance remain open; existing finish conditions and acceptance retained."
+  ],
+  "ownerAccepted": false,
+  "actualBeforeManifest": {
+    "__init__.py": "261cfbfa393f4b72d21e8ac5516f6e02648315565fdc23c2e9c5fc22b82b9c26",
+    "client.py": "9e0d6c7ff22f93d84d5a3d8b7574fceb04f9a0f2c9d96e13128043bba7ad3db9",
+    "config_flow.py": "656c3ddf6998faa8548789b81df2d4ad6b20a64dfee481f66282e5fb820ab65e",
+    "conversation.py": "31a3be3f0344b76e63d37a082678a24a2881c4c17590f53de1e3cc5961df2337",
+    "manifest.json": "7b1f3a1bec024c195fa02a72a1b34b01800f60119ced6685ad01900fda4a4caa",
+    "phone-assets/livekit-client.js": "7fa17e37af5e996d8a25f15a637dcc0620215bc01b394e5d209f726afe7dc04d",
+    "phone-assets/panel.js": "cb4cd0204505187ef709d092e3657f74962a1f5a55fd7ff7acadb158be6e4b2e",
+    "phone.py": "2c88250d7e66f00e783dae870f31a5a1f853269e1b248eb116befc575fea6f32",
+    "phone_transport.py": "2bd10fc6c53551b55a5267d32bc0bfab4acf73c0c8dbf4d64d8cf4276ea85990",
+    "strings.json": "7948a9527ccbb14cbeb8491dcb59a46fdfd79a30b5b9a7706d597732ec62aadc"
+  },
+  "staleManifestEntries": {
+    "client.py": {
+      "recorded": "db9948dbcd70a293d8c2bb256f59ed3a8efd53880472cacd54c440e46f99f6b4",
+      "actual": "9e0d6c7ff22f93d84d5a3d8b7574fceb04f9a0f2c9d96e13128043bba7ad3db9",
+      "actualMatchesCurrentSource": true
+    },
+    "conversation.py": {
+      "recorded": "4377e9f49082e7b722d7864d99b21bd4a6288bba71db11bc6c0f98f71f25fab0",
+      "actual": "31a3be3f0344b76e63d37a082678a24a2881c4c17590f53de1e3cc5961df2337",
+      "actualMatchesCurrentSource": true
+    }
+  },
+  "installation": {
+    "seconds": 1.933,
+    "before": {
+      "__init__.py": "261cfbfa393f4b72d21e8ac5516f6e02648315565fdc23c2e9c5fc22b82b9c26",
+      "client.py": "9e0d6c7ff22f93d84d5a3d8b7574fceb04f9a0f2c9d96e13128043bba7ad3db9",
+      "config_flow.py": "656c3ddf6998faa8548789b81df2d4ad6b20a64dfee481f66282e5fb820ab65e",
+      "conversation.py": "31a3be3f0344b76e63d37a082678a24a2881c4c17590f53de1e3cc5961df2337",
+      "manifest.json": "7b1f3a1bec024c195fa02a72a1b34b01800f60119ced6685ad01900fda4a4caa",
+      "strings.json": "7948a9527ccbb14cbeb8491dcb59a46fdfd79a30b5b9a7706d597732ec62aadc",
+      "phone.py": "2c88250d7e66f00e783dae870f31a5a1f853269e1b248eb116befc575fea6f32",
+      "phone_transport.py": "2bd10fc6c53551b55a5267d32bc0bfab4acf73c0c8dbf4d64d8cf4276ea85990",
+      "phone-assets/livekit-client.js": "7fa17e37af5e996d8a25f15a637dcc0620215bc01b394e5d209f726afe7dc04d",
+      "phone-assets/panel.js": "cb4cd0204505187ef709d092e3657f74962a1f5a55fd7ff7acadb158be6e4b2e"
+    },
+    "after": {
+      "__init__.py": "261cfbfa393f4b72d21e8ac5516f6e02648315565fdc23c2e9c5fc22b82b9c26",
+      "client.py": "9e0d6c7ff22f93d84d5a3d8b7574fceb04f9a0f2c9d96e13128043bba7ad3db9",
+      "config_flow.py": "656c3ddf6998faa8548789b81df2d4ad6b20a64dfee481f66282e5fb820ab65e",
+      "conversation.py": "31a3be3f0344b76e63d37a082678a24a2881c4c17590f53de1e3cc5961df2337",
+      "manifest.json": "7b1f3a1bec024c195fa02a72a1b34b01800f60119ced6685ad01900fda4a4caa",
+      "strings.json": "7948a9527ccbb14cbeb8491dcb59a46fdfd79a30b5b9a7706d597732ec62aadc",
+      "phone.py": "2c88250d7e66f00e783dae870f31a5a1f853269e1b248eb116befc575fea6f32",
+      "phone_transport.py": "2bd10fc6c53551b55a5267d32bc0bfab4acf73c0c8dbf4d64d8cf4276ea85990",
+      "phone-assets/livekit-client.js": "7fa17e37af5e996d8a25f15a637dcc0620215bc01b394e5d209f726afe7dc04d",
+      "phone-assets/panel.js": "d078f20f9d4ad51129f2f8cb08c1f23d4de7453952239d5872a4bebeedffda4c"
+    },
+    "servedPanelSha256": "d078f20f9d4ad51129f2f8cb08c1f23d4de7453952239d5872a4bebeedffda4c",
+    "ready": {
+      "status": 200,
+      "body": {
+        "ready": true
+      }
+    },
+    "servicesUnchanged": true,
+    "services": {
+      "/eva2-owner-voice-media-1": {
+        "id": "485fafd240c15e1de4eea51ccc24d94b4ea098a1b8556ca877b0610ade884422",
+        "image": "sha256:71ee58ab0ba430568e07670ce3a87d5955b3e57409e015b97c001bcef576ff92",
+        "startedAt": "2026-09-30T13:49:18.50125985Z",
+        "restartCount": 0
+      },
+      "/eva2-owner-voice-livekit-1": {
+        "id": "dbe9c8396a3bd2974dd1a40264d7ad855d5077cc14235325b058cfa2dacd17dd",
+        "image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+        "startedAt": "2026-09-30T13:49:18.435622411Z",
+        "restartCount": 0
+      },
+      "/eva2-managed-b-slot3-core": {
+        "id": "36c36aa8d3539193026972e4a5cc664ff00e3ac4a2d5271409aced1ce2285318",
+        "image": "sha256:35eba561f26f4745b7995ae849c9341c441361a74106326308781e7e3ffc7a69",
+        "startedAt": "2026-09-30T13:50:09.47176939Z",
+        "restartCount": 2
+      }
+    },
+    "backup": "/config/.eva2-phone-saved-result-20261001",
+    "backupExactBytesVerified": true,
+    "restarts": 0,
+    "rollbacks": 0
+  },
+  "decision": "Existing result receiver connected and fresh-visit cache boundary corrected. C4.3 finish condition still needs physical phone stop/continue and accepted-work observation; C4 and family acceptance unchanged."
+}

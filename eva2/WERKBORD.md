@@ -1,10 +1,16 @@
 # EVA2 werkbord
 
+## Actueel: C4.3 — telefoonresultaten aangesloten; fysieke proef open
+
+Een uitvoerder, basis `78348a1e`. De bestaande ontvanger voor opgeslagen werkresultaten is nu in het HA-telefoonpaneel geïnstalleerd. Alleen `panel.js` en zijn samengestelde hashmanifest vervangen; gepinde SDK, HA Python, spraakdiensten en kern behouden. Review vond lokale deeltoestand die een volgend gesprek kon beïnvloeden; alleen die toestand bij de bestaande stopgrens gewist. Echte geïnstalleerde producent en volledige gegenereerde UI gericht gecontroleerd, inclusief nieuw bezoek; in-memory DOM/SDK/auth is geen fysieke telefoonproef. Alle10 geïnstalleerde hashes, exacte backups, aangeboden asset en readiness200 bevestigd.0 herstarts/rollbacks. Twee oude manifestregistraties gecorrigeerd naar reeds actuele HA-bestanden; geen herinstallatie. [Bewijs](evidence/product/c4-phone-route-20261001.json) · [Review](reviews/c4-phone-saved-result-20261001.md) · [Telefoon proberen](deploy/home-assistant/owner-phone.md).
+
+C4.3 en het stemonderdeel blijven op hun oorspronkelijke eindvoorwaarde open. Probeer in de HA-app Praten met Eva na verversen: Begin gesprek, laat Eva een kort verhaaltje vertellen en zeg tijdens het antwoord zonder wakeword Hoe gaat het met jou? Oude spraak moet stoppen; nieuwe vraag krijgt antwoord. Eindig gesprek sluit audio en is geen taakstop. Nog geen uitvoerder actief voor deze fysieke waarneming. Eva-runtime-model/audio/huisaanvragen0; één assetlevering, twee gerichte UI-runs na concrete broncorrectie; ontwikkelcredits onbekend. Volgende bestaande taak nog niet gestart; niet wachten op gezinsacceptatie als onafhankelijk werk resteert.
+
 ## Actueel: C4.1/C4.2 — beide geïnstalleerd; hoorbare proeven open
 
 Dezelfde bestaande wakeword-onderbrekingsoverlay op beide gewone HA-routes hergebruikt. Bronreview behouden en tweede-profielbeoordeling gebundeld; eenmaal per apparaat via OTA geïnstalleerd. Beide apparaten verbinden met de nieuwe evententity; Eva2, Hey Eva en mute-on bleven behouden. Geen nieuwe engine, afgewezen continue firmware, model-/audio-/huisaanvraag, dependencyherinstallatie of automatische rollback. [Bewijs](evidence/product/c4-device-boundary-20261001.json) · [Review](reviews/c4-wakeword-relisten-20261001.md).
 
-Nog nodig: tijdens Eva's antwoord één wakeword en daarna een nieuwe vraag op elk apparaat. Daarom C4.1/C4.2 en groot stemonderdeel niet afgevinkt. Originele overkappingsbronfirmware ook bewaard; niet uit apparaatflash gehaald of fysiek opnieuw geflasht. C4.3 telefoonroute volgt, nog niet gestart. Hermes blijft op eigen aanmelding wachten; geen authproces actief. Ontwikkelcredits onbekend; Eva-runtime-modelcalls0. Geen uitvoerder/modelproef actief voor de wachtende speakerwaarnemingen.
+Nog nodig: tijdens Eva's antwoord één wakeword en daarna een nieuwe vraag op elk apparaat. Daarom C4.1/C4.2 en groot stemonderdeel niet afgevinkt. Originele overkappingsbronfirmware ook bewaard; niet uit apparaatflash gehaald of fysiek opnieuw geflasht. C4.3 telefoonroute is hierboven aangesloten; fysieke proef blijft open. Hermes blijft op eigen aanmelding wachten; geen authproces actief. Ontwikkelcredits onbekend; Eva-runtime-modelcalls0. Geen uitvoerder/modelproef actief voor de wachtende speakerwaarnemingen.
 
 ## Actueel: P1.1 — Hermes-start klaar; eigen login ontbreekt
 

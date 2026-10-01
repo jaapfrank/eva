@@ -1,0 +1,26 @@
+# C4.3 phone saved-result asset review — 1 October 2026
+
+**GO for the bounded two-asset installation.** No remaining concrete blocker was found in the corrected candidate or the prepared installation route. This is not C4.3 completion, installed verification, or physical phone acceptance.
+
+The review covers the intended delivery from source base `78348a1e`: the existing shared voice client, `build_ha_phone_panel.py` transformation, retained installed producer packets, generated panel, composite manifest and private `install.py`. The reviewer performed source and retained-artifact inspection only; no fixture replay, provider, audio, room, house or deployment calls.
+
+Exact candidate bindings:
+
+- Previous panel SHA256: `cb4cd0204505187ef709d092e3657f74962a1f5a55fd7ff7acadb158be6e4b2e`.
+- Corrected panel SHA256: `d078f20f9d4ad51129f2f8cb08c1f23d4de7453952239d5872a4bebeedffda4c`.
+- Composite `phone-build.json` SHA256: `8c4bc5661f2cdbf8ca17131b64cafede0a141416addd3b77ac2d98ab68c33a3e`.
+- Unchanged LiveKit SDK 2.22.3 SHA256: `7fa17e37af5e996d8a25f15a637dcc0620215bc01b394e5d209f726afe7dc04d`.
+
+The installed producer emits `background_result_part` and `background_result_unavailable`. Its bounded chunks, complete UTF-8 output hash and message identity match the receiver. The receiver accepts only the current attempt, Eva participant and `eva.work` topic; validates part indices, sizes and complete bytes; and renders through `textContent`. An unavailable event removes the displayed result and blocks a digest already queued in that attempt. It does not grant work-return authority: producer reauthorization remains unchanged.
+
+One concrete lifecycle defect was corrected during this review. Object coercion made all attempt-prefixed cache keys identical, while partial packets and unavailable markers survived conversation end. The shared client and regenerated panel now clear both stores in `stopConversation` (`client.html:53`, panel line 62). Every end, interruption and leave passes that boundary, and the existing current-attempt checks before reception and after digest completion remain. The retained full-component check now verifies that an old partial cannot combine with a new attempt, late packets from the old room are ignored, a fresh complete result renders, and a previous unavailable marker cannot poison the next attempt.
+
+The retained component check also covers the old panel ignoring actual producer packets, out-of-order exact-byte assembly, unavailable removal and non-restoration, changed-hash and wrong-participant rejection, and conversation end closing the session without a work-stop request. These are coordinator-executed in-memory DOM, SDK and authorization fixtures using real installed synthetic producer packets. Their synthetic reused operation case verifies receiver isolation; it does not prove that the backend permits an original-session operation in another session.
+
+The existing generator preserves the HA owner-token WebSocket transport, session capability cleanup and relay connection route. `localAccess=false` keeps the owner gate active; the installed SDK and authentication routes are unchanged. The amended composite manifest differs from the captured actual installed files only at `phone-assets/panel.js`; all nine companion entries retain their actual installed hashes. No HA Python, media or core replacement is included.
+
+The coordinator reported that the first installer preflight stopped before any remote write because the September 12 receipt had stale client.py and conversation.py entries. The reviewer independently hashed all ten captured current files: every hash matches `actual-before-files.json` (SHA256 `459b7eea1d552ca1c6694675685fa7f9ab3212c02a67008d0b4dac63fd9e5f1c`). Actual client.py is `9e0d6c7ff22f93d84d5a3d8b7574fceb04f9a0f2c9d96e13128043bba7ad3db9`, and conversation.py is `31a3be3f0344b76e63d37a082678a24a2881c4c17590f53de1e3cc5961df2337`; both also match current source. The amended receipt records these existing bytes rather than replacing either module. Compared with the old receipt, only those two stale entries and the intended panel entry change. The reviewed panel and retained component proof are unchanged.
+
+The amended installer uses the captured actual-before snapshot for its ten-file hash guard and separately checks the exact old remote receipt bytes before writes. Its candidate guard permits only the panel hash to differ from the actual-before snapshot. It retains exact original panel and receipt backups, stages and atomically renames only panel.js and phone-build.json, then checks all remote hashes, backup bytes, served public panel bytes, owner readiness 200 and unchanged retained service identities/start times. The reviewer inspected this receipt amendment without another fixture replay or deployment call. Deployment remains unperformed at this checkpoint; all installation checks must succeed before verification is reported.
+
+A phone must load the new asset before evaluating it. Physical microphone capture, barge-in, real room delivery, background-work continuity during actual speech, and owner acceptance remain open. Existing lifecycle proofs are reused; this checkpoint adds no claim of a complete phone function or broader C4 acceptance.

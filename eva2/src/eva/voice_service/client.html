@@ -50,6 +50,7 @@ async function cleanup(attempt){
 }
 function stopConversation(text='Het gesprek is beëindigd.'){
  const old=active;active=null;room=null;visit++;
+ savedResultParts.clear();unavailableSavedResults.clear();
  if(old)void cleanup(old);
  reset(text);
 }

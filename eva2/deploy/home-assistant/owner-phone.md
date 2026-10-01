@@ -81,3 +81,41 @@ Probeer: open een gesprek, verberg het paneel en keer terug. De microfoon hoort
 uit te blijven totdat je opnieuw Begin gesprek kiest. Bij verwijderen van het
 paneel moet opnieuw aanmelden nodig zijn. Werk dat al gestart was is geen
 stopopdracht gegeven; controleer het resultaat via het bestaande dashboard.
+
+## Phone result connection — 1 October 2026
+
+The installed HA asset now handles the existing private media service's
+`background_result_part` and `background_result_unavailable` messages. It joins
+bounded parts, verifies the complete UTF-8 hash, and displays the saved result
+as text. The shared client clears partial-result and unavailable caches at the
+existing conversation-stop boundary; current-attempt checks still reject late
+packets and pending digests from a previous visit.
+
+Only `phone-assets/panel.js` and its composite `phone-build.json` were replaced.
+The installed SDK, HA Python files, authentication, media service and core remain
+unchanged. Two old companion hashes in the receipt were corrected to their
+already installed source versions. Every installed file, exact backups, public
+asset bytes and owner readiness were checked; no service restart was performed.
+The panel SHA256 is
+`d078f20f9d4ad51129f2f8cb08c1f23d4de7453952239d5872a4bebeedffda4c`.
+The original two files remain at `/config/.eva2-phone-saved-result-20261001`;
+recovery restores only those files, without changing household Python modules.
+
+The real installed producer and generated UI passed the focused in-memory
+transport check, including a fresh visit after end. Independent review approved
+the exact candidate and installation route. These checks do not establish
+physical phone microphone quality, echo or barge-in. C4.3 and C4 remain open.
+
+To try the physical phone route:
+
+1. Refresh the HA app's page and open **Praten met Eva** (`/eva-owner-voice`)
+   with the existing owner sign-in.
+2. Choose **Begin gesprek** and say “Vertel een kort verhaaltje.”
+3. While Eva is speaking, say “Hoe gaat het met jou?” without a wakeword.
+   The old speech should stop and the new question should receive its own answer.
+4. **Eindig gesprek** closes audio. It is not an instruction to stop accepted
+   background work; use an explicit task-stop request when that is intended.
+
+[Delivery evidence](../../evidence/product/c4-phone-route-20261001.json) and
+[independent review](../../reviews/c4-phone-saved-result-20261001.md) distinguish
+the installed result receiver from the still-open physical phone trial.

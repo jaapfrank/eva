@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T01:36:08.488049+00:00",
+        "checkedAt": "2026-10-01T02:18:30.483950+00:00",
         "deliveries": [
+          {
+            "title": "Telefoon: opgeslagen taakresultaten zichtbaar",
+            "date": "1 oktober",
+            "state": "installed",
+            "result": "Bestaande ontvanger aangesloten op echte geïnstalleerde resultaatberichten; lokale deeltoestand bij afsluiten gewist. Gerichte overgangscontrole en onafhankelijke review GO. Alleen2 assets geplaatst, alle hashes/readiness200 gecontroleerd,0 herstarts.",
+            "remaining": "Echt onderbreken/doorpraten en werkbehoud op telefoon blijven afzonderlijk te proberen. Geen volledig C4 of extra grote productcategorie.",
+            "source": "eva2/evidence/product/c4-phone-route-20261001.json"
+          },
           {
             "title": "Beide speakers: onderbreken en opnieuw luisteren geïnstalleerd",
             "date": "1 oktober",
@@ -3155,28 +3163,28 @@
           }
         ],
         "now": {
-          "title": "C4.1/C4.2: geïnstalleerd, hoorbare proeven open",
-          "state": "Wacht op fysieke waarneming",
-          "owner": "Jaap voor hoorbare proef; Codex voor vervolg",
-          "detail": "Beide apparaten verbinden met onderbrekingsoverlay. Er loopt nu geen model-/audioproef of uitvoerder voor deze taak; beide mutes bleven aan. Kleine eindvoorwaarden en groot stemonderdeel niet afgevinkt."
+          "title": "C4.3: telefoonresultaten aangesloten",
+          "state": "Geïnstalleerd · telefoonproef open",
+          "owner": "Codex /root",
+          "detail": "Bestaande ontvanger toont opgeslagen werkresultaten; oude deeltoestand verdwijnt bij afsluiten. Alleen2 bestanden geleverd, exacte versie/gereedheid gecontroleerd,0 herstarts. Echt stoppen/doorpraten op telefoon nog niet waargenomen; geen C4-afronding."
         },
         "next": {
-          "title": "C4.3: bestaande telefoonroute controleren",
-          "detail": "Geaccepteerde laptoponderbreking behouden. Alleen resterende telefoonroute en relevante verbindingen controleren; fysieke telefoonproef apart. Nog niet gestart; geen nieuwe engine of brede herstelronde."
+          "title": "Volgende bestaande gebruikersopdracht kiezen",
+          "detail": "De fysieke telefoon- en speakerproeven blijven apart open. Geen herhaling van dezelfde bron-/installatiecontrole; hervat alleen een werkelijk resterende taak en registreer haar vóór starten."
         },
         "ownerAction": {
-          "title": "Probeer onderbreken op beide speakers",
+          "title": "Probeer onderbreken op je telefoon",
           "steps": [
-            "Haal telkens de speaker van mute en vraag Hey Eva, vertel kort iets over Mars.",
-            "Zeg tijdens het antwoord één keer Hey Eva; stel Hoe gaat het met jou? zodra ze luistert.",
-            "Geef per speaker door: stopt het oude antwoord en antwoordt Eva op de nieuwe vraag?"
+            "Ververs de HA-app en open Praten met Eva met je bestaande eigenaarsaanmelding.",
+            "Kies Begin gesprek en zeg Vertel een kort verhaaltje.",
+            "Zeg tijdens het antwoord zonder wakeword Hoe gaat het met jou? Geef door of de oude spraak stopt en de nieuwe vraag wordt beantwoord."
           ],
-          "expected": "Woonkamer en Overkapping stoppen de lopende spraak en hervatten luisteren na één wakeword. Nog geen gemeten fysieke uitkomst.",
-          "url": "http://localhost:44712/",
-          "linkLabel": "Open projectoverzicht"
+          "expected": "Dezelfde Eva onderbreken en verder praten. Eindig gesprek sluit alleen audio; aangenomen werk wordt alleen op expliciet verzoek gestopt. Speakerproeven C4.1/C4.2 blijven ook open.",
+          "url": "http://10.0.20.74:8123/eva-owner-voice",
+          "linkLabel": "Open HA-telefoonpaneel"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T01:36:08.488049+00:00",
+        "reviewedAt": "2026-10-01T02:18:30.483950+00:00",
         "previousOwnerAction": {
           "title": "Meld Hermes aan voor de vergelijking",
           "steps": [
@@ -13420,7 +13428,7 @@
             "replacementJustified": false
           },
           "owner": "/root",
-          "activeWorker": null,
+          "activeWorker": "/root",
           "baseCommit": "7ab5b01d",
           "assignment": {
             "stage": "both_installed_physical_observation_pending",
@@ -13507,10 +13515,32 @@
             {
               "id": "C4.3",
               "title": "Stoppen en doorpraten op telefoon",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "praktijk",
               "doneWhen": "Een lopende gesproken reactie stoppen en gesprek vervolgen; aangenomen werk alleen stoppen op verzoek.",
-              "owner": "Codex"
+              "owner": "Codex /root",
+              "assignment": {
+                "baseCommit": "78348a1e",
+                "owner": "/root",
+                "files": [
+                  "eva2/src/eva/voice_service/client.html (receiver stop-boundary cleanup only)",
+                  "existing HA phone-assets/panel.js and composite phone-build.json only",
+                  "eva2/evidence/product/c4-phone-route-20261001.json",
+                  "eva2/deploy/home-assistant/owner-phone.md"
+                ],
+                "stage": "installed_waiting_physical_phone_observation",
+                "activeWorkers": [],
+                "existing": "Accepted laptop interruption, existing HA owner-phone proxy/transport, voice gateway and website controls; previous source/installed return mismatch was unrelated to native speakers.",
+                "gap": "Installed panel ignores background_result_part/background_result_unavailable emitted by the current private media return route. Existing source UI handles them; its materialized HA asset was not updated. Core/HA readiness200, entry loaded. Media agent byte difference concerns household return only, not phone interruption.",
+                "outcome": "Keep the existing stop/continue phone audio route and make retained background results visible after speech interruption by installing the existing result receiver. No new interpretation, authentication or speech engine.",
+                "finish": "Een lopende gesproken reactie stoppen en gesprek vervolgen; aangenomen werk alleen stoppen op verzoek.",
+                "estimate": "One static-asset update on existing HA installation, current source/protocol checks and bundled review/readback. No model/audio/house calls; credits unknown.",
+                "design": "Use current existing panel_script generator and same pinned SDK. Publish only panel.js and a composite manifest preserving actual other installed hashes; no HA Python/media/core changes or restart. Reuse prior source/return/lifecycle proofs; check materialized asset against installed protocol, bundle independent review and one static-asset deployment. Physical phone stop/continue remains separate.",
+                "dependency": "Review found receiver stores survive end/start and coerce attempt objects to the same string. Clear only saved-result stores at the existing stop boundary; current(attempt) guard retained. Needed for fresh phone visits; no extra outcome. Initial full prewrite hash read found two stale manifest records (current client.py/conversation.py match source). No remote writes made; preserve actual files and correct receipt only.",
+                "result": "Same existing receiver installed with stop-boundary cache correction. Exact served asset, all10 installed file hashes, backups and HA readiness200 verified. Media/LiveKit/core IDs/start times retained;0 restarts/rollbacks. Physical phone finish remains open.",
+                "evidence": "eva2/evidence/product/c4-phone-route-20261001.json",
+                "review": "eva2/reviews/c4-phone-saved-result-20261001.md"
+              }
             }
           ]
         },
