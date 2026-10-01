@@ -1,6 +1,20 @@
 # EVA2 werkbord
 
-## Actueel: eenduidige taakstatus en concrete volgende stappen
+## Actueel: M1.2 door Jaap bevestigd; M1 afgerond
+
+Jaap bevestigt: **M1.2 werkt.** Later verder praten zonder alles opnieuw uit te
+leggen is geaccepteerd. M1.1 was al technisch aangetoond; daarmee is de bestaande
+opdracht M1 afgerond. Geen nieuwe implementatie, herhaalde proef of herstart.
+Andere persoonlijkheids-, gespreks- en speakerbeoordelingen blijven afzonderlijk
+open; deze bevestiging geldt niet automatisch voor alle kanalen.
+
+**Stand:** 14 van 44 kleine taken afgerond, 30 open. De drie eerder vastgelegde
+blokkades zijn ongewijzigd; grote productstand blijft 2/9. Dashboard bijgewerkt
+uit dezelfde werkbordbron. Geen uitvoerder actief voor deze registratie.
+[Bewijs](evidence/product/m1-continuity-owner-accepted-20261001.json).
+Geen modelcalls of huisacties; ontwikkelcredits onbekend.
+
+## Vorige oplevering: eenduidige taakstatus en concrete volgende stappen
 
 **Stand:** 13 van 44 kleine taken technisch afgerond, 31 open. Alle open taken
 hebben een concrete volgende stap en verantwoordelijke. De twee overzichten

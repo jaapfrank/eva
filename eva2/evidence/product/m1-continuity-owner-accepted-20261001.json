@@ -1,0 +1,28 @@
+{
+  "taskId": "M1.2",
+  "status": "completed_owner_accepted",
+  "checkedAt": "2026-10-01T13:58:56.478055+00:00",
+  "source": "Direct owner statement in current chat",
+  "ownerStatement": "M1.2 · werkt.",
+  "acceptedOutcome": "Later verder praten zonder alles opnieuw uit te leggen tijdens gewoon gebruik.",
+  "retainedTechnicalEvidence": [
+    "eva2/evidence/product/m1-existing-delivery-20260928.json",
+    "eva2/evidence/product/m1-cross-channel-recall-20260929.json"
+  ],
+  "implementation": "Existing installed memory and conversation routes retained; acceptance registration only. No new code, model call, test, restart or installation.",
+  "parentClosure": "M1 is complete because M1.1 was already verified and M1.2 is now explicitly accepted.",
+  "limits": [
+    "Owner did not identify the channel or provide conversation text; do not infer every channel or long-term universal accuracy.",
+    "Other family, personality, voice and conversation conditions remain separately open.",
+    "No additional complete product component is claimed."
+  ],
+  "ownerAcceptance": {
+    "accepted": true,
+    "statementRecordedAt": "2026-10-01T13:58:56.478055+00:00"
+  },
+  "newDevelopmentProbeUsage": {
+    "modelCalls": 0,
+    "toolHouseActions": 0,
+    "credits": null
+  }
+}
