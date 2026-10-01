@@ -1,6 +1,38 @@
 # EVA2 werkbord
 
-## Actueel: M3.3 — instructie geïnstalleerd; persoonlijkheid nog niet geaccepteerd
+## Actueel: eenduidige taakstatus en concrete volgende stappen
+
+**Stand:** 13 van 44 kleine taken technisch afgerond, 31 open. Alle open taken
+hebben een concrete volgende stap en verantwoordelijke. De twee overzichten
+gebruiken dezelfde labels en tonen instructies voor actuele én latere proeven.
+Een open gebruiksbeoordeling blokkeert onafhankelijk bouwen niet. Alleen
+geregistreerde actieve uitvoerders worden als werkend getoond.
+
+**Drie echte blokkades:** T3.1 vraagt Jaap één bestaand Chrome-tabblad te delen
+via http://127.0.0.1:44718/proef op de Chrome-computer. P1.1 vraagt eigen
+browseraanmeldingen voor OpenClaw/Hermes wanneer de verse flows gestart worden;
+dit blokkeert alleen de eindvergelijking. O2.3 is technisch werk van Codex aan
+de offline-browserafhankelijkheid in de bewaarde herstelinstallatie. Daarvoor
+is geen nieuwe eigenaarkeuze nodig; die technische fout is nog niet opgelost.
+
+**Gecorrigeerd:** L3.2/R1.1 zijn onvoltooid onderzoek met afgesloten oude proeven,
+geen eigenaarblokkade. I1.1 blijft ontwikkelwerk: speaker-TCP verbonden, maar de
+initiatiefselectie vindt nog geen actuele native gesprekssessie. Geen nuttige
+bijdrage of gezinsacceptatie geclaimd. Overkapping full duplex is nog niet gereed;
+een oude wakeword-proef wordt daar niet als volledige gebruiksproef aangeboden.
+
+**C1.2 afgerond op bestaand bewijs:** de eigenaarlog van 1 oktober bevestigt
+tweemaal een tussenvraag vóór onderzoek, op het eigen bericht. Een succesvol
+onderzoeksresultaat was geen extra eindvoorwaarde voor deze kleine taak. De
+gedeeltelijke beoordeling van onderzoeksinhoud blijft behouden; bronselectie
+en algemene taakbetrouwbaarheid blijven open. Grote productstand blijft 2/9.
+
+[Bewijs](evidence/product/task-guidance-reconciliation-20261001.json).
+Geen modelcalls of huisacties tijdens deze correctie; ontwikkelcredits onbekend.
+Na dashboardoplevering geen uitvoerder actief voor deze wijziging. Volgende
+technische blokkade is O2.3; de concrete gebruikershandelingen staan bij hun taak.
+
+## Vorige oplevering: M3.3 — instructie geïnstalleerd; persoonlijkheid nog niet geaccepteerd
 
 **Jouw negatieve beoordeling blijft staan.** De gedeelde identiteit was correct
 geladen. De instructie voor humor gaf onnodig één patroon op en het verbod op
@@ -23,8 +55,9 @@ humor en initiatief in werkelijk gebruik.
 
 **Verbruik:** twee Sol/none-modelcalls, 2.658 invoer- en 38 uitvoertokens, geen tools.
 Runtime- en ontwikkelcreditkosten onbekend. M3.1/M3.2, geheugenacceptaties en C3.3
-blijven staan. C3.1/C3.2 fysieke proeven blijven open; 12 van 44 kleine taken
-voltooid en 2 van 9 grote onderdelen afgerond, ongewijzigd.
+blijven staan. C3.1/C3.2 fysieke proeven blijven open. Stand bij die
+oplevering: 12 van 44 kleine taken voltooid en 2 van 9 grote onderdelen afgerond.
+De actuele stand staat bovenaan dit werkbord.
 
 ## Vorige oplevering: C3.1 — inputtaakcorrectie geïnstalleerd; fysieke begroeting open
 

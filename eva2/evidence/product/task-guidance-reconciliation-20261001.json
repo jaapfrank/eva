@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-01T13:51:34.967419+00:00",
+  "scope": "Reconcile blocked work and make recorded task instructions visible in both existing lists.",
+  "findings": [
+    "The checklist only displayed trial steps for exactly pending; open/requested/rejected-owner states and ownerInstructions were hidden.",
+    "The two lists used different status rules, including an unconditional in-progress label with no active worker.",
+    "Closed L3/R1 rounds and a momentarily absent initiative destination were mistaken for permanent owner blockers.",
+    "C1.2 was expanded beyond its original ordering/message-binding finish condition."
+  ],
+  "boundedCompletion": {
+    "task": "C1.2",
+    "existingEvidence": "eva2/evidence/product/c1-incomplete-work-report-20261001.json",
+    "ownerLog": "1 October 12:22 and 12:23: short replies before research, each attached to its own input.",
+    "independentReview": "/root/open_questions_triage confirmed the bounded finish condition and identified the extra research-success condition as scope growth.",
+    "notClaimed": [
+      "Full conversation product",
+      "Research success",
+      "General latency benefit"
+    ]
+  },
+  "remainingBlocks": [
+    {
+      "task": "T3.1",
+      "owner": "Jaap then Codex",
+      "routeCheckedAt": "2026-10-01T13:33:41Z",
+      "route": "http://127.0.0.1:44718/proef",
+      "result": "HTTP200; connected=false; actual share controls checked. Chrome computer only."
+    },
+    {
+      "task": "P1.1",
+      "owner": "Jaap and Codex",
+      "authStatusCheckedAt": "2026-10-01T11:32:00Z",
+      "result": "Own OpenClaw/Hermes saved authentication absent; no live device codes. Agent Zero preserved. Blocks final comparison only."
+    },
+    {
+      "task": "O2.3",
+      "owner": "Codex",
+      "result": "Verifier still requires all preserved gateways; no proven selective offline disable path. Old owner-choice blocker removed, technical dependency retained."
+    }
+  ],
+  "initiativeCheck": {
+    "coreComposed": true,
+    "nativeDestinationAvailable": false,
+    "speakerTcpConnected": true,
+    "modelCalls": 0,
+    "announcements": 0,
+    "limitation": "Neither transport nor session proves a present person or delivered useful initiative."
+  },
+  "totals": {
+    "smallTasks": 44,
+    "completed": 13,
+    "open": 31,
+    "blocked": 3,
+    "completeProductComponents": 2
+  },
+  "independentReview": {
+    "reviewer": "/root/open_questions_triage",
+    "decision": "GO for final source delta, including visible open children of technically completed parents and local Chrome instructions",
+    "correctionsApplied": true
+  },
+  "verification": {
+    "sourceBuild": "project mode succeeded",
+    "liveUi": "passed",
+    "liveRoute": "http://127.0.0.1:44712/",
+    "installedAsset": "project-dist/assets/index-Dln3_3uk.js",
+    "checklistTasks": 44,
+    "completed": 13,
+    "open": 31,
+    "bothViewsAgree": true,
+    "openTrialUnderCompletedParentVisible": true,
+    "instructionStatesCovered": ["open", "not_accepted", "blocked", "future"],
+    "browserErrors": [],
+    "privateScreenshot": "/home/administrator/project/.eva2-artifacts/task-guidance-20261001/chrome-task.png"
+  },
+  "usage": {
+    "runtimeModelCalls": 0,
+    "houseActions": 0,
+    "developmentCreditCost": null
+  }
+}
