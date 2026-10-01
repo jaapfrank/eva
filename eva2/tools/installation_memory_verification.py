@@ -80,7 +80,13 @@ def data_inventory(raw):
     for line in raw.decode('utf-8', errors='strict').split('\n'):
         if active is not None:
             if line == r"\.":
-                tables[active] = {"rows": len(rows), "rows_sha256": canonical_sha256(sorted(rows))}
+                # Row hashes are fixed-width bytes. Hash the complete sorted
+                # multiset directly: the general JSON contract's array bound
+                # applies to model payloads, not real database table sizes.
+                digest = hashlib.sha256(b"EvaMemoryRowMultiset/v1\x00")
+                for row_hash in sorted(rows):
+                    digest.update(bytes.fromhex(row_hash))
+                tables[active] = {"rows": len(rows), "rows_sha256": digest.hexdigest()}
                 active, rows = None, []
             else:
                 if len(rows) >= 1_000_000:

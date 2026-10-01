@@ -105,8 +105,10 @@ def validate_restore_verification_configuration(configuration):
     from tools.installation_memory_start import validate_memory_start_configuration
     keys = {"runtime", "external", "gateway", "binding", "document_preparation",
             "document_connection", "document_promotion", "native_authorization", "memory_api"}
-    if not isinstance(configuration, dict) or set(configuration) != keys:
+    if not isinstance(configuration, dict) or not keys <= set(configuration) or set(configuration) - keys - {"suspended_gateway_ids"}:
         raise ValueError("restore component verification configuration differs")
+    from tools.installation_gateway_verification import validate_suspended_gateway_ids
+    validate_suspended_gateway_ids(configuration.get("suspended_gateway_ids", ()))
     _configuration(configuration["runtime"])
     validate_external_configuration(configuration["external"])
     validate_gateway_start_configuration(configuration["gateway"],
@@ -190,7 +192,8 @@ def verify_restored_installation(connection, *, package_root, restore_id,
     if documents.get("all_verified") is not True or documents.get("archive_sha256") != archive:
         raise ValueError("restored writable documents are not verified")
     gateway = verify_gateway_providers(root, configuration=configuration["gateway"],
-        external_configuration=configuration["external"], binding_configuration=configuration["binding"], guard=current)
+        external_configuration=configuration["external"], binding_configuration=configuration["binding"], guard=current,
+        suspended_gateway_ids=configuration.get("suspended_gateway_ids", ()))
     if gateway.get("all_verified") is not True or gateway.get("archive_sha256") != archive:
         raise ValueError("restored upstream providers are not verified")
     current()

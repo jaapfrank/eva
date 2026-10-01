@@ -134,6 +134,16 @@ def test_activation_cannot_omit_a_prepared_writer(setup):
         module.build_prepared_restore_config(**args)
 
 
+def test_operator_suspension_selection_reaches_prepared_activation_without_mutating_input(setup):
+    args,_,_,_ = setup
+    activation_inputs(args)
+    args['activation_settings']['suspended_gateway_ids'] = ['retained-offline']
+    result = module.build_prepared_restore_config(**args)
+    assert result.config['activation']['suspended_gateway_ids'] == ['retained-offline']
+    result.config['activation']['suspended_gateway_ids'].clear()
+    assert args['activation_settings']['suspended_gateway_ids'] == ['retained-offline']
+
+
 def identity_restore_inputs(args, rows):
     private = args["preparation_workspace"] / "identity"
     private.mkdir(mode=0o700)

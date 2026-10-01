@@ -20,6 +20,15 @@ def test_inventory_ignores_row_order_but_preserves_duplicates_columns_and_sequen
         assert module.data_inventory(changed) != original
 
 
+def test_real_table_sizes_are_not_limited_by_model_json_arrays():
+    rows = [f'{index}\tremembered-content\n' for index in range(3000)]
+    original = module.data_inventory(dump(''.join(rows)))
+    assert original['tables']['public.memories (id, content)']['rows'] == 3000
+    assert original == module.data_inventory(dump(''.join(reversed(rows))))
+    rows[-1] = rows[-2]
+    assert original != module.data_inventory(dump(''.join(rows)))
+
+
 @pytest.mark.parametrize("raw", [dump() + b"INSERT INTO public.other VALUES (1);\n",
     dump().replace(b'\\.\n', b''), dump() + b"SELECT pg_catalog.lo_create('123');\n",
     dump().replace(b'16.13', b'17.1')])

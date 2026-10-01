@@ -107,6 +107,23 @@ def _read_credential(path):
         os.close(fd)
 
 
+def _runtime_file_host(container_path, row, environment, *, is_core, model_lease_path):
+    """The core's erasure/restore authority is mutable state, not a secret.
+
+    Its exact path, initial contents and mount remain operator approved. Other
+    credential routes, including the model lease, must stay read-only.
+    """
+    try:
+        return _host_file(container_path, row.get('Mounts', []), readonly=True)[0]
+    except ValueError:
+        aliases = [key for key, value in environment.items()
+                   if key.endswith('_FILE') and value == container_path]
+        if (not is_core or container_path == model_lease_path
+                or aliases != ['EVA_PORTABLE_RESTORE_AUTHORITY_FILE']):
+            raise
+        return _host_file(container_path, row.get('Mounts', []), readonly=False)[0]
+
+
 def verify_runtime_authorization(connection, *, package_root, restore_id,
                                  configuration, runtime_configuration, guard):
     validate_runtime_authorization_configuration(configuration)
@@ -177,7 +194,8 @@ def _verify_targets(configuration, runtime_configuration, root, authority, expec
                     and not _image_public_trust_file(row, key, value)):
                 raise ValueError("runtime credential route lacks current authorization")
         for container_path in covered:
-            host, _ = _host_file(container_path, row.get('Mounts', []), readonly=True)
+            host = _runtime_file_host(container_path, row, env, is_core=is_core,
+                                      model_lease_path=writer['model_lease_path'])
             if host == root or root in host.parents:
                 raise ValueError("runtime credentials cannot come from recovery material")
             if container_path == writer['model_lease_path']:

@@ -122,8 +122,25 @@ def test_profile_accepts_only_observed_null_false_oom_default_equivalence():
     assert row == original
     row['HostConfig']['OomKillDisable'] = True
     assert module.runtime_profile_sha256(row) != expected
+
     row['HostConfig']['OomKillDisable'] = False
     row['HostConfig']['Privileged'] = None
     assert module.runtime_profile_sha256(row) != expected
     del row['HostConfig']['OomKillDisable']
     assert module.runtime_profile_sha256(row) != expected
+
+
+@pytest.mark.parametrize('case', ['core_authority', 'worker_authority', 'secret', 'lease', 'alias'])
+def test_only_core_restore_authority_can_use_approved_mutable_mount(tmp_path,case):
+    row = {'Mounts':[{'Type':'bind','Source':str(tmp_path),'Destination':'/run','RW':True}]}
+    environment = {'EVA_PORTABLE_RESTORE_AUTHORITY_FILE':'/run/authority.json'}
+    path = '/run/authority.json'
+    lease = '/run/model.json'
+    if case == 'secret':environment = {'EVA_HA_TOKEN_FILE':path}
+    if case == 'lease':lease = path
+    if case == 'alias':environment['EVA_HA_TOKEN_FILE'] = path
+    if case == 'core_authority':
+        assert module._runtime_file_host(path,row,environment,is_core=True,model_lease_path=lease)==tmp_path/'authority.json'
+    else:
+        with pytest.raises(ValueError):
+            module._runtime_file_host(path,row,environment,is_core=case!='worker_authority',model_lease_path=lease)

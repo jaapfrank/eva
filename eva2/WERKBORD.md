@@ -1,6 +1,36 @@
 # EVA2 werkbord
 
-## Actueel: T3.1 — gedeeld Chrome-tabblad verbonden en vers gelezen
+## Actueel: O2.3 — bewaarde herstelroute afmaken
+
+Codex hervat de bestaande herstelinstallatie bij de offline-browserafhankelijkheid.
+Bewaarde export, gegevens, registraties en geslaagde stappen blijven behouden.
+Eerst de falende gateway-overgang herstellen; daarna dezelfde wizard afmaken en
+de herstelde installatie controleren. Eén uitvoerder, basis `c5502367`; geen nieuwe
+brede audit, export of herinstallatieronde. Geen eigenaarhandeling nodig.
+Stand blijft 15/44 kleine taken en 2/9 grote onderdelen; O2.3 is nog niet afgerond.
+
+Gerichte echte controle: twee browserkoppelingen/31 tools alleen in de herstelversie
+uitgeschakeld; alle 61 registraties behouden. Geheugenvergelijking gecorrigeerd voor
+grote echte tabellen: 27.899 rijen in 23 tabellen gelijk aan de bewaarde export.
+Geheugen-API gestart: 21 bewaarde banken bereikbaar. De gereviewde correcties
+staan in de bestaande hersteltool. Volledige activatie en runtimecontrole lopen;
+de bestaande kern staat daarvoor
+tijdelijk stil. Geen nieuwe import, export, huisactie of modelproef.
+
+Alle 7 actieve gatewayroutes geven een verse native controle (1 eerste en
+6 overige probes). De bewaarde bron-IP-pins zijn gericht naar de vijf werkelijke
+herstelproviders omgezet; geen ruimer netwerkbeleid. Alleen de gatewayconfiguratie
+vervangen, met dezelfde image en opslag; oorspronkelijke container behouden.
+Onafhankelijke controle bevestigd. Volledige activatie blijft lopen.
+
+Bij de hervatting is de geheugen-API gericht gestopt voor de bestaande
+isolatiecontrole. Alleen 79 oude model-logregels waren door native retentie
+opgeruimd; de overige 22 tabellen zijn gelijk. Die ene tabel is uit hetzelfde
+goedgekeurde archief teruggezet voor de controle vóór starten. Geen volledige
+herimport. Normale retentie na starten wordt apart vermeld; O2.3 blijft open.
+
+
+## Vorige oplevering: T3.1 — gedeeld Chrome-tabblad verbonden en vers gelezen
 
 Jaap meldt **Gedeeld**. De bestaande gateway/proxy/bridge-route heeft één verse
 waarneming gelezen van het gekozen projectdashboard op http://localhost:44712/.

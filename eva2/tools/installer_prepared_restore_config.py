@@ -163,7 +163,8 @@ def build_prepared_restore_config(*, preparation_workspace, connection, target_d
         if "activation" in components:
             raise ValueError("activation must have one configuration source")
         settings = deepcopy(activation_settings)
-        if set(settings) != {"model_authority_file", "writers", "memory_profile_sha256", "source_memory_writers"}:
+        required = {"model_authority_file", "writers", "memory_profile_sha256", "source_memory_writers"}
+        if not required <= set(settings) or set(settings) - required - {"suspended_gateway_ids"}:
             raise ValueError("prepared activation settings differ")
         # Profiles and credential digests are independently approved installer
         # inputs. Only new container identities come from target preparation.
@@ -190,6 +191,10 @@ def build_prepared_restore_config(*, preparation_workspace, connection, target_d
         validate_runtime_authorization_configuration(native)
         validate_memory_start_configuration(memory_api, external_configuration=components.get("external_recovery"))
         components["activation"] = {"native_authorization": native, "memory_api": memory_api}
+        if "suspended_gateway_ids" in settings:
+            from tools.installation_gateway_verification import validate_suspended_gateway_ids
+            validate_suspended_gateway_ids(settings["suspended_gateway_ids"])
+            components["activation"]["suspended_gateway_ids"] = settings["suspended_gateway_ids"]
     if "activation" in components:
         expected_api={k:pin("hindsight")[k] for k in ("name","id","image")}
         if components["activation"].get("memory_api",{}).get("container")!=expected_api:

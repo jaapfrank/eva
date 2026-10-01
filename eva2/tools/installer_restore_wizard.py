@@ -48,7 +48,7 @@ def configured_restore_workflow(config):
             raise ValueError("activation requires complete document promotion and runtime identity")
         if (not isinstance(activation, dict)
                 or not {"native_authorization", "memory_api"} <= set(activation)
-                or not set(activation) <= {"native_authorization", "memory_api", "startup_timeout_seconds"}):
+                or not set(activation) <= {"native_authorization", "memory_api", "startup_timeout_seconds", "suspended_gateway_ids"}):
             raise ValueError("activation configuration differs")
         timeout = activation.get("startup_timeout_seconds", 60)
         if type(timeout) not in (int, float) or not 0 < timeout <= 120:
@@ -135,6 +135,7 @@ def configured_restore_workflow(config):
                 "document_promotion": config["document_write_access"],
                 "native_authorization": config["activation"]["native_authorization"],
                 "memory_api": config["activation"]["memory_api"],
+                "suspended_gateway_ids": config["activation"].get("suspended_gateway_ids", []),
             }
             validate_restore_verification_configuration(verification)
             verify_components = partial(verify_restored_installation, configuration=verification)

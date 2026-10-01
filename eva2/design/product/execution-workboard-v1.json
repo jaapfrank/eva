@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T14:14:41.201360+00:00",
+        "checkedAt": "2026-10-01T15:16:03.479216+00:00",
         "deliveries": [
           {
             "title": "T3.1 — bestaand Chrome-tabblad echt gelezen",
@@ -3275,24 +3275,21 @@
           }
         ],
         "now": {
-          "title": "T3.1 — bestaand Chrome-tabblad verbonden",
-          "state": "installed",
-          "detail": "Jaap heeft het projectdashboard op localhost:44712 gedeeld. De bestaande gateway/proxy/bridge-route heeft het tabblad vers gelezen. 15 van 44 kleine taken klaar, 29 open; geen actieve uitvoerder voor deze afgeronde aansluiting."
+          "title": "O2.3 — bewaarde herstelroute afmaken",
+          "state": "in_progress",
+          "detail": "Gereviewde herstelcorrecties geïnstalleerd. Alle 7 actieve koppelingen bereikbaar; geheugeninhoud behouden. 79 automatisch verlopen model-logregels gericht teruggezet voor de exacte controle vóór starten. Volledige activatie loopt; O2.3 blijft open."
         },
         "next": {
-          "title": "T3.2 — gewone browseropdracht afmaken",
-          "detail": "De verbinding is beschikbaar; één concrete opdracht via de gedeelde route uitvoeren en het echte resultaat controleren. T3.3 overnemen blijft apart open."
+          "title": "O2.3 — volledige start en teruglezing afronden",
+          "detail": "Na de lopende componentcontrole: dezelfde kern en werker starten, bewaarde inhoud teruglezen en de geïnstalleerde correctie afronden."
         },
         "ownerAction": {
-          "title": "Chrome gedeeld; geen nieuwe deelhandeling nodig",
-          "steps": [
-            "Laat het gedeelde tabblad open voor de volgende browseropdracht.",
-            "P1.1: meld wanneer je de verse OpenClaw/Hermes-aanmeldingen kunt bevestigen."
-          ],
-          "expected": "T3.1 is klaar. Alleen P1.1 vraagt nog toegang van jou; O2.3 blijft technisch Codex-werk. Speaker-audio blijft afzonderlijk open."
+          "title": "O2.3 vraagt geen handeling van jou",
+          "steps": [],
+          "expected": "Codex lost de technische herstelafhankelijkheid op. Andere open gebruikersproeven blijven apart zichtbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T14:14:41.201360+00:00",
+        "reviewedAt": "2026-10-01T15:16:03.479216+00:00",
         "previousOwnerAction": {
           "title": "Probeer onderbreken op je telefoon",
           "steps": [
@@ -15290,7 +15287,7 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": null,
+          "activeWorker": "/root",
           "dashboardComponent": "installation",
           "remainingTasks": [
             {
@@ -15346,44 +15343,55 @@
             {
               "id": "O2.3",
               "title": "Herstelroute met werkelijke gegevensversie afronden",
-              "status": "blocked",
+              "status": "in_progress",
               "kind": "aansluiten",
               "doneWhen": "Bestaande herstelwizard werkt voor huidige gegevensversie; geen nieuw herstelsysteem bouwen.",
               "owner": "/root",
               "assignment": {
-                "baseCommit": "b97becc9",
+                "baseCommit": "c5502367",
                 "files": [
-                  "eva2/tools/installation_gateway_start.py",
-                  "eva2/tests/portable/test_restore_precreated_network.py"
+                  "eva2/tools/installation_gateway_verification.py",
+                  "eva2/tools/installation_restore_verification.py",
+                  "eva2/tools/installer_restore_wizard.py",
+                  "eva2/tools/installer_prepared_restore_config.py",
+                  "eva2/tools/installation_runtime_authorization.py",
+                  "eva2/tools/installation_memory_verification.py"
                 ],
                 "existing": "Current restore route proven from0009; existing install_schema forward route supports0007",
-                "gap": "Actual retained0007 data has not passed the existing forward migration needed by portable v2",
-                "outcome": "Bevroren echte gegevens via bestaande volledige herstelroute herstellen.",
-                "estimate": "Bestaande kernexport duurt eerder circa8min; één export van deze nieuwe consistente bronkopie, geen nieuwe live snapshot/modelcalls. Credits onbekend.",
+                "gap": "Retained offline gateway is still mandatory for discovery; resume the existing prepared target at that transition.",
+                "outcome": "Complete the saved full restore without losing retained offline connector data",
+                "estimate": "Reuse saved archive and target; focused lifecycle checks and one bundled review; no model calls planned; credit cost unknown",
                 "finish": "Consistent source copy collected through existing helpers; complete joint restore remains required.",
-                "stage": "technical_gateway_lifecycle_work",
+                "stage": "complete_activation_after_native_retention_reconciliation",
                 "workers": {},
-                "activeWorkers": [],
+                "activeWorkers": [
+                  "/root"
+                ],
                 "endCondition": "Pakket/autoriteit/wizard gebruiken dezelfde v3-kern met bestaande externe stappen; gerichte combinatiecontrole, onafhankelijke review en operatorinstallatie.",
                 "liveExportSession": null,
                 "liveRestoreSession": null,
                 "catalogFinding": "Four native catalogs recoverable exactly from preserved gateway rows; standalone catalog interface still requires connection. Evidence: eva2/evidence/product/o2-preserved-document-catalog-20260929.json",
                 "liveDocumentSession": null,
-                "liveGatewaySession": null
+                "liveGatewaySession": null,
+                "actualFindings": [
+                  "Native selective suspension preserves both existing browser registrations and disables31of61tools in restored gateway only.",
+                  "Actual memory comparison now supports17093-rowtable; all27899rows in23tables match frozen source.",
+                  "Restored memory API started and locally healthy;21retainedbanks. Full component/release/runtime start still running."
+                ]
               },
               "latestEvidence": "eva2/evidence/product/c1-o2-current-blockers-20260929.json",
-              "remaining": "Geen eigenaarbesluit nodig. Codex hervat de bewaarde herstelinstallatie en herstelt de legacyservice of maakt selectief buiten uitvoering houden mogelijk; gegevens/registraties behouden. Nog niet bewezen.",
-              "blocker": "Codex: de oude browserkoppeling is onbereikbaar; de herstelcontrole probeert nog elke bewaarde koppeling te bereiken. De herstelversie moet hiermee omgaan zonder gegevens of autorisatiehistorie te verwijderen. Alleen de herstelproef wordt geraakt.",
+              "remaining": "Volledige activatie, start en inhoud teruglezen op dezelfde bewaarde herstelinstallatie controleren. Offline browserkoppelingen blijven bewaard en uitgeschakeld; actieve bronnen zijn bereikbaar.",
               "previousBlocker": "Owner asked whether restored Eva may start with preserved but explicitly disabled offline legacy browser, or legacy service must first recover. No entry deleted or disabled while choice pending.",
               "ownerActionRequired": false,
-              "checkedAt": "2026-10-01T13:44:09.424387+00:00",
-              "nextAction": "Codex hervat de bewaarde herstelinstallatie en corrigeert de offline-browserafhankelijkheid, met gegevensbehoud.",
+              "checkedAt": "2026-10-01T15:16:03.479216+00:00",
+              "nextAction": "Lopende volledige activatie afronden, bewaarde inhoud teruglezen en de technische oplevering vastleggen.",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "resolvedTechnicalBlocker": "Codex: de oude browserkoppeling is onbereikbaar; de herstelcontrole probeert nog elke bewaarde koppeling te bereiken. De herstelversie moet hiermee omgaan zonder gegevens of autorisatiehistorie te verwijderen. Alleen de herstelproef wordt geraakt."
             }
           ],
           "latestEvidence": "eva2/evidence/product/o2-consistent-source-collected-20260929.json"
