@@ -425,7 +425,8 @@ def render_managed_b(plan: CoreBPlan) -> RenderedBManifest:
     return receipt
 
 
-def isolated_restore_graph(receipt: RenderedBManifest, graph: dict[str, Any], *, namespace: str, network_subnet: str | None = None) -> dict[str, Any]:
+def isolated_restore_graph(receipt: RenderedBManifest, graph: dict[str, Any], *, namespace: str, network_subnet: str | None = None,
+                           fresh_installation: bool = False, local_port: int | None = None) -> dict[str, Any]:
     """Project the verified services onto fresh storage with traffic still closed.
 
     Private bind inputs must already be materialized for the new target. This
@@ -436,6 +437,9 @@ def isolated_restore_graph(receipt: RenderedBManifest, graph: dict[str, Any], *,
         raise ValueError("invalid restore namespace")
     if _sha256(_canonical_json(graph)) != receipt.rendered_sha256:
         raise ValueError("rendered graph differs from its receipt")
+    if type(fresh_installation) is not bool or (fresh_installation and (
+            type(local_port) is not int or not 1024 <= local_port <= 65535)):
+        raise ValueError("fresh installation requires an explicit local port")
     if set(graph) - {"name", "services", "volumes", "networks"}:
         raise ValueError("unsupported rendered graph sections")
     subnet = None
@@ -451,7 +455,7 @@ def isolated_restore_graph(receipt: RenderedBManifest, graph: dict[str, Any], *,
     if len(networks) != 1:
         raise ValueError("restore projection requires one maintained network")
     network = next(iter(networks))
-    result["networks"] = {network: {"name": namespace + "-network", "internal": True}}
+    result["networks"] = {network: {"name": namespace + "-network", "internal": not fresh_installation}}
     if subnet is not None:
         result["networks"][network]["ipam"] = {"config": [{"subnet": str(subnet)}]}
     for key, volume in result.get("volumes", {}).items():
@@ -472,6 +476,9 @@ def isolated_restore_graph(receipt: RenderedBManifest, graph: dict[str, Any], *,
         service["container_name"] = namespace + "-" + name
         service["restart"] = "no"
         service.pop("ports", None)
+        if fresh_installation and name == "core":
+            service["ports"] = [{"host_ip": "127.0.0.1", "target": 8080,
+                                 "published": str(local_port), "protocol": "tcp"}]
         service["networks"] = {network: {"aliases": aliases}}
     return result
 

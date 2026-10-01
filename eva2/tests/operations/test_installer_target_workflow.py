@@ -26,8 +26,11 @@ def flow(tmp_path, monkeypatch):
     monkeypatch.setattr(module, "bind_installer_target_graph", lambda **kwargs:
         events.append("bindings") or SimpleNamespace(graph={"candidate": True}, pending=()))
     from tools import installer_runtime_access
-    monkeypatch.setattr(installer_runtime_access, "establish_installer_runtime_access", lambda **kwargs:
-        events.append("access") or SimpleNamespace(graph={"services": {"core": {}}}, receipt={}))
+    def establish_access(**kwargs):
+        events.append("access")
+        kwargs["target_root"].mkdir(mode=0o700)
+        return SimpleNamespace(graph={"services": {"core": {}}}, receipt={})
+    monkeypatch.setattr(installer_runtime_access, "establish_installer_runtime_access", establish_access)
     def provision(**kwargs):
         events.append("resources")
         assert kwargs["launch_graph"] == {"services": {"core": {}}}
@@ -48,6 +51,7 @@ def test_same_preparation_callback_reads_durable_success_after_restart(flow):
     workflow(plan)
     assert events == ["inputs", "materialization", "bindings", "access", "inputs", "resources"]
     assert new().status() == "prepared"
+    assert json.loads((workflow.access_root / "launch-graph.json").read_text()) == {"services": {"core": {}}}
     with pytest.raises(ValueError, match="already attempted"):
         new()(plan)
     assert events.count("resources") == 1

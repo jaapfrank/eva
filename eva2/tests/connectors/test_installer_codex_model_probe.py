@@ -59,7 +59,7 @@ def _success_stream(text: str = "EVA2_MODEL_READY") -> bytes:
 
 class CodexFixtureHandler(BaseHTTPRequestHandler):
     response_status = 200
-    response_type = "text/event-stream"
+    response_type: str | None = "text/event-stream"
     response_payload = _success_stream()
     requests: list[dict[str, object]] = []
 
@@ -77,7 +77,8 @@ class CodexFixtureHandler(BaseHTTPRequestHandler):
         )
         raw = self.response_payload
         self.send_response(self.response_status)
-        self.send_header("Content-Type", self.response_type)
+        if self.response_type is not None:
+            self.send_header("Content-Type", self.response_type)
         self.send_header("Content-Length", str(len(raw)))
         self.end_headers()
         self.wfile.write(raw)
@@ -88,7 +89,7 @@ class CodexFixtureHandler(BaseHTTPRequestHandler):
 
 @contextmanager
 def codex_fixture(
-    *, status: int = 200, payload: bytes | None = None, content_type: str = "text/event-stream"
+    *, status: int = 200, payload: bytes | None = None, content_type: str | None = "text/event-stream"
 ) -> Iterator[tuple[str, type[CodexFixtureHandler]]]:
     handler = type("BoundCodexFixtureHandler", (CodexFixtureHandler,), {})
     handler.response_status = status
@@ -201,6 +202,8 @@ def test_real_loopback_generation_records_usage_without_retaining_payload(
         (401, b"denied", "text/event-stream", "unauthorized"),
         (503, b"down", "text/event-stream", "unreachable"),
         (200, b"not-sse", "application/json", "invalid_response"),
+        (200, b"not-sse", None, "invalid_response"),
+        (200, _success_stream(), "application/json", "invalid_response"),
         (200, _success_stream("almost ready"), "text/event-stream", "invalid_response"),
         (
             200,
@@ -214,7 +217,7 @@ def test_provider_failures_remain_closed(
     private_tmp_path: Path,
     status: int,
     payload: bytes,
-    content_type: str,
+    content_type: str | None,
     reason: str,
 ) -> None:
     with codex_fixture(status=status, payload=payload, content_type=content_type) as (
@@ -232,6 +235,17 @@ def test_provider_failures_remain_closed(
     assert result.outcome == "blocked"
     assert result.reason_code == reason
     assert workflow.status().step("model_provider").state == "blocked"
+
+
+def test_completed_generation_without_content_type_preserves_measured_usage() -> None:
+    with codex_fixture(content_type=None) as (endpoint, handler):
+        observation = CodexInstallerModelProbe(
+            endpoint=endpoint, allow_insecure_loopback_test=True
+        ).read_only_probe(secret=memoryview(LEASE.encode()), timeout_seconds=2)
+    assert len(handler.requests) == 1
+    assert observation.outcome == "ready"
+    assert observation.input_tokens == 17
+    assert observation.output_tokens == 5
 
 
 @pytest.mark.parametrize(

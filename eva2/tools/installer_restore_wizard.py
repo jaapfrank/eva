@@ -184,6 +184,13 @@ def main(argv=None):
     if args.restore_config is None:
         data_home = Path(os.environ.get("XDG_DATA_HOME") or Path.home() / ".local/share")
         workspace = args.workspace or data_home / "eva2/installer"
+        package_root = Path(__file__).resolve().parents[1]
+        staging = package_root / "package-staging.json"
+        if staging.is_file() and json.loads(staging.read_bytes()).get("development_candidate") is not None:
+            if update_workflow is not None:
+                raise ValueError("fresh development installer cannot select an update workflow")
+            from tools.packaged_installer_target import run_packaged_target_wizard
+            return run_packaged_target_wizard(package_root, [*remaining, "--workspace", str(workspace)])
         return run_installer_wizard([*remaining, "--workspace", str(workspace)], update_workflow=update_workflow)
     if args.workspace is not None:
         remaining.extend(["--workspace", str(args.workspace)])

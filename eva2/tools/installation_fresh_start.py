@@ -64,14 +64,16 @@ def start_fresh_runtime(*, runtime_inputs, launch_graph, preparation, image_role
                         database_services, database_service, schema_service,
                         core_service, writer_services, authority,
                         materialized_bind_root=None, timeout_seconds=60,
-                        command=_command, inspect_all=None):
+                        command=_command, inspect_all=None, fresh_installation=False,
+                        installation_profile=None, support_tier="tier1_linux_container"):
     """Reuse schema preparation and existing owner initialization, without restore.
 
     Authority contains tenant_id, installation_id, principal_id, binding_id,
     release_sha256 and access_token from the trusted operator. No receipt stores
     the token or DSN. Injection hooks are for controlled tests only. This callable
-    requires Linux Docker IPv4 reachability from the operator host; it adds no
-    published port, extra network or alternate credential route.
+    requires Linux Docker IPv4 reachability from the operator host. Fresh mode
+    permits only the previously bound loopback owner port; restore mode stays
+    closed and neither mode adds an alternate credential route.
     """
     receipt = {"contract": "EvaFreshRuntimeStart/v1", "status": "not_started",
                "authority_initialized": False, "attempted": [], "started": [],
@@ -88,7 +90,10 @@ def start_fresh_runtime(*, runtime_inputs, launch_graph, preparation, image_role
         if type(timeout_seconds) not in (int, float) or not 0 < timeout_seconds <= 120:
             raise ValueError("bounded readiness deadline required")
         _validate(runtime_inputs, graph, prepared["namespace"], image_roles,
-                  database_services, schema_service, materialized_bind_root)
+                  database_services, schema_service, materialized_bind_root,
+                  fresh_installation=fresh_installation)
+        if prepared.get("fresh_installation", False) is not fresh_installation:
+            raise ValueError("prepared target mode differs")
         services = graph["services"]
         order = _order(graph, tuple(writer_services), {*database_services, schema_service})
         if database_service not in database_services or core_service not in order:
@@ -143,7 +148,7 @@ def start_fresh_runtime(*, runtime_inputs, launch_graph, preparation, image_role
             documents = inspect()
             networks = json.loads(command(["docker", "network", "inspect", network["id"]]))
             if (len(networks) != 1 or networks[0].get("Id") != network["id"]
-                    or networks[0].get("Name") != network["name"] or networks[0].get("Internal") is not True
+                    or networks[0].get("Name") != network["name"] or networks[0].get("Internal") is not (not fresh_installation)
                     or set(networks[0].get("Containers", {})) - {pin["id"] for pin in pins.values()}):
                 raise ValueError("prepared isolated network differs")
             rows = {}
@@ -157,9 +162,12 @@ def start_fresh_runtime(*, runtime_inputs, launch_graph, preparation, image_role
                 if any(environment.get(key) != str(value) for key, value in services[name].get("environment", {}).items()):
                     raise ValueError("prepared runtime environment differs")
                 attached = row.get("NetworkSettings", {}).get("Networks", {})
+                expected_ports = ({"8080/tcp": [{"HostIp": "127.0.0.1", "HostPort": str(
+                    services[name]["ports"][0]["published"])}]} if services[name].get("ports") else {})
                 if (row.get("Id") != pin["id"] or row.get("Image") != pin["image"]
                         or host.get("RestartPolicy", {}).get("Name") != "no"
-                        or host.get("PortBindings") or host.get("Privileged") or host.get("ExtraHosts")
+                        or (host.get("PortBindings") or {}) != expected_ports
+                        or host.get("Privileged") or host.get("ExtraHosts")
                         or state.get("Paused") is not False or state.get("Restarting") is not False
                         or set(attached) != {network["name"]}
                         or attached[network["name"]].get("NetworkID") not in {"", network["id"]}):
@@ -218,18 +226,38 @@ def start_fresh_runtime(*, runtime_inputs, launch_graph, preparation, image_role
                     for table in ("tenants", "installations", "principals", "principal_bindings"):
                         if connection.exec_driver_sql("SELECT EXISTS (SELECT 1 FROM eva_core." + table + ")").scalar_one():
                             raise ValueError("fresh target already contains owner scope")
-                    if connection.exec_driver_sql("SELECT EXISTS (SELECT 1 FROM eva_core.restore_activation)").scalar_one():
+                    # The selected immutable image may predate the optional
+                    # restore-activation table. A freshly prepared database with
+                    # no such relation cannot contain restore activation rows.
+                    # Existing owner tables remain mandatory and must be empty.
+                    has_restore_activation = connection.exec_driver_sql(
+                        "SELECT to_regclass('eva_core.restore_activation') IS NOT NULL"
+                    ).scalar_one()
+                    receipt["restore_activation_table_present"] = has_restore_activation
+                    if has_restore_activation and connection.exec_driver_sql("SELECT EXISTS (SELECT 1 FROM eva_core.restore_activation)").scalar_one():
                         raise ValueError("fresh target contains restore activation state")
             return lineage
 
         receipt["target_database"] = guard(fresh=True)
         receipt["authority_initialized"] = None
-        initialized = initialize_dashboard_authority(derived_dsn, **authority)
+        initialized = initialize_dashboard_authority(derived_dsn, **authority,
+            owner_label=installation_profile["owner_label"] if installation_profile else None,
+            support_tier=support_tier)
         if initialized.status != "initialized":
             raise ValueError("fresh owner initialization did not create a new scope")
         receipt["authority"] = asdict(initialized)
         receipt["authority_initialized"] = True
         guard()
+        def ready(name, row):
+            if services[name].get("healthcheck", {}).get("disable") is True:
+                if name not in {"model-access-lease", "hindsight-access-lease"}:
+                    return False
+                # These maintained credential producers intentionally have no
+                # Docker healthcheck. Inventory already verifies their live PID,
+                # exact command inputs/mounts and fixed target identity. Their
+                # seed credential is bound before consumers are admitted.
+                return row["State"].get("Running") is True and row["State"].get("Pid", 0) > 0
+            return row["State"].get("Health", {}).get("Status") == "healthy"
         for name in order:
             guard()
             pin = dict(pins[name])
@@ -240,17 +268,18 @@ def start_fresh_runtime(*, runtime_inputs, launch_graph, preparation, image_role
             deadline = time.monotonic() + timeout_seconds
             while True:
                 guard()
-                health = inventory()[name]["State"].get("Health", {}).get("Status")
+                actual = inventory()[name]
+                health = actual["State"].get("Health", {}).get("Status")
                 if pin not in receipt["started"]:
                     receipt["started"].append(pin)
-                if health == "healthy":
+                if ready(name, actual):
                     receipt["ready"].append(pin)
                     break
                 if health != "starting" or time.monotonic() >= deadline:
                     raise ValueError("fresh runtime readiness not confirmed")
                 time.sleep(.25)
         guard()
-        if any(inventory()[name]["State"].get("Health", {}).get("Status") != "healthy" for name in started):
+        if any(not ready(name, inventory()[name]) for name in started):
             raise ValueError("fresh runtime readiness changed")
         receipt.update(status="runtime_started_verified", runtime_started=True,
                        verification_scope="Pinned Docker health only; no channel, model or owner acceptance")

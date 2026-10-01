@@ -83,7 +83,7 @@ _COOKIE = "eva_installer_session"
 _MAX_BOOTSTRAP_AGE_SECONDS = 600
 _SECURITY_HEADERS = {
     "Cache-Control": "no-store",
-    "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
+    "Content-Security-Policy": "default-src 'none'; connect-src 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
     "Referrer-Policy": "no-referrer",
     "X-Content-Type-Options": "nosniff",
 }
@@ -301,6 +301,7 @@ def create_installer_wizard(
     installation_preparation_status: Callable[[], str] | None = None,
     restore_workflow: InstallerRestorePort | None = None,
     update_workflow=None,
+    installed_runtime_access=None,
 ) -> FastAPI:
     receipt = _safe_receipt(receipt)
     if identity_lifecycle is not None:
@@ -352,6 +353,11 @@ def create_installer_wizard(
     app = FastAPI(
         title="Eva local installer", docs_url=None, redoc_url=None, openapi_url=None
     )
+    if installed_runtime_access is not None:
+        from eva.adapters.api.installer_runtime_proxy import register_installer_runtime_proxy
+        register_installer_runtime_proxy(app, access=installed_runtime_access,
+            require_read=lambda request: require_installer_read(request),
+            require_write=lambda request: require_installer_write(request))
 
     def current_identity() -> IdentityPack:
         if identity_lifecycle is None:
@@ -527,6 +533,7 @@ def create_installer_wizard(
         build_plan=build_installation_plan,
         prepare_target=installation_preparer,
         read_preparation_status=installation_preparation_status,
+        runtime_owner_access=installed_runtime_access,
         require_write=require_installer_write,
         require_read=require_installer_read,
         security_headers=_SECURITY_HEADERS,

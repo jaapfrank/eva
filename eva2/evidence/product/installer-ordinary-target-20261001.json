@@ -1,0 +1,308 @@
+{
+  "contract": "EvaProductDeliveryEvidence/v1",
+  "id": "O1.1-ordinary-wsl-target-20261001",
+  "checkedAt": "2026-10-01T08:29:24.012467+00:00",
+  "task": "O1.1",
+  "scope": "Ordinary first Windows/WSL local development text installation; optional providers explicitly skipped",
+  "status": "installed_independently_reviewed",
+  "source": {
+    "integration_base": "cf509f2c651071d168731bfae0dce3a478367dde",
+    "source_has_changes": true,
+    "package_path": "/home/administrator/project/.eva2-artifacts/installer-wsl-20261001/package",
+    "package_staging_sha256": "083903f1c54eb51edd6778cb6d4c5959ac356690ba15f65fe8ecf4b7742c6235",
+    "source_inventory_sha256": "7b0cad0a96d48adf042fd894e55ea66db0cc3e9e4feadb6e372df960115ec5c2",
+    "source_file_count": 1206,
+    "python": "3.12.14",
+    "development_authority": "sealed original local candidate, real immutable Docker images and actual package bytes",
+    "production_release": false,
+    "platform_support_claim": false,
+    "images": {
+      "living-core": "sha256:35eba561f26f4745b7995ae849c9341c441361a74106326308781e7e3ffc7a69",
+      "postgres": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "hindsight": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710"
+    }
+  },
+  "confirmed_choices": {
+    "profile": {
+      "profile_confirmed": true,
+      "optional_providers": "explicitly skipped",
+      "budget_source": "existing installed runtime budget",
+      "no_provider_request_yet": true
+    },
+    "model_provider": "ready through registered existing route",
+    "budget": "existing approved runtime budget reused",
+    "optional_provider_selection": "Telegram, Home Assistant, email, adaptive connector explicitly skipped"
+  },
+  "actual_route": {
+    "canonical_package_entry": true,
+    "ordinary_wizard_plan_confirmed": true,
+    "handwritten_owner_configuration": false,
+    "ordinary_prepare_request_count": 1,
+    "namespace": "eva-install-ffd6b32ef9a6",
+    "target": {
+      "status": "runtime_ready",
+      "namespace": "eva-install-ffd6b32ef9a6",
+      "readiness": {
+        "database": "ready",
+        "detail": null,
+        "memory_projection": "ready",
+        "model_provider": "ready",
+        "ready": true
+      },
+      "states": {
+        "core": {
+          "state": "running",
+          "health": "healthy"
+        },
+        "durable-goal-worker": {
+          "state": "created",
+          "health": null
+        },
+        "hindsight": {
+          "state": "running",
+          "health": "healthy"
+        },
+        "hindsight-access-lease": {
+          "state": "running",
+          "health": null
+        },
+        "hindsight-postgres": {
+          "state": "running",
+          "health": "healthy"
+        },
+        "model-access-lease": {
+          "state": "running",
+          "health": null
+        },
+        "postgres": {
+          "state": "running",
+          "health": "healthy"
+        },
+        "schema-installer": {
+          "state": "exited",
+          "health": "unhealthy"
+        }
+      },
+      "loopback_owner_only": true,
+      "original_preparation_sha256": "94364915b7da549fd6cae6cd26e3023bcef4b9a14dd694bf1d8d15d06f4478e4",
+      "corrected_graph_sha256": "3ca8c2b95bb5180ade2f4ba6d47b6e978a26116b89547562425054925aa89624",
+      "package_staging_sha256": "51c586c7cf3d945b9e625754b4b8efcc95543733f31919b5f42ce2b5c3b64f43",
+      "core_replacement_only": true,
+      "all_previous_database_and_other_service_ids_retained": true,
+      "public_release": false,
+      "platform_support_claim": false,
+      "package_staging_snapshot_note": "Target receipt records earlier startup package snapshot; source.package_staging_sha256 identifies the subsequently corrected and independently checked final package."
+    },
+    "ui_link": {
+      "status": "runtime_ready",
+      "message": "De nieuwe Eva-diensten zijn gestart en technisch bereikbaar. De kanaal- en gebruiksproef staat nog open.",
+      "owner_access": true
+    },
+    "owner_page": {
+      "status": 200,
+      "owner_fetch_path_rewritten": true,
+      "csp_preserved": true
+    },
+    "response": {
+      "status": 200,
+      "content_type": "application/x-ndjson",
+      "text": "Hoi! Leuk je te zien.",
+      "provider": "chatgpt-codex:gpt-6-sol",
+      "text_sha256": "ca9766efbc85a3df24e1db981296a68e1542ab20c40ec4c239bf9e2813c3e69b",
+      "first_event_seconds": 4.023,
+      "complete_seconds": 4.962,
+      "input_receipt_header_initially_missing": true,
+      "input_receipt_header_corrected_and_guarded_local_transfer_test_passed": true
+    },
+    "durable_readback": {
+      "reply_readback_matches_stream": true,
+      "message_id": "dashboard:c89d9dcb-c080-4633-9e30-2a23fd94db7a",
+      "text_sha256": "ca9766efbc85a3df24e1db981296a68e1542ab20c40ec4c239bf9e2813c3e69b",
+      "model_usage": {
+        "tool_calls": 0,
+        "measurement": "measured",
+        "input_tokens": 1856,
+        "output_tokens": 11,
+        "model_attempts": 1
+      },
+      "model_timing": {
+        "completed_ms": 4099,
+        "first_content_ms": 3187
+      },
+      "scope": {
+        "tenant_id": "c86ee34e-cf22-5b89-ab2a-657dc9bf39f4",
+        "installation_id": "489dc7e9-e435-58ca-8743-305b32a7d075"
+      },
+      "stored_ingress_count": 1,
+      "stored_reply_count": 1,
+      "read_only": true
+    },
+    "context_continuation": {
+      "status": 200,
+      "content_type": "application/x-ndjson",
+      "headers_seconds": 0.024,
+      "input_receipt_present": true,
+      "input_receipt": "Een momentje.",
+      "first_event_seconds": 2.545,
+      "complete_seconds": 3.086,
+      "input": "Welke begroeting gebruikte je zojuist?",
+      "provider_route_unchanged": true,
+      "user_acceptance": false,
+      "text": "Ik zei: “Hoi! Leuk je te zien.”",
+      "provider": "chatgpt-codex:gpt-6-sol",
+      "text_sha256": "13f76fbfe8a7cdc728fbe62af5d9d1cca2f38358f13b8a0a703d928baa9fc808",
+      "durable_readback": {
+        "read_only": true,
+        "message_id": "dashboard:a244ab26-b86f-43d5-8993-621f194f695d",
+        "text_sha256": "13f76fbfe8a7cdc728fbe62af5d9d1cca2f38358f13b8a0a703d928baa9fc808",
+        "model_usage": {
+          "tool_calls": 0,
+          "measurement": "measured",
+          "input_tokens": 1880,
+          "output_tokens": 15,
+          "model_attempts": 1
+        },
+        "model_timing": {
+          "completed_ms": 2686,
+          "first_content_ms": 2183
+        },
+        "binding_checks": {
+          "dashboard_runtime_scope_matches": true,
+          "actual_installation_catalog_matches_runtime": true,
+          "actual_binding_catalog_matches_runtime": true,
+          "conversation_matches_owner_binding": true,
+          "journal_scope_matches_existing_external_timeline_mapping": true,
+          "reply_principal_matches_runtime": true,
+          "reply_readback_matches_stream": true
+        },
+        "stored_reply_count": 2,
+        "mapping_source": "eva.adapters.postgres.operational_timeline.external_timeline_scope"
+      }
+    },
+    "owner_browser": {
+      "bootstrap_exchange_observed": true,
+      "wizard_confirmed_profile_and_runtime_ready_visible": true,
+      "clicked_existing_open_eva_link": true,
+      "conversation_title": "Eva — gesprek",
+      "conversation_url": "http://127.0.0.1:44725/eva/internal/v1/dashboard/conversation",
+      "text_input_and_send_visible": true,
+      "browser_proof_model_calls": 0,
+      "screenshot": "C:/Users/jaapf/.codex/visualizations/2026/09/21/01a0c537-54d0-7080-9e4c-74db537877af/eva-o1-installed-20261001.png"
+    }
+  },
+  "development_repairs": [
+    {
+      "stage": "model_verification",
+      "cause": "Correct complete SSE marker/usage rejected because approved provider omitted Content-Type",
+      "change": "Accept absent header only after strict body/terminal/usage/exact marker validation"
+    },
+    {
+      "stage": "fresh_start",
+      "cause": "Selected existing immutable schema predates optional restore_activation relation",
+      "change": "Require mandatory empty owner tables; check optional relation existence before rejecting restore rows; retained exact graph hash verified; resume same prepared DBs"
+    },
+    {
+      "stage": "core_start",
+      "cause": "Render placeholders left unselected fanout/durable providers half configured",
+      "change": "Factory omits unconfigured delivery environment; actual selected image configuration checked with network disabled; only failed core replaced, all DBs/data/other services retained"
+    },
+    {
+      "stage": "browser_bootstrap",
+      "cause": "Shared wizard CSP omitted connect-src self, blocking its own bootstrap/API fetches despite correct HTTP APIs",
+      "change": "Permit only same-origin connections; ordinary real in-app browser bootstrap and Open Eva link then reach actual conversation UI; no target restart/reinstall or model call"
+    }
+  ],
+  "verification": {
+    "appropriate_existing_focused_suites": [
+      {
+        "artifact": "target-wiring-focused-check-with-yaml.log",
+        "result": "91 passed,1 skipped"
+      },
+      {
+        "artifact": "target-wiring-corrections-check.log",
+        "result": "64 passed,1 skipped"
+      },
+      {
+        "artifact": "ordinary-proxy-inventory-check.log",
+        "result": "6 passed"
+      },
+      {
+        "artifact": "model-probe-header-check.log",
+        "result": "16 passed"
+      },
+      {
+        "artifact": "retained-target-start-correction-check.log",
+        "result": "27 passed"
+      },
+      {
+        "artifact": "owner-proxy-header-check.log",
+        "result": "1 passed"
+      },
+      {
+        "artifact": "wizard-same-origin-bootstrap-check.log",
+        "result": "2 passed,17 deselected",
+        "coverage": "Bootstrap/session reuse, wrong credential and cross-origin refusal; actual same-origin CSP connection policy"
+      }
+    ],
+    "suites_overlap": "Do not sum these as unique tests or product functions",
+    "selected_image_runtime_configuration": {
+      "status": 0,
+      "output": "selected image runtime configuration accepted\n",
+      "error": "",
+      "network": "none",
+      "providers_called": false
+    },
+    "live_model_generation": true,
+    "durable_reply_matches_actual_stream": true,
+    "independent_review": "GO including actual browser entry, second-turn accounting and final 1206 package/source hashes",
+    "binding_checks": {
+      "dashboard_runtime_scope_matches": true,
+      "actual_installation_catalog_matches_runtime": true,
+      "actual_binding_catalog_matches_runtime": true,
+      "conversation_matches_owner_binding": true,
+      "journal_scope_matches_existing_external_timeline_mapping": true,
+      "reply_principal_matches_runtime": true,
+      "reply_readback_matches_stream": true
+    },
+    "review_path": "eva2/reviews/installer-ordinary-target-20261001.md"
+  },
+  "consumption": {
+    "development_credit_cost": "unknown",
+    "runtime_conversation": {
+      "tool_calls": 0,
+      "measurement": "measured",
+      "input_tokens": 1856,
+      "output_tokens": 11,
+      "model_attempts": 1
+    },
+    "verification_completed_generation": {
+      "input_tokens": 30,
+      "output_tokens": 9,
+      "complete_seconds": 1.625
+    },
+    "diagnostic_completed_generation": {
+      "input_tokens": 30,
+      "output_tokens": 9,
+      "elapsed_seconds": 1.567
+    },
+    "other_failed_verification_usage": "One unauthorized registered-default attempt and one response rejected before structural capture; actual credit cost/usage not measured",
+    "model_conversation_scope": "Two actual text turns: greeting and correct prior-greeting continuation; no research or house action",
+    "runtime_context_continuation": {
+      "tool_calls": 0,
+      "measurement": "measured",
+      "input_tokens": 1880,
+      "output_tokens": 15,
+      "model_attempts": 1
+    }
+  },
+  "limitations": [
+    "Not a pristine one-pass installation proof: targeted development repairs disclosed; no complete reinstall or database recreation.",
+    "WSL platform and production supply-chain release remain unvalidated.",
+    "This target starts local text/model/memory services; omitted provider setup remains O1.2. Fenced unconfigured durable worker remains unstarted.",
+    "The selected live core image is reused; installer package provenance and core image identity are distinct and both recorded.",
+    "Five-second measured greeting is not an instant-response or efficiency improvement claim.",
+    "No physical speaker, phone, Telegram, family acceptance or seven-day product claim."
+  ],
+  "owner_acceptance": "not_requested_or_inferred",
+  "product_counter_increased": false
+}

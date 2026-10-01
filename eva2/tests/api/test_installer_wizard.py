@@ -114,6 +114,10 @@ def test_wizard_requires_one_time_bootstrap_before_any_read() -> None:
     start = client.get("/bootstrap")
     assert start.status_code == 200
     assert "location.hash" in start.text
+    directives = {part.strip().split()[0]: part.strip().split()[1:]
+                  for part in start.headers["content-security-policy"].split(";")
+                  if part.strip()}
+    assert directives["connect-src"] == ["'self'"]
     assert "t" * 43 not in start.text
 
     exchange = client.post(

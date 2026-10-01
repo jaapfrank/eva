@@ -26,7 +26,9 @@ def _write_private(path, value):
     atomic_write_private(path, canonical_json_bytes(value))
 
 
-def _validate(inputs, graph, namespace, roles, databases, schema, materialized_bind_root):
+def _validate(inputs, graph, namespace, roles, databases, schema, materialized_bind_root, *, fresh_installation=False):
+    if type(fresh_installation) is not bool:
+        raise ValueError("explicit target installation mode required")
     if materialized_bind_root is not None:
         materialized_bind_root = Path(materialized_bind_root)
         if not materialized_bind_root.is_absolute() or materialized_bind_root.resolve() != materialized_bind_root:
@@ -57,12 +59,19 @@ def _validate(inputs, graph, namespace, roles, databases, schema, materialized_b
             if (set(spec) - allowed or not name.startswith(namespace + "-")
                     or name in names or not re.fullmatch(r"[a-z0-9-]+", name)):
                 raise ValueError("target resources must be new local named resources")
-            if kind == "network" and spec.get("internal") is not True:
+            if kind == "network" and spec.get("internal") is not (not fresh_installation):
                 raise ValueError("target network must be internal")
             names.add(name)
     for name, service in services.items():
+        ports = service.get("ports", [])
+        if ports and (not fresh_installation or name != "core" or len(ports) != 1
+                or set(ports[0]) != {"host_ip", "target", "published", "protocol"}
+                or ports[0]["host_ip"] != "127.0.0.1" or ports[0]["target"] != 8080
+                or ports[0]["protocol"] != "tcp" or not str(ports[0]["published"]).isdigit()
+                or not 1024 <= int(ports[0]["published"]) <= 65535):
+            raise ValueError("only the fresh local owner port may be published")
         if (service.get("image") != approved.get(roles[name]) or roles[name] not in approved
-                or service.get("restart") != "no" or service.get("ports")
+                or service.get("restart") != "no"
                 or service.get("network_mode") or service.get("privileged")
                 or any(key in service for key in ("build", "extends", "env_file", "secrets", "configs"))):
             raise ValueError("target service image or isolation differs")
@@ -135,7 +144,8 @@ def _validate(inputs, graph, namespace, roles, databases, schema, materialized_b
 
 def prepare_restore_target(*, runtime_inputs, launch_graph, namespace, image_roles,
                            database_services, schema_service, workspace,
-                           materialized_bind_root=None, command=_command, timeout_seconds=120):
+                           materialized_bind_root=None, command=_command, timeout_seconds=120,
+                           fresh_installation=False):
     """Consume trusted installer render output, never browser-provided graph data.
 
     Failed resources remain recorded and are never automatically reused or removed.
@@ -144,7 +154,7 @@ def prepare_restore_target(*, runtime_inputs, launch_graph, namespace, image_rol
     graph = deepcopy(launch_graph)
     validation_graph = deepcopy(graph)
     _validate(runtime_inputs, graph, namespace, image_roles, database_services, schema_service,
-              materialized_bind_root)
+              materialized_bind_root, fresh_installation=fresh_installation)
     if not 0 < timeout_seconds <= 300:
         raise ValueError("bounded timeout required")
     workspace = Path(workspace)
@@ -154,6 +164,8 @@ def prepare_restore_target(*, runtime_inputs, launch_graph, namespace, image_rol
     receipt = {"contract": "EvaRestoreTargetPreparation/v1", "status": "preparing",
                "namespace": namespace, "plan_sha256": runtime_inputs.receipt.plan_sha256,
                "graph_sha256": canonical_sha256(graph), "volumes": [], "networks": [],
+               "fresh_installation": fresh_installation,
+               "authority_kind": runtime_inputs.receipt.authority_kind,
                "containers": [], "started": [], "schema_completed": False,
                "planned_containers": [s["container_name"] for s in graph["services"].values()]}
     nonce = uuid.uuid4().hex
@@ -188,7 +200,8 @@ def prepare_restore_target(*, runtime_inputs, launch_graph, namespace, image_rol
                 for label, value in spec.get("labels", {}).items():
                     args += ["--label", label + "=" + str(value)]
                 if singular == "network":
-                    args += ["--internal"]
+                    if not fresh_installation:
+                        args += ["--internal"]
                     for entry in spec.get("ipam", {}).get("config", []):
                         if set(entry) != {"subnet"}:
                             raise ValueError("only explicit subnet IPAM supported")
@@ -201,7 +214,7 @@ def prepare_restore_target(*, runtime_inputs, launch_graph, namespace, image_rol
                 if (actual.get("Labels", {}).get(_LABEL) != nonce
                         or actual.get("Name") != spec["name"]
                         or (singular == "network" and (actual.get("Id") != identifier
-                                                       or actual.get("Internal") is not True))):
+                                                       or actual.get("Internal") is not (not fresh_installation)))):
                     raise ValueError("created resource ownership or isolation differs")
                 graph[kind][key] = {"external": True, "name": spec["name"]}
         graph["name"] = namespace
@@ -274,7 +287,7 @@ def prepare_restore_target(*, runtime_inputs, launch_graph, namespace, image_rol
             start_and_wait(name)
         # Re-read target DSN and private materialization after database startup.
         _validate(runtime_inputs, validation_graph, namespace, image_roles, database_services,
-                  schema_service, materialized_bind_root)
+                  schema_service, materialized_bind_root, fresh_installation=fresh_installation)
         start_and_wait(schema_service, schema=True)
         receipt["schema_completed"] = True
         for name, pin in by_service.items():

@@ -87,8 +87,14 @@ def initialize_dashboard_authority(
     binding_id: str,
     release_sha256: str,
     access_token: str,
+    owner_label: str | None = None,
+    support_tier: str = "tier1_linux_container",
     now: datetime | None = None,
 ) -> DashboardAuthorityReceipt:
+    if owner_label is not None and (not isinstance(owner_label, str) or not owner_label.strip() or len(owner_label) > 80):
+        raise ValueError("bounded installation owner label required")
+    if support_tier not in {"tier1_linux_container", "unsupported_fixture"}:
+        raise ValueError("installation support classification is invalid")
     tenant = _uuid(tenant_id, name="dashboard tenant")
     installation = _uuid(installation_id, name="dashboard installation")
     principal = _uuid(principal_id, name="dashboard principal")
@@ -151,7 +157,7 @@ def initialize_dashboard_authority(
             "installation_id": installation,
             "status": "active",
             "active_release_sha256": release_hash,
-            "support_tier": "tier1_linux_container",
+            "support_tier": support_tier,
             "current_identity_id": None,
             "current_identity_pack_version": None,
             "current_policy_id": None,
@@ -167,7 +173,7 @@ def initialize_dashboard_authority(
             "principal_id": principal,
             "principal_type": "human",
             "status": "active",
-            "display_name": None,
+            "display_name": owner_label,
             "privacy_class": "restricted",
             "revision": 1,
             "retention_policy_id": _RETENTION_POLICY,

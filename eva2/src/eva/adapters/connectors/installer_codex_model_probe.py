@@ -57,12 +57,15 @@ class CodexInstallerModelProbe:
     def __init__(
         self,
         *,
-        model: str = "gpt-5.4-mini",
+        model: str = "gpt-6-sol",
+        reasoning_effort: str = "none",
         endpoint: str = "https://chatgpt.com/backend-api/codex/responses",
         allow_insecure_loopback_test: bool = False,
     ) -> None:
         if _MODEL_RE.fullmatch(model) is None:
             raise ValueError("Codex installer verification model is invalid")
+        if reasoning_effort not in {"none", "low", "medium", "high"}:
+            raise ValueError("Codex installer verification effort is invalid")
         parsed = urlsplit(endpoint)
         if (
             parsed.hostname is None
@@ -96,6 +99,7 @@ class CodexInstallerModelProbe:
         self._port = parsed.port
         self._path = parsed.path
         self._model = model
+        self._reasoning_effort = reasoning_effort
 
     @staticmethod
     def _lease(secret: memoryview) -> tuple[str, str]:
@@ -145,7 +149,7 @@ class CodexInstallerModelProbe:
                 ),
                 "model": self._model,
                 "parallel_tool_calls": False,
-                "reasoning": {"effort": "low", "summary": "auto"},
+                "reasoning": {"effort": self._reasoning_effort, "summary": "auto"},
                 "store": False,
                 "stream": True,
                 "tool_choice": "none",
@@ -197,8 +201,11 @@ class CodexInstallerModelProbe:
             raise _model_error("unreachable", request_attempted=True)
         if status != 200:
             raise _model_error("provider_error", request_attempted=True)
-        if len(raw) > _MAX_RESPONSE_BYTES or not content_type.casefold().startswith(
-            "text/event-stream"
+        # The registered Codex route can omit Content-Type even when it emits
+        # a complete SSE response. An omitted header is not proof of success:
+        # the body still requires the terminal event, usage and exact marker.
+        if len(raw) > _MAX_RESPONSE_BYTES or (
+            content_type and not content_type.casefold().startswith("text/event-stream")
         ):
             raise _model_error("invalid_response", request_attempted=True)
         try:

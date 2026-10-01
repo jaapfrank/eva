@@ -87,7 +87,7 @@ def target(tmp_path, monkeypatch):
                 Destination=m["target"], RW=m.get("read_only") is not True) for m in spec["volumes"]]))
     state = SimpleNamespace(lineage={"name": "eva", "oid": 12, "system_identifier": "1234"},
         host_lineage=None, occupied=None, commands=[], initialized=[], rows=rows, disposed=False,
-        fail_start=False, fail_connect=False, drift=False, dsn=None)
+        fail_start=False, fail_connect=False, drift=False, dsn=None, restore_table=True)
     class Engine:
         def connect(self):
             if state.fail_connect:
@@ -103,6 +103,10 @@ def target(tmp_path, monkeypatch):
         def exec_driver_sql(self, sql):
             if "system_identifier" in sql:
                 return Result(state.host_lineage or deepcopy(state.lineage))
+            if "to_regclass" in sql:
+                return Result(state.restore_table)
+            if "restore_activation" in sql and not state.restore_table:
+                raise AssertionError("selected legacy schema has no restore table")
             return Result(state.occupied is not None and state.occupied in sql)
 
         def dispose(self):
@@ -156,6 +160,14 @@ def test_initializes_empty_schema_and_starts_only_selected_dependencies(target):
     assert target.disposed
     assert "private" not in json.dumps(receipt)
     assert not any(command[1] in {"stop", "rm", "restart"} for command in target.commands)
+
+
+def test_selected_legacy_schema_without_restore_table_can_start_fresh(target):
+    target.restore_table = False
+    receipt = subject.start_fresh_runtime(**target.kwargs)
+    assert receipt["runtime_started"] is True
+    assert receipt["restore_activation_table_present"] is False
+    assert len(target.initialized) == 1
 
 
 @pytest.mark.parametrize("table", ["tenants", "installations", "principals", "principal_bindings", "restore_activation"])

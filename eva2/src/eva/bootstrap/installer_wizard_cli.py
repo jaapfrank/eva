@@ -90,6 +90,8 @@ def run_installer_wizard(
     installation_preparation_status: Callable[[], str] | None = None,
     installation_preparation_factory: Callable[..., InstallerPreparation] | None = None,
     update_workflow=None,
+    preflight_transform=None,
+    installed_runtime_access=False,
 ) -> int:
     """Compose trusted preparation against the wizard's actual persisted state.
 
@@ -169,6 +171,8 @@ def run_installer_wizard(
         parser.error("budget configuration requires a capability workspace")
     try:
         receipt = preflight(load_platform_lock(args.platform_lock), inspect_host())
+        if preflight_transform is not None:
+            receipt = preflight_transform(receipt)
     except InstallerPreflightError as error:
         print(json.dumps({"status": "failed", "error": str(error)}, sort_keys=True))
         return 2
@@ -300,6 +304,9 @@ def run_installer_wizard(
             secret_store=secret_store,
             budget_workflow=budget_workflow,
             plan_reader=read_current_plan,
+            identity_file=(args.identity_current or Path(__file__).parents[1] / "application/default_identity_pack.json"),
+            identity_trust_file=(args.identity_trust or Path(__file__).parents[1] / "application/default_identity_pack_trust.json"),
+            secret_lifecycle=secret_lifecycle,
         )
         installation_preparer = preparation
         installation_preparation_status = preparation.status
@@ -309,6 +316,7 @@ def run_installer_wizard(
         create_installer_wizard(
             receipt,
             bootstrap,
+            installed_runtime_access=(preparation.runtime_access if installed_runtime_access else None),
             restore_workflow=restore_workflow,
             update_workflow=update_workflow,
             identity=identity,

@@ -22,7 +22,7 @@ _EXCLUDED_PARTS = {"node_modules", "__pycache__", ".pytest_cache", ".ruff_cache"
 
 
 def stage_package(*, source_root, target_root, runtime_image,
-                  platform_lock="release/platform-lock-wsl-candidate.json"):
+                  platform_lock="release/platform-lock-wsl-candidate.json", development_images=None):
     """Create one new package from trusted source and an already local image."""
     source, target = Path(source_root), Path(target_root)
     for path in (source, target):
@@ -54,6 +54,17 @@ def stage_package(*, source_root, target_root, runtime_image,
         ["git", "-C", str(repository), "rev-parse", "HEAD"], text=True).strip()
     dirty = bool(subprocess.check_output(
         ["git", "-C", str(repository), "status", "--porcelain", "--", *selected]))
+    if development_images is not None:
+        if (set(development_images) != {"living-core", "postgres", "hindsight"}
+                or development_images["living-core"] != runtime_image):
+            raise ValueError("complete explicit development image inventory required")
+        for digest in development_images.values():
+            if not re.fullmatch(r"sha256:[0-9a-f]{64}", digest):
+                raise ValueError("immutable local development image required")
+            inspected = json.loads(docker("image", "inspect", digest))
+            if (len(inspected) != 1 or inspected[0]["Id"] != digest
+                    or inspected[0].get("Os") != "linux" or inspected[0].get("Architecture") != "amd64"):
+                raise ValueError("local development image differs")
     # Inspect all intended source entries before creating the output tree.
     files = []
     for name in tracked:
@@ -85,6 +96,10 @@ def stage_package(*, source_root, target_root, runtime_image,
                "base_commit": source_commit, "source_has_changes": dirty,
                "runtime_executed": False, "target_prepared": False,
                "platform_support_claim": False}
+    if development_images is not None:
+        receipt["development_candidate"] = {"contract": "EvaLocalInstallerCandidate/v1",
+            "imageDigests": dict(development_images), "sourceCommit": source_commit,
+            "public_release": False}
     def save():
         output = target / "package-staging.json"
         output.write_text(json.dumps(receipt, indent=2) + "\n")
@@ -139,9 +154,16 @@ def main(argv=None):
     parser.add_argument("--target-root", required=True, type=Path)
     parser.add_argument("--runtime-image", required=True)
     parser.add_argument("--platform-lock", default="release/platform-lock-wsl-candidate.json")
+    parser.add_argument("--postgres-image")
+    parser.add_argument("--hindsight-image")
     args = parser.parse_args(argv)
+    if bool(args.postgres_image) != bool(args.hindsight_image):
+        parser.error("both local development dependency images are required")
+    images = ({"living-core": args.runtime_image, "postgres": args.postgres_image,
+               "hindsight": args.hindsight_image} if args.postgres_image else None)
     stage_package(source_root=args.source_root, target_root=args.target_root,
-                  runtime_image=args.runtime_image, platform_lock=args.platform_lock)
+                  runtime_image=args.runtime_image, platform_lock=args.platform_lock,
+                  development_images=images)
     return 0
 
 

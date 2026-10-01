@@ -20,6 +20,8 @@ class InstallerFreshStartSettings:
     core_service: str
     writer_services: tuple
     authority: dict
+    installation_profile: dict | None = None
+    support_tier: str = "tier1_linux_container"
 
 
 @dataclass(frozen=True)
@@ -42,6 +44,9 @@ class InstallerTargetSettings:
     model_authority_file: Path | None = None
     network_subnet: str | None = None
     fresh_start: InstallerFreshStartSettings | None = None
+    fresh_installation: bool = False
+    local_port: int | None = None
+    source_authority_directories: tuple = ()
 
 
 class InstallerTargetWorkflow:
@@ -121,7 +126,8 @@ class InstallerTargetWorkflow:
                 materialization_receipt=material, expected_plan_sha256=plan["plan_sha256"],
                 materialized_bind_root=self.material_root,
                 additional_bindings=settings.additional_bindings,
-                network_subnet=settings.network_subnet, current_plan=plan)
+                network_subnet=settings.network_subnet, current_plan=plan,
+                fresh_installation=settings.fresh_installation is True, local_port=settings.local_port)
             if binding.graph is None or binding.pending:
                 receipt["missing_bindings"] = list(binding.pending)
                 raise ValueError("complete target service bindings required")
@@ -129,7 +135,10 @@ class InstallerTargetWorkflow:
             from tools.installer_runtime_access import establish_installer_runtime_access
             access = establish_installer_runtime_access(binding=binding,
                 materialized_bind_root=self.material_root, target_root=self.access_root,
-                image_users=settings.image_users)
+                image_users=settings.image_users, source_authority_directories=settings.source_authority_directories or ())
+            # Retain the exact trusted graph for inspection of a later failed
+            # transition. Compose's external-resource projection is different.
+            write_private_once(self.access_root / "launch-graph.json", canonical_json_bytes(access.graph))
             # Rebind credentials/choices immediately before creating resources.
             if bind() != inputs:
                 raise ValueError("approved runtime inputs changed before provisioning")
@@ -138,7 +147,8 @@ class InstallerTargetWorkflow:
                 namespace=settings.namespace, image_roles={name: settings.image_roles[name]
                     for name in access.graph["services"]},
                 database_services=settings.database_services, schema_service=settings.schema_service,
-                workspace=self.resources_root, materialized_bind_root=self.access_root)
+                workspace=self.resources_root, materialized_bind_root=self.access_root,
+                fresh_installation=settings.fresh_installation is True)
             if prepared.get("status") != "prepared" or prepared.get("schema_completed") is not True:
                 raise ValueError("target preparation was not confirmed")
             receipt["preparation_receipt"] = str(self.resources_root / "preparation-receipt.json")
@@ -159,7 +169,9 @@ class InstallerTargetWorkflow:
                         database_services=settings.database_services,
                         database_service=start.database_service, schema_service=settings.schema_service,
                         core_service=start.core_service, writer_services=start.writer_services,
-                        authority=start.authority, materialized_bind_root=self.access_root)
+                        authority=start.authority, materialized_bind_root=self.access_root,
+                        fresh_installation=settings.fresh_installation is True,
+                        installation_profile=start.installation_profile, support_tier=start.support_tier)
                 except FreshRuntimeStartError as error:
                     receipt["startup"] = error.receipt
                     receipt["eva_started"] = error.receipt.get("runtime_started")
@@ -190,7 +202,8 @@ def run_target_installer_wizard(*, settings: InstallerTargetSettings, argv=None)
     if not isinstance(settings, InstallerTargetSettings):
         raise ValueError("trusted installer target settings required")
 
-    def factory(*, workspace, secret_store, budget_workflow, plan_reader):
+    def factory(*, workspace, secret_store, budget_workflow, plan_reader,
+                identity_file=None, identity_trust_file=None, secret_lifecycle=None):
         if workspace is None or secret_store is None or budget_workflow is None:
             raise ValueError("ordinary target preparation requires a complete wizard workspace")
         target_workspace = Path(workspace) / "target"

@@ -19,17 +19,43 @@ voortgang te volgen.
 <details>
 <summary>Developer packaging: first WSL candidate</summary>
 
-From this directory, `python3 -m tools.stage_installer_package --source-root
-/absolute/source/eva2 --target-root /absolute/new/package --runtime-image
-sha256:EXACT_LOCAL_IMAGE_ID` stages Git-controlled project inputs and exports
-`python-runtime` from the specified local Linux amd64 image without running it.
-Run `python3 /absolute/new/package/start-installer.py` to open the existing
-loopback wizard with the bundled Python 3.12.14. The assembler-selected platform
-lock is bound automatically; an explicit operator override remains available.
+From this directory, stage the current Git-controlled source with immutable,
+locally inspected Linux amd64 images:
 
-The WSL lock is still a candidate. Opening the wizard does not validate platform
-support or complete installation. Trusted release data and ordinary target/start
-wiring remain tracked under O1.1; no production trust authority is generated.
+```bash
+python3 -m tools.stage_installer_package   --source-root /absolute/source/eva2   --target-root /absolute/new/package   --runtime-image sha256:EXACT_LOCAL_CORE_IMAGE_ID   --postgres-image sha256:EXACT_LOCAL_POSTGRES_IMAGE_ID   --hindsight-image sha256:EXACT_LOCAL_HINDSIGHT_IMAGE_ID
+sudo python3 /absolute/new/package/start-installer.py
+```
+
+The launcher uses bundled Python3.12.14 and automatically selects the WSL
+candidate lock. It keeps the invoking sudo owner's existing model authority;
+on this host the registered Eva lease producer identifies the original source.
+A fresh computer falls back to that owner's native Codex login. Refresh authority
+is neither packaged nor copied into the new target. Existing comparison accounts
+are not consulted.
+
+Confirm the profile, verify the existing model route and confirm resource choices
+in the ordinary wizard. For this first development text target, explicitly skip
+Telegram, Home Assistant, email and the adaptive connector; their setup remains
+O1.2. Choose a language matching the verified identity pack. Select **Installatie
+uitvoeren**, then **Open de nieuwe Eva en begin een gesprek**. No target graph,
+Docker IDs, port, token, DSN or settings file must be handwritten by the owner.
+Sudo is currently required for the new runtime-owned files; operator permissions
+are checked before provisioning.
+
+The local development receipt binds actual source bytes and inspected images;
+it does not manufacture production signatures or validated platform support.
+Without all three image flags, ordinary public release support remains blocked.
+New storage and namespace keep the existing installation's data separate. The
+fresh core exposes only a loopback owner port; restore mode retains its closed
+network. The wizard presents text through its existing owner session and the
+core's bound credential. Voice and optional provider setup are not claimed by
+this installation slice.
+
+A failed transition retains its preparation receipt and exact trusted launch
+graph for inspection; never automatically recreate the databases or restart the
+whole installation. The dated O1.1 evidence discloses the actual targeted repairs,
+streamed response, durable readback and remaining release limitations.
 
 </details>
 

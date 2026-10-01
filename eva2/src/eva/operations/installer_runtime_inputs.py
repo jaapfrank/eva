@@ -7,6 +7,7 @@ from typing import Any
 from eva.contracts.canonical_json import canonical_sha256
 from eva.operations.installer_secret_store import InstallerSecretStore
 from eva.operations.release_verifier import ReleaseVerification
+from eva.operations.installer_development_candidate import InstallerDevelopmentCandidate
 
 
 @dataclass(frozen=True, slots=True)
@@ -17,6 +18,7 @@ class RuntimeInputReceipt:
     verification_receipt_sha256: str
     images: tuple[tuple[str, str], ...]
     secret_bindings: tuple[tuple[str, str, int], ...]
+    authority_kind: str = "verified_release"
 
 
 @dataclass(frozen=True, slots=True)
@@ -49,7 +51,7 @@ def bind_installer_runtime_inputs(
     """
     plan = deepcopy(plan)
     release_manifest = deepcopy(release_manifest)
-    if not isinstance(release_verification, ReleaseVerification):
+    if not isinstance(release_verification, (ReleaseVerification, InstallerDevelopmentCandidate)):
         raise ValueError("verified release is required")
     release_verification.require_verified()
     body = {key: value for key, value in plan.items() if key != "plan_sha256"}
@@ -98,6 +100,8 @@ def bind_installer_runtime_inputs(
             verification_receipt_sha256=release_verification.verification_receipt_sha256,
             images=tuple(sorted(images.items())),
             secret_bindings=tuple(public),
+            authority_kind=("owner_local_development" if isinstance(
+                release_verification, InstallerDevelopmentCandidate) else "verified_release"),
         ),
         secrets=tuple(resolved),
     )

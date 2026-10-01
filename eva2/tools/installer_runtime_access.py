@@ -51,7 +51,8 @@ def _inventory(source):
     return result
 
 
-def establish_installer_runtime_access(*, binding, materialized_bind_root, target_root, image_users):
+def establish_installer_runtime_access(*, binding, materialized_bind_root, target_root, image_users,
+                                      source_authority_directories=()):
     """Map a fully bound candidate to new reader-owned files; never start services.
 
     image_users is trusted inspected effective reader identity, including any
@@ -66,6 +67,11 @@ def establish_installer_runtime_access(*, binding, materialized_bind_root, targe
     if not root.is_absolute() or root.resolve()!=root:
         raise ValueError("new access directory must be absolute without links")
     graph=deepcopy(binding.graph)
+    authorities = {Path(directory): Path(directory) / filename
+                   for directory, filename in source_authority_directories}
+    for directory, selected in authorities.items():
+        if selected.parent != directory or selected.resolve() != selected:
+            raise ValueError("explicit original authority file required")
     groups={}
     for name,service in graph["services"].items():
         uid,gid=_identity(service,image_users)
@@ -114,10 +120,16 @@ def establish_installer_runtime_access(*, binding, materialized_bind_root, targe
                 # The maintained owner credential producer reads its existing
                 # private authority; never change or duplicate refresh authority.
                 for _,_,uid,_ in consumers:
-                    for _,info in _inventory(source):
+                    # A deterministic credential producer reads one original
+                    # auth pathname. Preserve its directory mount so os.replace
+                    # remains visible; other Codex sessions are not inventoried.
+                    inventory = ([(source,source.lstat()), * _inventory(authorities[source])]
+                                 if source in authorities else _inventory(source))
+                    for path,info in inventory:
                         required = 0o500 if stat.S_ISDIR(info.st_mode) else 0o400
                         mode = stat.S_IMODE(info.st_mode)
-                        if info.st_uid!=uid or mode&0o077 or mode&required != required:
+                        forbidden = 0o022 if source in authorities and path == source else 0o077
+                        if info.st_uid!=uid or mode&forbidden or mode&required != required:
                             raise ValueError("source authority is not privately readable by runtime reader")
                 for name,mount,uid,gid in consumers:
                     receipt["bindings"].append({"service":name,"target":mount["target"],

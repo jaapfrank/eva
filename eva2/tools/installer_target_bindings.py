@@ -42,7 +42,8 @@ def _private_root(root):
 
 def bind_installer_target_graph(*, render_receipt, rendered_graph, namespace,
                                 materialization_receipt, expected_plan_sha256,
-                                materialized_bind_root, additional_bindings=None, network_subnet=None, current_plan=None):
+                                materialized_bind_root, additional_bindings=None, network_subnet=None, current_plan=None,
+                                fresh_installation=False, local_port=None):
     """Return no candidate graph until every existing bind has an explicit target.
 
     A non-None graph proves file selection only. It is not a runtime-readable or
@@ -60,7 +61,8 @@ def bind_installer_target_graph(*, render_receipt, rendered_graph, namespace,
         raise ValueError("materialization receipt differs from confirmed plan")
     root = Path(materialized_bind_root)
     _private_root(root)
-    graph = isolated_restore_graph(render_receipt, rendered_graph, namespace=namespace, network_subnet=network_subnet)
+    graph = isolated_restore_graph(render_receipt, rendered_graph, namespace=namespace, network_subnet=network_subnet,
+                                   fresh_installation=fresh_installation, local_port=local_port)
     omitted_bindings = set()
     if current_plan is not None:
         from tools.installer_optional_capabilities import project_optional_capabilities
