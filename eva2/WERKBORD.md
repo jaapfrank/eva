@@ -1,6 +1,27 @@
 # EVA2 werkbord
 
-## Nu: eerst een betrouwbaar gesprek op Woonkamer
+## 2 oktober: autonome technische goaltekst gereed voor activering
+
+De app-goal is gecontroleerd: gepauzeerd en met een oude C1/HTTP429-opdracht.
+De bestaande verwezen goaltekst is bijgewerkt; Jaap vervangt/hervat de app-goal.
+**Geen nieuwe functie afgerond en geen bouwwerker actief tijdens deze voorbereiding.**
+
+De opdracht blijft het volledige bestaande Eva2-plan technisch opleveren. Eva1 is
+de belangrijkste praktische referentie. Maak één complete gebruikersuitkomst af,
+met bestaande code/bewijs, gerichte controle en gebundelde review/installatie.
+Menselijke proeven blijven open en blokkeren alleen daadwerkelijk afhankelijk werk.
+Geen brede nieuwe audit, herbouw of herhaalde test-/installatie-/rollbacklus.
+
+De actuele kleine taken bepalen hervatting: C3.1 woonkamerconversatie blijft de
+spraakuitkomst; uitsluitend ontbrekende fysieke waarneming blokkeert T2 algemene
+HA-uitvoering niet. Speakers en Telegram primair; telefoon/laptop optioneel.
+Technisch eindpunt en volledige projectacceptatie (vergelijking, zeven dagen
+gezinspraktijk en echt eindoordeel) blijven afzonderlijk zichtbaar.
+
+**Stand behouden: 16/44 kleine taken, 2/9 grote onderdelen.** Geen geaccepteerde
+functie heropend, eindvoorwaarde geschrapt of teller verhoogd voor deze tekst.
+
+## Vorige controle 1 oktober: woonkamerconversatie nog open
 
 **Eerstvolgende spraaktaak: C3.1, Codex /root.** De eigenaar meldt dat de eerste speaker nog niet
 het verwachte gesprek biedt. Codex heeft de passieve apparaatstatus gecontroleerd. De luister-/gespreksroute

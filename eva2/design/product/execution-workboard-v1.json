@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T17:18:11.195833+00:00",
+        "checkedAt": "2026-10-01T22:46:25.288933+00:00",
         "deliveries": [
           {
             "title": "Overkapping op dezelfde gecorrigeerde continue route aangesloten",
@@ -3299,26 +3299,25 @@
           }
         ],
         "now": {
-          "title": "Woonkamergesprek nog open; tweede speakerproef wacht",
-          "state": "open",
-          "detail": "Woonkamer is bereikbaar met huidige firmware en mute uit. Passieve meting zonder gebeurtenissen bewijst geen gesprek. Volgorde en actielijst gecorrigeerd; geen uitvoerder actief na deze gerichte controle. Volgende spraakwerk blijft C3.1, geen nieuwe telefoon-/laptoproute.",
+          "title": "Bijgewerkte goaltekst gereed; app-goal nog gepauzeerd",
+          "state": "planned",
+          "detail": "Alle zelfstandig uitvoerbare productfuncties afmaken, met Eva1 als praktische referentie. Technische oplevering en gezinsacceptatie apart. Geen functie nieuw afgerond; geen bouwwerker actief tijdens goalvoorbereiding.",
           "owner": "Codex /root"
         },
         "next": {
-          "title": "Eerst Woonkamer, daarna Overkapping",
-          "detail": "C3.1 actuele luister-/gespreksfout gericht vaststellen en oplossen; daarna korte beoordeling daar en pas daarna op Overkapping. T2 algemene HA-opdracht blijft onafhankelijk vervolgwerk."
+          "title": "Na activering: bestaande functionele uitkomsten afronden",
+          "detail": "Actuele kleine taken leidend. Eerst woonkamerroute waar gericht uitvoerbaar; T2 algemene HA-kern hoeft niet op uitsluitend fysieke beoordeling te wachten. Geen telefoon-/laptopbouw of oude providerreparatie."
         },
         "ownerAction": {
-          "title": "Nu geen nieuwe speaker-, telefoon- of laptopproef",
+          "title": "Goaltekst vervangen en hervatten",
           "steps": [
-            "C3.1: beschrijf alleen wat momenteel op Woonkamer misgaat als je dat al weet; geen uitgebreide herhaalproef.",
-            "M3.3: concrete statische antwoorden uit gewoon Telegramgebruik kun je doorgeven.",
-            "P1.1: eigen aanmeldingen zijn alleen nodig voor de eindvergelijking; overige bouw kan doorgaan."
+            "Vervang de achterhaalde C1/HTTP429-opdracht door de bijgewerkte technische goaltekst en zet het goal aan.",
+            "Nu geen nieuwe telefoon-/laptop- of tweede-speakerproef nodig. Open echte gebruiksbeoordelingen blijven apart zichtbaar."
           ],
-          "expected": "Eerst Codex-werk aan Woonkamer. Daarna korte beoordeling daar en pas daarna Overkapping. M1 en C3.3 blijven geaccepteerd; O2.3 vereist niets van jou."
+          "expected": "Codex hervat de bestaande producttaken; voorbereiding van dit goal is geen extra Eva-functie."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T17:18:11.195833+00:00"
+        "reviewedAt": "2026-10-01T22:46:25.288933+00:00"
       },
       "reviewedAt": "2026-10-01T15:52:21.323198+00:00"
     },
@@ -13139,9 +13138,9 @@
           ]
         }
       ],
-      "nextAction": "C3.1: Codex onderzoekt de gewone woonkamerconversatie. Geen tweede-speakerproef of telefoon-/laptopproef vragen; eerst bestaande woonkamerfout oplossen.",
+      "nextAction": "Na goalactivering hervatten bij actuele kleine taken. C3.1 is eerstvolgende spraakuitkomst; ontbrekende fysieke waarneming blokkeert zelfstandig uitvoerbare algemene HA-uitvoering T2 niet. Geen oude C1/HTTP429-opdracht herhalen.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
-      "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
+      "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
       "stopRules": [
         "Geen ongewijzigde proefherhaling; eerst concrete gewijzigde oorzaak of ontbrekend bewijs.",
@@ -15849,6 +15848,22 @@
         "phoneTrialRequired": false,
         "preserveInstalledCapabilities": true,
         "completionCounting": "No new completed task or owner acceptance from this scope correction; retain historical task IDs and evidence."
+      },
+      "autonomousTechnicalGoal20261002": {
+        "preparedAt": "2026-10-01T22:46:25.288933+00:00",
+        "state": "ready_for_owner_activation",
+        "goalSource": "C:/Users/jaapf/.codex/attachments/d91353b6-5d5a-4de3-bb46-8f22daaa18ef/goal-objective.md",
+        "replacementAppObjective": "Voer het bijgewerkte technische Eva2-oplevergoal uit in C:\\Users\\jaapf\\.codex\\attachments\\d91353b6-5d5a-4de3-bb46-8f22daaa18ef\\goal-objective.md. Lees die tekst en actuele eigenaarafspraken bij hervatten. Maak alle zelfstandig uitvoerbare bestaande producttaken compleet, geïntegreerd en geïnstalleerd; gebruik Eva1 als praktische referentie. Werk volgens de actuele kleine taken, zonder herbouw of test-/installatie-/rollbacklussen. Menselijke proeven blokkeren alleen afhankelijk werk. Houd dashboard en Git actueel. De oude C1/HTTP429-opdracht vervalt; volledige planeisen en acceptaties blijven geldig. Technische afronding en gezinsacceptatie zijn apart.",
+        "reason": "Remove obsolete C1/provider snapshot; prioritize complete installed user outcomes and separate autonomous technical completion from family acceptance.",
+        "primaryReference": "Existing Eva1/Eva2 inventory and fixed comparison criteria; no repeated broad research.",
+        "currentTaskSource": "audit.deliveryPlan.implementationSlices[].remainingTasks",
+        "technicalEnd": "No independently executable technical product task left; completed functions together installed and verified; planned final comparison performed with available recorded access.",
+        "retainedProjectEnd": "Full agreed comparison, seven days family use and explicit owner judgment remain open F2 work until actually fulfilled.",
+        "externalDependencyRule": "Only demonstrated external access or human observation may remain open. Ordinary development defects are actionable work, not external blockers.",
+        "preserveScopeAndCounts": true,
+        "appGoalStatusChecked": "paused",
+        "appObjectiveUpdatedByTool": false,
+        "independentReview": "GO /root/open_questions_triage: complete project requirements, innovation/comparison/F2 retained; autonomous technical endpoint separate; product tasks/acceptance unchanged; goal paused and not falsely edited/activated."
       }
     },
     "dashboardClarityCorrection20260922": {

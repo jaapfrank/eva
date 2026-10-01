@@ -1,5 +1,34 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Uitvoerafspraak 2 oktober 2026 — complete functies en technisch eindpunt
+
+Het bijgewerkte autonome bouwgoal maakt alle zelfstandig uitvoerbare functies uit
+het bestaande volledige plan technisch bruikbaar en geïnstalleerd. Eva1 is de
+belangrijkste praktische referentie; gebruik bestaande inventarisatie en criteria,
+hergebruik werkende mogelijkheden en bouw alleen voor een concreet tekort.
+Geen nieuwe brede audit of algemene herbouw.
+
+Maak één bestaande gebruikersuitkomst af: uitvoering, aansluiting, installatie en
+gerichte controle samen. Alleen een aantoonbare noodzakelijke afhankelijkheid
+rechtvaardigt tussenwerk. Als uitsluitend een fysieke/menselijke beoordeling
+resteert, blijft die zichtbaar en volgt de eerstvolgende zelfstandig uitvoerbare
+producttaak. Geen test-/installatie-/rollbacklus of wachten om actief te blijven.
+Een ontbrekende woonkamerwaarneming blokkeert algemene HA-uitvoering T2 niet.
+
+De actuele kleine taken bepalen waar hervat wordt; C1/HTTP429 uit het oude
+app-goal is een historische momentopname. De volledige scope, innovatieproef,
+vergelijkingscriteria, oorspronkelijke eindvoorwaarden en acceptaties blijven
+behouden. Speakers en Telegram blijven primair; geen verplichte telefoonproef.
+
+Het autonome bouwgoal heeft een technisch eindpunt: geen zelfstandig uitvoerbaar
+productwerk over, afgeronde functies samen geïnstalleerd en gecontroleerd, en de
+geplande eindvergelijking uitgevoerd met beschikbare vastgelegde toegang.
+Uitsluitend externe toegang en menselijke beoordeling blijven zo nodig expliciet
+open; gewone programmeerfouten gelden niet als externe blokkade. Open taken worden
+niet fictief voltooid. Het volledige project is pas geaccepteerd na de afgesproken
+vergelijking, zeven dagen gezinspraktijk en Jaaps echte eindoordeel (F2).
+De goaltekst is gereed voor activering door Jaap; tekstvoorbereiding is geen functie.
+
 ## Eigenaarcorrectie 1 oktober 2026 — eerst werkend gesprek via speakers en Telegram
 
 Speakers en Telegram zijn de primaire gebruiksroutes voor deze oplevering.
