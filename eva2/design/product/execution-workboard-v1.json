@@ -14734,8 +14734,9 @@
                   "selectedApproach": "Use an explicitly local development-candidate receipt tied to actual package bytes and inspected local immutable images; do not manufacture a production signature or supported-platform claim. Bind confirmed wizard choices to the existing target workflow. Fresh installation needs ordinary model egress and local owner output; restore isolation remains the default."
                 },
                 "review": "GO including repaired text route, real browser entry and final package/source hashes; public support and optional providers open",
-                "latestSourceCheckpoint": "ad296fde2a44d0d035fad2326a7e6cc6d528e4e6",
-                "integrationBase": "cf509f2c651071d168731bfae0dce3a478367dde"
+                "latestSourceCheckpoint": "7378378a495b0575671661506cf9e339f66a0c7d",
+                "integrationBase": "cf509f2c651071d168731bfae0dce3a478367dde",
+                "publication": "Published on origin/main; installed package hash inventory and immutable image provenance separately recorded."
               },
               "latestEvidence": "eva2/evidence/product/installer-ordinary-target-20261001.json",
               "remaining": "Technische kleine taak afgerond: gewone wizard start nieuwe lokale Windows/WSL-tekstinstallatie, met opgeslagen gesprek en browsertoegang. Gekozen optionele modules blijven O1.2; publieke support en menselijke acceptatie blijven open.",

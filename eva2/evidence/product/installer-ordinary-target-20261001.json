@@ -20,6 +20,13 @@
       "living-core": "sha256:35eba561f26f4745b7995ae849c9341c441361a74106326308781e7e3ffc7a69",
       "postgres": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
       "hindsight": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710"
+    },
+    "published_source_checkpoint": "7378378a495b0575671661506cf9e339f66a0c7d",
+    "publication": {
+      "repository": "https://github.com/jaapfrank/eva",
+      "branch": "main",
+      "local_origin_main_matches": true,
+      "verifiedAt": "2026-10-01T08:32:28.861505+00:00"
     }
   },
   "confirmed_choices": {
@@ -264,7 +271,14 @@
       "reply_principal_matches_runtime": true,
       "reply_readback_matches_stream": true
     },
-    "review_path": "eva2/reviews/installer-ordinary-target-20261001.md"
+    "review_path": "eva2/reviews/installer-ordinary-target-20261001.md",
+    "project_dashboard_readback": {
+      "status": 200,
+      "contract": "EvaProjectOverview/v1",
+      "actual_now_matches_completed_small_task": true,
+      "actual_latest_delivery_matches_evidence": true,
+      "checkedAt": "2026-10-01T08:32:28.861505+00:00"
+    }
   },
   "consumption": {
     "development_credit_cost": "unknown",
