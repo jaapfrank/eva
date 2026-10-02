@@ -236,7 +236,7 @@
           "evidence": "RT-001 · CO-007 · eerdere positieve feedback Jaap; volledige gezinsacceptatie open",
           "outcomes": [],
           "works": "Privégesprekken werken; Jaap meldde dat het gesprek prima loopt.",
-          "ownerSummary": "Nog nodig: vlot antwoorden en tussendoor praten via alle ingangen."
+          "ownerSummary": "Nog nodig: merkbaar eigen oordeel, humor en betrokkenheid. Bestaande Telegram-tussenvraag en geheugenacceptaties behouden."
         },
         {
           "id": "memory",
@@ -294,8 +294,8 @@
           "tested": "yes",
           "live": "yes",
           "accepted": "partial",
-          "gap": "IN-02 eigenaarsoordeel; geen concreet technisch restpunt binnen deze oplevering.",
-          "detail": "AU-008 is technisch afgerond en live. Eva’s eigen bijdrage is teruggelezen; de laatste beoordeling en eventuele budgetblokkade zijn zichtbaar. Alleen Jaaps IN-02-oordeel over nut en passendheid staat open.",
+          "gap": "I1/I2: zelf een nuttige bijdrage uitvoeren/afleveren en een gewone waarnemingsopdracht zelf automatiseren; gezinsbeoordeling apart.",
+          "detail": "AU-008 en de eerder geaccepteerde bijdrage blijven behouden. De bredere initiatiefuitkomst bevat nog technisch werk: zelfgekozen werk werkelijk uitvoeren en terugbrengen, relevante bronnen zelf kiezen en automatiseringen maken. Een ontbrekende speakersessie blokkeert alleen die hoorbare afleverroute.",
           "evidence": "eva2/evidence/product/AU-008-current-review-delivery-2026-09-12.json · eva2/reviews/AU-008-current-status-e96b2054.md",
           "outcomes": [
             {
@@ -315,7 +315,7 @@
             }
           ],
           "works": "Eva koos vanuit jouw bestaande huiswens zelfstandig een beoordelingskaart en leverde deze als privaat document op.",
-          "ownerSummary": "Nog nodig: regelmatig nuttig initiatief nemen en passend stil blijven."
+          "ownerSummary": "Nog nodig: zelf gekozen nuttig werk echt uitvoeren en terugbrengen; geen vaste vuilnisbak- of voicefunctie."
         },
         {
           "id": "tools",
@@ -424,7 +424,7 @@
             }
           ],
           "works": "Verstaanbare woonkamer-audio en doorpraten na het antwoord zijn door Jaap bevestigd.",
-          "ownerSummary": "Nog nodig: natuurlijk doorpraten en fysieke Voice PE-proef."
+          "ownerSummary": "Ondersteunend; geen eerste bouwprioriteit. Fysieke verstaanbaarheid en onderbreken blijven open, telefoon is optioneel."
         },
         {
           "id": "projects",
@@ -435,8 +435,8 @@
           "tested": "partial",
           "live": "partial",
           "accepted": "no",
-          "gap": "Algemene planning, meerdaagse praktijk en eigenaaracceptatie blijven open.",
-          "detail": "Eerst concept bewaren, daarna einddocument maken en beide teruglezen is via de gewone gebruikersroute bewezen. Eerdere geïsoleerde herstart- en stopproeven blijven gelden binnen hun scope. Algemene projectplanning en meerdaagse praktijk zijn nog niet afgerond.",
+          "gap": "L3 zelfstandige programmeeruitvoering en installatieoverdracht; R1 gemeten innovatie en eindacceptatie.",
+          "detail": "L1 procedureleren/hergebruik en L2 hervatten/terugmelden zijn afgerond binnen hun geregistreerde scope. De eerdere SHA-codeverbetering is met Codex-hulp toegepast. De componentroute bereidt alleen een pakket voor; algemene programmeeruitvoering en autonome toepassing zijn nog niet als geheel bewezen.",
           "evidence": "AU-002, AU-003, AU-004, AU-006",
           "outcomes": [
             {
@@ -486,7 +486,7 @@
             }
           ],
           "works": "Het voorbereide tweestapsproject blijft behouden. Beide documentdiensten draaien weer; automatisch herstartbeleid is geïnstalleerd. Eigen documentopdrachten zijn nog niet geïnstalleerd.",
-          "ownerSummary": "Werkwijze één keer hergebruikt; zelfstandig leren en langdurig werk nog afmaken."
+          "ownerSummary": "Eerst afmaken: Eva zelf laten programmeren, toepassen en controleren. Begrensd leren en hervatten zijn al bewezen."
         },
         {
           "id": "browser",
@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-01T22:46:25.288933+00:00",
+        "checkedAt": "2026-10-02T00:07:41.859993+00:00",
         "deliveries": [
           {
             "title": "Overkapping op dezelfde gecorrigeerde continue route aangesloten",
@@ -3299,25 +3299,25 @@
           }
         ],
         "now": {
-          "title": "Bijgewerkte goaltekst gereed; app-goal nog gepauzeerd",
+          "title": "Prioriteit: Eva moet zelf kunnen bouwen en bijdragen",
           "state": "planned",
-          "detail": "Alle zelfstandig uitvoerbare productfuncties afmaken, met Eva1 als praktische referentie. Technische oplevering en gezinsacceptatie apart. Geen functie nieuw afgerond; geen bouwwerker actief tijdens goalvoorbereiding.",
+          "detail": "Alle 24 opdrachten en 44 kleine taken op verantwoordelijkheid nagekeken. Algemene programmeeruitvoering is nog niet bewezen aangesloten; eigen codevoorstellen stoppen vóór installatie. Plan en taakaanwijzingen aangepast; geen nieuwe functie afgerond en geen productbouwwerker actief. App-goal staat nog gepauzeerd.",
           "owner": "Codex /root"
         },
         "next": {
-          "title": "Na activering: bestaande functionele uitkomsten afronden",
-          "detail": "Actuele kleine taken leidend. Eerst woonkamerroute waar gericht uitvoerbaar; T2 algemene HA-kern hoeft niet op uitsluitend fysieke beoordeling te wachten. Geen telefoon-/laptopbouw of oude providerreparatie."
+          "title": "L3.2/L3.3 · Eva levert zelf een werkende verbetering",
+          "detail": "Eerst L3.2/L3.3: Eva zelf een relevante programmeeropdracht laten afmaken. Bestaande toegelaten programmeerwerkruimte vaststellen/hergebruiken en alleen ontbrekende uitvoering-, review- en installatieovergangen aansluiten. Daarna algemene huis-/dienstuitvoering en zelfgekozen bijdragen; stemwerk is ondersteunend."
         },
         "ownerAction": {
-          "title": "Goaltekst vervangen en hervatten",
+          "title": "Nu geen nieuwe gebruiksproef nodig",
           "steps": [
-            "Vervang de achterhaalde C1/HTTP429-opdracht door de bijgewerkte technische goaltekst en zet het goal aan.",
-            "Nu geen nieuwe telefoon-/laptop- of tweede-speakerproef nodig. Open echte gebruiksbeoordelingen blijven apart zichtbaar."
+            "Jouw prioriteit is verwerkt: Eva moet zelf onderzoeken, programmeren, toepassen en nuttig initiatief nemen.",
+            "Geen telefoon-/laptop- of tweede-speakerproef voor deze programmeeruitkomst. Bestaande echte beoordelingen blijven open."
           ],
-          "expected": "Codex hervat de bestaande producttaken; voorbereiding van dit goal is geen extra Eva-functie."
+          "expected": "Codex sluit de ontbrekende algemene mogelijkheden aan; Eva voert de concrete verbetering zelf uit. Een voorstel of door Codex uitgevoerde wijziging telt daarvoor niet."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-01T22:46:25.288933+00:00"
+        "reviewedAt": "2026-10-02T00:07:41.859993+00:00"
       },
       "reviewedAt": "2026-10-01T15:52:21.323198+00:00"
     },
@@ -12981,7 +12981,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 1,
+      "currentStep": 5,
       "steps": [
         {
           "number": 1,
@@ -13051,7 +13051,7 @@
             "VB-002"
           ],
           "doneWhen": "Passend initiatief met werkelijk resultaat, terecht stil blijven en bestaande huisfuncties behouden; gezin beoordeelt eigenheid, plezier en hinder.",
-          "preserve": "Bestaat: Eva1-aanwezigheid en geïnstalleerde Eva2-huishoudcompositie met stiltebeleid en bezorging. Resteert: hoorbaar/nuttig gedrag en vaststellen van camera-/agenda-aansluiting. Geen nieuw initiatiefsysteem vanwege open acceptatie.",
+          "preserve": "Bestaande initiatiefcompositie, bronkoppelingen en resultaatroutes behouden. Resteert: een zelfgekozen werkelijk nuttige bijdrage en algemene waarnemingsautomatisering. Spraak is een mogelijke afleverroute, geen algemene voorwaarde.",
           "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
           "historicalPlanningEffortHours": "4–12",
           "blueprintSlices": [
@@ -13069,7 +13069,7 @@
             "AU-003"
           ],
           "doneWhen": "Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg.",
-          "preserve": "Bestaat: procedure-opslag, ontdekking en zelfstandig hergebruik; hervatten en geholpen zelfverbetering met geïnstalleerd resultaat. Resteert: volledige onbekende leeropdracht zonder hulp en meerdaagse praktijk. De bewezen taaklimiet eerst gericht oplossen, bestaande onderdelen hergebruiken.",
+          "preserve": "L1 procedureleren/hergebruik en L2 hervatten/terugmelden zijn binnen hun vastgelegde scope afgerond. Resteert: zelfstandige programmeeruitvoering met toegepaste eigen verbetering (L3) en de afzonderlijke innovatieproef (R1); geen herbouw van geaccepteerd leerwerk.",
           "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
           "historicalPlanningEffortHours": "8–24",
           "blueprintSlices": [
@@ -13138,7 +13138,7 @@
           ]
         }
       ],
-      "nextAction": "Na goalactivering hervatten bij actuele kleine taken. C3.1 is eerstvolgende spraakuitkomst; ontbrekende fysieke waarneming blokkeert zelfstandig uitvoerbare algemene HA-uitvoering T2 niet. Geen oude C1/HTTP429-opdracht herhalen.",
+      "nextAction": "Eerst L3.2/L3.3: Eva zelf een relevante programmeeropdracht laten afmaken. Bestaande toegelaten programmeerwerkruimte vaststellen/hergebruiken en alleen ontbrekende uitvoering-, review- en installatieovergangen aansluiten. Daarna algemene huis-/dienstuitvoering en zelfgekozen bijdragen; stemwerk is ondersteunend.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13208,7 +13208,15 @@
           "evidence": "eva2/evidence/product/b0-platform-20260928.json",
           "activeWorker": null,
           "dashboardComponent": "project-wide",
-          "remainingTasks": []
+          "remainingTasks": [],
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "behouden",
+            "codex": "Bestaande inventarisatie en keuzes gebruiken; geen nieuwe brede audit.",
+            "eva": "Eva gebruikt relevante documentatie binnen echte opdrachten.",
+            "taskIds": [],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "C1",
@@ -13401,6 +13409,17 @@
             "measurement": "Offline native-wiring fixture356→94ms; not real provider/network latency.",
             "review": "GO",
             "restartCount": 1
+          },
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "algemene basis",
+            "codex": "Gedeeld snel contact en taakoverdracht behouden; alleen gemeten resterende vertraging verbeteren.",
+            "eva": "Gewone vragen beantwoorden en werk aannemen zonder andere gesprekken te blokkeren.",
+            "taskIds": [
+              "C1.1",
+              "C1.2"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
           }
         },
         {
@@ -13441,7 +13460,15 @@
             "remaining": "Physical channel operation and experience remain in C1/C3/C4; no new broad category completion."
           },
           "dashboardComponent": "projects",
-          "remainingTasks": []
+          "remainingTasks": [],
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "behouden",
+            "codex": "Bestaand taakbeheer, correctie en stoppen hergebruiken.",
+            "eva": "Taken volgen, aanpassen, stoppen en op de juiste vraag terugkomen.",
+            "taskIds": [],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "C3",
@@ -13561,7 +13588,7 @@
                 "speakerIdentity": "not yet specified",
                 "scope": "Direct continuation seems possible; intelligibility and reliable replies are not accepted."
               },
-              "nextAction": "Codex lokaliseert de gewone woonkamerfout in de bestaande luister-/gespreksroute. Echte output en eindbevestiging zijn al gecontroleerd; niet opnieuw firmware vervangen zonder aangetoonde oorzaak.",
+              "nextAction": "Ondersteunend stemwerk, geen voorwaarde voor autonome programmeer-/huisopdrachten. Codex herstelt alleen een aangetoonde audio-overgang; Eva gebruikt dezelfde gedeelde kern. Fysieke verstaanbaarheid blijft apart open.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -13580,7 +13607,7 @@
               "kind": "aansluiten",
               "doneWhen": "Dezelfde volledige gespreksroute werkt op de tweede fysieke speaker.",
               "owner": "Codex",
-              "nextAction": "Eerst C3.1 woonkamerconversatie oplossen. Daarna dezelfde geïnstalleerde route kort op Overkapping beoordelen; nu geen handeling van Jaap.",
+              "nextAction": "Dezelfde ondersteunende aansluiting; geen tweede-speakerproef zolang de woonkamerconversatie niet bruikbaar is. Dit blokkeert geen zelfstandige taakuitvoering via Telegram.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -13653,7 +13680,19 @@
                 "scope": "Research result returns to original speaker; no full-duplex or second-speaker inference."
               }
             }
-          ]
+          ],
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "ondersteunende aansluiting",
+            "codex": "Bestaande spraaktransporten behouden; fysieke audiofouten later gericht herstellen.",
+            "eva": "Dezelfde gesprek-/werkkern via spraak gebruiken; waar uitvoerbaar eigen configuratie verbeteren.",
+            "taskIds": [
+              "C3.1",
+              "C3.2",
+              "C3.3"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "C4",
@@ -13719,7 +13758,7 @@
                 "expected": "Het gesprek blijft open tijdens denken en spreken; nieuwe vraag krijgt haar eigen antwoord, aangenomen onderzoek blijft lopen.",
                 "blocksIndependentWork": false
               },
-              "nextAction": "Microfoononderbreking samen met gewone woonkamerconversatie afmaken. Outputstopmeting bewijst geen barge-in.",
+              "nextAction": "Codex sluit echte microfoononderbreking op de bestaande route aan. Geen nieuwe spraakmotor; algemeen autonoom werk wacht hier niet op.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -13763,7 +13802,7 @@
                 "expected": "Beoordelen na werkende woonkamerconversatie; geen herhaling van een bekende falende route.",
                 "blocksIndependentWork": false
               },
-              "nextAction": "Eerst C3.1 woonkamerconversatie oplossen. Daarna dezelfde geïnstalleerde route kort op Overkapping beoordelen; nu geen handeling van Jaap.",
+              "nextAction": "Bestaande onderbrekingsroute hergebruiken na werkende woonkamer; geen duplicaat van de algemene taak-/gesprekskern.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -13805,7 +13844,7 @@
                 "evidence": "eva2/evidence/product/c4-phone-route-20261001.json",
                 "review": "eva2/reviews/c4-phone-saved-result-20261001.md"
               },
-              "nextAction": "Geen werk of eigenaarproef nodig voor de primaire oplevering. Bestaande telefoon-/laptoproute behouden als optionele mogelijkheid; geen acceptatie geclaimd.",
+              "nextAction": "Optioneel behouden; geen verplichte telefoon-/laptopbouw of gebruiksproef voor deze oplevering.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -13824,7 +13863,19 @@
               "remaining": "Optionele bestaande mogelijkheid. Niet verplicht voor afronding van gesprekken via speakers en Telegram."
             }
           ],
-          "remaining": "Microfoononderbreking eerst op Woonkamer beoordelen na oplossen C3.1; daarna Overkapping. C4.3 is optioneel buiten deze primaire oplevering."
+          "remaining": "Microfoononderbreking eerst op Woonkamer beoordelen na oplossen C3.1; daarna Overkapping. C4.3 is optioneel buiten deze primaire oplevering.",
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "ondersteunende aansluiting",
+            "codex": "Werkelijke microfoononderbreking en transportstop aansluiten; telefoon blijft optioneel.",
+            "eva": "Nieuwe inbreng verwerken zonder ongewenst achtergrondwerk te stoppen.",
+            "taskIds": [
+              "C4.1",
+              "C4.2",
+              "C4.3"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "M1",
@@ -13944,7 +13995,18 @@
             }
           ],
           "latestEvidence": "eva2/evidence/product/m1-continuity-owner-accepted-20261001.json",
-          "completedAt": "2026-10-01T13:58:56.478055+00:00"
+          "completedAt": "2026-10-01T13:58:56.478055+00:00",
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "behouden",
+            "codex": "Geaccepteerde persoonlijke continuïteit behouden.",
+            "eva": "Later relevant terugkomen op het gesprek zonder opnieuw alle uitleg te vragen.",
+            "taskIds": [
+              "M1.1",
+              "M1.2"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "M2",
@@ -13992,7 +14054,15 @@
             "remaining": "M1 langdurige continuïteit en C3 fysieke speakerwerking blijven open; geen nieuwe persoonsherkenning of algemene gezinsacceptatie."
           },
           "dashboardComponent": "memory",
-          "remainingTasks": []
+          "remainingTasks": [],
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "behouden",
+            "codex": "Bestaande identiteit en privé-/huishoudgrenzen behouden in iedere nieuwe tooloverdracht.",
+            "eva": "Alleen toegestane context gebruiken; privé blijft bij de juiste persoon.",
+            "taskIds": [],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "M3",
@@ -14128,20 +14198,33 @@
               },
               "result": "Gedeelde instructie op kern en werker geïnstalleerd en gezond: sociale nieuwsgierigheid en passende humor toegestaan, korte feitelijke herinneringsantwoorden blijven begrensd. Twee gerichte controles/review GO. De ene voorbeeldvergelijking gaf nog geen duidelijk gedragsverschil; M3.3 blijft niet geaccepteerd.",
               "ownerInstructions": {
-                "availableNow": true,
+                "availableNow": false,
                 "steps": [
                   "Praat gewoon met Eva via /eva2 in Telegram; vertel iets uit jouw dag en reageer op haar antwoord.",
                   "Plak één antwoord dat nog statisch voelt en vermeld de gebruikte ingang."
                 ],
                 "expected": "Eigen kijk, passende nieuwsgierigheid/humor; geen verplichte slotvraag.",
                 "reportBack": "Het concrete antwoord en wat eraan stoort.",
-                "blocksIndependentWork": false
+                "blocksIndependentWork": false,
+                "readyWhen": "Je hebt al concrete feedback gegeven. Codex moet eerst aantoonbaar beter gedrag opleveren; daarna volgt jouw oordeel in normaal gebruik."
               },
-              "nextAction": "Jouw oordeel over de nieuwe instructie verzamelen; concrete statische antwoorden blijven feedback voor Codex.",
+              "nextAction": "Codex gebruikt de al gemelde statische antwoorden om de gedeelde context en het gedrag gericht te verbeteren. Eva toont eigen oordeel, humor en nuttige betrokkenheid in gewoon gebruik; Jaaps oordeel blijft apart. Nog een promptwijziging zonder beter gedrag is geen afronding.",
               "ownerActionRequired": false
             }
           ],
-          "latestEvidence": "eva2/evidence/product/m3-style-fidelity-20260929.json"
+          "latestEvidence": "eva2/evidence/product/m3-style-fidelity-20260929.json",
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "gedeeld gedrag",
+            "codex": "Bestaande concrete statische antwoorden gebruiken voor gerichte verbetering; geen nieuwe begroetingsscripts.",
+            "eva": "Eigen oordeel, humor, nieuwsgierigheid en gekende gezinsvoorkeuren passend tonen.",
+            "taskIds": [
+              "M3.1",
+              "M3.2",
+              "M3.3"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "T1",
@@ -14334,7 +14417,15 @@
             "limitations": "186s,383998input/2427output partial; no general speed/reliability claim and no complete large tools/services category"
           },
           "dashboardComponent": "tools",
-          "remainingTasks": []
+          "remainingTasks": [],
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "behouden",
+            "codex": "Bestaande onderzoeks- en resultaatroute hergebruiken, geen nieuwe onderzoeksmotor.",
+            "eva": "Bronnen onderzoeken, ontbrekende feiten gericht zoeken en het resultaat begrijpelijk terugbrengen.",
+            "taskIds": [],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "T2",
@@ -14392,7 +14483,7 @@
               },
               "latestEvidence": "eva2/evidence/product/t2-readonly-followup-20260929.json",
               "remaining": "Timeout niet gereproduceerd; uitleestaak geslaagd. Oorzaak nog onbekend. Geen ongewijzigde proefherhaling; nieuwe concrete fout met geïnstalleerde meting nodig voor gerichte reparatie.",
-              "nextAction": "Codex gebruikt bewaarde foutmetingen om de concrete falende HA-overgang te verklaren; geen ongewijzigde herhaling.",
+              "nextAction": "Codex verklaart alleen de concrete bewaarde uitvoerfout wanneer deze de gekozen HA-uitkomst raakt; geen ongewijzigde herhaling of preventieve reparatielus.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -14408,7 +14499,7 @@
               "kind": "praktijk",
               "doneWhen": "De bestaande algemene HA-route kiest passende apparaten/diensten uit context en controleert het echte resultaat via chat of Telegram, zonder exacte namen te eisen.",
               "owner": "Codex",
-              "nextAction": "Codex gebruikt bestaande HA-bewijzen en controleert de algemene bron-/doelkeuze via een echte tekstroute; geen volledige herhaling via alle speakers.",
+              "nextAction": "Eva kiest zelf apparaten/diensten en handelt op een gewone huisvraag via de bestaande kern. Codex sluit alleen een ontbrekende algemene overgang aan; geen vooraf geschreven kamer-/apparaatregel.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -14429,7 +14520,7 @@
               "kind": "praktijk",
               "doneWhen": "Beide speaker-adapters geven de huisvraag door aan dezelfde bewezen HA-kern met de juiste huishoudbinding; geen tweede opdrachtinterpretatie of volledige dubbele HA-testreeks.",
               "owner": "Codex",
-              "nextAction": "Codex controleert de aansluiting en huishoudbinding van beide adapters. Geldig bewijs van algemene HA-uitvoering hergebruiken; alleen gewijzigde kanaalovergangen gericht controleren.",
+              "nextAction": "Codex controleert uitsluitend de binding van de bestaande speaker-adapters aan dezelfde HA-kern. Eva gebruikt dezelfde algemene uitvoering; T2.2/T2.4 wachten niet op fysieke spraakbeoordeling.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -14449,7 +14540,7 @@
               "kind": "aansluiten",
               "doneWhen": "Via de gedeelde algemene HA-route maken, wijzigen, teruglezen en gecontroleerd terugmelden; geldig bestaand websitebewijs behouden en chat/Telegram/spraak aansluiten op dezelfde uitvoering.",
               "owner": "Codex",
-              "nextAction": "Codex hergebruikt de bewezen maak-/wijzig-/terugleesroute en controleert ontbrekende tekstaansluiting. Geen aparte spraakautomatiseringsfunctie of volledige herhaalde proef per kanaal.",
+              "nextAction": "Eva ontwerpt, maakt, wijzigt en controleert de automatisering zelf met de algemene HA-tools. Codex hergebruikt de bewezen maak-/wijzigroute en repareert alleen ontbrekende overdracht; geen script voor één gebruikersvoorbeeld.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -14467,7 +14558,20 @@
           "previousDependsOn": [
             "C3"
           ],
-          "dependencyClarification": "Een werkende spraakinvoer is geen voorwaarde voor algemene HA-kernuitvoering via tekst. Speaker-aansluiting blijft apart te verifiëren; C3/C4 blijven verantwoordelijk voor audio."
+          "dependencyClarification": "Een werkende spraakinvoer is geen voorwaarde voor algemene HA-kernuitvoering via tekst. Speaker-aansluiting blijft apart te verifiëren; C3/C4 blijven verantwoordelijk voor audio.",
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "algemene uitvoering",
+            "codex": "Ontbrekende algemene HA-overgangen aansluiten; bestaande API en maak-/wijzigbewijs hergebruiken.",
+            "eva": "Apparaten ontdekken, huisvragen begrijpen en automatiseringen zelf maken, wijzigen en controleren.",
+            "taskIds": [
+              "T2.1",
+              "T2.2",
+              "T2.3",
+              "T2.4"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "T3",
@@ -14563,7 +14667,7 @@
               "kind": "praktijk",
               "doneWhen": "Eva voert een concrete opdracht uit, controleert het resultaat en levert het begrijpelijk op.",
               "owner": "Codex",
-              "nextAction": "Na delen maakt Codex één gewone browseropdracht af en controleert het echte resultaat.",
+              "nextAction": "Eva maakt een gewone browseropdracht zelf af met de bestaande bediening en resultaatcontrole. Codex sluit ontbrekende algemene browserovergangen aan; de eerder bevestigde Chrome-verbinding wordt niet opnieuw gebouwd.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -14579,7 +14683,7 @@
               "kind": "praktijk",
               "doneWhen": "Overname stopt lopende bediening; teruggeven vereist verse waarneming en herhaalt geen oude actie.",
               "owner": "Codex",
-              "nextAction": "Na T3.2 overnemen/teruggeven toetsen; Codex controleert stoppen en verse waarneming.",
+              "nextAction": "Codex bewaakt de algemene stop-/overnameovergang. Eva kijkt na teruggeven opnieuw en hervat zonder een oude handeling dubbel uit te voeren.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -14595,7 +14699,19 @@
             }
           ],
           "latestEvidence": "eva2/evidence/product/t3-owner-shared-tab-connected-20261001.json",
-          "nextAction": "T3.2: één concrete browseropdracht via de bestaande gedeelde route afmaken en controleren; daarna T3.3 overname."
+          "nextAction": "T3.2: één concrete browseropdracht via de bestaande gedeelde route afmaken en controleren; daarna T3.3 overname.",
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "algemene uitvoering",
+            "codex": "Bestaande Chrome-bediening, overnemen en actuele waarneming aansluiten.",
+            "eva": "Websites bedienen om een gewone opdracht werkelijk af te maken; geen websitespecifiek kernscript.",
+            "taskIds": [
+              "T3.1",
+              "T3.2",
+              "T3.3"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "T4",
@@ -14667,15 +14783,23 @@
             "remaining": "Owneracceptance,physicalaudioandmodelqualityseparate; reachableworkerdoesnotprovetaakprogress"
           },
           "dashboardComponent": "projects",
-          "remainingTasks": []
+          "remainingTasks": [],
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "behouden",
+            "codex": "Bestaande werkstatus en resultaatbediening hergebruiken.",
+            "eva": "Werkelijke voortgang, resultaat, fout en hervatting begrijpelijk tonen.",
+            "taskIds": [],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "I1",
           "parentStep": 4,
           "dependsOn": [
             "M2",
-            "M3",
-            "T2"
+            "T1",
+            "T4"
           ],
           "outcome": "Huisaanwezigheid en initiatief",
           "effort": "M",
@@ -14720,8 +14844,8 @@
               "previousBlocker": "Geen actuele native speakersessie bij livecontrole; echte bijdrage en hoorbare bruikbaarheid nog niet aangetoond. Koppelfout technisch opgelost en geïnstalleerd; bestaand reflectiebudget blijft gelden.",
               "checkedAt": "2026-10-01T13:44:09.424387+00:00",
               "ownerActionRequired": false,
-              "remaining": "Speakerverbinding aanwezig, maar huidige read-only controle vindt geen geldige native gesprekssessie voor initiatief. Codex moet de algemene aflevering en een echte nuttige bijdrage afronden. Geen bewijs van aanwezige personen uit alleen TCP.",
-              "nextAction": "Codex maakt de algemene initiatiefrouting en hoorbare aflevering af na speaker-readiness.",
+              "remaining": "De algemene initiatiefroute heeft eerdere bouw-/startbewijzen, maar een nieuwe werkelijk nuttige bijdrage met zelfstandige uitvoering en aflevering blijft open. Kies een bestaande toegestane beschikbare route; een afwezige speakersessie is alleen een beperking voor hoorbare aflevering.",
+              "nextAction": "Eva kiest vanuit gekende gezinsbehoeften zelf een nuttige bijdrage, onderzoekt/maakt die en brengt het werkelijke resultaat terug via een toegestane beschikbare route. Codex sluit alleen ontbrekende initiatief-/uitvoeroverdracht aan; een actieve speakersessie is geen algemene voorwaarde.",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
@@ -14736,7 +14860,7 @@
               "kind": "gebruikersproef",
               "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
               "owner": "Jaap",
-              "nextAction": "Na een echt afgeleverde bijdrage beoordeelt het gezin nut, moment en passend stil blijven.",
+              "nextAction": "Jaap beoordeelt de daadwerkelijk afgeleverde zelfgekozen bijdrage op nut, moment, eigenheid en hinder. Geen nieuw technisch werk verzinnen uit een nog ontbrekend oordeel.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -14751,14 +14875,31 @@
               }
             }
           ],
-          "latestEvidence": "eva2/evidence/product/i1-native-destination-20260929.json"
+          "latestEvidence": "eva2/evidence/product/i1-native-destination-20260929.json",
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "zelfgekozen bijdrage",
+            "codex": "Bestaande initiatief-, uitvoer- en afleverroute verbinden waar nodig; spraak is geen algemene voorwaarde.",
+            "eva": "Zelf een relevante gezinsbehoefte of kans kiezen, onderzoeken/uitvoeren en met iets nuttigs terugkomen.",
+            "taskIds": [
+              "I1.1",
+              "I1.2"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          },
+          "dependenciesBeforeAutonomyPriority20261002": [
+            "M2",
+            "M3",
+            "T2"
+          ],
+          "dependencyClarification": "Use the actual tools and permitted result channel needed by the selected outcome. Whole-component voice/personality acceptance is not a prerequisite; preserve their own open criteria. HA-dependent initiatives require the relevant T2 operation, not every speaker trial."
         },
         {
           "id": "I2",
           "parentStep": 4,
           "dependsOn": [
-            "I1",
-            "T1"
+            "T1",
+            "T2"
           ],
           "outcome": "Camera, agenda en eigen onderzoek",
           "effort": "M",
@@ -14832,7 +14973,7 @@
                 "decision": "Bins were an example of general intelligence: discover suitable sources and create the required automation using general tools, not a built-in bin function. A named camera/calendar choice is not a project prerequisite.",
                 "previousBlocker": "Superseded owner-choice requirement; no completed user capability inferred."
               },
-              "nextAction": "Codex verifieert zelfstandige bronontdekking via algemene hulpmiddelen; geen voorafgaande camerakeuze nodig.",
+              "nextAction": "Eva ontdekt relevante camera-/agendabronnen bij een gewone opdracht en kiest zelf; alleen echte onduidelijkheid vraagt een vraag. Codex levert algemene toegang, geen vaste bronnencombinatie.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -14848,7 +14989,7 @@
               "kind": "aansluiten",
               "doneWhen": "Eva stelt de gevraagde waarneming en terugmelding zelf in via bestaande algemene hulpmiddelen en passende automatisering, zonder vraag-/apparaatspecifieke kernregel; de werkelijke terugmelding blijft binnen het bestaande mandaat.",
               "owner": "Codex /root",
-              "nextAction": "Codex laat een gewone waarnemingsopdracht leiden tot passende automatisering en werkelijke terugmelding.",
+              "nextAction": "Eva maakt en gebruikt zelf de passende automatisering en meldt een echte waarneming terug. Codex verbindt alleen ontbrekende algemene tools/uitvoeroverdracht; geen ingebouwde vuilnisbakfunctie.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -14857,7 +14998,23 @@
                 "blocksIndependentWork": false
               }
             }
-          ]
+          ],
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "zelfgemaakte automatisering",
+            "codex": "Bestaande algemene bronontdekking, beeld, agenda, HA en resultaatroute samen aansluiten.",
+            "eva": "Zelf bronnen kiezen en de gevraagde waarneming/automatisering maken en gebruiken; vuilnisbakken zijn slechts een voorbeeld.",
+            "taskIds": [
+              "I2.1",
+              "I2.2"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          },
+          "dependenciesBeforeAutonomyPriority20261002": [
+            "I1",
+            "T1"
+          ],
+          "dependencyClarification": "Use the actual tools and permitted result channel needed by the selected outcome. Whole-component voice/personality acceptance is not a prerequisite; preserve their own open criteria. HA-dependent initiatives require the relevant T2 operation, not every speaker trial."
         },
         {
           "id": "L1",
@@ -14917,7 +15074,15 @@
             "ownerAccepted": false
           },
           "dashboardComponent": "projects",
-          "remainingTasks": []
+          "remainingTasks": [],
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "behouden",
+            "codex": "Bewezen procedureleren en hergebruik behouden; dit bewijst geen algemene programmeerwerkplek.",
+            "eva": "Een onbekende werkwijze leren, opslaan en bij andere invoer zelfstandig toepassen.",
+            "taskIds": [],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "L2",
@@ -15012,7 +15177,18 @@
           "completionEvidencePaths": [
             "eva2/evidence/product/l2-autonomous-weekend-20260929.json",
             "eva2/evidence/product/l2-next-day-completed-20260930.json"
-          ]
+          ],
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "behouden",
+            "codex": "Bewezen hervatten en eenmalige terugmelding behouden.",
+            "eva": "Een langdurig project bijhouden, vervolgen en afronden.",
+            "taskIds": [
+              "L2.1",
+              "L2.2"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "L3",
@@ -15027,8 +15203,8 @@
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Eva produced a small source fix; evaluation, import, installation and rollback exist. Assisted case improved 71/90 to 90/90.",
-            "remainingGap": "**Evidence:** autonomous improvement on held-out cases; assistance means the general criterion remains open.",
-            "nextAction": "Reuse improvement/evaluation/release route. Fix only missing autonomous handoff; do not rebuild evaluator or release system.",
+            "remainingGap": "A general programming executor is not established by the inspected source/evidence. Dynamic MCP-only availability remains unverified. The supported component route ends at a reviewed-package candidate; no runtime installation action. Prior SHA improvement required Codex import/install.",
+            "nextAction": "Establish/reuse the actually admitted programming workspace through existing delegated tools, then connect the missing execution, independent evaluation and managed release handoffs. Eva, not Codex, implements the selected product improvement.",
             "evidencePaths": [
               "eva2/evidence/product/component-self-improvement-assisted-20260924.json"
             ],
@@ -15082,7 +15258,7 @@
               "checkedAt": "2026-10-01T13:44:09.424387+00:00",
               "ownerActionRequired": false,
               "remaining": "Vorige onderzoeksronde afgesloten zonder bewezen voordeel. Codex bereidt een geldig vervolg met gewijzigde oorzaak/hypothese voor; geen automatische herhaling of nieuwe eigenaarbeslissing.",
-              "nextAction": "Codex gebruikt bewaarde fouten voor een gewijzigde geldige kandidaat; daarna onafhankelijke vergelijking.",
+              "nextAction": "Eerst stelt Codex vast welke algemene programmeerwerkruimte/uitvoerder werkelijk beschikbaar is via de bestaande gedelegeerde/MCP-route. Hergebruik die en sluit uitsluitend ontbrekende uitvoering aan. Eva onderzoekt en schrijft de concrete verbetering; een aparte beoordelaar vergelijkt de vastgezette kandidaat met de bestaande versie. De oude mislukte AIDE-ronde blijft afgesloten.",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
@@ -15097,7 +15273,7 @@
               "kind": "besluit",
               "doneWhen": "Alleen gemeten voordeel integreren. Gelijkspel/verlies wordt afgesloten zonder verdere bouw.",
               "owner": "Codex",
-              "nextAction": "Codex beslist op gemeten bewijs over integreren/afwijzen; niets onbewezen promoveren.",
+              "nextAction": "Codex verbindt beoordeeld exact resultaat met bestaande beheerde installatie en terugmelding. Eva past haar aantoonbare verbetering via die route toe, controleert de geïnstalleerde werking en bewaart bruikbare ervaring. Afwijzing sluit één kandidaat af; zij maakt de algemene programmeervaardigheid niet automatisch klaar.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -15107,7 +15283,20 @@
               }
             }
           ],
-          "latestEvidence": "eva2/evidence/product/aide-bounded-outcome-20260929.json"
+          "latestEvidence": "eva2/evidence/product/aide-bounded-outcome-20260929.json",
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "eerstvolgende algemene vaardigheid",
+            "codex": "Werkelijke programmeeruitvoerder vaststellen/hergebruiken en ontbrekende uitvoering-, onafhankelijke beoordeling- en releaseovergangen aansluiten.",
+            "eva": "Een relevant eigen tekort onderzoeken, code verbeteren, werkelijk uitvoeren en controleren, toepassen en terugmelden; zelfgekozen verbetering volgt via I1.",
+            "taskIds": [
+              "L3.1",
+              "L3.2",
+              "L3.3"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          },
+          "completionClarification": "A failed AIDE experiment may close that experiment, not the autonomous programming outcome. Preserve L3.1 historical closure. General programming requires a useful Eva-authored change executed, independently checked, installed and verified through her own route; one component microfix is bounded evidence only."
         },
         {
           "id": "R1",
@@ -15161,7 +15350,7 @@
               "blocker": null,
               "previousBlocker": "Vaste proef onvolledig: referentie bereikte12modelreacties vóór tweede deelresultaat. Kandidaat/B/herhalingen niet gemeten; eindvoorwaarde vergelijking niet gehaald. Deze ronde afgeslotenUNKNOWN zonder automatische vervolgproef.",
               "ownerActionRequired": false,
-              "nextAction": "Codex behoudt UNKNOWN en bereidt gericht een geldige vergelijking voor; geen ongewijzigde proefherhaling.",
+              "nextAction": "Bestaande innovatiehypothese met de vastgelegde proef vergelijken nadat de daarvoor nodige algemene uitvoering werkt. Geen nieuw optimalisatieplatform en geen ongewijzigde herhaling tot winst ontstaat.",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
@@ -15183,7 +15372,18 @@
           ],
           "owner": "/root",
           "reviewer": "/root/review_telegram_draft_lane",
-          "disposition": "Optional frozen round closed inconclusive; R1.1 comparison unmet and technical distinction open."
+          "disposition": "Optional frozen round closed inconclusive; R1.1 comparison unmet and technical distinction open.",
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "technische innovatie",
+            "codex": "Bestaande vaste onafhankelijke vergelijking uitvoeren; geen onbewezen innovatieclaim.",
+            "eva": "Uitvoerbare ervaring opbouwen en toepassen indien de bestaande proef daadwerkelijk voordeel aantoont.",
+            "taskIds": [
+              "R1.1",
+              "R1.2"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "O1",
@@ -15308,7 +15508,7 @@
                 "finishScope": "Original task finish retained. O1 parent cannot close until voice/HA/browser module additions/omissions are available through ordinary owner choices; unsupported channels must remain explicit.",
                 "review": "Conditional source GO; actual selected target/image/read route still unproved."
               },
-              "nextAction": "Codex hervat de bewaarde installerwijziging en bevestigt gekozen modules op de doelinstallatie.",
+              "nextAction": "Codex rondt de algemene modulekeuze in de bestaande installer af. Eva moet beschikbare modules via algemene beheerhandelingen kunnen toevoegen/weglaten binnen mandaat; geen afzonderlijke installer voor elk voorbeeld.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -15326,6 +15526,17 @@
             "doneWhen": "Skipped optional capabilities no longer force their service configuration during target preparation; selected capabilities retained. Complete O1.2 still requires usable module selection through installation.",
             "effort": "One bounded source change and focused cases; no Eva model calls; credits unknown",
             "result": "16 focused cases passed; independent GO; exact modules installed/imported in existing operator package. No runtime rollback or restart."
+          },
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "productinstallatie",
+            "codex": "Gewone modulaire installatie afronden; Eva mag na beschikbare toegang dezelfde algemene modules beheren.",
+            "eva": "Binnen mandaat een geschikte beschikbare module kiezen en installeren/configureren; geen eigen installer per functie.",
+            "taskIds": [
+              "O1.1",
+              "O1.2"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
           }
         },
         {
@@ -15459,7 +15670,19 @@
           ],
           "latestEvidence": "eva2/evidence/product/o2-actual-restore-20261001.json",
           "completedAt": "2026-10-01T15:37:04.611986+00:00",
-          "activeWorker": null
+          "activeWorker": null,
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "behouden",
+            "codex": "Geïnstalleerde update/herstelroute hergebruiken voor echte wijzigingen.",
+            "eva": "Beschikbare beheerde update/herstelhandelingen via aangesloten algemene tools gebruiken.",
+            "taskIds": [
+              "O2.1",
+              "O2.2",
+              "O2.3"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "P1",
@@ -15519,7 +15742,7 @@
               "nextImplementation": "Use these owned persisted configurations for native startup after own authentication. No repeated config/catalog probe without a changed cause or new evidence. Prior Agent Zero helper-envelope refusal remains unavailable; no hidden helper disable, auth-token copying or quota increase.",
               "checkedAt": "2026-10-01T11:32:00+00:00",
               "ownerActionRequired": true,
-              "nextAction": "Codex start de eigen aanmeldflows als jij kunt bevestigen; daarna controleert Codex native toegang.",
+              "nextAction": "Codex gebruikt bestaande vergelijkingsvoorbereiding; Jaap levert alleen daadwerkelijk ontbrekende accounttoegang. Dit blokkeert uitsluitend die vergelijking, niet Eva’s eigen functionele uitvoering.",
               "ownerInstructions": {
                 "availableNow": true,
                 "purpose": "access",
@@ -15554,7 +15777,7 @@
               },
               "remaining": "Kleine ontwikkelronde vastgelegd: C01/C04, 2epochs, 5systemen, maximaal40providerpogingen en gedeelde grenzen. Niet uitvoerbaar zolang native toelating ontbreekt. Definitieve ongeziene eindtaken en familiebudgetten blijven open.",
               "evidence": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#developmentPlan",
-              "nextAction": "Codex zet bestaande ongeziene eindtaken/scorers vast vóór uitvoering; geen nieuwe brede vergelijking.",
+              "nextAction": "Codex zet bestaande gelijke taken en beoordeling vooraf vast. De programmeeragent kan onafhankelijke beoordelingsregels en afgeschermde gegevens niet aanpassen.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -15574,6 +15797,17 @@
             "workers": {},
             "estimate": "One bounded pass, maximum five relevant files per external source review; zero model probes, credits unknown.",
             "endCondition": "Actual enforceable vs unknown per-task limits and metering stated for all five participants; no unsupported live admission."
+          },
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "onafhankelijke vergelijking",
+            "codex": "Gelijke taken, versies en toegang vastleggen met bestaande criteria.",
+            "eva": "Eva is onderwerp van vergelijking; zij wijzigt niet zelf haar beoordelingsregels.",
+            "taskIds": [
+              "P1.1",
+              "P1.2"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
           }
         },
         {
@@ -15608,7 +15842,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Codex voert de afgesproken eindvergelijking uit als eindkandidaat en toegang gereed zijn.",
+              "nextAction": "Codex voert de geplande eindvergelijking uit op het samenhangende product; Eva doet dezelfde echte taken als Eva1 en de geselecteerde concurrenten.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -15624,7 +15858,7 @@
               "kind": "rapporteren",
               "doneWhen": "Resultaten op kwaliteit, snelheid, zelfstandigheid en verbruik samen tonen; geen onbewezen algemene voorsprong.",
               "owner": "Codex",
-              "nextAction": "Codex publiceert gemeten winsten, verliezen en ontbrekende metingen.",
+              "nextAction": "Codex publiceert aantoonbare winst, gelijkspel, verlies en onbekend resultaat. Geen algemene voorsprong afleiden uit één geslaagde demonstratie.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -15633,7 +15867,18 @@
                 "blocksIndependentWork": false
               }
             }
-          ]
+          ],
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "onafhankelijke vergelijking",
+            "codex": "Eindkandidaat vergelijken met Eva1/concurrenten en werkelijke winst/verlies rapporteren.",
+            "eva": "Taken onder dezelfde voorwaarden uitvoeren; geen eigen score als onafhankelijke beoordeling.",
+            "taskIds": [
+              "P2.1",
+              "P2.2"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "F1",
@@ -15677,7 +15922,7 @@
               "kind": "opleveren",
               "doneWhen": "Alle verplichte afgeronde functies in één geïnstalleerde, herleidbare versie.",
               "owner": "Codex",
-              "nextAction": "Codex bundelt afgeronde functies en bestaand bewijs in één geïnstalleerde eindkandidaat.",
+              "nextAction": "Codex levert de bestaande functies samen geïnstalleerd op; eigen programmeren en initiatief worden beoordeeld op echte uitvoering door Eva, niet op handwerk van Codex.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -15693,7 +15938,7 @@
               "kind": "eindcontrole",
               "doneWhen": "Gebundelde eindcontrole, computerherstart en onafhankelijke review; alleen concrete resterende fouten corrigeren.",
               "owner": "Codex",
-              "nextAction": "Codex doet gezamenlijke eindcontrole, herstart en onafhankelijke review op de eindkandidaat.",
+              "nextAction": "Codex controleert het complete geheel gebundeld met onafhankelijke review. Geen nieuwe volledige test-/installatieronde per klein taakje.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -15702,7 +15947,18 @@
                 "blocksIndependentWork": false
               }
             }
-          ]
+          ],
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "gezamenlijke oplevering",
+            "codex": "Geïnstalleerd geheel en relevante combinaties gebundeld beoordelen.",
+            "eva": "Echte opdrachten via de samengebrachte mogelijkheden afronden.",
+            "taskIds": [
+              "F1.1",
+              "F1.2"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         },
         {
           "id": "F2",
@@ -15736,7 +15992,7 @@
               "kind": "gebruikersproef",
               "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.",
               "owner": "Jaap",
-              "nextAction": "Na technisch gereed gemelde eindkandidaat gebruikt het gezin Eva zeven dagen; nu geen handeling.",
+              "nextAction": "Jaap gebruikt de technisch opgeleverde Eva zeven dagen normaal. Beoordeel bruikbaarheid, humor, betrokkenheid en eigen initiatief; ontbrekende fysieke waarneming is geen fictieve technische afronding.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -15757,7 +16013,7 @@
               "kind": "gebruikersproef",
               "doneWhen": "Jaap beslist over acceptatie; bestaande acceptaties blijven behouden.",
               "owner": "Jaap",
-              "nextAction": "Na gezinsgebruik geeft Jaap het eindoordeel; technische afronding en acceptatie blijven apart.",
+              "nextAction": "Jaap bepaalt of Eva daadwerkelijk iets toevoegt aan het gezin. Codex bewaart eerdere acceptaties en registreert dit echte eindoordeel.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -15770,14 +16026,25 @@
                 "blocksIndependentWork": false
               }
             }
-          ]
+          ],
+          "responsibilityReview": {
+            "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+            "role": "gezinsbeoordeling",
+            "codex": "Concrete gebruiksinstructies leveren; menselijke acceptatie niet invullen.",
+            "eva": "Tijdens normaal gezinsgebruik laten zien wat zij toevoegt; Jaap beoordeelt dat zelf.",
+            "taskIds": [
+              "F2.1",
+              "F2.2"
+            ],
+            "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          }
         }
       ],
       "designDate": "2026-09-28",
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "C3",
+      "activeSliceId": "L3",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
@@ -15851,9 +16118,9 @@
       },
       "autonomousTechnicalGoal20261002": {
         "preparedAt": "2026-10-01T22:46:25.288933+00:00",
-        "state": "ready_for_owner_activation",
+        "state": "priority_updated_in_canonical_project_sources_app_goal_still_paused",
         "goalSource": "C:/Users/jaapf/.codex/attachments/d91353b6-5d5a-4de3-bb46-8f22daaa18ef/goal-objective.md",
-        "replacementAppObjective": "Voer het bijgewerkte technische Eva2-oplevergoal uit in C:\\Users\\jaapf\\.codex\\attachments\\d91353b6-5d5a-4de3-bb46-8f22daaa18ef\\goal-objective.md. Lees die tekst en actuele eigenaarafspraken bij hervatten. Maak alle zelfstandig uitvoerbare bestaande producttaken compleet, geïntegreerd en geïnstalleerd; gebruik Eva1 als praktische referentie. Werk volgens de actuele kleine taken, zonder herbouw of test-/installatie-/rollbacklussen. Menselijke proeven blokkeren alleen afhankelijk werk. Houd dashboard en Git actueel. De oude C1/HTTP429-opdracht vervalt; volledige planeisen en acceptaties blijven geldig. Technische afronding en gezinsacceptatie zijn apart.",
+        "replacementAppObjective": "Voer het volledige bestaande Eva2-plan uit volgens de nieuwste eigenaarcorrectie in eva2/PROJECTDOEL.md en de actuele kleine taken. Centrale uitkomst: Eva als autonome, warme en vaardige digitale huisgenoot die zelf onderzoekt, programmeert, verbetert en nuttig werk afmaakt. Eerst L3.2/L3.3: ontbrekende algemene programmeer-/uitvoerings-/releaseovergangen aansluiten en Eva een echte verbetering laten opleveren. Spraak is ondersteunend. Behoud alle planeisen, acceptaties en het technische eindpunt; geen brede herbouw of test-/installatielussen. Houd het bestaande dashboard en Git bij; onafhankelijke eindvergelijking en gezinsacceptatie blijven zichtbaar.",
         "reason": "Remove obsolete C1/provider snapshot; prioritize complete installed user outcomes and separate autonomous technical completion from family acceptance.",
         "primaryReference": "Existing Eva1/Eva2 inventory and fixed comparison criteria; no repeated broad research.",
         "currentTaskSource": "audit.deliveryPlan.implementationSlices[].remainingTasks",
@@ -15864,6 +16131,56 @@
         "appGoalStatusChecked": "paused",
         "appObjectiveUpdatedByTool": false,
         "independentReview": "GO /root/open_questions_triage: complete project requirements, innovation/comparison/F2 retained; autonomous technical endpoint separate; product tasks/acceptance unchanged; goal paused and not falsely edited/activated."
+      },
+      "ownerAutonomyPriority20261002": {
+        "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
+        "state": "task_mapping_completed_no_product_delivery",
+        "source": "Latest owner correction: voice is an example of work Eva should arrange herself; capable autonomous family member is the central outcome.",
+        "reviewScope": "All 24 existing slices and 44 small tasks; targeted source/evidence inspection, no new broad audit or live model run.",
+        "taskSource": "implementationSlices[].remainingTasks",
+        "nextProductOutcome": [
+          "L3.2",
+          "L3.3"
+        ],
+        "sequenceAfterFirstOutcome": [
+          "T2",
+          "I1",
+          "I2",
+          "T3"
+        ],
+        "behaviorThroughout": [
+          "M3"
+        ],
+        "supportingWork": [
+          "C3",
+          "C4",
+          "O1"
+        ],
+        "retainedIndependentEvidence": [
+          "R1",
+          "P1",
+          "P2",
+          "F1",
+          "F2"
+        ],
+        "executorAvailability": "General executor absent from inspected source bindings; dynamic MCP catalog not re-enumerated, so dynamic-only availability is unknown. Existing Agent Zero benchmark is not an Eva integration.",
+        "moneyContribution": "Self-directed useful opportunities and execution within the existing mandate, with measured costs/results; not limited to trading and no promised income or new spending/trading authority.",
+        "newProductTasksCompleted": 0,
+        "appGoalStatus": "paused",
+        "evidence": [
+          "eva2/src/eva/bootstrap/delegated_digital_composition.py",
+          "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+          "eva2/src/eva/adapters/postgres/component_improvement_actions.py",
+          "eva2/src/eva/application/component_improvements.py",
+          "eva2/tools/import_component_release.py",
+          "eva2/evidence/product/component-self-improvement-assisted-20260924.json",
+          "eva2/evidence/product/aide-bounded-outcome-20260929.json"
+        ],
+        "independentReview": {
+          "reviewer": "/root/completion_diagnosis",
+          "decision": "GO",
+          "scope": "Planning diff only; preserved task IDs, statuses, finish conditions and completed task data; actual executor availability first; no narrow-proof general autonomy or voice gate. No runtime functional review claimed."
+        }
       }
     },
     "dashboardClarityCorrection20260922": {

@@ -1,5 +1,32 @@
 # Eva2 — het complete bouwplan
 
+## Eigenaarcorrectie 2 oktober — algemene zelfstandigheid vóór stemwerk
+
+Eva moet zelf kunnen onderzoeken, programmeren, mogelijkheden toevoegen en verbeteren,
+en met nuttig werk aan het gezin bijdragen. “Regel voice” en de vuilnisbakken zijn
+voorbeelden van zulke opdrachten; geen losse functies die Codex vooraf uitschrijft.
+Warmte, humor, eigen oordeel en initiatief blijven onderdeel van hetzelfde product.
+
+**Eerst L3.2/L3.3:** een gewone programmeeropdracht door Eva laten eindigen in een
+werkende, gecontroleerde en toegepaste verbetering. De bestaande codevoorstellen,
+procedure-uitvoering en operatorrelease hergebruiken. Eerst gericht vaststellen of
+een algemene programmeerwerkruimte werkelijk aangesloten is; dynamische MCP-toegang
+is nog niet vastgesteld. Alleen ontbrekende algemene overgangen aansluiten. Eva
+schrijft de concrete productwijziging; Codex doet dat niet namens haar om de proef
+groen te maken. Onafhankelijke beoordeling blijft buiten de optimaliserende agent.
+
+Vervolgens algemene huis-/dienstuitvoering en nuttig initiatief (T2, I1/I2, T3),
+met herkenbaar gedrag (M3). Stemwerk C3/C4 is ondersteunend en geen voorwaarde voor
+zelfstandige uitvoering via Telegram. De acht productgroepen hieronder blijven
+scopegroepen; hun nummers verplichten niet tot volledige spraakafronding vóór leren
+of programmeren. Bestaande afgeronde taken en alle eindcriteria blijven behouden.
+De actuele taakverdeling staat uitsluitend op het [werkbord](WERKBORD.md).
+
+Zelf kansen zoeken om het gezin financieel te ondersteunen hoort bij initiatief,
+breder dan cryptohandel: nuttig werk, verifieerbare resultaten en opbrengst tegenover
+kosten. Bestaand mandaat blijft gelden; geen winstbelofte of automatische toestemming
+voor nieuwe uitgaven of verplichtingen.
+
 ## Eigenaaropdracht 29 september 2026 — gerichte zelfverbetering, eerst bruikbare opleveringen
 
 Neem de aanpak van AIDE en AIDE² op binnen L3: enkele codevarianten vergelijken,
@@ -9,8 +36,9 @@ en vrijgavevoorzieningen; geen algemeen optimalisatieplatform.
 [Onderzoek, proefvoorwaarden en actuele uitkomst](experiments/aide-20260929/README.md)
 zijn vastgelegd. Er is nog geen verbeterkandidaat of gemeten voordeel.
 
-**Uitvoervolgorde:** eerst de eenvoudigste nog open bruikbare uitkomsten afmaken,
-met bestaande code als vertrekpunt. AIDE-vervolg staat gepland en draait niet.
+**Historische volgorde 29 september, vervangen door de prioriteit hierboven:**
+eenvoudige bruikbare uitkomsten eerst. De oorspronkelijke AIDE-ronde is zonder
+kandidaat afgesloten; een gewijzigd vervolg is geen automatische herhaling.
 Bestaande afhankelijkheden en acceptaties blijven geldig. Een proefdocument of
 bijgewerkt dashboard telt niet als afgeronde Eva-functie.
 
@@ -82,8 +110,8 @@ informatie en bruikbaar gedrag behouden wel.
 | Gesprek en stem | Gesprek tijdens onderzoek, streaming, spraak en laptoponderbreking | Snelheid en gelijke werking via de echte ingangen |
 | Personen en geheugen | Geaccepteerd onthouden, corrigeren, inzien en wissen; privégrenzen | Gewijzigde koppelingen en langdurige gezinscontinuïteit |
 | Taken en huis | Onderzoek, taakbediening, resultaten, algemene HA-API en browser | Complete moeilijke opdrachten zonder ontwikkelaarshulp |
-| Initiatief | Eva1-aanwezigheid en geïnstalleerde huishoudroute in Eva2 | Nuttige, hoorbare samenhang; camera/agenda-aansluiting vaststellen |
-| Leren en projecten | Werkwijzen opslaan/hergebruiken, hervatten en een geholpen zelfverbetering | Onbekende werkwijze zelfstandig leren en meerdaags werk afronden |
+| Initiatief | Eva1-aanwezigheid en geïnstalleerde huishoudroute in Eva2 | Zelfgekozen werk uitvoeren/afleveren en relevante bronnen voor algemene automatisering kiezen |
+| Leren en projecten | Werkwijzen opslaan/hergebruiken, hervatten en een geholpen zelfverbetering | L1/L2 behouden; algemene programmeeruitvoering en toegepaste eigen verbetering afmaken |
 | Installatie en modules | Wizard, provisioning, herstel en terugweg | Gewone volledige installatie en optionele modules zonder handwerk |
 | Vergelijking | Protocol, hulpmiddelen en eerdere deelvergelijkingen | Actuele gelijke vergelijking met Eva1 en concurrenten |
 | Eindoplevering | Installatie-/controlevoorzieningen en afzonderlijke acceptaties | Eén compleet geheel en zeven dagen werkelijk gezinsgebruik |
@@ -105,16 +133,16 @@ wordt ze onderdeel van de aanbevolen samenstelling. Bij verlies valt deze oploss
 af; het vereiste technische onderscheid blijft dan open. Een dagelijkse bruikbare
 Eva en een bewezen technische doorbraak zijn twee afzonderlijke opleveroordelen.
 
-## De vaste bouwvolgorde
+## De acht productgroepen en hun eindvoorwaarden
 
 De acht bestaande productstappen blijven herkenbaar. Elke stap is opgesplitst in
 kleinere complete opleveringen; de precieze opdrachten staan in de
 [uitvoerspecificatie](design/blueprint-2026-09-28/delivery-plan.md).
 
-| Volgorde | Wat je daarna daadwerkelijk kunt gebruiken | Wanneer het af is |
+| Productgroep | Wat je daarna daadwerkelijk kunt gebruiken | Wanneer het af is |
 |---|---|---|
 | **Vooraf · wijzigingen onderbouwen** | Bestaand werk en concrete resterende tekortkomingen per opdracht | Elke wijziging heeft bewijs en een kleinste voldoende oplossing; vervanging heeft aantoonbare meerwaarde |
-| **1 · Gesprek en stem** | Praten terwijl meerdere opdrachten lopen; antwoord bij de juiste vraag | Alle vier ingangen en beide echte speakers voldoen aan de betreffende gesprek-/spraakgevallen |
+| **1 · Gesprek en stem** | Praten terwijl meerdere opdrachten lopen; antwoord bij de juiste vraag | Telegram en beide speakers voldoen aan de betreffende gevallen; bestaande web-/paneelroute blijft optioneel |
 | **2 · Personen en geheugen** | Een onderwerp later voortzetten en correcties terugzien | De juiste context komt bij de juiste persoon; gedeelde speakers geven geen privé-inhoud |
 | **3 · Werk en huis afmaken** | Onderzoek, algemene HA-bediening, browser/bestanden en taakbediening | Het gevraagde resultaat is echt gecontroleerd, opgeslagen en teruggebracht; stoppen/overnemen werkt |
 | **4 · Aanwezigheid en initiatief** | Eva merkt kansen op, doet nuttig werk en komt erop terug | Initiatief leidt tot resultaat; passende stilte en gezinswaardering zijn apart beoordeeld |
@@ -194,7 +222,7 @@ stilzwijgend bij dit plan.
 | [Leren en initiatief](design/blueprint-2026-09-28/learning-and-initiative.md) | Geheugenontwikkeling, persoonlijkheid, initiatief, reflectie, skills en begrensde technische vernieuwing |
 | [Opleverstappen](design/blueprint-2026-09-28/delivery-plan.md) | Kleine opdrachten, afhankelijkheden, eindvoorwaarden, ramingen, vergelijking en aansluiting op de negen dashboardonderdelen |
 
-**Eerstvolgende functionele uitkomst blijft C1:** warme snelle gesprekken en een
-tussenvraag tijdens echt werk via Telegram en website. Bestaand bewijs van
-gelijktijdig gesprek en onderzoek wordt gebruikt; alleen het resterende tekort
-rechtvaardigt werk. De vaste acht productstappen blijven staan.
+**Eerstvolgende functionele uitkomst: L3.2/L3.3**, zoals hierboven gespecificeerd.
+C1.1/C1.2, L1/L2 en andere bestaande acceptaties worden niet opnieuw gebouwd.
+Een opgeslagen codevoorstel of een door Codex uitgevoerde productwijziging voldoet
+niet aan zelfstandige uitvoering door Eva.

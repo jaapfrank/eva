@@ -1,5 +1,43 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Eigenaarcorrectie 2 oktober 2026 — Eva moet zelf kunnen bouwen en bijdragen
+
+De hoofdprioriteit is een zelfstandige digitale huisgenoot die zelf onderzoekt,
+programmeert, mogelijkheden toevoegt, aanpast en verbetert, haar werk controleert
+en werkelijk bruikbaar oplevert. Warmte, humor, eigen oordeel, gezinskennis en
+nuttig initiatief horen bij datzelfde product. Spraak is een ondersteunende
+mogelijkheid, geen verplichte eerste bouwfase. Ook “regel voice” is een voorbeeld
+van een opdracht die Eva uiteindelijk zelf moet kunnen uitvoeren; geen opdracht
+om opnieuw een aparte spraakfunctie voor te programmeren.
+
+Beoordeel alle bestaande taken op het onderscheid tussen algemene mogelijkheden
+die Codex moet aansluiten en concrete opdrachten die Eva vervolgens zelf uitvoert.
+Codex levert de ontbrekende programmeerwerkruimte, toegelaten hulpmiddelen en
+uitvoering-/review-/installatieovergangen met bestaande voorzieningen. Eva kiest
+binnen haar mandaat een aanpak, hergebruikt geschikte oplossingen, schrijft de
+benodigde wijziging, voert die uit, controleert het echte resultaat en leert ervan.
+Een door Codex geschreven productwijziging of opgeslagen codevoorstel bewijst deze
+zelfstandigheid niet. Gebruik de bestaande gedelegeerde uitvoering; geen nieuw
+agentplatform of aparte uitvoerroute per voorbeeld.
+
+Eerstvolgende bestaande uitkomst is L3.2/L3.3: van een gewone programmeeropdracht
+naar een beoordeelde, werkende eigen verbetering. Controleer eerst gericht welke
+algemene programmeeruitvoerder werkelijk toegelaten en aangesloten is; een eventuele
+dynamische MCP-uitvoerder is nog niet vastgesteld. Hergebruik wat aanwezig is en
+sluit alleen ontbrekende overgangen aan. De huidige beperkte componentvoorstellen
+plus handmatige Codex-installatie zijn hiervoor onvoldoende. Daarna algemene
+huis-/dienstuitvoering en nuttig initiatief (T2, I1/I2, T3); M3 blijft verantwoordelijk
+voor herkenbaar, niet-statisch gedrag. Stemwerk blokkeert deze uitvoering niet.
+De actuele kleine taken bepalen concrete afhankelijkheden en afronding.
+
+Geld verdienen hoort als mogelijke nuttige gezinsbijdrage bij initiatief: Eva kan
+zelf kansen onderzoeken, werk voorstellen/uitvoeren binnen haar mandaat en werkelijke
+opbrengsten tegenover kosten zetten. Dit is breder dan cryptohandel en geen
+winstbelofte of nieuw mandaat voor uitgaven, transacties of verplichtingen.
+Deze prioriteitscorrectie behoudt bestaande scope, bewijs en acceptaties, inclusief
+de nog open spraak-/gezinsbeoordelingen. Zij voltooit geen producttaak en activeert
+het gepauzeerde app-goal niet.
+
 ## Uitvoerafspraak 2 oktober 2026 — complete functies en technisch eindpunt
 
 Het bijgewerkte autonome bouwgoal maakt alle zelfstandig uitvoerbare functies uit

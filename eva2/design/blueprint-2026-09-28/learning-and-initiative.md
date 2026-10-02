@@ -1,5 +1,22 @@
 # Learning, personal development and useful initiative
 
+## Owner priority amendment — 2 October 2026
+
+Programming and useful autonomous contributions are central product outcomes, not
+an optional follow-up after voice. The existing workboard's L3.2/L3.3 covers the
+first complete programming outcome; I1/I2 then use the same execution capability
+for self-chosen work and general observation/automation requests. Preserve accepted
+L1/L2 outcomes. A prepared patch, restricted JSON procedure or Codex-assisted release
+is not evidence of general autonomous software development.
+
+Verify/reuse the actually admitted programming workspace and connect missing execution,
+independent review, managed application and result handoffs. Do not introduce a second
+agent loop or fixed feature for each owner example. Personality, family knowledge,
+humor and initiative accompany actual work. Financial contributions include useful
+work and opportunity discovery within the existing mandate, not only paper trading;
+actual costs and outcomes must remain distinguishable from projected profit.
+The workboard retains all existing tasks and records this distinction explicitly.
+
 Status: bounded design, 28 September 2026; source basis `e94f384551d78b8b7ae158d8688cd3a75fa81cda`.
 No implementation, installation, model trial, measured advantage or novelty claim.
 This document supplies the learning/initiative part of the complete family product; no company plan or business-development track.

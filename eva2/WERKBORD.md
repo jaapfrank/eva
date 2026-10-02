@@ -1,6 +1,49 @@
 # EVA2 werkbord
 
-## 2 oktober: autonome technische goaltekst gereed voor activering
+## 2 oktober: Eva zelf laten bouwen en bijdragen wordt de hoofdprioriteit
+
+**Eerstvolgende bestaande uitkomst: L3.2/L3.3.** Eva moet vanuit een gewone
+opdracht zelf een relevante wijziging onderzoeken, programmeren, uitvoeren,
+onafhankelijk laten beoordelen, toepassen en op de geïnstalleerde versie controleren.
+Codex sluit alleen de ontbrekende algemene mogelijkheden en overdrachten aan.
+Spraak is ondersteunend; geen voorafgaande speakerproef voor deze uitkomst.
+
+Alle **24 bestaande opdrachten / 44 kleine taken** zijn op verantwoordelijkheid
+nagekeken. Per opdracht staat de verdeling in `responsibilityReview`; bij alle
+28 open kleine taken staat de concrete volgende stap in het bestaande dashboard.
+Afgeronde taken, oorspronkelijke eindvoorwaarden en acceptaties zijn behouden.
+
+| Onderdeel | Codex moet aansluiten/afronden | Eva moet zelf doen |
+|---|---|---|
+| L3 programmeren en verbeteren | Werkelijk toegelaten programmeerwerkruimte vaststellen/hergebruiken; ontbrekende uitvoering, onafhankelijke beoordeling en beheerde toepassing verbinden | Oorzaak onderzoeken, geschikte oplossing kiezen, code maken, uitvoeren, controleren, toepassen en terugmelden |
+| T2/T3 huis, diensten en browser | Algemene API-/browserovergangen en overnemen/stoppen | Gewone opdrachten afmaken en automatiseringen zelf maken/wijzigen |
+| I1/I2 initiatief en waarneming | Bestaande initiatief-, bron- en uitvoerroute samen laten werken | Zelf nuttige bijdragen kiezen, onderzoek/werk uitvoeren en passende automatisering maken |
+| M3 persoonlijkheid | Concrete statische reacties gericht verbeteren in de gedeelde kern | Warmte, humor, nieuwsgierigheid, gezinskennis en eigen oordeel laten merken |
+| C3/C4 spraak | Bestaande algemene aansluitingen en echte audiofouten; ondersteunende volgorde | Dezelfde Eva-functies via spraak gebruiken; “regel voice” is een voorbeeld van een eigen opdracht |
+| O1/P/F installatie en afronding | Modulekeuze, samenhangend product en onafhankelijke vergelijking | Beschikbare beheermogelijkheden gebruiken; gezin beoordeelt echte waarde |
+| Al afgerond | B0, C2, M1/M2, T1/T4, L1/L2 en O2 binnen bestaande scope behouden | Werkende basis gebruiken, niet opnieuw laten bouwen |
+
+**Concreet gevonden grens:** de huidige eigen-componentroute laat Eva bron lezen,
+een beperkte wijziging voorstellen en een gemeten pakket bewaren, maar stopt vóór
+installatie. De SHA-verbetering van 71/90 naar 90/90 is met Codex-hulp ingevoerd.
+De bronbindingen bewijzen geen algemene programmeerwerkruimte; een uitsluitend
+dynamisch geregistreerde MCP-uitvoerder is nog onbekend. Die beschikbaarheid wordt
+als eerste gericht vastgesteld, voordat een nieuwe uitvoerder wordt gebouwd.
+Bestaande operatorimport, release, procedureleren en achtergrondwerk worden hergebruikt.
+Een kleine componentwijziging bewijst op zichzelf nog geen algemene programmeerkunde.
+
+Geld verdienen is een mogelijke zelfgekozen bijdrage binnen I1: kansen onderzoeken,
+passend werk doen en werkelijke opbrengst/kosten volgen binnen het bestaande mandaat.
+Geen winstbelofte; geen ingebouwde cryptostrategie. Nieuwe financiële verplichtingen
+zijn niet automatisch toegestaan door deze visie.
+
+**Stand: 16/44 kleine taken, 2/9 grote onderdelen.** Deze plancorrectie is geen
+productoplevering. De broncontrole gebruikte bestaande code en bewijs, geen nieuwe
+Eva-modelproef of installatie. Het app-goal is nog gepauzeerd; geen productbouwwerker
+wordt als actief weergegeven. Hierna volgen T2 en I1/I2/T3 op hun echte afhankelijkheden;
+herkenbaar gedrag M3 hoort bij de uitkomsten. De volledige eindscope blijft behouden.
+
+## Eerdere voorbereiding 2 oktober: technische goaltekst (prioriteit hierboven vervangt C3-eerst)
 
 De app-goal is gecontroleerd: gepauzeerd en met een oude C1/HTTP429-opdracht.
 De bestaande verwezen goaltekst is bijgewerkt; Jaap vervangt/hervat de app-goal.

@@ -6,6 +6,39 @@ not another workboard. Actual assignments and progress live only in
 [Architecture](architecture.md) · [Platform](platform-decision.md) ·
 [Learning/initiative](learning-and-initiative.md) · [Owner overview](../../EVA2_BOUWPLAN.md).
 
+## Owner priority amendment — 2 October 2026
+
+The primary outcome is a capable autonomous family member, including programming,
+self-improvement, useful initiative, personality and judgment. Voice is a supporting
+interface and an example of a feature Eva should eventually arrange herself.
+The numbered groups below retain scope, not a voice-first execution gate.
+Current assignments remain only in the canonical workboard.
+
+Review of all 24 slices and 44 small tasks separates Codex integration work from
+Eva's own execution. Each slice has a `responsibilityReview`; open small tasks carry
+visible next actions. Completed tasks, acceptance and original finish conditions are
+unchanged. Existing L1 procedure learning and L2 project continuation are retained.
+
+First outcome: L3.2/L3.3, an ordinary programming request leading to a useful Eva-authored,
+executed, independently assessed and installed improvement. The inspected component
+tools only support narrow edits and candidate preparation; the assisted SHA improvement
+required Codex import/install. No general programming executor is established by inspected
+source bindings. A dynamically admitted MCP executor remains unverified; inspect that
+specific availability before implementing or selecting another executor. Reuse the existing
+delegated task loop, tools, isolated execution, operator import and managed release.
+Connect missing handoffs rather than removing the runner's no-live-install instruction
+without a real implementation. An evaluator remains independent of candidate generation.
+One microfix or failed experiment does not finish general programming capability.
+
+After that outcome, proceed through T2 and I1/I2/T3 according to real dependencies;
+M3 behavior belongs throughout. I1 does not require whole-component voice or personality
+acceptance to deliver a permitted useful contribution. I2 needs the relevant general
+HA operations and result route, not a new dedicated camera/bin feature.
+Voice and family acceptance retain their own open criteria. Financial contribution is
+self-directed useful work/opportunity research within the existing mandate, not a promise
+of profit or automatic spending/trading authorization. This is a plan correction, not
+a newly delivered function or app-goal activation.
+
 ## 1. What is being delivered
 
 One installed Eva for this household: warm conversation and judgment; automatic
@@ -30,19 +63,18 @@ parallel only when they do not share files or require an unfinished contract.
 
 ```mermaid
 flowchart LR
-  B0["B0 · Existing capability and necessary change"] --> A["1 · Conversation and voice"]
-  A --> B["2 · Personal continuity"]
-  A --> C["3 · Complete work and control"]
-  B --> D["4 · Presence and initiative"]
-  C --> D
-  C --> E["5 · Learning and projects"]
-  D --> F["6 · Installable modular product"]
-  E --> F
-  F --> G["7 · Prepare comparative evidence"]
-  G --> H["8 · Freeze and verify candidate F1"]
-  H --> P["7 · Final comparison P2"]
-  H --> U["8 · Family use F2"]
-  P --> Z["Complete project decision"]
+  B[Existing accepted conversation, memory, tasks and learning] --> L[L3: Eva programs, checks and applies an improvement]
+  L --> T[T2/T3: general house and digital work]
+  T --> I[I1/I2: self-chosen contribution and automation]
+  M[M3: personality and judgment] --> F[Integrated candidate F1]
+  I --> F
+  V[C3/C4: supporting voice work] --> F
+  O[O1/O2: modular installation] --> F
+  R[R1: planned innovation comparison] --> F
+  P[P1: comparison access and criteria] --> P2[P2: final comparison]
+  F --> P2
+  F --> U[F2: family use and judgment]
+  P2 --> Z[Complete project decision]
   U --> Z
 ```
 
