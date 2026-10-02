@@ -1,6 +1,33 @@
 # EVA2 werkbord
 
-## Nu: L3 — Eva zelf een concrete verbetering laten maken
+## Laatste oplevering: T2.3/T2.4 — bestaande HA-uitvoering afgerond
+
+**19/44 kleine taken technisch klaar.** De oorspronkelijke taken T2.3 en T2.4
+zijn afgerond; geen nieuwe taken toegevoegd en geen eigenaaracceptatie verzonnen.
+Eva’s bestaande algemene HA-route heeft een automatisering werkelijk gemaakt,
+gewijzigd, volledig teruggelezen en correct teruggerapporteerd. Die code is behouden.
+De huidige kern/werker en de echte sessiebinding van beide speaker-adapters zijn
+gecontroleerd. Website, Telegram en speakers gebruiken dezelfde HA-mogelijkheden.
+Onafhankelijke review: GO voor deze twee technische eindvoorwaarden.
+
+**Al geïnstalleerd:** geen nieuwe code, herstart, herinstallatie of modelcall nodig.
+De controle omvatte echte geauthenticeerde speaker-sessies en hun uitvoeradres;
+geen nieuw gesproken/modelgestuurd HA-gesprek. Spraakkwaliteit en onderbreken blijven
+C3/C4. T2 blijft open voor T2.2 (gewone contextuele huisvraag) en T2.1 (eerdere
+onverklaarde timeout). Een geslaagde automatisering bewijst geen algemene foutloosheid.
+
+**Te gebruiken:** vraag in Telegram met `/eva2` in gewone taal om een automatisering
+te maken of te wijzigen. Eva gebruikt de algemene HA-route en leest de wijziging
+terug. Je hoeft de eerdere technische proef niet opnieuw te doen.
+
+[Bewijs](evidence/product/t2-current-shared-ha-20261002.json)
+· [Onafhankelijke review](reviews/t2-current-shared-ha-20261002.md).
+
+**Hierna, nog niet gestart:** T2.2, een gewone huisvraag via dezelfde tekstroute.
+L3/AIDE² blijven open; de afgesloten contextproef leverde geen verbeterkandidaat.
+Geen speculatief releaseplatform bouwen of mislukte proef als winst tellen.
+
+## Laatste resultaat binnen L3 — eigen code behouden voor later gebruik
 
 Het aangepaste goal is **actief**: persoon, geheugen, eigen initiatief en
 zelfstandig werk. De bestaande acceptaties en volledige eindvoorwaarden blijven.
@@ -44,8 +71,8 @@ Nul extra modelcalls, geen bronwijziging of herinstallatie. Onafhankelijke contr
 componentwijziging via de bestaande bronimport, build en beheerde updateroute toepassen
 en de geïnstalleerde uitkomst controleren. Geen nieuw document-/vaardigheidsplatform.
 De programma-CLI gebruikt bestandsargumenten; zij is geen JSON-stdin-procedure.
-L3 als geheel en de oorspronkelijke eindvoorwaarden blijven open; 17/44 kleine
-taken en eerdere acceptaties blijven behouden.
+L3 als geheel en de oorspronkelijke eindvoorwaarden blijven open; deze overdracht
+verhoogde de teller niet. Eerdere acceptaties blijven behouden.
 
 **AIDE-contextproef blijft afgesloten zonder kandidaat.** Deze algemene programmeer-
 controle heropent die proef niet. Zelfstandige gemeten zelfverbetering is nog niet

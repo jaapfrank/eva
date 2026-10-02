@@ -1,0 +1,531 @@
+{
+  "checkedAt": "2026-10-02T12:51:12.578793+00:00",
+  "baseCommit": "e566149d67301eed16af9883a33466c0861492d6",
+  "result": "existing_installed_function_and_current_bindings_verified",
+  "tasks": {
+    "T2.3": "technical_adapter_binding_completed",
+    "T2.4": "technical_general_automation_completed"
+  },
+  "userOutcome": "The existing general Home Assistant automation route can create, modify, read back and report a model-designed automation. Website, Telegram and both registered speakers use the shared HA capability; speech experience remains separate.",
+  "existingProof": [
+    "eva2/evidence/product/t2-ha-delivered-20260929.json",
+    "eva2/evidence/product/t2-ha-independent-20260929.json",
+    "eva2/evidence/product/shared-ha-general-installed-20260925.json",
+    "eva2/evidence/product/native-digital-continuity-20260925.json",
+    "eva2/evidence/product/c3-second-speaker-20261001.json",
+    "eva2/evidence/product/c3-audio-stutter-fix-20261001.json"
+  ],
+  "proofReuse": {
+    "automationReferenceCommit": "b9757cf695dba579c3bf1516fe6a8b0860afa83c",
+    "unchangedConnectors": [
+      "adapters/connectors/home_assistant_api.py",
+      "adapters/connectors/home_assistant_automations.py"
+    ],
+    "scope": "Only the generic HA API and automation connector are verified unchanged since the actual create/edit/readback. Other session/runtime modules have changed; current binding evidence is separate, not a claim that all historical code is unchanged."
+  },
+  "currentInstalledBindings": {
+    "eva2-managed-b-slot3-core": {
+      "privateRoutes": [
+        {
+          "route": "website",
+          "genericApiAvailable": true,
+          "automationInventoryAvailable": true
+        },
+        {
+          "route": "telegram",
+          "genericApiAvailable": true,
+          "automationInventoryAvailable": true
+        }
+      ],
+      "speakers": [
+        {
+          "satellite": "assist_satellite.home_assistant_voice_0a16e0_assist_satellite",
+          "device": "9e877ca00f57b1b75e0c2e3318abc704",
+          "source": "NativeHouseholdResponder.make_turn",
+          "audience": "household",
+          "genericApiAvailable": true,
+          "automationInventoryAvailable": true,
+          "foregroundAndBackgroundCapability": true
+        },
+        {
+          "satellite": "assist_satellite.home_assistant_voice_0a5035_assist_satellite",
+          "device": "f075b8ba2b711d74fff7d4756c620d64",
+          "source": "NativeHouseholdResponder.make_turn",
+          "audience": "household",
+          "genericApiAvailable": true,
+          "automationInventoryAvailable": true,
+          "foregroundAndBackgroundCapability": true
+        }
+      ],
+      "unknownActorDenied": true,
+      "configuration_sha256": "93638e8a6f0259e41540a018a6f3b0d7609c71aaf2339abec02a0116ee4914b1",
+      "execution_source_sha256": [
+        [
+          "bootstrap/delegated_digital_composition.py",
+          "1be79b051efc7beef434f34c2f55daa67c1d14c05764271a6c76c0007ed8e93d"
+        ],
+        [
+          "bootstrap/background_research.py",
+          "a71afbac8bab6fb505b50593d568c4552cb114080495df51acce9c8fa9442179"
+        ],
+        [
+          "adapters/model/research_tools.py",
+          "ae2b647eb8d498e10a5cbcabfd9c947013bf64304188167cb5278f85d1c6c9eb"
+        ],
+        [
+          "adapters/model/research_transport.py",
+          "e112e25d26a2c8582594bb162c5aef5c92b68f3cfd1c36708648967b75aee975"
+        ],
+        [
+          "bootstrap/household_digital_work.py",
+          "f1f8aba4ef988989d8b73326b2fa21e55bca1be737e3222e014e15fedda8b319"
+        ],
+        [
+          "bootstrap/household_work.py",
+          "385b0cab56ead7f079fafa20e0cabac7a106d6dc11f011a63c78355f647d9e80"
+        ],
+        [
+          "bootstrap/delegated_work_result_reader.py",
+          "7120f58a9894e85f9784b7fd0936aa0572482de4c46ed70a9783825936e2993b"
+        ],
+        [
+          "bootstrap/delegated_work_owner_service.py",
+          "a80386b92028bad9552232c3dac57f139046e08edb69df376f839399c851c43f"
+        ],
+        [
+          "adapters/postgres/delegated_work_actions.py",
+          "d6ad4521881d09e0f91f5edcefda3bbe4ec628e01f3d0db6992f974ffa203731"
+        ],
+        [
+          "bootstrap/delegated_digital_runner.py",
+          "1c13d982762c7f39d2256056f7223f19ee4745b82117069309f90e7c2c0cc2d5"
+        ],
+        [
+          "bootstrap/background_browser_context.py",
+          "b8474bf8fe32458102f24a4e96d2391d0e53b964855a0593bbf12bac2f745857"
+        ],
+        [
+          "adapters/connectors/browser_session.py",
+          "b2c251ed536ae5ce11d7a7f3fb3369dbdc59c7469b561b195af6105b406c7599"
+        ],
+        [
+          "adapters/postgres/background_work_progress.py",
+          "d1a5b28811d835e0cc6fb49bfa48841a93b6aff647e7ddeff33cd605517a2684"
+        ],
+        [
+          "adapters/postgres/work_corrections.py",
+          "0002ffa9f92387e39007a8843054378da1367d5f0ba9ef58477a203b257e70dd"
+        ],
+        [
+          "adapters/postgres/component_improvement_actions.py",
+          "15cf280f6dda09722c3aa04b93a9efcec79aef6cfc5405e9da6ffcad7f1cb027"
+        ],
+        [
+          "adapters/postgres/programming_actions.py",
+          "59d2638ab3a9f5406f0a93e0cc536a32cb48ee42dd01a3b9a12f82571a71fa61"
+        ],
+        [
+          "adapters/connectors/programming_workspace.py",
+          "9a15aca3618d91f3c72ae1b5c179b5d9513243f8543f8d77bc2e1d4a29298f76"
+        ],
+        [
+          "application/component_improvements.py",
+          "0c5cc1c88106161807eb450c8b0d89e6558c1d9089f151fd5a3e1fd52469b16e"
+        ],
+        [
+          "adapters/connectors/component_evaluation.py",
+          "4eb1f42a6865977b4f1af95825ee4c8497fa45c453858a1b01fbb527a14cc1f4"
+        ],
+        [
+          "adapters/connectors/procedure_execution.py",
+          "9099a5f4daec4329afb2f1fca44819b3c3dd628efcc1e3ef70bf0a390b372a02"
+        ],
+        [
+          "bootstrap/private_conversation_resources.py",
+          "2b2456f507fa1cabc4c3c30bd13ec60abe9a9776fc2fd2842971da633f478f65"
+        ],
+        [
+          "adapters/model/pydantic_conversation.py",
+          "5eb31eb57b0959d29919e5b3b7e053f588752ce9559433b16c47ef0ac5db2e23"
+        ],
+        [
+          "providers/mcp_autonomy.py",
+          "32c0dbddc8d3138be3d510c29ab9d7a0368ad951cdf08aae4df158a9c8e51a0d"
+        ],
+        [
+          "providers/mcp_discovery.py",
+          "b878b9552470c30b6b0e4967ecffb3b811ac930ea7ce2bba52e7011464c904f1"
+        ],
+        [
+          "providers/mcp_registration.py",
+          "2bc3206b581244370918a2430efce65fc614e70889ae7a2bd9966f0e6432d511"
+        ],
+        [
+          "providers/mcp_owner_authority.py",
+          "03c04e816f9f1c31b7b1bbf5cd1e6d7ece7aabcc806916973c86eed6671e64a3"
+        ],
+        [
+          "adapters/postgres/mcp_connector_registry.py",
+          "65be2012bec6dc4ca16a1c3c21fbe7fd9a88cce71b99cabf0be2f44ac53fa96f"
+        ],
+        [
+          "adapters/postgres/connector_results.py",
+          "56639febdc5f23a3506e850f67374a9c8e094be70c9077baa0bd96d8b534ddf4"
+        ],
+        [
+          "providers/procedure_reference_actions.py",
+          "33461c2b20e33d277da37aac3985930489f3222a62cd41f63589fa643ecb67d5"
+        ],
+        [
+          "adapters/postgres/procedure_reference_host.py",
+          "330b27bc6c54ddfffdbfc8135bf436267345d22cb1d51a564ff1bf4061ccf72e"
+        ],
+        [
+          "application/procedure_references.py",
+          "d089d5596ff9864042798bf54f9e862036eb882d2dcb38248bc13fe60f6de6f0"
+        ],
+        [
+          "adapters/postgres/memory_outbox.py",
+          "a5dd61f6f6ded20c1c9c02964c74b5d6ee0d0c50e04fe2788cd66b5bed98fa51"
+        ],
+        [
+          "adapters/postgres/external_conversation_tools.py",
+          "fcd9c2c4414309bfbfd39436122939868b2588199e3374d032a4b69918e95553"
+        ],
+        [
+          "adapters/connectors/mcp_gateway.py",
+          "8b9bf696ea30c89a2f510c8b2399b0fcbfea4fa7765d3ec482d01e2c02700a00"
+        ],
+        [
+          "providers/mcp_gateway.py",
+          "ea4fd29b3ba8faee60291f2881e4b6d2075a4eb8cfd18238a3210320ba6d86c6"
+        ],
+        [
+          "providers/home_assistant.py",
+          "070411d04444b66cb1dafb56e8203d4ae7f58cd594b319a34e869a3322968555"
+        ],
+        [
+          "adapters/connectors/home_assistant_api.py",
+          "cc0f97bef3b333d048a868dc94dd3ad6f6d747758e432b6e4d44a2f274152c9c"
+        ],
+        [
+          "adapters/connectors/home_assistant_admin.py",
+          "14735d3a9d76c28fb1cbef3902d853adf1b8d6f96a8496b01705283922ee847e"
+        ],
+        [
+          "adapters/connectors/home_assistant_automations.py",
+          "2cea1c363e0b3c04a442f090e89bec84289ecdaae5ee0db00ebec802904c86ba"
+        ]
+      ],
+      "sourceHashes": {
+        "providers/home_assistant.py": "070411d04444b66cb1dafb56e8203d4ae7f58cd594b319a34e869a3322968555",
+        "adapters/connectors/home_assistant_admin.py": "14735d3a9d76c28fb1cbef3902d853adf1b8d6f96a8496b01705283922ee847e",
+        "adapters/connectors/home_assistant_api.py": "cc0f97bef3b333d048a868dc94dd3ad6f6d747758e432b6e4d44a2f274152c9c",
+        "adapters/connectors/home_assistant_automations.py": "2cea1c363e0b3c04a442f090e89bec84289ecdaae5ee0db00ebec802904c86ba",
+        "bootstrap/household_voice.py": "34de6a37b91960598f7dc03878679096b452a74001a6f035b34665b64c42b0a3",
+        "bootstrap/household_digital_work.py": "f1f8aba4ef988989d8b73326b2fa21e55bca1be737e3222e014e15fedda8b319",
+        "bootstrap/household_work_composition.py": "5d8e928f31caa2fe37b5f99c98ea18d282251ce5451e06d9c2887c261e3c34e0",
+        "bootstrap/native_voice.py": "30dc2b242a3e0f90cdb2003ff52dd1287ef3ebadb968cdd28b5a4a802a04d02b",
+        "contracts/delegated_digital_work.py": "ada789a746420e33234d66f9f4b8f03ea270757bbff5da5a6d63bd65e218db51"
+      },
+      "modelCalls": 0,
+      "haRequests": 0
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "privateRoutes": [
+        {
+          "route": "website",
+          "genericApiAvailable": true,
+          "automationInventoryAvailable": true
+        },
+        {
+          "route": "telegram",
+          "genericApiAvailable": true,
+          "automationInventoryAvailable": true
+        }
+      ],
+      "speakers": [
+        {
+          "satellite": "assist_satellite.home_assistant_voice_0a16e0_assist_satellite",
+          "device": "9e877ca00f57b1b75e0c2e3318abc704",
+          "source": "NativeHouseholdResponder.make_turn",
+          "audience": "household",
+          "genericApiAvailable": true,
+          "automationInventoryAvailable": true,
+          "foregroundAndBackgroundCapability": true
+        },
+        {
+          "satellite": "assist_satellite.home_assistant_voice_0a5035_assist_satellite",
+          "device": "f075b8ba2b711d74fff7d4756c620d64",
+          "source": "NativeHouseholdResponder.make_turn",
+          "audience": "household",
+          "genericApiAvailable": true,
+          "automationInventoryAvailable": true,
+          "foregroundAndBackgroundCapability": true
+        }
+      ],
+      "unknownActorDenied": true,
+      "configuration_sha256": "93638e8a6f0259e41540a018a6f3b0d7609c71aaf2339abec02a0116ee4914b1",
+      "execution_source_sha256": [
+        [
+          "bootstrap/delegated_digital_composition.py",
+          "1be79b051efc7beef434f34c2f55daa67c1d14c05764271a6c76c0007ed8e93d"
+        ],
+        [
+          "bootstrap/background_research.py",
+          "a71afbac8bab6fb505b50593d568c4552cb114080495df51acce9c8fa9442179"
+        ],
+        [
+          "adapters/model/research_tools.py",
+          "ae2b647eb8d498e10a5cbcabfd9c947013bf64304188167cb5278f85d1c6c9eb"
+        ],
+        [
+          "adapters/model/research_transport.py",
+          "e112e25d26a2c8582594bb162c5aef5c92b68f3cfd1c36708648967b75aee975"
+        ],
+        [
+          "bootstrap/household_digital_work.py",
+          "f1f8aba4ef988989d8b73326b2fa21e55bca1be737e3222e014e15fedda8b319"
+        ],
+        [
+          "bootstrap/household_work.py",
+          "385b0cab56ead7f079fafa20e0cabac7a106d6dc11f011a63c78355f647d9e80"
+        ],
+        [
+          "bootstrap/delegated_work_result_reader.py",
+          "7120f58a9894e85f9784b7fd0936aa0572482de4c46ed70a9783825936e2993b"
+        ],
+        [
+          "bootstrap/delegated_work_owner_service.py",
+          "a80386b92028bad9552232c3dac57f139046e08edb69df376f839399c851c43f"
+        ],
+        [
+          "adapters/postgres/delegated_work_actions.py",
+          "d6ad4521881d09e0f91f5edcefda3bbe4ec628e01f3d0db6992f974ffa203731"
+        ],
+        [
+          "bootstrap/delegated_digital_runner.py",
+          "1c13d982762c7f39d2256056f7223f19ee4745b82117069309f90e7c2c0cc2d5"
+        ],
+        [
+          "bootstrap/background_browser_context.py",
+          "b8474bf8fe32458102f24a4e96d2391d0e53b964855a0593bbf12bac2f745857"
+        ],
+        [
+          "adapters/connectors/browser_session.py",
+          "b2c251ed536ae5ce11d7a7f3fb3369dbdc59c7469b561b195af6105b406c7599"
+        ],
+        [
+          "adapters/postgres/background_work_progress.py",
+          "d1a5b28811d835e0cc6fb49bfa48841a93b6aff647e7ddeff33cd605517a2684"
+        ],
+        [
+          "adapters/postgres/work_corrections.py",
+          "0002ffa9f92387e39007a8843054378da1367d5f0ba9ef58477a203b257e70dd"
+        ],
+        [
+          "adapters/postgres/component_improvement_actions.py",
+          "15cf280f6dda09722c3aa04b93a9efcec79aef6cfc5405e9da6ffcad7f1cb027"
+        ],
+        [
+          "adapters/postgres/programming_actions.py",
+          "59d2638ab3a9f5406f0a93e0cc536a32cb48ee42dd01a3b9a12f82571a71fa61"
+        ],
+        [
+          "adapters/connectors/programming_workspace.py",
+          "9a15aca3618d91f3c72ae1b5c179b5d9513243f8543f8d77bc2e1d4a29298f76"
+        ],
+        [
+          "application/component_improvements.py",
+          "0c5cc1c88106161807eb450c8b0d89e6558c1d9089f151fd5a3e1fd52469b16e"
+        ],
+        [
+          "adapters/connectors/component_evaluation.py",
+          "4eb1f42a6865977b4f1af95825ee4c8497fa45c453858a1b01fbb527a14cc1f4"
+        ],
+        [
+          "adapters/connectors/procedure_execution.py",
+          "9099a5f4daec4329afb2f1fca44819b3c3dd628efcc1e3ef70bf0a390b372a02"
+        ],
+        [
+          "bootstrap/private_conversation_resources.py",
+          "2b2456f507fa1cabc4c3c30bd13ec60abe9a9776fc2fd2842971da633f478f65"
+        ],
+        [
+          "adapters/model/pydantic_conversation.py",
+          "5eb31eb57b0959d29919e5b3b7e053f588752ce9559433b16c47ef0ac5db2e23"
+        ],
+        [
+          "providers/mcp_autonomy.py",
+          "32c0dbddc8d3138be3d510c29ab9d7a0368ad951cdf08aae4df158a9c8e51a0d"
+        ],
+        [
+          "providers/mcp_discovery.py",
+          "b878b9552470c30b6b0e4967ecffb3b811ac930ea7ce2bba52e7011464c904f1"
+        ],
+        [
+          "providers/mcp_registration.py",
+          "2bc3206b581244370918a2430efce65fc614e70889ae7a2bd9966f0e6432d511"
+        ],
+        [
+          "providers/mcp_owner_authority.py",
+          "03c04e816f9f1c31b7b1bbf5cd1e6d7ece7aabcc806916973c86eed6671e64a3"
+        ],
+        [
+          "adapters/postgres/mcp_connector_registry.py",
+          "65be2012bec6dc4ca16a1c3c21fbe7fd9a88cce71b99cabf0be2f44ac53fa96f"
+        ],
+        [
+          "adapters/postgres/connector_results.py",
+          "56639febdc5f23a3506e850f67374a9c8e094be70c9077baa0bd96d8b534ddf4"
+        ],
+        [
+          "providers/procedure_reference_actions.py",
+          "33461c2b20e33d277da37aac3985930489f3222a62cd41f63589fa643ecb67d5"
+        ],
+        [
+          "adapters/postgres/procedure_reference_host.py",
+          "330b27bc6c54ddfffdbfc8135bf436267345d22cb1d51a564ff1bf4061ccf72e"
+        ],
+        [
+          "application/procedure_references.py",
+          "d089d5596ff9864042798bf54f9e862036eb882d2dcb38248bc13fe60f6de6f0"
+        ],
+        [
+          "adapters/postgres/memory_outbox.py",
+          "a5dd61f6f6ded20c1c9c02964c74b5d6ee0d0c50e04fe2788cd66b5bed98fa51"
+        ],
+        [
+          "adapters/postgres/external_conversation_tools.py",
+          "fcd9c2c4414309bfbfd39436122939868b2588199e3374d032a4b69918e95553"
+        ],
+        [
+          "adapters/connectors/mcp_gateway.py",
+          "8b9bf696ea30c89a2f510c8b2399b0fcbfea4fa7765d3ec482d01e2c02700a00"
+        ],
+        [
+          "providers/mcp_gateway.py",
+          "ea4fd29b3ba8faee60291f2881e4b6d2075a4eb8cfd18238a3210320ba6d86c6"
+        ],
+        [
+          "providers/home_assistant.py",
+          "070411d04444b66cb1dafb56e8203d4ae7f58cd594b319a34e869a3322968555"
+        ],
+        [
+          "adapters/connectors/home_assistant_api.py",
+          "cc0f97bef3b333d048a868dc94dd3ad6f6d747758e432b6e4d44a2f274152c9c"
+        ],
+        [
+          "adapters/connectors/home_assistant_admin.py",
+          "14735d3a9d76c28fb1cbef3902d853adf1b8d6f96a8496b01705283922ee847e"
+        ],
+        [
+          "adapters/connectors/home_assistant_automations.py",
+          "2cea1c363e0b3c04a442f090e89bec84289ecdaae5ee0db00ebec802904c86ba"
+        ]
+      ],
+      "sourceHashes": {
+        "providers/home_assistant.py": "070411d04444b66cb1dafb56e8203d4ae7f58cd594b319a34e869a3322968555",
+        "adapters/connectors/home_assistant_admin.py": "14735d3a9d76c28fb1cbef3902d853adf1b8d6f96a8496b01705283922ee847e",
+        "adapters/connectors/home_assistant_api.py": "cc0f97bef3b333d048a868dc94dd3ad6f6d747758e432b6e4d44a2f274152c9c",
+        "adapters/connectors/home_assistant_automations.py": "2cea1c363e0b3c04a442f090e89bec84289ecdaae5ee0db00ebec802904c86ba",
+        "bootstrap/household_voice.py": "34de6a37b91960598f7dc03878679096b452a74001a6f035b34665b64c42b0a3",
+        "bootstrap/household_digital_work.py": "f1f8aba4ef988989d8b73326b2fa21e55bca1be737e3222e014e15fedda8b319",
+        "bootstrap/household_work_composition.py": "5d8e928f31caa2fe37b5f99c98ea18d282251ce5451e06d9c2887c261e3c34e0",
+        "bootstrap/native_voice.py": "30dc2b242a3e0f90cdb2003ff52dd1287ef3ebadb968cdd28b5a4a802a04d02b",
+        "contracts/delegated_digital_work.py": "ada789a746420e33234d66f9f4b8f03ea270757bbff5da5a6d63bd65e218db51"
+      },
+      "modelCalls": 0,
+      "haRequests": 0
+    }
+  },
+  "actualSpeakerSessionBindings": {
+    "speakers": [
+      {
+        "satellite": "assist_satellite.home_assistant_voice_0a16e0_assist_satellite",
+        "device": "9e877ca00f57b1b75e0c2e3318abc704",
+        "sameCoreUrl": "http://127.0.0.1:44710",
+        "realReady": true,
+        "realWorkSessionOpened": true,
+        "realWorkSessionClosed": true,
+        "requestPath": "/internal/v1/ha-voice/session/respond",
+        "fixedDeviceBinding": true,
+        "textUnchanged": true,
+        "requestDispatched": false
+      },
+      {
+        "satellite": "assist_satellite.home_assistant_voice_0a5035_assist_satellite",
+        "device": "f075b8ba2b711d74fff7d4756c620d64",
+        "sameCoreUrl": "http://127.0.0.1:44710",
+        "realReady": true,
+        "realWorkSessionOpened": true,
+        "realWorkSessionClosed": true,
+        "requestPath": "/internal/v1/ha-voice/session/respond",
+        "fixedDeviceBinding": true,
+        "textUnchanged": true,
+        "requestDispatched": false
+      }
+    ],
+    "sourceHashes": {
+      "/app/speaker/speaker_livekit_service.py": "bdae93ffb967257006e75a45aedbb3a810286909e7c9ac6e035e22f494128b37",
+      "/app/speaker/speaker_livekit_session.py": "fe0aabae006e3c8cf248947c6917915acc97f81bf1f49b4f416a96ddd6b83d24",
+      "/app/eva/voice_service/agent.py": "2de5e47c993bd2094fcf735e0b3c71e18cda9199e8b5c2debb3864ced6194c53"
+    },
+    "modelCalls": 0,
+    "haActions": 0,
+    "audioCalls": 0,
+    "limits": "Authenticated session readiness and transport envelope binding; no model turn or physical speaker input/output."
+  },
+  "installedServices": [
+    {
+      "name": "eva2-managed-b-slot3-core",
+      "image": "sha256:f7f25568e92de065c31a51c60c9930fc742eae539710833ca02e203dfbc906f4",
+      "health": "healthy"
+    },
+    {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "image": "sha256:550cc126926e217ee957a80c227c320e7b30ea7ea0885d9bb1c423306084e003",
+      "health": "healthy"
+    },
+    {
+      "name": "eva2-household-speaker-1",
+      "image": "sha256:b8001798c65f79e44b5a659ea7295103a633f63f03efc39106114bcc8208894f",
+      "health": "running"
+    }
+  ],
+  "independentReview": {
+    "reviewer": "/root/l3_application_seam",
+    "decision": "GO for original T2.3 and T2.4 technical criteria",
+    "path": "eva2/reviews/t2-current-shared-ha-20261002.md"
+  },
+  "limitations": [
+    "Speaker checks made actual authenticated ready/open/close calls and inspected the outgoing response envelope. The model/respond request was not dispatched.",
+    "The direct NativeHouseholdResponder check exercised make_turn fallback (work_server=None) with the installed audience gate. Actual speaker-client session open/close supplies separate live binding evidence; this is not a new full model turn.",
+    "Physical audio, barge-in, intelligibility and household acceptance remain C3/C4/M3 work.",
+    "T2.2 ordinary contextual device/service action and T2.1 historical timeout cause remain open. One successful automation does not prove general reliability.",
+    "Two local proof-harness corrections were necessary: missing conversation_id and missing admit_turn_audience on the initially empty runtime. No production mutation or model/HA dispatch occurred for those failures."
+  ],
+  "usage": {
+    "newEvaModelCalls": 0,
+    "newEvaModelTokens": 0,
+    "newHaActions": 0,
+    "newAudioCalls": 0,
+    "temporarySpeakerSessionsOpenedAndClosed": 2,
+    "codexDevelopmentCredits": null,
+    "costNote": "Earlier actual automation usage remains in its original evidence; this check does not erase it."
+  },
+  "installation": {
+    "required": false,
+    "runtimeChanged": false,
+    "status": "already_installed_verified",
+    "restarts": 0
+  },
+  "ownerAccepted": false,
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/t2-current-shared-ha-20261002",
+  "artifactHashes": {
+    "current-bindings.py": "e406e47756ed5a3019d4c9ccab7a6dc97530999f351b3e099146b7e488896a78",
+    "current-bindings.json": "672592963b4421c992a48060249ce19c749ad19513aa49c778a83fc62f71b2d7",
+    "speaker-binding.py": "2ff472fc297adfaa15256cc395a7f8afa2f259beae8bd578f5453ff70ae684b6",
+    "speaker-binding.log": "b0da38f51b489e3b3a502bf9fa93fd6a789469d2a13c20b12fd38295cb8fde48"
+  }
+}

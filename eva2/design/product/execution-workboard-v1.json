@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-02T12:25:10.818972+00:00",
+        "checkedAt": "2026-10-02T12:51:12.578793+00:00",
         "deliveries": [
+          {
+            "title": "T2.3/T2.4 — gedeelde HA-automatisering en speaker-aansluiting bevestigd",
+            "date": "2 oktober",
+            "state": "installed",
+            "result": "Bestaand echt maak-/wijzig-/terugleesresultaat hergebruikt. Huidige kern/werker en beide echte speakersessies aan dezelfde algemene HA-route bevestigd; onafhankelijke review GO. Geen nieuwe code, herinstallatie of modelcall nodig.",
+            "remaining": "Gewone huisvraag T2.2 en eerdere onverklaarde timeout T2.1 blijven open. Geen fysieke spraakacceptatie of algemene betrouwbaarheidsclaim. 19/44 kleine taken technisch klaar; grote productafronding niet gewijzigd.",
+            "source": "eva2/evidence/product/t2-current-shared-ha-20261002.json"
+          },
           {
             "title": "Eigen programma bewaard voor later hergebruik · 2 oktober",
             "date": "2026-10-02",
@@ -3347,14 +3355,14 @@
           }
         ],
         "now": {
-          "title": "L3: eigen code bewaard en later terugvindbaar",
-          "state": "in_progress",
-          "detail": "Het door Eva geschreven en onafhankelijk gecontroleerde programma staat nu via de bestaande documentroute in haar werkwijzenbibliotheek. Een later gesprek vindt exact dezelfde code terug. Bewaren is door Codex uitgevoerd, zonder modelcalls; dit is nog geen autonome zelfverbetering. Onafhankelijke controle GO. De volgende toepassingsaansluiting is nog niet gebouwd.",
+          "title": "T2.3 en T2.4 technisch afgerond",
+          "state": "completed",
+          "detail": "Algemene automatiseringen maken/wijzigen en de gedeelde speaker-aansluiting zijn op de bestaande installatie bevestigd. De volgende gewone huisvraag is nog niet gestart.",
           "owner": "Codex /root"
         },
         "next": {
-          "title": "Onafhankelijk goedgekeurde wijziging werkelijk toepassen",
-          "detail": "De bestaande kandidaat-, bronimport- en beheerde updateroutes bestaan. Nog te verbinden: een exact onafhankelijk goedgekeurd pakket naar bouwen, toepassen en geïnstalleerde controle. Eva mag haar eigen kandidaat niet goedkeuren. Geen nieuw platform of heropening van de afgesloten AIDE-contextproef."
+          "title": "T2.2: gewone huisvraag zelfstandig uitvoeren",
+          "detail": "Eva kiest zelf passende apparaten/diensten uit context en controleert het echte resultaat. Gebruik de bestaande algemene route; geen vaste kamer-/apparaatregel. L3/AIDE² blijven zichtbaar open."
         },
         "ownerAction": {
           "title": "Eén expliciete gegevenskeuze",
@@ -3364,9 +3372,9 @@
           "expected": "Deze keuze betreft de echte gegevensproef; geen privégesprekken of persoonlijke agenda in de proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-02T12:25:10.818972+00:00"
+        "reviewedAt": "2026-10-02T12:51:12.578793+00:00"
       },
-      "reviewedAt": "2026-10-01T15:52:21.323198+00:00"
+      "reviewedAt": "2026-10-02T12:51:12.578793+00:00"
     },
     "pendingTechnicalReview": {
       "reason": "Historische CO-003-kandidaat van 7 september: het oorspronkelijke bewijs bevat geen commitgebonden definitieve review of livegang. Deze oude kaart wordt daarom niet alsnog afgevinkt. De gebruikersuitkomst is later opgenomen in CO-004/CO-005, live opgeleverd en door Jaap via GE-02 geaccepteerd op 12 september. Het gekozen geheugenonderdeel blijft afgesloten; deze historische registratie is geen actuele bouw- of acceptatieblokkade.",
@@ -14499,18 +14507,19 @@
             "replacementJustified": false
           },
           "activeWorker": null,
-          "baseCommit": "87c006c2",
+          "baseCommit": "e566149d67301eed16af9883a33466c0861492d6",
           "owner": "/root",
           "effortNotice": "One task up to existing5min deadline, then inspection/review/cleanup; approximately15min active work.",
-          "latestEvidence": "eva2/evidence/product/t2-ha-delivered-20260929.json",
+          "latestEvidence": "eva2/evidence/product/t2-current-shared-ha-20261002.json",
           "assignment": {
-            "stage": "bounded_automation_completed_without_resume",
+            "stage": "automation_and_speaker_binding_completed",
             "outcome": "Complete a general HA automation create/edit/readback task without coordinator resume.",
             "scope": "3files: delegated_digital_composition.py, pydantic_conversation.py, openai_codex_provider.py; coordinator owns exact overlay and evidence.",
             "doneWhen": "Create/edit/readback/finalreply without manualresume; inspect and remove only trial object.",
-            "ownership": "Coordinator delivery record; independent review complete"
+            "ownership": "Coordinator evidence; independent review GO",
+            "result": "T2.3 and T2.4 completed; parent remains open for T2.1/T2.2."
           },
-          "nextAction": "Algemene huisbediening via chat of Telegram beoordelen; bestaand HA-bewijs hergebruiken. Spraakkwaliteit en onderbreken horen bij C3/C4.",
+          "nextAction": "T2.2: een gewone huisvraag via de gedeelde tekstroute uitvoeren en het echte resultaat controleren. T2.1 blijft alleen voor een concrete verklaarbare uitvoerfout open; geen herhaling om een timeout op te zoeken.",
           "dashboardComponent": "tools",
           "remainingTasks": [
             {
@@ -14568,43 +14577,80 @@
             {
               "id": "T2.3",
               "title": "Dezelfde huisbediening op beide speaker-ingangen aansluiten",
-              "status": "planned",
+              "status": "completed",
               "kind": "praktijk",
               "doneWhen": "Beide speaker-adapters geven de huisvraag door aan dezelfde bewezen HA-kern met de juiste huishoudbinding; geen tweede opdrachtinterpretatie of volledige dubbele HA-testreeks.",
               "owner": "Codex",
-              "nextAction": "Codex controleert uitsluitend de binding van de bestaande speaker-adapters aan dezelfde HA-kern. Eva gebruikt dezelfde algemene uitvoering; T2.2/T2.4 wachten niet op fysieke spraakbeoordeling.",
+              "nextAction": "Technisch afgerond op bestaande geïnstalleerde uitvoering. Gewone huisvraag en historische timeout blijven T2.2/T2.1; hoorbaarheid en onderbreken blijven C3/C4.",
               "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Codex controleert de aansluiting. Geen volledige huisfunctietest opnieuw nodig via beide speakers; fysieke audio blijft bij C3/C4.",
+                "availableNow": true,
+                "readyWhen": "De algemene HA-automatiseringsroute is geïnstalleerd; geen verplichte herhaling van de bestaande geslaagde proef.",
                 "steps": [
-                  "Alleen als een hoorbare aansluitingsproef nodig blijkt: stel één gewone huisvraag op de betreffende speaker en meld of vraag/antwoord goed doorkomen."
+                  "Vraag in Telegram met /eva2 in gewone taal om een automatisering te maken of aan te passen. Eva ontdekt de bestaande HA-mogelijkheden en leest de wijziging terug."
                 ],
                 "expected": "De speaker gebruikt dezelfde HA-kern; de volledige slimme uitvoering is niet per kanaal opnieuw gebouwd of getest.",
-                "reportBack": "Vraag, antwoord en of de gewenste handeling echt gebeurde.",
+                "reportBack": "Alleen bij een afwijking: de vraag, Eva’s antwoord en wat in HA werkelijk gebeurde.",
                 "blocksIndependentWork": false
-              }
+              },
+              "checkedAt": "2026-10-02T12:51:12.578793+00:00",
+              "assignment": {
+                "owner": "/root",
+                "baseCommit": "e566149d67301eed16af9883a33466c0861492d6",
+                "stage": "completed_existing_installed_route_verified",
+                "existing": "Independent actual automation create/edit/full readback29September and general four-route admission25September.",
+                "gap": "Confirm current installed shared adapter bindings; do not repeat model or HA mutations for already proven behavior.",
+                "files": [
+                  "eva2/evidence/product/t2-current-shared-ha-20261002.json",
+                  "existing workboard and WERKBORD"
+                ],
+                "estimate": "Current installed source/configuration checks plus one bundled independent review; zero new model calls or household mutations planned. Credits unknown.",
+                "doneWhen": "Beide speaker-adapters geven de huisvraag door aan dezelfde bewezen HA-kern met de juiste huishoudbinding; geen tweede opdrachtinterpretatie of volledige dubbele HA-testreeks.",
+                "activeWorkers": [],
+                "result": "Independent GO; current authenticated adapter/session binding and retained actual shared-core HA create/edit/readback proof. No new runtime installation or model call."
+              },
+              "completedAt": "2026-10-02T12:51:12.578793+00:00",
+              "blocker": null,
+              "latestEvidence": "eva2/evidence/product/t2-current-shared-ha-20261002.json"
             },
             {
               "id": "T2.4",
               "title": "Automatisering via gedeelde kern maken en wijzigen",
-              "status": "planned",
+              "status": "completed",
               "kind": "aansluiten",
               "doneWhen": "Via de gedeelde algemene HA-route maken, wijzigen, teruglezen en gecontroleerd terugmelden; geldig bestaand websitebewijs behouden en chat/Telegram/spraak aansluiten op dezelfde uitvoering.",
               "owner": "Codex",
-              "nextAction": "Eva ontwerpt, maakt, wijzigt en controleert de automatisering zelf met de algemene HA-tools. Codex hergebruikt de bewezen maak-/wijzigroute en repareert alleen ontbrekende overdracht; geen script voor één gebruikersvoorbeeld.",
+              "nextAction": "Technisch afgerond op bestaande geïnstalleerde uitvoering. Gewone huisvraag en historische timeout blijven T2.2/T2.1; hoorbaarheid en onderbreken blijven C3/C4.",
               "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Codex controleert welke aansluitingsstap nog ontbreekt. Een speakerproef is geen voorwaarde om de algemene automatiseringsfunctie af te ronden.",
+                "availableNow": true,
+                "readyWhen": "De algemene HA-automatiseringsroute is geïnstalleerd; geen verplichte herhaling van de bestaande geslaagde proef.",
                 "steps": [
-                  "Als nog een gebruiksproef nodig is: vraag in chat of met /eva2 in Telegram een uitgeschakelde testautomatisering te maken.",
-                  "Vraag één wijziging en laat Eva de bewaarde automatisering teruglezen. Bestaand geldig bewijs hoeft niet opnieuw."
+                  "Vraag in Telegram met /eva2 in gewone taal om een automatisering te maken of aan te passen. Eva ontdekt de bestaande HA-mogelijkheden en leest de wijziging terug."
                 ],
                 "expected": "Dezelfde automatisering wordt werkelijk gemaakt, gewijzigd en gecontroleerd; de invoeringang verandert de uitvoering niet.",
-                "reportBack": "Of de automatisering en wijziging in HA aanwezig zijn.",
+                "reportBack": "Alleen bij een afwijking: de vraag, Eva’s antwoord en wat in HA werkelijk gebeurde.",
                 "blocksIndependentWork": false
-              }
+              },
+              "checkedAt": "2026-10-02T12:51:12.578793+00:00",
+              "assignment": {
+                "owner": "/root",
+                "baseCommit": "e566149d67301eed16af9883a33466c0861492d6",
+                "stage": "completed_existing_installed_route_verified",
+                "existing": "Independent actual automation create/edit/full readback29September and general four-route admission25September.",
+                "gap": "Confirm current installed shared adapter bindings; do not repeat model or HA mutations for already proven behavior.",
+                "files": [
+                  "eva2/evidence/product/t2-current-shared-ha-20261002.json",
+                  "existing workboard and WERKBORD"
+                ],
+                "estimate": "Current installed source/configuration checks plus one bundled independent review; zero new model calls or household mutations planned. Credits unknown.",
+                "doneWhen": "Via de gedeelde algemene HA-route maken, wijzigen, teruglezen en gecontroleerd terugmelden; geldig bestaand websitebewijs behouden en chat/Telegram/spraak aansluiten op dezelfde uitvoering.",
+                "activeWorkers": [],
+                "result": "Independent GO; current authenticated adapter/session binding and retained actual shared-core HA create/edit/readback proof. No new runtime installation or model call."
+              },
+              "completedAt": "2026-10-02T12:51:12.578793+00:00",
+              "blocker": null,
+              "latestEvidence": "eva2/evidence/product/t2-current-shared-ha-20261002.json"
             }
           ],
           "previousDependsOn": [
@@ -15377,7 +15423,7 @@
               "checkedAt": "2026-10-02T12:25:10.818972+00:00",
               "ownerActionRequired": false,
               "remaining": "Eigen programma uitgevoerd, onafhankelijk gecontroleerd en met Codex-hulp in bestaande werkwijzenbibliotheek bewaard. Zelfstandige live-componenttoepassing en AIDE-contextverbetering blijven onbewezen.",
-              "nextAction": "De bestaande kandidaat-, bronimport- en beheerde updateroutes bestaan. Nog te verbinden: een exact onafhankelijk goedgekeurd pakket naar bouwen, toepassen en geïnstalleerde controle. Eva mag haar eigen kandidaat niet goedkeuren. Geen nieuw platform of heropening van de afgesloten AIDE-contextproef.",
+              "nextAction": "Bij een echte onafhankelijke winst de ontbrekende review→build→beheerste toepassing aansluiten. Bewaar exact de bestaande criteria. Zonder geldige kandidaat geen speculatief releaseplatform; bestaande T2-gebruikersuitkomst gaat nu verder.",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
@@ -15388,7 +15434,7 @@
                 "baseCommit": "1bce50c76bb9d1e3ab8b4f38a1d97e4247129e70",
                 "owner": "/root",
                 "activeWorkers": [],
-                "stage": "program_preserved_application_handoff_open",
+                "stage": "no_promotable_candidate_application_gap_recorded",
                 "outcome": "Eva completes a useful ordinary programming request through her own shared execution route, with independently assessed result and actual application.",
                 "existing": "Delegated tasks/MCP discovery, document and learned procedure tools, component proposals and managed operator release.",
                 "gap": "Existing document/procedure path is sufficient and exact program is preserved. Missing live-component handoff: independently accepted exact review to existing build, managed application and installed verification. No valid AIDE context candidate exists.",
