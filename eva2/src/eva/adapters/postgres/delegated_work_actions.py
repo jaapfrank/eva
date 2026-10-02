@@ -197,9 +197,13 @@ class PostgresDelegatedWorkActions:
                 + canonical_json_bytes({"active": selected, "recent_outcomes": recent,
                                         "limited": bool(limited)}).decode("utf-8")
                 + " Recent betekent bijgewerkt in de laatste 24 uur, niet noodzakelijk zojuist afgeleverd. "
-                "Gebruik bij een vervolgvraag het echte work_id met get_delegated_work om het resultaat "
-                "of de fout te lezen voordat je de inhoud bespreekt. Start hetzelfde werk niet opnieuw "
-                "alleen omdat het niet meer loopt. Meld deze lijst niet ongevraagd bij iedere begroeting. "
+                "For questions about an earlier result or failure, read its real work_id with "
+                "get_delegated_work before discussing the content; do not start new work. "
+                "A current explicit request to perform an action is new work even if its wording "
+                "matches a completed earlier request. Carry it out with current observations through "
+                "the offered tools: an old result proves only that earlier execution. Do not duplicate "
+                "work already admitted for the same turn, or restart uncertain, stopped or failed "
+                "work without an explicit request. Do not report this list at every greeting. "
                 "Stoppen vereist een echte toolaanroep; ontbrekend werk is op te vragen met list_delegated_work.")
         initiative_reader = getattr(self._service, "own_initiative_metadata", None)
         if callable(initiative_reader):

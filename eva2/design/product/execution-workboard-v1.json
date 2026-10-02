@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-02T08:43:26.882047+00:00",
+  "lastUpdated": "2026-10-02T13:51:01.308094+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-02T13:13:35.967432+00:00",
+        "checkedAt": "2026-10-02T13:51:01.308094+00:00",
         "deliveries": [
+          {
+            "title": "Huisbediening: minder modelrondes en correcte nieuwe uitvoering",
+            "date": "2 oktober",
+            "state": "installed",
+            "result": "Dezelfde gewone kamervraag daadwerkelijk uitgevoerd, gezamenlijk uitgelezen en volledig teruggezet. 108 onafhankelijke eindtoestanden gelijk; 26 gerichte controles en onafhankelijke eindreview GO. Kern/werker geïnstalleerd en gezond.",
+            "remaining": "Eén proef: 173→148s en 216.145→114.162 inputtokens. Ontvangst/ eerste actie later en outputtokens hoger; geen algemene kosten-/snelheidsgarantie. Eerdere mislukte intake apart zichtbaar. T2.1 en fysieke spraak blijven open; teller 20/44.",
+            "source": "eva2/evidence/product/t2-grouped-reads-installed-20261002.json"
+          },
           {
             "title": "T2.2 — Eva voert een gewone kamervraag zelf uit",
             "date": "2 oktober",
@@ -3363,14 +3371,14 @@
           }
         ],
         "now": {
-          "title": "T2.2: gewone huisvraag technisch afgerond",
-          "state": "completed",
-          "detail": "Eva koos zelf drie woonkamerlampen, schakelde ze in, las de toestand terug en herstelde alles. Onafhankelijke review GO. Nog traag: circa173s en216.145 invoertokens; geen snelheidswinstclaim.",
+          "title": "T2: verbeterde huisbediening opgeleverd",
+          "state": "installed",
+          "detail": "Nieuwe kamervraag uitgevoerd en volledig teruggezet. Onafhankelijke eindreview GO. 17→12 modelantwoorden, 216.145→114.162 inputtokens, 173→148 seconden in één proef; ontvangst en eerste lampactie waren juist later. 20/44 taken blijft gelijk.",
           "owner": "Codex /root"
         },
         "next": {
-          "title": "Dezelfde HA-uitvoering minder omslachtig maken",
-          "detail": "De bestaande API kan meerdere relevante toestanden samen uitlezen. Onderzoek de aangetoonde9afzonderlijke leesrondes; behoud echte controle en passende modelkwaliteit. Vervolg nog niet gestart; geen nieuwe kamerfunctie of taak-ID."
+          "title": "T3: gewone browseropdracht afmaken",
+          "detail": "Gebruik bestaande browseraansluiting en eerder bewijs; maak de oorspronkelijke uitvoer-/overname-uitkomst af. Geen herbouw van tools of nieuwe demonstratiefunctie. Nog niet gestart."
         },
         "ownerAction": {
           "title": "Eén expliciete gegevenskeuze",
@@ -3380,9 +3388,9 @@
           "expected": "Deze keuze betreft de echte gegevensproef; geen privégesprekken of persoonlijke agenda in de proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-02T13:13:35.967432+00:00"
+        "reviewedAt": "2026-10-02T13:51:01.308094+00:00"
       },
-      "reviewedAt": "2026-10-02T13:13:35.967432+00:00"
+      "reviewedAt": "2026-10-02T13:18:04.695516+00:00"
     },
     "pendingTechnicalReview": {
       "reason": "Historische CO-003-kandidaat van 7 september: het oorspronkelijke bewijs bevat geen commitgebonden definitieve review of livegang. Deze oude kaart wordt daarom niet alsnog afgevinkt. De gebruikersuitkomst is later opgenomen in CO-004/CO-005, live opgeleverd en door Jaap via GE-02 geaccepteerd op 12 september. Het gekozen geheugenonderdeel blijft afgesloten; deze historische registratie is geen actuele bouw- of acceptatieblokkade.",
@@ -13201,7 +13209,7 @@
           ]
         }
       ],
-      "nextAction": "L3: reuse existing document/procedure/evaluation routes to preserve, reuse and actually apply Eva-authored code; determine the concrete remaining handoff before adding anything. Closed AIDE experiment remains closed.",
+      "nextAction": "T3: finish the existing ordinary browser execution and handover outcome using available shared browser access and prior evidence. Not started yet.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -14518,16 +14526,26 @@
           "baseCommit": "e566149d67301eed16af9883a33466c0861492d6",
           "owner": "/root",
           "effortNotice": "One task up to existing5min deadline, then inspection/review/cleanup; approximately15min active work.",
-          "latestEvidence": "eva2/evidence/product/t2-room-request-20261002.json",
+          "latestEvidence": "eva2/evidence/product/t2-grouped-reads-installed-20261002.json",
           "assignment": {
-            "stage": "functional_room_request_completed_efficiency_gap_recorded",
-            "outcome": "Complete a general HA automation create/edit/readback task without coordinator resume.",
-            "scope": "3files: delegated_digital_composition.py, pydantic_conversation.py, openai_codex_provider.py; coordinator owns exact overlay and evidence.",
-            "doneWhen": "Create/edit/readback/finalreply without manualresume; inspect and remove only trial object.",
+            "stage": "installed_reviewed_efficiency_improvement_complete",
+            "outcome": "Preserve proven contextual room control while reducing independent state-read model rounds through existing generic HA API.",
+            "scope": "Shared conversation guidance and grouped HA reads; no task-specific rule.",
+            "doneWhen": "Same complete selection/effect/readback/restoration with fewer model rounds and measured usage; preserve failure/unknown handling and prior task acceptance.",
             "ownership": "Coordinator; independent review GO",
-            "result": "T2.2/T2.3/T2.4 functionally complete; parent open for recorded timeout/efficiency limitation."
+            "result": "Actual new room execution succeeded; measured model rounds/input lower in one case, full readback retained. Independent final GO. No new task count; T2.1 unproved historical timeout stays open.",
+            "baseCommit": "7eab21f277b595c13291c0f5459f3a6dd0754ef3",
+            "files": [
+              "eva2/src/eva/adapters/connectors/home_assistant_api.py",
+              "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+              "eva2/src/eva/adapters/postgres/delegated_work_actions.py",
+              "focused verification, evidence and existing workboard"
+            ],
+            "finish": "Same complete selection/effect/readback/restoration with fewer model rounds and measured usage; preserve failure/unknown handling and prior task acceptance.",
+            "estimate": "One small shared guidance change, existing focused checks and bundled independent review/install. One changed-cause request for actual measured outcome; no unchanged repeats. Credits unknown.",
+            "activeWorkers": []
           },
-          "nextAction": "Verminder de gemeten modelrondes voor onafhankelijke toestandsuitlezingen via de bestaande algemene HA-API, met behoud van volledige selectie en resultaatcontrole. Geen nieuwe apparaatregel. T2.1 historische oorzaak blijft onverklaard.",
+          "nextAction": "T2.2/T2.3/T2.4 functionally complete; retain installed measured read improvement. T2.1 awaits concrete failure evidence, no unchanged repetition. Continue independent T3.",
           "dashboardComponent": "tools",
           "remainingTasks": [
             {
@@ -14703,8 +14721,17 @@
             "inputTokens": 216145,
             "elapsedSeconds": 173.037,
             "causeObserved": "Nine separate model-driven entity read calls plus discovery/service steps; use existing general bulk reads where semantically equivalent. No root timeout cause claimed.",
-            "status": "not_yet_improved",
-            "newTaskCreated": false
+            "status": "bounded_improvement_installed",
+            "newTaskCreated": false,
+            "comparisonFailure": {
+              "result": "Foreground read the previous completed work and restated it; no new task or HA actions. No performance comparison possible.",
+              "inputTokens": 12538,
+              "outputTokens": 184,
+              "modelResponses": 2,
+              "elapsedSeconds": 18.405
+            },
+            "candidateEvidence": "eva2/evidence/product/t2-grouped-reads-installed-20261002.json",
+            "remaining": "148s is still slow; intake/first effect slower and output tokens higher. No repeated optimisation chain. Historical timeout remains unproved."
           }
         },
         {
@@ -16325,7 +16352,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "L3",
+      "activeSliceId": "T2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

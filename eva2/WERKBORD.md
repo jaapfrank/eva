@@ -1,5 +1,26 @@
 # EVA2 werkbord
 
+## Nu: T2 — verbeterde huisbediening geïnstalleerd
+
+Dezelfde gewone kamervraag is opnieuw werkelijk uitgevoerd: de juiste lampen
+zijn aangezet, apart gecontroleerd en volledig teruggezet. In deze ene proef:
+**17→12 modelantwoorden, 216.145→114.162 inputtokens, 173→148 seconden.**
+De eerste nieuwe poging haalde alleen oud werk op; dit is gericht hersteld in de
+bestaande taakcontext. Die mislukte poging en twee door Eva zelf gecorrigeerde
+uitleesfouten staan in het verslag. Ontvangst en eerste lampactie waren juist later; uitvoertokens stegen.
+Geen algemene snelheids-/kostenclaim.
+
+26 gerichte controles en onafhankelijke bronreview zijn geslaagd; kern en werker
+zijn gezond met gelijke bronprofielen. Onafhankelijke eindbeoordeling: GO.
+Bron, meting en review vormen één oplevering. De oorspronkelijke **20/44** taken blijven staan;
+geen extra functie door optimalisatie. AIDE² blijft afzonderlijk onderdeel van L3/R1.
+
+**Daarna T3, nog niet gestart:** gewone browseropdracht en de oorspronkelijke
+controle-/overname-uitkomst afmaken met de bestaande aansluiting en het bewijs.
+Historische T2.1-timeout en fysieke spraak blijven expliciet open.
+
+[Installatie en vergelijking](evidence/product/t2-grouped-reads-installed-20261002.json).
+
 ## Laatste oplevering: T2.2 — gewone huisvraag uitgevoerd
 
 **20/44 bestaande kleine taken technisch klaar.** Eva kreeg een gewone vraag,
@@ -20,7 +41,7 @@ geheugenachtergrond en Codex-verbruik zijn niet volledig gemeten, credits onbeke
 Negen afzonderlijke model-/toolrondes lazen de drie lampstanden vóór, tijdens en na
 de handeling. Het functionele resultaat is goed; geen snelheid-/kostenwinstclaim.
 
-**Hierna, nog niet gestart:** deze algemene uitvoering met bestaande gezamenlijke
+**Vervolg gestart:** deze algemene uitvoering met bestaande gezamenlijke
 uitlezingen minder omslachtig maken; geen nieuw kamerscript, taak-ID of verlies
 van resultaatcontrole. T2.1 historischetimeoutoorzaak blijft open; succes bewijst
 geen reparatie. Fysieke spraak blijft C3/C4; AIDE² blijft expliciet in L3/R1.
