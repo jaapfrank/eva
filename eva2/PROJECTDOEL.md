@@ -1,5 +1,58 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaarverduidelijking 2 oktober — eerst een zich ontwikkelende huisgenoot
+
+Eva begint met gewone chat en enkele optionele installatiekeuzes. Zij leert mensen,
+voorkeuren en haar toegestane omgeving kennen, onthoudt antwoorden, vormt eigen
+bedoelingen, onderzoekt mogelijkheden, doet voorstellen en maakt nuttig werk af.
+Zij komt later zelf terug op wat speelt en gebruikt feedback bij volgende keuzes.
+Zelf programmeren en uitbreidingen toevoegen dienen die betrokkenheid; een
+pluginplatform of kanaalwissel is niet het primaire productdoel.
+
+Elke persoon en ieder huishouden heeft eigen doelen, voorkeuren en hulpbehoeften.
+Eva leert die geleidelijk uit gesprekken, correcties en toegestane context; geen
+verplichte uitgebreide configuratie vooraf. De dochter ondersteunen bij huiswerk,
+Jaap helpen bij crypto-onderzoek, e-mail, post, afval of een wekker zijn voorbeelden
+van algemene persoonsgebonden ondersteuning, geen nieuwe vooraf te programmeren
+functies. Zij verbindt een waarneming met het doel en de omstandigheden van de
+betrokken persoon, betrekt relevante vervolgvragen en ontbrekende factoren en
+handelt zelfstandig binnen gemaakte afspraken. Alleen daadwerkelijk ontbrekende
+keuze of toegang vraagt hulp. Een agenda-afspraak en reistijd zijn bijvoorbeeld
+niet automatisch een complete wekadviesberekening: voorbereiding en persoonlijke
+gewoontes kunnen ook relevant zijn. Persoonskennis en privé-inhoud blijven gescheiden;
+aandacht voor het ene gezinslid maakt diens informatie niet beschikbaar aan anderen.
+
+Hergebruik de bestaande geheugen-, initiatief-, intentie- en uitvoeringsroutes.
+Eva2 blijft de integratiebasis; de vergelijking onderbouwt nu geen migratie van het
+gehele systeem. Hermes is alleen een vervangingskandidaat bij een concreet aangetoond
+voordeel, Agent Zero een bron van relevante bestaande zelfbouw-/beheermechanismen.
+De eerstvolgende complete uitkomst is I1/M3: een zelfgekozen, werkelijk uitgevoerde
+gezinsbijdrage met latere voortzetting/leren via dezelfde Eva, ook vanuit gewone
+chat. Los een noodzakelijke uitvoeringsafhankelijkheid gericht op. L3/O1 sluiten
+ontbrekende uitvoering/uitbreiding aan wanneer de gekozen behoefte dat vereist;
+geen verplichte nieuwe platformronde of volledig zelfprogrammeren vóór initiatief.
+
+Een gevonden robotstofzuiger, camera, speaker of HA-installatie is een voorbeeld
+om haar algemene waarnemen, onderzoeken en combineren te toetsen. Geen vooraf
+gebouwde stofzuiger-, beveiligings- of andere voorbeeldfunctie. Beschikbaarheid
+van hardware bewijst geen bruikbare API. Verkenning en uitbreiding volgen bestaande
+toegang en mandaat; echte persoons-/account-/fysieke handelingen vragen concrete
+hulp nadat Eva het overige werk heeft voorbereid. De standaardchat maakt eerste
+contact mogelijk; andere kanalen zijn optioneel, dezelfde identiteit en bevoegd
+geheugen blijven gelden. Jaaps reeds gevraagde mogelijkheden blijven behouden.
+Voor Jaap blijft full-duplex spraak via de speakers een gewenste oplevering.
+Voor andere huishoudens is dit een keuze; optioneel betekent niet dat Eva de
+mogelijkheid niet hoeft te kunnen realiseren en onderhouden wanneer die gewenst is.
+
+Reflectie, vooruitdenken en “dromen” verwerken echte ervaringen tot lessen en
+te toetsen ideeën; geen gefingeerde herinneringen of voortdurend modelverbruik
+om activiteit te tonen. Een stabiele uitvoerbasis en hergebruik blijven nodig:
+alles opnieuw genereren is niet automatisch slimmer. De vier productuitkomsten
+zijn persoonlijkheid, geheugen, eigen initiatief en zelfstandig werk. De huidige
+onderzoeks-/planopdracht activeert het gepauzeerde app-goal niet en levert op zichzelf
+geen functie op. Bestaande eindvoorwaarden, acceptaties en gegevens blijven staan.
+
+
 ## Eigenaarcorrectie 2 oktober 2026 — Eva moet zelf kunnen bouwen en bijdragen
 
 De hoofdprioriteit is een zelfstandige digitale huisgenoot die zelf onderzoekt,

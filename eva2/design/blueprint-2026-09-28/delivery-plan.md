@@ -1,5 +1,51 @@
 # Eva2 delivery specification
 
+## Current dispatch amendment — 2 October, after the extension comparison
+
+The owner explicitly requested comparison and a complete plan before more building.
+The current research deliverable is the revised owner overview and platform decision;
+no runtime migration, new feature, acceptance or new task ID follows from this text.
+The four product outcomes are personality, memory, initiative and autonomous work.
+Old eight-step/nine-category numbering is traceability, not a fixed product structure.
+
+The earlier DesktopCommander-only choice is no longer the next implementation
+assignment. It supplies execution, not a complete new-channel lifecycle. The current
+platform decision retains Eva2's existing memory/initiative/execution as the first
+integration basis. Hermes is the primary replacement candidate only if a concrete
+required seam justifies comparison. No second general registry is justified; native
+channel/plugin facilities exist in the competitors too.
+
+On implementation resumption, the first outcome is I1/M3: the same Eva remembers
+what matters to the family, chooses a useful contribution, performs it and returns
+with the observed result without a new task-specific owner prompt or recent speaker
+session prerequisite. Reuse M1/M2 and the existing native initiative execution; correct
+only the demonstrated missing handoffs. Resolve an actual tool gap within that outcome,
+not as a separate platform-building campaign. Completed B0 and 16 completed small tasks
+remain closed. The historical B0/C1-first and blanket L3-first assignments below are
+superseded; the app-goal is not activated by this document.
+
+When the contribution or a subsequent owner need exposes a real capability gap,
+complete one natural-language expansion end to end: discover/reuse or author,
+install/configure/start, use and read back, retain learning, stop/disable when asked.
+A new communication route includes real inbound and outbound behavior and the same
+Eva identity/authorized memory. Preserve L3.2's independent evaluation and L3.3's
+measured-gain/application conditions; a new adapter demo cannot silently close them.
+O1.2 covers optional composition/lifecycle without making every module mandatory.
+
+Next use the same capability on another need and on useful initiative (existing
+T2/T3 and I1/I2), with M3 behavior throughout. These are Eva-executed cases, not Codex
+preprogrammed features. L1/L2 and accepted M1/M2 remain reusable. Voice is supporting;
+Jaap's existing requests remain in final scope, but no voice-first dependency blocks
+this work. Finally F1/P2/F2 retain integrated checks, comparison and actual family
+acceptance. No new mandatory communication vendor or user setup tutorial.
+
+Before each dispatch, identify actual files, existing proof, exact missing seam and
+expected resource use. Earlier S/M/L time windows are historical estimates, not stop
+timers or current remaining-work promises. No new arbitrary time/attempt quotas.
+The existing independent evaluation rules, original task conditions and final scope
+remain unchanged unless an explicit owner decision changes them.
+
+
 Design candidate, 28 September 2026. This is a fixed scope/dependency specification,
 not another workboard. Actual assignments and progress live only in
 [WERKBORD](../../WERKBORD.md) and `execution-workboard-v1.json`.

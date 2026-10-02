@@ -1,5 +1,115 @@
 # Learning, personal development and useful initiative
 
+## Family-first synthesis — 2 October 2026
+
+The owner means a developing family member, not primarily an extension installer.
+Start in ordinary chat with optional setup choices. Use conversation and permitted
+observations to learn people, current concerns and opportunities; retain intentions;
+choose useful work; investigate or ask a meaningful question; execute; observe the
+result; adapt later behavior. Programming and new capabilities serve this cycle.
+Existing sections 5–6 already describe its event/initiative/reflection mechanism.
+The owner's further examples (a daughter's homework, personal crypto research,
+email, mail delivery, bins and an alarm) specify individualized support, not new
+feature requirements. Learn goals, preferences, appropriate help and permissions
+progressively per person. Connect observations to the actual goal and relevant
+circumstances; an appointment and travel time alone need not determine wake time.
+The same attention/execution mechanism must account for preparation, uncertainty,
+changed plans and prior agreements. One person's interests or private context do
+not become another person's context. Model-generated hypotheses remain distinct
+from explicit preferences and authorization.
+Do not add a new life-loop, sleep daemon, all-family database or permanent planner.
+
+The existing implementation is more than design: PersonalInterestWorker dispatches
+an autonomous_task through execute_native (application/personal_interests.py:248–254).
+bootstrap/runtime.py:1999–2005 wires it to execute_native_initiative, which calls the
+shared respond path with the existing journal/effects (:990–996). Eva1's autonomy.js
+selects promises, signals and curiosity through its existing episode/task identity
+(:754/803/836), using the same persona/context as conversation. Preserve useful
+behavior; source presence is not proof of daily family value.
+
+One concrete coupling to review is bootstrap/household_initiative.py:75–90: that
+household loop returns idle without a recent native speaker session before assessing
+context. It is a limitation of this particular route, not proof all Eva initiative
+is speaker-dependent. Existing private initiative routes must be considered before
+changing it. General family attention should work through an available authorized
+chat destination; no compulsory physical-speaker session or new channel-specific mind.
+
+### One coherent next user outcome, within I1/M3 and existing execution
+
+During ordinary chat Eva learns a real concern or preference. Later, without a new
+step-by-step prompt, she selects a relevant contribution, checks her assumptions,
+uses available means, investigates or asks only what is genuinely missing, and
+returns a verified useful result. When the same outcome needs a missing capability,
+L3/O1 provide its shared execution/activation seam, not a separate feature written
+by Codex. At the next relevant occasion she uses the correction or experience,
+continues an intention, or appropriately stays silent.
+
+Record the actual trigger, authorized context, chosen contribution, completed result,
+needed human help and subsequent behavior in existing records. Check stop/correction,
+original destination and private boundaries only where the route changes. Human
+usefulness, warmth, humor and nuisance remain the owner's separate judgment. No
+claim of success from self-described intentions, saved reflections or accepted tools.
+
+The robot-vacuum example illustrates general discovery and composition. Verify actual
+model/API capabilities and family need before concluding a camera/speaker can be used.
+No core rule about vacuums, surveillance, bins or chosen services. Discovery can yield
+an appropriate proposal, a different use, or no useful action. Ordinary granted actions
+do not require repeated approvals; genuinely new access or obligations still do.
+
+### Research relevance and limits
+
+These are targeted primary-source observations, not a new benchmark or selection of
+new dependencies. The existing prototype/evaluation budget rules remain controlling;
+no extra quota or experimental platform is created by this synthesis.
+
+- [ProAct, May 2026](https://arxiv.org/html/2605.25971v2) investigates preparation between
+  interactions using history and memory. Its scenario results do not prove real family
+  benefit; extra background computation and unnecessary information pushes can offset
+  gains. Reuse selective attention, not an always-running model conversation.
+- [Proactive Memory Agent, July 2026](https://arxiv.org/abs/2607.08716) studies reminders
+  at the right decision point and reports gains on coding/service benchmarks. The
+  relevant lesson is selective use of remembered state; it does not justify adding a
+  second memory owner to Eva or transfer its reported gains to a family setting.
+- [PRIME, April 2026](https://arxiv.org/html/2604.07645v1) uses evolving experiences from
+  successes, failures and preferences without retraining. Simulated users and bounded
+  environments limit the claim; saved experience must influence a later real outcome.
+- [Generative Agents](https://arxiv.org/abs/2304.03442) and
+  [Voyager](https://arxiv.org/abs/2305.16291) are earlier relevant prior art for
+  reflection/planning and self-directed executable skills. They are not new releases,
+  family reliability evidence, or an instruction to rebuild their frameworks.
+- OpenClaw documents [standing intents](https://docs.openclaw.ai/concepts/standing-intents)
+  and [dreaming](https://docs.openclaw.ai/concepts/dreaming); Hermes documents
+  [background curation](https://hermes-agent.nousresearch.com/docs/user-guide/features/curator).
+  Reflection, future intentions and plugin creation alone are therefore not a novelty claim.
+
+Keep observed facts, owner statements, hypotheses and imagined outcomes distinct in
+the existing memory authority. Rest-time work processes changed relevant experiences,
+lessons and tomorrow's intentions; it is interruptible and yields to live conversation.
+No observations means no invented life story. Observable behavior, not claims about
+consciousness, is the product requirement.
+
+### Differentiation to test, not to proclaim
+
+The candidate advantage is a coherent loop from family context and a self-selected
+need to a checked useful result and, only when necessary, a new reusable capability.
+The existing R1 hypothesis can test whether selective validity-aware experience helps
+that loop avoid stale assumptions and repeated research, at lower total cost or with
+better outcomes. This does not expand R1 into a household simulator or universal mind.
+Keep its frozen protocol and independent cases; ordinary useful initiative does not
+wait for R1. AIDE-style variants remain within the existing L3 agreement.
+
+Compare against Eva1 and selected competitors with equivalent information, model/
+access conditions and needs; additionally use the existing with/without-R1 ablation.
+Include initial learning, failed attempts, maintenance and background consumption,
+wrong interventions and required human help. A loss closes that hypothesis without
+an automatic new research chain; no unique/superior claim without the corresponding
+result. Seven-day family use still assesses whether the whole experience is valuable.
+
+Runtime authority in the older sections means the selected actual owner. For current
+work that is Eva2's existing execution; Hermes ownership below is conditional historical
+architecture, not a claim of deployment or a new migration instruction.
+
+
 ## Owner priority amendment — 2 October 2026
 
 Programming and useful autonomous contributions are central product outcomes, not

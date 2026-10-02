@@ -1,5 +1,41 @@
 # EVA2 werkbord
 
+## 2 oktober: vergelijking en huisgenootplan opgeleverd
+
+De vergelijking is gericht uitgevoerd: Eva1/Eva2-broncode, officiële concurrent-
+documentatie, gepinde Hermes-/Agent Zero-bronnen en relevant onderzoek naar
+vooruitdenken, geheugen en leren. De uitkomst is **behoud van Eva2 als integratiebasis**:
+geheugen, intenties en eigen initiatief via dezelfde uitvoering bestaan al.
+Hermes blijft alleen een vervangingskandidaat bij een concreet aangetoond voordeel.
+Een losse programmeertool is geen volledige uitbreidingsroute.
+
+**Eerstvolgende gebruikersuitkomst: I1/M3.** Vanuit gewone chat leert Eva wat speelt,
+kiest zelf een nuttige bijdrage, voert die uit en komt terug met resultaat; relevante
+ervaring en feedback beïnvloeden later gedrag. De specifieke huisinitiatiefroute
+wacht nu op een recente speakersessie; bestaande private routes meenemen voordat
+dit gericht wordt aangepast. L3/O1 ondersteunen een werkelijk ontbrekende mogelijkheid,
+geen verplichte zelfprogrammeer-/platformbouw vóór gewone betrokkenheid.
+
+[Actueel plan](EVA2_BOUWPLAN.md) · [Vergelijking en keuze](design/blueprint-2026-09-28/platform-decision.md)
+· [Ontwikkeling, initiatief en reflectie](design/blueprint-2026-09-28/learning-and-initiative.md).
+De eerdere volledige teksten zijn behouden; de actuele beslislagen zijn leidend.
+**Geen runtimewijziging, nieuwe taak-ID of afronding; 16/44 en de historische 2/9
+ongewijzigd.** Onafhankelijke review GO; productbouw niet gestart en geen uitvoerder
+actief. Voor Jaap blijven full-duplex speakers gewenst; voor andere huishoudens
+is dit optioneel. Geen model-,
+spraak- of huisactieproef in deze onderzoeksronde; ontwikkelcreditkosten onbekend.
+
+## 2 oktober: gerichte vergelijking en herzien uitvoerplan
+
+**Actief: Codex /root.** De eigenaar vraagt een inhoudelijke vergelijking van Eva1,
+Eva2 en concurrenten, gevolgd door een goed onderbouwd plan. De toets is een nieuwe
+mogelijkheid of communicatieroute vanuit gewone taal toevoegen en bruikbaar maken,
+zonder verplicht vooraf gekozen kanaal of vooraf gebouwde koppeling per dienst.
+Bestaand onderzoek wordt hergebruikt; alleen deze ontbrekende beslisvraag wordt
+uitgewerkt. Geen featurebouw, installatie of nieuwe taak-ID. Huidige runtime,
+productstatussen en acceptaties blijven behouden. Resultaat volgt in het bestaande
+bouwplan en de bestaande architectuur-/basiskeuze, niet in een tweede werkbord.
+
 ## 2 oktober: mogelijkheden toevoegen naar behoefte
 
 De eigenaar verduidelijkt: computer, browser, bestanden, HA en spraak zijn

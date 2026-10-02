@@ -1,5 +1,45 @@
 # Eva2 complete-product architecture
 
+## Current architecture constraint — on-demand extensions, 2 October 2026
+
+The owner asks for natural-language configuration of Eva's own capabilities and
+communication routes. This is broader than adding an MCP code tool. The current
+[platform decision](platform-decision.md#current-decision--2-october-2026-add-capabilities-from-ordinary-language)
+retains Eva2 as the integration/runtime basis. Hermes is a replacement candidate only
+for a concrete responsibility with a demonstrated advantage. The older Hermes diagram
+below is a conditional historical target, never the installed runtime or a mandatory
+first build step. The family-first purpose governs extension choices, not vice versa.
+
+The product has four outcomes: personality, memory, initiative and autonomous work.
+The bootstrap needs identity, authorized memory, permitted model access, execution/
+workspace and an initial text/setup ingress. Browser control, HA, Telegram, WhatsApp,
+voice and other services are optional capabilities added when wanted. Jaap's existing
+requested working capabilities and data remain preserved.
+
+Use the selected host's existing plugin/registry/process facilities; no new general
+extension framework by default. Reuse the current MCP and provider entrypoints on the
+retention route. A skill is a reusable procedure, a tool is callable execution, and a
+channel has a persistent inbound/outbound lifecycle. None substitutes for the others.
+
+The shared extension contract is: user need -> existing solution or authored package ->
+verified version/configuration -> effective start/registration -> actual usable result
+-> retained experience and later update/disable. Package-owned data and effective stop
+must remain distinguishable from merely setting a registry flag. A model decides the
+needed capability; deterministic host operations apply its exact candidate. This is a
+contract sketch, not a claim the whole lifecycle currently exists.
+
+For each new channel, resolve trusted person/audience before recall, carry the original
+message/task/destination binding, and route through the same Eva identity and execution
+owner. Channel adapters own transport, not their own persona/planner. When human login
+or physical input is unavoidable, retain progress and expose the single missing action.
+The installed product does not require a new owner choice of technology for every task.
+
+No second scheduler, autobiographical store, writable task authority or permanent
+planner is added around a selected platform. Old owners retire only after ownership
+moves and preserved data is verified. The existing detailed contracts below remain
+requirements where relevant, not a mandate to implement all optional modules up front.
+
+
 Design candidate, 28 September 2026. Source baseline `e94f384551d78b8b7ae158d8688cd3a75fa81cda`.
 This specifies proposed behavior and seams; it does not describe a new installed release.
 Owner scope: the complete family housemate. No business edition is included.
