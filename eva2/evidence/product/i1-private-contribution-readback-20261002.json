@@ -1,0 +1,59 @@
+{
+  "contract": "EvaExistingInitiativeReadback/v1",
+  "checkedAt": "2026-10-02T08:21:46.537731+00:00",
+  "taskId": "I1.1",
+  "scope": "Independent readback of an existing self-chosen contribution; no new runtime change or forced initiative.",
+  "intentId": "personal-interest:4198cf59109304519b253e09b4e2ae34da619015b057449361fb10155786de6b",
+  "origin": "eva_initiative",
+  "sourceEventId": "initiative-review:547262a5e00deb3ed2a6b3c5:497430",
+  "selectedAt": "2026-09-30T06:10:57Z",
+  "title": "Flexibele restjesplanner voor minder voedselverspilling",
+  "execution": {
+    "completedAt": "2026-09-30T06:15:58Z",
+    "mode": "autonomous_task",
+    "provider": "chatgpt-codex:gpt-6-astra",
+    "recordedUsage": {
+      "inputTokens": 11138,
+      "outputTokens": 508,
+      "modelAttempts": 2,
+      "toolCalls": 1
+    },
+    "recordedReplySha256": "8fc0a94d9635925122d97f6cf7d5e17f102a1326a36a3a0ebda88fda77de63de"
+  },
+  "artifact": {
+    "path": "/proof-state/eva-initiatief-4198cf59109304519b253e09b4e2ae34da619015b057449361fb10155786de6b-restjesplanner.md",
+    "sha256": "67197ab2a12b76c340a075fdc0993c15beeeab0e1cd3d33e936e14de2c3cfc1d",
+    "independentReadback": true,
+    "contentSummary": "Fill-in fields for food to use first, amount and storage; three flexible meal forms; storage and food safety caveats. No personal inventory or current family need assumed."
+  },
+  "delivery": {
+    "event": "INITIATIVE_RESULT_DELIVERED",
+    "at": "2026-09-30T06:16:30Z",
+    "channel": "telegram_private",
+    "providerReceiptPresent": true,
+    "newSendDuringThisCheck": false
+  },
+  "currentRuntime": {
+    "coreImage": "20d41fdf3506",
+    "healthy": true,
+    "privateContextReviewsRunning": true,
+    "speakerRequired": false,
+    "latestMeasuredDecisionAt": "2026-10-02T06:46:18Z",
+    "latestMeasuredDecision": "silence; available memories did not give a new concrete need",
+    "laterBudgetRefusalAt": "2026-10-02T07:46:46Z",
+    "budgetChanged": false
+  },
+  "limits": [
+    "This is a bounded existing contribution, not new code built on 2 October.",
+    "Technical delivery does not prove that Jaap found the contribution useful or timely; I1.2 remains open.",
+    "A generic restjesplanner does not prove a new need was discovered from current family life, improved personality or later learning.",
+    "Current silence is not evidence of a broken transport. No new model call was made to force a contribution.",
+    "Recorded usage is historical Eva runtime usage; development credit cost is unknown."
+  ],
+  "review": {
+    "decision": "GO for I1.1 only",
+    "reviewer": "completion_diagnosis",
+    "scope": "Independent source/evidence review; root independently read actual artifact and database delivery receipt. Not a repeated runtime trial.",
+    "limitations": "I1.2, I1 overall, M3 and perceived family usefulness remain open."
+  }
+}

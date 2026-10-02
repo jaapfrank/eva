@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-01T16:17:54.897173+00:00",
+  "lastUpdated": "2026-10-02T08:24:55.544624+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -3299,14 +3299,14 @@
           }
         ],
         "now": {
-          "title": "Vergelijking en huisgenootplan gereed; uitvoering gepland",
-          "state": "planned",
-          "detail": "Eva1/Eva2, concurrenten en relevant onderzoek vergeleken. Plan onafhankelijk beoordeeld: bestaande Eva2-basis behouden; eerst dezelfde Eva een zelfgekozen gezinsbijdrage laten uitvoeren en later op ervaring laten voortbouwen. Uitbreidingen dienen echte behoeften. Full-duplex speakers blijven voor Jaap gewenst, voor andere huishoudens optioneel. Geen runtimewijziging, nieuwe productafronding of actieve bouwwerker.",
+          "title": "I1.1 technisch bevestigd: eigen bijdrage gemaakt en afgeleverd",
+          "state": "completed",
+          "detail": "Bestaand resultaat van 30 september nu gecontroleerd en correct geregistreerd: restjesplanner zelf gekozen, document teruggelezen en privé in Telegram afgeleverd. Dit is geen nieuwe functie van vandaag. I1 als geheel, nut en persoonlijkheid blijven open. Volledige goaltekst bijgewerkt; app-goal nog gepauzeerd. Deze controle is afgerond; geen bouwwerker actief.",
           "owner": "Codex /root"
         },
         "next": {
-          "title": "Eva komt zelf met een werkelijk uitgevoerde bijdrage terug",
-          "detail": "Eerst I1/M3: een zelfgekozen nuttige gezinsbijdrage via bestaande geheugen-/initiatief-/uitvoering afronden, vanuit gewone chat. L3/O1 alleen waar de echte behoefte een ontbrekende uitvoerings- of uitbreidingsmogelijkheid vereist. Geen voorafgaande platformmigratie."
+          "title": "M3: betrokken gedrag in gewone gesprekken verbeteren",
+          "detail": "M3.3: gebruik Jaaps bestaande statische antwoorden om concrete ontbrekende persoonlijke context of gedragsbeperking te vinden en gericht te verbeteren. I1.2 gezinsnut blijft apart; geen herbouw van werkend privé-initiatief."
         },
         "ownerAction": {
           "title": "Nu geen technische handeling nodig",
@@ -3316,7 +3316,7 @@
           "expected": "Eerst een samenhangend beoordeeld plan; uitvoerings- en gezinsresultaten blijven afzonderlijk zichtbaar. Bestaande acceptaties blijven behouden."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-02T01:34:20.233278+00:00"
+        "reviewedAt": "2026-10-02T08:24:55.544624+00:00"
       },
       "reviewedAt": "2026-10-01T15:52:21.323198+00:00"
     },
@@ -13137,7 +13137,7 @@
           ]
         }
       ],
-      "nextAction": "Eerst I1/M3: een zelfgekozen nuttige gezinsbijdrage via bestaande geheugen-/initiatief-/uitvoering afronden, vanuit gewone chat. L3/O1 alleen waar de echte behoefte een ontbrekende uitvoerings- of uitbreidingsmogelijkheid vereist. Geen voorafgaande platformmigratie.",
+      "nextAction": "M3.3: gebruik Jaaps bestaande statische antwoorden om concrete ontbrekende persoonlijke context of gedragsbeperking te vinden en gericht te verbeteren. I1.2 gezinsnut blijft apart; geen herbouw van werkend privé-initiatief.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -14821,36 +14821,39 @@
             {
               "id": "I1.1",
               "title": "Een nuttige huisbijdrage laten aankomen",
-              "status": "planned",
+              "status": "completed",
               "kind": "praktijk",
               "doneWhen": "Bestaande initiatiefroute kiest en levert een concrete toegestane bijdrage.",
               "owner": "Codex",
               "assignment": {
-                "baseCommit": "fbc789e6",
-                "outcome": "Household initiative can select an actual live native session without requiring pending research results.",
+                "baseCommit": "9aaa5e51",
+                "outcome": "Existing private initiative chooses, executes and returns a useful contribution without a speaker prerequisite.",
                 "files": [
-                  "eva2/src/eva/adapters/postgres/household_work_sessions.py",
-                  "eva2/src/eva/bootstrap/household_initiative.py",
-                  "eva2/tests/postgres/test_native_task_continuity.py"
+                  "eva2/src/eva/bootstrap/runtime.py",
+                  "eva2/src/eva/adapters/postgres/sensory_events.py",
+                  "eva2/src/eva/adapters/postgres/initiative_delivery.py",
+                  "eva2/src/eva/application/free_will.py"
                 ],
-                "doneWhen": "Live native session selected without pending task; closed/expired/nonnative excluded; delivery gates unchanged; reviewed installed correction. Audible/useful delivery remains separate.",
-                "estimate": "One focused PostgreSQL regression and bounded review; zero planned model calls or announcements; credits unknown.",
-                "stage": "remaining_developer_work_no_owner_blocker",
+                "doneWhen": "Bestaande initiatiefroute kiest en levert een concrete toegestane bijdrage.",
+                "estimate": "Reuse installed mechanisms and existing evidence; one real end-to-end contribution after the concrete blocker is identified. No new platform. Model/token usage recorded where available; credit cost unknown.",
+                "stage": "existing_installed_result_verified",
                 "activeWorkers": []
               },
-              "latestEvidence": "eva2/evidence/product/i1-native-destination-20260929.json",
+              "latestEvidence": "eva2/evidence/product/i1-private-contribution-readback-20261002.json",
               "blocker": null,
               "previousBlocker": "Geen actuele native speakersessie bij livecontrole; echte bijdrage en hoorbare bruikbaarheid nog niet aangetoond. Koppelfout technisch opgelost en geïnstalleerd; bestaand reflectiebudget blijft gelden.",
-              "checkedAt": "2026-10-01T13:44:09.424387+00:00",
+              "checkedAt": "2026-10-02T08:24:55.544624+00:00",
               "ownerActionRequired": false,
-              "remaining": "De algemene initiatiefroute heeft eerdere bouw-/startbewijzen, maar een nieuwe werkelijk nuttige bijdrage met zelfstandige uitvoering en aflevering blijft open. Kies een bestaande toegestane beschikbare route; een afwezige speakersessie is alleen een beperking voor hoorbare aflevering.",
-              "nextAction": "Hergebruik de bestaande persoonlijke/huishoudelijke initiatiefroute en gedeelde runtime. Controleer de concrete speakerafhankelijkheid en bevoegde chatbestemming; laat Eva vanuit werkelijk gezinscontext zelf een bijdrage kiezen, uitvoeren en terugmelden. Geen vooraf geprogrammeerd voorbeeld.",
+              "remaining": "Geen technisch werk binnen I1.1. Nut, timing, hinder en bredere ontwikkeling blijven open bij I1.2/M3.",
+              "nextAction": "Behoud het werkende resultaat; geen herbouw of nieuwe geforceerde bijdrage voor deze taak.",
               "ownerInstructions": {
                 "availableNow": false,
-                "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
+                "readyWhen": "Deze technische taak is afgerond; geen herhaalproef nodig.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "completedAt": "2026-09-30T06:16:30+00:00",
+              "result": "Bestaand resultaat van 30 september teruggelezen: Eva koos zelf een restjesplanner, maakte het werkruimtedocument en leverde de samenvatting privé in Telegram af. Onafhankelijke review GO voor dit begrensde criterium. Geen nieuw gebouwde functie of oordeel over nut."
             },
             {
               "id": "I1.2",
@@ -14862,11 +14865,11 @@
               "nextAction": "Beoordeel nut en hinder van werkelijk uitgevoerde bijdragen; gebruik feedback later en laat Eva bij ongeschikte aanleiding stil blijven. Geen nieuwe beoordeling van alleen reflectietekst.",
               "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Codex moet eerst een echte bijdrage via I1.1 afleveren. Nu geen geforceerde proef nodig.",
+                "availableNow": true,
+                "readyWhen": "De restjesplanner is op 30 september privé afgeleverd. Je kunt het nut en moment van die bestaande bijdrage beoordelen; geen speakerproef of nieuwe opdracht vereist.",
                 "steps": [
-                  "Beoordeel de werkelijk afgeleverde bijdrage tijdens normaal gebruik.",
-                  "Meld of die nuttig was en het moment prettig of hinderlijk."
+                  "Bekijk in Telegram de al afgeleverde bijdrage Flexibele restjesplanner voor minder voedselverspilling van 30 september.",
+                  "Geef tijdens gewoon gebruik aan of zoiets nuttig is en of het moment past."
                 ],
                 "expected": "Nuttige aanwezigheid en passend stil blijven.",
                 "reportBack": "Bijdrage, moment en je oordeel.",
@@ -14874,7 +14877,7 @@
               }
             }
           ],
-          "latestEvidence": "eva2/evidence/product/i1-native-destination-20260929.json",
+          "latestEvidence": "eva2/evidence/product/i1-private-contribution-readback-20261002.json",
           "responsibilityReview": {
             "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
             "role": "zelfgekozen bijdrage",
@@ -14892,7 +14895,7 @@
             "T2"
           ],
           "dependencyClarification": "Use the actual tools and permitted result channel needed by the selected outcome. Whole-component voice/personality acceptance is not a prerequisite; preserve their own open criteria. HA-dependent initiatives require the relevant T2 operation, not every speaker trial.",
-          "nextAction": "Eerst I1/M3: een zelfgekozen nuttige gezinsbijdrage via bestaande geheugen-/initiatief-/uitvoering afronden, vanuit gewone chat. L3/O1 alleen waar de echte behoefte een ontbrekende uitvoerings- of uitbreidingsmogelijkheid vereist. Geen voorafgaande platformmigratie."
+          "nextAction": "I1.1 is technisch bevestigd. I1.2 blijft gezinsbeoordeling; verbeter bij M3 alleen een aangetoond ontbrekende context of gedrag op de reeds gemelde statische antwoorden. Geen nieuwe modelronde uitsluitend om initiatief af te dwingen."
         },
         {
           "id": "I2",
@@ -16102,7 +16105,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "I1",
+      "activeSliceId": "M3",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

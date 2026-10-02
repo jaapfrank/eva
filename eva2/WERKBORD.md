@@ -1,5 +1,30 @@
 # EVA2 werkbord
 
+## 2 oktober: goal bijgewerkt; bestaand I1.1-resultaat technisch bevestigd
+
+De volledige verwezen goaltekst volgt nu de vier productuitkomsten, optionele
+koppelingen en het huisgenootplan. Het app-goal toont nog de oude gepauzeerde
+C1-tekst; vervangen en activeren vraagt de gebruikersbediening. De expliciete
+opdracht van Jaap autoriseerde de hervatte controle in deze chat.
+
+**I1.1 technisch voltooid op 30 september; nu onafhankelijk gecontroleerd.** Eva
+koos zelf een restjesplanner, maakte het werkruimtedocument en leverde de samenvatting
+privé in Telegram af. Het echte bestand en de afleverregistratie zijn teruggelezen.
+De privéroute heeft geen speakersessie nodig. Geen nieuwe autonomielus, installatie,
+modelcall of bericht uitgevoerd. Dit is erkenning van bestaand werk, geen vandaag
+gebouwde productfunctie. [Bewijs](evidence/product/i1-private-contribution-readback-20261002.json).
+
+**17/44 kleine taken; historische 2/9 grote onderdelen onveranderd.** I1.2 en I1 als
+geheel blijven open: nut, passend moment en hinder zijn niet beoordeeld. Een algemene
+restjesplanner bewijst geen nieuwe actuele gezinsbehoefte of betere persoonlijkheid.
+De controle en onafhankelijke review zijn klaar; geen bouwwerker meer actief.
+
+**Eerstvolgend: M3.3.** Gebruik de bestaande statische antwoorden om ontbrekende
+persoonlijke context of gedrag gericht te verbeteren; geen speculatieve contextpatch,
+hoger reflectiebudget of geforceerde nieuwe bijdrage. De levende gezinslus blijft het
+doel, zonder de al werkende uitvoering opnieuw te bouwen. Ontwikkelcredits onbekend;
+de bewijsregistratie houdt historisch Eva-runtimeverbruik apart.
+
 ## 2 oktober: vergelijking en huisgenootplan opgeleverd
 
 De vergelijking is gericht uitgevoerd: Eva1/Eva2-broncode, officiële concurrent-
