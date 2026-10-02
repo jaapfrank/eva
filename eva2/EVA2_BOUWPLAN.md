@@ -97,6 +97,35 @@ een technisch onmogelijke of onbevestigde aansluiting heet niet geregeld.
 | Agent Zero | Bestaande werkwijze én voorzieningen om plugins zelf te maken, installeren, controleren en beheren. | Als losse programmeerwerker levert hij niet automatisch zijn pluginhost aan Eva. |
 | OpenClaw | Nieuwe kanaalplugins buiten meegeleverde kanalen, met installatie en runtimebeheer. | Geen aangetoond kleiner Eva-integratiegat; de bekeken plugin-API is experimenteel. |
 
+**Volledige vergelijking op vermogens, niet op een meegeleverde toolcatalogus.**
+Voor de gekozen referentieversies leggen we alle relevante soorten gebruikerswerk
+naast het bestaande project. Eva moet een gelijkwaardig resultaat kunnen bereiken
+met aanwezige middelen of door het ontbrekende zelf bruikbaar te maken. Een
+zelfgemaakte koppeling, een nieuwe werkwijze, een combinatie van diensten en het
+onderhouden daarvan tellen mee; alleen een toollijst of opgeslagen code niet.
+
+| Productuitkomst | Vergelijkingsdekking en bestaand werk |
+|---|---|
+| Persoon | Communicatie, wisselende modaliteiten/kanalen, eigen oordeel en gedrag tijdens werk: C1–C4/M3. Hetzelfde karakter moet keuzes sturen, niet alleen formuleringen. |
+| Geheugen | Mensen, correcties, persoonlijke continuïteit, relevante terughaalkeuze en scheiding van privé/gedeeld: M1/M2, bestaande ervaring/skills uit L1/L2. |
+| Eigen initiatief | Signalen en behoeften begrijpen, zelfstandig onderzoek/voorstellen/werk, afspraken later hervatten en passende stilte: I1/I2 met M3 en bestaande taakuitvoering. |
+| Zelfstandig werk | Onderzoek, digitaal handelen, onbekende diensten, programmeren, uitbreidingen, leren, stop/hervatten en resultaatcontrole: C2/T1–T4/L1–L3; R1 blijft de begrensde innovatieproef. |
+
+O1/O2 leveren gekozen samenstelling, installeren, bijwerken en herstel als
+ondersteuning; P1/P2/F1/F2 leveren vergelijking, samenhang en gezinsacceptatie.
+Zo blijft het volledige bestaande project gedekt zonder extra hoofdtaken of een
+functie per concurrent-tool. Een ontbrekend vermogen of verloren vergelijking
+blijft expliciet zichtbaar. De technische eindbeoordeling gebruikt vastgelegde
+referentieversies; iedere toekomstige concurrent-release wordt geen automatische
+uitbreiding van de lopende oplevering.
+
+De normale context bevat relevante kennis en een vindbare beschrijving van
+mogelijkheden; niet alle tools en documentatie tegelijk. Een benodigde uitbreiding
+kan in Eva's eigen werkruimte ontstaan en actief worden zonder een nieuwe kernregel.
+Een bestaande geschikte oplossing gebruiken blijft beter dan haar onnodig opnieuw
+te genereren. “Alles zelf kunnen toevoegen” wordt getoetst met werkelijk onbekend
+werk; het is geen bewezen garantie voor elke denkbare toekomstige opdracht.
+
 Concurrenten zijn dus niet beperkt tot hun meegeleverde functies. Zelf uitbreiden
 is bestaande techniek. Eva's beoogde voordeel zit in het begrijpen van jullie
 behoefte én zelfstandig bruikbaar maken en blijven gebruiken van de oplossing.

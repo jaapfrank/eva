@@ -51,6 +51,24 @@ memory/continuity and result retention are retained evidence. Competitor persona
 memory and scheduling features do not establish human family experience or current
 head-to-head superiority. See the existing [whole-product baseline](../../research/2026-09-27-system-choice/baseline.md).
 
+### Complete capability coverage without a mandatory tool inventory
+
+The owner's latest requirement covers the relevant user capabilities of the pinned
+reference systems, not just a new channel. Use four product outcomes: personality
+(C1–C4/M3), memory (M1/M2 plus retained experience), initiative (I1/I2), and autonomous
+work (C2/T1–T4/L1–L3, with R1 separately bounded). O1/O2 support installation/lifecycle;
+P1/P2/F1/F2 retain comparison and acceptance. This maps every existing slice including
+closed B0, not a new list of mandatory integrations.
+
+Evaluate result reachability through both existing tools and Eva-authored extensions.
+A fixed catalog count is not coverage; a skill file, generated code or installed
+package is not a working outcome. Unknown/failed capability families remain visible.
+Use the already specified independent task families and reference-version snapshots;
+do not silently add every future upstream feature to the current completion boundary.
+Dynamic discovery keeps normal context selective. A minimal general execution base
+is still necessary, and reusing a maintained solution is preferable when sufficient.
+No universal success guarantee or percentage of removed code follows from this design.
+
 ### Local evidence
 
 - Eva1: ../Bottie/src/mind/persona.js, autonomy.js:679/836 and tools.js:984/2508.

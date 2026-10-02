@@ -3316,7 +3316,7 @@
           "expected": "Eerst een samenhangend beoordeeld plan; uitvoerings- en gezinsresultaten blijven afzonderlijk zichtbaar. Bestaande acceptaties blijven behouden."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-02T01:32:37.940740+00:00"
+        "reviewedAt": "2026-10-02T01:34:20.233278+00:00"
       },
       "reviewedAt": "2026-10-01T15:52:21.323198+00:00"
     },
@@ -15835,7 +15835,7 @@
               },
               "remaining": "Kleine ontwikkelronde vastgelegd: C01/C04, 2epochs, 5systemen, maximaal40providerpogingen en gedeelde grenzen. Niet uitvoerbaar zolang native toelating ontbreekt. Definitieve ongeziene eindtaken en familiebudgetten blijven open.",
               "evidence": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#developmentPlan",
-              "nextAction": "Gebruik de bestaande vergelijkingscriteria voor dezelfde behoefte en hetzelfde bruikbare resultaat: kan Eva benodigde mogelijkheden zelf ontdekken, hergebruiken of toevoegen met minder hulp en verantwoord totaalverbruik? Aantal vooraf ingebouwde integraties is geen score. Leg gelijke taken, toegang en onafhankelijke beoordeling vooraf vast.",
+              "nextAction": "Gebruik de bestaande taakfamilies en vastgezette referentieversies voor persoonlijkheid, geheugen, initiatief en zelfstandig werk. Vergelijk aanwezige én door Eva toegevoegde mogelijkheden op bruikbaar resultaat, hulp, tijd en totaalverbruik; geen toolaantallen of vooraf gecodeerde voorbeeldadapter. Bestaande afgeschermde beoordeling behouden.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -16264,7 +16264,8 @@
         "comparison": "eva2/design/blueprint-2026-09-28/platform-decision.md",
         "development": "eva2/design/blueprint-2026-09-28/learning-and-initiative.md",
         "review": "GO /root/completion_diagnosis; completed task objects, all task statuses/finish conditions and owner trials retained.",
-        "selectedVoice": "Full-duplex audio/speakers remain requested for Jaap; optional for other installations, realizable by Eva when chosen."
+        "selectedVoice": "Full-duplex audio/speakers remain requested for Jaap; optional for other installations, realizable by Eva when chosen.",
+        "comparisonCoverage": "Compare relevant user capability families across pinned Eva1/Eva2/framework reference versions, including capabilities Eva adds on demand. No mandatory bundled tool inventory; all existing slices remain mapped to four product outcomes plus supporting delivery/acceptance. Unknowns and losses remain visible; no automatic future-release scope growth."
       }
     },
     "dashboardClarityCorrection20260922": {
