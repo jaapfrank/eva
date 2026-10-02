@@ -82,11 +82,10 @@ class ConversationClarificationRequired(RuntimeError):
 class ConversationActionInputRejected(ConversationClarificationRequired):
     """A tool input failed validation before admission or side effects."""
 
-    def __init__(self, fields: tuple[str, ...]) -> None:
+    def __init__(self, fields: tuple[str, ...], *, prompt: str =
+                 "Het onderzoek is nog niet gestart: de onderzoeksopdracht kon niet correct worden verwerkt.") -> None:
         self.fields = fields
-        super().__init__(
-            "Het onderzoek is nog niet gestart: de onderzoeksopdracht kon niet correct worden verwerkt."
-        )
+        super().__init__(prompt)
 
 
 _SHA256 = re.compile(r"[0-9a-f]{64}")

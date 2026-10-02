@@ -186,3 +186,27 @@ def test_replay_only_attempt_still_inspects_and_closes_remote_session(monkeypatc
     tool.close()
     assert [item[2] for item in client.calls if len(item) == 4] == ["call", "status"]
     assert client.calls[-1] == ("close", tool.session_key)
+
+
+@pytest.mark.parametrize("invalid", ['{"command": "print("broken")"}', '[]', 'null'])
+def test_invalid_arguments_are_correctable_before_admission(monkeypatch, invalid):
+    from eva.application.conversation import ConversationActionInputRejected
+    tool, turn, client = fixture_actions(monkeypatch)
+    dispatches = []
+    tool.dispatch = dispatches.append
+    bad = ConversationActionCall("bad", actions.CALL, {
+        "tool_name": "start_process", "arguments_json": invalid})
+    with pytest.raises(ConversationActionInputRejected) as error:
+        tool.execute(turn, bad, step_index=3)
+    assert error.value.fields == ("arguments_json",)
+    assert error.value.prompt == actions._INVALID_ARGUMENTS
+    assert not tool.started
+    assert client.calls == dispatches == []
+    assert tool.pending(turn, step_index=3) is None
+    good = ConversationActionCall("corrected", actions.CALL, {
+        "tool_name": "start_process", "arguments_json": '{"command":"python -V"}'})
+    receipt = tool.execute(turn, good, step_index=3)
+    assert receipt.output["status"] == "verified"
+    assert len(client.calls) == len(dispatches) == 1
+    assert tool.execute(turn, good, step_index=3) == receipt
+    assert len(client.calls) == len(dispatches) == 1

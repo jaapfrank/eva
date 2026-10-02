@@ -18,13 +18,25 @@ gezond en hebben gelijke bron/configuratieprofielen. Onafhankelijke review GO;
 145 gerichte controles verspreid over de relevante onderdelen. Eén gerichte
 replaycorrectie is direct toegepast, zonder rollback of gegevensherinstallatie.
 
-**Volgende werk, nog niet gestart:** Eva zelf één relevante taakcontextverbetering
-laten maken, onafhankelijk vergelijken en alleen gemeten winst toepassen.
-Huidige referentie: 3/5 relevante taakverwijzingen; bron en criteria liggen vast.
-Geen kandidaat of Eva-modelcall in deze aansluiting, credits onbekend.
-De uitvoeringsaansluiting is geen volledige L3-functie of extra groene hoofdtaak.
-17/44 kleine taken en eerdere acceptaties blijven behouden. Geen uitvoerder meer
-actief op de afgesloten aansluiting. Het actieve goal vervolgt de kandidaat.
+**Laatste resultaat:** herstelbare programmeerinvoer is geïnstalleerd in kern en
+werker; bronprofielen komen overeen en beide diensten zijn gezond. 136 gerichte
+controles en onafhankelijke GO. Eerdere succesvolle stappen blijven bij hervatten
+bewaard. Dit is een noodzakelijke correctie, geen extra afgeronde productfunctie.
+
+**Contextproef afgesloten zonder kandidaat:** de ene Eva-opdracht bleef ongeldige
+complexe toolargumenten produceren, ook na haar bestaande automatische correctie.
+6 modelantwoorden, 73.518 input-/3.130 outputtokens; credits onbekend. De bron blijft
+ongewijzigd op 3/5 relevante taakverwijzingen. Geen afgeschermde eindtoets, winst of
+zelfstandige zelfverbetering bewezen. De onafhankelijke controle betreft uitsluitend
+de proefuitkomst. Ontwikkelscorer was zichtbaar; de eindtoets bleef afgeschermd.
+
+**Eerstvolgend binnen L3:** het aangetoonde probleem met complexe programmeerinvoer
+oplossen voor algemene taakuitvoering. Geen extra contextkandidaat of nieuw
+optimalisatieplatform. Zelfstandige nuttige programmering, onafhankelijke vergelijking
+en toepassing blijven open. 17/44 en eerdere acceptaties blijven behouden.
+
+[Proefuitkomst](evidence/product/aide-workspace-outcome-20261002.json)
+· [Geïnstalleerde invoercorrectie](evidence/product/l3-programming-input-recovery-installed-20261002.json).
 
 [Installatiebewijs](evidence/product/l3-programming-execution-installed-20261002.json)
 · [Review](reviews/l3-programming-execution-20261002.md)

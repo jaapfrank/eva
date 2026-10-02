@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-02T11:08:33.786076+00:00",
+        "checkedAt": "2026-10-02T11:40:37.945869+00:00",
         "deliveries": [
+          {
+            "title": "Programmeerargumenten via bestaande zelfcorrectie · 2 oktober",
+            "date": "2026-10-02",
+            "state": "installed",
+            "result": "Ongeldige JSON stopt de taak niet meer direct met een ongehanteerde fout: Eva krijgt de bestaande eenmalige correctie vóór uitvoering. 136 gerichte controles, onafhankelijke GO, kern/werkerbron en gezondheid gecontroleerd.",
+            "remaining": "De echte contextproef leverde ook na correctie geen kandidaat. Betrouwbare algemene programmering en zelfverbetering blijven open. Dit is foutherstel, geen nieuwe afgeronde productfunctie.",
+            "source": "eva2/evidence/product/l3-programming-input-recovery-installed-20261002.json"
+          },
           {
             "title": "Algemene programmeerwerkruimte aangesloten en geïnstalleerd · 2 oktober",
             "date": "2026-10-02",
@@ -3323,14 +3331,14 @@
           }
         ],
         "now": {
-          "title": "L3: AIDE² toepassen op Eva’s eigen werkwijze",
+          "title": "L3: invoercorrectie live; contextproef zonder kandidaat",
           "state": "in_progress",
-          "detail": "Programmeeruitvoering geïnstalleerd; AIDE/AIDE²-onderzoek expliciet behouden. Eerste toepassing: relevante taakcontext verbeteren (huidig 3/5 taakverwijzingen). Kandidaat, onafhankelijke winstmeting en toepassing nog open; de modelproef is nog niet gestart.",
+          "detail": "Invoercorrectie geïnstalleerd en gecontroleerd; de onafhankelijke uitkomstcontrole bevestigt dat de ene contextproef geen kandidaat opleverde. 6 modelantwoorden, 73.518 input-/3.130 outputtokens in deze ontwikkelproef. Geen gemeten zelfverbetering of extra afgeronde hoofdtaak. Eerstvolgend: betrouwbare algemene programmeerinvoer.",
           "owner": "Codex /root"
         },
         "next": {
-          "title": "Eva-kandidaat maken, onafhankelijk vergelijken en toepassen",
-          "detail": "Eva maakt één kandidaat binnen de bestaande proef; ontwikkeling en afgeschermde eindbeoordeling blijven gescheiden. Meet kwaliteit, hulp, snelheid en verbruik; alleen gemeten winst toepassen. Dit is nog geen bewezen AIDE²-zelfverbetering."
+          "title": "Bestaande L3: betrouwbaar programmeren en toepassen",
+          "detail": "Eerst het aangetoonde probleem met complexe programmeerargumenten oplossen voor algemene taakuitvoering. Geen nieuwe contextkandidaat of herhaling van de afgesloten proef zonder afzonderlijke onderbouwing. Zelfverbetering, onafhankelijke vergelijking en effectieve toepassing blijven open."
         },
         "ownerAction": {
           "title": "Eén expliciete gegevenskeuze",
@@ -3340,7 +3348,7 @@
           "expected": "Deze keuze betreft de echte gegevensproef; geen privégesprekken of persoonlijke agenda in de proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-02T11:08:33.786076+00:00"
+        "reviewedAt": "2026-10-02T11:41:42.891795+00:00"
       },
       "reviewedAt": "2026-10-01T15:52:21.323198+00:00"
     },
@@ -13161,7 +13169,7 @@
           ]
         }
       ],
-      "nextAction": "I2.1/I2.2: trace existing general discovery and observation automation route, then complete only a demonstrated missing transition.",
+      "nextAction": "L3: address the demonstrated general programming-input usability deficit; the bounded context experiment is closed without a candidate. No new candidate attempt or wider optimizer platform.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -15298,8 +15306,8 @@
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Eva produced a small source fix; evaluation, import, installation and rollback exist. Assisted case improved 71/90 to 90/90.",
-            "remainingGap": "Actual installed configured and dynamic owner catalog checked: no general programming executor. Limited component route still ends at candidate preparation. Missing general execution and controlled application are confirmed gaps.",
-            "nextAction": "Establish/reuse the actually admitted programming workspace through existing delegated tools, then connect the missing execution, independent evaluation and managed release handoffs. Eva, not Codex, implements the selected product improvement.",
+            "remainingGap": "General programming execution is installed, but the real candidate task failed on malformed complex tool arguments. No valid context candidate, independent final assessment or useful applied improvement yet.",
+            "nextAction": "Repair the demonstrated general programming-input usability gap, preserving existing execution and fixed experiment outcome; do not repeat the closed candidate trial.",
             "evidencePaths": [
               "eva2/evidence/product/component-self-improvement-assisted-20260924.json"
             ],
@@ -15350,10 +15358,10 @@
               "owner": "Codex",
               "blocker": null,
               "previousBlocker": "Geen geldige kandidaat uit oorspronkelijke afgesloten proef; afgeschermde vergelijking niet uitgevoerd.",
-              "checkedAt": "2026-10-02T11:08:33.786076+00:00",
+              "checkedAt": "2026-10-02T11:40:37.945869+00:00",
               "ownerActionRequired": false,
-              "remaining": "AIDE²-toepassing op eigen taakcontext: Eva-gemaakte kandidaat, onafhankelijke eindvergelijking en bij winst toepassing. Onderzoek en uitvoering bestaan; zelfstandig beter gedrag is nog niet bewezen.",
-              "nextAction": "Bij een echt uitvoerings-/uitbreidingsgat een bestaande uitvoerder en beheerroute aansluiten; Eva maakt de kandidaat zelf. Onafhankelijk vergelijken volgens de bestaande eindvoorwaarde. Geen platformmigratie of losse toolinstallatie als vervanging voor een bruikbaar resultaat.",
+              "remaining": "Geen kandidaat uit de afgesloten vervolgproef. Onafhankelijke kandidaatvergelijking blijft onbewezen; programmeeraanroepen moeten eerst betrouwbaar uitvoerbaar zijn. Geen extra kandidaat op dezelfde proef.",
+              "nextAction": "Betrouwbare algemene programmeerinvoer afmaken bij het aangetoonde tekort. Geen extra kandidaat voor de afgesloten contextproef; onafhankelijke kandidaatvergelijking blijft onbewezen.",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
@@ -15361,13 +15369,13 @@
                 "blocksIndependentWork": false
               },
               "assignment": {
-                "baseCommit": "d9c7295b4114dc482b56b46312974e86dc2cbe27",
+                "baseCommit": "c1a90c70e8af746cf6db23bb0c89c3c823d7be2e",
                 "owner": "/root",
                 "activeWorkers": [],
-                "stage": "execution_dependency_installed_candidate_not_started",
+                "stage": "followup_closed_reviewed_input_fix_installed",
                 "outcome": "Eva completes a useful ordinary programming request through her own shared execution route, with independently assessed result and actual application.",
                 "existing": "Delegated tasks/MCP discovery, document and learned procedure tools, component proposals and managed operator release.",
-                "gap": "General programming is absent from the observed catalog; effective extension/channel activation remains incomplete. Connect only what the selected family outcome needs.",
+                "gap": "Malformed complex programming arguments persisted after one automatic correction. No candidate was created; protected final comparison remains unperformed.",
                 "files": [
                   "shared delegated execution and existing connector integration as required",
                   "focused existing tests",
@@ -15375,9 +15383,9 @@
                 ],
                 "estimate": "Reuse actual installed-catalog evidence and existing source first; no model calls before concrete reusable execution/application design. One implementation, one bounded review; actual usage reported, credits unknown.",
                 "doneWhen": "Useful Eva-authored change executed, independently assessed and applied through the actual installed route; evidence and result returned; broader capability limitations remain explicit.",
-                "completedPreparation": "Pinned DesktopCommander workspace and existing host/client/delegated integration installed in healthy core and worker. 145 focused checks across host/service/runner/composition, actual pinned MCP smoke and installed client/profile/source verification. Current baseline3/5 relevant references; criteria recorded; no candidate/model trial yet."
+                "completedPreparation": "Programming execution and input recovery installed and verified. One assisted candidate task terminated without a candidate; fixed holdout not run."
               },
-              "latestEvidence": "eva2/evidence/product/l3-programming-execution-installed-20261002.json"
+              "latestEvidence": "eva2/evidence/product/aide-workspace-outcome-20261002.json"
             },
             {
               "id": "L3.3",
@@ -15454,7 +15462,7 @@
           },
           "aide2SelfImprovement": {
             "ownerConfirmedAt": "2026-10-02T11:08:33.786076+00:00",
-            "state": "research_recorded_applied_improvement_unproven",
+            "state": "followup_closed_without_candidate_no_measured_gain",
             "research": "eva2/experiments/aide-20260929/research.md",
             "firstApplication": "Existing task-context selection gap; use recorded workspace follow-up criteria, not a new optimization platform.",
             "distinction": "AIDE searches task programs; AIDE² also searches agent orchestration with fixed underlying models. Our execution tooling is not evidence of AIDE² improvement.",
@@ -15462,6 +15470,14 @@
             "independentEvaluation": "Freeze baseline/candidate and assessment rules; optimizer cannot modify evaluator or protected final cases; no holdout-directed revision.",
             "promotion": "Only measured advantage, preserving privacy, authority and stop; record quality, human help, latency and total usage.",
             "evidenceBoundary": "The original failed trial stays closed. Assisted SHA256 improvement and the installed programming workspace do not prove repeated autonomous self-improvement."
+          },
+          "aideWorkspaceFollowup": {
+            "state": "closed_unsuccessful",
+            "logicalCandidateTasks": 1,
+            "candidateCount": 0,
+            "source": "eva2/evidence/product/aide-workspace-outcome-20261002.json",
+            "holdoutEvaluated": false,
+            "measuredImprovement": false
           }
         },
         {

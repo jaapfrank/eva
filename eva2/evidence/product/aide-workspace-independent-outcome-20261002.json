@@ -1,0 +1,111 @@
+{
+  "contract": "EvaAideIndependentOutcomeReview/v1",
+  "scope": "Outcome-only independent review of the single 2026-10-02 L3 programming task; no candidate assessment",
+  "decision": "Close this bounded attempt without a candidate or promotion; retain the frozen baseline and keep L3.2/L3.3 product completion unproven",
+  "baseline": {
+    "sha256": "d6ad4521881d09e0f91f5edcefda3bbe4ec628e01f3d0db6992f974ffa203731",
+    "frozenCopy": "baseline.py",
+    "source": "/home/administrator/project/Eva2/eva2/src/eva/adapters/postgres/delegated_work_actions.py",
+    "matchesFrozenCopy": true,
+    "matchesCurrentSource": true
+  },
+  "workspace": {
+    "key": "5c9a6a0a8e470f7ca1ba707ddfe8f06dc33012fba81523d106a5fc6ecb3bee63",
+    "files": [
+      "dev-cases.json",
+      "dev_check.py"
+    ],
+    "candidatePresent": false,
+    "developmentInputsUnchanged": true,
+    "hashes": {
+      "dev-cases.json": "cfcd399ac0e8792d9162d9c4adfce71fba04f4df284b42fd4a02f9cc15ea7903",
+      "dev_check.py": "def06902f1688202a28b330e48bcf9088b887dffd20b8c502caa8004bf2ab8a7"
+    }
+  },
+  "recordedExecution": {
+    "provider": "gpt-6-astra",
+    "reasoning": "medium",
+    "initialModelAttempts": 4,
+    "resumeModelAttempts": 2,
+    "aggregateModelAttempts": 6,
+    "requestedToolCalls": 6,
+    "dispatchedToolActions": 3,
+    "inputTokens": 73518,
+    "outputTokens": 3130,
+    "totalTokens": 76648,
+    "initialElapsedSeconds": 76.57,
+    "resumeElapsedSeconds": 89.58,
+    "aggregateExecutionSeconds": 166.15,
+    "credits": "unknown",
+    "cost": "unknown",
+    "terminalExitCode": 0,
+    "terminalIdle": true,
+    "terminalReply": "Deze programmeeraanroep is niet uitgevoerd: arguments_json moet één geldig JSON-object zijn.",
+    "terminalFinishedAt": "2026-10-02T11:33:39.621245+00:00"
+  },
+  "findings": [
+    "The initial run terminated on JSONDecodeError after four measured model attempts and three dispatched actions. The resumed log starts from those exact usage totals and ends after two further responses with the existing bounded input-correction path returning an honest rejection.",
+    "The source-reading host receipt and the start_process receipt show reads of current source and public development inputs/harness. A shell process did run to print development files. No candidate-writing or candidate-check command is evidenced; the workspace contains only the two unchanged input files.",
+    "The resume driver retains the same conversation/message identity and journal, initializes prior dispatched/requested call counters, and deducts 76.57 seconds from the existing task deadline. No additional candidate task or model route is evidenced.",
+    "The recorded terminal completed_tool_evidence=true refers to successful discovery/read work; it does not establish a completed programming improvement.",
+    "Git diff for delegated_work_actions.py and the experiment directory was empty at review time, and direct source/frozen-copy hashes match."
+  ],
+  "independence": {
+    "holdoutOpenedByReviewer": false,
+    "holdoutHashedByReviewer": false,
+    "holdoutEvaluationPerformed": false,
+    "answerModelComparisonPerformed": false,
+    "candidateFrozen": false,
+    "independentCandidateHardgateAssessment": "not run: no candidate",
+    "promotionRuleAssessment": "not run: no candidate",
+    "statementScope": "Reviewer tool history and inspected task records; no global filesystem-access audit was performed."
+  },
+  "deviations": [
+    "The publicly provided dev_check.py embeds the complete development scorer. The optimizer inspected this code in a recorded start_process output. This is a visibility deviation from the broader frozen follow-up wording that evaluator/scoring rules remain outside the workspace. The fixed criteria were not rewritten. There was no candidate and no heldout assessment or promotion.",
+    "The manually supplied resume feedback stated that no command had executed. This was imprecise: a development-file read command had executed; no candidate-writing/check command had executed."
+  ],
+  "assistanceAndLimits": [
+    "Codex manually corrected two experiment-driver faults before provider execution; recorded failures occur at the initial usage callback and remaining-output callback.",
+    "Codex then supplied a generic runtime correction that maps malformed programming arguments to the existing conversation input-correction mechanism and manually resumed the task. This is assisted execution, not a demonstration of autonomous recovery or self-improvement.",
+    "The two recorded pre-provider setup failures show no measured model usage and zero dispatched tools; their 0.02 and 0.30 second durations are excluded from the 166.15 seconds of candidate-task execution.",
+    "Measured tokens belong to development execution, not ordinary Eva runtime or a user-answer speed comparison. End-to-end answer latency, answer quality, context-token improvement, and real family usefulness were not measured.",
+    "This review approves only the honest no-candidate outcome. It does not validate installation of the generic runtime correction or certify completion of L3.2/L3.3, AIDE harness improvement, recursive self-improvement, or general superiority."
+  ],
+  "inspectedEvidence": [
+    "candidate-admission.json",
+    "candidate-terminal.json",
+    "candidate-run.log",
+    "candidate-before-input-recovery-terminal.json",
+    "candidate-before-input-recovery.log",
+    "candidate-pre-provider-setup.log",
+    "candidate-pre-provider-callback.log",
+    "candidate-pre-provider-terminal.json",
+    "candidate-pre-provider-callback-terminal.json",
+    "candidate-run.py",
+    "candidate-resume.py",
+    "dev-input-hashes.json",
+    "criteria.json",
+    "baseline.py",
+    "receipts/5c9a6a0a8e470f7ca1ba707ddfe8f06dc33012fba81523d106a5fc6ecb3bee63/83acc0b0e77f62ed320122a0b49d6a32c65a523e6b1662f3fded1d7c718e036c.json",
+    "receipts/5c9a6a0a8e470f7ca1ba707ddfe8f06dc33012fba81523d106a5fc6ecb3bee63/0bb81fad341fd50a521934533a539d4c93aa4250fd4c6d4f0a1412573c0b0bf9.json"
+  ],
+  "reviewedAt": "2026-10-02T11:39:24.857553+00:00",
+  "evidenceSha256": {
+    "candidate-admission.json": "117ff9e7a5e5425cc6d25067c58a032c5073e8ad5cc181dd5a4861274cb01f38",
+    "candidate-terminal.json": "fc61bc9242c5f1677f8ab912dceee438c65e06c4feab9273f1e02100e0e88469",
+    "candidate-run.log": "a12dd98a43a2915c0c8710cace09ec2b1cbe59be8bdadd0516e5a18431101fde",
+    "candidate-before-input-recovery-terminal.json": "c0383bef7ab878b693afce1f12322baf38b60eb9f531494bd46f4154f8ea8f4e",
+    "candidate-before-input-recovery.log": "b99455b2c55ccd584c5ba57d156a147fd1489c56a68421a6b920260f4d146d2c",
+    "candidate-pre-provider-setup.log": "ec8e94aabbe669770de79ff5c36915e1df1bac04aae72ac822ecb399b1d561e9",
+    "candidate-pre-provider-callback.log": "45e724d96328977571d49115e05f1135cf199dcb5a6f79bd7a303f1957d8e2b5",
+    "candidate-pre-provider-terminal.json": "8adba44c1dd23ba26abadc2ff646cc37603b0880a32bc798a7e933683ebc066e",
+    "candidate-pre-provider-callback-terminal.json": "35a7cb1b327aefb0438b1a4ee0161c5a20cf6d879b00a57ec7eeccfb0dccff66",
+    "candidate-run.py": "ac06f2b6885bb412488d89e5168063ff6dd42625439c8e5995443dbee2765d93",
+    "candidate-resume.py": "41e43e4e336317de3333f28e1f1a73803e3d2f75a968f02e0558ea276ec69366",
+    "dev-input-hashes.json": "d5cbf1599d006c636d2bdf506b8e3c627590301b2334cbabbb65b22bec35500d",
+    "criteria.json": "b7d316e05c98e6e49e34e99420b60bccd15a2c1e021b8c08293c21f2d979be68",
+    "baseline.py": "d6ad4521881d09e0f91f5edcefda3bbe4ec628e01f3d0db6992f974ffa203731",
+    "receipts/5c9a6a0a8e470f7ca1ba707ddfe8f06dc33012fba81523d106a5fc6ecb3bee63/83acc0b0e77f62ed320122a0b49d6a32c65a523e6b1662f3fded1d7c718e036c.json": "e777cf7911a40a04101621fce89f2f7f110de56d464c8ca8a08dc75f0a54c6ed",
+    "receipts/5c9a6a0a8e470f7ca1ba707ddfe8f06dc33012fba81523d106a5fc6ecb3bee63/0bb81fad341fd50a521934533a539d4c93aa4250fd4c6d4f0a1412573c0b0bf9.json": "890d02e7398b010f3d9b3f7bf3f17abfcaa62931fa962cab82b4665c123aa3ee"
+  }
+}

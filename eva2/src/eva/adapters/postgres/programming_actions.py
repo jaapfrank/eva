@@ -3,12 +3,13 @@ import json
 
 from eva.adapters.connectors.programming_workspace import configured_programming_workspace
 from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline, external_timeline_scope
-from eva.application.conversation import ConversationActionCall, ConversationActionReceipt, ConversationConflict, ConversationToolDescriptor
+from eva.application.conversation import ConversationActionCall, ConversationActionInputRejected, ConversationActionReceipt, ConversationConflict, ConversationToolDescriptor
 from eva.application.schema_validation import validate_schema_value
 from eva.contracts.canonical_json import canonical_sha256
 
 LIST = "list_programming_tools"
 CALL = "use_programming_tool"
+_INVALID_ARGUMENTS = "Deze programmeeraanroep is niet uitgevoerd: arguments_json moet één geldig JSON-object zijn."
 _SCHEMAS = {
     LIST: {"type": "object", "additionalProperties": False, "required": ["tool_name"],
            "properties": {"tool_name": {"type": "string", "maxLength": 128}}},
@@ -98,9 +99,14 @@ class ProgrammingActions:
             return saved
         args = None
         if call.name == CALL:
-            args = json.loads(call.arguments["arguments_json"])
+            try:
+                args = json.loads(call.arguments["arguments_json"])
+            except json.JSONDecodeError:
+                # No host call was admitted. Reuse the conversation's existing
+                # argument correction instead of terminating the whole task.
+                raise ConversationActionInputRejected(("arguments_json",), prompt=_INVALID_ARGUMENTS) from None
             if not isinstance(args, dict):
-                raise ConversationConflict("programming arguments must be an object")
+                raise ConversationActionInputRejected(("arguments_json",), prompt=_INVALID_ARGUMENTS)
         self.dispatch(turn)
         self.started = True
         if call.name == LIST:

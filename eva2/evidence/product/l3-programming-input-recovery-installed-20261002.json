@@ -1,0 +1,63 @@
+{
+  "checkedAt": "2026-10-02T11:36:33.980587+00:00",
+  "services": {
+    "eva2-managed-b-slot3-core": {
+      "sources": {
+        "application/conversation.py": "7e64d5f146c8d6a0bdac4a6d5564d2f92954b6764fdb8af6ec54bf3ef9502a62",
+        "adapters/connectors/programming_workspace.py": "9a15aca3618d91f3c72ae1b5c179b5d9513243f8543f8d77bc2e1d4a29298f76",
+        "adapters/postgres/programming_actions.py": "e629cfe71019c1c6037d75839d5fad465bec7558294298908e5bc1cd02a7323a",
+        "bootstrap/delegated_digital_composition.py": "1be79b051efc7beef434f34c2f55daa67c1d14c05764271a6c76c0007ed8e93d",
+        "bootstrap/delegated_digital_runner.py": "9d579561383db74fdbd541f8d113b4d9c20e944a624dea783d2bd20b591ba292",
+        "contracts/delegated_digital_work.py": "c10872a0a869d807b806ae917f9fd929e0ebd0d7fc4f28a58a39da727535777e"
+      },
+      "programming_tools": [
+        "list_programming_tools",
+        "use_programming_tool"
+      ],
+      "profile": "19eac161f5b25f36c3cc4562f435ddbd1240dab5f232172b766ef206ee5d5702",
+      "release": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "admitted_programming": [
+        "list_programming_tools",
+        "use_programming_tool"
+      ],
+      "image": "sha256:72c9500de057e9d6b9234a1192b420269b03cf7eb19d4dff86baa94bf653eb92",
+      "status": "running",
+      "health": "healthy",
+      "sourcesMatch": true
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "sources": {
+        "application/conversation.py": "7e64d5f146c8d6a0bdac4a6d5564d2f92954b6764fdb8af6ec54bf3ef9502a62",
+        "adapters/connectors/programming_workspace.py": "9a15aca3618d91f3c72ae1b5c179b5d9513243f8543f8d77bc2e1d4a29298f76",
+        "adapters/postgres/programming_actions.py": "e629cfe71019c1c6037d75839d5fad465bec7558294298908e5bc1cd02a7323a",
+        "bootstrap/delegated_digital_composition.py": "1be79b051efc7beef434f34c2f55daa67c1d14c05764271a6c76c0007ed8e93d",
+        "bootstrap/delegated_digital_runner.py": "9d579561383db74fdbd541f8d113b4d9c20e944a624dea783d2bd20b591ba292",
+        "contracts/delegated_digital_work.py": "c10872a0a869d807b806ae917f9fd929e0ebd0d7fc4f28a58a39da727535777e"
+      },
+      "programming_tools": [
+        "list_programming_tools",
+        "use_programming_tool"
+      ],
+      "profile": "19eac161f5b25f36c3cc4562f435ddbd1240dab5f232172b766ef206ee5d5702",
+      "release": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "admitted_programming": [
+        "list_programming_tools",
+        "use_programming_tool"
+      ],
+      "image": "sha256:8c5f6d308a74c84c20e4d94d9359147de1d3f95b499615d1821ad1ea2eafadc7",
+      "status": "running",
+      "health": "healthy",
+      "sourcesMatch": true
+    }
+  },
+  "profileMatch": true,
+  "liveProviderCalls": 0,
+  "review": "eva2/reviews/l3-programming-input-recovery-20261002.md",
+  "focusedTests": 136,
+  "limitation": "Argument rejection can be corrected; the actual resumed context task still produced no candidate.",
+  "contract": "EvaProgrammingInputRecovery/v1",
+  "state": "installed",
+  "purpose": "Permit existing conversation argument correction for malformed programming JSON before any execution, preserving prior receipts.",
+  "dataPreserved": true,
+  "rollback": "Prior exact images and Compose configuration retained; no rollback performed."
+}

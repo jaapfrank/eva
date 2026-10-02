@@ -1,0 +1,69 @@
+{
+  "contract": "EvaAideWorkspaceFollowupOutcome/v1",
+  "checkedAt": "2026-10-02T11:37:43.933882+00:00",
+  "state": "closed_unsuccessful",
+  "criteria": "eva2/experiments/aide-20260929/workspace-followup-20261002.json",
+  "sourceBaselineSha256": "d6ad4521881d09e0f91f5edcefda3bbe4ec628e01f3d0db6992f974ffa203731",
+  "candidateCount": 0,
+  "developmentBaseline": {
+    "requiredHits": 3,
+    "requiredTotal": 5,
+    "contextBytes": 4017,
+    "hardFailures": 0
+  },
+  "candidateMetrics": null,
+  "independentHoldoutEvaluated": false,
+  "answerComparisonCalls": 0,
+  "integratedContextImprovement": false,
+  "run": {
+    "logicalCandidateTasks": 1,
+    "resumptions": 1,
+    "refinements": 0,
+    "providerModel": "gpt-6-astra",
+    "reasoningEffort": "medium",
+    "aggregateUsage": {
+      "measurement": "measured",
+      "model_attempts": 6,
+      "tool_calls": 6,
+      "input_tokens": 73518,
+      "output_tokens": 3130
+    },
+    "dispatchedTools": 3,
+    "activeRunSeconds": 166.15,
+    "idleAtTerminal": true,
+    "outcome": "Malformed nested arguments_json prevented any candidate creation. Original attempt stopped on uncaught JSONDecodeError; corrected input path allowed one model correction on same resumed task, but corrected input remained invalid.",
+    "dispatchedToolDetail": "Catalog and source/development-input reads; a start_process command printed the development harness. No candidate-writing or candidate-check command completed."
+  },
+  "assistance": [
+    "Two experiment-driver callback fixes before provider admission; no candidate or provider usage then",
+    "Codex repaired programming JSON rejection to existing correction path, with independent source review",
+    "Same task manually resumed from three durable read/discovery receipts; aggregate provider usage and remaining original allowance preserved"
+  ],
+  "installedDependencyCorrection": "eva2/evidence/product/l3-programming-input-recovery-installed-20261002.json",
+  "independence": "Fixed criteria retained; no protected holdout read or optimizer feedback; outcome-only review is not independent candidate evaluation.",
+  "researchDistinction": {
+    "AIDE": "Search and measurement of task-program candidates.",
+    "AIDE2": "Research also optimizes the research-agent orchestration with fixed underlying models.",
+    "EvaDemonstrated": "Bounded workspace/tool discovery and source access; recoverable input feedback installed. No valid candidate, measured context gain or autonomous self-improvement demonstrated."
+  },
+  "limitations": [
+    "Synthetic/public-source controlled driver assembled installed conversation, provider and programming code; not an ordinary household request.",
+    "No family quality, latency benefit, cost saving or competitor advantage measured.",
+    "Original September29 failed trial remains separate and closed.",
+    "L3.2 independent candidate comparison and L3.3 useful application remain open.",
+    "The optimizer could read the public development scorer embedded in dev_check.py. This differs from the broad pre-registration wording about scoring rules outside the workspace; the protected final holdout/evaluator stayed separate. Criteria were not rewritten.",
+    "Manual resume feedback imprecisely said no command executed; a read-only process had printed source. No candidate-writing or candidate-check command ran."
+  ],
+  "usageAccounting": {
+    "evaExperimentProviderTokensMeasured": true,
+    "ordinaryEvaRuntimeMeasured": false,
+    "experimentProviderCreditCost": null,
+    "codexDevelopmentCredits": null
+  },
+  "recommendation": "Close this context experiment without another candidate. Resolve the general programming-input usability deficit before any separately justified future self-improvement application; do not build a new optimization platform.",
+  "independentOutcomeReview": {
+    "source": "eva2/evidence/product/aide-workspace-independent-outcome-20261002.json",
+    "sha256": "ab9b912f3ca205e3987f76a16cba1da157293c6c88c287b21e344a0e069a27b7",
+    "decision": "Close bounded attempt without candidate or promotion; L3.2/L3.3 not complete."
+  }
+}

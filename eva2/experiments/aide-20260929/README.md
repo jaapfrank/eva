@@ -29,3 +29,36 @@ No product code, installation or promotion follows. Independent review approved 
 Keep the existing proposal/evaluation/release facilities. A future attempt needs a concrete changed cause or revised experiment decision and an explicit accounting of the original allowance; do not reset the budget or assume the unused refinement is a fresh draft allowance. The current failure does not establish that AIDE is unsuitable. Whole L3 and the technical-differentiation requirement remain open.
 
 Original AIDE program search, AIDE² harness evolution, and Eva's demonstrated results remain separate: this trial produced no improved candidate and demonstrates no recursive self-improvement. Do not build a general optimizer to conceal a failed bounded trial.
+
+
+## Workspace follow-up, 2 October 2026
+
+The changed-cause follow-up is closed without a valid candidate. One logical
+Astra/medium task used the installed general programming tools. Three discovery/read
+steps completed; malformed nested tool arguments prevented writing the candidate.
+After a reviewed integration correction, the same task resumed its saved receipts
+and existing aggregate allowance. Its one automatic argument correction also
+remained invalid. No further candidate was requested.
+
+Measured total: 6 model responses, 73,518 input and 3,130 output tokens;
+166.15 seconds across the two active execution segments. Credit costs and Codex
+development usage are unknown. The reference remains 3/5 relevant task references
+and 4,017 context bytes. No candidate score, protected final test, answer-latency
+comparison, improvement or competitor advantage exists.
+
+The programmer-input correction is installed in the existing core and worker.
+It is a dependency repair, not evidence of AIDE² self-improvement. The controlled
+public-source driver and manual repairs are assistance; this was not a fully
+autonomous household request. Keep the original September trial and this follow-up
+separate. Before any future justified improvement trial, address the observed
+general programming-input usability; do not create a new optimization platform.
+
+[Outcome and measured usage](../../evidence/product/aide-workspace-outcome-20261002.json)
+· [Installed input correction](../../evidence/product/l3-programming-input-recovery-installed-20261002.json).
+
+The public development harness included its scorer, visible to the optimizer.
+This is a visibility deviation from the follow-up's broad wording about scoring
+rules outside the workspace; the protected final holdout/evaluator remained
+separate and no criterion was changed. A read-only `start_process` printed source;
+manual resume feedback saying no command executed was imprecise. No command wrote
+or checked a candidate.
