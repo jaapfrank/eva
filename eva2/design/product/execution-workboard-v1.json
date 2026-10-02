@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-02T13:51:01.308094+00:00",
+  "lastUpdated": "2026-10-02T13:58:53.315496+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-02T13:51:01.308094+00:00",
+        "checkedAt": "2026-10-02T14:16:37.301947+00:00",
         "deliveries": [
+          {
+            "title": "Optioneel Home Assistant installeren en vanuit nieuwe Eva gebruiken",
+            "date": "2 oktober",
+            "state": "installed",
+            "result": "De gewone wizard installeert de gekozen HA-module. Nieuwe Eva leest via chat correct HA-versie 2026.9.2; één installatie zonder reparatie/herhaling, onafhankelijke eindreview GO. Bestaande Eva en gegevens behouden.",
+            "remaining": "O1.2 blijft open voor gewone spraak/browserkeuzes en overige gekozen providerconsumenten. 20/44 oorspronkelijke kleine taken klaar; geen extra functie door opsplitsen.",
+            "source": "eva2/evidence/product/installer-selected-ha-installed-20261002.json"
+          },
           {
             "title": "Huisbediening: minder modelrondes en correcte nieuwe uitvoering",
             "date": "2 oktober",
@@ -3371,24 +3379,26 @@
           }
         ],
         "now": {
-          "title": "T2: verbeterde huisbediening opgeleverd",
-          "state": "installed",
-          "detail": "Nieuwe kamervraag uitgevoerd en volledig teruggezet. Onafhankelijke eindreview GO. 17→12 modelantwoorden, 216.145→114.162 inputtokens, 173→148 seconden in één proef; ontvangst en eerste lampactie waren juist later. 20/44 taken blijft gelijk.",
+          "title": "O1.2: resterende optionele modulekeuzes aansluiten",
+          "state": "in_progress",
+          "detail": "Gekozen HA werkt in de nieuwe installatie. De bestaande spraak-/browsermodules missen nog gewone installatiekeuzes en aansluitingen; Codex werkt dezelfde taak af.",
           "owner": "Codex /root"
         },
         "next": {
-          "title": "T3: gewone browseropdracht afmaken",
-          "detail": "Gebruik bestaande browseraansluiting en eerder bewijs; maak de oorspronkelijke uitvoer-/overname-uitkomst af. Geen herbouw van tools of nieuwe demonstratiefunctie. Nog niet gestart."
+          "title": "Dezelfde wizard met optionele browser en spraak",
+          "detail": "Bestaande modules hergebruiken; precieze ontbrekende keuze en uitvoeraansluiting afronden. Persoonlijke Chrome-opdracht T3 hervat zodra Jaap een tab deelt."
         },
         "ownerAction": {
-          "title": "Eén expliciete gegevenskeuze",
+          "title": "Deel Chrome voor de browseropdracht",
           "steps": [
-            "Beantwoord de vraag in deze chat: mag deze ene proef de tuin-camerabeschrijving en gedeelde afvalagenda via de bestaande modelprovider verwerken, of alleen fictieve gegevens gebruiken?"
+            "Open http://127.0.0.1:44718/proef in Chrome.",
+            "Kies Chrome-bediening → Deel een bestaand tabblad → Allow & select en deel het proeftabblad.",
+            "Meld Gedeeld. De aparte I2-gegevensvraag blijft open en blokkeert dit werk niet."
           ],
-          "expected": "Deze keuze betreft de echte gegevensproef; geen privégesprekken of persoonlijke agenda in de proef."
+          "expected": "Een actuele tabdeling; eerdere T3.1-acceptatie blijft behouden."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-02T13:51:01.308094+00:00"
+        "reviewedAt": "2026-10-02T14:16:37.301947+00:00"
       },
       "reviewedAt": "2026-10-02T13:18:04.695516+00:00"
     },
@@ -13209,7 +13219,7 @@
           ]
         }
       ],
-      "nextAction": "T3: finish the existing ordinary browser execution and handover outcome using available shared browser access and prior evidence. Not started yet.",
+      "nextAction": "O1.2: finish the existing optional-module installation handoff while T3 awaits explicit tab access.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -14758,14 +14768,20 @@
           },
           "activeWorker": null,
           "assignment": {
-            "stage": "shared_tab_verified_next_browser_task_open",
             "owner": "/root",
-            "scope": "Existing personal Chrome bridge on44718; availability and explicit tab-sharing only",
-            "effort": "One status check and tab connection; no Eva model calls; credits unknown",
-            "doneWhen": "Select an executable existing browser outcome or record the exact access prerequisite",
-            "result": "Jaap deelt een bestaand Chrome-tabblad. De echte gateway/proxy/bridge-route leest een verse waarneming van het gedeelde projectdashboard http://localhost:44712/. Geen herverbinding, navigatie of nieuwe browser.",
-            "baseCommit": "2e89b9d5",
-            "activeWorkers": []
+            "baseCommit": "80f2c34b93601f6394a4942d90436714867693d6",
+            "stage": "waiting_for_current_owner_tab_share",
+            "existing": "Owner shared a Chrome tab on1October; general tools, takeover/fresh snapshot and isolated route proof exist.",
+            "gap": "Ordinary model-driven complete browser/file result through current owner-shared route; determine actual access before executing.",
+            "files": [
+              "existing browser runtime only if a demonstrated defect",
+              "bounded T3 evidence",
+              "existing workboard and WERKBORD"
+            ],
+            "doneWhen": "Original T3.2 complete checked result and T3.3 stop/fresh-observation behavior; owner evaluation separate.",
+            "estimate": "Reuse existing evidence, one scoped current connection check, then one ordinary matched browser task. Model usage measured when run; credit cost unknown. No broad tests or reinstall absent code defect.",
+            "activeWorkers": [],
+            "result": "Current personal bridge is disconnected. Existing unchanged ChromeGate/worker/proxy and real isolated normal-route takeover proof retained; no missing implementation found. Current personal action/return proof needs explicit tab sharing."
           },
           "dashboardComponent": "browser",
           "remainingTasks": [
@@ -14824,43 +14840,64 @@
             {
               "id": "T3.2",
               "title": "Een browseropdracht volledig afmaken",
-              "status": "planned",
+              "status": "blocked",
               "kind": "praktijk",
               "doneWhen": "Eva voert een concrete opdracht uit, controleert het resultaat en levert het begrijpelijk op.",
               "owner": "Codex",
               "nextAction": "Eva maakt een gewone browseropdracht zelf af met de bestaande bediening en resultaatcontrole. Codex sluit ontbrekende algemene browserovergangen aan; de eerder bevestigde Chrome-verbinding wordt niet opnieuw gebouwd.",
-              "ownerActionRequired": false,
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
-                "steps": [],
-                "blocksIndependentWork": false
-              }
+                "availableNow": true,
+                "purpose": "access",
+                "url": "http://127.0.0.1:44718/proef",
+                "linkLabel": "Deel één bestaand Chrome-tabblad",
+                "steps": [
+                  "Open de proefpagina in Google Chrome.",
+                  "Kies Chrome-bediening → Deel een bestaand tabblad → Allow & select; selecteer het proeftabblad.",
+                  "Meld Gedeeld. Codex voert daarna de opdracht uit en begeleidt alleen de ontbrekende overnamehandeling."
+                ],
+                "expected": "Eva mag bedienen; alleen het gekozen tabblad is gedeeld.",
+                "blocksIndependentWork": false,
+                "localComputerOnly": true
+              },
+              "assignment": {
+                "stage": "checking_current_access_and_retained_evidence",
+                "owner": "/root",
+                "baseCommit": "80f2c34b93601f6394a4942d90436714867693d6",
+                "doneWhen": "Eva voert een concrete opdracht uit, controleert het resultaat en levert het begrijpelijk op."
+              },
+              "blocker": "Actuele persoonlijke Chrome-tabdeling ontbreekt; bestaande bridge meldt disconnected. Dit is toegang, geen aangetoonde bouwfout.",
+              "checkedAt": "2026-10-02T13:58:53.315496+00:00"
             },
             {
               "id": "T3.3",
               "title": "Overnemen en correct doorgaan",
-              "status": "planned",
+              "status": "blocked",
               "kind": "praktijk",
               "doneWhen": "Overname stopt lopende bediening; teruggeven vereist verse waarneming en herhaalt geen oude actie.",
               "owner": "Codex",
               "nextAction": "Codex bewaakt de algemene stop-/overnameovergang. Eva kijkt na teruggeven opnieuw en hervat zonder een oude handeling dubbel uit te voeren.",
-              "ownerActionRequired": false,
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "T3.1 is al afgerond; je gedeelde tabblad blijft behouden. Codex moet eerst T3.2 volledige opdracht afmaken. Nu nog geen overnameproef nodig.",
+                "availableNow": true,
+                "purpose": "access",
+                "url": "http://127.0.0.1:44718/proef",
+                "linkLabel": "Deel één bestaand Chrome-tabblad",
                 "steps": [
-                  "Wanneer Codex meldt dat de echte opdracht loopt: kies Jij neemt over op de bestaande Chrome-bediening.",
-                  "Doe zelf een handeling en geef de bediening daarna terug aan Eva."
+                  "Open de proefpagina in Google Chrome.",
+                  "Kies Chrome-bediening → Deel een bestaand tabblad → Allow & select; selecteer het proeftabblad.",
+                  "Meld Gedeeld. Codex voert daarna de opdracht uit en begeleidt alleen de ontbrekende overnamehandeling."
                 ],
-                "expected": "Eva stopt de oude bediening en kijkt opnieuw voordat ze doorgaat.",
-                "reportBack": "Of overnemen stopt en teruggeven passend doorgaat.",
-                "blocksIndependentWork": false
-              }
+                "expected": "Eva mag bedienen; alleen het gekozen tabblad is gedeeld.",
+                "blocksIndependentWork": false,
+                "localComputerOnly": true
+              },
+              "blocker": "Actuele persoonlijke Chrome-tabdeling ontbreekt; bestaande bridge meldt disconnected. Dit is toegang, geen aangetoonde bouwfout.",
+              "checkedAt": "2026-10-02T13:58:53.315496+00:00"
             }
           ],
-          "latestEvidence": "eva2/evidence/product/t3-owner-shared-tab-connected-20261001.json",
-          "nextAction": "T3.2: één concrete browseropdracht via de bestaande gedeelde route afmaken en controleren; daarna T3.3 overname.",
+          "latestEvidence": "eva2/evidence/product/t3-current-access-20261002.json",
+          "nextAction": "Owner shares an existing Chrome tab through44718; then one ordinary task plus the missing personal takeover boundary. No rebuild or repeated full recovery matrix.",
           "responsibilityReview": {
             "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
             "role": "algemene uitvoering",
@@ -14872,7 +14909,8 @@
               "T3.3"
             ],
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
-          }
+          },
+          "baseCommit": "80f2c34b93601f6394a4942d90436714867693d6"
         },
         {
           "id": "T4",
@@ -15705,15 +15743,15 @@
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Wizard, target provisioning and nine-service preparation exist, with installed subcomponents.",
-            "remainingGap": "**Unknown/evidence:** ordinary bootstrap without handwritten target settings and optional module omission are not fully demonstrated.",
-            "nextAction": "Reuse wizard/composition. Identify exact absent input/module seam; integrate it, not another installer.",
+            "remainingGap": "Gekozen HA-module via gewone wizard geïnstalleerd en vanuit de nieuwe Eva gebruikt: versie 2026.9.2 correct uitgelezen. Weglaten blijft werken. Spraak/browser toevoegen en overige gekozen providerconsumenten blijven open.",
+            "nextAction": "Reuse existing module implementations and ordinary installer to close voice/browser selection and consumers; no new general installer.",
             "evidencePaths": [
               "eva2/evidence/product/installer-composed-preparation-20260925.json"
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": null,
+          "activeWorker": "/root",
           "dashboardComponent": "installation",
           "remainingTasks": [
             {
@@ -15794,15 +15832,15 @@
               "owner": "Codex /root",
               "blocker": null,
               "evidence": "eva2/evidence/product/installer-optional-selection-20260929.json",
-              "checkedAt": "2026-10-01T08:39:36.283951+00:00",
-              "remaining": "Weglaten en tekstinstallatie werken. Gekozen HA/configuratie via gewone wizard werkelijk geverifieerd; bronaansluiting beoordeeld, daadwerkelijke gekozen module op de doelinstallatie nog bevestigen. Spraak/browser toevoeging en weglating blijven open.",
+              "checkedAt": "2026-10-02T14:16:37.301947+00:00",
+              "remaining": "Gekozen HA-module via gewone wizard geïnstalleerd en vanuit de nieuwe Eva gebruikt: versie 2026.9.2 correct uitgelezen. Weglaten blijft werken. Spraak/browser toevoegen en overige gekozen providerconsumenten blijven open.",
               "assignment": {
-                "baseCommit": "854014862daf80830d18b167a1c8a42460a60ed6",
+                "baseCommit": "80f2c34b93601f6394a4942d90436714867693d6",
                 "owner": "/root",
                 "activeWorkers": [],
-                "stage": "source_review_complete_waiting_after_C1_owner_failure",
+                "stage": "selected_ha_installed_next_optional_module_seam",
                 "existing": "O1.1 actual text target and omission proof complete. Existing capability/secret/provider verification, HA URL configuration, maintained optional graph projection and HA runtime connector already exist.",
-                "gap": "Ordinary factory rejects selected providers. Existing v4 verification receipts already bind non-secret configuration and secret generation; reuse them in preparation. Voice/HA/browser add/omit remain the original full O1.2 scope.",
+                "gap": "Selected HA factory rejection resolved. Ordinary voice/browser module selection and installed consumers remain absent; other selected providers explicitly unsupported.",
                 "outcome": "Dezelfde installatie werkt met gekozen modules; geen hardcoded eigenaarpaden.",
                 "design": "Reuse confirmed plan, actual provider configuration/secret generations and optional projection. Supply selected HA inputs into maintained runtime graph and actual starter, preserve skipped providers. Inspect existing voice/browser module boundaries before their installation wiring; no independent installer/framework or repeated deployment of current Eva.",
                 "files": [
@@ -15814,7 +15852,8 @@
                 ],
                 "estimate": "One executor, existing route and focused actual selected-module verification. No planned paid research or real house mutation. Development credits unknown; provider/model usage recorded if invoked.",
                 "finishScope": "Original task finish retained. O1 parent cannot close until voice/HA/browser module additions/omissions are available through ordinary owner choices; unsupported channels must remain explicit.",
-                "review": "Conditional source GO; actual selected target/image/read route still unproved."
+                "review": "Independent GO for selected HA installed; full O1.2 remains open.",
+                "result": "Current confirmed plan → selected immutable image validation → one preparation → healthy target → ordinary HA chat succeeded without repair/retry."
               },
               "nextAction": "Standaardchat en enkele optionele installatiekeuzes; bestaande modules kunnen worden weggelaten. Gebruik dezelfde beheerroute voor later benodigde uitbreidingen, zonder vooraf verplichte HA/browser/Telegram-bundel of nieuwe installer per voorbeeld.",
               "ownerActionRequired": false,
@@ -15823,17 +15862,19 @@
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "latestEvidence": "eva2/evidence/product/installer-selected-ha-installed-20261002.json",
+              "result": "Eén gewone installatieaanvraag in 131,944s; daarna echte chat met één HA-uitlezing en juist antwoord. Geen huiswijziging, herinstallatielus of verhoging van taak-/producttellers."
             }
           ],
           "assignment": {
             "owner": "/root",
             "baseCommit": "c2871ea8",
-            "stage": "optional_provider_projection_installed_awaiting_O1.1",
+            "stage": "selected_ha_installed_optional_module_completion",
             "scope": "Existing installer capability plan and target graph projection; no existing installation removal",
             "doneWhen": "Skipped optional capabilities no longer force their service configuration during target preparation; selected capabilities retained. Complete O1.2 still requires usable module selection through installation.",
             "effort": "One bounded source change and focused cases; no Eva model calls; credits unknown",
-            "result": "16 focused cases passed; independent GO; exact modules installed/imported in existing operator package. No runtime rollback or restart."
+            "result": "Eén gewone installatieaanvraag in 131,944s; daarna echte chat met één HA-uitlezing en juist antwoord. Geen huiswijziging, herinstallatielus of verhoging van taak-/producttellers."
           },
           "responsibilityReview": {
             "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
@@ -15845,7 +15886,8 @@
               "O1.2"
             ],
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
-          }
+          },
+          "latestEvidence": "eva2/evidence/product/installer-selected-ha-installed-20261002.json"
         },
         {
           "id": "O2",
@@ -16352,7 +16394,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "T2",
+      "activeSliceId": "O1",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

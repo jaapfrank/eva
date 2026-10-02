@@ -4,6 +4,7 @@ from dataclasses import dataclass, replace
 import json
 from pathlib import Path
 from uuid import uuid4
+from typing import Callable
 
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.operations.installer_identity_storage import atomic_write_private, read_private_artifact, write_private_once
@@ -47,6 +48,7 @@ class InstallerTargetSettings:
     fresh_installation: bool = False
     local_port: int | None = None
     source_authority_directories: tuple = ()
+    configuration_validator: Callable[[dict], dict] | None = None
 
 
 class InstallerTargetWorkflow:
@@ -139,7 +141,10 @@ class InstallerTargetWorkflow:
             # Retain the exact trusted graph for inspection of a later failed
             # transition. Compose's external-resource projection is different.
             write_private_once(self.access_root / "launch-graph.json", canonical_json_bytes(access.graph))
-            # Rebind credentials/choices immediately before creating resources.
+            if settings.configuration_validator is not None:
+                save("runtime_configuration")
+                receipt["runtime_configuration"] = settings.configuration_validator(access.graph)
+            # Rebind after validation, immediately before creating resources.
             if bind() != inputs:
                 raise ValueError("approved runtime inputs changed before provisioning")
             save("resource_preparation")
@@ -203,7 +208,8 @@ def run_target_installer_wizard(*, settings: InstallerTargetSettings, argv=None)
         raise ValueError("trusted installer target settings required")
 
     def factory(*, workspace, secret_store, budget_workflow, plan_reader,
-                identity_file=None, identity_trust_file=None, secret_lifecycle=None):
+                identity_file=None, identity_trust_file=None, secret_lifecycle=None,
+                provider_configuration_store=None, provider_verifier=None):
         if workspace is None or secret_store is None or budget_workflow is None:
             raise ValueError("ordinary target preparation requires a complete wizard workspace")
         target_workspace = Path(workspace) / "target"

@@ -1,6 +1,34 @@
 # EVA2 werkbord
 
-## Nu: T2 — verbeterde huisbediening geïnstalleerd
+## Nu: O1.2 — resterende optionele modules aansluiten
+
+**Opgeleverd:** dezelfde gewone installatiewizard kan nu de gekozen Home Assistant-
+module installeren. De nieuwe Eva antwoordde via haar gewone chat correct dat
+HA-versie **2026.9.2** is aangesloten. Zij las dit zelf met de bestaande algemene
+HA-API; een afzonderlijke uitlezing bevestigt de versie. Geen huiswijzigingen.
+
+De installatie liep met één aanvraag in **131,944 seconden** door, zonder reparatie
+of herhaling. Het chatantwoord kostte **11,6 seconden**, twee modelantwoorden en
+**7.177 input-/91 outputtokens**. Een afzonderlijke hercontrole van de vernieuwde
+modelaanmelding kostte 30/9 tokens. Credits en geheugenachtergrond niet volledig
+meetbaar. Onafhankelijke review: **GO voor gekozen HA geïnstalleerd**.
+
+**Nog af te maken binnen O1.2:** gewone spraak-/browserkeuzes en werkende consumenten
+van de overige gekozen providers. De bestaande modules hergebruiken; geen nieuwe
+installer. De oorspronkelijke **20/44** kleine taken blijven staan; HA-aansluiting
+voltooit niet fictief de hele modulaire installatie. Jaaps bestaande Eva bleef staan.
+
+[Installatie en gebruiksbewijs](evidence/product/installer-selected-ha-installed-20261002.json)
+· [Onafhankelijke review](reviews/installer-selected-modules-20261001.md).
+
+**T3 wacht alleen op actuele tabdeling:** de persoonlijke bridge meldt disconnected.
+Open http://127.0.0.1:44718/proef in Chrome en kies Chrome-bediening → Deel een
+bestaand tabblad → Allow & select. Deel het proeftabblad en meld Gedeeld.
+Bestaande motor en eerdere acceptaties behouden; geen nieuwe browserbouw.
+[Actuele toegang](evidence/product/t3-current-access-20261002.json).
+AIDE² blijft expliciet bij L3/R1, met onderscheid tussen onderzoek en bewezen winst.
+
+## Laatste oplevering: T2 — verbeterde huisbediening geïnstalleerd
 
 Dezelfde gewone kamervraag is opnieuw werkelijk uitgevoerd: de juiste lampen
 zijn aangezet, apart gecontroleerd en volledig teruggezet. In deze ene proef:
@@ -15,8 +43,8 @@ zijn gezond met gelijke bronprofielen. Onafhankelijke eindbeoordeling: GO.
 Bron, meting en review vormen één oplevering. De oorspronkelijke **20/44** taken blijven staan;
 geen extra functie door optimalisatie. AIDE² blijft afzonderlijk onderdeel van L3/R1.
 
-**Daarna T3, nog niet gestart:** gewone browseropdracht en de oorspronkelijke
-controle-/overname-uitkomst afmaken met de bestaande aansluiting en het bewijs.
+**Vervolg T3 wacht op tabdeling:** de persoonlijke bridge is nu disconnected.
+Uitvoering en overname blijven open; O1.2 gaat zelfstandig verder.
 Historische T2.1-timeout en fysieke spraak blijven expliciet open.
 
 [Installatie en vergelijking](evidence/product/t2-grouped-reads-installed-20261002.json).

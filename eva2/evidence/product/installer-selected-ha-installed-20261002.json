@@ -1,0 +1,155 @@
+{
+  "contract": "EvaProductDeliveryEvidence/v1",
+  "id": "O1.2-selected-ha-installed-20261002",
+  "checkedAt": "2026-10-02T14:16:37.301947+00:00",
+  "task": "O1.2",
+  "status": "installed_independently_reviewed",
+  "scope": "Selected Home Assistant module through the existing ordinary Windows/WSL development installer. Full optional-module task remains open.",
+  "existing": "Ordinary text installation, optional omission, provider verification, target provisioning and general HA API reused. No new installer or device-specific function.",
+  "source": {
+    "integration_base": "80f2c34b93601f6394a4942d90436714867693d6",
+    "source_has_changes": true,
+    "reviewed_file_hashes": {
+      "eva2/tools/packaged_installer_target.py": "b53ba03c21f33c6ceb16bd0936354abc610ba6db820af7b8650a689a7038351e",
+      "eva2/tools/installer_target_workflow.py": "5c681efc6f9366d0b5279ee82f5652072a4bd809717d9f79e5f912b889373d9d",
+      "eva2/src/eva/bootstrap/installer_wizard_cli.py": "5e8dbaed7ccf1fa978667c1b69e2296fbbcd71621e0c64cd055e7a7dd904ab7f",
+      "eva2/tests/operations/test_installer_target_workflow.py": "26b1a940703abc6a6af028fd361425b811de719e723329ee8d2caff7b911a875",
+      "eva2/tests/operations/test_packaged_installer_target.py": "f5a3485f17ef77f654090aab0e78ad7b63af00221b96981efb60d3837b0dfc11"
+    },
+    "package_path": "/home/administrator/project/.eva2-artifacts/installer-selected-modules-20261001/package",
+    "package_staging_sha256": "994e06e545ddce469e2230d72595cb3a581f8ce708f4a1a496eb4ce5cb83453e",
+    "source_file_count": 1207,
+    "original_package_base_commit": "854014862daf80830d18b167a1c8a42460a60ed6",
+    "images": {
+      "hindsight": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+      "living-core": "sha256:35eba561f26f4745b7995ae849c9341c441361a74106326308781e7e3ffc7a69",
+      "postgres": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1"
+    },
+    "public_release": false,
+    "platform_support_claim": false,
+    "review": "eva2/reviews/installer-selected-modules-20261001.md"
+  },
+  "changes": [
+    "Pass existing provider configuration/verification stores through the ordinary CLI and preparation factory.",
+    "Bind selected HA configuration and secret generation to the confirmed verification receipt; enable the existing general API for the fresh owner principal.",
+    "Validate settings with the actual selected immutable image before persistent preparation; recheck plan and secret generation after validation."
+  ],
+  "actual_route": {
+    "ordinary_confirmed_plan_sha256": "b83d9fd2a0055f5db6f0ec8c9c9527d564eb3a9bee78cdd3338618a7d974e7ec",
+    "workflow_plan_sha256": "b83d9fd2a0055f5db6f0ec8c9c9527d564eb3a9bee78cdd3338618a7d974e7ec",
+    "ordinary_prepare_requests": 1,
+    "prepare_result": {
+      "httpStatus": 200,
+      "body": {
+        "status": "runtime_ready",
+        "message": "De nieuwe Eva-diensten zijn gestart en technisch bereikbaar. De kanaal- en gebruiksproef staat nog open.",
+        "owner_access": true
+      },
+      "elapsedSeconds": 131.944
+    },
+    "namespace": "eva-install-f5afb1f07694",
+    "status": "runtime_ready",
+    "configuration_validation": {
+      "configuration_accepted": true,
+      "image": "sha256:35eba561f26f4745b7995ae849c9341c441361a74106326308781e7e3ffc7a69",
+      "network": "none",
+      "provider_requests": 0
+    },
+    "startup_status": "runtime_started_verified",
+    "runtime_user": "65532:65532",
+    "graph_user": "65532:65532",
+    "fresh_owner_allowed": true,
+    "fresh_owner_sha256": "fd812f557bc2420d7d5d0ab9ecdfb41c7e156f8193146d0442e00bcc4f7526b4",
+    "wizard_url": "http://127.0.0.1:44726/",
+    "conversation_proxy": "/eva/internal/v1/dashboard/conversation/respond",
+    "handwritten_owner_configuration": false,
+    "repair_or_retry_this_preparation": false,
+    "main_eva_installation_changed": false,
+    "persistent_data_preserved": true,
+    "worker_limit": "Durable goal worker is created, not running. This delivery proves ordinary chat and selected HA consumer, not background-work startup."
+  },
+  "ordinary_conversation": {
+    "input": "Welke versie van Home Assistant is hier aangesloten? Lees alleen de versie uit en wijzig niets.",
+    "messageId": "dashboard:c8ab325a-39f9-46dd-85ca-b27457108db5",
+    "elapsedSeconds": 11.6,
+    "answer": "Hier is Home Assistant versie 2026.9.2 aangesloten. Ik heb alleen gelezen en niets gewijzigd.",
+    "modelUsage": [
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 3141,
+        "output_tokens": 65,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 0,
+        "measurement": "measured",
+        "input_tokens": 4036,
+        "output_tokens": 26,
+        "model_attempts": 1
+      }
+    ],
+    "calls": [
+      {
+        "name": "home_assistant.api.request",
+        "arguments": {
+          "path": "/api/config",
+          "limit": 50,
+          "method": "GET",
+          "offset": 0,
+          "body_json": "",
+          "transport": "rest",
+          "response_pointer": ""
+        }
+      }
+    ],
+    "modelInputTokens": 7177,
+    "modelOutputTokens": 91,
+    "modelResponses": 2,
+    "provider": "chatgpt-codex:gpt-6-astra",
+    "independent_read_agrees": true,
+    "independent_read_model_calls": 0,
+    "independent_read_version": "2026.9.2",
+    "house_mutations": 0,
+    "raw_home_configuration_published": false
+  },
+  "verification": {
+    "source_review": "GO for selected HA installed only",
+    "focused_cases": 19,
+    "overlapping_latest_subset": 11,
+    "overlapping_counts_additive": false,
+    "unchanged_reviewed_bytes_tests_repeated_this_turn": false,
+    "selected_image_config_accepted": true,
+    "actual_runtime_chat_succeeded": true,
+    "owner_acceptance": false
+  },
+  "usage": {
+    "runtime_conversation_input_tokens": 7177,
+    "runtime_conversation_output_tokens": 91,
+    "runtime_conversation_model_responses": 2,
+    "model_route_reverification_input_tokens": 30,
+    "model_route_reverification_output_tokens": 9,
+    "model_route_reverification_reason": "Existing access lease rotated; current ordinary verified plan required.",
+    "measured_total_input_tokens": 7207,
+    "measured_total_output_tokens": 100,
+    "measured_total_model_responses": 3,
+    "background_memory_usage": "not measured",
+    "development_usage": "not attributed to this delivery",
+    "credit_cost": "unknown"
+  },
+  "remaining": [
+    "Full O1.2 remains in_progress: ordinary voice/browser selection and working installed consumers are still missing.",
+    "Selected Telegram/email/adaptive connector consumers remain explicitly unsupported by this target factory.",
+    "Physical voice, personal browser access, integrated final candidate and owner acceptance are not established by this proof."
+  ],
+  "private_artifacts": "/home/administrator/project/.eva2-artifacts/installer-selected-modules-20261001",
+  "artifact_sha256": {
+    "current-plan-20261002.json": "7890ca4267c8378dfe2a2a1515a208933c6b4d637d20f5bd17218f15964270fc",
+    "model-reverified-20261002.json": "01b3929a00441a364587347a7ac01dfd2e5a08f85f5c223136f23272c936401d",
+    "prepare-started-20261002.json": "d723c02160ad46b35adac4ebf6149700176baa386c15bddad44aa391fd046c23",
+    "prepare-result-20261002.json": "9720befe65d8c6ad47d5a2f3db82260df041bd09be9d6f9889d33e5307b56e88",
+    "selected-ha-runtime-read-20261002.json": "3f99810ccb8fa2b7101bb1762012de1d21f2d38c0bdcabb75b57ddeb71806723",
+    "ha-conversation-summary-20261002.json": "2265e400ad481a11b004f2babc4d290112121164e87c9854e640f98200007282",
+    "ordinary-target/target/target-workflow.json": "c4420b4af18ca95118a44c0f56d76406a70d062a201f14f33768b87e107771c6"
+  }
+}

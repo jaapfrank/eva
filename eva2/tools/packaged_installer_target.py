@@ -85,6 +85,64 @@ def _new_subnet():
     raise ValueError("no unused private installer subnet available")
 
 
+def verified_provider_configuration(plan, slot_id, configuration_store, verifier):
+    """Read only the configuration already bound by the existing v4 probe.
+
+    Capability evidence binds the endpoint and credential generation. Reuse that
+    receipt instead of inventing a second plan contract or probing again.
+    """
+    capability = next((item for item in plan["capabilities"]
+                       if item["step_id"] == slot_id), None)
+    if capability is None or capability["state"] != "ready":
+        raise ValueError("selected verified provider required")
+    if configuration_store is None or verifier is None:
+        raise ValueError("selected provider configuration unavailable")
+    configuration = configuration_store.read(slot_id=slot_id)
+    digest = capability["evidence_sha256"]
+    if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
+        raise ValueError("selected provider evidence identity differs")
+    raw = read_private_artifact(verifier.evidence_workspace / (digest + ".json"),
+                                label="verified provider configuration")
+    receipt = json.loads(raw)
+    binding = next((item for item in plan["inputs"]["secret_bindings"]
+                    if item["slot_id"] == slot_id), None)
+    if (hashlib.sha256(raw).hexdigest() != digest
+            or receipt.get("contract") != "EvaInstallerProviderVerificationReceipt/v4"
+            or receipt.get("slot_id") != slot_id or receipt.get("outcome") != "ready"
+            or receipt.get("reason_code") != "verified" or binding is None
+            or receipt.get("configuration_sha256") != configuration.configuration_sha256
+            or receipt.get("secret_reference") != binding["reference"]
+            or receipt.get("secret_generation") != binding["generation"]):
+        raise ValueError("selected provider configuration differs from confirmed verification")
+    return configuration.value
+
+
+
+def validate_target_runtime_configuration(graph):
+    """Check the actual selected image and bound files before creating services."""
+    core = graph["services"]["core"]
+    command = ["docker", "run", "--rm", "--pull", "never", "--network", "none",
+               "--name", core["container_name"] + "-configuration-check",
+               "--entrypoint", "/usr/local/bin/python"]
+    for key, value in core["environment"].items():
+        command.extend(("--env", key + "=" + str(value)))
+    for mount in core.get("volumes", []):
+        if mount["type"] == "bind":
+            command.extend(("--mount", "type=bind,src=" + mount["source"] +
+                            ",dst=" + mount["target"] +
+                            (",readonly" if mount.get("read_only") else "")))
+    command.extend((core["image"], "-c",
+        "from eva.bootstrap.runtime import RuntimeSettings; "
+        "from eva.providers.home_assistant import HomeAssistantProviderFactory; "
+        "RuntimeSettings.from_environment(); HomeAssistantProviderFactory.load_settings(); "
+        "print('runtime configuration accepted')"))
+    result = subprocess.run(command, capture_output=True, text=True)
+    if result.returncode != 0 or result.stdout.strip() != "runtime configuration accepted":
+        raise ValueError("selected image runtime configuration was not accepted")
+    return {"image": core["image"], "configuration_accepted": True,
+            "network": "none", "provider_requests": 0}
+
+
 def omit_unconfigured_text_target_transports(core):
     """Leave unselected background delivery disabled rather than half configured.
 
@@ -99,7 +157,8 @@ def omit_unconfigured_text_target_transports(core):
 
 class PackagedInstallerPreparation:
     def __init__(self, *, root, manifest, verification, workspace, secret_store, budget_workflow, plan_reader,
-                 identity_file, identity_trust_file, secret_lifecycle):
+                 identity_file, identity_trust_file, secret_lifecycle,
+                 provider_configuration_store=None, provider_verifier=None):
         if os.geteuid() != 0:
             raise ValueError("start the installer with sudo to create runtime-owned files")
         self.root, self.manifest, self.verification = Path(root), manifest, verification
@@ -119,6 +178,8 @@ class PackagedInstallerPreparation:
             if secret_lifecycle is None:
                 raise ValueError("actual credential lifecycle required to invalidate stale model verification")
             secret_lifecycle.rotate(slot_id="model_provider", secret=lease.decode("utf-8"))
+        self.provider_configuration_store = provider_configuration_store
+        self.provider_verifier = provider_verifier
         self.workflow = None
 
     def status(self):
@@ -146,11 +207,17 @@ class PackagedInstallerPreparation:
     def _settings(self, plan):
         if plan.get("status") != "ready_for_release_preparation":
             raise ValueError("confirmed complete wizard choices required")
-        # Other selected provider configurations remain O1.2 work. They cannot
-        # silently become skipped or borrow this home's tokens in a fresh target.
-        if any(c["state"] == "ready" and c["step_id"] in {"telegram", "home_assistant", "email", "adaptive_connector"}
+        # Providers without installed consumers must remain explicit. Selected
+        # HA uses the owner-entered endpoint and its existing verified secret.
+        if any(c["state"] == "ready" and c["step_id"] in {"telegram", "email", "adaptive_connector"}
                for c in plan["capabilities"]):
-            raise ValueError("this development text target requires optional providers to be explicitly skipped")
+            raise ValueError("selected provider has no ordinary target consumer yet")
+        home_assistant_selected = any(item["step_id"] == "home_assistant"
+                                      and item["state"] == "ready"
+                                      for item in plan["capabilities"])
+        home_assistant_url = (verified_provider_configuration(
+            plan, "home_assistant", self.provider_configuration_store, self.provider_verifier)
+            if home_assistant_selected else "http://127.0.0.1:9")
         from eva.adapters.objects.identity_verifier import load_current_identity_pack
         from eva.application.identity_verifier import load_identity_pack_trust_binding
         identity = load_current_identity_pack(self.identity_file,
@@ -208,7 +275,7 @@ class PackagedInstallerPreparation:
             "EVA_FANOUT_ALLOW_INSECURE_HTTP": "false", "EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON": "{}",
             # Required template fields for omitted/fenced consumers are removed
             # by existing capability projection before any container uses them.
-            "EVA_HOME_ASSISTANT_URL": "http://127.0.0.1:9",
+            "EVA_HOME_ASSISTANT_URL": home_assistant_url,
             "EVA_DURABLE_GOAL_PROVIDER": "unconfigured", "EVA_DURABLE_GOAL_PROVIDER_URL": "http://127.0.0.1:9",
             "EVA_CONVERSATION_MODEL": "gpt-6-astra", "EVA_CONVERSATION_REASONING_EFFORT": "medium",
             "TZ": profile["time_zone"],
@@ -228,6 +295,11 @@ class PackagedInstallerPreparation:
         core["environment"].update(EVA_DASHBOARD_RELEASE_SHA256=values["EVA_DASHBOARD_RELEASE_SHA256"],
             TZ=profile["time_zone"],
             EVA_CONVERSATION_CONTACT_MODEL="gpt-6-sol", EVA_CONVERSATION_CONTACT_REASONING_EFFORT="none")
+        if home_assistant_selected:
+            core["environment"].update(
+                EVA_HOME_ASSISTANT_API_ENABLED="true",
+                EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST=
+                    hashlib.sha256(identifiers["principal"].encode()).hexdigest())
         omit_unconfigured_text_target_transports(core)
         graph["services"]["hindsight"]["environment"].update(
             HINDSIGHT_API_LLM_MODEL="gpt-6-astra", HINDSIGHT_API_LLM_REASONING_EFFORT="medium")
@@ -256,7 +328,8 @@ class PackagedInstallerPreparation:
             fresh_start=InstallerFreshStartSettings("postgres", "core", ("model-access-lease", "hindsight-access-lease", "hindsight", "core"),
                 authority, installation_profile=profile, support_tier="unsupported_fixture"),
             fresh_installation=True, local_port=port,
-            source_authority_directories=((self.model_authority.parent, "auth.json"),))
+            source_authority_directories=((self.model_authority.parent, "auth.json"),),
+            configuration_validator=validate_target_runtime_configuration)
 
 
 def run_packaged_target_wizard(root, argv):

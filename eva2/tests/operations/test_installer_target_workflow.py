@@ -113,6 +113,7 @@ def test_ordinary_launcher_uses_live_wizard_stores_and_current_plan(flow, tmp_pa
         preparation = kwargs["installation_preparation_factory"](
             workspace=tmp_path, secret_store=secrets, budget_workflow=budget,
             plan_reader=lambda: dict(plan),
+            provider_configuration_store=object(), provider_verifier=object(),
         )
         assert preparation.settings.secret_store is secrets
         assert preparation.settings.budget_workflow is budget
@@ -159,3 +160,42 @@ def test_fresh_start_is_durable_and_never_reprovisions(flow, monkeypatch, fail):
     with pytest.raises(ValueError, match="already attempted"):
         new()(plan)
     assert events.count("resources") == events.count("start") == 1
+
+
+@pytest.mark.parametrize("accepted", [True, False])
+def test_selected_image_configuration_checked_before_creating_resources(flow, accepted):
+    from dataclasses import replace
+    new, plan, events = flow
+    workflow = new()
+    def validate(graph):
+        assert graph == {"services": {"core": {}}}
+        assert "resources" not in events
+        events.append("configuration")
+        if not accepted:
+            raise ValueError("configuration mismatch")
+        return {"configuration_accepted": True, "provider_requests": 0}
+    workflow.settings = replace(workflow.settings, configuration_validator=validate)
+    if accepted:
+        workflow(plan)
+        assert events.index("configuration") < events.index("resources")
+        assert json.loads(workflow.receipt_path.read_text())["runtime_configuration"]["configuration_accepted"] is True
+    else:
+        with pytest.raises(RuntimeError, match="inspect retained"):
+            workflow(plan)
+        assert "resources" not in events
+        assert workflow.material_root.exists() and workflow.access_root.exists()
+        assert json.loads(workflow.receipt_path.read_text())["phase"] == "runtime_configuration"
+
+
+def test_selection_changed_during_configuration_check_prevents_resources(flow):
+    from dataclasses import replace
+    new, plan, events = flow
+    workflow = new()
+    def validate(graph):
+        plan["plan_sha256"] = "b" * 64
+        return {"configuration_accepted": True}
+    workflow.settings = replace(workflow.settings, configuration_validator=validate)
+    with pytest.raises(RuntimeError, match="inspect retained"):
+        workflow(plan)
+    assert "resources" not in events
+    assert workflow.material_root.exists() and workflow.access_root.exists()

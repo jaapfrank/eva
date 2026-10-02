@@ -1,0 +1,56 @@
+{
+  "checkedAt": "2026-10-02T13:58:53.315496+00:00",
+  "basisCommit": "80f2c34b93601f6394a4942d90436714867693d6",
+  "state": "owner_tab_share_required",
+  "bridgeStatus": {
+    "contract": "EvaSharedChrome/v1",
+    "state": "disconnected",
+    "epoch": "8ce5101a-760e-4f1e-9947-96a49884d4b4",
+    "busy": false,
+    "connected": false,
+    "visibleIn": "Google Chrome",
+    "freshObservationRequired": true
+  },
+  "sourceContinuity": {
+    "server.mjs": {
+      "sha256": "d742d7216d1fe46656b02cae79e910d075949f31c5d1fbdaf9628e59481c95eb",
+      "sameAsReviewedRuntimeSource": true
+    },
+    "proxy.py": {
+      "sha256": "76d8658d841ec9d2ca8e6a035638919fb6d776c7c1fe6e7efc4635e4a8caaaf8",
+      "sameAsReviewedRuntimeSource": true
+    },
+    "gate.mjs": {
+      "sha256": "73ed17eea9ea9fa356c1aea38675e7914d812a9e7229800aed1a3883e22343dc",
+      "sameAsReviewedRuntimeSource": true
+    },
+    "worker.cjs": {
+      "sha256": "70a4b798490f3692dbf357ba7a7ad154d6b7f2a9fcda9ec2a1620a5291baddcf",
+      "sameAsReviewedRuntimeSource": true
+    },
+    "process.mjs": {
+      "sha256": "3ba1e5138e9ce028313fefc2658d9453b30016464a991b64b8dbda8d1ce21405",
+      "sameAsReviewedRuntimeSource": true
+    },
+    "package-lock.json": {
+      "sha256": "3a761fc3558ba3004ddbeed2962131037eae0ed2d5411f2674b92ce38a26ed13",
+      "sameAsReviewedRuntimeSource": true
+    }
+  },
+  "service": {
+    "active": true,
+    "mainPid": 33950,
+    "started": "2026-10-01 11:58:30 CEST"
+  },
+  "retainedProof": [
+    "eva2/evidence/product/chrome-isolated-route-2026-09-12.json",
+    "eva2/evidence/product/chrome-inflight-recovery-2026-09-12.json",
+    "eva2/evidence/product/t3-owner-shared-tab-connected-20261001.json"
+  ],
+  "finding": "No missing browser implementation shown. Existing real isolated execution and takeover proof remains applicable within its recorded scope. Personal tab action/return trial needs a current explicit owner grant.",
+  "newModelCalls": 0,
+  "newBrowserActions": 0,
+  "runtimeChanges": 0,
+  "taskCompletionChanged": false,
+  "independentReview": "Read-only review by /root/l3_application_seam confirms existing gates and required current personal route check."
+}

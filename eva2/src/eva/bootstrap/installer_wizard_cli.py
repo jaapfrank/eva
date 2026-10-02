@@ -307,6 +307,8 @@ def run_installer_wizard(
             identity_file=(args.identity_current or Path(__file__).parents[1] / "application/default_identity_pack.json"),
             identity_trust_file=(args.identity_trust or Path(__file__).parents[1] / "application/default_identity_pack_trust.json"),
             secret_lifecycle=secret_lifecycle,
+            provider_configuration_store=provider_configuration_store,
+            provider_verifier=provider_verifier,
         )
         installation_preparer = preparation
         installation_preparation_status = preparation.status
