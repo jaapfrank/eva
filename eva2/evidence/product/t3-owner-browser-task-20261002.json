@@ -1,0 +1,209 @@
+{
+  "contract": "EvaOwnerSharedBrowserTask/v1",
+  "taskId": "T3.2",
+  "checkedAt": "2026-10-02T15:09:27.876186+00:00",
+  "status": "installed_existing_route_functional_task_completed",
+  "sourceBaseline": "aca98ba68a262c16a11f495d489cb70e81b8c30b",
+  "runtimeSourceChange": false,
+  "existingRoute": "Ordinary local owner dashboard conversation -> shared delegated worker -> registered MCP catalog/gateway -> existing proxy/ChromeGate -> owner-shared Windows Chrome tab",
+  "setup": {
+    "ownerGrantReused": true,
+    "newGrantCreated": false,
+    "operatorNavigationToSafeFixture": true,
+    "originalPageRecordedPrivately": true,
+    "fixtureUrl": "http://127.0.0.1:44718/proef",
+    "pageTitle": "Eva Chrome-bedieningsproef",
+    "operatorClickedProofToggle": false
+  },
+  "ordinaryIntake": {
+    "route": "POST /internal/v1/dashboard/conversation/respond",
+    "messageId": "dashboard:6b4dac82-2c6a-420d-9c0b-a2814d3313c4",
+    "workId": "work:eva-chat:2521a636-06f3-5461-8411-e5ca1dcb0481",
+    "requestCount": 1,
+    "newWorkSucceeded": true
+  },
+  "toolSequence": [
+    {
+      "order": 1,
+      "toolName": "manage_connected_services",
+      "operation": "manage_connected_services",
+      "status": "STATE_VERIFIED",
+      "startedAt": "2026-10-02 15:07:10+00:00",
+      "completedAt": "2026-10-02 15:07:10+00:00",
+      "observationSha256": "137900ec069bf425992e2bff5da8c7af09b7c7e083d465e424bd10d2514bdfe3"
+    },
+    {
+      "order": 2,
+      "toolName": "discover_connector_tools",
+      "operation": "discover_connector_tools",
+      "status": "STATE_VERIFIED",
+      "startedAt": "2026-10-02 15:07:27+00:00",
+      "completedAt": "2026-10-02 15:07:27+00:00",
+      "observationSha256": "8db6f1beb10768f027bdc4ed34eba74584f0573350e17b70a0d832650a92aa01"
+    },
+    {
+      "order": 3,
+      "toolName": "eva-connector-aea119d90d81a9ca13a0465c050152ce-chrome-snapshot",
+      "operation": "chrome_snapshot",
+      "status": "STATE_VERIFIED",
+      "startedAt": "2026-10-02 15:07:36+00:00",
+      "completedAt": "2026-10-02 15:07:36+00:00",
+      "observationSha256": "ec388e97698bc8bccf9cefa7fa6753049c9f87c74663446a0d937a1839aeb2ae",
+      "receiptVerifiesExternalState": false
+    },
+    {
+      "order": 4,
+      "toolName": "eva-connector-aea119d90d81a9ca13a0465c050152ce-chrome-click",
+      "operation": "chrome_click",
+      "status": "STATE_VERIFIED",
+      "startedAt": "2026-10-02 15:07:57+00:00",
+      "completedAt": "2026-10-02 15:07:59+00:00",
+      "targetReference": "f1e24",
+      "observationSha256": "a11b99d370a06cd1db05c378a2ab5a54f48e1607b0860f385ee1d1506ad4119d",
+      "receiptVerifiesExternalState": false
+    },
+    {
+      "order": 5,
+      "toolName": "eva-connector-aea119d90d81a9ca13a0465c050152ce-chrome-snapshot",
+      "operation": "chrome_snapshot",
+      "status": "STATE_VERIFIED",
+      "startedAt": "2026-10-02 15:08:07+00:00",
+      "completedAt": "2026-10-02 15:08:07+00:00",
+      "observationSha256": "b4f4d3a6e89315862d06afbefeaca2c8da75354fe064cc0793a728007de5b4d8",
+      "receiptVerifiesExternalState": false
+    },
+    {
+      "order": 6,
+      "toolName": "eva-connector-aea119d90d81a9ca13a0465c050152ce-chrome-click",
+      "operation": "chrome_click",
+      "status": "STATE_VERIFIED",
+      "startedAt": "2026-10-02 15:08:20+00:00",
+      "completedAt": "2026-10-02 15:08:21+00:00",
+      "targetReference": "f1e29",
+      "observationSha256": "488ac67a7e10479689fe48def097382dc6ec92ea17634936c078d1ee0e71c4ff",
+      "receiptVerifiesExternalState": false
+    },
+    {
+      "order": 7,
+      "toolName": "eva-connector-aea119d90d81a9ca13a0465c050152ce-chrome-snapshot",
+      "operation": "chrome_snapshot",
+      "status": "STATE_VERIFIED",
+      "startedAt": "2026-10-02 15:08:30+00:00",
+      "completedAt": "2026-10-02 15:08:31+00:00",
+      "observationSha256": "7791b6da5edee59fedd9e0369b96597310068ccc9315d879cb7e9b6ba62e4eab",
+      "receiptVerifiesExternalState": false
+    }
+  ],
+  "result": {
+    "literalTextRead": "De proeftekst is zichtbaar. Eva kan dit paneel weer sluiten.",
+    "openConfirmedBySeparateModelSnapshot": {
+      "at": "2026-10-02 15:08:07+00:00",
+      "literalTextPresent": true,
+      "hideButtonPresent": true,
+      "observationSha256": "b4f4d3a6e89315862d06afbefeaca2c8da75354fe064cc0793a728007de5b4d8"
+    },
+    "closeConfirmedBySeparateModelSnapshot": {
+      "at": "2026-10-02 15:08:31+00:00",
+      "literalTextAbsent": true,
+      "showButtonPresent": true,
+      "observationSha256": "7791b6da5edee59fedd9e0369b96597310068ccc9315d879cb7e9b6ba62e4eab"
+    },
+    "independentFinalReadback": {
+      "httpStatus": 200,
+      "isError": false,
+      "pageUrl": "http://127.0.0.1:44718/proef",
+      "pageTitle": "Eva Chrome-bedieningsproef",
+      "showButtonPresent": true,
+      "hideButtonPresent": false,
+      "literalProofTextPresent": false,
+      "counterZero": true,
+      "pendingTestButtonStillDisabled": true,
+      "checkedAt": "2026-10-02T15:09:27.876186+00:00",
+      "passed": true
+    },
+    "modelOutputSha256": "c81d6640a90befe1d4d3a91f6301e4b61b97811cdceda13d5188f7afe8442097",
+    "delivery": "Result is available through the existing private website route; no UI-delivery acknowledgement is claimed."
+  },
+  "measurement": {
+    "timing": {
+      "requestStartedAt": "2026-10-02T15:06:25.108653+00:00",
+      "intakeReplyElapsedSeconds": 17.011,
+      "workCreatedAt": "2026-10-02 15:06:25+00:00",
+      "workerCallStartedAt": "2026-10-02 15:06:41+00:00",
+      "workCompletedAt": "2026-10-02 15:08:38+00:00",
+      "registeredWorkCreationToCompletionSeconds": 133.0,
+      "workerCallStartToCompletionSeconds": 117.0,
+      "requestStartToRecordedCompletionSeconds": 132.891347,
+      "completionTimestampResolutionSeconds": 1,
+      "note": "The 133-second registered-work span includes intake. Worker call start to completion is 117 seconds. The end-to-end subtraction uses the recorded whole-second completion timestamp; subsecond completion precision is unavailable."
+    },
+    "usage": {
+      "intake": {
+        "provider": "chatgpt-codex:gpt-6-sol",
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 7177,
+        "output_tokens": 306,
+        "model_attempts": 1
+      },
+      "worker": {
+        "contract": "DelegatedWorkUsage/v1",
+        "tool_calls": 7,
+        "measurement": "partial",
+        "input_tokens": 103508,
+        "total_tokens": 104325,
+        "output_tokens": 817,
+        "schema_version": 1,
+        "cost_usd_micros": null,
+        "completed_model_responses": 8
+      },
+      "combined": {
+        "modelResponses": 9,
+        "toolCallsIncludingDelegation": 8,
+        "inputTokens": 110685,
+        "outputTokens": 1123,
+        "costUsdMicros": null,
+        "developmentCredits": null,
+        "contextEfficiencyConclusion": "High token use and latency for two clicks; this result proves functionality, not efficiency."
+      },
+      "limitation": "Worker ledger labels measurement partial; available recorded token and response counters are preserved without a monetary estimate."
+    }
+  },
+  "limits": [
+    "This proves one ordinary model-driven task on the explicitly shared personal Chrome tab, with actual clicks and separate readback.",
+    "The operator prepared the exact safe fixture in the existing shared tab; the model independently discovered the connector and chose the click references.",
+    "A STATE_VERIFIED invocation receipt alone does not prove a page effect; the separate visible/hidden snapshots and independent final readback establish this result.",
+    "No fast-browser, general reliability, all-browser, desktop, or physical owner-acceptance claim.",
+    "T3.1 acceptance is retained. T3.3 personal manual takeover, explicit return and revocation remain open; no pending-click trial was started."
+  ],
+  "privateArtifacts": {
+    "directory": "/home/administrator/project/.eva2-artifacts/t3-owner-click-20261002",
+    "sha256": {
+      "criteria.json": "be7334970976223a0535d5c06a5b26b0e7b6d71903d141603911b2468a571dfb",
+      "prompt.txt": "acc27fbc63211b93731fbfc3743f83c4a05f8fd48188a8b4cd474b9c9f04c4a2",
+      "response.private.json": "9f388487691862e10cef3aa63f75e6b419989d5fbe0c02bb418be083d3864d73",
+      "work-rows.private.json": "63ab745388e930d82bb0c8e4e69a55d97a48f76596cd63820a4057a5a9274216",
+      "work.private.json": "15a605cc5dc32e6268ea88ca631e6a9021b755c55d71a50f044aae1536f5bc73",
+      "events.private.json": "9e3a0ed043340382cfdab234193ea57796b53c2693e8df5b82e6242ec98b1ec5",
+      "model-visible-snapshot.private.json": "77cb03d7a16df909e60ad64557d8be653f9c35b98773631c4d0273fe80c52e4c",
+      "model-hidden-snapshot.private.json": "4a2673b640c83368a65a966fa4b92c2ff542b119005f4279b2356d1be625f9c6",
+      "final-independent-snapshot.private.json": "620370332eeee53184523d3a0e39532fcb81553d7801a863e7b8579b3a41aed7",
+      "final-independent-readback.json": "d31b84d868ae4b63128188b03f8da3628afc3b115ce976860f776e7a89728369",
+      "measurement.json": "b109e59acea84f311e18c67546d9432b761e5ace2d1b60a41c43cd6f9fa21531",
+      "navigation-source.private.json": "fc271d1fb4678523ca223191b6ed95cdc1ce27ecc3cc0cdc77cb3ef75f386a2f",
+      "navigate-to-proof.private.json": "21bd41667355143f039302f982f92a6b3ff8806cc35e16fd916b7de99b0d2611"
+    }
+  },
+  "independentReview": {
+    "reviewer": "root coordinator",
+    "status": "GO for original T3.2 functional task",
+    "reviewedAt": "2026-10-02T15:19:04.779171+00:00",
+    "checked": [
+      "All 13 private artifact hashes match.",
+      "Actual task succeeded and returned the requested literal text plus final state.",
+      "Model-visible and model-hidden snapshots differ as claimed; independent final snapshot agrees.",
+      "Only two requested toggle clicks, no fixture counter clicks.",
+      "Usage and timing limitations retained; T3.3 and owner acceptance not inferred."
+    ]
+  }
+}

@@ -1,5 +1,24 @@
 # EVA2 werkbord
 
+## Laatste afgeronde taak: T3.2 — echte bediening van jouw Chrome-tab
+
+**21/44 oorspronkelijke kleine taken technisch klaar.** Eva heeft via de gewone
+Eva-gespreksroute de proeftekst daadwerkelijk geopend, letterlijk gelezen,
+weer gesloten en de verborgen eindtoestand gecontroleerd. Een afzonderlijke
+browserwaarneming bevestigt dit en teller **0**. Onafhankelijke review: **GO**.
+Bestaande geïnstalleerde code; geen nieuwe installatie of verzonnen acceptatie.
+
+**Wel nog traag en duur:** ongeveer **133 seconden**, **110.685 invoer- en
+1.123 uitvoertokens**, negen modelantwoorden. Gemeten tellers zijn gedeeltelijk;
+credits zijn onbekend. Dit bewijst deze gebruikersuitkomst, geen efficiëntiewinst.
+
+**Jij:** alleen T3.3 handmatig overnemen staat nog open. Meld wanneer je klaarzit
+bij de Chrome-proefpagina; Codex start daarna de wachtende klik voor **Neem over**.
+Geen herhaling van de geslaagde klikproef. O1.2 gaat onafhankelijk verder.
+
+[Uitvoering en meting](evidence/product/t3-owner-browser-task-20261002.json)
+· [Onafhankelijke review](reviews/t3-owner-browser-task-20261002.md).
+
 ## Nu: O1.2 — resterende optionele modules aansluiten
 
 **Opgeleverd:** dezelfde gewone installatiewizard kan nu de gekozen Home Assistant-
@@ -13,6 +32,10 @@ of herhaling. Het chatantwoord kostte **11,6 seconden**, twee modelantwoorden en
 modelaanmelding kostte 30/9 tokens. Credits en geheugenachtergrond niet volledig
 meetbaar. Onafhankelijke review: **GO voor gekozen HA geïnstalleerd**.
 
+**Nu:** optionele browsercode en bronreview gereed. De echte pakketstart vond een
+ontbrekende Python-dependency vóór browserdiensten werden gemaakt. Gerichte
+correctie gebruikt de aanwezige Compose-parser; opgeslagen keuzes blijven behouden.
+
 **Nog af te maken binnen O1.2:** gewone spraak-/browserkeuzes en werkende consumenten
 van de overige gekozen providers. De bestaande modules hergebruiken; geen nieuwe
 installer. De oorspronkelijke **20/44** kleine taken blijven staan; HA-aansluiting
@@ -21,9 +44,8 @@ voltooit niet fictief de hele modulaire installatie. Jaaps bestaande Eva bleef s
 [Installatie en gebruiksbewijs](evidence/product/installer-selected-ha-installed-20261002.json)
 · [Onafhankelijke review](reviews/installer-selected-modules-20261001.md).
 
-**T3 wacht alleen op actuele tabdeling:** de persoonlijke bridge meldt disconnected.
-Open http://127.0.0.1:44718/proef in Chrome en kies Chrome-bediening → Deel een
-bestaand tabblad → Allow & select. Deel het proeftabblad en meld Gedeeld.
+**T3.2 is inmiddels afgerond:** zie de laatste oplevering hierboven. T3.3 handmatige
+overname blijft afzonderlijk open; de bestaande tabverbinding is behouden.
 Bestaande motor en eerdere acceptaties behouden; geen nieuwe browserbouw.
 [Actuele toegang](evidence/product/t3-current-access-20261002.json).
 AIDE² blijft expliciet bij L3/R1, met onderscheid tussen onderzoek en bewezen winst.
@@ -43,8 +65,8 @@ zijn gezond met gelijke bronprofielen. Onafhankelijke eindbeoordeling: GO.
 Bron, meting en review vormen één oplevering. De oorspronkelijke **20/44** taken blijven staan;
 geen extra functie door optimalisatie. AIDE² blijft afzonderlijk onderdeel van L3/R1.
 
-**Vervolg T3 wacht op tabdeling:** de persoonlijke bridge is nu disconnected.
-Uitvoering en overname blijven open; O1.2 gaat zelfstandig verder.
+**Vervolg T3:** de gedeelde tab wordt via de bestaande route bediend; een nieuwe
+deelactie is niet nodig. Uitvoering en overname blijven apart beoordeeld.
 Historische T2.1-timeout en fysieke spraak blijven expliciet open.
 
 [Installatie en vergelijking](evidence/product/t2-grouped-reads-installed-20261002.json).
