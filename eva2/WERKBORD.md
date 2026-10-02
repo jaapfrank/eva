@@ -1,11 +1,34 @@
 # EVA2 werkbord
 
+## 2 oktober: eigen bijdragen bereikbaar in het gewone privégesprek
+
+Het volledige goal is actief. De concrete M3-contextcorrectie is **geïnstalleerd**
+in kern en werker: dezelfde opgeslagen eigen initiatieven, resultaat en feedback
+voor eigenaar en vertrouwde Telegramalias. Bronhashes, gezonde diensten en de echte
+lokale contextoverdracht gecontroleerd; 17 gerichte controles en onafhankelijke GO.
+Geen nieuwe initiatief-loop, vaste antwoordzin of provider toegevoegd.
+
+In de fictieve vergelijking noemt Eva haar concrete bijdrage waar zij eerst alleen
+een algemeen antwoord gaf. Dagplannen blijven algemeen. Echte privégegevens zijn
+alleen lokaal gelezen; de modelvergelijking gebruikte fictieve gegevens. Vier
+modelcalls: 5.116 input-/207 outputtokens. Credits onbekend. Eén lokale meting toont
+circa 0,32 seconde extra contextvoorbereiding per lezing; geen snelheidswinstclaim.
+
+**M3.3 blijft niet geaccepteerd.** Persoonlijkheid, humor, oordeel en gezinswaarde zijn
+hiermee niet af. Optioneel in Telegram: `/eva2 Wat heb je uit jezelf al gedaan waar
+je tevreden over bent?` Eerdere acceptaties en 17/44 kleine taken blijven gelijk.
+[Bewijs](evidence/product/m3-self-context-installed-20261002.json).
+
+**Hierna I2.1/I2.2:** de bestaande algemene bronontdekking gebruiken voor een gewone
+waarnemingsopdracht en de uitvoering/terugmelding afmaken. Nog niet gestart; geen
+nieuwe vaste camera-/vuilnisbakfunctie. Menselijke M3-beoordeling blokkeert dit niet.
+
+
 ## 2 oktober: goal bijgewerkt; bestaand I1.1-resultaat technisch bevestigd
 
 De volledige verwezen goaltekst volgt nu de vier productuitkomsten, optionele
-koppelingen en het huisgenootplan. Het app-goal toont nog de oude gepauzeerde
-C1-tekst; vervangen en activeren vraagt de gebruikersbediening. De expliciete
-opdracht van Jaap autoriseerde de hervatte controle in deze chat.
+koppelingen en het huisgenootplan. Het app-goal verwees bij deze eerdere registratie nog naar de oude gepauzeerde
+C1-tekst. Inmiddels is het nieuwe volledige goal actief; zie de actuele stand bovenaan.
 
 **I1.1 technisch voltooid op 30 september; nu onafhankelijk gecontroleerd.** Eva
 koos zelf een restjesplanner, maakte het werkruimtedocument en leverde de samenvatting

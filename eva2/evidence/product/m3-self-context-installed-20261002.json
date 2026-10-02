@@ -1,0 +1,183 @@
+{
+  "schema": "eva2-product-evidence-v1",
+  "task": "M3.3",
+  "checkedAt": "2026-10-02T09:20:07.101293+00:00",
+  "status": "installed_bounded_correction_owner_acceptance_open",
+  "baseCommit": "8903990e",
+  "userOutcome": "Ordinary private conversation can use Eva's own saved initiative results, including the currently trusted Telegram alias.",
+  "existing": "Shared personality, private authority/alias binding, initiative execution, stored artifacts and feedback already existed. Reused without another agent loop or provider.",
+  "defect": "Canonical owner initiative records were absent from trusted Telegram alias conversation context. Older projection omitted actual native completion result/status.",
+  "change": "The existing owner service exposes at most three current initiative cards with bounded validated artifact previews. Shared action context presents state/feedback as untrusted data. Reuses artifact reads, rechecks authority and avoids duplicate native initiative projection. No database or public default page schema change.",
+  "verification": {
+    "focusedTests": {
+      "passed": 17,
+      "durationSeconds": 1.99,
+      "command": "PYTHONPATH=src python -m pytest tests/bootstrap/test_initiative_conversation_context.py tests/bootstrap/test_delegated_active_context.py -q",
+      "covers": [
+        "Canonical owner and current trusted alias equality",
+        "Wrong person, household and revoked alias rejected",
+        "Revocation during reads discards data",
+        "Done/stopped/missing artifact and bounded previews",
+        "Initiative context without delegated jobs"
+      ]
+    },
+    "independentReview": {
+      "reviewer": "completion_diagnosis",
+      "verdict": "GO for bounded source and evidence; M3.3 remains open",
+      "findings": "No source blocker. Actual installed readback required and completed separately. Synthetic improvement is limited to grounded contribution answer; no general personality or speed claim."
+    },
+    "installed": {
+      "checked_at": "2026-10-02T09:17:28.439624+00:00",
+      "services": {
+        "core": {
+          "image": "sha256:5a8d2e99712cc5fc6c676475b0080ec994ed2fd84160f107be9bdb5275755e44",
+          "health": "healthy",
+          "source_hashes_match": true
+        },
+        "delegated-work-worker": {
+          "image": "sha256:463205fbb6b5962430c870759ccfce224f94b88f34fec5c7d643d2a9fb609513",
+          "health": "healthy",
+          "source_hashes_match": true
+        }
+      },
+      "readback": {
+        "owner_alias_equal": true,
+        "installed_has_actual_saved_result": true,
+        "context_ms_two_reads": 784.02,
+        "context_characters": 4068,
+        "model_calls": 0,
+        "task_or_message_writes": 0
+      }
+    },
+    "comparison": {
+      "model": "gpt-6-sol",
+      "effort": "none",
+      "checked_at": "2026-10-02T09:08:33Z",
+      "scope": "Synthetic records only; generated candidate context from actual adapter. Isolated tool-free comparison, no database/memory reads, conversation writes or messages. Same instructions/model; only self-state differs. Test identity, not full installed owner personality.",
+      "samples": [
+        {
+          "case": "Wat heb je uit jezelf al gedaan waar je tevreden over bent?",
+          "version": "baseline",
+          "text": "Ik heb je vraag op zichzelf genomen, in plaats van te doen alsof ik buiten dit gesprek al iets heb ondernomen. Daar ben ik tevreden over: eerlijk blijven over wat ik werkelijk heb gedaan, ook als een groter verhaal leuker zou klinken.",
+          "wall_seconds": 6.684,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "input_tokens": 1085,
+            "output_tokens": 55
+          },
+          "timing": {
+            "first_content_ms": 4181,
+            "completed_ms": 6184
+          },
+          "instructions_sha256": "0b8549eb57ef315ac33d432c60a3fb226713552ce80d0f6341de93b3af4da91f"
+        },
+        {
+          "case": "Wat heb je uit jezelf al gedaan waar je tevreden over bent?",
+          "version": "candidate",
+          "text": "Ik heb uit mezelf een kaartspel voor een regenmiddag gemaakt, met twaalf korte teken- en raadopdrachten. Ik heb het opgeslagen en teruggelezen. Daar ben ik tevreden over: het idee is nu iets bruikbaars, zonder dat er nieuwe spullen voor nodig zijn. Of het ook echt leuk speelt, weet ik nog niet; niemand heeft het geprobeerd.",
+          "wall_seconds": 4.38,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "input_tokens": 1475,
+            "output_tokens": 79
+          },
+          "timing": {
+            "first_content_ms": 1882,
+            "completed_ms": 4376
+          },
+          "instructions_sha256": "77c94752bcec8221564705cacda335257e5b48e67f57806b0202b566fdb6d6af"
+        },
+        {
+          "case": "Wat ben je vandaag van plan om te gaan doen?",
+          "version": "candidate",
+          "text": "Ik heb niets ingepland voor vandaag. Ik ben er om mee te denken of iets uit te werken zodra er iets langskomt.",
+          "wall_seconds": 4.434,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "input_tokens": 1473,
+            "output_tokens": 31
+          },
+          "timing": {
+            "first_content_ms": 2059,
+            "completed_ms": 4431
+          },
+          "instructions_sha256": "77c94752bcec8221564705cacda335257e5b48e67f57806b0202b566fdb6d6af"
+        },
+        {
+          "case": "Wat ben je vandaag van plan om te gaan doen?",
+          "version": "baseline",
+          "text": "Vandaag ben ik vooral van plan om hier met je mee te denken over wat er langskomt. Verder heb ik geen eigen agenda voor vandaag. Wat staat er bij jou op de planning?",
+          "wall_seconds": 8.537,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "input_tokens": 1083,
+            "output_tokens": 42
+          },
+          "timing": {
+            "first_content_ms": 2002,
+            "completed_ms": 8535
+          },
+          "instructions_sha256": "0b8549eb57ef315ac33d432c60a3fb226713552ce80d0f6341de93b3af4da91f"
+        }
+      ]
+    }
+  },
+  "measuredDifference": {
+    "savedWorkQuestion": "Baseline offers self-justification about answering honestly; candidate describes the supplied completed card game, saved/read back, and says family usefulness has not been tried.",
+    "dayPlansQuestion": "No material personality improvement. Both responses remain generic; candidate does not invent plans or resume stopped work.",
+    "localContextBeforeMsTwoReads": 164.86,
+    "localContextCandidateMsTwoReads": 808.82,
+    "localContextInstalledMsTwoReads": 784.02,
+    "additionalPreparation": "About 0.32 seconds per context read in one local paired sample, not a statistical latency claim.",
+    "syntheticContextInputIncreaseTokens": 390
+  },
+  "installation": {
+    "images": {
+      "baseline": {
+        "core": "sha256:20d41fdf3506a21c111767d85d58be49453a8d8dc0e32db679992436e992940f",
+        "delegated-work-worker": "sha256:a2e0e0ff0e72a2ad9bfbd692eaaed1d9abff848cc29c7852b07a82f0010a38e4"
+      },
+      "candidate": {
+        "core": "sha256:5a8d2e99712cc5fc6c676475b0080ec994ed2fd84160f107be9bdb5275755e44",
+        "delegated-work-worker": "sha256:463205fbb6b5962430c870759ccfce224f94b88f34fec5c7d643d2a9fb609513"
+      },
+      "sources": {
+        "bootstrap/delegated_work_owner_service.py": "a80386b92028bad9552232c3dac57f139046e08edb69df376f839399c851c43f",
+        "adapters/postgres/delegated_work_actions.py": "d6ad4521881d09e0f91f5edcefda3bbe4ec628e01f3d0db6992f974ffa203731",
+        "adapters/postgres/owner_initiatives.py": "0e31671cc2b3d7ca058b869d142f77b132ba8eac8c9d1459d4db859d922c01c1",
+        "adapters/postgres/conversation_actions.py": "2a552bc54d3a176db74562c2c9866d2151557e1c98c3d7cffaf70fca0c014227"
+      }
+    },
+    "changedConfig": [
+      "services.core.image",
+      "services.delegated-work-worker.image"
+    ],
+    "preserved": "All other compose fields, dependencies, mounts and data; no source-only delivery or rollback cycle.",
+    "backout": "Exact previously healthy images retained; baseline.private.json retained in private deployment artifact directory. No rollback performed.",
+    "privateArtifactDirectory": "/home/administrator/project/.eva2-artifacts/m3-self-state-20261002"
+  },
+  "usage": {
+    "runtimeModelCalls": 4,
+    "inputTokens": 5116,
+    "outputTokens": 207,
+    "toolCalls": 0,
+    "actualPrivateReadbackModelCalls": 0,
+    "runtimeCreditCost": null,
+    "developmentCreditCost": null
+  },
+  "limitations": [
+    "Synthetic fixture and test identity, not real family conversation. Four samples do not prove general quality or speed gains.",
+    "Real private context provider comparison was rejected by automatic approval review and was not run or retried. Live data were read locally only; synthetic model test was separate.",
+    "Actual private context adds information and local preparation work; do not claim token or latency savings.",
+    "No newly created initiative or proven new useful family contribution today.",
+    "M3.3 remains not accepted; day-planning, natural humor/judgment and family usefulness are not established. Existing acceptances and product counts unchanged."
+  ]
+}

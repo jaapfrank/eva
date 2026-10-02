@@ -174,11 +174,7 @@ class DelegatedWorkOwnerService:
             if task is not None or work_id is not None or research is not None:
                 raise ValueError("initiative operations do not accept task arguments")
             self.validate_authority(turn)
-            from eva.adapters.postgres.owner_initiatives import PostgresOwnerInitiatives
-            initiatives = PostgresOwnerInitiatives(self.store._engine,
-                tenant_id=turn.tenant_id, installation_id=turn.installation_id,
-                owner=self.owner_principal_id, binding=self.principal_binding_id,
-                authority_scope=self.store.scope)
+            initiatives = self._initiative_store(turn)
             if operation != "initiative_feedback" and feedback is not None:
                 raise ValueError("feedback requires its explicit operation")
             if operation == "initiative_list":
@@ -392,6 +388,35 @@ class DelegatedWorkOwnerService:
                         and (previous.usage is None or previous.usage.measurement != "measured"
                              or previous.usage.completed_model_responses != 1))),
                 "guidance": "Een nieuwe begrensde poging; de eerdere call en het eerdere verbruik blijven bewaard."}
+
+    def _initiative_store(self, turn: ConversationTurn):
+        from eva.adapters.postgres.owner_initiatives import PostgresOwnerInitiatives
+        return PostgresOwnerInitiatives(self.store._engine,
+            tenant_id=turn.tenant_id, installation_id=turn.installation_id,
+            owner=self.owner_principal_id, binding=self.principal_binding_id,
+            authority_scope=self.store.scope)
+
+    def own_initiative_metadata(self, turn: ConversationTurn) -> dict:
+        """Reuse the current private owner binding for bounded conversational self-state."""
+        self.validate_authority(turn)
+        initiatives = self._initiative_store(turn)
+        page = initiatives.page(now=self.now(), limit=3, include_result_preview=True)
+        selected = []
+        for card in page["cards"]:
+            item = {key: card[key] for key in (
+                "intent_id", "status", "phase", "updated_at", "has_artifact")}
+            item["title"] = card["title"][:160]
+            item["motivation"] = card["motivation"][:240]
+            feedback = card["feedback"]
+            item["feedback"] = feedback[:320] if isinstance(feedback, str) else None
+            if card["has_artifact"]:
+                item["result_preview"] = card["result_preview"]
+                item["result_truncated"] = card["result_truncated"]
+            selected.append(item)
+        # The alias file or owner binding may have changed during retrieval.
+        self.validate_authority(turn)
+        return {"initiatives": selected, "limited": page["truncated"],
+                "as_of": self.now().isoformat()}
 
     def active_work_metadata(self, turn: ConversationTurn) -> dict:
         """Project authorized task metadata without per-task delivery lookups."""

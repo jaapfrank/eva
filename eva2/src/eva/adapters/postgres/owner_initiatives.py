@@ -59,7 +59,7 @@ class PostgresOwnerInitiatives:
             raise ValueError("invalid initiative ID")
         return value
 
-    def page(self, *, now: datetime, limit: int = 64) -> dict:
+    def page(self, *, now: datetime, limit: int = 64, include_result_preview: bool = False) -> dict:
         if type(limit) is not int or not 1 <= limit <= 64:
             raise ValueError("initiative page limit must be between 1 and 64")
         with self._engine.begin() as conn:
@@ -75,13 +75,17 @@ class PostgresOwnerInitiatives:
                 status = ("stopped" if phase == "personal_stopped" else
                           "done" if phase in {"release_ready", "initiative_completed"} else
                           "attention" if row.status in ("failed", "needs_help") else "working")
+                artifact = self._artifact(conn, row.thread_id)
                 cards.append({"intent_id": data["intent_id"], "title": data["title"],
                     "motivation": data["motivation"], "question": data["next_exploration"],
                     "status": status, "phase": phase,
                     "updated_at": row.updated_at.isoformat(),
                     "can_stop": status not in ("stopped", "done"),
-                    "has_artifact": self._artifact(conn, row.thread_id) is not None,
+                    "has_artifact": artifact is not None,
                     "feedback": self._feedback(conn, row.thread_id)})
+                if include_result_preview and artifact is not None:
+                    cards[-1]["result_preview"] = artifact["content"][:500]
+                    cards[-1]["result_truncated"] = len(artifact["content"]) > 500
         return {"contract": "EvaOwnerInitiatives/v1", "cards": cards, "truncated": len(rows) > limit,
                 "latest_review": latest_review, "checked_at": now.isoformat()}
 

@@ -469,6 +469,7 @@ class PostgresConversationActions:
                 "Ga bij een deiktisch vervolg uitsluitend hiermee door, niet met een "
                 f"ouder project. Laatste volledige checkpoint:\n{content}"
             )
+        owner_initiative_context = "list_own_initiatives" in self.available_action_names(turn)
         for state in states:
             events = timeline.events(state.thread_id)
             adopted = next(
@@ -482,6 +483,10 @@ class PostgresConversationActions:
             if adopted is None:
                 continue
             data = self._event_data(adopted)
+            if owner_initiative_context and data.get("origin") == "eva_initiative":
+                # The owner adapter supplies current phase/result/feedback for
+                # both the canonical owner and the trusted private channel alias.
+                continue
             if data.get("principal_id") != turn.principal_id:
                 continue
             title = data.get("title")
