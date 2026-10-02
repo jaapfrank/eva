@@ -1,5 +1,26 @@
 # EVA2 werkbord
 
+## 2 oktober: uitvoering hervat — L3.2/L3.3
+
+Jaap heeft gevraagd het goal te lezen en ernaar te handelen; hij past de app-goal
+zelf aan. De volledige verwezen goaltekst is gelezen. De nieuwste eigenaarcorrectie
+is leidend: Eva moet een benodigde mogelijkheid zelf ontdekken, toevoegen en gebruiken.
+**Uitgevoerde voorbereiding: Codex /root**, met één read-only hergebruik-/reviewopdracht
+aan `/root/completion_diagnosis`. De echte geconfigureerde en dynamische catalogus
+is gecontroleerd: geen algemene programmeeruitvoerder. Bestaande beperkte Python-
+procedures en componentvoorstellen blijven behouden. DesktopCommanderMCP via de
+bestaande ContextForge/MCP-route is de gekozen hergebruikkandidaat; nog niet
+aangesloten of geïnstalleerd. Taakwerkmap, dependencygebruik, stoppen, onafhankelijke
+beoordeling en toepassing horen bij de complete aansluiting. Geen tweede agentlus.
+Deze controle is afgerond; geen uitvoerder meer actief. De volgende bouwstap blijft
+L3.2/L3.3, geen nieuwe opdracht-ID of productafronding.
+
+Vergelijking met Eva1 en concurrenten blijft verplicht: hetzelfde bruikbare resultaat,
+kwaliteit, zelfstandigheid, snelheid en werkelijk verbruik. Het onderscheidende doel is dat Eva bij een nieuwe behoefte zelf de ontbrekende
+mogelijkheid ontdekt, hergebruikt of toevoegt. Aantallen vooraf ingebouwde
+integraties zijn niet de maat. Werkelijke app-status is nog gepauzeerd; dit verhindert
+deze expliciet gevraagde uitvoering in de chat niet.
+
 ## 2 oktober: Eva zelf laten bouwen en bijdragen wordt de hoofdprioriteit
 
 **Eerstvolgende bestaande uitkomst: L3.2/L3.3.** Eva moet vanuit een gewone

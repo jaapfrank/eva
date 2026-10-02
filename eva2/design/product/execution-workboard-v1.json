@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-02T00:07:41.859993+00:00",
+        "checkedAt": "2026-10-02T00:35:22.610151+00:00",
         "deliveries": [
           {
             "title": "Overkapping op dezelfde gecorrigeerde continue route aangesloten",
@@ -3299,25 +3299,25 @@
           }
         ],
         "now": {
-          "title": "Prioriteit: Eva moet zelf kunnen bouwen en bijdragen",
+          "title": "L3 · ontbrekende programmeeruitvoering vastgesteld",
           "state": "planned",
-          "detail": "Alle 24 opdrachten en 44 kleine taken op verantwoordelijkheid nagekeken. Algemene programmeeruitvoering is nog niet bewezen aangesloten; eigen codevoorstellen stoppen vóór installatie. Plan en taakaanwijzingen aangepast; geen nieuwe functie afgerond en geen productbouwwerker actief. App-goal staat nog gepauzeerd.",
+          "detail": "Volledig goal gelezen. De echte geïnstalleerde catalogus bevat geen algemene programmeeruitvoerder. Bestaande programmeertool als hergebruikroute gekozen; aansluiting en zelfstandige uitvoering zijn de volgende bouwstap. Deze controle is afgerond; geen productbouwwerker of modelproef meer actief. App-goal wordt door Jaap bijgewerkt.",
           "owner": "Codex /root"
         },
         "next": {
-          "title": "L3.2/L3.3 · Eva levert zelf een werkende verbetering",
-          "detail": "Eerst L3.2/L3.3: Eva zelf een relevante programmeeropdracht laten afmaken. Bestaande toegelaten programmeerwerkruimte vaststellen/hergebruiken en alleen ontbrekende uitvoering-, review- en installatieovergangen aansluiten. Daarna algemene huis-/dienstuitvoering en zelfgekozen bijdragen; stemwerk is ondersteunend."
+          "title": "Eva bouwt een benodigde mogelijkheid zelf in",
+          "detail": "Sluit de bestaande programmeertool aan via de huidige gedelegeerde/MCP-route, met blijvende werkmap en taakgebonden stoppen. Eva maakt daarna zelf de relevante wijziging; onafhankelijke beoordeling en werkelijke toepassing blijven noodzakelijk. Geen eigen uitvoerplatform of script voor één voorbeeld. Doel blijft beter dan Eva1/concurrenten in bruikbaar resultaat, zelfstandigheid, snelheid en efficiëntie; geen wedstrijd in het aantal meegeleverde functies."
         },
         "ownerAction": {
-          "title": "Nu geen nieuwe gebruiksproef nodig",
+          "title": "Geen extra handeling nodig voor dit werk",
           "steps": [
-            "Jouw prioriteit is verwerkt: Eva moet zelf onderzoeken, programmeren, toepassen en nuttig initiatief nemen.",
-            "Geen telefoon-/laptop- of tweede-speakerproef voor deze programmeeruitkomst. Bestaande echte beoordelingen blijven open."
+            "Je past zelf het app-goal aan; de uitvoering van deze opdracht is hier hervat.",
+            "Geen nieuwe speakerproef nodig voor de algemene programmeeruitvoering."
           ],
-          "expected": "Codex sluit de ontbrekende algemene mogelijkheden aan; Eva voert de concrete verbetering zelf uit. Een voorstel of door Codex uitgevoerde wijziging telt daarvoor niet."
+          "expected": "Bij hervatting geldt de actuele L3-opdracht. De hergebruikcontrole is geen opgeleverde programmeerfunctie; bestaande 16/44 kleine taken en2/9 grote onderdelen blijven ongewijzigd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-02T00:07:41.859993+00:00"
+        "reviewedAt": "2026-10-02T00:35:22.610151+00:00"
       },
       "reviewedAt": "2026-10-01T15:52:21.323198+00:00"
     },
@@ -15203,7 +15203,7 @@
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Eva produced a small source fix; evaluation, import, installation and rollback exist. Assisted case improved 71/90 to 90/90.",
-            "remainingGap": "A general programming executor is not established by the inspected source/evidence. Dynamic MCP-only availability remains unverified. The supported component route ends at a reviewed-package candidate; no runtime installation action. Prior SHA improvement required Codex import/install.",
+            "remainingGap": "Actual installed configured and dynamic owner catalog checked: no general programming executor. Limited component route still ends at candidate preparation. Missing general execution and controlled application are confirmed gaps.",
             "nextAction": "Establish/reuse the actually admitted programming workspace through existing delegated tools, then connect the missing execution, independent evaluation and managed release handoffs. Eva, not Codex, implements the selected product improvement.",
             "evidencePaths": [
               "eva2/evidence/product/component-self-improvement-assisted-20260924.json"
@@ -15249,7 +15249,7 @@
             {
               "id": "L3.2",
               "title": "Kandidaat onafhankelijk vergelijken",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "onderzoek",
               "doneWhen": "Eén vastgezette kandidaat op afgeschermde taken vergelijken; kwaliteit, privacy, hulp, snelheid en verbruik vastleggen.",
               "owner": "Codex",
@@ -15257,13 +15257,30 @@
               "previousBlocker": "Geen geldige kandidaat uit oorspronkelijke afgesloten proef; afgeschermde vergelijking niet uitgevoerd.",
               "checkedAt": "2026-10-01T13:44:09.424387+00:00",
               "ownerActionRequired": false,
-              "remaining": "Vorige onderzoeksronde afgesloten zonder bewezen voordeel. Codex bereidt een geldig vervolg met gewijzigde oorzaak/hypothese voor; geen automatische herhaling of nieuwe eigenaarbeslissing.",
-              "nextAction": "Eerst stelt Codex vast welke algemene programmeerwerkruimte/uitvoerder werkelijk beschikbaar is via de bestaande gedelegeerde/MCP-route. Hergebruik die en sluit uitsluitend ontbrekende uitvoering aan. Eva onderzoekt en schrijft de concrete verbetering; een aparte beoordelaar vergelijkt de vastgezette kandidaat met de bestaande versie. De oude mislukte AIDE-ronde blijft afgesloten.",
+              "remaining": "Werkelijke catalogus gecontroleerd: geen algemene programmeeruitvoerder. Bestaande DesktopCommander-MCP is als hergebruikroute gekozen; aansluiting, taakstop, echte uitvoering en gecontroleerde toepassing moeten nog worden gerealiseerd.",
+              "nextAction": "Sluit de bestaande programmeertool aan via de huidige gedelegeerde/MCP-route, met blijvende werkmap en taakgebonden stoppen. Eva maakt daarna zelf de relevante wijziging; onafhankelijke beoordeling en werkelijke toepassing blijven noodzakelijk. Geen eigen uitvoerplatform of script voor één voorbeeld.",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
                 "steps": [],
                 "blocksIndependentWork": false
+              },
+              "assignment": {
+                "baseCommit": "39fb56949629bb8e3899bf0860e165bb4139ca2d",
+                "owner": "/root",
+                "activeWorkers": [],
+                "stage": "runtime_catalog_verified_reuse_selected",
+                "outcome": "Eva completes a useful ordinary programming request through her own shared execution route, with independently assessed result and actual application.",
+                "existing": "Delegated tasks/MCP discovery, document and learned procedure tools, component proposals and managed operator release.",
+                "gap": "Actual admitted general programming executor remains unverified; known component tools stop before installation.",
+                "files": [
+                  "shared delegated execution and existing connector integration as required",
+                  "focused existing tests",
+                  "existing delivery workboard and evidence"
+                ],
+                "estimate": "One coordinator executes; one read-only reuse/review assignment. Reuse current catalog/evidence before model calls or new integration. Actual model/tool usage recorded; credits unknown.",
+                "doneWhen": "Useful Eva-authored change executed, independently assessed and applied through the actual installed route; evidence and result returned; broader capability limitations remain explicit.",
+                "completedPreparation": "Actual catalog inspected; reusable executor selected. No runtime modification, new model call or completed programming outcome."
               }
             },
             {
@@ -15296,7 +15313,47 @@
             ],
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
           },
-          "completionClarification": "A failed AIDE experiment may close that experiment, not the autonomous programming outcome. Preserve L3.1 historical closure. General programming requires a useful Eva-authored change executed, independently checked, installed and verified through her own route; one component microfix is bounded evidence only."
+          "completionClarification": "A failed AIDE experiment may close that experiment, not the autonomous programming outcome. Preserve L3.1 historical closure. General programming requires a useful Eva-authored change executed, independently checked, installed and verified through her own route; one component microfix is bounded evidence only.",
+          "nextAction": "Inspect actual admitted programming tools and connect the smallest missing general handoff; Eva must perform the product task herself.",
+          "executorAdmissionCheck": {
+            "checkedAt": "2026-10-02T00:35:22.610151+00:00",
+            "installedCore": "eva2-managed-b-slot3-core",
+            "method": "Read-only configured provider settings and owner-scoped immutable PostgresMcpConnectorRegistry snapshot; no model or execution calls.",
+            "configuredCapabilityKinds": [
+              "workspace file write/read/list/search/info/create-directory",
+              "bound document creation"
+            ],
+            "activeDynamicServices": [
+              "GitMCP Playwright documentation",
+              "Playwright browser",
+              "shared Chrome",
+              "GitMCP CPython documentation"
+            ],
+            "generalProgrammingExecutorPresent": false,
+            "limitation": "Browser JavaScript execution is not a general project/programming environment. Existing JSON procedure and limited component evaluation remain available.",
+            "nextAction": "Reuse an existing programming tool through the current delegated/MCP route; preserve stop, durable task workspace, independent evaluation and actual application."
+          },
+          "programmingExecutorDecision": {
+            "state": "reuse_candidate_not_installed",
+            "candidate": "DesktopCommanderMCP",
+            "inspectedVersion": "0.2.52",
+            "license": "MIT",
+            "sources": [
+              "https://github.com/wonderwhy-er/DesktopCommanderMCP",
+              "https://raw.githubusercontent.com/wonderwhy-er/DesktopCommanderMCP/main/package.json",
+              "https://raw.githubusercontent.com/wonderwhy-er/DesktopCommanderMCP/main/SECURITY.md"
+            ],
+            "decisionBasis": "Existing multi-file editing, terminal and process/session tools through MCP; reuse current ContextForge translation rather than writing an executor or introducing another agent loop. Exact installed dependency/image pin and focused compatibility remain required before use.",
+            "existingEva1Comparison": "Bottie runProgram at source commit909bff513d7d7fd653d6a7f270d9e73facce430d already runs Node/Python/Git. No standalone bridge; extracting config/database/policy-coupled code and adapting network/task-stop would create more custom maintenance. Preserve it as functional reference.",
+            "conditions": [
+              "Isolated persistent programming workspace; no credential or unrelated host mounts",
+              "Actual Node/Python/Git and authorized source/dependency retrieval",
+              "Session lifecycle and process stop connected to existing task ownership and cancellation",
+              "Exact result independently assessed and applied through existing release facilities"
+            ],
+            "review": "/root/completion_diagnosis agrees this is the smallest found reusable integration; advice only, no installed capability or superiority claimed.",
+            "maintenanceOwner": "Codex coordinator; check exact upstream version, lock and relevant advisories before installation and next dependency update."
+          }
         },
         {
           "id": "R1",
@@ -15777,7 +15834,7 @@
               },
               "remaining": "Kleine ontwikkelronde vastgelegd: C01/C04, 2epochs, 5systemen, maximaal40providerpogingen en gedeelde grenzen. Niet uitvoerbaar zolang native toelating ontbreekt. Definitieve ongeziene eindtaken en familiebudgetten blijven open.",
               "evidence": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#developmentPlan",
-              "nextAction": "Codex zet bestaande gelijke taken en beoordeling vooraf vast. De programmeeragent kan onafhankelijke beoordelingsregels en afgeschermde gegevens niet aanpassen.",
+              "nextAction": "Gebruik de bestaande vergelijkingscriteria voor dezelfde behoefte en hetzelfde bruikbare resultaat: kan Eva benodigde mogelijkheden zelf ontdekken, hergebruiken of toevoegen met minder hulp en verantwoord totaalverbruik? Aantal vooraf ingebouwde integraties is geen score. Leg gelijke taken, toegang en onafhankelijke beoordeling vooraf vast.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -15858,7 +15915,7 @@
               "kind": "rapporteren",
               "doneWhen": "Resultaten op kwaliteit, snelheid, zelfstandigheid en verbruik samen tonen; geen onbewezen algemene voorsprong.",
               "owner": "Codex",
-              "nextAction": "Codex publiceert aantoonbare winst, gelijkspel, verlies en onbekend resultaat. Geen algemene voorsprong afleiden uit één geslaagde demonstratie.",
+              "nextAction": "Publiceer werkelijke winst/verlies tegenover Eva1 en concurrenten op resultaatkwaliteit, zelfstandig uitbreiden bij behoefte, menselijke hulp, snelheid en totaalverbruik. Geen algemene voorsprong of winst uit alleen aantallen ingebouwde functies afleiden.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -16180,7 +16237,10 @@
           "reviewer": "/root/completion_diagnosis",
           "decision": "GO",
           "scope": "Planning diff only; preserved task IDs, statuses, finish conditions and completed task data; actual executor availability first; no narrow-proof general autonomy or voice gate. No runtime functional review claimed."
-        }
+        },
+        "executionResumedBy": "Owner: prima lees het goal en acteer ernaar; user will update the app goal.",
+        "comparisonFocus": "Ability to discover, reuse or add a needed capability and produce a useful result; compare quality, independence, latency and total use with Eva1/concurrent systems, not number of bundled integrations.",
+        "latestCheck": "Confirmed actual configured and dynamic catalogs; no general programming executor. Reuse route selected, not yet integrated. No active product worker after this bounded preparation."
       }
     },
     "dashboardClarityCorrection20260922": {
