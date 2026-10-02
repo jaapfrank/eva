@@ -1,0 +1,80 @@
+{
+  "kind": "isolated_programming_workspace_smoke",
+  "checkedAt": "2026-10-02T10:47:44.660375+00:00",
+  "state": "host_execution_verified_not_installed",
+  "image": "sha256:4355cfe6db617e43e81d1679bf8c7b8beed71db8ec137378dbb46e809a2452d7",
+  "upstream": {
+    "name": "DesktopCommanderMCP",
+    "version": "0.2.52",
+    "mcpSdkVersion": "1.29.1",
+    "toolCount": 26
+  },
+  "sourceHashes": {
+    "eva2/src/eva/operations/programming_workspace.py": "0e52303e892964e0da3f034a739b79f7006a8c2e1034810232b51b929ff51678",
+    "eva2/tests/operations/test_programming_workspace.py": "5ca07b142825e9e58d36a55b44c4db975fab87da13144dd0cf251fdf1bbdf602"
+  },
+  "verification": {
+    "focusedTests": {
+      "passed": 20,
+      "elapsedSeconds": 0.22
+    },
+    "multiFilePython": {
+      "files": [
+        "helper.py",
+        "main.py"
+      ],
+      "expectedStdout": "42",
+      "observedStdout": "42",
+      "afterResumeStdout": "42",
+      "afterHostRestartStdout": "42"
+    },
+    "stopDuringInflightRead": {
+      "container_gone": true,
+      "elapsed_ms": 1359,
+      "request_outcome": "RuntimeError",
+      "receipt_state": "started",
+      "files_preserved": true
+    },
+    "restartReconciliation": {
+      "orphan_container_gone_before_next_attempt": true,
+      "files_preserved": true
+    },
+    "cleanup": {
+      "all_smoke_containers_gone": true
+    },
+    "trustedProcessStatus": {
+      "idleBefore": true,
+      "idleAfterTerminalSuccess": true,
+      "idleAfterTerminalFailure": true,
+      "idleWhileChildPrintsNoActiveSessions": false,
+      "idleAfterFileWriteWhileProcessRuns": false,
+      "statusProbeContainerGone": true
+    },
+    "terminalSemantics": {
+      "startProcessReturnsPidWithoutExitCode": true,
+      "readProcessOutputReportsExitCodeInText": true,
+      "observedExitCodes": [
+        0,
+        7
+      ],
+      "nonzeroProgramExitStillHasMcpIsErrorFalse": true,
+      "listSessionsReportsServerRegistryNotChildStdout": true,
+      "idleIsNotSemanticSuccess": true
+    }
+  },
+  "privateProofHashes": {
+    "evidence.json": "4dbcb83f552e66c0347fbdd8b67f6880dac886d3eb591f658ed28de0fc7ca555",
+    "process-status-evidence.json": "1a7890b2739462988f5b7a056299c45aeb95724f1307f2210e63518759fd6cce"
+  },
+  "usage": {
+    "modelCalls": 0,
+    "externalNetworkUsedBySmoke": false,
+    "creditCost": null
+  },
+  "limits": [
+    "Direct host MCP boundary only; not an ordinary-chat admission or installed-core proof.",
+    "Probe programs were authored by Codex, not Eva.",
+    "No independently accepted product improvement, release, owner acceptance or L3 completion claimed.",
+    "Process idleness proves no upstream active sessions, not program correctness or result quality."
+  ]
+}

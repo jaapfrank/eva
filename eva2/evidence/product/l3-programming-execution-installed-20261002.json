@@ -1,0 +1,122 @@
+{
+  "contract": "EvaProgrammingExecutionInstallation/v1",
+  "checkedAt": "2026-10-02T11:01:29.827955+00:00",
+  "state": "installed_execution_dependency_not_complete_L3",
+  "services": {
+    "core": {
+      "image": "sha256:1914e4b1a526e7516e084419f345dd1f16c8eefffa5b8b28a127e1c699ac0392",
+      "status": "running",
+      "health": "healthy",
+      "sourceHashesMatch": true,
+      "programmingTools": [
+        "list_programming_tools",
+        "use_programming_tool"
+      ]
+    },
+    "delegated-work-worker": {
+      "image": "sha256:65b0b77df956d8ab7ab54bd0bfee9c786423e82eef99c09c6c9396b57e177b47",
+      "status": "running",
+      "health": "healthy",
+      "sourceHashesMatch": true,
+      "programmingTools": [
+        "list_programming_tools",
+        "use_programming_tool"
+      ]
+    }
+  },
+  "sourceHashes": {
+    "adapters/connectors/programming_workspace.py": "9a15aca3618d91f3c72ae1b5c179b5d9513243f8543f8d77bc2e1d4a29298f76",
+    "adapters/postgres/programming_actions.py": "8e659f82d4a664996d38169748f43b919fad4d708669a7a45594f0b375ffcf74",
+    "bootstrap/delegated_digital_composition.py": "1be79b051efc7beef434f34c2f55daa67c1d14c05764271a6c76c0007ed8e93d",
+    "bootstrap/delegated_digital_runner.py": "9d579561383db74fdbd541f8d113b4d9c20e944a624dea783d2bd20b591ba292",
+    "contracts/delegated_digital_work.py": "c10872a0a869d807b806ae917f9fd929e0ebd0d7fc4f28a58a39da727535777e"
+  },
+  "profileConfigurationSha256": "19eac161f5b25f36c3cc4562f435ddbd1240dab5f232172b766ef206ee5d5702",
+  "profileExecutionSha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+  "hostSourceSha256": "0e52303e892964e0da3f034a739b79f7006a8c2e1034810232b51b929ff51678",
+  "workspaceImage": "sha256:4355cfe6db617e43e81d1679bf8c7b8beed71db8ec137378dbb46e809a2452d7",
+  "installedClientSmoke": {
+    "tool_count": 26,
+    "idle": true
+  },
+  "independentReview": "eva2/reviews/l3-programming-execution-20261002.md",
+  "executionSmoke": "eva2/evidence/product/programming-workspace-smoke-20261002.json",
+  "baselineDevelopmentScore": {
+    "hardFailures": 0,
+    "requiredHits": 3,
+    "requiredTotal": 5,
+    "contextBytes": 4017,
+    "cases": [
+      {
+        "id": "named_late",
+        "requiredHits": 0,
+        "requiredTotal": 1,
+        "hardFailures": [],
+        "contextBytes": 1141
+      },
+      {
+        "id": "ordinary",
+        "requiredHits": 1,
+        "requiredTotal": 1,
+        "hardFailures": [],
+        "contextBytes": 732
+      },
+      {
+        "id": "recent_named",
+        "requiredHits": 0,
+        "requiredTotal": 1,
+        "hardFailures": [],
+        "contextBytes": 846
+      },
+      {
+        "id": "no_match",
+        "requiredHits": 1,
+        "requiredTotal": 1,
+        "hardFailures": [],
+        "contextBytes": 649
+      },
+      {
+        "id": "stop",
+        "requiredHits": 1,
+        "requiredTotal": 1,
+        "hardFailures": [],
+        "contextBytes": 649
+      },
+      {
+        "id": "denied",
+        "requiredHits": 0,
+        "requiredTotal": 0,
+        "hardFailures": [],
+        "contextBytes": 0
+      }
+    ]
+  },
+  "criteria": "eva2/experiments/aide-20260929/workspace-followup-20261002.json",
+  "verification": {
+    "serviceAndRunnerCases": 103,
+    "compositionCases": 22,
+    "hostCases": 20,
+    "actualPinnedMcpExecution": true,
+    "actualInstalledClientRoute": true,
+    "coreAndWorkerProfileMatch": true,
+    "rollback": "Previous exact runtime images, Compose configuration and hostservice are retained; no rollback performed.",
+    "developmentCorrections": "One direct runtime overlay for actual pending() replay; no reinstall of data/services or repeated model trial."
+  },
+  "usage": {
+    "requestedEvaModelCalls": 0,
+    "developmentCredits": null,
+    "runtimeCreditCost": null
+  },
+  "remaining": [
+    "One Eva-authored candidate through shared programming route",
+    "Independent final comparison on protected cases",
+    "Apply only measured advantage",
+    "General extension activation and human acceptance remain separate"
+  ],
+  "completionClaims": {
+    "L3Completed": false,
+    "candidateProduced": false,
+    "independentImprovementShown": false,
+    "ownerAccepted": false
+  }
+}

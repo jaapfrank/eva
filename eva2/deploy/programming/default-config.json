@@ -1,0 +1,8 @@
+{
+  "telemetryEnabled": false,
+  "allowedDirectories": [
+    "/workspace",
+    "/opt/eva-source"
+  ],
+  "defaultShell": "/bin/bash"
+}

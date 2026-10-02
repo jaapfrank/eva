@@ -33,7 +33,7 @@ def load_config(path):
     config = json.loads(raw, object_pairs_hook=_object)
     required = {"image", "command", "token_file", "bind_host", "port", "allowed_paths"}
     limits = {field.name for field in fields(EvaluationConfig)} - {"image", "command"}
-    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled"}:
+    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace"}:
         raise ValueError("invalid evaluation service configuration fields")
     if (not isinstance(config["command"], list)
             or not isinstance(config["token_file"], str)
@@ -67,9 +67,10 @@ class EvaluationServer(ThreadingHTTPServer):
     daemon_threads = False
     request_queue_size = 8
 
-    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None):
+    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None):
         self.evaluator = evaluator
         self.procedure_executor = procedure_executor
+        self.programming_workspaces = programming_workspaces
         self.token = token
         self.allowed_paths = allowed_paths
         self.execution_lock = threading.Lock()
@@ -121,7 +122,61 @@ class EvaluationHandler(BaseHTTPRequestHandler):
             return
         self._reply(200, {"status": "ready"})
 
+    def _programming(self):
+        if self.server.programming_workspaces is None:
+            self._reply(404, {"error": "not_found"})
+            return
+        if not self._authenticated():
+            self._reply(401, {"error": "unauthorized"})
+            return
+        # In particular, close must never wait for the evaluator or a tool call.
+        try:
+            lengths = self.headers.get_all("Content-Length", [])
+            types = self.headers.get_all("Content-Type", [])
+            if (len(lengths) != 1 or not lengths[0].isascii() or not lengths[0].isdigit()
+                    or self.headers.get_all("Transfer-Encoding") or len(types) != 1
+                    or types[0].split(";", 1)[0].strip().lower() != "application/json"):
+                raise ValueError()
+            length = int(lengths[0])
+            if not 1 <= length <= _MAX_BODY:
+                raise ValueError()
+            raw = self.rfile.read(length)
+            if len(raw) != length:
+                raise ValueError()
+            value = json.loads(raw, object_pairs_hook=_object)
+            if not isinstance(value, dict):
+                raise ValueError()
+            action = value.get("action")
+            keys = {"session_key", "action"}
+            if action == "close" and set(value) == keys:
+                self.server.programming_workspaces.close(value["session_key"])
+                result = {"closed": True}
+            elif action == "status" and set(value) == keys | {"workspace_key"}:
+                result = self.server.programming_workspaces.processes_idle(
+                    value["session_key"], workspace_key=value["workspace_key"])
+            elif action == "list" and set(value) == keys | {"workspace_key"}:
+                result = self.server.programming_workspaces.list_tools(
+                    value["session_key"], workspace_key=value["workspace_key"])
+            elif action == "call" and set(value) == keys | {"workspace_key", "name", "arguments", "request_id"}:
+                result = self.server.programming_workspaces.call_tool(
+                    value["session_key"], value["name"], value["arguments"], value["request_id"],
+                    workspace_key=value["workspace_key"])
+            else:
+                raise ValueError()
+            if not isinstance(result, dict):
+                raise ValueError("programming result must be an object")
+        except (ValueError, TypeError, UnicodeError, OSError, OverflowError, RecursionError):
+            self._reply(400, {"error": "invalid_programming_request"})
+            return
+        except Exception:
+            self._reply(500, {"error": "programming_execution_unconfirmed"})
+            return
+        self._reply(200, result)
+
     def do_POST(self):
+        if self.path == "/programming":
+            self._programming()
+            return
         procedure = self.path == "/run-procedure" and self.server.procedure_executor is not None
         if self.path != "/evaluate" and not procedure:
             self._reply(404, {"error": "not_found"})
@@ -187,13 +242,23 @@ def main():
             deadline_seconds=min(settings.deadline_seconds, 30),
             output_bytes=min(settings.output_bytes, 16384), memory_mb=settings.memory_mb,
             cpus=settings.cpus, pids=settings.pids))
+    programming = None
+    config = json.loads(Path(args.config).read_text())
+    if "programming_workspace" in config:
+        from eva.operations.programming_workspace import ProgrammingWorkspaceConfig, ProgrammingWorkspaces
+        programming = ProgrammingWorkspaces(ProgrammingWorkspaceConfig(**config["programming_workspace"]))
     with EvaluationServer(address, evaluator=ComponentEvaluator(settings), token=token,
-                          allowed_paths=allowed_paths, procedure_executor=executor) as server:
+                          allowed_paths=allowed_paths, procedure_executor=executor,
+                          programming_workspaces=programming) as server:
         def stop(signum, frame):
             threading.Thread(target=server.shutdown, daemon=True).start()
         signal.signal(signal.SIGTERM, stop)
         signal.signal(signal.SIGINT, stop)
-        server.serve_forever(poll_interval=0.5)
+        try:
+            server.serve_forever(poll_interval=0.5)
+        finally:
+            if programming is not None:
+                programming.close_all()
 
 
 if __name__ == "__main__":

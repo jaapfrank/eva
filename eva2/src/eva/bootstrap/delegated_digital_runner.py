@@ -13,6 +13,7 @@ from eva.adapters.model.contracts import ConversationModelDeadlineExceeded
 from eva.adapters.postgres.background_model_journal import BackgroundModelJournal
 from eva.adapters.postgres.background_work_progress import BackgroundWorkProgress, load_work_progress
 from eva.adapters.postgres.component_improvement_actions import ComponentImprovementActions, DRAFT, EVALUATE, PREPARE
+from eva.adapters.postgres.programming_actions import ProgrammingActions, LIST as PROGRAMMING_LIST, CALL as PROGRAMMING_CALL
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.delegated_work import DelegatedWorkCall, DelegatedWorkReleaseSelector
 from eva.adapters.postgres.operational_timeline import external_timeline_scope
@@ -100,7 +101,16 @@ class _TaskModel:
             "bewaar je de stand en benoem je wat nodig is. Bestaande budgetten blijven gelden. ",
             "Bij een gevraagde verbetering van je eigen code: lees de echte component met "
             "read_own_component_source, onderzoek de oorzaak en relevante bestaande oplossingen, "
-            "en maak alleen bij een concrete tekortkoming een draft_own_component_improvement. "
+            "en maak alleen bij een concrete tekortkoming een wijziging. Voor een door de "
+            "vaste evaluator ondersteunde component gebruik je draft_own_component_improvement. "
+            "Voor andere programmeeropdrachten ontdek je list_programming_tools en gebruik je "
+            "use_programming_tool voor de blijvende /workspace. Bestaande Eva-bron staat "
+            "alleen-lezen onder /opt/eva-source/eva; maak een werkkopie voor wijzigingen. "
+            "Voer het programma en gerichte controles daadwerkelijk uit en lees hun eindresultaat. "
+            "Een nog lopend proces is geen voltooiing: lees het terug tot afsluiting of stop het. "
+            "Deze programmeerwerkruimte geeft geen toegang tot onafhankelijke toetsgegevens "
+            "of installatie. Lever exacte gewijzigde bestanden en eigen meetresultaten op voor "
+            "afzonderlijke beoordeling en toepassing; noem ze niet zelfstandig geïnstalleerd. "
             "Gebruik evaluate_own_component_improvement indien aangeboden voor die component, "
             "met de draft_step uit het voorstel. Beoordeel aan de hand van het echte meetrapport "
             "of dat de vooraf beschreven winst daadwerkelijk bewijst. Een gelijke uitkomst is geen winst. "
@@ -333,7 +343,7 @@ def _has_completed_tool_evidence(receipts):
             completed = False
             continue
         output = receipt.output
-        if receipt.call.name in {"save_work_progress", "get_delegated_work"}:
+        if receipt.call.name in {"save_work_progress", "get_delegated_work", PROGRAMMING_LIST}:
             # Planning and reading a predecessor are context, not new completed work.
             continue
         if receipt.call.name == "read_home_assistant_inventory":
@@ -380,6 +390,13 @@ def _has_completed_tool_evidence(receipts):
                 completed = True
             elif status != "unavailable":
                 return False
+        elif receipt.call.name == PROGRAMMING_CALL:
+            result = output.get("programming_result", {})
+            if output.get("status") != "verified" or result.get("isError") is not False:
+                return False
+            if receipt.call.arguments.get("tool_name") not in {
+                    "start_process", "interact_with_process", "list_sessions", "list_processes"}:
+                completed = True
         elif output.get("status") == "verified":
             completed = True
         else:
@@ -408,7 +425,7 @@ class DelegatedDigitalRunner:
         from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec, DelegatedDigitalWorkResult
         signal = CancellationSignal()
         usage = DelegatedWorkUsage.unmeasured()
-        journal = source = actions = reply = None
+        journal = source = actions = reply = programming = None
         latest_usage = ConversationModelUsage.unmeasured()
         deadline = parse_utc_timestamp(spec.deadline)
         call = DelegatedWorkCall(spec.work_id, "digital:" + spec.work_id, call_id, spec)
@@ -482,6 +499,8 @@ class DelegatedDigitalRunner:
                                               dispatch_guard, self.clock)
             improvements = ComponentImprovementActions(self.store._engine, spec, source, authorize,
                                                         dispatch_guard, self.clock)
+            programming = ProgrammingActions(self.store._engine, spec, source, authorize,
+                                             dispatch_guard, self.clock)
             connector_tools = tuple(
                 tool.with_preparation_call_resolver(improvements.resolve_document_call)
                 if "save_workspace_document" in tool.action_names else tool
@@ -491,7 +510,7 @@ class DelegatedDigitalRunner:
                 connector_tools = (*connector_tools, task_research_tools(
                     self.store._engine, self.model, turn=source, journal=journal,
                     authorize=authorize, grant=spec.grant, profile=self.profile))
-            actions = BackgroundConnectorActions((*connector_tools, progress, improvements), spec.grant.capability_ids,
+            actions = BackgroundConnectorActions((*connector_tools, progress, improvements, programming), spec.grant.capability_ids,
                                                   authorize, spec.grant.maximum_tool_calls)
             from eva.adapters.postgres.work_corrections import work_corrections
             task_model = _TaskModel(self.model, spec.task, self.browser_context,
@@ -570,6 +589,11 @@ class DelegatedDigitalRunner:
             if saved_progress and any(step["state"] not in {"done", "skipped"}
                                       for step in saved_progress["steps"]):
                 raise _UnfinishedWorkPlan("background task plan is unfinished")
+            with cancellation_scope(signal):
+                programming_idle = await asyncio.to_thread(programming.verify_idle)
+            if not programming_idle:
+                raise _UnfinishedWorkPlan("programming processes are still running")
+            authorize(source)
             if not _has_completed_tool_evidence(actions.receipts):
                 raise _UnfinishedWorkPlan("background task lacks verified completed tool results")
             if actual.measurement != "measured":
@@ -600,9 +624,13 @@ class DelegatedDigitalRunner:
                 hashlib.sha256((type(error).__name__ + ":" + str(error)).encode()).hexdigest(),
                 failure_report=report)
         finally:
-            watcher.cancel()
-            with suppress(asyncio.CancelledError):
-                await watcher
+            try:
+                if programming is not None:
+                    await asyncio.to_thread(programming.close)
+            finally:
+                watcher.cancel()
+                with suppress(asyncio.CancelledError):
+                    await watcher
 
     @staticmethod
     def _usage(actual, tool_calls):

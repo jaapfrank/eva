@@ -316,3 +316,17 @@ def test_old_household_envelope_remains_readable_but_requires_current_release_fo
     resumed = old.model_copy(update=release_fields(current))
     authority.validate_spec(resumed)
     assert resumed.grant == old.grant
+
+
+def test_configured_programming_tools_are_admitted_and_bound_to_release(tmp_path, monkeypatch):
+    import json
+    settings, bundle = configuration()
+    config = tmp_path / "programming.json"
+    config.write_text(json.dumps({"url": "http://127.0.0.1:44719",
+        "token_file": str(tmp_path / "token"), "timeout_seconds": 120}))
+    monkeypatch.setenv("EVA_PROGRAMMING_WORKSPACE_CLIENT_FILE", str(config))
+    first = build_digital_profile(settings, bundle)
+    assert {"list_programming_tools", "use_programming_tool"} <= set(first.grant().capability_ids)
+    config.write_text(json.dumps({"url": "http://127.0.0.1:44720",
+        "token_file": str(tmp_path / "token"), "timeout_seconds": 120}))
+    assert first.release != build_digital_profile(settings, bundle).release

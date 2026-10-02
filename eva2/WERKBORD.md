@@ -1,6 +1,31 @@
 # EVA2 werkbord
 
-## Nu: I2 — algemene automatiseringsaanroep geïnstalleerd
+## Nu: L3 — Eva zelf een concrete verbetering laten maken
+
+Het aangepaste goal is **actief**: persoon, geheugen, eigen initiatief en
+zelfstandig werk. De bestaande acceptaties en volledige eindvoorwaarden blijven.
+
+**Geïnstalleerd:** de algemene programmeerwerkruimte sluit aan op bestaande
+achtergrondtaken. Meerdere bestanden uitvoeren, stoppen en met dezelfde bestanden
+hervatten zijn met echte MCP/Python-uitvoer gecontroleerd. Kern en werker zijn
+gezond en hebben gelijke bron/configuratieprofielen. Onafhankelijke review GO;
+145 gerichte controles verspreid over de relevante onderdelen. Eén gerichte
+replaycorrectie is direct toegepast, zonder rollback of gegevensherinstallatie.
+
+**Volgende werk, nog niet gestart:** Eva zelf één relevante taakcontextverbetering
+laten maken, onafhankelijk vergelijken en alleen gemeten winst toepassen.
+Huidige referentie: 3/5 relevante taakverwijzingen; bron en criteria liggen vast.
+Geen kandidaat of Eva-modelcall in deze aansluiting, credits onbekend.
+De uitvoeringsaansluiting is geen volledige L3-functie of extra groene hoofdtaak.
+17/44 kleine taken en eerdere acceptaties blijven behouden. Geen uitvoerder meer
+actief op de afgesloten aansluiting. Het actieve goal vervolgt de kandidaat.
+
+[Installatiebewijs](evidence/product/l3-programming-execution-installed-20261002.json)
+· [Review](reviews/l3-programming-execution-20261002.md)
+· [Vooraf vastgelegde proef](experiments/aide-20260929/workspace-followup-20261002.json).
+De specifieke I2-camera-/agendagegevensvraag blijft apart en blokkeert dit werk niet.
+
+## Vorige oplevering: I2 — algemene automatiseringsaanroep geïnstalleerd
 
 Het volledige nieuwe goal is **actief**: persoon, geheugen, eigen initiatief en
 zelfstandig werk, met koppelingen naar behoefte en behoud van het bestaande plan.

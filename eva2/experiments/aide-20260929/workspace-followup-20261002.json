@@ -1,0 +1,19 @@
+{
+  "sourcePath": "eva2/src/eva/adapters/postgres/delegated_work_actions.py",
+  "baselineSha256": "d6ad4521881d09e0f91f5edcefda3bbe4ec628e01f3d0db6992f974ffa203731",
+  "baseCommit": "d9c7295b4114dc482b56b46312974e86dc2cbe27",
+  "historicalTrial": "AIDE-TASK-CONTEXT-01 remains closed after two provider failures; this does not reset that trial.",
+  "changedCause": "Existing working Astra medium delegated provider route plus installed general workspace, replacing timed out monolithic source-output requests; one real programming task produces and executes its candidate.",
+  "desiredOutcome": "Relevant authorized task selection for ordinary follow-up questions without extra lookup, preserving own-initiative context.",
+  "criteria": "Reuse eva2/experiments/aide-20260929/criteria.json hard conditions/selectionRule/promotionRule. New own-initiative block must be preserved unchanged.",
+  "candidateAllowance": {
+    "initialTasks": 1,
+    "refinements": 0,
+    "provider": "existing gpt-6-astra medium delegated task",
+    "taskBudget": "existing admitted delegated profile; no new subscription/model route",
+    "modelAnswerComparison": "up to24 Sol none calls only if hardgate and relevance win justify; 3 repetitions baseline/candidate on4 cases",
+    "credits": "unknown"
+  },
+  "independence": "Optimizer sees current source and development cases only. Evaluator/scoring rules and existing frozen holdout remain outside workspace. Freeze candidate hash before independent evaluation. No holdout-directed repairs.",
+  "integration": "Only measured advantage through existing managed core/worker install, followed by source/profile/live context verification. No general self-improvement claim from one task."
+}

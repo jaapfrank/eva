@@ -1,0 +1,15 @@
+{
+  "package": "@wonderwhy-er/desktop-commander",
+  "version": "0.2.52",
+  "license": "MIT",
+  "tarball": "https://registry.npmjs.org/@wonderwhy-er/desktop-commander/-/desktop-commander-0.2.52.tgz",
+  "integrity": "sha512-VNeKfaBR6TN/8MlP/ziTpjNEeHrGOFmmzQjrwzr52kQalBJoNNISWwaSQElPFc6+I17NOOM354KbSdS/aDrqGA==",
+  "sha256": "9cd9f52277b45602d5544ddfede0f0c5f6453131256010b8f2abba3576040c6c",
+  "retrievedAt": "2026-10-02",
+  "sources": [
+    "https://github.com/wonderwhy-er/DesktopCommanderMCP",
+    "https://raw.githubusercontent.com/wonderwhy-er/DesktopCommanderMCP/main/SECURITY.md"
+  ],
+  "maintenanceOwner": "Codex coordinator",
+  "nextReview": "Next dependency change before release; no automatic mutable updates"
+}

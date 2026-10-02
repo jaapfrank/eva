@@ -1267,3 +1267,28 @@ def test_blocked_plan_keeps_returned_findings_only_after_verified_work(monkeypat
     assert outcome.retryable is False
     assert outcome.failure_report == ("Observed provider error. Further access is unavailable."
                                       if verified_observation else None)
+
+
+def test_programming_launch_without_terminal_process_state_is_not_completed(monkeypatch):
+    import eva.bootstrap.delegated_digital_runner as module
+    _, spec, _, tools, _, runner, _ = fixture()
+    tools.release.set()
+    closed = []
+    class PendingProgramming:
+        action_names = ()
+        def __init__(self, *args): pass
+        def available_for(self, turn): return False
+        def verify_idle(self): return False
+        def close(self): closed.append(True)
+    monkeypatch.setattr(module, "ProgrammingActions", PendingProgramming)
+    outcome = asyncio.run(runner.run(spec, call_id="call:pending-program"))
+    assert outcome.status == "incomplete_work" and outcome.result is None
+    assert closed == [True]
+
+
+def test_programming_launch_receipt_alone_is_not_completed_work():
+    from eva.bootstrap.delegated_digital_runner import _has_completed_tool_evidence
+    receipt = ConversationActionReceipt(ConversationActionCall("launch", "use_programming_tool", {
+        "tool_name": "start_process", "arguments_json": '{"command":"python -V"}'}),
+        {"status": "verified", "programming_result": {"isError": False}})
+    assert _has_completed_tool_evidence([receipt]) is False
