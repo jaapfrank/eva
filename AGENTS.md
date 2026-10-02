@@ -1,5 +1,16 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Eigenaarbevestiging 2 oktober — AIDE² blijft expliciet onderdeel van L3
+
+Behoud het bestaande AIDE/AIDE²-onderzoek en de gerichte toepassing op Eva’s eigen
+werkwijze binnen L3/R1. Zie de actuele sectie in eva2/PROJECTDOEL.md en
+`eva2/experiments/aide-20260929/research.md`. Codevarianten vergelijken en de
+aansturing van de agent verbeteren zijn verschillende claims. De geïnstalleerde
+programmeerwerkruimte is geen aangetoonde AIDE²-zelfverbetering. Gebruik vaste
+vooraf gekozen criteria, gescheiden ontwikkeling/eindbeoordeling en het bestaande
+experimentbudget; alleen gemeten voordeel toepassen. Geen nieuw platform, extra
+hoofdtaken of hervatting van de historisch afgesloten proef zonder gewijzigde oorzaak.
+
 ## Eigenaarverduidelijking 2 oktober — eerst een zich ontwikkelende huisgenoot
 
 Eva begint met gewone chat en enkele optionele installatiekeuzes. Zij leert mensen,

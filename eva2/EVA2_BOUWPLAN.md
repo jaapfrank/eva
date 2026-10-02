@@ -1,5 +1,30 @@
 # Eva2 — het complete bouwplan
 
+## Eigenaarbevestiging 2 oktober — AIDE² en gemeten zelfverbetering
+
+AIDE/AIDE²-onderzoek en toepassing blijven expliciet onderdeel van **L3**, in
+samenhang met de bestaande innovatieproef R1. AIDE vergelijkt taakprogramma’s;
+AIDE² onderzoekt ook verbeteringen aan de aansturing van de onderzoeksagent zelf.
+Voor Eva gaat het dus ook om haar eigen werkwijze, bijvoorbeeld contextkeuze,
+plannen, hulpmiddelen kiezen en resultaten controleren; geen verplichte aparte
+bouwtaak voor ieder voorbeeld en geen training van nieuwe modelgewichten.
+
+Gebruik het [vastgelegde onderzoek](experiments/aide-20260929/research.md) en de
+bestaande uitvoerings-, kandidaat-, beoordelings- en installatieroutes. Leg vooraf
+referentie, gebruikstekort, ontwikkeltaken, onafhankelijke eindbeoordeling en
+experimentverbruik vast. De verbeterende agent kan beoordelingsregels en
+beschermde testgegevens niet aanpassen. Vergelijk resultaatkwaliteit, menselijke
+hulp, snelheid en totaal verbruik met dezelfde model/providerbasis; privacy,
+bevoegdheden en stoppen blijven voorwaarden. Alleen aantoonbare winst toepassen.
+
+De eerste concrete toepassing blijft de bestaande taakcontextselectie binnen L3;
+geen nieuw optimalisatieplatform of onderbreking van bruikbare opleveringen.
+De oorspronkelijke proef met twee providerfouten blijft afgesloten. De geïnstalleerde
+programmeerwerkruimte en de geholpen 71/90→90/90-codecorrectie bewijzen geen
+AIDE²-zelfverbetering. Onderzocht, kandidaat gemaakt, onafhankelijk beter bevonden
+en werkelijk toegepast blijven afzonderlijk zichtbaar. Zelfverbetering moet later
+merkbaar beter Eva-gedrag opleveren; herhaalde autonome verbetering is nog niet bewezen.
+
 ## Actueel besluitplan — 2 oktober: jij beschrijft de wens, Eva regelt de mogelijkheid
 
 Dit is de actuele productrichting en uitvoervolgorde. De eerdere tekst onderaan

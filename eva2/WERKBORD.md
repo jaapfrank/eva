@@ -5,6 +5,12 @@
 Het aangepaste goal is **actief**: persoon, geheugen, eigen initiatief en
 zelfstandig werk. De bestaande acceptaties en volledige eindvoorwaarden blijven.
 
+**AIDE² is expliciet onderdeel van L3:** niet alleen code maken, maar ook Eva’s
+eigen werkwijze op gemeten voordeel verbeteren. Onderzoek is vastgelegd;
+zelfverbetering is nog niet aangetoond. De taakcontextproef is de eerste toepassing,
+met vaste criteria en een afgeschermde eindbeoordeling. Dit verandert de actuele
+bouwvolgorde of eerdere acceptaties niet.
+
 **Geïnstalleerd:** de algemene programmeerwerkruimte sluit aan op bestaande
 achtergrondtaken. Meerdere bestanden uitvoeren, stoppen en met dezelfde bestanden
 hervatten zijn met echte MCP/Python-uitvoer gecontroleerd. Kern en werker zijn
