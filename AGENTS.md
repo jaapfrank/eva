@@ -20,6 +20,22 @@ Een door Codex geschreven productwijziging of opgeslagen codevoorstel bewijst de
 zelfstandigheid niet. Gebruik de bestaande gedelegeerde uitvoering; geen nieuw
 agentplatform of aparte uitvoerroute per voorbeeld.
 
+Computerbediening, browser, bestanden, Home Assistant, camera, agenda en spraak
+zijn voorbeelden van uitbreidingen die een gebruiker kan willen, geen verplichte
+standaardbundel voor iedere Eva-installatie. De vaste basis bevat de gedeelde
+identiteit, het geheugen, initiatief, taakuitvoering en de minimale werkruimte
+waarmee Eva benodigde mogelijkheden kan ontdekken, toevoegen, uitvoeren en beheren.
+Per behoefte gebruikt Eva eerst beschikbare middelen, onderzoekt bestaande
+oplossingen, sluit een passende uitbreiding aan of maakt zelf wat ontbreekt.
+Zij controleert het bruikbare resultaat en bewaart een herbruikbare werkwijze
+wanneer dat helpt. Ondersteuning mag dus niet afhangen van een vooraf door Codex
+geprogrammeerde koppeling voor iedere dienst of soort opdracht. Algemene middelen
+om uitbreidingen te realiseren blijven wel nodig; een prompt alleen levert die niet.
+Niet-gebruikte uitbreidingen hoeven niet geïnstalleerd of actief te zijn en kunnen
+weer worden uitgeschakeld. Reeds gevraagde en werkende mogelijkheden in Jaaps eigen
+installatie blijven behouden. Dit verduidelijkt de bouwgrens; geen nieuwe taak-ID,
+verzonnen afronding, verwijderronde of verruiming van het bestaande mandaat.
+
 Eerstvolgende bestaande uitkomst is L3.2/L3.3: van een gewone programmeeropdracht
 naar een beoordeelde, werkende eigen verbetering. Controleer eerst gericht welke
 algemene programmeeruitvoerder werkelijk toegelaten en aangesloten is; een eventuele

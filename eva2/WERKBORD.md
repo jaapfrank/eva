@@ -1,5 +1,19 @@
 # EVA2 werkbord
 
+## 2 oktober: mogelijkheden toevoegen naar behoefte
+
+De eigenaar verduidelijkt: computer, browser, bestanden, HA en spraak zijn
+voorbeelden, geen verplichte standaardbundel. De bestaande L3-uitkomst moet Eva
+het algemene vermogen geven om een benodigde mogelijkheid te ontdekken, toe te
+voegen, te gebruiken en te beheren, zonder een vooraf geprogrammeerde koppeling
+per wens. Identiteit, geheugen, initiatief en taakuitvoering blijven de basis;
+bestaande gevraagde koppelingen in Jaaps installatie blijven behouden.
+
+**Alleen de bouwafspraak verduidelijkt.** Geen runtimewijziging, nieuwe taak,
+acceptatie of productafronding; 16/44 kleine taken en 2/9 historische onderdelen
+ongewijzigd. Geen productbouwwerker actief. Eerstvolgende werk blijft de bestaande
+L3-aansluiting en Eva's eigen werkelijke uitvoering.
+
 ## 2 oktober: uitvoering hervat — L3.2/L3.3
 
 Jaap heeft gevraagd het goal te lezen en ernaar te handelen; hij past de app-goal

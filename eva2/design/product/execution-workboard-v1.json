@@ -3299,14 +3299,14 @@
           }
         ],
         "now": {
-          "title": "L3 · ontbrekende programmeeruitvoering vastgesteld",
+          "title": "Vastgelegd: Eva voegt mogelijkheden toe naar behoefte",
           "state": "planned",
-          "detail": "Volledig goal gelezen. De echte geïnstalleerde catalogus bevat geen algemene programmeeruitvoerder. Bestaande programmeertool als hergebruikroute gekozen; aansluiting en zelfstandige uitvoering zijn de volgende bouwstap. Deze controle is afgerond; geen productbouwwerker of modelproef meer actief. App-goal wordt door Jaap bijgewerkt.",
+          "detail": "Computer, browser, HA en spraak zijn voorbeelden van optionele uitbreidingen, geen verplichte standaardbundel. De bestaande L3-uitkomst draait om het vermogen om nieuwe mogelijkheden zelf toe te voegen en bruikbaar toe te passen. Alleen eigenaarafspraak bijgewerkt; geen runtimewijziging, productafronding of actieve productbouwwerker.",
           "owner": "Codex /root"
         },
         "next": {
           "title": "Eva bouwt een benodigde mogelijkheid zelf in",
-          "detail": "Sluit de bestaande programmeertool aan via de huidige gedelegeerde/MCP-route, met blijvende werkmap en taakgebonden stoppen. Eva maakt daarna zelf de relevante wijziging; onafhankelijke beoordeling en werkelijke toepassing blijven noodzakelijk. Geen eigen uitvoerplatform of script voor één voorbeeld. Doel blijft beter dan Eva1/concurrenten in bruikbaar resultaat, zelfstandigheid, snelheid en efficiëntie; geen wedstrijd in het aantal meegeleverde functies."
+          "detail": "Maak de bestaande L3-uitvoering compleet: een minimale blijvende programmeerwerkruimte via de bestaande gedelegeerde/MCP-route, taakgebonden stoppen en werkelijke toepassing. Eva ontdekt daarna bij een behoefte passende bestaande middelen, sluit een uitbreiding aan of maakt wat ontbreekt, controleert het resultaat en hergebruikt wat zij leert. Computerbediening, browser, HA en andere diensten worden niet als verplichte bundel voor iedereen ingebouwd. Bestaande gevraagde mogelijkheden blijven behouden; geen aparte uitvoerroute per voorbeeld. Vergelijk bruikbaar resultaat, zelfstandigheid, snelheid en verbruik met Eva1/concurrenten."
         },
         "ownerAction": {
           "title": "Geen extra handeling nodig voor dit werk",
@@ -3317,7 +3317,7 @@
           "expected": "Bij hervatting geldt de actuele L3-opdracht. De hergebruikcontrole is geen opgeleverde programmeerfunctie; bestaande 16/44 kleine taken en2/9 grote onderdelen blijven ongewijzigd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-02T00:35:22.610151+00:00"
+        "reviewedAt": "2026-10-02T01:06:22.298279+00:00"
       },
       "reviewedAt": "2026-10-01T15:52:21.323198+00:00"
     },
