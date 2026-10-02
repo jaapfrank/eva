@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-02T12:06:50.067304+00:00",
+        "checkedAt": "2026-10-02T12:25:10.818972+00:00",
         "deliveries": [
+          {
+            "title": "Eigen programma bewaard voor later hergebruik · 2 oktober",
+            "date": "2026-10-02",
+            "state": "installed",
+            "result": "Via bestaande geïnstalleerde document- en procedureroutes bewaard en in een later gesprek exact teruggevonden. Bron gelijk aan het onafhankelijk gecontroleerde Eva-programma. Review GO; nul nieuwe modelcalls of installatie.",
+            "remaining": "Bewaren was Codex-ondersteund. Geen nieuwe vaste agendafunctie, autonome leerclaim of live-componentzelfverbetering. L3 en tellers blijven open.",
+            "source": "eva2/evidence/product/l3-program-preserved-20261002.json"
+          },
           {
             "title": "Eva maakt en controleert zelf een herbruikbaar programma · 2 oktober",
             "date": "2026-10-02",
@@ -3339,14 +3347,14 @@
           }
         ],
         "now": {
-          "title": "L3: Eva schreef en controleerde zelf een bruikbaar programma",
+          "title": "L3: eigen code bewaard en later terugvindbaar",
           "state": "in_progress",
-          "detail": "De directe programmeerinvoer is geïnstalleerd in kern en werker. Eva maakte zelf een herbruikbare vergelijking van fictieve agenda-exporten, voerde die uit en las resultaat terug; onafhankelijke controle 18/18 geslaagd. Geen menselijke codewijziging. Zelfstandige toepassing/uitbreiding en gemeten zelfverbetering zijn hiermee nog niet af.",
+          "detail": "Het door Eva geschreven en onafhankelijk gecontroleerde programma staat nu via de bestaande documentroute in haar werkwijzenbibliotheek. Een later gesprek vindt exact dezelfde code terug. Bewaren is door Codex uitgevoerd, zonder modelcalls; dit is nog geen autonome zelfverbetering. Onafhankelijke controle GO. De volgende toepassingsaansluiting is nog niet gebouwd.",
           "owner": "Codex /root"
         },
         "next": {
-          "title": "Eigen code bewaren, hergebruiken en toepassen",
-          "detail": "Gebruik de bestaande document-, procedure- en beoordelingsroutes voor Eva’s eigen code; stel eerst vast welke overdracht werkelijk ontbreekt. Geen nieuwe catalogus, optimalisatieproef of platform. De afgesloten AIDE-contextproef blijft gesloten."
+          "title": "Onafhankelijk goedgekeurde wijziging werkelijk toepassen",
+          "detail": "De bestaande kandidaat-, bronimport- en beheerde updateroutes bestaan. Nog te verbinden: een exact onafhankelijk goedgekeurd pakket naar bouwen, toepassen en geïnstalleerde controle. Eva mag haar eigen kandidaat niet goedkeuren. Geen nieuw platform of heropening van de afgesloten AIDE-contextproef."
         },
         "ownerAction": {
           "title": "Eén expliciete gegevenskeuze",
@@ -3356,7 +3364,7 @@
           "expected": "Deze keuze betreft de echte gegevensproef; geen privégesprekken of persoonlijke agenda in de proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-02T12:06:50.067304+00:00"
+        "reviewedAt": "2026-10-02T12:25:10.818972+00:00"
       },
       "reviewedAt": "2026-10-01T15:52:21.323198+00:00"
     },
@@ -15314,8 +15322,8 @@
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "General programming executor and typed source/command inputs are installed. Eva wrote and ran a reusable program; independent synthetic functional check18/18 passed. Existing documents/procedures and managed component review/release remain available.",
-            "remainingGap": "One general coding task is proven; effective preservation/reuse/application through Eva still requires actual end-to-end evidence. This is not autonomous installed self-improvement.",
-            "nextAction": "L3: reuse existing document/procedure/evaluation routes to preserve, reuse and actually apply Eva-authored code; determine the concrete remaining handoff before adding anything. Closed AIDE experiment remains closed.",
+            "remainingGap": "Existing document/procedure path is sufficient and exact program is preserved. Missing live-component handoff: independently accepted exact review to existing build, managed application and installed verification. No valid AIDE context candidate exists.",
+            "nextAction": "De bestaande kandidaat-, bronimport- en beheerde updateroutes bestaan. Nog te verbinden: een exact onafhankelijk goedgekeurd pakket naar bouwen, toepassen en geïnstalleerde controle. Eva mag haar eigen kandidaat niet goedkeuren. Geen nieuw platform of heropening van de afgesloten AIDE-contextproef.",
             "evidencePaths": [
               "eva2/evidence/product/component-self-improvement-assisted-20260924.json"
             ],
@@ -15366,10 +15374,10 @@
               "owner": "Codex",
               "blocker": null,
               "previousBlocker": "Geen geldige kandidaat uit oorspronkelijke afgesloten proef; afgeschermde vergelijking niet uitgevoerd.",
-              "checkedAt": "2026-10-02T12:06:50.067304+00:00",
+              "checkedAt": "2026-10-02T12:25:10.818972+00:00",
               "ownerActionRequired": false,
-              "remaining": "Eigen programma uitgevoerd en onafhankelijk gecontroleerd; zelfstandige toepassing en AIDE-contextverbetering blijven afzonderlijk onbewezen.",
-              "nextAction": "L3: reuse existing document/procedure/evaluation routes to preserve, reuse and actually apply Eva-authored code; determine the concrete remaining handoff before adding anything. Closed AIDE experiment remains closed.",
+              "remaining": "Eigen programma uitgevoerd, onafhankelijk gecontroleerd en met Codex-hulp in bestaande werkwijzenbibliotheek bewaard. Zelfstandige live-componenttoepassing en AIDE-contextverbetering blijven onbewezen.",
+              "nextAction": "De bestaande kandidaat-, bronimport- en beheerde updateroutes bestaan. Nog te verbinden: een exact onafhankelijk goedgekeurd pakket naar bouwen, toepassen en geïnstalleerde controle. Eva mag haar eigen kandidaat niet goedkeuren. Geen nieuw platform of heropening van de afgesloten AIDE-contextproef.",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
@@ -15377,13 +15385,13 @@
                 "blocksIndependentWork": false
               },
               "assignment": {
-                "baseCommit": "d383826a003d4a21410a3dc528f31f1cbae258d0",
+                "baseCommit": "1bce50c76bb9d1e3ab8b4f38a1d97e4247129e70",
                 "owner": "/root",
                 "activeWorkers": [],
-                "stage": "general_program_verified_and_executor_installed",
+                "stage": "program_preserved_application_handoff_open",
                 "outcome": "Eva completes a useful ordinary programming request through her own shared execution route, with independently assessed result and actual application.",
                 "existing": "Delegated tasks/MCP discovery, document and learned procedure tools, component proposals and managed operator release.",
-                "gap": "Preservation/reuse and effective application need end-to-end completion through existing facilities. AIDE follow-up still has no valid context candidate or heldout improvement.",
+                "gap": "Existing document/procedure path is sufficient and exact program is preserved. Missing live-component handoff: independently accepted exact review to existing build, managed application and installed verification. No valid AIDE context candidate exists.",
                 "files": [
                   "shared delegated execution and existing connector integration as required",
                   "focused existing tests",
@@ -15391,9 +15399,9 @@
                 ],
                 "estimate": "Reuse actual installed-catalog evidence and existing source first; no model calls before concrete reusable execution/application design. One implementation, one bounded review; actual usage reported, credits unknown.",
                 "doneWhen": "Useful Eva-authored change executed, independently assessed and applied through the actual installed route; evidence and result returned; broader capability limitations remain explicit.",
-                "completedPreparation": "Typed programming inputs installed;137 focused checks; source review GO; Eva-authored program executed and independently passed18synthetic cases without human code edits."
+                "completedPreparation": "Eva-authored program executed and independently passed18cases. Exact source now saved/designated through installed tools and discovered/resolved unchanged from a separate conversation; assisted, zero model calls. Independent review GO. No worker remains active; next application handoff is not yet implemented."
               },
-              "latestEvidence": "eva2/evidence/product/l3-typed-programming-installed-20261002.json"
+              "latestEvidence": "eva2/evidence/product/l3-program-preserved-20261002.json"
             },
             {
               "id": "L3.3",

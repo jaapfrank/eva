@@ -35,9 +35,15 @@ Geen vaste agendafunctie ingebouwd en geen algemene voorsprong of zelfinstallati
 · [Eva’s gebruiksuitleg](evidence/programming/20261002/README.md)
 · [Installatie en resultaat](evidence/product/l3-typed-programming-installed-20261002.json).
 
-**Eerstvolgend binnen L3:** gebruik bestaande document-, procedure-, beoordelings-
-en installatieroutes om eigen code te bewaren, hergebruiken en werkelijk toepassen.
-Stel het resterende overdrachtsgat vast vóór nieuwe bouw. Geen nieuw platform.
+**Nu beschikbaar voor hergebruik:** het exacte door Eva geschreven programma is via
+de bestaande document-/procedureroute bewaard. Een later gesprek vindt het terug en
+leest bytegelijk dezelfde bron. Dit bewaren deed Codex; geen autonome leerclaim.
+Nul extra modelcalls, geen bronwijziging of herinstallatie. Onafhankelijke controle van deze overdracht: GO. [Bewijs](evidence/product/l3-program-preserved-20261002.json).
+
+**Volgende ontbrekende overdracht binnen L3:** een onafhankelijk goedgekeurde eigen
+componentwijziging via de bestaande bronimport, build en beheerde updateroute toepassen
+en de geïnstalleerde uitkomst controleren. Geen nieuw document-/vaardigheidsplatform.
+De programma-CLI gebruikt bestandsargumenten; zij is geen JSON-stdin-procedure.
 L3 als geheel en de oorspronkelijke eindvoorwaarden blijven open; 17/44 kleine
 taken en eerdere acceptaties blijven behouden.
 

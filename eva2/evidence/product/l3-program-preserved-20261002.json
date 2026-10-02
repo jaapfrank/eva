@@ -1,0 +1,89 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "checkedAt": "2026-10-02T12:23:18.704994+00:00",
+  "sourceCommit": "1bce50c76bb9d1e3ab8b4f38a1d97e4247129e70",
+  "outcome": "existing_authored_program_preserved_and_discoverable",
+  "scope": "Existing exact Eva-authored program adopted through installed document/procedure routes; no new core feature or autonomous self-improvement claim.",
+  "source": {
+    "path": "eva2/evidence/programming/20261002/agenda_changes.py",
+    "sha256": "23f6cf52981029b58246580f7028ac81e0d50ad0f22950f16f4bf2938f1601d8",
+    "independentFunctionalEvidence": "eva2/evidence/product/l3-programming-independent-20261002.json"
+  },
+  "savedProcedure": {
+    "document_id": "procedure-reference:63e274c55e4953c937a775ba4cc3331bb14befd4d1a8c2faab8da219cf2551a2",
+    "use_when": "Vergelijk twee JSON-exporten van afspraken of agenda-items op id: toegevoegd, verwijderd, gewijzigd en onveranderd. Exact bewaard en onafhankelijk gecontroleerd Python-programma; geen levende agendakoppeling. Dit is een CLI met drie bestandsargumenten BEFORE AFTER OUTPUT, niet een JSON-stdin-procedure. Lees de bron met resolve_reusable_procedure, schrijf haar ongewijzigd via write_programming_file in je eigen taakwerkruimte en voer de CLI met start_programming_process uit op nieuwe invoer. Controleer de JSON-uitvoer. Alleen standaardbibliotheek; geen netwerk of echte agendawijziging.",
+    "path": "/proof-state/eva-agenda-changes-20261002.py",
+    "content_sha256": "23f6cf52981029b58246580f7028ac81e0d50ad0f22950f16f4bf2938f1601d8",
+    "source_call_id": "codex:l3-program-save:20261002",
+    "source_message_id": "codex:l3-program-preservation:save:20261002",
+    "tool_configuration_sha256": "a2f87385fed891cf244d4294777901bbdc8509b62304a91e39f82df730947a54",
+    "receipt_sha256": "cf0c20a95a6e10f929c935bb04f03e1e9b5ee924ce18af32ba0083f8159e7efc",
+    "retention_until": "2027-10-02T12:21:59Z"
+  },
+  "observed": {
+    "saveVerified": true,
+    "designationVerified": true,
+    "newConversationLexicalDiscovery": true,
+    "newConversationExactReadback": true,
+    "sourceModified": false,
+    "liveAgendaAccess": false,
+    "programmeExecutionRepeated": false
+  },
+  "assistance": [
+    "Coordinator invoked existing installed save and designation actions for the already independently checked artifact.",
+    "Coordinator verified discovery/readback in a distinct conversation without model use.",
+    "One local driver timestamp-format error before admission or writes was corrected; no uncertain operation replay."
+  ],
+  "developmentUsage": {
+    "newModelCalls": 0,
+    "newRuntimeSourceChanges": 0,
+    "installations": 0,
+    "executedActions": [
+      "save_workspace_document",
+      "designate_reusable_procedure",
+      "list_reusable_procedures",
+      "resolve_reusable_procedure"
+    ],
+    "creditCost": null
+  },
+  "runningServices": [
+    {
+      "name": "eva2-managed-b-slot3-core",
+      "image": "sha256:f7f25568e92de065c31a51c60c9930fc742eae539710833ca02e203dfbc906f4",
+      "status": "running",
+      "health": "healthy"
+    },
+    {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "image": "sha256:550cc126926e217ee957a80c227c320e7b30ea7ea0885d9bb1c423306084e003",
+      "status": "running",
+      "health": "healthy"
+    }
+  ],
+  "limits": [
+    "This exact program was preserved with coordinator assistance, not autonomous learning.",
+    "The source is a CLI using BEFORE AFTER OUTPUT paths, not the JSON-stdin convention of run_reusable_procedure. A later task resolves source, writes into its own workspace and executes the CLI.",
+    "No new model-mediated reuse trial was run; prior unassisted reuse evidence and current programming execution evidence are retained with their scopes.",
+    "Actual improvement of live Eva components still needs the independent-review-to-managed-application handoff.",
+    "No protected AIDE holdout read, new AIDE candidate, general superiority or completed L3 claimed."
+  ],
+  "existingReuseEvidence": "eva2/evidence/product/procedure-unassisted-reuse-20260925.json",
+  "review": {
+    "status": "GO",
+    "path": "eva2/reviews/l3-program-preservation-20261002.md",
+    "scope": "Assisted preservation and cross-conversation exact retrieval, not autonomous learning or installed self-improvement."
+  },
+  "nextHandoff": {
+    "alreadyAvailable": [
+      "prepare_component_release exact package",
+      "import_component_release reviewed source import",
+      "installation_runtime_update image-only application"
+    ],
+    "missing": "Connect an independently authorized exact candidate review to existing build, managed application and installed verification; the optimizing model cannot approve its own review.",
+    "nonGoals": [
+      "new optimization platform",
+      "new document/procedure system",
+      "arbitrary multi-file promotion through the existing narrow component allowlist"
+    ]
+  }
+}
