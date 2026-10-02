@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-02T12:51:12.578793+00:00",
+        "checkedAt": "2026-10-02T13:13:35.967432+00:00",
         "deliveries": [
+          {
+            "title": "T2.2 — Eva voert een gewone kamervraag zelf uit",
+            "date": "2 oktober",
+            "state": "installed",
+            "result": "Zonder technische apparaatnamen kiest Eva de drie echte woonkamerlampen, schakelt aan, controleert en herstelt de oorspronkelijke toestand. Onafhankelijke HA-waarneming/readback en review GO; geen nieuwe code of installatie nodig.",
+            "remaining": "Circa173s,216.145 input-/1.514 outputtokens over17modelantwoorden: functioneel geslaagd, nog niet snel/efficiënt. T2.1 en fysieke spraak blijven open. 20/44 bestaande kleine taken klaar; geen extra grote productclaim.",
+            "source": "eva2/evidence/product/t2-room-request-20261002.json"
+          },
           {
             "title": "T2.3/T2.4 — gedeelde HA-automatisering en speaker-aansluiting bevestigd",
             "date": "2 oktober",
@@ -3355,14 +3363,14 @@
           }
         ],
         "now": {
-          "title": "T2.3 en T2.4 technisch afgerond",
+          "title": "T2.2: gewone huisvraag technisch afgerond",
           "state": "completed",
-          "detail": "Algemene automatiseringen maken/wijzigen en de gedeelde speaker-aansluiting zijn op de bestaande installatie bevestigd. De volgende gewone huisvraag is nog niet gestart.",
+          "detail": "Eva koos zelf drie woonkamerlampen, schakelde ze in, las de toestand terug en herstelde alles. Onafhankelijke review GO. Nog traag: circa173s en216.145 invoertokens; geen snelheidswinstclaim.",
           "owner": "Codex /root"
         },
         "next": {
-          "title": "T2.2: gewone huisvraag zelfstandig uitvoeren",
-          "detail": "Eva kiest zelf passende apparaten/diensten uit context en controleert het echte resultaat. Gebruik de bestaande algemene route; geen vaste kamer-/apparaatregel. L3/AIDE² blijven zichtbaar open."
+          "title": "Dezelfde HA-uitvoering minder omslachtig maken",
+          "detail": "De bestaande API kan meerdere relevante toestanden samen uitlezen. Onderzoek de aangetoonde9afzonderlijke leesrondes; behoud echte controle en passende modelkwaliteit. Vervolg nog niet gestart; geen nieuwe kamerfunctie of taak-ID."
         },
         "ownerAction": {
           "title": "Eén expliciete gegevenskeuze",
@@ -3372,9 +3380,9 @@
           "expected": "Deze keuze betreft de echte gegevensproef; geen privégesprekken of persoonlijke agenda in de proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-02T12:51:12.578793+00:00"
+        "reviewedAt": "2026-10-02T13:13:35.967432+00:00"
       },
-      "reviewedAt": "2026-10-02T12:51:12.578793+00:00"
+      "reviewedAt": "2026-10-02T13:13:35.967432+00:00"
     },
     "pendingTechnicalReview": {
       "reason": "Historische CO-003-kandidaat van 7 september: het oorspronkelijke bewijs bevat geen commitgebonden definitieve review of livegang. Deze oude kaart wordt daarom niet alsnog afgevinkt. De gebruikersuitkomst is later opgenomen in CO-004/CO-005, live opgeleverd en door Jaap via GE-02 geaccepteerd op 12 september. Het gekozen geheugenonderdeel blijft afgesloten; deze historische registratie is geen actuele bouw- of acceptatieblokkade.",
@@ -14510,16 +14518,16 @@
           "baseCommit": "e566149d67301eed16af9883a33466c0861492d6",
           "owner": "/root",
           "effortNotice": "One task up to existing5min deadline, then inspection/review/cleanup; approximately15min active work.",
-          "latestEvidence": "eva2/evidence/product/t2-current-shared-ha-20261002.json",
+          "latestEvidence": "eva2/evidence/product/t2-room-request-20261002.json",
           "assignment": {
-            "stage": "automation_and_speaker_binding_completed",
+            "stage": "functional_room_request_completed_efficiency_gap_recorded",
             "outcome": "Complete a general HA automation create/edit/readback task without coordinator resume.",
             "scope": "3files: delegated_digital_composition.py, pydantic_conversation.py, openai_codex_provider.py; coordinator owns exact overlay and evidence.",
             "doneWhen": "Create/edit/readback/finalreply without manualresume; inspect and remove only trial object.",
-            "ownership": "Coordinator evidence; independent review GO",
-            "result": "T2.3 and T2.4 completed; parent remains open for T2.1/T2.2."
+            "ownership": "Coordinator; independent review GO",
+            "result": "T2.2/T2.3/T2.4 functionally complete; parent open for recorded timeout/efficiency limitation."
           },
-          "nextAction": "T2.2: een gewone huisvraag via de gedeelde tekstroute uitvoeren en het echte resultaat controleren. T2.1 blijft alleen voor een concrete verklaarbare uitvoerfout open; geen herhaling om een timeout op te zoeken.",
+          "nextAction": "Verminder de gemeten modelrondes voor onafhankelijke toestandsuitlezingen via de bestaande algemene HA-API, met behoud van volledige selectie en resultaatcontrole. Geen nieuwe apparaatregel. T2.1 historische oorzaak blijft onverklaard.",
           "dashboardComponent": "tools",
           "remainingTasks": [
             {
@@ -14556,23 +14564,42 @@
             {
               "id": "T2.2",
               "title": "Gewone huisvraag via gedeelde kern uitvoeren",
-              "status": "planned",
+              "status": "completed",
               "kind": "praktijk",
               "doneWhen": "De bestaande algemene HA-route kiest passende apparaten/diensten uit context en controleert het echte resultaat via chat of Telegram, zonder exacte namen te eisen.",
               "owner": "Codex",
-              "nextAction": "Eva kiest zelf apparaten/diensten en handelt op een gewone huisvraag via de bestaande kern. Codex sluit alleen een ontbrekende algemene overgang aan; geen vooraf geschreven kamer-/apparaatregel.",
+              "nextAction": "Functionele eindvoorwaarde afgerond. T2 blijft open; de gemeten trage en kostbare uitlezing wordt bij dezelfde algemene uitvoering verbeterd, zonder extra kamertaak. Historische T2.1-timeout niet als opgelost afvinken.",
               "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Codex controleert eerst het bestaande HA-bewijs en de gedeelde tekstroute. Een spraakproef is hiervoor geen voorwaarde.",
+                "availableNow": true,
+                "readyWhen": "De bestaande geïnstalleerde algemene HA-route is functioneel gecontroleerd. Geen verplichte herhaling van deze proef.",
                 "steps": [
-                  "Gebruik, wanneer de proef beschikbaar is, chat of Telegram. Zet in Telegram /eva2 vóór je gewone huisvraag, bijvoorbeeld Doe de lampen in de woonkamer aan.",
-                  "Gebruik je gewone omschrijving; controleer of de gewenste handeling echt gebeurt. Geen exacte entiteits-ID nodig."
+                  "Stuur in Telegram /eva2 gevolgd door je gewone huisvraag, zonder exacte apparaatnamen."
                 ],
-                "expected": "De gedeelde kern kiest passende bestaande apparaten en meldt het gecontroleerde resultaat, ongeacht tekst of spraak.",
-                "reportBack": "Vraag, antwoord en of de gewenste handeling echt gebeurde.",
+                "expected": "Eva ontdekt passende apparaten en controleert de handeling. Deze meerstapsproef was nog langzaam; geen snelheidsbelofte.",
+                "reportBack": "Alleen bij afwijking: de vraag, het antwoord en wat werkelijk gebeurde.",
                 "blocksIndependentWork": false
-              }
+              },
+              "checkedAt": "2026-10-02T13:13:35.967432+00:00",
+              "assignment": {
+                "owner": "/root",
+                "baseCommit": "d2f1154d0e552b2d6a3f37a1700b25ab9c5fb609",
+                "stage": "completed_actual_room_action_verified",
+                "existing": "General HA discovery, API calls, automation editing and shared adapters are installed. No new device or room rules needed.",
+                "gap": "Actual context-based selection and checked state change for an ordinary room request without entity IDs.",
+                "outcome": "Eva chooses the living-room lights from actual context, changes and verifies their state, then returns them to the recorded previous state.",
+                "files": [
+                  "existing workboard",
+                  "bounded T2.2 evidence; runtime code only if a concrete defect is found"
+                ],
+                "estimate": "One ordinary model-driven room request on existing provider route. Preserve real state before any effect; record actual model/tool usage and elapsed time. Credit cost unknown.",
+                "doneWhen": "De bestaande algemene HA-route kiest passende apparaten/diensten uit context en controleert het echte resultaat via chat of Telegram, zonder exacte namen te eisen.",
+                "activeWorkers": [],
+                "result": "One ordinary owner request: model selected three actual living-room lights without technical IDs, switched on/read back/off/read back. Independent HA events and final states agree. Original installed general route retained; independent GO. Speed/cost remain weak."
+              },
+              "completedAt": "2026-10-02T13:13:35.967432+00:00",
+              "blocker": null,
+              "latestEvidence": "eva2/evidence/product/t2-room-request-20261002.json"
             },
             {
               "id": "T2.3",
@@ -14669,6 +14696,15 @@
               "T2.4"
             ],
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          },
+          "observedEfficiencyGap": {
+            "evidence": "eva2/evidence/product/t2-room-request-20261002.json",
+            "modelResponses": 17,
+            "inputTokens": 216145,
+            "elapsedSeconds": 173.037,
+            "causeObserved": "Nine separate model-driven entity read calls plus discovery/service steps; use existing general bulk reads where semantically equivalent. No root timeout cause claimed.",
+            "status": "not_yet_improved",
+            "newTaskCreated": false
           }
         },
         {

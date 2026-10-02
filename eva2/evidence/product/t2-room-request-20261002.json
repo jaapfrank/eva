@@ -1,0 +1,157 @@
+{
+  "checkedAt": "2026-10-02T13:08:48.685043+00:00",
+  "baseCommit": "d2f1154d0e552b2d6a3f37a1700b25ab9c5fb609",
+  "task": "T2.2",
+  "state": "installed_function_verified",
+  "route": "Existing owner website shared conversation route; normal delegated worker, no coordinator resume",
+  "request": "Zet de lampen in de woonkamer even aan, controleer dat het gelukt is en zet ze daarna terug zoals ze stonden. Verander verder niets.",
+  "criteria": {
+    "baseCommit": "d2f1154d0e552b2d6a3f37a1700b25ab9c5fb609",
+    "taskId": "T2.2",
+    "prompt": "Zet de lampen in de woonkamer even aan, controleer dat het gelukt is en zet ze daarna terug zoals ze stonden. Verander verder niets.",
+    "reference": "Existing installed generic inventory and HA API; previous proof only selected devices or edited harmless automation.",
+    "passConditions": [
+      "Choose actual living-room lighting from actual context without supplied technical identifiers; exclude speaker LED rings/unavailable duplicates.",
+      "Use existing generic services to cause a real off-to-on change and verify its observed state.",
+      "Return all changed lights to recorded prior state; do not claim precise restoration if unavailable or externally modified.",
+      "Correct final reply; preserve tool receipts, elapsed time, model usage and independent HA observations."
+    ],
+    "hardConditions": [
+      "No other devices, automation configuration, camera/private memory or new provider routes.",
+      "No custom room/device core code to satisfy this case.",
+      "Do not automatically replay a failed/uncertain actuation; inspect actual result."
+    ],
+    "executionBudget": "One ordinary request under installed runtime/provider constraints; no automatic replay. Record observed calls/time/tokens and unknown credits. This is not an arbitrary development stop limit.",
+    "beforeSnapshot": "lights-before.private.json",
+    "developmentCredits": null,
+    "recordedAt": "2026-10-02T12:56:37.463242+00:00"
+  },
+  "measurement": {
+    "workId": "work:eva-chat:8f646008-a77b-5f37-8c3a-c6bf5e2e1f94",
+    "state": "succeeded",
+    "foreground": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 7867,
+      "output_tokens": 248,
+      "model_attempts": 1
+    },
+    "worker": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 16,
+      "tool_calls": 15,
+      "input_tokens": 208278,
+      "output_tokens": 1266,
+      "total_tokens": 209544,
+      "cost_usd_micros": null
+    },
+    "combinedMeasured": {
+      "inputTokens": 216145,
+      "outputTokens": 1514,
+      "modelResponses": 17,
+      "toolCalls": 16
+    },
+    "timingSeconds": {
+      "receipt": 19.54,
+      "firstRealLightOn": 93.938,
+      "allSelectedLightsOn": 94.975,
+      "allSelectedLightsRestoredOff": 130.718,
+      "startToRecordedCompletion": 173.037,
+      "workCreatedToCompletionIncludingIntake": 173,
+      "workerCallStartedToCompletion": 154.0
+    },
+    "selection": {
+      "discoveredArea": "woonkamer",
+      "selectedPhysicalLights": [
+        "light.ledsteip_woonkamer",
+        "light.muur_rechts",
+        "light.woonkamer_stalamp"
+      ],
+      "ledRingExcluded": true,
+      "unavailableDuplicateEntitiesExcluded": true
+    },
+    "finalAnswer": "De ledstrip, muurlamp rechts en staande lamp stonden allemaal uit. Ik heb ze kort aangezet en afzonderlijk gecontroleerd: Home Assistant meldde alle drie als aan. Daarna heb ik ze weer uitgezet; een nieuwe uitlezing bevestigde voor iedere lamp de oorspronkelijke toestand.\n\nIk heb geen andere apparaten of instellingen aangestuurd; ook de lichtring van de spraakassistent is ongemoeid gebleven. De controle is via Home Assistant gedaan, niet door fysieke waarneming.",
+    "limits": [
+      "Website shared-core request, no Telegram transmission or physical audio trial.",
+      "HA-confirmed state; no human physical light observation.",
+      "Originally all selected lights were off: no restore-from-on or nondefault color case proved.",
+      "Read/check process is slow and expensive. No speed/cost advantage or timeout fix claim.",
+      "One unrelated light momentarily became unavailable with null user context; no tool targeted it. Aggregate group state changes are not additional device commands.",
+      "One observer-only State-object JSON template was rejected HTTP400; corrected to ordinary GETs without repeating model or actuation.",
+      "Usage covers observed foreground/worker; memory/background services and Codex development costs remain unmeasured."
+    ],
+    "timingNote": "Stored work.created_at preserves the original conversation timestamp. It is not worker-start time; do not add intake to created-to-completed duration. Terminal timestamps have one-second precision."
+  },
+  "actualEffects": [
+    {
+      "path": "/api/services/light/turn_on",
+      "limit": 50,
+      "method": "POST",
+      "offset": 0,
+      "body_json": "{\"entity_id\":[\"light.ledsteip_woonkamer\",\"light.muur_rechts\",\"light.woonkamer_stalamp\"]}",
+      "transport": "rest",
+      "response_pointer": ""
+    },
+    {
+      "path": "/api/services/light/turn_off",
+      "limit": 50,
+      "method": "POST",
+      "offset": 0,
+      "body_json": "{\"entity_id\":[\"light.ledsteip_woonkamer\",\"light.muur_rechts\",\"light.woonkamer_stalamp\"]}",
+      "transport": "rest",
+      "response_pointer": ""
+    }
+  ],
+  "otherEffects": "No other mutating HA calls. Living-room and downstairs aggregate groups followed member changes. Unrelated Nanoleaf availability event had no corresponding Eva tool request.",
+  "installation": {
+    "required": false,
+    "runtimeChanged": false,
+    "restarts": 0,
+    "status": "already_installed_verified"
+  },
+  "ownerAccepted": false,
+  "readbackBoundary": "The worker result verified=false is retained as its raw status; independent HA events and final GETs provide separate technical evidence, not owner/physical acceptance.",
+  "review": "eva2/reviews/t2-room-request-20261002.md",
+  "privateArtifacts": "/home/administrator/project/.eva2-artifacts/t2-room-request-20261002",
+  "artifacts": {
+    "criteria.json": "af66cfce89e4cbb2a17fdd98e2c0de1d1be6fbf0741d5010f45cc62b430326c2",
+    "prompt.txt": "9ee725ed2025bdc6b5103e3081f77b83ea93a8bbeb1293263bdeaf1c103f26d5",
+    "run.py": "09d36a31a1f4395fbaef76ee7d72add758c77ecd76ce92a3294faf0e2a9e4aa2",
+    "started.json": "f05e6e2b14b7d3af3bc746af8342a43e11100a3baba8017c6e9ff6794970a110",
+    "observer-terminal.json": "4b55b7bbed1068efaf109758e8c345ba3058fa6198f890683ceddcd6e462bdb8",
+    "response.private.json": "9406230789e34461df8196429324e700115475b5bfd35db4ea6bc9e75893ed3d",
+    "work-rows.private.jsonl": "1f7f9cd32974dee6cddc184f16ae9e61f00a0d0ab7fc58150f85624f73811899",
+    "current-work.private.json": "7beb777cb5898779b3dc261bbb994abe7dd4eb4cba5fee90191a137251cbd94f",
+    "light-areas.private.json": "09271e106e7ff915302958126410f7400b8ef41e131511e7513eb57b8c74a769",
+    "lights-before.private.json": "2ed2f18676c0fa8cd8ef8d7916eba504ac1206ca05ecb269b34e5a9208efd445",
+    "lights-after.private.json": "14c3f3d72df8ffc2341d07241abf0a61eb289a5719e534b16ad5cb818f831766",
+    "ha-light-events.private.json": "8b9b6ec6451df5a53a73d7b0d9a8fb7bbfc68738cd4f93facf6c77b1fe4cbe97",
+    "events.private.json": "f276a2f1e55467d2ac8f052e2f939f832caff936b8aade963f8218280cba7839",
+    "measurement.json": "543a1f20a3072fbd63db460d783d918b73250107db5ff94e9f01403ecb41b647",
+    "delivery-status.private.json": "7beb777cb5898779b3dc261bbb994abe7dd4eb4cba5fee90191a137251cbd94f"
+  },
+  "remaining": [
+    "Historical T2.1 provider timeout cause remains unproven; this success is not a fix.",
+    "Completion takes about173s from recorded start including intake and uses216145 measured input tokens; not a natural-speed or cost-efficient outcome. Independent per-entity reads incurred9model/tool round trips.",
+    "No full T2/global HA reliability, physical speech or competitive superiority claim."
+  ],
+  "followupDiagnosis": {
+    "observed": "15 HA tool calls: discovery/service metadata plus repeated separate per-entity state reads around two shared service mutations.",
+    "readRoundTrips": 9,
+    "currentGeneralCapability": "Existing Home Assistant template/general request can return selected state records in one request; no new per-device API is justified.",
+    "nextDecision": "Inspect existing general task/tool guidance and preserve complete verification while avoiding one model response for each independent read. No lowering model quality, skipping verification or new room-specific core rule.",
+    "notYetProven": "No optimization implemented or measured in this delivery."
+  },
+  "independentReview": {
+    "reviewer": "/root/l3_application_seam",
+    "decision": "GO for original functional T2.2 criterion; speed/cost and physical/audio acceptance remain separate",
+    "path": "eva2/reviews/t2-room-request-20261002.md"
+  },
+  "resultAvailability": {
+    "resultAvailable": true,
+    "deliveryState": "private_route_available",
+    "scope": "The original website can retrieve the completed result. This is not proof that a browser displayed it or Telegram/audio delivered it."
+  }
+}

@@ -1,8 +1,36 @@
 # EVA2 werkbord
 
+## Laatste oplevering: T2.2 — gewone huisvraag uitgevoerd
+
+**20/44 bestaande kleine taken technisch klaar.** Eva kreeg een gewone vraag,
+zonder apparaatnamen: zet de woonkamerlampen even aan, controleer en zet terug.
+Zij vond zelf de drie juiste lampen en gebruikte de algemene HA-API. Onafhankelijke
+live HA-gebeurtenissen bevestigen aan en weer uit; aparte einduitlezing bevestigt
+volledige oorspronkelijke gepubliceerde toestand. De speakerlichtring bleef ongemoeid.
+Onafhankelijke review: GO voor de oorspronkelijke functionele T2.2-eindvoorwaarde.
+
+**Al geïnstalleerd:** geen nieuwe code of herinstallatie. Resultaat is via de
+website beschikbaar; geen nieuwe Telegram-aflevering of fysieke audioproef geclaimd.
+Vraag in Telegram met `/eva2` in gewone taal om huisbediening; exacte IDs zijn
+niet nodig. Je hoeft deze technische proef niet te herhalen.
+
+**Nog onvoldoende efficiënt:** circa173seconden van vastgelegde start tot einde,
+17modelantwoorden,216.145 invoer-/1.514 uitvoertokens. Dit omvat intake en werker;
+geheugenachtergrond en Codex-verbruik zijn niet volledig gemeten, credits onbekend.
+Negen afzonderlijke model-/toolrondes lazen de drie lampstanden vóór, tijdens en na
+de handeling. Het functionele resultaat is goed; geen snelheid-/kostenwinstclaim.
+
+**Hierna, nog niet gestart:** deze algemene uitvoering met bestaande gezamenlijke
+uitlezingen minder omslachtig maken; geen nieuw kamerscript, taak-ID of verlies
+van resultaatcontrole. T2.1 historischetimeoutoorzaak blijft open; succes bewijst
+geen reparatie. Fysieke spraak blijft C3/C4; AIDE² blijft expliciet in L3/R1.
+
+[Uitvoering en meting](evidence/product/t2-room-request-20261002.json)
+· [Onafhankelijke review](reviews/t2-room-request-20261002.md).
+
 ## Laatste oplevering: T2.3/T2.4 — bestaande HA-uitvoering afgerond
 
-**19/44 kleine taken technisch klaar.** De oorspronkelijke taken T2.3 en T2.4
+**Vorige stand:19/44 kleine taken technisch klaar.** De oorspronkelijke taken T2.3 en T2.4
 zijn afgerond; geen nieuwe taken toegevoegd en geen eigenaaracceptatie verzonnen.
 Eva’s bestaande algemene HA-route heeft een automatisering werkelijk gemaakt,
 gewijzigd, volledig teruggelezen en correct teruggerapporteerd. Die code is behouden.
@@ -23,7 +51,7 @@ terug. Je hoeft de eerdere technische proef niet opnieuw te doen.
 [Bewijs](evidence/product/t2-current-shared-ha-20261002.json)
 · [Onafhankelijke review](reviews/t2-current-shared-ha-20261002.md).
 
-**Hierna, nog niet gestart:** T2.2, een gewone huisvraag via dezelfde tekstroute.
+**Vervolg afgerond:** T2.2, zie actuele resultaat hierboven.
 L3/AIDE² blijven open; de afgesloten contextproef leverde geen verbeterkandidaat.
 Geen speculatief releaseplatform bouwen of mislukte proef als winst tellen.
 
