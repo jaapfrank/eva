@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-02T10:03:15.677883+00:00",
+        "checkedAt": "2026-10-02T10:05:45.295951+00:00",
         "deliveries": [
           {
             "title": "Algemene HA-automatisering kan dezelfde Eva aanroepen",
@@ -3316,13 +3316,13 @@
         ],
         "now": {
           "title": "I2: algemene automatiseringsaanroep geïnstalleerd",
-          "state": "in_progress",
-          "detail": "Home Assistant kan dezelfde Eva vanuit een automatisering aanroepen en een tekstantwoord ontvangen. Echte aanroep geslaagd na één herstart. Nu bewijs en Git afronden; bronkeuze plus zelfgemaakte waarnemingsautomatisering blijft open.",
+          "state": "installed",
+          "detail": "Algemene HA→Eva-aanroep geïnstalleerd en live gecontroleerd. Bron, review en bewijs gepubliceerd op GitHub (958fccd5). De volledige waarnemingsautomatisering is nog open; de echte gegevensproef wacht op één specifieke toestemming.",
           "owner": "Codex /root"
         },
         "next": {
-          "title": "Eva zelf de waarnemingsopdracht laten instellen",
-          "detail": "De bestaande algemene tools gebruiken om bronnen te kiezen, de automatisering te maken en een werkelijk resultaat terug te brengen. Voor de echte camera-/agendagegevens staat één specifieke toestemmingsvraag open; geen vaste voorbeeldfunctie."
+          "title": "L3: zelf een ontbrekende mogelijkheid maken en toepassen",
+          "detail": "Volgende bestaande zelfstandige uitkomst: de huidige kandidaat-, uitvoer- en installatieroute gericht afmaken. Nog niet gestart in deze beurt; geen nieuw platform. De open gegevenskeuze voor I2 blokkeert dit onafhankelijke werk niet."
         },
         "ownerAction": {
           "title": "Eén expliciete gegevenskeuze",
@@ -3332,7 +3332,7 @@
           "expected": "Deze keuze betreft de echte gegevensproef; geen privégesprekken of persoonlijke agenda in de proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-02T10:03:15.677883+00:00"
+        "reviewedAt": "2026-10-02T10:05:45.295951+00:00"
       },
       "reviewedAt": "2026-10-01T15:52:21.323198+00:00"
     },
@@ -14953,7 +14953,7 @@
           "assignment": {
             "baseCommit": "02bea1b2",
             "owner": "/root",
-            "stage": "callback_installed_verified_recording_delivery",
+            "stage": "callback_installed_published_observation_outcome_open",
             "existing": "Installed HA conversation entity and device-authorized EvaVoiceClient; general HA automation writer already available.",
             "gap": "Live conversation.process schema has no satellite/device field; Eva conversation adapter requires a registered satellite; no eva2_voice action exists. Thus the general HA-automation-to-Eva handoff is absent.",
             "files": [
@@ -14965,9 +14965,8 @@
               "eva2/deploy/home-assistant/README.md"
             ],
             "endCondition": "An HA automation can call the existing household Eva runtime with an authorized registered satellite and receive its text response; no private identity, new planner, automatic TTS or example-specific automation. Install and check the actual action.",
-            "activeWorkers": [
-              "Codex /root (delivery evidence, dashboard and Git)"
-            ]
+            "activeWorkers": [],
+            "sourceCommit": "958fccd5"
           },
           "evidence": "eva2/evidence/product/local-vision-installed-20260928.json",
           "remaining": "Algemene vaardigheid nog afmaken: passende bestaande bronnen zelfstandig ontdekken, de gevraagde waarneming als automatisering instellen en met een nuttig resultaat terugkomen. Geen verplichte vuilnisbakfunctie of voorafgaande bronkeuze van Jaap.",
@@ -14976,12 +14975,12 @@
           "reviewPacingEvidence": "eva2/evidence/product/initiative-review-pacing-installed-20260928.json",
           "calendarSourceEvidence": "eva2/evidence/product/initiative-calendar-source-20260928.json",
           "returnServiceEvidence": "eva2/evidence/product/initiative-return-service-installed-20260928.json",
-          "activeWorker": "Codex /root",
+          "activeWorker": null,
           "latestEvidence": "eva2/evidence/product/i2-ha-automation-action-installed-20261002.json",
           "currentAssignment": {
             "baseCommit": "02bea1b2",
             "owner": "/root",
-            "stage": "callback_installed_verified_recording_delivery",
+            "stage": "callback_installed_published_observation_outcome_open",
             "existing": "Installed HA conversation entity and device-authorized EvaVoiceClient; general HA automation writer already available.",
             "gap": "Live conversation.process schema has no satellite/device field; Eva conversation adapter requires a registered satellite; no eva2_voice action exists. Thus the general HA-automation-to-Eva handoff is absent.",
             "files": [
@@ -14993,9 +14992,8 @@
               "eva2/deploy/home-assistant/README.md"
             ],
             "endCondition": "An HA automation can call the existing household Eva runtime with an authorized registered satellite and receive its text response; no private identity, new planner, automatic TTS or example-specific automation. Install and check the actual action.",
-            "activeWorkers": [
-              "Codex /root (delivery evidence, dashboard and Git)"
-            ]
+            "activeWorkers": [],
+            "sourceCommit": "958fccd5"
           },
           "dashboardComponent": "initiative",
           "remainingTasks": [
@@ -15070,7 +15068,7 @@
               "assignment": {
                 "baseCommit": "02bea1b2",
                 "owner": "/root",
-                "stage": "callback_installed_verified_recording_delivery",
+                "stage": "callback_installed_published_observation_outcome_open",
                 "existing": "Installed HA conversation entity and device-authorized EvaVoiceClient; general HA automation writer already available.",
                 "gap": "Live conversation.process schema has no satellite/device field; Eva conversation adapter requires a registered satellite; no eva2_voice action exists. Thus the general HA-automation-to-Eva handoff is absent.",
                 "files": [
@@ -15082,9 +15080,8 @@
                   "eva2/deploy/home-assistant/README.md"
                 ],
                 "endCondition": "An HA automation can call the existing household Eva runtime with an authorized registered satellite and receive its text response; no private identity, new planner, automatic TTS or example-specific automation. Install and check the actual action.",
-                "activeWorkers": [
-                  "Codex /root (delivery evidence, dashboard and Git)"
-                ]
+                "activeWorkers": [],
+                "sourceCommit": "958fccd5"
               },
               "latestEvidence": "eva2/evidence/product/i2-ha-automation-action-installed-20261002.json"
             }

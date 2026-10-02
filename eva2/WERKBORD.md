@@ -27,8 +27,11 @@ De ene gegevensvraag staat in de chat; die blokkeert alleen de echte gegevenspro
 Geen vooraf ingebouwde vuilnisbakfunctie, geen afgeronde volledige I2 of extra
 groot productonderdeel. Eerdere acceptaties en 17/44 kleine taken blijven staan.
 
-Root rondt bewijs, dashboard en Git van deze aansluiting af; geen bronuitvoerder
-meer actief. [Installatie en bewijs](evidence/product/i2-ha-automation-action-installed-20261002.json).
+Bron, review en bewijs zijn gepubliceerd op GitHub (`958fccd5`); geen uitvoerder
+meer actief op deze aansluiting. **Hierna L3:** de bestaande kandidaat-, uitvoer-
+en installatieroute voor een ontbrekende mogelijkheid gericht afmaken. Dat
+onafhankelijke werk wacht niet op de specifieke I2-gegevenskeuze en is in deze
+beurt nog niet gestart. [Installatie en bewijs](evidence/product/i2-ha-automation-action-installed-20261002.json).
 
 ## 2 oktober: eigen bijdragen bereikbaar in het gewone privégesprek
 
