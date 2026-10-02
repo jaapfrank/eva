@@ -1570,3 +1570,33 @@ def test_rate_limit_is_typed_and_does_not_repeat_the_request(tmp_path):
         _generate(_adapter(tmp_path, scripted))
     assert len(scripted.captures) == 1
     assert scripted.remaining_phases == 1
+
+
+@pytest.mark.parametrize("name,arguments", [
+    ("write_programming_file", {"path": "/workspace/main.py", "mode": "rewrite",
+      "content": "text = \"Eva's café\"\npath = r'C:\\data'\nprint(text, path)\n"}),
+    ("start_programming_process", {"command": "python -c \"print('café', r'C:\\data')\"", "timeout_ms": 1000}),
+])
+def test_native_programming_arguments_survive_actual_sdk_wire(tmp_path, monkeypatch, name, arguments):
+    import sys
+    from eva.adapters.postgres import programming_actions
+    monkeypatch.setattr(programming_actions, "configured_programming_workspace", lambda: object())
+    descriptor = next(item for item in programming_actions.programming_descriptors() if item.name == name)
+    call = ConversationActionCall("comfort-call-1", name, arguments)
+    monkeypatch.setattr(sys.modules[__name__], "TOOL", descriptor)
+    monkeypatch.setattr(sys.modules[__name__], "CALL", call)
+    model, _, requests, _ = _phase_transport_adapter(
+        tmp_path, monkeypatch, [("tool", ())], namespaced_search=True)
+    result = _generate(model, available_actions=(name,))
+    assert result.action_call == call
+    groups = [tool for tool in requests[0]["tools"] if tool["type"] == "namespace"]
+    selected = next(tool for tool in groups if tool["name"] == name)
+    schema = selected["tools"][0]["parameters"]
+    assert schema["additionalProperties"] is False
+    assert set(schema["required"]) == set(arguments)
+    assert set(schema["properties"]) == set(arguments)
+    for key, value in arguments.items():
+        assert schema["properties"][key]["type"] == ("integer" if isinstance(value, int) else "string")
+    if name == "write_programming_file":
+        assert schema["properties"]["mode"]["enum"] == ["rewrite", "append"]
+    assert "arguments_json" not in result.action_call.arguments

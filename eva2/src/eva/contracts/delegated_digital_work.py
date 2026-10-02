@@ -92,7 +92,7 @@ class DelegatedDigitalWorkGrant(DelegatedWorkGrant):
         allowed = {"research_current_options", "get_delegated_work", "connect_service", "discover_connector_tools", "manage_connected_services", "use_connector_tool",
                    "list_reusable_procedures", "resolve_reusable_procedure",
                    "designate_reusable_procedure", "save_workspace_document", "save_work_progress",
-                   "list_programming_tools", "use_programming_tool",
+                   "list_programming_tools", "use_programming_tool", "write_programming_file", "start_programming_process",
                    "read_own_component_source", "draft_own_component_improvement",
                    "evaluate_own_component_improvement", "prepare_own_component_release", "run_reusable_procedure", "home_assistant_request", "read_home_assistant_inventory"}
         if (not self.capability_ids or len(set(self.capability_ids)) != len(self.capability_ids)

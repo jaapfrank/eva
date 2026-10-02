@@ -1,0 +1,104 @@
+{
+  "contract": "EvaTypedProgrammingDelivery/v1",
+  "checkedAt": "2026-10-02T12:04:29.584829+00:00",
+  "state": "installed_general_programming_input",
+  "problem": "Nested JSON strings repeatedly prevented generated code from reaching the already installed executor.",
+  "change": "Typed write_programming_file and start_programming_process pass ordinary content/command strings to the same pinned MCP tools and durable dispatch. Legacy generic calls and previous receipts remain compatible.",
+  "services": {
+    "eva2-managed-b-slot3-core": {
+      "sources": {
+        "adapters/connectors/programming_workspace.py": "9a15aca3618d91f3c72ae1b5c179b5d9513243f8543f8d77bc2e1d4a29298f76",
+        "adapters/postgres/programming_actions.py": "59d2638ab3a9f5406f0a93e0cc536a32cb48ee42dd01a3b9a12f82571a71fa61",
+        "bootstrap/delegated_digital_composition.py": "1be79b051efc7beef434f34c2f55daa67c1d14c05764271a6c76c0007ed8e93d",
+        "bootstrap/delegated_digital_runner.py": "1c13d982762c7f39d2256056f7223f19ee4745b82117069309f90e7c2c0cc2d5",
+        "contracts/delegated_digital_work.py": "ada789a746420e33234d66f9f4b8f03ea270757bbff5da5a6d63bd65e218db51"
+      },
+      "programming_tools": [
+        "write_programming_file",
+        "start_programming_process",
+        "list_programming_tools",
+        "use_programming_tool"
+      ],
+      "profile": "93638e8a6f0259e41540a018a6f3b0d7609c71aaf2339abec02a0116ee4914b1",
+      "release": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "admitted_programming": [
+        "list_programming_tools",
+        "start_programming_process",
+        "use_programming_tool",
+        "write_programming_file"
+      ],
+      "image": "sha256:f7f25568e92de065c31a51c60c9930fc742eae539710833ca02e203dfbc906f4",
+      "status": "running",
+      "health": "healthy",
+      "sourcesMatch": true
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "sources": {
+        "adapters/connectors/programming_workspace.py": "9a15aca3618d91f3c72ae1b5c179b5d9513243f8543f8d77bc2e1d4a29298f76",
+        "adapters/postgres/programming_actions.py": "59d2638ab3a9f5406f0a93e0cc536a32cb48ee42dd01a3b9a12f82571a71fa61",
+        "bootstrap/delegated_digital_composition.py": "1be79b051efc7beef434f34c2f55daa67c1d14c05764271a6c76c0007ed8e93d",
+        "bootstrap/delegated_digital_runner.py": "1c13d982762c7f39d2256056f7223f19ee4745b82117069309f90e7c2c0cc2d5",
+        "contracts/delegated_digital_work.py": "ada789a746420e33234d66f9f4b8f03ea270757bbff5da5a6d63bd65e218db51"
+      },
+      "programming_tools": [
+        "write_programming_file",
+        "start_programming_process",
+        "list_programming_tools",
+        "use_programming_tool"
+      ],
+      "profile": "93638e8a6f0259e41540a018a6f3b0d7609c71aaf2339abec02a0116ee4914b1",
+      "release": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "admitted_programming": [
+        "list_programming_tools",
+        "start_programming_process",
+        "use_programming_tool",
+        "write_programming_file"
+      ],
+      "image": "sha256:550cc126926e217ee957a80c227c320e7b30ea7ea0885d9bb1c423306084e003",
+      "status": "running",
+      "health": "healthy",
+      "sourcesMatch": true
+    }
+  },
+  "controlledChecks": {
+    "hostRunnerComposition": 135,
+    "actualSdkWire": 2,
+    "independentSourceReview": "eva2/reviews/l3-typed-programming-20261002.md"
+  },
+  "evaAuthoredProgram": {
+    "frozenAt": "2026-10-02T11:59:41.971615+00:00",
+    "files": {
+      "agenda_changes.py": "23f6cf52981029b58246580f7028ac81e0d50ad0f22950f16f4bf2938f1601d8",
+      "README.md": "d892daebfd6c50075df902a17f7acebac1191879536507cc2c6f08d35ecb521b",
+      "changes.json": "f4bc78dd49a6478d35842bdebfc3dd995cd2694a43c8e4c9e4489b55755ff676"
+    },
+    "usage": {
+      "measurement": "measured",
+      "model_attempts": 7,
+      "tool_calls": 6,
+      "input_tokens": 45519,
+      "output_tokens": 2763
+    },
+    "elapsedSeconds": 146.39,
+    "inputFilesUnchanged": true,
+    "assistance": "Fictitious inputs and user requirements supplied; no source code authored or modified by Codex. Controlled public-source driver, not ordinary household admission.",
+    "source": "eva2/evidence/programming/20261002/agenda_changes.py",
+    "readme": "eva2/evidence/programming/20261002/README.md",
+    "result": "eva2/evidence/programming/20261002/changes.json",
+    "independentResult": "eva2/evidence/product/l3-programming-independent-20261002.json",
+    "casesPassed": 18
+  },
+  "provider": "existing gpt-6-astra medium",
+  "creditCost": null,
+  "codexDevelopmentCredits": null,
+  "ordinaryRuntimeMeasured": false,
+  "realModelReruns": 0,
+  "scope": "One actual code-writing/execution request over synthetic exports; not the closed AIDE context experiment. Same prepared runtime images were installed after review; data and unrelated services retained.",
+  "rollback": "Previous exact images and Compose configuration retained; not executed.",
+  "limitations": [
+    "Controlled shared conversation/programming driver with empty household memory; ordinary Telegram admission was not exercised.",
+    "No live calendar integration was added; the task was an example of general programming.",
+    "Protected AIDE final evaluation, autonomous self-installation and useful extension activation remain open.",
+    "No broad speed, cost or competitor advantage claimed."
+  ]
+}

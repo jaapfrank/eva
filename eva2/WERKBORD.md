@@ -18,25 +18,32 @@ gezond en hebben gelijke bron/configuratieprofielen. Onafhankelijke review GO;
 145 gerichte controles verspreid over de relevante onderdelen. Eén gerichte
 replaycorrectie is direct toegepast, zonder rollback of gegevensherinstallatie.
 
-**Laatste resultaat:** herstelbare programmeerinvoer is geïnstalleerd in kern en
-werker; bronprofielen komen overeen en beide diensten zijn gezond. 136 gerichte
-controles en onafhankelijke GO. Eerdere succesvolle stappen blijven bij hervatten
-bewaard. Dit is een noodzakelijke correctie, geen extra afgeronde productfunctie.
+**Laatste resultaat — geïnstalleerd:** directe code-/opdrachtinvoer via dezelfde
+programmeerwerkruimte. Eva schreef zelf een herbruikbaar Python-hulpmiddel plus
+README, vergeleek twee fictieve agenda-exporten en las de uitvoer terug. De code
+is niet door Codex aangepast. Onafhankelijke controle: 18/18 gevallen geslaagd,
+inclusief wijzigingen, Unicode en foutieve invoer zonder verlies van bestaand resultaat.
+137 gerichte aansluitcontroles, onafhankelijke bronreview en echte kern/werker-
+controle geslaagd; beide diensten gezond met gelijke toolprofielen.
 
-**Contextproef afgesloten zonder kandidaat:** de ene Eva-opdracht bleef ongeldige
-complexe toolargumenten produceren, ook na haar bestaande automatische correctie.
-6 modelantwoorden, 73.518 input-/3.130 outputtokens; credits onbekend. De bron blijft
-ongewijzigd op 3/5 relevante taakverwijzingen. Geen afgeschermde eindtoets, winst of
-zelfstandige zelfverbetering bewezen. De onafhankelijke controle betreft uitsluitend
-de proefuitkomst. Ontwikkelscorer was zichtbaar; de eindtoets bleef afgeschermd.
+**Gemeten ontwikkelproef:** 7 Astra/medium-antwoorden, 45.519 input-/2.763 outputtokens,
+146,39 seconden. Credits onbekend. Dit is één echte programmeeropdracht met fictieve
+gegevens; de oorspronkelijke Telegram-toelating is hiermee niet opnieuw beproefd.
+Geen vaste agendafunctie ingebouwd en geen algemene voorsprong of zelfinstallatieclaim.
 
-**Eerstvolgend binnen L3:** het aangetoonde probleem met complexe programmeerinvoer
-oplossen voor algemene taakuitvoering. Geen extra contextkandidaat of nieuw
-optimalisatieplatform. Zelfstandige nuttige programmering, onafhankelijke vergelijking
-en toepassing blijven open. 17/44 en eerdere acceptaties blijven behouden.
+[Door Eva geschreven programma](evidence/programming/20261002/agenda_changes.py)
+· [Eva’s gebruiksuitleg](evidence/programming/20261002/README.md)
+· [Installatie en resultaat](evidence/product/l3-typed-programming-installed-20261002.json).
 
-[Proefuitkomst](evidence/product/aide-workspace-outcome-20261002.json)
-· [Geïnstalleerde invoercorrectie](evidence/product/l3-programming-input-recovery-installed-20261002.json).
+**Eerstvolgend binnen L3:** gebruik bestaande document-, procedure-, beoordelings-
+en installatieroutes om eigen code te bewaren, hergebruiken en werkelijk toepassen.
+Stel het resterende overdrachtsgat vast vóór nieuwe bouw. Geen nieuw platform.
+L3 als geheel en de oorspronkelijke eindvoorwaarden blijven open; 17/44 kleine
+taken en eerdere acceptaties blijven behouden.
+
+**AIDE-contextproef blijft afgesloten zonder kandidaat.** Deze algemene programmeer-
+controle heropent die proef niet. Zelfstandige gemeten zelfverbetering is nog niet
+bewezen. [Afzonderlijke proefuitkomst](evidence/product/aide-workspace-outcome-20261002.json).
 
 [Installatiebewijs](evidence/product/l3-programming-execution-installed-20261002.json)
 · [Review](reviews/l3-programming-execution-20261002.md)

@@ -326,7 +326,7 @@ def test_configured_programming_tools_are_admitted_and_bound_to_release(tmp_path
         "token_file": str(tmp_path / "token"), "timeout_seconds": 120}))
     monkeypatch.setenv("EVA_PROGRAMMING_WORKSPACE_CLIENT_FILE", str(config))
     first = build_digital_profile(settings, bundle)
-    assert {"list_programming_tools", "use_programming_tool"} <= set(first.grant().capability_ids)
+    assert {"list_programming_tools", "use_programming_tool", "write_programming_file", "start_programming_process"} <= set(first.grant().capability_ids)
     config.write_text(json.dumps({"url": "http://127.0.0.1:44720",
         "token_file": str(tmp_path / "token"), "timeout_seconds": 120}))
     assert first.release != build_digital_profile(settings, bundle).release

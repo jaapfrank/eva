@@ -1292,3 +1292,23 @@ def test_programming_launch_receipt_alone_is_not_completed_work():
         "tool_name": "start_process", "arguments_json": '{"command":"python -V"}'}),
         {"status": "verified", "programming_result": {"isError": False}})
     assert _has_completed_tool_evidence([receipt]) is False
+
+
+@pytest.mark.parametrize("name,arguments", [
+    ("start_programming_process", {"command": "python -V", "timeout_ms": 1000}),
+    ("use_programming_tool", {"tool_name": "start_process", "arguments_json": '{"command":"python -V","timeout_ms":1000}'}),
+])
+def test_typed_and_legacy_process_start_do_not_prove_completion(name, arguments):
+    from eva.bootstrap.delegated_digital_runner import _has_completed_tool_evidence
+    receipt = ConversationActionReceipt(ConversationActionCall("launch", name, arguments),
+        {"status": "verified", "programming_result": {"isError": False}})
+    assert not _has_completed_tool_evidence([receipt])
+
+
+@pytest.mark.parametrize("is_error", [True, False])
+def test_typed_file_write_obeys_upstream_error_result(is_error):
+    from eva.bootstrap.delegated_digital_runner import _has_completed_tool_evidence
+    receipt = ConversationActionReceipt(ConversationActionCall("write", "write_programming_file", {
+        "path": "/workspace/main.py", "content": "print(42)", "mode": "rewrite"}),
+        {"status": "verified", "programming_result": {"isError": is_error}})
+    assert _has_completed_tool_evidence([receipt]) is (not is_error)

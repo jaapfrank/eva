@@ -13,7 +13,7 @@ from eva.adapters.model.contracts import ConversationModelDeadlineExceeded
 from eva.adapters.postgres.background_model_journal import BackgroundModelJournal
 from eva.adapters.postgres.background_work_progress import BackgroundWorkProgress, load_work_progress
 from eva.adapters.postgres.component_improvement_actions import ComponentImprovementActions, DRAFT, EVALUATE, PREPARE
-from eva.adapters.postgres.programming_actions import ProgrammingActions, LIST as PROGRAMMING_LIST, CALL as PROGRAMMING_CALL
+from eva.adapters.postgres.programming_actions import ProgrammingActions, programming_tool_name, LIST as PROGRAMMING_LIST, CALL as PROGRAMMING_CALL, WRITE as PROGRAMMING_WRITE, START as PROGRAMMING_START
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.delegated_work import DelegatedWorkCall, DelegatedWorkReleaseSelector
 from eva.adapters.postgres.operational_timeline import external_timeline_scope
@@ -104,7 +104,10 @@ class _TaskModel:
             "en maak alleen bij een concrete tekortkoming een wijziging. Voor een door de "
             "vaste evaluator ondersteunde component gebruik je draft_own_component_improvement. "
             "Voor andere programmeeropdrachten ontdek je list_programming_tools en gebruik je "
-            "use_programming_tool voor de blijvende /workspace. Bestaande Eva-bron staat "
+            "use_programming_tool voor de blijvende /workspace. Gebruik write_programming_file "
+            "voor code/tekst en start_programming_process voor opdrachten: geef content/command "
+            "rechtstreeks, zonder extra JSON-verpakking. De overige programmeertools blijven "
+            "via ontdekking beschikbaar voor teruglezen, bewerken en procesuitvoer. Bestaande Eva-bron staat "
             "alleen-lezen onder /opt/eva-source/eva; maak een werkkopie voor wijzigingen. "
             "Voer het programma en gerichte controles daadwerkelijk uit en lees hun eindresultaat. "
             "Een nog lopend proces is geen voltooiing: lees het terug tot afsluiting of stop het. "
@@ -390,11 +393,11 @@ def _has_completed_tool_evidence(receipts):
                 completed = True
             elif status != "unavailable":
                 return False
-        elif receipt.call.name == PROGRAMMING_CALL:
+        elif receipt.call.name in {PROGRAMMING_CALL, PROGRAMMING_WRITE, PROGRAMMING_START}:
             result = output.get("programming_result", {})
             if output.get("status") != "verified" or result.get("isError") is not False:
                 return False
-            if receipt.call.arguments.get("tool_name") not in {
+            if programming_tool_name(receipt.call) not in {
                     "start_process", "interact_with_process", "list_sessions", "list_processes"}:
                 completed = True
         elif output.get("status") == "verified":

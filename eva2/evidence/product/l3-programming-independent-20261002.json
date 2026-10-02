@@ -1,0 +1,128 @@
+{
+  "contract": "EvaIndependentProgrammingFunctionalCheck/v1",
+  "image": "sha256:4355cfe6db617e43e81d1679bf8c7b8beed71db8ec137378dbb46e809a2452d7",
+  "criteria_sha256": "fe9f316892271a500cc1004d37e6e9b849e5993e7032878636d8812a1595b64c",
+  "source_sha256": "23f6cf52981029b58246580f7028ac81e0d50ad0f22950f16f4bf2938f1601d8",
+  "readme_sha256": "d892daebfd6c50075df902a17f7acebac1191879536507cc2c6f08d35ecb521b",
+  "candidate_modified": false,
+  "original_task_inputs_unchanged": true,
+  "cases": [
+    {
+      "case": "all_change_kinds_full_objects_unicode_quotes",
+      "exit_code": 0,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "unchanged_reordered",
+      "exit_code": 0,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "empty_exports",
+      "exit_code": 0,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "invalid_before_malformed_json",
+      "exit_code": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "invalid_before_non_list_export",
+      "exit_code": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "invalid_before_non_object_record",
+      "exit_code": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "invalid_before_duplicate_ids",
+      "exit_code": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "invalid_before_missing_id",
+      "exit_code": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "invalid_before_empty_id",
+      "exit_code": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "invalid_before_non_string_id",
+      "exit_code": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "invalid_before_missing_title",
+      "exit_code": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "invalid_before_empty_title",
+      "exit_code": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "invalid_before_non_string_title",
+      "exit_code": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "invalid_before_missing_start",
+      "exit_code": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "invalid_before_empty_start",
+      "exit_code": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "invalid_before_non_string_start",
+      "exit_code": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "invalid_after_duplicate_ids",
+      "exit_code": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "case": "invalid_after_malformed_json",
+      "exit_code": 1,
+      "passed": true,
+      "failures": []
+    }
+  ],
+  "passed": true,
+  "limitations": [
+    "Functional CLI check on independent synthetic data; not quality superiority, a new AIDE candidate, or self-installation evidence."
+  ],
+  "runtime": {
+    "network": "none",
+    "candidate_read_only": true,
+    "credentials_or_host_socket": false
+  }
+}

@@ -31,6 +31,16 @@ uncertain command receipts are not blindly replayed. Closing/cancelling the task
 terminates its container. On host restart, reconcile only this root's exact owned
 containers before allowing another attempt to use the same workspace.
 
+Prefer the typed `write_programming_file(path, content, mode)` and
+`start_programming_process(command, timeout_ms)` descriptors for source text and
+commands. They pass native arguments to the same pinned MCP `write_file` and
+`start_process` operations; source code has only the provider's ordinary JSON
+encoding layer. `timeout_ms` is the initial output wait, not a process deadline.
+Use the existing discovery/general call for readback, process output and other
+operations. Legacy `arguments_json` calls and durable receipts remain supported.
+The aliases preserve task admission, request identity, stop and host isolation;
+both runtime services need the matching descriptors and source.
+
 A successful MCP call does not prove completed work. Before task completion, the
 host queries the upstream process registry; running processes prevent success.
 Idle state is lifecycle evidence only. Eva must inspect actual program results;

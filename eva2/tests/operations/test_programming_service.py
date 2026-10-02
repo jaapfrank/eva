@@ -210,3 +210,35 @@ def test_invalid_arguments_are_correctable_before_admission(monkeypatch, invalid
     assert len(client.calls) == len(dispatches) == 1
     assert tool.execute(turn, good, step_index=3) == receipt
     assert len(client.calls) == len(dispatches) == 1
+
+
+@pytest.mark.parametrize("name,upstream,arguments", [
+    (actions.WRITE, "write_file", {"path": "/workspace/quoted.py", "mode": "rewrite",
+      "content": "message = \"Eva's café\"\npath = r'C:\\data'\nprint(message, path)\n"}),
+    (actions.START, "start_process", {"command": "python /workspace/quoted.py", "timeout_ms": 1000}),
+])
+def test_typed_programming_arguments_reach_existing_mcp_once(monkeypatch, name, upstream, arguments):
+    tool, turn, client = fixture_actions(monkeypatch)
+    call = ConversationActionCall("typed", name, arguments)
+    receipt = tool.execute(turn, call, step_index=4)
+    assert client.calls[0][2] == "call"
+    assert client.calls[0][3]["name"] == upstream
+    assert client.calls[0][3]["arguments"] == arguments
+    assert receipt.call == call  # Durable identity remains the original typed call.
+    assert tool.pending(turn, step_index=4) == receipt
+    assert tool.execute(turn, call, step_index=4) == receipt
+    assert len(client.calls) == 1
+    assert receipt.output["installed"] is False
+
+
+def test_typed_programming_preserves_transport_uncertainty(monkeypatch):
+    tool, turn, client = fixture_actions(monkeypatch)
+    def uncertain(*args, **kwargs):
+        raise RuntimeError("connection lost after possible dispatch")
+    client.request = uncertain
+    call = ConversationActionCall("typed", actions.START, {"command": "python -V", "timeout_ms": 0})
+    with pytest.raises(RuntimeError, match="possible dispatch"):
+        tool.execute(turn, call)
+    assert tool.started and tool.pending(turn) is None
+    tool.close()
+    assert client.calls == [("close", tool.session_key)]

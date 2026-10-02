@@ -1,0 +1,13 @@
+{
+  "origin": "Eva gpt-6-astra medium via existing shared conversation/programming route; synthetic data",
+  "humanSourceEdits": false,
+  "files": {
+    "before.json": "122a5f86267f0c6a155f3c3f4c4ffa5033fc0b11b8e6a9f889b2e3c620451ce2",
+    "agenda_changes.py": "23f6cf52981029b58246580f7028ac81e0d50ad0f22950f16f4bf2938f1601d8",
+    "README.md": "d892daebfd6c50075df902a17f7acebac1191879536507cc2c6f08d35ecb521b",
+    "changes.json": "f4bc78dd49a6478d35842bdebfc3dd995cd2694a43c8e4c9e4489b55755ff676",
+    "after.json": "c6ebf8fd9c49c5c39e895680601317008f1a05f93975d6dda054d9ced4a63512"
+  },
+  "independentResult": "eva2/evidence/product/l3-programming-independent-20261002.json",
+  "scope": "Reusable general programming example, not a new built-in calendar feature or AIDE improvement"
+}

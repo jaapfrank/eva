@@ -1,0 +1,18 @@
+[
+  {
+    "id": "study",
+    "title": "Huiswerk: \"café\" en komma,",
+    "start": "2026-10-03T15:00:00+02:00",
+    "notes": "Eva's pad C:\\werk"
+  },
+  {
+    "id": "dentist",
+    "title": "Tandarts",
+    "start": "2026-10-04T10:00:00+02:00"
+  },
+  {
+    "id": "cancelled",
+    "title": "Oude afspraak",
+    "start": "2026-10-05T09:00:00+02:00"
+  }
+]
