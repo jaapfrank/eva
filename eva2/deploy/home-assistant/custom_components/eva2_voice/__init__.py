@@ -9,6 +9,13 @@ DOMAIN = "eva2_voice"
 _LOGGER = logging.getLogger(__name__)
 
 
+async def async_setup(hass, config):
+    """Keep automation actions discoverable while entries load or reload."""
+    from .services import async_register_services
+    async_register_services(hass)
+    return True
+
+
 async def async_setup_entry(hass, entry):
     client = EvaVoiceClient(
         async_get_clientsession(hass), url=entry.data["url"],

@@ -48,9 +48,10 @@ Reflectie, vooruitdenken en “dromen” verwerken echte ervaringen tot lessen e
 te toetsen ideeën; geen gefingeerde herinneringen of voortdurend modelverbruik
 om activiteit te tonen. Een stabiele uitvoerbasis en hergebruik blijven nodig:
 alles opnieuw genereren is niet automatisch slimmer. De vier productuitkomsten
-zijn persoonlijkheid, geheugen, eigen initiatief en zelfstandig werk. De huidige
-onderzoeks-/planopdracht activeert het gepauzeerde app-goal niet en levert op zichzelf
-geen functie op. Bestaande eindvoorwaarden, acceptaties en gegevens blijven staan.
+zijn persoonlijkheid, geheugen, eigen initiatief en zelfstandig werk. De eerdere
+onderzoeks-/planopdracht was op zichzelf geen functieoplevering. Jaap heeft de
+uitvoering op 2 oktober hervat; het bijgewerkte app-goal is nu actief. Bestaande
+eindvoorwaarden, acceptaties en gegevens blijven staan.
 
 
 ## Eigenaarcorrectie 2 oktober 2026 — Eva moet zelf kunnen bouwen en bijdragen

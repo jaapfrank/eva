@@ -1,5 +1,35 @@
 # EVA2 werkbord
 
+## Nu: I2 — algemene automatiseringsaanroep geïnstalleerd
+
+Het volledige nieuwe goal is **actief**: persoon, geheugen, eigen initiatief en
+zelfstandig werk, met koppelingen naar behoefte en behoud van het bestaande plan.
+De actuele kleine taken blijven leidend; geen nieuwe audit of herbouw.
+
+**Geïnstalleerd:** `eva2_voice.ask` laat een HA-automatisering dezelfde Eva aanroepen
+en haar tekstantwoord gebruiken. De bestaande huishoudbinding, cliënt, modelroute
+en algemene HA-tools blijven leidend. Eén HA-herstart; echte aanroep geeft
+`verbinding werkt.` terug (7,681 seconde, geen snelheidswinstclaim). 49 gerichte
+controles en onafhankelijke bronreview geslaagd. Actieve cliëntaanvragen worden
+niet door de automatisering onderbroken; geen automatische spraak.
+
+De fictieve bronkeuze koos de tuincamera en de werkende tweede afvalagenda na de
+lege eerste bron. Acht gemeten Astra/medium-antwoorden, 24.444 input-/572 outputtokens;
+één eerdere generate-aanroep mislukte in de proefregistratie, providerpogingen en
+tokens daarvan onbekend. De neutrale liveaanroep heeft geen aparte tokenmeting.
+Credits onbekend; geen herhaalde modelproef om de administratie aan te vullen.
+
+**Nog open:** I2.1/I2.2 — Eva zelf bronnen laten kiezen en de passende
+waarnemingsautomatisering laten maken, gebruiken en terugmelden. De echte
+camera-/afvalagendaproef is niet gestart: automatische goedkeuringscontrole
+weigerde de specifieke gegevensoverdracht naar de bestaande modelprovider.
+De ene gegevensvraag staat in de chat; die blokkeert alleen de echte gegevensproef.
+Geen vooraf ingebouwde vuilnisbakfunctie, geen afgeronde volledige I2 of extra
+groot productonderdeel. Eerdere acceptaties en 17/44 kleine taken blijven staan.
+
+Root rondt bewijs, dashboard en Git van deze aansluiting af; geen bronuitvoerder
+meer actief. [Installatie en bewijs](evidence/product/i2-ha-automation-action-installed-20261002.json).
+
 ## 2 oktober: eigen bijdragen bereikbaar in het gewone privégesprek
 
 Het volledige goal is actief. De concrete M3-contextcorrectie is **geïnstalleerd**

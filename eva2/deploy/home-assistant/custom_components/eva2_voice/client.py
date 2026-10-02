@@ -21,6 +21,10 @@ class EvaVoiceUnavailable(RuntimeError):
     """Sanitized failure safe to expose without transcript or credentials."""
 
 
+class EvaVoiceBusy(EvaVoiceUnavailable):
+    """An automation must not supersede an active household request."""
+
+
 @dataclass(frozen=True)
 class EvaVoiceAnswer:
     text: str
@@ -58,13 +62,16 @@ class EvaVoiceClient:
         self._closed = False
 
     async def respond(self, *, satellite_id: str, device_id: str,
-                      conversation_id: str, text: str, language: str, on_delta=None, on_receipt=None) -> EvaVoiceAnswer:
+                      conversation_id: str, text: str, language: str, on_delta=None, on_receipt=None,
+                      interrupt_existing: bool = True) -> EvaVoiceAnswer:
         if (self._closed or satellite_id not in self._satellites
                 or not re.fullmatch(r"[0-9a-f]{32}", device_id)
                 or not conversation_id or len(conversation_id) > 200
                 or not text.strip() or len(text) > 16_384
                 or not language or len(language) > 32):
             raise EvaVoiceUnavailable("Eva voice request is not admitted")
+        if not interrupt_existing and satellite_id in self._active:
+            raise EvaVoiceBusy("Eva voice speaker already has an active request")
         request_id = uuid4().hex
         # Physical stop and microphone capture need not wait for HTTP auditing.
         # A new model turn waits for already scheduled evidence; a failed report
@@ -78,6 +85,9 @@ class EvaVoiceClient:
                    "text": text, "language": language}
         previous = self._active.get(satellite_id)
         if previous is not None:
+            # Recheck after playback-report waits, with no await before admission.
+            if not interrupt_existing:
+                raise EvaVoiceBusy("Eva voice speaker already has an active request")
             previous.cancel()
         worker = asyncio.create_task(self._respond(payload, on_delta=on_delta, on_receipt=on_receipt))
         self._active[satellite_id] = worker

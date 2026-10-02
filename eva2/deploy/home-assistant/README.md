@@ -241,3 +241,40 @@ ChatLog or TTS. Model-authored acknowledgements for actually admitted work remai
 part of Eva's answer. This presentation change does not create full-duplex audio
 or keep speech recognition active during model thinking. The installed wakeword
 interruption overlay and physical C3/C4 trials remain separate.
+
+## Ask Eva from a Home Assistant automation
+
+The `eva2_voice.ask` action sends a question or task to the existing household-bound
+Eva. Set `satellite_id` to an enabled `assist_satellite.*` entity registered with
+exactly one loaded Eva integration and admitted by the core household policy.
+The integration resolves the device ID and credentials; the automation does not
+supply them. This device binding grants no private human identity or private memory.
+
+Add this action to an automation, replacing the example satellite ID:
+
+```yaml
+actions:
+  - action: eva2_voice.ask
+    data:
+      satellite_id: assist_satellite.your_registered_speaker
+      text: "Welke gezinstaken staan nog open?"
+      language: nl
+    response_variable: eva_answer
+```
+
+`response_variable` is optional. When supplied, `eva_answer` contains `text`,
+`conversation_id` and `continue_conversation`; later actions can use
+`{{ eva_answer.text }}`. To continue the same household conversation, pass the
+returned `conversation_id` in a later call's `data`. Omitting it starts a new
+conversation; omitting `language` uses Home Assistant's configured language.
+The action does not invoke TTS or play the answer on the speaker. The automation
+chooses whether and how to use the response.
+
+If the satellite already has an active Eva request, the action fails without
+interrupting that request, including a live voice request. Failed calls are not
+automatically retried. Do not add automatic retries for arbitrary work: an
+unconfirmed response does not establish that no external effect occurred.
+
+This callback does not itself create a recurring observation or prove an
+observation outcome. Recurrence requires an automation trigger, and any claimed
+observation still needs evidence from the relevant sources.

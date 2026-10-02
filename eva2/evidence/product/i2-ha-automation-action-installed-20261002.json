@@ -1,0 +1,155 @@
+{
+  "checkedAt": "2026-10-02T10:03:15.677883+00:00",
+  "status": "installed_general_callback_full_i2_outcome_open",
+  "baseCommit": "02bea1b24e72d6bf9043ca63da4d2495d028b757",
+  "taskIds": [
+    "I2.1",
+    "I2.2"
+  ],
+  "userOutcome": "An existing HA automation can invoke the same household-bound Eva runtime and receive its text response. Eva can discover this action through the existing general HA API.",
+  "existing": "General HA discovery, camera/calendar access, image interpretation, automation writing and background work are reused. No new planner, example-specific automation, private identity, provider or TTS route.",
+  "confirmedGap": {
+    "checkedAt": "2026-10-02T09:44:20.446279+00:00",
+    "sourceCommit": "02bea1b2",
+    "installedHomeAssistant": "2026.9.2",
+    "localIntegrationHashesMatchRepository": true,
+    "liveConversationProcessFields": [
+      "text",
+      "language",
+      "agent_id",
+      "conversation_id"
+    ],
+    "liveEvaServices": [],
+    "sourceRequirements": {
+      "path": "eva2/deploy/home-assistant/custom_components/eva2_voice/conversation.py",
+      "lines": [
+        28,
+        33
+      ],
+      "requires": "Registered enabled satellite_id with device_id before client invocation"
+    },
+    "gap": "No general HA automation action can supply the registered satellite/device binding to the existing EvaVoiceClient.",
+    "smallestChange": "Expose existing client via one general integration action; retain registered device binding, current runtime authority, cancellation and response validation. No new planner, private identity, TTS or camera rule.",
+    "realPayloadTrial": "Rejected before execution; explicit approval pending; no retry through another route."
+  },
+  "change": {
+    "action": "eva2_voice.ask",
+    "fields": [
+      "satellite_id",
+      "text",
+      "conversation_id (optional)",
+      "language (optional)"
+    ],
+    "response": [
+      "text",
+      "conversation_id",
+      "continue_conversation"
+    ],
+    "routing": "Existing registered enabled satellite, loaded config entry and EvaVoiceClient; authority remains with the installed core household policy.",
+    "conversationProtection": "Automation calls decline an active client request before and after awaited playback reporting; ordinary voice supersession remains unchanged.",
+    "lifecycle": "Service remains registered across entry unload/reload; each invocation resolves and rechecks the currently loaded binding. Cancellation propagates, failures are sanitized and not retried."
+  },
+  "verification": {
+    "focusedTests": {
+      "passed": 49,
+      "durationSeconds": 0.59,
+      "exitCode": 0,
+      "command": "PYTHONPATH=src /home/administrator/project/.eva2-artifacts/ha-voice-client-env/bin/python -m pytest tests/operations/test_ha_phone_entry.py tests/operations/test_ha_voice_native_client.py -q",
+      "workingDirectory": "/home/administrator/project/Eva2/eva2",
+      "log": "Tool response chunk 30b0a1; no separate log file",
+      "covers": [
+        "Loaded enabled registered satellite selection and optional response",
+        "Schema, binding revocation, sanitized failures and cancellation",
+        "Permanent service registration across entry unload/reload",
+        "Busy request rejection before and after awaited playback reporting",
+        "Existing native client behavior with unchanged voice default"
+      ]
+    },
+    "independentReview": {
+      "reviewer": "Codex /root (independent of implementation agent completion_diagnosis)",
+      "verdict": "GO for the bounded callback",
+      "findingResolved": "Recheck active client requests after playback-report awaits so an automation cannot cancel a voice request started during the await.",
+      "limitations": "No proof of a created recurring observation, useful family initiative or general I2 completion."
+    },
+    "installedFiles": {
+      "checkedAt": "2026-10-02T09:57:27.092578+00:00",
+      "files": {
+        "__init__.py": "22818a202bf23159a76bc7db89f6376475f438ed2457b00665c46a1cdb4bd38a",
+        "client.py": "7a489ff716079881e2b6164a03873314e4c631538725d160c87356c694ca1364",
+        "services.py": "9d0437ea0586a4b0f9f18be41e643c70cdba1bd593a499b4622a7a717cc55c1f",
+        "services.yaml": "553b1aa7744aaaf1635ce15fe7c32deb23afd12118296ea2c79fe03d8ff7ecf9"
+      },
+      "before_init_sha256": "261cfbfa393f4b72d21e8ac5516f6e02648315565fdc23c2e9c5fc22b82b9c26",
+      "remote_readback": "/config/custom_components/eva2_voice/__init__.py: OK\n/config/custom_components/eva2_voice/client.py: OK\n/config/custom_components/eva2_voice/.__init__.py.i2-staged: OK\n/config/custom_components/eva2_voice/.client.py.i2-staged: OK\n/config/custom_components/eva2_voice/.services.py.i2-staged: OK\n/config/custom_components/eva2_voice/.services.yaml.i2-staged: OK\n22818a202bf23159a76bc7db89f6376475f438ed2457b00665c46a1cdb4bd38a  /config/custom_components/eva2_voice/__init__.py\n7a489ff716079881e2b6164a03873314e4c631538725d160c87356c694ca1364  /config/custom_components/eva2_voice/client.py\n9d0437ea0586a4b0f9f18be41e643c70cdba1bd593a499b4622a7a717cc55c1f  /config/custom_components/eva2_voice/services.py\n553b1aa7744aaaf1635ce15fe7c32deb23afd12118296ea2c79fe03d8ff7ecf9  /config/custom_components/eva2_voice/services.yaml\n",
+      "scope": "Four integration source files; client voice default preserved and automation declines a busy device. Credentials, configuration, firmware and core/worker unchanged."
+    },
+    "haCoreRestart": "One successful core restart; action schema discovered in actual /api/services with optional response.",
+    "liveRequest": {
+      "http_status": 200,
+      "elapsed_seconds": 7.681,
+      "request_text": "Dit is een technische verbindingstest. Antwoord alleen met: verbinding werkt. Gebruik geen hulpmiddelen, herinneringen, beelden of agenda.",
+      "result": {
+        "changed_states": [],
+        "service_response": {
+          "text": "verbinding werkt.",
+          "conversation_id": "automation:4d53e599bdb2464eac8fc980724b318b",
+          "continue_conversation": true
+        }
+      }
+    },
+    "coreServices": [
+      {
+        "service": "eva2-managed-b-slot3-core",
+        "health": "healthy"
+      },
+      {
+        "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "health": "healthy"
+      }
+    ]
+  },
+  "syntheticSourceSelection": {
+    "scope": "Synthetic inventory/calendar/image interpretation only; real installed model adapter and tool descriptors/page selection, no DB, HA, vision or message calls. Not actual source discovery or a created automation.",
+    "model": "gpt-6-astra",
+    "reasoning_effort": "medium",
+    "elapsedSeconds": 51.142,
+    "usage": {
+      "model_calls": 8,
+      "tool_calls": 7,
+      "input_tokens": 24444,
+      "output_tokens": 572,
+      "earlier_failed_probe_tokens": null,
+      "credits": null,
+      "earlier_failed_probe_generate_invocations": 1,
+      "earlier_failed_probe_provider_attempts": null
+    },
+    "result": "Selected the garden camera and switched from empty Afvalwijzer to the working alternative Afval calendar; no private calendar read. Synthetic source data, not live household evidence.",
+    "correction": "Initial probe used .action instead of the actual .action_call result field; failed after one model response before saving usage. Only the probe was corrected; production code unchanged."
+  },
+  "usage": {
+    "syntheticModelAttemptsMeasured": 8,
+    "syntheticToolCalls": 7,
+    "syntheticInputTokens": 24444,
+    "syntheticOutputTokens": 572,
+    "earlierFailedGenerateInvocations": 1,
+    "earlierFailedProviderAttempts": null,
+    "earlierFailedTokens": null,
+    "installedNeutralServiceRequests": 1,
+    "installedNeutralProviderAttempts": null,
+    "installedNeutralTokens": null,
+    "runtimeCredits": null,
+    "developmentCredits": null
+  },
+  "installation": {
+    "scope": "Four HA integration files. HA credentials, entries, firmware, Eva core/worker images and retained data unchanged.",
+    "privateArtifacts": "/home/administrator/project/.eva2-artifacts/i2-observation-20261002",
+    "backout": "Exact baseline __init__.py and client.py bytes retained locally; new service files identified. No rollback performed."
+  },
+  "limitations": [
+    "I2.1/I2.2 remain open; callback is a necessary transition, not the complete observation/automation outcome.",
+    "Real camera-description/shared-calendar model trial was rejected before execution by automatic approval review; specific payload authorization remains pending. Not retried through another route.",
+    "The neutral live request returned in 7.681 seconds; this is a route check, not a speed improvement.",
+    "No physical speaker playback, messaging, HA device change, source read or recurring automation was requested by the live test.",
+    "Existing acceptances and completion counts are preserved."
+  ]
+}

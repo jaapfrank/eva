@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-02T09:20:07.101293+00:00",
+        "checkedAt": "2026-10-02T10:03:15.677883+00:00",
         "deliveries": [
+          {
+            "title": "Algemene HA-automatisering kan dezelfde Eva aanroepen",
+            "date": "2 oktober",
+            "state": "installed",
+            "result": "Nieuwe algemene actie eva2_voice.ask gebruikt de bestaande geregistreerde huishoudroute. 49 gerichte controles, onafhankelijke bronreview en echte HA→Eva→antwoordcontrole geslaagd; geen automatische spraak of onderbreking van een lopende cliëntaanvraag.",
+            "remaining": "I2.1/I2.2 blijven open: Eva moet nog zelf een volledige waarnemingsautomatisering maken en gebruiken. Echte camera-/agendaproef wacht op gegevenskeuze. Geen nieuw groot onderdeel of verhoogde teller.",
+            "source": "eva2/evidence/product/i2-ha-automation-action-installed-20261002.json"
+          },
           {
             "title": "Eigen bijdragen beschikbaar in gewone privégesprekken",
             "date": "2 oktober",
@@ -3307,25 +3315,24 @@
           }
         ],
         "now": {
-          "title": "M3-contextverbetering geïnstalleerd en gecontroleerd",
-          "state": "installed",
-          "detail": "Eva kan haar werkelijke eigen bijdragen in gewone privégesprekken meenemen. Werkende versie en Telegramkoppeling lokaal gecontroleerd. Geen volledige persoonlijkheidsafronding; dagplannen blijven algemeen.",
+          "title": "I2: algemene automatiseringsaanroep geïnstalleerd",
+          "state": "in_progress",
+          "detail": "Home Assistant kan dezelfde Eva vanuit een automatisering aanroepen en een tekstantwoord ontvangen. Echte aanroep geslaagd na één herstart. Nu bewijs en Git afronden; bronkeuze plus zelfgemaakte waarnemingsautomatisering blijft open.",
           "owner": "Codex /root"
         },
         "next": {
-          "title": "I2: Eva ontdekt en gebruikt zelf passende bronnen",
-          "detail": "Eerstvolgend zelfstandig productwerk: bestaande algemene bronontdekking en uitvoering verbinden aan de waarnemingsopdracht. Geen ingebouwde camera-/vuilnisbakfunctie. Nog niet gestart."
+          "title": "Eva zelf de waarnemingsopdracht laten instellen",
+          "detail": "De bestaande algemene tools gebruiken om bronnen te kiezen, de automatisering te maken en een werkelijk resultaat terug te brengen. Voor de echte camera-/agendagegevens staat één specifieke toestemmingsvraag open; geen vaste voorbeeldfunctie."
         },
         "ownerAction": {
-          "title": "Optioneel: praat met Eva over haar eigen bijdrage",
+          "title": "Eén expliciete gegevenskeuze",
           "steps": [
-            "Vraag in Telegram: /eva2 Wat heb je uit jezelf al gedaan waar je tevreden over bent?",
-            "Praat daarna gewoon verder. Geef alleen aan wanneer een antwoord nog statisch of onjuist voelt."
+            "Beantwoord de vraag in deze chat: mag deze ene proef de tuin-camerabeschrijving en gedeelde afvalagenda via de bestaande modelprovider verwerken, of alleen fictieve gegevens gebruiken?"
           ],
-          "expected": "Eva kan haar echte opgeslagen bijdragen gebruiken en onderscheidt uitgevoerd werk van nieuwe plannen. Deze gerichte verbetering bewijst nog geen volledige persoonlijkheid."
+          "expected": "Deze keuze betreft de echte gegevensproef; geen privégesprekken of persoonlijke agenda in de proef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-02T09:20:07.101293+00:00"
+        "reviewedAt": "2026-10-02T10:03:15.677883+00:00"
       },
       "reviewedAt": "2026-10-01T15:52:21.323198+00:00"
     },
@@ -13146,7 +13153,7 @@
           ]
         }
       ],
-      "nextAction": "I2.1: bestaande algemene bronontdekking voor een waarnemingsopdracht gebruiken; daarna I2.2 uitvoering/terugmelding. M3.3 menselijke beoordeling blijft open en blokkeert dit onafhankelijke vervolg niet.",
+      "nextAction": "I2.1/I2.2: trace existing general discovery and observation automation route, then complete only a demonstrated missing transition.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -14944,13 +14951,23 @@
           },
           "owner": "/root",
           "assignment": {
-            "stage": "initiative_return_service_installed",
-            "baseCommit": "9f8708a4",
+            "baseCommit": "02bea1b2",
             "owner": "/root",
-            "scope": "bootstrap/runtime.py one existing callback registration; real PostgreSQL delivery checks",
-            "endCondition": "Completed native result delivery proceeds independently of memory maintenance; original artifact and no-duplicate/uncertain-send behavior retained; install bounded one-line runtime patch.",
-            "effort": "One bounded connection, existing worker checks and two durable delivery cases; zero model calls or real messages.",
-            "sourceCommit": "122b91ae12f5c2b12e27c7ba32de305c3eb0702b"
+            "stage": "callback_installed_verified_recording_delivery",
+            "existing": "Installed HA conversation entity and device-authorized EvaVoiceClient; general HA automation writer already available.",
+            "gap": "Live conversation.process schema has no satellite/device field; Eva conversation adapter requires a registered satellite; no eva2_voice action exists. Thus the general HA-automation-to-Eva handoff is absent.",
+            "files": [
+              "eva2/deploy/home-assistant/custom_components/eva2_voice/__init__.py",
+              "eva2/deploy/home-assistant/custom_components/eva2_voice/client.py",
+              "eva2/deploy/home-assistant/custom_components/eva2_voice/services.py",
+              "eva2/deploy/home-assistant/custom_components/eva2_voice/services.yaml",
+              "eva2/tests/operations/test_ha_phone_entry.py",
+              "eva2/deploy/home-assistant/README.md"
+            ],
+            "endCondition": "An HA automation can call the existing household Eva runtime with an authorized registered satellite and receive its text response; no private identity, new planner, automatic TTS or example-specific automation. Install and check the actual action.",
+            "activeWorkers": [
+              "Codex /root (delivery evidence, dashboard and Git)"
+            ]
           },
           "evidence": "eva2/evidence/product/local-vision-installed-20260928.json",
           "remaining": "Algemene vaardigheid nog afmaken: passende bestaande bronnen zelfstandig ontdekken, de gevraagde waarneming als automatisering instellen en met een nuttig resultaat terugkomen. Geen verplichte vuilnisbakfunctie of voorafgaande bronkeuze van Jaap.",
@@ -14959,27 +14976,38 @@
           "reviewPacingEvidence": "eva2/evidence/product/initiative-review-pacing-installed-20260928.json",
           "calendarSourceEvidence": "eva2/evidence/product/initiative-calendar-source-20260928.json",
           "returnServiceEvidence": "eva2/evidence/product/initiative-return-service-installed-20260928.json",
-          "activeWorker": null,
-          "latestEvidence": "eva2/evidence/product/initiative-outcome-blocker-20260929.json",
+          "activeWorker": "Codex /root",
+          "latestEvidence": "eva2/evidence/product/i2-ha-automation-action-installed-20261002.json",
           "currentAssignment": {
-            "baseCommit": "b2264eaf",
-            "stage": "read_only_check_completed_dependencies_open",
+            "baseCommit": "02bea1b2",
             "owner": "/root",
-            "endCondition": "Identify existing live initiative and concrete prerequisites without changing budget or manufacturing result",
-            "effort": "One bounded source/current-state check, zero modelcalls; creditcost unknown",
-            "review": "review_directory_connection confirmed documented budget behavior"
+            "stage": "callback_installed_verified_recording_delivery",
+            "existing": "Installed HA conversation entity and device-authorized EvaVoiceClient; general HA automation writer already available.",
+            "gap": "Live conversation.process schema has no satellite/device field; Eva conversation adapter requires a registered satellite; no eva2_voice action exists. Thus the general HA-automation-to-Eva handoff is absent.",
+            "files": [
+              "eva2/deploy/home-assistant/custom_components/eva2_voice/__init__.py",
+              "eva2/deploy/home-assistant/custom_components/eva2_voice/client.py",
+              "eva2/deploy/home-assistant/custom_components/eva2_voice/services.py",
+              "eva2/deploy/home-assistant/custom_components/eva2_voice/services.yaml",
+              "eva2/tests/operations/test_ha_phone_entry.py",
+              "eva2/deploy/home-assistant/README.md"
+            ],
+            "endCondition": "An HA automation can call the existing household Eva runtime with an authorized registered satellite and receive its text response; no private identity, new planner, automatic TTS or example-specific automation. Install and check the actual action.",
+            "activeWorkers": [
+              "Codex /root (delivery evidence, dashboard and Git)"
+            ]
           },
           "dashboardComponent": "initiative",
           "remainingTasks": [
             {
               "id": "I2.1",
               "title": "Relevante bronnen zelfstandig ontdekken en kiezen",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "aansluiten",
               "doneWhen": "Eva ontdekt en kiest via bestaande algemene hulpmiddelen de camera-/agendabronnen die bij een gewone waarnemingsopdracht passen; alleen echte onduidelijkheid vraagt een vervolgvraag.",
               "owner": "Codex /root",
               "blocker": null,
-              "checkedAt": "2026-10-01T09:01:39.597591+00:00",
+              "checkedAt": "2026-10-02T09:23:08.193130+00:00",
               "sourceEvidence": [
                 "eva2/evidence/product/ha-domain-selection-installed-20260928.json",
                 "eva2/evidence/product/initiative-calendar-source-20260928.json"
@@ -14991,18 +15019,43 @@
                 "previousBlocker": "Superseded owner-choice requirement; no completed user capability inferred."
               },
               "nextAction": "Eva ontdekt relevante camera-/agendabronnen bij een gewone opdracht en kiest zelf; alleen echte onduidelijkheid vraagt een vraag. Codex levert algemene toegang, geen vaste bronnencombinatie.",
-              "ownerActionRequired": false,
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
-                "steps": [],
+                "availableNow": true,
+                "readyWhen": "Beantwoord alleen de gegevensvraag in deze chat; geen camerakeuze of fysieke proef nodig.",
+                "steps": [
+                  "Mag de ene proef de tuin-camerabeschrijving en gedeelde afvalagenda via de bestaande modelprovider verwerken, of uitsluitend fictieve gegevens?"
+                ],
                 "blocksIndependentWork": false
-              }
+              },
+              "assignment": {
+                "owner": "/root",
+                "baseCommit": "02bea1b24e72d6bf9043ca63da4d2495d028b757",
+                "stage": "synthetic_source_selection_checked_real_payload_approval_pending",
+                "outcome": "Eva discovers suitable existing sources for an observation request and creates/uses the required automation through general tools.",
+                "existing": "HA discovery, camera/calendar reads, image understanding, automation tools and delegated work already have evidence.",
+                "gap": "Complete ordinary request-to-source choice-to-observation automation-to-return is not established; inspect existing seam before building.",
+                "files": [
+                  "Only proven missing general execution transition; root owns shared source, evidence and workboard."
+                ],
+                "endCondition": "Installed shared execution supports representative source discovery and observation/automation outcome; no example-specific rules or invented owner acceptance.",
+                "usageEstimate": "Reuse saved evidence first; one representative route check and changed-cause verification if necessary. Actual calls/tokens reported, credits unknown.",
+                "activeWorkers": []
+              },
+              "pendingApproval": {
+                "requestedAt": "2026-10-02T09:29:34.802066+00:00",
+                "source": "Automatic approval review rejection in this chat",
+                "action": "One real household observation using garden-camera interpretation and shared waste calendar through existing model provider",
+                "reason": "Specific sensitive payload transfer not explicitly authorized",
+                "executionStarted": false,
+                "scope": "Only real-payload trial; source review and synthetic checks can continue"
+              },
+              "latestEvidence": "eva2/evidence/product/i2-ha-automation-action-installed-20261002.json"
             },
             {
               "id": "I2.2",
               "title": "Waarnemingsopdracht zelf automatiseren en terugmelden",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "aansluiten",
               "doneWhen": "Eva stelt de gevraagde waarneming en terugmelding zelf in via bestaande algemene hulpmiddelen en passende automatisering, zonder vraag-/apparaatspecifieke kernregel; de werkelijke terugmelding blijft binnen het bestaande mandaat.",
               "owner": "Codex /root",
@@ -15013,7 +15066,27 @@
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "assignment": {
+                "baseCommit": "02bea1b2",
+                "owner": "/root",
+                "stage": "callback_installed_verified_recording_delivery",
+                "existing": "Installed HA conversation entity and device-authorized EvaVoiceClient; general HA automation writer already available.",
+                "gap": "Live conversation.process schema has no satellite/device field; Eva conversation adapter requires a registered satellite; no eva2_voice action exists. Thus the general HA-automation-to-Eva handoff is absent.",
+                "files": [
+                  "eva2/deploy/home-assistant/custom_components/eva2_voice/__init__.py",
+                  "eva2/deploy/home-assistant/custom_components/eva2_voice/client.py",
+                  "eva2/deploy/home-assistant/custom_components/eva2_voice/services.py",
+                  "eva2/deploy/home-assistant/custom_components/eva2_voice/services.yaml",
+                  "eva2/tests/operations/test_ha_phone_entry.py",
+                  "eva2/deploy/home-assistant/README.md"
+                ],
+                "endCondition": "An HA automation can call the existing household Eva runtime with an authorized registered satellite and receive its text response; no private identity, new planner, automatic TTS or example-specific automation. Install and check the actual action.",
+                "activeWorkers": [
+                  "Codex /root (delivery evidence, dashboard and Git)"
+                ]
+              },
+              "latestEvidence": "eva2/evidence/product/i2-ha-automation-action-installed-20261002.json"
             }
           ],
           "responsibilityReview": {
@@ -16119,7 +16192,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "M3",
+      "activeSliceId": "I2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

@@ -1,0 +1,34 @@
+ask:
+  name: Vraag Eva
+  description: >-
+    Stel Eva een vraag of opdracht binnen de bestaande huishoudrechten van een
+    gekoppelde speaker. Geeft bij een response_variable de velden text,
+    conversation_id en continue_conversation terug. Spreekt zelf niets uit;
+    de automatisering bepaalt wat zij met het antwoord doet. Een aanvraag wordt
+    geweigerd als Eva op deze speaker al met een andere aanvraag bezig is.
+  fields:
+    satellite_id:
+      name: Gekoppelde speaker
+      description: De bestaande Assist-satellite waarvan Eva de huishoudrechten gebruikt.
+      required: true
+      selector:
+        entity:
+          filter:
+            - domain: assist_satellite
+    text:
+      name: Vraag of opdracht
+      required: true
+      selector:
+        text:
+          multiline: true
+    conversation_id:
+      name: Gesprek
+      description: Gebruik het eerder teruggegeven gesprek voor vervolgvragen; weglaten start een nieuw gesprek.
+      selector:
+        text:
+    language:
+      name: Taal
+      description: Taalcode; standaard de ingestelde Home Assistant-taal.
+      example: nl
+      selector:
+        text:
