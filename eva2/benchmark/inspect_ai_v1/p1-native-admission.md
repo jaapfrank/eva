@@ -301,3 +301,37 @@ The newer owner goal permits comparison with available, individually admitted
 participants; missing competitor access does not block a valid admitted pair.
 Unavailable samples stay unknown and do not inherit or redistribute any budget.
 The full EV-003 superiority thresholds remain unchanged.
+
+
+## Actual Eva1 source and memory accounting — 3 October 2026
+
+The running `eva.service` uses `/home/administrator/project/Bottie`, at the
+registered `909bff513d7d7fd653d6a7f270d9e73facce430d` HEAD with existing local
+Telegram changes. The prior CP001 worker imported the Eva2 repository's `src`,
+which differs from that baseline. Its offline adapter evidence remains valid;
+it does not establish actual Eva1 runtime provenance or a comparison result.
+
+The actual Bottie reply composer also hardcodes `low`, independently of its
+configurable interpretation effort. The explicit disposable equal-model variant
+therefore exposes only that reply effort as a setting, preserving `low` as the
+default. The original service, source and data are unchanged. Its source manifest
+binds 87 copied code/package/import files and a two-file patch; no credentials, `.env`,
+workspace or production database are copied. Native dependencies are physically
+copied and match their original dependency-tree hash, without installation.
+The complete synthetic two-call HTTP/agent/SQLite route passed; the default
+fixture regression passed separately. Startup preparation failures remain in the
+evidence. This is a declared comparison variant,
+not an unchanged-native performance claim. Native and equal-model results remain
+separate as required by the existing Step 7 plan.
+
+Targeted inspection of the installed Hindsight image also establishes that its
+Codex provider reports character-based token estimates, not raw provider usage.
+Its per-retry `attempt_context` is reusable, but the durable operation identity is
+not bound to the generated LLM trace. Cancelling an already-running operation is
+not supported by the pending-operation cancellation endpoint. The remaining
+sample accounting requires operation context, raw SSE usage and owned attempt
+cancellation; existing traces or configuration alone cannot establish it. No
+memory contents or credentials were read, and no inference request was made.
+
+See `../../evidence/product/p1-native-source-binding-20261003.json` for exact
+source/variant provenance and the current execution status. P1 remains open.

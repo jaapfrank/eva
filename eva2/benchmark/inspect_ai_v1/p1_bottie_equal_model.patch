@@ -1,0 +1,21 @@
+--- a/src/config.js
++++ b/src/config.js
+@@ -513,6 +513,7 @@
+   modelResearch: env.EVA_MODEL_RESEARCH || env.EVA_MODEL_VOICE || env.EVA_MODEL || 'gpt-5.6-terra',
+   reasoningEffort: env.EVA_REASONING || 'low',
+   reasoningChat: env.EVA_REASONING_CHAT || 'none',
++  reasoningReply: env.EVA_REASONING_REPLY || 'low',
+   reasoningVoice: env.EVA_REASONING_VOICE || 'low',
+   reasoningAutonomy: env.EVA_REASONING_AUTONOMY || 'low',
+   reasoningCode: env.EVA_REASONING_CODE || 'high',
+--- a/src/mind/agent.js
++++ b/src/mind/agent.js
+@@ -5387,7 +5387,7 @@
+         input: [msg('user', [baseInput, correction].filter(Boolean).join('\n\n'))],
+         tools: [],
+         model: config.modelVoice,
+-        effort: 'low',
++        effort: config.reasoningReply,
+         cacheKey: attempt ? 'eva-grounded-reply-repair' : 'eva-grounded-reply',
+         timeoutMs: remainingMs,
+         rateLimitRetries: 0,

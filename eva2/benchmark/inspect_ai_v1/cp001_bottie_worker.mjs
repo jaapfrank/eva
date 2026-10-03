@@ -3,8 +3,32 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import readline from 'node:readline';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { generateKeyPairSync, sign, createPrivateKey, createPublicKey, createHash } from 'node:crypto';
 
+const args = process.argv.slice(3);
+let sourceRoot = fileURLToPath(new URL('../../../', import.meta.url));
+let explicitSource = false;
+for (let index = 0; index < args.length; index += 1) {
+  if (['--resume', '--sample-control'].includes(args[index])) continue;
+  if (args[index] !== '--source-root' || explicitSource || !args[index + 1] || !path.isAbsolute(args[index + 1])) {
+    throw new Error('expected one absolute existing --source-root or known fixture flags');
+  }
+  sourceRoot = fs.realpathSync(args[++index]);
+  explicitSource = true;
+}
+sourceRoot = fs.realpathSync(sourceRoot);
+if (!fs.statSync(sourceRoot).isDirectory()) throw new Error('source root must be a directory');
+const sourceFiles = ['src/db.js', 'src/web/server.js', 'src/web/httpack.js',
+  'src/mind/agent.js', 'src/brain/llm.js', 'src/config.js', 'package.json'];
+const sourceHashes = Object.fromEntries(sourceFiles.map(relative => {
+  const filename = fs.realpathSync(path.join(sourceRoot, relative));
+  if (!filename.startsWith(sourceRoot + path.sep) || !fs.statSync(filename).isFile()) {
+    throw new Error('native source must be a regular file inside source root');
+  }
+  return [relative, createHash('sha256').update(fs.readFileSync(filename)).digest('hex')];
+}));
+const nativeModule = relative => pathToFileURL(path.join(sourceRoot, relative)).href;
 const dataDir = fs.realpathSync(process.argv[2]);
 const resume = process.argv.includes('--resume');
 const sampleControl = process.argv.includes('--sample-control');
@@ -15,6 +39,8 @@ const keyFile = path.join(dataDir, '.cp001-client-key.pem');
 if (resume && (!fs.lstatSync(keyFile).isFile() || !fs.lstatSync(path.join(dataDir, 'eva.db')).isFile())) {
   throw new Error('resume requires the fixture database and original private key');
 }
+// Never load the selected source tree's real dotenv configuration.
+process.env.DOTENV_CONFIG_PATH = '/dev/null';
 process.env.EVA_DATA_DIR = dataDir;
 process.env.OPENAI_API_KEY = 'test-only';
 process.env.WEB_HOST = '127.0.0.1';
@@ -126,8 +152,8 @@ globalThis.fetch = async (input, init = {}) => {
     providerControllers.delete(controller);
   }
 };
-const { db } = await import('../../../src/db.js');
-const { startWeb } = await import('../../../src/web/server.js');
+const { db } = await import(nativeModule('src/db.js'));
+const { startWeb } = await import(nativeModule('src/web/server.js'));
 const privateKey = resume ? createPrivateKey(fs.readFileSync(keyFile))
   : generateKeyPairSync('ec', { namedCurve: 'prime256v1' }).privateKey;
 if (!resume) {
@@ -139,12 +165,12 @@ if (!resume) {
 }
 const keyPair = { privateKey, publicKey: createPublicKey(privateKey) };
 const key = keyPair.publicKey.export({ format: 'jwk' });
-const { canonicalHttpClientAckPreimage, canonicalHttpWireSha256 } = await import('../../../src/web/httpack.js');
+const { canonicalHttpClientAckPreimage, canonicalHttpWireSha256 } = await import(nativeModule('src/web/httpack.js'));
 let lastExchange = null;
 const publicKey = { contract: 'HttpClientAckPublicKey/v3', algorithm: 'ES256', kty: 'EC', crv: 'P-256', x: key.x, y: key.y };
 const server = await startWeb();
 const base = `http://127.0.0.1:${server.address().port}`;
-send({ ready: true, database: path.join(dataDir, 'eva.db'), public_key: publicKey,
+send({ ready: true, source_root: sourceRoot, source_sha256: sourceHashes, explicit_source_root: explicitSource, database: path.join(dataDir, 'eva.db'), public_key: publicKey,
   ...(sampleControl ? { sample_control: true, role_scope: 'controlled contact fixture only' } : {}),
   resumed: resume, pid: process.pid, network_namespace: fs.readlinkSync('/proc/self/ns/net'),
   key_file_sha256: createHash('sha256').update(fs.readFileSync(keyFile)).digest('hex') });

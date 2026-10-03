@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-03T13:13:52.503447+00:00",
+  "lastUpdated": "2026-10-03T17:58:27.163715+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1035,8 +1035,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T17:19:16.052196+00:00",
+        "checkedAt": "2026-10-03T17:58:27.163715+00:00",
         "deliveries": [
+          {
+            "title": "Vergelijkingsroute gebruikt nu de echte Eva1-bron",
+            "date": "3 oktober",
+            "state": "tested",
+            "result": "Bron uit de draaiende Bottie-installatie vastgelegd. Expliciete gelijk-modelkopie doorloopt beide antwoordstappen en onafhankelijke databasecontrole; default-route behouden. Onafhankelijke beperkte GO, geen echte modelcalls.",
+            "remaining": "Voorbereiding voor vergelijking; nog geen score, prestatievoordeel of nieuwe Eva-functie. Geheugenmeting en volledige toelating blijven open. Stand blijft 25/44 oorspronkelijke kleine taken.",
+            "source": "eva2/evidence/product/p1-native-source-binding-20261003.json"
+          },
           {
             "title": "Vergelijkingskoppeling kan stoppen tijdens een lopende aanvraag",
             "date": "3 oktober",
@@ -3505,14 +3513,14 @@
           }
         ],
         "now": {
-          "title": "P1.1 · volgende native meetaansluiting",
+          "title": "P1.1 · volgende stap: geheugenverbruik volledig meten",
           "state": "planned",
           "owner": "Codex /root",
-          "detail": "Lokale stop-/meetkoppeling afgerond en onafhankelijk beoordeeld. Volgende aansluiting op echte provider- en geheugenaanroepen nog niet gestart; geen uitvoerder actief. P1 en de eindvergelijking zijn nog open."
+          "detail": "Eva1-broncorrectie lokaal gecontroleerd en onafhankelijk akkoord. Volgende technische aansluiting gebruikt een afzonderlijke proefinstantie om alle Eva2-geheugencalls mee te tellen; nog niet gestart. Geen live vergelijking of extra afgeronde Eva-functie."
         },
         "next": {
-          "title": "Bestaande native meetroute verder aansluiten",
-          "detail": "Hergebruik de geleverde stopkoppeling. Leg echte provider-/helper-/geheugendekking vast voordat dezelfde begrensde vergelijking draait. F1.2 wacht afzonderlijk op de gevraagde Windows-herstart."
+          "title": "Eva2-geheugencalls meenemen in dezelfde vergelijking",
+          "detail": "Gebruik bestaande geïsoleerde proefopzet en sampleledger; ruwe providerusage vastleggen, helpers niet uitschakelen en onbekende kosten zichtbaar houden. Aanmeldingen en F1.2-herstart blijven apart open."
         },
         "ownerAction": {
           "title": "Windows opnieuw opstarten voor de voorbereide eindcontrole",
@@ -15932,14 +15940,14 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Lokale native stop-/meetkoppeling gericht gecontroleerd en onafhankelijk akkoord. Werkelijke provider-/geheugen-/helperdekking en streamingmeting nog nodig vóór live vergelijking. Eigen OpenClaw/Hermes-aanmelding apart open.",
-              "latestEvidence": "eva2/evidence/product/p1-native-control-20261003.json",
+              "remaining": "Echte Eva1-bron, dependencyboom en expliciete gelijk-modelvariant lokaal aangesloten en onafhankelijk akkoord. Eva2-geheugenverbruik, streaming/volledige stopmeting en echte vergelijking blijven open.",
+              "latestEvidence": "eva2/evidence/product/p1-native-source-binding-20261003.json",
               "assignment": {
                 "owner": "Codex /root",
                 "support": null,
-                "stage": "offline_native_control_checked_next_binding_not_started",
-                "baseCommit": "523d5bc0",
-                "currentAction": "Offline native control seam checked and independently GO; root publishes the bounded checkpoint. Next actual native provider/helper/memory coverage and streaming/cancellation binding not started. No live sample admitted.",
+                "stage": "actual_bottie_source_bound_next_memory_binding",
+                "baseCommit": "73fe0ca37ba04e859b494b28c47cb973e742f100",
+                "currentAction": "Actual native source/explicit equal-model variant checked, independent bounded GO received. Root publishes source/evidence. Next: use one disposable Eva2 instance per sample to bind all memory calls to existing ledger; no new production memory logic unless necessary.",
                 "runtimeHandle": {
                   "hermesExecSession": 63638,
                   "hermesExitCode": 1,
@@ -15950,18 +15958,17 @@
                   "openclawPid": 3233193,
                   "openclawExitCode": 1
                 },
-                "estimate": "Zero runtime model/provider calls; focused checks only; development credit cost unknown.",
+                "estimate": "Source-bounded native route tracing and necessary offline checks; zero live model calls; development credits unknown.",
                 "files": [
-                  "Root: cp001_native.py parent control and test_cp001_native.py",
                   "Worker: cp001_bottie_worker.mjs and test_cp001_native_bottie.py",
-                  "Root: existing participant manifest, evidence and workboard"
+                  "Root: explicit equal-model patch, native source evidence, manifest and existing board"
                 ],
                 "activeWorkers": [],
-                "finish": "Existing actual native agent/HTTP/SQLite route exchanges sample permits and raw usage with the same ledger; controlled stop reaches a pending provider call. Earlier protocol remains compatible; independent review and zero-model focused checks. Does not complete full admission."
+                "finish": "Complete native provider/helper/memory coverage admission for an available pair, or establish the exact unchanged-envelope refusal; no synthetic-only success or budget increase."
               },
               "blocker": "OpenClaw/Hermes-aanmelding ontbreekt alleen voor die deelnemers. Eva1/Eva2 hebben zelfstandig te onderzoeken native meet-/stopovergangen.",
               "nextImplementation": "Use these owned persisted configurations for native startup after own authentication. No repeated config/catalog probe without a changed cause or new evidence. Prior Agent Zero helper-envelope refusal remains unavailable; no hidden helper disable, auth-token copying or quota increase.",
-              "checkedAt": "2026-10-03T17:19:16.052196+00:00",
+              "checkedAt": "2026-10-03T17:58:27.163715+00:00",
               "ownerActionRequired": true,
               "nextAction": "Codex gebruikt bestaande vergelijkingsvoorbereiding; Jaap levert alleen daadwerkelijk ontbrekende accounttoegang. Dit blokkeert uitsluitend die vergelijking, niet Eva’s eigen functionele uitvoering.",
               "ownerInstructions": {

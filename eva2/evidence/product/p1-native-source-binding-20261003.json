@@ -1,0 +1,147 @@
+{
+  "contract": "EvaNativeSourceBindingEvidence/v1",
+  "checkedAt": "2026-10-03T17:49:14.168377+00:00",
+  "taskId": "P1.1",
+  "status": "actual_native_equal_model_fixture_checked_not_live_admitted",
+  "wholeTaskCompleted": false,
+  "baseCommit": "73fe0ca37ba04e859b494b28c47cb973e742f100",
+  "finding": "The prior CP001 fixture imports Eva2 repository src; actual eva.service runs /home/administrator/project/Bottie. Those source trees differ. Earlier fixtures establish adapter behavior only, not running Eva1 provenance.",
+  "nativeSource": {
+    "service": "eva.service",
+    "workingDirectory": "/home/administrator/project/Bottie",
+    "head": "909bff513d7d7fd653d6a7f270d9e73facce430d",
+    "workingTreeClean": false,
+    "scope": "Read-only service working-directory observation and on-disk source binding; no process-memory code attestation.",
+    "sourceHashes": {
+      "src/config.js": "d80810b1ba973ebd5ab37f21f99c8ac953af13e12a47d6e3544e976064035f90",
+      "src/mind/agent.js": "566f36c7819d97f90ec2c5917bcf8edf67d8d4014ad5d05a6810cda02a619383",
+      "src/brain/llm.js": "9390dbc97d282a406a8d1a631c3b29f7aadfe7628419a1ed785ad4dcccc65ed6",
+      "package.json": "a3655bff7780fad43d49a5b9cf9cd457ea9341273a53635201f6aac8f1805537",
+      "package-lock.json": "e0e1a1d9c939f57ec375399908b99f4ee5dc640b524f15175d0596f5c25af1f1"
+    },
+    "modelsFromNativeDotenv": {
+      "EVA_MODEL": "gpt-5.6-sol",
+      "EVA_MODEL_VOICE": "gpt-5.6-terra",
+      "EVA_REASONING_CHAT": "none",
+      "EVA_REASONING_VOICE": "low"
+    },
+    "reasoningGap": "Native reply composer at src/mind/agent.js:5390 hardcodes low, independent of reasoningChat; source config cannot make it none.",
+    "unrelatedLocalState": "Existing deployment/document removals and Telegram integration changes retained; no original file overwritten."
+  },
+  "equalModelVariant": {
+    "sourceKind": "explicit_disposable_configuration_variant_not_stock_native",
+    "sourceFileCount": 87,
+    "copyInputs": [
+      "src",
+      "package.json",
+      "package-lock.json",
+      "deploy/eva-runtime-repair-protocol.mjs"
+    ],
+    "excluded": [
+      ".env",
+      "data",
+      "workspace",
+      "credentials",
+      "production database"
+    ],
+    "patch": "eva2/benchmark/inspect_ai_v1/p1_bottie_equal_model.patch",
+    "patchSha256": "e7473bd4f5ea80477b6ae8462cf3b390491d85266ebbb301f5a77bffefbb8646",
+    "changes": [
+      "Add EVA_REASONING_REPLY with original low default",
+      "Use that setting only at the existing reply composer"
+    ],
+    "models": {
+      "EVA_MODEL": "gpt-6-sol",
+      "EVA_MODEL_VOICE": "gpt-6-sol",
+      "EVA_REASONING_CHAT": "none",
+      "EVA_REASONING_REPLY": "none"
+    },
+    "sourceSnapshotManifestSha256": "e49cad570953623465861bcca6b467560d214d0b937c7e280630f405d31811e4",
+    "privateManifest": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-source-20261003-v1/manifest.json",
+    "sourceRoot": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-source-20261003-v1/equal-model-source",
+    "originalSourceVerifiedUnchanged": true,
+    "dependencies": {
+      "mode": "physical copy of existing native node_modules, no install/download",
+      "nativeAndCopySha256": "31fe36a05acb7ada9e9b73c56bc7dd0f942e3fa4e4b701a67fafd138d9828582"
+    }
+  },
+  "limits": [
+    "No unchanged-native product comparison or quality/latency advantage follows from the declared equal-model variant.",
+    "Real provider and complete sample accounting remain separate; no larger comparison budget or admission inferred.",
+    "Existing native dependency tree copied and independently hashed; no new dependency installation."
+  ],
+  "verification": {
+    "nativeFullRoute": "1 passed in 1.33 seconds",
+    "defaultRoute": "1 retained pass from initial combined run",
+    "sourceSelection": "Explicit actual Bottie-derived snapshot; seven imported/key source hashes observed before native startup",
+    "modelDispatches": [
+      {
+        "model": "gpt-6-sol",
+        "reasoning": "none",
+        "provider": "synthetic SSE"
+      },
+      {
+        "model": "gpt-6-sol",
+        "reasoning": "none",
+        "provider": "synthetic SSE"
+      }
+    ],
+    "syntheticUsage": {
+      "inputTokens": 34,
+      "outputTokens": 10
+    },
+    "reply": "Actual HTTP reply and separately read native SQLite body/hash match",
+    "stop": "Two finished synthetic dispatches; zero pending controls and active provider attempts; exit0",
+    "originalSourceUnchanged": true,
+    "nativeSampleFullyAdmitted": false
+  },
+  "modelCalls": 0,
+  "liveProviderRequests": 0,
+  "runtimeChanged": false,
+  "creditCost": null,
+  "developmentUsage": "Separate; credit cost unknown",
+  "eva2MemoryFinding": {
+    "image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+    "sourceReview": "/root/background_execution_seam, targeted installed source inspection",
+    "attemptHook": "Existing attempt_context before each upstream retry",
+    "usage": "Installed Codex memory provider estimates characters/4; not raw provider token usage",
+    "operationBinding": "Existing generated LLM trace does not receive durable retain/reflect operation identity",
+    "stop": "Native operation cancellation only accepts pending state; running attempts are not cancelled",
+    "next": "Bind existing durable operation context, raw SSE usage and actual pending provider tasks to shared sample accounting. Configuration-only change does not establish coverage.",
+    "installedSourceHashes": {
+      "engine/providers/codex_llm.py": "b4cda4b56b3a6cc1f6bca64eaca7cbc7c75b5e8420d6bb77750c0d6304098afe",
+      "engine/llm_wrapper.py": "d501cba7a0522f65da16abc2f25a250aba2bba902138fb47e00b4e3dda00b6e4",
+      "engine/llm_trace.py": "ef4d239d539ed1dceeb730ab2820bd66d654fd8e0c5b027510e7dfcb8e128ec5",
+      "engine/memory_engine.py": "12ec0ef2d30514813c778d05597f0b8f0e8af3fee18d5acfd9eb6e166dd9ab5a",
+      "engine/consolidation/consolidator.py": "ddd478fcaa6f64c7816f18cef467cb94925035b00e6b9e5f270c3f95b6346084"
+    }
+  },
+  "failedPreparations": [
+    "Initial source-only snapshot omitted a native deploy-module import; startup failed before provider dispatch. A static relative-import pass found and added exactly that original file.",
+    "The initial dependency symlink was refused by native runtimeversion. Existing dependencies were copied physically and both trees matched native dependencyTreeSha256; no guard disabled or package installed.",
+    "The first source-only Hindsight reader used the wrong consolidator path; the corrected installed path supplied the bounded source receipt."
+  ],
+  "sourceHashes": {
+    "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs": "e577dfe56f7ae4e9ae9095a91991e6829eee024726e588ae623633c5b00977bc",
+    "eva2/tests/benchmark/test_cp001_native_bottie.py": "a033d18e7d4c62f60ceabd571f3c4dc9a7d46dc1080644fa8535a7975dc8cb82",
+    "eva2/benchmark/inspect_ai_v1/p1_bottie_equal_model.patch": "e7473bd4f5ea80477b6ae8462cf3b390491d85266ebbb301f5a77bffefbb8646"
+  },
+  "privateEvidenceHashes": {
+    "/home/administrator/project/.eva2-artifacts/p1-bottie-native-source-20261003-v1/manifest.json": "e49cad570953623465861bcca6b467560d214d0b937c7e280630f405d31811e4",
+    "/home/administrator/project/.eva2-artifacts/p1-bottie-native-source-20261003-v1/test-result.json": "bef4dfe8e87a4a5b84d9753ef204b444e1a32d5ddc18b3dce195b397c0dae24b",
+    "/home/administrator/project/.eva2-artifacts/p1-bottie-native-source-20261003-v1/pytest.log": "c3825c7eacb5026d5e0c0e51a15b5ac12941c8c36e328a5cb372732fe3a74ad8",
+    "/home/administrator/project/.eva2-artifacts/p1-bottie-native-source-20261003-v1/source-dependencies.json": "4e135c57180a408815ed36496be2062bc518e27a14f08369abe6e5a285f67e7a",
+    "/home/administrator/project/.eva2-artifacts/p1-bottie-native-source-20261003-v1/corrected-result.json": "5612e2870bfe88d2c430d7c48d78358c6385741bf515ad68ab072577e8ab7095",
+    "/home/administrator/project/.eva2-artifacts/p1-bottie-native-source-20261003-v1/corrected-pytest.log": "c2f1b4fc58f022e72848bd7073cd1ab0845161c8170bb020aaea8b1f37c46aaf",
+    "/home/administrator/project/.eva2-artifacts/p1-bottie-native-source-20261003-v1/dependency-copy.json": "3d2559db188ec5dff0b6d3fe400b5123d1ac0da4ef8bd9baa172a6566a54bb0e",
+    "/home/administrator/project/.eva2-artifacts/p1-bottie-native-source-20261003-v1/native-result.json": "8e7c4c3c9d9b9dfaccb8d59d84015c99b1b849a2c69fa2375adfb96926572ca4",
+    "/home/administrator/project/.eva2-artifacts/p1-bottie-native-source-20261003-v1/native-pytest.log": "261e0cc667ccb4a186594fae47208424262c49dbe966f15f9627419134973a2c",
+    "/home/administrator/project/.eva2-artifacts/p1-bottie-native-source-20261003-v1/hindsight-source.json": "f3406f52ff190b13faad2034f4fc76ffa7824e0cefcb63ac1e1ae51e0aa45e21"
+  },
+  "next": "Bind every helper and memory attempt of one dedicated disposable Eva2 instance per sample to the existing ledger, including raw SSE usage and pending-call stop/settlement. This avoids unnecessary production operation-ID plumbing but remains unproven. Keep native/equal-model baselines separate; no live comparison yet.",
+  "independentReview": {
+    "path": "eva2/reviews/p1-native-source-binding-20261003.md",
+    "sha256": "798c3bae967b1678743ad202a70673a9b506840b8d0cccdb77eebd1c3126e95e",
+    "decision": "GO for actual native source binding and explicit disposable equal-model fixture only; P1/live admission open."
+  }
+}

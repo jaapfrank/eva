@@ -1,5 +1,6 @@
 """Adapter -> actual Bottie HTTP/agent/SQLite with controlled model transport."""
 
+import hashlib
 import importlib.util
 import json
 import os
@@ -460,6 +461,105 @@ def test_controlled_native_provider_binding_usage_and_stop_before_retry(monkeypa
                 process.wait(timeout=5)
                 assert process.returncode == 0
                 assert not process.stdout.read().strip(), "no retries after stop"
+            finally:
+                if process.poll() is None:
+                    process.kill()
+                    process.wait()
+
+
+def test_explicit_actual_bottie_source_completes_two_equal_model_calls(monkeypatch):
+    """Explicit disposable native variant, synthetic provider bytes, real SQLite."""
+    supplied = os.environ.get("CP001_BOTTIE_SOURCE_ROOT")
+    if not supplied:
+        pytest.skip("explicit disposable actual-Bottie source fixture required")
+    source = Path(supplied)
+    assert source.is_absolute() and source.is_dir()
+    source = source.resolve()
+    monkeypatch.syspath_prepend(str(BENCHMARK))
+    from cp001_accounting import ProviderSampleLedger
+
+    with tempfile.TemporaryDirectory(prefix="cp001-bottie-", dir="/tmp") as temp:
+        with tempfile.TemporaryFile(mode="w+t") as diagnostics:
+            process = subprocess.Popen([
+                "unshare", "--user", "--map-root-user", "--net", "sh", "-c",
+                'ip link set lo up && exec "$@"', "cp001", "node",
+                str(BENCHMARK / "cp001_bottie_worker.mjs"), temp,
+                "--sample-control", "--source-root", str(source),
+            ], cwd=ROOT, env={"PATH": os.defpath, "HOME": temp,
+                "DOTENV_CONFIG_PATH": "/dev/null", "EVA_MODEL": "gpt-6-sol",
+                "EVA_MODEL_VOICE": "gpt-6-sol", "EVA_REASONING_CHAT": "none",
+                "EVA_REASONING_REPLY": "none"}, stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE, stderr=diagnostics, text=True, bufsize=1)
+
+            def receive():
+                assert select.select([process.stdout], [], [], 30)[0], "worker deadline"
+                line = process.stdout.readline()
+                if not line:
+                    diagnostics.seek(0)
+                    pytest.fail(diagnostics.read()[-4000:])
+                return json.loads(line)
+
+            def send(value):
+                process.stdin.write(json.dumps(value) + "\n")
+                process.stdin.flush()
+
+            try:
+                ready = receive()
+                assert ready["explicit_source_root"] is True
+                assert ready["source_root"] == str(source)
+                assert Path(ready["database"]).parent == Path(temp)
+                for relative, digest in ready["source_sha256"].items():
+                    assert hashlib.sha256((source / relative).read_bytes()).hexdigest() == digest
+                path, body = native.request_for("eva1-bottie", run_id="0123456789ab",
+                    task="A", repeat=1, step=0, text="Vertel een rustige zin.",
+                    occurred_at="2026-09-12T00:00:00Z", client_ack_public_key=ready["public_key"])
+                ledger = ProviderSampleLedger("actual-bottie-equal-model-fixture", {
+                    "providerAttempts": 2, "providerInputTokens": 24000,
+                    "providerOutputTokens": 4096}, {"contact": ("gpt-6-sol", "none")})
+                control = native.NativeProviderControl(ledger, body["request_id"])
+                send({"path": path, "body": body, "timeout_ms": 20000, "max_bytes": 65536})
+                events = []
+                for attempt in range(2):
+                    begin = receive()
+                    events.append(begin)
+                    assert begin["provider_event"] == "begin"
+                    assert (begin["model"], begin["reasoning_effort"]) == ("gpt-6-sol", "none")
+                    permit = control.handle(begin)
+                    assert permit["allow"] and permit["attempt_id"] == attempt
+                    send(permit)
+                    settled = receive()
+                    events.append(settled)
+                    assert settled["status"] == "completed"
+                    assert settled["usage"] == {"input_tokens": 17, "output_tokens": 5, "total_tokens": 22}
+                    continuation = control.handle(settled)
+                    assert continuation["allow"]
+                    send(continuation)
+                response = receive()
+                assert response["status"] == 200 and response["provider_stub_calls"] == 2
+                assert response["real_model_calls"] == 0
+                with sqlite3.connect(Path(ready["database"]).as_uri() + "?mode=ro", uri=True) as reader:
+                    rows = reader.execute(
+                        "SELECT p.public_body_json, p.public_body_sha256 "
+                        "FROM eva_http_prepared_responses p "
+                        "JOIN eva_http_ingress_requests r ON r.request_ref=p.request_ref "
+                        "WHERE r.channel='web' AND r.conversation_id=? AND r.request_id=?",
+                        (body["conversation_id"], body["request_id"])).fetchall()
+                assert len(rows) == 1
+                stored, digest = rows[0]
+                assert native.digest(stored) == digest
+                answer = native.response_text("eva1-bottie", body, response["body"])
+                readback = native.independent_readback("eva1-bottie", body, answer, json.loads(stored))
+                assert readback["integrity"] is True
+                assert answer == "Ik geef een lokaal controleantwoord."
+                assert len(ledger.attempts) == 2
+                assert sum(event["usage"]["input_tokens"] for event in events if event["provider_event"] == "settle") == 34
+                assert sum(event["usage"]["output_tokens"] for event in events if event["provider_event"] == "settle") == 10
+                send(control.stop())
+                stopped = receive()
+                assert stopped["stopped"] and stopped["provider_stub_calls"] == 2
+                assert stopped["active_provider_attempts"] == stopped["pending_provider_controls"] == 0
+                process.wait(timeout=5)
+                assert process.returncode == 0 and not process.stdout.read().strip()
             finally:
                 if process.poll() is None:
                     process.kill()

@@ -46,11 +46,44 @@
     {
       "id": "eva1-bottie",
       "sourceCommit": "909bff513d7d7fd653d6a7f270d9e73facce430d",
-      "sourceKind": "local_checkout_head_not_runtime_provenance",
-      "workingTreeClean": null,
-      "runtimeProvenance": "not_bound_to_this_comparison",
+      "sourceKind": "actual_service_working_directory_head_with_declared_local_changes",
+      "workingTreeClean": false,
+      "runtimeProvenance": "service_working_directory_and_disk_sources_observed_not_execution_admitted",
       "admission": "not_admitted",
-      "nativeAdapter": "cp001_native.py"
+      "nativeAdapter": "cp001_native.py",
+      "sourceBinding": {
+        "evidence": "eva2/evidence/product/p1-native-source-binding-20261003.json",
+        "actualSourceRoot": "/home/administrator/project/Bottie",
+        "actualHead": "909bff513d7d7fd653d6a7f270d9e73facce430d",
+        "sourceHashes": {
+          "src/config.js": "d80810b1ba973ebd5ab37f21f99c8ac953af13e12a47d6e3544e976064035f90",
+          "src/mind/agent.js": "566f36c7819d97f90ec2c5917bcf8edf67d8d4014ad5d05a6810cda02a619383",
+          "src/brain/llm.js": "9390dbc97d282a406a8d1a631c3b29f7aadfe7628419a1ed785ad4dcccc65ed6",
+          "package.json": "a3655bff7780fad43d49a5b9cf9cd457ea9341273a53635201f6aac8f1805537",
+          "package-lock.json": "e0e1a1d9c939f57ec375399908b99f4ee5dc640b524f15175d0596f5c25af1f1"
+        },
+        "priorFixtureScope": "Eva2 repository src; offline adapter evidence only, not actual Eva1 runtime provenance",
+        "nativeProductModelSettings": "Current native .env config: gpt-5.6-sol default, gpt-5.6-terra voice/contact, none interpretation; low hardcoded reply. Actual model dispatch not yet observed.",
+        "originalSourceModified": false
+      },
+      "equalModelVariant": {
+        "status": "actual_native_offline_fixture_checked",
+        "kind": "explicit disposable configuration variant, separate from native-product baseline",
+        "patch": "eva2/benchmark/inspect_ai_v1/p1_bottie_equal_model.patch",
+        "patchSha256": "e7473bd4f5ea80477b6ae8462cf3b390491d85266ebbb301f5a77bffefbb8646",
+        "sourceManifestSha256": "e49cad570953623465861bcca6b467560d214d0b937c7e280630f405d31811e4",
+        "change": "Expose reply effort as optional setting, original low default retained",
+        "admission": "not_admitted",
+        "sourceDependencyReceiptSha256": "4e135c57180a408815ed36496be2062bc518e27a14f08369abe6e5a285f67e7a",
+        "nativeDependenciesSha256": "31fe36a05acb7ada9e9b73c56bc7dd0f942e3fa4e4b701a67fafd138d9828582",
+        "evidence": "eva2/evidence/product/p1-native-source-binding-20261003.json",
+        "scope": "Actual native source, two synthetic completed foreground calls, independent SQLite readback and local stop. No real provider or full sample admission.",
+        "independentReview": {
+          "path": "eva2/reviews/p1-native-source-binding-20261003.md",
+          "sha256": "798c3bae967b1678743ad202a70673a9b506840b8d0cccdb77eebd1c3126e95e",
+          "decision": "GO for actual native source binding and explicit disposable equal-model fixture only; P1/live admission open."
+        }
+      }
     },
     {
       "id": "openclaw",
@@ -544,7 +577,7 @@
     },
     "accounting": "Limits include all helpers, memory and retries. Every attempted provider request consumes one attempt, including failed/cancelled calls. Missing usage remains unknown; no further sample after a completeness or enforcement failure.",
     "isolation": "Fresh synthetic identity and empty private state for each sample; no production memory, HA devices, personal browser, messages or external action tools. Only authorized model endpoint network.",
-    "admission": "All five native routes must pass existing offline admission. Each first C01 sample is also its development smoke; it consumes the same fixed budget, never an extra free attempt. These observations currently do not admit any run.",
+    "admission": "Only individually admitted participants from the fixed schedule may execute under the newer 2 October owner instruction. Missing participants remain unavailable/unknown, with no unused budget redistribution. Each first C01 sample is also its development smoke and consumes the same fixed budget, never an extra free attempt. Current observations admit no run.",
     "concurrency": 1,
     "timing": "Record first nonempty content, complete answer and verified finish from ingress. Queue/preparation times separately. Timeout remains a failure after valid admission.",
     "scoring": "Existing Inspect native logs; original semantic criteria. Two independent human raters for warmth/preference, no AI judge. Native final-answer protocol calls are reported as tool dispatches, not hidden as zero. No external actions permitted.",
