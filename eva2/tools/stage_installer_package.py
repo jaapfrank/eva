@@ -171,6 +171,7 @@ def main(argv=None):
     parser.add_argument("--browser-native-wheel", type=Path)
     parser.add_argument("--postgres-image")
     parser.add_argument("--hindsight-image")
+    parser.add_argument("--mcp-gateway-image")
     parser.add_argument("--voice-media-image")
     parser.add_argument("--livekit-image")
     args = parser.parse_args(argv)
@@ -178,10 +179,12 @@ def main(argv=None):
         parser.error("both local development dependency images are required")
     if bool(args.voice_media_image) != bool(args.livekit_image):
         parser.error("both optional voice images are required")
-    if args.voice_media_image and not args.postgres_image:
+    if (args.voice_media_image or args.mcp_gateway_image) and not args.postgres_image:
         parser.error("optional voice images require the explicit development image inventory")
     images = ({"living-core": args.runtime_image, "postgres": args.postgres_image,
                "hindsight": args.hindsight_image} if args.postgres_image else None)
+    if args.mcp_gateway_image:
+        images["mcp-gateway"]=args.mcp_gateway_image
     if args.voice_media_image:
         images.update({"voice-media": args.voice_media_image, "livekit": args.livekit_image})
     stage_package(source_root=args.source_root, target_root=args.target_root,

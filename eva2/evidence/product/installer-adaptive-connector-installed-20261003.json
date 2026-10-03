@@ -1,0 +1,246 @@
+{
+  "contract": "EvaInstallerAdaptiveConnectorDelivery/v1",
+  "checked_at": "2026-10-03T14:57:42.246085+00:00",
+  "task_id": "O1.2",
+  "status": "installed_independently_reviewed",
+  "whole_task_completed": true,
+  "base_commit": "5c5c6c54f3f6fff0549fe36bfe20421b229f51c5",
+  "outcome": "A fresh ordinary installation with optional general connector access can register a public MCP source, discover its tools, read the requested source and answer through the same Eva conversation.",
+  "existing_reused": [
+    "Existing ContextForge gateway image and provisioning helper",
+    "McpAutonomyProviderFactory, owner authority, registry and durable effect journal",
+    "Existing optional browser session binding and ordinary installer"
+  ],
+  "added": [
+    "Ordinary connector scope confirmation and omission after confirmation",
+    "One package-owned gateway with or without browser, separate invoke/registration credentials and fresh installation-bound mandate",
+    "Dynamic-only provider composition without a fictitious static catalog",
+    "Configured browser catalog uses the existing private owner session binding when combined with general connector access"
+  ],
+  "source_files": {
+    "eva2/src/eva/adapters/api/installer_capability_api.py": "19b5a0fd0aeec4b3c46e23dd79500ecd79c808cfdfafe9c6e474eb4d2389e7f0",
+    "eva2/src/eva/adapters/api/installer_provider_api.py": "b4daadabe59709e118982167d42a918431e1287dbdf37e60a5e66cd012e76eb4",
+    "eva2/src/eva/adapters/connectors/browser_autostart.py": "5f7f3f436038f844c4aeeb8dbe4af62885d5c1afab34dfe60967c378c0cd0e86",
+    "eva2/src/eva/operations/installer_capability_workflow.py": "8382460c31611ddaa9d7cbe24afebdbd23116f55704cb4ba0b8a2e1f104e60ae",
+    "eva2/src/eva/operations/installer_connector_selection.py": "31523ebbf9e7142a9b9e1e56103ef85e85b761fed5ebff7879255ecfe2723cd3",
+    "eva2/src/eva/providers/mcp_autonomy.py": "a44543c27c89d54df1cc2a1c4a8cb25f02f7f784885c16c62b8801c7a9ead7a6",
+    "eva2/src/eva/providers/mcp_discovery.py": "e89dbc2a60121b6d74698cc3b6cdcd2d10dedb56b21e12c27e3c9bb2f4c2f855",
+    "eva2/src/eva/providers/mcp_gateway.py": "a3323a96b6c5305b36a4856f9a8cb2dba8f6c23be023dc0ea9a345a26fd4802b",
+    "eva2/tools/installer_browser_gateway.py": "c758bc5ddabf97661881bb219354ec489ec6c6907e1d2ef89086fa911d2dafb7",
+    "eva2/tools/installer_runtime_access.py": "f17e6131f154046d8a184744e496f4fad4c42fb159519214f56bff27954ba9af",
+    "eva2/tools/installer_target_bindings.py": "fc9bfef84719f0a776cdf311a95118d7632112a60290bac6a766f7c5581fb3a9",
+    "eva2/tools/packaged_installer_target.py": "f75ab3529eb3d2a6e8186cbb32d3c7c3c314a45b92b34b654452baa056a6af49",
+    "eva2/tools/stage_installer_package.py": "82e0687f64cfb5b8ad69a11263676e1254440d2eeef2b295fab53a16ff74ae91"
+  },
+  "tests_files": {
+    "eva2/tests/bootstrap/test_installer_browser_module.py": "cbf19aa4de6df2c8a3008387059b240cc22f8b613850a32e179455eab67f25bb",
+    "eva2/tests/connectors/test_mcp_autonomy_provider.py": "c475ebedb9397f5e90ce4b2d9940fdf6383938c94d0907fead9b8f2ada9ac757",
+    "eva2/tests/operations/test_installer_connector_selection.py": "36c75029397aef37e47e57fbf488ffdc98182db5d0d917f1ff91c461e683d52a",
+    "eva2/tests/operations/test_installer_browser_gateway.py": "77ca94d33b9df3029ffe6dc7b405e6501251a8a7936569ab32b59895039019ff",
+    "eva2/tests/operations/test_packaged_installer_target.py": "7f318177a3a725dea7819ba9ea1e55307a873406568f17117fe091457fac7a7a"
+  },
+  "final_source_inventory_sha256": "9d1349e222e32ed875ec166dcb8c329459505c3f90cefa8a896a444ff6bed3b4",
+  "package": {
+    "at": "2026-10-03T14:40:32.089227+00:00",
+    "base_commit": "5c5c6c54f3f6fff0549fe36bfe20421b229f51c5",
+    "files": {
+      "src/eva/adapters/api/installer_capability_api.py": "19b5a0fd0aeec4b3c46e23dd79500ecd79c808cfdfafe9c6e474eb4d2389e7f0",
+      "src/eva/adapters/api/installer_provider_api.py": "b4daadabe59709e118982167d42a918431e1287dbdf37e60a5e66cd012e76eb4",
+      "src/eva/adapters/connectors/browser_autostart.py": "5f7f3f436038f844c4aeeb8dbe4af62885d5c1afab34dfe60967c378c0cd0e86",
+      "src/eva/operations/installer_capability_workflow.py": "8382460c31611ddaa9d7cbe24afebdbd23116f55704cb4ba0b8a2e1f104e60ae",
+      "src/eva/operations/installer_connector_selection.py": "31523ebbf9e7142a9b9e1e56103ef85e85b761fed5ebff7879255ecfe2723cd3",
+      "src/eva/providers/mcp_autonomy.py": "a44543c27c89d54df1cc2a1c4a8cb25f02f7f784885c16c62b8801c7a9ead7a6",
+      "src/eva/providers/mcp_discovery.py": "e89dbc2a60121b6d74698cc3b6cdcd2d10dedb56b21e12c27e3c9bb2f4c2f855",
+      "src/eva/providers/mcp_gateway.py": "a3323a96b6c5305b36a4856f9a8cb2dba8f6c23be023dc0ea9a345a26fd4802b",
+      "tools/installer_browser_gateway.py": "c758bc5ddabf97661881bb219354ec489ec6c6907e1d2ef89086fa911d2dafb7",
+      "tools/installer_runtime_access.py": "f17e6131f154046d8a184744e496f4fad4c42fb159519214f56bff27954ba9af",
+      "tools/installer_target_bindings.py": "fc9bfef84719f0a776cdf311a95118d7632112a60290bac6a766f7c5581fb3a9",
+      "tools/packaged_installer_target.py": "f75ab3529eb3d2a6e8186cbb32d3c7c3c314a45b92b34b654452baa056a6af49",
+      "tools/stage_installer_package.py": "82e0687f64cfb5b8ad69a11263676e1254440d2eeef2b295fab53a16ff74ae91",
+      "README.md": "9e7aef2e22608c2a445c19d9129c9c0a7907335636a6c1ec18f5dcf53c82c6ad"
+    },
+    "runtime_image": "sha256:f7a6d902905bf1042e9eeee4423b27e938dff26c615770778acf80517821f9ec",
+    "runtime_image_files": {
+      "eva2/src/eva/providers/mcp_gateway.py": "a3323a96b6c5305b36a4856f9a8cb2dba8f6c23be023dc0ea9a345a26fd4802b",
+      "eva2/src/eva/providers/mcp_autonomy.py": "a44543c27c89d54df1cc2a1c4a8cb25f02f7f784885c16c62b8801c7a9ead7a6",
+      "eva2/src/eva/providers/mcp_discovery.py": "e89dbc2a60121b6d74698cc3b6cdcd2d10dedb56b21e12c27e3c9bb2f4c2f855",
+      "eva2/src/eva/adapters/connectors/browser_autostart.py": "5f7f3f436038f844c4aeeb8dbe4af62885d5c1afab34dfe60967c378c0cd0e86"
+    },
+    "package_staging_sha256": "7c2e92cb7eb69a67297c339dd69190c2c85efd7030aeae8a057c352fe1a3c112",
+    "public_release": false,
+    "runtime_started": false
+  },
+  "review": {
+    "path": "eva2/reviews/installer-adaptive-connector-20261003.md",
+    "source_decision": "SOURCE GO",
+    "installed_decision": "INSTALLED GO; original technical O1.2 optional composition finish met",
+    "sha256": "7084df051a6f4744e71f6b34b749bc19abdc2080946e014c0facefcf58f2add0"
+  },
+  "installation": {
+    "ordinary_prepare_requests": 1,
+    "seconds": 152.8511904689949,
+    "result": {
+      "status": "runtime_ready",
+      "message": "De nieuwe Eva-diensten zijn gestart en technisch bereikbaar. De kanaal- en gebruiksproef staat nog open.",
+      "owner_access": true,
+      "voice_url": null
+    },
+    "readback": {
+      "at": "2026-10-03T14:45:05.905863+00:00",
+      "namespace": "eva-install-bdb950a6a21a",
+      "core_image": "sha256:f7a6d902905bf1042e9eeee4423b27e938dff26c615770778acf80517821f9ec",
+      "core_healthy": true,
+      "standalone_gateway": true,
+      "static_catalog_absent": true,
+      "browser_absent": true,
+      "public_https": true,
+      "local_networks": [],
+      "fresh_mandate_ids_match": true,
+      "separate_invoke_registration_credentials": true,
+      "gateway_registrations_before": 0,
+      "mandate_sha256": "9bde8cb58b52c2b8390f1c0e2f9a95bc03bccf8b115b285c7a09ba543f65428b"
+    },
+    "gateway_image": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+    "no_reinstall_or_rollback": true,
+    "current_household_installation_preserved": true,
+    "new_target_not_integrated_F1_candidate": true
+  },
+  "ordinary_conversation": {
+    "request": "Sluit de openbare MCP-bron https://gitmcp.io/python/cpython aan en gebruik die connector om in README.rst te lezen wat CPython is. Antwoord in één zin met bronlink. Alleen openbare leesacties; start geen achtergrondtaak of documentproject.",
+    "response_text": "Via de aangesloten openbare connector heb ik README.rst gelezen: CPython is de Python-interpreter, waarvan deze repository de broncode en bouwinstructies bevat (bron: https://github.com/python/cpython/blob/main/README.rst).",
+    "provider": "chatgpt-codex:gpt-6-astra",
+    "text_sha256": "8c7085fd0d223538038d100696c57de6913ce77d12918423c3d70bff81873a8d",
+    "message_id": "dashboard:7878b6fe-08e9-49f6-b0c7-c4857b996718",
+    "transport": {
+      "http_status": 200,
+      "seconds": 40.537,
+      "request_repeated": false
+    },
+    "usage": {
+      "input_tokens": 21329,
+      "measurement": "measured",
+      "model_attempts": 5,
+      "output_tokens": 369,
+      "tool_calls": 4
+    },
+    "actions": [
+      {
+        "action": "connect_service",
+        "step": 1,
+        "verified": true
+      },
+      {
+        "action": "use_connector_tool",
+        "step": 3,
+        "verified": true
+      },
+      {
+        "action": "discover_connector_tools",
+        "step": 2,
+        "verified": true
+      },
+      {
+        "action": "discover_connector_tools",
+        "step": null,
+        "verified": true
+      }
+    ],
+    "independent_gateway_readback": {
+      "registered_sources": [
+        {
+          "id": "e81d65415cd140d9ade2016693091a72",
+          "name": "eva_connector_5498848991c63191f78c6517c13d685e",
+          "url": "https://gitmcp.io/python/cpython",
+          "enabled": 1,
+          "visibility": "public"
+        }
+      ],
+      "tool_count": 4
+    },
+    "captured_source": {
+      "sealed_bytes_match": true,
+      "length": 9164,
+      "sha256": "3c06c493fbd4737bad9411e27fc97c099eef0fe4ee4e742619c20a988a327f7e",
+      "readme_heading_present": true,
+      "build_content_present": true,
+      "capture_tool": "eva-connector-5498848991c63191f78c6517c13d685e-fetch-cpython-documentation",
+      "reply_matches_read_source": true,
+      "content_not_republished": true
+    },
+    "reply_committed_count": 1,
+    "operator_intervention_during_conversation": false
+  },
+  "focused_checks": {
+    "initial_candidate": "103 passed in 4.83s",
+    "ready_to_skip_correction": "1 passed in 1.08s",
+    "checks_not_repeated": true,
+    "image_hash_and_import_check": {
+      "image": "sha256:f7a6d902905bf1042e9eeee4423b27e938dff26c615770778acf80517821f9ec",
+      "image_files_match": true,
+      "imports_ok": true,
+      "runtime_replaced": false,
+      "at": "2026-10-03T14:34:16.191179+00:00"
+    }
+  },
+  "consumption": {
+    "model_verification_calls": 1,
+    "model_verification_seconds": 1.7079254429845605,
+    "model_verification_tokens": null,
+    "ordinary_chat_usage": {
+      "input_tokens": 21329,
+      "measurement": "measured",
+      "model_attempts": 5,
+      "output_tokens": 369,
+      "tool_calls": 4
+    },
+    "development_credits": null,
+    "provider_cost": null,
+    "unknown_costs_not_estimated": true
+  },
+  "assistance_and_corrections": [
+    "Operator chose a known public GitMCP endpoint and a narrow README reading request; this is an installation-composition proof, not unseen-provider superiority.",
+    "Pre-install source review corrected dynamic-only catalog loading, combined browser session identity and ready-to-skip UI handling. No installed runtime repair was needed.",
+    "A read-only operator measurement helper initially used noncanonical +00:00 timestamp formatting. Only that helper was corrected to Z; no model or external read was repeated."
+  ],
+  "limitations": [
+    "The public GitMCP endpoint was supplied by the operator; no provider-selection independence or competitive advantage claimed.",
+    "Browser plus connector composition is covered by focused code/integration checks; the live case intentionally omitted browser. Earlier installed browser evidence remains separate.",
+    "New Telegram bot and real AgentMail inbox interaction are not performed; existing package support and absent external access remain explicitly separate.",
+    "This isolated fresh target does not close F1 integrated release checks or family acceptance.",
+    "Installed voice transport proof does not establish physical microphone/speaker experience."
+  ],
+  "related_existing_evidence": [
+    "eva2/evidence/product/installer-ordinary-target-20261001.json",
+    "eva2/evidence/product/installer-selected-voice-installed-20261003.json",
+    "eva2/evidence/product/optional-browser-installed-20261003.json",
+    "eva2/evidence/product/installer-selected-telegram-installed-20261003.json",
+    "eva2/evidence/product/installer-selected-email-installed-20261003.json"
+  ],
+  "private_evidence_hashes": {
+    "prepare-result.json": "626f4260c9d9eb7b4c5735211377960e61bf34845ee6f0a090e66fdcceae37eb",
+    "model-verification.json": "778b2242178145ce9632ca3d3e76c7d4f735d706c350ee05c99e98e71eaa0170",
+    "installed-before-chat.json": "2d1f79fb7466330bef1b5596af13596191c2008e98addc6e9dcb5df7f28ae48e",
+    "connector-chat-response.private.ndjson": "8d226a921a999b7bfd4e6288ccc4ae1931188b27d7cca1c97aa365177d0feb99",
+    "connector-chat-terminal.json": "0914efe752a8bc1223c73db421776d88a4d89a0f48e11c227b9a087562ba6c6b",
+    "chat-journal-readback.json": "21753adb8b757d9f9cf66ce7e243cdc6384e08be171a5c2dae978f2c6a75ff99",
+    "gateway-after-chat.json": "c8460660175cacdb3094df02e358f64fe465c242c7087039f9a9c2cbfe0cba53",
+    "connector-effects.private.json": "94bfbd6510cae5be2255d88127574fa743167f46e96de5571dbc258fcbc829fe",
+    "source-content-readback.json": "613d2b509e4eed216841eb834d39ab8721fe0ef5fe0f581bb7b28d9cf48bea56",
+    "journal-readback-correction.json": "d19360fe0aa5ffebded4e0fa03e5a1ef5aa98f47da7d9ef73df315ce94024858"
+  },
+  "owner_action_required": false,
+  "completion_scope": {
+    "original_finish": "Dezelfde installatie werkt met gekozen modules; geen hardcoded eigenaarpaden.",
+    "basis": "Original Step6 text installation plus optional voice/HA/browser composition, retained installed evidence, now ordinary general connector selection and actual use. No independently executable O1.2 programming gap remains identified.",
+    "external_evidence_open": [
+      "New Telegram bot interaction",
+      "Real AgentMail inbox interaction"
+    ],
+    "separate_existing_work": [
+      "F1 integrated candidate",
+      "C3/C4 physical conversation",
+      "F2 family acceptance"
+    ],
+    "criteria_changed": false
+  }
+}

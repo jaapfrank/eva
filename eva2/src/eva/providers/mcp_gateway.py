@@ -99,10 +99,8 @@ class _ManagedDirectBrowserAdapter(McpGatewayToolAdapter):
     """Reuse the managed-browser lifecycle only for a configured single-owner catalog."""
     def __init__(self, config, specs, *, client, principal_sha256):
         super().__init__(config, specs)
-        self._owner_binding = canonical_sha256({
-            "contract": "EvaDirectBrowserOwner/v1", "principal_sha256": principal_sha256,
-            "gateway": config.base_url, "controller": client.origin,
-        })
+        from eva.adapters.connectors.browser_autostart import direct_browser_owner_binding
+        self._owner_binding = direct_browser_owner_binding(principal_sha256,config.base_url,client.origin)
         self._browser = ManagedBrowserAutostart(
             BrowserAutostartConfig(canonical_mcp_endpoint(config.base_url), client), self._owner_binding)
 
@@ -292,6 +290,12 @@ class McpGatewayProviderFactory:
         token_file = _environment_value("EVA_MCP_GATEWAY_TOKEN_FILE")
         catalog_file = _environment_value("EVA_MCP_GATEWAY_CATALOG_FILE")
         additional_catalog_file = _environment_value("EVA_MCP_GATEWAY_ADDITIONAL_CATALOG_FILE")
+        if (not catalog_file and not additional_catalog_file
+                and _environment_value('EVA_MCP_AUTONOMY_MANDATE_FILE')
+                and _environment_value('EVA_MCP_REGISTRATION_TOKEN_FILE')):
+            # The separately composed autonomy factory validates its full
+            # configuration and discovers actual tools; no dummy catalog.
+            return None
         configured = (bool(base_url), bool(token_file), bool(catalog_file))
         if not any(configured) and not additional_catalog_file:
             return None

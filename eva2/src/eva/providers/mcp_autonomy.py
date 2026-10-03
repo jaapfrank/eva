@@ -162,9 +162,19 @@ class McpAutonomyProviderFactory:
         registration = McpRegistrationToolAdapter(
             ContextForgeRegistrationClient(settings.registration), registry, authority,
             authority.owner_key, _SourceTurnLoader(engine, authority))
-        browser = (None if settings.browser_autostart is None else ManagedBrowserAutostart(
-            settings.browser_autostart,
-            connector_id_for(authority.owner_key, settings.browser_autostart.endpoint)))
+        browser=None
+        if settings.browser_autostart is not None:
+            aliases={}
+            catalog=settings.configured_catalog
+            if (catalog is not None and len(catalog.principal_sha256_allowlist)==1 and catalog.specs
+                    and all(spec.operation_kind=='invoke' and spec.descriptor.name.startswith('browser_') for spec in catalog.specs)
+                    and catalog.browser_client is not None
+                    and catalog.browser_client.origin==settings.browser_autostart.client.origin):
+                from eva.adapters.connectors.browser_autostart import direct_browser_owner_binding
+                aliases[registry._configured_id()]=direct_browser_owner_binding(
+                    catalog.principal_sha256_allowlist[0],catalog.base_url,catalog.browser_client.origin)
+            browser=ManagedBrowserAutostart(settings.browser_autostart,
+                connector_id_for(authority.owner_key,settings.browser_autostart.endpoint),session_aliases=aliases)
         discovery = McpDiscoveryToolAdapter(registry, browser_autostart=browser)
         return ProviderContribution(
             provider_id="mcp_autonomy",

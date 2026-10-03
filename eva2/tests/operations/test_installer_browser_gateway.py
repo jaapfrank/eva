@@ -112,3 +112,45 @@ def test_gateway_binds_only_existing_checked_browser_networks(tmp_path, monkeypa
     assert service["environment"]["SSRF_ALLOW_PRIVATE_NETWORKS"] == "false"
     assert result["status"] == "ready" and result["egress_network_id"] == egress_id
     assert len(calls) == 1 and calls[0][:2] == ["docker", "compose"]
+
+
+def test_connector_only_gateway_has_no_browser_and_issues_separate_limited_tokens(tmp_path,monkeypatch):
+    from types import SimpleNamespace
+    from uuid import uuid4
+    from tools import installer_browser_gateway as module
+    from tools.prepare_mcp_autonomy_access import PERMISSIONS
+    image=module.GATEWAY_IMAGE.rsplit('@',1)[1];network_id='a'*64
+    monkeypatch.setattr(module.os,'chown',lambda *a:None)
+    monkeypatch.setattr(module,'_gateway_service',lambda *a:{'environment':{'SSRF_ALLOW_PRIVATE_NETWORKS':'false'}})
+    names=[];requests=[];commands=[]
+    def request(name,method,path,**kw):
+        requests.append((method,path,kw))
+        if method=='POST':
+            scope=kw['payload']['scope']['permissions'];kind=kw['payload']['name']
+            return {'access_token':kind+'-secret','token':{'id':kind,'expires_at':'later','resource_scopes':scope}}
+        return {}
+    def inspect(*args):
+        if args[:2]==('image','inspect'):return [{'Id':image}]
+        if args[:2]==('network','inspect'):return [{'Id':network_id,'Internal':False,
+            'Labels':{'io.eva2.connector-owner':'fresh'},'IPAM':{'Config':[{'Subnet':'10.254.90.0/24'}]}}]
+        return [{'Id':'b'*64,'Image':image,'NetworkSettings':{'Networks':{'fresh-connector-egress':{'NetworkID':network_id}},
+            'Ports':{'4444/tcp':[{'HostIp':'10.254.90.1','HostPort':'45622'}]}}}]
+    helper=SimpleNamespace(_require_docker_resource_absent=lambda *a:names.append(a),_docker_json=inspect,
+        _wait_contextforge=lambda *a:None,_login_contextforge=lambda *a:'private-admin',_gateway_request=request)
+    monkeypatch.setattr(module,'_helper',lambda:helper)
+    monkeypatch.setattr(module.subprocess,'run',lambda *a,**k:commands.append(a))
+    plan=module.prepare_browser_gateway_files(package_root=tmp_path,workspace=tmp_path,namespace='fresh',
+        browser_plan=None,gateway_port=45622,images={'mcp-gateway':image},connector_subnet='10.254.90.0/24',
+        connector_scope={'public_https':True,'local_networks':[]},
+        identifiers={key:str(uuid4()) for key in ('tenant','installation','principal','binding')})
+    result=module.start_browser_gateway(plan)
+    graph=json.loads((__import__('pathlib').Path(plan['workspace'])/'compose.json').read_bytes())
+    assert len(graph['services'])==1 and set(graph['networks'])=={'connector-egress'}
+    env=graph['services']['gateway']['environment']
+    assert env['SSRF_ALLOW_PRIVATE_NETWORKS']=='false' and json.loads(env['SSRF_ALLOWED_NETWORKS'])==[]
+    issued=[r[2]['payload']['scope']['permissions'] for r in requests if r[0]=='POST']
+    assert issued==[['tools.read','tools.execute'],list(PERMISSIONS)]
+    assert not __import__('pathlib').Path(plan['catalog_file']).exists()
+    assert result['status']=='ready' and result['tool_count']==0
+    assert 'private-admin' not in repr(result) and '-secret' not in repr(result)
+    assert len(commands)==1

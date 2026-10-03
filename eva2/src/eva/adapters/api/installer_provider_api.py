@@ -44,11 +44,22 @@ _PROVIDER_SCOPE_DESCRIPTIONS = {
 }
 
 
-INSTALLER_PROVIDER_SECTION = """<section><h2>Verbinding controleren</h2><p>Eva voert alleen de kleinste controle uit. De modelcontrole gebruikt één kleine modelgeneratie en kan dus meetellen in je gebruik.</p><div id="provider-list"><p>De controles worden veilig geladen…</p></div><p id="provider-result" role="status"></p><div id="voice-choice"><button type="button" id="voice-discover">Gekozen spraak: beschikbare HA-pipelines ophalen</button><select id="voice-pipeline" hidden></select><p id="voice-processing"></p><button type="button" id="voice-confirm" hidden>Gebruik deze pipeline en sta verwerking door deze spraakproviders toe</button><p id="voice-result" role="status"></p></div></section>"""
+INSTALLER_PROVIDER_SECTION = """<section><h2>Verbinding controleren</h2><p>Eva voert alleen de kleinste controle uit. De modelcontrole gebruikt één kleine modelgeneratie en kan dus meetellen in je gebruik.</p><div id="provider-list"><p>De controles worden veilig geladen…</p></div><p id="provider-result" role="status"></p><div id="voice-choice"><button type="button" id="voice-discover">Gekozen spraak: beschikbare HA-pipelines ophalen</button><select id="voice-pipeline" hidden></select><p id="voice-processing"></p><button type="button" id="voice-confirm" hidden>Gebruik deze pipeline en sta verwerking door deze spraakproviders toe</button><p id="voice-result" role="status"></p></div><fieldset><legend>Andere diensten door Eva laten aansluiten</legend><p>Kies hierboven Ander kanaal of dienst. Eva gebruikt één meegeleverde connectorgateway; toegang tot persoonlijke accounts blijft apart nodig. Dit bevestigt de toegestane omgeving, niet dat een dienst al werkt.</p><label><input id="connector-public" type="checkbox">Openbare HTTPS-diensten ontdekken en gebruiken voor mijn opdrachten</label><label>Toegestane privénetwerken (optioneel; CIDR, één per regel)<textarea id="connector-networks"></textarea></label><button id="connector-confirm" type="button">Deze omgeving bevestigen</button><p id="connector-result" role="status"></p></fieldset></section>"""
 
 
 INSTALLER_PROVIDER_SCRIPT = r"""
 (() => {
+  document.getElementById('connector-confirm').addEventListener('click',async()=>{
+    const status=document.getElementById('connector-result');
+    try {
+      const networks=[...new Set(document.getElementById('connector-networks').value.split(/\n/).map(x=>x.trim()).filter(Boolean))].sort();
+      const response=await fetch('/internal/v1/onboarding/connectors/confirm',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({public_https:document.getElementById('connector-public').checked,local_networks:networks})});
+      if(!response.ok)throw new Error('scope rejected');
+      status.textContent='Omgeving bevestigd; de gateway wordt bij installatie toegevoegd. Persoonlijke accounttoegang is niet inbegrepen.';
+      window.dispatchEvent(new Event('eva-installer-state-changed'));
+    }catch(_error){status.textContent='Kies eerst Ander kanaal of dienst en geef expliciet openbare HTTPS-toegang of geldige privénetwerken op.';}
+  });
+
   const enabled = window.__evaProviderVerificationEnabled === true;
   const list = document.getElementById('provider-list');
   const result = document.getElementById('provider-result');
@@ -330,6 +341,21 @@ def register_installer_provider_routes(
 ) -> None:
     probe_factory = configured_probe_factory
     locks = {slot_id: Lock() for slot_id in _LABELS}
+
+    @app.post("/internal/v1/onboarding/connectors/confirm")
+    async def connectors_confirm(request: Request):
+        require_write(request)
+        if not enabled or verifier is None:
+            raise HTTPException(status_code=409, detail="connector configuration unavailable")
+        body=await _small_json(request)
+        if not isinstance(body,dict) or set(body)!={'public_https','local_networks'}:
+            raise HTTPException(status_code=422,detail="connector scope invalid")
+        from eva.operations.installer_connector_selection import confirm_connectors
+        try:
+            digest=confirm_connectors(verifier,**body)
+        except (ValueError,InstallerUseCaseError) as error:
+            raise HTTPException(status_code=409,detail="select connectors and confirm a valid explicit scope") from error
+        return JSONResponse({'state':'ready','evidence_sha256':digest,'installed':False},headers=security_headers)
 
     @app.post("/internal/v1/onboarding/voice/pipelines")
     async def voice_pipelines(request: Request):

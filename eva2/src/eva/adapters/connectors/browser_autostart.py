@@ -20,12 +20,17 @@ class BrowserAutostartConfig:
 
 
 class ManagedBrowserAutostart:
-    def __init__(self, config: BrowserAutostartConfig, connector_id: str):
+    def __init__(self, config: BrowserAutostartConfig, connector_id: str, *, session_aliases=None):
         self.config = config
         self.connector_id = connector_id
+        self._session_aliases = dict(session_aliases or {})
 
     def matches(self, connector_id: str) -> bool:
-        return connector_id == self.connector_id
+        return connector_id == self.connector_id or connector_id in self._session_aliases
+
+    def session_binding(self, connector_id: str) -> str:
+        if not self.matches(connector_id):raise ConversationConflict("browser session binding differs")
+        return self._session_aliases.get(connector_id,connector_id)
 
     @staticmethod
     def _state(value):
@@ -85,3 +90,9 @@ def managed_browser_session_id(token: str, connector_id: str, revision: int) -> 
         "connector_id": connector_id,
         "browser_revision": revision,
     }), "sha256").hex()
+
+
+def direct_browser_owner_binding(principal_sha256: str, gateway: str, controller: str) -> str:
+    from eva.contracts.canonical_json import canonical_sha256
+    return canonical_sha256({'contract':'EvaDirectBrowserOwner/v1','principal_sha256':principal_sha256,
+                             'gateway':gateway,'controller':controller})

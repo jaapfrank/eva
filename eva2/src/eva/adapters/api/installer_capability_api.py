@@ -60,7 +60,7 @@ INSTALLER_CAPABILITY_SCRIPT = r"""
     const control = document.createElement('button');
     control.type = 'button'; control.textContent = text;
     control.dataset.step = step.step_id; control.dataset.wanted = String(wanted);
-    control.disabled = !enabled || step.state === 'ready' ||
+    control.disabled = !enabled || (step.state === 'ready' && !(step.step_id === 'adaptive_connector' && !wanted)) ||
       (wanted && step.state === 'selected') || (!wanted && step.state === 'skipped');
     return control;
   }
@@ -72,7 +72,7 @@ INSTALLER_CAPABILITY_SCRIPT = r"""
       title.textContent = labels[step.step_id] + (step.required ? ' · verplicht' : ' · optioneel');
       const status = document.createElement('p');
       status.textContent = step.step_id === 'browser' && step.state === 'selected'
-        ? 'gekozen · nog niet geïnstalleerd' : states[step.state];
+        ? 'gekozen · nog niet geïnstalleerd' : (step.step_id === 'adaptive_connector' && step.state === 'ready' ? 'omgeving bevestigd · nog niet geïnstalleerd' : states[step.state]);
       row.append(title, status, button(step, true, step.state === 'blocked' ? 'Opnieuw proberen' : 'Dit wil ik'));
       if (!step.required) row.append(button(step, false, 'Overslaan'));
       list.append(row);
@@ -199,6 +199,10 @@ def register_installer_capability_routes(
         if not isinstance(body, dict) or set(body) != {"step_id", "wanted"}:
             raise HTTPException(status_code=422, detail="capability choice is invalid")
         try:
+            if body.get('step_id')=='adaptive_connector' and body.get('wanted') is False:
+                current=target.status().step('adaptive_connector')
+                if current.state=='ready':
+                    target.record_invalidation(step_id='adaptive_connector',evidence_sha256=current.evidence_sha256)
             transition = target.select(
                 step_id=body.get("step_id"), wanted=body.get("wanted")
             )

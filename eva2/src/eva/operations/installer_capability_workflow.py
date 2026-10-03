@@ -482,6 +482,7 @@ class InstallerCapabilityWorkflow:
             "telegram",
             "home_assistant",
             "voice",
+            "adaptive_connector",
             "email",
         }:
             raise InstallerCapabilityWorkflowError(

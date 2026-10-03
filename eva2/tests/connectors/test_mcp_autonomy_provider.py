@@ -258,3 +258,37 @@ def test_browser_autostart_requires_explicit_complete_trusted_configuration(monk
     assert settings.browser_autostart.client.origin == "https://controller.example"
     assert settings.browser_autostart.client.token == "synthetic-browser-control"
     assert "synthetic-browser-control" not in repr(settings)
+
+
+def test_browserless_autonomy_uses_real_settings_without_dummy_catalog(monkeypatch,tmp_path):
+    for name in ('EVA_MCP_GATEWAY_TOKEN_FILE','EVA_MCP_REGISTRATION_TOKEN_FILE'):
+        path=tmp_path/name;path.write_text('private-'+name);path.chmod(0o600);monkeypatch.setenv(name,str(path))
+    monkeypatch.setenv('EVA_MCP_GATEWAY_URL','http://10.254.80.1:44500')
+    monkeypatch.setenv('EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP','true')
+    monkeypatch.setenv('EVA_MCP_AUTONOMY_MANDATE_FILE',str(tmp_path/'mandate.json'))
+    assert module.McpGatewayProviderFactory.load_settings() is None
+    actual=module.McpAutonomyProviderFactory.load_settings()
+    assert actual.configured_catalog is None and actual.gateway.base_url=='http://10.254.80.1:44500'
+    monkeypatch.delenv('EVA_MCP_GATEWAY_URL')
+    with pytest.raises(RuntimeError):module.McpAutonomyProviderFactory.load_settings()
+    monkeypatch.delenv('EVA_MCP_AUTONOMY_MANDATE_FILE')
+    with pytest.raises(RuntimeError):module.McpGatewayProviderFactory.load_settings()
+
+
+def test_configured_browser_catalog_shares_direct_owner_session(monkeypatch):
+    from eva.adapters.connectors.browser_autostart import direct_browser_owner_binding,managed_browser_session_id
+    monkeypatch.setitem(sys.modules,'eva.providers.mcp_owner_authority',SimpleNamespace(McpOwnerAuthority=Authority))
+    monkeypatch.setattr(module,'PostgresMcpConnectorRegistry',lambda *a,**k:SimpleNamespace(_configured_id=lambda:'configured-browser'))
+    client=module.BrowserSessionClient('https://controller.example','private-token')
+    catalog=SimpleNamespace(principal_sha256_allowlist=('a'*64,),base_url='https://gateway.example',
+        specs=(SimpleNamespace(operation_kind='invoke',descriptor=SimpleNamespace(name='browser_snapshot')),),browser_client=client)
+    settings=module.McpAutonomySettings('/private/mandate.json',McpGatewayConfig(catalog.base_url,'gateway-token'),
+        McpRegistrationConfig(catalog.base_url,'registration-token'),configured_catalog=catalog,
+        browser_autostart=module.BrowserAutostartConfig('https://browser.example/mcp',client))
+    contribution=module.McpAutonomyProviderFactory.build(settings,sa.create_engine('postgresql+psycopg://unused:unused@localhost/unused'))
+    browser=contribution.external_tools[1]._provider._browser_autostart
+    direct=direct_browser_owner_binding('a'*64,catalog.base_url,client.origin)
+    assert browser.matches('configured-browser') and browser.session_binding('configured-browser')==direct
+    assert managed_browser_session_id('gateway-token',browser.session_binding('configured-browser'),7)==managed_browser_session_id('gateway-token',direct,7)
+    assert browser.session_binding(browser.connector_id)==browser.connector_id
+    assert not browser.matches('unrelated-connector')

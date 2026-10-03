@@ -1,37 +1,43 @@
 # EVA2 werkbord
 
-## Actief: O1.2 — algemene connector via dezelfde installatie aansluiten
+## Afgerond: O1.2 — modulaire installatie met algemene uitbreidingen
 
-**Stand: 23/44 bestaande kleine taken afgerond; nog steeds twee volledig afgeronde
-historische hoofdgroepen.** Er is geen derde hoofdgroep afgerond. L1/L2/L3 zijn
-technisch afgerond; R1 en de eindvergelijking blijven open.
+**Stand: 24/44 oorspronkelijke kleine taken afgerond. O1 en O2 zijn technisch klaar.**
+De oude hoofdgroep Installatie & herstel heeft nog de gezamenlijke F1-eindkandidaat
+als eindvoorwaarde; er is dus nog geen derde volledig afgeronde historische hoofdgroep.
 
-**Laatste oplevering:** optionele spraak is op een nieuwe Eva-installatie gestart.
-De gewone wizard kiest een bestaande HA-spraakpipeline, maakt de passende
-configuratie en start de bestaande media/LiveKit-diensten bij dezelfde kern.
-De pagina werkt vanaf Windows; een echte lokale mediasessie verbond in 0,647 s
-en is gesloten. Dat is transporttijd, geen antwoordtijd of fysieke luisterproef.
-Onafhankelijke bron-, installatie- en pakketreview: **GO**.
+De gewone wizard ondersteunt gekozen of weggelaten modules zonder eigenaarpaden
+in de code. De nieuwe Eva sloot via gewone chat een opgegeven openbare CPython-bron
+aan, ontdekte vier hulpmiddelen en las de gevraagde documentatie. Registratie,
+opgeslagen bronbytes en antwoord zijn onafhankelijk bevestigd. **Eindreview: GO.**
+De oorspronkelijke O1.2-eindvoorwaarde is behouden; geen zelfstandig programmeerwerk
+meer binnen deze taak. Bron en bewijs worden nu op GitHub gepubliceerd.
 
-De eerste installatieaanvraag duurde 142,417 s. Een localhost-linkfout is op dezelfde
-installatie gericht gecorrigeerd; gegevens bleven behouden. Eén modelverificatie
-duurde 1,719 s; tokenaantallen en credits zijn onbekend. Handmatige eerste imagebinding
-en die reparatie blijven vermeld. Geen claim van een onbegeleide foutloze installatie.
+Eén gewone installatieaanvraag: **152,851 s**. Eén gespreksopdracht: **40,537 s**,
+**21.329 input-/369 outputtokens**, vijf modelantwoorden en vier toolcalls. De kleine
+modelverificatie duurde 1,708 s; credits zijn onbekend. Geen herinstallatie of rollback.
+Een tijdnotatiefout in de alleen-lezen meethelper is gecorrigeerd; de Eva-opdracht is
+niet herhaald. Geen algemene snelheids- of concurrentiewinst geclaimd.
 
-**Nog binnen O1.2:** de zichtbare algemene connector-keuze heeft nog geen gewone
-installatieconsument. De uitvoerder onderzoekt gericht die bestaande route; de
-coördinator publiceert deze spraakoplevering. Echte nieuwe Telegram-/inboxproeven
-vragen aparte toegang. C3/C4 verstaanbaarheid, onderbreken en gezinsacceptatie
-blijven afzonderlijk open. Geen handeling van Jaap nodig voor dit vervolgwerk.
+[Installatie en werkelijk gebruik](evidence/product/installer-adaptive-connector-installed-20261003.json)
+· [Onafhankelijke eindreview](reviews/installer-adaptive-connector-20261003.md).
 
-[Spraakinstallatie en grenzen](evidence/product/installer-selected-voice-installed-20261003.json)
-· [Onafhankelijke review](reviews/installer-selected-voice-20261003.md).
+**Afzonderlijk open:** echte nieuwe Telegram-/AgentMail-proeven vragen bijbehorende
+toegang. De pakketondersteuning is geleverd, die echte kanaal-/inboxervaring is niet
+beproefd. De bestaande bot is behouden en geen echte inbox is gelezen. F1 voegt de
+installer-/MCP-kandidaat en de latere L3-hoofdinstallatie samen. C3/C4 en F2 behouden
+hun eigen fysieke en menselijke eindvoorwaarden.
 
-Telegram- en e-mailwiring waren al meegeleverd. Er is geen tweede poller op de
-bestaande bot gestart en geen echte inbox gelezen. De hoofdinstallatie blijft
-behouden; de gezamenlijke installer-/L3-versie hoort bij de bestaande F1-eindkandidaat.
-De eerdere dashboardfout die historische tekst boven actuele samenvattingen zette,
-is gerepareerd. De voortgang hieronder bewaart oorspronkelijke criteria en acceptaties.
+De eerder geleverde optionele spraak start de bestaande HA/media/LiveKit-route bij
+dezelfde nieuwe kern. Windows-pagina en werkelijk RTC-transport zijn bevestigd;
+geen fysieke gesprekskwaliteit of microfoonacceptatie geclaimd. Eerdere begeleide
+imagebinding en IPv4-correctie blijven in het bewijs zichtbaar.
+[Spraakinstallatie](evidence/product/installer-selected-voice-installed-20261003.json).
+
+**Hierna gepland:** R1.1, de bestaande begrensde innovatievergelijking. Eerst de
+gewijzigde oorzaak van de vorige onvolledige ronde gericht controleren. Geen
+ongewijzigde proefherhaling, brede audit of nieuw optimalisatieplatform. Jaap hoeft
+voor dit zelfstandige vervolg niets te doen.
 
 ## Nu opgeleverd: optionele browser in een nieuwe Eva-installatie
 

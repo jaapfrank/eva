@@ -150,7 +150,7 @@ def bind_installer_target_graph(*, render_receipt, rendered_graph, namespace,
             selected = Path(selected)
             if not selected.is_absolute() or selected.resolve() != selected or not selected.exists():
                 raise ValueError("explicit target bind is unavailable or linked")
-            directory_target = destination in {*_DIRECTORY_ROLES, "/run/eva/codex-owner", "/var/lib/eva/restore-authority", "/run/eva/voice"}
+            directory_target = destination in {*_DIRECTORY_ROLES, "/run/eva/codex-owner", "/var/lib/eva/restore-authority", "/run/eva/voice", "/run/eva/connectors/autonomy"}
             if directory_target and not selected.is_dir():
                 raise ValueError("maintained directory bind requires a directory")
             if not directory_target and not selected.is_file():

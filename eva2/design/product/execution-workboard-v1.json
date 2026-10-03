@@ -547,22 +547,22 @@
           "tested": "partial",
           "live": "partial",
           "accepted": "no",
-          "gap": "O1.2 optionele modules + eindkandidaat en gezinspraktijk",
-          "detail": "Bestaande wizard herstelt de opgenomen werkelijke gegevensversie met geheugen, documenten en gecontroleerde kern-/werkerstart. Optionele modulekeuze O1.2 en de gezamenlijke eindkandidaat/praktijk zijn nog open.",
+          "gap": "F1: alle geleverde versies samen installeren en eindcontroleren. Werkelijke nieuwe Telegram-/inboxproeven en gezinsacceptatie blijven afzonderlijk open.",
+          "detail": "O1.2 is op zijn oorspronkelijke compositievoorwaarde afgerond na een echte connectoropdracht. Externe bewijsgrenzen en eerdere begeleide correcties blijven zichtbaar; geen claim dat alle gebruiksroutes al beproefd zijn.",
           "evidence": "O1.1, O2.1/O2.2/O2.3 · FN-002, FN-003",
           "outcomes": [],
-          "works": "Gewone tekstinstallatie (O1.1), gekozen HA en eigen browser, update met gegevensbehoud en volledige herstelroute (O2) technisch bruikbaar. Browserchat onafhankelijk bevestigd; begeleide reparaties blijven zichtbaar.",
-          "ownerSummary": "Gewone tekstinstallatie, gekozen HA en eigen browser, update en herstel zijn bruikbaar. Telegram- en e-mailaansluitingen zijn in het installerpakket meegeleverd. Nog open: O1.2 overige oorspronkelijke opties en echte nieuwe kanaal-/inboxproeven blijven open. Gezamenlijke eindkandidaat en gezinspraktijk zijn nog niet afgerond.",
+          "works": "O1 modulaire installatie en O2 update/herstel zijn technisch afgerond. Nieuwe Eva gebruikt gekozen HA, browser en algemene connector; optionele spraak is gestart. Telegram-/e-mailwiring is meegeleverd.",
+          "ownerSummary": "O1 modulaire installatie en O2 update/herstel zijn technisch afgerond. Nieuwe Eva gebruikt gekozen HA, browser en algemene connector; optionele spraak is gestart. Telegram-/e-mailwiring is meegeleverd. Nog open: F1: alle geleverde versies samen installeren en eindcontroleren. Werkelijke nieuwe Telegram-/inboxproeven en gezinsacceptatie blijven afzonderlijk open.",
           "currentSummary": {
-            "checkedAt": "2026-10-03T14:16:10.713250+00:00",
-            "works": "Gewone tekstinstallatie, gekozen HA en eigen browser, update en herstel zijn bruikbaar. Optionele spraak is gestart en de mediasessie werkt. Telegram- en e-mailaansluitingen zijn meegeleverd.",
-            "gap": "Algemene connector-keuze nog aansluiten op de bestaande uitvoerroute. Echte nieuwe Telegram-/inboxproeven blijven afzonderlijk open; gezamenlijke F1-kandidaat volgt. Geen volledige O1.2-afronding.",
-            "detail": "De spraakproef controleert Windows-pagina en werkelijk lokaal RTC-transport, geen hoorbaar gesprek. De huidige installatie is een ontwikkelkandidaat.",
+            "checkedAt": "2026-10-03T14:57:42.246085+00:00",
+            "works": "O1 modulaire installatie en O2 update/herstel zijn technisch afgerond. Nieuwe Eva gebruikt gekozen HA, browser en algemene connector; optionele spraak is gestart. Telegram-/e-mailwiring is meegeleverd.",
+            "gap": "F1: alle geleverde versies samen installeren en eindcontroleren. Werkelijke nieuwe Telegram-/inboxproeven en gezinsacceptatie blijven afzonderlijk open.",
+            "detail": "O1.2 is op zijn oorspronkelijke compositievoorwaarde afgerond na een echte connectoropdracht. Externe bewijsgrenzen en eerdere begeleide correcties blijven zichtbaar; geen claim dat alle gebruiksroutes al beproefd zijn.",
             "evidencePaths": [
+              "eva2/evidence/product/installer-adaptive-connector-installed-20261003.json",
               "eva2/evidence/product/installer-selected-voice-installed-20261003.json",
               "eva2/evidence/product/installer-selected-email-installed-20261003.json",
-              "eva2/evidence/product/installer-selected-telegram-installed-20261003.json",
-              "eva2/evidence/product/optional-browser-installed-20261003.json"
+              "eva2/evidence/product/installer-selected-telegram-installed-20261003.json"
             ]
           }
         }
@@ -1034,8 +1034,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T14:16:10.713250+00:00",
+        "checkedAt": "2026-10-03T14:57:42.246085+00:00",
         "deliveries": [
+          {
+            "title": "O1.2 klaar · modulaire installatie en algemene connector",
+            "date": "3 oktober",
+            "state": "installed",
+            "result": "Gewone installatie met gekozen of weggelaten modules technisch afgerond. Nieuwe Eva sloot een openbare MCP-bron aan en las de gevraagde documentatie via dezelfde chat; bestaande tekst/HA/browser/spraakkeuzes blijven behouden. Onafhankelijke eindreview GO. De echte leesopdracht duurde 40,537 s met 21.329 input-/369 outputtokens.",
+            "remaining": "Nieuwe Telegram-/inboxbewijzen en F1 geïntegreerde eindkandidaat blijven apart. 24/44 oorspronkelijke kleine taken afgerond; dit is geen derde volledig afgeronde historische hoofdgroep.",
+            "source": "eva2/evidence/product/installer-adaptive-connector-installed-20261003.json"
+          },
           {
             "title": "Optionele spraak met nieuwe Eva geïnstalleerd",
             "date": "3 oktober",
@@ -3472,22 +3480,22 @@
           }
         ],
         "now": {
-          "title": "O1.2 · Laatste algemene connector-aansluiting",
+          "title": "O1.2 afgerond · oplevering publiceren",
           "state": "in_progress",
-          "owner": "Codex /root + uitvoerder",
-          "detail": "Spraakkeuze is geïnstalleerd en onafhankelijk gecontroleerd. De uitvoerder onderzoekt nu gericht de bestaande connectorroute; de coördinator publiceert de spraakoplevering."
+          "owner": "Codex /root",
+          "detail": "Modulaire installatie technisch afgerond en onafhankelijk bevestigd. Bron, bewijs en dashboard worden nu samen op GitHub vastgelegd. Stand: 24/44 kleine taken; nog geen derde volledig historisch hoofdonderdeel."
         },
         "next": {
-          "title": "Algemene connector via dezelfde installatie bruikbaar maken",
-          "detail": "Gebruik bestaande MCP-uitvoering en sluit uitsluitend ontbrekende installatie-invoer aan. Geen nieuwe catalogus of taakspecifieke connector."
+          "title": "R1 · Bestaande innovatievergelijking afronden",
+          "detail": "Gebruik de bestaande hypothese, kandidaat en gewone werkwijze. Controleer eerst de gewijzigde oorzaak van de eerder onvolledige proef; geen ongewijzigde herhaling of nieuw optimalisatieplatform."
         },
         "ownerAction": {
-          "title": "Nu geen handeling nodig",
+          "title": "Nu geen handeling nodig voor zelfstandig vervolgwerk",
           "steps": [],
-          "expected": "Codex rondt de algemene connector-aansluiting af. Fysieke speakerbeoordeling en ontbrekende toegang voor echte nieuwe kanalen blijven apart."
+          "expected": "Codex vervolgt de bestaande technische vergelijking. Nieuwe kanaaltoegang en fysieke/gezinsbeoordeling blijven afzonderlijk zichtbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T14:16:10.713250+00:00"
+        "reviewedAt": "2026-10-03T14:57:42.246085+00:00"
       },
       "reviewedAt": "2026-10-03T13:08:35.945523+00:00"
     },
@@ -15880,19 +15888,19 @@
           ],
           "outcome": "Installatie met optionele modules",
           "effort": "M",
-          "status": "in_progress",
+          "status": "completed",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Wizard, target provisioning and nine-service preparation exist, with installed subcomponents.",
-            "remainingGap": "Algemene connector-keuze nog aansluiten op de bestaande uitvoerroute. Echte nieuwe Telegram-/inboxproeven blijven afzonderlijk open; gezamenlijke F1-kandidaat volgt. Geen volledige O1.2-afronding.",
-            "nextAction": "Bestaande algemene connectorroute gericht aansluiten op de gewone installatiekeuze.",
+            "remainingGap": "Oorspronkelijke technische O1-compositievoorwaarde bereikt. Externe kanaalproeven en gezamenlijke F1-kandidaat blijven apart.",
+            "nextAction": "Proceed to remaining existing technical product work; integrate versions at F1.",
             "evidencePaths": [
               "eva2/evidence/product/installer-composed-preparation-20260925.json"
             ],
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": "/root/background_execution_seam",
+          "activeWorker": null,
           "dashboardComponent": "installation",
           "remainingTasks": [
             {
@@ -15967,64 +15975,48 @@
             {
               "id": "O1.2",
               "title": "Optionele modules kunnen weglaten",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "aansluiten",
               "doneWhen": "Dezelfde installatie werkt met gekozen modules; geen hardcoded eigenaarpaden.",
               "owner": "Codex /root",
               "blocker": null,
               "evidence": "eva2/evidence/product/installer-optional-selection-20260929.json",
-              "checkedAt": "2026-10-03T14:16:10.713250+00:00",
-              "remaining": "Algemene connector-keuze nog aansluiten op de bestaande uitvoerroute. Echte nieuwe Telegram-/inboxproeven blijven afzonderlijk open; gezamenlijke F1-kandidaat volgt. Geen volledige O1.2-afronding.",
+              "checkedAt": "2026-10-03T14:57:42.246085+00:00",
+              "remaining": "Geen zelfstandig technisch werk meer binnen de oorspronkelijke O1.2-compositievoorwaarde. Echte nieuwe Telegram-/inboxproeven blijven expliciete externe bewijsgrenzen; F1 integratie en C3/C4/F2 blijven afzonderlijk open.",
               "assignment": {
-                "baseCommit": "0610c8320d2fe0076418295b199407b176b61371",
+                "baseCommit": "5c5c6c54",
                 "owner": "/root",
-                "activeWorkers": [
-                  "/root/background_execution_seam"
-                ],
-                "stage": "optional_voice_installed_connector_route_inspection",
-                "existing": "Existing voice-session media/LiveKit, HA STT/TTS transport, DashboardVoicePolicy and shared core voice API already exist. Browser/HA choices and Telegram/email package wiring delivered.",
-                "gap": "Algemene connector-keuze nog aansluiten op de bestaande uitvoerroute. Echte nieuwe Telegram-/inboxproeven blijven afzonderlijk open; gezamenlijke F1-kandidaat volgt. Geen volledige O1.2-afronding.",
-                "outcome": "Bij een nieuwe gewone installatie kan de bestaande stemmodule worden gekozen of weggelaten, met dezelfde kern en een beschikbare HA-spraakpipeline, zonder handgeschreven configuratie.",
-                "design": "Confirmed optional voice plus existing verified HA/pipeline configuration derives fresh voice policy, shared core authority, pinned existing media/LiveKit images and free local ports. Use existing service/startup hooks; preserve omitted module and current speaker installations. No speech engine or new model route.",
+                "activeWorkers": [],
+                "stage": "installed_independently_reviewed",
+                "existing": "General MCP registration/discovery/execution and gateway provisioning exist. The visible adaptive_connector has no ordinary installer configuration, confirmed scope or target binding.",
+                "gap": "Bind ordinary optional selection to the existing MCP execution with fresh identities, actual registration/invoke access and explicit endpoint scope.",
+                "outcome": "Bij een gewone installatie de algemene uitbreidingsmogelijkheid kiezen of weglaten; de gekozen mogelijkheid via dezelfde Eva werkelijk gebruiken.",
+                "design": "Reuse existing optional gateway/provisioning and McpAutonomyProviderFactory. Compare package-owned gateway reuse with existing external gateway only for this missing seam; do not force users to administer a new platform or silently widen browser authority.",
                 "files": [
-                  "eva2/src/eva/adapters/api/installer_capability_api.py",
-                  "eva2/src/eva/adapters/api/installer_installation_plan_api.py",
-                  "eva2/src/eva/adapters/api/installer_provider_api.py",
-                  "eva2/src/eva/adapters/api/installer_wizard.py",
-                  "eva2/src/eva/bootstrap/installer_wizard_cli.py",
-                  "eva2/src/eva/operations/installer_capability_workflow.py",
-                  "eva2/src/eva/operations/installer_development_candidate.py",
-                  "eva2/src/eva/operations/installer_voice_selection.py",
-                  "eva2/tools/installer_runtime_access.py",
-                  "eva2/tools/installer_target_bindings.py",
-                  "eva2/tools/installer_target_workflow.py",
-                  "eva2/tools/installer_voice_module.py",
-                  "eva2/tools/packaged_installer_target.py",
-                  "eva2/tools/stage_installer_package.py"
+                  "existing installer provider configuration/verification/capability/UI/secrets",
+                  "existing packaged target/bindings and gateway provisioning helper",
+                  "direct affected tests"
                 ],
-                "estimate": "One optional module composition using two existing services, scoped selection/config/start checks and bundled review. Source work uses no Eva model or provider calls; actual required transport verification recorded separately. Development credits unknown.",
+                "estimate": "One existing optional consumer; focused source checks and one meaningful installed connector result. Development credits unknown; provider/model use recorded if used.",
                 "finishScope": "Original task finish retained. O1 parent cannot close until voice/HA/browser module additions/omissions are available through ordinary owner choices; unsupported channels must remain explicit.",
-                "review": "INSTALLED GO for voice and exact package delivery; original O1.2 finish remains open.",
-                "result": "Spraakkeuze werkt op een nieuwe installatie: bestaande HA-pipeline gekozen, diensten gestart, Windows-pagina bereikbaar en echte lokale mediasessie verbonden/gesloten. Onafhankelijke review GO. Fysieke gesprekskwaliteit is hiermee niet bewezen.",
+                "review": "INSTALLED GO; original technical O1.2 finish met, external evidence and F1 kept separate.",
+                "result": "Gewone installatie met gekozen of weggelaten modules technisch afgerond. Nieuwe Eva sloot een openbare MCP-bron aan en las de gevraagde documentatie via dezelfde chat; bestaande tekst/HA/browser/spraakkeuzes blijven behouden. Onafhankelijke eindreview GO.",
                 "fileOwners": {
                   "/root/background_execution_seam": [
-                    "existing installer capability/UI/provider configuration seams",
-                    "tools/packaged_installer_target.py",
-                    "bounded existing voice module composition/helper",
-                    "direct affected tests"
+                    "installer configuration/UI/target/helper source and direct tests"
                   ],
                   "/root": [
-                    "existing board, package/image integration, delivery evidence and Git"
-                  ],
-                  "/root/aide_final_evaluation": [
-                    "read-only image/policy preflight and independent candidate review"
+                    "board, runtime preflight, package/install integration, evidence and Git"
                   ]
                 },
                 "finding": "Voice installed; visible adaptive_connector still rejected by ordinary target because no consumer is bound.",
                 "ownerApproval": "Explicit owner permission 3 October 2026 in this chat; routine browser access also authorized.",
-                "currentAction": "Gerichte controle van bestaande adaptive_connector-consument en kleinste ontbrekende aansluiting; voice wordt nu gepubliceerd."
+                "currentAction": "Afgeronde bron, bewijs en dashboard publiceren op de gezamenlijke Git-basis.",
+                "latestSourceCheckpoint": "5c5c6c54",
+                "publication": "Voice change committed and pushed to origin/main; connector work starts from this shared base.",
+                "imageCandidate": "sha256:f7a6d902905bf1042e9eeee4423b27e938dff26c615770778acf80517821f9ec"
               },
-              "nextAction": "Bestaande algemene connectorroute gericht aansluiten op de gewone installatiekeuze.",
+              "nextAction": "Geen nieuwe O1.2-bouwronde. Geleverde versies samenbrengen bij bestaande F1; externe kanaalbewijzen afzonderlijk behouden.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -16032,19 +16024,32 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "latestEvidence": "eva2/evidence/product/installer-selected-voice-installed-20261003.json",
-              "result": "Spraakkeuze werkt op een nieuwe installatie: bestaande HA-pipeline gekozen, diensten gestart, Windows-pagina bereikbaar en echte lokale mediasessie verbonden/gesloten. Onafhankelijke review GO. Fysieke gesprekskwaliteit is hiermee niet bewezen.",
-              "versionBoundary": "Installer package/core image759b638 includes browser/email and optional voice; existing main runtime730524/0b1375 includes L3. Exact versions retained; combined candidate remains existing F1."
+              "latestEvidence": "eva2/evidence/product/installer-adaptive-connector-installed-20261003.json",
+              "result": "Gewone installatie met gekozen of weggelaten modules technisch afgerond. Nieuwe Eva sloot een openbare MCP-bron aan en las de gevraagde documentatie via dezelfde chat; bestaande tekst/HA/browser/spraakkeuzes blijven behouden. Onafhankelijke eindreview GO.",
+              "versionBoundary": "Installer package/core image759b638 includes browser/email and optional voice; existing main runtime730524/0b1375 includes L3. Exact versions retained; combined candidate remains existing F1.",
+              "completedAt": "2026-10-03T14:57:42.246085+00:00",
+              "externalEvidenceOpen": [
+                {
+                  "route": "new Telegram bot",
+                  "reason": "Separate bot access absent; current shared bot not repolled",
+                  "implementedPackageEvidence": "eva2/evidence/product/installer-selected-telegram-installed-20261003.json"
+                },
+                {
+                  "route": "real AgentMail inbox",
+                  "reason": "Verified inbox access absent; no real mail read",
+                  "implementedPackageEvidence": "eva2/evidence/product/installer-selected-email-installed-20261003.json"
+                }
+              ]
             }
           ],
           "assignment": {
             "owner": "/root",
-            "baseCommit": "0610c8320d2fe0076418295b199407b176b61371",
-            "stage": "optional_voice_installed_connector_route_inspection",
+            "baseCommit": "5c5c6c54",
+            "stage": "installed_independently_reviewed",
             "scope": "Finish existing optional module consumers through the same ordinary installer.",
             "doneWhen": "Dezelfde installatie werkt met gekozen modules; geen hardcoded eigenaarpaden.",
             "effort": "One bounded source change and focused cases; no Eva model calls; credits unknown",
-            "result": "Spraakkeuze werkt op een nieuwe installatie: bestaande HA-pipeline gekozen, diensten gestart, Windows-pagina bereikbaar en echte lokale mediasessie verbonden/gesloten. Onafhankelijke review GO. Fysieke gesprekskwaliteit is hiermee niet bewezen."
+            "result": "Gewone installatie met gekozen of weggelaten modules technisch afgerond. Nieuwe Eva sloot een openbare MCP-bron aan en las de gevraagde documentatie via dezelfde chat; bestaande tekst/HA/browser/spraakkeuzes blijven behouden. Onafhankelijke eindreview GO."
           },
           "responsibilityReview": {
             "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
@@ -16057,7 +16062,8 @@
             ],
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
           },
-          "latestEvidence": "eva2/evidence/product/installer-selected-voice-installed-20261003.json"
+          "latestEvidence": "eva2/evidence/product/installer-adaptive-connector-installed-20261003.json",
+          "completedAt": "2026-10-03T14:57:42.246085+00:00"
         },
         {
           "id": "O2",

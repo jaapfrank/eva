@@ -169,7 +169,7 @@ class McpDiscoveryToolAdapter:
             revision = await self._browser_autostart.ensure_available(binding.connector_id)
             # One owner-bound browser generation across tools and core/worker instances.
             # The model never selects this identity, and it is not a durable tool argument.
-            session_id = managed_browser_session_id(config.bearer_token, binding.connector_id, revision)
+            session_id = managed_browser_session_id(config.bearer_token, self._browser_autostart.session_binding(binding.connector_id), revision)
             config = replace(config, session_id=session_id)
         digest = binding.spec.configuration_sha256
         with self._cache_lock:

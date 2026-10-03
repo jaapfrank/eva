@@ -151,9 +151,10 @@ def validate_target_runtime_configuration(graph):
         "from eva.providers.home_assistant import HomeAssistantProviderFactory; "
         "from eva.providers.mcp_gateway import McpGatewayProviderFactory; "
         "from eva.providers.agentmail import AgentMailProviderFactory; "
+        "from eva.providers.mcp_autonomy import McpAutonomyProviderFactory; "
         "from eva.adapters.api.browser_session import browser_session_from_environment; "
         "RuntimeSettings.from_environment(); HomeAssistantProviderFactory.load_settings(); "
-        "McpGatewayProviderFactory.load_settings(); AgentMailProviderFactory.load_settings(); browser_session_from_environment(); "
+        "McpGatewayProviderFactory.load_settings(); McpAutonomyProviderFactory.load_settings(); AgentMailProviderFactory.load_settings(); browser_session_from_environment(); "
         "print('runtime configuration accepted')"))
     result = subprocess.run(command, capture_output=True, text=True)
     if result.returncode != 0 or result.stdout.strip() != "runtime configuration accepted":
@@ -267,9 +268,14 @@ class PackagedInstallerPreparation:
             raise ValueError("confirmed complete wizard choices required")
         # Providers without installed consumers must remain explicit. Selected
         # HA uses the owner-entered endpoint and its existing verified secret.
-        if any(c["state"] == "ready" and c["step_id"] in {"adaptive_connector"}
-               for c in plan["capabilities"]):
-            raise ValueError("selected provider has no ordinary target consumer yet")
+        connectors_selected=any(c['state']=='ready' and c['step_id']=='adaptive_connector' for c in plan['capabilities'])
+        connector_scope=None
+        if connectors_selected:
+            from eva.operations.installer_connector_selection import load_connector_scope
+            connector_scope=load_connector_scope(plan,self.provider_verifier)
+            from tools.provision_workspace_provider import GATEWAY_IMAGE
+            if self.manifest['imageDigests'].get('mcp-gateway')!=GATEWAY_IMAGE.rsplit('@',1)[1]:
+                raise ValueError('selected connectors require the exact packaged gateway image')
         voice_selected = any(item["step_id"] == "voice" and item["state"] == "ready"
                              for item in plan["capabilities"])
         voice_selection = None
@@ -311,6 +317,7 @@ class PackagedInstallerPreparation:
         if browser_selected:
             # Check the actual package imports before writing any target inputs.
             from tools.installer_browser_module import prepare_browser_module, start_browser_module
+        if browser_selected or connectors_selected:
             from tools.installer_browser_gateway import prepare_browser_gateway_files, start_browser_gateway
         inputs = self.workspace / "inputs"
         identifiers = {key: str(uuid4()) for key in ("tenant", "installation", "principal", "binding")}
@@ -376,11 +383,19 @@ class PackagedInstallerPreparation:
                 python_executable=Path(sys.executable))
             gateway_plan = prepare_browser_gateway_files(package_root=self.root, workspace=inputs,
                 namespace=namespace, browser_plan=browser_module, gateway_port=available_port(),
-                images=self.manifest["imageDigests"])
+                images=self.manifest["imageDigests"],connector_scope=connector_scope,identifiers=identifiers)
             def selected_module_preparation():
                 browser_runtime = start_browser_module(browser_module)
                 gateway_runtime = start_browser_gateway(gateway_plan, browser_runtime=browser_runtime)
                 return {"browser": browser_runtime, "gateway": gateway_runtime}
+        elif connectors_selected:
+            with socket.socket() as listener:
+                listener.bind(('127.0.0.1',0));gateway_port=listener.getsockname()[1]
+            gateway_plan=prepare_browser_gateway_files(package_root=self.root,workspace=inputs,
+                namespace=namespace,browser_plan=None,gateway_port=gateway_port,images=self.manifest['imageDigests'],
+                connector_scope=connector_scope,identifiers=identifiers,connector_subnet=_new_subnet((network_subnet,)))
+            def selected_module_preparation():
+                return {'gateway':start_browser_gateway(gateway_plan)}
         docker_config = inputs / "docker-config"
         docker_config.mkdir(mode=0o700)
         images = self.manifest["imageDigests"]
@@ -461,6 +476,19 @@ class PackagedInstallerPreparation:
                 EVA_HOME_ASSISTANT_API_ENABLED="true",
                 EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST=
                     hashlib.sha256(identifiers["principal"].encode()).hexdigest())
+        if connectors_selected:
+            core['environment'].update(
+                EVA_MCP_GATEWAY_URL=gateway_plan['gateway_url'],
+                EVA_MCP_GATEWAY_TOKEN_FILE='/run/eva/connectors/autonomy/token',
+                EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP='true',
+                EVA_MCP_AUTONOMY_MANDATE_FILE='/run/eva/connectors/autonomy/mandate.json',
+                EVA_MCP_REGISTRATION_TOKEN_FILE='/run/eva/connectors/autonomy/registration-token',
+                EVA_MCP_REGISTRATION_VISIBILITY='public',EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY='true')
+            core.setdefault('volumes',[]).append({'type':'bind','source':str(Path(gateway_plan['token_file']).parent),
+                'target':'/run/eva/connectors/autonomy','read_only':True,'bind':{'create_host_path':False}})
+            if browser_selected:
+                core['environment'].update(EVA_MCP_MANAGED_ENDPOINTS_FILE='/run/eva/connectors/autonomy/managed-endpoints.json',
+                    EVA_BROWSER_MCP_ENDPOINT=browser_module['mcp_url'])
         if browser_selected:
             core["environment"].update(
                 EVA_MCP_GATEWAY_URL=gateway_plan["gateway_url"],
@@ -477,6 +505,11 @@ class PackagedInstallerPreparation:
                 core.setdefault("volumes", []).append({"type": "bind", "source": source,
                     "target": "/run/eva/connectors/mcp/" + destination, "read_only": True,
                     "bind": {"create_host_path": False}})
+        if connectors_selected and browser_selected:
+            core['environment']['EVA_MCP_GATEWAY_TOKEN_FILE']='/run/eva/connectors/autonomy/token'
+            core['environment']['EVA_MCP_GATEWAY_CATALOG_FILE']='/run/eva/connectors/autonomy/catalog.json'
+            core['volumes']=[m for m in core['volumes'] if m.get('target') not in {
+                '/run/eva/connectors/mcp/token','/run/eva/connectors/mcp/catalog.json'}]
         omit_unconfigured_text_target_transports(core)
         graph["services"]["hindsight"]["environment"].update(
             HINDSIGHT_API_LLM_MODEL="gpt-6-astra", HINDSIGHT_API_LLM_REASONING_EFFORT="medium")
@@ -493,7 +526,8 @@ class PackagedInstallerPreparation:
                     extras[(name, mount["target"])] = mount["source"]
                 elif telegram_selected and mount.get("source") in {str(p) for p in telegram_files.values()}:
                     extras[(name, mount["target"])] = mount["source"]
-                elif browser_selected and name == "core" and mount["target"].startswith("/run/eva/connectors/mcp/"):
+                elif name == "core" and ((browser_selected and mount["target"].startswith("/run/eva/connectors/mcp/"))
+                        or (connectors_selected and mount["target"]=="/run/eva/connectors/autonomy")):
                     extras[(name, mount["target"])] = mount["source"]
         render = replace(render, rendered_sha256=hashlib.sha256(canonical_json_bytes(graph)).hexdigest())
         authority = {"tenant_id": identifiers["tenant"], "installation_id": identifiers["installation"],

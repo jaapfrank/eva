@@ -57,6 +57,29 @@ graph for inspection; never automatically recreate the databases or restart the
 whole installation. The dated O1.1 evidence discloses the actual targeted repairs,
 streamed response, durable readback and remaining release limitations.
 
+### Optional general connector access
+
+Choose **Ander kanaal of dienst**, then confirm the permitted environment under
+**Andere diensten door Eva laten aansluiten**. Public HTTPS access is an explicit
+choice. Specific private network ranges are optional; personal account sign-in
+is separate. This confirms the environment, not that any external service has
+already been connected. The choice can also be omitted.
+
+The installer supplies one existing ContextForge gateway and generates its
+credentials and installation-specific owner mandate. If the browser is also
+selected, both use that same gateway. An owner does not need to administer a
+separate gateway or hand-edit its credentials. Eva then uses her existing general
+connector discovery, registration and execution through ordinary conversation.
+For example, ask her to connect a supplied public MCP documentation endpoint and
+read a specific fact from it. Tool output remains untrusted source material.
+
+Developer packaging accepts `--mcp-gateway-image sha256:<digest>` alongside the
+existing three base image arguments. Use the pinned image required by the bundled
+gateway composition. The core image must include the matching MCP provider
+composition and shared browser session handling; changing only wizard files is
+insufficient. Current installation evidence and remaining limits are recorded in
+the [workboard](WERKBORD.md).
+
 ### Optional voice in the local development package
 
 To package this optional route, add both `--voice-media-image sha256:<digest>`

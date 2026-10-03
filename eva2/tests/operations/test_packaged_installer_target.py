@@ -135,7 +135,7 @@ def test_selected_telegram_binds_owner_to_verification(tmp_path):
 
 
 @pytest.mark.parametrize("selected", [True, False])
-@pytest.mark.parametrize("capability", ["telegram", "email"])
+@pytest.mark.parametrize("capability", ["telegram", "email", "adaptive_connector"])
 def test_ordinary_telegram_selection_wires_existing_consumer(tmp_path, monkeypatch, selected, capability):
     from pathlib import Path
     from dataclasses import dataclass
@@ -177,12 +177,21 @@ def test_ordinary_telegram_selection_wires_existing_consumer(tmp_path, monkeypat
         "postgres": "sha256:"+'b'*64, "hindsight": "sha256:"+'c'*64}}
     prepared.verification = prepared.secret_store = prepared.budget_workflow = object()
     prepared.provider_configuration_store = prepared.provider_verifier = object()
+    if capability=='adaptive_connector':
+        from tools import installer_browser_gateway as gateway
+        from tools.provision_workspace_provider import GATEWAY_IMAGE
+        prepared.manifest['imageDigests']['mcp-gateway']=GATEWAY_IMAGE.rsplit('@',1)[1]
+        monkeypatch.setattr('eva.operations.installer_connector_selection.load_connector_scope',lambda *a:{'public_https':True,'local_networks':[]})
+        monkeypatch.setattr(gateway,'_gateway_service',lambda *a:{})
+        monkeypatch.setattr(gateway,'_helper',lambda:object())
+        monkeypatch.setattr(gateway.os,'chown',lambda *a:None)
     plan = {"contract": "EvaInstallerInstallationPlan/v2", "status": "ready_for_release_preparation",
         "blockers": [], "capabilities": [
             {"step_id": "telegram", "state": "ready" if selected and capability == "telegram" else "skipped"},
             {"step_id": "email", "state": "ready" if selected and capability == "email" else "skipped"},
             {"step_id": "home_assistant", "state": "skipped"},
-            {"step_id": "browser", "state": "skipped"}],
+            {"step_id": "browser", "state": "skipped"},
+            {"step_id": "adaptive_connector", "state": "ready" if selected and capability=="adaptive_connector" else "skipped"}],
         "inputs": {"identity_pack_sha256": canonical_sha256(identity),
                    "profile": {"profile": {"language": identity.language, "time_zone": "Europe/Amsterdam"}}}}
     plan["plan_sha256"] = canonical_sha256(plan)
@@ -217,3 +226,15 @@ def test_ordinary_telegram_selection_wires_existing_consumer(tmp_path, monkeypat
     else:
         assert not email_mounts
         assert not any(key.startswith('EVA_AGENTMAIL_') for key in core['environment'])
+
+    if selected and capability=='adaptive_connector':
+        assert callable(settings.selected_module_preparation)
+        assert core['environment']['EVA_MCP_REGISTRATION_VISIBILITY']=='public'
+        assert core['environment']['EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY']=='true'
+        assert 'EVA_MCP_GATEWAY_CATALOG_FILE' not in core['environment']
+        directory=settings.additional_bindings[('core','/run/eva/connectors/autonomy')]
+        mandate=json.loads((Path(directory)/'mandate.json').read_bytes())
+        assert mandate['owner_principal_id']==settings.fresh_start.authority['principal_id']
+        assert mandate['public_https'] is True and mandate['local_networks']==[]
+    else:
+        assert 'EVA_MCP_AUTONOMY_MANDATE_FILE' not in core['environment']

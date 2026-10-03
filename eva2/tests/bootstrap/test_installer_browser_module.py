@@ -290,3 +290,14 @@ def test_stage_voice_cli_pair(monkeypatch,flags,valid):
         assert stage.main(args)==0
         images=calls[0]['development_images']
         assert ('voice-media' in images)==bool(flags) and ('livekit' in images)==bool(flags)
+
+
+def test_stage_connector_gateway_cli_uses_existing_inventory(monkeypatch):
+    spec=importlib.util.spec_from_file_location('stage_connector_cli',ROOT/'tools/stage_installer_package.py')
+    stage=importlib.util.module_from_spec(spec);spec.loader.exec_module(stage)
+    calls=[];monkeypatch.setattr(stage,'stage_package',lambda **kw:calls.append(kw))
+    base=['--source-root','/source','--target-root','/target','--runtime-image','sha256:core','--mcp-gateway-image','sha256:gateway']
+    with pytest.raises(SystemExit):stage.main(base)
+    assert not calls
+    assert stage.main([*base,'--postgres-image','sha256:pg','--hindsight-image','sha256:memory'])==0
+    assert calls[0]['development_images']['mcp-gateway']=='sha256:gateway'
