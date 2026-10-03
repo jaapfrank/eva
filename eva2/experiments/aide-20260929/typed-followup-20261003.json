@@ -1,0 +1,73 @@
+{
+  "contract": "EvaTypedContextFollowup/v1",
+  "recordedAt": "2026-10-03T00:55:43Z",
+  "taskIds": [
+    "L3.2",
+    "L3.3"
+  ],
+  "baseCommit": "932558b14727fefc5e36ab6ef66a7ea2ce8cfbef",
+  "baselineSha256": "99954a459bb14c3411613d165d981887746890749df1e51c2dd50f0a21acf34e",
+  "sourcePath": "eva2/src/eva/adapters/postgres/delegated_work_actions.py",
+  "priorTrials": "Original September29 and October2 workspace trials remain closed unsuccessful with all usage retained. This is a separately recorded changed-cause continuation.",
+  "changedCause": "Typed programming source/command inputs installed after the last failed context attempt; real Eva-written/executed program subsequently passed18 independent cases. Current source still selects first8/3 irrespective of question.",
+  "preserveNewCode": "Current T2 instruction clarification and whole own-initiative block remain unchanged.",
+  "criteria": "eva2/experiments/aide-20260929/criteria.json hardConditions,selectionRule,promotionRule unchanged.",
+  "allowance": {
+    "initialCandidates": 1,
+    "refinements": 0,
+    "candidateModel": "existing gpt-6-astra medium worker profile",
+    "taskLimits": {
+      "schema_version": 4,
+      "contract": "DelegatedDigitalWorkGrant/v4",
+      "context_refs": [],
+      "capability_ids": [
+        "home_assistant_request",
+        "read_home_assistant_inventory",
+        "save_workspace_document",
+        "connect_service",
+        "discover_connector_tools",
+        "manage_connected_services",
+        "use_connector_tool",
+        "designate_reusable_procedure",
+        "list_reusable_procedures",
+        "resolve_reusable_procedure",
+        "run_reusable_procedure",
+        "get_delegated_work",
+        "save_work_progress",
+        "evaluate_own_component_improvement",
+        "prepare_own_component_release",
+        "read_own_component_source",
+        "draft_own_component_improvement",
+        "write_programming_file",
+        "start_programming_process",
+        "list_programming_tools",
+        "use_programming_tool",
+        "research_current_options"
+      ],
+      "workspace_ref": null,
+      "child_network_access": false,
+      "maximum_model_runs": 32,
+      "maximum_completed_model_responses": 32,
+      "maximum_input_tokens": 2097152,
+      "maximum_output_tokens": 38400,
+      "maximum_total_tokens": 2135552,
+      "maximum_cost_usd_micros": null,
+      "timeout_seconds": 300,
+      "maximum_claims_before_call_start": 2,
+      "delegation_depth": 1,
+      "maximum_tool_calls": 31
+    },
+    "answerComparisonMaximumCalls": 24,
+    "answerRepetitions": 3,
+    "answerModel": "existing gpt-6-sol none only if independent hardgate and relevance/token benefit justify",
+    "credits": "unknown"
+  },
+  "independence": "Optimizer sees public source and synthetic development data only. Baseline/cases/harness hashes frozen; any modification rejects the run. Protected final evaluator and holdout stay outside programming workspace and are accessible only to independent evaluator after candidate freeze. Development scorer is visible, unlike independent final assessment.",
+  "inputsSha256": {
+    "baseline.py": "99954a459bb14c3411613d165d981887746890749df1e51c2dd50f0a21acf34e",
+    "dev-cases.json": "cfcd399ac0e8792d9162d9c4adfce71fba04f4df284b42fd4a02f9cc15ea7903",
+    "dev_check.py": "def06902f1688202a28b330e48bcf9088b887dffd20b8c502caa8004bf2ab8a7"
+  },
+  "integration": "Only independently measured benefit may be connected through existing exact review/package/import/managed-update facilities. No speculative release platform.",
+  "providerCallsStarted": false
+}

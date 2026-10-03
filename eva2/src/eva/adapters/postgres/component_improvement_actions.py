@@ -1,4 +1,4 @@
-"""Owner source drafts and fixed isolated evaluations, never live installation."""
+"""Scoped component drafts, evaluations and independently approved application."""
 from pathlib import Path
 import json
 
@@ -14,7 +14,13 @@ READ = "read_own_component_source"
 DRAFT = "draft_own_component_improvement"
 EVALUATE = "evaluate_own_component_improvement"
 PREPARE = "prepare_own_component_release"
+APPLY = "apply_reviewed_component_improvement"
+APPLICATION_STATUS = "get_reviewed_component_application"
 _SCHEMAS = {
+    APPLICATION_STATUS: {"type": "object", "additionalProperties": False, "required": ["review_id"],
+            "properties": {"review_id": {"type": "string", "minLength": 1, "maxLength": 128}}},
+    APPLY: {"type": "object", "additionalProperties": False, "required": ["review_id"],
+            "properties": {"review_id": {"type": "string", "minLength": 1, "maxLength": 128}}},
     PREPARE: {"type": "object", "additionalProperties": False,
         "required": ["evaluation_step"], "properties": {
             "evaluation_step": {"type": "integer", "minimum": 0}}},
@@ -50,7 +56,22 @@ def component_descriptors():
         "en component_step uit dit resultaat, zonder content opnieuw uit te schrijven. "
         "Dit installeert niets: gemeten voordeel, onafhankelijke beoordeling en terugweg blijven nodig.",
         _SCHEMAS[PREPARE], "Meld pakketvindplaats en resterende beoordeling; claim geen toepassing."),)
-    return (*evaluation, *preparation,
+    application = () if evaluator is None or not evaluator.reviewed_releases else (
+        ConversationToolDescriptor(APPLY,
+            "Vraag toepassing aan van één al onafhankelijk goedgekeurde eigen verbetering. "
+            "Beschikbare review-ID's: " + ", ".join(key for key, _ in evaluator.reviewed_releases) + ". "
+            "De host controleert het exacte pakket en voert de update pas uit nadat deze taak "
+            "klaar is en lopend werk is vrijgegeven. Rond na de aanvraag deze taak af; wacht "
+            "niet binnen deze taak op de update. De aanvraag is nog geen geïnstalleerd resultaat. "
+            "Je kiest geen broncode, rechten, shellcommando of installatiebestand.",
+            _SCHEMAS[APPLY], "Meld de bewaarde aanvraag en echte status; keur nooit je eigen code goed."),
+        ConversationToolDescriptor(APPLICATION_STATUS,
+            "Lees de echte toepassingsstatus van een vooraf beoordeelde verbetering, ook vanuit "
+            "een later gesprek. Gebruik het review-ID. Dit start of herhaalt geen update. "
+            "Geef alleen bij installed=true aan dat de host de exacte images bevestigd heeft; "
+            "een onzekere of onderbroken toepassing moet zichtbaar blijven.",
+            _SCHEMAS[APPLICATION_STATUS], "Meld de actuele status; voer een onzekere toepassing niet opnieuw uit."),)
+    return (*evaluation, *preparation, *application,
         ConversationToolDescriptor(READ,
             "Lees de werkelijk geïnstalleerde Eva-broncode. Leeg path toont de mappen; "
             "een Python-pad geeft maximaal 160 regels en een bronhash. Gebruik next_line voor vervolg. "
@@ -75,6 +96,8 @@ class ComponentImprovementActions:
     def __init__(self, engine, spec, source, authorize, dispatch, clock):
         self.evaluator = configured_component_evaluator()
         self.action_names = (READ, DRAFT) + (() if self.evaluator is None else (EVALUATE, PREPARE))
+        if self.evaluator is not None and self.evaluator.reviewed_releases:
+            self.action_names += (APPLY, APPLICATION_STATUS)
         self.spec, self.source = spec, source
         self.authorize, self.dispatch, self.clock = authorize, dispatch, clock
         self.root = Path(__file__).resolve().parents[2]
@@ -137,8 +160,26 @@ class ComponentImprovementActions:
             if replay.call != call:
                 raise ConversationConflict("component action changed during replay")
             return replay
+        if call.name in {APPLY, APPLICATION_STATUS}:
+            scope = canonical_sha256({key: getattr(turn, key) for key in
+                                      ("tenant_id", "installation_id", "principal_id")})
+            if dict(self.evaluator.reviewed_releases).get(call.arguments["review_id"]) != scope:
+                raise ConversationConflict("reviewed component is not approved for this source")
         self.dispatch(turn)
-        if call.name == PREPARE:
+        if call.name in {APPLY, APPLICATION_STATUS}:
+            request_id = canonical_sha256({"execution": self.spec.execution_id,
+                "source": self.spec.source.model_dump(mode="json"), "step": step_index,
+                "review_id": call.arguments["review_id"]})
+            operation = "request" if call.name == APPLY else "status"
+            value = self.evaluator.application(operation, review_id=call.arguments["review_id"],
+                request_id=request_id, task_id=self.spec.work_id)
+            admitted = {"queued", "waiting", "completed"} if call.name == APPLY else {
+                "ready", "queued", "waiting", "completed", "interrupted_before_dispatch",
+                "cancelled", "dispatching", "unconfirmed", "rejected"}
+            if value.get("state") not in admitted:
+                raise ConversationConflict("reviewed component application was not accepted")
+            scope = "reviewed_application_requested" if call.name == APPLY else "reviewed_application_status"
+        elif call.name == PREPARE:
             evaluation_step = call.arguments["evaluation_step"]
             if evaluation_step >= step_index:
                 raise ConversationConflict("release preparation requires an earlier evaluation")

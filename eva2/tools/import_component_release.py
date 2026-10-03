@@ -16,8 +16,10 @@ import json
 from pathlib import Path
 import subprocess
 
+_ACTIVE_CONTEXT_PATH = "adapters/postgres/delegated_work_actions.py"
 ALLOWED_PATHS = frozenset({
     "contracts/timestamps.py", "contracts/canonical_json.py", "application/cancellation.py",
+    _ACTIVE_CONTEXT_PATH,
 })
 
 
@@ -65,6 +67,26 @@ def checked_evidence(review_file, entry):
     return {"path": str(path.resolve()), "sha256": digest(raw)}
 
 
+def _active_context_surroundings(raw):
+    """Locate only the method body; AST columns are UTF-8 byte offsets."""
+    module = ast.parse(raw.decode("utf-8"))
+    classes = [node for node in module.body if isinstance(node, ast.ClassDef)
+               and node.name == "PostgresDelegatedWorkActions"]
+    if len(classes) != 1:
+        raise ValueError("active_context scope requires exactly one target class")
+    methods = [node for node in classes[0].body
+               if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+               and node.name == "active_context"]
+    if len(methods) != 1 or not isinstance(methods[0], ast.FunctionDef):
+        raise ValueError("active_context scope requires exactly one synchronous method")
+    method = methods[0]
+    first = method.body[0]
+    lines = raw.splitlines(keepends=True)
+    start = sum(map(len, lines[:first.lineno - 1])) + first.col_offset
+    end = sum(map(len, lines[:method.end_lineno - 1])) + method.end_col_offset
+    return raw[:start], raw[end:]
+
+
 def prepare(package_file, review_file, checkout):
     package = load_object(package_file)
     package_hash = package.get("candidate_package_sha256")
@@ -79,7 +101,8 @@ def prepare(package_file, review_file, checkout):
     if path not in ALLOWED_PATHS or not isinstance(content, str):
         raise ValueError("component is outside the configured evaluation scope")
     raw = content.encode("utf-8")
-    if len(raw) > 32768 or digest(raw) != package.get("candidate_sha256"):
+    limit = 65536 if path == _ACTIVE_CONTEXT_PATH else 32768
+    if len(raw) > limit or digest(raw) != package.get("candidate_sha256"):
         raise ValueError("candidate bytes differ")
     ast.parse(content, filename=path)
     report = package["evaluation"]
@@ -115,6 +138,9 @@ def prepare(package_file, review_file, checkout):
     baseline = target.read_bytes()
     if digest(baseline) != package["baseline_sha256"] or baseline == raw:
         raise ValueError("release baseline changed or candidate has no change")
+    if (path == _ACTIVE_CONTEXT_PATH
+            and _active_context_surroundings(baseline) != _active_context_surroundings(raw)):
+        raise ValueError("candidate changes bytes outside the active_context body")
     diff = difflib.unified_diff(baseline.decode().splitlines(keepends=True),
         content.splitlines(keepends=True), fromfile="a/" + path, tofile="b/" + path)
     patch = "".join(line if line.endswith("\n") else line + "\n\\ No newline at end of file\n" for line in diff)

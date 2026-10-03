@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 from urllib.request import Request, build_opener, ProxyHandler, HTTPRedirectHandler
 from urllib.parse import urlsplit
@@ -20,6 +21,29 @@ class ComponentEvaluationClient:
     allowed_paths: tuple[str, ...]
     suite_sha256: str
     timeout_seconds: int = 120
+    reviewed_releases: tuple[tuple[str, str], ...] = ()
+
+    def _post(self, endpoint, payload, *, limit=160000):
+        token = Path(self.token_file).read_text().strip()
+        if not token or len(token) > 1024 or any(c.isspace() for c in token):
+            raise ValueError("component evaluator credential unavailable")
+        request = Request(self.url + endpoint, json.dumps(payload, ensure_ascii=False).encode(),
+                          headers={"Authorization": "Bearer " + token, "Content-Type": "application/json"},
+                          method="POST")
+        with build_opener(ProxyHandler({}), _NoRedirect()).open(request, timeout=self.timeout_seconds) as response:
+            raw = response.read(limit + 1)
+        if len(raw) > limit:
+            raise ValueError("component host response exceeds bound")
+        value = json.loads(raw)
+        if not isinstance(value, dict):
+            raise ValueError("component host response must be an object")
+        return value
+
+    def application(self, action, *, review_id, request_id, task_id):
+        if review_id not in dict(self.reviewed_releases):
+            raise ValueError("component review is not configured")
+        return self._post("/reviewed-component", {"action": action, "review_id": review_id,
+            "request_id": request_id, "task_id": task_id}, limit=16384)
 
     def evaluate(self, draft):
         path = draft["path"]
@@ -27,17 +51,7 @@ class ComponentEvaluationClient:
             raise ValueError("no installed functional evaluation suite for this component")
         payload = {"relative_path": path, "baseline_sha256": draft["source_sha256"],
                    "source": draft["candidate_content"]}
-        token = Path(self.token_file).read_text().strip()
-        if not token or len(token) > 1024 or any(c.isspace() for c in token):
-            raise ValueError("component evaluator credential unavailable")
-        request = Request(self.url + "/evaluate", json.dumps(payload, ensure_ascii=False).encode(),
-                          headers={"Authorization": "Bearer " + token, "Content-Type": "application/json"},
-                          method="POST")
-        with build_opener(ProxyHandler({}), _NoRedirect()).open(request, timeout=self.timeout_seconds) as response:
-            raw = response.read(160001)
-        if len(raw) > 160000:
-            raise ValueError("component evaluation report exceeds bound")
-        report = json.loads(raw)
+        report = self._post("/evaluate", payload)
         if (report.get("contract") != "EvaIsolatedComponentEvaluation/v1"
                 or report.get("relative_path") != path
                 or report.get("baseline_sha256") != draft["source_sha256"]
@@ -57,7 +71,8 @@ def configured_component_evaluator():
     if not config_path:
         return None
     data = json.loads(Path(config_path).read_text())
-    if set(data) != {"url", "token_file", "allowed_paths", "suite_sha256", "timeout_seconds"}:
+    required = {"url", "token_file", "allowed_paths", "suite_sha256", "timeout_seconds"}
+    if not required <= set(data) or set(data) - required - {"reviewed_releases"}:
         raise ValueError("component evaluator configuration fields differ")
     url = urlsplit(data["url"])
     if (url.scheme not in {"http", "https"} or not url.hostname or url.username or url.password
@@ -67,4 +82,11 @@ def configured_component_evaluator():
             or type(data["timeout_seconds"]) is not int or not 1 <= data["timeout_seconds"] <= 300
             or not isinstance(data["suite_sha256"], str) or len(data["suite_sha256"]) != 64):
         raise ValueError("invalid component evaluator configuration")
-    return ComponentEvaluationClient(**{**data, "allowed_paths": tuple(data["allowed_paths"])})
+    reviews = data.get("reviewed_releases", {})
+    if (not isinstance(reviews, dict) or len(reviews) > 32
+            or any(not isinstance(key, str) or not re.fullmatch(r"[0-9a-f]{64}", key)
+                   or not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value)
+                   for key, value in reviews.items())):
+        raise ValueError("invalid reviewed component scopes")
+    return ComponentEvaluationClient(**{**data, "allowed_paths": tuple(data["allowed_paths"]),
+                                        "reviewed_releases": tuple(sorted(reviews.items()))})

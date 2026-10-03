@@ -127,6 +127,9 @@ class _TaskModel:
             "uit te schrijven. Bij stoppen vóór voorbereiding bewaar je op dezelfde manier het "
             "laatste voorstel of rapport. Tussenopslag is niet nodig; de stappen zijn al vastgelegd. "
             "Dit pakket wacht nog op gemeten voordeel en beoordeling. "
+            "Voor een vooraf onafhankelijk goedgekeurde review mag je, indien aangeboden, "
+            "apply_reviewed_component_improvement gebruiken. Rond die aanvraagtaak daarna af: "
+            "de host past de wijziging pas na taakafronding toe. Aanvraag is geen installatiebewijs. "
             "Wijzig of installeer geen draaiende component via andere tools. Beschrijf "
             "verwachte winst als hypothese zolang er geen meting is; tekstcontroles bewijzen "
             "geen algemene functionele kwaliteit. Geef de echte vindplaats en beperkingen terug.",

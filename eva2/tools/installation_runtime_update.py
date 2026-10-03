@@ -11,7 +11,11 @@ from copy import deepcopy
 import json
 from pathlib import Path
 
-from tools.installation_document_connection import _command
+def _command(*args, **kwargs):
+    # Pure image comparison is also used by the minimal host application service.
+    # Load installer/database dependencies only for the default command runner.
+    from tools.installation_document_connection import _command as run
+    return run(*args, **kwargs)
 
 
 def image_update_services(installed: dict, candidate: dict) -> list[str]:

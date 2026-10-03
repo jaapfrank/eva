@@ -182,11 +182,55 @@ class PostgresDelegatedWorkActions:
         active = [job for job in listing.get("jobs", ())
                   if job.get("state") in {"admitted", "call_started"}
                   and not job.get("stop_requested", False)]
+        # Rank only authorized identity metadata; never inspect task payloads.
+        import math
+        import re
+        import unicodedata
+
+        def normalize(value):
+            return "".join(char for char in unicodedata.normalize(
+                "NFKD", str(value).casefold()) if not unicodedata.combining(char))
+
+        def tokens(value):
+            return set(re.findall(r"[^\W_]+", normalize(value)))
+
+        query = normalize(getattr(turn, "text", "") or "")
+        query_tokens = tokens(query)
+        rows = [job for job in listing.get("jobs", ())
+                if (job.get("state") in {"admitted", "call_started"}
+                    and not job.get("stop_requested", False))
+                or job.get("recent_outcome", False)]
+        title_tokens = [tokens(job.get("title", "")) for job in rows]
+        frequency = {}
+        for words in title_tokens:
+            for word in words:
+                frequency[word] = frequency.get(word, 0) + 1
+
+        def relevance(job):
+            identity = normalize(job["work_id"])
+            explicit_id = bool(identity and re.search(
+                r"(?<![\w:.-])" + re.escape(identity) + r"(?![\w:.-])", query))
+            words = tokens(job.get("title", ""))
+            score = 0.0
+            for word in words:
+                weight = math.log(1 + (len(rows) + 1) / (frequency[word] + 1))
+                if word in query_tokens:
+                    score += weight
+                elif len(word) >= 5 and any(
+                        len(term) >= 5 and (word in term or term in word)
+                        and min(len(word), len(term)) / max(len(word), len(term)) >= 0.6
+                        for term in query_tokens):
+                    score += 0.5 * weight
+            # Stable ties retain the service ordering (recency for outcomes).
+            return (explicit_id, score / math.sqrt(max(1, len(words))))
+
+        active = sorted(active, key=relevance, reverse=True)
         selected = [{"work_id": job["work_id"], "title": job["title"][:160], "state": job["state"]}
                     for job in active[:8]]
         outcomes = sorted((job for job in listing.get("jobs", ())
                            if job.get("recent_outcome", False)),
                           key=lambda job: job.get("updated_at", ""), reverse=True)
+        outcomes = sorted(outcomes, key=relevance, reverse=True)
         recent = [{"work_id": job["work_id"], "title": job["title"][:120],
                    "state": job["state"], "result_available": job.get("result_available", False)}
                   for job in outcomes[:3]]

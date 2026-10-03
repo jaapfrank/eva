@@ -126,3 +126,28 @@ def test_pending_denied_scope_does_not_read_provider(monkeypatch):
         raise ConversationConflict("unavailable")
     monkeypatch.setattr(scoped, "_select", denied)
     assert scoped.pending(NS()) is None
+
+
+def test_named_authorized_task_remains_answerable_beyond_default_window():
+    jobs = [{"work_id": f"work:item-{i:02d}", "title": f"Review document {i}",
+             "state": "admitted", "stop_requested": False} for i in range(12)]
+    service = Service(jobs)
+    text = "\n".join(PostgresDelegatedWorkActions(None, service).active_context(
+        NS(message_id="message:followup", text="Hoe staat work:item-11 ervoor?")))
+    assert 'work:item-11' in text
+    assert sum(job["work_id"] in text for job in jobs) == 8
+    assert len(service.reads) == 1
+
+
+def test_subject_followup_selects_recent_result_without_exposing_its_payload():
+    jobs = [{"work_id": f"work:result-{i}", "title": f"Other project {i}",
+             "state": "succeeded", "recent_outcome": True,
+             "updated_at": f"2026-10-03T09:00:0{i}Z"} for i in range(5)]
+    jobs[0].update(title="Bijen houden in de achtertuin", result="PRIVATE_RESULT", task="PRIVATE_TASK")
+    service = Service(jobs)
+    text = "\n".join(PostgresDelegatedWorkActions(None, service).active_context(
+        NS(message_id="message:subject", text="Hoe staat het met de bijen in de achtertuin?")))
+    assert "work:result-0" in text
+    assert sum(job["work_id"] in text for job in jobs) == 3
+    assert "PRIVATE_RESULT" not in text and "PRIVATE_TASK" not in text
+    assert len(service.reads) == 1

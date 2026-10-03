@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T00:46:27.839293+00:00",
+        "checkedAt": "2026-10-03T01:57:44.921325+00:00",
         "deliveries": [
           {
             "title": "Eva gebruikt zelfstandig haar eigen browser",
@@ -3395,24 +3395,22 @@
           }
         ],
         "now": {
-          "title": "Zelfstandig browsergebruik opgeleverd",
-          "state": "installed",
-          "detail": "Eva start haar eigen browser en voerde zonder tabdeling of handmatige hulp een volledige navigeer-, klik- en leestaak uit. Eindpagina apart bevestigd; onafhankelijke eindreview GO. Proef: 81,5 seconden en 101.588 invoertokens; bruikbaar, nog traag en duur. Vervolgwerk nog niet gestart.",
-          "owner": "Codex /root"
+          "title": "L3 · Beoordeelde verbetering klaar voor toepassing",
+          "state": "blocked",
+          "detail": "Contextwinst onafhankelijk bewezen; bronimport en eigen toepassingsroute gebouwd en gereviewd. Automatische goedkeuringscontrole blokkeerde de blijvende rootrechten van de bestaande hostdienst en clientwijziging. Gerichte toestemmingsvraag aan Jaap staat open; huidige runtime nog ongewijzigd.",
+          "owner": "Jaap · installatiekeuze"
         },
         "next": {
-          "title": "Vervolgwerk nog niet gestart",
-          "detail": "De bestaande overige producttaken blijven open. Persoonlijke Chrome-overname T3.3 is optioneel en is geen voorwaarde voor Eva’s eigen browser."
+          "title": "Gebruik op de geïnstalleerde Eva controleren",
+          "detail": "Controleer bronhash, gedeelde runtime en werkelijke contextselectie. Autonome toepassing blijft apart van deze ondersteunde installatie."
         },
         "ownerAction": {
-          "title": "Geen browser voorbereiden of tabblad delen",
-          "steps": [
-            "Geef Eva gewoon een opdracht, bijvoorbeeld via Telegram: /eva2 Open https://example.com, volg Learn more en vertel wat je daar leest."
-          ],
-          "expected": "Eva gebruikt haar eigen browser en geeft het gecontroleerde resultaat terug. Alleen als een benodigde persoonlijke aanmelding ontbreekt kan zij jouw hulp nodig hebben."
+          "title": "Geen handeling nodig voor deze bouwtaak",
+          "steps": [],
+          "expected": "Zelfstandig technisch werk gaat door. App-goal hervatten kan alleen via de gebruikersbediening; actuele opdracht staat hier."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T00:46:27.839293+00:00"
+        "reviewedAt": "2026-10-03T00:59:30.772912+00:00"
       },
       "reviewedAt": "2026-10-02T13:18:04.695516+00:00"
     },
@@ -15500,7 +15498,7 @@
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "General programming executor and typed source/command inputs are installed. Eva wrote and ran a reusable program; independent synthetic functional check18/18 passed. Existing documents/procedures and managed component review/release remain available.",
-            "remainingGap": "Existing document/procedure path is sufficient and exact program is preserved. Missing live-component handoff: independently accepted exact review to existing build, managed application and installed verification. No valid AIDE context candidate exists.",
+            "remainingGap": "A valid Eva-authored frozen context candidate now exists. Independent answer evaluation and exact approved source→managed application remain; deterministic gain alone is not final acceptance.",
             "nextAction": "De bestaande kandidaat-, bronimport- en beheerde updateroutes bestaan. Nog te verbinden: een exact onafhankelijk goedgekeurd pakket naar bouwen, toepassen en geïnstalleerde controle. Eva mag haar eigen kandidaat niet goedkeuren. Geen nieuw platform of heropening van de afgesloten AIDE-contextproef.",
             "evidencePaths": [
               "eva2/evidence/product/component-self-improvement-assisted-20260924.json"
@@ -15546,16 +15544,16 @@
             {
               "id": "L3.2",
               "title": "Kandidaat onafhankelijk vergelijken",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "onderzoek",
               "doneWhen": "Eén vastgezette kandidaat op afgeschermde taken vergelijken; kwaliteit, privacy, hulp, snelheid en verbruik vastleggen.",
               "owner": "Codex",
               "blocker": null,
               "previousBlocker": "Geen geldige kandidaat uit oorspronkelijke afgesloten proef; afgeschermde vergelijking niet uitgevoerd.",
-              "checkedAt": "2026-10-02T12:25:10.818972+00:00",
+              "checkedAt": "2026-10-03T01:23:59.398781+00:00",
               "ownerActionRequired": false,
-              "remaining": "Eigen programma uitgevoerd, onafhankelijk gecontroleerd en met Codex-hulp in bestaande werkwijzenbibliotheek bewaard. Zelfstandige live-componenttoepassing en AIDE-contextverbetering blijven onbewezen.",
-              "nextAction": "Bij een echte onafhankelijke winst de ontbrekende review→build→beheerste toepassing aansluiten. Bewaar exact de bestaande criteria. Zonder geldige kandidaat geen speculatief releaseplatform; bestaande T2-gebruikersuitkomst gaat nu verder.",
+              "remaining": "Toepassing en geïnstalleerde controle volgen onder L3.3. Geen eigenaarhandeling.",
+              "nextAction": "L3.3 voert de exact beoordeelde bron in en controleert de geïnstalleerde werking.",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
@@ -15563,39 +15561,62 @@
                 "blocksIndependentWork": false
               },
               "assignment": {
-                "baseCommit": "1bce50c76bb9d1e3ab8b4f38a1d97e4247129e70",
+                "baseCommit": "932558b14727fefc5e36ab6ef66a7ea2ce8cfbef",
                 "owner": "/root",
                 "activeWorkers": [],
-                "stage": "no_promotable_candidate_application_gap_recorded",
+                "stage": "independent_comparison_completed",
                 "outcome": "Eva completes a useful ordinary programming request through her own shared execution route, with independently assessed result and actual application.",
                 "existing": "Delegated tasks/MCP discovery, document and learned procedure tools, component proposals and managed operator release.",
-                "gap": "Existing document/procedure path is sufficient and exact program is preserved. Missing live-component handoff: independently accepted exact review to existing build, managed application and installed verification. No valid AIDE context candidate exists.",
+                "gap": "Earlier context candidate failed at nested JSON input. Typed programming input was installed later and produced an independently checked program; verify changed-cause continuation using unchanged evaluation criteria.",
                 "files": [
                   "shared delegated execution and existing connector integration as required",
                   "focused existing tests",
                   "existing delivery workboard and evidence"
                 ],
-                "estimate": "Reuse actual installed-catalog evidence and existing source first; no model calls before concrete reusable execution/application design. One implementation, one bounded review; actual usage reported, credits unknown.",
+                "estimate": "One existing Astra/medium task with installed profile. Zero refinements. At most24 existing Sol/none answer comparisons only after independent hardgate and gain; actual usage reported, credits unknown.",
                 "doneWhen": "Useful Eva-authored change executed, independently assessed and applied through the actual installed route; evidence and result returned; broader capability limitations remain explicit.",
-                "completedPreparation": "Eva-authored program executed and independently passed18cases. Exact source now saved/designated through installed tools and discovered/resolved unchanged from a separate conversation; assisted, zero model calls. Independent review GO. No worker remains active; next application handoff is not yet implemented."
+                "completedPreparation": "One Eva-authored candidate frozen SHA2562554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7;96.14s,8modelattempts,7tools,107308input/1636outputtokens. Protected inputs unchanged. Independent deterministic gate0hardfail,11→13/16required references; fixed answer comparison pending."
               },
-              "latestEvidence": "eva2/evidence/product/l3-program-preserved-20261002.json"
+              "latestEvidence": "eva2/evidence/product/l3-context-independent-20261003.json",
+              "completedAt": "2026-10-03T01:23:59.398781+00:00",
+              "result": "Vastgezette Eva-kandidaat onafhankelijk geslaagd:11→13/16 verwijzingen,geen regressies;24/24 antwoordaanroepen geslaagd. Mediaan3,972→3,453s; invoertokens5094→5115. Geen algemene snelheid-/kostenwinst."
             },
             {
               "id": "L3.3",
               "title": "Verbetering integreren of afwijzen",
-              "status": "planned",
+              "status": "blocked",
               "kind": "besluit",
               "doneWhen": "Alleen gemeten voordeel integreren. Gelijkspel/verlies wordt afgesloten zonder verdere bouw.",
               "owner": "Codex",
               "nextAction": "Codex verbindt beoordeeld exact resultaat met bestaande beheerde installatie en terugmelding. Eva past haar aantoonbare verbetering via die route toe, controleert de geïnstalleerde werking en bewaart bruikbare ervaring. Afwijzing sluit één kandidaat af; zij maakt de algemene programmeervaardigheid niet automatisch klaar.",
-              "ownerActionRequired": false,
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
-                "steps": [],
+                "availableNow": true,
+                "readyWhen": "Beantwoord de toestemmingsvraag in deze chat over de bestaande programmeerhost als root-systeemdienst.",
+                "steps": [
+                  "Kies of de beoordeelde zelfverbeteringsroute als bestaande systeemdienst mag worden geïnstalleerd, of alleen de contextverbetering."
+                ],
                 "blocksIndependentWork": false
-              }
+              },
+              "checkedAt": "2026-10-03T01:57:44.921325+00:00",
+              "blocker": "Automatic approval review rejected the persistent root systemd host/client change. Explicit scoped owner approval requested; no service mutation executed.",
+              "latestEvidence": "eva2/evidence/product/l3-context-independent-20261003.json",
+              "assignment": {
+                "baseCommit": "932558b14727fefc5e36ab6ef66a7ea2ce8cfbef",
+                "owner": "/root",
+                "activeWorkers": [],
+                "stage": "reviewed_source_ready_awaiting_host_privilege_approval",
+                "outcome": "Install exactly the independently successful Eva-authored context candidate through existing release facilities; distinguish assisted installation from autonomous application.",
+                "files": [
+                  "eva2/tools/import_component_release.py",
+                  "eva2/tests/operations/test_import_component_release.py",
+                  "eva2/src/eva/adapters/postgres/delegated_work_actions.py",
+                  "existing workboard and evidence"
+                ],
+                "estimate": "No further model comparison or candidate generation; reuse installed images and image-only updater. Credits unknown.",
+                "doneWhen": "Alleen gemeten voordeel integreren. Gelijkspel/verlies wordt afgesloten zonder verdere bouw."
+              },
+              "remaining": "Na toestemming bestaande host en toepassingskoppeling installeren, Eva de exact beoordeelde update laten aanvragen en de geïnstalleerde bron/status controleren. Alleen de contextverbetering installeren blijft het alternatief."
             }
           ],
           "latestEvidence": "eva2/evidence/product/l3-typed-programming-installed-20261002.json",
@@ -15673,6 +15694,16 @@
             "source": "eva2/evidence/product/aide-workspace-outcome-20261002.json",
             "holdoutEvaluated": false,
             "measuredImprovement": false
+          },
+          "aideTypedFollowup": {
+            "state": "independent_pass_application_pending",
+            "candidateSha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+            "evidence": "eva2/evidence/product/l3-context-independent-20261003.json",
+            "candidateCount": 1,
+            "refinements": 0,
+            "measuredImprovement": true,
+            "installed": false,
+            "limitation": "Controlled task-context experiment; no claim of full autonomous recursive self-improvement or general competitor superiority."
           }
         },
         {

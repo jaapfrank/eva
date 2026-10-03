@@ -1,5 +1,31 @@
 # EVA2 werkbord
 
+## Actief: L3.3 — bewezen eigen contextverbetering installeren
+
+**L3.2 afgerond:** de vastgezette Eva-kandidaat slaagt voor de onafhankelijke
+beoordeling. **13/16** benodigde taakverwijzingen tegenover **11/16**, geen
+regressies. Alle **24/24** modelaanroepen geslaagd; mediaan **3,972→3,453s**.
+Inputtokens **5.094→5.115**: geen besparing geclaimd. Drie herhalingen per vraag
+bewijzen alleen deze begrensde uitkomst, geen algemene voorsprong.
+
+**Nu:** exacte bron geïmporteerd; images en eigen toepassingsroute voorbereid en
+onafhankelijk gereviewd. De automatische goedkeuringscontrole blokkeerde de
+installatie omdat de bestaande systeemdienst blijvend rootrechten zou krijgen en
+de gedeelde clientconfiguratie wijzigt. De huidige losgestarte host draait al als
+root. Een gerichte toestemmingsvraag staat in deze chat; er is nog geen dienst of
+runtime vervangen. Geen geïnstalleerde wijziging of autonome toepassing geclaimd.
+**22/44 oorspronkelijke kleine taken** afgerond; technische deeltaken zijn geen
+extra afgerond groot productonderdeel. Bestaande acceptaties blijven staan.
+
+Kandidaatgeneratie: **96,14 seconden**, **107.308 input-/1.636 outputtokens**,
+8 modelantwoorden en 7 hulpmiddeloproepen. Eindbeoordeling: **10.209 input-/989
+outputtokens**. Credits onbekend. Geen nieuwe kandidaat of optimalisatieplatform.
+Het app-goal staat nog geblokkeerd; de opdracht van 3 oktober hervat het werk
+in deze chat. Technische voortgang en menselijke acceptatie blijven gescheiden.
+
+[Onafhankelijke meting](evidence/product/l3-context-independent-20261003.json)
+· [Beoordeling](reviews/l3-context-independent-20261003.md).
+
 ## Nu opgeleverd: Eva gebruikt zelfstandig haar eigen browser
 
 Eva startte haar gestopte eigen browser, opende example.com, klikte door naar
@@ -11,7 +37,7 @@ geïnstalleerd; kern en werker draaien gezond met dezelfde bronversie.
 De proef duurde **81,5 seconden**, met **101.588 input-/782 outputtokens**
 (gedeeltelijk gemeten; credits onbekend). Zelfstandig gebruik werkt; geen claim
 van lage kosten of hoge snelheid. Twee eerdere mislukte pogingen blijven zichtbaar.
-De onafhankelijke eindreview is **GO**. Vervolgwerk is nog niet gestart.
+De onafhankelijke eindreview is **GO**. Het huidige vervolgwerk staat hierboven.
 De vorige T3.1/T3.2-acceptatie
 blijft behouden; geen nieuwe taak of tellerwijziging. Persoonlijke overname T3.3
 blijft optioneel en blokkeert deze zelfstandige route niet.

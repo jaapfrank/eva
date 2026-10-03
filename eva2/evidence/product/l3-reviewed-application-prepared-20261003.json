@@ -1,0 +1,45 @@
+{
+  "contract": "EvaReviewedApplicationPreparation/v1",
+  "recordedAt": "2026-10-03T01:57:44.921325+00:00",
+  "taskIds": [
+    "L3.2",
+    "L3.3"
+  ],
+  "candidateSha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+  "packageSha256": "503e263aa1c01ca0bc5aa443990c98a61c94fa29ae4c9f6d637135ccf3b9d5ab",
+  "independentGain": "eva2/evidence/product/l3-context-independent-20261003.json",
+  "reviews": [
+    "eva2/reviews/l3-context-application-20261003.md",
+    "eva2/reviews/l3-reviewed-application-source-20261003.md"
+  ],
+  "focusedVerification": {
+    "formalComponentEvaluation": "Existing17checks pass on both complete baseline/candidate modules",
+    "applicationAfterReview": {
+      "passed": 72,
+      "seconds": 4.58
+    },
+    "hostPreflight": "Actual existing minimal host interpreter imports and validates all exact artifact bindings; review-status returns ready without application",
+    "liveReadiness": "Existing completed scoped task returns ready; read-only, no modelcall/update"
+  },
+  "state": "source_ready_installation_requires_host_permission",
+  "installed": false,
+  "approvalBlock": "Automatic approval review rejected persistent root systemd service and shared client change; owner question pending. Rejected command did not execute.",
+  "scope": "Eva-authored candidate, separate independent assessment, coordinator-prepared approved images, Eva-triggered host application; no self-approval or autonomous builder claim.",
+  "runtimeUsage": {
+    "candidateInputTokens": 107308,
+    "candidateOutputTokens": 1636,
+    "candidateModelAttempts": 8,
+    "candidateToolCalls": 7,
+    "candidateSeconds": 96.14,
+    "answerComparisonInputTokens": 10209,
+    "answerComparisonOutputTokens": 989,
+    "answerComparisonCalls": 24,
+    "credits": null
+  },
+  "limitations": [
+    "One controlled context task; not general superiority to Eva1 or competitors.",
+    "No token savings; three response samples per question only.",
+    "Readiness is a task/lease/lock snapshot with existing graceful shutdown, not an atomic admission barrier.",
+    "Original failed trials and preparation errors remain in existing/private evidence; they are not completed product functions."
+  ]
+}

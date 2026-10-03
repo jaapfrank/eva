@@ -1,0 +1,152 @@
+{
+  "contract": "EvaL3IndependentContextAssessment/v1",
+  "reviewedAt": "2026-10-03T01:16:24.855716+00:00",
+  "taskIds": [
+    "L3.2",
+    "L3.3"
+  ],
+  "decision": "passes_fixed_promotion_rule",
+  "promotionScope": "Frozen active_context candidate only; eligible for the existing reviewed application/install route. This report does not certify installation or mark the product tasks complete.",
+  "baselineSha256": "99954a459bb14c3411613d165d981887746890749df1e51c2dd50f0a21acf34e",
+  "candidateSha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+  "programmingImage": "sha256:4355cfe6db617e43e81d1679bf8c7b8beed71db8ec137378dbb46e809a2452d7",
+  "criteria": {
+    "source": "eva2/experiments/aide-20260929/criteria.json",
+    "followup": "eva2/experiments/aide-20260929/typed-followup-20261003.json",
+    "promotionRuleUnchanged": true,
+    "candidateRefinements": 0
+  },
+  "preservation": {
+    "baselineDevelopmentCasesAndHarnessHashesUnchanged": true,
+    "bytesOutsideActiveContextUnchanged": true,
+    "methodInterfaceUnchanged": true,
+    "currentT2InstructionsPreserved": true,
+    "ownInitiativeBlockByteExact": true,
+    "candidateUnaidedByFinalEvaluator": true
+  },
+  "deterministicComparison": {
+    "questions": 16,
+    "isolatedInvocations": 32,
+    "hardFailures": {
+      "baseline": 0,
+      "candidate": 0
+    },
+    "requiredReferences": 16,
+    "includedReferences": {
+      "baseline": 11,
+      "candidate": 13
+    },
+    "newlyAnswerableQuestions": 2,
+    "relevanceRegressions": 0,
+    "contextBytes": {
+      "baseline": 18348,
+      "candidate": 18388
+    },
+    "meaning": "Metadata inclusion and preservation; not model answer correctness by itself."
+  },
+  "answerComparison": {
+    "model": "gpt-6-sol",
+    "reasoning": "none",
+    "selectedQuestions": 4,
+    "repetitions": 3,
+    "logicalModelCalls": 24,
+    "successfulCalls": 24,
+    "failedCalls": 0,
+    "automaticRetries": 0,
+    "additionalJudgeModelCalls": 0,
+    "tools": 0,
+    "correctnessRegressions": 0,
+    "correctDirectAnswersOnNewlyAnswerableQuestions": {
+      "baseline": 0,
+      "candidate": 6,
+      "possiblePerLeg": 6
+    },
+    "newlyAnswerableQuestionsCorrectAcrossAllThreeRepetitions": 2,
+    "conditionalFurtherResultLookupReplies": 1,
+    "legs": {
+      "baseline": {
+        "calls": 12,
+        "correctAnswers": 12,
+        "medianSeconds": 3.971835786505835,
+        "minimumSeconds": 3.2196174600103404,
+        "maximumSeconds": 7.105757842975436,
+        "totalProviderSeconds": 50.77752497897018,
+        "inputTokens": 5094,
+        "outputTokens": 566
+      },
+      "candidate": {
+        "calls": 12,
+        "correctAnswers": 12,
+        "medianSeconds": 3.4530697720038006,
+        "minimumSeconds": 2.6829604000085965,
+        "maximumSeconds": 3.747564160003094,
+        "totalProviderSeconds": 40.339480900991475,
+        "inputTokens": 5115,
+        "outputTokens": 423
+      }
+    },
+    "pooledMedianRatio": 0.8693888563408078,
+    "pooledMedianChangePercent": -13.061114365919224,
+    "largestPerQuestionMedianRatio": 1.1063450915316912,
+    "allFourQuestionMediansWithin25PercentRegression": true,
+    "inputTokenChangePercent": 0.41224970553592755,
+    "inputTokenSavingClaim": false,
+    "judging": "Independent semantic review of all 24 responses under the pre-answer rubric; no judge model."
+  },
+  "usage": {
+    "candidateGeneration": {
+      "measurement": "measured",
+      "model_attempts": 8,
+      "tool_calls": 7,
+      "input_tokens": 107308,
+      "output_tokens": 1636
+    },
+    "candidateGenerationSeconds": 96.14,
+    "answerEvaluation": {
+      "inputTokens": 10209,
+      "outputTokens": 989,
+      "logicalModelCalls": 24
+    },
+    "developmentAndEvaluationOnly": true,
+    "subscriptionCredits": "unknown",
+    "cost": "unknown",
+    "historicalTrials": "Prior failed-trial usage remains recorded separately; this does not erase or reset it."
+  },
+  "independence": {
+    "candidateFrozenBeforeProtectedAccess": true,
+    "holdoutSha256": "32ca4fe1b47e7f6a191f6d9c80ddf82c89a7560146303f18bf9fcf20ae3828c3",
+    "protectedContentReturnedToOptimizer": false,
+    "candidateInvocationsReceivedOnlyCurrentInput": true,
+    "expectedAnswersExcludedFromCandidateInputs": true,
+    "network": "none",
+    "privateRuntimeMounts": false,
+    "developmentScorerVisibility": "Explicitly allowed by typed follow-up; final evaluator and holdout excluded from programming workspace.",
+    "answerPlanSha256": "ddf0ae1a2983686f47737fdeb3b3ab2ce702bee085aa0c1a1a3f15d5c1578642"
+  },
+  "evaluatorCorrection": {
+    "occurredBeforeHeldoutInvocations": true,
+    "description": "Removed a historical development-only import allowlist accidentally copied into the new final adapter. The harmless math import did not violate a registered hardCondition. The preliminary static result is preserved privately; candidate, fixed criteria and holdout stayed unchanged.",
+    "failedHeldoutComparisons": 0
+  },
+  "limits": [
+    "Four selected synthetic task-status questions, three samples per question and variant. Sampling and provider load can change timings; no confidence interval or broad conversational speed claim is supported.",
+    "Alternating variant order reduces order effects but does not eliminate network, caching or provider variance.",
+    "Reported answer times measure provider/model response latency inside the driver and exclude Docker/interpreter startup; they do not measure end-to-end task completion or household interaction.",
+    "One candidate reply supplied the correct status but additionally described a conditional lookup for further result detail; complete removal of follow-up lookups is not claimed.",
+    "Input tokens increased slightly. Promotion follows the newly-answerable-task branch, not the 20 percent token-reduction branch.",
+    "Own-initiative and T2 preservation are established by source comparison; installed combined behavior still requires the existing application verification.",
+    "This is one bounded task-context improvement, not recursive self-improvement, general AIDE² superiority, family acceptance, or completion of the full L3 outcome.",
+    "The legacy component-size limit is an application constraint outside this fixed evaluation; it was not used to change the candidate or scoring."
+  ],
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/l3-context-typed-20261003/independent-final",
+  "evidenceSha256": {
+    "invocation.py": "7d9aac11afc7bae3ce94f8960a8ff9ef44eb695d2594786e794fc2d83eae5244",
+    "evaluate_final.py": "3c468880cccc22cba4ba2e555b8c4fb49e4e9a94fc408ec918d731edf6944785",
+    "answer-plan.json": "ddf0ae1a2983686f47737fdeb3b3ab2ce702bee085aa0c1a1a3f15d5c1578642",
+    "answer-started.jsonl": "fab36cdf10d2207fcde74e18dd7362a32038da42b0055fd5a7e22c2c95fdb7e0",
+    "answer-results.jsonl": "a8021c250461a086f978d59fa53fab6f2a733780cdca23942357f718bc5178bc",
+    "private-answer-review.json": "8cabb25fe18d5aa4219cef9de0d4d82a85f485570bb82858af8ecfd1efbcb6a7",
+    "aggregate-report.json": "a51265c3ef9c7345ba18b80d68fd114b5d00b599d298a224897ec18bf7a1768c",
+    "adapter-correction.json": "066e68167fe4e58762fc16ed56abcef455efa060146fdec0f94a97bd28d762cd"
+  }
+}

@@ -33,7 +33,7 @@ def load_config(path):
     config = json.loads(raw, object_pairs_hook=_object)
     required = {"image", "command", "token_file", "bind_host", "port", "allowed_paths"}
     limits = {field.name for field in fields(EvaluationConfig)} - {"image", "command"}
-    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace"}:
+    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace", "reviewed_component_applications"}:
         raise ValueError("invalid evaluation service configuration fields")
     if (not isinstance(config["command"], list)
             or not isinstance(config["token_file"], str)
@@ -67,10 +67,11 @@ class EvaluationServer(ThreadingHTTPServer):
     daemon_threads = False
     request_queue_size = 8
 
-    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None):
+    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None, reviewed_applications=None):
         self.evaluator = evaluator
         self.procedure_executor = procedure_executor
         self.programming_workspaces = programming_workspaces
+        self.reviewed_applications = reviewed_applications
         self.token = token
         self.allowed_paths = allowed_paths
         self.execution_lock = threading.Lock()
@@ -173,7 +174,48 @@ class EvaluationHandler(BaseHTTPRequestHandler):
             return
         self._reply(200, result)
 
+    def _reviewed_component(self):
+        if self.server.reviewed_applications is None:
+            self._reply(404, {"error": "not_found"})
+            return
+        if not self._authenticated():
+            self._reply(401, {"error": "unauthorized"})
+            return
+        try:
+            lengths = self.headers.get_all("Content-Length", [])
+            types = self.headers.get_all("Content-Type", [])
+            if (len(lengths) != 1 or not lengths[0].isascii() or not lengths[0].isdigit()
+                    or self.headers.get_all("Transfer-Encoding") or len(types) != 1
+                    or types[0].split(";", 1)[0].strip().lower() != "application/json"):
+                raise ValueError()
+            length = int(lengths[0])
+            if not 1 <= length <= 8192:
+                raise ValueError()
+            raw = self.rfile.read(length)
+            if len(raw) != length:
+                raise ValueError()
+            value = json.loads(raw, object_pairs_hook=_object)
+            if not isinstance(value, dict) or set(value) != {"action", "review_id", "request_id", "task_id"}:
+                raise ValueError()
+            if value["action"] == "request":
+                result = self.server.reviewed_applications.request(
+                    value["review_id"], value["request_id"], value["task_id"])
+            elif value["action"] == "status":
+                result = self.server.reviewed_applications.review_status(value["review_id"])
+            else:
+                raise ValueError()
+        except (ValueError, TypeError, UnicodeError, OSError, OverflowError, RecursionError):
+            self._reply(400, {"error": "invalid_component_application"})
+            return
+        except Exception:
+            self._reply(500, {"error": "component_application_unconfirmed"})
+            return
+        self._reply(200, result)
+
     def do_POST(self):
+        if self.path == "/reviewed-component":
+            self._reviewed_component()
+            return
         if self.path == "/programming":
             self._programming()
             return
@@ -247,9 +289,13 @@ def main():
     if "programming_workspace" in config:
         from eva.operations.programming_workspace import ProgrammingWorkspaceConfig, ProgrammingWorkspaces
         programming = ProgrammingWorkspaces(ProgrammingWorkspaceConfig(**config["programming_workspace"]))
+    applications = None
+    if "reviewed_component_applications" in config:
+        from eva.operations.component_application_runtime import configured_component_applications
+        applications = configured_component_applications(config["reviewed_component_applications"])
     with EvaluationServer(address, evaluator=ComponentEvaluator(settings), token=token,
                           allowed_paths=allowed_paths, procedure_executor=executor,
-                          programming_workspaces=programming) as server:
+                          programming_workspaces=programming, reviewed_applications=applications) as server:
         def stop(signum, frame):
             threading.Thread(target=server.shutdown, daemon=True).start()
         signal.signal(signal.SIGTERM, stop)
@@ -257,6 +303,8 @@ def main():
         try:
             server.serve_forever(poll_interval=0.5)
         finally:
+            if applications is not None:
+                applications.close()
             if programming is not None:
                 programming.close_all()
 
