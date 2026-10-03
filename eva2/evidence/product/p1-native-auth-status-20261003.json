@@ -1,0 +1,26 @@
+{
+  "contract": "EvaNativeComparisonAccessObservation/v1",
+  "checked_at": "2026-10-03T16:50:38.310133+00:00",
+  "scope": "Native participant authentication only; no inference or comparison admission",
+  "openclaw": {
+    "state": "device_auth_timed_out",
+    "exec_session": 95641,
+    "exit_code": 1,
+    "native_profile": "existing independent OpenClaw Codex home",
+    "own_login_confirmed": false,
+    "replacement_flow_started": false,
+    "terminal_receipt_sha256": "690f28ad4dcf0ad97504ed158b4c7f16ce137ff2439212d3026430945ed22ec0"
+  },
+  "hermes": {
+    "state": "previous_native_login_failed_AuthError",
+    "new_flow_started": false,
+    "own_login_confirmed": false
+  },
+  "model_calls": 0,
+  "credentials_copied": false,
+  "next_action": "Start one fresh native flow only when the owner is ready to complete it; investigate device-code account setting if a still-active fresh code is rejected.",
+  "limitations": [
+    "No cause is established for the earlier website rejection beyond the terminal states of those flows.",
+    "Authentication does not establish equal benchmark admission or approve separate R1 consumption."
+  ]
+}

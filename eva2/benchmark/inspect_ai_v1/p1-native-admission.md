@@ -283,3 +283,21 @@ This direct package session does not validate OpenClaw host configuration,
 full harness execution, tools/sandbox behavior, latency or comparison admission.
 No Eva installation changed. See
 `../../evidence/product/p1-openclaw-native-catalog-20261001.json`.
+
+## Native provider control — 3 October 2026
+
+The existing offline Bottie fixture now binds its actual native fetch entry to
+`ProviderSampleLedger` via `NativeProviderControl`. It can receive stop while an
+HTTP request is pending, settle a stopped reservation and prevent later dispatch.
+Eight focused cases are evidenced with retained successes and one corrected race
+case. No live provider mode, model calls, native product changes or larger budget
+were introduced. The observer buffers the fixture SSE; this is not latency-neutral
+streaming evidence. Native role parity, helper/memory coverage, active cloud stop
+and complete participant admission remain open. See
+[`p1-native-control-20261003.json`](../../evidence/product/p1-native-control-20261003.json)
+and the [independent review](../../reviews/p1-native-control-20261003.md).
+
+The newer owner goal permits comparison with available, individually admitted
+participants; missing competitor access does not block a valid admitted pair.
+Unavailable samples stay unknown and do not inherit or redistribute any budget.
+The full EV-003 superiority thresholds remain unchanged.

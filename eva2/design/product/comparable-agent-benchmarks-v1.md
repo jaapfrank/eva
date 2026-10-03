@@ -2,6 +2,19 @@
 
 Actueel meetprotocol: 7 september 2026. De releaseverkenning onderaan is historisch.
 
+## Owner instruction precedence — 2 October 2026
+
+The current delivery goal permits comparison with available, individually admitted
+participants. An unavailable competitor therefore does not block a valid partial
+comparison between admitted Eva1/Eva2 or other available participants. Keep absent
+samples explicitly unavailable/unknown, with no loss or win assigned and no
+redistribution of their unused budget. Each executed participant still needs the
+existing native admission, identical task conditions and recorded accounting.
+The full EV-003 superiority thresholds below remain unchanged and cannot be
+claimed from a partial comparison. This supersedes only the older prerequisite
+that every participant must be ready before any comparative execution.
+See the 2 October owner instruction in `../../PROJECTDOEL.md`.
+
 ## EV-003 — wanneer telt verbetering?
 
 Dit is een vooraf vastgelegd productprotocol, geen score of algemene marktclaim.

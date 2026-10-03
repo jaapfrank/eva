@@ -292,5 +292,88 @@ class NativeAdapterTests(unittest.TestCase):
         )
 
 
+
+
+class NativeProviderControlTests(unittest.TestCase):
+    def control(self):
+        from cp001_accounting import ProviderSampleLedger
+        ledger = ProviderSampleLedger(
+            "sample-1",
+            {"providerAttempts": 2, "providerInputTokens": 20, "providerOutputTokens": 10},
+            {"contact": ("fixture-model", "none")},
+        )
+        return native.NativeProviderControl(ledger, "request-1"), ledger
+
+    def begin(self, event_id="event-1", request_id="request-1"):
+        return {"provider_event": "begin", "event_id": event_id,
+                "request_id": request_id, "role": "contact",
+                "model": "fixture-model", "reasoning_effort": "none"}
+
+    def settle(self, attempt=0, usage=None, status="completed"):
+        return {"provider_event": "settle", "event_id": "event-1",
+                "request_id": "request-1", "attempt_id": attempt,
+                "status": status, "usage": usage}
+
+    def test_raw_usage_and_attempt_identity_flow_into_existing_ledger(self):
+        control, ledger = self.control()
+        permit = control.handle(self.begin())
+        self.assertTrue(permit["allow"])
+        self.assertEqual(permit["attempt_id"], 0)
+        usage = {"input_tokens": 12, "output_tokens": 3, "total_tokens": 15}
+        self.assertTrue(control.handle(self.settle(usage=usage))["allow"])
+        self.assertEqual(ledger.attempts[0]["usage"], usage)
+        self.assertTrue(ledger.report()["complete"])
+        self.assertFalse(control.handle(self.settle(usage=usage))["allow"])
+        self.assertEqual(len(ledger.attempts), 1)
+
+    def test_other_request_cannot_consume_or_settle_the_sample(self):
+        control, ledger = self.control()
+        self.assertFalse(control.handle(self.begin(request_id="other"))["allow"])
+        self.assertEqual(ledger.attempts, [])
+        self.assertFalse(control.handle(self.begin())["allow"])
+        self.assertEqual(ledger.attempts, [])
+
+    def test_wrong_attempt_identity_never_creates_success(self):
+        control, ledger = self.control()
+        control.handle(self.begin())
+        result = control.handle(self.settle(attempt=True,
+            usage={"input_tokens": 1, "output_tokens": 1, "total_tokens": 2}))
+        self.assertFalse(result["allow"])
+        self.assertFalse(ledger.report()["complete"])
+        self.assertEqual(ledger.attempts[0]["status"], "pending")
+
+    def test_missing_usage_stays_unknown_and_prevents_another_attempt(self):
+        control, ledger = self.control()
+        control.handle(self.begin())
+        self.assertFalse(control.handle(self.settle())["allow"])
+        self.assertIsNone(ledger.attempts[0]["usage"])
+        self.assertFalse(ledger.report()["complete"])
+        self.assertFalse(control.handle(self.begin("event-2"))["allow"])
+        self.assertEqual(len(ledger.attempts), 1)
+
+    def test_stop_can_arrive_before_an_admitted_permit_reaches_the_worker(self):
+        control, ledger = self.control()
+        withheld_permit = control.handle(self.begin())
+        self.assertTrue(withheld_permit["allow"])
+        control.stop()
+        terminal = control.handle(self.settle(attempt=None, status="aborted"))
+        self.assertFalse(terminal["allow"])
+        self.assertNotIn("stop", terminal)
+        self.assertEqual(ledger.attempts[0]["status"], "aborted")
+        self.assertIsNone(ledger.attempts[0]["usage"])
+        self.assertFalse(ledger.report()["complete"])
+
+    def test_stop_requires_terminal_observation_and_does_not_guess_usage(self):
+        control, ledger = self.control()
+        control.handle(self.begin())
+        self.assertEqual(control.stop(), {"stop": True})
+        self.assertEqual(ledger.attempts[0]["status"], "pending")
+        self.assertFalse(control.handle(self.settle(status="aborted"))["allow"])
+        self.assertEqual(ledger.attempts[0]["status"], "aborted")
+        self.assertIsNone(ledger.attempts[0]["usage"])
+        self.assertFalse(control.handle(self.begin("event-2"))["allow"])
+        self.assertEqual(len(ledger.attempts), 1)
+
+
 if __name__ == "__main__":
     unittest.main()

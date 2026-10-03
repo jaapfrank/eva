@@ -1035,8 +1035,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T16:44:01.274310+00:00",
+        "checkedAt": "2026-10-03T17:19:16.052196+00:00",
         "deliveries": [
+          {
+            "title": "Vergelijkingskoppeling kan stoppen tijdens een lopende aanvraag",
+            "date": "3 oktober",
+            "state": "tested",
+            "result": "De echte native proefroute koppelt pogingen aan het bestaande verbruiksregister en verwerkt stop terwijl HTTP loopt. Acht gerichte gevallen en onafhankelijke beperkte GO; geen live modelcalls.",
+            "remaining": "Alleen voorbereidende lokale proefkoppeling. Nog geen live vergelijking, volledige meetdekking of nieuwe Eva-functie; 25/44 taken blijven afgerond.",
+            "source": "eva2/evidence/product/p1-native-control-20261003.json"
+          },
           {
             "title": "Gesprek tijdens werk en opgeslagen resultaten bevestigd",
             "date": "3 oktober",
@@ -3497,26 +3505,26 @@
           }
         ],
         "now": {
-          "title": "F1.2 · gezamenlijke werking en herstart controleren",
-          "state": "in_progress",
+          "title": "P1.1 · volgende native meetaansluiting",
+          "state": "planned",
           "owner": "Codex /root",
-          "detail": "Gezamenlijke werking gecontroleerd: tussenvraag tijdens werk, opgeslagen geheugen en twee resultaten zichtbaar op de echte pagina. Onafhankelijke voorbereiding GO. Echte Windows-herstart en nacontrole nog open; 25/44 taken afgerond."
+          "detail": "Lokale stop-/meetkoppeling afgerond en onafhankelijk beoordeeld. Volgende aansluiting op echte provider- en geheugenaanroepen nog niet gestart; geen uitvoerder actief. P1 en de eindvergelijking zijn nog open."
         },
         "next": {
-          "title": "Na de aanmeldingen: Windows-herstart en nacontrole",
-          "detail": "De voorbereiding is gereed. Na de echte eigenaarherstart dezelfde geheugen-, taak-, resultaat- en bestandstoestand controleren; oorspronkelijke opdrachten niet opnieuw uitvoeren."
+          "title": "Bestaande native meetroute verder aansluiten",
+          "detail": "Hergebruik de geleverde stopkoppeling. Leg echte provider-/helper-/geheugendekking vast voordat dezelfde begrensde vergelijking draait. F1.2 wacht afzonderlijk op de gevraagde Windows-herstart."
         },
         "ownerAction": {
-          "title": "Eerst verse inlog; herstart volgt daarna",
+          "title": "Windows opnieuw opstarten voor de voorbereide eindcontrole",
           "steps": [
-            "Voltooi OpenClaw met de verse code uit deze chat. Hermes volgt daarna.",
-            "Nog geen computerherstart tijdens de aanmelding. De herstartvoorbereiding is beoordeeld; de concrete instructie volgt na de aanmeldingen.",
-            "Beantwoord afzonderlijk de toestemmingsvraag voor de acht runs van de innovatieproef."
+            "Sla je werk op, kies in Windows Opnieuw opstarten en open daarna deze Codex-chat.",
+            "Meld Herstart klaar; Codex doet de nacontrole. De inlogcodes zijn verlopen; er loopt geen aanmelding.",
+            "De afzonderlijke toestemmingsvraag voor acht innovatieruns blijft open."
           ],
-          "expected": "Aanmelding en herstart zijn afzonderlijke handelingen. F1.2 blijft open tot de echte herstart en nacontrole."
+          "expected": "Geen nieuwe installatie of herhaling van opdrachten. F1.2 blijft open tot de echte herstart en nacontrole."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T16:44:01.274310+00:00"
+        "reviewedAt": "2026-10-03T17:19:16.052196+00:00"
       },
       "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
     },
@@ -15924,35 +15932,43 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "OpenClaw-inlog nu actief. Hermes nog niet aangemeld. Gelijke vergelijkingsvoorwaarden en uitvoering blijven apart.",
-              "latestEvidence": "eva2/evidence/product/p1-native-auth-status-20261001.json",
+              "remaining": "Lokale native stop-/meetkoppeling gericht gecontroleerd en onafhankelijk akkoord. Werkelijke provider-/geheugen-/helperdekking en streamingmeting nog nodig vóór live vergelijking. Eigen OpenClaw/Hermes-aanmelding apart open.",
+              "latestEvidence": "eva2/evidence/product/p1-native-control-20261003.json",
               "assignment": {
                 "owner": "Codex /root",
-                "support": "/root/background_execution_seam",
-                "stage": "fresh_openclaw_native_login_waiting",
+                "support": null,
+                "stage": "offline_native_control_checked_next_binding_not_started",
                 "baseCommit": "523d5bc0",
-                "currentAction": "Owner reported old codes rejected; terminal old flows confirmed. Fresh OpenClaw native sign-in active, Hermes starts after confirmed OpenClaw completion. No model generation.",
+                "currentAction": "Offline native control seam checked and independently GO; root publishes the bounded checkpoint. Next actual native provider/helper/memory coverage and streaming/cancellation binding not started. No live sample admitted.",
                 "runtimeHandle": {
                   "hermesExecSession": 63638,
                   "hermesExitCode": 1,
                   "hermesState": "native_login_failed_AuthError",
-                  "openclawState": "fresh_native_device_login_active",
+                  "openclawState": "device_auth_timed_out",
                   "openclawExecSession": 95641,
                   "openclawPreviousPid": 2534685,
-                  "openclawPid": 3233193
+                  "openclawPid": 3233193,
+                  "openclawExitCode": 1
                 },
-                "estimate": "Two native auth flows plus read-only confirmation; no model generation, credit cost unknown."
+                "estimate": "Zero runtime model/provider calls; focused checks only; development credit cost unknown.",
+                "files": [
+                  "Root: cp001_native.py parent control and test_cp001_native.py",
+                  "Worker: cp001_bottie_worker.mjs and test_cp001_native_bottie.py",
+                  "Root: existing participant manifest, evidence and workboard"
+                ],
+                "activeWorkers": [],
+                "finish": "Existing actual native agent/HTTP/SQLite route exchanges sample permits and raw usage with the same ledger; controlled stop reaches a pending provider call. Earlier protocol remains compatible; independent review and zero-model focused checks. Does not complete full admission."
               },
-              "blocker": "OpenClaw wacht op invoer van de verse code. Hermes krijgt pas daarna een eigen verse aanmelding.",
+              "blocker": "OpenClaw/Hermes-aanmelding ontbreekt alleen voor die deelnemers. Eva1/Eva2 hebben zelfstandig te onderzoeken native meet-/stopovergangen.",
               "nextImplementation": "Use these owned persisted configurations for native startup after own authentication. No repeated config/catalog probe without a changed cause or new evidence. Prior Agent Zero helper-envelope refusal remains unavailable; no hidden helper disable, auth-token copying or quota increase.",
-              "checkedAt": "2026-10-03T16:35:46.145351+00:00",
+              "checkedAt": "2026-10-03T17:19:16.052196+00:00",
               "ownerActionRequired": true,
               "nextAction": "Codex gebruikt bestaande vergelijkingsvoorbereiding; Jaap levert alleen daadwerkelijk ontbrekende accounttoegang. Dit blokkeert uitsluitend die vergelijking, niet Eva’s eigen functionele uitvoering.",
               "ownerInstructions": {
-                "availableNow": true,
-                "readyWhen": "De verse OpenClaw-code staat in de chat en is tijdelijk actief.",
+                "availableNow": false,
+                "readyWhen": "Meld wanneer je klaarzit voor één nieuwe aanmelding; de vorige code is verlopen.",
                 "steps": [
-                  "Gebruik alleen de verse OpenClaw-code uit de chat; Hermes volgt na bevestiging."
+                  "Meld dat je klaarzit; Codex start dan één nieuwe native code."
                 ],
                 "blocksIndependentWork": false
               }
@@ -15960,12 +15976,12 @@
             {
               "id": "P1.2",
               "title": "Gelijke taken en meetbudget vastzetten",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "voorbereiden",
               "doneWhen": "Bestaande vergelijkingsprotocollen invullen met taken, scorers en eindig budget vóór uitvoering.",
               "owner": "Codex",
               "assignment": {
-                "baseCommit": "d3226925",
+                "baseCommit": "7b619c50390f54f0daa5755c42d5e533b18aacf2",
                 "files": [
                   "eva2/design/product/comparable-agent-benchmarks-v1.md",
                   "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json"
@@ -15973,10 +15989,14 @@
                 "existing": "EV-003 development cadence, C01/C04 public development cases, existing Inspect runner and native admission observations.",
                 "gap": "Current pins lack a bounded development run manifest with aggregate limits.",
                 "finish": "Freeze two known development cases, order, per-sample and aggregate limits; retain unavailable access and unseen final dataset as open. No model run.",
-                "estimate": "15–25 minutes; zero provider calls; credits unknown.",
-                "activeWorkers": []
+                "estimate": "One bounded read-only decision using existing evidence; zero provider calls, development credits unknown.",
+                "activeWorkers": [],
+                "owner": "/root",
+                "support": null,
+                "stage": "existing_development_manifest_ready_native_seam_dependency",
+                "currentAction": "Independent decision: newer owner instruction allows available admitted participants without waiting for every competitor login. Existing C01/C04 schedule and budgets remain unchanged; native Eva1/Eva2 sample accounting remains a technical dependency."
               },
-              "remaining": "Kleine ontwikkelronde vastgelegd: C01/C04, 2epochs, 5systemen, maximaal40providerpogingen en gedeelde grenzen. Niet uitvoerbaar zolang native toelating ontbreekt. Definitieve ongeziene eindtaken en familiebudgetten blijven open.",
+              "remaining": "Ontwikkelgevallen en budget al vastgezet. Gelijke meet-/stopovergangen van Eva1/Eva2 eerst aansluiten; ontbrekende concurrenten blijven onbekend. Eindtaken en familiebudgetten blijven open.",
               "evidence": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#developmentPlan",
               "nextAction": "Gebruik de bestaande taakfamilies en vastgezette referentieversies voor persoonlijkheid, geheugen, initiatief en zelfstandig werk. Vergelijk aanwezige én door Eva toegevoegde mogelijkheden op bruikbaar resultaat, hulp, tijd en totaalverbruik; geen toolaantallen of vooraf gecodeerde voorbeeldadapter. Bestaande afgeschermde beoordeling behouden.",
               "ownerActionRequired": false,
@@ -15985,7 +16005,8 @@
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "checkedAt": "2026-10-03T16:56:25.879537+00:00"
             }
           ],
           "assignment": {
@@ -16159,22 +16180,26 @@
               "doneWhen": "Gebundelde eindcontrole, computerherstart en onafhankelijke review; alleen concrete resterende fouten corrigeren.",
               "owner": "Codex",
               "nextAction": "Codex controleert het complete geheel gebundeld met onafhankelijke review. Geen nieuwe volledige test-/installatieronde per klein taakje.",
-              "ownerActionRequired": false,
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
-                "steps": [],
+                "availableNow": true,
+                "readyWhen": "Voorbereiding gereed; geen actieve native aanmelding.",
+                "steps": [
+                  "Sla je werk op en kies in Windows Opnieuw opstarten.",
+                  "Open daarna deze Codex-chat en meld Herstart klaar."
+                ],
+                "expected": "Codex controleert dezelfde diensten, geheugen, resultaten en bestanden zonder oorspronkelijke taken opnieuw uit te voeren.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-03T16:44:01.274310+00:00",
+              "checkedAt": "2026-10-03T16:50:38.310133+00:00",
               "assignment": {
                 "baseCommit": "512bdcfcac2239fc4709cdc686fee4a07c941895",
                 "owner": "/root",
                 "support": "Independent preparation review completed; no worker currently running",
-                "stage": "pre_reboot_ready_auth_in_progress",
+                "stage": "owner_windows_restart_requested",
                 "existing": "F1.1 installed GO; same core/worker sources, verified package binding and existing component evidence.",
                 "gap": "Joint endcheck and actual computer restart of the composed candidate not yet evidenced.",
-                "currentAction": "Preparation independently accepted. Seven focused cases passed; conversation overlapped completed work. Stored memory, files and visible browser results bound to the snapshot of 20 containers and 11 host units. Actual owner Windows restart follows the ongoing native sign-ins.",
+                "currentAction": "Preparation accepted and published. Native login has ended; owner Windows restart requested. No active evaluator or new test call.",
                 "files": [
                   "existing F1 endcheck/provenance artifacts",
                   "existing boot observer configuration if needed"

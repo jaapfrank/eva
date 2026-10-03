@@ -1,0 +1,92 @@
+{
+  "contract": "EvaNativeComparisonControlEvidence/v1",
+  "checkedAt": "2026-10-03T17:16:29.286193+00:00",
+  "taskIds": [
+    "P1.1",
+    "P1.2"
+  ],
+  "status": "offline_native_control_checked",
+  "wholeTaskCompleted": false,
+  "baseCommit": "7b619c50390f54f0daa5755c42d5e533b18aacf2",
+  "existingReused": [
+    "Actual Bottie agent, HTTP ingress and SQLite/ACK fixtures",
+    "Existing Python ProviderSampleLedger and native adapter",
+    "Existing development budget and sample schedule; no increase"
+  ],
+  "confirmedGap": "The existing fixture worker waited for its HTTP result before reading a stop command, and native fetch dispatch was not bound to the common sample ledger.",
+  "change": [
+    "Opt-in native begin/settle handshake carrying exact request/event/attempt identity into the existing ledger",
+    "Concurrent control handling while one HTTP ingress is active; stop rejects later dispatch",
+    "Raw synthetic SSE usage preserved; failed, aborted or missing usage remains unknown",
+    "Stop-before-admission and stop-after-reservation-before-permit-delivery both settle without a new dispatch"
+  ],
+  "verification": {
+    "parentCasesPassed": 6,
+    "nativeIntegrationCasesPassed": 2,
+    "initialCombined": {
+      "passed": 7,
+      "failed": 1,
+      "seconds": 2.41
+    },
+    "finalCorrectedCase": {
+      "passed": 1,
+      "seconds": 1.4
+    },
+    "preAdmissionStop": {
+      "completedSyntheticDispatches": 1,
+      "knownSyntheticUsage": {
+        "inputTokens": 17,
+        "outputTokens": 5
+      },
+      "lateDispatches": 0
+    },
+    "reservedPermitStop": {
+      "reservedAttempts": 1,
+      "dispatchedCalls": 0,
+      "status": "aborted",
+      "usage": null,
+      "remainingControls": 0
+    },
+    "nativeDefaultsPreserved": true,
+    "network": "Separate loopback-only namespace with test-only credential and synthetic provider stream"
+  },
+  "correctionsAndFailedChecks": [
+    "Independent review found a reserved-but-undelivered permit race; parent now closes only the exact stopped reservation as aborted/unknown.",
+    "Independent review found an already-aborted native signal needed immediate propagation; fixed before final execution.",
+    "Initial True-case incorrectly assumed both native phases use one model/effort profile. Ledger correctly denied it. An attempted fixture-only environment override did not fix that assumption and was reverted. A diagnostic rerun supplied insufficiently expanded output; its failed log remains.",
+    "Final True-case tests the first native permit directly, retaining the exact intended race without changing native model settings or relaxing the ledger. Only that changed case was rerun; other passing cases were retained."
+  ],
+  "modelCalls": 0,
+  "liveProviderRequests": 0,
+  "creditCost": null,
+  "developmentUsage": "Separate; credit cost not measured",
+  "productRuntimeChanged": false,
+  "runtimeRestarted": false,
+  "liveComparisonAdmitted": false,
+  "limitations": [
+    "Controlled native fixture evidence only; no live provider mode added.",
+    "Contact fixture role is declared; prescribed model/effort parity and complete native helper/memory/retry coverage remain unproven.",
+    "Observer waits for complete cloned SSE before releasing it; no latency-neutral streaming or benchmark latency claim.",
+    "Stopping before provider dispatch does not prove interrupting an active cloud generation or provider-side quiescence.",
+    "Original defaults, initial failures and unavailable costs remain visible; no new product task or competitive win counted."
+  ],
+  "next": "Bind remaining actual native provider/helper/memory coverage and streaming/stop observation before admitting any paid comparative sample. Reuse this control seam; do not count unavailable participants as losses.",
+  "sourceHashes": {
+    "eva2/benchmark/inspect_ai_v1/cp001_native.py": "8839d4efc75be5b67f6e25bfaf8aa816cb20d3bf7d63a8ddeb43b25db837cb36",
+    "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs": "f473c3984bf114e6480143a17352d503ebb96fcfdcd391e3c949154a578ade21",
+    "eva2/tests/benchmark/test_cp001_native.py": "5034d6023f33a7b8b1e9f5078a351c83574b4d7a8b272ab4fe761d3c76886969",
+    "eva2/tests/benchmark/test_cp001_native_bottie.py": "18a408acbf275127293473a5ad039c57f2b1740fccc63c0bcd80d40b6b5c6fd6"
+  },
+  "privateEvidenceHashes": {
+    "/home/administrator/project/.eva2-artifacts/p1-native-control-20261003/result.json": "c6faa3069ab11d873a39a7063fcfc2677fe34d785fea693a87a7d292d0899ef7",
+    "/home/administrator/project/.eva2-artifacts/p1-native-control-20261003/pytest.log": "cc58e6c5d502d11fa0da5f1073e7f28ec809b86781208e518e931ad1a275ec38",
+    "/home/administrator/project/.eva2-artifacts/p1-native-control-20261003/controlled-profile-check.json": "e6efaf972a7e3e7a9321c5f415cd41219dc07b02062d5a4476693d8e0c10d8ca",
+    "/home/administrator/project/.eva2-artifacts/p1-native-control-20261003/controlled-profile-check.log": "0b15afda61906dfb21cb97cab1d70b34f20b33deaf9cfcf332e3862d1918debe",
+    "/home/administrator/project/.eva2-artifacts/p1-native-control-20261003/permit-diagnostic.log": "8166161b420413ead532b21baacf38cbce657ffa0f3b99b0fe1a4512dd7728de",
+    "/home/administrator/project/.eva2-artifacts/p1-native-control-20261003/reserved-permit-check.json": "c06fa26d9382a16f6618153f316984141c0e41ff24308e431ee75401e0a25cab",
+    "/home/administrator/project/.eva2-artifacts/p1-native-control-20261003/reserved-permit-check.log": "a855b3c5f70f8cab19bae7fe75831012c6b74396f5ebb0b0985cd31c75146cd9"
+  },
+  "independentReview": "eva2/reviews/p1-native-control-20261003.md",
+  "independentReviewDecision": "GO for offline native control only",
+  "independentReviewSha256": "cf4d2da58693197e38982b56146b08100a12bbaa627475ccd64034c6d1b3392f"
+}

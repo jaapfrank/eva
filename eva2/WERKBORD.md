@@ -18,7 +18,7 @@ het bewijs claimt niet dat ieder bestand van HEAD geïnstalleerd is.
 [Geïnstalleerd resultaat](evidence/product/f1-integrated-installed-20261003.json)
 · [Onafhankelijke review](reviews/f1-integrated-candidate-20261003.md).
 
-**Nu actief: F1.2 — gezamenlijke werking en computerherstart controleren.**
+**F1.2 — voorbereiding gereed; computerherstart nog nodig.**
 Zeven bestaande gerichte gevallen geslaagd op de geïnstalleerde bron en schema 7.
 De gewone proef beantwoordde de tussenvraag tijdens werk; twee testbestanden en
 het persoonsgebonden Hindsight-record zijn teruggelezen. Beide resultaten staan
@@ -33,11 +33,30 @@ open. Nog steeds 25/44 afgerond; geen nieuwe functieclaim uit deze controle.
 [Resultaat en beperkingen](evidence/product/f1-joint-check-pre-reboot-20261003.json)
 · [Voorbereidingsreview](reviews/f1-joint-check-20261003.md).
 
-**Nu van Jaap nodig:** na zijn melding dat oude codes worden afgewezen is een
-verse OpenClaw-aanmelding gestart (exec 95641), met dezelfde eigen native configuratie.
-Hermes volgt pas daarna. Geen oude codes gebruiken. Nog geen Windows-herstart tijdens
-inloggen. Agent Zero heeft een eigen bewaarde sessie; OpenCode blijft de programmeer-
-referentie. Geen credentials gekopieerd of vergelijkingsmodelcalls.
+**P1.1 — lokale native meet-/stopkoppeling gereed; volgende aansluiting nog niet gestart.**
+De echte native proefroute gebruikt nu het bestaande sampleverbruiksregister en
+verwerkt stop tijdens een lopende HTTP-aanvraag. Acht gerichte gevallen, met
+behoud van fouten en gerichte correctie; onafhankelijke beperkte GO. Geen echte
+model- of provideraanroepen en geen wijziging aan Eva1/Eva2-productdiensten.
+Dit is voorbereidend vergelijkingswerk, geen nieuwe functie of P1-afronding.
+Werkelijke provider-/helper-/geheugendekking en streamingmeting blijven open.
+[Bewijs en beperkingen](evidence/product/p1-native-control-20261003.json)
+· [Review](reviews/p1-native-control-20261003.md).
+
+De geïnstalleerde F1-images zijn aan de vergelijking gebonden en onafhankelijk
+beoordeeld. De actuele eigenaaropdracht laat beschikbare, toegelaten deelnemers
+vergelijken; ontbrekende concurrenten zijn onbekend, geen verliezers. Geen
+budgetherverdeling, gewijzigde eindcriteria of algemene winstclaim. De volgende
+native aansluiting is nog niet gestart; geen uitvoerder staat actief geregistreerd.
+
+**Nu van Jaap nodig: Windows opnieuw opstarten voor F1.2.** Sla werk op,
+kies Opnieuw opstarten en open daarna deze chat; meld “Herstart klaar”. De
+voorbereiding is onafhankelijk goedgekeurd. Geen nieuwe installatie nodig.
+
+De verse OpenClaw-aanmelding is geëindigd met de native timeout van 15 minuten;
+geen nieuwe inlogpoging actief en geen modelcalls. Hermes is nog niet aangemeld.
+Nieuwe codes pas wanneer Jaap klaarzit; de verlopen codes niet opnieuw gebruiken.
+[Native inlogstatus](evidence/product/p1-native-auth-status-20261003.json).
 
 **R1.1:** bron/protocol en onafhankelijke toelating gereed; automatische review
 weigerde de concrete acht nieuwe modelruns zonder expliciete eigenaarstoestemming.

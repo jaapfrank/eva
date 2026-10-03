@@ -380,3 +380,87 @@ def test_bottie_process_crash_before_ack_replays_and_delivers_once(bottie):
     assert duplicate["status"] == 200 and duplicate["body"] == delivered["body"]
     assert bottie.delivery_readback(body, ref) == after
     assert all(h["provider_stub_calls"] == 0 for h in bottie.records["http"][1:])
+
+
+@pytest.mark.parametrize("reserved_before_stop", [False, True])
+def test_controlled_native_provider_binding_usage_and_stop_before_retry(monkeypatch, reserved_before_stop):
+    """Actual agent/fetch boundary; parent ledger protocol, no provider network."""
+    monkeypatch.syspath_prepend(str(BENCHMARK))
+    from cp001_accounting import ProviderSampleLedger
+    with tempfile.TemporaryDirectory(prefix="cp001-bottie-", dir="/tmp") as temp:
+        with tempfile.TemporaryFile(mode="w+t") as diagnostics:
+            process = subprocess.Popen([
+                "unshare", "--user", "--map-root-user", "--net", "sh", "-c",
+                'ip link set lo up && exec "$@"', "cp001", "node",
+                str(BENCHMARK / "cp001_bottie_worker.mjs"), temp, "--sample-control",
+            ], cwd=ROOT, env={"PATH": os.defpath, "HOME": temp}, stdin=subprocess.PIPE,
+               stdout=subprocess.PIPE, stderr=diagnostics, text=True, bufsize=1)
+            def receive():
+                assert select.select([process.stdout], [], [], 30)[0], "worker deadline"
+                line = process.stdout.readline()
+                if not line:
+                    diagnostics.seek(0)
+                    pytest.fail(diagnostics.read()[-4000:])
+                return json.loads(line)
+            def send(value):
+                process.stdin.write(json.dumps(value) + "\n")
+                process.stdin.flush()
+            try:
+                ready = receive()
+                path, body = native.request_for("eva1-bottie", run_id="0123456789ab",
+                    task="A", repeat=1, step=0, text="Vertel een rustige zin.",
+                    occurred_at="2026-09-12T00:00:00Z", client_ack_public_key=ready["public_key"])
+                send({"path": path, "body": body, "timeout_ms": 20000, "max_bytes": 65536})
+                first = receive()
+                assert first["provider_event"] == "begin"
+                assert first["request_id"] == body["request_id"] and first["role"] == "contact"
+                assert first["model"] and "reasoning_effort" in first
+                ledger = ProviderSampleLedger("controlled-native", {
+                    "providerAttempts": 2, "providerInputTokens": 100, "providerOutputTokens": 100},
+                    {"contact": (first["model"], first["reasoning_effort"])})
+                control = native.NativeProviderControl(ledger, body["request_id"])
+                admission = control.handle(first)
+                assert admission["allow"] and admission["attempt_id"] == 0
+                if reserved_before_stop:
+                    # Reserve the first permit but never send it to the worker.
+                    # This tests the race without assuming equal native profiles
+                    # in the later interpretation and response phases.
+                    held = first
+                    stop = control.stop()
+                else:
+                    send(admission)
+                    settled = receive()
+                    assert settled["provider_event"] == "settle"
+                    assert settled["event_id"] == first["event_id"] and settled["attempt_id"] == 0
+                    assert settled["usage"] == {"input_tokens": 17, "output_tokens": 5, "total_tokens": 22}
+                    continuation = control.handle(settled)
+                    assert continuation["allow"]
+                    send(continuation)
+                    held = receive()
+                    assert held["provider_event"] == "begin" and held["event_id"] != first["event_id"]
+                    assert held["request_id"] == body["request_id"]
+                    stop = control.stop()
+                    assert not control.handle(held)["allow"]
+                send(stop)
+                aborted = receive()
+                assert aborted["provider_event"] == "settle" and aborted["event_id"] == held["event_id"]
+                assert aborted["attempt_id"] is None and aborted["usage"] is None
+                assert aborted["status"] == "aborted"
+                assert control.handle(aborted) == {"provider_control": held["event_id"], "allow": False}
+                assert len(ledger.attempts) == 1
+                if reserved_before_stop:
+                    assert ledger.attempts[0]["status"] == "aborted"
+                    assert ledger.attempts[0]["usage"] is None
+                    assert not ledger.report()["complete"]
+                else:
+                    assert ledger.attempts[0]["status"] == "completed"
+                stopped = receive()
+                assert stopped["stopped"] and stopped["provider_stub_calls"] == (0 if reserved_before_stop else 1)
+                assert stopped["active_provider_attempts"] == stopped["pending_provider_controls"] == 0
+                process.wait(timeout=5)
+                assert process.returncode == 0
+                assert not process.stdout.read().strip(), "no retries after stop"
+            finally:
+                if process.poll() is None:
+                    process.kill()
+                    process.wait()

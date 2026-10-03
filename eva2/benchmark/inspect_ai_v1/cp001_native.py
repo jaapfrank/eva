@@ -304,6 +304,86 @@ def exchange(
     return result
 
 
+class NativeProviderControl:
+    """Bind a native worker's provider handshake to the existing sample ledger.
+
+    The caller owns the worker and forwards its events without substitution.
+    This controls local dispatch and records raw usage; it does not attest cloud
+    cancellation, cover unbound helpers, or enable a live comparison.
+    """
+
+    def __init__(self, ledger, request_id: str):
+        if not isinstance(request_id, str) or not request_id:
+            raise ValueError("A native request identity is required")
+        self.ledger = ledger
+        self.request_id = request_id
+        self._attempts_by_event: dict[str, int | None] = {}
+        self._settled: set[str] = set()
+
+    def stop(self) -> dict:
+        self.ledger.stop_async_attempts("native comparison stopped")
+        return {"stop": True}
+
+    def handle(self, event: dict) -> dict:
+        from cp001_accounting import SampleStopped
+
+        event_id = event.get("event_id") if isinstance(event, dict) else None
+        control = {"provider_control": event_id, "allow": False}
+        try:
+            if (
+                not isinstance(event_id, str)
+                or not event_id
+                or event.get("request_id") != self.request_id
+            ):
+                raise ValueError("provider event identity differs")
+            kind = event.get("provider_event")
+            if kind == "begin":
+                if event_id in self._attempts_by_event:
+                    raise ValueError("duplicate provider begin")
+                # Keep a denied event bound so its no-dispatch terminal event
+                # cannot be mistaken for an unobserved provider call.
+                self._attempts_by_event[event_id] = None
+                attempt = self.ledger.begin(
+                    event.get("role"), event.get("model"), event.get("reasoning_effort")
+                )
+                self._attempts_by_event[event_id] = attempt
+                return {**control, "allow": True, "attempt_id": attempt}
+            if kind != "settle" or event_id not in self._attempts_by_event:
+                raise ValueError("provider terminal event has no begin")
+            if event_id in self._settled:
+                raise ValueError("duplicate provider terminal event")
+            expected = self._attempts_by_event[event_id]
+            attempt = event.get("attempt_id")
+            status = event.get("status")
+            if status not in ("completed", "aborted", "error"):
+                raise ValueError("invalid provider terminal status")
+            if expected is None:
+                if attempt is not None or status == "completed":
+                    raise ValueError("denied provider call cannot complete")
+                self._settled.add(event_id)
+                return control
+            if attempt is None and status == "aborted" and self.ledger.stop_requested:
+                # Stop may reach the worker before an already reserved permit.
+                # The bound terminal event closes that reservation; it supplies
+                # no usage and does not prove a provider-side cancellation.
+                self._settled.add(event_id)
+                self.ledger.incomplete(expected, "aborted")
+                return control
+            if type(attempt) is not int or attempt != expected:
+                raise ValueError("provider attempt identity differs")
+            self._settled.add(event_id)
+            if status == "completed":
+                self.ledger.finish(attempt, event.get("usage"))
+                return {**control, "allow": not bool(self.ledger.stopped)}
+            self.ledger.incomplete(attempt, status)
+            return control
+        except SampleStopped:
+            return control
+        except (KeyError, TypeError, ValueError):
+            self.ledger.stop_async_attempts("invalid native provider event")
+            return {**control, "stop": True}
+
+
 def build_preflight_task(samples: list[dict], report: dict):
     """Record actual native request mappings in Inspect without invoking I/O."""
     from inspect_ai import Task

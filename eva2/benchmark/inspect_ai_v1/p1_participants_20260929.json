@@ -1,17 +1,47 @@
 {
   "contract": "EvaComparisonParticipantInputs/v1",
-  "checkedAt": "2026-10-01T00:01:16.695228+00:00",
+  "checkedAt": "2026-10-03T16:52:25.148006+00:00",
   "stage": "source_pins_recorded_access_not_admitted",
   "protocol": "eva2/design/product/comparable-agent-benchmarks-v1.md#ev-003",
   "scope": "Inputs for existing Inspect runner; not results, a new runtime or a new scorer.",
   "participants": [
     {
       "id": "eva2",
-      "sourceCommit": "880c1292797e11acd925baa1dc592e6099de2cb7",
-      "sourceKind": "local_checkpoint",
-      "runtimeProvenance": "not_bound_to_this_comparison",
+      "sourceCommit": "512bdcfcac2239fc4709cdc686fee4a07c941895",
+      "sourceKind": "integration_checkpoint_with_retained_runtime_variants",
+      "runtimeProvenance": "installed_core_worker_pins_bound_not_comparison_admitted",
       "admission": "not_admitted",
-      "nativeAdapter": "cp001_native.py"
+      "nativeAdapter": "cp001_native.py",
+      "previousSourceCheckpoint": {
+        "sourceCommit": "880c1292797e11acd925baa1dc592e6099de2cb7",
+        "sourceKind": "local_checkpoint",
+        "runtimeProvenance": "not_bound_to_this_comparison",
+        "historicalOnly": true
+      },
+      "runtimeBinding": {
+        "checkedAt": "2026-10-03T16:52:25.148006+00:00",
+        "images": {
+          "eva2-managed-b-slot3-core": "sha256:fd1c7cd3413405fd6b1b5ce408f2028cffed8de735a301550663e4c891ee5902",
+          "eva2-managed-b-slot3-delegated-work-worker-1": "sha256:30d65117cc0f526bc3ed8859a0eee867ff8fe0943c0bf42c8c09d787c2ca3089"
+        },
+        "evidence": "eva2/evidence/product/f1-integrated-installed-20261003.json",
+        "evidenceSha256": "07623bbc8c0d979c96e55917253e4c48052effd8e90f3636cc19edbd5fd35e6d",
+        "independentReview": "eva2/reviews/f1-integrated-candidate-20261003.md",
+        "reviewSha256": "0efcc5bab70ebb447b1948170f002b4ef2f0b15129c9fa0c8c58eee3057da9d6",
+        "sourceIdentity": {
+          "equal_runtime_items": 350,
+          "retained_repository_variants": 26,
+          "repository_head_fully_installed": false,
+          "l3_winner_sha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7"
+        },
+        "boundary": "Runtime provenance only. F1.2 restart, same comparison tools/state/model/accounting/stop envelope and native admission remain separate.",
+        "provenanceReview": {
+          "reviewer": "/root/aide_final_evaluation",
+          "decision": "GO for provenance only",
+          "reviewedInputManifestSha256": "ffe88b7377a4355c594ef0ec90a4557eaf6361d2ae75f869b1dfd9b4769f003d",
+          "limits": "No admission, full HEAD installation or superiority inferred; prior reference retained."
+        }
+      }
     },
     {
       "id": "eva1-bottie",
@@ -311,9 +341,16 @@
   },
   "readiness": {
     "mayStartModelComparison": false,
-    "reason": "No five-way native admission at these pins; no frozen unseen dataset or final candidate.",
+    "reason": "Installed Eva2 F1 pins are bound. No available participant yet has complete native sample admission; final family budgets and independently curated unseen tasks remain open. Missing competitors do not block admitted partial execution.",
     "missingAccessCountsAs": "unknown_not_loss",
-    "historicalResults": "EV-002 remains unchanged; no current ranking inferred."
+    "historicalResults": "EV-002 remains unchanged; no current ranking inferred.",
+    "partialExecutionPolicy": {
+      "source": "Owner technical endpoint, 2 October 2026",
+      "availableAdmittedParticipantsOnly": true,
+      "missingParticipants": "unavailable_unknown_not_loss",
+      "unusedBudgetRedistributed": false,
+      "completeSuperiorityClaim": false
+    }
   },
   "budget": {
     "thisAssignmentModelCalls": 0,
