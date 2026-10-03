@@ -37,6 +37,7 @@ _EXECUTION_SOURCES = (
     "bootstrap/delegated_digital_runner.py",
     "bootstrap/background_browser_context.py",
     "adapters/connectors/browser_session.py",
+    "adapters/connectors/browser_autostart.py",
     "adapters/postgres/background_work_progress.py",
     "adapters/postgres/work_corrections.py",
     "adapters/postgres/component_improvement_actions.py",

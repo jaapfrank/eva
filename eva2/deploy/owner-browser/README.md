@@ -14,7 +14,7 @@ A maintenance directory's basename is its instance name. The network helpers int
 
 Images are immutable references in the argv templates and `provenance.json`; the templates use `--pull never`. There is no custom Dockerfile. Provision the pinned images through the existing operator image process before container creation.
 
-The sole Python change inside the browser image is `selkies-auth.patch`, applied to `/lsiopy/lib/python3.13/site-packages/selkies/selkies.py` **before the browser starts**. `selkies-auth-source.json` records both original and final SHA-256 values. Reconstruct it from the stopped, pinned container rather than relying on an untracked modified module:
+The hash-bound Python change inside the browser image is `selkies-auth.patch`, applied to `/lsiopy/lib/python3.13/site-packages/selkies/selkies.py` **before the browser starts**. `selkies-auth-source.json` records both original and final SHA-256 values. Reconstruct it from the stopped, pinned container rather than relying on an untracked modified module:
 
 ```sh
 docker cp "$BROWSER_CONTAINER_ID:/lsiopy/lib/python3.13/site-packages/selkies/selkies.py" "$DEPLOYMENT_DIR/selkies-upstream.py"
@@ -37,6 +37,81 @@ chmod 0444 "$DEPLOYMENT_DIR/viewer.htpasswd"
 ```
 
 Keep that hash inside the private directory. Chromium and renderers run as UID/GID 1000, with no effective capabilities, `NoNewPrivs=1`, and their own namespace/seccomp sandbox. The browser container's init process retains the upstream permissions required to initialize the desktop. `seccomp-browser.json` is the pinned Moby profile plus the documented namespace rule, with the precise baseline/delta limitations in `seccomp-delta.json`. It is not `seccomp=unconfined` or `--no-sandbox`.
+
+
+## Viewer-independent native frame callbacks
+
+`pixelflux-idle-source.json` pins one upstream wheel for the existing CPython
+3.13/Linux x86_64 container. Its source supplies idle Wayland frame callbacks
+without a viewer or capture stream while retaining the existing Selkies settings
+and JPEG/H264 wire format. This records a reproducible dependency correction;
+live browser/task results and owner acceptance are separate evidence.
+
+**The version string `2.1.0` is insufficient.** Use the exact `f9d49bf` release
+asset and SHA below. The later PyPI 2.1.0 wheel changes settings and the video
+header. It is not interchangeable with this artifact.
+
+Apply during operator maintenance with no admitted browser work or active viewer.
+Keep the recorded container IDs, profile, network, controller state and auth
+overlay. The container must be running for `docker exec`; restart its already
+loaded Selkies process through controller stop/start immediately after installation.
+Do not admit new browser work in between. If the final extension hash already
+matches the pin, retain that installation and its original backup.
+
+Use operator-chosen `DEPLOYMENT_DIR` and the existing full `BROWSER_CONTAINER_ID`.
+The backup directory below must be new; never overwrite an earlier backup.
+Run with failure propagation, so a failed hash or copy stops the procedure.
+
+```sh
+set -eu
+WHEEL=pixelflux-2.1.0-cp313-cp313-manylinux_2_28_x86_64.whl
+SITE=/lsiopy/lib/python3.13/site-packages
+NATIVE_BACKUP="$DEPLOYMENT_DIR/pixelflux-before-f9d49bf"
+mkdir -m 0700 "$NATIVE_BACKUP"
+curl --fail --location --output "$NATIVE_BACKUP/$WHEEL" \
+  "https://github.com/selkies-project/pixelflux/releases/download/f9d49bf/$WHEEL"
+printf '%s  %s\n' 8583b1baf6119d38908a353affc7c6e7efca518009dc694fa78814adf0d30971 \
+  "$NATIVE_BACKUP/$WHEEL" | sha256sum --check
+
+docker cp "$BROWSER_CONTAINER_ID:$SITE/pixelflux.cpython-313-x86_64-linux-gnu.so" "$NATIVE_BACKUP/"
+docker cp "$BROWSER_CONTAINER_ID:$SITE/pixelflux.libs" "$NATIVE_BACKUP/"
+docker cp "$BROWSER_CONTAINER_ID:$SITE/pixelflux-2.0.0.dist-info" "$NATIVE_BACKUP/"
+printf '%s  %s\n' ce60a6ccaa2a35695c3b8bacf168e1db6c969d97e5b3aca526e8063ed635b29f \
+  "$NATIVE_BACKUP/pixelflux.cpython-313-x86_64-linux-gnu.so" | sha256sum --check
+docker cp "$NATIVE_BACKUP/$WHEEL" "$BROWSER_CONTAINER_ID:/tmp/$WHEEL"
+
+# Separate preflight target; the active package remains unchanged.
+docker exec --user 0 "$BROWSER_CONTAINER_ID" test ! -e /tmp/eva-pixelflux-f9d49bf-preflight
+docker exec --user 0 "$BROWSER_CONTAINER_ID" /lsiopy/bin/python3 -m pip install \
+  --no-deps --no-index --target /tmp/eva-pixelflux-f9d49bf-preflight "/tmp/$WHEEL"
+docker exec --user 0 "$BROWSER_CONTAINER_ID" /lsiopy/bin/python3 -c \
+  'import sys; sys.path.insert(0, "/tmp/eva-pixelflux-f9d49bf-preflight"); from pixelflux import CaptureSettings, ScreenCapture, StripeFrame, ensure_wayland_display; s=CaptureSettings(); assert s.output_mode == 0 and s.use_openh264 is False; s.output_mode=1; s.use_openh264=True; assert all(hasattr(ScreenCapture,n) for n in ("start_capture","stop_capture","set_cursor_callback","inject_key","inject_mouse_move","inject_mouse_button","inject_mouse_scroll")); assert callable(ensure_wayland_display); print("Native API import passed; no display started")'
+
+# Only the verified local wheel; no dependency resolution or image replacement.
+docker exec --user 0 "$BROWSER_CONTAINER_ID" /lsiopy/bin/python3 -m pip install \
+  --no-deps --no-index --force-reinstall "/tmp/$WHEEL"
+docker exec "$BROWSER_CONTAINER_ID" /lsiopy/bin/python3 -c \
+  'import hashlib,pathlib,pixelflux; p=pathlib.Path(pixelflux.__file__); assert hashlib.sha256(p.read_bytes()).hexdigest()=="7d4fd0db93e48fd4e83eed1b4f6407f914f646d08c7a562b485d6d32ab89f281"; print("Pinned native extension verified")'
+```
+
+Stop and start through the **existing controller**, reading a fresh status/revision
+before each action. GET `/internal/v1/dashboard/browser/status`; POST
+`/internal/v1/dashboard/browser/control` with
+`{"action":"stop","revision":REVISION}` and then
+`{"action":"start","revision":NEW_REVISION}`. Use the existing private controller
+client/credential. Do not print tokens, use raw `docker restart`, or automatically
+resume owner/recovery states. Confirm both containers and controller return healthy
+in `eva` state.
+
+Check animation frames and an ordinary Playwright click without a viewer, using a
+fresh snapshot and actual destination readback. Keep those results separately.
+No force-click, Computer Use API, Chromium flag change, or owner-tab sharing is
+part of this correction.
+
+Keep the old extension, native libraries and dist-info in `NATIVE_BACKUP`; they
+are recovery assets, not an automatic rollback instruction. Container recreation
+loses this overlay: repeat the exact wheel step on the pinned base during protected
+provisioning, before admitting browsing. Retain wheel licenses and library notices.
 
 ## Recreate the same pair without the old scratch scripts
 
@@ -90,3 +165,28 @@ The browser MCP endpoint is `http://192.168.0.2:8931/mcp`. Operator configuratio
 ## Licensing and provenance
 
 Retain the included LinuxServer GPL-3.0 packaging license and Apache-2.0 Playwright/Moby licenses. Selkies' patched module is MPL-2.0; reconstruction preserves its original license header and the included source patch exposes the modification. Upstream image contents retain their own component licenses. `provenance.json` and `selkies-auth-source.json` are source/hash records, not a claim that a later reprovisioned instance has passed user acceptance.
+
+
+## Autonomous use on the current installation — 3 October 2026
+
+The current core and delegated worker set `EVA_BROWSER_MCP_ENDPOINT` to the
+registered own-browser endpoint, alongside the existing control URL and private
+token file. The connector remains owner-bound through the existing mandate.
+Actual authorized tool use starts a stopped browser through the existing host
+controller. Owner takeover and recovery states are not automatically resumed.
+Personal Chrome sharing is optional and is not a prerequisite for these tasks.
+
+The same private gateway session must be retained across snapshot and click.
+The browser generation and owner-derived connector identity scope that session;
+it grants no access by itself. Existing gateway authentication and current
+connector authorization still apply to each call. Browser lifecycle changes
+rotate the session. ContextForge currently releases old session generations on
+session removal or gateway shutdown; generation rotation alone does not collect
+them. No new general session platform is included in this correction.
+
+On this host `eva-owner-browser.service` is enabled and running as of this
+change. This supersedes the original direct-launch statement above for the
+current installation, but does not establish reboot/firewall recovery.
+Installed images, source hashes, the native package overlay, observed task
+outcome and limitations are recorded separately in
+`../../evidence/product/autonomous-browser-installed-20261003.json`.

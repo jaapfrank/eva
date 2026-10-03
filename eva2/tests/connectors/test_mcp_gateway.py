@@ -1142,3 +1142,35 @@ def test_transport_failure_keeps_private_cause_and_sanitized_message(monkeypatch
     else:
         assert type(caught.value) is RuntimeError
         assert str(caught.value) == "MCP gateway request failed (503)"
+
+
+
+@pytest.mark.parametrize("value", ["", "a" * 63, "a" * 65, "A" * 64, "g" * 64, "a" * 62 + "\\r\\n", 7])
+def test_gateway_rejects_invalid_private_session_identity(value):
+    with pytest.raises(ValueError, match="session identity"):
+        McpGatewayConfig("https://gateway.example", "private-token", session_id=value)
+
+
+@pytest.mark.parametrize("session_id", [None, "a" * 64])
+def test_gateway_sends_private_session_header_only_on_rpc_posts(monkeypatch, session_id):
+    calls = []
+    class Response:
+        def __enter__(self):
+            return self
+        def __exit__(self, *_args):
+            pass
+        def read(self, *_args):
+            return b"{}"
+    def opened(request, *, timeout):
+        calls.append((request.get_method(), request.full_url,
+                      {key.lower(): value for key, value in request.header_items()}))
+        return Response()
+    monkeypatch.setattr(mcp_gateway_module.urllib_request, "urlopen", opened)
+    config = McpGatewayConfig("https://gateway.example", "private-token", session_id=session_id)
+    adapter = McpGatewayToolAdapter(config, (_spec(),))
+    for method, path in [("GET", "/tools"), ("POST", "/rpc"), ("GET", "/rpc"), ("POST", "/other")]:
+        adapter._request_json(method, path, None if method == "GET" else {})
+    assert [headers.get("mcp-session-id") for _, _, headers in calls] == [None, session_id, None, None]
+    assert all(headers["authorization"] == "Bearer private-token" for _, _, headers in calls)
+    if session_id is not None:
+        assert session_id not in repr(config)

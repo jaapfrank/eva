@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-02T15:19:04.779171+00:00",
+        "checkedAt": "2026-10-03T00:46:27.839293+00:00",
         "deliveries": [
+          {
+            "title": "Eva gebruikt zelfstandig haar eigen browser",
+            "date": "3 oktober",
+            "state": "installed",
+            "result": "Eigen browser automatisch gestart; echte navigatie, klik, eindantwoord en afzonderlijke pagina-uitlezing geslaagd zonder owner-UI. Correcties samen geïnstalleerd; onafhankelijke review GO.",
+            "remaining": "Proef: 81,5 seconden en 101.588 invoertokens; nog traag en duur. Persoonlijke overname blijft optioneel; geen claim over alle websites, aanmeldingen of verse installatie. 21/44 bestaande kleine taken; teller niet opgehoogd.",
+            "source": "eva2/evidence/product/autonomous-browser-installed-20261003.json"
+          },
           {
             "title": "T3.2: Eva bedient werkelijk jouw gedeelde Chrome-tab",
             "date": "2 oktober",
@@ -3387,25 +3395,24 @@
           }
         ],
         "now": {
-          "title": "O1.2: bewaarde browserinstallatie voortzetten; T3.2 af",
-          "state": "in_progress",
-          "detail": "De echte Chrome-klikproef is afgerond. O1.2: de beperkte hervatprocedure is ter review opgeslagen na controle van het bouwmandaat; nog geen browserresources gestart. Handmatige T3.3-proef wacht alleen op Jaaps gereedmelding.",
+          "title": "Zelfstandig browsergebruik opgeleverd",
+          "state": "installed",
+          "detail": "Eva start haar eigen browser en voerde zonder tabdeling of handmatige hulp een volledige navigeer-, klik- en leestaak uit. Eindpagina apart bevestigd; onafhankelijke eindreview GO. Proef: 81,5 seconden en 101.588 invoertokens; bruikbaar, nog traag en duur. Vervolgwerk nog niet gestart.",
           "owner": "Codex /root"
         },
         "next": {
-          "title": "Dezelfde wizard met optionele browser en spraak",
-          "detail": "Resterende moduleaansluiting afronden; persoonlijke browseropdracht direct uitvoeren zodra de bedoelde proeftab gedeeld is."
+          "title": "Vervolgwerk nog niet gestart",
+          "detail": "De bestaande overige producttaken blijven open. Persoonlijke Chrome-overname T3.3 is optioneel en is geen voorwaarde voor Eva’s eigen browser."
         },
         "ownerAction": {
-          "title": "Alleen nog handmatige overname beoordelen",
+          "title": "Geen browser voorbereiden of tabblad delen",
           "steps": [
-            "De klikproef is klaar; je hoeft de tekstknoppen niet opnieuw te testen.",
-            "Meld in Codex wanneer je bij de Chrome-proefpagina klaarzit. Codex start dan de wachtende klik voor Neem over."
+            "Geef Eva gewoon een opdracht, bijvoorbeeld via Telegram: /eva2 Open https://example.com, volg Learn more en vertel wat je daar leest."
           ],
-          "expected": "T3.3: zelf onderbreken, teller blijft 0, expliciet teruggeven met verse waarneming."
+          "expected": "Eva gebruikt haar eigen browser en geeft het gecontroleerde resultaat terug. Alleen als een benodigde persoonlijke aanmelding ontbreekt kan zij jouw hulp nodig hebben."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-02T15:19:04.779171+00:00"
+        "reviewedAt": "2026-10-03T00:46:27.839293+00:00"
       },
       "reviewedAt": "2026-10-02T13:18:04.695516+00:00"
     },
@@ -14763,8 +14770,8 @@
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Isolated browser and shared Chrome, takeover and fresh-observation recovery exist.",
-            "remainingGap": "T3.1 accepted and T3.2 technically completed on the existing personal Chrome route. T3.3 manual takeover and fresh return remain open; slow and expensive task execution is recorded.",
-            "nextAction": "Use the currently owner-shared existing tab for the next bounded browser task; retain existing adapter and takeover controls.",
+            "remainingGap": "Own-browser automatic startup and a full task are installed and verified. Personal manual takeover T3.3 stays optional/open; generic browser speed and cost remain limitations.",
+            "nextAction": "No owner tab-sharing prerequisite. Preserve previous shared-Chrome acceptance and the installed own-browser result.",
             "evidencePaths": [
               "eva2/evidence/product/personal-chrome-controls-installed-20260922.json",
               "eva2/evidence/product/chrome-inflight-recovery-2026-09-12.json",
@@ -14776,19 +14783,24 @@
           "activeWorker": null,
           "assignment": {
             "owner": "/root",
-            "baseCommit": "80f2c34b93601f6394a4942d90436714867693d6",
-            "stage": "T3.2_completed_T3.3_owner_coordination",
-            "existing": "Owner shared a Chrome tab on1October; general tools, takeover/fresh snapshot and isolated route proof exist.",
-            "gap": "Ordinary model-driven complete browser/file result through current owner-shared route; determine actual access before executing.",
+            "baseCommit": "eb78d763",
+            "stage": "completed_autonomous_own_browser_installed",
+            "existing": "Maintained Chromium/Playwright browser, fixed controller, registry/gateway and execution engine already exist.",
+            "gap": "Autostart installed. Ordinary task exposes per-call gateway sessions losing snapshot refs; exact header-bound diagnostic succeeds.",
             "files": [
-              "existing browser runtime only if a demonstrated defect",
-              "bounded T3 evidence",
-              "existing workboard and WERKBORD"
+              "eva2/src/eva/adapters/connectors/browser_autostart.py",
+              "eva2/src/eva/providers/mcp_autonomy.py",
+              "eva2/src/eva/providers/mcp_discovery.py",
+              "eva2/src/eva/bootstrap/background_browser_context.py",
+              "eva2/src/eva/bootstrap/delegated_digital_composition.py",
+              "focused browser tests and existing evidence/workboard",
+              "eva2/src/eva/adapters/connectors/mcp_gateway.py"
             ],
-            "doneWhen": "Original T3.2 complete checked result and T3.3 stop/fresh-observation behavior; owner evaluation separate.",
-            "estimate": "Reuse existing evidence, one scoped current connection check, then one ordinary matched browser task. Model usage measured when run; credit cost unknown. No broad tests or reinstall absent code defect.",
+            "doneWhen": "Ordinary owner task starts and uses the existing own browser without owner UI, returns a checked real page result, and is installed in matching core/worker. Personal manual takeover is separate.",
+            "estimate": "Reuse installed browser and existing controller. One bounded ordinary public-page task after focused verification. Actual model tokens measured; credits unknown.",
             "activeWorkers": [],
-            "result": "Actual ordinary Eva task on owner-shared Chrome passed; independent final readback confirms both clicks. Manual personal takeover remains open."
+            "result": "Current own-browser task completed from stopped without owner UI or manual task assistance. Separate readback confirms result, independent final review GO. 81.506 seconds, 101588 input and 782 output tokens (partial); prior failures and limits retained.",
+            "outcome": "Existing browser task runs without owner tab sharing or manual start; preserve accepted shared-Chrome proof."
           },
           "dashboardComponent": "browser",
           "remainingTasks": [
@@ -14802,7 +14814,7 @@
               "blocker": null,
               "checkedAt": "2026-10-01T14:14:41.201360+00:00",
               "ownerActionRequired": false,
-              "nextAction": "Afgerond; tabblad beschikbaar. T3.2 opdracht uitvoeren en T3.3 overnemen blijven afzonderlijk open.",
+              "nextAction": "Afgerond en geaccepteerd; T3.2 klikopdracht ook afgerond. Persoonlijke tabdeling is optioneel.",
               "ownerInstructions": {
                 "availableNow": true,
                 "purpose": "access",
@@ -14876,7 +14888,11 @@
               "checkedAt": "2026-10-02T15:19:04.779171+00:00",
               "completedAt": "2026-10-02T15:19:04.779171+00:00",
               "latestEvidence": "eva2/evidence/product/t3-owner-browser-task-20261002.json",
-              "result": "Eva opende de echte proeftekst, las haar letterlijk, sloot haar en controleerde de verborgen eindtoestand. Onafhankelijke browserwaarneming bevestigt teller 0. Bestaande geïnstalleerde route; geen nieuwe code of eigenaaracceptatie."
+              "result": "Eva opende de echte proeftekst, las haar letterlijk, sloot haar en controleerde de verborgen eindtoestand. Onafhankelijke browserwaarneming bevestigt teller 0. Bestaande geïnstalleerde route; geen nieuwe code of eigenaaracceptatie.",
+              "additionalEvidence": [
+                "eva2/evidence/product/autonomous-browser-installed-20261003.json"
+              ],
+              "autonomousBrowserResult": "3 oktober: dezelfde gebruikersuitkomst ook zelfstandig met eigen browser vanaf gestopte toestand bevestigd; geen handmatige tabdeling. Bestaande afronding blijft behouden."
             },
             {
               "id": "T3.3",
@@ -14886,9 +14902,9 @@
               "doneWhen": "Overname stopt lopende bediening; teruggeven vereist verse waarneming en herhaalt geen oude actie.",
               "owner": "Codex",
               "nextAction": "Codex bewaakt de algemene stop-/overnameovergang. Eva kijkt na teruggeven opnieuw en hervat zonder een oude handeling dubbel uit te voeren.",
-              "ownerActionRequired": true,
+              "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": true,
+                "availableNow": false,
                 "purpose": "practice",
                 "url": "http://127.0.0.1:44718/proef",
                 "linkLabel": "Deel één bestaand Chrome-tabblad",
@@ -14899,19 +14915,20 @@
                 ],
                 "expected": "Lopende klik stopt; teruggeven vereist verse waarneming, zonder oude klik te herhalen.",
                 "blocksIndependentWork": false,
-                "localComputerOnly": true
+                "localComputerOnly": true,
+                "readyWhen": "Optionele persoonlijke overnameproef later; geen voorwaarde voor Eva’s zelfstandige eigen browser."
               },
               "blocker": null,
               "checkedAt": "2026-10-02T15:19:04.779171+00:00",
               "assignment": {
-                "stage": "waiting_for_owner_readiness_for_manual_takeover",
+                "stage": "optional_personal_takeover_not_current_assignment",
                 "owner": "/root",
                 "activeWorkers": []
               }
             }
           ],
-          "latestEvidence": "eva2/evidence/product/t3-owner-browser-task-20261002.json",
-          "nextAction": "T3.3: coordinate one personal takeover while a click is pending; earlier technical recovery evidence retained.",
+          "latestEvidence": "eva2/evidence/product/autonomous-browser-installed-20261003.json",
+          "nextAction": "Own browser is available for ordinary tasks. Personal takeover remains an optional separate T3.3 assessment.",
           "responsibilityReview": {
             "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
             "role": "algemene uitvoering",
@@ -15846,15 +15863,13 @@
               "owner": "Codex /root",
               "blocker": null,
               "evidence": "eva2/evidence/product/installer-optional-selection-20260929.json",
-              "checkedAt": "2026-10-02T15:04:10.341162+00:00",
+              "checkedAt": "2026-10-02T15:28:33.715410+00:00",
               "remaining": "Gekozen HA-module via gewone wizard geïnstalleerd en vanuit de nieuwe Eva gebruikt: versie 2026.9.2 correct uitgelezen. Weglaten blijft werken. Spraak/browser toevoegen en overige gekozen providerconsumenten blijven open.",
               "assignment": {
                 "baseCommit": "aca98ba68a262c16a11f495d489cb70e81b8c30b",
                 "owner": "/root",
-                "activeWorkers": [
-                  "/root/background_execution_seam"
-                ],
-                "stage": "explicit_continuation_of_retained_selected_modules",
+                "activeWorkers": [],
+                "stage": "retained_not_current_assignment",
                 "existing": "O1.1 actual text target and omission proof complete. Existing capability/secret/provider verification, HA URL configuration, maintained optional graph projection and HA runtime connector already exist.",
                 "gap": "Selected HA factory rejection resolved. Ordinary voice/browser module selection and installed consumers remain absent; other selected providers explicitly unsupported.",
                 "outcome": "Dezelfde installatie werkt met gekozen modules; geen hardcoded eigenaarpaden.",
@@ -15868,7 +15883,7 @@
                 ],
                 "estimate": "One executor, existing route and focused actual selected-module verification. No planned paid research or real house mutation. Development credits unknown; provider/model usage recorded if invoked.",
                 "finishScope": "Original task finish retained. O1 parent cannot close until voice/HA/browser module additions/omissions are available through ordinary owner choices; unsupported channels must remain explicit.",
-                "review": "Independent GO for selected HA installed; full O1.2 remains open.",
+                "review": "Independent GO for explicit pre-resource continuation. Latest two-line mode correction inspected by root; actual corrected runtime use pending.",
                 "result": "Current confirmed plan → selected immutable image validation → one preparation → healthy target → ordinary HA chat succeeded without repair/retry.",
                 "fileOwners": {
                   "/root/l3_application_seam": [
@@ -15890,7 +15905,7 @@
                     "integration tests and existing workboard"
                   ]
                 },
-                "finding": "Dependency import repaired. Real Docker host/none networks exposed null IPAM Config; one-line correction with representative check passed. Prepared files retained, no browser resource created at failure; explicit continuation of selected_modules underway."
+                "finding": "Same attempt retained and resumed. Browser/container/controller created; start returned503. Exact live error is PermissionError reading patched Selkies file, mode0600. Prepared recipe files already have correct444/755; only patch output caused this run. Source fixes patched.chmod444 before copy; direct test6passed. No source-copy/runtime permission repair yet; gateway/core for this target not installed."
               },
               "nextAction": "Standaardchat en enkele optionele installatiekeuzes; bestaande modules kunnen worden weggelaten. Gebruik dezelfde beheerroute voor later benodigde uitbreidingen, zonder vooraf verplichte HA/browser/Telegram-bundel of nieuwe installer per voorbeeld.",
               "ownerActionRequired": false,

@@ -1,0 +1,362 @@
+{
+  "contract": "EvaAutonomousBrowserDelivery/v1",
+  "status": "installed_verified",
+  "recordedAt": "2026-10-03T00:41:24.885067+00:00",
+  "scope": "Current installation: ordinary owner task through the existing shared core/worker, registered MCP gateway and own managed Chromium browser. Personal Chrome sharing is optional.",
+  "baseCommit": "eb78d763",
+  "criteria": {
+    "recordedAt": "2026-10-02T23:28:37.561541+00:00",
+    "scope": "ordinary owner conversation -> existing digital worker -> own managed browser",
+    "baseline": "Own Chromium and registered MCP tools exist; stopped browser cannot start from actual tool use; context asks owner to start/share. Personal Chrome T3.2 remains accepted.",
+    "success": [
+      "One ordinary conversation task opens the own browser from stopped with no owner UI action.",
+      "Real browser navigation and link follow succeed, destination title and URL are returned from observed page.",
+      "No personal Chrome connector used.",
+      "One shared core/worker composition installed."
+    ],
+    "hardConditions": [
+      "Keep profile/data.",
+      "Do not resume owner-controlled browser or replay uncertain browser effects automatically.",
+      "Read-only public website task; no real home actions, messages, payments or private content."
+    ],
+    "plannedRequests": 1,
+    "notClaimed": [
+      "All websites, logins, CAPTCHAs or downloads work.",
+      "General competitor superiority or lower model cost."
+    ]
+  },
+  "existing": [
+    "Own isolated Chromium browser and Playwright MCP server",
+    "Owner-bound connector registry and authenticated ContextForge gateway",
+    "Host browser controller and persistent browser profile",
+    "Ordinary conversation and delegated digital worker",
+    "Accepted personal shared-Chrome task T3.2"
+  ],
+  "changes": [
+    "Start the configured stopped browser only on authorized actual tool use",
+    "Default task context to own browser without requesting owner tab sharing",
+    "Exact compatible upstream compositor idle-frame fix",
+    "Retain owner- and browser-generation-bound private gateway session across browser tools"
+  ],
+  "diagnosis": {
+    "withoutViewerFramesPerSecondBefore": 0,
+    "withoutViewerFramesPerSecondAfter": 61,
+    "ordinaryGatewayFailure": "Ref e13 not found in the current page snapshot",
+    "controlledGatewayComparison": "After browser restart, navigate/snapshot/click fails with per-call sessions and succeeds with one stable private session; same public page and target."
+  },
+  "attempts": [
+    {
+      "attempt": "initial_autostart",
+      "state": "failed",
+      "workId": "work:eva-chat:e9587916-0f86-5313-9d21-ef3d53e6065b",
+      "createdAt": "2026-10-02 23:42:41+00:00",
+      "completedAt": "2026-10-02 23:43:49+00:00",
+      "intakeSeconds": 13.826,
+      "workerUsage": {
+        "contract": "DelegatedWorkUsage/v1",
+        "tool_calls": 4,
+        "measurement": "partial",
+        "input_tokens": 71367,
+        "total_tokens": 71909,
+        "output_tokens": 542,
+        "schema_version": 1,
+        "cost_usd_micros": null,
+        "completed_model_responses": 5
+      },
+      "errorCode": "incomplete_work",
+      "foregroundUsage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 6985,
+        "output_tokens": 205,
+        "model_attempts": 1
+      }
+    },
+    {
+      "attempt": "after_compositor_fix",
+      "state": "failed",
+      "workId": "work:eva-chat:7feb83e2-2b62-5105-8957-a23abbaccb10",
+      "createdAt": "2026-10-03 00:11:39+00:00",
+      "completedAt": "2026-10-03 00:12:51+00:00",
+      "intakeSeconds": 10.138,
+      "workerUsage": {
+        "contract": "DelegatedWorkUsage/v1",
+        "tool_calls": 4,
+        "measurement": "partial",
+        "input_tokens": 72454,
+        "total_tokens": 73051,
+        "output_tokens": 597,
+        "schema_version": 1,
+        "cost_usd_micros": null,
+        "completed_model_responses": 5
+      },
+      "errorCode": "incomplete_work",
+      "foregroundUsage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 7176,
+        "output_tokens": 205,
+        "model_attempts": 1
+      }
+    }
+  ],
+  "runtime": {
+    "initialAutostartInstall": {
+      "before": {
+        "core": "sha256:813f62fabd7787bf07527a0880860416cc93aded6ec30ed67457ac22078ebfda",
+        "delegated-work-worker": "sha256:3de9d93e67ecca111fc782d111c1c300efa5726725c656538955298cd099b9c9"
+      },
+      "sourceHashes": {
+        "adapters/connectors/browser_autostart.py": "bf982da02b74d1403ab89ebc5f7fb15c6deff968fb64dcc74d40af3126bca8d3",
+        "providers/mcp_autonomy.py": "8503ba0fca9afcc0ff5aca02792bac23cad7d9354a96775a91ed2a9de77dbc69",
+        "providers/mcp_discovery.py": "f89c84ff56fbb6b86d413896dcd48a4f25ac8380a7267287cca119c2f91a0f85",
+        "bootstrap/background_browser_context.py": "32f9ebba53a1779f84c72479a4eb386cd3c097e0cf1bd693bce9add909ea45f9",
+        "bootstrap/delegated_digital_composition.py": "218ae582c67447672539310cbd7856792af6dd2af05d44afc29a4477e5877191"
+      },
+      "images": {
+        "core": "sha256:fed732bc4867b8c386e8e3288bf7b99f528bb7233714e4bba93f58f54b3d1d3a",
+        "delegated-work-worker": "sha256:eca7bc3fe9f20f2dfa725ef2b7f811f2bcdca5448212c3b924efa8ac0ed7175e"
+      },
+      "installed": true,
+      "installedAt": "2026-10-02T23:41:40.366354+00:00"
+    },
+    "nativeOverlay": {
+      "contract": "EvaOwnerBrowserNativeOverlay/v1",
+      "status": "reproducible_dependency_pin_not_live_acceptance",
+      "purpose": "Keep Wayland frame callbacks running without a connected viewer so ordinary Playwright actions can complete their stability checks.",
+      "baseImage": "lscr.io/linuxserver/chromium@sha256:63e8e38540462a38c70ef85497c13c412485b39979394ea95da450fca5b4efa8",
+      "package": "pixelflux",
+      "distributionVersion": "2.1.0",
+      "releaseTag": "f9d49bf",
+      "sourceCommit": "f9d49bfcb84d4f27d92eddf29781840298ab9d9e",
+      "releaseUrl": "https://github.com/selkies-project/pixelflux/releases/tag/f9d49bf",
+      "wheel": {
+        "filename": "pixelflux-2.1.0-cp313-cp313-manylinux_2_28_x86_64.whl",
+        "url": "https://github.com/selkies-project/pixelflux/releases/download/f9d49bf/pixelflux-2.1.0-cp313-cp313-manylinux_2_28_x86_64.whl",
+        "sha256": "8583b1baf6119d38908a353affc7c6e7efca518009dc694fa78814adf0d30971",
+        "sizeBytes": 17527517,
+        "githubAssetId": 575080369,
+        "publishedAt": "2026-09-19T16:22:04Z"
+      },
+      "installedTarget": {
+        "python": "/lsiopy/bin/python3",
+        "sitePackages": "/lsiopy/lib/python3.13/site-packages",
+        "extension": "pixelflux.cpython-313-x86_64-linux-gnu.so",
+        "extensionSha256": "7d4fd0db93e48fd4e83eed1b4f6407f914f646d08c7a562b485d6d32ab89f281"
+      },
+      "original": {
+        "distributionVersion": "2.0.0",
+        "extensionSha256": "ce60a6ccaa2a35695c3b8bacf168e1db6c969d97e5b3aca526e8063ed635b29f",
+        "preserve": [
+          "pixelflux.cpython-313-x86_64-linux-gnu.so",
+          "pixelflux.libs",
+          "pixelflux-2.0.0.dist-info"
+        ]
+      },
+      "compatibility": {
+        "abi": "CPython 3.13, glibc manylinux_2_28, x86_64",
+        "retainedSettings": [
+          "CaptureSettings.output_mode (0=JPEG, 1=H264)",
+          "CaptureSettings.use_openh264"
+        ],
+        "retainedWire": "H264 prefix 0x04 followed by 0x01=IDR, 0x02=I, 0x00=delta; no codec high nibble. EncodedStripe.data_type remains 1=JPEG, 2=H264.",
+        "sourceAnchors": {
+          "idleFunction": "pixelflux/src/lib.rs:4181",
+          "idleCall": "pixelflux/src/lib.rs:4865",
+          "legacySettings": "pixelflux/src/lib.rs:5429",
+          "h264Header": "pixelflux/src/encoders/software.rs:454",
+          "jpegDataType": "pixelflux/src/encoders/software.rs:967",
+          "h264DataType": "pixelflux/src/encoders/software.rs:1062"
+        },
+        "preflight": "Separate target-directory import in the existing browser ABI found no missing existing CaptureSettings, ScreenCapture or StripeFrame fields/methods. API evidence is not viewer or task acceptance.",
+        "versionLabelWarning": "Do not substitute PyPI 2.1.0 (SHA256 43d47574e52f485d86b4b3d0f56c6bcf160e99ebc658cb59d7a096e6ee0ca1a0) or another 2.1.0 snapshot; that later build changes settings and the video wire protocol."
+      },
+      "deploymentBoundary": "Only the native package in the existing browser container; preserve profile and Selkies authentication overlay, use existing controller stop/start. No Computer Use API or Chromium flag change.",
+      "license": "MPL-2.0; retain wheel licenses and bundled component notices"
+    },
+    "sessionFixInstall": {
+      "before": {
+        "core": "sha256:fed732bc4867b8c386e8e3288bf7b99f528bb7233714e4bba93f58f54b3d1d3a",
+        "delegated-work-worker": "sha256:eca7bc3fe9f20f2dfa725ef2b7f811f2bcdca5448212c3b924efa8ac0ed7175e"
+      },
+      "sourceHashes": {
+        "adapters/connectors/browser_autostart.py": "ed3b9b3a685fdf2ede7562cffd890a3f14d730bccda43babe45afac57b57bc4e",
+        "adapters/connectors/mcp_gateway.py": "3f23ff879bd2c9c70024e7aad1f2817879241124a4697b742aa7a899785af653",
+        "providers/mcp_autonomy.py": "8503ba0fca9afcc0ff5aca02792bac23cad7d9354a96775a91ed2a9de77dbc69",
+        "providers/mcp_discovery.py": "20cfd6a68601291aa93b20cc6791c8a89adb0044d956743ce4aec3cec38cff6a",
+        "bootstrap/background_browser_context.py": "32f9ebba53a1779f84c72479a4eb386cd3c097e0cf1bd693bce9add909ea45f9",
+        "bootstrap/delegated_digital_composition.py": "218ae582c67447672539310cbd7856792af6dd2af05d44afc29a4477e5877191"
+      },
+      "images": {
+        "core": "sha256:901222dc4f1276775084e6725dea269075fa6e5d0d40f3ea601fd1dc25c6288c",
+        "delegated-work-worker": "sha256:35f44f6eb1a8bc972a34b8b4af263284987cc20706625280996c7d86f4951d32"
+      },
+      "installed": true,
+      "installedAt": "2026-10-03T00:36:42.073101+00:00"
+    }
+  },
+  "verification": {
+    "autostartFocusedTests": {
+      "passed": 47,
+      "seconds": 1.47
+    },
+    "compositionTests": {
+      "passed": 27,
+      "seconds": 2.41
+    },
+    "ordinaryFinalTask": "passed",
+    "sessionFocusedTests": {
+      "passed": 102,
+      "seconds": 14.98,
+      "command": "python -m pytest -q tests/connectors/test_browser_autostart.py tests/connectors/test_mcp_discovery.py tests/connectors/test_mcp_gateway.py"
+    },
+    "candidateComposition": "Both actual candidate images load identical digital profiles with existing runtime configuration.",
+    "installedComposition": "Both installed images healthy; all six source hashes match repository and core/worker profiles match.",
+    "independentSourceReview": {
+      "reviewer": "/root/completion_diagnosis",
+      "result": "GO",
+      "scope": "autostart, pinned compositor compatibility and browser-scoped session correction"
+    },
+    "independentFinalReview": {
+      "reviewer": "/root/completion_diagnosis",
+      "result": "GO",
+      "path": "eva2/reviews/autonomous-browser-installed-20261003.md",
+      "scope": "Installed current own-browser outcome only; earlier failures and limitations preserved."
+    }
+  },
+  "limitations": [
+    "No general guarantee for all websites, login, CAPTCHA, downloads or concurrent browser jobs.",
+    "Native overlay is installed in the current existing container; exact reconstruction is documented. Fresh optional browser installer remains separate O1 work.",
+    "No visual viewer acceptance or reboot/firewall recovery inferred from frame callback measurements.",
+    "ContextForge old session generations have no TTL; they are removed on session deletion or gateway shutdown. Rotation alone is not cleanup.",
+    "Model usage reports are partial; credits and Codex development cost are unknown. No competitor or speed/cost win claimed."
+  ],
+  "acceptance": {
+    "ownerAccepted": false,
+    "previousT31andT32AcceptancePreserved": true,
+    "originalSmallTasksCompleted": 21,
+    "originalSmallTasksTotal": 44
+  },
+  "result": {
+    "workId": "work:eva-chat:b9e6f0ec-d627-5bf8-a405-2f1416bdae5a",
+    "state": "succeeded",
+    "messageId": "dashboard:9f20e7bd-bb49-449a-82fb-e784f2ba6d7c",
+    "prompt": "Open zelfstandig je eigen browser, ga naar https://example.com en volg de link Learn more. Lees op de bestemmingspagina de hoofdtitel en leg in een zin uit waarvoor de voorbeeld-domeinen zijn. Gebruik mijn persoonlijke Chrome niet. Geef de daadwerkelijk bezochte URL en de gelezen titel terug.",
+    "reply": "Ik heb in mijn eigen beheerde browser example.com bezocht en op ‘Learn more’ geklikt; jouw persoonlijke Chrome is niet gebruikt.\n\nDaadwerkelijk bezochte bestemmings-URL: https://www.iana.org/help/example-domains\nGelezen hoofdtitel: Example Domains\n\nVoorbeeld-domeinen zoals example.com en example.org zijn gereserveerd voor illustratieve voorbeelden in documentatie en mogen daarvoor zonder voorafgaande toestemming worden gebruikt.",
+    "resultSha256": "8f292a90288a7b8bdd9104dc3c332e22e950cd5cd966dcf2fe364173e8c65432",
+    "destination": "https://www.iana.org/help/example-domains",
+    "title": "Example Domains",
+    "actualBrowserTools": [
+      {
+        "name": "eva-connector-cf71c26d6ede3e345a227f2a18d7ee6e-browser-navigate",
+        "arguments": {
+          "url": "https://example.com"
+        }
+      },
+      {
+        "name": "eva-connector-cf71c26d6ede3e345a227f2a18d7ee6e-browser-snapshot",
+        "arguments": {}
+      },
+      {
+        "name": "eva-connector-cf71c26d6ede3e345a227f2a18d7ee6e-browser-click",
+        "arguments": {
+          "target": "e13",
+          "element": "Learn more"
+        }
+      },
+      {
+        "name": "eva-connector-cf71c26d6ede3e345a227f2a18d7ee6e-browser-snapshot",
+        "arguments": {}
+      }
+    ],
+    "browserBefore": {
+      "contract": "EvaBrowserSession/v1",
+      "revision": 70,
+      "state": "stopped",
+      "owner_control": false,
+      "eva_control": false,
+      "browser_ready": false,
+      "mcp_ready": false,
+      "profile_preserved": true,
+      "fresh_observation_required": false,
+      "viewer_path": null
+    },
+    "browserAfter": {
+      "contract": "EvaBrowserSession/v1",
+      "revision": 72,
+      "state": "eva",
+      "owner_control": false,
+      "eva_control": true,
+      "browser_ready": true,
+      "mcp_ready": true,
+      "profile_preserved": true,
+      "fresh_observation_required": true,
+      "viewer_path": null
+    },
+    "ownerUiActions": 0,
+    "manualInterventionDuringFinalTask": false,
+    "personalChromeUsed": false,
+    "independentReadback": "Separate MCP session after task completion confirmed the actual destination, title and page text. No navigation or clicking by the observer."
+  },
+  "measurement": {
+    "elapsedSeconds": 81.506,
+    "intakeSeconds": 14.254,
+    "workerSeconds": 68.0,
+    "foregroundUsage": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 7241,
+      "output_tokens": 202,
+      "model_attempts": 1
+    },
+    "workerUsage": {
+      "contract": "DelegatedWorkUsage/v1",
+      "tool_calls": 5,
+      "measurement": "partial",
+      "input_tokens": 94347,
+      "total_tokens": 94927,
+      "output_tokens": 580,
+      "schema_version": 1,
+      "cost_usd_micros": null,
+      "completed_model_responses": 6
+    },
+    "recordedTotalInputTokens": 101588,
+    "recordedTotalOutputTokens": 782,
+    "recordedModelResponses": 7,
+    "costCredits": null,
+    "costUsd": null,
+    "scope": "Final ordinary Eva task only; partial model accounting, not Codex development consumption. Both earlier failed attempts are separately retained.",
+    "interpretation": "Usable autonomous browser result; still slow and token-heavy, not an efficiency claim."
+  },
+  "privateEvidence": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/autonomous-browser-20261003/session-fix/events.private.json",
+      "sha256": "08ec3cf085698f3a9999cbb84186650cf6df66daea69e34d96a1ed4834c88527"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/autonomous-browser-20261003/session-fix/work.private.json",
+      "sha256": "bb6ec32dab77e0d0d3a8717ff1095dead57039dae2f55baae1ac40093a2dd65e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/autonomous-browser-20261003/session-fix/response.private.json",
+      "sha256": "cf55b8b969d616840bce28d891265dbdd48e5d879dee97b4287b5160298c7f4e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/autonomous-browser-20261003/session-fix/independent-readback.private.json",
+      "sha256": "8b2b3df49c567b960bdaa9741b78fa0cbc2eb5f7dbd0fe183182b2d518eca77c"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/autonomous-browser-20261003/session-fix/installed-profile.private.json",
+      "sha256": "0e478e64d109e9287564bb7d32f35c9fc735bc3d32456befbd0e3e1b8fe6c1f7"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/autonomous-browser-20261003/after-idle-fix/restart-gateway-click.private.json",
+      "sha256": "61fa7f120c2d772363575866adef9d36fd26d3307547bce0f122953771872b01"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/autonomous-browser-20261003/after-idle-fix/session-gateway-click.private.json",
+      "sha256": "5fcae296b983cd4ae250f0c7894b55be16d2a27abb93da109bada565aa700fca"
+    }
+  ],
+  "completedAt": "2026-10-03T00:46:27.839293+00:00"
+}

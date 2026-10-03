@@ -16,11 +16,12 @@ from eva.providers import mcp_autonomy as module
 @pytest.fixture(autouse=True)
 def clean_environment(monkeypatch):
     for name in tuple(module.os.environ):
-        if name.startswith("EVA_MCP_"):
+        if name.startswith(("EVA_MCP_", "EVA_BROWSER_")):
             monkeypatch.delenv(name)
 
 
 def configured(monkeypatch, tmp_path):
+    monkeypatch.setattr(module.McpGatewayProviderFactory, "load_settings", lambda: None)
     for name in ("EVA_MCP_GATEWAY_TOKEN_FILE", "EVA_MCP_REGISTRATION_TOKEN_FILE"):
         path = tmp_path / name
         path.write_text("synthetic-" + name)
@@ -159,23 +160,35 @@ def test_loader_refuses_missing_or_erased_ingress_and_propagates_corruption(monk
         loader(source)
 
 
-def test_factory_reuses_two_durable_ports_without_registration_io(monkeypatch):
+@pytest.mark.parametrize("with_browser", [False, True])
+def test_factory_reuses_two_durable_ports_without_registration_io(monkeypatch, with_browser):
     monkeypatch.setitem(sys.modules, "eva.providers.mcp_owner_authority",
         SimpleNamespace(McpOwnerAuthority=Authority))
     records = []
-    def registry(*args, canonical_owner):
+    def registry(*args, canonical_owner, configured_catalog):
         assert callable(canonical_owner)
+        assert configured_catalog is None
         records.append(args)
         return SimpleNamespace()
     monkeypatch.setattr(module, "PostgresMcpConnectorRegistry", registry)
     engine = sa.create_engine("postgresql+psycopg://unused:unused@localhost/unused")
     settings = module.McpAutonomySettings("/private/mandate.json",
         McpGatewayConfig("https://gateway.example", "gateway-token"),
-        McpRegistrationConfig("https://gateway.example", "registration-token"))
+        McpRegistrationConfig("https://gateway.example", "registration-token"),
+        browser_autostart=(module.BrowserAutostartConfig("https://browser.example/mcp",
+            module.BrowserSessionClient("https://controller.example", "control-token"))
+            if with_browser else None))
     contribution = module.McpAutonomyProviderFactory.build(settings, engine)
     names = {tool.name for tool in contribution.conversation_tools}
     assert {"connect_service", "discover_connector_tools", "use_connector_tool"} <= names
     assert len(contribution.external_tools) == 2
+    browser = contribution.external_tools[1]._provider._browser_autostart
+    if with_browser:
+        assert browser.connector_id == module.connector_id_for(
+            Authority.owner_key, "https://browser.example/mcp")
+        assert browser.config is settings.browser_autostart
+    else:
+        assert browser is None
     assert records[0][0] is engine and records[0][1] == Authority.scope
     assert records[0][2] == "owner"
     assert all(port.available_for(source_turn()) for port in contribution.external_tools)
@@ -227,3 +240,21 @@ def test_parameterless_mcp_schema_keeps_original_catalog_pin(monkeypatch):
     row["inputSchema"]["properties"] = {}
     with pytest.raises(RuntimeError, match="differs from the sealed catalog"):
         asyncio.run(adapter.verify_catalog())
+
+
+def test_browser_autostart_requires_explicit_complete_trusted_configuration(monkeypatch, tmp_path):
+    configured(monkeypatch, tmp_path)
+    assert module.McpAutonomyProviderFactory.load_settings().browser_autostart is None
+    monkeypatch.setenv("EVA_BROWSER_MCP_ENDPOINT", "https://browser.example/mcp")
+    with pytest.raises(RuntimeError, match="autostart configuration is incomplete"):
+        module.McpAutonomyProviderFactory.load_settings()
+    token_file = tmp_path / "controller-token"
+    token_file.write_text("synthetic-browser-control")
+    token_file.chmod(0o600)
+    monkeypatch.setenv("EVA_BROWSER_CONTROL_URL", "https://controller.example")
+    monkeypatch.setenv("EVA_BROWSER_CONTROL_TOKEN_FILE", str(token_file))
+    settings = module.McpAutonomyProviderFactory.load_settings()
+    assert settings.browser_autostart.endpoint == "https://browser.example/mcp"
+    assert settings.browser_autostart.client.origin == "https://controller.example"
+    assert settings.browser_autostart.client.token == "synthetic-browser-control"
+    assert "synthetic-browser-control" not in repr(settings)

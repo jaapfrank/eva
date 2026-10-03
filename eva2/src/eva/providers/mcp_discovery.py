@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 import json
+import hmac
 from threading import Lock
 from typing import Literal, Protocol
 
@@ -21,6 +22,9 @@ from eva.application.conversation import (
 )
 from eva.application.orchestration import ToolDispatchResult, ToolProofObservation, ToolRequest
 from eva.contracts.base import JsonValue, validate_json_value
+from eva.contracts.canonical_json import canonical_json_bytes
+from eva.application.schema_validation import validate_schema_value
+from eva.adapters.connectors.browser_autostart import ManagedBrowserAutostart
 
 
 _USE_ACTION = "use_connector_tool"
@@ -122,7 +126,11 @@ class McpDiscoveryToolPlanner:
         binding = self._registry.resolve_for_turn(turn, tool_id)
         if binding.tool_id != tool_id:
             raise ConversationConflict("connector registry returned another tool")
-        adapter = await self._adapter._verified_adapter(binding)
+        if (self._adapter._browser_autostart is not None
+                and self._adapter._browser_autostart.matches(binding.connector_id)):
+            # Reject invalid inputs before a task can start its configured browser.
+            validate_schema_value(arguments, binding.spec.descriptor.input_schema, "arguments")
+        adapter = await self._adapter._verified_adapter(binding, prepare_browser=True)
         prepared = await adapter.planner().prepare(
             turn, ConversationActionCall(call.call_id, binding.spec.descriptor.name, arguments),
         )
@@ -139,8 +147,10 @@ class McpDiscoveryToolAdapter:
 
     supports_stored_results = True
 
-    def __init__(self, registry: McpConnectorRegistry) -> None:
+    def __init__(self, registry: McpConnectorRegistry, *,
+                 browser_autostart: ManagedBrowserAutostart | None = None) -> None:
         self._registry = registry
+        self._browser_autostart = browser_autostart
         self._cache: dict[str, tuple[McpGatewayConfig, McpGatewayToolAdapter]] = {}
         self._cache_lock = Lock()
 
@@ -151,19 +161,38 @@ class McpDiscoveryToolAdapter:
     def planner(self) -> McpDiscoveryToolPlanner:
         return McpDiscoveryToolPlanner(self._registry, self)
 
-    async def _verified_adapter(self, binding: McpExecutionBinding) -> McpGatewayToolAdapter:
+    async def _verified_adapter(self, binding: McpExecutionBinding, *,
+                                prepare_browser: bool = False) -> McpGatewayToolAdapter:
+        config = binding.config
+        managed = (self._browser_autostart is not None
+                   and self._browser_autostart.matches(binding.connector_id))
+        if prepare_browser and managed:
+            revision = await self._browser_autostart.ensure_available(binding.connector_id)
+            # One owner-bound browser generation across tools and core/worker instances.
+            # The model never selects this identity, and it is not a durable tool argument.
+            session_id = hmac.digest(config.bearer_token.encode("utf-8"), canonical_json_bytes({
+                "contract": "EvaManagedBrowserMcpSession/v1",
+                "connector_id": binding.connector_id,
+                "browser_revision": revision,
+            }), "sha256").hex()
+            config = replace(config, session_id=session_id)
         digest = binding.spec.configuration_sha256
         with self._cache_lock:
             cached = self._cache.get(digest)
-        if cached is not None and cached[0] == binding.config:
-            return cached[1]
-        adapter = McpGatewayToolAdapter(binding.config, (binding.spec,))
+        if cached is not None:
+            if cached[0] == config:
+                return cached[1]
+            if (managed and not prepare_browser
+                    and replace(cached[0], session_id=config.session_id) == config):
+                # Sealed result replay does not need a live generation or status call.
+                return cached[1]
+        adapter = McpGatewayToolAdapter(config, (binding.spec,))
         await adapter.verify_catalog()
         with self._cache_lock:
             # This is only an optimization; evicted generations remain in the registry.
             if len(self._cache) >= 128:
                 self._cache.pop(next(iter(self._cache)))
-            self._cache[digest] = (binding.config, adapter)
+            self._cache[digest] = (config, adapter)
         return adapter
 
     async def _adapter_for_request(
@@ -180,7 +209,32 @@ class McpDiscoveryToolAdapter:
             # Recovery only reads the immutable dispatch receipt, even when the
             # provider is offline or its current catalog has changed.
             return McpGatewayToolAdapter(binding.config, (binding.spec,))
-        return await self._verified_adapter(binding)
+        prepare_browser = False
+        if (self._browser_autostart is not None
+                and self._browser_autostart.matches(binding.connector_id)):
+            # Validate durable requests too: resume need not pass through the planner.
+            McpGatewayToolAdapter._validate_request_binding(command, binding.spec)
+            arguments = command.arguments
+            bindings = binding.spec.execute_argument_bindings
+            if phase == "observe":
+                arguments = command.observation_arguments or {}
+                bindings = binding.spec.observe_argument_bindings
+            schema = binding.spec.descriptor.input_schema
+            projected_schema = {
+                **schema,
+                "properties": {item.provider_name: schema["properties"][item.argument_name]
+                               for item in bindings},
+                "required": [item.provider_name for item in bindings
+                             if item.argument_name in schema["required"]],
+            }
+            validate_schema_value(arguments, projected_schema, "arguments")
+            prepare_browser = True
+            if binding.spec.operation_kind in {"read", "invoke"}:
+                from eva.adapters.postgres.connector_results import recovered_result
+                # Sealed replay and uncertain captures must not start infrastructure.
+                kind = "invoke" if binding.spec.operation_kind == "invoke" else "read"
+                prepare_browser = recovered_result(command, kind) is None
+        return await self._verified_adapter(binding, prepare_browser=prepare_browser)
 
     async def execute(self, command: ToolRequest) -> ToolDispatchResult:
         adapter = await self._adapter_for_request(command, phase="execute")

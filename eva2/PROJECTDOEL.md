@@ -1,5 +1,17 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaarverduidelijking 3 oktober 2026 — zelfstandig browsergebruik
+
+Eva gebruikt voor gewone browseropdrachten zelfstandig haar eigen reeds beschikbare
+browser. Jaap hoeft daarvoor geen persoonlijk Chrome-tabblad te delen of eerst
+dashboardknoppen te bedienen. Persoonlijke Chrome-bediening blijft een optionele
+extra mogelijkheid wanneer de eigenaar juist zijn tabblad wil laten gebruiken.
+Bestaande installatie, browsercontroller en algemene uitvoering hergebruiken;
+geen nieuwe browserlaag. Een echte handmatige overname of ingetrokken toegang
+blijft gerespecteerd. Ontbrekende persoonlijke aanmelding vraagt alleen de werkelijk
+noodzakelijke hulp. De gedeelde Chrome-acceptatie en T3.2-uitkomst blijven behouden;
+een persoonlijke overnameproef blokkeert zelfstandig browsergebruik niet.
+
 ## Eigenaarbevestiging 2 oktober — AIDE² en gemeten zelfverbetering
 
 AIDE/AIDE²-onderzoek en toepassing blijven expliciet onderdeel van **L3**, in

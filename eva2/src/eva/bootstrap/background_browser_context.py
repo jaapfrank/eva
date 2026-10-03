@@ -1,4 +1,4 @@
-"""Read the existing owner browser's availability for private background work."""
+"""Describe the existing managed browser for private background work."""
 from __future__ import annotations
 
 import json
@@ -42,10 +42,16 @@ class BackgroundBrowserContext:
                     "beschikbare tools; meld de ontbrekende browserverbinding als die nodig is.",)
         return ("Actuele beschikbaarheid van de beheerde browser (geen inhoud van tabbladen): "
                 + json.dumps(snapshot, ensure_ascii=False) + ". "
-                "Gebruik bij browserwerk de bestaande MCP-connector en zijn ontdekte tools. "
+                "Gebruik voor gewone browseropdrachten standaard Eva’s eigen beheerde browser "
+                "via de bestaande MCP-connector en zijn ontdekte tools. Persoonlijke Chrome-tabdeling "
+                "is alleen een extra mogelijkheid als de eigenaar juist zijn eigen tabblad bedoelt. "
+                + ("De eigen browser is de connector op " + os.environ["EVA_BROWSER_MCP_ENDPOINT"]
+                   + ". Bij stopped wordt deze browser bij werkelijk toolgebruik zelfstandig gestart; "
+                   "vraag daarvoor geen dashboardhandeling of tabdeling. "
+                   if os.environ.get("EVA_BROWSER_MCP_ENDPOINT") else "") +
                 "Als owner_control waar is, heeft de eigenaar de bediening; probeer die "
                 "niet over te nemen of te omzeilen. Leg uit dat teruggeven kan in het "
-                "browserpaneel van Eva’s dashboard. Bij stopped kan de eigenaar daar starten; "
+                "browserpaneel van Eva’s dashboard. "
                 "bij recovery_required kan de eigenaar daar Herstel en neem over kiezen, "
                 "de pagina controleren en teruggeven. Dat hervat geen gestopte taak; "
                 "gebruik daarvoor de bestaande taakbediening na een expliciet verzoek. Ga waar mogelijk "

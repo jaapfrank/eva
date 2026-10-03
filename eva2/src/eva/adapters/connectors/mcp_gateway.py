@@ -51,6 +51,7 @@ class McpGatewayConfig:
     bearer_token: str = field(repr=False)
     request_timeout_seconds: int = 15
     allow_plain_http: bool = False
+    session_id: str | None = field(default=None, repr=False)
 
     def __post_init__(self) -> None:
         parsed = parse.urlsplit(self.base_url)
@@ -69,6 +70,11 @@ class McpGatewayConfig:
             raise ValueError("MCP gateway token is invalid")
         if not 2 <= self.request_timeout_seconds <= 30:
             raise ValueError("MCP gateway timeout is invalid")
+        if self.session_id is not None and (
+            not isinstance(self.session_id, str)
+            or re.fullmatch(r"[a-f0-9]{64}", self.session_id) is None
+        ):
+            raise ValueError("MCP gateway session identity is invalid")
 
 
 @dataclass(frozen=True, slots=True)
@@ -747,15 +753,18 @@ class McpGatewayToolAdapter:
         self, method: str, path: str, payload: dict[str, JsonValue] | None
     ) -> Any:
         body = None if payload is None else json.dumps(payload).encode("utf-8")
+        headers = {
+            "Accept": "application/json",
+            "Authorization": f"Bearer {self._config.bearer_token}",
+            "Content-Type": "application/json",
+        }
+        if method == "POST" and path == "/rpc" and self._config.session_id is not None:
+            headers["Mcp-Session-Id"] = self._config.session_id
         request = urllib_request.Request(
             self._config.base_url.rstrip("/") + path,
             data=body,
             method=method,
-            headers={
-                "Accept": "application/json",
-                "Authorization": f"Bearer {self._config.bearer_token}",
-                "Content-Type": "application/json",
-            },
+            headers=headers,
         )
         try:
             with urllib_request.urlopen(

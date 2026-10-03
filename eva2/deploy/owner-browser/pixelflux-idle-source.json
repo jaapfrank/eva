@@ -1,0 +1,54 @@
+{
+  "contract": "EvaOwnerBrowserNativeOverlay/v1",
+  "status": "reproducible_dependency_pin_not_live_acceptance",
+  "purpose": "Keep Wayland frame callbacks running without a connected viewer so ordinary Playwright actions can complete their stability checks.",
+  "baseImage": "lscr.io/linuxserver/chromium@sha256:63e8e38540462a38c70ef85497c13c412485b39979394ea95da450fca5b4efa8",
+  "package": "pixelflux",
+  "distributionVersion": "2.1.0",
+  "releaseTag": "f9d49bf",
+  "sourceCommit": "f9d49bfcb84d4f27d92eddf29781840298ab9d9e",
+  "releaseUrl": "https://github.com/selkies-project/pixelflux/releases/tag/f9d49bf",
+  "wheel": {
+    "filename": "pixelflux-2.1.0-cp313-cp313-manylinux_2_28_x86_64.whl",
+    "url": "https://github.com/selkies-project/pixelflux/releases/download/f9d49bf/pixelflux-2.1.0-cp313-cp313-manylinux_2_28_x86_64.whl",
+    "sha256": "8583b1baf6119d38908a353affc7c6e7efca518009dc694fa78814adf0d30971",
+    "sizeBytes": 17527517,
+    "githubAssetId": 575080369,
+    "publishedAt": "2026-09-19T16:22:04Z"
+  },
+  "installedTarget": {
+    "python": "/lsiopy/bin/python3",
+    "sitePackages": "/lsiopy/lib/python3.13/site-packages",
+    "extension": "pixelflux.cpython-313-x86_64-linux-gnu.so",
+    "extensionSha256": "7d4fd0db93e48fd4e83eed1b4f6407f914f646d08c7a562b485d6d32ab89f281"
+  },
+  "original": {
+    "distributionVersion": "2.0.0",
+    "extensionSha256": "ce60a6ccaa2a35695c3b8bacf168e1db6c969d97e5b3aca526e8063ed635b29f",
+    "preserve": [
+      "pixelflux.cpython-313-x86_64-linux-gnu.so",
+      "pixelflux.libs",
+      "pixelflux-2.0.0.dist-info"
+    ]
+  },
+  "compatibility": {
+    "abi": "CPython 3.13, glibc manylinux_2_28, x86_64",
+    "retainedSettings": [
+      "CaptureSettings.output_mode (0=JPEG, 1=H264)",
+      "CaptureSettings.use_openh264"
+    ],
+    "retainedWire": "H264 prefix 0x04 followed by 0x01=IDR, 0x02=I, 0x00=delta; no codec high nibble. EncodedStripe.data_type remains 1=JPEG, 2=H264.",
+    "sourceAnchors": {
+      "idleFunction": "pixelflux/src/lib.rs:4181",
+      "idleCall": "pixelflux/src/lib.rs:4865",
+      "legacySettings": "pixelflux/src/lib.rs:5429",
+      "h264Header": "pixelflux/src/encoders/software.rs:454",
+      "jpegDataType": "pixelflux/src/encoders/software.rs:967",
+      "h264DataType": "pixelflux/src/encoders/software.rs:1062"
+    },
+    "preflight": "Separate target-directory import in the existing browser ABI found no missing existing CaptureSettings, ScreenCapture or StripeFrame fields/methods. API evidence is not viewer or task acceptance.",
+    "versionLabelWarning": "Do not substitute PyPI 2.1.0 (SHA256 43d47574e52f485d86b4b3d0f56c6bcf160e99ebc658cb59d7a096e6ee0ca1a0) or another 2.1.0 snapshot; that later build changes settings and the video wire protocol."
+  },
+  "deploymentBoundary": "Only the native package in the existing browser container; preserve profile and Selkies authentication overlay, use existing controller stop/start. No Computer Use API or Chromium flag change.",
+  "license": "MPL-2.0; retain wheel licenses and bundled component notices"
+}

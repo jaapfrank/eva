@@ -1,5 +1,24 @@
 # EVA2 werkbord
 
+## Nu opgeleverd: Eva gebruikt zelfstandig haar eigen browser
+
+Eva startte haar gestopte eigen browser, opende example.com, klikte door naar
+IANA en gaf de werkelijk gelezen titel en URL terug. Een aparte uitlezing
+bevestigt de eindpagina. Jaap deelde geen tabblad en bediende geen knoppen.
+Automatische start, sessiebehoud en de benodigde compositorcorrectie zijn
+geïnstalleerd; kern en werker draaien gezond met dezelfde bronversie.
+
+De proef duurde **81,5 seconden**, met **101.588 input-/782 outputtokens**
+(gedeeltelijk gemeten; credits onbekend). Zelfstandig gebruik werkt; geen claim
+van lage kosten of hoge snelheid. Twee eerdere mislukte pogingen blijven zichtbaar.
+De onafhankelijke eindreview is **GO**. Vervolgwerk is nog niet gestart.
+De vorige T3.1/T3.2-acceptatie
+blijft behouden; geen nieuwe taak of tellerwijziging. Persoonlijke overname T3.3
+blijft optioneel en blokkeert deze zelfstandige route niet.
+
+[Uitvoering en meting](evidence/product/autonomous-browser-installed-20261003.json)
+· [Onafhankelijke review](reviews/autonomous-browser-installed-20261003.md).
+
 ## Laatste afgeronde taak: T3.2 — echte bediening van jouw Chrome-tab
 
 **21/44 oorspronkelijke kleine taken technisch klaar.** Eva heeft via de gewone
@@ -12,14 +31,14 @@ Bestaande geïnstalleerde code; geen nieuwe installatie of verzonnen acceptatie.
 1.123 uitvoertokens**, negen modelantwoorden. Gemeten tellers zijn gedeeltelijk;
 credits zijn onbekend. Dit bewijst deze gebruikersuitkomst, geen efficiëntiewinst.
 
-**Jij:** alleen T3.3 handmatig overnemen staat nog open. Meld wanneer je klaarzit
-bij de Chrome-proefpagina; Codex start daarna de wachtende klik voor **Neem over**.
-Geen herhaling van de geslaagde klikproef. O1.2 gaat onafhankelijk verder.
+**Jij:** geen tabdeel- of dashboardhandeling nodig voor zelfstandig browsergebruik.
+T3.3 persoonlijke overname blijft een optionele aparte proef. De geslaagde klikproef
+wordt niet herhaald. O1.2 is bewaard en momenteel niet de actieve opdracht.
 
 [Uitvoering en meting](evidence/product/t3-owner-browser-task-20261002.json)
 · [Onafhankelijke review](reviews/t3-owner-browser-task-20261002.md).
 
-## Nu: O1.2 — resterende optionele modules aansluiten
+## Eerder werk, nu bewaard: O1.2 — resterende optionele modules aansluiten
 
 **Opgeleverd:** dezelfde gewone installatiewizard kan nu de gekozen Home Assistant-
 module installeren. De nieuwe Eva antwoordde via haar gewone chat correct dat
@@ -32,9 +51,13 @@ of herhaling. Het chatantwoord kostte **11,6 seconden**, twee modelantwoorden en
 modelaanmelding kostte 30/9 tokens. Credits en geheugenachtergrond niet volledig
 meetbaar. Onafhankelijke review: **GO voor gekozen HA geïnstalleerd**.
 
-**Nu:** optionele browsercode en bronreview gereed. De echte pakketstart vond een
-ontbrekende Python-dependency vóór browserdiensten werden gemaakt. Gerichte
-correctie gebruikt de aanwezige Compose-parser; opgeslagen keuzes blijven behouden.
+**Nu:** de aparte optionele browser is aangemaakt, maar de start is nog niet klaar.
+De controller vindt het gepatchte programmabestand niet leesbaar voor de
+browsergebruiker (0600). De broncorrectie zet dat bestand op 0444; zes gerichte
+controles slagen. De bewaarde containers, het profiel en de foutgeschiedenis
+blijven staan. Herstel van precies deze bestandsrechten en verdere aansluiting
+op de nieuwe Eva zijn nog werk voor Codex; niets hiervan heet al geïnstalleerd.
+De persoonlijke Chrome-klikproef hierboven is een andere, reeds werkende route.
 
 **Nog af te maken binnen O1.2:** gewone spraak-/browserkeuzes en werkende consumenten
 van de overige gekozen providers. De bestaande modules hergebruiken; geen nieuwe

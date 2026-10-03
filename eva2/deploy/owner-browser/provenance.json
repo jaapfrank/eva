@@ -138,8 +138,12 @@
       "containsCredentials": false
     },
     "README.md": {
-      "sha256": "d6f95bb98f680d5ebebef31544c81a5774b265799ac0dbcc60eb176daa58049a",
-      "source": "Maintenance instructions derived from copied source/argv and browser_next deployment report."
+      "sha256": "c4b9891c5174f1e047ccbd240ea973ddca947dfcff8e734108d0b505a1fce3be",
+      "source": "Existing maintenance recipe plus exact Pixelflux idle-frame overlay procedure."
+    },
+    "pixelflux-idle-source.json": {
+      "sha256": "c1fb95cfef41dac4ba4ad104880f45e6ed0ba2d7bc8e800b97c6383bf9741d15",
+      "source": "Official f9d49bf wheel, exact upstream source and bounded API preflight."
     }
   },
   "excluded": [
@@ -151,5 +155,11 @@
     "live container identity/configuration",
     "full copied Selkies module (reconstruct with hash-bound patch)"
   ],
-  "runtimeLifecycle": "Existing host controller runs from a manually launched process; user service template was not activated. Host reboot persistence is not established."
+  "runtimeLifecycle": "Existing host controller runs from a manually launched process; user service template was not activated. Host reboot persistence is not established.",
+  "pixelfluxOverlay": {
+    "pinFile": "pixelflux-idle-source.json",
+    "sourceCommit": "f9d49bfcb84d4f27d92eddf29781840298ab9d9e",
+    "wheelSha256": "8583b1baf6119d38908a353affc7c6e7efca518009dc694fa78814adf0d30971",
+    "installationEvidence": "Recorded separately; this recipe does not assert live acceptance."
+  }
 }

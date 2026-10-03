@@ -12,6 +12,8 @@ import os
 from sqlalchemy.engine import Engine
 
 from eva.adapters.connectors.mcp_gateway import McpGatewayConfig
+from eva.adapters.connectors.browser_autostart import BrowserAutostartConfig, ManagedBrowserAutostart
+from eva.adapters.connectors.browser_session import BrowserSessionClient
 from eva.adapters.connectors.mcp_registration import (
     ContextForgeRegistrationClient, McpRegistrationConfig,
 )
@@ -27,7 +29,7 @@ from eva.application.conversation import (
 )
 from eva.providers.contracts import ProviderContribution
 from eva.providers.mcp_discovery import McpDiscoveryToolAdapter
-from eva.providers.mcp_registration import McpRegistrationToolAdapter
+from eva.providers.mcp_registration import McpRegistrationToolAdapter, connector_id_for
 from eva.providers.mcp_gateway import McpGatewayProviderFactory, McpGatewayProviderSettings
 
 
@@ -38,6 +40,7 @@ class McpAutonomySettings:
     registration: McpRegistrationConfig
     managed_endpoints_file: str | None = None
     configured_catalog: McpGatewayProviderSettings | None = None
+    browser_autostart: BrowserAutostartConfig | None = None
 
 
 def _value(name: str) -> str:
@@ -113,7 +116,8 @@ class McpAutonomyProviderFactory:
         visibility = _value("EVA_MCP_REGISTRATION_VISIBILITY")
         exclusive = _value("EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY")
         managed = _value("EVA_MCP_MANAGED_ENDPOINTS_FILE")
-        if not any((mandate, registration_file, visibility, exclusive, managed)):
+        browser_endpoint = _value("EVA_BROWSER_MCP_ENDPOINT")
+        if not any((mandate, registration_file, visibility, exclusive, managed, browser_endpoint)):
             return None
         if "EVA_MCP_REGISTRATION_TOKEN" in os.environ or "EVA_MCP_GATEWAY_TOKEN" in os.environ:
             raise RuntimeError("MCP autonomy credentials require private runtime files")
@@ -127,8 +131,17 @@ class McpAutonomyProviderFactory:
         registration = McpRegistrationConfig(base_url, read_runtime_secret_file(registration_file,
             setting_name="EVA_MCP_REGISTRATION_TOKEN_FILE"), allow_plain_http=plain == "true",
             visibility=visibility or "private", exclusive_owner_gateway=exclusive == "true")
+        browser = None
+        if browser_endpoint:
+            control_url = _value("EVA_BROWSER_CONTROL_URL")
+            control_file = _value("EVA_BROWSER_CONTROL_TOKEN_FILE")
+            if not control_url or not control_file:
+                raise RuntimeError("managed browser autostart configuration is incomplete")
+            browser = BrowserAutostartConfig(browser_endpoint, BrowserSessionClient(
+                control_url, read_runtime_secret_file(control_file,
+                    setting_name="EVA_BROWSER_CONTROL_TOKEN_FILE")))
         return McpAutonomySettings(mandate, gateway, registration, managed or None,
-                                   McpGatewayProviderFactory.load_settings())
+                                   McpGatewayProviderFactory.load_settings(), browser)
 
     @staticmethod
     def build(settings: McpAutonomySettings, engine: Engine) -> ProviderContribution:
@@ -149,7 +162,10 @@ class McpAutonomyProviderFactory:
         registration = McpRegistrationToolAdapter(
             ContextForgeRegistrationClient(settings.registration), registry, authority,
             authority.owner_key, _SourceTurnLoader(engine, authority))
-        discovery = McpDiscoveryToolAdapter(registry)
+        browser = (None if settings.browser_autostart is None else ManagedBrowserAutostart(
+            settings.browser_autostart,
+            connector_id_for(authority.owner_key, settings.browser_autostart.endpoint)))
+        discovery = McpDiscoveryToolAdapter(registry, browser_autostart=browser)
         return ProviderContribution(
             provider_id="mcp_autonomy",
             conversation_tools=registration.conversation_tools() + discovery.conversation_tools(),
