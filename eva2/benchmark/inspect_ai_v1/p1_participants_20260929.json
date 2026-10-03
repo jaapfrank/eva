@@ -1,6 +1,6 @@
 {
   "contract": "EvaComparisonParticipantInputs/v1",
-  "checkedAt": "2026-10-03T23:20:52.479009+00:00",
+  "checkedAt": "2026-10-03T23:49:02.700767+00:00",
   "stage": "final_dataset_inspect_bound_native_resources_incomplete",
   "protocol": "eva2/design/product/comparable-agent-benchmarks-v1.md#ev-003",
   "scope": "Inputs for existing Inspect runner; not results, a new runtime or a new scorer.",
@@ -852,7 +852,7 @@
     "finalCalibrationStatus": "Candidate frozen for independent curation. Existing functional proof preserved; incomplete usage is not extrapolated into a final task budget. No final matrix admission."
   },
   "finalDataset": {
-    "status": "inspect_binding_verified_resources_and_budget_open",
+    "status": "eva2_native_turn_reply_binding_verified_other_resources_and_budget_open",
     "commitment": "eva2/benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json",
     "commitmentSha256": "bbdbf8eff011aeb51c41e2ff6532346dd22615a99102166e4005292100dd03bf",
     "candidate": {
@@ -881,7 +881,7 @@
       "Two independent blinded human raters for the protocol human judgements; physical listening remains required where specified, never inferred from transport success.",
       "Explicit private evidence retention, controlled rater access and cleanup moment before execution."
     ],
-    "checkedAt": "2026-10-03T23:20:52.479009+00:00",
+    "checkedAt": "2026-10-03T23:49:02.700767+00:00",
     "evaluatorBinding": {
       "source": "eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
       "sourceSha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
@@ -920,6 +920,66 @@
       "productInstallationRequired": false,
       "productCandidateChanged": false,
       "completionClaim": "P1.2 remains open until actual resource bindings and finite calibrated budgets are fixed."
+    },
+    "nativeConversationBinding": {
+      "source": "eva2/benchmark/inspect_ai_v1/cp001_native.py",
+      "sourceSha256": "f5a584df4039b9aee5cdd113010c350201da7e18359f558175a1777c4959f4b3",
+      "interfaces": [
+        "eva2_request_for_turn(ConversationTurn)",
+        "exchange",
+        "read_eva2_committed_reply(engine, body, timeout_seconds=...)"
+      ],
+      "actorBoundary": "Resolved native actor/audience from trusted evaluator provisioning. No alias inference, unknown-to-owner fallback or physical identity claim. Distinct static connector bindings are separate persons; Telegram pairing aliases another account to its confirmer.",
+      "observed": {
+        "actualIngress": "create_app/PostgresHindsightMemoryRuntime",
+        "database": "PostgreSQL 16.13",
+        "syntheticPrincipals": 2,
+        "httpRequests": 5,
+        "independentReadbacks": 4,
+        "modelStubCalls": 4,
+        "realModelCalls": 0,
+        "replayAdditionalModelCalls": 0,
+        "focusedTest": "1 passed in 3.73s",
+        "semanticMemory": "stub; cold path disabled",
+        "productQualityScore": null
+      },
+      "sourceReview": "/root/background_execution_seam: limited GO; no blockers",
+      "resultReview": "/root/background_execution_seam: source hashes, exact reply/scope readbacks, replay, isolation and cleanup verified; limited GO",
+      "testSource": "eva2/tests/benchmark/test_cp001_native_postgres.py",
+      "testSourceSha256": "696ea8b80ab4f758e29cab685defb2c492e12a0a83504ecccc4a03160e1c3b45",
+      "evidence": {
+        "receipt.json": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-native-turn-binding-20261004-v1/receipt.json",
+          "sha256": "f9be82288424031ea06836fd542c157b95a930aee6446155cc8f86e6ef3d0715"
+        },
+        "collection-preflight.json": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-native-turn-binding-20261004-v1/collection-preflight.json",
+          "sha256": "342596b3f2a5739b4c4f4783f86406e697a6990251541e7ed49437299f647c07"
+        },
+        "resumed-receipt.json": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-native-turn-binding-20261004-v1/resumed-receipt.json",
+          "sha256": "3f914cc771dc1c96d2c0e7b151db847bfec33f5413c1fd59c54f71b9e53d84e5"
+        },
+        "resumed-test.txt": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-native-turn-binding-20261004-v1/resumed-test.txt",
+          "sha256": "b7901c5e8aab78ffae2f61d61c69885199e6a581564b5a80488bed9f5f5e0b59"
+        }
+      },
+      "curatorSchemaMapping": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/native-binding/curator-mapping.json",
+        "sha256": "bc2e389247b0afcfb50b04675d1f938d4a7741ff84174d60703ccada89adcb82",
+        "content": "14 resource types, 9 evaluator types; no hidden prompts, values or oracles exported"
+      },
+      "initialPreparationFailure": "A locally reused pytest support module was missing; no test executed. Added only existing local support files, collection preflight passed, then one focused execution passed. Original failure retained.",
+      "remaining": [
+        "Full native semantic-memory/outbox/operation settlement across scenario turns.",
+        "Actual actor/audience provisioning including shared/unknown speakers and separate Bottie bindings.",
+        "Controlled native clocks/events and allowed isolated action resources.",
+        "Family budgets and execution order before final inference."
+      ],
+      "productInstalledChanged": false,
+      "newEvaFunction": false,
+      "creditCost": null
     }
   }
 }

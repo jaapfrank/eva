@@ -32,15 +32,23 @@ Geen extra Eva-functie of installatie uit deze meting: stand **25/44**.
 [Alle acht resultaten en beperkingen](evidence/product/p1-known-pair-results-20261003.json).
 [Onafhankelijke resultaatreview](reviews/p1-known-pair-results-20261003.md).
 
-**Nu: P1.2 — afgeschermde eindtaken aansluiten op de bestaande beoordeling.**
+**Nu: P1.2 — afgeschermde eindtaken op de echte Eva-routes aansluiten.**
 Alle 72 ongeziene scenario’s zijn onafhankelijk vastgelegd. De dunne Inspect-
 koppeling leest alleen toegestane invoer voor deelnemers; verborgen antwoorden
 blijven bij de beoordelaar. Taakslagen, menselijke voorkeur, initiatiefnut en
 kosten blijven afzonderlijk zichtbaar. Gerichte controles en gebundelde bronreview
 zijn afgerond; geen echte eindtaak uitgevoerd.
 
-Daarna: echte proefbronnen en onafhankelijke resultaatuitlezing aansluiten en
-familie-/totaalbudget plus uitvoervolgorde vastzetten vóór de eindvergelijking.
+De echte API/PostgreSQL-koppeling is nu gericht gecontroleerd met twee synthetische
+personen: vijf HTTP-verzoeken, vier modelstubantwoorden en exacte onafhankelijke
+readbacks; replay zonder extra modelaanroep. Onafhankelijke bron- en resultaatreview
+akkoord. Nul echte modelcalls; dit bewijst geen semantische geheugenkwaliteit.
+De ontbrekende lokale pytest-supportmodule uit de eerste voorbereiding is gericht
+hersteld; de oorspronkelijke voorbereidingsfout blijft in het bewijs staan.
+
+Volgende aansluiting: volledige native geheugenverwerking per scenario, daarna
+echte actor-/audience-, klok-/event- en actievoorzieningen plus vaste meetbudgetten.
+De geslaagde API-proef wordt niet opnieuw uitgevoerd zonder relevante wijziging.
 Geen modelproef of nieuwe aanmelding actief. P1.2/P2 blijven open; de actuele
 stand is **26/44 oorspronkelijke kleine taken**. Echte audio, ontbrekende toegang
 en menselijke beoordeling worden niet door een synthetische test vervangen.

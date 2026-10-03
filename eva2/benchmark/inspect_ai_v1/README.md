@@ -563,8 +563,22 @@ candidate, protocol, private payload permissions and every case hash.
   can record a tie; initiative disagreement is conservatively not useful.
 
 Reuse `cp001_native.exchange` for the existing Eva1/Eva2 transport and native
-readback callbacks. The legacy `request_for` mapping only supports its original
-A/B development fixtures and is not the final-dataset request builder.
+readback callbacks. `eva2_request_for_turn` serializes an already resolved native
+`ConversationTurn`; it does not choose an actor, audience, session or timestamp.
+`read_eva2_committed_reply` uses a separate read-only database connection and binds
+the stored reply to tenant, installation, principal, conversation and message.
+Pass this reader as the existing `exchange` callback. The legacy `request_for`
+mapping only supports its original A/B development fixtures and is not the
+final-dataset request builder.
+
+The focused `test_resolved_multi_person_turns_use_native_scope_and_independent_readback`
+case reuses the actual API/PostgreSQL fixture with two configured synthetic
+`TelegramPrincipalBindings`, later-session history, cross-person scoping and replay.
+Its model and semantic memory are stubs; it proves API/journal binding, not physical
+identity verification or semantic recall. Native pairing aliases an additional
+Telegram account to the confirming person; it does not create another person.
+Real shared/unknown-speaker authority, event clocks, full memory settlement and
+allowed action resources remain evaluator provisioning work before final execution.
 
 The focused public tests use synthetic cases, not the sealed final questions:
 `PYTHONPATH=eva2/src:. python -m pytest -q eva2/tests/benchmark/test_ev003_final_dataset.py`.

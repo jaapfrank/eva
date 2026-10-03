@@ -141,6 +141,67 @@ def request_for(
     return "/api/chat", body
 
 
+def eva2_request_for_turn(turn) -> tuple[str, dict]:
+    """Serialize an already resolved native turn; never infer actor or authority.
+
+    The trusted evaluator resolves actor, audience, session and clock using real
+    provisioning before calling this function. A valid private turn represents
+    the trusted connector boundary, not proof of physical person recognition.
+    Household/group authority is still revalidated by the native runtime.
+    """
+    from dataclasses import asdict
+    from eva.application.conversation import ConversationTurn
+    from eva.application.memory_audience import memory_audience_to_wire
+
+    if not isinstance(turn, ConversationTurn):
+        raise ValueError("an explicitly resolved native ConversationTurn is required")
+    body = {name: getattr(turn, name) for name in (
+        "tenant_id", "installation_id", "principal_id", "conversation_id",
+        "message_id", "text", "occurred_at")}
+    body["audience"] = memory_audience_to_wire(turn.audience)
+    if turn.project_id is not None:
+        body["project_id"] = turn.project_id
+    if turn.observation_binding is not None:
+        body["observation_binding"] = asdict(turn.observation_binding)
+    return "/internal/v1/turns/respond", body
+
+
+def read_eva2_committed_reply(engine, body: dict, *, timeout_seconds: float):
+    """Read one scoped native reply through an independent database connection.
+
+    The caller owns the disposable database and supplies this reader to exchange.
+    This is durable reply evidence only, not semantic-memory settlement, complete
+    usage, authentication, fresh-state proof or permission to start a model run.
+    """
+    import math
+    import sqlalchemy as sa
+    from eva.adapters.postgres.operational_timeline import external_timeline_scope
+
+    if (type(timeout_seconds) not in (int, float)
+            or not math.isfinite(timeout_seconds) or timeout_seconds <= 0):
+        raise ValueError("a positive remaining readback timeout is required")
+    scope = external_timeline_scope(body["tenant_id"], body["installation_id"], "scope")
+    with engine.connect() as connection:
+        connection.execute(sa.text("SET TRANSACTION READ ONLY"))
+        connection.execute(sa.text("SELECT set_config(:key, :value, true)"),
+                           {"key": "statement_timeout",
+                            "value": str(max(1, int(timeout_seconds * 1000)))})
+        rows = connection.execute(sa.text(
+            "SELECT payload->'data' FROM eva_core.operational_events "
+            "WHERE tenant_id=:tenant AND installation_id=:installation "
+            "AND thread_id=:thread AND event_type='REPLY_COMMITTED' "
+            "AND payload->'data'->>'principal_id'=:principal "
+            "AND payload->'data'->>'conversation_id'=:conversation "
+            "AND payload->'data'->>'message_id'=:message ORDER BY sequence"),
+            {"tenant": scope.tenant_id, "installation": scope.installation_id,
+             "thread": f"conversation:{body['message_id']}",
+             "principal": body["principal_id"], "conversation": body["conversation_id"],
+             "message": body["message_id"]}).scalars().all()
+    if len(rows) > 1:
+        raise ValueError("multiple committed replies for one native request")
+    return rows[0] if rows else None
+
+
 def response_text(participant: str, body: dict, response: dict) -> str:
     """Reject handoffs/errors, mismatched identity and forged content hashes."""
     if not isinstance(response, dict):

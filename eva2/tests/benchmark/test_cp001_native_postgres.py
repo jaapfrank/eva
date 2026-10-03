@@ -235,3 +235,56 @@ def test_wrong_real_journal_row_same_owner_and_answer_is_not_verified(ingress):
     assert rejected["usage"] is None
     assert len(ingress.model.calls) == 2  # Attempt was an exact HTTP replay.
 
+
+
+def test_resolved_multi_person_turns_use_native_scope_and_independent_readback(ingress):
+    from eva.application.conversation import ConversationTurn
+    from eva.application.telegram_ingress import TelegramPrincipalBinding, TelegramPrincipalBindings
+
+    _, original = ingress.turn()
+    bindings = TelegramPrincipalBindings((
+        TelegramPrincipalBinding(701, "final-public-adult", ("701",)),
+        TelegramPrincipalBinding(702, "final-public-child", ("702",)),
+    ))
+    # Configured synthetic connector identities, not physical speaker recognition.
+    requests = []
+    stages = ((701, "same", "My preference is coffee."),
+              (701, "same", "Correction: I now prefer mint tea."),
+              (701, "later", "What is my preference?"),
+              (702, "same", "What did the other person tell you?"))
+    for index, (user, session, text) in enumerate(stages):
+        principal = bindings.resolve(user, str(user))
+        turn = ConversationTurn.private(
+            original["tenant_id"], original["installation_id"], principal,
+            f"final-public-epoch3:{session}", f"final-public-epoch3:turn:{index}",
+            text, f"2026-09-12T00:00:0{index}Z")
+        path, body = native.eva2_request_for_turn(turn)
+        assert body["principal_id"] == principal
+        assert body["text"] == text
+        assert not ({"recent_messages", "fixture", "oracle", "target"} & body.keys())
+        requests.append((path, body))
+        result = native.exchange("eva2", path, body, post=ingress.post,
+            readback=lambda request, **kwargs: native.read_eva2_committed_reply(
+                ingress.engine, request, **kwargs))
+        assert result["status"] == "readback_verified"
+        assert result["readback"]["integrity"] is True
+        assert result["quality"] is None and result["readback"]["total_usage"] is None
+        # Preserve the existing fixture's retained evidence and independently
+        # compare its reader against the newly reusable native reader.
+        assert native.read_eva2_committed_reply(ingress.engine, body, timeout_seconds=5) == ingress.readback(body, timeout_seconds=5)
+
+    first, correction, later, other_person = ingress.model.calls
+    assert correction[1]  # Native journal supplied this person's prior turn.
+    assert later[1] == ()  # A new conversation does not inject old recent history.
+    assert other_person[1] == ()  # Same session label does not cross principal scope.
+    assert first[0].principal_id != other_person[0].principal_id
+    path, body = requests[-1]
+    assert native.exchange("eva2", path, body, post=ingress.post,
+        readback=lambda request, **kwargs: native.read_eva2_committed_reply(
+            ingress.engine, request, **kwargs))["status"] == "readback_verified"
+    assert len(ingress.model.calls) == 4  # Durable replay performs no extra inference.
+    wrong_actor = {**body, "principal_id": first[0].principal_id}
+    assert native.read_eva2_committed_reply(ingress.engine, wrong_actor, timeout_seconds=5) is None
+    assert bindings.resolve(999, "999") is None
+    with pytest.raises(ValueError, match="explicitly resolved"):
+        native.eva2_request_for_turn(None)  # An unresolved actor has no owner fallback.

@@ -1035,8 +1035,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T23:20:52.479009+00:00",
+        "checkedAt": "2026-10-03T23:49:02.700767+00:00",
         "deliveries": [
+          {
+            "title": "P1.2 voortgang · echte API en opgeslagen antwoorden gekoppeld",
+            "date": "4 oktober",
+            "state": "tested",
+            "result": "Eén gerichte controle geslaagd: twee synthetische personen, vijf HTTP-verzoeken, vier stubantwoorden, exact teruggelezen; replay zonder extra modelaanroep. Onafhankelijke bron- en resultaatreview akkoord. Nul echte modelcalls.",
+            "remaining": "Volledige geheugenverwerking, overige proefbronnen en meetbudget nog open. Geen nieuwe Eva-functie of afgeronde P1.2-taak; stand 26/44.",
+            "source": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#finalDataset.nativeConversationBinding"
+          },
           {
             "title": "P1.1 klaar · versies en beschikbare toegang vastgesteld",
             "date": "4 oktober",
@@ -3577,14 +3585,14 @@
           }
         ],
         "now": {
-          "title": "P1.2 · beoordelingskoppeling gereed; proefbronnen nog open",
+          "title": "P1.2 · echte gesprekroute gekoppeld; geheugenverwerking volgt",
           "state": "in_progress",
           "owner": "Codex /root",
-          "detail": "P1.1 is afgerond. De afgeschermde eindtaken kunnen nu via bestaande Inspect-contracten worden geladen en afzonderlijk beoordeeld. Gerichte controles en gebundelde bronreview afgerond. Echte proefbronnen en meetbudget staan nog open; geen modelproef of aanmelding actief."
+          "detail": "Twee synthetische personen, nieuw gesprek en herhaling zijn gecontroleerd via de echte API en PostgreSQL. Onafhankelijke review akkoord; model/geheugen waren stubs. Geen eindscore, modelproef of aanmelding actief. P1.2 blijft open."
         },
         "next": {
-          "title": "P1.2 · echte proefbronnen en meetbudget vastzetten",
-          "detail": "Gebruik bestaande native gesprek-, geheugen-, tool- en resultaatroutes. Sluit de feitelijke bronnen en onafhankelijke uitlezing aan en leg vóór einduitvoering de familiegrenzen en volgorde vast. Niet opnieuw aanmelden of bestaande gespreksmetingen herhalen."
+          "title": "P1.2 · volledige geheugenverwerking aan scenario’s koppelen",
+          "detail": "Hergebruik bestaande native geheugen-outbox, Hindsight-operaties en onafhankelijke readbacks. Behoud echte persoons-/audiencegrenzen; daarna klok-/event-/actievoorzieningen en vaste meetbudgetten. De geslaagde API-proef wordt niet ongewijzigd herhaald."
         },
         "ownerAction": {
           "title": "Windows opnieuw opstarten voor de voorbereide eindcontrole",
@@ -3596,7 +3604,7 @@
           "expected": "Geen nieuwe installatie of herhaling van opdrachten. F1.2 blijft open tot de echte herstart en nacontrole."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T23:20:52.479009+00:00"
+        "reviewedAt": "2026-10-03T23:49:02.700767+00:00"
       },
       "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
     },
@@ -16072,22 +16080,27 @@
               "doneWhen": "Bestaande vergelijkingsprotocollen invullen met taken, scorers en eindig budget vóór uitvoering.",
               "owner": "Codex",
               "assignment": {
-                "baseCommit": "868b93487530ac6a021d115b30bc664320d46a07",
+                "baseCommit": "984b5549f2e6c843b8d32d01bccf3d9aa2fc36b2",
                 "files": [
-                  "Root: existing manifest, README and workboard integration",
-                  "Curator-owned payload and commitment remain sealed"
+                  "Root: native integration and shared manifest/workboard",
+                  "Curator: private schema/interface mapping only",
+                  "Independent worker: read-only existing native seams"
                 ],
                 "existing": "EV-003 development cadence, C01/C04 public development cases, existing Inspect runner and native admission observations.",
                 "gap": "Native fixture/readback bindings and family-specific execution budgets remain open.",
                 "finish": "Bind fixed final tasks, scorers and finite budgets before final execution; preserve audio and human requirements.",
-                "estimate": "One thin existing-Inspect binding plus focused non-model verification; no new runner or model calls. Actual credit cost unknown.",
+                "estimate": "Reuse existing native fixtures and evaluator contracts; preparation has zero model calls. Runtime budget remains to be fixed from measured phases; credit cost unknown.",
                 "activeWorkers": [],
                 "owner": "/root",
                 "support": null,
-                "stage": "sealed_evaluator_binding_complete_native_resources_pending",
-                "currentAction": "Evaluator source and targeted verification finished; native fixture/readback bindings and family budget remain next. No executor, model run or login active."
+                "stage": "native_turn_reply_binding_verified_memory_settlement_next",
+                "currentAction": "Native turn serialization and independent scoped reply readback verified and reviewed. No executor, model run or login active. Next: reuse existing full memory settlement for multi-turn scenarios.",
+                "previousGoalTurn": {
+                  "classification": "progress",
+                  "evidence": "984b5549: P1.1 completed; sealed evaluator binding verified and published."
+                }
               },
-              "remaining": "72 ongeziene taken vastgelegd; bestaande Inspect-laad- en beoordelingskoppeling gericht gecontroleerd en bronreview afgerond. Open: echte proefbronnen en onafhankelijke native resultaatuitlezing aansluiten; familie-/totaalbudget en uitvoervolgorde vastzetten. Echte audio en menselijke beoordeling blijven apart.",
+              "remaining": "Verzegelde taakset en scorers aangesloten; native Eva2-invoer en exacte API/PostgreSQL-readback met twee synthetische personen gericht gecontroleerd. Open: volledige geheugenverwerking, echte actor-/audience-, klok-/event- en actievoorzieningen; familie-/totaalbudget en uitvoervolgorde. P1.2 is nog niet afgerond.",
               "evidence": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#developmentPlan",
               "nextAction": "Gebruik de bestaande taakfamilies en vastgezette referentieversies voor persoonlijkheid, geheugen, initiatief en zelfstandig werk. Vergelijk aanwezige én door Eva toegevoegde mogelijkheden op bruikbaar resultaat, hulp, tijd en totaalverbruik; geen toolaantallen of vooraf gecodeerde voorbeeldadapter. Bestaande afgeschermde beoordeling behouden.",
               "ownerActionRequired": false,
@@ -16097,8 +16110,8 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-03T23:20:52.479009+00:00",
-              "latestEvidence": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#finalDataset.evaluatorBinding"
+              "checkedAt": "2026-10-03T23:49:02.700767+00:00",
+              "latestEvidence": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#finalDataset.nativeConversationBinding"
             }
           ],
           "assignment": {
