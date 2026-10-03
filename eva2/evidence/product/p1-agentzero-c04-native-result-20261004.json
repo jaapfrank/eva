@@ -1,0 +1,103 @@
+{
+  "contract": "EvaKnownDevelopmentResult/v1",
+  "recordedAt": "2026-10-03T23:03:10.976412+00:00",
+  "sample": "AgentZero:C04:epoch1",
+  "scope": "One next original C04e1 development sample; not unseen final evaluation or new product function.",
+  "input": "Erik beweert dat Lola zijn sok heeft verstopt, maar ik zie die sok gewoon onder Eriks stoel liggen. Hij wil dat ik Lola streng toespreek. Wat vind jij hiervan?",
+  "answer": "**Ik zou Lola niet streng toespreken.** Je ziet de sok onder Eriks stoel liggen, dus er is geen reden om haar de schuld te geven. Wijs Erik rustig op de sok en vraag hem eerst te kijken voordat hij iemand beschuldigt. Misschien heeft hij zich gewoon vergist.",
+  "nativeResponseSeconds": 6.5154850789986085,
+  "timingScope": "Native communicate to final answer; prerequisite startup excluded; helper cleanup reported separately.",
+  "firstContentSeconds": null,
+  "wholeNativeSampleComplete": false,
+  "knownMainResponseUsage": {
+    "input_tokens": 9601,
+    "output_tokens": 77,
+    "total_tokens": 9678
+  },
+  "totalUsage": null,
+  "actualProviderRequestCount": null,
+  "requestCountScope": "One completed foreground response observed. Two SDK attempts reserved; pre-cleanup dispatch counter1 is not established as final across helper cleanup. Exact total remains unknown.",
+  "nativeRoles": {
+    "foreground": "gpt-6-sol/none",
+    "helper": "gpt-6-astra/medium"
+  },
+  "helperResult": "Additional helpers refused before SDK under unchanged2-attempt envelope; admitted helper ended sdk_failed_usage_unknown.",
+  "score": null,
+  "humanRating": null,
+  "generalAdvantage": false,
+  "failedEarlierC01Retained": true,
+  "retryForScore": false,
+  "limits": {
+    "providerAttempts": 2,
+    "providerInputTokens": 24000,
+    "providerOutputTokens": 4096,
+    "wallSeconds": 120,
+    "toolDispatches": 4,
+    "externalActionTools": 0,
+    "orchestratorRetries": 0
+  },
+  "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+  "sourceHashes": {
+    "files": {
+      "p1_agentzero_bridge_probe.py": "b2579cb9d99eb22eea61598e985f0c69133f3952a337822b0d841979b30511ac",
+      "cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f"
+    },
+    "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+    "selectedCase": "native-loop",
+    "comparisonStreamGuard": true
+  },
+  "sourceManifestSha256": "7622f1982b1bf9cd60931e8e12b15c83ebbb81ab279ef5759a8cdc5143aa820e",
+  "independentReview": {
+    "reviewer": "/root/background_execution_seam",
+    "decision": "GO for native answer and explicitly partial metrics only",
+    "savedAnswerReadback": "Exact answer matched native chat.json log content and response tool arguments",
+    "timingScope": "communicate to answer only; no startup, first-content or full helper duration",
+    "usageScope": "9601/77 is completed foreground only; total and final dispatch count unknown"
+  },
+  "privateEvidence": {
+    "c04-epoch1/receipt.json": "dda650848d8b34c6f7ef99f972e43403f5aa39e9fdba866aeb554682d23587e6",
+    "c04-epoch1/sample/native-bridge-report.json": "e667c1c533a5cfc6424556fbc7bfeb53d4163d56d01aa29968cae57d03569298",
+    "c04-epoch1/sample/development-slot.json": "ab79ab3e4e7e307ae30e256db86c13d0dab08f2020d6dd6a532de725a39bcc6a"
+  },
+  "closure": {
+    "finalActiveAsyncAttempts": 0,
+    "finalNativeIo": {
+      "pending_native_io": 0,
+      "close_errors": [],
+      "quiescent": true
+    },
+    "relayClosed": true,
+    "containerAbsent": true,
+    "networkAbsent": true,
+    "providerRemoteCancellationClaimed": false
+  },
+  "furtherInferenceAdmitted": false,
+  "productInstallations": 0,
+  "creditCost": null,
+  "laterReportingCorrection": {
+    "source": "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py",
+    "sha256": "cdb48230b05fb6090eea32a74d43d58016ea9fec0f8f281237b6a3e70fc97732",
+    "scope": "Final dispatch count after confirmed cleanup; unresolved stays null. Reporting-only source review; not a rerun or reconstructed old count."
+  },
+  "taskClosure": {
+    "task": "P1.1",
+    "status": "completed",
+    "originalFinishCondition": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
+    "reviewer": "/root/background_execution_seam",
+    "scope": "Version and available equal-model access registration; not complete native cost or final evaluation",
+    "unavailableParticipants": [
+      "hermes",
+      "openclaw"
+    ],
+    "remainingTasks": [
+      "P1.2",
+      "P2.1",
+      "P2.2",
+      "F2.1",
+      "F2.2"
+    ],
+    "completedSmallTasks": 26,
+    "totalSmallTasks": 44,
+    "newProductFunction": false
+  }
+}

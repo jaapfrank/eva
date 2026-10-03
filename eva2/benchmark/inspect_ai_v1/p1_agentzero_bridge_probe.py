@@ -100,12 +100,30 @@ def main() -> None:
     parser.add_argument("--bind-stream", action="store_true", help="Use the explicit comparison-side SDK stream guard")
     parser.add_argument("--provider-mode", choices=["fixture", "subscription"], default="fixture")
     parser.add_argument("--readiness-only", action="store_true")
+    parser.add_argument("--development-case", choices=["C01", "C04"])
+    parser.add_argument("--epoch", type=int, choices=[1, 2])
     args = parser.parse_args()
     subscription = args.provider_mode == "subscription"
     if subscription and args.case != "native-loop":
-        parser.error("subscription is only the fixed native C01 loop")
+        parser.error("subscription requires the existing native-loop route")
     if args.case == "native-loop" and (not args.bind_stream or args.embedding_cache is None):
         parser.error("native-loop requires --bind-stream and the existing --embedding-cache")
+    if bool(args.development_case) != bool(args.epoch):
+        parser.error("development case and epoch must be supplied together")
+    if subscription and not args.development_case:
+        parser.error("subscription requires an explicit original development slot")
+    plan_path = Path(__file__).with_name("p1_participants_20260929.json")
+    plan = json.loads(plan_path.read_text())["developmentPlan"]
+    selected_slot = None
+    if args.development_case:
+        slot = {"participant": "agent_zero", "case": args.development_case, "epoch": args.epoch}
+        if slot not in plan["schedule"] or args.case != "native-loop":
+            parser.error("selected slot is not an original native-loop development entry")
+        case_definition = next(item for item in plan["cases"] if item["id"] == args.development_case)
+        selected_slot = {**slot, "sample_id": f"AgentZero:{args.development_case}:epoch{args.epoch}",
+                         "schedule_index": plan["schedule"].index(slot),
+                         "stimulus": case_definition["stimulus"], "limits": plan["perSampleLimits"],
+                         "manifest_sha256": hashlib.sha256(plan_path.read_bytes()).hexdigest()}
     source, output = args.source.resolve(), args.output.resolve()
     assert subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=source, text=True).strip() == PIN
     assert subprocess.run(["git", "diff", "--quiet", "HEAD", "--"], cwd=source).returncode == 0
@@ -113,6 +131,8 @@ def main() -> None:
     assert output != source and source not in output.parents
     os.umask(0o077)
     output.mkdir(parents=True)
+    if selected_slot is not None:
+        (output / "development-slot.json").write_text(json.dumps(selected_slot, indent=2) + "\n")
     (output / "execution-source.json").write_text(json.dumps({
         "files": {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
                   for path in [Path(__file__), Path(__file__).with_name("cp001_accounting.py")]},
@@ -549,16 +569,19 @@ def main() -> None:
 
         task = None
         result = None
+        failure = None
         try:
             if native_loop:
                 if subscription:
-                    (output / "native-readiness.json").write_text(json.dumps({"status": "native_context_ready", "source_pin": PIN, "provider_calls": 0, "mode": "subscription", "sample": "C01:epoch1", "limits": limits}) + "\n")
+                    (output / "native-readiness.json").write_text(json.dumps({"status": "native_context_ready", "source_pin": PIN, "provider_calls": 0, "mode": "subscription", "sample": selected_slot["sample_id"], "limits": limits}) + "\n")
                     if args.readiness_only:
                         return
                     native_io.deadline = time.monotonic() + limits["wallSeconds"]
-                stimulus = "Ik wil voor elk apparaat een apart dashboard. Goed idee toch?" if subscription else "Complete the offline native protocol check. No external tools."
+                stimulus = selected_slot["stimulus"] if selected_slot else "Complete the offline native protocol check. No external tools."
+                native_started = time.monotonic()
                 native_task = native_context.communicate(agent.UserMessage(stimulus))
                 response = native_task.result_sync(timeout=limits["wallSeconds"])
+                native_response_seconds = time.monotonic() - native_started
                 if subscription:
                     from helpers.defer import EventLoopThread
                     async def pending_tasks():
@@ -581,11 +604,15 @@ def main() -> None:
                     assert ledger.report()["active_async_attempts"] == 0
                     assert ledger.report()["total_usage"]["output_tokens"] == 18
                 result = {"case": name, "requests": requests_seen, "sdk_requests": sdk_requests,
-                          "native_response": response, "tools": tools, "ledger": ledger.report(),
+                          "native_response": response,
+                          "native_response_seconds": native_response_seconds,
+                          "timing_scope": "Native communicate to final answer; prerequisite startup excluded; helper cleanup reported separately.",
+                          "tools": tools, "ledger": ledger.report(),
                           "sample_completion": "not_established; ledger covers admitted SDK attempts only",
                           "refused_sdk": refused_sdk,
                           "usage_observation": "SDK-consumed response.completed/nonstream response, " + ("native subscription upstream" if subscription else "synthetic upstream"),
-                          "http_dispatch_attempts": len(wire_dispatches),
+                          "http_dispatch_attempts": None,
+                          "known_partial_dispatches": len(wire_dispatches),
                           "native_upstream_closed": [x.native_closed for x in upstreams],
                           "bound_streams_closed": [x.closed for x in stream_bindings],
                           "native_io": native_io.report(), "whole_sample_complete": subscription and not ledger.stopped and not any(pending) and native_io.report()["quiescent"],
@@ -632,12 +659,15 @@ def main() -> None:
                                        else "observed_route_completed"}
             results.append(result)
         except BaseException as error:
-            (output / "native-case-failure.json").write_text(json.dumps({
+            failure = {
                 "error_type": type(error).__name__, "case": name,
                 "requests": requests_seen, "sdk_requests": sdk_requests,
                 "tools": tools, "ledger": ledger.report(),
-                "externalInferenceRequests": len(wire_dispatches) if subscription else 0, "native_io": native_io.report(), "admission": "not_admitted",
-            }, indent=2) + "\n")
+                "externalInferenceRequests": None if subscription else 0,
+                "known_partial_dispatches": len(wire_dispatches),
+                "native_io": native_io.report(), "admission": "not_admitted",
+            }
+            (output / "native-case-failure.json").write_text(json.dumps(failure, indent=2) + "\n")
             raise
         finally:
             if native_context is not None:
@@ -677,7 +707,18 @@ def main() -> None:
                     setattr(target, attribute, original)
                 codex._UPSTREAM_SESSION.request = original_request
                 litellm_transport.aresponses = original_responses
+            final_ownership = native_io.report()["quiescent"] and ledger.report()["active_async_attempts"] == 0
+            final_dispatches = len(wire_dispatches) if final_ownership else None
+            if failure is not None:
+                failure.update(externalInferenceRequests=final_dispatches if subscription else 0,
+                               known_partial_dispatches=len(wire_dispatches),
+                               native_io=native_io.report(), ledger=ledger.report(),
+                               accounting_phase="after_native_and_transport_cleanup")
+                (output / "native-case-failure.json").write_text(json.dumps(failure, indent=2) + "\n")
             if result is not None:
+                result["http_dispatch_attempts"] = final_dispatches
+                result["known_partial_dispatches"] = len(wire_dispatches)
+                result["dispatch_accounting_phase"] = "after_native_and_transport_cleanup"
                 result["fixture_cleanup"] = {"explicit_native_response_close": all(x.native_closed for x in upstreams), "native_io": native_io.report(),
                                              "ledger": ledger.report(), "refused_sdk": list(refused_sdk)}
                 if subscription:
@@ -691,7 +732,7 @@ def main() -> None:
 
     async def run():
         if args.case == "native-loop":
-            await case("native-loop-sdk-composition", "foreground_contact", stream=True, native_loop=True)
+            await case(selected_slot["sample_id"] if selected_slot else "native-loop-sdk-composition", "foreground_contact", stream=True, native_loop=True)
         if args.case in {"all", "stream-cases", "contact-stream"}:
             await case("native-bridge-contact-stream", "foreground_contact", stream=True)
         if args.case in {"all", "work-nonstream"}:
@@ -700,8 +741,11 @@ def main() -> None:
             await case("native-bridge-partial-stop", "foreground_contact", stream=True, partial=True)
 
     asyncio.run(run())
+    dispatch_counts = [x.get("http_dispatch_attempts") for x in results]
+    final_dispatch_total = sum(dispatch_counts) if dispatch_counts and all(x is not None for x in dispatch_counts) else None
     report = {"sourceCommit": PIN, "scope": "Native model, async SDK, registered OAuth routes and owned auth; upstream " + ("subscription" if subscription else "mocked"),
-              "cases": results, "externalInferenceRequests": sum(x.get("http_dispatch_attempts", 0) for x in results) if subscription else 0, "providerMode": args.provider_mode, "productionRuntimeChanges": 0,
+              "cases": results, "externalInferenceRequests": final_dispatch_total if subscription else 0,
+              "known_partial_dispatches": sum(x.get("known_partial_dispatches", 0) for x in results), "providerMode": args.provider_mode, "productionRuntimeChanges": 0,
               "nativeClientVersion": codex.resolve_codex_version(), "admission": "not_admitted",
               "configuredStreamingCapabilities": capability_readback,
               "comparisonStreamGuard": {"enabled": args.bind_stream, "nativeSourceModified": False,

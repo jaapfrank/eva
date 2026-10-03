@@ -1,7 +1,7 @@
 {
   "contract": "EvaComparisonParticipantInputs/v1",
-  "checkedAt": "2026-10-03T22:49:36.491266+00:00",
-  "stage": "final_dataset_curated_native_comparison_incomplete",
+  "checkedAt": "2026-10-03T23:20:52.479009+00:00",
+  "stage": "final_dataset_inspect_bound_native_resources_incomplete",
   "protocol": "eva2/design/product/comparable-agent-benchmarks-v1.md#ev-003",
   "scope": "Inputs for existing Inspect runner; not results, a new runtime or a new scorer.",
   "participants": [
@@ -315,7 +315,7 @@
       "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
       "tagObject": "90f2a79e22d1e39cab6db79cd622422edaf96152",
       "officialRelease": "https://github.com/agent0ai/agent-zero/releases/tag/v2.13",
-      "admission": "not_admitted_after_native_execution_gap",
+      "admission": "native_foreground_observed_whole_lifecycle_incomplete",
       "localSource": {
         "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/agent-zero-source",
         "headVerified": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
@@ -450,6 +450,18 @@
         "admission": "not_admitted"
       },
       "latestNativeAttempt": {
+        "sample": "C04:epoch1",
+        "evidence": "eva2/evidence/product/p1-agentzero-c04-native-result-20261004.json",
+        "status": "native_answer_and_saved_readback_confirmed_incomplete_helper_accounting",
+        "nativeResponseSeconds": 6.5154850789986085,
+        "knownForegroundInputTokens": 9601,
+        "knownForegroundOutputTokens": 77,
+        "totalUsage": null,
+        "actualProviderRequests": null,
+        "admission": "no_further_inference_admitted",
+        "remaining": "Family/native lifecycle admission and final evaluator binding remain open; exact original task closure assessed independently."
+      },
+      "previousNativeAttempt": {
         "sample": "C01:epoch1",
         "evidence": "eva2/evidence/product/p1-final-dataset-agentzero-attempt-20261004.json",
         "status": "failed_unknown_usage_no_quality_score",
@@ -571,11 +583,11 @@
     "paidJudgeCalls": 0,
     "nextModelRuns": 0,
     "creditCost": null,
-    "notice": "Eight Eva1/Eva2 entries preserve16 measured completed calls. Later first Agent Zero attempt failed with2 helper reservations and1 model-relay connection but no captured native request boundary; actual inference and total cost unknown. No repeat admitted.",
-    "observedInputTokens": 56459,
-    "observedOutputTokens": 2152,
-    "knownCompletedMeasuredCalls": 16,
-    "additionalNativeReservedAttempts": 2,
+    "notice": "Eight Eva1/Eva2 samples preserve 16 completed measured calls. Agent Zero C01 had unknown traffic. Original C04 produced one measured foreground answer (9601 input / 77 output tokens) with incomplete helper usage; at least one dispatch, exact total unknown. All totals are known portions only, not complete cost. No next inference admitted.",
+    "observedInputTokens": 66060,
+    "observedOutputTokens": 2229,
+    "knownCompletedMeasuredCalls": 17,
+    "additionalNativeReservedAttempts": 4,
     "additionalActualInferenceRequests": null
   },
   "acceptanceScale": {
@@ -840,7 +852,7 @@
     "finalCalibrationStatus": "Candidate frozen for independent curation. Existing functional proof preserved; incomplete usage is not extrapolated into a final task budget. No final matrix admission."
   },
   "finalDataset": {
-    "status": "curated_unscored_not_execution_admission",
+    "status": "inspect_binding_verified_resources_and_budget_open",
     "commitment": "eva2/benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json",
     "commitmentSha256": "bbdbf8eff011aeb51c41e2ff6532346dd22615a99102166e4005292100dd03bf",
     "candidate": {
@@ -864,12 +876,50 @@
     "remainingBindings": [
       "Per-family task and aggregate budgets and execution order calibrated on development evidence, sealed before final calls.",
       "Individually admitted native participants with equal tools/data/network/hardware and full accounting/stop coverage for the relevant family.",
-      "Existing Inspect input loading plus thin semantic/readback scorers bound to private oracle records; no fixture-oracle success may be relabelled as native quality.",
       "Local fixture service/browser origins, controlled clock/background events, identity/audience guards, process interruption and independent native memory/effect/file readback adapters.",
       "Exact synthetic speech/non-speech audio waveforms and delivery conditions must be recorded and hash-bound by independent operators; native microphone/playback and duplex route required. Text cannot substitute.",
       "Two independent blinded human raters for the protocol human judgements; physical listening remains required where specified, never inferred from transport success.",
       "Explicit private evidence retention, controlled rater access and cleanup moment before execution."
     ],
-    "checkedAt": "2026-10-03T22:33:23.743497+00:00"
+    "checkedAt": "2026-10-03T23:20:52.479009+00:00",
+    "evaluatorBinding": {
+      "source": "eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+      "sourceSha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+      "testSource": "eva2/tests/benchmark/test_ev003_final_dataset.py",
+      "testSourceSha256": "e572414a6e5bd0371680f198969c639826c5880c2f41cbdf6a93abb8575edfe2",
+      "scope": "Evaluator-only Inspect Sample/Score binding; no model calls, native runner or execution admission.",
+      "verification": {
+        "initialPublicSyntheticCasesPassed": 26,
+        "preferenceAndFailureCorrectionCasesPassed": 5,
+        "finalAccountingCorrectionCasesPassed": 5,
+        "unaffectedCasesNotRepeated": true,
+        "realCasesExecuted": 0,
+        "modelCalls": 0,
+        "focusedReceipt": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/loader-binding/focused-tests.json",
+          "sha256": "9cb93aa175667cd2faf34e9351936718e8726787152224d33b8973a60f9ccec8"
+        },
+        "structuralReceipt": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/loader-binding/structural-validation.json",
+          "sha256": "a0c68a76f59a9a2eddf2a89292a48a45fa8bf91d76280b55c83b36738d1bbc19",
+          "cases": 72,
+          "epochs": 3,
+          "limitation": "Original validation source hash not captured separately. Later edits affect scoring/callbacks, not the loader. Private payload bytes unchanged; no hidden reread for scoring fixes."
+        }
+      },
+      "review": {
+        "independentReviewer": "/root/background_execution_seam",
+        "finalCorrectionReviewer": "/root",
+        "decision": "GO for public loader/scorer binding only",
+        "findingsResolved": [
+          "Explicit human preference tie 0.5, separate from task and initiative booleans.",
+          "Unknown accounting cannot erase independently proven task success, failure or forbidden effects."
+        ],
+        "sourceSha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b"
+      },
+      "productInstallationRequired": false,
+      "productCandidateChanged": false,
+      "completionClaim": "P1.2 remains open until actual resource bindings and finite calibrated budgets are fixed."
+    }
   }
 }

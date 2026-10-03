@@ -1035,8 +1035,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T22:49:36.491266+00:00",
+        "checkedAt": "2026-10-03T23:20:52.479009+00:00",
         "deliveries": [
+          {
+            "title": "P1.1 klaar · versies en beschikbare toegang vastgesteld",
+            "date": "4 oktober",
+            "state": "tested",
+            "result": "Eva1/Eva2-routes en Agent Zero’s eigen native modeltoegang vastgelegd. Werkelijk C04-antwoord van Agent Zero onafhankelijk teruggelezen: 6,52 s; hoofdantwoord 9.601 input-/77 outputtokens. Oorspronkelijke toegangsregistratietaak onafhankelijk afgerond. De dunne Inspect-beoordelingskoppeling is ook gericht gecontroleerd; P1.2 blijft open.",
+            "remaining": "Hermes/OpenClaw-toegang ontbreekt zichtbaar. Totale Agent Zero-kosten onbekend; P1.2/P2 en gezinsacceptatie blijven open. 26/44 oorspronkelijke kleine taken; geen nieuwe Eva-functie of algemene voorsprong.",
+            "source": "eva2/evidence/product/p1-agentzero-c04-native-result-20261004.json"
+          },
           {
             "title": "Eindvergelijking · 72 taken vastgelegd; meetkoppeling gecorrigeerd",
             "date": "4 oktober",
@@ -3569,14 +3577,14 @@
           }
         ],
         "now": {
-          "title": "P1 · vergelijkingsvoorbereiding vastgelegd",
+          "title": "P1.2 · beoordelingskoppeling gereed; proefbronnen nog open",
           "state": "in_progress",
           "owner": "Codex /root",
-          "detail": "72 eindtaken onafhankelijk vastgelegd. Startargument en modelkoppeling van de Agent Zero-proef gecorrigeerd; gezamenlijke namaakproef geslaagd. Echte poging bleef zonder geldig antwoord en met onbekend verbruik. Geen modelproef, agent of aanmelding actief; vervolgstap staat hieronder."
+          "detail": "P1.1 is afgerond. De afgeschermde eindtaken kunnen nu via bestaande Inspect-contracten worden geladen en afzonderlijk beoordeeld. Gerichte controles en gebundelde bronreview afgerond. Echte proefbronnen en meetbudget staan nog open; geen modelproef of aanmelding actief."
         },
         "next": {
-          "title": "P1 · echte meetroute en eindtaken aansluiten",
-          "detail": "Gebruik de gecorrigeerde native route en bestaande Inspect-voorzieningen om volledige meetdekking en eindtaak-koppelingen af te maken. Geen herhaling zonder gewijzigde oorzaak/toelating en geen nieuwe inlogcodes. De acht geldige Eva1/Eva2-metingen blijven behouden."
+          "title": "P1.2 · echte proefbronnen en meetbudget vastzetten",
+          "detail": "Gebruik bestaande native gesprek-, geheugen-, tool- en resultaatroutes. Sluit de feitelijke bronnen en onafhankelijke uitlezing aan en leg vóór einduitvoering de familiegrenzen en volgorde vast. Niet opnieuw aanmelden of bestaande gespreksmetingen herhalen."
         },
         "ownerAction": {
           "title": "Windows opnieuw opstarten voor de voorbereide eindcontrole",
@@ -3588,7 +3596,7 @@
           "expected": "Geen nieuwe installatie of herhaling van opdrachten. F1.2 blijft open tot de echte herstart en nacontrole."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T22:49:36.491266+00:00"
+        "reviewedAt": "2026-10-03T23:20:52.479009+00:00"
       },
       "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
     },
@@ -15999,19 +16007,19 @@
             {
               "id": "P1.1",
               "title": "Vergelijkbare versies en toegang vastleggen",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "voorbereiden",
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Acht vaste Eva1/Eva2-ontwikkelmetingen uitgevoerd en onafhankelijk gecontroleerd. Eva2 consolidatie niet voltooid binnen deze proef. Resterende toelating, familiegebonden eindvoorwaarden en ongeziene eindvergelijking blijven open.",
-              "latestEvidence": "eva2/evidence/product/p1-final-dataset-agentzero-attempt-20261004.json",
+              "remaining": "Versies en beschikbare gelijk-modeltoegang vastgelegd. Hermes/OpenClaw blijven expliciet zonder toegang. Taakgerichte meetdekking en de echte eindvergelijking blijven onder P1.2/P2 open.",
+              "latestEvidence": "eva2/evidence/product/p1-agentzero-c04-native-result-20261004.json",
               "assignment": {
                 "owner": "/root",
                 "support": null,
-                "stage": "corrective_candidate_mock_verified",
-                "baseCommit": "343587cd514fa3ecc22e1876268fd0c2f025cce7",
-                "currentAction": "Corrected native comparison candidate recorded and mock-verified; no active process or admitted next inference. Continue the remaining existing admission/binding work.",
+                "stage": "versions_and_available_access_registered",
+                "baseCommit": "868b93487530ac6a021d115b30bc664320d46a07",
+                "currentAction": "Original P1.1 finish condition fulfilled and independently reviewed; no process active.",
                 "runtimeHandle": {
                   "hermesExecSession": 63638,
                   "hermesExitCode": 1,
@@ -16022,13 +16030,13 @@
                   "openclawPid": 3233193,
                   "openclawExitCode": 1
                 },
-                "estimate": "One coherent native zero-call readiness result. No real provider call before independent admission; credits unknown.",
+                "estimate": "Reuse one native adapter and existing isolated launcher; zero model calls during preparation. Actual credit cost unknown.",
                 "files": [
                   "Worker: p1_agentzero_native_probe.py, p1_agentzero_bridge_probe.py, focused existing test, private launcher/receipts",
                   "Root: manifest, evidence, existing dashboard"
                 ],
                 "activeWorkers": [],
-                "finish": "Complete native provider/helper/memory coverage admission for an available pair, or establish the exact unchanged-envelope refusal; no synthetic-only success or budget increase.",
+                "finish": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
                 "nextSeam": {
                   "providerFactory": "Native Codex constructors all bound in the isolated memory lifecycle.",
                   "implemented": true,
@@ -16038,19 +16046,22 @@
                 },
                 "publishedSourceCommit": "3bfce4cfeb22ef68ff4edceb614f9bd263439518"
               },
-              "blocker": "Hermes/OpenClaw-toegang ontbreekt alleen daar. Eerste Agent Zero-poging was niet betrouwbaar meetbaar; technische koppeling gecorrigeerd, echte complete observatie blijft open voor Codex.",
-              "nextImplementation": "Use these owned persisted configurations for native startup after own authentication. No repeated config/catalog probe without a changed cause or new evidence. Prior Agent Zero helper-envelope refusal remains unavailable; no hidden helper disable, auth-token copying or quota increase.",
-              "checkedAt": "2026-10-03T22:49:36.491266+00:00",
-              "ownerActionRequired": true,
-              "nextAction": "Codex gebruikt bestaande vergelijkingsvoorbereiding; Jaap levert alleen daadwerkelijk ontbrekende accounttoegang. Dit blokkeert uitsluitend die vergelijking, niet Eva’s eigen functionele uitvoering.",
+              "blocker": null,
+              "nextImplementation": "Geen resterende implementatie voor P1.1. P1.2/P2 gebruiken de vastgelegde versies en bestaande toegang; ontbrekende deelnemers blijven zichtbaar.",
+              "checkedAt": "2026-10-03T23:09:01.384239+00:00",
+              "ownerActionRequired": false,
+              "nextAction": "Afgerond volgens oorspronkelijke eindvoorwaarde. Echte taakuitvoering en eindbeoordeling volgen onder P1.2/P2.",
               "ownerInstructions": {
                 "availableNow": false,
-                "readyWhen": "Meld wanneer je klaarzit voor gewone browseraanmelding; apparaatcodes zijn niet verplicht.",
-                "steps": [
-                  "Meld dat je klaarzit; Codex start eerst één gewone browseraanmelding voor Hermes.",
-                  "Na bevestigde aanmelding volgt OpenClaw; geen twee gelijktijdige codes."
-                ],
+                "readyWhen": "P1.1 is afgerond. Ontbrekende Hermes/OpenClaw-aanmelding is vastgelegd; geen nieuwe code of handeling voor deze taak nodig.",
+                "steps": [],
                 "blocksIndependentWork": false
+              },
+              "completedAt": "2026-10-03T23:09:01.384239+00:00",
+              "closureReview": {
+                "reviewer": "/root/background_execution_seam",
+                "decision": "GO for original version/access registration",
+                "boundary": "P1.2/P2 retain family admission, incomplete native helper usage, final scoring and missing participant execution. No full comparison or superiority claim."
               }
             },
             {
@@ -16061,7 +16072,7 @@
               "doneWhen": "Bestaande vergelijkingsprotocollen invullen met taken, scorers en eindig budget vóór uitvoering.",
               "owner": "Codex",
               "assignment": {
-                "baseCommit": "343587cd514fa3ecc22e1876268fd0c2f025cce7",
+                "baseCommit": "868b93487530ac6a021d115b30bc664320d46a07",
                 "files": [
                   "Root: existing manifest, README and workboard integration",
                   "Curator-owned payload and commitment remain sealed"
@@ -16069,14 +16080,14 @@
                 "existing": "EV-003 development cadence, C01/C04 public development cases, existing Inspect runner and native admission observations.",
                 "gap": "Native fixture/readback bindings and family-specific execution budgets remain open.",
                 "finish": "Bind fixed final tasks, scorers and finite budgets before final execution; preserve audio and human requirements.",
-                "estimate": "Reuse existing evaluation routes; no final inference admitted; credit cost unknown.",
+                "estimate": "One thin existing-Inspect binding plus focused non-model verification; no new runner or model calls. Actual credit cost unknown.",
                 "activeWorkers": [],
                 "owner": "/root",
                 "support": null,
-                "stage": "final_dataset_binding",
-                "currentAction": "Independent 72-case curation completed; bind existing native fixtures/readbacks and freeze family budgets next. No inference admitted."
+                "stage": "sealed_evaluator_binding_complete_native_resources_pending",
+                "currentAction": "Evaluator source and targeted verification finished; native fixture/readback bindings and family budget remain next. No executor, model run or login active."
               },
-              "remaining": "72 ongeziene eindtaken onafhankelijk vastgelegd en afgeschermd. Open: bestaande runner/scorers en echte bronnen aansluiten; familie-/totaalbudget en volgorde vastzetten; menselijke/audio-beoordeling blijft apart.",
+              "remaining": "72 ongeziene taken vastgelegd; bestaande Inspect-laad- en beoordelingskoppeling gericht gecontroleerd en bronreview afgerond. Open: echte proefbronnen en onafhankelijke native resultaatuitlezing aansluiten; familie-/totaalbudget en uitvoervolgorde vastzetten. Echte audio en menselijke beoordeling blijven apart.",
               "evidence": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#developmentPlan",
               "nextAction": "Gebruik de bestaande taakfamilies en vastgezette referentieversies voor persoonlijkheid, geheugen, initiatief en zelfstandig werk. Vergelijk aanwezige én door Eva toegevoegde mogelijkheden op bruikbaar resultaat, hulp, tijd en totaalverbruik; geen toolaantallen of vooraf gecodeerde voorbeeldadapter. Bestaande afgeschermde beoordeling behouden.",
               "ownerActionRequired": false,
@@ -16086,8 +16097,8 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-03T22:49:36.491266+00:00",
-              "latestEvidence": "eva2/benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json"
+              "checkedAt": "2026-10-03T23:20:52.479009+00:00",
+              "latestEvidence": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#finalDataset.evaluatorBinding"
             }
           ],
           "assignment": {

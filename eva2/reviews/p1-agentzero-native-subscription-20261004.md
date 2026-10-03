@@ -1,6 +1,7 @@
 # Agent Zero native subscription comparison — 4 October 2026
 
-Current outcome: the admitted first attempt failed; further inference is **not admitted**.
+Current outcome: C01 remains failed/unknown. The original next C04 epoch1 slot
+is separately admitted below; no final-matrix or repeated-score inference is admitted.
 The original pre-run review below is retained as history, not current readiness.
 
 Reviewer: `/root`, independent of the implementation worker
@@ -68,3 +69,44 @@ run passed in 14.518s with zero real calls; both reserved requests used the exis
 BridgeHTTPHandler at the expected native OAuth path. Final source hash:
 `bbf262e8e89e0b5861ce6f54486f0b65c705e4f5d3ed3982ec2180d751c9a42f`.
 No further inference is admitted by this review.
+
+## Original next development slot: C04 epoch1
+
+Root reviewed the explicit original case/epoch mapping, manifest hash, original
+stimulus and unchanged limits. The one changed-path native mock passed in15.924s,
+with both attempts on the same guarded native SDK route. Source now measures
+communicate-to-answer elapsed time; the implementation worker independently
+reviewed that tiny timing delta. It excludes initialization, first-content latency
+and later helper cleanup. Source b2579cb9... is preserved separately for execution.
+
+**GO for AgentZero:C04:epoch1 only**, the next original scheduled case. The failed
+C01 is not repeated, erased or rescored. Unknown prior traffic remains unknown.
+No helper removal, provider change, larger budget or final matrix is admitted.
+
+## C04 outcome review
+
+The native answer was independently read back from the synthetic saved chat:
+`/log/logs/4/content` and `/log/logs/3/kvps/tool_args/text` match the return value.
+The measured answer delay is 6.515485079s; foreground usage is 9601 input/77 output.
+The helper did not complete and its usage is unknown. A dispatch count captured
+before cleanup cannot establish final request count; at least one is proven.
+No full-sample completion, semantic/human score or general advantage is claimed.
+Independent reviewer `/root/background_execution_seam`: **GO for these limited
+facts**, not complete accounting or final comparison. No repeat was executed.
+
+Final reporting-only source change was independently read by root: final dispatch
+count is sampled after confirmed local native/transport cleanup; unresolved
+ownership keeps it null, with a known partial counter. Aggregation preserves
+unknown. Failure receipts follow the same rule. No native dispatch/budget behavior
+changed and no live sample was repeated. Existing C04 evidence remains partial;
+the source correction does not reconstruct its missing final observation.
+
+## Original P1.1 closure
+
+Independent reviewer `/root/background_execution_seam` concludes **GO for P1.1**:
+the originally stated version/access registration is fulfilled. Eva1/Eva2 and
+Agent Zero have fixed sources and observed available equal-model routes;
+Hermes/OpenClaw missing access is explicit, as the criterion permits. The current
+manifest now includes the confirmed C04 outcome. Complete family/native accounting
+and final evaluation remain P1.2/P2. This closes one original preparation task,
+not a new product function or superiority requirement.

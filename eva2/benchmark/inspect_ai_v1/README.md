@@ -539,3 +539,39 @@ zijn gebonden, geen zelfstandig imageattestaat. Geldigheid van een bestaande rec
 betekent niet dat er intussen geen nieuw journalwerk bestaat; challenge en snapshot
 moeten door de afnemer voor het bedoelde leesmoment gepind zijn. De bestaande live-
 poort blijft false/exit2; volledige provider/helperdekking blijft unknown.
+
+## Sealed EV-003 evaluation binding
+
+`ev003_final_dataset.py` connects the existing final dataset to Inspect's public
+`Sample` and `Score` contracts. It does not start a run or grant model access.
+Load it in the trusted evaluator process with `load_final_dataset(commitment_path,
+commitment_sha256=..., repo_root=...)`, using the pinned hash in
+`p1_participants_20260929.json.finalDataset`. The loader checks the commitment,
+candidate, protocol, private payload permissions and every case hash.
+
+- `samples(epoch)` exposes the authorized initial input and public case/hash
+  metadata only. Fixtures, expected answers and oracles are never sample targets.
+- `with_fixture` and `with_oracle` supply private copies to trusted provisioning
+  and evaluation callbacks. Keep these callbacks outside the participant process.
+- `make_scorer(evidence_for, readback_hooks)` returns an Inspect scorer. Receipts
+  must bind the actual run, case, epoch and retained evidence bytes. Hooks read
+  independent native results and recorded human judgments; a participant's own
+  success claim is insufficient.
+- Task completion, individual human preference, initiative usefulness and usage
+  remain separate. Missing adapter evidence is unknown. A verified admitted
+  product failure is a failure even when its cost is unknown. Human preference
+  can record a tie; initiative disagreement is conservatively not useful.
+
+Reuse `cp001_native.exchange` for the existing Eva1/Eva2 transport and native
+readback callbacks. The legacy `request_for` mapping only supports its original
+A/B development fixtures and is not the final-dataset request builder.
+
+The focused public tests use synthetic cases, not the sealed final questions:
+`PYTHONPATH=eva2/src:. python -m pytest -q eva2/tests/benchmark/test_ev003_final_dataset.py`.
+Use the existing pinned Inspect environment; no new dependency is introduced.
+
+This binding does not finish P1.2. Actual native resource/provisioning callbacks,
+family budgets and execution order still need to be fixed before inference.
+Audio requires actual audio resources and listening evidence; human preferences
+require recorded independent judgments. Structural loading proves neither a
+successful task nor competitive superiority. The sealed payloads remain unchanged.

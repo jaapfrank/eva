@@ -1,6 +1,14 @@
 # EVA2 werkbord
 
-**Laatste resultaat: P1 — acht vaste Eva1/Eva2-metingen uitgevoerd en onafhankelijk gecontroleerd.**
+**P1.1 afgerond: versies en beschikbare modeltoegang vastgesteld. Stand 26/44 kleine taken.**
+De oorspronkelijke voorwaarde is onafhankelijk gecontroleerd. Eva1/Eva2 en Agent Zero
+hebben aantoonbare eigen toegang; Hermes/OpenClaw ontbreken zichtbaar. Dit is afronding
+van vergelijkingsvoorbereiding, geen nieuwe Eva-functie of algemene voorsprong.
+De echte Agent Zero C04-vraag kreeg na 6,52 s een opgeslagen antwoord; hoofdantwoord
+9.601 input-/77 outputtokens. Achtergrondwerk en totale kosten blijven onbekend.
+[P1.1-bewijs en beperkingen](evidence/product/p1-agentzero-c04-native-result-20261004.json).
+
+**Eerdere meting — 3 oktober: acht vaste Eva1/Eva2-metingen uitgevoerd en onafhankelijk gecontroleerd.**
 Twee dezelfde bekende gespreksvragen, elk tweemaal per systeem, met dezelfde
 modelkeuze per rol en lege proefgegevens. Geen aanmelding of modelproef actief.
 
@@ -24,17 +32,22 @@ Geen extra Eva-functie of installatie uit deze meting: stand **25/44**.
 [Alle acht resultaten en beperkingen](evidence/product/p1-known-pair-results-20261003.json).
 [Onafhankelijke resultaatreview](reviews/p1-known-pair-results-20261003.md).
 
-**Nu:** P1 — alle 72 ongeziene eindtaken zijn onafhankelijk vastgelegd en afgeschermd.
-De eerste Agent Zero-poging gaf geen geldig antwoord en geen volledige
-verbruiksmeting. Het verkeerde startargument en de onvolledige modelkoppeling
-zijn gecorrigeerd. Dezelfde proefroute slaagt met namaakantwoorden; geen echte
-herhaling. De mislukte meting blijft onbekend, niet als concurrentverlies geteld.
-Geen modelproef, agent of aanmelding actief. Volgende stap: echte meetdekking en
-aansluiting van de eindtaken via de bestaande evaluatievoorzieningen afmaken.
-De acht geldige Eva1/Eva2-metingen blijven behouden. Geen nieuwe productfunctie:
-**25/44** blijft de stand. Eindbudgetten, echte audio en menselijke oordelen blijven open.
+**Nu: P1.2 — afgeschermde eindtaken aansluiten op de bestaande beoordeling.**
+Alle 72 ongeziene scenario’s zijn onafhankelijk vastgelegd. De dunne Inspect-
+koppeling leest alleen toegestane invoer voor deelnemers; verborgen antwoorden
+blijven bij de beoordelaar. Taakslagen, menselijke voorkeur, initiatiefnut en
+kosten blijven afzonderlijk zichtbaar. Gerichte controles en gebundelde bronreview
+zijn afgerond; geen echte eindtaak uitgevoerd.
+
+Daarna: echte proefbronnen en onafhankelijke resultaatuitlezing aansluiten en
+familie-/totaalbudget plus uitvoervolgorde vastzetten vóór de eindvergelijking.
+Geen modelproef of nieuwe aanmelding actief. P1.2/P2 blijven open; de actuele
+stand is **26/44 oorspronkelijke kleine taken**. Echte audio, ontbrekende toegang
+en menselijke beoordeling worden niet door een synthetische test vervangen.
 [Afgeschermde eindtaken](benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json)
-· [Poging, correctie en beperkingen](evidence/product/p1-final-dataset-agentzero-attempt-20261004.json).
+· [Actuele meetkoppeling en beperkingen](benchmark/inspect_ai_v1/p1_participants_20260929.json).
+
+**Hieronder staat eerdere opleverhistorie. Tellers daarin horen bij de vermelde oplevering.**
 
 
 ## Afgerond: F1.1 — één gezamenlijke geïnstalleerde versie
