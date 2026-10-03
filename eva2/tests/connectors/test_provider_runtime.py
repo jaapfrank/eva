@@ -8,7 +8,10 @@ import sqlalchemy as sa
 
 import eva.providers.home_assistant as home_assistant_provider
 import eva.providers.runtime as provider_runtime
-from eva.providers.agentmail import AgentMailProviderSettings
+from eva.providers.agentmail import AgentMailProviderSettings, AgentMailProviderFactory
+OWNER = {"tenant_id": "00000000-0000-0000-0000-000000000001",
+         "installation_id": "00000000-0000-0000-0000-000000000002",
+         "principal_id": "00000000-0000-0000-0000-000000000003"}
 from eva.providers.home_assistant import HomeAssistantProviderSettings
 from eva.providers.runtime import (
     ExternalProviderSettings,
@@ -70,6 +73,8 @@ def test_email_provider_settings_are_file_only_and_live_outside_core(
     monkeypatch.setenv("EVA_AGENTMAIL_INBOX_ID", "eva@example.invalid")
     monkeypatch.setenv("EVA_AGENTMAIL_API_KEY_FILE", str(key))
 
+    for key, value in OWNER.items():
+        monkeypatch.setenv("EVA_RUNTIME_" + key.upper(), value)
     settings = load_external_provider_settings()
 
     assert settings is not None
@@ -77,7 +82,7 @@ def test_email_provider_settings_are_file_only_and_live_outside_core(
     assert settings.providers[0].provider_id == "agentmail"
     assert settings.providers[0].settings == AgentMailProviderSettings(
         inbox_id="eva@example.invalid",
-        credential="private-test-key",
+        credential="private-test-key", **OWNER,
     )
     assert "private-test-key" not in repr(settings)
     monkeypatch.setenv("EVA_AGENTMAIL_API_KEY", "forbidden-inline-key")
@@ -112,7 +117,7 @@ def test_provider_bundle_registers_tools_without_core_branch(
         "load_settings",
         staticmethod(lambda: AgentMailProviderSettings(
             inbox_id="eva@example.invalid",
-            credential="secret",
+            credential="secret", **OWNER,
         )),
     )
     settings = load_external_provider_settings()
@@ -312,3 +317,30 @@ def test_household_inventory_is_private_owner_read_even_with_effects_disabled():
         with pytest.raises(ConversationConflict, match="audience"):
             household.execute(denied, ConversationActionCall("call", "read_home_assistant_inventory", {}))
     engine.dispose()
+
+
+@pytest.mark.parametrize("changed", ["tenant_id", "installation_id", "principal_id", "audience_owner", "household"])
+def test_email_private_owner_gate_precedes_database_and_provider(changed):
+    from types import SimpleNamespace
+    from eva.application.conversation import ConversationActionCall, ConversationConflict
+    settings = AgentMailProviderSettings(inbox_id="private@example.invalid", credential="secret", **OWNER)
+    tools = AgentMailProviderFactory.build(settings, None).external_tools[0]
+    turn = SimpleNamespace(**OWNER, conversation_id="ordinary-chat", audience=SimpleNamespace(kind="private_person", principal_id=OWNER['principal_id']))
+    assert tools.available_for(turn)
+    if changed in OWNER: setattr(turn, changed, "00000000-0000-0000-0000-000000000009")
+    elif changed == 'audience_owner': turn.audience.principal_id = 'someone-else'
+    else: turn.audience.kind = 'household'
+    assert not tools.available_for(turn)
+    with pytest.raises(ConversationConflict, match="unavailable"):
+        tools.execute(turn, ConversationActionCall("private-check", "list_email_messages", {"limit": 1}))
+
+
+def test_email_enabled_without_runtime_owner_fails_before_secret_read(monkeypatch):
+    import eva.providers.agentmail as module
+    monkeypatch.setenv('EVA_AGENTMAIL_INBOX_ID', 'private@example.invalid')
+    monkeypatch.setenv('EVA_AGENTMAIL_API_KEY_FILE', '/must/not/read')
+    monkeypatch.delenv('EVA_AGENTMAIL_API_KEY', raising=False)
+    for key in OWNER: monkeypatch.delenv('EVA_RUNTIME_' + key.upper(), raising=False)
+    monkeypatch.setattr(module, 'read_runtime_secret_file', lambda *a, **k: pytest.fail('secret read before owner validation'))
+    with pytest.raises(RuntimeError, match='private owner'):
+        AgentMailProviderFactory.load_settings()

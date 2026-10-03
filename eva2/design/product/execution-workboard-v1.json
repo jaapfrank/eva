@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-03T12:41:39.179067+00:00",
+  "lastUpdated": "2026-10-03T13:08:35.945523+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -161,40 +161,16 @@
       "summary": "Eva heeft al bruikbare deelresultaten. De 24 opleveropdrachten zijn geen 24 ontbrekende functies: per opdracht staat nu wat bestaat en of aansluiten, verbeteren of alleen beproeven nodig is.",
       "nextOutcomes": [
         {
-          "title": "B0 · Basis controleren — actief",
-          "detail": "Gepinde bron en stubs; één onderbouwde GO/NO-GO voor vijf platformcontracten."
+          "title": "Afgerond · Actuele dashboardteksten hersteld",
+          "detail": "Nieuwe werkbordteksten zichtbaar; historische bewijs- en acceptatiestatus behouden. Geen producttellerverhoging."
         },
         {
-          "title": "Stap 1 · Eén gesprek en stem — voorgesteld",
-          "detail": "Begroeten, snelle ontvangst, doorpraten tijdens werk, onderbreken en stoppen via website, Telegram, HA en fysiek Voice PE; gedeelde kern, afzonderlijk bewijs per ingang."
+          "title": "Daarna · O1.2 oorspronkelijke modulekeuzes",
+          "detail": "Telegram- en e-mailconfiguratie zijn meegeleverd; daadwerkelijke nieuwe kanaal-/inboxproeven zijn nog niet uitgevoerd. Overige gewone modulekeuzes blijven open. Geen herbouw van geïnstalleerd browser-, leer- of herstelwerk."
         },
         {
-          "title": "Stap 2 · Personen en continuïteit — voorgesteld",
-          "detail": "Later terugkomen op onderwerp en correctie bij geverifieerde persoon; geen privécontext naar dochter, onbekende spreker of onbevoegde toehoorder."
-        },
-        {
-          "title": "Stap 3 · Taken afmaken en terugmelden — voorgesteld",
-          "detail": "Meerdere aangenomen taken volgen, gecontroleerd resultaat aan juiste persoon terugbrengen, browserovername en herstel zonder dubbele acties; bruikbare taakbediening."
-        },
-        {
-          "title": "Stap 4 · Initiatief en huisaanwezigheid — voorgesteld",
-          "detail": "Passend initiatief met werkelijk resultaat, terecht stil blijven en bestaande huisfuncties behouden; gezin beoordeelt eigenheid, plezier en hinder."
-        },
-        {
-          "title": "Stap 5 · Leren en langdurig werk — voorgesteld",
-          "detail": "Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg."
-        },
-        {
-          "title": "Stap 6 · Installatie en herstel — voorgesteld",
-          "detail": "Installatie zonder terminal, verhuizing met identiteit/data, veilige herkoppeling, update en verliesloze terugweg werken."
-        },
-        {
-          "title": "Stap 7 · Vergelijking voorbereiden en uitvoeren — voorgesteld",
-          "detail": "EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat."
-        },
-        {
-          "title": "Stap 8 · Eindkandidaat en acceptatie — voorgesteld",
-          "detail": "Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie."
+          "title": "Vervolgens · Bestaande onafhankelijke producttaken",
+          "detail": "Innovatieproef R1 en resterende algemene mogelijkheden volgens hun huidige afhankelijkheden; eindvergelijking en gezamenlijke kandidaat blijven afzonderlijk gepland."
         }
       ],
       "openRisks": [
@@ -236,7 +212,16 @@
           "evidence": "RT-001 · CO-007 · eerdere positieve feedback Jaap; volledige gezinsacceptatie open",
           "outcomes": [],
           "works": "Privégesprekken werken; Jaap meldde dat het gesprek prima loopt.",
-          "ownerSummary": "Nog nodig: merkbaar eigen oordeel, humor en betrokkenheid. Bestaande Telegram-tussenvraag en geheugenacceptaties behouden."
+          "ownerSummary": "Telegram-tussenvragen tijdens werk en latere privé-onderwerpvoortzetting zijn afgerond. De bestaande geheugen- en gespreksacceptaties blijven behouden. Nog open: Natuurlijkheid/persoonlijkheid M3.3 en fysieke speakerconversatie C3/C4 blijven open.",
+          "currentSummary": {
+            "checkedAt": "2026-10-03T13:00:37.521696+00:00",
+            "works": "Telegram-tussenvragen tijdens werk en latere privé-onderwerpvoortzetting zijn afgerond. De bestaande geheugen- en gespreksacceptaties blijven behouden.",
+            "gap": "Natuurlijkheid/persoonlijkheid M3.3 en fysieke speakerconversatie C3/C4 blijven open.",
+            "detail": "Gesprekken via dezelfde kern; een geslaagde technische deeluitkomst is geen volledige gezinsacceptatie.",
+            "evidencePaths": [
+              "eva2/design/product/execution-workboard-v1.json"
+            ]
+          }
         },
         {
           "id": "memory",
@@ -283,7 +268,16 @@
             }
           ],
           "works": "Het gekozen geheugenonderdeel is afgesloten: automatisch onthouden, corrigeren en toepassen (GE-01), plus inzien, bewust corrigeren en vergeten (GE-02), door Jaap geaccepteerd.",
-          "ownerSummary": "Klaar: onthouden, corrigeren, inzien en vergeten. Sprekerherkenning nog open."
+          "ownerSummary": "Onthouden, corrigeren, inzien en vergeten zijn geaccepteerd. Ook later een onderwerp vervolgen is door Jaap bevestigd (M1.2). Nog open: Privé-inhoud blijft bij de juiste persoon via de afgesproken privéroutes; geen open stemherkenningsbouw als voorwaarde voor dit geaccepteerde geheugenonderdeel.",
+          "currentSummary": {
+            "checkedAt": "2026-10-03T13:00:37.521696+00:00",
+            "works": "Onthouden, corrigeren, inzien en vergeten zijn geaccepteerd. Ook later een onderwerp vervolgen is door Jaap bevestigd (M1.2).",
+            "gap": "Privé-inhoud blijft bij de juiste persoon via de afgesproken privéroutes; geen open stemherkenningsbouw als voorwaarde voor dit geaccepteerde geheugenonderdeel.",
+            "detail": "De eerdere GE-01/GE-02- en M1-acceptaties blijven staan.",
+            "evidencePaths": [
+              "eva2/design/product/execution-workboard-v1.json"
+            ]
+          }
         },
         {
           "id": "initiative",
@@ -315,7 +309,16 @@
             }
           ],
           "works": "Eva koos vanuit jouw bestaande huiswens zelfstandig een beoordelingskaart en leverde deze als privaat document op.",
-          "ownerSummary": "Nog nodig: zelf gekozen nuttig werk echt uitvoeren en terugbrengen; geen vaste vuilnisbak- of voicefunctie."
+          "ownerSummary": "I1.1: een eigen bijdrage is werkelijk uitgevoerd en privé teruggelezen; bestaande initiatiefroute behouden. Nog open: I1.2 nut/stilte beoordelen. I2: relevante waarnemingsbronnen zelf kiezen en de opdracht werkelijk automatiseren/terugmelden blijft open.",
+          "currentSummary": {
+            "checkedAt": "2026-10-03T13:00:37.521696+00:00",
+            "works": "I1.1: een eigen bijdrage is werkelijk uitgevoerd en privé teruggelezen; bestaande initiatiefroute behouden.",
+            "gap": "I1.2 nut/stilte beoordelen. I2: relevante waarnemingsbronnen zelf kiezen en de opdracht werkelijk automatiseren/terugmelden blijft open.",
+            "detail": "De eigen bijdrage is een concreet resultaat. Herhaald passend gezinsinitiatief en algemene waarnemingsopdrachten zijn nog geen afgerond geheel.",
+            "evidencePaths": [
+              "eva2/evidence/product/i1-private-contribution-readback-20261002.json"
+            ]
+          }
         },
         {
           "id": "tools",
@@ -424,7 +427,16 @@
             }
           ],
           "works": "Verstaanbare woonkamer-audio en doorpraten na het antwoord zijn door Jaap bevestigd.",
-          "ownerSummary": "Ondersteunend; geen eerste bouwprioriteit. Fysieke verstaanbaarheid en onderbreken blijven open, telefoon is optioneel."
+          "ownerSummary": "Onderzoeksresultaat terug op de juiste speaker (C3.3) is door Jaap bevestigd. Eerdere geaccepteerde spraakresultaten blijven staan. Nog open: Verstaanbaar doorpraten en echte microfoononderbreking op woonkamer en daarna tweede speaker blijven C3/C4. Geen verplichte telefoon-/laptopproef.",
+          "currentSummary": {
+            "checkedAt": "2026-10-03T13:00:37.521696+00:00",
+            "works": "Onderzoeksresultaat terug op de juiste speaker (C3.3) is door Jaap bevestigd. Eerdere geaccepteerde spraakresultaten blijven staan.",
+            "gap": "Verstaanbaar doorpraten en echte microfoononderbreking op woonkamer en daarna tweede speaker blijven C3/C4. Geen verplichte telefoon-/laptopproef.",
+            "detail": "Speakers en Telegram zijn primair; web/HA-paneel blijven optioneel. Fysieke luisterervaring is afzonderlijk nodig en blokkeert onafhankelijk werk niet.",
+            "evidencePaths": [
+              "eva2/design/product/execution-workboard-v1.json"
+            ]
+          }
         },
         {
           "id": "projects",
@@ -486,7 +498,16 @@
             }
           ],
           "works": "Algemene programmeeruitvoering en één beoordeelde eigen contextverbetering zijn daadwerkelijk toegepast. Bestaand leren, hervatten en terugmelden blijven behouden.",
-          "ownerSummary": "Nu bruikbaar: zelf programmeren, geïsoleerd vergelijken en onafhankelijk beoordeelde verbetering toepassen via de bestaande host. Herhaalde autonome zelfverbetering en algemene voorsprong zijn nog niet bewezen."
+          "ownerSummary": "L1 leren, L2 hervatten/terugmelden en L3 één onafhankelijk beter bevonden contextverbetering toepassen zijn technisch afgerond. Nog open: R1 vergelijking van uitvoerbare ervaring, geplande eindvergelijking en gezinsbeoordeling blijven open.",
+          "currentSummary": {
+            "checkedAt": "2026-10-03T13:00:37.521696+00:00",
+            "works": "L1 leren, L2 hervatten/terugmelden en L3 één onafhankelijk beter bevonden contextverbetering toepassen zijn technisch afgerond.",
+            "gap": "R1 vergelijking van uitvoerbare ervaring, geplande eindvergelijking en gezinsbeoordeling blijven open.",
+            "detail": "Eva schreef de kandidaat, vroeg na operatorvoorbereiding de beoordeelde toepassing aan en las later de echte installatie terug. Geen bewijs van herhaalde volledig autonome zelfverbetering.",
+            "evidencePaths": [
+              "eva2/evidence/product/l3-context-installed-20261003.json"
+            ]
+          }
         },
         {
           "id": "browser",
@@ -504,7 +525,18 @@
           "works": "Browserbediening en herstel zijn historisch getest. De persoonlijke Chrome-route is momenteel niet verbonden.",
           "tryIt": "Open Browser in het eigenaarsdashboard; neem over en geef terug.",
           "currentRouteEvidence": "eva2/evidence/product/browser-current-route-audit-2026-09-13.json",
-          "ownerSummary": "Nog nodig: werken in jouw Chrome en betrouwbaar overnemen."
+          "ownerSummary": "Eva gebruikt zelfstandig haar eigen browser en heeft een volledige lees-/klikopdracht uitgevoerd. Ook de gedeelde Chrome-opdracht T3.2 is afgerond. Nog open: T3.3 persoonlijke overname en correct doorgaan blijft afzonderlijk open. Zelfstandig browsergebruik vraagt geen tabdeelhandeling; snelheid en verbruik zijn nog ongunstig.",
+          "currentSummary": {
+            "checkedAt": "2026-10-03T13:00:37.521696+00:00",
+            "works": "Eva gebruikt zelfstandig haar eigen browser en heeft een volledige lees-/klikopdracht uitgevoerd. Ook de gedeelde Chrome-opdracht T3.2 is afgerond.",
+            "gap": "T3.3 persoonlijke overname en correct doorgaan blijft afzonderlijk open. Zelfstandig browsergebruik vraagt geen tabdeelhandeling; snelheid en verbruik zijn nog ongunstig.",
+            "detail": "Op de bestaande eigen browser én de nieuwe optionele installatie zijn navigatie, klikken en terugmelding werkelijk gecontroleerd. Geen claim over alle websites en aanmeldingen.",
+            "evidencePaths": [
+              "eva2/evidence/product/autonomous-browser-installed-20261003.json",
+              "eva2/evidence/product/optional-browser-installed-20261003.json",
+              "eva2/evidence/product/t3-owner-browser-task-20261002.json"
+            ]
+          }
         },
         {
           "id": "installation",
@@ -520,7 +552,18 @@
           "evidence": "O1.1, O2.1/O2.2/O2.3 · FN-002, FN-003",
           "outcomes": [],
           "works": "Gewone tekstinstallatie (O1.1), gekozen HA en eigen browser, update met gegevensbehoud en volledige herstelroute (O2) technisch bruikbaar. Browserchat onafhankelijk bevestigd; begeleide reparaties blijven zichtbaar.",
-          "ownerSummary": "Tekst, gekozen HA/browser en herstel bruikbaar; resterende optionele aansluitingen en gezamenlijke eindoplevering nog open."
+          "ownerSummary": "Gewone tekstinstallatie, gekozen HA en eigen browser, update en herstel zijn bruikbaar. Telegram- en e-mailaansluitingen zijn in het installerpakket meegeleverd. Nog open: O1.2 overige oorspronkelijke opties en echte nieuwe kanaal-/inboxproeven blijven open. Gezamenlijke eindkandidaat en gezinspraktijk zijn nog niet afgerond.",
+          "currentSummary": {
+            "checkedAt": "2026-10-03T13:00:37.521696+00:00",
+            "works": "Gewone tekstinstallatie, gekozen HA en eigen browser, update en herstel zijn bruikbaar. Telegram- en e-mailaansluitingen zijn in het installerpakket meegeleverd.",
+            "gap": "O1.2 overige oorspronkelijke opties en echte nieuwe kanaal-/inboxproeven blijven open. Gezamenlijke eindkandidaat en gezinspraktijk zijn nog niet afgerond.",
+            "detail": "Pakketondersteuning is onderscheiden van een daadwerkelijk gestarte nieuwe Telegrambot of gelezen inbox; die laatste proeven zijn niet uitgevoerd.",
+            "evidencePaths": [
+              "eva2/evidence/product/installer-selected-email-installed-20261003.json",
+              "eva2/evidence/product/installer-selected-telegram-installed-20261003.json",
+              "eva2/evidence/product/optional-browser-installed-20261003.json"
+            ]
+          }
         }
       ],
       "competitorCheckedAt": "21 september 2026",
@@ -964,41 +1007,42 @@
           "Geen open werk binnen de geaccepteerde Telegramstreaming."
         ],
         "conversation": [
-          "Snelle begroeting en doorpraten tijdens werk via alle vier ingangen afmaken.",
-          "Latere onderwerpvoortzetting (M1) is technisch aangetoond en door Jaap bevestigd; overige gezinsbeleving en persoonlijkheid blijven afzonderlijk open."
+          "Natuurlijkheid/persoonlijkheid M3.3 en fysieke speakerconversatie C3/C4 blijven open."
         ],
         "memory": [
-          "Geaccepteerde geheugenfuncties blijven behouden. Oudere privé-uitwisselingen zoeken en later voortzetten is geïnstalleerd en door Jaap bevestigd (M1.2).",
-          "Eigenaar kiest privé-inhoud via Telegram, buiten gedeelde speakers. Geen stemverificatie bouwen als toegang tot privégeheugen."
+          "Privé-inhoud blijft bij de juiste persoon via de afgesproken privéroutes; geen open stemherkenningsbouw als voorwaarde voor dit geaccepteerde geheugenonderdeel."
         ],
         "initiative": [
-          "Het bestaande resultaat kan door Jaap beoordeeld worden; daarvoor geen nieuwe bouw nodig.",
-          "Herhaald passend initiatief, huisaanwezigheid en terecht stil blijven als geheel afronden."
+          "I1.2 nut/stilte beoordelen. I2: relevante waarnemingsbronnen zelf kiezen en de opdracht werkelijk automatiseren/terugmelden blijft open."
         ],
         "tools": [
           "Ongeziene diensten, persoonlijke accounts en combinatietaken via de algemene uitvoering afmaken.",
           "Resultaten onafhankelijk controleren en begrijpelijk terugbrengen zonder ontwikkelhulp."
         ],
         "voice": [
-          "Luna6-contactmodel en HA-streamdoorgifte geïnstalleerd. Hoorbare snelheid, doorpraten tijdens werk en stoppen per ingang nog beoordelen.",
-          "Werkende Voice PE-firmware behouden. Continue-spraakkandidaat niet hersteld; laptoponderbreken blijft geaccepteerd."
+          "Verstaanbaar doorpraten en echte microfoononderbreking op woonkamer en daarna tweede speaker blijven C3/C4. Geen verplichte telefoon-/laptopproef."
         ],
         "projects": [
-          "R1 begrensde innovatieproef en geplande eindvergelijking uitvoeren; bestaande L1/L2/L3-uitkomsten niet herbouwen.",
-          "Gezinsgebruik en oordeel over algemene zelfstandigheid blijven apart. Eén toegepaste contextverbetering bewijst geen herhaald autonoom verbeteren."
+          "R1 vergelijking van uitvoerbare ervaring, geplande eindvergelijking en gezinsbeoordeling blijven open."
         ],
         "browser": [
-          "Bestaand Chrome-tabblad is verbonden en vers gelezen (T3.1). Een volledige browseropdracht afmaken en overnemen/vers doorgaan blijven T3.2/T3.3.",
-          "Na computerherstart herstellen met behouden gegevens, nieuwe toegang en zonder oude acties te herhalen."
+          "T3.3 persoonlijke overname en correct doorgaan blijft afzonderlijk open. Zelfstandig browsergebruik vraagt geen tabdeelhandeling; snelheid en verbruik zijn nog ongunstig."
         ],
         "installation": [
-          "Resterende optionele aansluitingen binnen O1.2 afronden; tekst, HA, browser en herstel niet opnieuw bouwen.",
-          "Gezamenlijke eindkandidaat, geplande vergelijking en gezinspraktijk afzonderlijk afronden."
+          "O1.2 overige oorspronkelijke opties en echte nieuwe kanaal-/inboxproeven blijven open. Gezamenlijke eindkandidaat en gezinspraktijk zijn nog niet afgerond."
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T12:41:39.179067+00:00",
+        "checkedAt": "2026-10-03T13:08:35.945523+00:00",
         "deliveries": [
+          {
+            "title": "Optionele e-maillezer aangesloten in installerpakket",
+            "date": "3 oktober",
+            "state": "installed",
+            "result": "Gewone installer geeft de geverifieerde inbox en sleutel door aan de bestaande alleen-lezenprovider. Persoonscontrole en bijbehorend image zijn meegeleverd; onafhankelijke bron- en installatiereview GO. Geen echte mailbox gelezen of nieuwe e-mailinstallatie beproefd.",
+            "remaining": "Werkelijk mailboxgebruik vereist een gekozen en geverifieerde AgentMail-inbox in een nieuwe installatie. Overige O1.2-opties blijven open; 23/44 kleine taken, nog geen derde volledig hoofdonderdeel.",
+            "source": "eva2/evidence/product/installer-selected-email-installed-20261003.json"
+          },
           {
             "title": "Telegramkeuze beschikbaar in de gewone installer",
             "date": "3 oktober",
@@ -3419,14 +3463,14 @@
           }
         ],
         "now": {
-          "title": "O1.2 · Telegram-installeroplevering vastleggen",
-          "state": "in_progress",
+          "title": "Dashboardteksten hersteld; e-mailpakket opgeleverd",
+          "state": "completed",
           "owner": "Codex /root",
-          "detail": "Telegramkeuze, eigenaarconfiguratie en bestaande startkoppeling zijn in het gewone installatiepakket geïnstalleerd; onafhankelijke bron- en installatiereview GO. Werkelijke wizard-API en v2-persoonsbinding op het echte image gecontroleerd. Geen nieuwe bot gestart of cloudgesprek bewezen. Coördinator verwerkt bewijs en Git; uitvoerder onderzoekt alleen de eerstvolgende bestaande moduleaansluiting."
+          "detail": "Live gecontroleerd: zeven hoofdkaarten tonen hun actuele werkbordtekst; historische bewijsbeschrijvingen blijven bewaard. Teller ongewijzigd: Antwoordstream en Geheugen klaar, 23/44 kleine taken. E-mailpakket heeft bron- en installatiereview GO. Uitvoerder en reviewer zijn klaar; vervolg hieronder is nog niet gestart."
         },
         "next": {
-          "title": "Resterende gewone modulekeuze binnen O1.2 aansluiten",
-          "detail": "Bepaal vanuit de bestaande consumenten de kleinste ontbrekende aansluiting. Geen nieuwe adapter of tweede installatieplatform; echte nieuwe Telegramchat blijft apart open."
+          "title": "O1.2 · Resterende oorspronkelijke moduleaansluitingen",
+          "detail": "Telegram- en e-mailconfiguratie zijn meegeleverd; daadwerkelijke nieuwe kanaal-/inboxproeven zijn nog niet uitgevoerd. Overige gewone modulekeuzes blijven open. Geen herbouw van geïnstalleerd browser-, leer- of herstelwerk."
         },
         "ownerAction": {
           "title": "Nu geen handeling nodig voor zelfstandig vervolgwerk",
@@ -3434,9 +3478,9 @@
           "expected": "Alleen voor een echte nieuwe Telegraminstallatie is een aparte bot nodig. De bestaande Eva-bot blijft beschikbaar; zelfstandig browsergebruik is al toegestaan."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T12:41:39.179067+00:00"
+        "reviewedAt": "2026-10-03T13:08:35.945523+00:00"
       },
-      "reviewedAt": "2026-10-02T13:18:04.695516+00:00"
+      "reviewedAt": "2026-10-03T13:08:35.945523+00:00"
     },
     "pendingTechnicalReview": {
       "reason": "Historische CO-003-kandidaat van 7 september: het oorspronkelijke bewijs bevat geen commitgebonden definitieve review of livegang. Deze oude kaart wordt daarom niet alsnog afgevinkt. De gebruikersuitkomst is later opgenomen in CO-004/CO-005, live opgeleverd en door Jaap via GE-02 geaccepteerd op 12 september. Het gekozen geheugenonderdeel blijft afgesloten; deze historische registratie is geen actuele bouw- of acceptatieblokkade.",
@@ -15920,46 +15964,46 @@
               "owner": "Codex /root",
               "blocker": null,
               "evidence": "eva2/evidence/product/installer-optional-selection-20260929.json",
-              "checkedAt": "2026-10-03T12:41:39.179067+00:00",
+              "checkedAt": "2026-10-03T13:00:37.521696+00:00",
               "remaining": "Telegram-installerwiring geïnstalleerd; afzonderlijke bot/start/cloudchat nog niet beproefd. E-mail, adaptive_connector en oorspronkelijke spraak/modulekeuzes nog afronden waar de gewone installatieroute ontbreekt.",
               "assignment": {
-                "baseCommit": "daf6c5e85619e4e2c78b320da2b05c64faaeafd2",
+                "baseCommit": "5b6a60168e0c010cc4d2807e76a33fc5216c1cc5",
                 "owner": "/root",
-                "activeWorkers": [
-                  "/root/background_execution_seam"
-                ],
-                "stage": "telegram_installer_package_installed_channel_unverified",
-                "existing": "O1.1 actual text target and omission proof complete. Existing capability/secret/provider verification, HA URL configuration, maintained optional graph projection and HA runtime connector already exist.",
-                "gap": "Selected Telegram wiring delivered in the ordinary package. Real new-bot cloud conversation remains unverified; email/adaptive/voice original optional module scope remains.",
+                "activeWorkers": [],
+                "stage": "email_installer_package_installed_mailbox_unverified",
+                "existing": "Ordinary email selection, secret/inbox configuration and configured AgentMail verification exist. Core bundles list_email_messages/read_email_message provider. Selected Telegram package delivered; real new-bot conversation not exercised.",
+                "gap": "Selected ready email is rejected before ordinary target materializes existing AgentMail environment and credential mount.",
                 "outcome": "Dezelfde installatie werkt met gekozen modules; geen hardcoded eigenaarpaden.",
-                "design": "Existing bot-token materialization and getMe verification remain. Add explicit numeric Telegram owner_user_id to existing provider configuration/confirmed hash; materialize existing private v2 principal binding and fresh pairing secret; include existing telegram-ingress in writer startup. Reuse core/delegated return route, not a new proactive service. Main bot must not gain a second poller. Native polling service explicitly disables inherited core HTTP healthcheck; existing portless readiness requires exact Telegram entrypoint/command, disabled healthcheck and a live non-restarting process. Process readiness does not assert Telegramcloud acceptance.",
+                "design": "Reuse verified provider configuration and existing secret materialization, mount into maintained core provider, add file role binding and retain skip projection. Confirm existing private-owner authorization and actual image early. No new service, adapter or send-email capability. Necessary dependency: existing AgentMail wrapper has no authorize_turn callback. Add owner/tenant/install/private-audience binding using the existing callback and deliver it in the actual image; configuration alone is insufficient.",
                 "files": [
-                  "eva2/tools/packaged_installer_target.py",
-                  "eva2/src/eva/operations/installer_provider_configuration.py",
-                  "eva2/src/eva/adapters/api/installer_provider_api.py",
-                  "eva2/src/eva/adapters/connectors/installer_configured_probe_factory.py",
-                  "eva2/tools/installation_fresh_start.py"
+                  "tools/packaged_installer_target.py",
+                  "tools/installer_target_bindings.py",
+                  "src/eva/providers/agentmail.py",
+                  "direct tests and minimal necessary existing helpers"
                 ],
-                "estimate": "Reuse existing consumers; focused selection/materialization check before installed review. No model calls for source research; development credits unknown.",
+                "estimate": "One existing consumer attachment with focused cases and bundled review/package update. No runtime model or mail calls for development; credits unknown.",
                 "finishScope": "Original task finish retained. O1 parent cannot close until voice/HA/browser module additions/omissions are available through ordinary owner choices; unsupported channels must remain explicit.",
-                "review": "Source and installed GO: eva2/reviews/installer-selected-telegram-20261003.md. Exact package hashes match source. Native consumer/cloud delivery not exercised; separate bot required.",
-                "result": "Telegramkeuze, eigenaarconfiguratie en bestaande startkoppeling zijn in het gewone installatiepakket geïnstalleerd; onafhankelijke bron- en installatiereview GO. Werkelijke wizard-API en v2-persoonsbinding op het echte image gecontroleerd. Geen nieuwe bot gestart of cloudgesprek bewezen.",
+                "review": "SOURCE and INSTALLED GO: eva2/reviews/installer-selected-email-20261003.md; exact provider in new candidate image. No real mailbox usage claimed.",
+                "result": "Gewone installer geeft de geverifieerde inbox en sleutel door aan de bestaande alleen-lezenprovider. Persoonscontrole en bijbehorend image zijn meegeleverd; onafhankelijke bron- en installatiereview GO. Geen echte mailbox gelezen of nieuwe e-mailinstallatie beproefd.",
                 "fileOwners": {
                   "/root/background_execution_seam": [
-                    "Read-only next existing optional consumer seam; Telegram source frozen"
+                    "tools/packaged_installer_target.py",
+                    "tools/installer_target_bindings.py",
+                    "src/eva/providers/agentmail.py",
+                    "direct tests and minimal necessary existing helpers"
                   ],
                   "/root": [
-                    "Evidence, workboard, package integration and Git"
+                    "workboard, evidence, package integration and Git"
                   ],
                   "/root/aide_final_evaluation": [
-                    "Completed independent source/package review"
+                    "independent read-only authorization/image check and final source/package review"
                   ]
                 },
                 "finding": "A bot identity alone cannot identify the first owner. Existing /link requires an already verified confirmer. Ordinary installer therefore needs explicit owner account input before its existing ingress can serve private conversations.",
                 "ownerApproval": "Explicit owner permission 3 October 2026 in this chat; routine browser access also authorized.",
-                "currentAction": "Rond bewijs/Git van de geïnstalleerde Telegramkeuze af en bepaal de kleinste resterende oorspronkelijke moduleaansluiting; geen herhaling van de browserproef."
+                "currentAction": "Installer wiring delivered; finish dashboard text correction requested by Jaap, then resume original remaining O1.2 scope."
               },
-              "nextAction": "Rond bewijs/Git van de geïnstalleerde Telegramkeuze af en bepaal de kleinste resterende oorspronkelijke moduleaansluiting; geen herhaling van de browserproef.",
+              "nextAction": "Telegram- en e-mailconfiguratie zijn meegeleverd; daadwerkelijke nieuwe kanaal-/inboxproeven zijn nog niet uitgevoerd. Overige gewone modulekeuzes blijven open. Geen herbouw van geïnstalleerd browser-, leer- of herstelwerk.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -15967,8 +16011,8 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "latestEvidence": "eva2/evidence/product/installer-selected-telegram-installed-20261003.json",
-              "result": "Telegramkeuze, eigenaarconfiguratie en bestaande startkoppeling zijn in het gewone installatiepakket geïnstalleerd; onafhankelijke bron- en installatiereview GO. Werkelijke wizard-API en v2-persoonsbinding op het echte image gecontroleerd. Geen nieuwe bot gestart of cloudgesprek bewezen.",
+              "latestEvidence": "eva2/evidence/product/installer-selected-email-installed-20261003.json",
+              "result": "Gewone installer geeft de geverifieerde inbox en sleutel door aan de bestaande alleen-lezenprovider. Persoonscontrole en bijbehorend image zijn meegeleverd; onafhankelijke bron- en installatiereview GO. Geen echte mailbox gelezen of nieuwe e-mailinstallatie beproefd.",
               "versionBoundary": "Fresh browser target/package uses901222 base with3browser files (e2d6af image). Main runtime has separate L3 candidate730524/0b1375. This is not the integrated final candidate; preserve exact identities and combine at existing F1."
             }
           ],
@@ -15992,7 +16036,7 @@
             ],
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
           },
-          "latestEvidence": "eva2/evidence/product/installer-selected-telegram-installed-20261003.json"
+          "latestEvidence": "eva2/evidence/product/installer-selected-email-installed-20261003.json"
         },
         {
           "id": "O2",

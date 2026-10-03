@@ -113,3 +113,27 @@ def test_skipped_providers_do_not_require_tokens_or_ingress(setup, bound):
         assert not any(key.startswith(("EVA_TELEGRAM_", "EVA_HOME_ASSISTANT_"))
                        for key in service.get("environment", {}))
     assert setup["rendered_graph"] == before
+
+
+def test_email_provider_secret_binds_existing_readonly_core_mount(setup):
+    from dataclasses import replace
+    root = setup['materialized_bind_root']
+    secret = root / 'provider-email.secret'
+    secret.write_bytes(b'synthetic-email-api-secret')
+    secret.chmod(0o600)
+    setup['materialization_receipt']['files'].append({'role': 'provider:email',
+        'path': str(secret), 'sha256': hashlib.sha256(secret.read_bytes()).hexdigest()})
+    graph = setup['rendered_graph']
+    graph['services']['core']['environment'].update(EVA_AGENTMAIL_INBOX_ID='owner@example.invalid',
+        EVA_AGENTMAIL_API_KEY_FILE='/run/secrets/agentmail_api_key')
+    graph['services']['core']['volumes'].append({'type': 'bind', 'source': '/placeholder/email',
+        'target': '/run/secrets/agentmail_api_key', 'read_only': True, 'bind': {'create_host_path': False}})
+    setup['render_receipt'] = replace(setup['render_receipt'], rendered_sha256=canonical_sha256(graph))
+    first = bind_installer_target_graph(**setup)
+    assert 'core:/run/secrets/agentmail_api_key' not in first.pending
+    completed = bind_installer_target_graph(**setup, additional_bindings=fill_remaining(setup, first.pending))
+    assert completed.graph is not None
+    mount = next(m for m in completed.graph['services']['core']['volumes']
+                 if m['target'] == '/run/secrets/agentmail_api_key')
+    assert mount['source'] == str(secret) and mount['read_only'] is True
+    assert secret.read_bytes() == b'synthetic-email-api-secret'

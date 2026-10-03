@@ -1,0 +1,33 @@
+{
+  "contract": "EvaCurrentDashboardSummaryReadback/v1",
+  "recorded_at": "2026-10-03T13:07:20.244479+00:00",
+  "status": "installed_live_readback_passed",
+  "route": "http://127.0.0.1:44712/project-state",
+  "source_sha256": "03d7c489a65a0b4519318a5b36daf16505799d513cdc9bed67f895934646a203",
+  "test_sha256": "cc00b66bdcea42a8e439d743b2534f27bcae9b2b9f3dc0bddda3729323360c7b",
+  "current_summary_ids": [
+    "conversation",
+    "memory",
+    "initiative",
+    "voice",
+    "projects",
+    "browser",
+    "installation"
+  ],
+  "completed_main_ids": [
+    "answer-stream",
+    "memory"
+  ],
+  "completed_small_tasks": 23,
+  "all_prior_statuses_acceptances_and_step_counts_unchanged": true,
+  "historical_narratives_preserved": true,
+  "frontend_rebuild": false,
+  "eva_runtime_changed": false,
+  "model_calls": 0,
+  "review_path": "eva2/reviews/dashboard-current-summary-20261003.md",
+  "review_sha256": "87fa02251a8a3a2459de5fcdb75ea45ea1537c8a0abf64ce816aa437b93374d8",
+  "independent_review": "SOURCE GO after resolving the actual memory override; live readback performed by coordinator",
+  "scope": "Current text precedence only. Existing completion criteria, step counts, historic acceptance and product state remain unchanged.",
+  "verification": "Initial focused tests passed; independent review found memory override and the corrected actual-memory regression passed (3 tests in 80ms). Live API now matches all seven explicit summaries, including memory.",
+  "credits": null
+}

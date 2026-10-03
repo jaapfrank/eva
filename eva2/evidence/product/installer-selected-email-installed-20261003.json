@@ -1,0 +1,118 @@
+{
+  "contract": "EvaSelectedEmailInstallerDelivery/v1",
+  "recorded_at": "2026-10-03T13:00:37.521696+00:00",
+  "task_id": "O1.2",
+  "status": "installer_package_installed_mailbox_unverified",
+  "base_commit": "5b6a60168e0c010cc4d2807e76a33fc5216c1cc5",
+  "result": "Verified ordinary email selection now configures the existing AgentMail read-only provider with the selected inbox and materialized secret. Existing runtime owner identifiers constrain private access through the maintained generic authorization hook. Source and actual candidate image are installed into the ordinary wizard package; no real selected-email target or inbox read is claimed.",
+  "existing_reused": [
+    "Configured provider verification and inbox/config hash receipt",
+    "AgentMail list/read adapter, external tool journal and authorization hook",
+    "Fresh installer target, secret materialization and immutable image overlay"
+  ],
+  "installation": {
+    "recorded_at": "2026-10-03T12:53:18.387348+00:00",
+    "status": "installed_existing_wizard_restarted",
+    "files": {
+      "tools/packaged_installer_target.py": "083d751a92c7db278562dcce04fbc1e4cda54862cc8e1cb9010852f45a9650ca",
+      "tools/installer_target_bindings.py": "2a20450ccc5c8004cb641b19a771fc38f9f48595c15fc3bd67522705ee729d8b",
+      "src/eva/providers/agentmail.py": "601ee78ff4c0f642fbeac372796082e554f330784dad55a7bb366600a1830696"
+    },
+    "old_listener_pid": 910265,
+    "new_listener_pid": 1074960,
+    "workspace_preserved": true,
+    "new_installation_image": "sha256:759b638cc283465c10c9130f2aa45df44ee24c3f375d39f055a90f15ec046b02",
+    "existing_target_image_unchanged": "sha256:e2d6af7ca0cba49761efe54c082ee1fab988f9de06680c01bfaa4fb6469a21d4",
+    "provider_status_http": 200,
+    "mailbox_accessed": false,
+    "real_email_provider_started": false,
+    "initial_process_guard": "Refused before mutation because running process had execed the known installer_restore_wizard module. Exact live argv inspected and bound before one successful package update."
+  },
+  "image_build": {
+    "recorded_at": "2026-10-03T12:48:55.262948+00:00",
+    "base_image": "sha256:e2d6af7ca0cba49761efe54c082ee1fab988f9de06680c01bfaa4fb6469a21d4",
+    "image": "sha256:759b638cc283465c10c9130f2aa45df44ee24c3f375d39f055a90f15ec046b02",
+    "source_hashes": {
+      "tools/packaged_installer_target.py": "083d751a92c7db278562dcce04fbc1e4cda54862cc8e1cb9010852f45a9650ca",
+      "tools/installer_target_bindings.py": "2a20450ccc5c8004cb641b19a771fc38f9f48595c15fc3bd67522705ee729d8b",
+      "src/eva/providers/agentmail.py": "601ee78ff4c0f642fbeac372796082e554f330784dad55a7bb366600a1830696"
+    },
+    "installed": false,
+    "scope": "Existing optional installer core development overlay; no main runtime change or mailbox access"
+  },
+  "actual_image_check": {
+    "contract": "EvaActualImageEmailBindingCheck/v1",
+    "valid": true,
+    "source_sha256": "601ee78ff4c0f642fbeac372796082e554f330784dad55a7bb366600a1830696",
+    "synthetic_configuration": true,
+    "provider_calls": 0,
+    "model_calls": 0,
+    "network": "none",
+    "same_owner_available": true,
+    "different_owner_blocked_before_dispatch": true,
+    "omitted_provider_absent": true,
+    "image": "sha256:759b638cc283465c10c9130f2aa45df44ee24c3f375d39f055a90f15ec046b02"
+  },
+  "verification": {
+    "review_path": "eva2/reviews/installer-selected-email-20261003.md",
+    "review_sha256": "2179d7b3603b3a44cbcc0aa7e27bc9240dfb87a6530cda71c9f69be4526b5cb5",
+    "result": "SOURCE and INSTALLED GO for installer configuration and provider/image binding",
+    "focused_checks": "40 involved cases ultimately passed across focused corrected runs. Initial host/container collection dependencies and new fixture errors are retained in development logs. Counts do not imply a real inbox or complete installer acceptance.",
+    "diff_check": "Passed before package delivery"
+  },
+  "use": "For a new installation select email, provide the existing AgentMail API key and intended inbox in the ordinary wizard, verify, then finish installation. Ask that installation to list/read messages in private chat. This does not add sending or access to a different mail provider.",
+  "limitations": [
+    "Existing targets retain skipped email; no real inbox configured or accessed in this delivery",
+    "Candidate image was exercised without network using synthetic configuration; this is packaging/private-binding evidence, not a cloud mail result",
+    "Main runtime is unchanged; selected provider needs this reviewed new image, not the older e2d6af image",
+    "O1.2 original optional module scope and final integrated F1 candidate remain open; no task count increased"
+  ],
+  "usage": {
+    "runtime_model_calls": 0,
+    "provider_calls": 0,
+    "emails_sent": 0,
+    "mailbox_contents_read": 0,
+    "credits": null,
+    "scope": "This implementation and package delivery; Codex development credits unknown"
+  },
+  "artifacts": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-selected-email-20261003/package-installed.json",
+      "sha256": "6c602ad8216caf766672f8d5439ace42faf6dcc0fccd05325be79088b9f79082"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-selected-email-20261003/image/build.json",
+      "sha256": "95929699468528ce42da7565112fbf95534fd91b49a14b82f81748ff7549b749"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-selected-email-20261003/image/compatibility-result.json",
+      "sha256": "fc17cf718faa9089f484994bc678dae175b01619666713c3039291927f8349a6"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-selected-email-20261003/provider-status.private.json",
+      "sha256": "a8db4b7b487960381c5248f182337cab3dfc77e968209b0c71282854cc3de228"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-selected-email-20261003/current-image-configuration.json",
+      "sha256": "3c5f2f9025c1ec9232af031005f7be692a5b4f8e87f48d705954bfbe3955624d"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-selected-email-20261003/delivery-plan.json",
+      "sha256": "adb09f568cd6d862825f152b3ba28db4e398c122f58c57f3d019cb93d0b720bb"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-selected-email-20261003/live-provider-readback.json",
+      "sha256": "f57c008e56633d284403671a0cde05f6f969b5053929b512e4552ab7828ac13b"
+    }
+  ],
+  "live_provider_readback": {
+    "slot_id": "email",
+    "state": "skipped",
+    "available": true,
+    "configuration_required": true,
+    "configuration_present": false,
+    "secret_present": false,
+    "can_configure": false,
+    "can_verify": false
+  }
+}

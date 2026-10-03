@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 import os
+from uuid import UUID
+from eva.application.conversation import ConversationConflict, ConversationTurn
 
 import sqlalchemy as sa
 
@@ -23,6 +25,16 @@ def _value(name: str) -> str:
 class AgentMailProviderSettings:
     inbox_id: str
     credential: str = field(repr=False)
+    tenant_id: str
+    installation_id: str
+    principal_id: str
+
+    def authorize_turn(self, turn: ConversationTurn) -> None:
+        if (turn.tenant_id != self.tenant_id or turn.installation_id != self.installation_id
+                or turn.principal_id != self.principal_id
+                or turn.audience.kind != "private_person"
+                or turn.audience.principal_id != turn.principal_id):
+            raise ConversationConflict("E-mail is unavailable for this audience")
 
 
 class AgentMailProviderFactory:
@@ -41,11 +53,16 @@ class AgentMailProviderFactory:
             raise RuntimeError("Eva external e-mail provider configuration is incomplete")
         if not inbox_id:
             return None
+        try:
+            owner = {key: str(UUID(_value("EVA_RUNTIME_" + key.upper())))
+                     for key in ("tenant_id", "installation_id", "principal_id")}
+        except ValueError as error:
+            raise RuntimeError("Eva e-mail requires the existing runtime private owner binding") from error
         credential = read_runtime_secret_file(
             credential_file,
             setting_name="EVA_AGENTMAIL_API_KEY_FILE",
         )
-        return AgentMailProviderSettings(inbox_id=inbox_id, credential=credential)
+        return AgentMailProviderSettings(inbox_id=inbox_id, credential=credential, **owner)
 
     @staticmethod
     def build(
@@ -65,6 +82,7 @@ class AgentMailProviderFactory:
                     engine,
                     adapter.conversation_read_planner(),
                     adapter,
+                    authorize_turn=settings.authorize_turn,
                 ),
             ),
         )

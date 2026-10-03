@@ -25,6 +25,7 @@ _FILE_ROLES = {
     "/run/eva/runtime-budget/current.json": "runtime_budget",
     "/run/secrets/home_assistant_token": "provider:home_assistant",
     "/run/secrets/telegram_bot_token": "provider:telegram",
+    "/run/secrets/agentmail_api_key": "provider:email",
 }
 _DIRECTORY_ROLES = {
     "/run/eva/model-lease": ("model_access_lease", "model-lease"),

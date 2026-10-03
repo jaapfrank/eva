@@ -19,6 +19,35 @@ export function acceptedMemoryDelivery(board) {
     evidence: memory.ownerAcceptanceEvidence };
 }
 
+// Only explicitly maintained summary text supersedes the dated audit narrative.
+// Evidence, technical/owner states and completion remain in their existing paths.
+export function applyCurrentCapabilitySummaries(project, board) {
+  const current = board.audit?.projectDashboard?.capabilities || [];
+  for (const row of project.capabilities) {
+    const summary = current.find(item => item.id === row.id)?.currentSummary;
+    if (!summary || typeof summary !== 'object' || Array.isArray(summary)) continue;
+    const fields = ['works', 'gap', 'detail'].filter(key =>
+      typeof summary[key] === 'string' && summary[key].trim());
+    if (!fields.length) continue;
+    row.historicalSummary ??= Object.fromEntries(
+      ['works', 'visibleResult', 'gap', 'detail', 'resultBasis', 'evidence'].map(key => [key, row[key]]));
+    for (const key of fields) row[key] = summary[key];
+    if (fields.includes('works')) row.visibleResult = summary.works;
+    if (row.product?.delivery) {
+      if (fields.includes('works')) row.product.delivery.result = row.visibleResult;
+      if (fields.includes('gap')) row.product.delivery.followup = row.gap;
+    }
+    if (typeof summary.checkedAt === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(summary.checkedAt)
+        && Number.isFinite(Date.parse(summary.checkedAt))) {
+      row.resultBasis = `Actuele werkbordstand · ${summary.checkedAt}`;
+    }
+    if (Array.isArray(summary.evidencePaths)) {
+      const paths = summary.evidencePaths.filter(path => typeof path === 'string' && path.trim());
+      row.evidence = [...new Set([...(row.evidence ? row.evidence.split(' · ') : []), ...paths])].join(' · ');
+    }
+  }
+}
+
 export function applyReviewedCapabilities(project, board, audit) {
   if (audit.contract !== 'EvaCapabilityAudit/v2') throw new Error('scoped audit required');
   project.capabilityAudit = { checkedAt: audit.checkedAt, meaning: audit.meaning, ownerBrowserUpdate: audit.ownerBrowserUpdate };
@@ -338,6 +367,7 @@ export function projectServer() {
             displayKicker: 'REVIEW EN ADMINISTRATIEVE AFRONDING', displayStatus: 'Gebruikersresultaat afgerond · review nog open',
           } : {}) });
         applyProductCompletion(project, board);
+        applyCurrentCapabilitySummaries(project, board);
         response.end(JSON.stringify({
           id: 'project', contract: 'EvaProjectOverview/v1',
           revision: createHash('sha256').update(raw).digest('hex'),

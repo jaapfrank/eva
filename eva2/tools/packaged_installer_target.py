@@ -150,9 +150,10 @@ def validate_target_runtime_configuration(graph):
         "from eva.bootstrap.runtime import RuntimeSettings; "
         "from eva.providers.home_assistant import HomeAssistantProviderFactory; "
         "from eva.providers.mcp_gateway import McpGatewayProviderFactory; "
+        "from eva.providers.agentmail import AgentMailProviderFactory; "
         "from eva.adapters.api.browser_session import browser_session_from_environment; "
         "RuntimeSettings.from_environment(); HomeAssistantProviderFactory.load_settings(); "
-        "McpGatewayProviderFactory.load_settings(); browser_session_from_environment(); "
+        "McpGatewayProviderFactory.load_settings(); AgentMailProviderFactory.load_settings(); browser_session_from_environment(); "
         "print('runtime configuration accepted')"))
     result = subprocess.run(command, capture_output=True, text=True)
     if result.returncode != 0 or result.stdout.strip() != "runtime configuration accepted":
@@ -261,9 +262,14 @@ class PackagedInstallerPreparation:
             raise ValueError("confirmed complete wizard choices required")
         # Providers without installed consumers must remain explicit. Selected
         # HA uses the owner-entered endpoint and its existing verified secret.
-        if any(c["state"] == "ready" and c["step_id"] in {"email", "adaptive_connector"}
+        if any(c["state"] == "ready" and c["step_id"] in {"adaptive_connector"}
                for c in plan["capabilities"]):
             raise ValueError("selected provider has no ordinary target consumer yet")
+        email_selected = any(item["step_id"] == "email" and item["state"] == "ready"
+                             for item in plan["capabilities"])
+        email_inbox = (verified_provider_configuration(
+            plan, "email", self.provider_configuration_store, self.provider_verifier)
+            if email_selected else None)
         telegram_selected = any(item["step_id"] == "telegram" and item["state"] == "ready"
                                 for item in plan["capabilities"])
         telegram_owner = None
@@ -396,6 +402,14 @@ class PackagedInstallerPreparation:
         core["environment"].update(EVA_DASHBOARD_RELEASE_SHA256=values["EVA_DASHBOARD_RELEASE_SHA256"],
             TZ=profile["time_zone"],
             EVA_CONVERSATION_CONTACT_MODEL="gpt-6-sol", EVA_CONVERSATION_CONTACT_REASONING_EFFORT="none")
+        if email_selected:
+            core["environment"].update(
+                EVA_AGENTMAIL_INBOX_ID=email_inbox,
+                EVA_AGENTMAIL_API_KEY_FILE="/run/secrets/agentmail_api_key")
+            core.setdefault("volumes", []).append({"type": "bind",
+                "source": str(inputs / "selected-email-secret"),
+                "target": "/run/secrets/agentmail_api_key", "read_only": True,
+                "bind": {"create_host_path": False}})
         if telegram_selected:
             # This image also runs the HTTP core; its inherited HTTP healthcheck
             # is not a health endpoint offered by the existing polling process.

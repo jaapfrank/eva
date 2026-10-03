@@ -1,32 +1,35 @@
 # EVA2 werkbord
 
-## Actief: O1.2 — Telegram-installeroplevering vastleggen
+## Actueel: e-mailpakket opgeleverd en dashboardteksten hersteld
 
-**Geïnstalleerd:** de gewone installer ondersteunt nu Telegram met een expliciet
-gekozen privéaccount, bestaande botcontrole en dezelfde persoonsbinding voor kern
-en Telegramingang. De vijf beoordeelde pakketbestanden draaien in de wizard op
-poort 44727. Onafhankelijke bron- en installatiereview **GO**. De gevonden geërfde
-webservercontrole op de Telegramconsumer is gericht gecorrigeerd vóór installatie.
+**Stand: 23/44 bestaande kleine taken afgerond. Er is nog geen derde volledig
+hoofdonderdeel bijgekomen naast de twee eerdere afgeronde onderdelen.** Nieuwe
+deelresultaten zijn dus niet hetzelfde als een compleet afgerond hoofdonderdeel.
+L1/L2/L3 zijn technisch afgerond; R1 en de eindvergelijking blijven open.
 
-**Nog niet bewezen:** een volledige nieuwe Telegraminstallatie en echt gesprek via
-een aparte bot. Er is geen nieuwe poller gestart; de bestaande bot en de eerdere
-keuze om Telegram op de browserproef over te slaan zijn behouden. Voor zelfstandig
-vervolgwerk hoeft Jaap nu niets te doen. Bij een nieuwe installatie zijn een eigen
-bot-token en het numerieke privéaccount nodig; de wizard geeft die instructies.
+Op Jaaps statusvraag bleek een concrete dashboardfout: historische auditteksten
+overschreven actuelere hoofdkaartsamenvattingen. Die tekstprojectie is gerepareerd,
+onafhankelijk beoordeeld en live gecontroleerd voor alle zeven actuele kaarten,
+inclusief geheugen. Criteria, historie en eigenaaracceptaties blijven intact.
+Geen tellerverhoging. Uitvoerder en reviewer zijn klaar; het resterende O1.2-vervolg
+is nog niet gestart. [Live controle](evidence/product/dashboard-current-summary-installed-20261003.json).
 
-Root rondt bewijs en Git af. De uitvoerder bepaalt alleen de eerstvolgende concrete
-aansluiting binnen O1.2; de onafhankelijke reviewer is klaar. E-mail, adaptive
-connector en de oorspronkelijke optionele spraakkeuze blijven zichtbaar als
-resterend werk. **23/44** oorspronkelijke kleine taken klaar; geen tellerstap voor
-een deeloplevering. Deze wijziging gebruikte nul Eva-modelcalls of Telegramcloudcalls;
-Codex-credits zijn onbekend.
+**Laatste installeroplevering:** gekozen e-mail gebruikt de bestaande alleen-lezen
+inboxprovider, met de bestaande persoonscontrole. De drie bronbestanden en het
+bijbehorende nieuwe image zijn in het gewone installatiepakket opgenomen.
+Onafhankelijke bron- en installatiereview **GO**. Geen echte inbox gelezen.
+Eerder is de Telegramconfiguratie met privéaccountbinding meegeleverd; geen nieuwe
+bot gestart. De bestaande installatiekeuzes en hoofdinstallatie zijn behouden.
 
-Versies blijven expliciet: de nieuwe browserinstallatie gebruikt de bestaande
-901222-basis met drie browserwijzigingen; de hoofdinstallatie bevat de latere
-L3-verbetering. Dit is nog niet de gezamenlijke eindkandidaat van F1.
+Voor echte nieuwe Telegram-/e-mailinstallaties zijn een aparte bot respectievelijk
+AgentMail-inbox nodig. De wizard geeft de instructies. Deze ontbrekende praktijkproeven
+maken het volledige O1.2 niet af; overige oorspronkelijke opties blijven zichtbaar.
+Geen Eva-modelcalls, mailboxinhoud of uitgaande e-mails in deze twee pakketwijzigingen.
+Codex-credits onbekend. Gezamenlijke integratie van de nieuwe installerimage en de
+latere L3-hoofdinstallatie blijft bij de bestaande F1-eindkandidaat.
 
-[Geïnstalleerde Telegramkeuze en grenzen](evidence/product/installer-selected-telegram-installed-20261003.json)
-· [Onafhankelijke review](reviews/installer-selected-telegram-20261003.md).
+[E-mailpakket en grenzen](evidence/product/installer-selected-email-installed-20261003.json)
+· [Telegramkeuze en grenzen](evidence/product/installer-selected-telegram-installed-20261003.json).
 
 ## Nu opgeleverd: optionele browser in een nieuwe Eva-installatie
 

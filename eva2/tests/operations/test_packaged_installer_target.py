@@ -135,7 +135,8 @@ def test_selected_telegram_binds_owner_to_verification(tmp_path):
 
 
 @pytest.mark.parametrize("selected", [True, False])
-def test_ordinary_telegram_selection_wires_existing_consumer(tmp_path, monkeypatch, selected):
+@pytest.mark.parametrize("capability", ["telegram", "email"])
+def test_ordinary_telegram_selection_wires_existing_consumer(tmp_path, monkeypatch, selected, capability):
     from pathlib import Path
     from dataclasses import dataclass
     import re
@@ -148,7 +149,7 @@ def test_ordinary_telegram_selection_wires_existing_consumer(tmp_path, monkeypat
     monkeypatch.setattr("eva.adapters.objects.identity_verifier.load_current_identity_pack", lambda *a, **k: identity)
     monkeypatch.setattr("eva.application.identity_verifier.load_identity_pack_trust_binding", lambda *a: None)
     monkeypatch.setattr(target, "_new_subnet", lambda *a: "10.254.200.0/24")
-    monkeypatch.setattr(target, "verified_provider_configuration", lambda *a: "123456789")
+    monkeypatch.setattr(target, "verified_provider_configuration", lambda plan, slot, *a: "123456789" if slot == "telegram" else "owner@example.invalid")
     @dataclass(frozen=True)
     class Render:
         rendered_sha256: str = "a" * 64
@@ -178,7 +179,8 @@ def test_ordinary_telegram_selection_wires_existing_consumer(tmp_path, monkeypat
     prepared.provider_configuration_store = prepared.provider_verifier = object()
     plan = {"contract": "EvaInstallerInstallationPlan/v2", "status": "ready_for_release_preparation",
         "blockers": [], "capabilities": [
-            {"step_id": "telegram", "state": "ready" if selected else "skipped"},
+            {"step_id": "telegram", "state": "ready" if selected and capability == "telegram" else "skipped"},
+            {"step_id": "email", "state": "ready" if selected and capability == "email" else "skipped"},
             {"step_id": "home_assistant", "state": "skipped"},
             {"step_id": "browser", "state": "skipped"}],
         "inputs": {"identity_pack_sha256": canonical_sha256(identity),
@@ -186,9 +188,9 @@ def test_ordinary_telegram_selection_wires_existing_consumer(tmp_path, monkeypat
     plan["plan_sha256"] = canonical_sha256(plan)
     settings = prepared._settings(plan)
     graph, _ = project_optional_capabilities(settings.rendered_graph, plan, plan['plan_sha256'])
-    assert ('telegram-ingress' in graph['services']) is selected
-    assert ('telegram-ingress' in settings.fresh_start.writer_services) is selected
-    if selected:
+    assert ('telegram-ingress' in graph['services']) is (selected and capability == 'telegram')
+    assert ('telegram-ingress' in settings.fresh_start.writer_services) is (selected and capability == 'telegram')
+    if selected and capability == "telegram":
         from eva.adapters.credentials.telegram_bindings import load_principal_bindings
         path = settings.additional_bindings[('telegram-ingress', '/run/secrets/telegram_principal_bindings')]
         assert path == settings.additional_bindings[('core', '/run/secrets/telegram_principal_bindings')]
@@ -205,3 +207,13 @@ def test_ordinary_telegram_selection_wires_existing_consumer(tmp_path, monkeypat
                    for m in core['volumes'])
     else:
         assert not list((prepared.workspace / 'inputs').glob('telegram-*'))
+    core = graph['services']['core']
+    email_mounts = [m for m in core['volumes'] if m['target'] == '/run/secrets/agentmail_api_key']
+    if selected and capability == 'email':
+        assert core['environment']['EVA_AGENTMAIL_INBOX_ID'] == 'owner@example.invalid'
+        assert core['environment']['EVA_AGENTMAIL_API_KEY_FILE'] == '/run/secrets/agentmail_api_key'
+        assert len(email_mounts) == 1 and email_mounts[0]['read_only'] is True
+        assert core['environment']['EVA_RUNTIME_PRINCIPAL_ID'] == settings.fresh_start.authority['principal_id']
+    else:
+        assert not email_mounts
+        assert not any(key.startswith('EVA_AGENTMAIL_') for key in core['environment'])
