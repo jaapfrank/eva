@@ -435,8 +435,8 @@
           "tested": "partial",
           "live": "partial",
           "accepted": "no",
-          "gap": "L3 zelfstandige programmeeruitvoering en installatieoverdracht; R1 gemeten innovatie en eindacceptatie.",
-          "detail": "L1 procedureleren/hergebruik en L2 hervatten/terugmelden zijn afgerond binnen hun geregistreerde scope. De eerdere SHA-codeverbetering is met Codex-hulp toegepast. De componentroute bereidt alleen een pakket voor; algemene programmeeruitvoering en autonome toepassing zijn nog niet als geheel bewezen.",
+          "gap": "R1 gemeten innovatie, geplande eindvergelijking en gezinsacceptatie blijven open.",
+          "detail": "L1 procedureleren en L2 hervatten/terugmelden zijn afgerond binnen hun scope. L3: Eva schreef een contextverbetering, onafhankelijke beoordeling vond meer bruikbare taakcontext; na operatorvoorbereiding vroeg Eva de exact beoordeelde toepassing aan en las later de werkelijke installatie terug.",
           "evidence": "AU-002, AU-003, AU-004, AU-006",
           "outcomes": [
             {
@@ -485,8 +485,8 @@
               "detail": "Op 22 september zijn de bestaande diensten hersteld en healthy; beide projectstatussen, alle 28 bestanden en het journaal zijn onafhankelijk gecontroleerd en behouden. Automatisch herstartbeleid is geïnstalleerd zonder de containers opnieuw te starten. Dit bewijst geen nieuw documentproject."
             }
           ],
-          "works": "Het voorbereide tweestapsproject blijft behouden. Beide documentdiensten draaien weer; automatisch herstartbeleid is geïnstalleerd. Eigen documentopdrachten zijn nog niet geïnstalleerd.",
-          "ownerSummary": "Eerst afmaken: Eva zelf laten programmeren, toepassen en controleren. Begrensd leren en hervatten zijn al bewezen."
+          "works": "Algemene programmeeruitvoering en één beoordeelde eigen contextverbetering zijn daadwerkelijk toegepast. Bestaand leren, hervatten en terugmelden blijven behouden.",
+          "ownerSummary": "Nu bruikbaar: zelf programmeren, geïsoleerd vergelijken en onafhankelijk beoordeelde verbetering toepassen via de bestaande host. Herhaalde autonome zelfverbetering en algemene voorsprong zijn nog niet bewezen."
         },
         {
           "id": "browser",
@@ -984,8 +984,8 @@
           "Werkende Voice PE-firmware behouden. Continue-spraakkandidaat niet hersteld; laptoponderbreken blijft geaccepteerd."
         ],
         "projects": [
-          "Taakbediening en terugmelding via Telegram, website en publieke HA-spraak zijn aangesloten. Meerdere opdrachten, juiste terugmelding en echte resultaten als geheel nog bewijzen.",
-          "Werkwijzen zoeken/uitvoeren, planning en verbeterkandidaten zijn gebouwd; zelfstandig FLUXNOTE-hergebruik zonder nieuwe hulp nu gecontroleerd. Algemene zelfstandigheid, meerdaagse praktijk en brede toegepaste verbetering blijven open."
+          "R1 begrensde innovatieproef en geplande eindvergelijking uitvoeren; bestaande L1/L2/L3-uitkomsten niet herbouwen.",
+          "Gezinsgebruik en oordeel over algemene zelfstandigheid blijven apart. Eén toegepaste contextverbetering bewijst geen herhaald autonoom verbeteren."
         ],
         "browser": [
           "Bestaand Chrome-tabblad is verbonden en vers gelezen (T3.1). Een volledige browseropdracht afmaken en overnemen/vers doorgaan blijven T3.2/T3.3.",
@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T02:33:50.607128+00:00",
+        "checkedAt": "2026-10-03T11:58:15.660852+00:00",
         "deliveries": [
+          {
+            "title": "L3.3: Eva past haar beoordeelde contextverbetering toe",
+            "date": "3 oktober",
+            "state": "installed",
+            "result": "Exacte kandidaat op kern en werker geïnstalleerd na Eva’s eigen aanvraag; latere uitlezing bevestigt installatie zonder herhaling. Onafhankelijke eindreview GO. Begrensde vergelijking: 11→13 van 16 relevante taakverwijzingen.",
+            "remaining": "23/44 oorspronkelijke kleine taken klaar. Operator bereidde images en reviewbinding voor; geen herhaald autonoom verbeteren, tokenbesparing of algemene concurrentievoorsprong geclaimd. R1 en gezinsbeoordeling blijven open.",
+            "source": "eva2/evidence/product/l3-context-installed-20261003.json"
+          },
           {
             "title": "Eva gebruikt zelfstandig haar eigen browser",
             "date": "3 oktober",
@@ -3395,25 +3403,22 @@
           }
         ],
         "now": {
-          "title": "O1.2 · Browseraansluiting wacht op netwerktoestemming",
-          "state": "blocked",
-          "owner": "Jaap · installatiekeuze",
-          "detail": "Gerichte correctie en onafhankelijke bronreview klaar. Browser, gateway en databases behouden; de nieuwe kern kan de gateway nog niet bereiken. Automatische goedkeuringscontrole heeft extra netwerktoegang vóór uitvoering afgewezen. Toestemmingsvraag staat in de chat. Geen geïnstalleerde browserchat of nieuw afgerond productonderdeel."
+          "title": "O1.2 · Browser in een nieuwe installatie afronden",
+          "state": "in_progress",
+          "owner": "Codex /root/background_execution_seam",
+          "detail": "L3.3 is geïnstalleerd en onafhankelijk goedgekeurd. De browseragent heeft sessiebehoud aangesloten en de oude geladen grafische bibliotheek gericht vervangen. Kosteloze echte klik geslaagd; gewone Eva-chat en eindreview volgen."
         },
         "next": {
-          "title": "Goedgekeurde aansluiting toepassen en vanuit Eva gebruiken",
-          "detail": "Na toestemming: bestaande gateway verbinden, dezelfde kern starten en één gewone browseropdracht controleren. L3.3 heeft een aparte open hosttoestemming; geen herinstallatie vanaf nul."
+          "title": "Overige gekozen installatieopties en bestaande vervolgvolgorde",
+          "detail": "O1.2 blijft open tot de oorspronkelijke gekozen modulecombinaties werken. Geen nieuwe producttaken of tellerwijzigingen door opsplitsen."
         },
         "ownerAction": {
-          "title": "Twee concrete installatiekeuzes staan open",
-          "steps": [
-            "L3.3: geef antwoord op de vraag over de bestaande programmeerhost als root-systeemdienst.",
-            "O1.2: geef antwoord op de vraag over aansluiting van de browsergateway op haar bestaande uitgaande netwerk."
-          ],
-          "expected": "De automatische goedkeuringscontrole vraagt deze expliciete keuzes. De beoordeelde wijzigingen en eerdere resultaten blijven bewaard; niets is stilzwijgend toegepast."
+          "title": "Geen handeling van jou nodig voor deze installatie",
+          "steps": [],
+          "expected": "Beide toestemmingen ontvangen. Eva mag zelfstandig haar browser gebruiken; technische uitvoering en controle gaan door."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T02:33:50.607128+00:00"
+        "reviewedAt": "2026-10-03T11:58:15.660852+00:00"
       },
       "reviewedAt": "2026-10-02T13:18:04.695516+00:00"
     },
@@ -13165,7 +13170,7 @@
             "AU-003"
           ],
           "doneWhen": "Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg.",
-          "preserve": "L1 procedureleren/hergebruik en L2 hervatten/terugmelden zijn binnen hun vastgelegde scope afgerond. Resteert: zelfstandige programmeeruitvoering met toegepaste eigen verbetering (L3) en de afzonderlijke innovatieproef (R1); geen herbouw van geaccepteerd leerwerk.",
+          "preserve": "L1, L2 en de begrensde eigen verbetering L3 technisch afgerond. R1 en de geplande eindvergelijking/gezinsbeoordeling blijven afzonderlijk open; geen herbouw van bestaand leerwerk.",
           "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
           "historicalPlanningEffortHours": "8–24",
           "blueprintSlices": [
@@ -13234,7 +13239,7 @@
           ]
         }
       ],
-      "nextAction": "O1.2: finish the existing optional-module installation handoff while T3 awaits explicit tab access.",
+      "nextAction": "Rond de al gekozen optionele browser op dezelfde nieuwe installatie af; overige bestaande kleine taken en afhankelijkheden blijven zichtbaar.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -15497,12 +15502,12 @@
           ],
           "outcome": "Eigen verbetering beoordelen",
           "effort": "M",
-          "status": "in_progress",
+          "status": "completed",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "General programming executor and typed source/command inputs are installed. Eva wrote and ran a reusable program; independent synthetic functional check18/18 passed. Existing documents/procedures and managed component review/release remain available.",
-            "remainingGap": "A valid Eva-authored frozen context candidate now exists. Independent answer evaluation and exact approved source→managed application remain; deterministic gain alone is not final acceptance.",
-            "nextAction": "De bestaande kandidaat-, bronimport- en beheerde updateroutes bestaan. Nog te verbinden: een exact onafhankelijk goedgekeurd pakket naar bouwen, toepassen en geïnstalleerde controle. Eva mag haar eigen kandidaat niet goedkeuren. Geen nieuw platform of heropening van de afgesloten AIDE-contextproef.",
+            "remainingGap": "The frozen independently successful Eva-authored context improvement is now installed through Eva-requested reviewed application, with a separate later status read. Repeated autonomous improvement and R1 remain outside this bounded result.",
+            "nextAction": "Use the installed general programming and reviewed application route when a concrete need justifies an improvement; retain independent approval and exact version binding.",
             "evidencePaths": [
               "eva2/evidence/product/component-self-improvement-assisted-20260924.json"
             ],
@@ -15587,28 +15592,26 @@
             {
               "id": "L3.3",
               "title": "Verbetering integreren of afwijzen",
-              "status": "blocked",
+              "status": "completed",
               "kind": "besluit",
               "doneWhen": "Alleen gemeten voordeel integreren. Gelijkspel/verlies wordt afgesloten zonder verdere bouw.",
               "owner": "Codex",
-              "nextAction": "Codex verbindt beoordeeld exact resultaat met bestaande beheerde installatie en terugmelding. Eva past haar aantoonbare verbetering via die route toe, controleert de geïnstalleerde werking en bewaart bruikbare ervaring. Afwijzing sluit één kandidaat af; zij maakt de algemene programmeervaardigheid niet automatisch klaar.",
-              "ownerActionRequired": true,
+              "nextAction": "Gebruik de geïnstalleerde route bij een concrete verbeterbehoefte; deze kandidaat niet opnieuw toepassen.",
+              "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": true,
-                "readyWhen": "Beantwoord de toestemmingsvraag in deze chat over de bestaande programmeerhost als root-systeemdienst.",
-                "steps": [
-                  "Kies of de beoordeelde zelfverbeteringsroute als bestaande systeemdienst mag worden geïnstalleerd, of alleen de contextverbetering."
-                ],
+                "availableNow": false,
+                "readyWhen": "Deze technische oplevering vraagt geen handeling van jou. Gewone gesprekken gebruiken de verbeterde taakcontext.",
+                "steps": [],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-03T01:57:44.921325+00:00",
-              "blocker": "Automatic approval review rejected the persistent root systemd host/client change. Explicit scoped owner approval requested; no service mutation executed.",
-              "latestEvidence": "eva2/evidence/product/l3-context-independent-20261003.json",
+              "checkedAt": "2026-10-03T11:58:15.660852+00:00",
+              "blocker": null,
+              "latestEvidence": "eva2/evidence/product/l3-context-installed-20261003.json",
               "assignment": {
                 "baseCommit": "932558b14727fefc5e36ab6ef66a7ea2ce8cfbef",
                 "owner": "/root",
                 "activeWorkers": [],
-                "stage": "reviewed_source_ready_awaiting_host_privilege_approval",
+                "stage": "completed_installed_reviewed",
                 "outcome": "Install exactly the independently successful Eva-authored context candidate through existing release facilities; distinguish assisted installation from autonomous application.",
                 "files": [
                   "eva2/tools/import_component_release.py",
@@ -15617,12 +15620,15 @@
                   "existing workboard and evidence"
                 ],
                 "estimate": "No further model comparison or candidate generation; reuse installed images and image-only updater. Credits unknown.",
-                "doneWhen": "Alleen gemeten voordeel integreren. Gelijkspel/verlies wordt afgesloten zonder verdere bouw."
+                "doneWhen": "Alleen gemeten voordeel integreren. Gelijkspel/verlies wordt afgesloten zonder verdere bouw.",
+                "ownerApproval": "Explicit owner permission 3 October 2026 in this chat; routine browser access also authorized.",
+                "review": "Installed GO: eva2/reviews/l3-context-installed-20261003.md"
               },
-              "remaining": "Na toestemming bestaande host en toepassingskoppeling installeren, Eva de exact beoordeelde update laten aanvragen en de geïnstalleerde bron/status controleren. Alleen de contextverbetering installeren blijft het alternatief."
+              "remaining": "Geen zelfstandig technisch werk meer voor deze kandidaat. Herhaalde autonome verbetering, R1 en algemene concurrentievoorsprong zijn hiermee niet bewezen.",
+              "result": "Eva vroeg de onafhankelijk beoordeelde contextverbetering zelf aan; de host installeerde de exacte kandidaat. Kern en werker gezond, latere statusuitlezing bevestigt dezelfde aanvraag als geïnstalleerd. Onafhankelijke eindreview GO."
             }
           ],
-          "latestEvidence": "eva2/evidence/product/l3-typed-programming-installed-20261002.json",
+          "latestEvidence": "eva2/evidence/product/l3-context-installed-20261003.json",
           "responsibilityReview": {
             "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
             "role": "eerstvolgende algemene vaardigheid",
@@ -15681,14 +15687,15 @@
           },
           "aide2SelfImprovement": {
             "ownerConfirmedAt": "2026-10-02T11:08:33.786076+00:00",
-            "state": "followup_closed_without_candidate_no_measured_gain",
+            "state": "one_measured_eva_authored_candidate_installed",
             "research": "eva2/experiments/aide-20260929/research.md",
             "firstApplication": "Existing task-context selection gap; use recorded workspace follow-up criteria, not a new optimization platform.",
             "distinction": "AIDE searches task programs; AIDE² also searches agent orchestration with fixed underlying models. Our execution tooling is not evidence of AIDE² improvement.",
             "scope": "Improve the shared agent approach when a measured user deficit justifies it: context selection, planning, tool use or result verification are examples, not separate required builds.",
             "independentEvaluation": "Freeze baseline/candidate and assessment rules; optimizer cannot modify evaluator or protected final cases; no holdout-directed revision.",
             "promotion": "Only measured advantage, preserving privacy, authority and stop; record quality, human help, latency and total usage.",
-            "evidenceBoundary": "The original failed trial stays closed. Assisted SHA256 improvement and the installed programming workspace do not prove repeated autonomous self-improvement."
+            "evidenceBoundary": "The original failed trial remains closed. This later bounded task-context improvement was Eva-authored, independently evaluated, operator-packaged and Eva-triggered for real application; no repeated autonomous improvement or general AIDE2 superiority claim.",
+            "installedEvidence": "eva2/evidence/product/l3-context-installed-20261003.json"
           },
           "aideWorkspaceFollowup": {
             "state": "closed_unsuccessful",
@@ -15891,19 +15898,21 @@
             {
               "id": "O1.2",
               "title": "Optionele modules kunnen weglaten",
-              "status": "blocked",
+              "status": "in_progress",
               "kind": "aansluiten",
               "doneWhen": "Dezelfde installatie werkt met gekozen modules; geen hardcoded eigenaarpaden.",
               "owner": "Codex /root",
-              "blocker": "Automatic approval review rejected gateway egress attachment before execution. Reviewed concrete correction prepared; explicit owner permission requested in chat.",
+              "blocker": null,
               "evidence": "eva2/evidence/product/installer-optional-selection-20260929.json",
-              "checkedAt": "2026-10-03T02:33:50.607128+00:00",
-              "remaining": "Gekozen browser en gateway werken; nieuwe kern mist bereikbare gatewaypoort. Bestaande poging, profiel, databases en identiteit behouden. Netwerkaansluiting vereist expliciete toestemming na automatische afwijzing; gerichte broncorrectie/review wordt voorbereid.",
+              "checkedAt": "2026-10-03T11:48:24.145737+00:00",
+              "remaining": "Goedgekeurde netwerkaansluiting is uitgevoerd. De nieuwe Eva kon navigeren en waarnemen, maar klikken verloor de browsersessie. De gerichte sessiekoppeling heeft bronreview GO en wordt op dezelfde nieuwe installatie toegepast; volledige browserchat nog te bevestigen.",
               "assignment": {
                 "baseCommit": "70f1da3c971b3a979a0ada47a31fe3183c7de07f",
-                "owner": "/root",
-                "activeWorkers": [],
-                "stage": "source_ready_gateway_network_permission_pending",
+                "owner": "/root/background_execution_seam",
+                "activeWorkers": [
+                  "/root/background_execution_seam"
+                ],
+                "stage": "reviewed_browser_session_correction_installation",
                 "existing": "O1.1 actual text target and omission proof complete. Existing capability/secret/provider verification, HA URL configuration, maintained optional graph projection and HA runtime connector already exist.",
                 "gap": "Selected HA factory rejection resolved. Ordinary voice/browser module selection and installed consumers remain absent; other selected providers explicitly unsupported.",
                 "outcome": "Dezelfde installatie werkt met gekozen modules; geen hardcoded eigenaarpaden.",
@@ -15939,7 +15948,8 @@
                     "integration tests and existing workboard"
                   ]
                 },
-                "finding": "Exact Docker NetworkSettings.Ports is 4444/tcp:null on internal-only gateway. Same host TCP refused; container4444 healthy. Proposed existing browser egress attachment was rejected before execution; no bypass or runtime network change."
+                "finding": "Exact Docker NetworkSettings.Ports is 4444/tcp:null on internal-only gateway. Same host TCP refused; container4444 healthy. Proposed existing browser egress attachment was rejected before execution; no bypass or runtime network change.",
+                "ownerApproval": "Explicit owner permission 3 October 2026 in this chat; routine browser access also authorized."
               },
               "nextAction": "Standaardchat en enkele optionele installatiekeuzes; bestaande modules kunnen worden weggelaten. Gebruik dezelfde beheerroute voor later benodigde uitbreidingen, zonder vooraf verplichte HA/browser/Telegram-bundel of nieuwe installer per voorbeeld.",
               "ownerActionRequired": false,

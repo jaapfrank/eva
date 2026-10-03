@@ -1,40 +1,34 @@
 # EVA2 werkbord
 
-## O1.2 — gerichte browseraansluiting wacht op netwerktoestemming
+## Actief: O1.2 — browser in een nieuwe installatie afronden
 
-Browser, gateway en nieuwe databases draaien gezond; profiel en identiteit zijn
-behouden. De kern stopt doordat Docker de gatewaypoort niet publiceert op alleen
-een intern netwerk. De gerichte netwerkaansluiting is vóór uitvoering afgewezen
-door automatische goedkeuringscontrole; de concrete broncorrectie is klaar en onafhankelijk beoordeeld. De
-toestemmingsvraag staat in de chat. Geen herinstallatie en nog geen bruikbare
-nieuwe browserchat. 9 pakketcontroles en 11 gerichte gatewaycontroles slagen;
-geen nieuwe modelproef gestart. De oude poging blijft bewaard.
+Eén agent rondt de bestaande optionele browserroute af, een tweede controleert
+onafhankelijk het resultaat. Root verzorgt integratie, dashboard en Git.
+De goedgekeurde netwerkaansluiting en sessiekoppeling zijn toegepast. Het proces
+gebruikte nog een oude grafische bibliotheek; gerichte herstart laadt nu de juiste
+versie. Een echte klik werkt; gewone Eva-chat en eindreview volgen. Geen nieuwe
+installatiepoging of eigenaarhandeling nodig. O1.2 blijft als geheel open.
 
-## L3.3 — beoordeelde contextverbetering wacht op hosttoestemming
+## Nu afgerond: L3.3 — eigen contextverbetering werkelijk toegepast
 
-**L3.2 afgerond:** de vastgezette Eva-kandidaat slaagt voor de onafhankelijke
-beoordeling. **13/16** benodigde taakverwijzingen tegenover **11/16**, geen
-regressies. Alle **24/24** modelaanroepen geslaagd; mediaan **3,972→3,453s**.
-Inputtokens **5.094→5.115**: geen besparing geclaimd. Drie herhalingen per vraag
-bewijzen alleen deze begrensde uitkomst, geen algemene voorsprong.
+**23/44 oorspronkelijke kleine taken technisch klaar.** Eva vroeg de onafhankelijk
+beoordeelde verbetering aan. De host installeerde de exacte kandidaat op kern en
+werker; beide zijn gezond. Een latere, uitsluitend lezende taak bevestigt dezelfde
+ene aanvraag als daadwerkelijk geïnstalleerd. Onafhankelijke eindreview: **GO**.
 
-**Nu:** exacte bron geïmporteerd; images en eigen toepassingsroute voorbereid en
-onafhankelijk gereviewd. De automatische goedkeuringscontrole blokkeerde de
-installatie omdat de bestaande systeemdienst blijvend rootrechten zou krijgen en
-de gedeelde clientconfiguratie wijzigt. De huidige losgestarte host draait al als
-root. Een gerichte toestemmingsvraag staat in deze chat; er is nog geen dienst of
-runtime vervangen. Geen geïnstalleerde wijziging of autonome toepassing geclaimd.
-**22/44 oorspronkelijke kleine taken** afgerond; technische deeltaken zijn geen
-extra afgerond groot productonderdeel. Bestaande acceptaties blijven staan.
+Vastgelegde vergelijking: **11→13 van 16 relevante taakverwijzingen**; twee extra
+vragen beantwoordbaar. Provider-mediaan **3,972→3,453s** in deze kleine proef.
+Invoertokens namen iets toe. Operatorvoorbereiding van images/reviewbinding,
+aanvankelijke aansluitfout en de mislukte eerste statusvraag zijn zichtbaar in het
+verslag. Dit is één werkende zelfverbeteringsroute; geen bewijs van herhaalde
+volledig autonome verbetering of algemene winst op concurrenten. Credits onbekend.
 
-Kandidaatgeneratie: **96,14 seconden**, **107.308 input-/1.636 outputtokens**,
-8 modelantwoorden en 7 hulpmiddeloproepen. Eindbeoordeling: **10.209 input-/989
-outputtokens**. Credits onbekend. Geen nieuwe kandidaat of optimalisatieplatform.
-Het app-goal staat nog geblokkeerd; de opdracht van 3 oktober hervat het werk
-in deze chat. Technische voortgang en menselijke acceptatie blijven gescheiden.
+**Gebruiken:** gewone gesprekken gebruiken voortaan de betere taakcontext. Vraag
+bij een gecontroleerde toepassing om een korte statuscontrole; opnieuw installeren
+is niet nodig. R1, de eindvergelijking en gezinsbeoordeling blijven afzonderlijk open.
 
-[Onafhankelijke meting](evidence/product/l3-context-independent-20261003.json)
-· [Beoordeling](reviews/l3-context-independent-20261003.md).
+[Installatie en meting](evidence/product/l3-context-installed-20261003.json)
+· [Onafhankelijke review](reviews/l3-context-installed-20261003.md).
 
 ## Nu opgeleverd: Eva gebruikt zelfstandig haar eigen browser
 
@@ -55,7 +49,7 @@ blijft optioneel en blokkeert deze zelfstandige route niet.
 [Uitvoering en meting](evidence/product/autonomous-browser-installed-20261003.json)
 · [Onafhankelijke review](reviews/autonomous-browser-installed-20261003.md).
 
-## Laatste afgeronde taak: T3.2 — echte bediening van jouw Chrome-tab
+## Eerdere oplevering: T3.2 — echte bediening van jouw Chrome-tab
 
 **21/44 oorspronkelijke kleine taken technisch klaar.** Eva heeft via de gewone
 Eva-gespreksroute de proeftekst daadwerkelijk geopend, letterlijk gelezen,
@@ -69,7 +63,7 @@ credits zijn onbekend. Dit bewijst deze gebruikersuitkomst, geen efficiëntiewin
 
 **Jij:** geen tabdeel- of dashboardhandeling nodig voor zelfstandig browsergebruik.
 T3.3 persoonlijke overname blijft een optionele aparte proef. De geslaagde klikproef
-wordt niet herhaald. O1.2 is bewaard en momenteel niet de actieve opdracht.
+wordt niet herhaald. O1.2 wordt inmiddels vervolgd; de actuele opdracht staat bovenaan.
 
 [Uitvoering en meting](evidence/product/t3-owner-browser-task-20261002.json)
 · [Onafhankelijke review](reviews/t3-owner-browser-task-20261002.md).
@@ -87,13 +81,10 @@ of herhaling. Het chatantwoord kostte **11,6 seconden**, twee modelantwoorden en
 modelaanmelding kostte 30/9 tokens. Credits en geheugenachtergrond niet volledig
 meetbaar. Onafhankelijke review: **GO voor gekozen HA geïnstalleerd**.
 
-**Nu:** de aparte optionele browser is aangemaakt, maar de start is nog niet klaar.
-De controller vindt het gepatchte programmabestand niet leesbaar voor de
-browsergebruiker (0600). De broncorrectie zet dat bestand op 0444; zes gerichte
-controles slagen. De bewaarde containers, het profiel en de foutgeschiedenis
-blijven staan. Herstel van precies deze bestandsrechten en verdere aansluiting
-op de nieuwe Eva zijn nog werk voor Codex; niets hiervan heet al geïnstalleerd.
-De persoonlijke Chrome-klikproef hierboven is een andere, reeds werkende route.
+**Historische tussenstand:** de browser kon aanvankelijk niet starten door een
+onleesbaar patchbestand. Dat is inmiddels hersteld. De actuele browseraansluiting
+en de nog resterende fout staan bovenaan; deze eerdere fout blokkeert niet meer.
+De bewaarde containers, het profiel en de foutgeschiedenis blijven behouden.
 
 **Nog af te maken binnen O1.2:** gewone spraak-/browserkeuzes en werkende consumenten
 van de overige gekozen providers. De bestaande modules hergebruiken; geen nieuwe

@@ -1,0 +1,164 @@
+{
+  "contract": "EvaReviewedContextInstalled/v1",
+  "checkedAt": "2026-10-03T11:58:15.660852+00:00",
+  "taskIds": [
+    "L3.3"
+  ],
+  "state": "installed_independent_review_go",
+  "installed": true,
+  "sourceCommitBeforeContractCompletion": "6bda321ba31d8efe541d1a08a7a354c2c89cb3b5",
+  "independentGain": "eva2/evidence/product/l3-context-independent-20261003.json",
+  "candidateSha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+  "reviewId": "503e263aa1c01ca0bc5aa443990c98a61c94fa29ae4c9f6d637135ccf3b9d5ab",
+  "requestId": "6ea597a8d7e47362fd270ba0694e1513b109e03561fe6e7e639f62343edbabd5",
+  "applicationWorkId": "work:eva-chat:8a68dfd2-e2d6-5fe6-9408-bb056791627e",
+  "laterStatusWorkId": "work:eva-chat:878208c1-51a8-5a38-b29a-3c5f9bc3c2d1",
+  "requestCount": 1,
+  "requestState": "completed",
+  "runtime": [
+    {
+      "service": "core",
+      "container": "eva2-managed-b-slot3-core",
+      "containerId": "46dc360fba88a11d26c12204d064ebd34c2dba8be7946a0c3c3336da6dff9613",
+      "image": "sha256:730524883c9c47c193b33e9a875ad4c4e3f3b722d315c50387fd10c8fdd59661",
+      "healthy": true,
+      "sourceSha256": {
+        "eva.adapters.postgres.delegated_work_actions": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+        "eva.contracts.delegated_digital_work": "cf7b13dd84f87751a01ca8b69beb05c11ddedaa5cfa399125cca217dc99c8698"
+      }
+    },
+    {
+      "service": "delegated-work-worker",
+      "container": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "containerId": "18a49200dfa708b8ca7fbe46150a4e24c93bd392bc46a1f5aa61fd05bc3d80d2",
+      "image": "sha256:0b1375541e87bf8145ef896248836b51d78d14e47b6c32dd8df951efbf4205b1",
+      "healthy": true,
+      "sourceSha256": {
+        "eva.adapters.postgres.delegated_work_actions": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+        "eva.contracts.delegated_digital_work": "cf7b13dd84f87751a01ca8b69beb05c11ddedaa5cfa399125cca217dc99c8698"
+      }
+    }
+  ],
+  "retainedMounts": true,
+  "applicationRoute": "Eva ordinary chat admitted work; worker requested the frozen independently approved release; host waited for successful source task and readiness snapshot, then used existing image-only update. Later separate read-only work returned installed status without redispatch.",
+  "laterStatusReply": "De statusuitlezing bevestigt dat de contextverbetering voor review-ID 503e263aa1c01ca0bc5aa443990c98a61c94fa29ae4c9f6d637135ccf3b9d5ab is geïnstalleerd: de aanvraag staat op ‘completed’, met ‘installed: true’ en status ‘verified’. Dit is dus niet alleen een aanvaarde aanvraag, maar een bevestigde installatie.\n\nIk heb uitsluitend de bestaande status uitgelezen; niets opnieuw toegepast, gewijzigd of onderzocht.",
+  "existingReused": [
+    "Isolated candidate/evaluation and reviewed component release",
+    "Shared delegated work and provider route",
+    "Existing image-only updater and retained installation/data"
+  ],
+  "added": [
+    "Reviewed release application and durable later status connected to existing tools/host",
+    "Two missing explicit digital connector-action allowlist entries; actual descriptor-to-grant contract test",
+    "Host system service and same shared client updated under explicit owner permission"
+  ],
+  "independentDifference": {
+    "includedTaskReferences": {
+      "before": 11,
+      "after": 13,
+      "of": 16
+    },
+    "newlyAnswerableQuestions": 2,
+    "regressions": 0,
+    "medianProviderSeconds": {
+      "before": 3.971835786505835,
+      "after": 3.4530697720038006
+    },
+    "inputTokens": {
+      "before": 5094,
+      "after": 5115
+    },
+    "scope": "Frozen independently judged four-question model comparison with three repetitions; no new comparison for installation."
+  },
+  "verification": {
+    "contractAndComposition": {
+      "passed": 69,
+      "seconds": 2.86
+    },
+    "fourActualImageProfilePreflight": "All four baseline/candidate core/worker images validated configured descriptors and exact source hashes before application",
+    "installedExactHashesAndHealth": true,
+    "applicationRequestedOnce": true,
+    "separateLaterReadSucceeded": true,
+    "review": "eva2/reviews/l3-context-installed-20261003.md",
+    "independentRawStatusReceipt": "Exact work-scoped COMPONENT_ACTION_RECORDED: get_reviewed_component_application → verified/completed/installed:true; original request/apply task unchanged.",
+    "independentReview": {
+      "decision": "GO",
+      "sha256": "2d089c1cccfda04d877a837ed6c023d9c0149cc31533083588a4de0b55eac1cf"
+    }
+  },
+  "runtimeUsage": {
+    "ordinary-apply": {
+      "foreground": {
+        "input_tokens": 6913,
+        "output_tokens": 204,
+        "tool_calls": 1,
+        "model_attempts": 1
+      },
+      "work": {
+        "contract": "DelegatedWorkUsage/v1",
+        "tool_calls": 2,
+        "measurement": "partial",
+        "input_tokens": 16694,
+        "total_tokens": 16886,
+        "output_tokens": 192,
+        "schema_version": 1,
+        "cost_usd_micros": null,
+        "completed_model_responses": 3
+      },
+      "foregroundSeconds": 16.034
+    },
+    "ordinary-status": {
+      "foreground": {
+        "input_tokens": 23729,
+        "output_tokens": 307,
+        "tool_calls": 2,
+        "model_attempts": 3
+      },
+      "work": null,
+      "foregroundSeconds": 38.233
+    },
+    "ordinary-status-task": {
+      "foreground": {
+        "input_tokens": 7623,
+        "output_tokens": 205,
+        "tool_calls": 1,
+        "model_attempts": 1
+      },
+      "work": {
+        "contract": "DelegatedWorkUsage/v1",
+        "tool_calls": 1,
+        "measurement": "partial",
+        "input_tokens": 12323,
+        "total_tokens": 12528,
+        "output_tokens": 205,
+        "schema_version": 1,
+        "cost_usd_micros": null,
+        "completed_model_responses": 2
+      },
+      "foregroundSeconds": 10.833
+    }
+  },
+  "usageLimit": "Runtime model counts are partial where marked; background memory and development subscription-credit use are not fully measurable. Credits and monetary cost unknown. Earlier candidate/evaluation usage remains in independent evidence.",
+  "operatorAssistance": [
+    "Coordinator prepared exact images and independent review binding. Eva did not approve her own work or build the deployment images.",
+    "Private installation driver initially passed strings instead of Paths; fixed before runtime mutation.",
+    "Actual initial application-tool startup exposed missing action allowlist entries; narrowly corrected in place with focused regression test, no rollback.",
+    "First later status prompt explicitly forbade new work; foreground had no direct status tool. A separate explicitly read-only work task succeeded; failed status attempt usage retained."
+  ],
+  "boundaries": [
+    "One controlled agent-context improvement; not repeated autonomous improvement or general superiority to Eva1/competitors.",
+    "AIDE searches task programs; AIDE² also searches agent control. This is one bounded application of that idea using existing Eva facilities, not a reproduction of either full research system.",
+    "No input-token saving or general conversation speed claim; observed latency remains provider-sensitive.",
+    "Readiness is a task/lease/lock snapshot plus graceful shutdown, not an atomic new-task admission barrier.",
+    "Existing manual rollback images and receipts retained; no rollback performed.",
+    "Owner/family acceptance and planned end comparison remain separate."
+  ],
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/l3-context-typed-20261003/application",
+  "receipts": {
+    "reviewed-host/update.json": "dacaf8835969d375954fc67fbf1a595385f5a163310e57f6245970a74d52fe03",
+    "reviewed-host/requests/6ea597a8d7e47362fd270ba0694e1513b109e03561fe6e7e639f62343edbabd5.json": "223a9992ab13a0ba76146a14029575227f422dc6e9aa7250b3c3324a14fcba3c",
+    "contract-completion/actual-image-profile-preflight.json": "3a0b11f71035f3813e59054baf99b0d1a0055e741103c84b55214e55c5298b9b",
+    "contract-completion/tool-runtime-update.json": "6fb868c3d4069c0c0425449f8630b8b63ee87781588f84af28cc3ce74a8e1179",
+    "ordinary-status-task/status-receipt.private.json": "cb785fef8655ae6a72f8b9e6ee9be982eaa7e1d9d72c6377478d3ba43904f6ed"
+  }
+}

@@ -290,3 +290,19 @@ def test_usage_wire_bounds_cover_existing_digital_grant_bounds(input_tokens, out
                                        "total_tokens": 3_200_001 + output_tokens})
         with pytest.raises(ValidationError):
             type(value).model_validate({**value.model_dump(mode="json"), "total_tokens": 3_300_001})
+
+
+def test_reviewed_application_descriptors_roundtrip_through_digital_grant(monkeypatch):
+    from types import SimpleNamespace
+    from eva.adapters.postgres import component_improvement_actions as actions
+    monkeypatch.setattr(actions, "configured_component_evaluator", lambda: SimpleNamespace(
+        allowed_paths=("adapters/postgres/delegated_work_actions.py",),
+        reviewed_releases=(("a" * 64, "b" * 64),)))
+    names = tuple(item.name for item in actions.component_descriptors())
+    assert actions.APPLY in names and actions.APPLICATION_STATUS in names
+    grant = replace(profile(), capability_ids=names).grant()
+    assert DelegatedDigitalWorkGrant.model_validate(grant.to_payload()) == grant
+    changed = grant.to_payload()
+    changed["capability_ids"] = [*names, "approve_own_component_release"]
+    with pytest.raises(ValidationError, match="explicit connector actions"):
+        DelegatedDigitalWorkGrant.model_validate(changed)
