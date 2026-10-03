@@ -22,7 +22,8 @@ _EXCLUDED_PARTS = {"node_modules", "__pycache__", ".pytest_cache", ".ruff_cache"
 
 
 def stage_package(*, source_root, target_root, runtime_image,
-                  platform_lock="release/platform-lock-wsl-candidate.json", development_images=None):
+                  platform_lock="release/platform-lock-wsl-candidate.json", development_images=None,
+                  browser_native_wheel=None):
     """Create one new package from trusted source and an already local image."""
     source, target = Path(source_root), Path(target_root)
     for path in (source, target):
@@ -34,6 +35,10 @@ def stage_package(*, source_root, target_root, runtime_image,
         raise ValueError("existing source and new package directory required")
     if not re.fullmatch(r"sha256:[0-9a-f]{64}", runtime_image):
         raise ValueError("immutable local runtime image required")
+    native_wheel = None
+    if browser_native_wheel is not None:
+        from tools.installer_browser_module import native_browser_wheel
+        _, native_wheel = native_browser_wheel(source, browser_native_wheel)
     def docker(*arguments):
         return subprocess.check_output(["docker", *arguments], text=True,
                                        stderr=subprocess.PIPE).strip()
@@ -55,7 +60,8 @@ def stage_package(*, source_root, target_root, runtime_image,
     dirty = bool(subprocess.check_output(
         ["git", "-C", str(repository), "status", "--porcelain", "--", *selected]))
     if development_images is not None:
-        if (set(development_images) != {"living-core", "postgres", "hindsight"}
+        if (not {"living-core", "postgres", "hindsight"} <= set(development_images)
+                or set(development_images) - {"living-core", "postgres", "hindsight", "browser", "browser-mcp", "mcp-gateway"}
                 or development_images["living-core"] != runtime_image):
             raise ValueError("complete explicit development image inventory required")
         for digest in development_images.values():
@@ -115,6 +121,12 @@ def stage_package(*, source_root, target_root, runtime_image,
             output.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(path, output)
             receipt["source_files"][str(relative)] = hashlib.sha256(output.read_bytes()).hexdigest()
+        if native_wheel is not None:
+            relative = Path("deploy/owner-browser") / native_wheel.name
+            output = target / relative
+            shutil.copyfile(native_wheel, output)
+            _, verified = native_browser_wheel(target, output)
+            receipt["source_files"][str(relative)] = hashlib.sha256(verified.read_bytes()).hexdigest()
         save()
         container = docker("create", "--network", "none", "--label",
                            "io.eva2.installer-export=" + export_nonce,
@@ -154,6 +166,7 @@ def main(argv=None):
     parser.add_argument("--target-root", required=True, type=Path)
     parser.add_argument("--runtime-image", required=True)
     parser.add_argument("--platform-lock", default="release/platform-lock-wsl-candidate.json")
+    parser.add_argument("--browser-native-wheel", type=Path)
     parser.add_argument("--postgres-image")
     parser.add_argument("--hindsight-image")
     args = parser.parse_args(argv)
@@ -163,7 +176,7 @@ def main(argv=None):
                "hindsight": args.hindsight_image} if args.postgres_image else None)
     stage_package(source_root=args.source_root, target_root=args.target_root,
                   runtime_image=args.runtime_image, platform_lock=args.platform_lock,
-                  development_images=images)
+                  development_images=images, browser_native_wheel=args.browser_native_wheel)
     return 0
 
 

@@ -749,6 +749,8 @@ def test_wizard_retains_capability_choices_but_cannot_claim_provider_ready(
     page = first.get("/")
     assert "Wat wil je koppelen?" in page.text
     assert "window.__evaCapabilityEnabled=true" in page.text
+    assert "Geïsoleerde browser" in page.text
+    assert "gekozen · nog niet geïnstalleerd" in page.text
 
     origin = {"origin": "http://127.0.0.1"}
     cross_origin = first.post(
@@ -775,6 +777,7 @@ def test_wizard_retains_capability_choices_but_cannot_claim_provider_ready(
     for step_id, wanted in (
         ("model_provider", True),
         ("telegram", True),
+        ("browser", True),
         ("email", False),
     ):
         selected = first.post(
@@ -805,11 +808,12 @@ def test_wizard_retains_capability_choices_but_cannot_claim_provider_ready(
         "model_provider": "selected",
         "telegram": "selected",
         "home_assistant": "pending",
+        "browser": "selected",
         "email": "skipped",
         "adaptive_connector": "pending",
         "budgets": "pending",
     }
-    assert resumed.json()["revision"] == 3
+    assert resumed.json()["revision"] == 4
     assert resumed.json()["non_claims"][1].startswith("Alleen een afzonderlijke")
 
     operator = InstallerCapabilityWorkflow(
@@ -837,6 +841,18 @@ def test_wizard_retains_capability_choices_but_cannot_claim_provider_ready(
     telegram = next(item for item in verified["steps"] if item["step_id"] == "telegram")
     assert telegram["state"] == "ready"
     assert telegram["evidence_sha256"] == "e" * 64
+    browser = next(item for item in verified["steps"] if item["step_id"] == "browser")
+    assert browser["state"] == "selected"
+    assert browser["evidence_sha256"] is None
+    skipped = third.post(
+        "/internal/v1/onboarding/capabilities/select",
+        json={"step_id": "browser", "wanted": False},
+        headers=origin,
+    )
+    assert skipped.status_code == 200
+    assert skipped.json()["state"] == "skipped"
+    assert skipped.json()["provider_verified"] is False
+    assert skipped.json()["evidence_sha256"] is None
 
 
 def test_wizard_blocks_capability_choices_when_platform_preflight_is_blocked(
@@ -1249,6 +1265,7 @@ def test_wizard_shows_ready_read_only_installation_plan(private_tmp_path: Path) 
     )
     for step_id in ("telegram", "home_assistant", "email", "adaptive_connector"):
         capabilities.select(step_id=step_id, wanted=False)
+    capabilities.select(step_id="browser", wanted=True)
     capabilities.select(step_id="budgets", wanted=True)
     budgets = InstallerBudgetWorkflow(
         workspace=budget_workspace,
@@ -1300,6 +1317,15 @@ def test_wizard_shows_ready_read_only_installation_plan(private_tmp_path: Path) 
     assert plan.headers["cache-control"] == "no-store"
     assert plan.json()["status"] == "ready_for_release_preparation"
     assert plan.json()["blockers"] == []
+    assert next(
+        item for item in plan.json()["capabilities"] if item["step_id"] == "browser"
+    ) == {
+        "step_id": "browser", "required": False,
+        "state": "selected", "evidence_sha256": None,
+    }
+    assert [
+        item["slot_id"] for item in plan.json()["inputs"]["secret_bindings"]
+    ] == ["model_provider"]
     assert "synthetic-model-plan-secret" not in plan.text
     assert all(route.path != "/internal/v1/onboarding/install/apply" for route in client.app.routes)
 

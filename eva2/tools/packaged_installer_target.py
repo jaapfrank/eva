@@ -68,9 +68,9 @@ def existing_model_authority(owner_uid):
     return next(iter(sources)) if sources else Path(pwd.getpwuid(owner_uid).pw_dir) / ".codex/auth.json"
 
 
-def _new_subnet():
+def _new_subnet(reserved=()):
     ids = _docker("network", "ls", "-q").split()
-    existing = []
+    existing = [ipaddress.ip_network(value) for value in reserved]
     if ids:
         for network in json.loads(_docker("network", "inspect", *ids)):
             for spec in network.get("IPAM", {}).get("Config", []) or []:
@@ -134,7 +134,10 @@ def validate_target_runtime_configuration(graph):
     command.extend((core["image"], "-c",
         "from eva.bootstrap.runtime import RuntimeSettings; "
         "from eva.providers.home_assistant import HomeAssistantProviderFactory; "
+        "from eva.providers.mcp_gateway import McpGatewayProviderFactory; "
+        "from eva.adapters.api.browser_session import browser_session_from_environment; "
         "RuntimeSettings.from_environment(); HomeAssistantProviderFactory.load_settings(); "
+        "McpGatewayProviderFactory.load_settings(); browser_session_from_environment(); "
         "print('runtime configuration accepted')"))
     result = subprocess.run(command, capture_output=True, text=True)
     if result.returncode != 0 or result.stdout.strip() != "runtime configuration accepted":
@@ -153,6 +156,40 @@ def omit_unconfigured_text_target_transports(core):
         key: value for key, value in core["environment"].items()
         if not key.startswith(("EVA_FANOUT_", "EVA_DURABLE_GOAL_"))
     }
+
+
+def retained_initial_target_inputs(workspace, *, profile, identity_trust_file):
+    """Explicit operator continuation for failure before any target resources.
+
+    This is deliberately not automatic: only the exact early four-file state is
+    reusable. A module plan or workflow receipt requires its own inspected repair.
+    """
+    workspace = Path(workspace)
+    inputs = workspace / "inputs"
+    if (workspace.resolve() != workspace or inputs.resolve() != inputs
+            or {p.name for p in workspace.iterdir()} != {"inputs", "owner-access.json"}
+            or {p.name for p in inputs.iterdir()} != {
+                "dashboard-token", "identity-trust.json", "installation-profile.json"}):
+        raise ValueError("only inspected initial target inputs can be retained")
+    retained_profile = read_private_artifact(inputs / "installation-profile.json", label="retained profile")
+    trust = read_private_artifact(inputs / "identity-trust.json", label="retained identity trust")
+    if (canonical_sha256(json.loads(retained_profile)) != canonical_sha256(profile)
+            or trust != Path(identity_trust_file).read_bytes()):
+        raise ValueError("retained target choices differ from the current plan")
+    access = json.loads(read_private_artifact(workspace / "owner-access.json", label="retained owner access"))
+    match = re.fullmatch(r"http://127\.0\.0\.1:([0-9]{1,5})", access.get("url", ""))
+    if (not match or not 1024 <= int(match[1]) <= 65535
+            or not re.fullmatch(r"eva-install-[0-9a-f]{12}", access.get("namespace", ""))
+            or access.get("development_only") is not True
+            or access.get("platform_support_claim") is not False):
+        raise ValueError("retained owner access differs")
+    token = read_private_artifact(inputs / "dashboard-token", label="retained owner token").decode()
+    if not re.fullmatch(r"[A-Za-z0-9_-]{64}", token):
+        raise ValueError("retained owner token differs")
+    port = int(match[1])
+    with socket.socket() as listener:
+        listener.bind(("127.0.0.1", port))
+    return access["namespace"], port, token
 
 
 class PackagedInstallerPreparation:
@@ -204,7 +241,7 @@ class PackagedInstallerPreparation:
         self.workflow = InstallerTargetWorkflow(workspace=self.workspace, settings=settings, plan_reader=self.plan_reader)
         return self.workflow(displayed_plan)
 
-    def _settings(self, plan):
+    def _settings(self, plan, *, retain_initial_inputs=False):
         if plan.get("status") != "ready_for_release_preparation":
             raise ValueError("confirmed complete wizard choices required")
         # Providers without installed consumers must remain explicit. Selected
@@ -227,23 +264,59 @@ class PackagedInstallerPreparation:
             raise ValueError("mounted identity differs from confirmed wizard identity")
         if profile["language"].split("-")[0] != identity.language.split("-")[0]:
             raise ValueError("installation language requires a matching verified identity pack")
+        browser_selected = any(item["step_id"] == "browser" and item["state"] == "selected"
+                               for item in plan["capabilities"])
+        if browser_selected:
+            # Check the actual package imports before writing any target inputs.
+            from tools.installer_browser_module import prepare_browser_module, start_browser_module
+            from tools.installer_browser_gateway import prepare_browser_gateway_files, start_browser_gateway
         inputs = self.workspace / "inputs"
-        inputs.mkdir(mode=0o700, exist_ok=False)
-        namespace = "eva-install-" + uuid4().hex[:12]
         identifiers = {key: str(uuid4()) for key in ("tenant", "installation", "principal", "binding")}
-        token = secrets.token_urlsafe(48)
-        write_private_once(inputs / "dashboard-token", token.encode())
         # The package's verified default identity is neutral, not a family dump.
         identity_file = self.identity_file
         trust_file = inputs / "identity-trust.json"
-        write_private_once(trust_file, self.identity_trust_file.read_bytes())
-        write_private_once(inputs / "installation-profile.json", canonical_json_bytes(profile))
-        with socket.socket() as listener:
-            listener.bind(("127.0.0.1", 0))
-            port = listener.getsockname()[1]
-        write_private_once(self.workspace / "owner-access.json", canonical_json_bytes({
-            "url": f"http://127.0.0.1:{port}", "namespace": namespace,
-            "development_only": True, "platform_support_claim": False}))
+        if retain_initial_inputs:
+            if self.status() != "available" or self.plan_reader() != plan:
+                raise ValueError("current unstarted target plan required")
+            namespace, port, token = retained_initial_target_inputs(self.workspace,
+                profile=profile, identity_trust_file=self.identity_trust_file)
+        else:
+            inputs.mkdir(mode=0o700, exist_ok=False)
+            namespace = "eva-install-" + uuid4().hex[:12]
+            token = secrets.token_urlsafe(48)
+            write_private_once(inputs / "dashboard-token", token.encode())
+            write_private_once(trust_file, self.identity_trust_file.read_bytes())
+            write_private_once(inputs / "installation-profile.json", canonical_json_bytes(profile))
+            with socket.socket() as listener:
+                listener.bind(("127.0.0.1", 0))
+                port = listener.getsockname()[1]
+            write_private_once(self.workspace / "owner-access.json", canonical_json_bytes({
+                "url": f"http://127.0.0.1:{port}", "namespace": namespace,
+                "development_only": True, "platform_support_claim": False}))
+        network_subnet = _new_subnet()
+        browser_module = None
+        gateway_plan = None
+        selected_module_preparation = None
+        if browser_selected:
+            internal_subnet = _new_subnet((network_subnet,))
+            egress_subnet = _new_subnet((network_subnet, internal_subnet))
+            def available_port():
+                with socket.socket() as listener:
+                    listener.bind(("127.0.0.1", 0))
+                    return listener.getsockname()[1]
+            import sys
+            browser_module = prepare_browser_module(package_root=self.root, workspace=inputs,
+                namespace=namespace, owner_origin=f"http://127.0.0.1:{port}",
+                internal_subnet=internal_subnet, egress_subnet=egress_subnet,
+                control_port=available_port(), viewer_port=available_port(),
+                python_executable=Path(sys.executable))
+            gateway_plan = prepare_browser_gateway_files(package_root=self.root, workspace=inputs,
+                namespace=namespace, browser_plan=browser_module, gateway_port=available_port(),
+                images=self.manifest["imageDigests"])
+            def selected_module_preparation():
+                browser_runtime = start_browser_module(browser_module)
+                gateway_runtime = start_browser_gateway(gateway_plan, browser_runtime=browser_runtime)
+                return {"browser": browser_runtime, "gateway": gateway_runtime}
         docker_config = inputs / "docker-config"
         docker_config.mkdir(mode=0o700)
         images = self.manifest["imageDigests"]
@@ -300,6 +373,22 @@ class PackagedInstallerPreparation:
                 EVA_HOME_ASSISTANT_API_ENABLED="true",
                 EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST=
                     hashlib.sha256(identifiers["principal"].encode()).hexdigest())
+        if browser_selected:
+            core["environment"].update(
+                EVA_MCP_GATEWAY_URL=gateway_plan["gateway_url"],
+                EVA_MCP_GATEWAY_TOKEN_FILE="/run/eva/connectors/mcp/token",
+                EVA_MCP_GATEWAY_CATALOG_FILE="/run/eva/connectors/mcp/catalog.json",
+                EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP="true",
+                EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST=hashlib.sha256(identifiers["principal"].encode()).hexdigest(),
+                EVA_BROWSER_CONTROL_URL=browser_module["control_url"],
+                EVA_BROWSER_CONTROL_TOKEN_FILE="/run/eva/connectors/mcp/browser-control-token",
+                EVA_BROWSER_OWNER_ORIGIN=f"http://127.0.0.1:{port}")
+            for source, destination in ((gateway_plan["token_file"], "token"),
+                    (gateway_plan["catalog_file"], "catalog.json"),
+                    (browser_module["control_token_file"], "browser-control-token")):
+                core.setdefault("volumes", []).append({"type": "bind", "source": source,
+                    "target": "/run/eva/connectors/mcp/" + destination, "read_only": True,
+                    "bind": {"create_host_path": False}})
         omit_unconfigured_text_target_transports(core)
         graph["services"]["hindsight"]["environment"].update(
             HINDSIGHT_API_LLM_MODEL="gpt-6-astra", HINDSIGHT_API_LLM_REASONING_EFFORT="medium")
@@ -311,6 +400,8 @@ class PackagedInstallerPreparation:
                     # replacement remains visible to the fixed lease producer.
                     extras[(name, mount["target"])] = str(self.model_authority.parent)
                 elif mount.get("source") in {str(inputs / "dashboard-token"), str(identity_file), str(trust_file)}:
+                    extras[(name, mount["target"])] = mount["source"]
+                elif browser_selected and name == "core" and mount["target"].startswith("/run/eva/connectors/mcp/"):
                     extras[(name, mount["target"])] = mount["source"]
         render = replace(render, rendered_sha256=hashlib.sha256(canonical_json_bytes(graph)).hexdigest())
         authority = {"tenant_id": identifiers["tenant"], "installation_id": identifiers["installation"],
@@ -324,12 +415,13 @@ class PackagedInstallerPreparation:
                 NewDatabaseTarget("hindsight-postgres", "hindsight", "postgres", "memory-password", "memory-dsn", "postgresql")),
             namespace, roles, identifiers["tenant"], identifiers["installation"], extras,
             {images["living-core"]: "65532:65532", images["postgres"]: "70:70", images["hindsight"]: "1000:1000"},
-            model_authority_file=self.model_authority, network_subnet=_new_subnet(),
+            model_authority_file=self.model_authority, network_subnet=network_subnet,
             fresh_start=InstallerFreshStartSettings("postgres", "core", ("model-access-lease", "hindsight-access-lease", "hindsight", "core"),
                 authority, installation_profile=profile, support_tier="unsupported_fixture"),
             fresh_installation=True, local_port=port,
             source_authority_directories=((self.model_authority.parent, "auth.json"),),
-            configuration_validator=validate_target_runtime_configuration)
+            configuration_validator=validate_target_runtime_configuration,
+            selected_module_preparation=selected_module_preparation)
 
 
 def run_packaged_target_wizard(root, argv):

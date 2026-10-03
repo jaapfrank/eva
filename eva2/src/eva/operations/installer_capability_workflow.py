@@ -1,9 +1,10 @@
 """Restart-safe, connector-neutral onboarding status for Eva's installer.
 
-The browser may record only whether a capability is wanted or deliberately
-skipped.  ``ready`` and ``blocked`` are reserved for an operator-side verifier
-that supplies a SHA-256-bound provider receipt.  No secret or callable provider
-configuration belongs in this workflow.
+The wizard may record only whether a capability is wanted or deliberately
+skipped. Local modules retain that choice until installation; they do not gain
+provider-verification states here. Ready and blocked are reserved for an
+operator-side verifier that supplies a SHA-256-bound receipt. No secret or
+callable provider configuration belongs in this workflow.
 """
 
 from __future__ import annotations
@@ -50,12 +51,14 @@ CAPABILITY_SPECS = (
     CapabilitySpec("model_provider", True),
     CapabilitySpec("telegram", False),
     CapabilitySpec("home_assistant", False),
+    CapabilitySpec("browser", False),
     CapabilitySpec("email", False),
     CapabilitySpec("adaptive_connector", False),
     CapabilitySpec("budgets", True),
 )
 
 
+LOCAL_MODULE_STEPS = frozenset({"browser"})
 _SPEC_BY_ID = {item.step_id: item for item in CAPABILITY_SPECS}
 _UNSET = object()
 
@@ -241,6 +244,10 @@ class InstallerCapabilityWorkflow:
                 )
             spec = _SPEC_BY_ID[step_id]
             assert isinstance(state, str)
+            if step_id in LOCAL_MODULE_STEPS and state in {"ready", "blocked"}:
+                raise InstallerCapabilityWorkflowError(
+                    "local module selection has no provider verification state"
+                )
             if spec.required and state == "skipped":
                 raise InstallerCapabilityWorkflowError(
                     "required installer capability cannot be skipped"
@@ -398,6 +405,10 @@ class InstallerCapabilityWorkflow:
             raise InstallerCapabilityWorkflowError(
                 "installer capability step is unknown"
             )
+        if step_id in LOCAL_MODULE_STEPS:
+            raise InstallerCapabilityWorkflowError(
+                "local module selection has no provider verification state"
+            )
         if outcome not in {"ready", "blocked"}:
             raise InstallerCapabilityWorkflowError(
                 "installer capability verification outcome is invalid"
@@ -511,6 +522,7 @@ class InstallerCapabilityWorkflow:
 
 __all__ = [
     "CAPABILITY_SPECS",
+    "LOCAL_MODULE_STEPS",
     "CapabilityStepStatus",
     "InstallerCapabilityStatus",
     "InstallerCapabilityTransition",

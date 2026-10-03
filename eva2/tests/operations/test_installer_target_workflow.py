@@ -199,3 +199,33 @@ def test_selection_changed_during_configuration_check_prevents_resources(flow):
         workflow(plan)
     assert "resources" not in events
     assert workflow.material_root.exists() and workflow.access_root.exists()
+
+
+def test_selected_module_inputs_exist_before_core_materialization(flow):
+    from dataclasses import replace
+    new, plan, events = flow
+    workflow = new()
+    def prepare_module():
+        events.append("selected_module")
+        return {"browser": {"state": "eva"}}
+    workflow.settings = replace(workflow.settings, selected_module_preparation=prepare_module)
+    workflow(plan)
+    assert events.index("inputs") < events.index("selected_module") < events.index("materialization")
+    receipt = json.loads(workflow.receipt_path.read_text())
+    assert receipt["selected_modules"]["browser"]["state"] == "eva"
+
+
+def test_changed_plan_after_module_start_preserves_state_without_starting_core(flow):
+    from dataclasses import replace
+    new, plan, events = flow
+    workflow = new()
+    def prepare_module():
+        plan["plan_sha256"] = "b" * 64
+        return {"browser": {"state": "eva", "id": "retained"}}
+    workflow.settings = replace(workflow.settings, selected_module_preparation=prepare_module)
+    with pytest.raises(RuntimeError, match="retain"):
+        workflow(dict(plan))
+    receipt = json.loads(workflow.receipt_path.read_text())
+    assert receipt["phase"] == "selected_modules"
+    assert receipt["selected_modules"]["browser"]["id"] == "retained"
+    assert "resources" not in events and "materialization" not in events

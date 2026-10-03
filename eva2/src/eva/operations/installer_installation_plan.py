@@ -5,7 +5,10 @@ from __future__ import annotations
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.identity import IdentityPack
 from eva.operations.installer_budget_workflow import InstallerBudgetStatus
-from eva.operations.installer_capability_workflow import InstallerCapabilityStatus
+from eva.operations.installer_capability_workflow import (
+    LOCAL_MODULE_STEPS,
+    InstallerCapabilityStatus,
+)
 from eva.operations.installer_profile_workflow import InstallerProfileStatus
 from eva.operations.installer_secret_store import InstallerSecretSlotStatus
 
@@ -82,7 +85,7 @@ def build_installer_installation_plan(
             )
             if step.state == "pending":
                 blockers.append(_blocker("capability_pending", step_id=step.step_id))
-            elif step.state == "selected":
+            elif step.state == "selected" and step.step_id not in LOCAL_MODULE_STEPS:
                 blockers.append(
                     _blocker("capability_selected", step_id=step.step_id)
                 )
@@ -171,6 +174,7 @@ def build_installer_installation_plan(
             "Dit plan heeft niets geïnstalleerd of gewijzigd.",
             "Dit plan heeft Docker, containers, databases, diensten en providers niet aangeroepen.",
             "Een echte installatie vereist een aparte, expliciete eigenaarhandeling.",
+            "Een gekozen lokale browser is nog niet geïnstalleerd.",
         ],
         "read_only": True,
         "status": "ready_for_release_preparation" if not blockers else "blocked",

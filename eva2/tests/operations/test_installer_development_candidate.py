@@ -59,3 +59,18 @@ def test_local_target_admission_preserves_unproved_public_support(tmp_path, host
     assert result["status"] == ("ready" if host_ok else "blocked")
     assert next(row for row in result["checks"] if row["id"] == "release_support")["state"] == "blocked"
     assert original["status"] == "blocked"
+
+
+def test_optional_browser_images_are_bound_to_the_same_inspected_candidate(tmp_path):
+    inspect = package(tmp_path)
+    path = tmp_path / "package-staging.json"
+    metadata = json.loads(path.read_text())
+    images = metadata["development_candidate"]["imageDigests"]
+    images.update({role: "sha256:" + "4" * 64 for role in ("browser", "browser-mcp", "mcp-gateway")})
+    path.write_text(json.dumps(metadata))
+    manifest, verified = verify_installer_development_candidate(tmp_path, inspect_image=inspect)
+    assert manifest["imageDigests"] == images
+    images["unreviewed-role"] = "sha256:" + "5" * 64
+    path.write_text(json.dumps(metadata))
+    with pytest.raises(ValueError, match="inventory"):
+        verify_installer_development_candidate(tmp_path, inspect_image=inspect)

@@ -49,6 +49,7 @@ class InstallerTargetSettings:
     local_port: int | None = None
     source_authority_directories: tuple = ()
     configuration_validator: Callable[[dict], dict] | None = None
+    selected_module_preparation: Callable[[], dict] | None = None
 
 
 class InstallerTargetWorkflow:
@@ -116,6 +117,11 @@ class InstallerTargetWorkflow:
             receipt["phase"] = phase
             atomic_write_private(self.receipt_path, canonical_json_bytes(receipt))
         try:
+            if settings.selected_module_preparation is not None:
+                save("selected_modules")
+                receipt["selected_modules"] = settings.selected_module_preparation()
+                if bind() != inputs:
+                    raise ValueError("approved choices changed during module preparation")
             material = materialize_installer_runtime_files(runtime_inputs=inputs,
                 current_plan=plan, budget_workflow=settings.budget_workflow,
                 target_root=self.material_root, tenant_id=settings.tenant_id,

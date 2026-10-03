@@ -1,6 +1,16 @@
 # EVA2 werkbord
 
-## Actief: L3.3 — bewezen eigen contextverbetering installeren
+## O1.2 — gerichte browseraansluiting wacht op netwerktoestemming
+
+Browser, gateway en nieuwe databases draaien gezond; profiel en identiteit zijn
+behouden. De kern stopt doordat Docker de gatewaypoort niet publiceert op alleen
+een intern netwerk. De gerichte netwerkaansluiting is vóór uitvoering afgewezen
+door automatische goedkeuringscontrole; de concrete broncorrectie is klaar en onafhankelijk beoordeeld. De
+toestemmingsvraag staat in de chat. Geen herinstallatie en nog geen bruikbare
+nieuwe browserchat. 9 pakketcontroles en 11 gerichte gatewaycontroles slagen;
+geen nieuwe modelproef gestart. De oude poging blijft bewaard.
+
+## L3.3 — beoordeelde contextverbetering wacht op hosttoestemming
 
 **L3.2 afgerond:** de vastgezette Eva-kandidaat slaagt voor de onafhankelijke
 beoordeling. **13/16** benodigde taakverwijzingen tegenover **11/16**, geen

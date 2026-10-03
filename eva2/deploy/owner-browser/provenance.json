@@ -138,7 +138,7 @@
       "containsCredentials": false
     },
     "README.md": {
-      "sha256": "c4b9891c5174f1e047ccbd240ea973ddca947dfcff8e734108d0b505a1fce3be",
+      "sha256": "a92711f3ebd6279c5161061a681e9912cef0c43fd7118baf1a231f24d597e0da",
       "source": "Existing maintenance recipe plus exact Pixelflux idle-frame overlay procedure."
     },
     "pixelflux-idle-source.json": {

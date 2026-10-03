@@ -1,0 +1,47 @@
+{
+  "contract": "EvaOptionalBrowserInstallationProgress/v1",
+  "checkedAt": "2026-10-03T02:29:38.462644+00:00",
+  "task": "O1.2",
+  "status": "gateway_network_permission_required",
+  "installedUsableBrowserChat": false,
+  "assistedContinuation": true,
+  "sameAttempt": "d5d35875-4421-438b-b7cd-72bb03061b1d",
+  "retained": {
+    "browserAndMcp": true,
+    "profile": true,
+    "identity": true,
+    "databases": true
+  },
+  "working": {
+    "browser": true,
+    "mcp": true,
+    "gateway": "ready",
+    "browserTools": 24,
+    "schema": true
+  },
+  "runtime": {
+    "coreImage": "sha256:901222dc4f1276775084e6725dea269075fa6e5d0d40f3ea601fd1dc25c6288c",
+    "core": "exited before chat startup",
+    "contextImprovementInstalled": false
+  },
+  "failure": {
+    "stage": "core startup catalog verification",
+    "cause": "Docker internal-only gateway has configured port4444 but actual published mapping is null. Container-local4444 is reachable; host and core-network published45621 are refused. Browser controller is reachable.",
+    "networkMutation": "not executed: automatic approval review rejected existing egress network attachment; awaiting explicit owner permission after concrete source review"
+  },
+  "tests": {
+    "packagingChecks": 9,
+    "seconds": 0.75,
+    "actualBundledPackage": "6 immutable images and exact wheel validated",
+    "ordinaryChatRequest": "prepared, not invoked",
+    "gatewayChecks": 11,
+    "gatewayCheckSeconds": 1.34
+  },
+  "developmentCredits": "unknown",
+  "comparisonClaim": false,
+  "sourceReview": "eva2/reviews/installer-optional-browser-20261002.md",
+  "installationContinuationSeconds": 132.35000945199863,
+  "sourceReviewStatus": "GO for explicit owner decision; gateway gains outbound network reach; not a container egress firewall",
+  "newModelTrialsStarted": 0,
+  "ownerQuestion": "Explicit gateway egress permission requested; separate L3 root-service question remains open."
+}

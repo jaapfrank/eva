@@ -997,7 +997,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T01:57:44.921325+00:00",
+        "checkedAt": "2026-10-03T02:33:50.607128+00:00",
         "deliveries": [
           {
             "title": "Eva gebruikt zelfstandig haar eigen browser",
@@ -3395,22 +3395,25 @@
           }
         ],
         "now": {
-          "title": "L3 · Beoordeelde verbetering klaar voor toepassing",
+          "title": "O1.2 · Browseraansluiting wacht op netwerktoestemming",
           "state": "blocked",
-          "detail": "Contextwinst onafhankelijk bewezen; bronimport en eigen toepassingsroute gebouwd en gereviewd. Automatische goedkeuringscontrole blokkeerde de blijvende rootrechten van de bestaande hostdienst en clientwijziging. Gerichte toestemmingsvraag aan Jaap staat open; huidige runtime nog ongewijzigd.",
-          "owner": "Jaap · installatiekeuze"
+          "owner": "Jaap · installatiekeuze",
+          "detail": "Gerichte correctie en onafhankelijke bronreview klaar. Browser, gateway en databases behouden; de nieuwe kern kan de gateway nog niet bereiken. Automatische goedkeuringscontrole heeft extra netwerktoegang vóór uitvoering afgewezen. Toestemmingsvraag staat in de chat. Geen geïnstalleerde browserchat of nieuw afgerond productonderdeel."
         },
         "next": {
-          "title": "Gebruik op de geïnstalleerde Eva controleren",
-          "detail": "Controleer bronhash, gedeelde runtime en werkelijke contextselectie. Autonome toepassing blijft apart van deze ondersteunde installatie."
+          "title": "Goedgekeurde aansluiting toepassen en vanuit Eva gebruiken",
+          "detail": "Na toestemming: bestaande gateway verbinden, dezelfde kern starten en één gewone browseropdracht controleren. L3.3 heeft een aparte open hosttoestemming; geen herinstallatie vanaf nul."
         },
         "ownerAction": {
-          "title": "Geen handeling nodig voor deze bouwtaak",
-          "steps": [],
-          "expected": "Zelfstandig technisch werk gaat door. App-goal hervatten kan alleen via de gebruikersbediening; actuele opdracht staat hier."
+          "title": "Twee concrete installatiekeuzes staan open",
+          "steps": [
+            "L3.3: geef antwoord op de vraag over de bestaande programmeerhost als root-systeemdienst.",
+            "O1.2: geef antwoord op de vraag over aansluiting van de browsergateway op haar bestaande uitgaande netwerk."
+          ],
+          "expected": "De automatische goedkeuringscontrole vraagt deze expliciete keuzes. De beoordeelde wijzigingen en eerdere resultaten blijven bewaard; niets is stilzwijgend toegepast."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T00:59:30.772912+00:00"
+        "reviewedAt": "2026-10-03T02:33:50.607128+00:00"
       },
       "reviewedAt": "2026-10-02T13:18:04.695516+00:00"
     },
@@ -15888,19 +15891,19 @@
             {
               "id": "O1.2",
               "title": "Optionele modules kunnen weglaten",
-              "status": "in_progress",
+              "status": "blocked",
               "kind": "aansluiten",
               "doneWhen": "Dezelfde installatie werkt met gekozen modules; geen hardcoded eigenaarpaden.",
               "owner": "Codex /root",
-              "blocker": null,
+              "blocker": "Automatic approval review rejected gateway egress attachment before execution. Reviewed concrete correction prepared; explicit owner permission requested in chat.",
               "evidence": "eva2/evidence/product/installer-optional-selection-20260929.json",
-              "checkedAt": "2026-10-02T15:28:33.715410+00:00",
-              "remaining": "Gekozen HA-module via gewone wizard geïnstalleerd en vanuit de nieuwe Eva gebruikt: versie 2026.9.2 correct uitgelezen. Weglaten blijft werken. Spraak/browser toevoegen en overige gekozen providerconsumenten blijven open.",
+              "checkedAt": "2026-10-03T02:33:50.607128+00:00",
+              "remaining": "Gekozen browser en gateway werken; nieuwe kern mist bereikbare gatewaypoort. Bestaande poging, profiel, databases en identiteit behouden. Netwerkaansluiting vereist expliciete toestemming na automatische afwijzing; gerichte broncorrectie/review wordt voorbereid.",
               "assignment": {
-                "baseCommit": "aca98ba68a262c16a11f495d489cb70e81b8c30b",
+                "baseCommit": "70f1da3c971b3a979a0ada47a31fe3183c7de07f",
                 "owner": "/root",
                 "activeWorkers": [],
-                "stage": "retained_not_current_assignment",
+                "stage": "source_ready_gateway_network_permission_pending",
                 "existing": "O1.1 actual text target and omission proof complete. Existing capability/secret/provider verification, HA URL configuration, maintained optional graph projection and HA runtime connector already exist.",
                 "gap": "Selected HA factory rejection resolved. Ordinary voice/browser module selection and installed consumers remain absent; other selected providers explicitly unsupported.",
                 "outcome": "Dezelfde installatie werkt met gekozen modules; geen hardcoded eigenaarpaden.",
@@ -15914,7 +15917,7 @@
                 ],
                 "estimate": "One executor, existing route and focused actual selected-module verification. No planned paid research or real house mutation. Development credits unknown; provider/model usage recorded if invoked.",
                 "finishScope": "Original task finish retained. O1 parent cannot close until voice/HA/browser module additions/omissions are available through ordinary owner choices; unsupported channels must remain explicit.",
-                "review": "Independent GO for explicit pre-resource continuation. Latest two-line mode correction inspected by root; actual corrected runtime use pending.",
+                "review": "Independent SOURCE GO including native packaging and specific network exposure; installed browser chat remains unverified.",
                 "result": "Current confirmed plan → selected immutable image validation → one preparation → healthy target → ordinary HA chat succeeded without repair/retry.",
                 "fileOwners": {
                   "/root/l3_application_seam": [
@@ -15936,7 +15939,7 @@
                     "integration tests and existing workboard"
                   ]
                 },
-                "finding": "Same attempt retained and resumed. Browser/container/controller created; start returned503. Exact live error is PermissionError reading patched Selkies file, mode0600. Prepared recipe files already have correct444/755; only patch output caused this run. Source fixes patched.chmod444 before copy; direct test6passed. No source-copy/runtime permission repair yet; gateway/core for this target not installed."
+                "finding": "Exact Docker NetworkSettings.Ports is 4444/tcp:null on internal-only gateway. Same host TCP refused; container4444 healthy. Proposed existing browser egress attachment was rejected before execution; no bypass or runtime network change."
               },
               "nextAction": "Standaardchat en enkele optionele installatiekeuzes; bestaande modules kunnen worden weggelaten. Gebruik dezelfde beheerroute voor later benodigde uitbreidingen, zonder vooraf verplichte HA/browser/Telegram-bundel of nieuwe installer per voorbeeld.",
               "ownerActionRequired": false,
@@ -15946,7 +15949,7 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "latestEvidence": "eva2/evidence/product/installer-selected-ha-installed-20261002.json",
+              "latestEvidence": "eva2/evidence/product/installer-optional-browser-progress-20261003.json",
               "result": "Eén gewone installatieaanvraag in 131,944s; daarna echte chat met één HA-uitlezing en juist antwoord. Geen huiswijziging, herinstallatielus of verhoging van taak-/producttellers."
             }
           ],

@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+from dataclasses import replace
+
+import pytest
+
 from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.contracts.canonical_json import canonical_sha256
 from eva.operations.installer_budget_workflow import InstallerBudget, InstallerBudgetStatus
@@ -69,11 +73,14 @@ def _budget() -> InstallerBudgetStatus:
     )
 
 
-def _capabilities(*, budget_sha256: str | None = None) -> InstallerCapabilityStatus:
+def _capabilities(
+    *, budget_sha256: str | None = None, browser_state: str = "skipped"
+) -> InstallerCapabilityStatus:
     states = {
         "model_provider": (True, "ready"),
         "telegram": (False, "skipped"),
         "home_assistant": (False, "skipped"),
+        "browser": (False, browser_state),
         "email": (False, "skipped"),
         "adaptive_connector": (False, "skipped"),
         "budgets": (True, "ready"),
@@ -222,3 +229,98 @@ def test_plan_refuses_budget_without_exact_capability_binding() -> None:
     assert plan["status"] == "blocked"
     assert any(item["code"] == "budget_binding_mismatch" for item in plan["blockers"])
     assert plan["inputs"]["budgets"] is None  # type: ignore[index]
+
+
+def test_browser_choice_is_bound_to_plan_without_provider_receipt_or_secret() -> None:
+    budget = _budget()
+    shared = {
+        "preflight": _preflight(),
+        "identity": load_current_identity_pack(),
+        "profile": _profile(),
+        "secrets": _secret(),
+        "budgets": budget,
+    }
+    selected = build_installer_installation_plan(
+        **shared,
+        capabilities=_capabilities(
+            budget_sha256=budget.budget_sha256, browser_state="selected"
+        ),
+    )
+    skipped = build_installer_installation_plan(
+        **shared,
+        capabilities=_capabilities(
+            budget_sha256=budget.budget_sha256, browser_state="skipped"
+        ),
+    )
+
+    for plan in (selected, skipped):
+        assert plan["status"] == "ready_for_release_preparation"
+        assert plan["blockers"] == []
+        assert [item["slot_id"] for item in plan["inputs"]["secret_bindings"]] == [
+            "model_provider"
+        ]
+    assert next(
+        item for item in selected["capabilities"] if item["step_id"] == "browser"
+    ) == {
+        "step_id": "browser",
+        "required": False,
+        "state": "selected",
+        "evidence_sha256": None,
+    }
+    assert selected["inputs"] == skipped["inputs"]
+    assert selected["plan_sha256"] != skipped["plan_sha256"]
+
+
+def test_browser_still_requires_explicit_selection_or_skip() -> None:
+    budget = _budget()
+    plan = build_installer_installation_plan(
+        preflight=_preflight(),
+        identity=load_current_identity_pack(),
+        profile=_profile(),
+        capabilities=_capabilities(
+            budget_sha256=budget.budget_sha256, browser_state="pending"
+        ),
+        secrets=_secret(),
+        budgets=budget,
+    )
+
+    assert plan["status"] == "blocked"
+    assert [(item["code"], item["step_id"]) for item in plan["blockers"]] == [
+        ("capability_pending", "browser")
+    ]
+
+
+@pytest.mark.parametrize(
+    "step_id",
+    ["model_provider", "telegram", "home_assistant", "email", "adaptive_connector", "budgets"],
+)
+def test_selected_browser_does_not_bypass_other_capability_verification(
+    step_id: str,
+) -> None:
+    budget = _budget()
+    capabilities = _capabilities(
+        budget_sha256=budget.budget_sha256, browser_state="selected"
+    )
+    capabilities = replace(
+        capabilities,
+        steps=tuple(
+            replace(step, state="selected", evidence_sha256=None)
+            if step.step_id == step_id else step
+            for step in capabilities.steps
+        ),
+    )
+    plan = build_installer_installation_plan(
+        preflight=_preflight(),
+        identity=load_current_identity_pack(),
+        profile=_profile(),
+        capabilities=capabilities,
+        secrets=_secret(),
+        budgets=budget,
+    )
+
+    assert plan["status"] == "blocked"
+    assert any(
+        item["code"] == "capability_selected" and item["step_id"] == step_id
+        for item in plan["blockers"]
+    )
+    assert all(item.get("step_id") != "browser" for item in plan["blockers"])

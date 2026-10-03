@@ -39,6 +39,7 @@ def test_capability_choices_resume_with_separate_required_and_optional_steps(
         "model_provider",
         "telegram",
         "home_assistant",
+        "browser",
         "email",
         "adaptive_connector",
         "budgets",
@@ -221,3 +222,72 @@ def test_capability_workflow_refuses_a_clock_before_retained_history(
     with pytest.raises(InstallerCapabilityWorkflowError, match="precedes"):
         workflow.select(step_id="email", wanted=True)
     assert workflow.status().revision == 1
+
+
+def test_browser_choice_can_be_selected_skipped_and_resumed_without_verification(
+    private_tmp_path: Path,
+) -> None:
+    workflow = _workflow(private_tmp_path)
+    selected = workflow.select(step_id="browser", wanted=True)
+    assert selected.state == "selected"
+    assert selected.evidence_sha256 is None
+    assert workflow.select(step_id="browser", wanted=True).already_in_state is True
+    assert workflow.status().revision == 1
+
+    skipped = workflow.select(step_id="browser", wanted=False)
+    assert skipped.state == "skipped"
+    assert skipped.evidence_sha256 is None
+    selected_again = workflow.select(step_id="browser", wanted=True)
+    resumed = InstallerCapabilityWorkflow(workspace=workflow.workspace).status()
+    assert resumed.step("browser").state == "selected"
+    assert resumed.step("browser").required is False
+    assert resumed.step("browser").evidence_sha256 is None
+    assert resumed.revision == 3
+    assert resumed.head_sha256 == selected_again.head_sha256
+
+
+@pytest.mark.parametrize("outcome", ["ready", "blocked"])
+def test_browser_rejects_provider_verification_without_changing_selection(
+    private_tmp_path: Path, outcome: str,
+) -> None:
+    workflow = _workflow(private_tmp_path)
+    workflow.select(step_id="browser", wanted=True)
+    retained = workflow.state_path.read_bytes()
+
+    with pytest.raises(InstallerCapabilityWorkflowError, match="local module"):
+        workflow.record_verification(
+            step_id="browser", outcome=outcome, evidence_sha256="d" * 64
+        )
+    assert workflow.state_path.read_bytes() == retained
+    assert workflow.status().step("browser").state == "selected"
+
+
+def test_existing_provider_history_is_retained_when_browser_choice_is_added(
+    private_tmp_path: Path,
+) -> None:
+    workflow = _workflow(private_tmp_path)
+    workflow.select(step_id="model_provider", wanted=True)
+    workflow.record_verification(
+        step_id="model_provider", outcome="ready", evidence_sha256="a" * 64
+    )
+    workflow.select(step_id="email", wanted=False)
+    retained = workflow.state_path.read_bytes()
+    history = json.loads(retained)
+    assert all(item["step_id"] != "browser" for item in history["events"])
+
+    resumed = InstallerCapabilityWorkflow(
+        workspace=workflow.workspace, clock=lambda: "2026-08-29T03:03:00Z"
+    )
+    status = resumed.status()
+    assert status.revision == history["revision"]
+    assert status.head_sha256 == history["head_sha256"]
+    assert status.step("model_provider").state == "ready"
+    assert status.step("browser").state == "pending"
+    assert workflow.state_path.read_bytes() == retained
+
+    selected = resumed.select(step_id="browser", wanted=True)
+    updated = json.loads(workflow.state_path.read_bytes())
+    assert updated["contract"] == "EvaInstallerCapabilityWorkflow/v1"
+    assert updated["events"][:-1] == history["events"]
+    assert updated["events"][-1]["previous_event_sha256"] == history["head_sha256"]
+    assert selected.revision == history["revision"] + 1

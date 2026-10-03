@@ -19,6 +19,7 @@ _LABELS = {
     "model_provider": "Modelverbinding",
     "telegram": "Telegram",
     "home_assistant": "Home Assistant",
+    "browser": "Geïsoleerde browser",
     "email": "E-mail",
     "adaptive_connector": "Ander kanaal of dienst",
     "budgets": "Geheugen-, token- en kostenlimieten",
@@ -27,12 +28,13 @@ _CAPABILITY_REQUIRED = {
     "model_provider": True,
     "telegram": False,
     "home_assistant": False,
+    "browser": False,
     "email": False,
     "adaptive_connector": False,
     "budgets": True,
 }
 
-INSTALLER_CAPABILITY_SECTION = """<section><h2>Wat wil je koppelen?</h2><p>Kiezen is nog niet koppelen. Alleen een echte controle kan later groen geven.</p><div id="capability-list"><p>De koppelstatus wordt veilig geladen…</p></div><p id="capability-result" role="status"></p></section>"""
+INSTALLER_CAPABILITY_SECTION = """<section><h2>Wat wil je koppelen?</h2><p>Kiezen is nog niet koppelen. Alleen een echte controle kan later groen geven. De geïsoleerde browser wordt pas bij installatie toegevoegd.</p><div id="capability-list"><p>De koppelstatus wordt veilig geladen…</p></div><p id="capability-result" role="status"></p></section>"""
 
 
 INSTALLER_CAPABILITY_SCRIPT = r"""
@@ -42,7 +44,7 @@ INSTALLER_CAPABILITY_SCRIPT = r"""
   const result = document.getElementById('capability-result');
   const labels = {
     model_provider: 'Modelverbinding', telegram: 'Telegram',
-    home_assistant: 'Home Assistant', email: 'E-mail',
+    home_assistant: 'Home Assistant', browser: 'Geïsoleerde browser', email: 'E-mail',
     adaptive_connector: 'Ander kanaal of dienst',
     budgets: 'Geheugen-, token- en kostenlimieten'
   };
@@ -66,12 +68,14 @@ INSTALLER_CAPABILITY_SCRIPT = r"""
       const row = document.createElement('article');
       const title = document.createElement('strong');
       title.textContent = labels[step.step_id] + (step.required ? ' · verplicht' : ' · optioneel');
-      const status = document.createElement('p'); status.textContent = states[step.state];
+      const status = document.createElement('p');
+      status.textContent = step.step_id === 'browser' && step.state === 'selected'
+        ? 'gekozen · nog niet geïnstalleerd' : states[step.state];
       row.append(title, status, button(step, true, step.state === 'blocked' ? 'Opnieuw proberen' : 'Dit wil ik'));
       if (!step.required) row.append(button(step, false, 'Overslaan'));
       list.append(row);
     });
-    message(payload.enabled ? 'Een keuze maakt nog geen verbinding.' : 'Deze stap is nog niet beschikbaar.');
+    message(payload.enabled ? 'Een keuze maakt nog geen verbinding en installeert niets.' : 'Deze stap is nog niet beschikbaar.');
   }
   async function refresh() {
     const response = await fetch('/internal/v1/onboarding/capabilities/status', {
@@ -141,9 +145,10 @@ def _payload(
         "head_sha256": head_sha256,
         "steps": steps,
         "non_claims": [
-            "selected betekent alleen gekozen; niet gekoppeld of klaar.",
+            "selected betekent alleen gekozen; niet geïnstalleerd, gekoppeld of klaar.",
             "Alleen een afzonderlijke providercontrole met receipt kan ready schrijven.",
             "Deze browserroute accepteert geen connectorsecret en geen verificatie-uitkomst.",
+            "De gekozen lokale browser heeft geen providersecret nodig en wordt pas bij installatie toegevoegd.",
         ],
     }
 
