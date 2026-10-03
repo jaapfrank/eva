@@ -1,0 +1,2656 @@
+{
+  "contract": "EvaComparisonDatasetCommitment/v1",
+  "createdAt": "2026-10-03T22:29:25.216065+00:00",
+  "status": "complete_independent_curation_unscored_not_execution_admission",
+  "curator": "/root/aide_final_evaluation",
+  "candidate": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_candidate_freeze_20261004.json",
+    "sha256": "09897a070e8d9163aa8c90475f2eb1fe81697ad05836267e0b8fb1f94bb176b7"
+  },
+  "protocol": {
+    "path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+    "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+    "thresholds_modified": false
+  },
+  "dataset": {
+    "families": {
+      "conversation_memory": 12,
+      "cross_domain_actions": 12,
+      "initiative": 12,
+      "browser_computer": 12,
+      "learning_projects": 12,
+      "voice_presence": 12
+    },
+    "different_scenarios": 72,
+    "epochs": 3,
+    "samples_per_participant": 216,
+    "full_five_participant_matrix_samples": 1080,
+    "available_participants_policy": "Execute only independently admitted available participants; unavailable participants unknown, never losses; no unused-budget redistribution.",
+    "initiative_balance": {
+      "useful_opportunities": 6,
+      "distractors": 6,
+      "per_case_assignment": "private oracle only"
+    },
+    "two_human_raters": true,
+    "dataset_total_sha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4",
+    "hash_definition": "SHA-256 of compact sorted-key UTF-8 JSON containing payload_files [{name,sha256}] in samples,fixtures,oracles order and case_hashes [{id,sha256}] in JSONL order. Each payload_sha256 hashes compact sorted-key UTF-8 JSON of that record without newline. case_sha256 hashes {id,payload_sha256}. No self-referential commitment hash.",
+    "same_cases_each_epoch": true,
+    "fresh_state_each_epoch": true,
+    "cross_case_state_transfer": false,
+    "outcomes": "unscored",
+    "semantic_scores": "unscored",
+    "human_scores": "unscored",
+    "inference_admitted": false,
+    "curation_provider_calls": 0,
+    "task_budgets": "UNSET; retain original protocol, calibrate on development evidence and seal separately before any final execution.",
+    "models_and_provider_policy": "unchanged from candidate freeze; no fallback or new provider authorization"
+  },
+  "private_payloads": [
+    {
+      "name": "samples.jsonl",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/holdout/samples.jsonl",
+      "sha256": "717d02090fb0380081efb4714f22cb0504f4226f663180d29792088cd3e47599",
+      "bytes": 45067,
+      "records": 72
+    },
+    {
+      "name": "fixtures.jsonl",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/holdout/fixtures.jsonl",
+      "sha256": "f18ccfe964501313386edc299e8a7fadb28f91bce783945bc04f27390cfa40ef",
+      "bytes": 297409,
+      "records": 72
+    },
+    {
+      "name": "oracles.jsonl",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/holdout/oracles.jsonl",
+      "sha256": "1d58807987c2d48b70b60ee1b5e78ad42e36e2cbe2bc9206f4103053fd5552c3",
+      "bytes": 163357,
+      "records": 72
+    }
+  ],
+  "private_curator_note": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/holdout/curator-note.md",
+    "sha256": "73aea2513bb23d46b87db6918c5571d9dec243ed4a96b57b7ea1c9c2220e5f20"
+  },
+  "protection": {
+    "directory": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/holdout",
+    "owner": "root:root",
+    "directory_mode": "0700",
+    "file_mode": "0600",
+    "builder_may_read": false,
+    "ordinary_administrator_read_check": "denied",
+    "disclosure": "Only public structure and hashes; participant sees current authorized input/fixture surface, never oracle or full event schedule.",
+    "retention": "Evaluator-owned retention through comparison and owner review; explicit controlled-access/cleanup moment still must be bound before execution per original protocol."
+  },
+  "schemas": {
+    "samples.jsonl": {
+      "compatibility": "native Inspect Sample-compatible JSONL; no custom result format",
+      "id": "string",
+      "input": "string ordinary-language user input; voice requires actual audio ingress, not text fallback",
+      "metadata": {
+        "family": "string",
+        "fixture_id": "string",
+        "resource_types": "array[string]",
+        "evaluator_types": "array[string]",
+        "epochs": "integer",
+        "fresh_state_each_epoch": "boolean",
+        "input_delivery": "string",
+        "status": "string",
+        "oracle_in_input": "boolean"
+      }
+    },
+    "fixtures.jsonl": {
+      "id": "string",
+      "native_start": "object",
+      "identities": "array[object]",
+      "clock": "object",
+      "initial_actor": "string|null",
+      "initial_audience": "string",
+      "setup_dialogue": "array[object]",
+      "mandate": "object",
+      "services": "array[object]",
+      "files": "object[path,string UTF-8 contents]",
+      "browser": "object|null",
+      "audio": "object|null",
+      "events": "array[object]",
+      "event_delivery_policy": "string",
+      "completion_observation": "string",
+      "resource_requirements": "array[object]"
+    },
+    "oracles.jsonl": {
+      "id": "string",
+      "semantic_conditions": "array[string]",
+      "independent_readbacks": "array[{evaluator:string,target:string,predicate:string,source:string,required:boolean}]",
+      "forbidden_effects": "array[string]",
+      "human_evaluation": "object",
+      "completion_rule": "object",
+      "coverage_tags": "array[string]; evaluator-only, not a public per-case hint",
+      "initiative_class": "string|null; evaluator-only",
+      "additional_oracle": "object; evaluator-only"
+    }
+  },
+  "required_evaluator_types": [
+    "audio_capture_review",
+    "browser_dom_readback",
+    "independent_file_readback",
+    "independent_memory_readback",
+    "independent_service_readback",
+    "native_trace",
+    "physical_listening_review",
+    "semantic_rubric",
+    "two_human_raters"
+  ],
+  "required_resource_types": [
+    "background_initiative_trigger",
+    "browser_fixture_origin",
+    "browser_handoff",
+    "controllable_local_work_barrier",
+    "controlled_clock",
+    "duplex_audio_endpoint",
+    "isolated_identity_memory",
+    "local_fixture_services",
+    "microphone_audio_input",
+    "physical_listening_panel",
+    "playback_capture",
+    "private_filesystem",
+    "programmable_process_restart",
+    "sealed_audio_assets"
+  ],
+  "resource_case_counts": {
+    "background_initiative_trigger": 12,
+    "browser_fixture_origin": 12,
+    "browser_handoff": 2,
+    "controllable_local_work_barrier": 1,
+    "controlled_clock": 72,
+    "duplex_audio_endpoint": 12,
+    "isolated_identity_memory": 72,
+    "local_fixture_services": 24,
+    "microphone_audio_input": 12,
+    "physical_listening_panel": 12,
+    "playback_capture": 12,
+    "private_filesystem": 20,
+    "programmable_process_restart": 12,
+    "sealed_audio_assets": 12
+  },
+  "structural_validation": {
+    "status": "passed",
+    "model_or_agent_tests": 0,
+    "record_counts": {
+      "samples": 72,
+      "fixtures": 72,
+      "oracles": 72
+    },
+    "unique_ids": 72,
+    "unique_initial_prompts": 72,
+    "aligned_ids": true,
+    "samples_have_no_target_oracle": true,
+    "all_oracles_have_semantic_and_independent_conditions": true,
+    "cross_domain_cases_have_at_least_two_services": true,
+    "initiative_balance_exact": true,
+    "browser_handoff_present": true,
+    "learning_cases_include_new_documentation_reusable_work_reuse_and_restart": true,
+    "voice_cases_require_audio_capture_and_two_physical_listening_raters": true,
+    "actor_and_audio_references_resolve": true,
+    "candidate_and_protocol_hashes_verified": true,
+    "private_permissions_verified": true,
+    "known_development_templates_excluded": true,
+    "unseen_scope": "Independently authored after freeze; no use of known C01/C04/CONT01/RT-001 as final cases. Does not prove absence from arbitrary model training data."
+  },
+  "remaining_bindings": [
+    "Per-family task and aggregate budgets and execution order calibrated on development evidence, sealed before final calls.",
+    "Individually admitted native participants with equal tools/data/network/hardware and full accounting/stop coverage for the relevant family.",
+    "Existing Inspect input loading plus thin semantic/readback scorers bound to private oracle records; no fixture-oracle success may be relabelled as native quality.",
+    "Local fixture service/browser origins, controlled clock/background events, identity/audience guards, process interruption and independent native memory/effect/file readback adapters.",
+    "Exact synthetic speech/non-speech audio waveforms and delivery conditions must be recorded and hash-bound by independent operators; native microphone/playback and duplex route required. Text cannot substitute.",
+    "Two independent blinded human raters for the protocol human judgements; physical listening remains required where specified, never inferred from transport success.",
+    "Explicit private evidence retention, controlled rater access and cleanup moment before execution."
+  ],
+  "cases": [
+    {
+      "id": "EV003-CM-01",
+      "family": "conversation_memory",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_memory_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "5e713d5d68727aeacf354979e1a89a6e7abbc92f4c7e6122afaf730a171a8cb1",
+        "fixtures": "4404ba3b4ecf923512ccb965907407a341d08b6bf061c52b6f4858f52f6e0fb8",
+        "oracles": "dfe1ce0b78398aa2f968cbf8802d9e5232434b3cce7e0bf1e07367842916a8e2"
+      },
+      "case_sha256": "93b090fb45885e2652625f649c759ed36dab4d3d43be70530018f5dcd68d9f0e",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-CM-02",
+      "family": "conversation_memory",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_memory_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "b0e3ef7ac162d2148c085d789a33e9d269026585c82daab85900db3ed0610c54",
+        "fixtures": "17c2e97d4e80835ab8ae0bd96602b943bb277f38b7bccd92d919b55272ba8b8a",
+        "oracles": "b378796469613d1f9734c6b9698d1162edae9343c02686c2f969e57c24724d4b"
+      },
+      "case_sha256": "981571f858b5b61f7a3d193e086e3a8e9947684c3277255cb18aeb04af9bfc5c",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-CM-03",
+      "family": "conversation_memory",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_memory_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "22def13472e78deabc2f9000875230db33a0c49baf24e209f432a752936e3d51",
+        "fixtures": "26f7ece581b3a8b25a33b1379799c1df9a1efcf71d35cb12233eb2b459c7fa64",
+        "oracles": "b092e2a168fffce64fbe4760d8a44ec561128c2d8da569a867001b0f21865e03"
+      },
+      "case_sha256": "434bea7ed83700a755830da0e31afc820c4809d6c5e36326451d97a05a89e7df",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-CM-04",
+      "family": "conversation_memory",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 2,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_memory_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "523b37d45bbaeeec8d457ab7a901ec1479bcdf83c6239a86cedce9c182571cbf",
+        "fixtures": "0f484d4868e83097b8f32a3ba0941391373ca41866ccbd1480e079c6d80046b3",
+        "oracles": "e51f58d751fb351fcf143238830dd818706e5acaedffdffda0c4e7f177f26a57"
+      },
+      "case_sha256": "3fc5969a7b595fd7faf54e3df1e1e430972ce078fb35109428b3c352cc00d73f",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-CM-05",
+      "family": "conversation_memory",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 3,
+        "synthetic_identities": 2,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_memory_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "54ccedadce84ee273b61db68e553eca1b371256db3c976c91985856b16540e76",
+        "fixtures": "3253e1a57e90081677c551d6d4707fd8334326f3d5d0b8e8e5d19a9706d7852f",
+        "oracles": "916ba7d4dee202d8f1231f5777cb052b1c041aa9822ac7662d159b77605fcc62"
+      },
+      "case_sha256": "29dac7cd93cfc54f82ab11d889cd340cdbc5ddb855fc3175852e29243f508a92",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-CM-06",
+      "family": "conversation_memory",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_memory_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "db42390ea46069b0e26138b4daf29923ec5013dddfce4763ac367feb45871545",
+        "fixtures": "7261aa56cb3033ff6ce9837fb43461802baf692cedcd5aeaa522ee6f0fc65fca",
+        "oracles": "9ef998da8b2a656309bdd96ea4e591885d61900572bc418b3506c591eb14cd5c"
+      },
+      "case_sha256": "59183433a985806ee2d3995ba3094442669d80565f866284e15dc1fdeb00e7d8",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-CM-07",
+      "family": "conversation_memory",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 1,
+        "synthetic_identities": 2,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_memory_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "a61b537795a1b7ad2341cfe460bbad79a37b4450ee22a5d86a4019fd37c8df81",
+        "fixtures": "fec2551536e2f012534e84faae72911c5d19e33b2eb296bb40e88c2931abf333",
+        "oracles": "cb16b7d5048f3d6a5cc5230b05be168de85fe6acd9261cf708b26a6fd21e5c2a"
+      },
+      "case_sha256": "6dcf9f8130feb52cd92603d3cabb7a982a7c9915ce79636e1e532f6c6ec8489f",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-CM-08",
+      "family": "conversation_memory",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_memory_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "c669a9690c69c555414e6a7340d510873ffcad8d49ecad04339068b4479d091a",
+        "fixtures": "9f4677bb33f7d28d586f106dc2f7a76c6bfa4899d5f31aff446bf5843dffb1da",
+        "oracles": "2ee75e4fb26e2a72d88bee0b3606719f99eb98abd13088c4a981701d245ff0cf"
+      },
+      "case_sha256": "eb97ea2c09ca17354f6d818b886a2f28030571a9b5443432bf5b9b89a42b0f05",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-CM-09",
+      "family": "conversation_memory",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 3,
+        "synthetic_identities": 2,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_memory_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "8b14d88afd27af2555c925e7f9b3a0a17ed159851972c43355c1c29b96ae6f14",
+        "fixtures": "b3672e066b8048e05c384278749c91af278c583e72a097ee424659f785e737fc",
+        "oracles": "f546e9993ddb4c7a3c19477bfaaea4d33d97e406047074b3b2a47b803843debd"
+      },
+      "case_sha256": "8ea7c971261766f4e49a403e0577c4728ff2d8e9b998f9665f5172a6eea40ade",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-CM-10",
+      "family": "conversation_memory",
+      "counts": {
+        "setup_dialogue_turns": 2,
+        "scripted_events": 1,
+        "synthetic_identities": 2,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_memory_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "6e8a369f072269444f86eb3c74b0d186f8a9c936941432741c8f3c9243407d4a",
+        "fixtures": "b3afeecd145ad021e56b98933dceb4d1edcaa57dd3b45253d40493b208fafed9",
+        "oracles": "ba61abc710e6674f7e3cea68dc59f904e33b22d850f1f93aa2f7ef91d8d909ee"
+      },
+      "case_sha256": "f4079147cdf844ff2c77ea2eed2416b508fb917229ac6b5e6265470b06afbf75",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-CM-11",
+      "family": "conversation_memory",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_memory_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "d99796229341ba69145e911e6c70e2a8846cb21c870dc1792a8f00f3268cb1fc",
+        "fixtures": "8e5966b669bcde922a294aa58aee21599c378048f2fe90b5c4fe983a67ec10ab",
+        "oracles": "d540650fcb31f2702d9bb9f43439cd8bb88d333a774a1a4f8f012f7d8a4de08e"
+      },
+      "case_sha256": "2b1365db058d86b2fd926f25def15540d04753867f297559357c3f99b03a589d",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-CM-12",
+      "family": "conversation_memory",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_memory_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "cee1b04b7d19877ca3ade6487ac112ea48c46d86aa5f483e28cf67956055c17b",
+        "fixtures": "e9bfe81c63e7d3fb50b183d917e4f854c20087da1b620ae85a1837cb2aeb289f",
+        "oracles": "5331c237e0d21cf196600495fae425f103b2b1f110a438996e6791dfe4e0d8d6"
+      },
+      "case_sha256": "7863be50ba3fde88bcd2466cff48ef0fb9405a72d9bd7c7aa20841aa3b33e837",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-XD-01",
+      "family": "cross_domain_actions",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "7b3e96c9efc5583b0768749194b117d11cb4d71d733eee6d87be51028d123115",
+        "fixtures": "f14274181fc6c807cca84ddf1023f37691d8f91abcd1fd6fafe0bab8b8c4f53b",
+        "oracles": "789c296c2173e659f7cb7caebb887913e0424b8cca75b035ff7854b18179527b"
+      },
+      "case_sha256": "739ee2fbb2b8c11a156f32457aeedfe0792c4fbd737c5e412cd50db832cdc658",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-XD-02",
+      "family": "cross_domain_actions",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "e7e3c22ff0491fec79856f55d62d2912b486cd636e41b92f19ec962638b04dab",
+        "fixtures": "5b90591a1823b99c70dd0bf55e8e0578aabbe3b10e39456081aa032c7c5bae53",
+        "oracles": "9c78a16ef25aeda1a1796c471a39a143a38d5b1e50e48aac04e49b4f51da9a64"
+      },
+      "case_sha256": "de9c2827e88ba35f8482630c029caa79a3b7b08ae541fc252ec9d538d14e10fe",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-XD-03",
+      "family": "cross_domain_actions",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 3,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "40d777eaf5208735fe549dc4f49a246c5eff7e6b79f1101b44ad911a10e01c1e",
+        "fixtures": "c7005341d14de047153a240aece878ce01b51f1ab41056bf3bbde4774646bbb8",
+        "oracles": "164ce8d3a6ee392f26a63da4e3957434182e2b4fed2af081e1b6c00a79f8cceb"
+      },
+      "case_sha256": "5148e0821beb9ea777570f3e89197638ca995e5f447d4656b78e2107dafb99d2",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-XD-04",
+      "family": "cross_domain_actions",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 3,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "0cabfcdc894b539c97ab16d2e3d1175d9c8d8d421ec5d58a8c3ba3b050d2f399",
+        "fixtures": "9b1a4d933b69874f54c9317c10da1902541937a6c7ba129ff727d24f106c6e13",
+        "oracles": "55f9cc92f63692d07aef9d4f6bb3e68b84b58de4120bf1ec7d372671e37c3f43"
+      },
+      "case_sha256": "2fd8372251bba9ab19b5c96f28918398598b61d8644eec7f7dd6bcd643fd223f",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-XD-05",
+      "family": "cross_domain_actions",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 2,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "independent_file_readback",
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services",
+        "private_filesystem"
+      ],
+      "payload_sha256": {
+        "samples": "2f277c010f1b280fa579c8476a0043b3b4ab1b58520f33c00561dce9949f9ced",
+        "fixtures": "788fe3db7188a0cf07cb0e200b6fa57bebea4edb5eba2a6fa09fbb1edf1be429",
+        "oracles": "f6e53b3ad222dc3776987748df87196977ce6826b01d099c6d57e42168162110"
+      },
+      "case_sha256": "d3b2621c49344b1b5973659e5624e15d1e498d6391506478ce891f464ede7139",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-XD-06",
+      "family": "cross_domain_actions",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "ec05280bf18dd44e4d3c485f8ffbdc5ed5d41503ec59fc18b561204f37dfe205",
+        "fixtures": "f4b299bc523e161e4dfaac93f38d74130d221bbe62c38e2f4bf66358ea19174e",
+        "oracles": "64285d1e58d92d7859012bcc3e4e6376a64960fd98c22af18e3293999e392fa4"
+      },
+      "case_sha256": "4307c461c540d367dcb5531ba9c2ce565d256fb54bb71855116df76e59a14ee0",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-XD-07",
+      "family": "cross_domain_actions",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 2,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "c21de086a80d5c13870a0d47baadbb6c4ee1ebc74f5f5b3a360a1f4289eefd97",
+        "fixtures": "871f7f815e8348b1d2dbd573cbbb520c7d5d3d4f9d95ceac69460a72bdb63ba6",
+        "oracles": "0d2bf9d380592828038873060e083534017f8badc1132d966daa237c16c78202"
+      },
+      "case_sha256": "2e4ee02ba45994309b71eb87241d682a3066c4ae0dd6ef121abf3ba34fc99e84",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-XD-08",
+      "family": "cross_domain_actions",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "889b2d4c0ef59a17fc7936d2d1c48f140c8c58761ce6740ddab6f58c010c2b05",
+        "fixtures": "ad1def9ee5e0b6bc5f669ceb8270e356382132c2650f8813b90f653927e1cdd1",
+        "oracles": "99a52f3aa0a04fd74a3a52ab17352665615af858ce75a6502ed8931ae8932b12"
+      },
+      "case_sha256": "875b23e273478f87a44e0304d37d3372e121a5b13b317e7aee0c1e4fc3c9cf5f",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-XD-09",
+      "family": "cross_domain_actions",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "1d49568cc091d774d608fe1d471b5445e793a76f9e1f408b03d19ee044df618b",
+        "fixtures": "fdf65c23aafb92eb3c116a17dfe81b8197b81fbc23f4b9082f3339a145516217",
+        "oracles": "03c3c90c6b6354cee4400891324884b48135c5cec3b6c0167793b55dd83d0a47"
+      },
+      "case_sha256": "8d26d8b2b691fa8bdca548abee2c889e84e2abc70695b6d9ced2e6a4fe8bb60d",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-XD-10",
+      "family": "cross_domain_actions",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "be81ff7a768347aa9a20d6d7772ba8659fccb042ced57b571642ca5da0a62f2b",
+        "fixtures": "2e339fbaef62e09187e34768a9770253af8c31946e5681370ba8a0051114257e",
+        "oracles": "5bd9308519fe2177d50a4f1ed795b7de320be91d01f7fcb65446892b2caaafb4"
+      },
+      "case_sha256": "59c0eebef71993d9aac2b0bbac2fe4eac1c8167336f69214b1000a2b1ca0abcb",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-XD-11",
+      "family": "cross_domain_actions",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "81acfb83faa41f5726719c0e03f44fa944818139164125d91b0a26195500abe4",
+        "fixtures": "a289de073f1fa556d614681d529863c484cca2a5807f8d6eb6527632c96c16ea",
+        "oracles": "923aa102618ad4da0cd34c79980d132003191ac2d690c8a1ca57d971529eb3bd"
+      },
+      "case_sha256": "96572d5e97e2559b8a6f32e9a166d8c735b9d287b4f7652fca560f2a31426e51",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-XD-12",
+      "family": "cross_domain_actions",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 1,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "f89c5d4177d73a2b79ef24ff012a30b76361bd9ca13a67099d6c798e5d42f6f0",
+        "fixtures": "2795e09678897d6d8fa69b5d66c381c1e2b9cf8f46e7a871ae2f1a8d27755f31",
+        "oracles": "1db497a3a8a2f6e478684c7cb95b3ecab19fd623b8a209090ab34b9e91cd683f"
+      },
+      "case_sha256": "aeb2efcee9353b1c18def959f92e08f64f8361b2346b3ba5894b0849c8fa6e21",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-IN-01",
+      "family": "initiative",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "background_initiative_trigger",
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "f6fe57f9796c409326fbdf1f1bb28f89891bfa85b2475a2cd8d542b5148d9e59",
+        "fixtures": "06ff616dc0e91b4ec6f864da1e211bb60bf12a25f99919df6be83653dfa07201",
+        "oracles": "c39a5033514638d05768574b93d39e22e33cbce3fc5e2c584c63421510a4e443"
+      },
+      "case_sha256": "4419b6c441878453be442c9eb1cdee74d93509305d098714e7572803726dbc5a",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-IN-02",
+      "family": "initiative",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "background_initiative_trigger",
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "8cbd4e442688b8368bf8f11e6228f0155e6c3395414426d5d321004e6ffd33d9",
+        "fixtures": "27014d46d419558fada7a04176e946b3f8acfdf3154930fb7e5daf190af316c1",
+        "oracles": "04602d0e2fc3eb39de8f2c4e30d9582dbc4003cefe2c92486a9f5e56b0d6687a"
+      },
+      "case_sha256": "c6377d68ddf85a95e1cd85d500da6948aac6c48ec7135fbdf838654ff9ce6ce3",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-IN-03",
+      "family": "initiative",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 1,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "background_initiative_trigger",
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "7ac53723d4672a191ac4517f05bfb554407dc497a0b193b6d037bb97e385735a",
+        "fixtures": "cc3875da2172afe2c02353ff77d044409d470c4f28b20e495070bc1d400c6cdb",
+        "oracles": "eff47d124cdd5a589d78e6947fba26138d9218c0bf87c070363fc530e1f41f89"
+      },
+      "case_sha256": "afab0c2c5e4603fbe36c474d96ee196fc0ca93c30a728f6d0fad5b6d2906530d",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-IN-04",
+      "family": "initiative",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 1,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "background_initiative_trigger",
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "7269e58cb59967b4feb0d6846a2dc4df1129044c0454fac7eeee30292038bcfe",
+        "fixtures": "ccb3d9d939de4d06597f84b0a1dd84450daa6122ec8e9b1da8bddee54d8a8a51",
+        "oracles": "3b9a1b2d70ec0b6fba6674082e9fdea3ea08b0858557ddbb393847f1371d3194"
+      },
+      "case_sha256": "889cb9cc120880762e260a74c5984ce63c982b9a9f2d1fe2b5d8ecd412a19ced",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-IN-05",
+      "family": "initiative",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 1,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "background_initiative_trigger",
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "f6e42518556a6db0ec8ea4c8097accdbc85ac745554e1463a62a31905b216aa1",
+        "fixtures": "6fdfdb67447f429af3f32858d73721ef171c4e24546fed00bda588ec7d3c070f",
+        "oracles": "59af80eb2d1804669dce2c964f2a655ce337b34f5f29de24951e77937fbbba09"
+      },
+      "case_sha256": "20621ebbf1cba859bc74c160d127428587562cc5a75dd002f4c67d770ef1f3bd",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-IN-06",
+      "family": "initiative",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 4,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "independent_memory_readback",
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "background_initiative_trigger",
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "a70e8607519fed1a13c5094221b30b045e58aabf8c90accaf8fd66700c2202bf",
+        "fixtures": "ad95137e4fb777dcbaf962e947b7bccd4915879c501bbd87512f6eeb3fc81aef",
+        "oracles": "97b421b534f422622c4b6501f490ddb624103397bbe02ab8f3a4dd1a210b73ee"
+      },
+      "case_sha256": "a22ea900a8098b3fb4f6fe0a17912e65d2bb0ae98a169e8fed60b048d72ea191",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-IN-07",
+      "family": "initiative",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 3,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 2,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "background_initiative_trigger",
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "46c6b4ce6edb21d238c198a491c627b5fba6c0a6d60b194b46b14840f179eaf6",
+        "fixtures": "f0f68bf7f700ad31d27616bf5a926c35394a1af1d5adeda269a5bca6e3be6c91",
+        "oracles": "e642a19f4c9803b1cf79cd2ea38ea7733521c35dfa70d51f2252b819ea7a4020"
+      },
+      "case_sha256": "9678654fbf38de93b6c44f222fe286b85f4d20049a336db4563066b69cf5c174",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-IN-08",
+      "family": "initiative",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 2,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "background_initiative_trigger",
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "56eacc43600ca9c3560b70603df59b89d18ad364de4e0baf4f04ac5c736c50dc",
+        "fixtures": "3765dfba6cf538c64fa1b91f0b444ce12d1bfcd2188e0eeb941828fce7a0364e",
+        "oracles": "b54a49dbb51c90d3e1afcbaa3602982dbbbfec642262706472dd51007161c730"
+      },
+      "case_sha256": "97d1fca3a84dce2c6542b6572f6cfd3e5e8c1954cf1c5528fdc5fc1dd8060e70",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-IN-09",
+      "family": "initiative",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 2,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "background_initiative_trigger",
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "3398bce283215f6dd32e5437d029f4652a1a888e6c89d0790954826948531922",
+        "fixtures": "49bd4f226b58d97c1132e89499650e0640651fdda5850e5b1e76adc2e26176ca",
+        "oracles": "fe3ac9a163ccad56759e5a674de6cd41943504c12ad4bbc362d82a7e9738d867"
+      },
+      "case_sha256": "98c0c4a77ce14cfed2379f4a12859346cc89d93ac626f3a42a2f654e7f185e30",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-IN-10",
+      "family": "initiative",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 2,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "background_initiative_trigger",
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "9698380ed4d94978e8a3660849a4a1d68145f8fc9377ccd54a7a2fb0710abcd1",
+        "fixtures": "b95e70f6f7292df0d759ac39d46b0a9e8e1f3c3cdd11f2c7f847124b10b509e1",
+        "oracles": "92db5e7586494cd0ce792b5b197fe12b6a79e065a7a52139c4ca392b96254a98"
+      },
+      "case_sha256": "040f8c21e7d39f8ec0392b10c24b066f97d83a479e8d36f039ee44d31313c837",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-IN-11",
+      "family": "initiative",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 1,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "background_initiative_trigger",
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "e61f9f0fd6df7b3dbf6fcafa1206ec2142ef655efdc6abc7ff2a687bd24e9820",
+        "fixtures": "2840cb301653487f21bc2a2636439516b54be1f39254118c332ca89251619e22",
+        "oracles": "0fb59560d114d9083edd13371f8390aee4da91b30a434d1afe1bcaef5179fd14"
+      },
+      "case_sha256": "3749b843a75296ca6ebb82b8a46f35f860d67c362b3b9150ad1b26cc2383bd5c",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-IN-12",
+      "family": "initiative",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 2,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 2,
+        "independent_readbacks": 2
+      },
+      "required_evaluator_types": [
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "background_initiative_trigger",
+        "controlled_clock",
+        "isolated_identity_memory",
+        "local_fixture_services"
+      ],
+      "payload_sha256": {
+        "samples": "a79b7b2db7a01c27c27a66ece805b3ae9e87b25f2f0595f37da5cd6b7abfeb60",
+        "fixtures": "21977f3f968e055a63cb7295877f71c2288abdd90e8b8d3e73256f0393bd45fb",
+        "oracles": "8c0087c058e8aaecbbb5016f3b3ac04336aa86456840ee8a4c84cc8ecf42c06f"
+      },
+      "case_sha256": "53500645f4021ab6525ac18dabee05d4bd4f23424610e06525259fc8128f1c30",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-BC-01",
+      "family": "browser_computer",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 2,
+        "required_audio_assets": 0,
+        "semantic_conditions": 2,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "browser_dom_readback",
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "browser_fixture_origin",
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "ee7d7ed17e44fcf1ef6777ff56840cfdb799a67a257ce0d296ce06ec9b2afbae",
+        "fixtures": "ec3e6234b237b99943427debf464692ffdb9698de87e5826ab24668852a816c5",
+        "oracles": "2505db17050f8cc95f1b6fc3b4fa7f273f34d5cd38b052daa11ccd871b52d8d3"
+      },
+      "case_sha256": "80e926e297f0b9fdf4e1e50d84d9dfbc79b0340af47860c969f8509835331472",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-BC-02",
+      "family": "browser_computer",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 1,
+        "required_audio_assets": 0,
+        "semantic_conditions": 2,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "browser_dom_readback",
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "browser_fixture_origin",
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "9e1b5aa3ed16429738497a3344fc60cea88cfc6458d11efe9ff2cceee45d26b2",
+        "fixtures": "df4002461c3b2dc6ad433f2b90d9047fba3eae21ac14616b25d40ad8b0c95e24",
+        "oracles": "f8c052ee75a0680a7a8879f3ed1200ecf3507a0583c77226ed3e35bb8098b9d9"
+      },
+      "case_sha256": "f757759f165cee490e1d7dc51fa1ae0e4f62fa3727451701b956ca55fd74875a",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-BC-03",
+      "family": "browser_computer",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 1,
+        "required_audio_assets": 0,
+        "semantic_conditions": 2,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "browser_dom_readback",
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "browser_fixture_origin",
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "ecdc733a18249b6e75e025d84003d0091d87aba3db6ec939fca0c747b050245c",
+        "fixtures": "af3a46deb737430f434be21b625ab8b44909f1e898e9a0cd652a00b2f6eb8870",
+        "oracles": "c89d33c0ca8550a4e3f2de59d411592af5ea6d472d46756102443f2bf56fa93c"
+      },
+      "case_sha256": "76641db33ba426f572e8894dbc9ec5ec62781ec0521ea76cb465623bc07797a0",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-BC-04",
+      "family": "browser_computer",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 4,
+        "required_audio_assets": 0,
+        "semantic_conditions": 2,
+        "independent_readbacks": 4
+      },
+      "required_evaluator_types": [
+        "browser_dom_readback",
+        "independent_file_readback",
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "browser_fixture_origin",
+        "controlled_clock",
+        "isolated_identity_memory",
+        "private_filesystem"
+      ],
+      "payload_sha256": {
+        "samples": "79c41f385803c84a7e2f761865f93de7b75a99c99daa7aad18e3b876c4e5891d",
+        "fixtures": "7f60327efc09fd761f68bb55cf7a2592d2695525bfb89c7ed7dac271ab08dd38",
+        "oracles": "1743dea40061d9c5b8514bc0105888bdaefe729eb7158bf99309b089c1f2383a"
+      },
+      "case_sha256": "a3be61c4659084138a8b92609f9d52d317eb9bf0358c424f8682100c80095081",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-BC-05",
+      "family": "browser_computer",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 1,
+        "browser_pages": 2,
+        "required_audio_assets": 0,
+        "semantic_conditions": 2,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "browser_dom_readback",
+        "independent_file_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "browser_fixture_origin",
+        "controlled_clock",
+        "isolated_identity_memory",
+        "private_filesystem"
+      ],
+      "payload_sha256": {
+        "samples": "fa84c4de3f7574974afb56335e20fb2761bb9c37c47444ec92824b4f44ffdd74",
+        "fixtures": "554330c4156adcba502d31ad404c40b9a5020a3c539f0267efd45a3a851ad357",
+        "oracles": "14a50633ac6d3d6078e01692bf9cf9164c6d48b6ef4907d825f00a0a0a9602b2"
+      },
+      "case_sha256": "05dd0f5db49508cf5134d7ec217207e5c82c6834a4f9f7bcfd5ca4fe5d59c404",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-BC-06",
+      "family": "browser_computer",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 2,
+        "browser_pages": 1,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 4
+      },
+      "required_evaluator_types": [
+        "browser_dom_readback",
+        "independent_file_readback",
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "browser_fixture_origin",
+        "controlled_clock",
+        "isolated_identity_memory",
+        "private_filesystem"
+      ],
+      "payload_sha256": {
+        "samples": "557906a044fcc77e37fa2ca83a57da6431c4a3e1d48c4d76fd5d0a6c3dd9426c",
+        "fixtures": "7025f8080bbc66e66b2797868526e8fd9988352fae6bad2973c5ca3b74355610",
+        "oracles": "7e1cb31b2fc1992c09bd92589d3eb6c32eabc14a84b328fe7d8c26248fcc14d8"
+      },
+      "case_sha256": "abfc82d443af41bc956a39a63157832786fabaf36940d9afa21d2c6398d3decf",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-BC-07",
+      "family": "browser_computer",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 3,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 1,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "browser_dom_readback",
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "browser_fixture_origin",
+        "browser_handoff",
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "451e83be5f4227fea3858bd4404cbb165e1a93479b08628498f6468a59ce930e",
+        "fixtures": "c3aef96cf5e4304b8217782c9b3098ad217ef28b8322b259d9718466e39427ec",
+        "oracles": "e2fe87efd8217396471de1aec8285f312131ef6135bdb3fc1b4a0f82cd6d027a"
+      },
+      "case_sha256": "7aa675c52c207cd5c1ae47e2a14357cedbcf0b991ad911517ce0a053f608ade5",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-BC-08",
+      "family": "browser_computer",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 1,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 2,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "browser_dom_readback",
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "browser_fixture_origin",
+        "browser_handoff",
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "f3a3ea0d74a59e7be6c6e1195bf639a97277d6c513f936fc66c91e71b969d387",
+        "fixtures": "9297fec770104b830799da801f2b16b8f348be481b61f5dd77162d338fa9d81e",
+        "oracles": "520eae0af269b517a38aa0d6ae2764e9fae19f957356f6fc20a4bd1309077156"
+      },
+      "case_sha256": "27b70b06bf02613d74e2c5ac4d72b9e75c6b04703c25b94ea5ab831a20384cf5",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-BC-09",
+      "family": "browser_computer",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 1,
+        "browser_pages": 1,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "browser_dom_readback",
+        "independent_file_readback",
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "browser_fixture_origin",
+        "controlled_clock",
+        "isolated_identity_memory",
+        "private_filesystem"
+      ],
+      "payload_sha256": {
+        "samples": "7cb743db8f10216890caba321b0cb3ad3e5d2e8a05f22a1feeb9d2e041ffa417",
+        "fixtures": "09a949ee9813bb0c978bd3d6a1e24e2720916a693fab601daa989dc5c3d6af60",
+        "oracles": "614f405b25b572ed451fe9619ad3612b401afe16e045f0aac3be6f32c37254c7"
+      },
+      "case_sha256": "3307e5f13341a201311da041aba5973b784915568e111b45a7fb18842383b65b",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-BC-10",
+      "family": "browser_computer",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 2,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "browser_dom_readback",
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "browser_fixture_origin",
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "d467fd7789a925452dd1fe619ecb9ff3a010a256de4f8bc90e0d5b21fdf819d0",
+        "fixtures": "483dad49e6fa017ac1938b11bcc21bfd4dd9a96a3232d04a97905c7c9ca90a05",
+        "oracles": "d84c725f2d89018bf2fed8b5299a226145f05e4e80ba34127aaf646e43cd795f"
+      },
+      "case_sha256": "e6bffd832368a8bf721c0b550e0a57214dd924a7d04108b49984669046041fd1",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-BC-11",
+      "family": "browser_computer",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 1,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 1,
+        "required_audio_assets": 0,
+        "semantic_conditions": 2,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "browser_dom_readback",
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "browser_fixture_origin",
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "d4ead00f6f961dc59de46087353ce77c5d842a74e76385a71c8ee3341f9085c8",
+        "fixtures": "4987022cd7f0c11cf595111e1565300f36b45d45ff16f87aca326b8f88608c6a",
+        "oracles": "f02cd5e87e8d3ac877f253855a74ec8b88c34d086d8d133db28b963b75149b5f"
+      },
+      "case_sha256": "fd571a28c8afba3d7af57b9d9f6440bc73fa45ca160f236432a419a2882c92de",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-BC-12",
+      "family": "browser_computer",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 1,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 1,
+        "required_audio_assets": 0,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "browser_dom_readback",
+        "independent_service_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "browser_fixture_origin",
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "payload_sha256": {
+        "samples": "c2df4a8893c0fcbc081f993bc490476c13e63c9df86794c3396ebd0650f5fa7a",
+        "fixtures": "67f76b617735d47f4a414dc4c9dc722fc9a1092df521730a73df246c6b06c26b",
+        "oracles": "9236b0fab0272da09175906e2459e4432dcd3d0ebb9a30200fe9675d5f4fea05"
+      },
+      "case_sha256": "02be8d743a5b22193a0341ef015ba31ad084219e7885cf26c6eac72a9e9ff364",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-LP-01",
+      "family": "learning_projects",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 3,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 3,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 4,
+        "independent_readbacks": 5
+      },
+      "required_evaluator_types": [
+        "independent_file_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "private_filesystem",
+        "programmable_process_restart"
+      ],
+      "payload_sha256": {
+        "samples": "b51ce2523b63abb363b3963f5bf3606ce623ff651c0e0942de6efcf511dfd048",
+        "fixtures": "1961ead1970103c2cf9dda0e228f0e454c2681e2874450e57468976984abc0e5",
+        "oracles": "ccde989e293fa687079ef67ca1c860035a1d2ddb31435381baf7c9d570dd6d27"
+      },
+      "case_sha256": "ed9179570ea4b8b3d55cc23fa6911251f34d3c6c1056f37c7e568a8192f0f6b2",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-LP-02",
+      "family": "learning_projects",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 3,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 3,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 4,
+        "independent_readbacks": 5
+      },
+      "required_evaluator_types": [
+        "independent_file_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "private_filesystem",
+        "programmable_process_restart"
+      ],
+      "payload_sha256": {
+        "samples": "011b5bee00ed6dcdf7c88f90daedb5fe24fba687a10bb2e0eef5122e73d7ce37",
+        "fixtures": "73bb5cc5f7c4afbe235506ccb112229077b749872e4f9dd9955b240bf5893ca8",
+        "oracles": "e3d7dc1d9a7dca4e026519c1b0f61867b3ab3b550e8b569678e6b3bd90929413"
+      },
+      "case_sha256": "b9d05c89fcdd3c8aa6c2998465b7da1ccda7107fb23fa3557239d4875124de69",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-LP-03",
+      "family": "learning_projects",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 3,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 3,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 4,
+        "independent_readbacks": 5
+      },
+      "required_evaluator_types": [
+        "independent_file_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "private_filesystem",
+        "programmable_process_restart"
+      ],
+      "payload_sha256": {
+        "samples": "abda190453f3dc725d20147d5463fdda2114d31e3bf154d3263bc2d5aca11c9e",
+        "fixtures": "24788f512ffd4e312c3baf116e631aaac0f159ecda7cc631ffa631c2af29a1a3",
+        "oracles": "da6b279293c2c9afa6024e5bb52c34433ea985038b56b35cdced411e179276b0"
+      },
+      "case_sha256": "b5db10356b4d5e03c4bb6e451bec774d9fdedefae814b1da200dea09dea824f8",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-LP-04",
+      "family": "learning_projects",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 3,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 3,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 4,
+        "independent_readbacks": 5
+      },
+      "required_evaluator_types": [
+        "independent_file_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "private_filesystem",
+        "programmable_process_restart"
+      ],
+      "payload_sha256": {
+        "samples": "71b4fb3d80b9d98701f0a40656757ff008c6be1f6539dc6d4a44cc0d1a59122d",
+        "fixtures": "480f8f851511fc52a3518bc3bf42ccabb0ed6d9a32c008e0538fd4c1b0911065",
+        "oracles": "7534319d9c46396fb382d0a83306f4f84e9f596cc852aa78c00f8741aeb3c9d5"
+      },
+      "case_sha256": "d5ae2d2ea816c0a697b3f92467c5ab67981a134361f3a6020722f95a6a8f6fa7",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-LP-05",
+      "family": "learning_projects",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 3,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 3,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 4,
+        "independent_readbacks": 5
+      },
+      "required_evaluator_types": [
+        "independent_file_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "private_filesystem",
+        "programmable_process_restart"
+      ],
+      "payload_sha256": {
+        "samples": "01109c7b56c1d12fc4f00492e44b12f09fe0bfc1825375a7ebaabea9fc5e8963",
+        "fixtures": "cef56126cce43349528accfa0556c4d3e4f70ba104e9893d6aec3fc0c8236e9c",
+        "oracles": "140b55adb86d22cc34ea66286e4ca208c38836bacc4ec43755986726976b11d2"
+      },
+      "case_sha256": "e70e0c08b3395d8453691f2773db271e7cf5f30be694c84f70a36b47567fcdee",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-LP-06",
+      "family": "learning_projects",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 3,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 3,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 5,
+        "independent_readbacks": 5
+      },
+      "required_evaluator_types": [
+        "independent_file_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "private_filesystem",
+        "programmable_process_restart"
+      ],
+      "payload_sha256": {
+        "samples": "236565cdaac62bc1427dd2b0708aec4c5aa27cc8b2eb3d78ff916e24f461f1fe",
+        "fixtures": "0d4c141ae622c848562a3413b2930a9f1899be0e132bddadc14f5de47173f363",
+        "oracles": "eaa8be83040bff619952af1273497b56483a08c5ec641fcddc086a93cc10cd03"
+      },
+      "case_sha256": "023732b1821eb5b9edb3389fcfded364cdca04dc8ee1a490567c5b2a0664a7ac",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-LP-07",
+      "family": "learning_projects",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 3,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 3,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 5,
+        "independent_readbacks": 5
+      },
+      "required_evaluator_types": [
+        "independent_file_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "private_filesystem",
+        "programmable_process_restart"
+      ],
+      "payload_sha256": {
+        "samples": "d97ad4b922b64015591dd8715ffc741efdf46cffab70a56bca2bd6ffddbe0454",
+        "fixtures": "5d0d129da1ccb87163b35d2b520bd96e3ddb598b77fa4458bc9bd2f73a028e7e",
+        "oracles": "5d381132ef093730439aa8ba5f6c03e1b942af3f85de8bcfdb8f19457de873d8"
+      },
+      "case_sha256": "fd5defa05bc84fe1b346358a9aa572a8dfe81a0a3e817928e9ed45941b30777a",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-LP-08",
+      "family": "learning_projects",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 3,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 3,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 5,
+        "independent_readbacks": 5
+      },
+      "required_evaluator_types": [
+        "independent_file_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "private_filesystem",
+        "programmable_process_restart"
+      ],
+      "payload_sha256": {
+        "samples": "cc7d118cd606a42e03526ba652926bc5690071c5ef6570d33b23ff08857b3f4f",
+        "fixtures": "871931190f865f672ddba0f2321c2e9c000d50c0fdf2373244fe959afa83bae5",
+        "oracles": "bb5af268f8c8473737a7f24c9bafe14f443c66adde89da6d8f28ba731aa57ae6"
+      },
+      "case_sha256": "2cf72856ffd3c331bf8e5fd7e78e8f31da6b14e81a9c8caea2f6fb5502c34a66",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-LP-09",
+      "family": "learning_projects",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 3,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 3,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 4,
+        "independent_readbacks": 5
+      },
+      "required_evaluator_types": [
+        "independent_file_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "private_filesystem",
+        "programmable_process_restart"
+      ],
+      "payload_sha256": {
+        "samples": "5aa2ede7029b5947713380c1ebf39a889c5a0fbb74dae445648c3f7a0f227898",
+        "fixtures": "d3fdcb77ae2a19d60b9630093221ecb6ebe4f43a8c5737ef2b7e998ce1f0a2d1",
+        "oracles": "2d940de9bd09f6aa414d8e28d4615c209ac7461686ca4c57cd0f1249df09881a"
+      },
+      "case_sha256": "d9964d64e37ebd420ef59f1c03eebe515a1203fbc4035e4603005443f46f817d",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-LP-10",
+      "family": "learning_projects",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 3,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 3,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 4,
+        "independent_readbacks": 5
+      },
+      "required_evaluator_types": [
+        "independent_file_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "private_filesystem",
+        "programmable_process_restart"
+      ],
+      "payload_sha256": {
+        "samples": "d60912388f3695d8b366550029dc118bd7ec267830b7836ba975f1d898ced61c",
+        "fixtures": "2770265df91c06b98ff9a5859cf7f38f7f413fd8e83187eb3636e6cd56fb0503",
+        "oracles": "dd627751c98c94631dacc66eb757397505e5fb105ea7d911b3cf25a1f4007db5"
+      },
+      "case_sha256": "4f15f771ca97c6763d6a7072034104b2a3e5e317842bdbc039ee8117ae4cfbeb",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-LP-11",
+      "family": "learning_projects",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 3,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 3,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 4,
+        "independent_readbacks": 5
+      },
+      "required_evaluator_types": [
+        "independent_file_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "private_filesystem",
+        "programmable_process_restart"
+      ],
+      "payload_sha256": {
+        "samples": "5163da0f7ca4154bea616916c73a5cd3ec6e30cb813ee777b536342ffbad3936",
+        "fixtures": "9b930fc1e9152ac5aa2657065464aae433c62d58d8fc6a54637d5b9a38397c80",
+        "oracles": "17e900c8ebd1b8d07e9124482f743b229f2ca03f0981508d299df1734ab90cac"
+      },
+      "case_sha256": "606477d295d77866d3de6b1e653590828bb7b30e7ed26ea5eda6e73b74271c0b",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-LP-12",
+      "family": "learning_projects",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 3,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 3,
+        "browser_pages": 0,
+        "required_audio_assets": 0,
+        "semantic_conditions": 5,
+        "independent_readbacks": 5
+      },
+      "required_evaluator_types": [
+        "independent_file_readback",
+        "native_trace",
+        "semantic_rubric"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "private_filesystem",
+        "programmable_process_restart"
+      ],
+      "payload_sha256": {
+        "samples": "46de2c933f1d2ff66a1b25a001f79bdc455fa7583adaddc3bdc62e40b891825e",
+        "fixtures": "bd2f1f3c53b1cc1d472c1564d15b7f4c640bf2c901dc34280cb5c4fc133ba674",
+        "oracles": "1260b39e56a07b545b4a5371f2c4f301078c1b3d97c7cd67f446736cb5847d2b"
+      },
+      "case_sha256": "d3c574649db6186cb110ea57c9df0fdffbd17865ada9d674eb5e5cec102536e0",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-VP-01",
+      "family": "voice_presence",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 1,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 2,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "audio_capture_review",
+        "native_trace",
+        "physical_listening_review",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "duplex_audio_endpoint",
+        "isolated_identity_memory",
+        "microphone_audio_input",
+        "physical_listening_panel",
+        "playback_capture",
+        "sealed_audio_assets"
+      ],
+      "payload_sha256": {
+        "samples": "f17faf517b5b65623942371b2860bcd35d7c56aa26d894f2760ab9be0c64f331",
+        "fixtures": "4ce9f1d0ec44d9c47b576fbca6149ea36104bed846d66bc3fa427f09e25b6cb1",
+        "oracles": "811a48cf2cf214684ba57db3386020975ef8811b5fa98659c398631296c58965"
+      },
+      "case_sha256": "f99b07ac2c30eb735338d22baf1dd12734b523be7124ba7101424547f83696a0",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-VP-02",
+      "family": "voice_presence",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 1,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 2,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "audio_capture_review",
+        "native_trace",
+        "physical_listening_review",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "duplex_audio_endpoint",
+        "isolated_identity_memory",
+        "microphone_audio_input",
+        "physical_listening_panel",
+        "playback_capture",
+        "sealed_audio_assets"
+      ],
+      "payload_sha256": {
+        "samples": "12ecb0bbd44421f747eb9dcf01e5df704ad606329ab597d13438c7098bb0a434",
+        "fixtures": "461cb6cb989adc4e3e1fbfb6f49efb77780b050eee26fab57ca7750a9d8932da",
+        "oracles": "2f8e867325c1962f190bbb8df3eb33b259f4f2cfe761ba17b3c2aa1905423047"
+      },
+      "case_sha256": "bbc9ed8c866f1d14d55be8a9a7d11a9d290e047d25820b0c3b43d8067ba13283",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-VP-03",
+      "family": "voice_presence",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 2,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "audio_capture_review",
+        "native_trace",
+        "physical_listening_review",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "duplex_audio_endpoint",
+        "isolated_identity_memory",
+        "microphone_audio_input",
+        "physical_listening_panel",
+        "playback_capture",
+        "sealed_audio_assets"
+      ],
+      "payload_sha256": {
+        "samples": "f1426ba903b34d53b49a30aaee4069896e651d0ae3e015977cf93a7946b85d31",
+        "fixtures": "cdc3193b37f7e7b4495fb1c616c924e10a34e30b8a5dc4132a19275310216ed3",
+        "oracles": "ce6e39da2626e120175012ce80dd41ebce3b28d4b4c53b3b780f3440818ac464"
+      },
+      "case_sha256": "8faeb68d19b28aec91c0a7396ed4428d2f5fedf50a84e18ff3e9d2dfef44ddb3",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-VP-04",
+      "family": "voice_presence",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 1,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 2,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "audio_capture_review",
+        "native_trace",
+        "physical_listening_review",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "duplex_audio_endpoint",
+        "isolated_identity_memory",
+        "microphone_audio_input",
+        "physical_listening_panel",
+        "playback_capture",
+        "sealed_audio_assets"
+      ],
+      "payload_sha256": {
+        "samples": "ee8d83bba4c5127c4bdf771ad6947eb53fcf038d11b0d845585f576cb87211d9",
+        "fixtures": "4c2a1d778e5e072b8de1d26ba4712bef5925235345e63c885f59dde0f498f798",
+        "oracles": "2f63f5d3b2e83625c1cf1639252367eccb11921203ea471f2016dd55d693a2e9"
+      },
+      "case_sha256": "9515b2ba33d0844bb2f585b282db4c5e8cdafe1a4380bb552bd4a5a35ebee19b",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-VP-05",
+      "family": "voice_presence",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 2,
+        "semantic_conditions": 3,
+        "independent_readbacks": 4
+      },
+      "required_evaluator_types": [
+        "audio_capture_review",
+        "independent_memory_readback",
+        "native_trace",
+        "physical_listening_review",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "duplex_audio_endpoint",
+        "isolated_identity_memory",
+        "microphone_audio_input",
+        "physical_listening_panel",
+        "playback_capture",
+        "sealed_audio_assets"
+      ],
+      "payload_sha256": {
+        "samples": "e147ab60c020594fb3730d616256933dc4c9369a1d30645b904258b6abce83bb",
+        "fixtures": "627d78f7ae2010b24ee650a303545d1f252e9717806483fef29eda1ebde5cec3",
+        "oracles": "c9238df5a1d316627cb20e8bd014d58f85a867fca60895c4636d8324358a8a9a"
+      },
+      "case_sha256": "e1c6cdc522d0db38138b5e2e0a33dc836ceec0e90a1fb59cedf4562ee3d0febd",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-VP-06",
+      "family": "voice_presence",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 1,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 2,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "audio_capture_review",
+        "native_trace",
+        "physical_listening_review",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "duplex_audio_endpoint",
+        "isolated_identity_memory",
+        "microphone_audio_input",
+        "physical_listening_panel",
+        "playback_capture",
+        "sealed_audio_assets"
+      ],
+      "payload_sha256": {
+        "samples": "2d7bfdab39751e3f18ede862bfb98466a03c1cb62698a59dfa71e9728c9f6a95",
+        "fixtures": "1f8e6f0babc59b7c8e1b5e922c91eafa7406a73fc5f28cfa50904c31e0f0b114",
+        "oracles": "a2fd942a5bbfee6642ba1ae180bb2b116a92514d267608f4b849820322f28cc6"
+      },
+      "case_sha256": "0736d51cc5e733918031a61996106a2746ab1070fd431ed6ddb45cbe885700f5",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-VP-07",
+      "family": "voice_presence",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 3,
+        "semantic_conditions": 3,
+        "independent_readbacks": 4
+      },
+      "required_evaluator_types": [
+        "audio_capture_review",
+        "independent_memory_readback",
+        "native_trace",
+        "physical_listening_review",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "duplex_audio_endpoint",
+        "isolated_identity_memory",
+        "microphone_audio_input",
+        "physical_listening_panel",
+        "playback_capture",
+        "sealed_audio_assets"
+      ],
+      "payload_sha256": {
+        "samples": "2ba7fc4cadd92b9289238f50d27eb774a804059b049d5509afe5a117331c2e76",
+        "fixtures": "b6300291dcef2d32f46528d461173ebda5319b0aaaaafe74ce36b323152ad0e6",
+        "oracles": "55a6fcc043c721d2d3125ba4d2c1917a92f8e089f40bfd2c40a24bc6c80152ec"
+      },
+      "case_sha256": "45d7ee92737084c2fa4fc9abd811fb986f97f2d2acbe80cb5c2b607879ea1eb0",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-VP-08",
+      "family": "voice_presence",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 1,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 1,
+        "browser_pages": 0,
+        "required_audio_assets": 2,
+        "semantic_conditions": 3,
+        "independent_readbacks": 4
+      },
+      "required_evaluator_types": [
+        "audio_capture_review",
+        "independent_file_readback",
+        "native_trace",
+        "physical_listening_review",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "duplex_audio_endpoint",
+        "isolated_identity_memory",
+        "microphone_audio_input",
+        "physical_listening_panel",
+        "playback_capture",
+        "private_filesystem",
+        "sealed_audio_assets"
+      ],
+      "payload_sha256": {
+        "samples": "6f768c55bf209edd2f8731e558edb7da1a0eac2f54f97f562d49faa6a3c0718f",
+        "fixtures": "b1c33db68d14ebf3a3907267a055e6baf76abe0c652628a299a8a46626c45a6e",
+        "oracles": "355106d0143551ca762eea7f52e589a68337fa9a7bd1de32819afde77d2c3b1b"
+      },
+      "case_sha256": "9e7dce65d36184201f8fb51e4887d8973ae1255a1f40e2e73c524e4f79712213",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-VP-09",
+      "family": "voice_presence",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 1,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 2,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "audio_capture_review",
+        "native_trace",
+        "physical_listening_review",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "duplex_audio_endpoint",
+        "isolated_identity_memory",
+        "microphone_audio_input",
+        "physical_listening_panel",
+        "playback_capture",
+        "sealed_audio_assets"
+      ],
+      "payload_sha256": {
+        "samples": "915a9b831763678fe34ca6c7ca14dfbf6ab5e46d814cd2edf102085c3e1e12fd",
+        "fixtures": "02f166faddfca4d938db63b2aeba6e3e384aeda3aafb4bc949d595375a30e9d2",
+        "oracles": "4b5536fc4e65acd5db39e938349cb774171e5433149423f6b1bffab7173fc1ed"
+      },
+      "case_sha256": "045a9ac1380c5c2571c79bd2f96b98e067ce2c17f1dd74bdcdb156bc46430616",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-VP-10",
+      "family": "voice_presence",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 0,
+        "browser_pages": 0,
+        "required_audio_assets": 3,
+        "semantic_conditions": 3,
+        "independent_readbacks": 3
+      },
+      "required_evaluator_types": [
+        "audio_capture_review",
+        "native_trace",
+        "physical_listening_review",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "duplex_audio_endpoint",
+        "isolated_identity_memory",
+        "microphone_audio_input",
+        "physical_listening_panel",
+        "playback_capture",
+        "sealed_audio_assets"
+      ],
+      "payload_sha256": {
+        "samples": "904be168396d7d9d539e41a3d9caebf1490016b2c9438c72a6221d679cd9c9ee",
+        "fixtures": "ea4683288557d74f1b8f63b6708dac90f5d071e6f76218126bb3fed1bde7064e",
+        "oracles": "b1bec744c4cc336b131e430a2583df670fee223e9a366afe7e6252b1b75d48d0"
+      },
+      "case_sha256": "6115c84cdd96e07e3d462236b862eb166bf2d0fbc663cb4d2f6cb434f7abc4a7",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-VP-11",
+      "family": "voice_presence",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 3,
+        "browser_pages": 0,
+        "required_audio_assets": 2,
+        "semantic_conditions": 3,
+        "independent_readbacks": 5
+      },
+      "required_evaluator_types": [
+        "audio_capture_review",
+        "independent_file_readback",
+        "native_trace",
+        "physical_listening_review",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controllable_local_work_barrier",
+        "controlled_clock",
+        "duplex_audio_endpoint",
+        "isolated_identity_memory",
+        "microphone_audio_input",
+        "physical_listening_panel",
+        "playback_capture",
+        "private_filesystem",
+        "sealed_audio_assets"
+      ],
+      "payload_sha256": {
+        "samples": "ba0c56e01e7ce923e30ad0cc181e1a953e468ab85efcc7ecac1c3f4f6199c322",
+        "fixtures": "573d7e5313ba5220455debf22ca1d639898bab1e131a08eeafef9384de0fd014",
+        "oracles": "d989d374f87b2dde703889b2142b0c25a63ca99ef69599f701ae9731c51f51c6"
+      },
+      "case_sha256": "f47222e7f45fec892541ac24c55947317037d5817dec4feb30302c0043a54440",
+      "status": "unscored"
+    },
+    {
+      "id": "EV003-VP-12",
+      "family": "voice_presence",
+      "counts": {
+        "setup_dialogue_turns": 0,
+        "scripted_events": 1,
+        "synthetic_identities": 1,
+        "fixture_services": 0,
+        "initial_files": 1,
+        "browser_pages": 0,
+        "required_audio_assets": 2,
+        "semantic_conditions": 3,
+        "independent_readbacks": 5
+      },
+      "required_evaluator_types": [
+        "audio_capture_review",
+        "independent_file_readback",
+        "independent_memory_readback",
+        "native_trace",
+        "physical_listening_review",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "required_resource_types": [
+        "controlled_clock",
+        "duplex_audio_endpoint",
+        "isolated_identity_memory",
+        "microphone_audio_input",
+        "physical_listening_panel",
+        "playback_capture",
+        "private_filesystem",
+        "sealed_audio_assets"
+      ],
+      "payload_sha256": {
+        "samples": "6bc9de35a9fc55f52546ae82f9d72e0d26326b4030df164362ee5af47ad6d16a",
+        "fixtures": "5f7d29d41985696a550995026c529c69c3e89836054a87c13e5a47499fca7291",
+        "oracles": "5bc27a0cad2f27a4a188cdcf8b61f5b5eec331b82cca5afae0f007743d29693a"
+      },
+      "case_sha256": "a293bc1d1dd148914fcfeb4c746aaa7d26e331935852feb77e703576b611b6bf",
+      "status": "unscored"
+    }
+  ]
+}

@@ -24,8 +24,17 @@ Geen extra Eva-functie of installatie uit deze meting: stand **25/44**.
 [Alle acht resultaten en beperkingen](evidence/product/p1-known-pair-results-20261003.json).
 [Onafhankelijke resultaatreview](reviews/p1-known-pair-results-20261003.md).
 
-**Volgende opdracht:** bestaande P1-voorwaarden voor de ongeziene eindvergelijking
-afronden. Nog niet gestart; geen actieve proef, aanmelding of reviewer.
+**Nu:** P1 — alle 72 ongeziene eindtaken zijn onafhankelijk vastgelegd en afgeschermd.
+De eerste Agent Zero-poging gaf geen geldig antwoord en geen volledige
+verbruiksmeting. Het verkeerde startargument en de onvolledige modelkoppeling
+zijn gecorrigeerd. Dezelfde proefroute slaagt met namaakantwoorden; geen echte
+herhaling. De mislukte meting blijft onbekend, niet als concurrentverlies geteld.
+Geen modelproef, agent of aanmelding actief. Volgende stap: echte meetdekking en
+aansluiting van de eindtaken via de bestaande evaluatievoorzieningen afmaken.
+De acht geldige Eva1/Eva2-metingen blijven behouden. Geen nieuwe productfunctie:
+**25/44** blijft de stand. Eindbudgetten, echte audio en menselijke oordelen blijven open.
+[Afgeschermde eindtaken](benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json)
+· [Poging, correctie en beperkingen](evidence/product/p1-final-dataset-agentzero-attempt-20261004.json).
 
 
 ## Afgerond: F1.1 — één gezamenlijke geïnstalleerde versie

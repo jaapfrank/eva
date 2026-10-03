@@ -134,3 +134,82 @@ def test_invalid_consumed_usage_closes_owned_response_and_remains_unknown():
         assert book.report()["attempts"][0]["status"] == "unattested"
         assert book.report()["total_usage"]["output_tokens"] is None
     asyncio.run(scenario())
+
+
+def test_native_blocking_proxy_ownership_survives_caller_stop():
+    import importlib.util
+    import threading
+    from pathlib import Path
+    module_path = Path(__file__).resolve().parents[2] / "benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py"
+    spec = importlib.util.spec_from_file_location("native_proxy_ownership", module_path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    async def run():
+        class Ledger:
+            stopped = None
+            def stop_async_attempts(self, reason): self.stopped = reason
+        ledger = Ledger()
+        owner = module.NativeSyncOwnership(ledger, 120)
+        entered, release = threading.Event(), threading.Event()
+        def held():
+            entered.set()
+            release.wait(5)
+            return "unchanged native bytes"
+        task = asyncio.create_task(owner.call(held))
+        while not entered.is_set(): await asyncio.sleep(.001)
+        task.cancel()
+        try: await task
+        except asyncio.CancelledError: pass
+        assert owner.report()["pending_native_io"] == 1
+        assert owner.report()["quiescent"] is False
+        release.set()
+        while owner.report()["pending_native_io"]: await asyncio.sleep(.001)
+        assert await owner.call(lambda: b"wire") == b"wire"
+        def failed_close(): raise OSError("synthetic close failure")
+        try: await owner.close(failed_close)
+        except OSError: pass
+        assert owner.report()["close_errors"] == ["OSError"]
+        assert owner.report()["quiescent"] is False
+        owner.executor.shutdown(wait=True)
+    asyncio.run(run())
+
+
+def test_native_close_after_deadline_releases_held_context():
+    import contextvars
+    import importlib.util
+    import threading
+    from pathlib import Path
+    spec = importlib.util.spec_from_file_location("native_bridge_close", Path(__file__).parents[2] / "benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    class Ledger:
+        def stop_async_attempts(self, reason):
+            pass
+    async def check():
+        owner = module.NativeSyncOwnership(Ledger(), 2)
+        entered, release = threading.Event(), threading.Event()
+        context = contextvars.copy_context()
+        class Upstream:
+            native_closed = False
+            def close(self):
+                self.native_closed = True
+                release.set()
+        class Response:
+            closed = False
+            def close(self):
+                self.closed = True
+        upstream, response = Upstream(), Response()
+        def read():
+            entered.set()
+            release.wait(2)
+            return b"original bytes"
+        task = asyncio.create_task(owner.call(context.run, read))
+        while not entered.is_set():
+            await asyncio.sleep(0.001)
+        owner.deadline = 0
+        await owner.close_response(context, response, [upstream])
+        assert await task == b"original bytes"
+        assert response.closed and upstream.native_closed
+        assert owner.report()["quiescent"]
+        owner.executor.shutdown(wait=True)
+    asyncio.run(check())

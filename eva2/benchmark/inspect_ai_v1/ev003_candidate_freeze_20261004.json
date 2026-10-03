@@ -1,0 +1,112 @@
+{
+  "contract": "EvaComparisonCandidateFreeze/v1",
+  "checkedAt": "2026-10-03T22:02:04.973019+00:00",
+  "status": "frozen_for_independent_dataset_curation_not_execution_admission",
+  "repositoryCommit": "343587cd514fa3ecc22e1876268fd0c2f025cce7",
+  "scope": "Existing EV-003 6 families x 12 unseen scenarios x 3 epochs, plus mandatory Eva1 baseline. Dataset curation does not admit inference or prove product completion.",
+  "participantsManifest": {
+    "path": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
+    "sha256": "cc4c51017f6dc3b882bae7dd6a55e9fffb773920b847378c6f808a13de389ba4"
+  },
+  "participants": [
+    {
+      "id": "eva2",
+      "sourceCommit": "512bdcfcac2239fc4709cdc686fee4a07c941895",
+      "sourceKind": "integration_checkpoint_with_retained_runtime_variants",
+      "admissionAtFreeze": "completed_fixed_development_only_no_further_run_admitted",
+      "nativeState": "fixed_development_executed"
+    },
+    {
+      "id": "eva1-bottie",
+      "sourceCommit": "909bff513d7d7fd653d6a7f270d9e73facce430d",
+      "sourceKind": "actual_service_working_directory_head_with_declared_local_changes",
+      "admissionAtFreeze": "completed_fixed_development_only_no_further_run_admitted",
+      "nativeState": "fixed_development_executed"
+    },
+    {
+      "id": "openclaw",
+      "sourceCommit": "eb377ac59e6c9fd6c7705028034812becf00271b",
+      "sourceKind": null,
+      "admissionAtFreeze": "not_admitted",
+      "nativeState": "unavailable_until_separate_admission"
+    },
+    {
+      "id": "hermes",
+      "sourceCommit": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
+      "sourceKind": null,
+      "admissionAtFreeze": "not_admitted",
+      "nativeState": "unavailable_until_separate_admission"
+    },
+    {
+      "id": "agent_zero",
+      "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+      "sourceKind": null,
+      "admissionAtFreeze": "not_admitted",
+      "nativeState": "unavailable_until_separate_admission"
+    }
+  ],
+  "models": {
+    "foreground_contact": {
+      "model": "gpt-6-sol",
+      "reasoning": "none"
+    },
+    "all_model_helpers_including_memory": {
+      "model": "gpt-6-astra",
+      "reasoning": "medium"
+    },
+    "policy": "Exact role settings shared by all participants; no automatic model fallback or effort escalation in this run. Unsupported role setting is unavailable before inference."
+  },
+  "productImages": {
+    "eva2-managed-b-slot3-core": "sha256:fd1c7cd3413405fd6b1b5ce408f2028cffed8de735a301550663e4c891ee5902",
+    "eva2-managed-b-slot3-delegated-work-worker-1": "sha256:30d65117cc0f526bc3ed8859a0eee867ff8fe0943c0bf42c8c09d787c2ca3089"
+  },
+  "referenceEvidence": [
+    {
+      "path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+      "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479"
+    },
+    {
+      "path": "eva2/evidence/product/f1-integrated-installed-20261003.json",
+      "sha256": "07623bbc8c0d979c96e55917253e4c48052effd8e90f3636cc19edbd5fd35e6d"
+    },
+    {
+      "path": "eva2/evidence/product/p1-known-pair-results-20261003.json",
+      "sha256": "fc082cf46853e9e92e082d9a6daac6bc056fdc4fcff5200c98aaab573b8cb2ee"
+    },
+    {
+      "path": "eva2/evidence/product/p1-native-bottie-c01-subscription-20261003.json",
+      "sha256": "788dbe97fd3ab632bd33901899b41f13f1b74f93e31da7b24cca1bb80e8bda7d"
+    },
+    {
+      "path": "eva2/evidence/product/p1-hindsight-lifecycle-20261003.json",
+      "sha256": "f2644355591de9357b3d00cc0b1ac968467b4973b4bbcf0bfe3c9e96792876b8"
+    }
+  ],
+  "openConditions": [
+    "F1.2 real Windows restart and follow-up remain open.",
+    "Real household physical voice and human personality/family judgments are not inferred from output receipts.",
+    "All-family task-specific budgets, evaluator bindings and runtime admission remain open.",
+    "No existing C01/C04 prompt or other previously observed development case counts as unseen."
+  ],
+  "curation": {
+    "owner": "/root/aide_final_evaluation",
+    "families": [
+      "conversation_memory",
+      "cross_domain_actions",
+      "initiative",
+      "browser_computer",
+      "learning_projects",
+      "voice_presence"
+    ],
+    "unseenCasesPerFamily": 12,
+    "epochs": 3,
+    "initiativeOpportunityCount": 6,
+    "initiativeDistractorCount": 6,
+    "humanRaters": 2,
+    "privateDirectory": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/holdout",
+    "publicReceipt": "eva2/benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json",
+    "builderMayReadHiddenContent": false,
+    "modelRunsAdmitted": false,
+    "publish": "Structure, hashes and exact remaining setup only; no hidden stimuli, fixtures or oracle answers."
+  }
+}

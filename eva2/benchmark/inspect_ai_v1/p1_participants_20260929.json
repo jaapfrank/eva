@@ -1,7 +1,7 @@
 {
   "contract": "EvaComparisonParticipantInputs/v1",
-  "checkedAt": "2026-10-03T21:55:57.755911+00:00",
-  "stage": "available_pair_development_schedule_executed",
+  "checkedAt": "2026-10-03T22:49:36.491266+00:00",
+  "stage": "final_dataset_curated_native_comparison_incomplete",
   "protocol": "eva2/design/product/comparable-agent-benchmarks-v1.md#ev-003",
   "scope": "Inputs for existing Inspect runner; not results, a new runtime or a new scorer.",
   "participants": [
@@ -315,7 +315,7 @@
       "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
       "tagObject": "90f2a79e22d1e39cab6db79cd622422edaf96152",
       "officialRelease": "https://github.com/agent0ai/agent-zero/releases/tag/v2.13",
-      "admission": "not_admitted",
+      "admission": "not_admitted_after_native_execution_gap",
       "localSource": {
         "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/agent-zero-source",
         "headVerified": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
@@ -448,6 +448,18 @@
         "remaining": "Running network proxy, real inference/usage/cancellation, sync/alternative SDK/tool/retry coverage and equal access to other participants.",
         "externalInferenceRequests": 0,
         "admission": "not_admitted"
+      },
+      "latestNativeAttempt": {
+        "sample": "C01:epoch1",
+        "evidence": "eva2/evidence/product/p1-final-dataset-agentzero-attempt-20261004.json",
+        "status": "failed_unknown_usage_no_quality_score",
+        "providerRequests": null,
+        "remaining": "Observed native mode and SDK client gaps corrected and checked on shared mock route. Real complete provider observation still missing; prior attempt remains failed/unknown.",
+        "correctedCandidate": {
+          "sourceSha256": "bbf262e8e89e0b5861ce6f54486f0b65c705e4f5d3ed3982ec2180d751c9a42f",
+          "status": "mocked_native_binding_verified_not_live_admission",
+          "evidence": "eva2/evidence/product/p1-final-dataset-agentzero-attempt-20261004.json"
+        }
       }
     }
   ],
@@ -555,13 +567,16 @@
     ]
   },
   "budget": {
-    "thisAssignmentModelCalls": 16,
+    "thisAssignmentModelCalls": null,
     "paidJudgeCalls": 0,
     "nextModelRuns": 0,
     "creditCost": null,
-    "notice": "Eight fixed available-pair entries, 16 measured provider requests including helpers. Eva2 memory consolidation incomplete within unchanged sample limits. No fully completed memory-cost comparison; missing participants and unused budget not reallocated.",
+    "notice": "Eight Eva1/Eva2 entries preserve16 measured completed calls. Later first Agent Zero attempt failed with2 helper reservations and1 model-relay connection but no captured native request boundary; actual inference and total cost unknown. No repeat admitted.",
     "observedInputTokens": 56459,
-    "observedOutputTokens": 2152
+    "observedOutputTokens": 2152,
+    "knownCompletedMeasuredCalls": 16,
+    "additionalNativeReservedAttempts": 2,
+    "additionalActualInferenceRequests": null
   },
   "acceptanceScale": {
     "casesPerFamily": 12,
@@ -773,6 +788,88 @@
       "providerCalls": 0
     },
     "results": "eva2/evidence/product/p1-known-pair-results-20261003.json",
-    "resultReview": "eva2/reviews/p1-known-pair-results-20261003.md"
+    "resultReview": "eva2/reviews/p1-known-pair-results-20261003.md",
+    "calibrationConclusion": {
+      "knownPairComplete": true,
+      "preserveOriginalLimitsAndResults": true,
+      "repeatKnownCases": false,
+      "memoryCompletionFinding": "Four Eva2 replies and retained facts are verified. Consolidation is pending because the shared two-call conversation development limit blocks the next request before dispatch. This is an observed development-envelope result, not evidence of a broken installed memory function.",
+      "independentLifecycleEvidence": "eva2/evidence/product/p1-hindsight-lifecycle-20261003.json",
+      "lifecycleEvidenceScope": "One synthetic extraction plus consolidation completed in two helper calls. Synthetic latency/tokens are not real-provider calibration. Foreground contact adds a separate call in the real native conversation samples.",
+      "finalBudgetConsequence": "A two-request final conversation-and-memory limit cannot represent the observed full pipeline. Do not disable memory or change the recorded development budget. Final family-specific limits require an independently frozen separate plan using native lifecycle and task evidence; none are admitted here.",
+      "otherFamilies": "Known short conversation timings and usage do not calibrate action, initiative, browser, learning or physical voice tasks.",
+      "candidateFreeze": "eva2/benchmark/inspect_ai_v1/ev003_candidate_freeze_20261004.json"
+    },
+    "existingFamilyEvidence": [
+      {
+        "family": "cross_domain_actions",
+        "path": "eva2/evidence/product/t2-current-shared-ha-20261002.json",
+        "sha256": "ab719fd0983acbc1d25b7e292c87cfd89bffd4579360830883222e8421de0595",
+        "interpretation": "Existing binding-only check; zero new model calls. Earlier action outcome retained in original referenced evidence; does not calibrate whole sample usage.",
+        "finalBudgetDerived": false
+      },
+      {
+        "family": "initiative",
+        "path": "eva2/evidence/product/i1-private-contribution-readback-20261002.json",
+        "sha256": "e82462ac99f58819fbaa1fe07482ef7c1170d9b56be5e077e4550bc3e3a64273",
+        "interpretation": "Historical useful-contribution execution recorded 2 attempts, 11138 input/508 output. It is not a complete current equal-sample measurement or human usefulness judgment.",
+        "finalBudgetDerived": false
+      },
+      {
+        "family": "browser_computer",
+        "path": "eva2/evidence/product/autonomous-browser-installed-20261003.json",
+        "sha256": "742062794d0a7e436958b77e70e370bcc2999e7cf250d24fb5b0a563b6bff37d",
+        "interpretation": "Final ordinary task recorded 81.506 seconds and 101588 input/782 output, explicitly partial including worker metrics. Native memory/helper completion not established for cost parity.",
+        "finalBudgetDerived": false
+      },
+      {
+        "family": "learning_projects",
+        "path": "eva2/evidence/product/l3-context-installed-20261003.json",
+        "sha256": "e46f206e550e15f52193a0c8ddcca49fb35f98519d6c1097c0e3a3e1392035fd",
+        "interpretation": "Installed independently reviewed application proved. Work usage is explicitly partial and memory helper work is not fully included.",
+        "finalBudgetDerived": false
+      },
+      {
+        "family": "conversation_memory",
+        "path": "eva2/evidence/product/f1-joint-check-pre-reboot-20261003.json",
+        "sha256": "8237ba961040d4e566e4777d3722455da7a6c75a5dc738e347586e7e56fe7baa",
+        "interpretation": "Combined task/conversation/readback achieved; 125759 input/1381 output, 13 recorded responses and 10 tools are partial. Does not replace shared native sample accounting.",
+        "finalBudgetDerived": false
+      }
+    ],
+    "finalCalibrationStatus": "Candidate frozen for independent curation. Existing functional proof preserved; incomplete usage is not extrapolated into a final task budget. No final matrix admission."
+  },
+  "finalDataset": {
+    "status": "curated_unscored_not_execution_admission",
+    "commitment": "eva2/benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json",
+    "commitmentSha256": "bbdbf8eff011aeb51c41e2ff6532346dd22615a99102166e4005292100dd03bf",
+    "candidate": {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_candidate_freeze_20261004.json",
+      "sha256": "09897a070e8d9163aa8c90475f2eb1fe81697ad05836267e0b8fb1f94bb176b7"
+    },
+    "datasetSha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4",
+    "families": {
+      "conversation_memory": 12,
+      "cross_domain_actions": 12,
+      "initiative": 12,
+      "browser_computer": 12,
+      "learning_projects": 12,
+      "voice_presence": 12
+    },
+    "scenarios": 72,
+    "epochs": 3,
+    "samplesPerParticipant": 216,
+    "privateBuilderAccess": false,
+    "inferenceAdmitted": false,
+    "remainingBindings": [
+      "Per-family task and aggregate budgets and execution order calibrated on development evidence, sealed before final calls.",
+      "Individually admitted native participants with equal tools/data/network/hardware and full accounting/stop coverage for the relevant family.",
+      "Existing Inspect input loading plus thin semantic/readback scorers bound to private oracle records; no fixture-oracle success may be relabelled as native quality.",
+      "Local fixture service/browser origins, controlled clock/background events, identity/audience guards, process interruption and independent native memory/effect/file readback adapters.",
+      "Exact synthetic speech/non-speech audio waveforms and delivery conditions must be recorded and hash-bound by independent operators; native microphone/playback and duplex route required. Text cannot substitute.",
+      "Two independent blinded human raters for the protocol human judgements; physical listening remains required where specified, never inferred from transport success.",
+      "Explicit private evidence retention, controlled rater access and cleanup moment before execution."
+    ],
+    "checkedAt": "2026-10-03T22:33:23.743497+00:00"
   }
 }

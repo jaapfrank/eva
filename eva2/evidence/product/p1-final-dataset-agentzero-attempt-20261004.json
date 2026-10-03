@@ -1,0 +1,113 @@
+{
+  "contract": "EvaComparisonPreparationAndAttempt/v1",
+  "checkedAt": "2026-10-03T22:49:36.491266+00:00",
+  "status": "sealed_dataset_and_failed_native_attempt_no_product_completion",
+  "dataset": {
+    "commitment": "eva2/benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json",
+    "scenarios": 72,
+    "families": 6,
+    "epochs": 3,
+    "status": "independently_curated_unscored",
+    "builderReadPrivateContents": false,
+    "curationProviderCalls": 0
+  },
+  "agentZero": {
+    "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+    "sample": "AgentZero:C01:epoch1",
+    "result": "failed_native_setup_during_prompt_no_valid_answer",
+    "firstPreparation": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-agentzero-native-subscription-20261004-v1/c01-epoch1",
+      "result": "failed_before_stimulus_inherited_root_HOME",
+      "relayConnections": 0
+    },
+    "actualAttempt": "/home/administrator/project/.eva2-artifacts/p1-agentzero-native-subscription-20261004-v1/c01-epoch1-startup-corrected",
+    "admittedSdkReservations": 2,
+    "capturedInferenceDispatches": 0,
+    "modelRelayConnections": 1,
+    "actualInferenceRequests": null,
+    "usage": {
+      "inputTokens": null,
+      "outputTokens": null,
+      "creditCost": null
+    },
+    "accountingConclusion": "Two pending native helper reservations and a model-endpoint relay connection without captured native request boundary. Zero in the narrow externalInferenceRequests field cannot prove zero actual inference or complete cost coverage.",
+    "nativeFailureTransition": "native system-prompt extension requested development RPC credentials; handled exception before a valid response",
+    "cleanup": {
+      "relayClosed": true,
+      "containerAbsent": true,
+      "networkAbsent": true
+    },
+    "furtherInferenceAdmitted": false,
+    "score": null,
+    "semantics": "unknown; infrastructure refusal is not a competitor loss",
+    "rootCause": {
+      "nativeMode": "Proven: native runtime accepts --dockerized=1, but the launcher used separate --dockerized 1 arguments, leaving development mode active.",
+      "transport": "Client injection only at model builders does not cover cached imported builder aliases; the SDK boundary must bind the same existing transport. Native HTTP refusal was restored before all cleanup.",
+      "unattributableConnection": "The prior TLS-only CONNECT cannot be classified as inference or quota traffic. Usage stays unknown."
+    }
+  },
+  "verification": {
+    "focusedOwnershipTests": {
+      "passed": 3,
+      "pytestSeconds": 0.07,
+      "providerCalls": 0,
+      "receipt": "/home/administrator/project/.eva2-artifacts/p1-agentzero-native-subscription-20261004-v1/review-regression.json"
+    },
+    "nativeReadiness": {
+      "passed": true,
+      "seconds": 11.815752962982515,
+      "providerCalls": 0,
+      "receipt": "/home/administrator/project/.eva2-artifacts/p1-agentzero-native-subscription-20261004-v1/readiness-quota-fallback-result.json"
+    },
+    "endpointOnlyValidation": "/home/administrator/project/.eva2-artifacts/p1-agentzero-native-subscription-20261004-v1/envelope-validation/receipt.json",
+    "publicIntegrationReview": "GO from independent curator; candidate/protocol/commitment hashes match; hidden contents not opened",
+    "independentResultReview": {
+      "reviewer": "/root/aide_final_evaluation",
+      "decision": "GO for failed/unknown description only",
+      "scope": "Raw pending reservations, missing request boundaries and relay connection; no score or zero-usage claim.",
+      "reviewedPublicOutcomeSha256Prefix": "ce4d24c2"
+    }
+  },
+  "sourceHashes": {
+    "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py": "f63b6c858d794d7fb39a45f77101702051752bb2805e0f6a374c91b23b0bee12",
+    "eva2/tests/benchmark/test_cp001_stream_control.py": "e15f7305c9543e966997fd7901f09e9a4c625cad529f00506587243fd47e119b",
+    "eva2/benchmark/inspect_ai_v1/ev003_candidate_freeze_20261004.json": "09897a070e8d9163aa8c90475f2eb1fe81697ad05836267e0b8fb1f94bb176b7",
+    "eva2/benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json": "bbdbf8eff011aeb51c41e2ff6532346dd22615a99102166e4005292100dd03bf"
+  },
+  "privateEvidence": {
+    "c01-epoch1-startup-corrected/receipt.json": "6188aadb61becb07bdc73b89a93964042d7541dbddb751b9d50ed6c7ae5729ff",
+    "c01-epoch1-startup-corrected/sample/native-case-failure.json": "280cf2c76990b75af3e2e7bd8a5da599ae1abc32428d5fc6e78611234179ca2b",
+    "source-freeze.json": "598771e9d916935964f4b58811586a14b1fd6740607662462b9ee65e31357849",
+    "admission-c01-e1-startup-corrected.json": "d11a6fbf674ba9664984e1b487c27d0ee63b0373cf25b7cc6d48ddde00cd748c"
+  },
+  "remaining": [
+    "Corrected native candidate has passed the shared mocked loop. Complete an independently admitted real observation with full dispatch/usage coverage; failed sample remains unknown, no automatic retry.",
+    "Bind final native fixtures/readbacks and family budgets using existing evaluation routes.",
+    "Audio resources and two human raters remain genuine prerequisites."
+  ],
+  "productChange": false,
+  "productInstallations": 0,
+  "completedSmallTasks": 25,
+  "smallTaskTotal": 44,
+  "generalAdvantageEstablished": false,
+  "review": "eva2/reviews/p1-agentzero-native-subscription-20261004.md",
+  "correctedCandidate": {
+    "status": "shared_mocked_native_route_verified_no_further_inference_admitted",
+    "source": "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py",
+    "sha256": "bbf262e8e89e0b5861ce6f54486f0b65c705e4f5d3ed3982ec2180d751c9a42f",
+    "nativeSourceModified": false,
+    "providerCalls": 0,
+    "fixtureSeconds": 14.517568877985468,
+    "sdkBindingAttempts": 2,
+    "fixture": "/home/administrator/project/.eva2-artifacts/p1-agentzero-native-subscription-20261004-v1/shared-sdk-binding-fixture-result.json",
+    "changes": [
+      "Native --dockerized=1 argument and early native mode assertion",
+      "Same existing comparison SDK transport explicitly bound for each guarded native request, including helpers",
+      "Child passwd user environment and guards retained through full local cleanup"
+    ],
+    "retainedExecutedSource": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-agentzero-native-subscription-20261004-v1/executed-bridge-f63b6c85.py",
+      "sha256": "f63b6c858d794d7fb39a45f77101702051752bb2805e0f6a374c91b23b0bee12"
+    }
+  }
+}

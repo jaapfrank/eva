@@ -1,5 +1,31 @@
 # Inspect AI-evalomgeving
 
+## Independently sealed final cases — 4 October 2026
+
+[`ev003_candidate_freeze_20261004.json`](ev003_candidate_freeze_20261004.json)
+binds the installed candidate and original protocol.
+[`ev003_dataset_commitment_20261004.json`](ev003_dataset_commitment_20261004.json)
+binds 72 independently curated cases: 12 per original family, with the same cases
+in three epochs and fresh state per epoch. Public metadata contains schemas,
+resource types and hashes; private input, fixtures and independent oracles are
+separate evaluator-owned files inaccessible to the ordinary builder account.
+Do not open private payloads while developing Eva or tune against the final set.
+
+Structural validation is complete; every result remains unscored. This is not
+execution admission or a new product feature. Before final execution, bind the
+existing Inspect loader/scorers, native fixture and independent effect readers,
+family and aggregate budgets, run order and controlled evidence retention.
+Use known development evidence for calibration, never hidden answers. Audio cases
+require actual microphone/playback assets and physical listening, not text
+substitutes. The two human raters and family acceptance remain human judgments.
+Missing participant access stays unknown; it cannot become a competitor loss.
+
+The first native Agent Zero subscription attempt is retained in
+[`p1-final-dataset-agentzero-attempt-20261004.json`](../../evidence/product/p1-final-dataset-agentzero-attempt-20261004.json).
+It produced no valid answer and has incomplete dispatch/usage coverage. A narrow
+zero counter is not zero cost. The corrected adapter candidate and mocked checks
+do not admit another inference run or turn that failure into a competitor loss.
+
 ## Current participant inputs — 29 September 2026
 
 `p1_participants_20260929.json` pins Eva2, Eva1/Bottie, OpenClaw, Hermes
