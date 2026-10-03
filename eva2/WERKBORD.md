@@ -1,19 +1,26 @@
 # EVA2 werkbord
 
-**Nu: P1 — eerste echte gespreksmeting vastgelegd.** De vaste Eva2-vraag is
-éénmaal uitgevoerd: eerste tekst **2,970 s**, volledig antwoord **5,124 s**.
-Antwoord en geheugenfeit zijn opgeslagen en afzonderlijk teruggelezen.
-Twee modelaanvragen: **4.874 input-/171 outputtokens**. Consolidatie bleef
-wachtend doordat de derde aanvraag buiten het vaste vergelijkingsbudget viel.
-Onafhankelijke beperkte beoordeling bevestigt deze onvolledige uitkomst.
-Geen nieuwe functie of snelheidswinst geclaimd; stand blijft **25/44**.
-[Meetresultaat en beperkingen](evidence/product/p1-native-c01-subscription-20261003.json).
+**Nu: P1 — overige vaste Eva1/Eva2-metingen voorbereiden.**
+Dezelfde vaste C01-vraag, gelijke modelkeuze per rol, lege proefgegevens.
 
-Bron en bewijs vastgelegd. Geen modelproef of aanmelding actief.
-Vervolg: bestaande Eva1-vergelijkingsroute; ontbrekende concurrentaanmelding
-blijft apart. Geen herhaling of nieuwe audit. Optionele persoonlijke
-Chrome-overname is al gebouwd en vraagt later nieuwe tabselectie;
-geen herbouw of verplichte browserproef.
+| Gemeten | Eva2 | Eva1/Bottie |
+|---|---:|---:|
+| Volledig antwoord | 5,124 s | 15,948 s |
+| Invoertokens, alle gemeten calls | 4.874 | 9.185 |
+| Uitvoertokens | 171 | 272 |
+| Modelaanvragen | 2 | 2 |
+| Antwoord apart teruggelezen | Ja | Ja |
+| Hele native proef binnen scope afgerond | Nee: consolidatie wacht | Ja |
+
+**Eén meting; geen algemene voorsprong of volledige kostenvergelijking.**
+Bottie gebruikt haar native webroutine, met expliciete gelijk-modelconfiguratie;
+geen uitspraak over alle functies van de draaiende Eva1-dienst.
+Beide antwoorden en beperkingen blijven bewaard. Eén gebundelde review van de
+zes resterende vooraf geplande uitvoeringen loopt; geen modelproef of aanmelding
+actief. Vervolg: die vaste gevallen met dezelfde aansluiting;
+geen herhaling voor een betere score of hoger proefbudget. Stand **25/44**.
+[Eva2-uitkomst](evidence/product/p1-native-c01-subscription-20261003.json)
+· [Eva1-uitkomst](evidence/product/p1-native-bottie-c01-subscription-20261003.json).
 
 ## Afgerond: F1.1 — één gezamenlijke geïnstalleerde versie
 

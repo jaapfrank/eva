@@ -48,7 +48,7 @@ if (subscription) {
       || !path.isAbsolute(hookManifest || '')) throw new Error('subscription requires explicit source, control, lease and hook manifest');
   const manifest = JSON.parse(fs.readFileSync(hookManifest, 'utf8'));
   if (manifest.contract !== 'Cp001BottieNativeHooks/v1') throw new Error('native hook manifest differs');
-  for (const relative of ['src/brain/oauth.js', 'src/brain/llm.js', 'src/mind/tools.js']) {
+  for (const relative of ['src/brain/oauth.js', 'src/brain/llm.js', 'src/mind/tools.js', 'src/mind/understanding.js']) {
     const filename = fs.realpathSync(path.join(sourceRoot, relative));
     if (!filename.startsWith(sourceRoot + path.sep)) throw new Error('hook source escapes root');
     const content = fs.readFileSync(filename);
@@ -130,6 +130,18 @@ function loadLease() {
     return { accessToken: value.access_token, accountId: value.account_id };
   } finally { fs.closeSync(fd); }
 }
+const toolEvents = [];
+function recordTool(name, protocol = false) {
+  const allowed = !stopping && toolEvents.filter(e => e.admitted).length < 4
+    && (protocol ? name === 'commit_turn_understanding' : ['onthoud', 'zoek_geheugen', 'zoek_gesprek'].includes(name));
+  toolEvents.push({ request_id: currentRequestId, name, protocol, admitted: allowed,
+    outcome: allowed ? 'admitted_not_completion_proof' : 'refused_before_dispatch' });
+  const receipt = JSON.stringify({ contract: 'Cp001NativeToolDispatch/v1', maximum: 4, events: toolEvents });
+  const temporary = path.join(dataDir, 'native-tool-dispatch.json.tmp');
+  fs.writeFileSync(temporary, receipt, { mode: 0o600 });
+  fs.renameSync(temporary, path.join(dataDir, 'native-tool-dispatch.json'));
+  if (!allowed) { stopSample(); throw new Error('native sample tool boundary reached'); }
+}
 if (subscription) {
   // Fixed hooks are installed only into the explicitly hashed disposable source.
   globalThis[Symbol.for('eva.cp001.native-control.v1')] = Object.freeze({
@@ -142,12 +154,8 @@ if (subscription) {
       const role = configuredRole(model, effort);
       return (...values) => roleContext.run(role, () => request(...values));
     },
-    beforeTool(name) {
-      if (stopping || !['onthoud', 'zoek_geheugen', 'zoek_gesprek'].includes(name)) {
-        stopSample();
-        throw new Error('external action refused by frozen conversation sample');
-      }
-    },
+    beforeTool(name) { recordTool(name); },
+    beforeProtocol(name) { recordTool(name, true); },
   });
 }
 
@@ -412,7 +420,7 @@ try {
   await new Promise((resolve) => server.close(resolve));
   db.pragma('wal_checkpoint(TRUNCATE)');
   db.close();
-  if (sampleControl) send({ stopped: true, provider_stub_calls: providerCalls, pending_provider_controls: pendingControls.size, active_provider_attempts: providerControllers.size, provider_close_failures: [...providerControllers].filter(c => c.closeFailed).length, quiescent: providerControllers.size === 0 && pendingControls.size === 0, real_model_calls: realProviderCalls });
+  if (sampleControl) send({ stopped: true, provider_stub_calls: providerCalls, pending_provider_controls: pendingControls.size, active_provider_attempts: providerControllers.size, tool_dispatches: toolEvents.filter(e => e.admitted).length, tool_events: toolEvents, provider_close_failures: [...providerControllers].filter(c => c.closeFailed).length, quiescent: providerControllers.size === 0 && pendingControls.size === 0, real_model_calls: realProviderCalls });
 }
 // Imported product modules may own idle timers; the isolated fixture is finished.
 process.exit(0);

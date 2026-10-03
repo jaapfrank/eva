@@ -1,0 +1,138 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "recordedAt": "2026-10-03T21:16:25.028298+00:00",
+  "task": "P1.2",
+  "participant": "eva1-bottie",
+  "case": "C01",
+  "epoch": 1,
+  "scope": "startWeb-only native agent route and awaited ACK reconciliation; no whole eva.service scheduler claim",
+  "outcome": "native_reply_readback_and_delivery_verified",
+  "prompt": "Ik wil voor elk apparaat een apart dashboard. Goed idee toch?",
+  "reply": "Eerlijk? Ik zou niet voor elk apparaat een dashboard maken. Dan ben je straks vooral tabbladen aan het beheren. Liever één overzicht voor dagelijks gebruik, met aparte schermen per kamer of taak als dat nodig blijkt.",
+  "fullNativeSampleCompleteWithinScope": true,
+  "timing": {
+    "firstContentSeconds": 15.94803452299675,
+    "verifiedReplySeconds": 15.952043754979968,
+    "throughDeliveryAckSeconds": 16.030641249002656,
+    "note": "Native /api/chat returns a full JSON response. Its first user-visible content is the full reply; provider token timing is separate."
+  },
+  "usage": {
+    "providerAttempts": 2,
+    "observedUsageComplete": true,
+    "tokens": {
+      "input_tokens": 9185,
+      "output_tokens": 272,
+      "total_tokens": 9457
+    },
+    "attempts": [
+      {
+        "id": 0,
+        "sample_id": "eva1-bottie:C01:epoch1",
+        "role": "contact",
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 8029,
+          "output_tokens": 221,
+          "total_tokens": 8250
+        }
+      },
+      {
+        "id": 1,
+        "sample_id": "eva1-bottie:C01:epoch1",
+        "role": "contact",
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 1156,
+          "output_tokens": 51,
+          "total_tokens": 1207
+        }
+      }
+    ],
+    "creditCost": null,
+    "developmentCredits": null
+  },
+  "durableReplyReadback": true,
+  "ackReadbackCount": 1,
+  "tools": {
+    "contract": "Cp001NativeToolDispatch/v1",
+    "maximum": 4,
+    "events": [
+      {
+        "request_id": "managed-b-probe:56fe23b83add:1",
+        "name": "commit_turn_understanding",
+        "protocol": true,
+        "admitted": true,
+        "outcome": "admitted_not_completion_proof"
+      }
+    ]
+  },
+  "stop": {
+    "stopped": true,
+    "provider_stub_calls": 0,
+    "pending_provider_controls": 0,
+    "active_provider_attempts": 0,
+    "tool_dispatches": 1,
+    "tool_events": [
+      {
+        "request_id": "managed-b-probe:56fe23b83add:1",
+        "name": "commit_turn_understanding",
+        "protocol": true,
+        "admitted": true,
+        "outcome": "admitted_not_completion_proof"
+      }
+    ],
+    "provider_close_failures": 0,
+    "quiescent": true,
+    "real_model_calls": 2
+  },
+  "finalDatabaseCounts": {
+    "messages": 2,
+    "memories": 0,
+    "timeline": 6
+  },
+  "cleanup": {
+    "networkRemoved": true,
+    "workerExit": 0,
+    "relayClosed": true,
+    "databaseSaved": "/home/administrator/project/.eva2-artifacts/p1-bottie-c01-subscription-20261003-v1/eva.db",
+    "databaseSha256": "2f7ddc9771241d75bba02a44295566780c3cc5638792e78e70aee667be8dcf03",
+    "temporaryNativeDataRetained": "/tmp/cp001-bottie-cgjnth71"
+  },
+  "artifacts": {
+    "result": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-c01-subscription-20261003-v1/result.private.json",
+      "sha256": "3d86a18068c25b1a0f8731a087044a459f06fafc1e65defea3babb0c274aca42"
+    },
+    "inspectLog": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-c01-subscription-20261003-v1/execution-logs/2026-10-03T21-13-26-00-00_p1-known-C01-epoch1-bottie_gwYQSGeb7C2oovsypcUPAw.eval",
+      "sha256": "107bc77d3b880d7ae715f17865af5b1fa788ddcb5f39da1b63f42a7a96f4d52e"
+    },
+    "launcher": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-c01-subscription-20261003-v1/launch.py",
+      "sha256": "cb2ad76f5374f4fda3b4ff0a9af951141030ee2bfb5a7d469aa3bcdcee70e9f8"
+    },
+    "sourceFreeze": "/home/administrator/project/.eva2-artifacts/p1-bottie-c01-subscription-20261003-v1/source-freeze.json",
+    "offlineReady": "/home/administrator/project/.eva2-artifacts/p1-bottie-c01-subscription-20261003-v1/offline-ready.json"
+  },
+  "review": {
+    "path": "eva2/reviews/p1-bottie-c01-subscription-20261003.md",
+    "executionAdmission": "GO for exactly this sample",
+    "resultAssessment": "Confirmed native reply, independent SQLite hash/ACK, measured usage and local stop within startWeb scope."
+  },
+  "preparationFailure": {
+    "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-c01-subscription-20261003-v1/native-node-check.json",
+    "cause": "Copied subscription source omitted native SQLite dependency path; existing pinned dependency tree mounted read-only. No install or provider call."
+  },
+  "limitations": [
+    "Single known development case; no repeated latency or semantic/personality superiority claim.",
+    "Explicit equal-model and observation-hook variant; not unmodified production Eva1.",
+    "Fresh empty local state; only native startWeb/agent/awaited ACK, not the eva.service schedulers.",
+    "Eva2 retained a fact but consolidation remains pending; measured tokens are not equal fully completed memory costs.",
+    "No product installation or new completed product function.",
+    "Original unseen EV-003 acceptance remains open."
+  ]
+}

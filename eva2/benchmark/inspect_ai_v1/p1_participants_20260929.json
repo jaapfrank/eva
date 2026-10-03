@@ -456,7 +456,7 @@
   },
   "readiness": {
     "mayStartModelComparison": false,
-    "reason": "The sole admitted Eva2 C01 epoch1 entry has executed; answer and fact stored, consolidation incomplete under unchanged sample envelope. No repeat or other entry automatically admitted.",
+    "reason": "Both admitted C01 epoch1 entries consumed. Native answers recorded; Eva2 consolidation incomplete. No replay or other entry automatically admitted.",
     "missingAccessCountsAs": "unknown_not_loss",
     "historicalResults": "EV-002 remains unchanged; no current ranking inferred.",
     "partialExecutionPolicy": {
@@ -479,15 +479,24 @@
         "outcome": "sample_envelope_refused",
         "fullNativeSampleComplete": false,
         "evidence": "eva2/evidence/product/p1-native-c01-subscription-20261003.json"
+      },
+      {
+        "participant": "eva1-bottie",
+        "case": "C01",
+        "epoch": 1,
+        "outcome": "native_reply_readback_and_delivery_verified",
+        "fullNativeSampleComplete": true,
+        "scope": "startWeb-only native agent route and awaited ACK reconciliation; no whole eva.service scheduler claim",
+        "evidence": "eva2/evidence/product/p1-native-bottie-c01-subscription-20261003.json"
       }
     ]
   },
   "budget": {
-    "thisAssignmentModelCalls": 2,
+    "thisAssignmentModelCalls": 4,
     "paidJudgeCalls": 0,
     "nextModelRuns": 0,
     "creditCost": null,
-    "notice": "Two actual requests: 4874 input/171 output tokens. Third dispatch refused before HTTP. No unused budget redistribution."
+    "notice": "C01 epoch1: Eva2 two requests4874input/171output; Bottie two requests9185input/272output. Eva2 consolidation incomplete; no full-memory cost win inferred. No unused budget redistribution."
   },
   "acceptanceScale": {
     "casesPerFamily": 12,
@@ -513,7 +522,7 @@
     "modelCalls": 0
   },
   "developmentPlan": {
-    "status": "first_known_sample_recorded_incomplete_native_consolidation",
+    "status": "first_known_pair_recorded",
     "claim": "Known conversation development cases only; not unseen acceptance, voice or broad task capability.",
     "cases": [
       {

@@ -630,3 +630,24 @@ const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
         assert case["dispatches"] == 1
         if case["kind"].startswith("nonok"):
             assert case["closes"] == 1
+
+
+def test_subscription_native_tool_cap_has_independent_receipt(tmp_path):
+    script = r"""
+const fs=require('node:fs'),path=require('node:path');
+const source=fs.readFileSync(process.argv[1],'utf8');
+const block=source.slice(source.indexOf('const toolEvents = [];'),source.indexOf('if (subscription) {\n  // Fixed hooks'));
+const run=new Function('fs','path','dataDir',`let stopping=false,currentRequestId='sample';const stopSample=()=>{stopping=true};${block}
+recordTool('commit_turn_understanding',true);
+recordTool('onthoud');recordTool('zoek_geheugen');recordTool('zoek_gesprek');
+let refused=false;try{recordTool('onthoud')}catch{refused=true}
+return {refused,stopping};`);
+process.stdout.write(JSON.stringify(run(fs,path,process.argv[2])));
+"""
+    result = subprocess.run(["node", "-e", script, str(BENCHMARK / "cp001_bottie_worker.mjs"), str(tmp_path)], capture_output=True, text=True, check=True)
+    assert json.loads(result.stdout) == {"refused": True, "stopping": True}
+    receipt = json.loads((tmp_path / "native-tool-dispatch.json").read_text())
+    assert receipt["maximum"] == 4
+    assert sum(event["admitted"] for event in receipt["events"]) == 4
+    assert receipt["events"][0]["protocol"] is True
+    assert receipt["events"][-1]["outcome"] == "refused_before_dispatch"

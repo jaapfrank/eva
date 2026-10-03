@@ -1035,8 +1035,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T20:56:21.662308+00:00",
+        "checkedAt": "2026-10-03T21:24:16.348873+00:00",
         "deliveries": [
+          {
+            "title": "Eerste echte Eva1/Eva2-vergelijking vastgelegd",
+            "date": "3 oktober",
+            "state": "tested",
+            "result": "Dezelfde vraag: Eva2 antwoord in 5,124 s met 4.874 gemeten inputtokens; Eva1 in 15,948 s met 9.185. Beide antwoorden opgeslagen en onafhankelijk teruggelezen. Vier modelaanvragen totaal.",
+            "remaining": "Eén ontwikkelgeval: Eva1-proef compleet, Eva2-consolidatie open. Geen algemene kwaliteits-/kostenwinst of nieuwe Eva-functie; 25/44 taken blijven afgerond.",
+            "source": "eva2/evidence/product/p1-native-bottie-c01-subscription-20261003.json"
+          },
           {
             "title": "Eerste echte gespreksmeting: antwoord en geheugenfeit bewaard",
             "date": "3 oktober",
@@ -3545,14 +3553,14 @@
           }
         ],
         "now": {
-          "title": "P1 · eerste echte gespreksmeting afgerond",
-          "state": "tested",
+          "title": "P1 · overige vaste Eva1/Eva2-metingen voorbereiden",
+          "state": "in_progress",
           "owner": "Codex /root",
-          "detail": "Vaste Eva2-vraag eenmaal uitgevoerd: eerste tekst 2,970 s, volledig antwoord 5,124 s. Antwoord en geheugenfeit opgeslagen; consolidatie niet afgerond binnen vast proefbudget. Bron en bewijs vastgelegd. Geen modelproef of aanmelding actief; vergelijking met Eva1 volgt."
+          "detail": "Eerste antwoordmeting: Eva2 5,124 s, Eva1 15,948 s; bewijs behouden. De zes overige vooraf geplande uitvoeringen gebruiken dezelfde aansluiting en krijgen één gebundelde review. Nog geen nieuwe modelproef of aanmelding actief."
         },
         "next": {
-          "title": "Bestaande Eva1-vergelijking afronden",
-          "detail": "De voorbereide Eva1-route aansluiten binnen hetzelfde protocol; concurrentaanmelding rust tot Jaap klaarzit. Geen nieuwe audit, herhaling van C01 of productherbouw."
+          "title": "Volgende vooraf vastgelegde vergelijkingsgevallen",
+          "detail": "Hergebruik dezelfde aansluiting voor de geplande C04- en tweede metingen als het bestaande protocol dat toelaat. Geen herhaling voor een mooiere score of verruiming van het proefbudget. Ontbrekende deelnemers blijven onbekend."
         },
         "ownerAction": {
           "title": "Windows opnieuw opstarten voor de voorbereide eindcontrole",
@@ -3564,7 +3572,7 @@
           "expected": "Geen nieuwe installatie of herhaling van opdrachten. F1.2 blijft open tot de echte herstart en nacontrole."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T20:56:21.662308+00:00"
+        "reviewedAt": "2026-10-03T21:24:16.348873+00:00"
       },
       "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
     },
@@ -15980,14 +15988,14 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Eerste Eva2 C01 vastgelegd; antwoord en feit bewaard, volledige consolidatie niet binnen vast proefbudget. Eva1 en overige beschikbare deelnemers nog niet gemeten; eindvergelijking en menselijke beoordeling open.",
-              "latestEvidence": "eva2/evidence/product/p1-native-c01-subscription-20261003.json",
+              "remaining": "C01 epoch1 via Eva1 en Eva2 gemeten. Eva1 native proef compleet; Eva2 consolidatie open. Andere geplande gevallen/deelnemers en ongeziene eindvergelijking blijven open.",
+              "latestEvidence": "eva2/evidence/product/p1-native-bottie-c01-subscription-20261003.json",
               "assignment": {
                 "owner": "Codex /root",
                 "support": "/root/background_execution_seam",
-                "stage": "first_native_result_recorded_next_participant_queued",
-                "baseCommit": "b52f19ac01153967bb9f4f68f9be29a8dda4515c",
-                "currentAction": "First native C01 outcome independently assessed and recorded. No live model run or login active; next participant queued.",
+                "stage": "remaining_fixed_samples_group_review",
+                "baseCommit": "d4aaa30c381fa1ec9fe6e19bd26bf83bdc97eea0",
+                "currentAction": "One grouped parameter/binding review for six remaining fixed Eva1/Eva2 samples. Original two results retained; no new model calls yet.",
                 "runtimeHandle": {
                   "hermesExecSession": 63638,
                   "hermesExitCode": 1,
@@ -15998,13 +16006,15 @@
                   "openclawPid": 3233193,
                   "openclawExitCode": 1
                 },
-                "estimate": "Two actual calls, 4874 input/171 output tokens; development credits unknown. No replay.",
+                "estimate": "At most12 further existing-route provider attempts under the unchanged per-sample and aggregate development protocol. No paid judge. Actual credit costs unknown.",
                 "files": [
-                  "Root: native worker, experiment evidence, manifest and workboard",
-                  "Completed worker: IPC adapter and focused tests; HTTP stream compatibility/settlement",
-                  "Completed reviewer: shared native accounting review"
+                  "Worker: cp001_bottie_worker.mjs, test_cp001_native_bottie.py and private C01 launcher",
+                  "Root: manifest, evidence, existing workboard and WERKBORD",
+                  "Independent reviewer: single bounded result review after launcher is ready"
                 ],
-                "activeWorkers": [],
+                "activeWorkers": [
+                  "/root/aide_final_evaluation"
+                ],
                 "finish": "Complete native provider/helper/memory coverage admission for an available pair, or establish the exact unchanged-envelope refusal; no synthetic-only success or budget increase.",
                 "nextSeam": {
                   "providerFactory": "Native Codex constructors all bound in the isolated memory lifecycle.",
@@ -16017,7 +16027,7 @@
               },
               "blocker": "OpenClaw/Hermes-aanmelding ontbreekt alleen voor die deelnemers. Eva1/Eva2 hebben zelfstandig te onderzoeken native meet-/stopovergangen.",
               "nextImplementation": "Use these owned persisted configurations for native startup after own authentication. No repeated config/catalog probe without a changed cause or new evidence. Prior Agent Zero helper-envelope refusal remains unavailable; no hidden helper disable, auth-token copying or quota increase.",
-              "checkedAt": "2026-10-03T20:56:21.662308+00:00",
+              "checkedAt": "2026-10-03T21:17:37.751434+00:00",
               "ownerActionRequired": true,
               "nextAction": "Codex gebruikt bestaande vergelijkingsvoorbereiding; Jaap levert alleen daadwerkelijk ontbrekende accounttoegang. Dit blokkeert uitsluitend die vergelijking, niet Eva’s eigen functionele uitvoering.",
               "ownerInstructions": {
@@ -16046,14 +16056,16 @@
                 "existing": "EV-003 development cadence, C01/C04 public development cases, existing Inspect runner and native admission observations.",
                 "gap": "Current pins lack a bounded development run manifest with aggregate limits.",
                 "finish": "Freeze two known development cases, order, per-sample and aggregate limits; retain unavailable access and unseen final dataset as open. No model run.",
-                "estimate": "Two actual calls, 4874 input/171 output tokens; development credits unknown. No replay.",
-                "activeWorkers": [],
+                "estimate": "At most12 further existing-route provider attempts under the unchanged per-sample and aggregate development protocol. No paid judge. Actual credit costs unknown.",
+                "activeWorkers": [
+                  "/root/aide_final_evaluation"
+                ],
                 "owner": "/root",
                 "support": null,
-                "stage": "first_native_result_recorded_next_participant_queued",
-                "currentAction": "First native C01 outcome independently assessed and recorded. No live model run or login active; next participant queued."
+                "stage": "remaining_fixed_samples_group_review",
+                "currentAction": "One grouped parameter/binding review for six remaining fixed Eva1/Eva2 samples. Original two results retained; no new model calls yet."
               },
-              "remaining": "Eerste Eva2 C01 vastgelegd; antwoord en feit bewaard, volledige consolidatie niet binnen vast proefbudget. Eva1 en overige beschikbare deelnemers nog niet gemeten; eindvergelijking en menselijke beoordeling open.",
+              "remaining": "C01 epoch1 via Eva1 en Eva2 gemeten. Eva1 native proef compleet; Eva2 consolidatie open. Andere geplande gevallen/deelnemers en ongeziene eindvergelijking blijven open.",
               "evidence": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#developmentPlan",
               "nextAction": "Gebruik de bestaande taakfamilies en vastgezette referentieversies voor persoonlijkheid, geheugen, initiatief en zelfstandig werk. Vergelijk aanwezige én door Eva toegevoegde mogelijkheden op bruikbaar resultaat, hulp, tijd en totaalverbruik; geen toolaantallen of vooraf gecodeerde voorbeeldadapter. Bestaande afgeschermde beoordeling behouden.",
               "ownerActionRequired": false,
@@ -16063,8 +16075,8 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-03T20:56:21.662308+00:00",
-              "latestEvidence": "eva2/evidence/product/p1-native-c01-subscription-20261003.json"
+              "checkedAt": "2026-10-03T21:17:37.751434+00:00",
+              "latestEvidence": "eva2/evidence/product/p1-native-bottie-c01-subscription-20261003.json"
             }
           ],
           "assignment": {
