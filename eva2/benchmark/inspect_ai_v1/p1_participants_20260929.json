@@ -41,6 +41,29 @@
           "reviewedInputManifestSha256": "ffe88b7377a4355c594ef0ec90a4557eaf6361d2ae75f869b1dfd9b4769f003d",
           "limits": "No admission, full HEAD installation or superiority inferred; prior reference retained."
         }
+      },
+      "memoryProviderAccounting": {
+        "status": "offline_native_provider_passed_full_instance_unbound",
+        "evidence": "eva2/evidence/product/p1-hindsight-accounting-20261003.json",
+        "adapter": "eva2/benchmark/inspect_ai_v1/cp001_http_accounting.py",
+        "probe": "eva2/benchmark/inspect_ai_v1/p1_hindsight_accounting_probe.py",
+        "sourceSha256": {
+          "p1_hindsight_accounting_probe.py": "512766ab2dd0e0804062acdbb3b1c962613503b6266b8d78b7326b63762aed1e",
+          "cp001_http_accounting.py": "906ea1bf9ee43ee5892aeb2c1d609447bbaa73698c8dd514cc4269a5bb3c5ff9",
+          "cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f"
+        },
+        "nativeProviderSha256": "b4cda4b56b3a6cc1f6bca64eaca7cbc7c75b5e8420d6bb77750c0d6304098afe",
+        "tests": 9,
+        "runtimeModelCalls": 0,
+        "binding": "One explicit sample-owned native HTTPX client; every dispatched retry has model/effort admission and raw SSE usage. Existing ledger/stream guard and exact Eva attestor reused.",
+        "remaining": "Bind all foreground/helper clients and actual retain/consolidate/reflect lifecycle from the same fresh sample to its parent ledger. Streaming/timing and final dataset remain open.",
+        "liveAdmission": false,
+        "independentReview": {
+          "path": "eva2/reviews/p1-hindsight-accounting-20261003.md",
+          "sha256": "50a6b961bcf7fee97cc000f70a570205e8dcd93087c9b3848b30742d0cfd6391",
+          "decision": "GO for bounded native provider accounting only",
+          "reviewer": "/root/aide_final_evaluation"
+        }
       }
     },
     {

@@ -33,28 +33,26 @@ open. Nog steeds 25/44 afgerond; geen nieuwe functieclaim uit deze controle.
 [Resultaat en beperkingen](evidence/product/f1-joint-check-pre-reboot-20261003.json)
 · [Voorbereidingsreview](reviews/f1-joint-check-20261003.md).
 
-**P1.1 — echte Eva1-bron aangesloten; geheugenmeting is de volgende stap.**
-De echte native proefroute gebruikt nu het bestaande sampleverbruiksregister en
-verwerkt stop tijdens een lopende HTTP-aanvraag. Acht gerichte gevallen, met
-behoud van fouten en gerichte correctie; onafhankelijke beperkte GO. Geen echte
-model- of provideraanroepen en geen wijziging aan Eva1/Eva2-productdiensten.
-Dit is voorbereidend vergelijkingswerk, geen nieuwe functie of P1-afronding.
-Werkelijke provider-/helper-/geheugendekking en streamingmeting blijven open.
-[Bewijs en beperkingen](evidence/product/p1-native-control-20261003.json)
-· [Review](reviews/p1-native-control-20261003.md).
+**P1.1 — ruwe geheugenmeting werkt; volledige aansluiting nog open.**
+De echte Eva1-bron en expliciete gelijk-modelvariant zijn gepubliceerd in
+`798a814a`; originele Eva1 blijft behouden. Nu telt de vergelijking ook de echte
+Hindsight-providerpogingen met het bestaande verbruiksregister. Negen gerichte
+controles slagen: native herhaling, ruwe usage, stoppen, ontbrekende usage en
+mislukte afsluiting. De native schatting blijft afzonderlijk zichtbaar.
 
-De geïnstalleerde F1-images zijn aan de vergelijking gebonden en onafhankelijk
-beoordeeld. De actuele eigenaaropdracht laat beschikbare, toegelaten deelnemers
-vergelijken; ontbrekende concurrenten zijn onbekend, geen verliezers. Geen
-budgetherverdeling, gewijzigde eindcriteria of algemene winstclaim. De echte Eva1 draait uit Bottie; de eerdere fixture gebruikte de Eva2-bronkopie.
-De echte bron en een expliciete lege gelijk-modelvariant zijn aangesloten.
-De volledige lokale tweecallroute en onafhankelijke SQLite-uitlezing slagen;
-de originele bron blijft behouden. Onafhankelijke beperkte GO.
-Hindsight-usage is geschat en mist operationbinding; die meetdekking blijft open.
-Geen nieuwe modelcalls, budgetvergroting of competitieve score. De volgende
-aansluiting gebruikt afzonderlijke proefinstanties waar dat voldoende is;
-geen nieuwe geheugenlogica bouwen uitsluitend voor meting.
-[Bronbinding en beide bewaarde voorbereidingsfouten](evidence/product/p1-native-source-binding-20261003.json).
+Twee fouten in de losse proefopstart zijn bewaard en gericht gecorrigeerd; de
+inhoudelijke controles slaagden bij hun eerste uitvoering. Geen echte modelcalls,
+installatie of rollback. Onafhankelijke beperkte eindreview: GO.
+Dit is vergelijkingsvoorbereiding, geen nieuwe Eva-functie of afgeronde P1.
+[Meetresultaat en beperkingen](evidence/product/p1-hindsight-accounting-20261003.json).
+
+**Nog te doen:** alle gespreks- en geheugencalls binnen één afzonderlijke
+proefinstantie aan hetzelfde centrale register koppelen en het einde van de
+achtergrondverwerking controleren. De bestaande native worker heeft een lege
+vector-database en de al aanwezige lokale modelresources nodig; die aansluiting
+is de volgende stap. Daarna de beschikbare toegelaten deelnemers
+vergelijken; ontbrekende concurrenten blijven onbekend. Geen nieuwe geheugenlogica,
+gewijzigde vergelijkingscriteria, groter budget of algemene winstclaim.
 
 **Nu van Jaap nodig: Windows opnieuw opstarten voor F1.2.** Sla werk op,
 kies Opnieuw opstarten en open daarna deze chat; meld “Herstart klaar”. De

@@ -1,0 +1,156 @@
+{
+  "contract": "eva2-p1-hindsight-accounting-v1",
+  "checkedAt": "2026-10-03T18:26:05.690022+00:00",
+  "status": "offline_native_provider_binding_passed_not_full_sample_admission",
+  "baseCommit": "798a814ae2bd5d4632e6f5c6189c10853b992b3f",
+  "task": "P1.1",
+  "existing": "ProviderSampleLedger, SampleAsyncStream, Eva raw SSE usage attestor and installed Hindsight CodexLLM request/retry/decoder retained.",
+  "added": "Explicit sample-owned HTTPX transport and focused native offline probe. No production provider, memory rules, installation or credentials changed.",
+  "runtime": {
+    "image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+    "nativeProviderSha256": "b4cda4b56b3a6cc1f6bca64eaca7cbc7c75b5e8420d6bb77750c0d6304098afe",
+    "evaAttestorSourceSha256": "efdaf9e083ef15ee77b16a1015b7cfb1ac5cd82538e47840404fa5a290ca843f",
+    "pythonDependencyMount": "/var/lib/eva2/hindsight-cuda/torch-2.10.0-cu128-b8e1c087cc91 mounted readonly at /opt/eva-cuda, same as installed service",
+    "httpxVersion": "0.28.1",
+    "isolation": "Disposable network-none, read-only root filesystem, all capabilities dropped; writable tmpfs and private output only; fixture UID0 to write owned receipt. No production data/auth/DB mounts.",
+    "attestorReuse": "Hash-bound AST selection of the unchanged CodexProviderError, RawUsageAttestation and _RawSseUsageAttestor definitions; no native Hindsight modules faked. Pure definitions avoid importing unavailable Pydantic-AI dependencies into Hindsight Python3.11."
+  },
+  "checks": {
+    "testsRun": 9,
+    "failures": 0,
+    "errors": 0,
+    "durationSeconds": 0.19060972801526077,
+    "cases": [
+      "test_duplicate_terminal_never_becomes_complete",
+      "test_eof_close_failure_prevents_native_retry",
+      "test_failed_close_remains_unsettled",
+      "test_fragmented_gzip_preserves_wire_bytes_and_request",
+      "test_native_missing_usage_stops_before_retry200",
+      "test_native_missing_usage_stops_before_retry503",
+      "test_native_retry_counts_both_requests_and_keeps_estimate_separate",
+      "test_stop_closes_only_selected_native_call_even_after_terminal",
+      "test_transport_close_attempts_all_owned_bodies",
+      "test_wrong_role_is_rejected_before_dispatch"
+    ],
+    "nativeRetry": {
+      "ledger": {
+        "sample_id": "native-retry",
+        "provider_attempts": 2,
+        "complete": true,
+        "stop": null,
+        "stop_requested": false,
+        "active_async_attempts": 0,
+        "cancel_errors": [],
+        "total_usage": {
+          "input_tokens": 62,
+          "output_tokens": 14,
+          "total_tokens": 76
+        },
+        "known_partial_usage": {
+          "input_tokens": 62,
+          "output_tokens": 14,
+          "total_tokens": 76
+        },
+        "attempts": [
+          {
+            "id": 0,
+            "sample_id": "native-retry",
+            "role": "helper",
+            "model": "gpt-6-astra",
+            "reasoning_effort": "medium",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 31,
+              "output_tokens": 7,
+              "total_tokens": 38
+            }
+          },
+          {
+            "id": 1,
+            "sample_id": "native-retry",
+            "role": "helper",
+            "model": "gpt-6-astra",
+            "reasoning_effort": "medium",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 31,
+              "output_tokens": 7,
+              "total_tokens": 38
+            }
+          }
+        ],
+        "coverage": "Only native entrypoints actually bound by the caller",
+        "live_admission": false
+      },
+      "native_estimate": {
+        "input_tokens": 6,
+        "output_tokens": 8,
+        "total_tokens": 14,
+        "cached_tokens": 0,
+        "thoughts_tokens": 0
+      },
+      "note": "Native char/4 estimate is not raw measured usage; both responses are synthetic."
+    }
+  },
+  "history": [
+    {
+      "attempt": "v1",
+      "outcome": "Preparation stopped before tests: dependency-only /opt/eva-cuda mount omitted; httpx unavailable. No model call."
+    },
+    {
+      "attempt": "v2",
+      "outcome": "Preparation stopped before tests: native non-root image user could not write root-owned private receipt. No model call. Isolated LiteLLM cost-map lookup denied by network-none, local backup used."
+    },
+    {
+      "attempt": "v3",
+      "outcome": "Same installed dependency mount readonly; fixture UID0 and local bundled cost map. Nine first actual test executions pass. Three focused close-error review paths corrected before tests."
+    }
+  ],
+  "consumption": {
+    "runtimeModelCalls": 0,
+    "realProviderTokens": 0,
+    "developmentCredits": null,
+    "syntheticUsage": "The native two-attempt case reports 62 input / 14 output fixture tokens. These are test values, not consumed model tokens."
+  },
+  "limits": [
+    "Mock HTTP responses; no provider latency or billed cost measured",
+    "Actual CodexLLM retry and decode, not complete retain/reflect lifecycle",
+    "Only the explicitly bound client; no full-instance admission",
+    "Comparison stop is assistance, not native cancellation",
+    "No exact cache-token breakdown or billing measured",
+    "Full Eva2 foreground/background memory lifecycle and parent cross-process ledger binding remain open",
+    "No live admission, comparison score, product function completion, restart proof or new family acceptance"
+  ],
+  "receipts": {
+    "v1": {
+      "launch.json": "30b810bef75d30b534e58b6f222daacba62b6df2ada217ce3291c4b11cf2f645",
+      "stderr.log": "bb5a9866934658ca73a2c5b9318f896b591b1d0b704eafbf20d678a35bf4cb03",
+      "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit.json": "00f69e5c8d6320400fdca88b305328c37ba5af6e2f383b4f529e307edaa3e6b7"
+    },
+    "v2": {
+      "launch.json": "35ae051307e570f1b061941f0b967c1cd00e28e851827ad9d361b3d9a29a1e6a",
+      "stderr.log": "e158db82be7cc3d7bb77cef81710a35fc7518caf918984f5df3bb11bbd9fecbd",
+      "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit.json": "b9954e90db1c7f34eb194a3aedd9ce705142497d4328b755aeece0d9a42dc8f9"
+    },
+    "v3": {
+      "launch.json": "e6a1277a069767550203b421bf761274a2858ea621beaea644cbd0e62c400b5b",
+      "result.json": "99a7f091cf2e1c52ef20c4e82249a29cfcee212d9eed513e67c72680032005cd",
+      "stderr.log": "78f639b85ba5d1c7cd0d1d275e711ec5deca7edfc87013b511fceadbe4da244a",
+      "stdout.log": "05a160e9d0c2591396cfb8489e08f123ffba1be0e1cc3a3b76d20f45f8bb7a8d",
+      "exit.json": "b1693dde2646b57af1edb71515b5026f858a0474eafdf6400a1c247b8fb6ebf1"
+    }
+  },
+  "sourceSha256": {
+    "p1_hindsight_accounting_probe.py": "512766ab2dd0e0804062acdbb3b1c962613503b6266b8d78b7326b63762aed1e",
+    "cp001_http_accounting.py": "906ea1bf9ee43ee5892aeb2c1d609447bbaa73698c8dd514cc4269a5bb3c5ff9",
+    "cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f"
+  },
+  "independentReview": {
+    "path": "eva2/reviews/p1-hindsight-accounting-20261003.md",
+    "sha256": "50a6b961bcf7fee97cc000f70a570205e8dcd93087c9b3848b30742d0cfd6391",
+    "decision": "GO for bounded native provider accounting only",
+    "reviewer": "/root/aide_final_evaluation"
+  }
+}

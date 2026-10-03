@@ -335,3 +335,26 @@ memory contents or credentials were read, and no inference request was made.
 
 See `../../evidence/product/p1-native-source-binding-20261003.json` for exact
 source/variant provenance and the current execution status. P1 remains open.
+
+
+## Native memory HTTP accounting — 3 October
+
+`cp001_http_accounting.py` now observes a sample-owned native HTTPX client through
+`ProviderSampleLedger` and `SampleAsyncStream`. It reuses the exact existing Eva
+raw SSE attestor, forwards unchanged request/response bytes and headers, observes
+content decoding separately, counts every native retry and keeps incomplete usage
+unknown. Close failure prevents a new dispatch and remains visibly unsettled.
+
+Nine focused checks passed inside the pinned installed Hindsight image and its
+actual read-only Python dependency mount. `CodexLLM` was imported normally; its
+JSON parse retry and decoder executed with synthetic HTTP and auth only. Two
+pre-test setup failures are retained. No real model calls or production changes.
+The dependency mismatch was handled by hash-bound AST selection of three pure
+Eva attestor definitions, not a second parser or fake native provider modules.
+See `../../evidence/product/p1-hindsight-accounting-20261003.json`.
+
+This binds one native provider client, not the complete installation. Full
+foreground/retain/consolidation/reflection coverage, a common parent ledger,
+end-of-sample settlement and actual streaming timings remain open. The native
+character-based estimate is preserved separately. Cache-token breakdown and
+billed cost are not attested by this receipt. No live admission is granted.

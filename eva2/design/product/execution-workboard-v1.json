@@ -1038,6 +1038,14 @@
         "checkedAt": "2026-10-03T17:58:27.163715+00:00",
         "deliveries": [
           {
+            "title": "Vergelijkingsvoorbereiding: native geheugenverbruik meetbaar",
+            "date": "3 oktober",
+            "state": "tested",
+            "result": "De echte Hindsight-provider telt ruwe usage en herhaalpogingen via het bestaande register. Negen gerichte controles en onafhankelijke GO; geen echte modelcalls.",
+            "remaining": "Nog geen volledige geheugenpipeline, live vergelijking of nieuwe Eva-functie. De afzonderlijke meetadapter vereist geen productinstallatie.",
+            "source": "eva2/evidence/product/p1-hindsight-accounting-20261003.json"
+          },
+          {
             "title": "Vergelijkingsroute gebruikt nu de echte Eva1-bron",
             "date": "3 oktober",
             "state": "tested",
@@ -3513,14 +3521,14 @@
           }
         ],
         "now": {
-          "title": "P1.1 · volgende stap: geheugenverbruik volledig meten",
+          "title": "P1.1 · native geheugenmeting gecontroleerd",
           "state": "planned",
           "owner": "Codex /root",
-          "detail": "Eva1-broncorrectie lokaal gecontroleerd en onafhankelijk akkoord. Volgende technische aansluiting gebruikt een afzonderlijke proefinstantie om alle Eva2-geheugencalls mee te tellen; nog niet gestart. Geen live vergelijking of extra afgeronde Eva-functie."
+          "detail": "Negen gerichte controles en onafhankelijke GO. Volgende aansluiting op de volledige geheugenverwerking is nog niet gestart. Geen echte modelcalls of nieuwe afgeronde Eva-functie."
         },
         "next": {
-          "title": "Eva2-geheugencalls meenemen in dezelfde vergelijking",
-          "detail": "Gebruik bestaande geïsoleerde proefopzet en sampleledger; ruwe providerusage vastleggen, helpers niet uitschakelen en onbekende kosten zichtbaar houden. Aanmeldingen en F1.2-herstart blijven apart open."
+          "title": "Volledige proefinstantie aan één verbruiksregister koppelen",
+          "detail": "Bestaande lege vector-database en lokale geheugenmodelresources gebruiken; native achtergrondverwerking en alle calls tellen. Aanmelding en F1.2-herstart blijven afzonderlijk open."
         },
         "ownerAction": {
           "title": "Windows opnieuw opstarten voor de voorbereide eindcontrole",
@@ -3532,7 +3540,7 @@
           "expected": "Geen nieuwe installatie of herhaling van opdrachten. F1.2 blijft open tot de echte herstart en nacontrole."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T17:19:16.052196+00:00"
+        "reviewedAt": "2026-10-03T18:28:51.382841+00:00"
       },
       "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
     },
@@ -15940,14 +15948,14 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Echte Eva1-bron, dependencyboom en expliciete gelijk-modelvariant lokaal aangesloten en onafhankelijk akkoord. Eva2-geheugenverbruik, streaming/volledige stopmeting en echte vergelijking blijven open.",
-              "latestEvidence": "eva2/evidence/product/p1-native-source-binding-20261003.json",
+              "remaining": "Echte Eva1-bron en native Hindsight-provideraccounting lokaal gecontroleerd en onafhankelijk akkoord. Volledige voorgrond/geheugenverwerking per proefinstantie, gezamenlijke meet-/stoproute en echte vergelijking blijven open.",
+              "latestEvidence": "eva2/evidence/product/p1-hindsight-accounting-20261003.json",
               "assignment": {
                 "owner": "Codex /root",
                 "support": null,
-                "stage": "actual_bottie_source_bound_next_memory_binding",
-                "baseCommit": "73fe0ca37ba04e859b494b28c47cb973e742f100",
-                "currentAction": "Actual native source/explicit equal-model variant checked, independent bounded GO received. Root publishes source/evidence. Next: use one disposable Eva2 instance per sample to bind all memory calls to existing ledger; no new production memory logic unless necessary.",
+                "stage": "native_memory_http_accounting_complete_next_full_instance",
+                "baseCommit": "798a814ae2bd5d4632e6f5c6189c10853b992b3f",
+                "currentAction": "Native Hindsight HTTP accounting passed nine focused checks and independent bounded GO. Root publishes source/evidence. Next full-instance binding reuses native MemoryEngine/WorkerPoller; first establish existing empty vector DB and local model resources, then bind all calls to the same parent ledger.",
                 "runtimeHandle": {
                   "hermesExecSession": 63638,
                   "hermesExitCode": 1,
@@ -15958,17 +15966,23 @@
                   "openclawPid": 3233193,
                   "openclawExitCode": 1
                 },
-                "estimate": "Source-bounded native route tracing and necessary offline checks; zero live model calls; development credits unknown.",
+                "estimate": "Reuse existing sample ledger and native provider; focused offline verification only, zero live model calls; development credits unknown.",
                 "files": [
-                  "Worker: cp001_bottie_worker.mjs and test_cp001_native_bottie.py",
-                  "Root: explicit equal-model patch, native source evidence, manifest and existing board"
+                  "Root: cp001_http_accounting.py, p1_hindsight_accounting_probe.py, evidence, manifest and existing board",
+                  "Reviewer: p1-hindsight-accounting-20261003.md"
                 ],
                 "activeWorkers": [],
-                "finish": "Complete native provider/helper/memory coverage admission for an available pair, or establish the exact unchanged-envelope refusal; no synthetic-only success or budget increase."
+                "finish": "Complete native provider/helper/memory coverage admission for an available pair, or establish the exact unchanged-envelope refusal; no synthetic-only success or budget increase.",
+                "nextSeam": {
+                  "providerFactory": "All native Codex clients originate from CodexLLM through llm_wrapper.py394–402",
+                  "sampleLifecycle": "Native WorkerPoller required; pending-only wait is insufficient. Observe pending/running operations and ledger-owned requests, then native graceful shutdown.",
+                  "preflight": "Existing fresh vector DB and installed local embedding/crossencoder resources; no private bank clone or new runner.",
+                  "implemented": false
+                }
               },
               "blocker": "OpenClaw/Hermes-aanmelding ontbreekt alleen voor die deelnemers. Eva1/Eva2 hebben zelfstandig te onderzoeken native meet-/stopovergangen.",
               "nextImplementation": "Use these owned persisted configurations for native startup after own authentication. No repeated config/catalog probe without a changed cause or new evidence. Prior Agent Zero helper-envelope refusal remains unavailable; no hidden helper disable, auth-token copying or quota increase.",
-              "checkedAt": "2026-10-03T17:58:27.163715+00:00",
+              "checkedAt": "2026-10-03T18:28:51.382841+00:00",
               "ownerActionRequired": true,
               "nextAction": "Codex gebruikt bestaande vergelijkingsvoorbereiding; Jaap levert alleen daadwerkelijk ontbrekende accounttoegang. Dit blokkeert uitsluitend die vergelijking, niet Eva’s eigen functionele uitvoering.",
               "ownerInstructions": {
