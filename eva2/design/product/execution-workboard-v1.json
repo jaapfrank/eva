@@ -1034,7 +1034,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T15:06:30.744241+00:00",
+        "checkedAt": "2026-10-03T15:31:02.940717+00:00",
         "deliveries": [
           {
             "title": "O1.2 klaar · modulaire installatie en algemene connector",
@@ -3480,22 +3480,25 @@
           }
         ],
         "now": {
-          "title": "R1.1 · bestaande innovatievergelijking voorbereiden",
-          "state": "in_progress",
-          "owner": "Codex /root/background_execution_seam",
-          "detail": "O1.2 is technisch klaar, geïnstalleerd, onafhankelijk beoordeeld en gepubliceerd. Nu gericht controleren wat de oorzaak van de eerdere onvolledige vergelijking verandert. Nog geen nieuwe modelproef gestart. Stand: 24/44 kleine taken; 2/9 historische hoofdgroepen volledig klaar."
+          "title": "P1.1 · eigen aanmeldingen voor vergelijking",
+          "state": "waiting_owner",
+          "owner": "Jaap / Codex",
+          "detail": "Hermes en OpenClaw wachten op de verse aanmeldingen uit deze chat. Agent Zero-aanmelding is bewaard. R1-vervolgproef is onafhankelijk beoordeeld, maar automatische goedkeuringsreview verlangt expliciete toestemming voor uitvoering. Geen nieuwe modelproef gestart."
         },
         "next": {
-          "title": "R1.1 · vergelijking uitvoeren na gerichte protocolcontrole",
-          "detail": "Hergebruik de bestaande kandidaat en gewone leerroute. Ontwikkeling en onafhankelijke eindbeoordeling blijven gescheiden; geen ongewijzigde herhaling of nieuw optimalisatieplatform."
+          "title": "F1 · geleverde functies samenbrengen",
+          "detail": "Bestaande geïnstalleerde functies en bronversies samenbrengen in de gezamenlijke eindkandidaat; nog niet gestart. De gereedstaande R1-proef wordt alleen na expliciete toestemming uitgevoerd."
         },
         "ownerAction": {
-          "title": "Nu geen handeling nodig voor zelfstandig vervolgwerk",
-          "steps": [],
-          "expected": "Codex vervolgt de bestaande technische vergelijking. Nieuwe kanaaltoegang en fysieke/gezinsbeoordeling blijven afzonderlijk zichtbaar."
+          "title": "Aanmelden en afzonderlijke proefkeuze",
+          "steps": [
+            "Voltooi de Hermes- en OpenClaw-aanmelding met de verse codes in deze chat.",
+            "Beantwoord afzonderlijk de toestemmingsvraag voor de 8-run innovatieproef."
+          ],
+          "expected": "Inloggen verleent niet stilzwijgend toestemming voor de vervolgproef. Onafhankelijk productwerk blijft mogelijk."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T15:06:30.744241+00:00"
+        "reviewedAt": "2026-10-03T15:31:02.940717+00:00"
       },
       "reviewedAt": "2026-10-03T13:08:35.945523+00:00"
     },
@@ -15801,7 +15804,7 @@
           ],
           "outcome": "Uitvoerbare ervaring vergelijken",
           "effort": "M research",
-          "status": "in_progress",
+          "status": "blocked",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Ordinary procedure reuse is the comparison baseline; task-model concept has prior art and no Eva implementation evidence.",
@@ -15814,13 +15817,13 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": "/root/background_execution_seam",
+          "activeWorker": null,
           "dashboardComponent": "projects",
           "remainingTasks": [
             {
               "id": "R1.1",
               "title": "Ervaringsmodel begrensd vergelijken",
-              "status": "in_progress",
+              "status": "blocked",
               "kind": "onderzoek",
               "doneWhen": "Eén passende geïsoleerde vergelijking met gewone bestaande werkwijzen, inclusief leerverbruik.",
               "owner": "Codex /root",
@@ -15828,30 +15831,30 @@
               "assignment": {
                 "owner": "/root/background_execution_seam",
                 "baseCommit": "a5009dddca814ce828158d28e552fb7d072d954e",
-                "stage": "focused_followup_preparation",
+                "stage": "independently_admitted_execution_approval_required",
                 "outcome": "Determine a distinct, bounded intervention for change-aware reuse before comparing it with the existing ordinary skill route.",
                 "existing": "JSON Patch learning and different-input reuse already work; copy execution and precondition checks are not a new task model. Full learning replay is not admitted by the existing experiment envelope.",
-                "gap": "Held-out benefit and promotion decision not measured; development candidate is available.",
+                "gap": "Old driver stopped all eight planned runs on the first per-run response exhaustion. New programming tools do not change that cause. Independent review checks a separate driver which preserves a local failed outcome and continues fixed arms, while hard boundary/global/unknown failures still stop.",
                 "files": [
                   "eva2/experiments/r1-executable-experience-20260930/"
                 ],
-                "currentAction": "Read existing public freeze and current execution seam; establish a changed cause before any follow-up model run. Preserve original UNKNOWN round and independent held-out grading.",
+                "currentAction": "15 offline checks passed; source/protocol and fresh independent cases/scorer are frozen. Exact 8-run followup is ready, but auto-review denied execution. Explicit owner question pending; no alternate runner or repeated attempt.",
                 "finish": "Existing R1.1 finish condition retained: isolated comparison with ordinary methods, including learning cost. Source preparation alone does not complete R1 or technical distinction.",
                 "estimate": "Targeted existing-route preflight and bounded runnable continuation; no live model calls in preparation. Preserve explicit original experiment accounting; credits unknown.",
-                "activeWorkers": [
-                  "/root/background_execution_seam"
-                ]
+                "activeWorkers": []
               },
               "remaining": "Vorige onderzoeksronde afgesloten zonder bewezen voordeel. Codex bereidt een geldig vervolg met gewijzigde oorzaak/hypothese voor; geen automatische herhaling of nieuwe eigenaarbeslissing.",
-              "checkedAt": "2026-10-03T15:06:30.744241+00:00",
-              "blocker": null,
+              "checkedAt": "2026-10-03T15:31:02.940717+00:00",
+              "blocker": "Automatische goedkeuringsreview heeft de concrete 8-run vervolguitvoering geweigerd wegens ontbrekende expliciete eigenaarstoestemming voor dit nieuwe modelverbruik. Nog geen modelcalls of uitvoeringsproces gestart.",
               "previousBlocker": "Vaste proef onvolledig: referentie bereikte12modelreacties vóór tweede deelresultaat. Kandidaat/B/herhalingen niet gemeten; eindvoorwaarde vergelijking niet gehaald. Deze ronde afgeslotenUNKNOWN zonder automatische vervolgproef.",
-              "ownerActionRequired": false,
-              "nextAction": "Bestaande kandidaat en gewone werkwijze koppelen aan de huidige algemene uitvoering. Alleen bij een aangetoonde gewijzigde oorzaak de afzonderlijk beoordeelde vergelijking uitvoeren.",
+              "ownerActionRequired": true,
+              "nextAction": "Na expliciete toestemming alleen de exact beoordeelde proef uitvoeren. Tot die tijd ander zelfstandig productwerk vervolgen; geen ongewijzigde uitvoeringspoging.",
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
-                "steps": [],
+                "availableNow": true,
+                "readyWhen": "De concrete proef en vaste meetgrenzen zijn gereed; de goedkeuringsvraag staat in deze chat.",
+                "steps": [
+                  "Beantwoord of de 8-run vervolgproef met maximaal96nieuwe modelreacties mag worden uitgevoerd."
+                ],
                 "blocksIndependentWork": false
               }
             },
@@ -15868,7 +15871,7 @@
             }
           ],
           "owner": "/root",
-          "reviewer": "/root/review_telegram_draft_lane",
+          "reviewer": "/root/aide_final_evaluation",
           "disposition": "Optional frozen round closed inconclusive; R1.1 comparison unmet and technical distinction open.",
           "responsibilityReview": {
             "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
@@ -16239,48 +16242,37 @@
             {
               "id": "P1.1",
               "title": "Vergelijkbare versies en toegang vastleggen",
-              "status": "blocked",
+              "status": "in_progress",
               "kind": "voorbereiden",
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Geen actieve aanmeldcode/link. Codex start verse eigen flows als Jaap kan bevestigen; Agent Zero-aanmelding behouden. Alleen eindvergelijking wacht op toegang.",
+              "remaining": "Eigenaar biedt nu accountaanmelding. Daarna native status en catalogus controleren; gelijkwaardige model-/toolvoorwaarden en de volledige vergelijking blijven afzonderlijk open.",
               "latestEvidence": "eva2/evidence/product/p1-native-auth-status-20261001.json",
               "assignment": {
-                "baseCommit": "a4524901",
-                "owner": "/root",
-                "activeWorkers": [],
-                "files": [
-                  "eva2/benchmark/inspect_ai_v1/p1_openclaw_host_config_probe.py",
-                  "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-                  "eva2/evidence/product/p1-openclaw-host-config-20261001.json"
-                ],
-                "existing": "Pinned OpenClaw2026.9.6 and native Codex plugin/managed0.155.1; reviewed direct builder and actual unauthenticated catalog. Existing registration, authentication gaps and product acceptance retained.",
-                "gap": "Direct builder fixture is not persistent canonical host configuration. The actual CLI has not validated/read back the two intended main-role configurations.",
-                "outcome": "Persist correct openai/model references with model-scoped codex runtime policy, and verify the installed OpenClaw CLI accepts and reads them.",
-                "finish": "Two role configurations validated and read back once through the real installed CLI in an empty owned profile with network namespace disabled. Record exact failures or success; no gateway, model thread, auth, inference, copied credentials or native patch.",
-                "design": "Keep separate contact Sol/off and work Astra/medium files in one owned comparison profile; explicit native plugin load path, immutable config environment, shared owned workspace. Preserve both model-scoped runtime pins; no provider metadata fabrication or helper-coverage claim. Source/package hashes and unchanged-file checks join focused independent review.",
-                "estimate": "Four local CLI reads, zero intended model/provider calls; no Eva service changes; development credits unknown.",
-                "stage": "persistent_host_config_reviewed_awaiting_own_native_signin",
-                "finding": "Both persisted main-role configurations validated and authored fields read back unchanged through actual CLI. Additional native defaults visible; no auth, inference or runtime selection.",
-                "reviewer": "/root/review_telegram_draft_lane",
-                "reviewResult": "GO for configuration acceptance/readback only"
+                "owner": "Codex /root",
+                "support": "/root/background_execution_seam",
+                "stage": "two_native_device_logins_waiting_for_owner",
+                "baseCommit": "523d5bc0",
+                "currentAction": "Both independently owned native login flows active; user has verification URL and two separate codes. No credentials copied or inference requests.",
+                "runtimeHandle": {
+                  "hermesExecSession": 63638,
+                  "openclawPid": 2534685
+                },
+                "estimate": "Two native auth flows plus read-only confirmation; no model generation, credit cost unknown."
               },
-              "blocker": "OpenClaw en Hermes missen eigen ChatGPT-aanmelding voor de eindvergelijking. Jij bevestigt de verse aanmeldingen nadat Codex die start. Dit blokkeert het bouwen van Eva niet.",
+              "blocker": "Hermes en OpenClaw eigen device-login actief; Jaap bevestigt via de verse codes in deze chat. Agent Zero eigen aanmelding bewaard.",
               "nextImplementation": "Use these owned persisted configurations for native startup after own authentication. No repeated config/catalog probe without a changed cause or new evidence. Prior Agent Zero helper-envelope refusal remains unavailable; no hidden helper disable, auth-token copying or quota increase.",
-              "checkedAt": "2026-10-01T11:32:00+00:00",
+              "checkedAt": "2026-10-03T15:31:02.940717+00:00",
               "ownerActionRequired": true,
               "nextAction": "Codex gebruikt bestaande vergelijkingsvoorbereiding; Jaap levert alleen daadwerkelijk ontbrekende accounttoegang. Dit blokkeert uitsluitend die vergelijking, niet Eva’s eigen functionele uitvoering.",
               "ownerInstructions": {
                 "availableNow": true,
-                "purpose": "access",
+                "readyWhen": "Eigenaar heeft de verse aanmeldlink en code in deze chat ontvangen.",
                 "steps": [
-                  "Meld hier Start de aanmeldingen voor OpenClaw en Hermes wanneer je de browseraanmeldingen kunt bevestigen.",
-                  "Codex start de bestaande eigen routes en geeft twee verse links/codes. Bevestig beide met je ChatGPT-account.",
-                  "Meld na beide bevestigingen Klaar; Codex controleert opgeslagen toegang."
+                  "Voltooi de Hermes-aanmelding uit deze chat.",
+                  "Voltooi daarna de aparte OpenClaw-aanmelding zodra die klaarstaat."
                 ],
-                "expected": "Eigen geldige provider-aanmelding voor beide concurrenten. Nu staat geen actieve aanmeldcode klaar.",
-                "reportBack": "Wanneer je aanwezig bent om beide verse aanmeldingen te bevestigen.",
                 "blocksIndependentWork": false
               }
             },

@@ -1,0 +1,1 @@
+["/home/administrator/project/.eva2-artifacts/native-voice-offline-env-w8rt00c4/venv/bin/python", "-m", "pytest", "-q", "-o", "addopts=", "-p", "no:cacheprovider", "/home/administrator/project/Eva2/eva2/experiments/r1-executable-experience-20260930/followup-20261003/test_followup.py"]

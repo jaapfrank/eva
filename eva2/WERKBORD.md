@@ -34,12 +34,28 @@ geen fysieke gesprekskwaliteit of microfoonacceptatie geclaimd. Eerdere begeleid
 imagebinding en IPv4-correctie blijven in het bewijs zichtbaar.
 [Spraakinstallatie](evidence/product/installer-selected-voice-installed-20261003.json).
 
-**Nu actief:** R1.1, gerichte voorbereiding van de bestaande innovatievergelijking.
-Uitvoerder `/root/background_execution_seam` controleert vanaf `a5009ddd` de
-bestaande kandidaat en actuele uitvoerroute. Eerst aantonen welke oorzaak is
-gewijzigd; nog geen nieuwe modelproef. Daarna afzonderlijke protocolcontrole en
-vergelijking. Geen ongewijzigde herhaling of nieuw optimalisatieplatform. Root
-beheert integratie en dashboard; Jaap hoeft voor dit vervolg niets te doen.
+**R1.1 gereed voor uitvoering, toestemming gevraagd:** aparte vervolgdriver,
+15 offline controles en onafhankelijke toelating gereed. Eén lokale mislukte
+variant brak de oude volledige vergelijking af; de correctie bewaart die mislukking
+zonder de andere vaste varianten te verliezen. Kandidaat en beoordelingsregels
+blijven gelijk. Acht verse runs zijn expliciet een vervolg, niet de oude acht;
+inclusief de eerdere poging zijn dat negen historische starts. Oud verbruik telt mee.
+
+Automatische goedkeuringsreview heeft de uitvoeringsaanvraag geweigerd wegens
+ontbrekende expliciete toestemming voor deze acht nieuwe modelruns. **Geen modelcall
+of uitvoeringsproces gestart.** Concrete vraag staat in de chat: maximaal 96 nieuwe
+modelreacties, totaal inclusief historie 600.000 input-/48.000 outputtokens, credits
+onbekend, geen automatische herhaling. Geen andere runner om de weigering heen.
+[Onafhankelijke toelating](reviews/r1-followup-admission-20261003.md).
+
+**Parallel op verzoek van Jaap:** P1.1 eigen aanmeldingen. Hermes en OpenClaw
+wachten op bevestiging met de twee verse codes uit deze chat. Agent Zero heeft
+een bewaarde eigen sessie. OpenCode blijft de programmeerreferentie in het
+bestaande plan. Geen credentials gekopieerd en geen vergelijkingsmodelcalls.
+
+**Hierna:** F1, de geleverde functies in één eindkandidaat samenbrengen; nog niet
+actief. Login en proefkeuze blokkeren onafhankelijk productwerk niet. De stand
+blijft 24/44 kleine taken en 2/9 historische hoofdgroepen.
 
 ## Nu opgeleverd: optionele browser in een nieuwe Eva-installatie
 

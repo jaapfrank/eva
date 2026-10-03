@@ -1,0 +1,19 @@
+{
+  "baseCommit": "a5009dddca814ce828158d28e552fb7d072d954e",
+  "files": {
+    "offline-final-command.json": "bf109c32653c2312f2cd87e7bc1563b53df2be1700ffadcff228920670fde63d",
+    "offline-command.json": "bf109c32653c2312f2cd87e7bc1563b53df2be1700ffadcff228920670fde63d",
+    "preflight-result.json": "f0403486dcc089d315952d3b9dd1741c459a31c7928900fa9b52484765e05a68",
+    "compare_followup.py": "c6e10918fc43fa76afb0534bfb7ab5eddef7c9b54029be485def20e88c192887",
+    "offline-test.log": "e438f3d6a6b62e3fe2fbc4aef96c2b73fa2925deb995d70b140ae418d4081baa",
+    "offline-result.json": "822c8de7da85288c7155760f74558f8fa47b9d71538b93fde332de1fe779b14d",
+    "runtime-preflight.log": "87cbd9e6e70b7b6cf8b982fe2a0cd6da543aa0fa83183a37969e85a696d8bcd1",
+    "test_followup.py": "5c1f0143349f8b5bc146d9f6a840e69886f5c49c138ba8f4685b33e334640cc3",
+    "offline-final-result.json": "822c8de7da85288c7155760f74558f8fa47b9d71538b93fde332de1fe779b14d",
+    "preflight.py": "8bdad38b72012d281558b9ce56cbc7a1b0ab104c0a31f0b874f15db9c89ac8e5",
+    "PROTOCOL.md": "65c6a254a5489e135025d238bba4909b9a422b0f4ca13cd8b0a5606450c0ec02",
+    "offline-final-test.log": "b86fc6661008d693123f44ee6ae1f3af2a7a996b9981a664282ab6076796f9d5"
+  },
+  "modelCalls": 0,
+  "protectedGradingRead": false
+}

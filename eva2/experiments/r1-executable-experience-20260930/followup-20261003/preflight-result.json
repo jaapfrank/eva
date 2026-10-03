@@ -1,0 +1,49 @@
+{
+  "contract": "EvaR1FollowupPreparation/v1",
+  "decision": "NO_UNCHANGED_RETRY",
+  "originalFrozenFilesUnchanged": {
+    "README.md": true,
+    "compare.py": true,
+    "construction-evidence.json": true,
+    "criteria.json": true,
+    "generate.py": true,
+    "generated-artifact.json": true,
+    "guard_check.py": true,
+    "runtime-provenance.json": true,
+    "service.py": true,
+    "validate.py": true,
+    "wire_check.py": true
+  },
+  "currentSourceHashes": {
+    "adapters/model/openai_codex_provider.py": "efdaf9e083ef15ee77b16a1015b7cfb1ac5cd82538e47840404fa5a290ca843f",
+    "adapters/model/pydantic_conversation.py": "5eb31eb57b0959d29919e5b3b7e053f588752ce9559433b16c47ef0ac5db2e23",
+    "adapters/connectors/procedure_execution.py": "9099a5f4daec4329afb2f1fca44819b3c3dd628efcc1e3ef70bf0a390b372a02"
+  },
+  "sameProcedureClient": true,
+  "sameProviderTransport": true,
+  "existingLimits": {
+    "maximum_task_runs": 8,
+    "maximum_model_responses_per_task_run": 12,
+    "maximum_tool_operations_per_task_run": 24,
+    "maximum_total_input_tokens": 600000,
+    "maximum_total_output_tokens": 48000,
+    "maximum_tool_result_characters_per_run": 36000,
+    "maximum_predicted_plans_per_run": 6,
+    "maximum_transitions_per_predicted_plan": 12,
+    "includes": "Synthesis, development validation, both arms, social contact calls, repairs and all recorded helpers. No arbitrary elapsed-time pause is introduced."
+  },
+  "previousAccountedUsage": {
+    "inputTokens": 30226,
+    "outputTokens": 5057,
+    "attestedRequests": 14,
+    "taskRunsStarted": 1
+  },
+  "liveRuntimeHealthChecked": false,
+  "protectedInputsRead": false,
+  "modelCalls": 0,
+  "executorCalls": 0,
+  "providerRequests": 0,
+  "creditCost": null,
+  "preparationSeconds": 0.0008911479962989688,
+  "blocker": "New programming actions are absent from the frozen harness; its shared 12-response run envelope remains unchanged."
+}
