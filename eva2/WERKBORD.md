@@ -50,6 +50,7 @@ processen zijn afgesloten; synthetische dumps zijn bewaard en proefresources ver
 Nul echte modelcalls; fixturetokens zijn geen werkelijk modelverbruik.
 Totale proefuitvoering 47,437s, geen meting van Eva's antwoordkwaliteit of snelheid.
 Geen productinstallatie of nieuwe afgeronde functie. Stand blijft **25/44**.
+Bron en bewijs gepubliceerd op GitHub in `3bfce4cf`.
 [Bewijs en beperkingen](evidence/product/p1-shared-native-accounting-20261003.json)
 · [Onafhankelijke review](reviews/p1-shared-native-sample-20261003.md).
 

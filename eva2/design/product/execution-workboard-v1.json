@@ -1035,7 +1035,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T19:47:07.169282+00:00",
+        "checkedAt": "2026-10-03T19:49:24.286680+00:00",
         "deliveries": [
           {
             "title": "Vergelijking: gesprek én achtergrondgeheugen samen gemeten",
@@ -3540,7 +3540,7 @@
           "title": "P1.1 · gezamenlijke meting gecontroleerd; vergelijking nog open",
           "state": "in_progress",
           "owner": "Codex /root",
-          "detail": "Gesprek en geheugen gebruiken samen één verbruiksregister. Onafhankelijke beperkte GO. Deze niet-lege proef stopt vóór een derde modelaanroep; geheugenverwerking is daardoor niet afgerond. Nul echte modelcalls. Afronding en bronpublicatie nu; vervolg nog niet gestart."
+          "detail": "Gezamenlijke meting en stophandhaving onafhankelijk gecontroleerd en gepubliceerd in 3bfce4cf. De niet-lege proef stopte vóór de derde aanroep; consolidatie bleef wachtend. Nul echte modelcalls. Volgende vergelijkingsstap nog niet gestart; geen uitvoerder of proefproces actief."
         },
         "next": {
           "title": "Beschikbare deelnemers toelaten tot de vastgelegde vergelijking",
@@ -3556,7 +3556,7 @@
           "expected": "Geen nieuwe installatie of herhaling van opdrachten. F1.2 blijft open tot de echte herstart en nacontrole."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T19:47:07.169282+00:00"
+        "reviewedAt": "2026-10-03T19:49:24.286680+00:00"
       },
       "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
     },
@@ -15969,9 +15969,9 @@
               "assignment": {
                 "owner": "Codex /root",
                 "support": "/root/background_execution_seam",
-                "stage": "shared_native_accounting_reviewed_publishing",
+                "stage": "shared_native_accounting_published",
                 "baseCommit": "470f000fead99261539ebee2e1e4bf0239631247",
-                "currentAction": "Bounded offline shared accounting/stop proof complete and independently reviewed; publish source and evidence. Native consolidation remains pending after cap refusal; no live admission or feature completion.",
+                "currentAction": "Shared offline accounting and bounded stop proof published. No active probe or worker; next fixed-case native admission remains queued. No native task completion or product feature claim.",
                 "runtimeHandle": {
                   "hermesExecSession": 63638,
                   "hermesExitCode": 1,
@@ -15996,11 +15996,12 @@
                   "sampleLifecycle": "Shared foreground/memory parent ledger is now observed through native HTTP, outbox, retain and attempted consolidation. Actual fixed-case setup and live admission remain.",
                   "preflight": "Reuse existing native control/ledger, disposable database and public model cache; no production state, new runner or provider route.",
                   "budgetObservation": "The nonempty synthetic memory fixture uses two helper attempts. Existing C01/C04 after-response retention is active; its complete sample behavior remains unmeasured."
-                }
+                },
+                "publishedSourceCommit": "3bfce4cfeb22ef68ff4edceb614f9bd263439518"
               },
               "blocker": "OpenClaw/Hermes-aanmelding ontbreekt alleen voor die deelnemers. Eva1/Eva2 hebben zelfstandig te onderzoeken native meet-/stopovergangen.",
               "nextImplementation": "Use these owned persisted configurations for native startup after own authentication. No repeated config/catalog probe without a changed cause or new evidence. Prior Agent Zero helper-envelope refusal remains unavailable; no hidden helper disable, auth-token copying or quota increase.",
-              "checkedAt": "2026-10-03T19:47:07.169282+00:00",
+              "checkedAt": "2026-10-03T19:49:24.286680+00:00",
               "ownerActionRequired": true,
               "nextAction": "Codex gebruikt bestaande vergelijkingsvoorbereiding; Jaap levert alleen daadwerkelijk ontbrekende accounttoegang. Dit blokkeert uitsluitend die vergelijking, niet Eva’s eigen functionele uitvoering.",
               "ownerInstructions": {
