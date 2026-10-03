@@ -1,6 +1,6 @@
 {
   "contract": "EvaComparisonParticipantInputs/v1",
-  "checkedAt": "2026-10-03T16:52:25.148006+00:00",
+  "checkedAt": "2026-10-03T18:53:17.822832+00:00",
   "stage": "source_pins_recorded_access_not_admitted",
   "protocol": "eva2/design/product/comparable-agent-benchmarks-v1.md#ev-003",
   "scope": "Inputs for existing Inspect runner; not results, a new runtime or a new scorer.",
@@ -62,6 +62,34 @@
           "path": "eva2/reviews/p1-hindsight-accounting-20261003.md",
           "sha256": "50a6b961bcf7fee97cc000f70a570205e8dcd93087c9b3848b30742d0cfd6391",
           "decision": "GO for bounded native provider accounting only",
+          "reviewer": "/root/aide_final_evaluation"
+        }
+      },
+      "memoryLifecycleAccounting": {
+        "status": "isolated_native_retain_consolidation_passed_full_instance_unbound",
+        "evidence": "eva2/evidence/product/p1-hindsight-lifecycle-20261003.json",
+        "probe": "eva2/benchmark/inspect_ai_v1/p1_hindsight_lifecycle_probe.py",
+        "probeSha256": "263a131e454392198c108e7897d1f6ef69c5f05ac6f932fd536f60a0f9d0e83d",
+        "providerInstances": 4,
+        "completedStages": [
+          "retain_extract_facts",
+          "consolidation"
+        ],
+        "nativeRuns": 1,
+        "runtimeModelCalls": 0,
+        "syntheticProviderAttempts": 2,
+        "syntheticUsage": {
+          "inputTokens": 62,
+          "outputTokens": 14
+        },
+        "independentReadback": "Stored fact, source-linked observation and completed consolidation; no pending/running operations or tracked worker/provider activity.",
+        "liveAdmission": false,
+        "unchangedEnvelope": true,
+        "remaining": "Bind native foreground and memory subprocesses to one parent ledger; check journal/outbox/native background completion for the existing samples. This one memory fixture uses both allowed calls; complete sample behavior remains unmeasured.",
+        "independentReview": {
+          "status": "GO for isolated native lifecycle only",
+          "path": "eva2/reviews/p1-hindsight-lifecycle-20261003.md",
+          "sha256": "58fe7f4ec620b3000214ed2ed5d7c5689ca7a6b839cd7b2a50011dfa41485105",
           "reviewer": "/root/aide_final_evaluation"
         }
       }
@@ -397,7 +425,7 @@
   },
   "readiness": {
     "mayStartModelComparison": false,
-    "reason": "Installed Eva2 F1 pins are bound. No available participant yet has complete native sample admission; final family budgets and independently curated unseen tasks remain open. Missing competitors do not block admitted partial execution.",
+    "reason": "Native Eva1 source and isolated Eva2 memory retain/consolidation now bound. Foreground plus all sample-owned memory calls still need one ledger and settlement; no available participant has full admission. Missing access stays unknown.",
     "missingAccessCountsAs": "unknown_not_loss",
     "historicalResults": "EV-002 remains unchanged; no current ranking inferred.",
     "partialExecutionPolicy": {

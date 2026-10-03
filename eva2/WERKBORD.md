@@ -33,26 +33,29 @@ open. Nog steeds 25/44 afgerond; geen nieuwe functieclaim uit deze controle.
 [Resultaat en beperkingen](evidence/product/f1-joint-check-pre-reboot-20261003.json)
 · [Voorbereidingsreview](reviews/f1-joint-check-20261003.md).
 
-**P1.1 — ruwe geheugenmeting werkt; volledige aansluiting nog open.**
-De echte Eva1-bron en expliciete gelijk-modelvariant zijn gepubliceerd in
-`798a814a`; originele Eva1 blijft behouden. Nu telt de vergelijking ook de echte
-Hindsight-providerpogingen met het bestaande verbruiksregister. Negen gerichte
-controles slagen: native herhaling, ruwe usage, stoppen, ontbrekende usage en
-mislukte afsluiting. De native schatting blijft afzonderlijk zichtbaar.
+**P1.1 — native geheugenverwerking gecontroleerd; volledige vergelijking nog open.**
+De echte Eva1-bron/gelijk-modelvariant en eerdere Hindsight-providercontrole blijven
+behouden. Eén aanvullende native geheugenproef slaagt: het feit is opgeslagen,
+consolidatie maakt een gekoppelde herinnering en de achtergrondtaak eindigt echt.
+Onafhankelijke databaseuitlezing bevestigt dit; gevolgde taken en verbindingen zijn
+na afsluiten nul. **Onafhankelijke beperkte GO.** Geen herhaalde proef.
 
-Twee fouten in de losse proefopstart zijn bewaard en gericht gecorrigeerd; de
-inhoudelijke controles slaagden bij hun eerste uitvoering. Geen echte modelcalls,
-installatie of rollback. Onafhankelijke beperkte eindreview: GO.
-Dit is vergelijkingsvoorbereiding, geen nieuwe Eva-functie of afgeronde P1.
-[Meetresultaat en beperkingen](evidence/product/p1-hindsight-accounting-20261003.json).
+Twee synthetische Astra/medium-antwoorden, nul echte modelcalls. De 62/14 tokens
+zijn fixturewaarden, geen werkelijk modelverbruik. De proef duurde 13,452 s inclusief
+12,412 s lokale modelvoorbereiding; dit is geen meting van antwoordsnelheid.
+Alleen lege opslag en bestaande publieke modelbestanden gebruikt. Proefcontainers
+en netwerk verwijderd na bewaren van de synthetische gegevens; Eva ongewijzigd.
+[Bewijs en beperkingen](evidence/product/p1-hindsight-lifecycle-20261003.json)
+· [Review](reviews/p1-hindsight-lifecycle-20261003.md).
 
-**Nog te doen:** alle gespreks- en geheugencalls binnen één afzonderlijke
-proefinstantie aan hetzelfde centrale register koppelen en het einde van de
-achtergrondverwerking controleren. De bestaande native worker heeft een lege
-vector-database en de al aanwezige lokale modelresources nodig; die aansluiting
-is de volgende stap. Daarna de beschikbare toegelaten deelnemers
-vergelijken; ontbrekende concurrenten blijven onbekend. Geen nieuwe geheugenlogica,
-gewijzigde vergelijkingscriteria, groter budget of algemene winstclaim.
+**Nu:** resultaat vastleggen/publiceren; uitvoerder en reviewer zijn klaar.
+**Volgende:** het bestaande register gezamenlijk gebruiken voor de voorgrond en
+alle geheugencalls binnen één proefinstantie. De echte gespreksroute schrijft ook
+naar de memory-outbox; alleen het eerste antwoord meten laat dat werk weg. Deze
+niet-lege geheugenfixture gebruikt beide toegestane pogingen. Dat bewijst niet dat
+ieder gesprek dit doet; het budget blijft gelijk en een weigering blijft zichtbaar.
+Daarna de beschikbare volledig toegelaten deelnemers vergelijken. Ontbrekende
+toegang blijft onbekend. Stand **25/44**, geen nieuwe productfunctie uit meetwerk.
 
 **Nu van Jaap nodig: Windows opnieuw opstarten voor F1.2.** Sla werk op,
 kies Opnieuw opstarten en open daarna deze chat; meld “Herstart klaar”. De

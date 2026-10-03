@@ -358,3 +358,30 @@ foreground/retain/consolidation/reflection coverage, a common parent ledger,
 end-of-sample settlement and actual streaming timings remain open. The native
 character-based estimate is preserved separately. Cache-token breakdown and
 billed cost are not attested by this receipt. No live admission is granted.
+
+
+## Native memory lifecycle — 3 October 2026
+
+One fresh native Hindsight engine and WorkerPoller completed retain and queued
+consolidation, with all four constructed Codex clients bound to the existing
+sample ledger. Independent database readback confirms a retained world fact,
+its source-linked observation and completed consolidation before and after
+shutdown. No pending/running operations or tracked worker/provider activity
+remained. The reviewed probe succeeded on its first execution; no model requests
+were sent upstream. Existing raw-usage and cancellation checks were reused.
+
+The two synthetic helper calls use Astra/medium and the unchanged two-attempt
+envelope. Fixture usage is 62 input / 14 output, not billed model usage. Local
+model loading and fixture execution are not latency evidence. Only public model
+resources and empty temporary storage were used; synthetic data was preserved
+before removing the two dedicated containers and their network. No Eva service
+was reinstalled or rolled back. Independent review: bounded GO.
+
+Foreground and memory still need a common parent ledger across the existing
+native subprocesses, plus journal/outbox/background settlement. The actual API
+after-response route writes conversation content to the memory outbox; treating
+a foreground answer alone as sample completion would omit work. This nonempty
+memory fixture consumes both allowed attempts, but it does not establish that
+every selected conversation sample would do so. Preserve refusals; do not disable
+native memory or enlarge the budget. No full admission or comparison win follows.
+See [`p1-hindsight-lifecycle-20261003.json`](../../evidence/product/p1-hindsight-lifecycle-20261003.json).

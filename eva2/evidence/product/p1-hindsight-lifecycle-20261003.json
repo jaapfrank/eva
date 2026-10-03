@@ -1,0 +1,291 @@
+{
+  "contract": "P1HindsightNativeLifecycleEvidence/v1",
+  "checkedAt": "2026-10-03T18:51:01.917536+00:00",
+  "scope": "Isolated native memory retain plus queued consolidation; synthetic provider HTTP. Comparison preparation, not a product feature or live participant admission.",
+  "baseCommit": "89b4cb1ebe8c567c9a18a00ab31162a42a7ef13a",
+  "source": {
+    "probe": "eva2/benchmark/inspect_ai_v1/p1_hindsight_lifecycle_probe.py",
+    "probeSha256": "263a131e454392198c108e7897d1f6ef69c5f05ac6f932fd536f60a0f9d0e83d",
+    "reuse": {
+      "cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f",
+      "cp001_http_accounting.py": "906ea1bf9ee43ee5892aeb2c1d609447bbaa73698c8dd514cc4269a5bb3c5ff9",
+      "p1_hindsight_accounting_probe.py": "512766ab2dd0e0804062acdbb3b1c962613503b6266b8d78b7326b63762aed1e"
+    },
+    "native": {
+      "/app/api/hindsight_api/engine/providers/codex_llm.py": "b4cda4b56b3a6cc1f6bca64eaca7cbc7c75b5e8420d6bb77750c0d6304098afe",
+      "/app/api/hindsight_api/engine/memory_engine.py": "12ec0ef2d30514813c778d05597f0b8f0e8af3fee18d5acfd9eb6e166dd9ab5a",
+      "/app/api/hindsight_api/worker/poller.py": "f845467c37cee58c21033a195a971a907cf92154172ad5194d5fcc258451cd53"
+    },
+    "evaAttestorSha256": "efdaf9e083ef15ee77b16a1015b7cfb1ac5cd82538e47840404fa5a290ca843f"
+  },
+  "environment": {
+    "hindsightImage": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+    "databaseImage": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+    "freshDatabase": true,
+    "publicModelsOnly": [
+      "BAAI/bge-small-en-v1.5",
+      "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    ],
+    "modelDownloads": 0,
+    "publicModelCopyBytes": 226325451,
+    "publicModelFileRecords": 43,
+    "network": "Dedicated internal Docker network, no published ports",
+    "productionStateCopied": false,
+    "llmStartupVerificationSkipped": true,
+    "pythonDependencies": "Existing read-only installed torch-2.10.0-cu128-b8e1c087cc91 mount"
+  },
+  "execution": {
+    "nativeRuns": 1,
+    "exit": {
+      "exit_code": 0,
+      "seconds": 24.410865357000148,
+      "result_exists": true
+    },
+    "result": {
+      "contract": "P1HindsightLifecycleProbe/v1",
+      "upstream_model_calls": 0,
+      "synthetic_http_usage": true,
+      "native_usage_is_estimated": true,
+      "loader_sha256": "512766ab2dd0e0804062acdbb3b1c962613503b6266b8d78b7326b63762aed1e",
+      "bank": "p1-offline-lifecycle",
+      "limits": {
+        "providerAttempts": 2,
+        "providerInputTokens": 24000,
+        "providerOutputTokens": 4096,
+        "wallSeconds": 120,
+        "toolDispatches": 4,
+        "externalActionTools": 0,
+        "orchestratorRetries": 0
+      },
+      "statuses": {
+        "initialized": true,
+        "retain_ids": [
+          "b688a9ae-4410-4bd9-8549-1c9ac9296713"
+        ],
+        "pipeline": "terminal"
+      },
+      "errors": [],
+      "calls": [
+        {
+          "schema": "FactExtractionResponse",
+          "scope": "retain_extract_facts",
+          "stage": null,
+          "model": "gpt-6-astra",
+          "effort": "medium",
+          "forced_tool": false
+        },
+        {
+          "schema": "_ConsolidationBatchResponse",
+          "scope": "consolidation",
+          "stage": "llm.codex.consolidation.attempt=1/4",
+          "model": "gpt-6-astra",
+          "effort": "medium",
+          "forced_tool": false
+        }
+      ],
+      "native_source_sha256": {
+        "/app/api/hindsight_api/engine/providers/codex_llm.py": "b4cda4b56b3a6cc1f6bca64eaca7cbc7c75b5e8420d6bb77750c0d6304098afe",
+        "/app/api/hindsight_api/engine/memory_engine.py": "12ec0ef2d30514813c778d05597f0b8f0e8af3fee18d5acfd9eb6e166dd9ab5a",
+        "/app/api/hindsight_api/worker/poller.py": "f845467c37cee58c21033a195a971a907cf92154172ad5194d5fcc258451cd53"
+      },
+      "eva_source_sha256": "efdaf9e083ef15ee77b16a1015b7cfb1ac5cd82538e47840404fa5a290ca843f",
+      "preparation_seconds": 12.412414697988424,
+      "readback_before_stop": {
+        "memories": [
+          {
+            "id": "b688a9ae-4410-4bd9-8549-1c9ac9296713",
+            "fact_type": "world",
+            "text": "Fixture visitor prefers chamomile tea. | Involving: Fixture visitor | Personal preference",
+            "source_memory_ids": []
+          },
+          {
+            "id": "b8d88e81-9ef0-48ec-b76c-bf1e72a17360",
+            "fact_type": "observation",
+            "text": "Fixture visitor prefers chamomile tea.",
+            "source_memory_ids": [
+              "b688a9ae-4410-4bd9-8549-1c9ac9296713"
+            ]
+          }
+        ],
+        "operations": [
+          {
+            "operation_id": "618bf847-b9b4-4941-be2c-3dc73d7f9beb",
+            "operation_type": "consolidation",
+            "status": "completed"
+          }
+        ],
+        "pending_running": 0
+      },
+      "worker_after_stop": {
+        "in_flight": 0,
+        "unfinished_tasks": 0
+      },
+      "readback_after_stop": {
+        "memories": [
+          {
+            "id": "b688a9ae-4410-4bd9-8549-1c9ac9296713",
+            "fact_type": "world",
+            "text": "Fixture visitor prefers chamomile tea. | Involving: Fixture visitor | Personal preference",
+            "source_memory_ids": []
+          },
+          {
+            "id": "b8d88e81-9ef0-48ec-b76c-bf1e72a17360",
+            "fact_type": "observation",
+            "text": "Fixture visitor prefers chamomile tea.",
+            "source_memory_ids": [
+              "b688a9ae-4410-4bd9-8549-1c9ac9296713"
+            ]
+          }
+        ],
+        "operations": [
+          {
+            "operation_id": "618bf847-b9b4-4941-be2c-3dc73d7f9beb",
+            "operation_type": "consolidation",
+            "status": "completed"
+          }
+        ],
+        "pending_running": 0
+      },
+      "ledger": {
+        "sample_id": "p1-offline-lifecycle",
+        "provider_attempts": 2,
+        "complete": true,
+        "stop": "offline lifecycle probe finishing",
+        "stop_requested": true,
+        "active_async_attempts": 0,
+        "cancel_errors": [],
+        "total_usage": {
+          "input_tokens": 62,
+          "output_tokens": 14,
+          "total_tokens": 76
+        },
+        "known_partial_usage": {
+          "input_tokens": 62,
+          "output_tokens": 14,
+          "total_tokens": 76
+        },
+        "attempts": [
+          {
+            "id": 0,
+            "sample_id": "p1-offline-lifecycle",
+            "role": "helper",
+            "model": "gpt-6-astra",
+            "reasoning_effort": "medium",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 31,
+              "output_tokens": 7,
+              "total_tokens": 38
+            }
+          },
+          {
+            "id": 1,
+            "sample_id": "p1-offline-lifecycle",
+            "role": "helper",
+            "model": "gpt-6-astra",
+            "reasoning_effort": "medium",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 31,
+              "output_tokens": 7,
+              "total_tokens": 38
+            }
+          }
+        ],
+        "coverage": "Only native entrypoints actually bound by the caller",
+        "live_admission": false
+      },
+      "provider_instances": 4,
+      "active_responses": 0,
+      "local_quiescence": true,
+      "seconds": 13.45209074500599,
+      "pipeline_proof": {
+        "retained_fact_ids": [
+          "b688a9ae-4410-4bd9-8549-1c9ac9296713"
+        ],
+        "linked_observation_ids": [
+          "b8d88e81-9ef0-48ec-b76c-bf1e72a17360"
+        ],
+        "completed_consolidation_ids": [
+          "618bf847-b9b4-4941-be2c-3dc73d7f9beb"
+        ]
+      },
+      "complete": true
+    },
+    "independentDatabaseReadback": {
+      "memories": [
+        {
+          "id": "b8d88e81-9ef0-48ec-b76c-bf1e72a17360",
+          "fact_type": "observation",
+          "text": "Fixture visitor prefers chamomile tea.",
+          "source_memory_ids": [
+            "b688a9ae-4410-4bd9-8549-1c9ac9296713"
+          ]
+        },
+        {
+          "id": "b688a9ae-4410-4bd9-8549-1c9ac9296713",
+          "fact_type": "world",
+          "text": "Fixture visitor prefers chamomile tea. | Involving: Fixture visitor | Personal preference",
+          "source_memory_ids": []
+        }
+      ],
+      "operations": [
+        {
+          "operation_id": "618bf847-b9b4-4941-be2c-3dc73d7f9beb",
+          "operation_type": "consolidation",
+          "status": "completed"
+        }
+      ]
+    },
+    "priorSetup": "Default Docker network allocation failed before database creation. Existing networks/routes checked, then an unused explicit subnet allocated. Two read-only preparation helpers were corrected for optional inspect fields. No lifecycle was restarted."
+  },
+  "cleanup": {
+    "checkedAt": "2026-10-03T18:48:53.147262+00:00",
+    "removed_containers": [
+      "eva2-p1-memory-lifecycle-probe-20261003",
+      "eva2-p1-memory-db-20261003"
+    ],
+    "removed_network": "eva2-p1-memory-lifecycle-20261003",
+    "production_changed": false,
+    "synthetic_data_dump_sha256": "1db3998f10ea4910108696ed3af6a9e8ddace9831c651c8e4499267864d83cd4",
+    "independent_db_sha256": "586cde70210b704e21e80de1c14e7f48b53be3418b20b5ce54bdc2def57a9a3d",
+    "retained_public_model_cache": true
+  },
+  "consumption": {
+    "runtimeModelCalls": 0,
+    "syntheticProviderAttempts": 2,
+    "syntheticUsage": {
+      "inputTokens": 62,
+      "outputTokens": 14
+    },
+    "developmentCredits": null,
+    "billedRuntimeCost": null,
+    "latencyClaim": false
+  },
+  "privateReceipts": {
+    "public-model-resources.json": "c838bc38884c3934dd2a08b49fa59e7262f077c90e6972033f211c0db216c73c",
+    "database-start.json": "15e13492b36c37b7b51a970657cd8b9ae784b7aadd1d2ee71b9bc6418f2837dd",
+    "attempt1/launch.json": "26d2a46fd74fc2dcc78e580b10f5c311dc75c35e2597ff26b6cf676b8a1826df",
+    "attempt1/result.json": "dfd833f61b066266ac21b777e7f6377d47322d090a916eca61f937316018b855",
+    "attempt1/exit.json": "4117c74bd2d032d490532b5d18da8b1b595e42086f62f2df281045b670a69d83",
+    "attempt1/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "attempt1/stderr.log": "d47c8039ccad91a4d7595da66b811dafc22a7ab156844df02df8ad41a3fa8ff2",
+    "independent-db-readback.json": "586cde70210b704e21e80de1c14e7f48b53be3418b20b5ce54bdc2def57a9a3d",
+    "cleanup.json": "9c63fa06f80a4060712bb330acd2cf58e7c1c6c67cdced68a28eef1f46ace556"
+  },
+  "privateReceiptDirectory": "/home/administrator/project/.eva2-artifacts/p1-hindsight-lifecycle-20261003-v1",
+  "limitations": [
+    "One synthetic fact exercises extraction and consolidation; reflection, retrieval quality and live model behavior are not measured.",
+    "Foreground and memory are not yet bound to one full-sample parent ledger. No full participant admission.",
+    "The two allowed attempts are both used by this fixture; do not disable memory, increase the envelope or infer that every Eva2 sample must fail.",
+    "Usage figures are synthetic HTTP fixture values; native usage estimates and measured runtime credits are different.",
+    "Local quiescence covers tracked provider bodies and worker tasks, not remote cloud cancellation.",
+    "No Eva service installation, product acceptance, latency improvement or competitor win follows."
+  ],
+  "review": {
+    "status": "GO for isolated native lifecycle only",
+    "path": "eva2/reviews/p1-hindsight-lifecycle-20261003.md",
+    "sha256": "58fe7f4ec620b3000214ed2ed5d7c5689ca7a6b839cd7b2a50011dfa41485105",
+    "reviewer": "/root/aide_final_evaluation"
+  }
+}
