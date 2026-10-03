@@ -1,8 +1,9 @@
-"""Disposable native Eva2 services with synthetic provider HTTP and shared accounting.
+"""Disposable native Eva2 services with sample-owned provider accounting.
 
 Run only with fresh operator-owned databases and a dedicated internal network.
 Both native application factories, the conversation engine and background workers
-remain intact. This worker neither launches containers nor authorizes live calls.
+remain intact. Synthetic responses remain the default. Subscription mode retains native credentials
+and requires an explicit model-only proxy. This worker does not authorize a run.
 """
 import argparse
 import asyncio
@@ -19,9 +20,64 @@ import time
 from unittest.mock import patch
 
 from cp001_process_accounting import ProcessSampleLedger
+from cp001_accounting import SampleStopped
 
 ENDPOINT = "https://chatgpt.com/backend-api/codex/responses"
 FACT = "Fixture visitor prefers chamomile tea."
+
+
+def subscription_transport(http, args, result):
+    """Preserve wire bytes; the sample proxy exposes only the authorized endpoint."""
+    if not args.provider_proxy:
+        raise ValueError("subscription mode requires the isolated model-only proxy")
+    inner = http.AsyncHTTPTransport(proxy=args.provider_proxy, retries=0)
+
+    class Network(http.AsyncBaseTransport):
+        async def handle_async_request(self, request):
+            payload = json.loads(await request.aread())
+            result["calls"].append({"model": payload.get("model"),
+                "effort": payload.get("reasoning", {}).get("effort"),
+                "kind": "subscription_dispatch"})
+            # Only ResponsesSampleTransport may call this transport, after its
+            # endpoint, role and parent-ledger admission checks.
+            return await inner.handle_async_request(request)
+
+        async def aclose(self):
+            await inner.aclose()
+
+    return Network()
+
+
+def bind_memory_client(client, http, args, result, ledger, attestor):
+    """Replace only native transport; retain its client options and auth manager."""
+    from cp001_http_accounting import ResponsesSampleTransport
+    if any(t is not None for t in client._mounts.values()):
+        raise ValueError("native memory client contains an unbound transport mount")
+    original = client._transport
+    transport = ResponsesSampleTransport(subscription_transport(http, args, result),
+        ledger, role="helper", endpoint=ENDPOINT, attestor_factory=attestor)
+    client._transport = transport
+    return original, transport
+
+
+def observe_memory_protocol(parsed, result):
+    """Mirror native first-match selection without replacing parser results."""
+    _text, tool_calls = parsed
+    for call in tool_calls:
+        if call.name == "structured_response":
+            if isinstance(call.arguments, dict):
+                result.setdefault("protocol_consumptions", []).append({
+                    "name": call.name, "kind": "native_structured_output",
+                    "external_effect": False})
+            break
+    return parsed
+
+
+def block_action(result, ledger, name):
+    """C01/C04 allow dialogue and native journaling, never a requested action."""
+    result.setdefault("action_attempts", []).append({"name": name, "dispatched": False})
+    ledger.stop_async_attempts("unexpected action in fixed conversation case")
+    raise SampleStopped("unexpected action in fixed conversation case")
 
 
 def source_hash(cls):
@@ -78,14 +134,26 @@ def serve_core(args, ledger, result):
         def __init__(self, settings, *, credential_loader):
             # Role follows the actual wire model at admission, not the fixture answer.
             role = "contact" if settings.model_name == "gpt-6-sol" else "helper"
-            transport = ResponsesSampleTransport(Network(), ledger, role=role,
+            network = subscription_transport(httpx2, args, result) if args.provider_mode == "subscription" else Network()
+            transport = ResponsesSampleTransport(network, ledger, role=role,
                 endpoint=ENDPOINT, attestor_factory=_RawSseUsageAttestor)
             transports.append(transport)
-            super().__init__(settings, credential_loader=lambda: ("offline-fixture", "offline-fixture"),
+            loader = credential_loader if args.provider_mode == "subscription" else lambda: ("offline-fixture", "offline-fixture")
+            super().__init__(settings, credential_loader=loader,
                 network_transport=transport)
 
-    with patch.object(model_module, "OpenAICodexProvider", Provider), \
-         patch.object(composition, "create_app", capture_runtime):
+    def deny_action(self, turn, call, **kwargs):
+        return block_action(result, ledger, call.name)
+
+    with ExitStack() as stack:
+        stack.enter_context(patch.object(model_module, "OpenAICodexProvider", Provider))
+        stack.enter_context(patch.object(composition, "create_app", capture_runtime))
+        if args.provider_mode == "subscription":
+            # Keep the normal advertised catalog and planning; observe and stop
+            # an actual attempted dispatch before any effect can occur.
+            from eva.adapters.postgres.conversation_actions import PostgresConversationActions
+            stack.enter_context(patch.object(PostgresConversationActions, "execute", deny_action))
+            stack.enter_context(patch.object(PostgresConversationActions, "execute_step", deny_action))
         app = composition.create_runtime_app()
         server = uvicorn.Server(uvicorn.Config(app, host="0.0.0.0", port=args.port, log_level="warning", access_log=False))
         try:
@@ -140,6 +208,7 @@ async def serve_memory(args, ledger, result):
     clients, unused_clients, transports, pollers = [], [], [], []
     original_init, original_call, original_poller = CodexLLM.__init__, CodexLLM.call, WorkerPoller.__init__
     signature = inspect.signature(original_call)
+    original_parse = CodexLLM._parse_sse_tool_stream
 
     async def respond(request):
         payload = json.loads(request.content)
@@ -167,10 +236,17 @@ async def serve_memory(args, ledger, result):
 
     def initialize(self, *a, **kw):
         original_init(self, *a, **kw)
-        unused_clients.append(self._client)
-        transport = ResponsesSampleTransport(httpx.MockTransport(respond), ledger, role="helper",
-            endpoint=ENDPOINT, attestor_factory=attestor)
-        self._client = httpx.AsyncClient(transport=transport)
+        if args.provider_mode == "subscription":
+            # Keep the native client timeout, headers, authentication manager and
+            # parser. No mounted proxy may silently bypass the observed transport.
+            original_transport, transport = bind_memory_client(
+                self._client, httpx, args, result, ledger, attestor)
+            unused_clients.append(original_transport)
+        else:
+            unused_clients.append(self._client)
+            transport = ResponsesSampleTransport(httpx.MockTransport(respond), ledger, role="helper",
+                endpoint=ENDPOINT, attestor_factory=attestor)
+            self._client = httpx.AsyncClient(transport=transport)
         clients.append(self._client)
         transports.append(transport)
 
@@ -184,6 +260,9 @@ async def serve_memory(args, ledger, result):
             schema_context.reset(token)
             scope_context.reset(scope)
 
+    async def observed_parse(self, response):
+        return observe_memory_protocol(await original_parse(self, response), result)
+
     def observe_poller(self, *a, **kw):
         original_poller(self, *a, **kw)
         pollers.append(self)
@@ -191,10 +270,12 @@ async def serve_memory(args, ledger, result):
     token = "fixture." + base64.urlsafe_b64encode(json.dumps({"exp": 4102444800}).encode()).decode().rstrip("=") + ".fixture"
     try:
         with ExitStack() as stack:
-            stack.enter_context(patch.object(CodexLLM, "_load_codex_auth", return_value=(token, "offline-fixture")))
-            stack.enter_context(patch.object(CodexLLM, "_load_codex_refresh_token", return_value=None))
+            if args.provider_mode == "synthetic":
+                stack.enter_context(patch.object(CodexLLM, "_load_codex_auth", return_value=(token, "offline-fixture")))
+                stack.enter_context(patch.object(CodexLLM, "_load_codex_refresh_token", return_value=None))
             stack.enter_context(patch.object(CodexLLM, "__init__", initialize))
             stack.enter_context(patch.object(CodexLLM, "call", observed_call))
+            stack.enter_context(patch.object(CodexLLM, "_parse_sse_tool_stream", observed_parse))
             stack.enter_context(patch.object(WorkerPoller, "__init__", observe_poller))
             memory = MemoryEngine(db_url=dsn, skip_llm_verification=True)
             app = create_app(memory)
@@ -229,13 +310,17 @@ def main():
     parser.add_argument("--eva-source", type=Path)
     parser.add_argument("--eva-sha256")
     parser.add_argument("--existing-empty-schema", action="store_true")
+    parser.add_argument("--provider-mode", choices=("synthetic", "subscription"), default="synthetic")
+    parser.add_argument("--provider-proxy", help="Sample-owned HTTP CONNECT proxy; subscription mode only")
     args = parser.parse_args()
+    if args.provider_mode == "subscription" and not args.provider_proxy:
+        parser.error("subscription mode requires the isolated model-only proxy")
     if args.output.exists():
         parser.error("output exists; preserve previous evidence")
     credentials = json.loads(args.control_file.read_text())
     ledger = ProcessSampleLedger(**credentials)
     result = {"contract": "P1NativeEva2Worker/v1", "kind": args.kind, "native_sources": {},
-        "upstream_model_calls": 0, "calls": [], "errors": [], "local_settled": False}
+        "provider_mode": args.provider_mode, "upstream_model_calls": 0, "action_attempts": [], "protocol_consumptions": [], "calls": [], "errors": [], "local_settled": False}
     started = time.monotonic()
     try:
         if args.kind == "core":
@@ -247,6 +332,7 @@ def main():
         traceback.print_exc()
         result["errors"].append({"phase": "native_worker", "type": type(error).__name__})
     finally:
+        result["upstream_model_calls"] = sum(c.get("kind") == "subscription_dispatch" for c in result["calls"])
         result["local_ledger"] = ledger.report()
         result["control_close_acknowledged"] = ledger.close(settled=result["local_settled"] and not result["errors"])
         result["ledger_after_close"] = ledger.report()

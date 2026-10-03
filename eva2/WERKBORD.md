@@ -1,5 +1,20 @@
 # EVA2 werkbord
 
+**Nu: P1 — eerste echte gespreksmeting vastgelegd.** De vaste Eva2-vraag is
+éénmaal uitgevoerd: eerste tekst **2,970 s**, volledig antwoord **5,124 s**.
+Antwoord en geheugenfeit zijn opgeslagen en afzonderlijk teruggelezen.
+Twee modelaanvragen: **4.874 input-/171 outputtokens**. Consolidatie bleef
+wachtend doordat de derde aanvraag buiten het vaste vergelijkingsbudget viel.
+Onafhankelijke beperkte beoordeling bevestigt deze onvolledige uitkomst.
+Geen nieuwe functie of snelheidswinst geclaimd; stand blijft **25/44**.
+[Meetresultaat en beperkingen](evidence/product/p1-native-c01-subscription-20261003.json).
+
+Bron en bewijs vastgelegd. Geen modelproef of aanmelding actief.
+Vervolg: bestaande Eva1-vergelijkingsroute; ontbrekende concurrentaanmelding
+blijft apart. Geen herhaling of nieuwe audit. Optionele persoonlijke
+Chrome-overname is al gebouwd en vraagt later nieuwe tabselectie;
+geen herbouw of verplichte browserproef.
+
 ## Afgerond: F1.1 — één gezamenlijke geïnstalleerde versie
 
 **Stand: 25/44 oorspronkelijke kleine taken afgerond. De historische hoofdgroepen
@@ -54,8 +69,9 @@ Bron en bewijs gepubliceerd op GitHub in `3bfce4cf`.
 [Bewijs en beperkingen](evidence/product/p1-shared-native-accounting-20261003.json)
 · [Onafhankelijke review](reviews/p1-shared-native-sample-20261003.md).
 
-**Vervolg:** de beschikbare deelnemers op de vaste C01/C04-routes toelaten en de
-vergelijking uitvoeren. Nog niet gestart; ontbrekende toegang blijft onbekend.
+**Vervolg:** de overige beschikbare deelnemers op de vaste C01/C04-routes
+toelaten en vergelijken. De eerste echte Eva2 C01 staat hierboven; ontbrekende
+toegang blijft onbekend.
 De bestaande Eva1-bron- en Hindsight-levenscyclusbewijzen worden hergebruikt.
 
 **Nu van Jaap nodig: Windows opnieuw opstarten voor F1.2.** Sla werk op,

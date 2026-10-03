@@ -1035,8 +1035,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T19:49:24.286680+00:00",
+        "checkedAt": "2026-10-03T20:56:21.662308+00:00",
         "deliveries": [
+          {
+            "title": "Eerste echte gespreksmeting: antwoord en geheugenfeit bewaard",
+            "date": "3 oktober",
+            "state": "tested",
+            "result": "Eerste tekst 2,970 s; volledig antwoord 5,124 s. Twee modelaanvragen: 4.874 input-/171 outputtokens. Afzonderlijk teruggelezen en beperkte onafhankelijke beoordeling afgerond.",
+            "remaining": "Consolidatie bleef wachtend bij het vaste proefbudget. Geen volledige vergelijking, snelheidswinst of nieuwe productfunctie; stand 25/44.",
+            "source": "eva2/evidence/product/p1-native-c01-subscription-20261003.json"
+          },
           {
             "title": "Vergelijking: gesprek én achtergrondgeheugen samen gemeten",
             "date": "3 oktober",
@@ -3537,26 +3545,26 @@
           }
         ],
         "now": {
-          "title": "P1.1 · gezamenlijke meting gecontroleerd; vergelijking nog open",
-          "state": "in_progress",
+          "title": "P1 · eerste echte gespreksmeting afgerond",
+          "state": "tested",
           "owner": "Codex /root",
-          "detail": "Gezamenlijke meting en stophandhaving onafhankelijk gecontroleerd en gepubliceerd in 3bfce4cf. De niet-lege proef stopte vóór de derde aanroep; consolidatie bleef wachtend. Nul echte modelcalls. Volgende vergelijkingsstap nog niet gestart; geen uitvoerder of proefproces actief."
+          "detail": "Vaste Eva2-vraag eenmaal uitgevoerd: eerste tekst 2,970 s, volledig antwoord 5,124 s. Antwoord en geheugenfeit opgeslagen; consolidatie niet afgerond binnen vast proefbudget. Bron en bewijs vastgelegd. Geen modelproef of aanmelding actief; vergelijking met Eva1 volgt."
         },
         "next": {
-          "title": "Beschikbare deelnemers toelaten tot de vastgelegde vergelijking",
-          "detail": "De echte C01/C04-routes binden aan bron, configuratie, hulpmiddelen en volledige meting. Eerdere voorproeven niet herhalen; ontbrekende toegang blijft onbekend en de meetgrenzen blijven gelijk."
+          "title": "Bestaande Eva1-vergelijking afronden",
+          "detail": "De voorbereide Eva1-route aansluiten binnen hetzelfde protocol; concurrentaanmelding rust tot Jaap klaarzit. Geen nieuwe audit, herhaling van C01 of productherbouw."
         },
         "ownerAction": {
           "title": "Windows opnieuw opstarten voor de voorbereide eindcontrole",
           "steps": [
             "Sla je werk op, kies in Windows Opnieuw opstarten en open daarna deze Codex-chat.",
-            "Meld Herstart klaar; Codex doet de nacontrole. De inlogcodes zijn verlopen; er loopt geen aanmelding.",
+            "Meld Herstart klaar; Codex doet de nacontrole. Geen aanmelding actief; verlopen codes zijn een aannemelijke verklaring voor de eerdere fout.",
             "De afzonderlijke toestemmingsvraag voor acht innovatieruns blijft open."
           ],
           "expected": "Geen nieuwe installatie of herhaling van opdrachten. F1.2 blijft open tot de echte herstart en nacontrole."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T19:49:24.286680+00:00"
+        "reviewedAt": "2026-10-03T20:56:21.662308+00:00"
       },
       "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
     },
@@ -14703,31 +14711,39 @@
               "status": "pending",
               "kind": "praktijk",
               "doneWhen": "Overname stopt lopende bediening; teruggeven vereist verse waarneming en herhaalt geen oude actie.",
-              "owner": "Codex",
+              "owner": "Jaap (optionele tabselectie/beoordeling); Codex (begeleiding)",
               "nextAction": "Codex bewaakt de algemene stop-/overnameovergang. Eva kijkt na teruggeven opnieuw en hervat zonder een oude handeling dubbel uit te voeren.",
-              "ownerActionRequired": false,
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
+                "availableNow": true,
                 "purpose": "practice",
                 "url": "http://127.0.0.1:44718/proef",
                 "linkLabel": "Deel één bestaand Chrome-tabblad",
                 "steps": [
-                  "Houd de Chrome-proefpagina in beeld en meld in Codex dat je klaarzit.",
-                  "Codex start daarna de wachtende klik. Druk bij ACTIE BEZIG op Neem over.",
-                  "Klik na bevestigde overname op Geef proefknop vrij; de teller moet 0 blijven. Codex begeleidt daarna expliciet teruggeven."
+                  "Open de bestaande proefpagina in Chrome.",
+                  "Kies Chrome-bediening → Deel een bestaand tabblad → Allow & select en selecteer de proefpagina.",
+                  "Meld Gedeeld wanneer je de optionele persoonlijke overname wilt beoordelen."
                 ],
                 "expected": "Lopende klik stopt; teruggeven vereist verse waarneming, zonder oude klik te herhalen.",
                 "blocksIndependentWork": false,
                 "localComputerOnly": true,
-                "readyWhen": "Optionele persoonlijke overnameproef later; geen voorwaarde voor Eva’s zelfstandige eigen browser."
+                "readyWhen": "Optioneel; blokkeert Eva’s zelfstandige browser en overige projectwerk niet."
               },
               "blocker": null,
-              "checkedAt": "2026-10-02T15:19:04.779171+00:00",
+              "checkedAt": "2026-10-03T20:25:58.124561+00:00",
               "assignment": {
-                "stage": "optional_personal_takeover_not_current_assignment",
+                "stage": "optional_personal_trial_awaits_tab_selection",
                 "owner": "/root",
-                "activeWorkers": []
-              }
+                "activeWorkers": [],
+                "currentReadback": {
+                  "checkedAt": "2026-10-03T20:30:23.377215+00:00",
+                  "state": "disconnected",
+                  "connected": false,
+                  "busy": false,
+                  "freshObservationRequired": true
+                }
+              },
+              "remaining": "Technische overname en verplichte nieuwe waarneming bestaan en zijn eerder beproefd. Actuele persoonlijke Chrome-route is disconnected; de optionele praktijkproef vraagt een nieuwe expliciete tabselectie. Geen aangetoond bouwtekort."
             }
           ],
           "latestEvidence": "eva2/evidence/product/autonomous-browser-installed-20261003.json",
@@ -15964,14 +15980,14 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Native bron, geheugenroute en gezamenlijk verbruiksregister beperkt onafhankelijk gecontroleerd. Deze niet-lege proef wordt vóór een derde call geweigerd. Echte C01/C04-toelating en uitvoering met beschikbare deelnemers blijven open.",
-              "latestEvidence": "eva2/evidence/product/p1-shared-native-accounting-20261003.json",
+              "remaining": "Eerste Eva2 C01 vastgelegd; antwoord en feit bewaard, volledige consolidatie niet binnen vast proefbudget. Eva1 en overige beschikbare deelnemers nog niet gemeten; eindvergelijking en menselijke beoordeling open.",
+              "latestEvidence": "eva2/evidence/product/p1-native-c01-subscription-20261003.json",
               "assignment": {
                 "owner": "Codex /root",
                 "support": "/root/background_execution_seam",
-                "stage": "shared_native_accounting_published",
-                "baseCommit": "470f000fead99261539ebee2e1e4bf0239631247",
-                "currentAction": "Shared offline accounting and bounded stop proof published. No active probe or worker; next fixed-case native admission remains queued. No native task completion or product feature claim.",
+                "stage": "first_native_result_recorded_next_participant_queued",
+                "baseCommit": "b52f19ac01153967bb9f4f68f9be29a8dda4515c",
+                "currentAction": "First native C01 outcome independently assessed and recorded. No live model run or login active; next participant queued.",
                 "runtimeHandle": {
                   "hermesExecSession": 63638,
                   "hermesExitCode": 1,
@@ -15982,7 +15998,7 @@
                   "openclawPid": 3233193,
                   "openclawExitCode": 1
                 },
-                "estimate": "Reuse native routes and prior memory proof; synthetic provider responses first, zero live model calls in this connection check. Development credits unknown.",
+                "estimate": "Two actual calls, 4874 input/171 output tokens; development credits unknown. No replay.",
                 "files": [
                   "Root: native worker, experiment evidence, manifest and workboard",
                   "Completed worker: IPC adapter and focused tests; HTTP stream compatibility/settlement",
@@ -15993,15 +16009,15 @@
                 "nextSeam": {
                   "providerFactory": "Native Codex constructors all bound in the isolated memory lifecycle.",
                   "implemented": true,
-                  "sampleLifecycle": "Shared foreground/memory parent ledger is now observed through native HTTP, outbox, retain and attempted consolidation. Actual fixed-case setup and live admission remain.",
+                  "sampleLifecycle": "Native foreground reply and memory retain measured together; consolidation pending after unchanged envelope refusal.",
                   "preflight": "Reuse existing native control/ledger, disposable database and public model cache; no production state, new runner or provider route.",
-                  "budgetObservation": "The nonempty synthetic memory fixture uses two helper attempts. Existing C01/C04 after-response retention is active; its complete sample behavior remains unmeasured."
+                  "budgetObservation": "Two real requests completed, third refused before dispatch. All observed usage known; full native memory incomplete."
                 },
                 "publishedSourceCommit": "3bfce4cfeb22ef68ff4edceb614f9bd263439518"
               },
               "blocker": "OpenClaw/Hermes-aanmelding ontbreekt alleen voor die deelnemers. Eva1/Eva2 hebben zelfstandig te onderzoeken native meet-/stopovergangen.",
               "nextImplementation": "Use these owned persisted configurations for native startup after own authentication. No repeated config/catalog probe without a changed cause or new evidence. Prior Agent Zero helper-envelope refusal remains unavailable; no hidden helper disable, auth-token copying or quota increase.",
-              "checkedAt": "2026-10-03T19:49:24.286680+00:00",
+              "checkedAt": "2026-10-03T20:56:21.662308+00:00",
               "ownerActionRequired": true,
               "nextAction": "Codex gebruikt bestaande vergelijkingsvoorbereiding; Jaap levert alleen daadwerkelijk ontbrekende accounttoegang. Dit blokkeert uitsluitend die vergelijking, niet Eva’s eigen functionele uitvoering.",
               "ownerInstructions": {
@@ -16030,14 +16046,14 @@
                 "existing": "EV-003 development cadence, C01/C04 public development cases, existing Inspect runner and native admission observations.",
                 "gap": "Current pins lack a bounded development run manifest with aggregate limits.",
                 "finish": "Freeze two known development cases, order, per-sample and aggregate limits; retain unavailable access and unseen final dataset as open. No model run.",
-                "estimate": "One bounded read-only decision using existing evidence; zero provider calls, development credits unknown.",
+                "estimate": "Two actual calls, 4874 input/171 output tokens; development credits unknown. No replay.",
                 "activeWorkers": [],
                 "owner": "/root",
                 "support": null,
-                "stage": "existing_development_manifest_ready_native_seam_dependency",
-                "currentAction": "Independent decision: newer owner instruction allows available admitted participants without waiting for every competitor login. Existing C01/C04 schedule and budgets remain unchanged; native Eva1/Eva2 sample accounting remains a technical dependency."
+                "stage": "first_native_result_recorded_next_participant_queued",
+                "currentAction": "First native C01 outcome independently assessed and recorded. No live model run or login active; next participant queued."
               },
-              "remaining": "Ontwikkelgevallen en budget al vastgezet. Gelijke meet-/stopovergangen van Eva1/Eva2 eerst aansluiten; ontbrekende concurrenten blijven onbekend. Eindtaken en familiebudgetten blijven open.",
+              "remaining": "Eerste Eva2 C01 vastgelegd; antwoord en feit bewaard, volledige consolidatie niet binnen vast proefbudget. Eva1 en overige beschikbare deelnemers nog niet gemeten; eindvergelijking en menselijke beoordeling open.",
               "evidence": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#developmentPlan",
               "nextAction": "Gebruik de bestaande taakfamilies en vastgezette referentieversies voor persoonlijkheid, geheugen, initiatief en zelfstandig werk. Vergelijk aanwezige én door Eva toegevoegde mogelijkheden op bruikbaar resultaat, hulp, tijd en totaalverbruik; geen toolaantallen of vooraf gecodeerde voorbeeldadapter. Bestaande afgeschermde beoordeling behouden.",
               "ownerActionRequired": false,
@@ -16047,7 +16063,8 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-03T16:56:25.879537+00:00"
+              "checkedAt": "2026-10-03T20:56:21.662308+00:00",
+              "latestEvidence": "eva2/evidence/product/p1-native-c01-subscription-20261003.json"
             }
           ],
           "assignment": {

@@ -456,7 +456,7 @@
   },
   "readiness": {
     "mayStartModelComparison": false,
-    "reason": "Shared Eva2 foreground/memory accounting is verified offline; this nonempty fixture hits the unchanged two-call cap before consolidation. Available participants still require fixed-case native admission and actual execution; missing access stays unknown.",
+    "reason": "The sole admitted Eva2 C01 epoch1 entry has executed; answer and fact stored, consolidation incomplete under unchanged sample envelope. No repeat or other entry automatically admitted.",
     "missingAccessCountsAs": "unknown_not_loss",
     "historicalResults": "EV-002 remains unchanged; no current ranking inferred.",
     "partialExecutionPolicy": {
@@ -465,14 +465,29 @@
       "missingParticipants": "unavailable_unknown_not_loss",
       "unusedBudgetRedistributed": false,
       "completeSuperiorityClaim": false
-    }
+    },
+    "admittedScheduleEntries": [],
+    "nativeAdmissionReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-eva2-c01-subscription-20261003-v1/admission.json",
+      "sha256": "d1c6cf60b8a2c383030dc283fc2bed8e4f1234d23c7fbbceb556947eecdb1a76"
+    },
+    "executedScheduleEntries": [
+      {
+        "participant": "eva2",
+        "case": "C01",
+        "epoch": 1,
+        "outcome": "sample_envelope_refused",
+        "fullNativeSampleComplete": false,
+        "evidence": "eva2/evidence/product/p1-native-c01-subscription-20261003.json"
+      }
+    ]
   },
   "budget": {
-    "thisAssignmentModelCalls": 0,
+    "thisAssignmentModelCalls": 2,
     "paidJudgeCalls": 0,
     "nextModelRuns": 0,
     "creditCost": null,
-    "notice": "P1.2 must freeze executable per-task and aggregate limits before admission."
+    "notice": "Two actual requests: 4874 input/171 output tokens. Third dispatch refused before HTTP. No unused budget redistribution."
   },
   "acceptanceScale": {
     "casesPerFamily": 12,
@@ -498,7 +513,7 @@
     "modelCalls": 0
   },
   "developmentPlan": {
-    "status": "frozen_inputs_not_admitted",
+    "status": "first_known_sample_recorded_incomplete_native_consolidation",
     "claim": "Known conversation development cases only; not unseen acceptance, voice or broad task capability.",
     "cases": [
       {

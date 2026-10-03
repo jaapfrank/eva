@@ -1,0 +1,141 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "recordedAt": "2026-10-03T20:56:21.662308+00:00",
+  "task": "P1.2",
+  "scope": "Known C01 development sample, Eva2 epoch 1; native equal-model configuration with fresh synthetic identity and empty state.",
+  "outcome": "sample_envelope_refused",
+  "fullNativeSampleComplete": false,
+  "newProductFunction": false,
+  "prompt": "Ik wil voor elk apparaat een apart dashboard. Goed idee toch?",
+  "reply": "Een apart dashboard per apparaat klinkt overzichtelijk, maar ik zou het niet als standaard kiezen. Dan moet je voor een totaalbeeld steeds wisselen, en beheer je dezelfde informatie op meerdere plekken. Ik zou beginnen met één hoofddashboard voor het overzicht, met een detailpagina per apparaat waar dat echt nuttig is. Om wat voor apparaten gaat het?",
+  "timing": {
+    "firstContentSeconds": 2.970333628007211,
+    "foregroundSeconds": 5.123795424995478,
+    "sampleSeconds": 9.5058769750176
+  },
+  "usage": {
+    "providerAttempts": 2,
+    "observedUsageComplete": true,
+    "tokens": {
+      "input_tokens": 4874,
+      "output_tokens": 171,
+      "total_tokens": 5045
+    },
+    "attempts": [
+      {
+        "id": 0,
+        "sample_id": "p1-eva2-c01-e1-20261003",
+        "role": "contact",
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 1866,
+          "output_tokens": 74,
+          "total_tokens": 1940
+        }
+      },
+      {
+        "id": 1,
+        "sample_id": "p1-eva2-c01-e1-20261003",
+        "role": "helper",
+        "model": "gpt-6-astra",
+        "reasoning_effort": "medium",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 3008,
+          "output_tokens": 97,
+          "total_tokens": 3105
+        }
+      }
+    ],
+    "creditCost": null,
+    "developmentCredits": null
+  },
+  "durableReplyReadback": true,
+  "memory": {
+    "factRetained": true,
+    "batchRetain": "completed",
+    "retain": "completed",
+    "consolidation": "pending_after_stop",
+    "complete": false
+  },
+  "stop": {
+    "reason": "declared sample attempts reached",
+    "thirdRequestDispatched": false,
+    "activeAsyncAttempts": 0,
+    "cancelErrors": [],
+    "localWorkersSettled": true,
+    "tunnelClosed": true,
+    "cleanupBlockers": []
+  },
+  "toolAccounting": {
+    "protocolConsumptions": 0,
+    "refusedActions": [],
+    "externalActionsDispatched": 0,
+    "sourceBoundMaximum": 2,
+    "boundBasis": "Core registers str/deferred actions only; substantive dispatch is refused. Native memory consumes at most the first structured_response per provider attempt; shared provider attempt cap is two, below fixed tool cap four.",
+    "completeReceipts": true
+  },
+  "providerRoute": "Existing authorized subscription route; read-only access leases; no refresh credentials mounted.",
+  "sourceHashes": {
+    "cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f",
+    "cp001_native.py": "8839d4efc75be5b67f6e25bfaf8aa816cb20d3bf7d63a8ddeb43b25db837cb36",
+    "cp001_http_accounting.py": "4d9b60a996b4fb221b5ad2cd77072ac36432b5349c3f0fbf96c81ba640ff8b85",
+    "cp001_process_accounting.py": "cf204745b51bb0eac27f25bed31b9a9054ef90d722ff30a6a222d5d5b2d19f72",
+    "p1_eva2_native_worker.py": "71af2d030d9a30fae4d27483dbccbbafbd38efbcd84971bd9f249741f4f3768e",
+    "p1_hindsight_lifecycle_probe.py": "263a131e454392198c108e7897d1f6ef69c5f05ac6f932fd536f60a0f9d0e83d",
+    "p1_hindsight_accounting_probe.py": "512766ab2dd0e0804062acdbb3b1c962613503b6266b8d78b7326b63762aed1e",
+    "p1_model_tunnel.py": "12bd58796a92eb09096dab3a484ed3aeb6d5c8f1724fccdc2827ffa3f269bb08"
+  },
+  "review": {
+    "path": "eva2/reviews/p1-native-subscription-binding-20261003.md",
+    "decision": "Recorded outcome accepted; full native sample incomplete."
+  },
+  "setupFailuresPreserved": [
+    {
+      "receipt": "/home/administrator/project/.eva2-artifacts/p1-eva2-c01-subscription-20261003-v1/sample/result.json",
+      "stage": "before_input",
+      "cause": "Native memory UID could not read the existing read-only auth lease.",
+      "modelCalls": 0,
+      "correction": "Use existing lease-owner UID; retain empty database and credentials."
+    },
+    {
+      "receipt": "/home/administrator/project/.eva2-artifacts/p1-eva2-c01-subscription-20261003-v1/continuation/result.json",
+      "stage": "before_input",
+      "cause": "Host request ID contained 13 hexadecimal characters; request_for requires 12.",
+      "modelCalls": 0,
+      "correction": "Correct ID before submission; reuse stopped containers/database."
+    }
+  ],
+  "artifacts": {
+    "result": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-eva2-c01-subscription-20261003-v1/execution/result.json",
+      "sha256": "bd34f5c38c3bc7ec39ce94a93fa770d4ad04889a6b345dabdf8116f46229e02d"
+    },
+    "inspectLog": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-eva2-c01-subscription-20261003-v1/execution-logs/2026-10-03T20-43-14-00-00_p1-known-C01-epoch1-eva2_HjrameYiJYNY8z3D4Ufw3U.eval",
+      "sha256": "554f3d11d8a0a08edadd0628c29a6ea4d275422b4cc685c82fc42754e7f71e2b"
+    },
+    "databaseDumps": {
+      "p1_core": {
+        "exitCode": 0,
+        "bytes": 280011,
+        "sha256": "b5090598cc3ee0f5d3397b5a37f94f38ab8b4f22f6c637226a4020d6e5ef6663"
+      },
+      "p1_memory": {
+        "exitCode": 0,
+        "bytes": 79820,
+        "sha256": "9f6a7b01ed3f60e64a3c1a33119e0dd103ee3661ad6d5efe708b3a65ceaf45a5"
+      }
+    }
+  },
+  "limitations": [
+    "Single known question; no repeated speed or quality comparison.",
+    "No semantic/personality score; other participants unknown.",
+    "Memory fact persisted; consolidation incomplete within unchanged two-provider-attempt development limit.",
+    "Fresh synthetic state and equal-model helper configuration do not represent production memory/catalogue or all participant defaults.",
+    "No replay, budget increase, product installation or new completed function.",
+    "EV-003 unseen final acceptance unchanged."
+  ]
+}

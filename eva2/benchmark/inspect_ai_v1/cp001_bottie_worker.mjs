@@ -3,14 +3,27 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import readline from 'node:readline';
+import { AsyncLocalStorage } from 'node:async_hooks';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { generateKeyPairSync, sign, createPrivateKey, createPublicKey, createHash } from 'node:crypto';
 
 const args = process.argv.slice(3);
 let sourceRoot = fileURLToPath(new URL('../../../', import.meta.url));
 let explicitSource = false;
+let providerMode = 'fixture';
+let authLease = null;
+let hookManifest = null;
 for (let index = 0; index < args.length; index += 1) {
   if (['--resume', '--sample-control'].includes(args[index])) continue;
+  if (['--provider-mode', '--auth-lease', '--hook-manifest'].includes(args[index])) {
+    const option = args[index];
+    const value = args[++index];
+    if (!value) throw new Error('option requires a value');
+    if (option === '--provider-mode') providerMode = value;
+    else if (option === '--auth-lease') authLease = value;
+    else hookManifest = value;
+    continue;
+  }
   if (args[index] !== '--source-root' || explicitSource || !args[index + 1] || !path.isAbsolute(args[index + 1])) {
     throw new Error('expected one absolute existing --source-root or known fixture flags');
   }
@@ -28,6 +41,23 @@ const sourceHashes = Object.fromEntries(sourceFiles.map(relative => {
   }
   return [relative, createHash('sha256').update(fs.readFileSync(filename)).digest('hex')];
 }));
+if (!['fixture', 'subscription'].includes(providerMode)) throw new Error('unknown provider mode');
+const subscription = providerMode === 'subscription';
+if (subscription) {
+  if (!explicitSource || !args.includes('--sample-control') || !path.isAbsolute(authLease || '')
+      || !path.isAbsolute(hookManifest || '')) throw new Error('subscription requires explicit source, control, lease and hook manifest');
+  const manifest = JSON.parse(fs.readFileSync(hookManifest, 'utf8'));
+  if (manifest.contract !== 'Cp001BottieNativeHooks/v1') throw new Error('native hook manifest differs');
+  for (const relative of ['src/brain/oauth.js', 'src/brain/llm.js', 'src/mind/tools.js']) {
+    const filename = fs.realpathSync(path.join(sourceRoot, relative));
+    if (!filename.startsWith(sourceRoot + path.sep)) throw new Error('hook source escapes root');
+    const content = fs.readFileSync(filename);
+    const hash = createHash('sha256').update(content).digest('hex');
+    if (manifest.source_sha256?.[relative] !== hash
+        || !content.includes(Buffer.from('eva.cp001.native-control.v1'))) throw new Error('native hook source differs');
+    sourceHashes[relative] = hash;
+  }
+} else if (authLease || hookManifest) throw new Error('credentials only permitted in subscription mode');
 const nativeModule = relative => pathToFileURL(path.join(sourceRoot, relative)).href;
 const dataDir = fs.realpathSync(process.argv[2]);
 const resume = process.argv.includes('--resume');
@@ -42,7 +72,8 @@ if (resume && (!fs.lstatSync(keyFile).isFile() || !fs.lstatSync(path.join(dataDi
 // Never load the selected source tree's real dotenv configuration.
 process.env.DOTENV_CONFIG_PATH = '/dev/null';
 process.env.EVA_DATA_DIR = dataDir;
-process.env.OPENAI_API_KEY = 'test-only';
+if (subscription) delete process.env.OPENAI_API_KEY;
+else process.env.OPENAI_API_KEY = 'test-only';
 process.env.WEB_HOST = '127.0.0.1';
 process.env.WEB_PORT = '0';
 process.env.NODE_ENV = 'test';
@@ -51,6 +82,8 @@ process.env.EVA_WEB_TOKEN = 'cp001-local-contract';
 console.log = (...args) => console.error(...args);
 const nativeFetch = globalThis.fetch;
 let providerCalls = 0;
+let realProviderCalls = 0;
+const roleContext = new AsyncLocalStorage();
 let currentText = '';
 const send = (value) => process.stdout.write(JSON.stringify(value) + '\n');
 let currentRequestId = null;
@@ -74,6 +107,47 @@ function decision(event, controller) {
     controller.signal.addEventListener('abort', abort, { once: true });
     pendingControls.set(event.event_id, value => { controller.signal.removeEventListener('abort', abort); resolve(value); });
     send(event);
+  });
+}
+
+function configuredRole(model, effort) {
+  if (model === 'gpt-6-sol' && effort === 'none') return 'contact';
+  if (model === 'gpt-6-astra' && effort === 'medium') return 'helper';
+  throw new Error('native model/effort is outside the frozen role policy');
+}
+function loadLease() {
+  const fd = fs.openSync(authLease, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW);
+  try {
+    const st = fs.fstatSync(fd);
+    if (!st.isFile() || st.uid !== 1000 || st.gid !== 65532 || (st.mode & 0o777) !== 0o640 || st.size > 65536) {
+      throw new Error('native lease metadata differs');
+    }
+    const value = JSON.parse(fs.readFileSync(fd, 'utf8'));
+    if (Object.keys(value).sort().join(',') !== 'access_token,account_id,contract,source_sha256'
+        || value.contract !== 'EvaModelAccessLease/v1' || !/^[a-f0-9]{64}$/.test(value.source_sha256)
+        || typeof value.access_token !== 'string' || !value.access_token
+        || typeof value.account_id !== 'string' || !value.account_id) throw new Error('native access lease differs');
+    return { accessToken: value.access_token, accountId: value.account_id };
+  } finally { fs.closeSync(fd); }
+}
+if (subscription) {
+  // Fixed hooks are installed only into the explicitly hashed disposable source.
+  globalThis[Symbol.for('eva.cp001.native-control.v1')] = Object.freeze({
+    authStatus() { loadLease(); return { status: 'ok' }; },
+    async getAccess({ forceRefresh = false, signal } = {}) {
+      if (forceRefresh || stopping || signal?.aborted) throw new Error('native lease refresh/dispatch refused');
+      return loadLease();
+    },
+    bindRequest(request, { model, effort }) {
+      const role = configuredRole(model, effort);
+      return (...values) => roleContext.run(role, () => request(...values));
+    },
+    beforeTool(name) {
+      if (stopping || !['onthoud', 'zoek_geheugen', 'zoek_gesprek'].includes(name)) {
+        stopSample();
+        throw new Error('external action refused by frozen conversation sample');
+      }
+    },
   });
 }
 
@@ -106,6 +180,11 @@ globalThis.fetch = async (input, init = {}) => {
   if (!sampleControl) return fixtureFetch(input);
   if (stopping) throw new DOMException('sample stopped', 'AbortError');
   const body = JSON.parse(init.body || '{}');
+  const role = subscription ? roleContext.getStore() : currentRole;
+  if (subscription && (String(input) !== 'https://chatgpt.com/backend-api/codex/responses'
+      || role !== configuredRole(body.model, body.reasoning?.effort))) {
+    stopSample(); throw new Error('unbound native provider dispatch');
+  }
   const eventId = `provider:${++eventSequence}`;
   const controller = new AbortController();
   providerControllers.add(controller);
@@ -114,20 +193,105 @@ globalThis.fetch = async (input, init = {}) => {
   if (init.signal?.aborted) controller.abort();
   let attemptId = null;
   let settled = false;
+  const startedAt = performance.now();
+  let firstContentAt = null;
   const settle = async (status, usage) => {
     settled = true;
     return decision({ provider_event: 'settle', event_id: eventId,
-      request_id: currentRequestId, attempt_id: attemptId, status, usage }, controller);
+      request_id: currentRequestId, attempt_id: attemptId, status, usage,
+      ...(subscription ? { observed_timing: { first_content_ms: firstContentAt === null ? null : firstContentAt - startedAt, settled_ms: performance.now() - startedAt } } : {}) }, controller);
   };
   try {
     const admission = await decision({ provider_event: 'begin', event_id: eventId,
-      request_id: currentRequestId, role: currentRole, model: body.model ?? null,
+      request_id: currentRequestId, role, model: body.model ?? null,
       reasoning_effort: body.reasoning?.effort ?? null }, controller);
     if (!admission.allow || !Number.isSafeInteger(admission.attempt_id) || admission.attempt_id < 0 || controller.signal.aborted || stopping) {
       stopSample();
       throw new DOMException('sample dispatch denied', 'AbortError');
     }
     attemptId = admission.attempt_id;
+    if (subscription) {
+      realProviderCalls += 1;
+      const response = await nativeFetch(input, { ...init, signal: controller.signal });
+      const reader = response.body?.getReader();
+      controller.streamOwned = true;
+      const cleanup = () => {
+        if (controller.closeFailed) return;
+        init.signal?.removeEventListener('abort', abort);
+        providerControllers.delete(controller);
+      };
+      const closeReader = async () => {
+        try { await reader?.cancel(); }
+        catch {
+          controller.closeFailed = true;
+          stopSample();
+          throw new Error('native provider stream close failed');
+        }
+      };
+      if (!response.ok || !reader) {
+        controller.abort();
+        try { await closeReader(); } finally { cleanup(); }
+        throw new Error('native provider did not return a successful stream');
+      }
+      let pending = '', total = 0, terminalCount = 0, usage = null, failed = false;
+      const decoder = new TextDecoder('utf-8', { fatal: true });
+      const observe = (text) => {
+        pending += text;
+        if (pending.length > 1048576) throw new Error('native SSE event exceeds observer boundary');
+        let end;
+        while ((end = pending.indexOf('\n')) >= 0) {
+          const line = pending.slice(0, end).trim(); pending = pending.slice(end + 1);
+          if (!line.startsWith('data:')) continue;
+          const raw = line.slice(5).trim();
+          if (!raw || raw === '[DONE]') continue;
+          const event = JSON.parse(raw);
+          if (event.type === 'response.output_text.delta' && firstContentAt === null) firstContentAt = performance.now();
+          if (!event || typeof event !== 'object' || typeof event.type !== 'string') throw new Error('malformed native SSE event');
+          if (['response.failed', 'response.incomplete', 'response.cancelled', 'response.canceled', 'error'].includes(event.type)) failed = true;
+          if (event.type === 'response.completed') {
+            terminalCount += 1;
+            if (event.response?.status !== 'completed' || event.response?.error != null) failed = true;
+            usage = event.response?.usage ?? null;
+          }
+          if (terminalCount > 1) throw new Error('duplicate native terminal');
+        }
+      };
+      const stream = new ReadableStream({
+        async pull(target) {
+          try {
+            const part = await reader.read();
+            if (part.done) {
+              observe(decoder.decode());
+              if (pending.trim() || failed || terminalCount !== 1 || !usage) throw new Error('native raw usage is incomplete');
+              const decisionResult = await settle('completed', usage);
+              if (!decisionResult.allow || stopping || controller.signal.aborted) throw new Error('native continuation refused');
+              cleanup(); target.close(); return;
+            }
+            total += part.value.byteLength;
+            if (total > 16777216) throw new Error('native stream exceeds observer boundary');
+            observe(decoder.decode(part.value, { stream: true }));
+            target.enqueue(part.value);
+          } catch (error) {
+            controller.abort();
+            let observedError = error;
+            try { await closeReader(); } catch (closeError) { observedError = closeError; }
+            if (!settled) await settle('error', null);
+            cleanup(); target.error(observedError);
+          }
+        },
+        async cancel() {
+          controller.abort();
+          let closeError = null;
+          try { await closeReader(); } catch (error) { closeError = error; }
+          if (!settled) await settle('aborted', null);
+          cleanup();
+          if (closeError) throw closeError;
+        },
+      });
+      // Ownership transfers to the stream until EOF/cancellation; no clone/drain.
+      controller.streamOwned = true;
+      return new Response(stream, { status: response.status, headers: response.headers });
+    }
     const response = await fixtureFetch(input);
     // Clone observes exact native SSE; the original response bytes remain untouched.
     const raw = await response.clone().text();
@@ -148,8 +312,10 @@ globalThis.fetch = async (input, init = {}) => {
     if (!settled) await settle(error?.name === 'AbortError' ? 'aborted' : 'error', null);
     throw error;
   } finally {
-    init.signal?.removeEventListener('abort', abort);
-    providerControllers.delete(controller);
+    if (!controller.streamOwned) {
+      init.signal?.removeEventListener('abort', abort);
+      providerControllers.delete(controller);
+    }
   }
 };
 const { db } = await import(nativeModule('src/db.js'));
@@ -171,7 +337,7 @@ const publicKey = { contract: 'HttpClientAckPublicKey/v3', algorithm: 'ES256', k
 const server = await startWeb();
 const base = `http://127.0.0.1:${server.address().port}`;
 send({ ready: true, source_root: sourceRoot, source_sha256: sourceHashes, explicit_source_root: explicitSource, database: path.join(dataDir, 'eva.db'), public_key: publicKey,
-  ...(sampleControl ? { sample_control: true, role_scope: 'controlled contact fixture only' } : {}),
+  ...(sampleControl ? { sample_control: true, role_scope: subscription ? 'explicit native contact/helper context' : 'controlled contact fixture only', provider_mode: providerMode } : {}),
   resumed: resume, pid: process.pid, network_namespace: fs.readlinkSync('/proc/self/ns/net'),
   key_file_sha256: createHash('sha256').update(fs.readFileSync(keyFile)).digest('hex') });
 async function handle(request) {
@@ -214,7 +380,7 @@ async function handle(request) {
       writeGeneration: Number(response.headers.get('x-eva-http-write-generation')) };
     }
     send({ status: response.status, body, provider_stub_calls: providerCalls,
-      replayed: response.headers.get('idempotency-replayed'), real_model_calls: 0 });
+      replayed: response.headers.get('idempotency-replayed'), real_model_calls: realProviderCalls });
 }
 let chain = Promise.resolve();
 let handlerError = null;
@@ -246,7 +412,7 @@ try {
   await new Promise((resolve) => server.close(resolve));
   db.pragma('wal_checkpoint(TRUNCATE)');
   db.close();
-  if (sampleControl) send({ stopped: true, provider_stub_calls: providerCalls, pending_provider_controls: pendingControls.size, active_provider_attempts: providerControllers.size, real_model_calls: 0 });
+  if (sampleControl) send({ stopped: true, provider_stub_calls: providerCalls, pending_provider_controls: pendingControls.size, active_provider_attempts: providerControllers.size, provider_close_failures: [...providerControllers].filter(c => c.closeFailed).length, quiescent: providerControllers.size === 0 && pendingControls.size === 0, real_model_calls: realProviderCalls });
 }
 // Imported product modules may own idle timers; the isolated fixture is finished.
 process.exit(0);

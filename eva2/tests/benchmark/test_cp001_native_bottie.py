@@ -564,3 +564,69 @@ def test_explicit_actual_bottie_source_completes_two_equal_model_calls(monkeypat
                 if process.poll() is None:
                     process.kill()
                     process.wait()
+
+
+def test_subscription_fetch_observer_preserves_native_stream_and_raw_usage():
+    """Exercise the worker's actual fetch wrapper without credentials or network."""
+    script = r"""
+const fs = require('node:fs');
+const source = fs.readFileSync(process.argv[1], 'utf8');
+const wrapper = source.slice(source.indexOf('globalThis.fetch = async'), source.indexOf("const { db } ="));
+const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+(async () => {
+ const results = [];
+ for (const kind of ['complete', 'missing', 'duplicate', 'cancelled', 'error', 'malformed', 'noncompleted', 'terminal-error', 'close-failure', 'nonok', 'nonok-close-failure']) {
+  const events = [], pieces = [Buffer.from('data: {"type":"response.output_text.delta","delta":"hello"}\n\n')];
+  const completed = Buffer.from('data: {"type":"response.completed","response":{"status":"completed","usage":{"input_tokens":17,"output_tokens":7}}}\n\n');
+  if (kind !== 'missing') pieces.push(completed);
+  if (kind === 'duplicate') pieces.push(completed);
+  if (['cancelled','error'].includes(kind)) pieces.unshift(Buffer.from('data: '+JSON.stringify({type:kind==='error'?'error':'response.cancelled'})+'\n\n'));
+  if (['malformed','close-failure'].includes(kind)) pieces.unshift(Buffer.from('data: {broken}\n\n'));
+  if (['noncompleted','terminal-error'].includes(kind)) pieces[pieces.length-1]=Buffer.from('data: '+JSON.stringify({type:'response.completed',response:{status:kind==='noncompleted'?'incomplete':'completed',error:kind==='terminal-error'?{code:'failed'}:null,usage:{input_tokens:17,output_tokens:7}}})+'\n\n');
+  let reads = 0, dispatches = 0, closes = 0;
+  const nativeFetch = async (_url, init) => {
+   if (!init.signal) throw new Error('missing bound abort signal');
+   dispatches++;
+   return new Response(new ReadableStream({pull(c) { reads++; const part = pieces.shift(); if(part)c.enqueue(part);else c.close(); }, cancel() { closes++; if(kind.includes('close-failure'))throw Error('synthetic close failure'); }}), {status:kind.startsWith('nonok')?403:200,headers:{'content-type':'text/event-stream'}});
+  };
+  const prelude = `let stopping=false, currentRole='contact', currentRequestId='sample', eventSequence=0, realProviderCalls=0;
+    const sampleControl=true, subscription=true, providerControllers=new Set(), pendingControls=new Map();
+    const roleContext={getStore:()=> 'contact'};
+    const configuredRole=(m,e)=>{if(m!=='gpt-6-sol'||e!=='none')throw Error('role');return 'contact'};
+    const stopSample=()=>{stopping=true;for(const c of providerControllers)c.abort()};
+    const fixtureFetch=()=>{throw Error('fixture path used')};
+    const decision=async(event)=>{events.push(event);return {allow:true,attempt_id:1}};`;
+  const run = new AsyncFunction('nativeFetch','events', prelude+wrapper+`
+    let text='', error=null;
+    try {
+      const response=await globalThis.fetch('https://chatgpt.com/backend-api/codex/responses', {body:JSON.stringify({model:'gpt-6-sol',reasoning:{effort:'none'}})});
+      text=await response.text();
+    } catch(e){error=e.message}
+    return {text,error,active:providerControllers.size,closeFailures:[...providerControllers].filter(c=>c.closeFailed).length};`);
+  const value = await run(nativeFetch,events);
+  results.push({kind,...value,events,dispatches,closes});
+ }
+ process.stdout.write(JSON.stringify(results));
+})().catch(e=>{console.error(e);process.exit(1)});
+"""
+    result = subprocess.run(
+        ["node", "-e", script, str(BENCHMARK / "cp001_bottie_worker.mjs")],
+        capture_output=True, text=True, check=True, timeout=15,
+    )
+    cases = json.loads(result.stdout)
+    complete, *failures = cases
+    assert complete["error"] is None
+    assert '"delta":"hello"' in complete["text"]
+    assert complete["events"][-1]["usage"] == {"input_tokens": 17, "output_tokens": 7}
+    assert complete["events"][-1]["status"] == "completed"
+    for failed in failures:
+        assert failed["error"]
+        assert failed["events"][-1]["usage"] is None
+        assert failed["events"][-1]["status"] == "error"
+    for case in cases:
+        close_failed = "close-failure" in case["kind"]
+        assert case["active"] == int(close_failed)
+        assert case["closeFailures"] == int(close_failed)
+        assert case["dispatches"] == 1
+        if case["kind"].startswith("nonok"):
+            assert case["closes"] == 1
