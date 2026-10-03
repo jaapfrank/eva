@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 import json
-import hmac
 from threading import Lock
 from typing import Literal, Protocol
 
@@ -24,7 +23,7 @@ from eva.application.orchestration import ToolDispatchResult, ToolProofObservati
 from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.application.schema_validation import validate_schema_value
-from eva.adapters.connectors.browser_autostart import ManagedBrowserAutostart
+from eva.adapters.connectors.browser_autostart import ManagedBrowserAutostart, managed_browser_session_id
 
 
 _USE_ACTION = "use_connector_tool"
@@ -170,11 +169,7 @@ class McpDiscoveryToolAdapter:
             revision = await self._browser_autostart.ensure_available(binding.connector_id)
             # One owner-bound browser generation across tools and core/worker instances.
             # The model never selects this identity, and it is not a durable tool argument.
-            session_id = hmac.digest(config.bearer_token.encode("utf-8"), canonical_json_bytes({
-                "contract": "EvaManagedBrowserMcpSession/v1",
-                "connector_id": binding.connector_id,
-                "browser_revision": revision,
-            }), "sha256").hex()
+            session_id = managed_browser_session_id(config.bearer_token, binding.connector_id, revision)
             config = replace(config, session_id=session_id)
         digest = binding.spec.configuration_sha256
         with self._cache_lock:

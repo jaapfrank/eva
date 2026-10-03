@@ -1,0 +1,189 @@
+{
+  "contract": "EvaOptionalBrowserInstallerOutcome/v1",
+  "status": "installed_ordinary_chat_verified",
+  "namespace": "eva-install-c32443b9475e",
+  "recorded_at": "2026-10-03T11:58:40.292999+00:00",
+  "route": "http://127.0.0.1:44727/eva/",
+  "target_owner_url": "http://127.0.0.1:46049",
+  "workflow_attempt_id": "d5d35875-4421-438b-b7cd-72bb03061b1d",
+  "result": "Ik heb https://example.com/ geopend, op ‘Learn more’ geklikt en de bestemmingspagina gecontroleerd.\n\nTitel: Example Domains\nAdres: https://www.iana.org/help/example-domains",
+  "url": "https://www.iana.org/help/example-domains",
+  "title": "Example Domains",
+  "independent_readback": "Separate snapshot-only gateway session; no navigation or click",
+  "attempts": [
+    {
+      "status": "failed",
+      "reason": "No fixed direct browser session; generic click rejection",
+      "message_id": "dashboard:b7ef02e4-e8ee-4a02-8a6f-4accbea3fdc1",
+      "seconds": 29.676,
+      "model_responses": 4,
+      "input_tokens": 12973,
+      "output_tokens": 282,
+      "tool_calls": 3
+    },
+    {
+      "status": "failed",
+      "reason": "Old deleted compositor remained loaded; reference resolved but stability timed out",
+      "message_id": "dashboard:95e732a6-053a-495a-aef9-4a3603ac7214",
+      "seconds": 36.665,
+      "model_responses": 4,
+      "input_tokens": 13162,
+      "output_tokens": 247,
+      "tool_calls": 3
+    },
+    {
+      "status": "succeeded",
+      "reason": "Reviewed session fix plus verified loaded pinned compositor",
+      "message_id": "dashboard:0e4e0f6f-a04a-421b-8565-482729be5326",
+      "seconds": 36.036,
+      "model_responses": 5,
+      "input_tokens": 20390,
+      "output_tokens": 260,
+      "tool_calls": 4
+    }
+  ],
+  "http_only_rejected_attempt": {
+    "status": 401,
+    "model_calls": 0,
+    "reason": "Expired installer session; session renewed"
+  },
+  "runtime": {
+    "core_id": "e812eb846d421919c26b831fe0313188aa9bc849665d8f5c8b3175837e9beac6",
+    "core_image": "sha256:e2d6af7ca0cba49761efe54c082ee1fab988f9de06680c01bfaa4fb6469a21d4",
+    "core_health": "healthy",
+    "source_hashes": {
+      "providers/mcp_gateway.py": "09a655e9836f67bd5be61fdb9198f09e43d4d6253520862728cf6d6ab186f6dd",
+      "providers/mcp_discovery.py": "2235114a301fdb0ada6a920ad8b3cb0bc17e6b496d7eab13b5f775e4cd3f2ac6",
+      "adapters/connectors/browser_autostart.py": "ee873278392f2c2bfab67fc4c899699de480a106b5b7ea82ebc1a8d6b8717327"
+    },
+    "gateway_id": "8327691301ab41015ab651d0bac61142db42b506fef1b83df904cec39cbe5fbe",
+    "gateway_ports": {
+      "4444/tcp": [
+        {
+          "HostIp": "10.254.3.1",
+          "HostPort": "45621"
+        }
+      ]
+    },
+    "gateway_networks": {
+      "eva-install-c32443b9475e-egress": "65f3fc9762663ab8b4a0dba2af57139d877ad114521750d667f51f8864954b90",
+      "eva-install-c32443b9475e-net": "49271f92a23ab7d2707d1ebbba1acb7724da1875b4e8b0d39781a2105abe4603"
+    },
+    "browser_status": {
+      "contract": "EvaBrowserSession/v1",
+      "revision": 10,
+      "state": "eva",
+      "owner_control": false,
+      "eva_control": true,
+      "browser_ready": true,
+      "mcp_ready": true,
+      "profile_preserved": true,
+      "fresh_observation_required": true,
+      "viewer_path": null
+    }
+  },
+  "preserved": {
+    "same_browser_and_mcp_containers": true,
+    "same_gateway_container": true,
+    "profile_preserved": true,
+    "database_reinitialized": false,
+    "initialized_authority_preserved": true,
+    "main_installation_changed": false
+  },
+  "development_overlay": true,
+  "public_release_claim": false,
+  "first_install_was_unattended": false,
+  "manual_repairs": "Earlier failed selected_modules and fresh_start continued explicitly; permission repair, pinned native overlay loaded by controller restart, approved gateway egress attachment, reviewed source overlay. Failure history retained.",
+  "not_claimed": [
+    "Universal website/login/CAPTCHA compatibility",
+    "Host reboot recovery",
+    "Family acceptance",
+    "Fresh end-to-end run without the recorded operator repairs"
+  ],
+  "credits": null,
+  "usd": null,
+  "evidence": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-optional-browser-20261002/final-browser-response.private.ndjson",
+      "sha256": "09582765ed7448617fe441a7b074f57fcff5d8620dc08a2286d4fdcaece9ec80"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-optional-browser-20261002/final-browser-reply.private.json",
+      "sha256": "7e2e42997b6659949012aacc860802993d70f9daaddacf10f16f0fe085415caa"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-optional-browser-20261002/final-browser-events.private.json",
+      "sha256": "a525b8947a627b374c8182051ae9bf79598717e92f4b51ee1c7779424e54fbda"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-optional-browser-20261002/final-browser-tool-proof.private.json",
+      "sha256": "d7a28fe10041e0be1b6b1ec93016c191fbaa9178ec4aaf8aa26db879161208e2"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-optional-browser-20261002/final-independent-browser-readback.private.json",
+      "sha256": "5a537c2ec7c047fec066775f9cd7d10e99e7f9c7540903a04eb8bbe7e4a80fe1"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-optional-browser-20261002/pixelflux-loaded-proof.json",
+      "sha256": "9d6e436582c13649ced2a56de8fa04a59b2a3e3f31175e4f19042ba8f7fc3f19"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-optional-browser-20261002/approved-gateway-attachment-20261003.json",
+      "sha256": "7ec79c255c81e665e97d585768d04491f836d24f0aa739ab1f967f4de41cc61a"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-optional-browser-20261002/samecore-readiness-reconciliation.json",
+      "sha256": "aff2786e2fae2ed33987844c0e87053fe0909fea52641c850e472ee99acb28b7"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-optional-browser-20261002/direct-browser-session-fix/build.json",
+      "sha256": "836cf1bfd8bc773d167ec0e418f707a386805bdccbb092ffe117a7d28d6b4c22"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-optional-browser-20261002/direct-browser-session-fix/update.private.json",
+      "sha256": "9dbdc80a99fac9b4de7e11b8527ab681d2523a12fca99d33961dc2904a46d428"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-optional-browser-20261002/raw-click-diagnostic.private.json",
+      "sha256": "559eb94963db5c2b6886a15f627f12a1f70d8040e0f650d0aa99b19fbae6817f"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-optional-browser-20261002/loaded-compositor-control.private.json",
+      "sha256": "f76abf473a1fffcd20580368582fcab3c2aac71207ee7637590604faf7727ae4"
+    }
+  ],
+  "package_verification": {
+    "reviewed_browser_files_match_source": true,
+    "native_wheel_sha256": "8583b1baf6119d38908a353affc7c6e7efca518009dc694fa78814adf0d30971",
+    "staging_runtime_interpreter_origin_retained": true,
+    "development_living_core_image": "sha256:e2d6af7ca0cba49761efe54c082ee1fab988f9de06680c01bfaa4fb6469a21d4"
+  },
+  "verification": {
+    "source_review": "SOURCE GO /root/aide_final_evaluation before image-only update",
+    "focused_checks": [
+      {
+        "file": "tests/connectors/test_mcp_gateway_provider.py",
+        "passed": 27,
+        "seconds": 2.99
+      },
+      {
+        "selection": "managed_direct_browser_is_selected",
+        "passed": 3,
+        "seconds": 0.89
+      }
+    ],
+    "prior_browser_staging_and_network_tests": "Already retained in the prior source checkpoint; not rerun"
+  },
+  "usage": {
+    "model_responses_total": 13,
+    "input_tokens_total": 46525,
+    "output_tokens_total": 789,
+    "model_requested_tool_calls_total": 10,
+    "diagnostic_or_independent_browser_calls": 7,
+    "diagnostic_model_calls": 0,
+    "credits": null,
+    "usd": null,
+    "scope": "Three ordinary Eva runtime tasks plus seven separately initiated browser-tool diagnostics/readbacks; not Codex development consumption"
+  },
+  "use": "Open the ordinary installer at http://localhost:44727/ and choose its Eva view; use the normal chat to ask Eva to open a public website, follow a link and report the observed result. Installer sessions expire and require the normal local bootstrap; no dashboard token must be pasted into chat."
+}

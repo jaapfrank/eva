@@ -519,8 +519,8 @@
           "detail": "Bestaande wizard herstelt de opgenomen werkelijke gegevensversie met geheugen, documenten en gecontroleerde kern-/werkerstart. Optionele modulekeuze O1.2 en de gezamenlijke eindkandidaat/praktijk zijn nog open.",
           "evidence": "O1.1, O2.1/O2.2/O2.3 · FN-002, FN-003",
           "outcomes": [],
-          "works": "Gewone tekstinstallatie (O1.1), update met gegevensbehoud en volledige herstelroute (O2) technisch bruikbaar en geïnstalleerd.",
-          "ownerSummary": "O2 herstel/update afgerond; optionele modules en eindoplevering nog open."
+          "works": "Gewone tekstinstallatie (O1.1), gekozen HA en eigen browser, update met gegevensbehoud en volledige herstelroute (O2) technisch bruikbaar. Browserchat onafhankelijk bevestigd; begeleide reparaties blijven zichtbaar.",
+          "ownerSummary": "Tekst, gekozen HA/browser en herstel bruikbaar; resterende optionele aansluitingen en gezamenlijke eindoplevering nog open."
         }
       ],
       "competitorCheckedAt": "21 september 2026",
@@ -992,13 +992,21 @@
           "Na computerherstart herstellen met behouden gegevens, nieuwe toegang en zonder oude acties te herhalen."
         ],
         "installation": [
-          "O1.1 tekstinstallatie en O2 update/herstel technisch afgerond. O1.2 gekozen optionele modules nog afmaken.",
-          "Bevroren eindkandidaat, volledige review, computerherstart en zeven dagen gezinspraktijk afronden."
+          "Resterende optionele aansluitingen binnen O1.2 afronden; tekst, HA, browser en herstel niet opnieuw bouwen.",
+          "Gezamenlijke eindkandidaat, geplande vergelijking en gezinspraktijk afzonderlijk afronden."
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T11:58:15.660852+00:00",
+        "checkedAt": "2026-10-03T12:06:24.291952+00:00",
         "deliveries": [
+          {
+            "title": "Optionele browser werkt vanuit een nieuwe Eva-installatie",
+            "date": "3 oktober",
+            "state": "installed",
+            "result": "Gewone chat opent een pagina, volgt de link en meldt de werkelijk waargenomen IANA-titel/URL. Afzonderlijke uitlezing en onafhankelijke eindreview GO. Bestaande containers, profiel en gegevens behouden.",
+            "remaining": "36,036s; 20.390 input-/260 outputtokens in de geslaagde proef. Twee eerdere mislukkingen en begeleide installatiecorrecties blijven zichtbaar. O1.2 blijft open voor overige opties; 23/44 oorspronkelijke kleine taken, geen nieuwe tellerstap.",
+            "source": "eva2/evidence/product/optional-browser-installed-20261003.json"
+          },
           {
             "title": "L3.3: Eva past haar beoordeelde contextverbetering toe",
             "date": "3 oktober",
@@ -3403,14 +3411,14 @@
           }
         ],
         "now": {
-          "title": "O1.2 · Browser in een nieuwe installatie afronden",
+          "title": "O1.2 · Telegramkeuze op bestaande consumenten aansluiten",
           "state": "in_progress",
-          "owner": "Codex /root/background_execution_seam",
-          "detail": "L3.3 is geïnstalleerd en onafhankelijk goedgekeurd. De browseragent heeft sessiebehoud aangesloten en de oude geladen grafische bibliotheek gericht vervangen. Kosteloze echte klik geslaagd; gewone Eva-chat en eindreview volgen."
+          "owner": "Codex /root",
+          "detail": "Browseruitkomst afgerond. De concrete volgende overgang is gevonden: de geverifieerde Telegramkeuze wordt nog geweigerd voordat de bestaande Telegram-ingang en terugmelding hun configuratie krijgen. Root bereidt de begrensde aansluiting voor."
         },
         "next": {
-          "title": "Overige gekozen installatieopties en bestaande vervolgvolgorde",
-          "detail": "O1.2 blijft open tot de oorspronkelijke gekozen modulecombinaties werken. Geen nieuwe producttaken of tellerwijzigingen door opsplitsen."
+          "title": "Telegram via dezelfde gewone installatie beschikbaar maken",
+          "detail": "Hergebruik de bestaande ingang, terugmelding en persoonsbinding. Overige modulekeuzes blijven binnen O1.2; geen nieuwe adapter of installatieplatform."
         },
         "ownerAction": {
           "title": "Geen handeling van jou nodig voor deze installatie",
@@ -3418,7 +3426,7 @@
           "expected": "Beide toestemmingen ontvangen. Eva mag zelfstandig haar browser gebruiken; technische uitvoering en controle gaan door."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T11:58:15.660852+00:00"
+        "reviewedAt": "2026-10-03T12:06:24.291952+00:00"
       },
       "reviewedAt": "2026-10-02T13:18:04.695516+00:00"
     },
@@ -13239,7 +13247,7 @@
           ]
         }
       ],
-      "nextAction": "Rond de al gekozen optionele browser op dezelfde nieuwe installatie af; overige bestaande kleine taken en afhankelijkheden blijven zichtbaar.",
+      "nextAction": "O1.2: geverifieerde Telegramkeuze aansluiten op bestaande consumers; geen herhaling van afgeronde browserproef.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -15904,17 +15912,17 @@
               "owner": "Codex /root",
               "blocker": null,
               "evidence": "eva2/evidence/product/installer-optional-selection-20260929.json",
-              "checkedAt": "2026-10-03T11:48:24.145737+00:00",
-              "remaining": "Goedgekeurde netwerkaansluiting is uitgevoerd. De nieuwe Eva kon navigeren en waarnemen, maar klikken verloor de browsersessie. De gerichte sessiekoppeling heeft bronreview GO en wordt op dezelfde nieuwe installatie toegepast; volledige browserchat nog te bevestigen.",
+              "checkedAt": "2026-10-03T12:06:24.291952+00:00",
+              "remaining": "Telegram, e-mail en adaptive_connector met ready credentials worden nog expliciet geweigerd als selected provider has no ordinary target consumer yet. Telegram heeft bestaande consumers; hun geselecteerde configuratie en persoonsbinding moeten worden aangesloten. Overige oorspronkelijke modulekeuzes blijven zichtbaar.",
               "assignment": {
                 "baseCommit": "70f1da3c971b3a979a0ada47a31fe3183c7de07f",
-                "owner": "/root/background_execution_seam",
+                "owner": "/root",
                 "activeWorkers": [
-                  "/root/background_execution_seam"
+                  "/root"
                 ],
-                "stage": "reviewed_browser_session_correction_installation",
+                "stage": "telegram_consumer_handoff",
                 "existing": "O1.1 actual text target and omission proof complete. Existing capability/secret/provider verification, HA URL configuration, maintained optional graph projection and HA runtime connector already exist.",
-                "gap": "Selected HA factory rejection resolved. Ordinary voice/browser module selection and installed consumers remain absent; other selected providers explicitly unsupported.",
+                "gap": "Browser and HA selected outcomes work. Ready Telegram/email/adaptive_connector selections are still rejected by packaged_installer_target.py; Telegram already has optional ingress/proactive consumers but lacks selected config/credential materialization.",
                 "outcome": "Dezelfde installatie werkt met gekozen modules; geen hardcoded eigenaarpaden.",
                 "design": "Existing browser select/skip plus BrowserSessionHost/Chromium-MCP recipe and existing ContextForge adapter. Fresh profile and gateway per selected installation; skip creates no browser. Ordinary new owner, no copied personal tab grant. One installer hook prepares selected module before core file binding; retained phase/IDs on failure, no automatic retry or cleanup.",
                 "files": [
@@ -15926,8 +15934,8 @@
                 ],
                 "estimate": "One executor, existing route and focused actual selected-module verification. No planned paid research or real house mutation. Development credits unknown; provider/model usage recorded if invoked.",
                 "finishScope": "Original task finish retained. O1 parent cannot close until voice/HA/browser module additions/omissions are available through ordinary owner choices; unsupported channels must remain explicit.",
-                "review": "Independent SOURCE GO including native packaging and specific network exposure; installed browser chat remains unverified.",
-                "result": "Current confirmed plan → selected immutable image validation → one preparation → healthy target → ordinary HA chat succeeded without repair/retry.",
+                "review": "Installed GO: eva2/reviews/installer-optional-browser-installed-20261003.md",
+                "result": "Gekozen HA en browser zijn op afzonderlijke nieuwe installaties bruikbaar via gewone chat. Browser openen/waarnemen/klikken/terugmelden werkelijk uitgevoerd; onafhankelijke eindreview GO. Gewone tekstinstallatie en module-weglating blijven behouden.",
                 "fileOwners": {
                   "/root/l3_application_seam": [
                     "installer_capability_workflow.py",
@@ -15948,10 +15956,11 @@
                     "integration tests and existing workboard"
                   ]
                 },
-                "finding": "Exact Docker NetworkSettings.Ports is 4444/tcp:null on internal-only gateway. Same host TCP refused; container4444 healthy. Proposed existing browser egress attachment was rejected before execution; no bypass or runtime network change.",
-                "ownerApproval": "Explicit owner permission 3 October 2026 in this chat; routine browser access also authorized."
+                "finding": "Private direct browser session now retained; loaded pinned compositor confirmed after targeted restart. Same public link task succeeds through ordinary chat.",
+                "ownerApproval": "Explicit owner permission 3 October 2026 in this chat; routine browser access also authorized.",
+                "currentAction": "Koppel de geverifieerde Telegram-installatiekeuze aan bestaande telegram-ingress/proactive-consumenten en persoonsbinding in packaged_installer_target.py en installer_optional_capabilities.py."
               },
-              "nextAction": "Standaardchat en enkele optionele installatiekeuzes; bestaande modules kunnen worden weggelaten. Gebruik dezelfde beheerroute voor later benodigde uitbreidingen, zonder vooraf verplichte HA/browser/Telegram-bundel of nieuwe installer per voorbeeld.",
+              "nextAction": "Koppel de geverifieerde Telegram-installatiekeuze aan bestaande telegram-ingress/proactive-consumenten en persoonsbinding in packaged_installer_target.py en installer_optional_capabilities.py.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -15959,8 +15968,9 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "latestEvidence": "eva2/evidence/product/installer-optional-browser-progress-20261003.json",
-              "result": "Eén gewone installatieaanvraag in 131,944s; daarna echte chat met één HA-uitlezing en juist antwoord. Geen huiswijziging, herinstallatielus of verhoging van taak-/producttellers."
+              "latestEvidence": "eva2/evidence/product/optional-browser-installed-20261003.json",
+              "result": "Gekozen HA en browser zijn op afzonderlijke nieuwe installaties bruikbaar via gewone chat. Browser openen/waarnemen/klikken/terugmelden werkelijk uitgevoerd; onafhankelijke eindreview GO. Gewone tekstinstallatie en module-weglating blijven behouden.",
+              "versionBoundary": "Fresh browser target/package uses901222 base with3browser files (e2d6af image). Main runtime has separate L3 candidate730524/0b1375. This is not the integrated final candidate; preserve exact identities and combine at existing F1."
             }
           ],
           "assignment": {

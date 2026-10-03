@@ -1,13 +1,31 @@
 # EVA2 werkbord
 
-## Actief: O1.2 — browser in een nieuwe installatie afronden
+## Actief: O1.2 — Telegramkeuze aansluiten op bestaande consumenten
 
-Eén agent rondt de bestaande optionele browserroute af, een tweede controleert
-onafhankelijk het resultaat. Root verzorgt integratie, dashboard en Git.
-De goedgekeurde netwerkaansluiting en sessiekoppeling zijn toegepast. Het proces
-gebruikte nog een oude grafische bibliotheek; gerichte herstart laadt nu de juiste
-versie. Een echte klik werkt; gewone Eva-chat en eindreview volgen. Geen nieuwe
-installatiepoging of eigenaarhandeling nodig. O1.2 blijft als geheel open.
+Browser en HA werken op de nieuwe installatie. De volgende concrete ontbrekende
+stap is gevonden: een geverifieerde Telegramkeuze wordt nog geweigerd voordat de
+bestaande ingang en terugmelding hun configuratie krijgen. Root bereidt de gerichte
+aansluiting van credentials en persoonsbinding voor. Geen nieuwe Telegram-adapter,
+installatieplatform of browserproef. **23/44** oorspronkelijke kleine taken klaar.
+
+Versies blijven expliciet: de nieuwe browserinstallatie gebruikt de bestaande
+901222-basis met drie browserwijzigingen; de hoofdinstallatie bevat de latere
+L3-verbetering. Dit is nog niet de gezamenlijke eindkandidaat van F1.
+
+## Nu opgeleverd: optionele browser in een nieuwe Eva-installatie
+
+Vanuit gewone chat op de nieuwe installatie opende Eva example.com, klikte de link
+en meldde de juiste IANA-titel en URL. Afzonderlijke uitlezing bevestigt dit;
+onafhankelijke eindreview **GO**. Geen persoonlijk tabblad delen of browserknoppen
+bedienen nodig. Browsercontainers, profiel en gegevens zijn behouden.
+
+De geslaagde proef duurde **36,036 seconden**, met **20.390 input-/260 outputtokens**.
+Twee eerdere mislukkingen en begeleide installatiecorrecties blijven vastgelegd.
+Dit bewijst deze werkende browserkeuze, geen foutloze onbegeleide eerste installatie
+of volledige O1.2. Credits/kosten onbekend; bestaande hoofdinstallatie behouden.
+
+[Resultaat en meting](evidence/product/optional-browser-installed-20261003.json)
+· [Onafhankelijke review](reviews/installer-optional-browser-installed-20261003.md).
 
 ## Nu afgerond: L3.3 — eigen contextverbetering werkelijk toegepast
 

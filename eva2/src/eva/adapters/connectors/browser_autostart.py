@@ -74,3 +74,14 @@ class ManagedBrowserAutostart:
             raise ConversationConflict(
                 "managed browser start or status is uncertain; refresh state before further work"
             ) from error
+
+
+def managed_browser_session_id(token: str, connector_id: str, revision: int) -> str:
+    """Private stable session for one authorized owner binding and browser generation."""
+    import hmac
+    from eva.contracts.canonical_json import canonical_json_bytes
+    return hmac.digest(token.encode("utf-8"), canonical_json_bytes({
+        "contract": "EvaManagedBrowserMcpSession/v1",
+        "connector_id": connector_id,
+        "browser_revision": revision,
+    }), "sha256").hex()

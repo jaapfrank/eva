@@ -451,3 +451,92 @@ def test_additional_catalog_cannot_activate_an_unconfigured_provider(monkeypatch
     monkeypatch.setenv("EVA_MCP_GATEWAY_ADDITIONAL_CATALOG_FILE", "/not-read-without-authority")
     with pytest.raises(RuntimeError, match="incomplete"):
         McpGatewayProviderFactory.load_settings()
+
+
+@pytest.mark.parametrize("state", ["owner", "recovery_required"])
+def test_direct_browser_keeps_owner_and_recovery_boundaries(monkeypatch, state):
+    import asyncio
+    from types import SimpleNamespace
+    from eva.providers.mcp_gateway import _ManagedDirectBrowserAdapter
+    from eva.adapters.connectors.mcp_gateway import McpGatewayConfig, McpGatewayToolAdapter
+    from eva.adapters.postgres import connector_results
+    from eva.application.conversation import ConversationConflict
+    payload = _invoke_addition()
+    payload["tools"][0]["eva_name"] = "browser_click"
+    spec = parse_mcp_gateway_catalog(json.dumps(payload))[0]
+    class Client:
+        origin = "http://browser.invalid:8000"
+        async def status(self):
+            return {"contract": "EvaBrowserSession/v1", "revision": 3, "state": state,
+                "owner_control": state == "owner", "eva_control": False, "browser_ready": True, "mcp_ready": False}
+    adapter = _ManagedDirectBrowserAdapter(McpGatewayConfig("https://gateway.invalid", "token"), (spec,), client=Client(), principal_sha256="a"*64)
+    adapter._verified_input_schemas[(spec.execute_tool_name, "execute")] = SCHEMA
+    monkeypatch.setattr(adapter, "_validate_request_binding", lambda *args: None)
+    monkeypatch.setattr(connector_results, "recovered_result", lambda *args: None)
+    with pytest.raises(ConversationConflict, match="owner control|recovery"):
+        asyncio.run(adapter.execute(SimpleNamespace(tool_name=spec.execute_tool_name, arguments={"message": "click"})))
+
+
+def test_direct_browser_sessions_share_generation_without_mutating_adapter_and_skip_capture(monkeypatch):
+    import asyncio, hmac
+    from types import SimpleNamespace
+    from eva.providers.mcp_gateway import _ManagedDirectBrowserAdapter
+    from eva.adapters.connectors.mcp_gateway import McpGatewayConfig, McpGatewayToolAdapter
+    from eva.adapters.connectors.browser_autostart import managed_browser_session_id
+    from eva.adapters.postgres import connector_results
+    from eva.contracts.canonical_json import canonical_json_bytes
+    payload = _invoke_addition()
+    payload["tools"][0]["eva_name"] = "browser_click"
+    spec = parse_mcp_gateway_catalog(json.dumps(payload))[0]
+    class Client:
+        origin = "http://browser.invalid:8000"
+        revision = 3
+        calls = 0
+        async def status(self):
+            self.calls += 1
+            return {"contract": "EvaBrowserSession/v1", "revision": self.revision, "state": "eva",
+                "owner_control": False, "eva_control": True, "browser_ready": True, "mcp_ready": True}
+    client = Client()
+    adapter = _ManagedDirectBrowserAdapter(McpGatewayConfig("https://gateway.invalid", "token"), (spec,), client=client, principal_sha256="a"*64)
+    adapter._verified_input_schemas[(spec.execute_tool_name, "execute")] = SCHEMA
+    monkeypatch.setattr(adapter, "_validate_request_binding", lambda *args: None)
+    monkeypatch.setattr(connector_results, "recovered_result", lambda *args: None)
+    async def dispatch(self, command):
+        return self._config.session_id
+    monkeypatch.setattr(McpGatewayToolAdapter, "execute", dispatch)
+    command = SimpleNamespace(tool_name=spec.execute_tool_name, arguments={"message": "click"})
+    first = asyncio.run(adapter.execute(command))
+    assert first == asyncio.run(adapter.execute(command))
+    assert adapter._config.session_id is None
+    expected = hmac.digest(b"token", canonical_json_bytes({"contract": "EvaManagedBrowserMcpSession/v1", "connector_id": adapter._owner_binding, "browser_revision": 3}), "sha256").hex()
+    assert first == expected == managed_browser_session_id("token", adapter._owner_binding, 3)
+    client.revision = 4
+    assert asyncio.run(adapter.execute(command)) != first
+    assert managed_browser_session_id("other-token", adapter._owner_binding, 3) != first
+    assert managed_browser_session_id("token", "other-owner", 3) != first
+    monkeypatch.setattr(connector_results, "recovered_result", lambda *args: {"captured": True})
+    calls = client.calls
+    assert asyncio.run(adapter.execute(command)) is None
+    assert client.calls == calls
+
+
+@pytest.mark.parametrize("kind", ["dedicated", "multiple_owners", "mixed"])
+def test_managed_direct_browser_is_selected_only_for_existing_single_owner_catalog(monkeypatch, private_tmp_path, kind):
+    payload = _invoke_addition()
+    payload["tools"][0]["eva_name"] = "browser_click" if kind != "mixed" else "additional_action"
+    paths = {"TOKEN_FILE": ("token", "gateway-token"), "CATALOG_FILE": ("catalog", json.dumps(payload))}
+    monkeypatch.delenv("EVA_MCP_GATEWAY_ADDITIONAL_CATALOG_FILE", raising=False)
+    monkeypatch.delenv("EVA_MCP_GATEWAY_TOKEN", raising=False)
+    for key, (name, value) in paths.items():
+        path = private_tmp_path / name
+        _private_file(path, value)
+        monkeypatch.setenv("EVA_MCP_GATEWAY_" + key, str(path))
+    control = private_tmp_path / "control"
+    _private_file(control, "control-token")
+    monkeypatch.setenv("EVA_BROWSER_CONTROL_URL", "http://browser.invalid:8000")
+    monkeypatch.setenv("EVA_BROWSER_CONTROL_TOKEN_FILE", str(control))
+    monkeypatch.setenv("EVA_MCP_GATEWAY_URL", "https://gateway.invalid")
+    monkeypatch.setenv("EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP", "false")
+    monkeypatch.setenv("EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST", "a"*64 + (","+"b"*64 if kind == "multiple_owners" else ""))
+    settings = McpGatewayProviderFactory.load_settings()
+    assert (settings.browser_client is not None) is (kind == "dedicated")

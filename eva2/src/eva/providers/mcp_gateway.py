@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
+from copy import copy
 import hashlib
 import json
 import re
@@ -28,6 +29,11 @@ from eva.application.conversation import (
 )
 from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.contracts.base import validate_json_value
+from eva.contracts.canonical_json import canonical_sha256
+from eva.adapters.connectors.browser_autostart import BrowserAutostartConfig, ManagedBrowserAutostart, managed_browser_session_id
+from eva.adapters.connectors.browser_session import BrowserSessionClient
+from eva.adapters.connectors.mcp_registration import canonical_mcp_endpoint
+from eva.application.schema_validation import validate_schema_value
 from eva.providers.contracts import ProviderContribution
 
 
@@ -63,6 +69,7 @@ class McpGatewayProviderSettings:
     allow_plain_http: bool
     specs: tuple[McpGatewayToolSpec, ...]
     principal_sha256_allowlist: tuple[str, ...]
+    browser_client: BrowserSessionClient | None = field(default=None, repr=False)
 
     def __post_init__(self) -> None:
         if (
@@ -72,6 +79,11 @@ class McpGatewayProviderSettings:
             or len(set(self.principal_sha256_allowlist)) != len(self.principal_sha256_allowlist)
         ):
             raise ValueError("MCP gateway principal allowlist is invalid")
+        if self.browser_client is not None and (
+            len(self.principal_sha256_allowlist) != 1 or not self.specs
+            or any(spec.operation_kind != "invoke" or not spec.descriptor.name.startswith("browser_") for spec in self.specs)
+        ):
+            raise ValueError("managed direct browser requires a dedicated single-owner catalog")
 
     def authorize_turn(self, turn: ConversationTurn) -> None:
         principal = hashlib.sha256(turn.principal_id.encode("utf-8")).hexdigest()
@@ -81,6 +93,37 @@ class McpGatewayProviderSettings:
             or principal not in self.principal_sha256_allowlist
         ):
             raise ConversationConflict("MCP gateway is unavailable for this audience")
+
+
+class _ManagedDirectBrowserAdapter(McpGatewayToolAdapter):
+    """Reuse the managed-browser lifecycle only for a configured single-owner catalog."""
+    def __init__(self, config, specs, *, client, principal_sha256):
+        super().__init__(config, specs)
+        self._owner_binding = canonical_sha256({
+            "contract": "EvaDirectBrowserOwner/v1", "principal_sha256": principal_sha256,
+            "gateway": config.base_url, "controller": client.origin,
+        })
+        self._browser = ManagedBrowserAutostart(
+            BrowserAutostartConfig(canonical_mcp_endpoint(config.base_url), client), self._owner_binding)
+
+    async def execute(self, command):
+        spec = self._by_execute_name.get(command.tool_name)
+        if spec is None:
+            return await super().execute(command)
+        self._validate_request_binding(command, spec)
+        schema = self._verified_input_schemas.get((spec.execute_tool_name, "execute"))
+        if schema is None:
+            raise RuntimeError("MCP gateway execute catalog is not verified")
+        validate_schema_value(command.arguments, schema, "execute_arguments", provider_schema=True)
+        from eva.adapters.postgres.connector_results import recovered_result
+        if recovered_result(command, "invoke") is not None:
+            return await super().execute(command)
+        revision = await self._browser.ensure_available(self._owner_binding)
+        # Never mutate shared configuration: concurrent calls keep their own generation.
+        adapter = copy(self)
+        adapter._config = replace(self._config, session_id=managed_browser_session_id(
+            self._config.bearer_token, self._owner_binding, revision))
+        return await McpGatewayToolAdapter.execute(adapter, command)
 
 
 def _environment_value(name: str) -> str:
@@ -286,12 +329,24 @@ class McpGatewayProviderFactory:
             if (len(specs) > 128 or len(set(names)) != len(names)
                     or len(set(execute_names)) != len(execute_names)):
                 raise RuntimeError("MCP gateway combined catalog contains duplicate tools or exceeds limit")
+        browser_client = None
+        controller = _environment_value("EVA_BROWSER_CONTROL_URL")
+        # Dedicated installer browser catalog: do not reinterpret mixed or
+        # multi-principal gateway providers used by existing installations.
+        if (controller and len(principals) == 1 and specs
+                and all(spec.operation_kind == "invoke" and spec.descriptor.name.startswith("browser_") for spec in specs)):
+            control_token_file = _environment_value("EVA_BROWSER_CONTROL_TOKEN_FILE")
+            if not control_token_file:
+                raise RuntimeError("managed browser controller token is required")
+            browser_client = BrowserSessionClient(controller, read_runtime_secret_file(
+                control_token_file, setting_name="EVA_BROWSER_CONTROL_TOKEN_FILE"))
         settings = McpGatewayProviderSettings(
             base_url=base_url,
             bearer_token=token,
             allow_plain_http=allow_plain_raw == "true",
             specs=specs,
             principal_sha256_allowlist=principals,
+            browser_client=browser_client,
         )
         try:
             McpGatewayConfig(
@@ -307,14 +362,14 @@ class McpGatewayProviderFactory:
     def build(
         settings: McpGatewayProviderSettings, engine: sa.Engine
     ) -> ProviderContribution:
-        adapter = McpGatewayToolAdapter(
-            McpGatewayConfig(
+        config = McpGatewayConfig(
                 settings.base_url,
                 settings.bearer_token,
                 allow_plain_http=settings.allow_plain_http,
-            ),
-            settings.specs,
-        )
+            )
+        adapter = (McpGatewayToolAdapter(config, settings.specs) if settings.browser_client is None else
+            _ManagedDirectBrowserAdapter(config, settings.specs, client=settings.browser_client,
+                principal_sha256=settings.principal_sha256_allowlist[0]))
         # Uvicorn calls synchronous app factories inside its running event loop.
         # Complete admission in an owned worker loop before exposing any tools.
         with ThreadPoolExecutor(max_workers=1) as executor:
