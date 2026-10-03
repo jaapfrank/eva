@@ -302,6 +302,7 @@ def create_installer_wizard(
     restore_workflow: InstallerRestorePort | None = None,
     update_workflow=None,
     installed_runtime_access=None,
+    installed_voice_access=None,
 ) -> FastAPI:
     receipt = _safe_receipt(receipt)
     if identity_lifecycle is not None:
@@ -534,6 +535,7 @@ def create_installer_wizard(
         prepare_target=installation_preparer,
         read_preparation_status=installation_preparation_status,
         runtime_owner_access=installed_runtime_access,
+        runtime_voice_access=installed_voice_access,
         require_write=require_installer_write,
         require_read=require_installer_read,
         security_headers=_SECURITY_HEADERS,

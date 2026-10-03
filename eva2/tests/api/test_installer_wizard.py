@@ -808,6 +808,7 @@ def test_wizard_retains_capability_choices_but_cannot_claim_provider_ready(
         "model_provider": "selected",
         "telegram": "selected",
         "home_assistant": "pending",
+        "voice": "pending",
         "browser": "selected",
         "email": "skipped",
         "adaptive_connector": "pending",
@@ -1263,7 +1264,7 @@ def test_wizard_shows_ready_read_only_installation_plan(private_tmp_path: Path) 
     capabilities.record_verification(
         step_id="model_provider", outcome="ready", evidence_sha256="a" * 64
     )
-    for step_id in ("telegram", "home_assistant", "email", "adaptive_connector"):
+    for step_id in ("telegram", "home_assistant", "voice", "email", "adaptive_connector"):
         capabilities.select(step_id=step_id, wanted=False)
     capabilities.select(step_id="browser", wanted=True)
     capabilities.select(step_id="budgets", wanted=True)

@@ -143,3 +143,20 @@ def test_fresh_sibling_access_root_is_supported(tmp_path):
     result=establish_installer_runtime_access(binding=binding(secret,[f"{os.geteuid()}:{os.getegid()}"]),
         materialized_bind_root=material,target_root=tmp_path/"access",image_users={})
     assert result.receipt["status"]=="access_established"
+
+
+def test_voice_policy_directory_gets_runtime_owned_copy_and_live_replacement(tmp_path):
+    material,_=source(tmp_path)
+    policy=tmp_path/'prepared-policy';policy.mkdir(mode=0o700)
+    (policy/'policy.json').write_text('{"state":"enabled"}')
+    bound=binding(policy,[f'{os.geteuid()}:{os.getegid()}'])
+    bound.graph['services']['0']['volumes'][0]['target']='/run/eva/voice'
+    result=run(material,bound)
+    actual=Path(result.graph['services']['0']['volumes'][0]['source'])
+    assert actual!=policy and actual.is_dir()
+    assert actual.stat().st_uid==os.geteuid()
+    replacement=actual/'new.json';replacement.write_text('{"state":"disabled"}')
+    replacement.replace(actual/'policy.json')
+    assert json.loads((actual/'policy.json').read_bytes())['state']=='disabled'
+    assert json.loads((policy/'policy.json').read_bytes())['state']=='enabled'
+    (actual/'policy.json').unlink();assert not (actual/'policy.json').exists()

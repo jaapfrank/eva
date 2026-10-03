@@ -35,11 +35,11 @@ is neither packaged nor copied into the new target. Existing comparison accounts
 are not consulted.
 
 Confirm the profile, verify the existing model route and confirm resource choices
-in the ordinary wizard. For this first development text target, explicitly skip
-Telegram, Home Assistant, email and the adaptive connector; their setup remains
-O1.2. Choose a language matching the verified identity pack. Select **Installatie
-uitvoeren**, then **Open de nieuwe Eva en begin een gesprek**. No target graph,
-Docker IDs, port, token, DSN or settings file must be handwritten by the owner.
+in the ordinary wizard. For a minimal text target, explicitly skip optional
+connections. Choose a language matching the verified identity pack. Select
+**Installatie uitvoeren**, then **Open de nieuwe Eva en begin een gesprek**.
+No target graph, Docker IDs, port, token, DSN or settings file must be handwritten
+by the owner. Current optional-module evidence is recorded in O1.2 on the workboard.
 Sudo is currently required for the new runtime-owned files; operator permissions
 are checked before provisioning.
 
@@ -49,13 +49,41 @@ Without all three image flags, ordinary public release support remains blocked.
 New storage and namespace keep the existing installation's data separate. The
 fresh core exposes only a loopback owner port; restore mode retains its closed
 network. The wizard presents text through its existing owner session and the
-core's bound credential. Voice and optional provider setup are not claimed by
-this installation slice.
+core's bound credential. The basic three-image command above builds the text candidate; optional modules
+require their actual immutable images in the package.
 
 A failed transition retains its preparation receipt and exact trusted launch
 graph for inspection; never automatically recreate the databases or restart the
 whole installation. The dated O1.1 evidence discloses the actual targeted repairs,
 streamed response, durable readback and remaining release limitations.
+
+### Optional voice in the local development package
+
+To package this optional route, add both `--voice-media-image sha256:<digest>`
+and `--livekit-image sha256:<digest>` to the existing staging command with its
+three base image arguments. Both local immutable images are inspected through
+the existing image verification; supplying only one voice image is rejected.
+This extends the development package and does not declare a public release.
+
+Choose Home Assistant and voice in the wizard, enter the HA endpoint and access,
+and verify the connection. Fetch the available speech pipelines, choose the
+intended pipeline, and confirm processing by its displayed speech providers.
+The supported retention basis currently covers Home Assistant Cloud STT and TTS;
+other listed engines remain unverified. Choosing voice does not select another
+language model or replace speaker firmware.
+
+After **Installatie uitvoeren**, use **Praten met de nieuwe Eva** and **Begin
+gesprek**. The installer creates fresh owner bindings, policy, credentials and
+free loopback ports for the existing media/LiveKit services. The same new core
+handles the conversation. Omitting voice creates no voice services. Existing
+policy expiry and revocation remain enforced.
+
+The 3 October installed check covers ordinary selection, service startup,
+Windows access to the explicit IPv4 page, and a real same-host RTC session that
+connected and closed. It does not establish microphone quality, a Windows-browser
+ICE connection, or speaker acceptance. See
+[installed evidence](evidence/product/installer-selected-voice-installed-20261003.json)
+and the [independent review](reviews/installer-selected-voice-20261003.md).
 
 </details>
 

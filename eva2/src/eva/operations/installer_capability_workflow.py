@@ -52,6 +52,7 @@ CAPABILITY_SPECS = (
     CapabilitySpec("telegram", False),
     CapabilitySpec("home_assistant", False),
     CapabilitySpec("browser", False),
+    CapabilitySpec("voice", False),
     CapabilitySpec("email", False),
     CapabilitySpec("adaptive_connector", False),
     CapabilitySpec("budgets", True),
@@ -480,6 +481,7 @@ class InstallerCapabilityWorkflow:
             "model_provider",
             "telegram",
             "home_assistant",
+            "voice",
             "email",
         }:
             raise InstallerCapabilityWorkflowError(

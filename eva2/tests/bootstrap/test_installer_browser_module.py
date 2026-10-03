@@ -212,7 +212,8 @@ def test_native_wheel_requires_exact_offline_bytes(tmp_path):
 
 
 @pytest.mark.parametrize("include_native", [False, True])
-def test_stage_optional_native_wheel_inventory_without_runtime(tmp_path, monkeypatch, include_native):
+@pytest.mark.parametrize("include_voice", [False, True])
+def test_stage_optional_native_wheel_inventory_without_runtime(tmp_path, monkeypatch, include_native, include_voice):
     from types import ModuleType
     stage_spec = importlib.util.spec_from_file_location("stage_browser_test", ROOT / "tools/stage_installer_package.py")
     stage = importlib.util.module_from_spec(stage_spec)
@@ -243,7 +244,7 @@ def test_stage_optional_native_wheel_inventory_without_runtime(tmp_path, monkeyp
                 return b""
             return "f" * 40
         if argv[1:3] == ["image", "inspect"]:
-            return json.dumps([{"Id": image, "Architecture": "amd64", "Os": "linux"}])
+            return json.dumps([{"Id": argv[3], "Architecture": "amd64", "Os": "linux"}])
         if argv[1] == "create":
             nonce = argv[argv.index("--label") + 1].split("=", 1)[1]
             return container
@@ -260,11 +261,32 @@ def test_stage_optional_native_wheel_inventory_without_runtime(tmp_path, monkeyp
     tools_module.__path__ = []
     monkeypatch.setitem(sys.modules, "tools", tools_module)
     monkeypatch.setitem(sys.modules, "tools.installer_browser_module", module)
-    result = stage.stage_package(source_root=source, target_root=target, runtime_image=image,
+    images={"living-core":image,"postgres":"sha256:"+"1"*64,"hindsight":"sha256:"+"2"*64}
+    if include_voice:images.update({"voice-media":"sha256:"+"3"*64,"livekit":"sha256:"+"4"*64})
+    result = stage.stage_package(development_images=images, source_root=source, target_root=target, runtime_image=image,
         browser_native_wheel=Path(prepared["native_wheel"]) if include_native else None)
+    assert result["development_candidate"]["imageDigests"]==images
+    assert all(["docker","image","inspect",digest] in calls for digest in images.values())
     key = "deploy/owner-browser/" + Path(prepared["native_wheel"]).name
     assert (key in result["source_files"]) is include_native
     assert (target / key).exists() is include_native
     if include_native:
         assert result["source_files"][key] == prepared["native_overlay"]["wheel"]["sha256"]
     assert not any(call[0] == "docker" and call[1] in {"start", "run", "pull"} for call in calls)
+
+
+@pytest.mark.parametrize('flags,valid', [([],True),(['--voice-media-image','sha256:a'],False),
+    (['--livekit-image','sha256:b'],False),(['--voice-media-image','sha256:a','--livekit-image','sha256:b'],True)])
+def test_stage_voice_cli_pair(monkeypatch,flags,valid):
+    spec=importlib.util.spec_from_file_location('stage_voice_cli',ROOT/'tools/stage_installer_package.py')
+    stage=importlib.util.module_from_spec(spec);spec.loader.exec_module(stage)
+    calls=[];monkeypatch.setattr(stage,'stage_package',lambda **kw:calls.append(kw))
+    args=['--source-root','/source','--target-root','/target','--runtime-image','sha256:core',
+          '--postgres-image','sha256:pg','--hindsight-image','sha256:memory',*flags]
+    if not valid:
+        with pytest.raises(SystemExit):stage.main(args)
+        assert calls==[]
+    else:
+        assert stage.main(args)==0
+        images=calls[0]['development_images']
+        assert ('voice-media' in images)==bool(flags) and ('livekit' in images)==bool(flags)

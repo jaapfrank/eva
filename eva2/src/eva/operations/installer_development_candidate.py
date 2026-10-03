@@ -53,7 +53,7 @@ def verify_installer_development_candidate(package_root, *, inspect_image):
         raise ValueError("explicit local development installation candidate required")
     images = manifest["imageDigests"]
     if (not isinstance(images, dict) or not {"living-core", "postgres", "hindsight"} <= set(images)
-            or set(images) - {"living-core", "postgres", "hindsight", "browser", "browser-mcp", "mcp-gateway"}):
+            or set(images) - {"living-core", "postgres", "hindsight", "browser", "browser-mcp", "mcp-gateway", "voice-media", "livekit"}):
         raise ValueError("complete local installer image inventory required")
     for digest in images.values():
         if not isinstance(digest, str) or not re.fullmatch(r"sha256:[0-9a-f]{64}", digest):

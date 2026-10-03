@@ -229,3 +229,27 @@ def test_changed_plan_after_module_start_preserves_state_without_starting_core(f
     assert receipt["phase"] == "selected_modules"
     assert receipt["selected_modules"]["browser"]["id"] == "retained"
     assert "resources" not in events and "materialization" not in events
+
+
+@pytest.mark.parametrize('fail',[False,True])
+def test_optional_module_starts_after_core_and_retains_running_core_on_failure(flow,monkeypatch,fail):
+    from dataclasses import replace
+    from tools import installation_fresh_start
+    new,plan,events=flow; workflow=new()
+    start=module.InstallerFreshStartSettings('postgres','core',('core',),{})
+    def core(**kwargs):events.append('core-ready');return {'status':'runtime_started_verified','runtime_started':True}
+    monkeypatch.setattr(installation_fresh_start,'start_fresh_runtime',core)
+    def voice(graph):
+        assert events[-1]=='inputs' and 'core-ready' in events
+        assert graph=={'services':{'core':{}}}
+        events.append('voice')
+        if fail:raise ValueError('voice error')
+        return {'phase':'ready'}
+    workflow.settings=replace(workflow.settings,fresh_start=start,after_fresh_start=voice)
+    if fail:
+        with pytest.raises(RuntimeError):workflow(plan)
+    else:workflow(plan)
+    receipt=json.loads(workflow.receipt_path.read_text())
+    assert receipt['eva_started'] is True and receipt['startup']['runtime_started'] is True
+    assert workflow.status()==('needs_inspection' if fail else 'runtime_ready')
+    assert workflow.resources_root.exists()

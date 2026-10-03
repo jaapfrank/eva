@@ -116,7 +116,9 @@ def establish_installer_runtime_access(*, binding, materialized_bind_root, targe
     try:
         counter=0
         for source,consumers in groups.items():
-            if source.is_dir() and not source.is_relative_to(material):
+            if (source.is_dir() and not source.is_relative_to(material)
+                    and not all(mount["target"] == "/run/eva/voice" and mount.get("read_only") is True
+                                for _, mount, _, _ in consumers)):
                 # The maintained owner credential producer reads its existing
                 # private authority; never change or duplicate refresh authority.
                 for _,_,uid,_ in consumers:

@@ -44,7 +44,7 @@ _PROVIDER_SCOPE_DESCRIPTIONS = {
 }
 
 
-INSTALLER_PROVIDER_SECTION = """<section><h2>Verbinding controleren</h2><p>Eva voert alleen de kleinste controle uit. De modelcontrole gebruikt één kleine modelgeneratie en kan dus meetellen in je gebruik.</p><div id="provider-list"><p>De controles worden veilig geladen…</p></div><p id="provider-result" role="status"></p></section>"""
+INSTALLER_PROVIDER_SECTION = """<section><h2>Verbinding controleren</h2><p>Eva voert alleen de kleinste controle uit. De modelcontrole gebruikt één kleine modelgeneratie en kan dus meetellen in je gebruik.</p><div id="provider-list"><p>De controles worden veilig geladen…</p></div><p id="provider-result" role="status"></p><div id="voice-choice"><button type="button" id="voice-discover">Gekozen spraak: beschikbare HA-pipelines ophalen</button><select id="voice-pipeline" hidden></select><p id="voice-processing"></p><button type="button" id="voice-confirm" hidden>Gebruik deze pipeline en sta verwerking door deze spraakproviders toe</button><p id="voice-result" role="status"></p></div></section>"""
 
 
 INSTALLER_PROVIDER_SCRIPT = r"""
@@ -163,6 +163,40 @@ INSTALLER_PROVIDER_SCRIPT = r"""
   });
   window.addEventListener('eva-installer-state-changed', () => {
     refresh().catch(() => {});
+  });
+  let voiceInventory = null;
+  const voiceSelect = document.getElementById('voice-pipeline');
+  const voiceResult = document.getElementById('voice-result');
+  const voiceConfirm = document.getElementById('voice-confirm');
+  function voiceProcessing() {
+    const selected = voiceInventory?.pipelines.find(p => p.id === voiceSelect.value);
+    document.getElementById('voice-processing').textContent = selected ?
+      `${selected.processing} STT: ${selected.stt_engine}; TTS: ${selected.tts_engine}. Eva bewaart geen ruwe audio. Kies spraak en controleer eerst Home Assistant.` : '';
+  }
+  document.getElementById('voice-discover').addEventListener('click', async () => {
+    try {
+      const response = await fetch('/internal/v1/onboarding/voice/pipelines', {method:'POST', credentials:'same-origin'});
+      if(!response.ok) throw new Error('unavailable');
+      voiceInventory = await response.json();
+      voiceSelect.replaceChildren();
+      for(const p of voiceInventory.pipelines) {
+        const option=document.createElement('option'); option.value=p.id; option.textContent=`${p.name} (${p.language})`; voiceSelect.append(option);
+      }
+      voiceSelect.hidden=voiceInventory.pipelines.length === 1;
+      voiceConfirm.hidden=false; voiceProcessing();
+      voiceResult.textContent=voiceInventory.pipelines.length === 1 ? 'Eén geschikte pipeline gevonden.' : 'Kies de gewenste bestaande pipeline.';
+    } catch {voiceResult.textContent='Kies spraak en controleer eerst Home Assistant. Pipeline-ophaling is nog niet gelukt.';}
+  });
+  voiceSelect.addEventListener('change', voiceProcessing);
+  voiceConfirm.addEventListener('click', async () => {
+    try {
+      const response=await fetch('/internal/v1/onboarding/voice/confirm', {method:'POST',credentials:'same-origin',
+        headers:{'Content-Type':'application/json'},body:JSON.stringify({inventory_sha256:voiceInventory.inventory_sha256,
+          pipeline_id:voiceSelect.value,allow_provider_audio:true})});
+      if(!response.ok) throw new Error('changed');
+      voiceResult.textContent='Spraakkeuze bevestigd. Audio en fysieke werking zijn nog niet getest.';
+      window.dispatchEvent(new Event('eva-installer-state-changed'));
+    } catch {voiceResult.textContent='Spraakkeuze gewijzigd of niet bevestigd. Haal de pipelines opnieuw op.';}
   });
   refresh().catch(() => {
     list.textContent = 'De providerstatus is niet leesbaar.';
@@ -296,6 +330,33 @@ def register_installer_provider_routes(
 ) -> None:
     probe_factory = configured_probe_factory
     locks = {slot_id: Lock() for slot_id in _LABELS}
+
+    @app.post("/internal/v1/onboarding/voice/pipelines")
+    async def voice_pipelines(request: Request):
+        require_write(request)
+        if not enabled or verifier is None or configuration_store is None:
+            raise HTTPException(status_code=409, detail="voice configuration unavailable")
+        from eva.operations.installer_voice_selection import voice_inventory
+        try:
+            result = await voice_inventory(verifier, configuration_store)
+        except Exception as error:
+            raise HTTPException(status_code=409, detail="voice pipeline discovery unavailable") from error
+        return JSONResponse(result, headers=security_headers)
+
+    @app.post("/internal/v1/onboarding/voice/confirm")
+    async def voice_confirm(request: Request):
+        require_write(request)
+        if not enabled or verifier is None or configuration_store is None:
+            raise HTTPException(status_code=409, detail="voice configuration unavailable")
+        body = await _small_json(request)
+        if not isinstance(body, dict) or set(body) != {"inventory_sha256", "pipeline_id", "allow_provider_audio"}:
+            raise HTTPException(status_code=422, detail="voice selection invalid")
+        from eva.operations.installer_voice_selection import confirm_voice
+        try:
+            digest = confirm_voice(verifier, configuration_store, **body)
+        except Exception as error:
+            raise HTTPException(status_code=409, detail="voice selection no longer available") from error
+        return JSONResponse({"state":"ready", "evidence_sha256":digest}, headers=security_headers)
 
     @app.get("/internal/v1/onboarding/providers/status")
     def provider_status(request: Request) -> JSONResponse:

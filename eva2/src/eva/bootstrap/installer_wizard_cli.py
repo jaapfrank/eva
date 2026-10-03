@@ -319,6 +319,7 @@ def run_installer_wizard(
             receipt,
             bootstrap,
             installed_runtime_access=(preparation.runtime_access if installed_runtime_access else None),
+            installed_voice_access=(getattr(preparation, "voice_access", None) if installed_runtime_access else None),
             restore_workflow=restore_workflow,
             update_workflow=update_workflow,
             identity=identity,

@@ -249,6 +249,11 @@ class PackagedInstallerPreparation:
         token = read_private_artifact(self.workspace / "inputs/dashboard-token", label="fresh owner token").decode()
         return selected["url"], token
 
+    def voice_access(self):
+        if self.status() != "runtime_ready": return None
+        value = json.loads(read_private_artifact(self.workspace / "owner-access.json", label="fresh owner access"))
+        return value.get("voice_url")
+
     def __call__(self, displayed_plan):
         if self.status() != "available" or self.plan_reader() != displayed_plan:
             raise ValueError("current unattempted installation plan required")
@@ -265,6 +270,15 @@ class PackagedInstallerPreparation:
         if any(c["state"] == "ready" and c["step_id"] in {"adaptive_connector"}
                for c in plan["capabilities"]):
             raise ValueError("selected provider has no ordinary target consumer yet")
+        voice_selected = any(item["step_id"] == "voice" and item["state"] == "ready"
+                             for item in plan["capabilities"])
+        voice_selection = None
+        if voice_selected:
+            from eva.operations.installer_voice_selection import load_voice_selection
+            from tools.installer_voice_module import prepare_voice_module, start_voice_module
+            voice_selection = load_voice_selection(plan, self.provider_verifier, self.provider_configuration_store)
+            if not {"voice-media", "livekit"} <= self.manifest["imageDigests"].keys():
+                raise ValueError("selected voice images are not packaged")
         email_selected = any(item["step_id"] == "email" and item["state"] == "ready"
                              for item in plan["capabilities"])
         email_inbox = (verified_provider_configuration(
@@ -324,6 +338,25 @@ class PackagedInstallerPreparation:
         telegram_files = {}
         if telegram_selected:
             telegram_files = prepare_telegram_owner_files(inputs, telegram_owner, identifiers)
+        voice_module = None
+        if voice_selected:
+            ports = []
+            while len(ports) < 3:
+                with socket.socket() as candidate:
+                    candidate.bind(("127.0.0.1", 0)); selected_port = candidate.getsockname()[1]
+                    if selected_port in ports: continue
+                    with socket.socket(type=socket.SOCK_DGRAM) as udp:
+                        try: udp.bind(("127.0.0.1", selected_port))
+                        except OSError: continue
+                    ports.append(selected_port)
+            voice_module = prepare_voice_module(workspace=inputs, namespace=namespace,
+                images=self.manifest["imageDigests"], selection=voice_selection, identifiers=identifiers,
+                identity=identity, identity_file=identity_file, core_url=f"http://127.0.0.1:{port}",
+                media_port=ports[0], livekit_port=ports[1], rtc_udp_port=ports[2])
+            from eva.operations.installer_identity_storage import atomic_write_private
+            owner_access = json.loads(read_private_artifact(self.workspace / "owner-access.json", label="fresh owner access"))
+            owner_access["voice_url"] = voice_module["voice_url"]
+            atomic_write_private(self.workspace / "owner-access.json", canonical_json_bytes(owner_access))
         network_subnet = _new_subnet()
         browser_module = None
         gateway_plan = None
@@ -402,6 +435,10 @@ class PackagedInstallerPreparation:
         core["environment"].update(EVA_DASHBOARD_RELEASE_SHA256=values["EVA_DASHBOARD_RELEASE_SHA256"],
             TZ=profile["time_zone"],
             EVA_CONVERSATION_CONTACT_MODEL="gpt-6-sol", EVA_CONVERSATION_CONTACT_REASONING_EFFORT="none")
+        if voice_selected:
+            core["environment"]["EVA_DASHBOARD_VOICE_POLICY_FILE"] = "/run/eva/voice/policy.json"
+            core.setdefault("volumes", []).append({"type":"bind", "source":voice_module["policy_directory"],
+                "target":"/run/eva/voice", "read_only":True, "bind":{"create_host_path":False}})
         if email_selected:
             core["environment"].update(
                 EVA_AGENTMAIL_INBOX_ID=email_inbox,
@@ -452,6 +489,8 @@ class PackagedInstallerPreparation:
                     extras[(name, mount["target"])] = str(self.model_authority.parent)
                 elif mount.get("source") in {str(inputs / "dashboard-token"), str(identity_file), str(trust_file)}:
                     extras[(name, mount["target"])] = mount["source"]
+                elif voice_selected and mount.get("source") == voice_module["policy_directory"]:
+                    extras[(name, mount["target"])] = mount["source"]
                 elif telegram_selected and mount.get("source") in {str(p) for p in telegram_files.values()}:
                     extras[(name, mount["target"])] = mount["source"]
                 elif browser_selected and name == "core" and mount["target"].startswith("/run/eva/connectors/mcp/"):
@@ -474,7 +513,8 @@ class PackagedInstallerPreparation:
             fresh_installation=True, local_port=port,
             source_authority_directories=((self.model_authority.parent, "auth.json"),),
             configuration_validator=validate_target_runtime_configuration,
-            selected_module_preparation=selected_module_preparation)
+            selected_module_preparation=selected_module_preparation,
+            after_fresh_start=(lambda graph: start_voice_module(voice_module, graph)) if voice_selected else None)
 
 
 def run_packaged_target_wizard(root, argv):

@@ -12,7 +12,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 
 
-INSTALLER_INSTALLATION_PLAN_SECTION = """<section><h2>Installatieplan</h2><div id="installation-plan"><p>Het plan wordt veilig geladen…</p></div><p><small>Het plan bekijken verandert niets. Installatie uitvoeren maakt opslag en bereidt de databases voor. Een pakket voor nieuwe installatie start daarna Eva; een herstelpakket wacht op herstel.</small></p><button id="installation-prepare" type="button" disabled>Installatie uitvoeren</button><p id="installation-preparation-status" role="status"></p><a id="installed-eva" href="/eva/internal/v1/dashboard/conversation" hidden>Open de nieuwe Eva en begin een gesprek</a></section>"""
+INSTALLER_INSTALLATION_PLAN_SECTION = """<section><h2>Installatieplan</h2><div id="installation-plan"><p>Het plan wordt veilig geladen…</p></div><p><small>Het plan bekijken verandert niets. Installatie uitvoeren maakt opslag en bereidt de databases voor. Een pakket voor nieuwe installatie start daarna Eva; een herstelpakket wacht op herstel.</small></p><button id="installation-prepare" type="button" disabled>Installatie uitvoeren</button><p id="installation-preparation-status" role="status"></p><a id="installed-eva" href="/eva/internal/v1/dashboard/conversation" hidden>Open de nieuwe Eva en begin een gesprek</a><p><a id="installed-voice" hidden>Praten met de nieuwe Eva</a></p></section>"""
 
 
 INSTALLER_INSTALLATION_PLAN_SCRIPT = r"""
@@ -56,6 +56,10 @@ INSTALLER_INSTALLATION_PLAN_SCRIPT = r"""
     const status = await statusResponse.json();
     preparationStatus.textContent = status.message;
     document.getElementById('installed-eva').hidden = status.status !== 'runtime_ready' || status.owner_access !== true;
+    const voice = document.getElementById('installed-voice');
+    const voiceUrl = typeof status.voice_url === 'string' && /^http:\/\/(localhost|127\.0\.0\.1):[0-9]+$/.test(status.voice_url) ? status.voice_url : null;
+    voice.hidden = status.status !== 'runtime_ready' || !voiceUrl;
+    if (voiceUrl) voice.href = voiceUrl;
     prepare.disabled = attempted || status.status !== 'available' || currentPlan.status !== 'ready_for_release_preparation';
   }
   prepare.onclick = async () => {
@@ -96,6 +100,7 @@ def register_installer_installation_plan_routes(
     prepare_target: Callable[[dict[str, object]], None] | None = None,
     read_preparation_status: Callable[[], str] | None = None,
     runtime_owner_access: Callable | None = None,
+    runtime_voice_access: Callable | None = None,
 ) -> None:
     @app.get("/internal/v1/onboarding/install/plan")
     def installation_plan(request: Request) -> JSONResponse:
@@ -132,7 +137,8 @@ def register_installer_installation_plan_routes(
 
     def preparation_payload():
         return {"status": preparation_state, "message": messages[preparation_state],
-                "owner_access": bool(preparation_state == "runtime_ready" and runtime_owner_access is not None)}
+                "owner_access": bool(preparation_state == "runtime_ready" and runtime_owner_access is not None),
+                "voice_url": runtime_voice_access() if preparation_state == "runtime_ready" and runtime_voice_access else None}
 
     @app.get("/internal/v1/onboarding/install/preparation")
     def preparation_status(request: Request) -> JSONResponse:

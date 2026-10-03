@@ -50,6 +50,7 @@ class InstallerTargetSettings:
     source_authority_directories: tuple = ()
     configuration_validator: Callable[[dict], dict] | None = None
     selected_module_preparation: Callable[[], dict] | None = None
+    after_fresh_start: Callable[[dict], dict] | None = None
 
 
 class InstallerTargetWorkflow:
@@ -191,6 +192,11 @@ class InstallerTargetWorkflow:
                 if startup.get("status") != "runtime_started_verified" or startup.get("runtime_started") is not True:
                     raise ValueError("fresh startup was not confirmed")
                 receipt["eva_started"] = True
+                if settings.after_fresh_start is not None:
+                    if bind() != inputs:
+                        raise ValueError("approved choices changed before optional startup")
+                    save("selected_modules_start")
+                    receipt["selected_modules_started"] = settings.after_fresh_start(access.graph)
                 receipt["status"] = "runtime_ready"
                 save("runtime_ready")
         except Exception as error:

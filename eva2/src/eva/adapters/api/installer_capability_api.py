@@ -20,6 +20,7 @@ _LABELS = {
     "telegram": "Telegram",
     "home_assistant": "Home Assistant",
     "browser": "Geïsoleerde browser",
+    "voice": "Spraak via deze computer",
     "email": "E-mail",
     "adaptive_connector": "Ander kanaal of dienst",
     "budgets": "Geheugen-, token- en kostenlimieten",
@@ -29,6 +30,7 @@ _CAPABILITY_REQUIRED = {
     "telegram": False,
     "home_assistant": False,
     "browser": False,
+    "voice": False,
     "email": False,
     "adaptive_connector": False,
     "budgets": True,
@@ -44,7 +46,7 @@ INSTALLER_CAPABILITY_SCRIPT = r"""
   const result = document.getElementById('capability-result');
   const labels = {
     model_provider: 'Modelverbinding', telegram: 'Telegram',
-    home_assistant: 'Home Assistant', browser: 'Geïsoleerde browser', email: 'E-mail',
+    home_assistant: 'Home Assistant', browser: 'Geïsoleerde browser', voice: 'Spraak via deze computer', email: 'E-mail',
     adaptive_connector: 'Ander kanaal of dienst',
     budgets: 'Geheugen-, token- en kostenlimieten'
   };

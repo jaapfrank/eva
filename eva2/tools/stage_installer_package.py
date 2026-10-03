@@ -61,9 +61,11 @@ def stage_package(*, source_root, target_root, runtime_image,
         ["git", "-C", str(repository), "status", "--porcelain", "--", *selected]))
     if development_images is not None:
         if (not {"living-core", "postgres", "hindsight"} <= set(development_images)
-                or set(development_images) - {"living-core", "postgres", "hindsight", "browser", "browser-mcp", "mcp-gateway"}
+                or set(development_images) - {"living-core", "postgres", "hindsight", "browser", "browser-mcp", "mcp-gateway", "voice-media", "livekit"}
                 or development_images["living-core"] != runtime_image):
             raise ValueError("complete explicit development image inventory required")
+        if ("voice-media" in development_images) != ("livekit" in development_images):
+            raise ValueError("both optional voice images are required")
         for digest in development_images.values():
             if not re.fullmatch(r"sha256:[0-9a-f]{64}", digest):
                 raise ValueError("immutable local development image required")
@@ -169,11 +171,19 @@ def main(argv=None):
     parser.add_argument("--browser-native-wheel", type=Path)
     parser.add_argument("--postgres-image")
     parser.add_argument("--hindsight-image")
+    parser.add_argument("--voice-media-image")
+    parser.add_argument("--livekit-image")
     args = parser.parse_args(argv)
     if bool(args.postgres_image) != bool(args.hindsight_image):
         parser.error("both local development dependency images are required")
+    if bool(args.voice_media_image) != bool(args.livekit_image):
+        parser.error("both optional voice images are required")
+    if args.voice_media_image and not args.postgres_image:
+        parser.error("optional voice images require the explicit development image inventory")
     images = ({"living-core": args.runtime_image, "postgres": args.postgres_image,
                "hindsight": args.hindsight_image} if args.postgres_image else None)
+    if args.voice_media_image:
+        images.update({"voice-media": args.voice_media_image, "livekit": args.livekit_image})
     stage_package(source_root=args.source_root, target_root=args.target_root,
                   runtime_image=args.runtime_image, platform_lock=args.platform_lock,
                   development_images=images, browser_native_wheel=args.browser_native_wheel)

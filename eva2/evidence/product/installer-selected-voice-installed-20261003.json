@@ -1,0 +1,171 @@
+{
+  "contract": "EvaInstallerSelectedVoiceDelivery/v1",
+  "checked_at": "2026-10-03T14:16:10.713250+00:00",
+  "task_id": "O1.2",
+  "outcome": "Optional existing voice can be selected, configured and started with a fresh Eva core using the ordinary local development installer.",
+  "status": "installed_suboutcome",
+  "whole_task_completed": false,
+  "base_commit": "0610c8320d2fe0076418295b199407b176b61371",
+  "existing_reused": [
+    "Shared Eva core voice API and owner policy",
+    "Existing HA STT/TTS transport and media/LiveKit images",
+    "Ordinary installer capability, target and runtime-access hooks"
+  ],
+  "added": [
+    "Ordinary voice opt-in or skip, verified HA pipeline selection and explicit provider audio choice",
+    "Fresh core identity, shared readonly policy directory, free loopback ports and service startup",
+    "Owner voice link using explicit IPv4; optional paired image flags in developer packager"
+  ],
+  "source_files": {
+    "eva2/src/eva/adapters/api/installer_capability_api.py": "2f5adbae064088be946f4b702125948d742082f9812023f526a5d650012707b7",
+    "eva2/src/eva/adapters/api/installer_installation_plan_api.py": "b49aa590b8ce019c2a72f727a381ab74e30e742d8acdbf26178cd1890e081b4c",
+    "eva2/src/eva/adapters/api/installer_provider_api.py": "61d6ad573ca13de3801e99ca3fdccd7b724ff378991200590a0af3211739514e",
+    "eva2/src/eva/adapters/api/installer_wizard.py": "27fefb40eb25d6ea45a82799a6e5931c99d3a1cc2e27e9f6fb4bc64b70f54f87",
+    "eva2/src/eva/bootstrap/installer_wizard_cli.py": "3c39fd189293f8dd76c6681370cdf0c4d287276cfcad0b1d1520e90e926b5e19",
+    "eva2/src/eva/operations/installer_capability_workflow.py": "2ebaf2dd201977c7834578e3fa12723a1359e077a1789dabc6b987e67e8f9f18",
+    "eva2/src/eva/operations/installer_development_candidate.py": "679cc6f8de3df7db768b5d11f2d6a09589dd6f343c4a205c55f3d9d1e855e860",
+    "eva2/src/eva/operations/installer_voice_selection.py": "5a8e90cae5aaa8f9a3e6ee0934ee6df7f8533cb23d6fb85ad7a213b91eec2591",
+    "eva2/tools/installer_runtime_access.py": "3fc2cdd64499e33cc1088958b99ed91a396a1db5b775cd1f2d711e6e1e049e22",
+    "eva2/tools/installer_target_bindings.py": "e2058d71b748180a6581e3ea98f24ff1d15f53478196f0be39a624145d58f05d",
+    "eva2/tools/installer_target_workflow.py": "74da948f9fb003ab167003a8da1835e0f8dbf29bba8747563c0c8e6f3add5608",
+    "eva2/tools/installer_voice_module.py": "2513fc208eaeca1855e07280e5d2082137714ee6ab4d23730aba2c72c26d14b8",
+    "eva2/tools/packaged_installer_target.py": "892e68a8ec8fa9ea7862a8cb388bb7ffb319e1489384fcbb323fbe1f441b494c",
+    "eva2/tools/stage_installer_package.py": "441f0277936c1d3d5c4be6815be1a02fb44fc59a2cae7fa2d8e884b3686bdc66"
+  },
+  "package_snapshot_sha256": "e4f4534adb5aeaf2e168f46b1606e08f4d33c9b63e4d91f9d0c20fe066844d25",
+  "review": {
+    "path": "eva2/reviews/installer-selected-voice-20261003.md",
+    "sha256": "a607c6a40b064148e3a4feba2463a76e8d2040dcf70d8abfdefd7f5410b9e2d6",
+    "decision": "INSTALLED GO for bounded voice and package delivery; O1.2 remains open"
+  },
+  "installation": {
+    "kind": "local development candidate; not public release",
+    "fresh_target": true,
+    "ordinary_prepare_requests": 1,
+    "prepare_seconds": 142.4167711350019,
+    "initial_status": "runtime_ready",
+    "services": [
+      {
+        "name": "eva-install-2b3bb766f69b-core",
+        "image": "sha256:759b638cc283465c10c9130f2aa45df44ee24c3f375d39f055a90f15ec046b02",
+        "running": true,
+        "health": "healthy",
+        "policy_mounts": [
+          {
+            "source": "/home/administrator/project/.eva2-artifacts/installer-selected-voice-20261003/ordinary-target/target/runtime-access/input-8",
+            "target": "/run/eva/voice",
+            "read_only": true
+          }
+        ]
+      },
+      {
+        "name": "eva-install-2b3bb766f69b-voice-livekit-1",
+        "image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+        "running": true,
+        "health": null,
+        "policy_mounts": []
+      },
+      {
+        "name": "eva-install-2b3bb766f69b-voice-media-1",
+        "image": "sha256:2e9092a057dbcaa089bc91b00f27c9abd7feff429257d54f7a90a642917e69f6",
+        "running": true,
+        "health": null,
+        "policy_mounts": [
+          {
+            "source": "/home/administrator/project/.eva2-artifacts/installer-selected-voice-20261003/ordinary-target/target/runtime-access/input-8",
+            "target": "/run/eva/voice",
+            "read_only": true
+          }
+        ]
+      }
+    ],
+    "voice_url": "http://127.0.0.1:48587",
+    "public_signaling_url": "ws://127.0.0.1:48613",
+    "shared_policy_directory": true,
+    "fresh_owner_ids_match": true,
+    "policy_sha256": "5b4cd9dd2558c6aeea3c5c5cadbf3241e618b8464afab367ff6b843cb67a08fe",
+    "package_hashes_match": true,
+    "supported_pipeline_basis": "Existing Home Assistant Cloud STT and TTS; other discovered engines remain unverified",
+    "retained_main_installation": true,
+    "durable_goal_worker_started": false
+  },
+  "checks": {
+    "ha_pipeline_inventory_count": 4,
+    "read_only_ha_discovery": true,
+    "source_regressions": {
+      "review_corrections": "10 passed in 1.99s",
+      "ipv4_delta": "2 passed in 1.28s",
+      "packager_pair": "8 passed, 7 deselected in 0.34s",
+      "overlapping_checks_not_summed": true
+    },
+    "windows_ipv4_page": {
+      "http_status": 200,
+      "start_button": true,
+      "local_access": true
+    },
+    "native_rtc_final": {
+      "connected": true,
+      "remote_participants": [
+        "eva"
+      ],
+      "session_sha256": "a554430061a225ffdfe39e30a1b90d85d8288f9514721a311e5c7554c808fe55",
+      "connection_seconds": 0.647,
+      "microphone_opened": false,
+      "audio_published": false,
+      "model_called_by_check": false,
+      "scope": "same-host actual RTC session; no physical or Windows browser acceptance",
+      "end": {
+        "closed": true,
+        "ongoing_core_work_cancelled": false
+      }
+    },
+    "core_media_ready": true
+  },
+  "assistance_and_failures": [
+    "Initial developer package image pins were bound manually before the ordinary owner selection and install request. The packager pair option is now implemented and delivered; no new full package build or fresh install repeated.",
+    "Source review found policy inode replacement, cross-origin websocket redirect, and stale ready pipeline configuration issues; corrected before installation. Initial strict UUID fixture failure was corrected.",
+    "Windows localhost link timed out while the explicit IPv4 endpoint worked. Generated URLs and retained target policy/config were corrected; only that target core and media restarted. No target replacement, rollback or data reset.",
+    "Initial same-host RTC connected in 0.743s; final 0.647s follows the changed IPv4 configuration. These are transport timings, not conversational response latency.",
+    "Browser automation was unavailable and no browser binary was installed. Native RTC plus Windows HTTP do not replace browser audio evaluation."
+  ],
+  "consumption": {
+    "eva_model_verification_calls": 1,
+    "model_verification_seconds": 1.7190532509994227,
+    "model_evidence_sha256": "e6d19d9e18c95abda51d7aecacf88371100400fe39e38b6fc8395750854aa78e",
+    "model_tokens": null,
+    "model_cost": null,
+    "development_credits": null,
+    "rtc_check_model_calls": 0,
+    "microphone_opened": false,
+    "audio_published": false
+  },
+  "limitations": [
+    "No audible conversation, Windows browser ICE or physical speaker acceptance claimed; C3/C4 remain open.",
+    "No fully unassisted fresh install proven after all corrections.",
+    "O1.2 adaptive_connector still has no ordinary target consumer. Actual new Telegram and mailbox trials require corresponding access.",
+    "Separate development target is not the integrated F1 candidate.",
+    "Existing policy expiry and revocation remain; no retention claim for other HA speech engines."
+  ],
+  "artifact_hashes": {
+    "model-verification.json": "57a91b8bcad77b1703079df05ebf149b55ef1be40dd00e821c2e7029253e06ed",
+    "prepare-result.json": "bf5dc29a265f72af44dd04e69d0f0d53702e1e1a56fecb56a4e944b65f1f1f8b",
+    "session-transport-initial.private.json": "17866ecf8279ff7a715dfb24dd5012cbcc41749c0dc83f17f3036a867b93b7fb",
+    "session-transport.private.json": "657437a4466b9538afc2470e327d58ff6ef4ea04b84b30b974b603f87ebe4049",
+    "installed-final-readback.json": "2675ce7b81ed2b2bd2791c29d6fbedc1f4daed8aa14701fa9bbe5c00a58f9623",
+    "windows-link-check.json": "6a2758c715a5b4434cc2e0a4f670f9032bf6b0d366bf50af87e61efa13c67d04",
+    "ipv4-installed-correction.private.json": "931e6d55ae74f590df1003b8cca3b8d79abc02e9eb2d66e8e034b2330e14201a"
+  },
+  "test_artifact_hashes": {
+    "result.json": "c365161d39236fe0f1d32937fbc549796b8487d8faf65ed3879b96897c78ea5d",
+    "stager-command.json": "4d2d38fe7c1ca773e8ebf1a0186f0766c189959c89b1d279ede3b00f1b095085",
+    "stager-pytest.log": "125e2045d92abc88755adc65755df2802badccaa6a8c74b050d0f845e46525ad",
+    "stager-result.json": "c365161d39236fe0f1d32937fbc549796b8487d8faf65ed3879b96897c78ea5d",
+    "ipv4-pytest.log": "3d5d4adb74b114a61c91f32c4f7e9b71d1c684729712ae18c89dd9966ddabceb",
+    "pytest.log": "d021d45d18fc5c1f84eeecbe992d63466396a54aae844d528aec4e1884062ca6",
+    "ipv4-command.json": "b1fbb0950cf778eb9621d16e4def3a99e26cb8fad4dd2f72b55755673256e0a6",
+    "command.json": "8fbbc1e14e5ddad383cc8517e591f77f43d543a79f9ef19c980c2188321483ec",
+    "ipv4-result.json": "c365161d39236fe0f1d32937fbc549796b8487d8faf65ed3879b96897c78ea5d"
+  },
+  "owner_action_required": false,
+  "use": "In the ordinary wizard choose Home Assistant and voice, verify HA, select its supported pipeline and confirm processing; run installation, open Praten met de nieuwe Eva, then Begin gesprek. This optional page does not replace the primary speakers/Telegram acceptance."
+}
