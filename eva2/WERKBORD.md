@@ -11,7 +11,7 @@ in de code. De nieuwe Eva sloot via gewone chat een opgegeven openbare CPython-b
 aan, ontdekte vier hulpmiddelen en las de gevraagde documentatie. Registratie,
 opgeslagen bronbytes en antwoord zijn onafhankelijk bevestigd. **Eindreview: GO.**
 De oorspronkelijke O1.2-eindvoorwaarde is behouden; geen zelfstandig programmeerwerk
-meer binnen deze taak. Bron en bewijs worden nu op GitHub gepubliceerd.
+meer binnen deze taak. Bron en bewijs zijn op GitHub gepubliceerd in `a5009ddd`.
 
 Eén gewone installatieaanvraag: **152,851 s**. Eén gespreksopdracht: **40,537 s**,
 **21.329 input-/369 outputtokens**, vijf modelantwoorden en vier toolcalls. De kleine
@@ -34,10 +34,12 @@ geen fysieke gesprekskwaliteit of microfoonacceptatie geclaimd. Eerdere begeleid
 imagebinding en IPv4-correctie blijven in het bewijs zichtbaar.
 [Spraakinstallatie](evidence/product/installer-selected-voice-installed-20261003.json).
 
-**Hierna gepland:** R1.1, de bestaande begrensde innovatievergelijking. Eerst de
-gewijzigde oorzaak van de vorige onvolledige ronde gericht controleren. Geen
-ongewijzigde proefherhaling, brede audit of nieuw optimalisatieplatform. Jaap hoeft
-voor dit zelfstandige vervolg niets te doen.
+**Nu actief:** R1.1, gerichte voorbereiding van de bestaande innovatievergelijking.
+Uitvoerder `/root/background_execution_seam` controleert vanaf `a5009ddd` de
+bestaande kandidaat en actuele uitvoerroute. Eerst aantonen welke oorzaak is
+gewijzigd; nog geen nieuwe modelproef. Daarna afzonderlijke protocolcontrole en
+vergelijking. Geen ongewijzigde herhaling of nieuw optimalisatieplatform. Root
+beheert integratie en dashboard; Jaap hoeft voor dit vervolg niets te doen.
 
 ## Nu opgeleverd: optionele browser in een nieuwe Eva-installatie
 

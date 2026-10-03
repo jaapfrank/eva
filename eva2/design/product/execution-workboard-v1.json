@@ -1034,7 +1034,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T14:57:42.246085+00:00",
+        "checkedAt": "2026-10-03T15:06:30.744241+00:00",
         "deliveries": [
           {
             "title": "O1.2 klaar · modulaire installatie en algemene connector",
@@ -3480,14 +3480,14 @@
           }
         ],
         "now": {
-          "title": "O1.2 afgerond · oplevering publiceren",
+          "title": "R1.1 · bestaande innovatievergelijking voorbereiden",
           "state": "in_progress",
-          "owner": "Codex /root",
-          "detail": "Modulaire installatie technisch afgerond en onafhankelijk bevestigd. Bron, bewijs en dashboard worden nu samen op GitHub vastgelegd. Stand: 24/44 kleine taken; nog geen derde volledig historisch hoofdonderdeel."
+          "owner": "Codex /root/background_execution_seam",
+          "detail": "O1.2 is technisch klaar, geïnstalleerd, onafhankelijk beoordeeld en gepubliceerd. Nu gericht controleren wat de oorzaak van de eerdere onvolledige vergelijking verandert. Nog geen nieuwe modelproef gestart. Stand: 24/44 kleine taken; 2/9 historische hoofdgroepen volledig klaar."
         },
         "next": {
-          "title": "R1 · Bestaande innovatievergelijking afronden",
-          "detail": "Gebruik de bestaande hypothese, kandidaat en gewone werkwijze. Controleer eerst de gewijzigde oorzaak van de eerder onvolledige proef; geen ongewijzigde herhaling of nieuw optimalisatieplatform."
+          "title": "R1.1 · vergelijking uitvoeren na gerichte protocolcontrole",
+          "detail": "Hergebruik de bestaande kandidaat en gewone leerroute. Ontwikkeling en onafhankelijke eindbeoordeling blijven gescheiden; geen ongewijzigde herhaling of nieuw optimalisatieplatform."
         },
         "ownerAction": {
           "title": "Nu geen handeling nodig voor zelfstandig vervolgwerk",
@@ -3495,7 +3495,7 @@
           "expected": "Codex vervolgt de bestaande technische vergelijking. Nieuwe kanaaltoegang en fysieke/gezinsbeoordeling blijven afzonderlijk zichtbaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T14:57:42.246085+00:00"
+        "reviewedAt": "2026-10-03T15:06:30.744241+00:00"
       },
       "reviewedAt": "2026-10-03T13:08:35.945523+00:00"
     },
@@ -15801,7 +15801,7 @@
           ],
           "outcome": "Uitvoerbare ervaring vergelijken",
           "effort": "M research",
-          "status": "planned",
+          "status": "in_progress",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Ordinary procedure reuse is the comparison baseline; task-model concept has prior art and no Eva implementation evidence.",
@@ -15814,38 +15814,40 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": null,
+          "activeWorker": "/root/background_execution_seam",
           "dashboardComponent": "projects",
           "remainingTasks": [
             {
               "id": "R1.1",
               "title": "Ervaringsmodel begrensd vergelijken",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "onderzoek",
               "doneWhen": "Eén passende geïsoleerde vergelijking met gewone bestaande werkwijzen, inclusief leerverbruik.",
               "owner": "Codex /root",
               "latestEvidence": "eva2/evidence/product/r1-incomplete-comparison-20260930.json",
               "assignment": {
-                "owner": "/root",
-                "baseCommit": "2e17f72a",
-                "stage": "remaining_developer_work_no_owner_blocker",
+                "owner": "/root/background_execution_seam",
+                "baseCommit": "a5009dddca814ce828158d28e552fb7d072d954e",
+                "stage": "focused_followup_preparation",
                 "outcome": "Determine a distinct, bounded intervention for change-aware reuse before comparing it with the existing ordinary skill route.",
                 "existing": "JSON Patch learning and different-input reuse already work; copy execution and precondition checks are not a new task model. Full learning replay is not admitted by the existing experiment envelope.",
                 "gap": "Held-out benefit and promotion decision not measured; development candidate is available.",
                 "files": [
                   "eva2/experiments/r1-executable-experience-20260930/"
                 ],
-                "currentAction": "No active model runs or automatic replay. Preserve UNKNOWN and independent grading; comparison finish condition remains unmet.",
+                "currentAction": "Read existing public freeze and current execution seam; establish a changed cause before any follow-up model run. Preserve original UNKNOWN round and independent held-out grading.",
                 "finish": "Existing R1.1 finish condition retained: isolated comparison with ordinary methods, including learning cost. Source preparation alone does not complete R1 or technical distinction.",
-                "estimate": "Two synthesis responses measured:2345input/4578output. Existing frozen eight-run envelope includes construction and all helpers; unknown credit cost.",
-                "activeWorkers": []
+                "estimate": "Targeted existing-route preflight and bounded runnable continuation; no live model calls in preparation. Preserve explicit original experiment accounting; credits unknown.",
+                "activeWorkers": [
+                  "/root/background_execution_seam"
+                ]
               },
               "remaining": "Vorige onderzoeksronde afgesloten zonder bewezen voordeel. Codex bereidt een geldig vervolg met gewijzigde oorzaak/hypothese voor; geen automatische herhaling of nieuwe eigenaarbeslissing.",
-              "checkedAt": "2026-10-01T13:44:09.424387+00:00",
+              "checkedAt": "2026-10-03T15:06:30.744241+00:00",
               "blocker": null,
               "previousBlocker": "Vaste proef onvolledig: referentie bereikte12modelreacties vóór tweede deelresultaat. Kandidaat/B/herhalingen niet gemeten; eindvoorwaarde vergelijking niet gehaald. Deze ronde afgeslotenUNKNOWN zonder automatische vervolgproef.",
               "ownerActionRequired": false,
-              "nextAction": "Bestaande innovatiehypothese met de vastgelegde proef vergelijken nadat de daarvoor nodige algemene uitvoering werkt. Geen nieuw optimalisatieplatform en geen ongewijzigde herhaling tot winst ontstaat.",
+              "nextAction": "Bestaande kandidaat en gewone werkwijze koppelen aan de huidige algemene uitvoering. Alleen bij een aangetoonde gewijzigde oorzaak de afzonderlijk beoordeelde vergelijking uitvoeren.",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
@@ -16026,7 +16028,7 @@
               },
               "latestEvidence": "eva2/evidence/product/installer-adaptive-connector-installed-20261003.json",
               "result": "Gewone installatie met gekozen of weggelaten modules technisch afgerond. Nieuwe Eva sloot een openbare MCP-bron aan en las de gevraagde documentatie via dezelfde chat; bestaande tekst/HA/browser/spraakkeuzes blijven behouden. Onafhankelijke eindreview GO.",
-              "versionBoundary": "Installer package/core image759b638 includes browser/email and optional voice; existing main runtime730524/0b1375 includes L3. Exact versions retained; combined candidate remains existing F1.",
+              "versionBoundary": "Installer package/core image f7a6d902 includes optional modules and dynamic connector; existing main runtime 730524/0b1375 includes L3. Exact versions retained in evidence; the combined candidate remains existing F1.",
               "completedAt": "2026-10-03T14:57:42.246085+00:00",
               "externalEvidenceOpen": [
                 {
