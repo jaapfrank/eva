@@ -1,16 +1,32 @@
 # EVA2 werkbord
 
-## Actief: O1.2 — Telegramkeuze aansluiten op bestaande consumenten
+## Actief: O1.2 — Telegram-installeroplevering vastleggen
 
-Browser en HA werken op de nieuwe installatie. De volgende concrete ontbrekende
-stap is gevonden: een geverifieerde Telegramkeuze wordt nog geweigerd voordat de
-bestaande ingang en terugmelding hun configuratie krijgen. Root bereidt de gerichte
-aansluiting van credentials en persoonsbinding voor. Geen nieuwe Telegram-adapter,
-installatieplatform of browserproef. **23/44** oorspronkelijke kleine taken klaar.
+**Geïnstalleerd:** de gewone installer ondersteunt nu Telegram met een expliciet
+gekozen privéaccount, bestaande botcontrole en dezelfde persoonsbinding voor kern
+en Telegramingang. De vijf beoordeelde pakketbestanden draaien in de wizard op
+poort 44727. Onafhankelijke bron- en installatiereview **GO**. De gevonden geërfde
+webservercontrole op de Telegramconsumer is gericht gecorrigeerd vóór installatie.
+
+**Nog niet bewezen:** een volledige nieuwe Telegraminstallatie en echt gesprek via
+een aparte bot. Er is geen nieuwe poller gestart; de bestaande bot en de eerdere
+keuze om Telegram op de browserproef over te slaan zijn behouden. Voor zelfstandig
+vervolgwerk hoeft Jaap nu niets te doen. Bij een nieuwe installatie zijn een eigen
+bot-token en het numerieke privéaccount nodig; de wizard geeft die instructies.
+
+Root rondt bewijs en Git af. De uitvoerder bepaalt alleen de eerstvolgende concrete
+aansluiting binnen O1.2; de onafhankelijke reviewer is klaar. E-mail, adaptive
+connector en de oorspronkelijke optionele spraakkeuze blijven zichtbaar als
+resterend werk. **23/44** oorspronkelijke kleine taken klaar; geen tellerstap voor
+een deeloplevering. Deze wijziging gebruikte nul Eva-modelcalls of Telegramcloudcalls;
+Codex-credits zijn onbekend.
 
 Versies blijven expliciet: de nieuwe browserinstallatie gebruikt de bestaande
 901222-basis met drie browserwijzigingen; de hoofdinstallatie bevat de latere
 L3-verbetering. Dit is nog niet de gezamenlijke eindkandidaat van F1.
+
+[Geïnstalleerde Telegramkeuze en grenzen](evidence/product/installer-selected-telegram-installed-20261003.json)
+· [Onafhankelijke review](reviews/installer-selected-telegram-20261003.md).
 
 ## Nu opgeleverd: optionele browser in een nieuwe Eva-installatie
 

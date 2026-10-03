@@ -33,7 +33,7 @@ _CONFIRMATIONS = {
     "home_assistant": "VERBINDING CONTROLEREN",
     "email": "VERBINDING CONTROLEREN",
 }
-_PROVIDER_CONFIGURATION_SLOTS = ("home_assistant", "email")
+_PROVIDER_CONFIGURATION_SLOTS = ("home_assistant", "email", "telegram")
 _PROVIDER_SCOPE_DESCRIPTIONS = {
     "model_provider": ("Eén kleine modelcontrole zonder tools of opslag",),
     "telegram": ("Alleen de identiteit van de testbot lezen",),
@@ -78,12 +78,18 @@ INSTALLER_PROVIDER_SCRIPT = r"""
         config.autocomplete = 'off'; config.spellcheck = false;
         config.maxLength = 1024; config.dataset.configuration = item.slot_id;
         config.placeholder = item.slot_id === 'home_assistant' ?
-          'http://homeassistant.local:8123' : 'AgentMail inbox-ID';
+          'http://homeassistant.local:8123' : item.slot_id === 'telegram' ?
+          'Jouw numerieke Telegram-gebruikers-ID (niet de bot-ID)' : 'AgentMail inbox-ID';
         const save = document.createElement('button');
         save.type = 'button'; save.dataset.configure = item.slot_id;
         save.textContent = item.configuration_present ? 'Instelling wijzigen' : 'Instelling bewaren';
         save.disabled = !enabled;
         row.append(config, save);
+        if (item.slot_id === 'telegram') {
+          const help = document.createElement('p');
+          help.textContent = 'Kies een eigen bot die niet al door een andere Eva wordt gebruikt. Vul jouw account-ID in; alleen jouw privéchat wordt gekoppeld. Open na installatie de bot en stuur /start, daarna /eva2 Hallo. De verbindingstest controleert de bot, niet jouw identiteit.';
+          row.append(help);
+        }
       }
       if (item.available && item.can_verify) {
         const button = document.createElement('button');
@@ -213,7 +219,8 @@ def _payload(
         state = getattr(capability, "state", "unavailable")
         secret_present = getattr(secret, "state", None) == "present"
         is_available = slot_id in available
-        configuration_required = slot_id in _PROVIDER_CONFIGURATION_SLOTS
+        configuration_required = slot_id in _PROVIDER_CONFIGURATION_SLOTS and (
+            slot_id != "telegram" or configuration_store is not None)
         configuration = configurations.get(slot_id)
         configuration_present = (
             getattr(configuration, "state", None) == "configured"
@@ -402,7 +409,9 @@ def register_installer_provider_routes(
         try:
             try:
                 target_verifier = verifier
-                if slot_id in _PROVIDER_CONFIGURATION_SLOTS:
+                if slot_id in _PROVIDER_CONFIGURATION_SLOTS and (
+                    slot_id != "telegram" or configuration_store is not None
+                ):
                     if configuration_store is None or probe_factory is None:
                         raise InstallerUseCaseError(
                             "provider configuration is unavailable"

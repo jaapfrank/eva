@@ -139,6 +139,7 @@ def _client(
     [
         ("home_assistant", "http://127.0.0.1:18123", "home_assistant.api.read"),
         ("email", "eva-family@agentmail.to", "email.identity.read"),
+        ("telegram", "123456789", "telegram.get_me"),
     ],
 )
 def test_user_can_configure_and_verify_endpoint_provider_without_value_echo(

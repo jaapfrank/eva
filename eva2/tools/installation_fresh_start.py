@@ -60,6 +60,27 @@ def _order(graph, selected, prerequisites):
     return result
 
 
+def _service_ready(name, spec, row):
+    if spec.get("healthcheck", {}).get("disable") is not True:
+        return row["State"].get("Health", {}).get("Status") == "healthy"
+    if name == "telegram-ingress":
+        # Only the maintained native poller is portless. A differently launched
+        # or still HTTP-healthchecked container cannot use this readiness path.
+        entrypoint = ["/usr/local/bin/python"]
+        command = ["-m", "eva.bootstrap.telegram_ingress"]
+        config = row.get("Config", {})
+        if (spec.get("entrypoint") != entrypoint or spec.get("command") != command
+                or config.get("Entrypoint") != entrypoint or config.get("Cmd") != command
+                or config.get("Healthcheck", {}).get("Test") != ["NONE"]):
+            return False
+    elif name not in {"model-access-lease", "hindsight-access-lease"}:
+        return False
+    state = row["State"]
+    return (state.get("Running") is True and state.get("Status") == "running"
+            and type(state.get("Pid")) is int and state["Pid"] > 0
+            and state.get("Paused") is False and state.get("Restarting") is False)
+
+
 def start_fresh_runtime(*, runtime_inputs, launch_graph, preparation, image_roles,
                         database_services, database_service, schema_service,
                         core_service, writer_services, authority,
@@ -249,15 +270,7 @@ def start_fresh_runtime(*, runtime_inputs, launch_graph, preparation, image_role
         receipt["authority_initialized"] = True
         guard()
         def ready(name, row):
-            if services[name].get("healthcheck", {}).get("disable") is True:
-                if name not in {"model-access-lease", "hindsight-access-lease"}:
-                    return False
-                # These maintained credential producers intentionally have no
-                # Docker healthcheck. Inventory already verifies their live PID,
-                # exact command inputs/mounts and fixed target identity. Their
-                # seed credential is bound before consumers are admitted.
-                return row["State"].get("Running") is True and row["State"].get("Pid", 0) > 0
-            return row["State"].get("Health", {}).get("Status") == "healthy"
+            return _service_ready(name, services[name], row)
         for name in order:
             guard()
             pin = dict(pins[name])
@@ -282,7 +295,7 @@ def start_fresh_runtime(*, runtime_inputs, launch_graph, preparation, image_role
         if any(not ready(name, inventory()[name]) for name in started):
             raise ValueError("fresh runtime readiness changed")
         receipt.update(status="runtime_started_verified", runtime_started=True,
-                       verification_scope="Pinned Docker health only; no channel, model or owner acceptance")
+                       verification_scope="Pinned Docker health or explicitly bound portless process; no channel, model or owner acceptance")
         return receipt
     except Exception as error:
         receipt["status"] = "inspection_required_no_retry"

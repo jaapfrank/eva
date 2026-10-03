@@ -241,3 +241,23 @@ def test_distinct_runtime_database_credentials_still_require_same_target(target,
         with pytest.raises(subject.FreshRuntimeStartError):
             subject.start_fresh_runtime(**target.kwargs)
         assert target.initialized == []
+
+
+@pytest.mark.parametrize("changed", [None, "image_health", "command", "entrypoint", "pid", "paused", "restarting", "other_service"])
+def test_native_telegram_portless_readiness_is_exact(changed):
+    from tools.installation_fresh_start import _service_ready
+    spec = {"healthcheck": {"disable": True}, "entrypoint": ["/usr/local/bin/python"],
+            "command": ["-m", "eva.bootstrap.telegram_ingress"]}
+    row = {"Config": {"Entrypoint": list(spec['entrypoint']), "Cmd": list(spec['command']),
+                      "Healthcheck": {"Test": ["NONE"]}},
+           "State": {"Running": True, "Status": "running", "Pid": 1234,
+                     "Paused": False, "Restarting": False}}
+    name = "telegram-ingress"
+    if changed == "image_health": row['Config']['Healthcheck']['Test'] = ['CMD', 'http-health']
+    elif changed == "command": row['Config']['Cmd'] = ['-m', 'eva.bootstrap.runtime']
+    elif changed == "entrypoint": row['Config']['Entrypoint'] = ['/bin/sh']
+    elif changed == "pid": row['State']['Pid'] = 0
+    elif changed == "paused": row['State']['Paused'] = True
+    elif changed == "restarting": row['State']['Restarting'] = True
+    elif changed == "other_service": name = 'unverified-worker'
+    assert _service_ready(name, spec, row) is (changed is None)

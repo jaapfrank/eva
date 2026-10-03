@@ -23,7 +23,7 @@ from eva.operations.installer_safety import (
 
 
 ProviderConfigurationState = Literal["missing", "configured"]
-PROVIDER_CONFIGURATION_SLOTS = ("home_assistant", "email")
+PROVIDER_CONFIGURATION_SLOTS = ("home_assistant", "email", "telegram")
 _SLOT_SET = frozenset(PROVIDER_CONFIGURATION_SLOTS)
 _MAX_VALUE_LENGTH = 1_024
 
@@ -88,6 +88,24 @@ def _value(value: object) -> str:
         raise InstallerProviderConfigurationInputError(
             "provider configuration value is invalid"
         )
+    return value
+
+
+def telegram_owner_user_id(value: str) -> int:
+    """An explicit local owner's account selection, never bot identity or first sender."""
+    if (not isinstance(value, str) or not value.isascii() or not value.isdecimal()
+            or value.startswith("0") or len(value) > 16 or not 0 < int(value) < 2**52):
+        raise ValueError("Telegram owner user ID must be a positive numeric account ID")
+    return int(value)
+
+
+def _configuration_value(slot_id, value):
+    value = _value(value)
+    if slot_id == "telegram":
+        try:
+            telegram_owner_user_id(value)
+        except ValueError as exc:
+            raise InstallerProviderConfigurationInputError(str(exc)) from exc
     return value
 
 
@@ -166,7 +184,7 @@ class InstallerProviderConfigurationStore:
                 )
             try:
                 checked_slot = _slot(slot_id)
-                checked_value = _value(row.get("value"))
+                checked_value = _configuration_value(checked_slot, row.get("value"))
             except InstallerProviderConfigurationInputError as exc:
                 raise InstallerProviderConfigurationError(
                     "provider configuration state is invalid"
@@ -229,7 +247,7 @@ class InstallerProviderConfigurationStore:
         self, *, slot_id: object, value: object
     ) -> InstallerProviderConfiguration:
         checked_slot = _slot(slot_id)
-        checked_value = _value(value)
+        checked_value = _configuration_value(checked_slot, value)
         with self._lock():
             revision, configured = self._load()
             current = configured.get(checked_slot)

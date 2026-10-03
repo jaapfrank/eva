@@ -14,6 +14,11 @@ from eva.application.installer import InstallerProviderProbe
 def configured_installer_probe(slot_id: str, value: str) -> InstallerProviderProbe:
     """Validate configuration and return the matching read-only probe."""
 
+    if slot_id == "telegram":
+        from eva.operations.installer_provider_configuration import telegram_owner_user_id
+        from eva.adapters.connectors.installer_telegram_probe import TelegramInstallerReadOnlyProbe
+        telegram_owner_user_id(value)
+        return TelegramInstallerReadOnlyProbe()
     if slot_id == "home_assistant":
         return HomeAssistantInstallerReadOnlyProbe(base_url=value)
     if slot_id == "email":

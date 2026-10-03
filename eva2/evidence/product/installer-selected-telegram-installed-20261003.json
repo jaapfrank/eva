@@ -1,0 +1,100 @@
+{
+  "contract": "EvaSelectedTelegramInstallerDelivery/v1",
+  "recorded_at": "2026-10-03T12:41:39.179067+00:00",
+  "task_id": "O1.2",
+  "status": "installer_package_installed_channel_unverified",
+  "base_commit": "daf6c5e85619e4e2c78b320da2b05c64faaeafd2",
+  "result": "The ordinary installer now accepts a verified selected Telegram provider, an explicit owner account, and materializes the maintained native ingress and shared private binding. The reviewed files are installed into the live ordinary wizard package. A new Telegram consumer and actual cloud chat have not been started.",
+  "existing_reused": [
+    "Provider plan, secret materialization and getMe verification",
+    "Native Telegram ingress and private principal binding v2",
+    "Core private result recipient resolver",
+    "Existing fresh-install graph and startup workflow"
+  ],
+  "changed": [
+    "Explicit numeric owner user ID and hash-bound configuration receipt",
+    "Same owner binding and fresh pairing secret for core and ingress",
+    "Selected native ingress startup with explicit portless process readiness",
+    "Ordinary wizard account and separate-bot instructions"
+  ],
+  "installation": {
+    "status": "installed_existing_wizard_restarted",
+    "files": {
+      "tools/packaged_installer_target.py": "94f8b759e19564fbe15f6828badc2b8be27f69f962859d39052ec5644ba3c381",
+      "src/eva/operations/installer_provider_configuration.py": "7b2db33d4a1e9c497475433ab1794e293cdbd649902ec99bc6bad126faabede0",
+      "src/eva/adapters/api/installer_provider_api.py": "d921cf33dd50cb18d9fabf2aac1c131f3553c1763d04654f106a6e90382d4159",
+      "src/eva/adapters/connectors/installer_configured_probe_factory.py": "1d2f6a71f0870eb5c252f088ff488a6a646fde67dbff67e4f3790f2fe831812a",
+      "tools/installation_fresh_start.py": "73d63c4f90b94b634f58259e21fb148fa46aac2c6e8ddbce75fd93c9e195dad3"
+    },
+    "old_listener_pid": 552559,
+    "new_listener_pid": 910265,
+    "workspace_preserved": true,
+    "runtime_image_unchanged": "sha256:e2d6af7ca0cba49761efe54c082ee1fab988f9de06680c01bfaa4fb6469a21d4",
+    "bot_started": false,
+    "provider_status_http": 200,
+    "initial_process_guard": "No change until actual packaged bootstrap command was verified; stale launcher PID ignored."
+  },
+  "wizard_origin": "http://127.0.0.1:44727/",
+  "live_readback": {
+    "http_status": 200,
+    "owner_input_hint": true,
+    "separate_bot_instruction": true,
+    "script_declares_telegram_configuration": true,
+    "provider_configuration_required": true,
+    "skipped_choice_preserved": "skipped"
+  },
+  "actual_image_binding_check": {
+    "contract": "EvaActualImageTelegramBindingCheck/v1",
+    "valid": true,
+    "bindings_sha256": "a94af69c38b355e4c701edcafc4dcda9e1db2a6f95b7b3c26de9b48e2e647289",
+    "model_calls": 0,
+    "provider_calls": 0,
+    "synthetic_account": true
+  },
+  "verification": {
+    "source_and_installed_review": "INSTALLED GO for selection/configuration and start wiring; no channel-delivery acceptance",
+    "review_path": "eva2/reviews/installer-selected-telegram-20261003.md",
+    "review_sha256": "8d161c383829243bf35d69834fec64449a84a1b3007d9fcb288b3122c2c950a5",
+    "focused_checks": "Earlier relevant runs covered 43 cases with corrected failures. Final fresh-start/target suite: 44 passed in 1.31s. Overlapping counts are not a unique total. Reviewer did not repeat suites.",
+    "diff_check": "Passed before delivery"
+  },
+  "limitations": [
+    "No live getMe verification, consumer start, Telegram cloud message or end-to-end new selected-Telegram installation in this delivery",
+    "Use a separate bot for a new installation; never add a second poller to the current Eva bot",
+    "The prior browser target retains its skipped Telegram choice; no incremental activation claimed",
+    "Fresh target has no digital worker, so this patch does not claim background execution delivery",
+    "O1.2 remains open for original optional module scope; no task completion or family acceptance added",
+    "Existing fresh target image and later main L3 images are distinct; combine at existing F1"
+  ],
+  "finding_resolved": "Independent review found an inherited HTTP healthcheck on the native polling ingress before installation. Narrow process readiness now requires exact native command/entrypoint, disabled HTTP healthcheck and a live non-restarting process. This does not establish Telegram cloud readiness.",
+  "usage": {
+    "eva_model_calls": 0,
+    "provider_calls": 0,
+    "telegram_pollers_started": 0,
+    "credits": null,
+    "scope": "This installer implementation/delivery; Codex development usage not measurable as per-task credits"
+  },
+  "use": "For a new installation choose Telegram, enter a separate bot token and your own numeric Telegram account ID, verify the bot and finish installation. Then privately send /start and /eva2 Hallo to that bot. The bot verification itself does not authenticate the human. Real channel acceptance remains open.",
+  "artifacts": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-selected-telegram-20261003/package-installed.json",
+      "sha256": "f0bd8888044f08dbf0688d3bfca7c0879c214fbafba9dc70e9c8cf4e9dd57005"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-selected-telegram-20261003/live-provider-readback.json",
+      "sha256": "9ea20d2892f05b3a3f9fce55e3fd1e4331cba5c096481572f3a2015e7281fb00"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-selected-telegram-20261003/provider-status.private.json",
+      "sha256": "573ed568970771498db91941e6916f33e409d560609af24ad8e5c32f52aa8ba9"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-selected-telegram-20261003/image-compatibility/result.json",
+      "sha256": "d94fe79dd9e278730542a5e4cbfcc04dd6749eb6a58ccfee41bc1176244691b9"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/installer-selected-telegram-20261003/delivery-plan.json",
+      "sha256": "d29c7f6f32ac5d76e686497bea325172c6ac925b2b2d383dc6484caf3038d32d"
+    }
+  ]
+}

@@ -25,7 +25,7 @@ def test_configuration_is_private_hashed_restart_safe_and_idempotent(
 ) -> None:
     root = private_tmp_path / "provider-configuration"
     store = _store(root)
-    assert [item.state for item in store.status()] == ["missing", "missing"]
+    assert [item.state for item in store.status()] == ["missing", "missing", "missing"]
 
     retained = store.configure(
         slot_id="home_assistant", value="http://homeassistant.local:8123"

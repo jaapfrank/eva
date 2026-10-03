@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-02T13:58:53.315496+00:00",
+  "lastUpdated": "2026-10-03T12:41:39.179067+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -997,8 +997,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T12:06:24.291952+00:00",
+        "checkedAt": "2026-10-03T12:41:39.179067+00:00",
         "deliveries": [
+          {
+            "title": "Telegramkeuze beschikbaar in de gewone installer",
+            "date": "3 oktober",
+            "state": "installed",
+            "result": "Telegramkeuze, eigenaarconfiguratie en bestaande startkoppeling zijn in het gewone installatiepakket geïnstalleerd; onafhankelijke bron- en installatiereview GO. Werkelijke wizard-API en v2-persoonsbinding op het echte image gecontroleerd. Geen nieuwe bot gestart of cloudgesprek bewezen.",
+            "remaining": "Echte nieuwe Telegraminstallatie en chat vereisen een aparte bot; huidige bot blijft ongewijzigd. O1.2 blijft open voor overige oorspronkelijke opties. 23/44 kleine taken; geen tellerverhoging.",
+            "source": "eva2/evidence/product/installer-selected-telegram-installed-20261003.json"
+          },
           {
             "title": "Optionele browser werkt vanuit een nieuwe Eva-installatie",
             "date": "3 oktober",
@@ -3411,22 +3419,22 @@
           }
         ],
         "now": {
-          "title": "O1.2 · Telegramkeuze op bestaande consumenten aansluiten",
+          "title": "O1.2 · Telegram-installeroplevering vastleggen",
           "state": "in_progress",
           "owner": "Codex /root",
-          "detail": "Browseruitkomst afgerond. De concrete volgende overgang is gevonden: de geverifieerde Telegramkeuze wordt nog geweigerd voordat de bestaande Telegram-ingang en terugmelding hun configuratie krijgen. Root bereidt de begrensde aansluiting voor."
+          "detail": "Telegramkeuze, eigenaarconfiguratie en bestaande startkoppeling zijn in het gewone installatiepakket geïnstalleerd; onafhankelijke bron- en installatiereview GO. Werkelijke wizard-API en v2-persoonsbinding op het echte image gecontroleerd. Geen nieuwe bot gestart of cloudgesprek bewezen. Coördinator verwerkt bewijs en Git; uitvoerder onderzoekt alleen de eerstvolgende bestaande moduleaansluiting."
         },
         "next": {
-          "title": "Telegram via dezelfde gewone installatie beschikbaar maken",
-          "detail": "Hergebruik de bestaande ingang, terugmelding en persoonsbinding. Overige modulekeuzes blijven binnen O1.2; geen nieuwe adapter of installatieplatform."
+          "title": "Resterende gewone modulekeuze binnen O1.2 aansluiten",
+          "detail": "Bepaal vanuit de bestaande consumenten de kleinste ontbrekende aansluiting. Geen nieuwe adapter of tweede installatieplatform; echte nieuwe Telegramchat blijft apart open."
         },
         "ownerAction": {
-          "title": "Geen handeling van jou nodig voor deze installatie",
+          "title": "Nu geen handeling nodig voor zelfstandig vervolgwerk",
           "steps": [],
-          "expected": "Beide toestemmingen ontvangen. Eva mag zelfstandig haar browser gebruiken; technische uitvoering en controle gaan door."
+          "expected": "Alleen voor een echte nieuwe Telegraminstallatie is een aparte bot nodig. De bestaande Eva-bot blijft beschikbaar; zelfstandig browsergebruik is al toegestaan."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T12:06:24.291952+00:00"
+        "reviewedAt": "2026-10-03T12:41:39.179067+00:00"
       },
       "reviewedAt": "2026-10-02T13:18:04.695516+00:00"
     },
@@ -15912,55 +15920,46 @@
               "owner": "Codex /root",
               "blocker": null,
               "evidence": "eva2/evidence/product/installer-optional-selection-20260929.json",
-              "checkedAt": "2026-10-03T12:06:24.291952+00:00",
-              "remaining": "Telegram, e-mail en adaptive_connector met ready credentials worden nog expliciet geweigerd als selected provider has no ordinary target consumer yet. Telegram heeft bestaande consumers; hun geselecteerde configuratie en persoonsbinding moeten worden aangesloten. Overige oorspronkelijke modulekeuzes blijven zichtbaar.",
+              "checkedAt": "2026-10-03T12:41:39.179067+00:00",
+              "remaining": "Telegram-installerwiring geïnstalleerd; afzonderlijke bot/start/cloudchat nog niet beproefd. E-mail, adaptive_connector en oorspronkelijke spraak/modulekeuzes nog afronden waar de gewone installatieroute ontbreekt.",
               "assignment": {
-                "baseCommit": "70f1da3c971b3a979a0ada47a31fe3183c7de07f",
+                "baseCommit": "daf6c5e85619e4e2c78b320da2b05c64faaeafd2",
                 "owner": "/root",
                 "activeWorkers": [
-                  "/root"
+                  "/root/background_execution_seam"
                 ],
-                "stage": "telegram_consumer_handoff",
+                "stage": "telegram_installer_package_installed_channel_unverified",
                 "existing": "O1.1 actual text target and omission proof complete. Existing capability/secret/provider verification, HA URL configuration, maintained optional graph projection and HA runtime connector already exist.",
-                "gap": "Browser and HA selected outcomes work. Ready Telegram/email/adaptive_connector selections are still rejected by packaged_installer_target.py; Telegram already has optional ingress/proactive consumers but lacks selected config/credential materialization.",
+                "gap": "Selected Telegram wiring delivered in the ordinary package. Real new-bot cloud conversation remains unverified; email/adaptive/voice original optional module scope remains.",
                 "outcome": "Dezelfde installatie werkt met gekozen modules; geen hardcoded eigenaarpaden.",
-                "design": "Existing browser select/skip plus BrowserSessionHost/Chromium-MCP recipe and existing ContextForge adapter. Fresh profile and gateway per selected installation; skip creates no browser. Ordinary new owner, no copied personal tab grant. One installer hook prepares selected module before core file binding; retained phase/IDs on failure, no automatic retry or cleanup.",
+                "design": "Existing bot-token materialization and getMe verification remain. Add explicit numeric Telegram owner_user_id to existing provider configuration/confirmed hash; materialize existing private v2 principal binding and fresh pairing secret; include existing telegram-ingress in writer startup. Reuse core/delegated return route, not a new proactive service. Main bot must not gain a second poller. Native polling service explicitly disables inherited core HTTP healthcheck; existing portless readiness requires exact Telegram entrypoint/command, disabled healthcheck and a live non-restarting process. Process readiness does not assert Telegramcloud acceptance.",
                 "files": [
                   "eva2/tools/packaged_installer_target.py",
-                  "eva2/tools/installer_target_workflow.py",
-                  "eva2/src/eva/bootstrap/installer_wizard_cli.py",
-                  "eva2/tests/operations/test_installer_target_workflow.py",
-                  "eva2/tests/operations/test_packaged_installer_target.py"
+                  "eva2/src/eva/operations/installer_provider_configuration.py",
+                  "eva2/src/eva/adapters/api/installer_provider_api.py",
+                  "eva2/src/eva/adapters/connectors/installer_configured_probe_factory.py",
+                  "eva2/tools/installation_fresh_start.py"
                 ],
-                "estimate": "One executor, existing route and focused actual selected-module verification. No planned paid research or real house mutation. Development credits unknown; provider/model usage recorded if invoked.",
+                "estimate": "Reuse existing consumers; focused selection/materialization check before installed review. No model calls for source research; development credits unknown.",
                 "finishScope": "Original task finish retained. O1 parent cannot close until voice/HA/browser module additions/omissions are available through ordinary owner choices; unsupported channels must remain explicit.",
-                "review": "Installed GO: eva2/reviews/installer-optional-browser-installed-20261003.md",
-                "result": "Gekozen HA en browser zijn op afzonderlijke nieuwe installaties bruikbaar via gewone chat. Browser openen/waarnemen/klikken/terugmelden werkelijk uitgevoerd; onafhankelijke eindreview GO. Gewone tekstinstallatie en module-weglating blijven behouden.",
+                "review": "Source and installed GO: eva2/reviews/installer-selected-telegram-20261003.md. Exact package hashes match source. Native consumer/cloud delivery not exercised; separate bot required.",
+                "result": "Telegramkeuze, eigenaarconfiguratie en bestaande startkoppeling zijn in het gewone installatiepakket geïnstalleerd; onafhankelijke bron- en installatiereview GO. Werkelijke wizard-API en v2-persoonsbinding op het echte image gecontroleerd. Geen nieuwe bot gestart of cloudgesprek bewezen.",
                 "fileOwners": {
-                  "/root/l3_application_seam": [
-                    "installer_capability_workflow.py",
-                    "installer_capability_api.py",
-                    "installer_installation_plan.py",
-                    "their direct tests"
-                  ],
                   "/root/background_execution_seam": [
-                    "tools/installer_browser_module.py",
-                    "direct browser module test",
-                    "minimal browser recipe parameterization if required"
+                    "Read-only next existing optional consumer seam; Telegram source frozen"
                   ],
                   "/root": [
-                    "packaged_installer_target.py",
-                    "installer_target_workflow.py",
-                    "installer_browser_gateway.py",
-                    "optional projection and image inventory",
-                    "integration tests and existing workboard"
+                    "Evidence, workboard, package integration and Git"
+                  ],
+                  "/root/aide_final_evaluation": [
+                    "Completed independent source/package review"
                   ]
                 },
-                "finding": "Private direct browser session now retained; loaded pinned compositor confirmed after targeted restart. Same public link task succeeds through ordinary chat.",
+                "finding": "A bot identity alone cannot identify the first owner. Existing /link requires an already verified confirmer. Ordinary installer therefore needs explicit owner account input before its existing ingress can serve private conversations.",
                 "ownerApproval": "Explicit owner permission 3 October 2026 in this chat; routine browser access also authorized.",
-                "currentAction": "Koppel de geverifieerde Telegram-installatiekeuze aan bestaande telegram-ingress/proactive-consumenten en persoonsbinding in packaged_installer_target.py en installer_optional_capabilities.py."
+                "currentAction": "Rond bewijs/Git van de geïnstalleerde Telegramkeuze af en bepaal de kleinste resterende oorspronkelijke moduleaansluiting; geen herhaling van de browserproef."
               },
-              "nextAction": "Koppel de geverifieerde Telegram-installatiekeuze aan bestaande telegram-ingress/proactive-consumenten en persoonsbinding in packaged_installer_target.py en installer_optional_capabilities.py.",
+              "nextAction": "Rond bewijs/Git van de geïnstalleerde Telegramkeuze af en bepaal de kleinste resterende oorspronkelijke moduleaansluiting; geen herhaling van de browserproef.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -15968,8 +15967,8 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "latestEvidence": "eva2/evidence/product/optional-browser-installed-20261003.json",
-              "result": "Gekozen HA en browser zijn op afzonderlijke nieuwe installaties bruikbaar via gewone chat. Browser openen/waarnemen/klikken/terugmelden werkelijk uitgevoerd; onafhankelijke eindreview GO. Gewone tekstinstallatie en module-weglating blijven behouden.",
+              "latestEvidence": "eva2/evidence/product/installer-selected-telegram-installed-20261003.json",
+              "result": "Telegramkeuze, eigenaarconfiguratie en bestaande startkoppeling zijn in het gewone installatiepakket geïnstalleerd; onafhankelijke bron- en installatiereview GO. Werkelijke wizard-API en v2-persoonsbinding op het echte image gecontroleerd. Geen nieuwe bot gestart of cloudgesprek bewezen.",
               "versionBoundary": "Fresh browser target/package uses901222 base with3browser files (e2d6af image). Main runtime has separate L3 candidate730524/0b1375. This is not the integrated final candidate; preserve exact identities and combine at existing F1."
             }
           ],
@@ -15993,7 +15992,7 @@
             ],
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
           },
-          "latestEvidence": "eva2/evidence/product/installer-selected-ha-installed-20261002.json"
+          "latestEvidence": "eva2/evidence/product/installer-selected-telegram-installed-20261003.json"
         },
         {
           "id": "O2",

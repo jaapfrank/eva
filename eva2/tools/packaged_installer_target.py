@@ -118,6 +118,21 @@ def verified_provider_configuration(plan, slot_id, configuration_store, verifier
 
 
 
+def prepare_telegram_owner_files(inputs, owner_user_id, identifiers):
+    """Bind the explicit installer account to the same fresh private owner."""
+    from uuid import UUID
+    from eva.operations.installer_provider_configuration import telegram_owner_user_id
+    owner = telegram_owner_user_id(str(owner_user_id))
+    principal, binding = (str(UUID(identifiers[key])) for key in ("principal", "binding"))
+    paths = {"bindings": inputs / "telegram-bindings.json", "pairing": inputs / "telegram-pairing-secret"}
+    write_private_once(paths["bindings"], canonical_json_bytes({
+        "contract": "EvaTelegramPrincipalBindings/v2", "bindings": [{
+            "telegram_user_id": owner, "principal_id": principal,
+            "principal_binding_id": binding, "allowed_chat_ids": [str(owner)]}]}))
+    write_private_once(paths["pairing"], secrets.token_urlsafe(48).encode())
+    return paths
+
+
 def validate_target_runtime_configuration(graph):
     """Check the actual selected image and bound files before creating services."""
     core = graph["services"]["core"]
@@ -246,9 +261,16 @@ class PackagedInstallerPreparation:
             raise ValueError("confirmed complete wizard choices required")
         # Providers without installed consumers must remain explicit. Selected
         # HA uses the owner-entered endpoint and its existing verified secret.
-        if any(c["state"] == "ready" and c["step_id"] in {"telegram", "email", "adaptive_connector"}
+        if any(c["state"] == "ready" and c["step_id"] in {"email", "adaptive_connector"}
                for c in plan["capabilities"]):
             raise ValueError("selected provider has no ordinary target consumer yet")
+        telegram_selected = any(item["step_id"] == "telegram" and item["state"] == "ready"
+                                for item in plan["capabilities"])
+        telegram_owner = None
+        if telegram_selected:
+            from eva.operations.installer_provider_configuration import telegram_owner_user_id
+            telegram_owner = telegram_owner_user_id(verified_provider_configuration(
+                plan, "telegram", self.provider_configuration_store, self.provider_verifier))
         home_assistant_selected = any(item["step_id"] == "home_assistant"
                                       and item["state"] == "ready"
                                       for item in plan["capabilities"])
@@ -293,6 +315,9 @@ class PackagedInstallerPreparation:
             write_private_once(self.workspace / "owner-access.json", canonical_json_bytes({
                 "url": f"http://127.0.0.1:{port}", "namespace": namespace,
                 "development_only": True, "platform_support_claim": False}))
+        telegram_files = {}
+        if telegram_selected:
+            telegram_files = prepare_telegram_owner_files(inputs, telegram_owner, identifiers)
         network_subnet = _new_subnet()
         browser_module = None
         gateway_plan = None
@@ -360,6 +385,9 @@ class PackagedInstallerPreparation:
         values["EVA_RUNTIME_PRINCIPAL_ID"] = identifiers["principal"]
         for kind in ("HOME_ASSISTANT_TOKEN", "TELEGRAM_BOT_TOKEN", "TELEGRAM_PRINCIPAL_BINDINGS", "TELEGRAM_PAIRING_SECRET"):
             values["EVA_" + kind + "_FILE_HOST"] = str(inputs / ("omitted-" + kind.lower()))
+        if telegram_selected:
+            values["EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST"] = str(telegram_files["bindings"])
+            values["EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST"] = str(telegram_files["pairing"])
         required = set(re.findall(r"\$\{(\w+):\?", template.read_text())) - {"EVA_B_CONFIGURATION_SHA256"}
         if required - values.keys():
             raise ValueError("maintained installer template has unresolved package settings")
@@ -368,6 +396,15 @@ class PackagedInstallerPreparation:
         core["environment"].update(EVA_DASHBOARD_RELEASE_SHA256=values["EVA_DASHBOARD_RELEASE_SHA256"],
             TZ=profile["time_zone"],
             EVA_CONVERSATION_CONTACT_MODEL="gpt-6-sol", EVA_CONVERSATION_CONTACT_REASONING_EFFORT="none")
+        if telegram_selected:
+            # This image also runs the HTTP core; its inherited HTTP healthcheck
+            # is not a health endpoint offered by the existing polling process.
+            graph["services"]["telegram-ingress"]["healthcheck"] = {"disable": True}
+            core["environment"]["EVA_TELEGRAM_BOT_TOKEN_FILE"] = "/run/secrets/telegram_bot_token"
+            core.setdefault("volumes", []).append({"type": "bind",
+                "source": values["EVA_TELEGRAM_BOT_TOKEN_FILE_HOST"],
+                "target": "/run/secrets/telegram_bot_token", "read_only": True,
+                "bind": {"create_host_path": False}})
         if home_assistant_selected:
             core["environment"].update(
                 EVA_HOME_ASSISTANT_API_ENABLED="true",
@@ -401,6 +438,8 @@ class PackagedInstallerPreparation:
                     extras[(name, mount["target"])] = str(self.model_authority.parent)
                 elif mount.get("source") in {str(inputs / "dashboard-token"), str(identity_file), str(trust_file)}:
                     extras[(name, mount["target"])] = mount["source"]
+                elif telegram_selected and mount.get("source") in {str(p) for p in telegram_files.values()}:
+                    extras[(name, mount["target"])] = mount["source"]
                 elif browser_selected and name == "core" and mount["target"].startswith("/run/eva/connectors/mcp/"):
                     extras[(name, mount["target"])] = mount["source"]
         render = replace(render, rendered_sha256=hashlib.sha256(canonical_json_bytes(graph)).hexdigest())
@@ -416,7 +455,7 @@ class PackagedInstallerPreparation:
             namespace, roles, identifiers["tenant"], identifiers["installation"], extras,
             {images["living-core"]: "65532:65532", images["postgres"]: "70:70", images["hindsight"]: "1000:1000"},
             model_authority_file=self.model_authority, network_subnet=network_subnet,
-            fresh_start=InstallerFreshStartSettings("postgres", "core", ("model-access-lease", "hindsight-access-lease", "hindsight", "core"),
+            fresh_start=InstallerFreshStartSettings("postgres", "core", ("model-access-lease", "hindsight-access-lease", "hindsight", "core") + (("telegram-ingress",) if telegram_selected else ()),
                 authority, installation_profile=profile, support_tier="unsupported_fixture"),
             fresh_installation=True, local_port=port,
             source_authority_directories=((self.model_authority.parent, "auth.json"),),
