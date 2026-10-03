@@ -1,7 +1,7 @@
 {
   "contract": "EvaComparisonParticipantInputs/v1",
-  "checkedAt": "2026-10-03T19:47:07.169282+00:00",
-  "stage": "source_pins_recorded_access_not_admitted",
+  "checkedAt": "2026-10-03T21:55:57.755911+00:00",
+  "stage": "available_pair_development_schedule_executed",
   "protocol": "eva2/design/product/comparable-agent-benchmarks-v1.md#ev-003",
   "scope": "Inputs for existing Inspect runner; not results, a new runtime or a new scorer.",
   "participants": [
@@ -10,7 +10,7 @@
       "sourceCommit": "512bdcfcac2239fc4709cdc686fee4a07c941895",
       "sourceKind": "integration_checkpoint_with_retained_runtime_variants",
       "runtimeProvenance": "installed_core_worker_pins_bound_not_comparison_admitted",
-      "admission": "not_admitted",
+      "admission": "completed_fixed_development_only_no_further_run_admitted",
       "nativeAdapter": "cp001_native.py",
       "previousSourceCheckpoint": {
         "sourceCommit": "880c1292797e11acd925baa1dc592e6099de2cb7",
@@ -123,6 +123,14 @@
           "reviewer": "/root/aide_final_evaluation"
         },
         "remaining": "Bind actual frozen C01/C04 native instances/configuration/tools/timing and complete available participant admission. This synthetic nonempty case does not score those inputs."
+      },
+      "executedDevelopment": {
+        "evidence": "eva2/evidence/product/p1-known-pair-results-20261003.json",
+        "review": "eva2/reviews/p1-known-pair-results-20261003.md",
+        "samples": 4,
+        "newSampleAdmitted": false,
+        "fullNativeSamplesCompleteWithinScope": 0,
+        "scope": "Known C01/C04 twice; equal-model observation variant. Eva2 consolidation incomplete; Bottie startWeb and awaited ACK only."
       }
     },
     {
@@ -131,7 +139,7 @@
       "sourceKind": "actual_service_working_directory_head_with_declared_local_changes",
       "workingTreeClean": false,
       "runtimeProvenance": "service_working_directory_and_disk_sources_observed_not_execution_admitted",
-      "admission": "not_admitted",
+      "admission": "completed_fixed_development_only_no_further_run_admitted",
       "nativeAdapter": "cp001_native.py",
       "sourceBinding": {
         "evidence": "eva2/evidence/product/p1-native-source-binding-20261003.json",
@@ -165,6 +173,14 @@
           "sha256": "798c3bae967b1678743ad202a70673a9b506840b8d0cccdb77eebd1c3126e95e",
           "decision": "GO for actual native source binding and explicit disposable equal-model fixture only; P1/live admission open."
         }
+      },
+      "executedDevelopment": {
+        "evidence": "eva2/evidence/product/p1-known-pair-results-20261003.json",
+        "review": "eva2/reviews/p1-known-pair-results-20261003.md",
+        "samples": 4,
+        "newSampleAdmitted": false,
+        "fullNativeSamplesCompleteWithinScope": 4,
+        "scope": "Known C01/C04 twice; equal-model observation variant. Eva2 consolidation incomplete; Bottie startWeb and awaited ACK only."
       }
     },
     {
@@ -456,7 +472,7 @@
   },
   "readiness": {
     "mayStartModelComparison": false,
-    "reason": "Both admitted C01 epoch1 entries consumed. Native answers recorded; Eva2 consolidation incomplete. No replay or other entry automatically admitted.",
+    "reason": "All eight fixed available-pair development entries executed and independently reviewed. No further sample admitted. Missing participants remain unknown.",
     "missingAccessCountsAs": "unknown_not_loss",
     "historicalResults": "EV-002 remains unchanged; no current ranking inferred.",
     "partialExecutionPolicy": {
@@ -473,30 +489,79 @@
     },
     "executedScheduleEntries": [
       {
-        "participant": "eva2",
-        "case": "C01",
-        "epoch": 1,
-        "outcome": "sample_envelope_refused",
-        "fullNativeSampleComplete": false,
-        "evidence": "eva2/evidence/product/p1-native-c01-subscription-20261003.json"
-      },
-      {
         "participant": "eva1-bottie",
         "case": "C01",
         "epoch": 1,
         "outcome": "native_reply_readback_and_delivery_verified",
-        "fullNativeSampleComplete": true,
-        "scope": "startWeb-only native agent route and awaited ACK reconciliation; no whole eva.service scheduler claim",
-        "evidence": "eva2/evidence/product/p1-native-bottie-c01-subscription-20261003.json"
+        "fullNativeSampleCompleteWithinScope": true,
+        "evidence": "eva2/evidence/product/p1-known-pair-results-20261003.json"
+      },
+      {
+        "participant": "eva2",
+        "case": "C01",
+        "epoch": 1,
+        "outcome": "sample_envelope_refused",
+        "fullNativeSampleCompleteWithinScope": false,
+        "evidence": "eva2/evidence/product/p1-known-pair-results-20261003.json"
+      },
+      {
+        "participant": "eva1-bottie",
+        "case": "C01",
+        "epoch": 2,
+        "outcome": "readback_verified",
+        "fullNativeSampleCompleteWithinScope": true,
+        "evidence": "eva2/evidence/product/p1-known-pair-results-20261003.json"
+      },
+      {
+        "participant": "eva2",
+        "case": "C01",
+        "epoch": 2,
+        "outcome": "sample_envelope_refused",
+        "fullNativeSampleCompleteWithinScope": false,
+        "evidence": "eva2/evidence/product/p1-known-pair-results-20261003.json"
+      },
+      {
+        "participant": "eva1-bottie",
+        "case": "C04",
+        "epoch": 1,
+        "outcome": "readback_verified",
+        "fullNativeSampleCompleteWithinScope": true,
+        "evidence": "eva2/evidence/product/p1-known-pair-results-20261003.json"
+      },
+      {
+        "participant": "eva2",
+        "case": "C04",
+        "epoch": 1,
+        "outcome": "sample_envelope_refused",
+        "fullNativeSampleCompleteWithinScope": false,
+        "evidence": "eva2/evidence/product/p1-known-pair-results-20261003.json"
+      },
+      {
+        "participant": "eva1-bottie",
+        "case": "C04",
+        "epoch": 2,
+        "outcome": "readback_verified",
+        "fullNativeSampleCompleteWithinScope": true,
+        "evidence": "eva2/evidence/product/p1-known-pair-results-20261003.json"
+      },
+      {
+        "participant": "eva2",
+        "case": "C04",
+        "epoch": 2,
+        "outcome": "sample_envelope_refused",
+        "fullNativeSampleCompleteWithinScope": false,
+        "evidence": "eva2/evidence/product/p1-known-pair-results-20261003.json"
       }
     ]
   },
   "budget": {
-    "thisAssignmentModelCalls": 4,
+    "thisAssignmentModelCalls": 16,
     "paidJudgeCalls": 0,
     "nextModelRuns": 0,
     "creditCost": null,
-    "notice": "C01 epoch1: Eva2 two requests4874input/171output; Bottie two requests9185input/272output. Eva2 consolidation incomplete; no full-memory cost win inferred. No unused budget redistribution."
+    "notice": "Eight fixed available-pair entries, 16 measured provider requests including helpers. Eva2 memory consolidation incomplete within unchanged sample limits. No fully completed memory-cost comparison; missing participants and unused budget not reallocated.",
+    "observedInputTokens": 56459,
+    "observedOutputTokens": 2152
   },
   "acceptanceScale": {
     "casesPerFamily": 12,
@@ -522,7 +587,7 @@
     "modelCalls": 0
   },
   "developmentPlan": {
-    "status": "first_known_pair_recorded",
+    "status": "available_pair_executed_result_review_accepted",
     "claim": "Known conversation development cases only; not unseen acceptance, voice or broad task capability.",
     "cases": [
       {
@@ -706,6 +771,8 @@
       "decision": "GO for frozen development inputs only",
       "checked": "Arithmetic, case stimuli/criteria/source hashes, unchanged EV-003 scope, exact model role mapping and protocol/action interpretation. Native admission and final acceptance budgets remain open.",
       "providerCalls": 0
-    }
+    },
+    "results": "eva2/evidence/product/p1-known-pair-results-20261003.json",
+    "resultReview": "eva2/reviews/p1-known-pair-results-20261003.md"
   }
 }

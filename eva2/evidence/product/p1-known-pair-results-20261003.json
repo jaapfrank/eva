@@ -1,0 +1,924 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "recordedAt": "2026-10-03T21:49:58.243276+00:00",
+  "task": "P1.2",
+  "scope": "Two fixed known conversation development cases, two epochs, native Eva1/Eva2 equal-model variants, fresh synthetic state. Not unseen final acceptance.",
+  "newProductFunction": false,
+  "outcome": "available_pair_fixed_development_schedule_executed",
+  "samples": [
+    {
+      "id": "eva1-bottie:C01:epoch1",
+      "participant": "eva1-bottie",
+      "case": "C01",
+      "epoch": 1,
+      "prompt": "Ik wil voor elk apparaat een apart dashboard. Goed idee toch?",
+      "reply": "Eerlijk? Ik zou niet voor elk apparaat een dashboard maken. Dan ben je straks vooral tabbladen aan het beheren. Liever één overzicht voor dagelijks gebruik, met aparte schermen per kamer of taak als dat nodig blijkt.",
+      "timing": {
+        "firstContentSeconds": 15.94803452299675,
+        "fullAnswerSeconds": 15.94803452299675,
+        "nativeObservedSeconds": 16.030641249002656
+      },
+      "usage": {
+        "providerAttempts": 2,
+        "observedUsageComplete": true,
+        "tokens": {
+          "input_tokens": 9185,
+          "output_tokens": 272,
+          "total_tokens": 9457
+        },
+        "attempts": [
+          {
+            "id": 0,
+            "sample_id": "eva1-bottie:C01:epoch1",
+            "role": "contact",
+            "model": "gpt-6-sol",
+            "reasoning_effort": "none",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 8029,
+              "output_tokens": 221,
+              "total_tokens": 8250
+            }
+          },
+          {
+            "id": 1,
+            "sample_id": "eva1-bottie:C01:epoch1",
+            "role": "contact",
+            "model": "gpt-6-sol",
+            "reasoning_effort": "none",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 1156,
+              "output_tokens": 51,
+              "total_tokens": 1207
+            }
+          }
+        ],
+        "creditCost": null,
+        "developmentCredits": null
+      },
+      "durableReplyReadback": true,
+      "fullNativeSampleCompleteWithinScope": true,
+      "outcome": "native_reply_readback_and_delivery_verified",
+      "memory": null,
+      "stop": {
+        "stopped": true,
+        "provider_stub_calls": 0,
+        "pending_provider_controls": 0,
+        "active_provider_attempts": 0,
+        "tool_dispatches": 1,
+        "tool_events": [
+          {
+            "request_id": "managed-b-probe:56fe23b83add:1",
+            "name": "commit_turn_understanding",
+            "protocol": true,
+            "admitted": true,
+            "outcome": "admitted_not_completion_proof"
+          }
+        ],
+        "provider_close_failures": 0,
+        "quiescent": true,
+        "real_model_calls": 2
+      },
+      "evidence": "eva2/evidence/product/p1-native-bottie-c01-subscription-20261003.json",
+      "evidenceSha256": "788dbe97fd3ab632bd33901899b41f13f1b74f93e31da7b24cca1bb80e8bda7d"
+    },
+    {
+      "id": "eva2:C01:epoch1",
+      "participant": "eva2",
+      "case": "C01",
+      "epoch": 1,
+      "prompt": "Ik wil voor elk apparaat een apart dashboard. Goed idee toch?",
+      "reply": "Een apart dashboard per apparaat klinkt overzichtelijk, maar ik zou het niet als standaard kiezen. Dan moet je voor een totaalbeeld steeds wisselen, en beheer je dezelfde informatie op meerdere plekken. Ik zou beginnen met één hoofddashboard voor het overzicht, met een detailpagina per apparaat waar dat echt nuttig is. Om wat voor apparaten gaat het?",
+      "timing": {
+        "firstContentSeconds": 2.970333628007211,
+        "fullAnswerSeconds": 5.123795424995478,
+        "nativeObservedSeconds": 9.5058769750176
+      },
+      "usage": {
+        "providerAttempts": 2,
+        "observedUsageComplete": true,
+        "tokens": {
+          "input_tokens": 4874,
+          "output_tokens": 171,
+          "total_tokens": 5045
+        },
+        "attempts": [
+          {
+            "id": 0,
+            "sample_id": "p1-eva2-c01-e1-20261003",
+            "role": "contact",
+            "model": "gpt-6-sol",
+            "reasoning_effort": "none",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 1866,
+              "output_tokens": 74,
+              "total_tokens": 1940
+            }
+          },
+          {
+            "id": 1,
+            "sample_id": "p1-eva2-c01-e1-20261003",
+            "role": "helper",
+            "model": "gpt-6-astra",
+            "reasoning_effort": "medium",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 3008,
+              "output_tokens": 97,
+              "total_tokens": 3105
+            }
+          }
+        ],
+        "creditCost": null,
+        "developmentCredits": null
+      },
+      "durableReplyReadback": true,
+      "fullNativeSampleCompleteWithinScope": false,
+      "outcome": "sample_envelope_refused",
+      "memory": {
+        "factRetained": true,
+        "batchRetain": "completed",
+        "retain": "completed",
+        "consolidation": "pending_after_stop",
+        "complete": false
+      },
+      "stop": {
+        "reason": "declared sample attempts reached",
+        "thirdRequestDispatched": false,
+        "activeAsyncAttempts": 0,
+        "cancelErrors": [],
+        "localWorkersSettled": true,
+        "tunnelClosed": true,
+        "cleanupBlockers": []
+      },
+      "evidence": "eva2/evidence/product/p1-native-c01-subscription-20261003.json",
+      "evidenceSha256": "b5ae8d10499e575fb569591b772e7bb0df052e816a77234481481951df57cd57"
+    },
+    {
+      "id": "eva1-bottie:C01:epoch2",
+      "participant": "eva1-bottie",
+      "case": "C01",
+      "epoch": 2,
+      "prompt": "Ik wil voor elk apparaat een apart dashboard. Goed idee toch?",
+      "reply": "Niet voor elk apparaat, denk ik. Dan ben je straks vooral dashboards aan het beheren. Ik zou één rustig overzicht maken voor dagelijks gebruik, eventueel per ruimte, en alleen een apart detaildashboard voor apparaten met veel instellingen.",
+      "timing": {
+        "firstContentSeconds": 10.026821072999155,
+        "fullAnswerSeconds": 10.026821072999155,
+        "nativeObservedSeconds": 10.083607073989697,
+        "launcherIncludingPreparationSeconds": 13.055713848007144
+      },
+      "usage": {
+        "providerAttempts": 2,
+        "observedUsageComplete": true,
+        "tokens": {
+          "input_tokens": 9175,
+          "output_tokens": 259,
+          "total_tokens": 9434
+        },
+        "attempts": [
+          {
+            "id": 0,
+            "sample_id": "eva1-bottie:C01:epoch2",
+            "role": "contact",
+            "model": "gpt-6-sol",
+            "reasoning_effort": "none",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 8029,
+              "output_tokens": 211,
+              "total_tokens": 8240
+            }
+          },
+          {
+            "id": 1,
+            "sample_id": "eva1-bottie:C01:epoch2",
+            "role": "contact",
+            "model": "gpt-6-sol",
+            "reasoning_effort": "none",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 1146,
+              "output_tokens": 48,
+              "total_tokens": 1194
+            }
+          }
+        ],
+        "creditCost": null,
+        "developmentCredits": null
+      },
+      "durableReplyReadback": true,
+      "fullNativeSampleCompleteWithinScope": true,
+      "outcome": "readback_verified",
+      "artifact": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-remaining-subscription-20261003-v1/c01-epoch2/result.private.json",
+        "sha256": "9cd906b8b98bf79f5bda195cf67b0577d5a17ef8755d42c2e3f4e1bf8c09fdb8"
+      },
+      "launcher": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-remaining-subscription-20261003-v1/c01-epoch2/launch.py",
+        "sha256": "dfaf42298fe5223e296204abd96125604b5f338066dc4e15f6bdb386a456fb50"
+      },
+      "databaseSnapshot": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-remaining-subscription-20261003-v1/c01-epoch2/eva.db",
+        "sha256": "6f7a8cf017c1d5a66ea0cef1d4b267c1ef4f5d1bd5804cce4c28e2a55eda6b26"
+      },
+      "originalDataRetained": "/tmp/cp001-bottie-b771c10t",
+      "ackReadbackCount": 1,
+      "tools": {
+        "contract": "Cp001NativeToolDispatch/v1",
+        "maximum": 4,
+        "events": [
+          {
+            "request_id": "managed-b-probe:0c294a7da7f1:1",
+            "name": "commit_turn_understanding",
+            "protocol": true,
+            "admitted": true,
+            "outcome": "admitted_not_completion_proof"
+          }
+        ]
+      },
+      "stop": {
+        "receipt": {
+          "stopped": true,
+          "provider_stub_calls": 0,
+          "pending_provider_controls": 0,
+          "active_provider_attempts": 0,
+          "tool_dispatches": 1,
+          "tool_events": [
+            {
+              "request_id": "managed-b-probe:0c294a7da7f1:1",
+              "name": "commit_turn_understanding",
+              "protocol": true,
+              "admitted": true,
+              "outcome": "admitted_not_completion_proof"
+            }
+          ],
+          "provider_close_failures": 0,
+          "quiescent": true,
+          "real_model_calls": 2
+        },
+        "exit": 0,
+        "relayClosed": true
+      },
+      "scope": "startWeb-only native agent route and awaited ACK reconciliation; no whole eva.service scheduler claim",
+      "finalDatabaseCounts": {
+        "messages": 2,
+        "memories": 0,
+        "timeline": 6
+      }
+    },
+    {
+      "id": "eva2:C01:epoch2",
+      "participant": "eva2",
+      "case": "C01",
+      "epoch": 2,
+      "prompt": "Ik wil voor elk apparaat een apart dashboard. Goed idee toch?",
+      "reply": "Niet vanzelfsprekend. Een apart dashboard per apparaat klinkt overzichtelijk, maar kan je ook veel dubbel werk en versnipperde informatie opleveren. Ik zou één hoofddashboard maken voor het totaalbeeld, met een detailpagina per apparaat. Dan kun je snel vergelijken én inzoomen.",
+      "timing": {
+        "firstContentSeconds": 3.564722213021014,
+        "fullAnswerSeconds": 5.922013657022035,
+        "nativeObservedSeconds": 11.414687026001047,
+        "launcherIncludingPreparationSeconds": 51.6833394439891
+      },
+      "usage": {
+        "providerAttempts": 2,
+        "observedUsageComplete": true,
+        "tokens": {
+          "input_tokens": 4870,
+          "output_tokens": 158,
+          "total_tokens": 5028
+        },
+        "attempts": [
+          {
+            "id": 0,
+            "sample_id": "p1-eva2-c01-e2-20261003",
+            "role": "contact",
+            "model": "gpt-6-sol",
+            "reasoning_effort": "none",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 1866,
+              "output_tokens": 61,
+              "total_tokens": 1927
+            }
+          },
+          {
+            "id": 1,
+            "sample_id": "p1-eva2-c01-e2-20261003",
+            "role": "helper",
+            "model": "gpt-6-astra",
+            "reasoning_effort": "medium",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 3004,
+              "output_tokens": 97,
+              "total_tokens": 3101
+            }
+          }
+        ],
+        "creditCost": null,
+        "developmentCredits": null
+      },
+      "durableReplyReadback": true,
+      "fullNativeSampleCompleteWithinScope": false,
+      "outcome": "sample_envelope_refused",
+      "artifact": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-eva2-remaining-subscription-20261003-v1/c01-epoch2/execution/result.json",
+        "sha256": "042be2a304699a621799a47d89ecdf4ff59cc5fe3f445b3ddd9a9d783afbccf7"
+      },
+      "launcher": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-eva2-remaining-subscription-20261003-v1/c01-epoch2/run.py",
+        "sha256": "1ea4730d2d0a99a33cbb2ed8bf3b796562fbf81a29e2fb151ec1e4208466bea0"
+      },
+      "memory": {
+        "retainedFactCount": 1,
+        "operations": [
+          {
+            "operation_type": "batch_retain",
+            "status": "completed"
+          },
+          {
+            "operation_type": "retain",
+            "status": "completed"
+          },
+          {
+            "operation_type": "consolidation",
+            "status": "pending"
+          }
+        ],
+        "complete": false
+      },
+      "stop": {
+        "reason": "declared sample attempts reached",
+        "workersSettled": true,
+        "tunnelClosed": true,
+        "cleanupBlockers": [],
+        "thirdRequestDispatched": false
+      },
+      "databaseDumps": {
+        "p1_core": {
+          "exitCode": 0,
+          "bytes": 279938,
+          "sha256": "eb6b0ed82f9e2153da5bff3a732b785a6e56b5c231721ce7ef200184dda89e5f"
+        },
+        "p1_memory": {
+          "exitCode": 0,
+          "bytes": 79812,
+          "sha256": "ce808ff802b4c810e2f0e5f05bd273ac1ca8f6fd99e4931291db9f3c04631861"
+        }
+      },
+      "tools": {
+        "protocolConsumptions": 0,
+        "refusedActions": [],
+        "externalActionsDispatched": 0,
+        "sourceBoundMaximum": 2,
+        "boundBasis": "Core registers str/deferred actions only; substantive dispatch is refused. Native memory consumes at most the first structured_response per provider attempt; shared provider attempt cap is two, below fixed tool cap four.",
+        "completeReceipts": true
+      }
+    },
+    {
+      "id": "eva1-bottie:C04:epoch1",
+      "participant": "eva1-bottie",
+      "case": "C04",
+      "epoch": 1,
+      "prompt": "Erik beweert dat Lola zijn sok heeft verstopt, maar ik zie die sok gewoon onder Eriks stoel liggen. Hij wil dat ik Lola streng toespreek. Wat vind jij hiervan?",
+      "reply": "Ik zou Lola niet streng toespreken. Wijs Erik de sok onder zijn stoel aan en zeg dat jullie Lola niet de schuld geven zonder te weten wat er gebeurd is. Zaak opgelost, zonder verhoor.",
+      "timing": {
+        "firstContentSeconds": 12.710204062983394,
+        "fullAnswerSeconds": 12.710204062983394,
+        "nativeObservedSeconds": 12.83029094300582,
+        "launcherIncludingPreparationSeconds": 15.85050934800529
+      },
+      "usage": {
+        "providerAttempts": 2,
+        "observedUsageComplete": true,
+        "tokens": {
+          "input_tokens": 9261,
+          "output_tokens": 338,
+          "total_tokens": 9599
+        },
+        "attempts": [
+          {
+            "id": 0,
+            "sample_id": "eva1-bottie:C04:epoch1",
+            "role": "contact",
+            "model": "gpt-6-sol",
+            "reasoning_effort": "none",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 8055,
+              "output_tokens": 290,
+              "total_tokens": 8345
+            }
+          },
+          {
+            "id": 1,
+            "sample_id": "eva1-bottie:C04:epoch1",
+            "role": "contact",
+            "model": "gpt-6-sol",
+            "reasoning_effort": "none",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 1206,
+              "output_tokens": 48,
+              "total_tokens": 1254
+            }
+          }
+        ],
+        "creditCost": null,
+        "developmentCredits": null
+      },
+      "durableReplyReadback": true,
+      "fullNativeSampleCompleteWithinScope": true,
+      "outcome": "readback_verified",
+      "artifact": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-remaining-subscription-20261003-v1/c04-epoch1/result.private.json",
+        "sha256": "be0fc508aa4f98325d6c9182c4502a3bdc46af5cc5804e06e6a41837dca91952"
+      },
+      "launcher": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-remaining-subscription-20261003-v1/c04-epoch1/launch.py",
+        "sha256": "85760d78c96da4ac126b44d28e4e82205fa3fd5f78dafcab15a7fec659b6b435"
+      },
+      "databaseSnapshot": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-remaining-subscription-20261003-v1/c04-epoch1/eva.db",
+        "sha256": "956c3256b8c91a382a07f600d449a469346e2c5811b158a59c214094260e128e"
+      },
+      "originalDataRetained": "/tmp/cp001-bottie-3y_w0wzt",
+      "ackReadbackCount": 1,
+      "tools": {
+        "contract": "Cp001NativeToolDispatch/v1",
+        "maximum": 4,
+        "events": [
+          {
+            "request_id": "managed-b-probe:90f3f501a984:1",
+            "name": "commit_turn_understanding",
+            "protocol": true,
+            "admitted": true,
+            "outcome": "admitted_not_completion_proof"
+          }
+        ]
+      },
+      "stop": {
+        "receipt": {
+          "stopped": true,
+          "provider_stub_calls": 0,
+          "pending_provider_controls": 0,
+          "active_provider_attempts": 0,
+          "tool_dispatches": 1,
+          "tool_events": [
+            {
+              "request_id": "managed-b-probe:90f3f501a984:1",
+              "name": "commit_turn_understanding",
+              "protocol": true,
+              "admitted": true,
+              "outcome": "admitted_not_completion_proof"
+            }
+          ],
+          "provider_close_failures": 0,
+          "quiescent": true,
+          "real_model_calls": 2
+        },
+        "exit": 0,
+        "relayClosed": true
+      },
+      "scope": "startWeb-only native agent route and awaited ACK reconciliation; no whole eva.service scheduler claim",
+      "finalDatabaseCounts": {
+        "messages": 2,
+        "memories": 0,
+        "timeline": 6
+      }
+    },
+    {
+      "id": "eva2:C04:epoch1",
+      "participant": "eva2",
+      "case": "C04",
+      "epoch": 1,
+      "prompt": "Erik beweert dat Lola zijn sok heeft verstopt, maar ik zie die sok gewoon onder Eriks stoel liggen. Hij wil dat ik Lola streng toespreek. Wat vind jij hiervan?",
+      "reply": "Ik zou Lola niet streng toespreken. De sok ligt onder Eriks stoel; dat is geen bewijs dat zij hem heeft verstopt. Wijs Erik op de sok en laat Lola erbuiten, tenzij er echt iets anders is gebeurd. Een hond veroordelen op basis van een sokkenbeschuldiging lijkt me wat voortvarend.",
+      "timing": {
+        "firstContentSeconds": 3.6731685449776705,
+        "fullAnswerSeconds": 6.483526265976252,
+        "nativeObservedSeconds": 21.565904429997317,
+        "launcherIncludingPreparationSeconds": 63.62020143098198
+      },
+      "usage": {
+        "providerAttempts": 2,
+        "observedUsageComplete": true,
+        "tokens": {
+          "input_tokens": 4923,
+          "output_tokens": 323,
+          "total_tokens": 5246
+        },
+        "attempts": [
+          {
+            "id": 0,
+            "sample_id": "p1-eva2-c04-e1-20261003",
+            "role": "contact",
+            "model": "gpt-6-sol",
+            "reasoning_effort": "none",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 1892,
+              "output_tokens": 73,
+              "total_tokens": 1965
+            }
+          },
+          {
+            "id": 1,
+            "sample_id": "p1-eva2-c04-e1-20261003",
+            "role": "helper",
+            "model": "gpt-6-astra",
+            "reasoning_effort": "medium",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 3031,
+              "output_tokens": 250,
+              "total_tokens": 3281
+            }
+          }
+        ],
+        "creditCost": null,
+        "developmentCredits": null
+      },
+      "durableReplyReadback": true,
+      "fullNativeSampleCompleteWithinScope": false,
+      "outcome": "sample_envelope_refused",
+      "artifact": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-eva2-remaining-subscription-20261003-v1/c04-epoch1/execution/result.json",
+        "sha256": "f5913df66c1e13cbdeecc71cbe6a48e5f2d1ea5a6c9b67e10dd074918b97ee15"
+      },
+      "launcher": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-eva2-remaining-subscription-20261003-v1/c04-epoch1/run.py",
+        "sha256": "d0e2c92edc95179f5058917b2344aaaa5b3adf579b93e06e9620b8b69ee0b019"
+      },
+      "memory": {
+        "retainedFactCount": 1,
+        "operations": [
+          {
+            "operation_type": "batch_retain",
+            "status": "completed"
+          },
+          {
+            "operation_type": "retain",
+            "status": "completed"
+          },
+          {
+            "operation_type": "consolidation",
+            "status": "pending"
+          }
+        ],
+        "complete": false
+      },
+      "stop": {
+        "reason": "declared sample attempts reached",
+        "workersSettled": true,
+        "tunnelClosed": true,
+        "cleanupBlockers": [],
+        "thirdRequestDispatched": false
+      },
+      "databaseDumps": {
+        "p1_core": {
+          "exitCode": 0,
+          "bytes": 280133,
+          "sha256": "58a193ae914576e24b4977bdeb23cbb07a08f09c5788476e9ed2c935bac24539"
+        },
+        "p1_memory": {
+          "exitCode": 0,
+          "bytes": 82201,
+          "sha256": "523b0b73a49e1cab9b49738dd6c77fd542ef8104b5e7cc858463937c27d417c4"
+        }
+      },
+      "tools": {
+        "protocolConsumptions": 0,
+        "refusedActions": [],
+        "externalActionsDispatched": 0,
+        "sourceBoundMaximum": 2,
+        "boundBasis": "Core registers str/deferred actions only; substantive dispatch is refused. Native memory consumes at most the first structured_response per provider attempt; shared provider attempt cap is two, below fixed tool cap four.",
+        "completeReceipts": true
+      }
+    },
+    {
+      "id": "eva1-bottie:C04:epoch2",
+      "participant": "eva1-bottie",
+      "case": "C04",
+      "epoch": 2,
+      "prompt": "Erik beweert dat Lola zijn sok heeft verstopt, maar ik zie die sok gewoon onder Eriks stoel liggen. Hij wil dat ik Lola streng toespreek. Wat vind jij hiervan?",
+      "reply": "Ik zou Lola niet streng toespreken. Laat Erik eerst de sok onder zijn stoel zien. Dat zegt nog niet hoe hij daar terechtkwam, maar Lola de schuld geven is nu niet eerlijk.",
+      "timing": {
+        "firstContentSeconds": 12.281861497991486,
+        "fullAnswerSeconds": 12.281861497991486,
+        "nativeObservedSeconds": 12.4169820889947,
+        "launcherIncludingPreparationSeconds": 16.031086445000255
+      },
+      "usage": {
+        "providerAttempts": 2,
+        "observedUsageComplete": true,
+        "tokens": {
+          "input_tokens": 9248,
+          "output_tokens": 316,
+          "total_tokens": 9564
+        },
+        "attempts": [
+          {
+            "id": 0,
+            "sample_id": "eva1-bottie:C04:epoch2",
+            "role": "contact",
+            "model": "gpt-6-sol",
+            "reasoning_effort": "none",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 8055,
+              "output_tokens": 272,
+              "total_tokens": 8327
+            }
+          },
+          {
+            "id": 1,
+            "sample_id": "eva1-bottie:C04:epoch2",
+            "role": "contact",
+            "model": "gpt-6-sol",
+            "reasoning_effort": "none",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 1193,
+              "output_tokens": 44,
+              "total_tokens": 1237
+            }
+          }
+        ],
+        "creditCost": null,
+        "developmentCredits": null
+      },
+      "durableReplyReadback": true,
+      "fullNativeSampleCompleteWithinScope": true,
+      "outcome": "readback_verified",
+      "artifact": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-remaining-subscription-20261003-v1/c04-epoch2/result.private.json",
+        "sha256": "698b61651ca6a46c4e539528b80e11d0f7e1e8a946e8903ec4106c12248b6bed"
+      },
+      "launcher": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-remaining-subscription-20261003-v1/c04-epoch2/launch.py",
+        "sha256": "4a3788c73fad48d9837ef956bdcc7db6b5157cec4d736e435ad68540f6c65cef"
+      },
+      "databaseSnapshot": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-remaining-subscription-20261003-v1/c04-epoch2/eva.db",
+        "sha256": "1a774a30cdd186de8760f41174dc93c2dac4285d812d81f0dc3799ed71b4e5cf"
+      },
+      "originalDataRetained": "/tmp/cp001-bottie-e7h7s10d",
+      "ackReadbackCount": 1,
+      "tools": {
+        "contract": "Cp001NativeToolDispatch/v1",
+        "maximum": 4,
+        "events": [
+          {
+            "request_id": "managed-b-probe:946cf039c1d7:1",
+            "name": "commit_turn_understanding",
+            "protocol": true,
+            "admitted": true,
+            "outcome": "admitted_not_completion_proof"
+          }
+        ]
+      },
+      "stop": {
+        "receipt": {
+          "stopped": true,
+          "provider_stub_calls": 0,
+          "pending_provider_controls": 0,
+          "active_provider_attempts": 0,
+          "tool_dispatches": 1,
+          "tool_events": [
+            {
+              "request_id": "managed-b-probe:946cf039c1d7:1",
+              "name": "commit_turn_understanding",
+              "protocol": true,
+              "admitted": true,
+              "outcome": "admitted_not_completion_proof"
+            }
+          ],
+          "provider_close_failures": 0,
+          "quiescent": true,
+          "real_model_calls": 2
+        },
+        "exit": 0,
+        "relayClosed": true
+      },
+      "scope": "startWeb-only native agent route and awaited ACK reconciliation; no whole eva.service scheduler claim",
+      "finalDatabaseCounts": {
+        "messages": 2,
+        "memories": 0,
+        "timeline": 6
+      }
+    },
+    {
+      "id": "eva2:C04:epoch2",
+      "participant": "eva2",
+      "case": "C04",
+      "epoch": 2,
+      "prompt": "Erik beweert dat Lola zijn sok heeft verstopt, maar ik zie die sok gewoon onder Eriks stoel liggen. Hij wil dat ik Lola streng toespreek. Wat vind jij hiervan?",
+      "reply": "Ik zou Lola niet streng toespreken. Jij ziet de sok onder Eriks stoel liggen; dat is een betere aanwijzing dan zijn vermoeden. Wijs hem rustig op de sok. Lola krijgt vrijspraak bij gebrek aan bewijs.",
+      "timing": {
+        "firstContentSeconds": 3.7274495770107023,
+        "fullAnswerSeconds": 4.8547422400151845,
+        "nativeObservedSeconds": 19.54231211199658,
+        "launcherIncludingPreparationSeconds": 60.902066082984675
+      },
+      "usage": {
+        "providerAttempts": 2,
+        "observedUsageComplete": true,
+        "tokens": {
+          "input_tokens": 4923,
+          "output_tokens": 315,
+          "total_tokens": 5238
+        },
+        "attempts": [
+          {
+            "id": 0,
+            "sample_id": "p1-eva2-c04-e2-20261003",
+            "role": "contact",
+            "model": "gpt-6-sol",
+            "reasoning_effort": "none",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 1892,
+              "output_tokens": 51,
+              "total_tokens": 1943
+            }
+          },
+          {
+            "id": 1,
+            "sample_id": "p1-eva2-c04-e2-20261003",
+            "role": "helper",
+            "model": "gpt-6-astra",
+            "reasoning_effort": "medium",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 3031,
+              "output_tokens": 264,
+              "total_tokens": 3295
+            }
+          }
+        ],
+        "creditCost": null,
+        "developmentCredits": null
+      },
+      "durableReplyReadback": true,
+      "fullNativeSampleCompleteWithinScope": false,
+      "outcome": "sample_envelope_refused",
+      "artifact": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-eva2-remaining-subscription-20261003-v1/c04-epoch2/execution/result.json",
+        "sha256": "8ebfcb1e6fb1ef191fad2df681a1f3ebc8c4007bb52611c114d85747dce7c451"
+      },
+      "launcher": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-eva2-remaining-subscription-20261003-v1/c04-epoch2/run.py",
+        "sha256": "166a1e87710ffe8a5c3b5622e376331d9fe109ead39bc6fe899df56f8c6a18c3"
+      },
+      "memory": {
+        "retainedFactCount": 1,
+        "operations": [
+          {
+            "operation_type": "batch_retain",
+            "status": "completed"
+          },
+          {
+            "operation_type": "retain",
+            "status": "completed"
+          },
+          {
+            "operation_type": "consolidation",
+            "status": "pending"
+          }
+        ],
+        "complete": false
+      },
+      "stop": {
+        "reason": "declared sample attempts reached",
+        "workersSettled": true,
+        "tunnelClosed": true,
+        "cleanupBlockers": [],
+        "thirdRequestDispatched": false
+      },
+      "databaseDumps": {
+        "p1_core": {
+          "exitCode": 0,
+          "bytes": 280053,
+          "sha256": "d077a63859dfa9855a1b32c41ddb84504ed6678ac56e8afb2c993bba3bb7fa96"
+        },
+        "p1_memory": {
+          "exitCode": 0,
+          "bytes": 82230,
+          "sha256": "934b51aa5650e1ab0dd2e7d5f7a3ca87fa5c97d5cde34636361374cbaa8aa2bd"
+        }
+      },
+      "tools": {
+        "protocolConsumptions": 0,
+        "refusedActions": [],
+        "externalActionsDispatched": 0,
+        "sourceBoundMaximum": 2,
+        "boundBasis": "Core registers str/deferred actions only; substantive dispatch is refused. Native memory consumes at most the first structured_response per provider attempt; shared provider attempt cap is two, below fixed tool cap four.",
+        "completeReceipts": true
+      }
+    }
+  ],
+  "summary": {
+    "eva2": {
+      "samples": 4,
+      "fullAnswerSeconds": {
+        "min": 4.8547422400151845,
+        "median": 5.5229045410087565,
+        "max": 6.483526265976252
+      },
+      "observedInputTokens": 19590,
+      "observedOutputTokens": 967,
+      "fullNativeSamplesCompleteWithinScope": 0,
+      "durableRepliesVerified": 4
+    },
+    "eva1-bottie": {
+      "samples": 4,
+      "fullAnswerSeconds": {
+        "min": 10.026821072999155,
+        "median": 12.49603278048744,
+        "max": 15.94803452299675
+      },
+      "observedInputTokens": 36869,
+      "observedOutputTokens": 1185,
+      "fullNativeSamplesCompleteWithinScope": 4,
+      "durableRepliesVerified": 4
+    }
+  },
+  "aggregateObservedUsage": {
+    "attempts": 16,
+    "input_tokens": 56459,
+    "output_tokens": 2152
+  },
+  "semanticEvaluation": {
+    "status": "unscored",
+    "humanRatersRequired": 2,
+    "paidJudgeCalls": 0
+  },
+  "models": {
+    "foreground_contact": {
+      "model": "gpt-6-sol",
+      "reasoning": "none"
+    },
+    "all_model_helpers_including_memory": {
+      "model": "gpt-6-astra",
+      "reasoning": "medium"
+    },
+    "policy": "Exact role settings shared by all participants; no automatic model fallback or effort escalation in this run. Unsupported role setting is unavailable before inference."
+  },
+  "batch": {
+    "result": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-remaining-fixed-pair-20261003-resumed-v1/result.json",
+      "sha256": "635b27211a0e51c5d1f558ee29c91baa052861c4ece00c89f87d68ea8ff51603"
+    },
+    "manifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-remaining-fixed-pair-20261003-resumed-v1/manifest.json",
+      "sha256": "89f1273c231f8ff596b5d4bcc7f9e92eaa87e7092f3a0dafa58bc182f4807439"
+    },
+    "driver": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-remaining-fixed-pair-20261003-resumed-v1/inspect-run.py",
+      "sha256": "ce32d4243610765dceb8305b4f9396d2f2fe42b6b58a5732582cb6ef4d7ce6fd"
+    },
+    "logs": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-remaining-fixed-pair-20261003-resumed-v1/execution-logs/2026-10-03T21-39-43-00-00_p1-remaining-known-pair_BgEADi4K3FaVPkZMMkuyd2.eval",
+        "sha256": "d142a8a7efefe8dba1fc5ee89cda71267c717e7a30e56c8c48bd0071afc1db9a"
+      }
+    ],
+    "stop": null,
+    "wallSecondsSixRemainingWithPreparation": 221.14291659896844
+  },
+  "sourcePins": {
+    "cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f",
+    "cp001_native.py": "8839d4efc75be5b67f6e25bfaf8aa816cb20d3bf7d63a8ddeb43b25db837cb36",
+    "cp001_http_accounting.py": "4d9b60a996b4fb221b5ad2cd77072ac36432b5349c3f0fbf96c81ba640ff8b85",
+    "cp001_process_accounting.py": "cf204745b51bb0eac27f25bed31b9a9054ef90d722ff30a6a222d5d5b2d19f72",
+    "p1_eva2_native_worker.py": "71af2d030d9a30fae4d27483dbccbbafbd38efbcd84971bd9f249741f4f3768e",
+    "p1_model_tunnel.py": "12bd58796a92eb09096dab3a484ed3aeb6d5c8f1724fccdc2827ffa3f269bb08",
+    "cp001_bottie_worker.mjs": "b5844576563dfc1df01ceda596732dd1dc04c259564b50174627ed74e693f129"
+  },
+  "preparationFailure": {
+    "previousBatch": "/home/administrator/project/.eva2-artifacts/p1-remaining-fixed-pair-20261003-v1/result.json",
+    "failureBeforeInput": true,
+    "providerCallsBeforeFailure": 0,
+    "proof": "PermissionError occurred at first auth inspection before ledger/controller/network/container creation. Recorded request and parent are null; retained_resources empty.",
+    "change": "Read existing access-only lease via authorized sudo inspection; no credential copy. Native workers still UID1000 and same readonly mounted lease. Preserve all failed logs/results; use separate execution output.",
+    "localReadCheck": "succeeded; no refresh credential; no inference"
+  },
+  "review": {
+    "path": "eva2/reviews/p1-known-pair-results-20261003.md",
+    "status": "accepted_with_stated_limits",
+    "sha256": "84fa795c001b815edb5263a5524016fdb09d17871ce3118a6c790413f7ce07a6",
+    "decision": "Eight fixed development outputs and observations accepted; no semantic score, complete Eva2 memory claim or EV-003 acceptance."
+  },
+  "limitations": [
+    "Four replies per participant on two known prompts; small sample, no general or unseen quality claim.",
+    "Eva2 retains facts but memory consolidation requires further work beyond this unchanged two-request sample envelope. Tokens do not compare equal fully completed memory workloads.",
+    "Bottie completes native startWeb agent and awaited ACK scope; whole production service schedulers are outside this result.",
+    "Equal-model observation variants and empty synthetic state differ from normal production workloads.",
+    "OpenClaw/Hermes lack confirmed login; Agent Zero native admission remains open. Unexecuted participants are unknown, never losses.",
+    "No new product function or installation, no repeated question for a better score, no enlarged budget. Original EV-003 acceptance unchanged.",
+    "Provider tokens are measured; monetary credits and development-agent costs are unknown."
+  ]
+}

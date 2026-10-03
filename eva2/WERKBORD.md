@@ -1,26 +1,32 @@
 # EVA2 werkbord
 
-**Nu: P1 — overige vaste Eva1/Eva2-metingen voorbereiden.**
-Dezelfde vaste C01-vraag, gelijke modelkeuze per rol, lege proefgegevens.
+**Laatste resultaat: P1 — acht vaste Eva1/Eva2-metingen uitgevoerd en onafhankelijk gecontroleerd.**
+Twee dezelfde bekende gespreksvragen, elk tweemaal per systeem, met dezelfde
+modelkeuze per rol en lege proefgegevens. Geen aanmelding of modelproef actief.
 
-| Gemeten | Eva2 | Eva1/Bottie |
+| Gemeten over vier antwoorden | Eva2 | Eva1/Bottie |
 |---|---:|---:|
-| Volledig antwoord | 5,124 s | 15,948 s |
-| Invoertokens, alle gemeten calls | 4.874 | 9.185 |
-| Uitvoertokens | 171 | 272 |
-| Modelaanvragen | 2 | 2 |
-| Antwoord apart teruggelezen | Ja | Ja |
-| Hele native proef binnen scope afgerond | Nee: consolidatie wacht | Ja |
+| Volledig antwoord, bereik | 4,855–6,484 s | 10,027–15,948 s |
+| Volledig antwoord, mediaan | 5,523 s | 12,496 s |
+| Invoertokens, alle gemeten calls | 19.590 | 36.869 |
+| Uitvoertokens | 967 | 1.185 |
+| Modelaanvragen | 8 | 8 |
+| Antwoord apart teruggelezen | 4/4 | 4/4 |
+| Hele native proef binnen scope afgerond | 0/4: consolidatie wacht | 4/4 |
 
-**Eén meting; geen algemene voorsprong of volledige kostenvergelijking.**
-Bottie gebruikt haar native webroutine, met expliciete gelijk-modelconfiguratie;
-geen uitspraak over alle functies van de draaiende Eva1-dienst.
-Beide antwoorden en beperkingen blijven bewaard. Eén gebundelde review van de
-zes resterende vooraf geplande uitvoeringen loopt; geen modelproef of aanmelding
-actief. Vervolg: die vaste gevallen met dezelfde aansluiting;
-geen herhaling voor een betere score of hoger proefbudget. Stand **25/44**.
-[Eva2-uitkomst](evidence/product/p1-native-c01-subscription-20261003.json)
-· [Eva1-uitkomst](evidence/product/p1-native-bottie-c01-subscription-20261003.json).
+**Kleine ontwikkelvergelijking; geen algemene kwaliteits- of totale kostenwinst.**
+Eva2 gaf in deze proeven eerder het volledige antwoord. Haar geheugenfeiten zijn
+bewaard, maar verdere consolidatie paste niet in de vooraf vaste proefgrens.
+Bottie is gemeten via de native webroutine en de bijbehorende ontvangstbevestiging,
+niet via alle achtergrondtaken van de productiedienst. Persoonlijkheid is niet gescoord.
+De mislukte voorbereiding vóór vraaginvoer is behouden; die kostte nul modelcalls.
+Geen extra Eva-functie of installatie uit deze meting: stand **25/44**.
+[Alle acht resultaten en beperkingen](evidence/product/p1-known-pair-results-20261003.json).
+[Onafhankelijke resultaatreview](reviews/p1-known-pair-results-20261003.md).
+
+**Volgende opdracht:** bestaande P1-voorwaarden voor de ongeziene eindvergelijking
+afronden. Nog niet gestart; geen actieve proef, aanmelding of reviewer.
+
 
 ## Afgerond: F1.1 — één gezamenlijke geïnstalleerde versie
 
@@ -76,9 +82,8 @@ Bron en bewijs gepubliceerd op GitHub in `3bfce4cf`.
 [Bewijs en beperkingen](evidence/product/p1-shared-native-accounting-20261003.json)
 · [Onafhankelijke review](reviews/p1-shared-native-sample-20261003.md).
 
-**Vervolg:** de overige beschikbare deelnemers op de vaste C01/C04-routes
-toelaten en vergelijken. De eerste echte Eva2 C01 staat hierboven; ontbrekende
-toegang blijft onbekend.
+**Historische voorbereiding:** de vaste Eva1/Eva2 C01/C04-reeks is inmiddels
+afgerond; zie het actuele resultaat bovenaan. Andere deelnemers blijven onbekend.
 De bestaande Eva1-bron- en Hindsight-levenscyclusbewijzen worden hergebruikt.
 
 **Nu van Jaap nodig: Windows opnieuw opstarten voor F1.2.** Sla werk op,
