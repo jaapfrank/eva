@@ -18,14 +18,26 @@ het bewijs claimt niet dat ieder bestand van HEAD geïnstalleerd is.
 [Geïnstalleerd resultaat](evidence/product/f1-integrated-installed-20261003.json)
 · [Onafhankelijke review](reviews/f1-integrated-candidate-20261003.md).
 
-**Volgende: F1.2 — gezamenlijke werking en computerherstart controleren.** Nog niet
-gestart; geen uitvoerder actief op dit overgangsmoment. Vergelijking, fysieke
-spraakbeleving en echte gezinsacceptatie behouden hun eigen eindvoorwaarden.
+**Nu actief: F1.2 — gezamenlijke werking en computerherstart controleren.**
+Zeven bestaande gerichte gevallen geslaagd op de geïnstalleerde bron en schema 7.
+De gewone proef beantwoordde de tussenvraag tijdens werk; twee testbestanden en
+het persoonsgebonden Hindsight-record zijn teruggelezen. Beide resultaten staan
+op de echte eigenaarpagina en blijven na herladen zichtbaar. De tussenvraag duurde
+7,136 s; geen snelheidswinst. De onthoudvraag veroorzaakte ook een extra opslagtaak.
+Geregistreerd runtimeverbruik: 125.759 input- en 1.381 outputtokens, 13 modelantwoorden
+en 10 toolcalls; gedeeltelijke meting, credits onbekend. Ontwikkelverbruik apart.
 
-**Alleen van Jaap nodig:** Hermes en OpenClaw zijn zonder bevestigde aanmelding
-geëindigd; de oude codes zijn niet meer bruikbaar. Nieuwe afzonderlijke aanmelding
-zodra Jaap klaarstaat. Agent Zero heeft een eigen bewaarde sessie; OpenCode blijft
-de programmeerreferentie. Geen credentials gekopieerd of vergelijkingsmodelcalls.
+**Onafhankelijke voorbereiding: GO.** Snapshot van 20 containers, 11 hostdiensten,
+geheugen, taken en bestanden gereed. De echte Windows-herstart en nacontrole blijven
+open. Nog steeds 25/44 afgerond; geen nieuwe functieclaim uit deze controle.
+[Resultaat en beperkingen](evidence/product/f1-joint-check-pre-reboot-20261003.json)
+· [Voorbereidingsreview](reviews/f1-joint-check-20261003.md).
+
+**Nu van Jaap nodig:** na zijn melding dat oude codes worden afgewezen is een
+verse OpenClaw-aanmelding gestart (exec 95641), met dezelfde eigen native configuratie.
+Hermes volgt pas daarna. Geen oude codes gebruiken. Nog geen Windows-herstart tijdens
+inloggen. Agent Zero heeft een eigen bewaarde sessie; OpenCode blijft de programmeer-
+referentie. Geen credentials gekopieerd of vergelijkingsmodelcalls.
 
 **R1.1:** bron/protocol en onafhankelijke toelating gereed; automatische review
 weigerde de concrete acht nieuwe modelruns zonder expliciete eigenaarstoestemming.

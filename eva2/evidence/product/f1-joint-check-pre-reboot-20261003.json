@@ -1,0 +1,110 @@
+{
+  "contract": "EvaInstalledProductEvidence/v1",
+  "checked_at": "2026-10-03T16:44:01.274310+00:00",
+  "task_id": "F1.2",
+  "status": "pre_restart_checked",
+  "whole_task_completed": false,
+  "base_commit": "512bdcfcac2239fc4709cdc686fee4a07c941895",
+  "outcome": "The installed core and worker sustain a conversation during completed background work, store the synthetic personal memory and show both saved results on the ordinary owner page. Actual Windows restart remains open.",
+  "product_source_changed": false,
+  "installation_repeated": false,
+  "images": {
+    "core": "sha256:fd1c7cd3413405fd6b1b5ce408f2028cffed8de735a301550663e4c891ee5902",
+    "worker": "sha256:30d65117cc0f526bc3ed8859a0eee867ff8fe0943c0bf42c8c09d787c2ca3089"
+  },
+  "focused_checks": {
+    "selectors": 5,
+    "cases_passed": 7,
+    "initial_passed": 6,
+    "initial_failed": 1,
+    "failed_case_only_rerun_passed": 1,
+    "initial_seconds": 15.3,
+    "rerun_seconds": 3.87,
+    "actual_image_source_and_schema_used": true,
+    "model_calls": 0,
+    "production_database_used": false,
+    "private_fixture_adjustments": [
+      "Existing test migration expectation aligned to actual installed schema 0007; no production schema migration performed.",
+      "Old Telegram success mock now echoes the requested reply message identity required by the installed adapter. Assertions and production source unchanged."
+    ]
+  },
+  "ordinary_live_check": {
+    "route": "Existing local private owner conversation API and original owner page",
+    "foreground_messages": 3,
+    "background_tasks_completed": 2,
+    "planned_background_tasks": 1,
+    "unexpected_extra_task": "The explicit synthetic remember request additionally created a test-information file. Its usage is included.",
+    "latency_seconds": {
+      "remember_request": 14.01,
+      "background_acceptance": 11.208,
+      "interjection": 7.136
+    },
+    "interjection_completed_during_background_work": true,
+    "speed_improvement_claimed": false,
+    "synthetic_personal_memory_persisted": true,
+    "post_restart_memory_recall_tested": false,
+    "saved_files_read_independently": 2,
+    "result_outputs_visible_in_browser_dom": 2,
+    "result_outputs_retained_after_page_reload": true,
+    "delivery_acknowledgements_per_result": 1,
+    "delivery_disposition": "offered_not_proven_heard",
+    "original_acknowledging_client": "unknown",
+    "browser_check_caused_original_acknowledgement": false,
+    "human_acceptance": false
+  },
+  "recorded_runtime_consumption": {
+    "input_tokens": 125759,
+    "output_tokens": 1381,
+    "model_responses": 13,
+    "tool_calls": 10,
+    "completeness": "partial",
+    "credits": null,
+    "development_usage_included": false,
+    "note": "Includes the additional test-information task. Internal memory/provider work may not all be recorded. No token reduction or general cost advantage is established."
+  },
+  "restart_preparation": {
+    "containers_bound": 20,
+    "host_units_bound": 11,
+    "host_client_files_bound": 3,
+    "tasks_and_results_bound": 2,
+    "saved_files_bound": 2,
+    "memory_document_bound": true,
+    "windows_boot_before": "2026-10-01T09:48:48.5000000Z",
+    "snapshot_sha256": "82bdde24a8cc908eab30f87b269c07d2022b8a0ff5a44131a0277d87f4e16b2a",
+    "dynamic_execstart_metadata_excluded_from_configuration_hash": true,
+    "unit_files_bind_executable_commands": true,
+    "old_postboot_model_canary_armed": false,
+    "actual_windows_restart_performed": false
+  },
+  "independent_review": {
+    "path": "eva2/reviews/f1-joint-check-20261003.md",
+    "sha256": "aad3f72f8ee37fcc6589a0876d27066e6415e35a27cf61d83e0b73fb16ef0060",
+    "decision": "Preparation GO only; F1.2 remains open"
+  },
+  "remaining": [
+    "Owner-initiated Windows restart after ongoing participant sign-in finishes.",
+    "Compare the recorded service/configuration, memory, task/result and file bindings after that real restart, without re-executing the original tasks.",
+    "Ordinary memory recall and result access after restart, followed by independent final review."
+  ],
+  "limitations": [
+    "No full F1.2 completion or new product function claimed.",
+    "No human speaker quality, personality, family acceptance or competitive superiority established.",
+    "A browser reload does not substitute for a Windows restart.",
+    "The measured responses are still slow; this functional combined check does not establish a latency improvement."
+  ],
+  "private_evidence_hashes": {
+    "/home/administrator/project/.eva2-artifacts/f1-joint-check-20261003/offline/receipt.json": "8a52c443169b6bf65821f47f3b6b2c315a61fd91d6cbca01c9097f9bfed9f180",
+    "/home/administrator/project/.eva2-artifacts/f1-joint-check-20261003/offline/actual-image-schema-source.json": "b07d245ec7e1d6b370520158331803ed014cf01ec391df018e9126c68a8d04cf",
+    "/home/administrator/project/.eva2-artifacts/f1-joint-check-20261003/offline/fixture-adaptation.json": "476d31061f9cdd015f60daddfa0996748bd91362fbccc739b6783871a56dbfa3",
+    "/home/administrator/project/.eva2-artifacts/f1-joint-check-20261003/offline/return-mock-correction.json": "742893fb9de4141ea7c6bd831abcd2c7f3fefbe4758dde0c87da320872b829d1",
+    "/home/administrator/project/.eva2-artifacts/f1-joint-check-20261003/live/protocol.json": "3cb3cdfaf36ea181b113532c07588479d575790ff74a734419ac350a4bb99f77",
+    "/home/administrator/project/.eva2-artifacts/f1-joint-check-20261003/live/journal.private.json": "35d49e6778a937156e3fe3e31c2154efb63b246a4bad6fc8db484e177dc406ef",
+    "/home/administrator/project/.eva2-artifacts/f1-joint-check-20261003/live/replies.private.json": "3e82bf19fb643672a9449aab45ac69ea6e0631725282bfa09fc241e73022866e",
+    "/home/administrator/project/.eva2-artifacts/f1-joint-check-20261003/live/actual-documents.private.json": "954bd8972c4be685e64535d90a1de52ffe35b567f1c05985cc69eb9cafcc58e3",
+    "/home/administrator/project/.eva2-artifacts/f1-joint-check-20261003/live/memory-document.private.json": "dc11eab62f5fa7a2caf20a2db07c2833a19fdf56658be5df1a1d863565bd56a8",
+    "/home/administrator/project/.eva2-artifacts/f1-joint-check-20261003/live/ordinary-results.private.json": "0fd7e8f74ec69aec7641ffafb6f485b361be259ed1884f6d0fd98fdd90b20e43",
+    "/home/administrator/project/.eva2-artifacts/f1-joint-check-20261003/browser-return/receipt.private.json": "4d1e4907521319eb8847063412feb000885b873b9c83f24d48d01a774faf37ff",
+    "/home/administrator/project/.eva2-artifacts/f1-joint-check-20261003/live/before-reboot.private.json": "82bdde24a8cc908eab30f87b269c07d2022b8a0ff5a44131a0277d87f4e16b2a",
+    "/home/administrator/project/.eva2-artifacts/f1-joint-check-20261003/live/snapshot-reboot.py": "0b451dbf7c073c9f2070ddbd26f3d75e766064b3c3f41f1e5ea051264e4a6bc6"
+  }
+}

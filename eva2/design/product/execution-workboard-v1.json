@@ -1035,8 +1035,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T16:07:18.537186+00:00",
+        "checkedAt": "2026-10-03T16:44:01.274310+00:00",
         "deliveries": [
+          {
+            "title": "Gesprek tijdens werk en opgeslagen resultaten bevestigd",
+            "date": "3 oktober",
+            "state": "tested",
+            "result": "De geïnstalleerde Eva beantwoordde een tussenvraag tijdens een lopende documentopdracht. Geheugen en twee testbestanden zijn opgeslagen; beide resultaten staan op de gewone pagina. Onafhankelijke voorbereiding GO.",
+            "remaining": "F1.2 blijft open tot de echte Windows-herstart en nacontrole. Tussenvraag 7,136 s; geen snelheidswinst. Geen nieuwe afgeronde functie.",
+            "source": "eva2/evidence/product/f1-joint-check-pre-reboot-20261003.json"
+          },
           {
             "title": "F1.1 klaar · geleverde functies samen geïnstalleerd",
             "date": "3 oktober",
@@ -3489,25 +3497,26 @@
           }
         ],
         "now": {
-          "title": "F1.1 afgerond · gezamenlijke versie geïnstalleerd",
-          "state": "completed",
+          "title": "F1.2 · gezamenlijke werking en herstart controleren",
+          "state": "in_progress",
           "owner": "Codex /root",
-          "detail": "Kern, werker en gewoon installatiepakket samengebracht en onafhankelijk gecontroleerd. 25/44 kleine taken afgerond. Geen uitvoerder actief; F1.2 is de eerstvolgende bestaande opdracht."
+          "detail": "Gezamenlijke werking gecontroleerd: tussenvraag tijdens werk, opgeslagen geheugen en twee resultaten zichtbaar op de echte pagina. Onafhankelijke voorbereiding GO. Echte Windows-herstart en nacontrole nog open; 25/44 taken afgerond."
         },
         "next": {
-          "title": "F1.2 · gezamenlijke werking en herstart controleren",
-          "detail": "Bestaande eindcontrole gericht op de geïnstalleerde kandidaat uitvoeren, inclusief computerherstart en onafhankelijke beoordeling. Ontbrekende toegang en fysieke/gezinsbeleving afzonderlijk zichtbaar."
+          "title": "Na de aanmeldingen: Windows-herstart en nacontrole",
+          "detail": "De voorbereiding is gereed. Na de echte eigenaarherstart dezelfde geheugen-, taak-, resultaat- en bestandstoestand controleren; oorspronkelijke opdrachten niet opnieuw uitvoeren."
         },
         "ownerAction": {
-          "title": "Aanmelden en afzonderlijke proefkeuze",
+          "title": "Eerst verse inlog; herstart volgt daarna",
           "steps": [
-            "Hermes en OpenClaw zijn zonder bevestigde aanmelding gestopt. Meld wanneer je klaar bent voor verse codes; oude codes niet gebruiken.",
-            "Beantwoord afzonderlijk de toestemmingsvraag voor de 8-run innovatieproef."
+            "Voltooi OpenClaw met de verse code uit deze chat. Hermes volgt daarna.",
+            "Nog geen computerherstart tijdens de aanmelding. De herstartvoorbereiding is beoordeeld; de concrete instructie volgt na de aanmeldingen.",
+            "Beantwoord afzonderlijk de toestemmingsvraag voor de acht runs van de innovatieproef."
           ],
-          "expected": "Inloggen verleent niet stilzwijgend toestemming voor de vervolgproef. Onafhankelijk productwerk blijft mogelijk."
+          "expected": "Aanmelding en herstart zijn afzonderlijke handelingen. F1.2 blijft open tot de echte herstart en nacontrole."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
+        "reviewedAt": "2026-10-03T16:44:01.274310+00:00"
       },
       "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
     },
@@ -15910,38 +15919,40 @@
             {
               "id": "P1.1",
               "title": "Vergelijkbare versies en toegang vastleggen",
-              "status": "blocked",
+              "status": "in_progress",
               "kind": "voorbereiden",
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Native aanmelding ontbreekt nog voor Hermes en OpenClaw. Gelijke model-/toolvoorwaarden en de volledige vergelijking blijven afzonderlijk open.",
+              "remaining": "OpenClaw-inlog nu actief. Hermes nog niet aangemeld. Gelijke vergelijkingsvoorwaarden en uitvoering blijven apart.",
               "latestEvidence": "eva2/evidence/product/p1-native-auth-status-20261001.json",
               "assignment": {
                 "owner": "Codex /root",
                 "support": "/root/background_execution_seam",
-                "stage": "native_logins_ended_owner_readiness_pending",
+                "stage": "fresh_openclaw_native_login_waiting",
                 "baseCommit": "523d5bc0",
-                "currentAction": "Both separate native logins ended without confirmed authentication. Prior codes are inactive; no automatic retry. Saved Agent Zero own session retained.",
+                "currentAction": "Owner reported old codes rejected; terminal old flows confirmed. Fresh OpenClaw native sign-in active, Hermes starts after confirmed OpenClaw completion. No model generation.",
                 "runtimeHandle": {
                   "hermesExecSession": 63638,
                   "hermesExitCode": 1,
                   "hermesState": "native_login_failed_AuthError",
-                  "openclawPid": 2534685,
-                  "openclawState": "process_ended_native_status_not_logged_in"
+                  "openclawState": "fresh_native_device_login_active",
+                  "openclawExecSession": 95641,
+                  "openclawPreviousPid": 2534685,
+                  "openclawPid": 3233193
                 },
                 "estimate": "Two native auth flows plus read-only confirmation; no model generation, credit cost unknown."
               },
-              "blocker": "Beide eigen inlogpogingen zijn gestopt zonder bevestigde aanmelding. Oude codes zijn niet meer bruikbaar; een verse flow volgt wanneer Jaap klaarstaat.",
+              "blocker": "OpenClaw wacht op invoer van de verse code. Hermes krijgt pas daarna een eigen verse aanmelding.",
               "nextImplementation": "Use these owned persisted configurations for native startup after own authentication. No repeated config/catalog probe without a changed cause or new evidence. Prior Agent Zero helper-envelope refusal remains unavailable; no hidden helper disable, auth-token copying or quota increase.",
-              "checkedAt": "2026-10-03T15:59:33.934722+00:00",
+              "checkedAt": "2026-10-03T16:35:46.145351+00:00",
               "ownerActionRequired": true,
               "nextAction": "Codex gebruikt bestaande vergelijkingsvoorbereiding; Jaap levert alleen daadwerkelijk ontbrekende accounttoegang. Dit blokkeert uitsluitend die vergelijking, niet Eva’s eigen functionele uitvoering.",
               "ownerInstructions": {
                 "availableNow": true,
-                "readyWhen": "Jaap is klaar voor een verse afzonderlijke aanmelding.",
+                "readyWhen": "De verse OpenClaw-code staat in de chat en is tijdelijk actief.",
                 "steps": [
-                  "Meld wanneer je klaar bent voor nieuwe Hermes- en OpenClaw-codes; de oude codes zijn niet meer bruikbaar."
+                  "Gebruik alleen de verse OpenClaw-code uit de chat; Hermes volgt na bevestiging."
                 ],
                 "blocksIndependentWork": false
               }
@@ -16102,7 +16113,7 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": null,
+          "activeWorker": "/root",
           "dashboardComponent": "project-wide",
           "remainingTasks": [
             {
@@ -16143,7 +16154,7 @@
             {
               "id": "F1.2",
               "title": "Gezamenlijke werking en herstart controleren",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "eindcontrole",
               "doneWhen": "Gebundelde eindcontrole, computerherstart en onafhankelijke review; alleen concrete resterende fouten corrigeren.",
               "owner": "Codex",
@@ -16154,7 +16165,25 @@
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "checkedAt": "2026-10-03T16:44:01.274310+00:00",
+              "assignment": {
+                "baseCommit": "512bdcfcac2239fc4709cdc686fee4a07c941895",
+                "owner": "/root",
+                "support": "Independent preparation review completed; no worker currently running",
+                "stage": "pre_reboot_ready_auth_in_progress",
+                "existing": "F1.1 installed GO; same core/worker sources, verified package binding and existing component evidence.",
+                "gap": "Joint endcheck and actual computer restart of the composed candidate not yet evidenced.",
+                "currentAction": "Preparation independently accepted. Seven focused cases passed; conversation overlapped completed work. Stored memory, files and visible browser results bound to the snapshot of 20 containers and 11 host units. Actual owner Windows restart follows the ongoing native sign-ins.",
+                "files": [
+                  "existing F1 endcheck/provenance artifacts",
+                  "existing boot observer configuration if needed"
+                ],
+                "finish": "Gebundelde eindcontrole, computerherstart en onafhankelijke review; alleen concrete resterende fouten corrigeren.",
+                "estimate": "One bundled integrated evaluation and actual restart proof using existing facilities; exact model need determined from existing harness; credits unknown."
+              },
+              "remaining": "Echte Windows-herstart en nacontrole nog nodig. Voorbereiding onafhankelijk goedgekeurd. Tussenvraag duurde 7,136 s; geen snelheidswinst geclaimd.",
+              "latestEvidence": "eva2/evidence/product/f1-joint-check-pre-reboot-20261003.json"
             }
           ],
           "responsibilityReview": {
