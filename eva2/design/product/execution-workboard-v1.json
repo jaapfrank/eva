@@ -547,18 +547,19 @@
           "tested": "partial",
           "live": "partial",
           "accepted": "no",
-          "gap": "F1: alle geleverde versies samen installeren en eindcontroleren. Werkelijke nieuwe Telegram-/inboxproeven en gezinsacceptatie blijven afzonderlijk open.",
-          "detail": "O1.2 is op zijn oorspronkelijke compositievoorwaarde afgerond na een echte connectoropdracht. Externe bewijsgrenzen en eerdere begeleide correcties blijven zichtbaar; geen claim dat alle gebruiksroutes al beproefd zijn.",
+          "gap": "F1.2 gezamenlijke eindcontrole en computerherstart blijven open. Werkelijke nieuwe Telegram-/inboxproeven en gezinsacceptatie blijven afzonderlijk open.",
+          "detail": "F1.1 eenmaal geïnstalleerd en onafhankelijk GO. Bestaande gegevens en 18 overige diensten behouden. Geen claim dat alle gebruikservaringen opnieuw zijn beproefd.",
           "evidence": "O1.1, O2.1/O2.2/O2.3 · FN-002, FN-003",
           "outcomes": [],
-          "works": "O1 modulaire installatie en O2 update/herstel zijn technisch afgerond. Nieuwe Eva gebruikt gekozen HA, browser en algemene connector; optionele spraak is gestart. Telegram-/e-mailwiring is meegeleverd.",
-          "ownerSummary": "O1 modulaire installatie en O2 update/herstel zijn technisch afgerond. Nieuwe Eva gebruikt gekozen HA, browser en algemene connector; optionele spraak is gestart. Telegram-/e-mailwiring is meegeleverd. Nog open: F1: alle geleverde versies samen installeren en eindcontroleren. Werkelijke nieuwe Telegram-/inboxproeven en gezinsacceptatie blijven afzonderlijk open.",
+          "works": "O1 modulaire installatie en O2 update/herstel technisch afgerond; F1.1 combineert de geleverde kern/werker en bindt het gewone pakket aan dezelfde kern.",
+          "ownerSummary": "O1 modulaire installatie en O2 update/herstel technisch afgerond; F1.1 combineert de geleverde kern/werker en bindt het gewone pakket aan dezelfde kern. Nog open: F1.2 gezamenlijke eindcontrole en computerherstart blijven open. Werkelijke nieuwe Telegram-/inboxproeven en gezinsacceptatie blijven afzonderlijk open.",
           "currentSummary": {
-            "checkedAt": "2026-10-03T14:57:42.246085+00:00",
-            "works": "O1 modulaire installatie en O2 update/herstel zijn technisch afgerond. Nieuwe Eva gebruikt gekozen HA, browser en algemene connector; optionele spraak is gestart. Telegram-/e-mailwiring is meegeleverd.",
-            "gap": "F1: alle geleverde versies samen installeren en eindcontroleren. Werkelijke nieuwe Telegram-/inboxproeven en gezinsacceptatie blijven afzonderlijk open.",
-            "detail": "O1.2 is op zijn oorspronkelijke compositievoorwaarde afgerond na een echte connectoropdracht. Externe bewijsgrenzen en eerdere begeleide correcties blijven zichtbaar; geen claim dat alle gebruiksroutes al beproefd zijn.",
+            "checkedAt": "2026-10-03T16:07:18.537186+00:00",
+            "works": "O1 modulaire installatie en O2 update/herstel technisch afgerond; F1.1 combineert de geleverde kern/werker en bindt het gewone pakket aan dezelfde kern.",
+            "gap": "F1.2 gezamenlijke eindcontrole en computerherstart blijven open. Werkelijke nieuwe Telegram-/inboxproeven en gezinsacceptatie blijven afzonderlijk open.",
+            "detail": "F1.1 eenmaal geïnstalleerd en onafhankelijk GO. Bestaande gegevens en 18 overige diensten behouden. Geen claim dat alle gebruikservaringen opnieuw zijn beproefd.",
             "evidencePaths": [
+              "eva2/evidence/product/f1-integrated-installed-20261003.json",
               "eva2/evidence/product/installer-adaptive-connector-installed-20261003.json",
               "eva2/evidence/product/installer-selected-voice-installed-20261003.json",
               "eva2/evidence/product/installer-selected-email-installed-20261003.json",
@@ -1030,12 +1031,20 @@
           "T3.3 persoonlijke overname en correct doorgaan blijft afzonderlijk open. Zelfstandig browsergebruik vraagt geen tabdeelhandeling; snelheid en verbruik zijn nog ongunstig."
         ],
         "installation": [
-          "O1.2 overige oorspronkelijke opties en echte nieuwe kanaal-/inboxproeven blijven open. Gezamenlijke eindkandidaat en gezinspraktijk zijn nog niet afgerond."
+          "F1.2 gezamenlijke eindcontrole en computerherstart. Werkelijke nieuwe Telegram-/inboxproeven en gezinsacceptatie blijven afzonderlijk open."
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T15:31:02.940717+00:00",
+        "checkedAt": "2026-10-03T16:07:18.537186+00:00",
         "deliveries": [
+          {
+            "title": "F1.1 klaar · geleverde functies samen geïnstalleerd",
+            "date": "3 oktober",
+            "state": "installed",
+            "result": "Dezelfde gecombineerde kern voor hoofdinstallatie en gewoon installatiepakket; achtergrondwerker bevat dezelfde 350 bron-/lockbestanden. Contextverbetering en optionele-modulecorrecties behouden. Eenmaal geïnstalleerd, onafhankelijk installed-GO; 18 overige diensten ongewijzigd.",
+            "remaining": "25/44 oorspronkelijke kleine taken afgerond. F1.2 gezamenlijke eindcontrole en computerherstart, vergelijking en menselijke beoordeling blijven open. Deze integratie is geen extra nieuwe productfunctie.",
+            "source": "eva2/evidence/product/f1-integrated-installed-20261003.json"
+          },
           {
             "title": "O1.2 klaar · modulaire installatie en algemene connector",
             "date": "3 oktober",
@@ -3480,27 +3489,27 @@
           }
         ],
         "now": {
-          "title": "P1.1 · eigen aanmeldingen voor vergelijking",
-          "state": "waiting_owner",
-          "owner": "Jaap / Codex",
-          "detail": "Hermes en OpenClaw wachten op de verse aanmeldingen uit deze chat. Agent Zero-aanmelding is bewaard. R1-vervolgproef is onafhankelijk beoordeeld, maar automatische goedkeuringsreview verlangt expliciete toestemming voor uitvoering. Geen nieuwe modelproef gestart."
+          "title": "F1.1 afgerond · gezamenlijke versie geïnstalleerd",
+          "state": "completed",
+          "owner": "Codex /root",
+          "detail": "Kern, werker en gewoon installatiepakket samengebracht en onafhankelijk gecontroleerd. 25/44 kleine taken afgerond. Geen uitvoerder actief; F1.2 is de eerstvolgende bestaande opdracht."
         },
         "next": {
-          "title": "F1 · geleverde functies samenbrengen",
-          "detail": "Bestaande geïnstalleerde functies en bronversies samenbrengen in de gezamenlijke eindkandidaat; nog niet gestart. De gereedstaande R1-proef wordt alleen na expliciete toestemming uitgevoerd."
+          "title": "F1.2 · gezamenlijke werking en herstart controleren",
+          "detail": "Bestaande eindcontrole gericht op de geïnstalleerde kandidaat uitvoeren, inclusief computerherstart en onafhankelijke beoordeling. Ontbrekende toegang en fysieke/gezinsbeleving afzonderlijk zichtbaar."
         },
         "ownerAction": {
           "title": "Aanmelden en afzonderlijke proefkeuze",
           "steps": [
-            "Voltooi de Hermes- en OpenClaw-aanmelding met de verse codes in deze chat.",
+            "Hermes en OpenClaw zijn zonder bevestigde aanmelding gestopt. Meld wanneer je klaar bent voor verse codes; oude codes niet gebruiken.",
             "Beantwoord afzonderlijk de toestemmingsvraag voor de 8-run innovatieproef."
           ],
           "expected": "Inloggen verleent niet stilzwijgend toestemming voor de vervolgproef. Onafhankelijk productwerk blijft mogelijk."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T15:31:02.940717+00:00"
+        "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
       },
-      "reviewedAt": "2026-10-03T13:08:35.945523+00:00"
+      "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
     },
     "pendingTechnicalReview": {
       "reason": "Historische CO-003-kandidaat van 7 september: het oorspronkelijke bewijs bevat geen commitgebonden definitieve review of livegang. Deze oude kaart wordt daarom niet alsnog afgevinkt. De gebruikersuitkomst is later opgenomen in CO-004/CO-005, live opgeleverd en door Jaap via GE-02 geaccepteerd op 12 september. Het gekozen geheugenonderdeel blijft afgesloten; deze historische registratie is geen actuele bouw- of acceptatieblokkade.",
@@ -6835,359 +6844,18 @@
       "scope": "Technische installatie en remote browserroute; geen fysieke telefoonacceptatie."
     },
     "currentRuntime": {
-      "recordedAt": "2026-09-13T10:24:28.471965+00:00",
-      "image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+      "recordedAt": "2026-10-03T16:07:18.537186+00:00",
+      "image": "sha256:fd1c7cd3413405fd6b1b5ce408f2028cffed8de735a301550663e4c891ee5902",
+      "workerImage": "sha256:30d65117cc0f526bc3ed8859a0eee867ff8fe0943c0bf42c8c09d787c2ca3089",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-      "parentImage": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
-      "sourceOverlays": {
-        "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
-        "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
-        "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
-        "MCP-pagination": "de689de95007c69a93397be022c9f2b2654c0af5",
-        "research-budget-failure": "cecbc88fc5ec19c08c245efb452ada5a14a95b0a",
-        "owner-research-continuation": "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11",
-        "voice-http-replay": "7d2844b1ea507520bb4613947236f3a96e3270b2",
-        "combined-live-adaptation": "7b03f820cd73325348536224d75d45329b0e1505",
-        "delegated-work-adapter-boundary": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
-        "shared-schema-validator": "7d4d1e897f1725a4e61c2b8d026d1d2ed7a00b37",
-        "fresh-initiative-mandate-reader": "5baccfb462843bb0cff8d6e3c4d09f56d4f7c931",
-        "direct-model-attempts": "084cdc822cd9f7b5e88ea99678379949897e46a5",
-        "language-repair-input-guard": "1f1e064e4ab144ceae4464943a36a64698064b0d",
-        "reviewed-runtime-bundle": "702dfc1bfece74db7c222b2086142a5c6e1b1202",
-        "local-stream-closure": "436ec6101cfaa300a21a11ec4773f5d8dff42750",
-        "AU006-prepared-document-project": "1026a819a963fd3f06319e4ae627e49cfa6d277f",
-        "AU006-ordinary-document-actions": "eb511ffda706ae64c27b58ebaa37ea32a3b9248e",
-        "telegram-word-limit": "aa4a0bef19dcd8ab7e68549df95232d5b99a2a37",
-        "AU004-procedure-references": "158f0341570b2d191caf5ab58a93ea939ea40bc8"
-      },
-      "backgroundWorkEnabled": true,
-      "protectedDatabaseHindsightMediaContainersPreserved": true,
-      "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
-      "evidence": "eva2/evidence/living-core/au004-r6-abc-live-pass-20260913.json",
-      "meaning": "Begrensde procedureoplevering en documentgezondheidscontroles technisch afgerond en live. Telegramreparaties, bestaande doelen en bestanden behouden; geen algemene projectvoortgang- of zelfleerclaim.",
-      "releaseSourceCommit": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
-      "canonicalSourceDiffersFromRelease": "Shared source retains held household router/shared voice stream; installed replay-only adaptation is separately reviewed on exact live-image baseline.",
-      "sourceCommit": "436ec6101cfaa300a21a11ec4773f5d8dff42750",
-      "previousRuntime": {
-        "recordedAt": "2026-09-13T04:57:58.968726+00:00",
-        "image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
-        "core": "eva2-managed-b-slot3-core",
-        "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-        "parentImage": "sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd",
-        "sourceOverlays": {
-          "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
-          "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
-          "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
-          "MCP-pagination": "de689de95007c69a93397be022c9f2b2654c0af5",
-          "research-budget-failure": "cecbc88fc5ec19c08c245efb452ada5a14a95b0a",
-          "owner-research-continuation": "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11",
-          "voice-http-replay": "7d2844b1ea507520bb4613947236f3a96e3270b2",
-          "combined-live-adaptation": "7b03f820cd73325348536224d75d45329b0e1505",
-          "delegated-work-adapter-boundary": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
-          "shared-schema-validator": "7d4d1e897f1725a4e61c2b8d026d1d2ed7a00b37",
-          "fresh-initiative-mandate-reader": "5baccfb462843bb0cff8d6e3c4d09f56d4f7c931",
-          "direct-model-attempts": "084cdc822cd9f7b5e88ea99678379949897e46a5",
-          "language-repair-input-guard": "1f1e064e4ab144ceae4464943a36a64698064b0d",
-          "reviewed-runtime-bundle": "702dfc1bfece74db7c222b2086142a5c6e1b1202",
-          "local-stream-closure": "436ec6101cfaa300a21a11ec4773f5d8dff42750",
-          "AU006-prepared-document-project": "1026a819a963fd3f06319e4ae627e49cfa6d277f",
-          "AU006-ordinary-document-actions": "eb511ffda706ae64c27b58ebaa37ea32a3b9248e"
-        },
-        "backgroundWorkEnabled": true,
-        "protectedDatabaseHindsightMediaContainersPreserved": true,
-        "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
-        "evidence": "eva2/evidence/living-core/au006-r2-live-completed-20260913.json",
-        "meaning": "Core met begrensd voorbereid documentproject live; bestaande gedelegeerde worker blijft op832. RPC-eigenaarcorrectie behoudt gatewayguard en endpointpolicy. Geen algemene projectplannerclaim.",
-        "releaseSourceCommit": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
-        "canonicalSourceDiffersFromRelease": "Shared source retains held household router/shared voice stream; installed replay-only adaptation is separately reviewed on exact live-image baseline.",
-        "sourceCommit": "436ec6101cfaa300a21a11ec4773f5d8dff42750",
-        "previousRuntime": {
-          "recordedAt": "2026-09-12T23:49:07.717992+00:00",
-          "image": "sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd",
-          "core": "eva2-managed-b-slot3-core",
-          "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-          "parentImage": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b",
-          "sourceOverlays": {
-            "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
-            "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
-            "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
-            "MCP-pagination": "de689de95007c69a93397be022c9f2b2654c0af5",
-            "research-budget-failure": "cecbc88fc5ec19c08c245efb452ada5a14a95b0a",
-            "owner-research-continuation": "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11",
-            "voice-http-replay": "7d2844b1ea507520bb4613947236f3a96e3270b2",
-            "combined-live-adaptation": "7b03f820cd73325348536224d75d45329b0e1505",
-            "delegated-work-adapter-boundary": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
-            "shared-schema-validator": "7d4d1e897f1725a4e61c2b8d026d1d2ed7a00b37",
-            "fresh-initiative-mandate-reader": "5baccfb462843bb0cff8d6e3c4d09f56d4f7c931",
-            "direct-model-attempts": "084cdc822cd9f7b5e88ea99678379949897e46a5",
-            "language-repair-input-guard": "1f1e064e4ab144ceae4464943a36a64698064b0d",
-            "reviewed-runtime-bundle": "702dfc1bfece74db7c222b2086142a5c6e1b1202",
-            "local-stream-closure": "436ec6101cfaa300a21a11ec4773f5d8dff42750"
-          },
-          "backgroundWorkEnabled": true,
-          "protectedDatabaseHindsightMediaContainersPreserved": true,
-          "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
-          "evidence": "eva2/evidence/architecture/local-stream-live-2026-09-13.json",
-          "meaning": "Actuele runtime met lokale streamafsluitobservatie. De vier gewijzigde streambestanden zijn canonical-bytegelijk; reader-provenance en eerder apart gehouden household-scope zijn niet mee uitgerold.",
-          "releaseSourceCommit": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
-          "canonicalSourceDiffersFromRelease": "Shared source retains held household router/shared voice stream; installed replay-only adaptation is separately reviewed on exact live-image baseline.",
-          "sourceCommit": "436ec6101cfaa300a21a11ec4773f5d8dff42750",
-          "previousRuntime": {
-            "recordedAt": "2026-09-12T22:50:15.918879+00:00",
-            "image": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b",
-            "core": "eva2-managed-b-slot3-core",
-            "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-            "parentImage": "sha256:c992b0c3bf4977a101a813d6ee11d82d8821b76279e8dc5a71ced09d72426c79",
-            "sourceOverlays": {
-              "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
-              "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
-              "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
-              "MCP-pagination": "de689de95007c69a93397be022c9f2b2654c0af5",
-              "research-budget-failure": "cecbc88fc5ec19c08c245efb452ada5a14a95b0a",
-              "owner-research-continuation": "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11",
-              "voice-http-replay": "7d2844b1ea507520bb4613947236f3a96e3270b2",
-              "combined-live-adaptation": "7b03f820cd73325348536224d75d45329b0e1505",
-              "delegated-work-adapter-boundary": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
-              "shared-schema-validator": "7d4d1e897f1725a4e61c2b8d026d1d2ed7a00b37",
-              "fresh-initiative-mandate-reader": "5baccfb462843bb0cff8d6e3c4d09f56d4f7c931",
-              "direct-model-attempts": "084cdc822cd9f7b5e88ea99678379949897e46a5",
-              "language-repair-input-guard": "1f1e064e4ab144ceae4464943a36a64698064b0d",
-              "reviewed-runtime-bundle": "702dfc1bfece74db7c222b2086142a5c6e1b1202"
-            },
-            "backgroundWorkEnabled": true,
-            "protectedDatabaseHindsightMediaContainersPreserved": true,
-            "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
-            "evidence": "eva2/evidence/architecture/reviewed-runtime-bundle-live-2026-09-13.json",
-            "meaning": "Actuele gecombineerde runtime. Zes gewijzigde bronbestanden zijn canonical-bytegelijk; runtime.py behoudt uitsluitend het bekende verschil van niet-uitgerolde household-routerinstallatie. Oudere bewijzen blijven historisch gebonden.",
-            "releaseSourceCommit": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
-            "canonicalSourceDiffersFromRelease": "Shared source retains held household router/shared voice stream; installed replay-only adaptation is separately reviewed on exact live-image baseline.",
-            "sourceCommit": "702dfc1bfece74db7c222b2086142a5c6e1b1202",
-            "previousRuntime": {
-              "recordedAt": "2026-09-12T21:44:39.360262+00:00",
-              "image": "sha256:c992b0c3bf4977a101a813d6ee11d82d8821b76279e8dc5a71ced09d72426c79",
-              "core": "eva2-managed-b-slot3-core",
-              "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-              "parentImage": "sha256:e1bb281cc772ab7a2f6ce747dce6a9ccec382ff357f5583e47882997a337217f",
-              "sourceOverlays": {
-                "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
-                "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
-                "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
-                "MCP-pagination": "de689de95007c69a93397be022c9f2b2654c0af5",
-                "research-budget-failure": "cecbc88fc5ec19c08c245efb452ada5a14a95b0a",
-                "owner-research-continuation": "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11",
-                "voice-http-replay": "7d2844b1ea507520bb4613947236f3a96e3270b2",
-                "combined-live-adaptation": "7b03f820cd73325348536224d75d45329b0e1505",
-                "delegated-work-adapter-boundary": "e7194d2566e7c40aa0cfeccf9098816b907fc118"
-              },
-              "backgroundWorkEnabled": true,
-              "protectedDatabaseHindsightMediaContainersPreserved": true,
-              "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
-              "evidence": "eva2/evidence/architecture/adapter-boundaries-live-2026-09-12.json",
-              "meaning": "Actuele gecombineerde runtime; oudere geheugen- en voicebewijzen behouden hun eigen historische imagebinding.",
-              "previousRuntime": {
-                "recordedAt": "2026-09-12T21:07:48.830691+00:00",
-                "image": "sha256:e1bb281cc772ab7a2f6ce747dce6a9ccec382ff357f5583e47882997a337217f",
-                "core": "eva2-managed-b-slot3-core",
-                "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-                "parentImage": "sha256:df675dc82f38ff386fdf9cb87062e78f9ba8231f7f277472c2bd53f1a734d072",
-                "sourceOverlays": {
-                  "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
-                  "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
-                  "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
-                  "MCP-pagination": "de689de95007c69a93397be022c9f2b2654c0af5",
-                  "research-budget-failure": "cecbc88fc5ec19c08c245efb452ada5a14a95b0a",
-                  "owner-research-continuation": "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11",
-                  "voice-http-replay": "7d2844b1ea507520bb4613947236f3a96e3270b2",
-                  "combined-live-adaptation": "7b03f820cd73325348536224d75d45329b0e1505"
-                },
-                "backgroundWorkEnabled": true,
-                "protectedDatabaseHindsightMediaContainersPreserved": true,
-                "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
-                "evidence": "eva2/evidence/product/Research-voice-combined-live-2026-09-12.json",
-                "meaning": "Actuele gecombineerde runtime; oudere geheugen- en voicebewijzen behouden hun eigen historische imagebinding.",
-                "previousRuntime": {
-                  "recordedAt": "2026-09-12T20:10:23.774735+00:00",
-                  "image": "sha256:df675dc82f38ff386fdf9cb87062e78f9ba8231f7f277472c2bd53f1a734d072",
-                  "core": "eva2-managed-b-slot3-core",
-                  "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-                  "parentImage": "sha256:d2d58938ef58ce19bdfcd16aea745ae3d743cc409169db21e230c379ddc43081",
-                  "sourceOverlays": {
-                    "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
-                    "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
-                    "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
-                    "MCP-pagination": "de689de95007c69a93397be022c9f2b2654c0af5",
-                    "research-budget-failure": "cecbc88fc5ec19c08c245efb452ada5a14a95b0a"
-                  },
-                  "backgroundWorkEnabled": true,
-                  "protectedDatabaseHindsightMediaContainersPreserved": true,
-                  "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
-                  "evidence": "eva2/evidence/product/Research-budget-failure-live-2026-09-12.json",
-                  "meaning": "Actuele gecombineerde runtime; oudere geheugen- en voicebewijzen behouden hun eigen historische imagebinding.",
-                  "previousRuntime": {
-                    "recordedAt": "2026-09-12T19:22:20.805379+00:00",
-                    "image": "sha256:d2d58938ef58ce19bdfcd16aea745ae3d743cc409169db21e230c379ddc43081",
-                    "core": "eva2-managed-b-slot3-core",
-                    "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-                    "parentImage": "sha256:542597c376ef56c7a9aac49184ac7991b811f4b1c2b17e735844ce4af9719229",
-                    "sourceOverlays": {
-                      "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
-                      "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
-                      "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
-                      "MCP-pagination": "de689de95007c69a93397be022c9f2b2654c0af5"
-                    },
-                    "backgroundWorkEnabled": true,
-                    "protectedDatabaseHindsightMediaContainersPreserved": true,
-                    "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
-                    "evidence": "eva2/evidence/product/MCP-catalog-pagination-live-2026-09-12.json",
-                    "meaning": "Actuele gecombineerde runtime; oudere geheugen- en voicebewijzen behouden hun eigen historische imagebinding.",
-                    "previousRuntime": {
-                      "recordedAt": "2026-09-12T18:41:14.229347+00:00",
-                      "image": "sha256:542597c376ef56c7a9aac49184ac7991b811f4b1c2b17e735844ce4af9719229",
-                      "core": "eva2-managed-b-slot3-core",
-                      "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-                      "parentImage": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
-                      "sourceOverlays": {
-                        "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
-                        "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
-                        "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401"
-                      },
-                      "backgroundWorkEnabled": true,
-                      "protectedDatabaseHindsightMediaContainersPreserved": true,
-                      "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
-                      "evidence": "eva2/evidence/product/AU-002-concurrent-stop-live-2026-09-12.json",
-                      "meaning": "Actuele gecombineerde runtime; oudere geheugen- en voicebewijzen behouden hun eigen historische imagebinding.",
-                      "previousRuntime": {
-                        "recordedAt": "2026-09-12T16:52:54Z",
-                        "image": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
-                        "core": "eva2-managed-b-slot3-core",
-                        "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-                        "parentImage": "sha256:bfb0d25abb7f4a1247d376050fdfd7b606e3a3285dcd19b9ee6831d3297b046d",
-                        "sourceOverlays": {
-                          "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
-                          "AU-002": "30905cf101599f075759d5980bb816dd246f822c"
-                        },
-                        "backgroundWorkEnabled": true,
-                        "protectedDatabaseHindsightMediaContainersPreserved": true,
-                        "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
-                        "evidence": "eva2/evidence/product/AU-008-current-review-delivery-2026-09-12.json",
-                        "meaning": "Actuele gecombineerde runtime; oudere geheugen- en voicebewijzen behouden hun eigen historische imagebinding."
-                      }
-                    }
-                  }
-                },
-                "releaseSourceCommit": "7b03f820cd73325348536224d75d45329b0e1505",
-                "canonicalSourceDiffersFromRelease": "Shared source retains held household router/shared voice stream; installed replay-only adaptation is separately reviewed on exact live-image baseline."
-              },
-              "releaseSourceCommit": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
-              "canonicalSourceDiffersFromRelease": "Shared source retains held household router/shared voice stream; installed replay-only adaptation is separately reviewed on exact live-image baseline."
-            }
-          }
-        },
-        "coreImage": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
-        "coreContainerId": "35a5d34ca3a958ee86c863e603813f7eb520808a4aaebc5bb1dc318cef965b2d",
-        "coreStartedAt": "2026-09-13T04:52:24.511441607Z",
-        "workerImage": "sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd",
-        "documentWorker": {
-          "name": "/eva2-document-goal-worker-au006",
-          "id": "818413ea341b9f45a9e9281e2c7fddbb96b21641bd4f8479690c126386c48c33",
-          "image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
-          "started_at": "2026-09-13T04:52:34.261689259Z",
-          "running": true
-        },
-        "documentProvider": {
-          "name": "/eva2-document-workspace-au006",
-          "id": "bb4f83eded83a7f2df82045658a73d4f210e6a41c354a0a73a390dd56cecaac6",
-          "image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
-          "started_at": "2026-09-13T04:52:13.612799665Z",
-          "running": true
-        },
-        "documentCoreOverride": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-core.override.compose.json",
-        "latestIndependentRestorationReview": {
-          "evidencePath": "eva2/evidence/product/AU-004-current-restoration-review-2026-09-13.json",
-          "coreImage": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
-          "coreContainerId": "38e2495a66498099bf53735c8657eea0315aff2a26691fe02be2dad020b169e5",
-          "ready": true,
-          "scope": "Current state after failed AU004 installation; distinct from original failed rollback receipt."
-        }
-      },
-      "coreImage": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
-      "workerImage": "sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd",
-      "documentWorker": {
-        "name": "eva2-document-goal-worker-au006",
-        "id": "1329566f565d386a735e018f984b584c012a3bc7fb5e9bf6f6da02910c3915c5",
-        "image": "sha256:1d0a704d32255bc7630c8670d8137d6d6c2a7c76e4533f5186c8f79613205fa0",
-        "started_at": "2026-09-13T10:59:50.90140435Z",
-        "running": true,
-        "health": "healthy",
-        "healthEvidence": "eva2/evidence/living-core/document-health-r2-live-20260913.json"
-      },
-      "documentProvider": {
-        "name": "eva2-document-workspace-au006",
-        "id": "77bced2a4c0d56bbad44031581eaf9f064f55949ae43d2af02c998ed400473b6",
-        "image": "sha256:ba9eda41299033a19e25c483e07e973b40545b226b062da6a29ccb70482f1b5e",
-        "started_at": "2026-09-13T10:59:50.89674576Z",
-        "running": true,
-        "health": "healthy",
-        "healthEvidence": "eva2/evidence/living-core/document-health-r2-live-20260913.json"
-      },
-      "documentCoreOverride": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-core.override.compose.json",
-      "latestIndependentRestorationReview": {
-        "evidencePath": "eva2/evidence/product/AU-004-current-restoration-review-2026-09-13.json",
-        "coreImage": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
-        "coreContainerId": "38e2495a66498099bf53735c8657eea0315aff2a26691fe02be2dad020b169e5",
-        "ready": true,
-        "scope": "Current state after failed AU004 installation; distinct from original failed rollback receipt."
-      },
-      "containerIdentityStatus": "Independently verified current R6 core",
-      "coreContainerId": "38608cb8adc2886354f3594c2d99520c6b14375bd7e33bdeee5943a62c8c5105",
-      "telegramCoreOverride": "/home/administrator/project/.eva2-artifacts/telegram-recovery-20260913/core-reply-fix.compose.json",
-      "latestWriterRollbackEvidence": "eva2/evidence/living-core/au004-r3-a-failed-source-call-visibility-20260913.json",
-      "previousCoreBeforeProcedureDelivery": {
-        "image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
-        "coreImage": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
-        "coreContainerId": "a98fd8455e8ac81e3307d908e2bb3b8c73c073dfd77f40c5e7bf06863073784a",
-        "evidence": "eva2/evidence/living-core/telegram-recovery-live-receipt-20260913.json",
-        "recordedAt": "2026-09-13T08:21:16.540204+00:00"
-      },
-      "latestIndependentLiveEvidence": "eva2/evidence/product/AU-004-r6-outcome-independent-review-2026-09-13.json",
-      "nextParentAuthority": {
-        "evidencePath": "eva2/evidence/living-core/document-health-r2-live-20260913.json",
-        "authoritySha256": "294e719ec1ddb376c0eb5bab9d48d93027f738c3091cb6f3ce60d7fa76524533",
-        "image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
-        "documentWorkerImage": "sha256:1d0a704d32255bc7630c8670d8137d6d6c2a7c76e4533f5186c8f79613205fa0",
-        "documentProviderImage": "sha256:ba9eda41299033a19e25c483e07e973b40545b226b062da6a29ccb70482f1b5e",
-        "healthOverride": "eva2/deploy/living-core/document-health.compose.json",
-        "procedureOptInRequired": true,
-        "keepCompleteComposeAndProtectedServices": true,
-        "olderR6ProtectedSnapshotHistorical": true,
-        "fallbackScope": "Historical R6bc6 fallback is not the default baseline for future changes"
-      },
-      "historicalDocumentServicesBeforeHealth": {
-        "worker": {
-          "name": "/eva2-document-goal-worker-au006",
-          "id": "818413ea341b9f45a9e9281e2c7fddbb96b21641bd4f8479690c126386c48c33",
-          "image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
-          "started_at": "2026-09-13T04:52:34.261689259Z",
-          "running": true
-        },
-        "provider": {
-          "name": "/eva2-document-workspace-au006",
-          "id": "bb4f83eded83a7f2df82045658a73d4f210e6a41c354a0a73a390dd56cecaac6",
-          "image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
-          "started_at": "2026-09-13T04:52:13.612799665Z",
-          "running": true
-        },
-        "authority": {
-          "evidencePath": "eva2/evidence/living-core/au004-r6-runtime-handoff-20260913.json",
-          "authoritySha256": "5955fbe1253e23f3cae1c3a7296698862d1ca9488b541be76e636ceaf40039ba",
-          "image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
-          "procedureOptInRequired": true,
-          "keepCompleteComposeAndProtectedServices": true,
-          "fallbackScope": "bc6 only as reviewed R6 rollback; not future default"
-        }
-      },
-      "documentHealthEvidence": "eva2/evidence/product/document-health-r2-live-independent-2026-09-13.json"
+      "sourceBase": "8ab4701a5d89c25a55ecf5d153f68e6a33179f79",
+      "composedSourceIdentity": true,
+      "repositoryHeadFullyInstalled": false,
+      "retainedRepositoryVariants": 26,
+      "sameRuntimeSourceItems": 350,
+      "evidence": "eva2/evidence/product/f1-integrated-installed-20261003.json",
+      "meaning": "F1.1 combined installation; F1.2 and real owner/comparison acceptance remain open."
     },
     "chromeTransportRecovery20260912": {
       "status": "technically_tested_and_live",
@@ -16242,36 +15910,38 @@
             {
               "id": "P1.1",
               "title": "Vergelijkbare versies en toegang vastleggen",
-              "status": "in_progress",
+              "status": "blocked",
               "kind": "voorbereiden",
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Eigenaar biedt nu accountaanmelding. Daarna native status en catalogus controleren; gelijkwaardige model-/toolvoorwaarden en de volledige vergelijking blijven afzonderlijk open.",
+              "remaining": "Native aanmelding ontbreekt nog voor Hermes en OpenClaw. Gelijke model-/toolvoorwaarden en de volledige vergelijking blijven afzonderlijk open.",
               "latestEvidence": "eva2/evidence/product/p1-native-auth-status-20261001.json",
               "assignment": {
                 "owner": "Codex /root",
                 "support": "/root/background_execution_seam",
-                "stage": "two_native_device_logins_waiting_for_owner",
+                "stage": "native_logins_ended_owner_readiness_pending",
                 "baseCommit": "523d5bc0",
-                "currentAction": "Both independently owned native login flows active; user has verification URL and two separate codes. No credentials copied or inference requests.",
+                "currentAction": "Both separate native logins ended without confirmed authentication. Prior codes are inactive; no automatic retry. Saved Agent Zero own session retained.",
                 "runtimeHandle": {
                   "hermesExecSession": 63638,
-                  "openclawPid": 2534685
+                  "hermesExitCode": 1,
+                  "hermesState": "native_login_failed_AuthError",
+                  "openclawPid": 2534685,
+                  "openclawState": "process_ended_native_status_not_logged_in"
                 },
                 "estimate": "Two native auth flows plus read-only confirmation; no model generation, credit cost unknown."
               },
-              "blocker": "Hermes en OpenClaw eigen device-login actief; Jaap bevestigt via de verse codes in deze chat. Agent Zero eigen aanmelding bewaard.",
+              "blocker": "Beide eigen inlogpogingen zijn gestopt zonder bevestigde aanmelding. Oude codes zijn niet meer bruikbaar; een verse flow volgt wanneer Jaap klaarstaat.",
               "nextImplementation": "Use these owned persisted configurations for native startup after own authentication. No repeated config/catalog probe without a changed cause or new evidence. Prior Agent Zero helper-envelope refusal remains unavailable; no hidden helper disable, auth-token copying or quota increase.",
-              "checkedAt": "2026-10-03T15:31:02.940717+00:00",
+              "checkedAt": "2026-10-03T15:59:33.934722+00:00",
               "ownerActionRequired": true,
               "nextAction": "Codex gebruikt bestaande vergelijkingsvoorbereiding; Jaap levert alleen daadwerkelijk ontbrekende accounttoegang. Dit blokkeert uitsluitend die vergelijking, niet Eva’s eigen functionele uitvoering.",
               "ownerInstructions": {
                 "availableNow": true,
-                "readyWhen": "Eigenaar heeft de verse aanmeldlink en code in deze chat ontvangen.",
+                "readyWhen": "Jaap is klaar voor een verse afzonderlijke aanmelding.",
                 "steps": [
-                  "Voltooi de Hermes-aanmelding uit deze chat.",
-                  "Voltooi daarna de aparte OpenClaw-aanmelding zodra die klaarstaat."
+                  "Meld wanneer je klaar bent voor nieuwe Hermes- en OpenClaw-codes; de oude codes zijn niet meer bruikbaar."
                 ],
                 "blocksIndependentWork": false
               }
@@ -16418,7 +16088,7 @@
           ],
           "outcome": "Geintegreerde eindkandidaat",
           "effort": "M",
-          "status": "planned",
+          "status": "in_progress",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Managed installation, provenance, rollback and component checks already used.",
@@ -16438,18 +16108,37 @@
             {
               "id": "F1.1",
               "title": "Eén eindkandidaat samenstellen",
-              "status": "planned",
+              "status": "completed",
               "kind": "opleveren",
               "doneWhen": "Alle verplichte afgeronde functies in één geïnstalleerde, herleidbare versie.",
-              "owner": "Codex",
-              "nextAction": "Codex levert de bestaande functies samen geïnstalleerd op; eigen programmeren en initiatief worden beoordeeld op echte uitvoering door Eva, niet op handwerk van Codex.",
+              "owner": "Codex /root",
+              "nextAction": "Geen zelfstandig werk meer binnen F1.1. Volgende bestaande taak: F1.2 gezamenlijke eindcontrole en computerherstart.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "checkedAt": "2026-10-03T16:07:18.537186+00:00",
+              "assignment": {
+                "baseCommit": "8ab4701a",
+                "stage": "installed_independent_go",
+                "owner": "/root/background_execution_seam",
+                "reviewer": "/root/aide_final_evaluation",
+                "existing": "Main core730524/worker0b1375 include installed L3 context improvement; ordinary installer f7a6d902 includes optional-module/MCP fixes. Existing locks, data and working functions remain.",
+                "gap": "Completed changes are not yet one coherent runtime/package version.",
+                "files": [
+                  "private combined-image build context",
+                  "existing installer package manifest and exact source files"
+                ],
+                "currentAction": "Completed; no executor active. Installed core/worker and ordinary package share the composed candidate. F1.2 not yet started.",
+                "finish": "Alle verplichte afgeronde functies in één geïnstalleerde, herleidbare versie.",
+                "estimate": "One combined image/package delivery with focused changed-interface checks and independent review. No model calls during preparation; credits unknown."
+              },
+              "completedAt": "2026-10-03T16:07:18.537186+00:00",
+              "latestEvidence": "eva2/evidence/product/f1-integrated-installed-20261003.json",
+              "result": "Gecombineerde kern en werker eenmaal geïnstalleerd; beide gezond met dezelfde 350 bron-/lockitems. Gewoon installatiepakket aan dezelfde kern gebonden. Onafhankelijke installed-GO. F1.2, vergelijking en menselijke acceptatie blijven open."
             },
             {
               "id": "F1.2",
@@ -16478,7 +16167,8 @@
               "F1.2"
             ],
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
-          }
+          },
+          "reviewer": "/root/aide_final_evaluation"
         },
         {
           "id": "F2",
@@ -16564,7 +16254,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "O1",
+      "activeSliceId": "F1",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
@@ -17664,6 +17354,361 @@
       "installations": 0,
       "featureCompletionChanged": false,
       "decisionReceipt": "eva2/evidence/product/b0-platform-20260928.json"
+    },
+    "runtimeHistory20260913": {
+      "recordedAt": "2026-09-13T10:24:28.471965+00:00",
+      "image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+      "core": "eva2-managed-b-slot3-core",
+      "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "parentImage": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+      "sourceOverlays": {
+        "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
+        "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
+        "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
+        "MCP-pagination": "de689de95007c69a93397be022c9f2b2654c0af5",
+        "research-budget-failure": "cecbc88fc5ec19c08c245efb452ada5a14a95b0a",
+        "owner-research-continuation": "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11",
+        "voice-http-replay": "7d2844b1ea507520bb4613947236f3a96e3270b2",
+        "combined-live-adaptation": "7b03f820cd73325348536224d75d45329b0e1505",
+        "delegated-work-adapter-boundary": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
+        "shared-schema-validator": "7d4d1e897f1725a4e61c2b8d026d1d2ed7a00b37",
+        "fresh-initiative-mandate-reader": "5baccfb462843bb0cff8d6e3c4d09f56d4f7c931",
+        "direct-model-attempts": "084cdc822cd9f7b5e88ea99678379949897e46a5",
+        "language-repair-input-guard": "1f1e064e4ab144ceae4464943a36a64698064b0d",
+        "reviewed-runtime-bundle": "702dfc1bfece74db7c222b2086142a5c6e1b1202",
+        "local-stream-closure": "436ec6101cfaa300a21a11ec4773f5d8dff42750",
+        "AU006-prepared-document-project": "1026a819a963fd3f06319e4ae627e49cfa6d277f",
+        "AU006-ordinary-document-actions": "eb511ffda706ae64c27b58ebaa37ea32a3b9248e",
+        "telegram-word-limit": "aa4a0bef19dcd8ab7e68549df95232d5b99a2a37",
+        "AU004-procedure-references": "158f0341570b2d191caf5ab58a93ea939ea40bc8"
+      },
+      "backgroundWorkEnabled": true,
+      "protectedDatabaseHindsightMediaContainersPreserved": true,
+      "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+      "evidence": "eva2/evidence/living-core/au004-r6-abc-live-pass-20260913.json",
+      "meaning": "Begrensde procedureoplevering en documentgezondheidscontroles technisch afgerond en live. Telegramreparaties, bestaande doelen en bestanden behouden; geen algemene projectvoortgang- of zelfleerclaim.",
+      "releaseSourceCommit": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
+      "canonicalSourceDiffersFromRelease": "Shared source retains held household router/shared voice stream; installed replay-only adaptation is separately reviewed on exact live-image baseline.",
+      "sourceCommit": "436ec6101cfaa300a21a11ec4773f5d8dff42750",
+      "previousRuntime": {
+        "recordedAt": "2026-09-13T04:57:58.968726+00:00",
+        "image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+        "core": "eva2-managed-b-slot3-core",
+        "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "parentImage": "sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd",
+        "sourceOverlays": {
+          "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
+          "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
+          "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
+          "MCP-pagination": "de689de95007c69a93397be022c9f2b2654c0af5",
+          "research-budget-failure": "cecbc88fc5ec19c08c245efb452ada5a14a95b0a",
+          "owner-research-continuation": "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11",
+          "voice-http-replay": "7d2844b1ea507520bb4613947236f3a96e3270b2",
+          "combined-live-adaptation": "7b03f820cd73325348536224d75d45329b0e1505",
+          "delegated-work-adapter-boundary": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
+          "shared-schema-validator": "7d4d1e897f1725a4e61c2b8d026d1d2ed7a00b37",
+          "fresh-initiative-mandate-reader": "5baccfb462843bb0cff8d6e3c4d09f56d4f7c931",
+          "direct-model-attempts": "084cdc822cd9f7b5e88ea99678379949897e46a5",
+          "language-repair-input-guard": "1f1e064e4ab144ceae4464943a36a64698064b0d",
+          "reviewed-runtime-bundle": "702dfc1bfece74db7c222b2086142a5c6e1b1202",
+          "local-stream-closure": "436ec6101cfaa300a21a11ec4773f5d8dff42750",
+          "AU006-prepared-document-project": "1026a819a963fd3f06319e4ae627e49cfa6d277f",
+          "AU006-ordinary-document-actions": "eb511ffda706ae64c27b58ebaa37ea32a3b9248e"
+        },
+        "backgroundWorkEnabled": true,
+        "protectedDatabaseHindsightMediaContainersPreserved": true,
+        "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+        "evidence": "eva2/evidence/living-core/au006-r2-live-completed-20260913.json",
+        "meaning": "Core met begrensd voorbereid documentproject live; bestaande gedelegeerde worker blijft op832. RPC-eigenaarcorrectie behoudt gatewayguard en endpointpolicy. Geen algemene projectplannerclaim.",
+        "releaseSourceCommit": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
+        "canonicalSourceDiffersFromRelease": "Shared source retains held household router/shared voice stream; installed replay-only adaptation is separately reviewed on exact live-image baseline.",
+        "sourceCommit": "436ec6101cfaa300a21a11ec4773f5d8dff42750",
+        "previousRuntime": {
+          "recordedAt": "2026-09-12T23:49:07.717992+00:00",
+          "image": "sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd",
+          "core": "eva2-managed-b-slot3-core",
+          "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "parentImage": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b",
+          "sourceOverlays": {
+            "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
+            "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
+            "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
+            "MCP-pagination": "de689de95007c69a93397be022c9f2b2654c0af5",
+            "research-budget-failure": "cecbc88fc5ec19c08c245efb452ada5a14a95b0a",
+            "owner-research-continuation": "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11",
+            "voice-http-replay": "7d2844b1ea507520bb4613947236f3a96e3270b2",
+            "combined-live-adaptation": "7b03f820cd73325348536224d75d45329b0e1505",
+            "delegated-work-adapter-boundary": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
+            "shared-schema-validator": "7d4d1e897f1725a4e61c2b8d026d1d2ed7a00b37",
+            "fresh-initiative-mandate-reader": "5baccfb462843bb0cff8d6e3c4d09f56d4f7c931",
+            "direct-model-attempts": "084cdc822cd9f7b5e88ea99678379949897e46a5",
+            "language-repair-input-guard": "1f1e064e4ab144ceae4464943a36a64698064b0d",
+            "reviewed-runtime-bundle": "702dfc1bfece74db7c222b2086142a5c6e1b1202",
+            "local-stream-closure": "436ec6101cfaa300a21a11ec4773f5d8dff42750"
+          },
+          "backgroundWorkEnabled": true,
+          "protectedDatabaseHindsightMediaContainersPreserved": true,
+          "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+          "evidence": "eva2/evidence/architecture/local-stream-live-2026-09-13.json",
+          "meaning": "Actuele runtime met lokale streamafsluitobservatie. De vier gewijzigde streambestanden zijn canonical-bytegelijk; reader-provenance en eerder apart gehouden household-scope zijn niet mee uitgerold.",
+          "releaseSourceCommit": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
+          "canonicalSourceDiffersFromRelease": "Shared source retains held household router/shared voice stream; installed replay-only adaptation is separately reviewed on exact live-image baseline.",
+          "sourceCommit": "436ec6101cfaa300a21a11ec4773f5d8dff42750",
+          "previousRuntime": {
+            "recordedAt": "2026-09-12T22:50:15.918879+00:00",
+            "image": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b",
+            "core": "eva2-managed-b-slot3-core",
+            "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+            "parentImage": "sha256:c992b0c3bf4977a101a813d6ee11d82d8821b76279e8dc5a71ced09d72426c79",
+            "sourceOverlays": {
+              "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
+              "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
+              "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
+              "MCP-pagination": "de689de95007c69a93397be022c9f2b2654c0af5",
+              "research-budget-failure": "cecbc88fc5ec19c08c245efb452ada5a14a95b0a",
+              "owner-research-continuation": "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11",
+              "voice-http-replay": "7d2844b1ea507520bb4613947236f3a96e3270b2",
+              "combined-live-adaptation": "7b03f820cd73325348536224d75d45329b0e1505",
+              "delegated-work-adapter-boundary": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
+              "shared-schema-validator": "7d4d1e897f1725a4e61c2b8d026d1d2ed7a00b37",
+              "fresh-initiative-mandate-reader": "5baccfb462843bb0cff8d6e3c4d09f56d4f7c931",
+              "direct-model-attempts": "084cdc822cd9f7b5e88ea99678379949897e46a5",
+              "language-repair-input-guard": "1f1e064e4ab144ceae4464943a36a64698064b0d",
+              "reviewed-runtime-bundle": "702dfc1bfece74db7c222b2086142a5c6e1b1202"
+            },
+            "backgroundWorkEnabled": true,
+            "protectedDatabaseHindsightMediaContainersPreserved": true,
+            "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+            "evidence": "eva2/evidence/architecture/reviewed-runtime-bundle-live-2026-09-13.json",
+            "meaning": "Actuele gecombineerde runtime. Zes gewijzigde bronbestanden zijn canonical-bytegelijk; runtime.py behoudt uitsluitend het bekende verschil van niet-uitgerolde household-routerinstallatie. Oudere bewijzen blijven historisch gebonden.",
+            "releaseSourceCommit": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
+            "canonicalSourceDiffersFromRelease": "Shared source retains held household router/shared voice stream; installed replay-only adaptation is separately reviewed on exact live-image baseline.",
+            "sourceCommit": "702dfc1bfece74db7c222b2086142a5c6e1b1202",
+            "previousRuntime": {
+              "recordedAt": "2026-09-12T21:44:39.360262+00:00",
+              "image": "sha256:c992b0c3bf4977a101a813d6ee11d82d8821b76279e8dc5a71ced09d72426c79",
+              "core": "eva2-managed-b-slot3-core",
+              "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+              "parentImage": "sha256:e1bb281cc772ab7a2f6ce747dce6a9ccec382ff357f5583e47882997a337217f",
+              "sourceOverlays": {
+                "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
+                "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
+                "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
+                "MCP-pagination": "de689de95007c69a93397be022c9f2b2654c0af5",
+                "research-budget-failure": "cecbc88fc5ec19c08c245efb452ada5a14a95b0a",
+                "owner-research-continuation": "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11",
+                "voice-http-replay": "7d2844b1ea507520bb4613947236f3a96e3270b2",
+                "combined-live-adaptation": "7b03f820cd73325348536224d75d45329b0e1505",
+                "delegated-work-adapter-boundary": "e7194d2566e7c40aa0cfeccf9098816b907fc118"
+              },
+              "backgroundWorkEnabled": true,
+              "protectedDatabaseHindsightMediaContainersPreserved": true,
+              "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+              "evidence": "eva2/evidence/architecture/adapter-boundaries-live-2026-09-12.json",
+              "meaning": "Actuele gecombineerde runtime; oudere geheugen- en voicebewijzen behouden hun eigen historische imagebinding.",
+              "previousRuntime": {
+                "recordedAt": "2026-09-12T21:07:48.830691+00:00",
+                "image": "sha256:e1bb281cc772ab7a2f6ce747dce6a9ccec382ff357f5583e47882997a337217f",
+                "core": "eva2-managed-b-slot3-core",
+                "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+                "parentImage": "sha256:df675dc82f38ff386fdf9cb87062e78f9ba8231f7f277472c2bd53f1a734d072",
+                "sourceOverlays": {
+                  "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
+                  "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
+                  "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
+                  "MCP-pagination": "de689de95007c69a93397be022c9f2b2654c0af5",
+                  "research-budget-failure": "cecbc88fc5ec19c08c245efb452ada5a14a95b0a",
+                  "owner-research-continuation": "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11",
+                  "voice-http-replay": "7d2844b1ea507520bb4613947236f3a96e3270b2",
+                  "combined-live-adaptation": "7b03f820cd73325348536224d75d45329b0e1505"
+                },
+                "backgroundWorkEnabled": true,
+                "protectedDatabaseHindsightMediaContainersPreserved": true,
+                "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+                "evidence": "eva2/evidence/product/Research-voice-combined-live-2026-09-12.json",
+                "meaning": "Actuele gecombineerde runtime; oudere geheugen- en voicebewijzen behouden hun eigen historische imagebinding.",
+                "previousRuntime": {
+                  "recordedAt": "2026-09-12T20:10:23.774735+00:00",
+                  "image": "sha256:df675dc82f38ff386fdf9cb87062e78f9ba8231f7f277472c2bd53f1a734d072",
+                  "core": "eva2-managed-b-slot3-core",
+                  "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+                  "parentImage": "sha256:d2d58938ef58ce19bdfcd16aea745ae3d743cc409169db21e230c379ddc43081",
+                  "sourceOverlays": {
+                    "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
+                    "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
+                    "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
+                    "MCP-pagination": "de689de95007c69a93397be022c9f2b2654c0af5",
+                    "research-budget-failure": "cecbc88fc5ec19c08c245efb452ada5a14a95b0a"
+                  },
+                  "backgroundWorkEnabled": true,
+                  "protectedDatabaseHindsightMediaContainersPreserved": true,
+                  "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+                  "evidence": "eva2/evidence/product/Research-budget-failure-live-2026-09-12.json",
+                  "meaning": "Actuele gecombineerde runtime; oudere geheugen- en voicebewijzen behouden hun eigen historische imagebinding.",
+                  "previousRuntime": {
+                    "recordedAt": "2026-09-12T19:22:20.805379+00:00",
+                    "image": "sha256:d2d58938ef58ce19bdfcd16aea745ae3d743cc409169db21e230c379ddc43081",
+                    "core": "eva2-managed-b-slot3-core",
+                    "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+                    "parentImage": "sha256:542597c376ef56c7a9aac49184ac7991b811f4b1c2b17e735844ce4af9719229",
+                    "sourceOverlays": {
+                      "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
+                      "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
+                      "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
+                      "MCP-pagination": "de689de95007c69a93397be022c9f2b2654c0af5"
+                    },
+                    "backgroundWorkEnabled": true,
+                    "protectedDatabaseHindsightMediaContainersPreserved": true,
+                    "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+                    "evidence": "eva2/evidence/product/MCP-catalog-pagination-live-2026-09-12.json",
+                    "meaning": "Actuele gecombineerde runtime; oudere geheugen- en voicebewijzen behouden hun eigen historische imagebinding.",
+                    "previousRuntime": {
+                      "recordedAt": "2026-09-12T18:41:14.229347+00:00",
+                      "image": "sha256:542597c376ef56c7a9aac49184ac7991b811f4b1c2b17e735844ce4af9719229",
+                      "core": "eva2-managed-b-slot3-core",
+                      "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+                      "parentImage": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
+                      "sourceOverlays": {
+                        "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
+                        "AU-002": "30905cf101599f075759d5980bb816dd246f822c",
+                        "AU-002-timing": "2eb1bfdb75284187f52fdca3a82b5d1b19232401"
+                      },
+                      "backgroundWorkEnabled": true,
+                      "protectedDatabaseHindsightMediaContainersPreserved": true,
+                      "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+                      "evidence": "eva2/evidence/product/AU-002-concurrent-stop-live-2026-09-12.json",
+                      "meaning": "Actuele gecombineerde runtime; oudere geheugen- en voicebewijzen behouden hun eigen historische imagebinding.",
+                      "previousRuntime": {
+                        "recordedAt": "2026-09-12T16:52:54Z",
+                        "image": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
+                        "core": "eva2-managed-b-slot3-core",
+                        "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+                        "parentImage": "sha256:bfb0d25abb7f4a1247d376050fdfd7b606e3a3285dcd19b9ee6831d3297b046d",
+                        "sourceOverlays": {
+                          "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
+                          "AU-002": "30905cf101599f075759d5980bb816dd246f822c"
+                        },
+                        "backgroundWorkEnabled": true,
+                        "protectedDatabaseHindsightMediaContainersPreserved": true,
+                        "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+                        "evidence": "eva2/evidence/product/AU-008-current-review-delivery-2026-09-12.json",
+                        "meaning": "Actuele gecombineerde runtime; oudere geheugen- en voicebewijzen behouden hun eigen historische imagebinding."
+                      }
+                    }
+                  }
+                },
+                "releaseSourceCommit": "7b03f820cd73325348536224d75d45329b0e1505",
+                "canonicalSourceDiffersFromRelease": "Shared source retains held household router/shared voice stream; installed replay-only adaptation is separately reviewed on exact live-image baseline."
+              },
+              "releaseSourceCommit": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
+              "canonicalSourceDiffersFromRelease": "Shared source retains held household router/shared voice stream; installed replay-only adaptation is separately reviewed on exact live-image baseline."
+            }
+          }
+        },
+        "coreImage": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+        "coreContainerId": "35a5d34ca3a958ee86c863e603813f7eb520808a4aaebc5bb1dc318cef965b2d",
+        "coreStartedAt": "2026-09-13T04:52:24.511441607Z",
+        "workerImage": "sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd",
+        "documentWorker": {
+          "name": "/eva2-document-goal-worker-au006",
+          "id": "818413ea341b9f45a9e9281e2c7fddbb96b21641bd4f8479690c126386c48c33",
+          "image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+          "started_at": "2026-09-13T04:52:34.261689259Z",
+          "running": true
+        },
+        "documentProvider": {
+          "name": "/eva2-document-workspace-au006",
+          "id": "bb4f83eded83a7f2df82045658a73d4f210e6a41c354a0a73a390dd56cecaac6",
+          "image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
+          "started_at": "2026-09-13T04:52:13.612799665Z",
+          "running": true
+        },
+        "documentCoreOverride": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-core.override.compose.json",
+        "latestIndependentRestorationReview": {
+          "evidencePath": "eva2/evidence/product/AU-004-current-restoration-review-2026-09-13.json",
+          "coreImage": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+          "coreContainerId": "38e2495a66498099bf53735c8657eea0315aff2a26691fe02be2dad020b169e5",
+          "ready": true,
+          "scope": "Current state after failed AU004 installation; distinct from original failed rollback receipt."
+        }
+      },
+      "coreImage": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+      "workerImage": "sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd",
+      "documentWorker": {
+        "name": "eva2-document-goal-worker-au006",
+        "id": "1329566f565d386a735e018f984b584c012a3bc7fb5e9bf6f6da02910c3915c5",
+        "image": "sha256:1d0a704d32255bc7630c8670d8137d6d6c2a7c76e4533f5186c8f79613205fa0",
+        "started_at": "2026-09-13T10:59:50.90140435Z",
+        "running": true,
+        "health": "healthy",
+        "healthEvidence": "eva2/evidence/living-core/document-health-r2-live-20260913.json"
+      },
+      "documentProvider": {
+        "name": "eva2-document-workspace-au006",
+        "id": "77bced2a4c0d56bbad44031581eaf9f064f55949ae43d2af02c998ed400473b6",
+        "image": "sha256:ba9eda41299033a19e25c483e07e973b40545b226b062da6a29ccb70482f1b5e",
+        "started_at": "2026-09-13T10:59:50.89674576Z",
+        "running": true,
+        "health": "healthy",
+        "healthEvidence": "eva2/evidence/living-core/document-health-r2-live-20260913.json"
+      },
+      "documentCoreOverride": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-core.override.compose.json",
+      "latestIndependentRestorationReview": {
+        "evidencePath": "eva2/evidence/product/AU-004-current-restoration-review-2026-09-13.json",
+        "coreImage": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+        "coreContainerId": "38e2495a66498099bf53735c8657eea0315aff2a26691fe02be2dad020b169e5",
+        "ready": true,
+        "scope": "Current state after failed AU004 installation; distinct from original failed rollback receipt."
+      },
+      "containerIdentityStatus": "Independently verified current R6 core",
+      "coreContainerId": "38608cb8adc2886354f3594c2d99520c6b14375bd7e33bdeee5943a62c8c5105",
+      "telegramCoreOverride": "/home/administrator/project/.eva2-artifacts/telegram-recovery-20260913/core-reply-fix.compose.json",
+      "latestWriterRollbackEvidence": "eva2/evidence/living-core/au004-r3-a-failed-source-call-visibility-20260913.json",
+      "previousCoreBeforeProcedureDelivery": {
+        "image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+        "coreImage": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+        "coreContainerId": "a98fd8455e8ac81e3307d908e2bb3b8c73c073dfd77f40c5e7bf06863073784a",
+        "evidence": "eva2/evidence/living-core/telegram-recovery-live-receipt-20260913.json",
+        "recordedAt": "2026-09-13T08:21:16.540204+00:00"
+      },
+      "latestIndependentLiveEvidence": "eva2/evidence/product/AU-004-r6-outcome-independent-review-2026-09-13.json",
+      "nextParentAuthority": {
+        "evidencePath": "eva2/evidence/living-core/document-health-r2-live-20260913.json",
+        "authoritySha256": "294e719ec1ddb376c0eb5bab9d48d93027f738c3091cb6f3ce60d7fa76524533",
+        "image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+        "documentWorkerImage": "sha256:1d0a704d32255bc7630c8670d8137d6d6c2a7c76e4533f5186c8f79613205fa0",
+        "documentProviderImage": "sha256:ba9eda41299033a19e25c483e07e973b40545b226b062da6a29ccb70482f1b5e",
+        "healthOverride": "eva2/deploy/living-core/document-health.compose.json",
+        "procedureOptInRequired": true,
+        "keepCompleteComposeAndProtectedServices": true,
+        "olderR6ProtectedSnapshotHistorical": true,
+        "fallbackScope": "Historical R6bc6 fallback is not the default baseline for future changes"
+      },
+      "historicalDocumentServicesBeforeHealth": {
+        "worker": {
+          "name": "/eva2-document-goal-worker-au006",
+          "id": "818413ea341b9f45a9e9281e2c7fddbb96b21641bd4f8479690c126386c48c33",
+          "image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+          "started_at": "2026-09-13T04:52:34.261689259Z",
+          "running": true
+        },
+        "provider": {
+          "name": "/eva2-document-workspace-au006",
+          "id": "bb4f83eded83a7f2df82045658a73d4f210e6a41c354a0a73a390dd56cecaac6",
+          "image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
+          "started_at": "2026-09-13T04:52:13.612799665Z",
+          "running": true
+        },
+        "authority": {
+          "evidencePath": "eva2/evidence/living-core/au004-r6-runtime-handoff-20260913.json",
+          "authoritySha256": "5955fbe1253e23f3cae1c3a7296698862d1ca9488b541be76e636ceaf40039ba",
+          "image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+          "procedureOptInRequired": true,
+          "keepCompleteComposeAndProtectedServices": true,
+          "fallbackScope": "bc6 only as reviewed R6 rollback; not future default"
+        }
+      },
+      "documentHealthEvidence": "eva2/evidence/product/document-health-r2-live-independent-2026-09-13.json"
     }
   },
   "activeTaskId": "AU-008",

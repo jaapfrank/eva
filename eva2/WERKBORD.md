@@ -1,8 +1,43 @@
 # EVA2 werkbord
 
-## Afgerond: O1.2 — modulaire installatie met algemene uitbreidingen
+## Afgerond: F1.1 — één gezamenlijke geïnstalleerde versie
 
-**Stand: 24/44 oorspronkelijke kleine taken afgerond. O1 en O2 zijn technisch klaar.**
+**Stand: 25/44 oorspronkelijke kleine taken afgerond. De historische hoofdgroepen
+blijven 2/9; de gezamenlijke F1.2-eindcontrole is nog open.**
+
+Kern en achtergrondwerker zijn eenmaal samen bijgewerkt en draaien gezond. Beide
+bevatten dezelfde 350 bron-/lockbestanden, inclusief de bestaande L3-contextwinst
+en de optionele-modulecorrecties. Het gewone installatiepakket gebruikt dezelfde
+kern. Configuratie, gegevensbindings en 18 overige diensten zijn behouden.
+**Onafhankelijke eindreview: INSTALLED GO.** Installatie: 41,895 s. Geen gecontroleerde
+modelcalls voor deze integratie; ontwikkelcredits onbekend.
+
+Dit is afronding van de bestaande integratietaak, geen nieuw verzonnen productfunctie.
+De samengestelde versie bevat 26 bewust behouden verschillen met de repository;
+het bewijs claimt niet dat ieder bestand van HEAD geïnstalleerd is.
+[Geïnstalleerd resultaat](evidence/product/f1-integrated-installed-20261003.json)
+· [Onafhankelijke review](reviews/f1-integrated-candidate-20261003.md).
+
+**Volgende: F1.2 — gezamenlijke werking en computerherstart controleren.** Nog niet
+gestart; geen uitvoerder actief op dit overgangsmoment. Vergelijking, fysieke
+spraakbeleving en echte gezinsacceptatie behouden hun eigen eindvoorwaarden.
+
+**Alleen van Jaap nodig:** Hermes en OpenClaw zijn zonder bevestigde aanmelding
+geëindigd; de oude codes zijn niet meer bruikbaar. Nieuwe afzonderlijke aanmelding
+zodra Jaap klaarstaat. Agent Zero heeft een eigen bewaarde sessie; OpenCode blijft
+de programmeerreferentie. Geen credentials gekopieerd of vergelijkingsmodelcalls.
+
+**R1.1:** bron/protocol en onafhankelijke toelating gereed; automatische review
+weigerde de concrete acht nieuwe modelruns zonder expliciete eigenaarstoestemming.
+De vraag staat in de chat, maximaal 96 nieuwe reacties binnen de vastgelegde totale
+meetgrenzen; credits onbekend. Geen uitvoeringsproces gestart en geen andere runner.
+Na toestemming wordt de runtimeherkomst aan deze F1-versie gebonden vóór uitvoering;
+kandidaat, beschermde beoordeling en proefvoorwaarden blijven gelijk.
+[Toelatingsreview](reviews/r1-followup-admission-20261003.md).
+
+## Eerdere oplevering: O1.2 — modulaire installatie met algemene uitbreidingen
+
+**Stand bij deze oplevering: 24/44 oorspronkelijke kleine taken afgerond. O1 en O2 zijn technisch klaar.**
 De oude hoofdgroep Installatie & herstel heeft nog de gezamenlijke F1-eindkandidaat
 als eindvoorwaarde; er is dus nog geen derde volledig afgeronde historische hoofdgroep.
 
@@ -33,29 +68,6 @@ dezelfde nieuwe kern. Windows-pagina en werkelijk RTC-transport zijn bevestigd;
 geen fysieke gesprekskwaliteit of microfoonacceptatie geclaimd. Eerdere begeleide
 imagebinding en IPv4-correctie blijven in het bewijs zichtbaar.
 [Spraakinstallatie](evidence/product/installer-selected-voice-installed-20261003.json).
-
-**R1.1 gereed voor uitvoering, toestemming gevraagd:** aparte vervolgdriver,
-15 offline controles en onafhankelijke toelating gereed. Eén lokale mislukte
-variant brak de oude volledige vergelijking af; de correctie bewaart die mislukking
-zonder de andere vaste varianten te verliezen. Kandidaat en beoordelingsregels
-blijven gelijk. Acht verse runs zijn expliciet een vervolg, niet de oude acht;
-inclusief de eerdere poging zijn dat negen historische starts. Oud verbruik telt mee.
-
-Automatische goedkeuringsreview heeft de uitvoeringsaanvraag geweigerd wegens
-ontbrekende expliciete toestemming voor deze acht nieuwe modelruns. **Geen modelcall
-of uitvoeringsproces gestart.** Concrete vraag staat in de chat: maximaal 96 nieuwe
-modelreacties, totaal inclusief historie 600.000 input-/48.000 outputtokens, credits
-onbekend, geen automatische herhaling. Geen andere runner om de weigering heen.
-[Onafhankelijke toelating](reviews/r1-followup-admission-20261003.md).
-
-**Parallel op verzoek van Jaap:** P1.1 eigen aanmeldingen. Hermes en OpenClaw
-wachten op bevestiging met de twee verse codes uit deze chat. Agent Zero heeft
-een bewaarde eigen sessie. OpenCode blijft de programmeerreferentie in het
-bestaande plan. Geen credentials gekopieerd en geen vergelijkingsmodelcalls.
-
-**Hierna:** F1, de geleverde functies in één eindkandidaat samenbrengen; nog niet
-actief. Login en proefkeuze blokkeren onafhankelijk productwerk niet. De stand
-blijft 24/44 kleine taken en 2/9 historische hoofdgroepen.
 
 ## Nu opgeleverd: optionele browser in een nieuwe Eva-installatie
 

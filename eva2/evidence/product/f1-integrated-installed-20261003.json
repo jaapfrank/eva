@@ -1,0 +1,120 @@
+{
+  "contract": "EvaInstalledProductEvidence/v1",
+  "checked_at": "2026-10-03T16:02:22.253547+00:00",
+  "task_id": "F1.1",
+  "status": "installed_independent_go",
+  "whole_task_completed": true,
+  "base_commit": "8ab4701a5d89c25a55ecf5d153f68e6a33179f79",
+  "outcome": "Existing completed changes are combined in the installed core/worker and ordinary installer package.",
+  "existing_reused": [
+    "Installed L3 context winner and runtime configuration",
+    "Five already reviewed optional browser/MCP/AgentMail provider fixes",
+    "Four existing core improvements aligned into the worker",
+    "Existing ordinary installer manifest verification, dependencies and stored data"
+  ],
+  "added": [
+    "A composed core/worker image pair with the same 350 source/lock items",
+    "An explicit two-service deployment descriptor referencing existing external dependencies",
+    "Ordinary installer bound to that core image with honest development-overlay provenance"
+  ],
+  "source_identity": {
+    "equal_runtime_items": 350,
+    "retained_repository_variants": 26,
+    "repository_head_fully_installed": false,
+    "l3_winner_sha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7"
+  },
+  "installation": {
+    "attempts": 1,
+    "exit_code": 0,
+    "elapsed_seconds": 41.89533098900574,
+    "services": [
+      {
+        "name": "eva2-managed-b-slot3-core",
+        "image": "sha256:fd1c7cd3413405fd6b1b5ce408f2028cffed8de735a301550663e4c891ee5902",
+        "running": true,
+        "health": "healthy",
+        "beforeConfigurationSha256": "d1c07887f328f3cc18631316aad945963a928d47476a11680f93a99e4b545d10",
+        "afterConfigurationSha256": "d1c07887f328f3cc18631316aad945963a928d47476a11680f93a99e4b545d10",
+        "changedConfigurationFields": [],
+        "containerId": "d405e5c97a3455e5a39a4da8ebb545f0295eeac4f752a0dd438a07599e43028a"
+      },
+      {
+        "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "image": "sha256:30d65117cc0f526bc3ed8859a0eee867ff8fe0943c0bf42c8c09d787c2ca3089",
+        "running": true,
+        "health": "healthy",
+        "beforeConfigurationSha256": "6ccdefbdd933ff065f0b8e8da73b9bfeca715764a4553aab524295f803492d08",
+        "afterConfigurationSha256": "6ccdefbdd933ff065f0b8e8da73b9bfeca715764a4553aab524295f803492d08",
+        "changedConfigurationFields": [],
+        "containerId": "e5a68ebf47caa575bcaf4e96954d0377576d5e8fb07c3fb24f7ac1452b08d8cb"
+      }
+    ],
+    "other_services_retained": 18,
+    "all_other_container_ids_and_images_unchanged": true,
+    "health": {
+      "status": 200,
+      "body": {
+        "status": "alive"
+      }
+    },
+    "configuration_unchanged": true,
+    "l3_historical_receipts_unchanged": true,
+    "previous_images_retained": true,
+    "automatic_rollback_performed": false
+  },
+  "package": {
+    "core_image": "sha256:fd1c7cd3413405fd6b1b5ce408f2028cffed8de735a301550663e4c891ee5902",
+    "manifest_sha256": "2a0662d69ea935443b3ccae42947f19c7f6a7bb8a994978db57e797021e2813a",
+    "source_files_verified": 1225,
+    "image_pins_verified": 8,
+    "source_files_changed": [],
+    "historical_base_and_python_runtime_preserved": true,
+    "new_installation_repeated": false
+  },
+  "focused_checks": {
+    "passed_cases": 85,
+    "production_image_source_used": true,
+    "rerun_full_suite": false,
+    "independent_review": "eva2/reviews/f1-integrated-candidate-20261003.md"
+  },
+  "consumption": {
+    "controlled_model_calls": 0,
+    "controlled_provider_calls": 0,
+    "credits": null,
+    "note": "Development-agent usage is separate and not measured here; this records integration checks, not all autonomous background runtime activity."
+  },
+  "assistance_and_corrections": [
+    "Build reference initially treated a bare SHA as registry name; preserved local base alias fixed the reference before installation.",
+    "Focused harness lacked SQLite library; after that correction one existing fixture needed its original root. Only failed checks were repeated.",
+    "Limited Compose initially retained depends_on references to omitted services; exact external prerequisites were verified and only those edges removed before installation.",
+    "Package verification first used host Python without pydantic; existing bundled runtime used before manifest mutation."
+  ],
+  "limitations": [
+    "F1.2 joint behavior and actual computer restart remain open.",
+    "Native comparison access and final P2 evaluation remain separate.",
+    "Physical voice quality, family experience and F2 acceptance are not established by this installation.",
+    "Installer package contains its established host-source snapshot; not every repository HEAD file is installed.",
+    "R1 followup has not executed; explicit approval remains pending and future execution must rebind runtime provenance."
+  ],
+  "owner_action_required": false,
+  "completion_scope": "Original F1.1 integration only, no new function or general competitive-superiority claim.",
+  "private_evidence_hashes": {
+    "/home/administrator/project/.eva2-artifacts/f1-integrated-delivery-20261003/installation.json": "f945271cc33f687fd2a68b20d85a3efdc7fc0dd0b260acb1783ef4249dfc90cd",
+    "/home/administrator/project/.eva2-artifacts/f1-integrated-delivery-20261003/installed-readback.json": "5e90fc7e28d3efcfd2a862a9d109d8e2a9bd2f38705b42b70b8543002ec99c72",
+    "/home/administrator/project/.eva2-artifacts/f1-integrated-delivery-20261003/candidate-compose.private.json": "fb6590361d55d35b7067ef6153cff208ba910015be929e16c899561aaab879fe",
+    "/home/administrator/project/.eva2-artifacts/f1-integrated-delivery-20261003/installed-base-compose.private.json": "2f447c7905ec08783f7cf852d0311902e0f059f8a00b2bd5446a2ab64ed9a4bd",
+    "/home/administrator/project/.eva2-artifacts/f1-integrated-delivery-20261003/existing-runtime-bindings.json": "1dbc474d479c75ace8613066987b4cdd2491913ad1ecb88c0e0e235b2a8499f9",
+    "/home/administrator/project/.eva2-artifacts/f1-integrated-delivery-20261003/package-binding.json": "eaf39016f0ab1cf0496ebd988fab51ef8e9a5126c2eb1bcfe89c63a30ad629ba",
+    "/home/administrator/project/.eva2-artifacts/f1-integrated-candidate-20261003/build-receipt.json": "bdbbc9890cbfa955e9aaebe79aa89905605c149c750183c28a33b1cbc000a00f",
+    "/home/administrator/project/.eva2-artifacts/f1-integrated-candidate-20261003/candidate-preflight.json": "35e2a41cad59769c1c1723f25f5d5d64c7d0550301e0f2561097bb1ed67ae90d",
+    "/home/administrator/project/.eva2-artifacts/f1-integrated-candidate-20261003/retained-source-variants.json": "b727f7a78bfc857dba1212aa4b3a50d86258562c1c206e30cb2b9337587086e1",
+    "/home/administrator/project/.eva2-artifacts/f1-integrated-candidate-20261003/core-candidate-source.json": "e5e9a21cfa7a2942924c0d7fc7315059eec502e1aa90c3cc0b007419c428031f",
+    "/home/administrator/project/.eva2-artifacts/f1-integrated-candidate-20261003/worker-candidate-source.json": "8f461f7d66e25d1cb9268a899c192d1a61941c8311d4ab6521ba76cfb68baebf",
+    "/home/administrator/project/.eva2-artifacts/f1-independent-review-20261003/installed-readback.json": "e02fce4b4474b997ca6540899b5eca30989f1c6622a6d05750e4ed63d16bc5d7"
+  },
+  "review": {
+    "decision": "INSTALLED GO",
+    "path": "eva2/reviews/f1-integrated-candidate-20261003.md",
+    "sha256": "0efcc5bab70ebb447b1948170f002b4ef2f0b15129c9fa0c8c58eee3057da9d6"
+  }
+}
