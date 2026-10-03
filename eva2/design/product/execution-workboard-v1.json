@@ -1035,8 +1035,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T18:53:17.822832+00:00",
+        "checkedAt": "2026-10-03T19:47:07.169282+00:00",
         "deliveries": [
+          {
+            "title": "Vergelijking: gesprek én achtergrondgeheugen samen gemeten",
+            "date": "3 oktober",
+            "state": "tested",
+            "result": "De native route telt beide bekende pogingen mee en weigert de derde vóór uitvoering. De streamafsluitfout is gericht hersteld; onafhankelijke beperkte GO. Geen echte modelcalls.",
+            "remaining": "De proef voltooit de consolidatie niet binnen de vaste twee pogingen. Nog geen echte vergelijking, snelheidswinst of nieuwe Eva-functie; 25/44 taken blijven afgerond.",
+            "source": "eva2/evidence/product/p1-shared-native-accounting-20261003.json"
+          },
           {
             "title": "Vergelijkingsvoorbereiding: geheugenverwerking volledig meegemeten",
             "date": "3 oktober",
@@ -3529,14 +3537,14 @@
           }
         ],
         "now": {
-          "title": "P1.1 · geheugenproef afgerond, gezamenlijke meting nog open",
+          "title": "P1.1 · gezamenlijke meting gecontroleerd; vergelijking nog open",
           "state": "in_progress",
           "owner": "Codex /root",
-          "detail": "Gecontroleerd resultaat vastleggen en publiceren. Uitvoerder en reviewer zijn klaar; volgende aansluiting is gesprek plus geheugen in hetzelfde bestaande register."
+          "detail": "Gesprek en geheugen gebruiken samen één verbruiksregister. Onafhankelijke beperkte GO. Deze niet-lege proef stopt vóór een derde modelaanroep; geheugenverwerking is daardoor niet afgerond. Nul echte modelcalls. Afronding en bronpublicatie nu; vervolg nog niet gestart."
         },
         "next": {
-          "title": "Gesprek en achtergrondgeheugen samen meten",
-          "detail": "Bestaand begin/permit/settle/stop-protocol hergebruiken voor beide native processen. Voltooiing omvat ook memory-outbox en consolidatie; vaste proefgrenzen blijven behouden."
+          "title": "Beschikbare deelnemers toelaten tot de vastgelegde vergelijking",
+          "detail": "De echte C01/C04-routes binden aan bron, configuratie, hulpmiddelen en volledige meting. Eerdere voorproeven niet herhalen; ontbrekende toegang blijft onbekend en de meetgrenzen blijven gelijk."
         },
         "ownerAction": {
           "title": "Windows opnieuw opstarten voor de voorbereide eindcontrole",
@@ -3548,7 +3556,7 @@
           "expected": "Geen nieuwe installatie of herhaling van opdrachten. F1.2 blijft open tot de echte herstart en nacontrole."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T18:53:17.822832+00:00"
+        "reviewedAt": "2026-10-03T19:47:07.169282+00:00"
       },
       "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
     },
@@ -15956,14 +15964,14 @@
               "doneWhen": "Eva1 en geselecteerde concurrenten hebben vastgelegde versies en gelijkwaardige toegang; ontbrekende toegang zichtbaar.",
               "owner": "Codex /root",
               "sourceManifest": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
-              "remaining": "Echte Eva1-bron en geïsoleerde native Eva2-geheugenverwerking onafhankelijk gecontroleerd. Eén gedeeld register voor voorgrond en al het achtergrondgeheugen per proef, volledige toelating en echte vergelijking blijven open.",
-              "latestEvidence": "eva2/evidence/product/p1-hindsight-lifecycle-20261003.json",
+              "remaining": "Native bron, geheugenroute en gezamenlijk verbruiksregister beperkt onafhankelijk gecontroleerd. Deze niet-lege proef wordt vóór een derde call geweigerd. Echte C01/C04-toelating en uitvoering met beschikbare deelnemers blijven open.",
+              "latestEvidence": "eva2/evidence/product/p1-shared-native-accounting-20261003.json",
               "assignment": {
                 "owner": "Codex /root",
-                "support": null,
-                "stage": "native_memory_lifecycle_reviewed",
-                "baseCommit": "89b4cb1ebe8c567c9a18a00ab31162a42a7ef13a",
-                "currentAction": "Record and publish the independently reviewed native memory lifecycle. No worker is currently executing. Next: reuse the existing parent begin/permit/settle/stop protocol for foreground plus memory; no larger budget.",
+                "support": "/root/background_execution_seam",
+                "stage": "shared_native_accounting_reviewed_publishing",
+                "baseCommit": "470f000fead99261539ebee2e1e4bf0239631247",
+                "currentAction": "Bounded offline shared accounting/stop proof complete and independently reviewed; publish source and evidence. Native consolidation remains pending after cap refusal; no live admission or feature completion.",
                 "runtimeHandle": {
                   "hermesExecSession": 63638,
                   "hermesExitCode": 1,
@@ -15974,31 +15982,33 @@
                   "openclawPid": 3233193,
                   "openclawExitCode": 1
                 },
-                "estimate": "Reuse pinned images, readonly dependencies and already downloaded public models; zero live model calls. Development credits unknown.",
+                "estimate": "Reuse native routes and prior memory proof; synthetic provider responses first, zero live model calls in this connection check. Development credits unknown.",
                 "files": [
-                  "Root: disposable DB/model-resource setup, evidence/manifest/workboard",
-                  "Worker: p1_hindsight_lifecycle_probe.py only"
+                  "Root: native worker, experiment evidence, manifest and workboard",
+                  "Completed worker: IPC adapter and focused tests; HTTP stream compatibility/settlement",
+                  "Completed reviewer: shared native accounting review"
                 ],
                 "activeWorkers": [],
                 "finish": "Complete native provider/helper/memory coverage admission for an available pair, or establish the exact unchanged-envelope refusal; no synthetic-only success or budget increase.",
                 "nextSeam": {
                   "providerFactory": "Native Codex constructors all bound in the isolated memory lifecycle.",
-                  "implemented": false,
-                  "sampleLifecycle": "Foreground and memory subprocesses require the same parent ledger and unique event namespaces. Final settlement must include journal, memory outbox, native operations and tracked HTTP.",
+                  "implemented": true,
+                  "sampleLifecycle": "Shared foreground/memory parent ledger is now observed through native HTTP, outbox, retain and attempted consolidation. Actual fixed-case setup and live admission remain.",
                   "preflight": "Reuse existing native control/ledger, disposable database and public model cache; no production state, new runner or provider route.",
                   "budgetObservation": "The nonempty synthetic memory fixture uses two helper attempts. Existing C01/C04 after-response retention is active; its complete sample behavior remains unmeasured."
                 }
               },
               "blocker": "OpenClaw/Hermes-aanmelding ontbreekt alleen voor die deelnemers. Eva1/Eva2 hebben zelfstandig te onderzoeken native meet-/stopovergangen.",
               "nextImplementation": "Use these owned persisted configurations for native startup after own authentication. No repeated config/catalog probe without a changed cause or new evidence. Prior Agent Zero helper-envelope refusal remains unavailable; no hidden helper disable, auth-token copying or quota increase.",
-              "checkedAt": "2026-10-03T18:53:17.822832+00:00",
+              "checkedAt": "2026-10-03T19:47:07.169282+00:00",
               "ownerActionRequired": true,
               "nextAction": "Codex gebruikt bestaande vergelijkingsvoorbereiding; Jaap levert alleen daadwerkelijk ontbrekende accounttoegang. Dit blokkeert uitsluitend die vergelijking, niet Eva’s eigen functionele uitvoering.",
               "ownerInstructions": {
                 "availableNow": false,
-                "readyWhen": "Meld wanneer je klaarzit voor één nieuwe aanmelding; de vorige code is verlopen.",
+                "readyWhen": "Meld wanneer je klaarzit voor gewone browseraanmelding; apparaatcodes zijn niet verplicht.",
                 "steps": [
-                  "Meld dat je klaarzit; Codex start dan één nieuwe native code."
+                  "Meld dat je klaarzit; Codex start eerst één gewone browseraanmelding voor Hermes.",
+                  "Na bevestigde aanmelding volgt OpenClaw; geen twee gelijktijdige codes."
                 ],
                 "blocksIndependentWork": false
               }

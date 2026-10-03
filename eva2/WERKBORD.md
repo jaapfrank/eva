@@ -33,29 +33,29 @@ open. Nog steeds 25/44 afgerond; geen nieuwe functieclaim uit deze controle.
 [Resultaat en beperkingen](evidence/product/f1-joint-check-pre-reboot-20261003.json)
 · [Voorbereidingsreview](reviews/f1-joint-check-20261003.md).
 
-**P1.1 — native geheugenverwerking gecontroleerd; volledige vergelijking nog open.**
-De echte Eva1-bron/gelijk-modelvariant en eerdere Hindsight-providercontrole blijven
-behouden. Eén aanvullende native geheugenproef slaagt: het feit is opgeslagen,
-consolidatie maakt een gekoppelde herinnering en de achtergrondtaak eindigt echt.
-Onafhankelijke databaseuitlezing bevestigt dit; gevolgde taken en verbindingen zijn
-na afsluiten nul. **Onafhankelijke beperkte GO.** Geen herhaalde proef.
+**P1.1 — gesprek en achtergrondgeheugen samen meetbaar; vergelijking nog open.**
+De native gesprek-/geheugenroute gebruikt nu één bestaand verbruiksregister.
+De specifieke HTTPX2- en streamafsluitfouten zijn gecorrigeerd. Zeven gerichte
+IPC-gevallen en zeven actuele HTTPX2-gevallen onderbouwen de koppeling;
+onafhankelijke beperkte review **GO**. Eerdere mislukte voorbereidingen blijven
+zichtbaar, inclusief de vijfde poging die ten onrechte budgetweigering heette.
 
-Twee synthetische Astra/medium-antwoorden, nul echte modelcalls. De 62/14 tokens
-zijn fixturewaarden, geen werkelijk modelverbruik. De proef duurde 13,452 s inclusief
-12,412 s lokale modelvoorbereiding; dit is geen meting van antwoordsnelheid.
-Alleen lege opslag en bestaande publieke modelbestanden gebruikt. Proefcontainers
-en netwerk verwijderd na bewaren van de synthetische gegevens; Eva ongewijzigd.
-[Bewijs en beperkingen](evidence/product/p1-hindsight-lifecycle-20261003.json)
-· [Review](reviews/p1-hindsight-lifecycle-20261003.md).
+De zesde proef registreert twee werkelijk doorgelopen synthetische antwoorden:
+gesprek 17/7 en geheugen 31/7 invoer-/uitvoertokens. De derde aanvraag wordt vóór
+uitvoering geweigerd door de ongewijzigde proefgrens. Antwoord en opgeslagen feit
+zijn teruggelezen; consolidatie blijft na stoppen wachtend. Bekend verbruik is dus
+volledig geregistreerd, maar de geheugentaak is **niet afgerond**. Alle gevolgde
+processen zijn afgesloten; synthetische dumps zijn bewaard en proefresources verwijderd.
 
-**Nu:** resultaat vastleggen/publiceren; uitvoerder en reviewer zijn klaar.
-**Volgende:** het bestaande register gezamenlijk gebruiken voor de voorgrond en
-alle geheugencalls binnen één proefinstantie. De echte gespreksroute schrijft ook
-naar de memory-outbox; alleen het eerste antwoord meten laat dat werk weg. Deze
-niet-lege geheugenfixture gebruikt beide toegestane pogingen. Dat bewijst niet dat
-ieder gesprek dit doet; het budget blijft gelijk en een weigering blijft zichtbaar.
-Daarna de beschikbare volledig toegelaten deelnemers vergelijken. Ontbrekende
-toegang blijft onbekend. Stand **25/44**, geen nieuwe productfunctie uit meetwerk.
+Nul echte modelcalls; fixturetokens zijn geen werkelijk modelverbruik.
+Totale proefuitvoering 47,437s, geen meting van Eva's antwoordkwaliteit of snelheid.
+Geen productinstallatie of nieuwe afgeronde functie. Stand blijft **25/44**.
+[Bewijs en beperkingen](evidence/product/p1-shared-native-accounting-20261003.json)
+· [Onafhankelijke review](reviews/p1-shared-native-sample-20261003.md).
+
+**Vervolg:** de beschikbare deelnemers op de vaste C01/C04-routes toelaten en de
+vergelijking uitvoeren. Nog niet gestart; ontbrekende toegang blijft onbekend.
+De bestaande Eva1-bron- en Hindsight-levenscyclusbewijzen worden hergebruikt.
 
 **Nu van Jaap nodig: Windows opnieuw opstarten voor F1.2.** Sla werk op,
 kies Opnieuw opstarten en open daarna deze chat; meld “Herstart klaar”. De
@@ -63,7 +63,8 @@ voorbereiding is onafhankelijk goedgekeurd. Geen nieuwe installatie nodig.
 
 De verse OpenClaw-aanmelding is geëindigd met de native timeout van 15 minuten;
 geen nieuwe inlogpoging actief en geen modelcalls. Hermes is nog niet aangemeld.
-Nieuwe codes pas wanneer Jaap klaarzit; de verlopen codes niet opnieuw gebruiken.
+Beide programma’s ondersteunen ook gewone browseraanmelding. Die route wordt
+voorbereid zodra Jaap klaarzit, één tegelijk; oude codes niet opnieuw gebruiken.
 [Native inlogstatus](evidence/product/p1-native-auth-status-20261003.json).
 
 **R1.1:** bron/protocol en onafhankelijke toelating gereed; automatische review

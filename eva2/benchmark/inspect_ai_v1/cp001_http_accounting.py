@@ -5,10 +5,15 @@ not authorize a run or prove all clients in an installation are bound. A caller
 must dedicate the instance to one sample and bind every provider client.
 """
 
+import asyncio
 from dataclasses import asdict
 import json
 
-import httpx
+try:
+    import httpx
+except ImportError:
+    # The installed core uses httpx2; Hindsight uses the original httpx package.
+    import httpx2 as httpx
 
 from cp001_accounting import SampleAsyncStream, SampleStopped
 
@@ -23,6 +28,8 @@ class _ObservedBytes:
         self.attestor = attestor_factory()
         self.closed = False
         self.close_error = None
+        self.invalid = False
+        self.settled = False
 
     def __aiter__(self):
         return self
@@ -31,21 +38,32 @@ class _ObservedBytes:
         try:
             chunk = await anext(self.parts)
         except StopAsyncIteration:
-            # Close before declaring a settled attempt. A failed close must not
-            # be hidden by HTTPX subsequently treating the response as closed.
-            await self.aclose()
             try:
-                self.attestor.feed(self.decoder.flush())
-                usage = self.attestor.finish()
+                self._observe_decoded(self.decoder.flush())
+                self.attestor.finish()
             except Exception as error:
+                self.invalid = True
+                await self.aclose()
                 raise SampleStopped("native HTTP response has no complete raw usage") from error
-            self.ledger.finish(self.attempt, asdict(usage))
+            await self.aclose()
+            raise
+        except BaseException:
+            self.invalid = True
             raise
         try:
-            self.attestor.feed(self.decoder.decode(chunk))
+            self._observe_decoded(self.decoder.decode(chunk))
         except Exception as error:
+            self.invalid = True
             raise SampleStopped("native HTTP response usage is invalid") from error
         return chunk
+
+    def _observe_decoded(self, decoded):
+        # HTTPX returns bytes; HTTPX2 streams decoder output as byte chunks.
+        if isinstance(decoded, (bytes, bytearray)):
+            self.attestor.feed(decoded)
+        else:
+            for chunk in decoded:
+                self.attestor.feed(chunk)
 
     async def aclose(self):
         if self.closed:
@@ -61,6 +79,20 @@ class _ObservedBytes:
                 self.ledger.stopped = self.ledger.stopped or "native response close failed"
             raise
         self.closed = True
+        # Native SDKs may stop reading at response.completed, before HTTP EOF.
+        # Settle only already-observed terminal bytes after successful close;
+        # never drain unread bytes or upgrade cancellation/invalid input.
+        task = asyncio.current_task()
+        if (not self.invalid and not self.ledger.stop_requested
+            and not (task is not None and task.cancelling())
+            and self.attestor.terminal is not None and not self.settled):
+            try:
+                usage = self.attestor.finish()
+            except Exception as error:
+                self.invalid = True
+                raise SampleStopped("native HTTP terminal usage is invalid") from error
+            self.ledger.finish(self.attempt, asdict(usage))
+            self.settled = True
 
 
 class _BoundBody(httpx.AsyncByteStream):

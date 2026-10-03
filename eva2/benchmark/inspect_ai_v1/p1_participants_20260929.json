@@ -1,6 +1,6 @@
 {
   "contract": "EvaComparisonParticipantInputs/v1",
-  "checkedAt": "2026-10-03T18:53:17.822832+00:00",
+  "checkedAt": "2026-10-03T19:47:07.169282+00:00",
   "stage": "source_pins_recorded_access_not_admitted",
   "protocol": "eva2/design/product/comparable-agent-benchmarks-v1.md#ev-003",
   "scope": "Inputs for existing Inspect runner; not results, a new runtime or a new scorer.",
@@ -92,6 +92,37 @@
           "sha256": "58fe7f4ec620b3000214ed2ed5d7c5689ca7a6b839cd7b2a50011dfa41485105",
           "reviewer": "/root/aide_final_evaluation"
         }
+      },
+      "sharedNativeAccounting": {
+        "status": "offline_shared_ledger_verified_nonempty_sample_refused",
+        "evidence": "eva2/evidence/product/p1-shared-native-accounting-20261003.json",
+        "evidenceSha256": "2063dd0794de7fabf9eee35ebd203214603a3a37989036df70a2725a78880c55",
+        "source": {
+          "cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f",
+          "cp001_native.py": "8839d4efc75be5b67f6e25bfaf8aa816cb20d3bf7d63a8ddeb43b25db837cb36",
+          "cp001_http_accounting.py": "4d9b60a996b4fb221b5ad2cd77072ac36432b5349c3f0fbf96c81ba640ff8b85",
+          "cp001_process_accounting.py": "cf204745b51bb0eac27f25bed31b9a9054ef90d722ff30a6a222d5d5b2d19f72",
+          "p1_eva2_native_worker.py": "cfb518679e3efc3bf7eff4621ee3021db4b50dd94ff2c393b8bf460bee840451",
+          "p1_httpx2_accounting_probe.py": "0bbb45198bdd3469fbfcd70689664e9dccf48bf1fa49c6296ccbb2ccfd566699",
+          "p1_hindsight_lifecycle_probe.py": "263a131e454392198c108e7897d1f6ef69c5f05ac6f932fd536f60a0f9d0e83d"
+        },
+        "runtimeModelCalls": 0,
+        "observedSyntheticAttempts": 2,
+        "knownDispatchedUsage": {
+          "inputTokens": 48,
+          "outputTokens": 14
+        },
+        "thirdDispatchRefused": true,
+        "nativeSampleComplete": false,
+        "consolidationStateAfterStop": "pending",
+        "liveAdmission": false,
+        "independentReview": {
+          "path": "eva2/reviews/p1-shared-native-sample-20261003.md",
+          "sha256": "3c6dbe0922a20d35af4171ec51920f66df1ccab519c5fc928b95202b57bc3bf7",
+          "status": "GO for shared observed accounting and stop enforcement only",
+          "reviewer": "/root/aide_final_evaluation"
+        },
+        "remaining": "Bind actual frozen C01/C04 native instances/configuration/tools/timing and complete available participant admission. This synthetic nonempty case does not score those inputs."
       }
     },
     {
@@ -425,7 +456,7 @@
   },
   "readiness": {
     "mayStartModelComparison": false,
-    "reason": "Native Eva1 source and isolated Eva2 memory retain/consolidation now bound. Foreground plus all sample-owned memory calls still need one ledger and settlement; no available participant has full admission. Missing access stays unknown.",
+    "reason": "Shared Eva2 foreground/memory accounting is verified offline; this nonempty fixture hits the unchanged two-call cap before consolidation. Available participants still require fixed-case native admission and actual execution; missing access stays unknown.",
     "missingAccessCountsAs": "unknown_not_loss",
     "historicalResults": "EV-002 remains unchanged; no current ranking inferred.",
     "partialExecutionPolicy": {

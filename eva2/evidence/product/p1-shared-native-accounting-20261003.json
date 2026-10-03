@@ -1,0 +1,366 @@
+{
+  "contract": "P1SharedNativeAccountingEvidence/v1",
+  "checkedAt": "2026-10-03T19:45:12.335990+00:00",
+  "baseCommit": "470f000fead99261539ebee2e1e4bf0239631247",
+  "scope": "Comparison preparation only: native foreground plus asynchronous memory share one existing accounting ledger. Synthetic HTTP answers, no live model calls. No feature completion, scored task result, latency claim or live participant admission.",
+  "source": {
+    "cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f",
+    "cp001_native.py": "8839d4efc75be5b67f6e25bfaf8aa816cb20d3bf7d63a8ddeb43b25db837cb36",
+    "cp001_http_accounting.py": "4d9b60a996b4fb221b5ad2cd77072ac36432b5349c3f0fbf96c81ba640ff8b85",
+    "cp001_process_accounting.py": "cf204745b51bb0eac27f25bed31b9a9054ef90d722ff30a6a222d5d5b2d19f72",
+    "p1_eva2_native_worker.py": "cfb518679e3efc3bf7eff4621ee3021db4b50dd94ff2c393b8bf460bee840451",
+    "p1_httpx2_accounting_probe.py": "0bbb45198bdd3469fbfcd70689664e9dccf48bf1fa49c6296ccbb2ccfd566699",
+    "p1_hindsight_lifecycle_probe.py": "263a131e454392198c108e7897d1f6ef69c5f05ac6f932fd536f60a0f9d0e83d"
+  },
+  "nativeSources": {
+    "/opt/eva/src/eva/bootstrap/runtime.py": "1ec444b7e676b45cd48987dd54cbbabae97420c93768ab098733e7baa9ebd66b",
+    "/opt/eva/src/eva/adapters/model/openai_codex_provider.py": "efdaf9e083ef15ee77b16a1015b7cfb1ac5cd82538e47840404fa5a290ca843f",
+    "/app/api/hindsight_api/engine/memory_engine.py": "12ec0ef2d30514813c778d05597f0b8f0e8af3fee18d5acfd9eb6e166dd9ab5a",
+    "/app/api/hindsight_api/engine/providers/codex_llm.py": "b4cda4b56b3a6cc1f6bca64eaca7cbc7c75b5e8420d6bb77750c0d6304098afe",
+    "/app/api/hindsight_api/worker/poller.py": "f845467c37cee58c21033a195a971a907cf92154172ad5194d5fcc258451cd53"
+  },
+  "environment": {
+    "coreImage": "sha256:fd1c7cd3413405fd6b1b5ce408f2028cffed8de735a301550663e4c891ee5902",
+    "memoryImage": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+    "databaseImage": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+    "network": "Dedicated internal Docker network; no published ports or real provider access",
+    "finalSampleFreshTables": {
+      "core": 0,
+      "memory": 0
+    },
+    "publicModelCacheReused": true,
+    "productionStateCopied": false,
+    "nativeApplicationFactoriesPreserved": true,
+    "fixtureConfiguration": "Synthetic tenant/principal and existing resource-budget values; optional base module configuration is not a claim that every owner-installed module was enabled."
+  },
+  "focusedVerification": {
+    "ipcUniqueCases": 7,
+    "ipcReceipts": {
+      "pytest-late-permit.log": "4568e7487097b2bb608751854191621038961f7ea454edbb9092f04f79dd9ef5",
+      "command-late-permit.json": "e085959c57016e7b6db174739ddf03f00c6862618b1675c80b789c75c1a09508",
+      "pytest.log": "816784a4e272b1978e26ac9cacb03a7232c777eac836276d0b19507bd21e50b1",
+      "pytest-correction.log": "4d4324b86087ac7c37dae6b8dbfadf37a051796a0d773b900a32b6a8e3e201ad",
+      "pytest-late-permit-final.log": "7d42ef5504b9f8dea803cd978f146b4a7a910815a154ed9e4e59883957d8862e",
+      "command.json": "9b5fce504a96e96e07eee31624d19fc85d25c999da1c103670436907952039a3",
+      "command-late-permit-final.json": "b4f98897828ecc94e506b347e2df18da9f38a7f06aa195992d9bc1962a5e29a6",
+      "command-correction.json": "78ff6b17403136e4a6c78b1c1afed97234401fd5b5cabf9560733d4169d9c799"
+    },
+    "ipcLimitations": "Cases passed across original/correction/race runs; initial close and race-fixture failures are retained. No new unchanged rerun.",
+    "httpx2Cases": 7,
+    "httpx2Success": true,
+    "httpx2Seconds": 0.006709887005854398,
+    "httpx2ResultSha256": "044d83e161ef55cc86a0b4ad70e992b763cbd93e2bb06a7e1c53d2ac6804f184",
+    "httpx2Scope": "Exact wire bytes, plain and fragmented gzip; SDK-style terminal close, missing usage, observed duplicate terminal, failed close, stop/cancellation. Unread suffix is not drained or validated; no remote EOF claim."
+  },
+  "attemptHistory": [
+    {
+      "attempt": 1,
+      "recordedOutcome": "technical_failure",
+      "interpretedOutcome": "technical_failure",
+      "cause": "Native module mounted too shallow for existing ROOT resolution; fixed mount depth.",
+      "syntheticProviderDispatches": 0,
+      "resultSha256": "625534e35676ad84a112efbb3f830a4a5f0836947e82663eef24f955c4c5fd7f",
+      "stop": "sample observation complete",
+      "runtimeModelCalls": 0
+    },
+    {
+      "attempt": 2,
+      "recordedOutcome": "technical_failure",
+      "interpretedOutcome": "technical_failure",
+      "cause": "Native core refused fixture DSN permissions 0644; corrected fixture files to 0600.",
+      "syntheticProviderDispatches": 0,
+      "resultSha256": "4b761879b9bbc5323e6a70067355ce6a7b05fb64c72599344d5d40e4c43a4623",
+      "stop": "child closed without tracked HTTP settlement",
+      "runtimeModelCalls": 0
+    },
+    {
+      "attempt": 3,
+      "recordedOutcome": "technical_failure",
+      "interpretedOutcome": "technical_failure",
+      "cause": "HTTPX2 yields decoder byte chunks; observer expected bytes. Corrected both decode and flush.",
+      "syntheticProviderDispatches": 1,
+      "resultSha256": "6eda3c0ce1aa1a8d0087878bc932a394f84cbe2e01bfbb627f75415f175ad224",
+      "stop": "SDK attempt did not yield complete usage",
+      "runtimeModelCalls": 0
+    },
+    {
+      "attempt": 4,
+      "recordedOutcome": "technical_failure",
+      "interpretedOutcome": "technical_failure",
+      "cause": "Reuse guard correctly refused a prior empty bank; preserved it and used a new memory database.",
+      "syntheticProviderDispatches": 0,
+      "resultSha256": "bcf1163727b662e4b6f65dd25935696ccecb411bb96c33e56bb0192d75f151f0",
+      "stop": "sample observation complete",
+      "runtimeModelCalls": 0
+    },
+    {
+      "attempt": 5,
+      "recordedOutcome": "sample_envelope_refused",
+      "interpretedOutcome": "accounting_failure",
+      "cause": "Native SDK stops after response.completed before EOF; observer incorrectly marked valid completed usage unknown. Receipt label sample_envelope_refused was wrong; this was an accounting failure.",
+      "syntheticProviderDispatches": 1,
+      "resultSha256": "d85d9cacef32249d9477de99a862302501d68cbc8a00710fe0618bde468cc5bf",
+      "stop": "SDK attempt did not yield complete usage",
+      "runtimeModelCalls": 0
+    },
+    {
+      "attempt": 6,
+      "recordedOutcome": "sample_envelope_refused",
+      "interpretedOutcome": "sample_envelope_refused",
+      "cause": "Observed native terminal settlement works; third call refused before dispatch by unchanged two-attempt sample envelope.",
+      "syntheticProviderDispatches": 2,
+      "resultSha256": "2583192e92c8118e8ba4ea1bdec9572b05cbeec79dfdea1242a7724f41877c12",
+      "stop": "declared sample attempts reached",
+      "runtimeModelCalls": 0
+    }
+  ],
+  "finalSample": {
+    "outcome": "sample_envelope_refused",
+    "launcher": {
+      "exitCode": 0,
+      "wallSeconds": 47.437443603994325
+    },
+    "launcherSha256": "823156fca233ba9bb232fceef1cc78c3441db6c2f76048a5023b4fdfe45e3973",
+    "foregroundSeconds": 3.1856607740046456,
+    "sampleObservationSeconds": 4.488307499006623,
+    "replyIntegrity": true,
+    "replyText": "Ik onthoud dat je kamillethee lekker vindt.",
+    "parentAccounting": {
+      "ledger": {
+        "sample_id": "p1-eva2-shared-sample-20261003-v6",
+        "provider_attempts": 2,
+        "complete": true,
+        "stop": "declared sample attempts reached",
+        "stop_requested": true,
+        "active_async_attempts": 0,
+        "cancel_errors": [],
+        "total_usage": {
+          "input_tokens": 48,
+          "output_tokens": 14,
+          "total_tokens": 62
+        },
+        "known_partial_usage": {
+          "input_tokens": 48,
+          "output_tokens": 14,
+          "total_tokens": 62
+        },
+        "attempts": [
+          {
+            "id": 0,
+            "sample_id": "p1-eva2-shared-sample-20261003-v6",
+            "role": "contact",
+            "model": "gpt-6-sol",
+            "reasoning_effort": "none",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 17,
+              "output_tokens": 7,
+              "total_tokens": 24
+            }
+          },
+          {
+            "id": 1,
+            "sample_id": "p1-eva2-shared-sample-20261003-v6",
+            "role": "helper",
+            "model": "gpt-6-astra",
+            "reasoning_effort": "medium",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 31,
+              "output_tokens": 7,
+              "total_tokens": 38
+            }
+          }
+        ],
+        "coverage": "Only native entrypoints actually bound by the caller",
+        "live_admission": false
+      },
+      "errors": [],
+      "workers": {
+        "core": {
+          "connected": false,
+          "seen": true,
+          "terminal": {
+            "reported_settled": true,
+            "active_tasks": 0,
+            "pending_local": 0,
+            "cancel_errors": [],
+            "tracked_http_settled": true
+          },
+          "disconnect": null,
+          "unsettled_events": 0
+        },
+        "memory": {
+          "connected": false,
+          "seen": true,
+          "terminal": {
+            "reported_settled": true,
+            "active_tasks": 0,
+            "pending_local": 0,
+            "cancel_errors": [],
+            "tracked_http_settled": true
+          },
+          "disconnect": null,
+          "unsettled_events": 0
+        }
+      },
+      "scope": "Child terminal evidence covers tracked HTTP only; native process/DB completion is separate."
+    },
+    "beforeStopMemory": {
+      "memories": [
+        {
+          "id": "8367ece6-ccd5-4a6f-a9a3-c550c7e7d2eb",
+          "bank_id": "p1_offline_shared-616fcba97c897a60d6419f6c9617f866",
+          "fact_type": "world",
+          "text": "Fixture visitor prefers chamomile tea. | Involving: Fixture visitor | Personal preference",
+          "source_memory_ids": []
+        }
+      ],
+      "operations": [
+        {
+          "operation_id": "bd66c9a5-8562-54ad-a392-45358da9aed5",
+          "operation_type": "batch_retain",
+          "status": "completed"
+        },
+        {
+          "operation_id": "399fa4f3-34a9-43b9-8d57-90f1be5f765a",
+          "operation_type": "retain",
+          "status": "completed"
+        },
+        {
+          "operation_id": "97540338-baba-460d-a5d1-3e3ae6f7f0ad",
+          "operation_type": "consolidation",
+          "status": "processing"
+        }
+      ]
+    },
+    "afterStopMemory": {
+      "memories": [
+        {
+          "id": "8367ece6-ccd5-4a6f-a9a3-c550c7e7d2eb",
+          "bank_id": "p1_offline_shared-616fcba97c897a60d6419f6c9617f866",
+          "fact_type": "world",
+          "text": "Fixture visitor prefers chamomile tea. | Involving: Fixture visitor | Personal preference",
+          "source_memory_ids": []
+        }
+      ],
+      "operations": [
+        {
+          "operation_id": "bd66c9a5-8562-54ad-a392-45358da9aed5",
+          "operation_type": "batch_retain",
+          "status": "completed"
+        },
+        {
+          "operation_id": "399fa4f3-34a9-43b9-8d57-90f1be5f765a",
+          "operation_type": "retain",
+          "status": "completed"
+        },
+        {
+          "operation_id": "97540338-baba-460d-a5d1-3e3ae6f7f0ad",
+          "operation_type": "consolidation",
+          "status": "pending"
+        }
+      ]
+    },
+    "afterStopCoreCheckpoints": [
+      {
+        "thread_id": "conversation-model:fa67cecf-8be8-47aa-9bfe-3517048ffc5e",
+        "phase": "model_recorded",
+        "status": "completed"
+      },
+      {
+        "thread_id": "conversation:managed-b-probe:bd5ac2b7d3a3:1",
+        "phase": "memory_queued",
+        "status": "completed"
+      },
+      {
+        "thread_id": "memory-storage:02d061e554c8c8719da09f8470611ff9ea72284be1399eb41018b9b2c1723496",
+        "phase": "memory_storage_retained",
+        "status": "active"
+      },
+      {
+        "thread_id": "memory-retain:02d061e554c8c8719da09f8470611ff9ea72284be1399eb41018b9b2c1723496",
+        "phase": "memory_retained",
+        "status": "completed"
+      }
+    ],
+    "nativeWorkers": {
+      "core": {
+        "localSettled": true,
+        "workers": [
+          {
+            "thread_alive": false,
+            "service_thread_alive": false,
+            "last_error": null
+          }
+        ],
+        "activeResponses": 0,
+        "controlCloseAcknowledged": true
+      },
+      "memory": {
+        "localSettled": true,
+        "workers": [
+          {
+            "in_flight": 0,
+            "unfinished_tasks": 0
+          }
+        ],
+        "activeResponses": 0,
+        "controlCloseAcknowledged": true,
+        "providerInstances": 4,
+        "calls": [
+          {
+            "schema": "FactExtractionResponse",
+            "scope": "retain_extract_facts",
+            "stage": "llm.codex.retain_extract_facts.attempt=1/4",
+            "model": "gpt-6-astra",
+            "effort": "medium"
+          }
+        ]
+      }
+    },
+    "databaseDumps": {
+      "p1_core": {
+        "exitCode": 0,
+        "bytes": 279664,
+        "sha256": "f2d41d3d92f9c3f188e62e8ac21e3e0a20a53471592b88ead2345272f92264f2"
+      },
+      "p1_memory": {
+        "exitCode": 0,
+        "bytes": 79027,
+        "sha256": "491e5d6907387878fc31273e370c1872f7f3134965aa495957fba1087bd298a0"
+      }
+    },
+    "cleanupBlockers": [],
+    "fixtureResourcesRemoved": true,
+    "resultSha256": "2583192e92c8118e8ba4ea1bdec9572b05cbeec79dfdea1242a7724f41877c12"
+  },
+  "interpretation": {
+    "knownDispatchedUsageComplete": true,
+    "syntheticUsage": {
+      "inputTokens": 48,
+      "outputTokens": 14
+    },
+    "nativeMemoryTaskComplete": false,
+    "thirdCallDispatched": false,
+    "budgetUnchanged": true,
+    "pendingConsolidationPreservedInDump": true,
+    "warning": "Ledger complete means usage for dispatched requests is known. It does not mean the native memory task completed. The consolidation operation is pending after controlled stop.",
+    "noGeneralBudgetClaim": "This nonempty memory fixture requires a third call; actual C01/C04 inputs have not been run and need not have identical memory work.",
+    "childMirrorDiagnostic": "After acknowledged closure, child local mirrors report parent disconnected; accounting unknown. Authoritative parent receipts independently show valid terminal acknowledgments, no unsettled HTTP events and known usage. This does not establish native task completion."
+  },
+  "consumption": {
+    "realModelCalls": 0,
+    "allNativeAttemptsSyntheticDispatches": 4,
+    "developmentCredits": null,
+    "runtimeCredits": null,
+    "fixtureTokenCountsAreActualUsage": false
+  },
+  "review": {
+    "path": "eva2/reviews/p1-shared-native-sample-20261003.md",
+    "sha256": "3c6dbe0922a20d35af4171ec51920f66df1ccab519c5fc928b95202b57bc3bf7",
+    "status": "GO for shared observed accounting and stop enforcement only",
+    "reviewer": "/root/aide_final_evaluation"
+  },
+  "remaining": "Individual live admission still needs the actual fixed C01/C04 sample route, complete source/config/tool binding and reporting. Missing competitor access remains unknown. No budget redistribution or final acceptance claim."
+}
