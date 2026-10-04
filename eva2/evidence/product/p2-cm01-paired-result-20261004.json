@@ -1,0 +1,96 @@
+{
+  "contract": "EvaComparisonPairResult/v1",
+  "checkedAt": "2026-10-04T15:19:09.697698+00:00",
+  "caseId": "EV003-CM-01",
+  "epoch": 1,
+  "status": "both_native_completed_both_objective_task_failed",
+  "scope": "One original sealed three-turn conversation-memory case on the same frozen participant versions, inputs and declared limits. Not the full comparison or a new product capability.",
+  "participants": {
+    "eva1-bottie": {
+      "taskOutcome": "I",
+      "nativeOutcome": "native_route_complete",
+      "providerCalls": 8,
+      "inputTokens": 52645,
+      "outputTokens": 2467,
+      "recordedIntervalSeconds": 95.426132643,
+      "toolDispatches": 8,
+      "verifiedReplies": 3,
+      "verifiedAcks": 3,
+      "replyAndReadbackSeconds": [
+        43.431432978,
+        33.228097941,
+        15.194024155
+      ],
+      "fullSettlementSeconds": null,
+      "failureStage": "Persisted memory remained unchanged after the correction.",
+      "receiptSha256": "26e12b5554fcf386209abe631ec8239d8239a41397c3f8c41995a50df13ea0d5"
+    },
+    "eva2": {
+      "taskOutcome": "I",
+      "nativeOutcome": "native_sample_completed",
+      "providerCalls": 8,
+      "inputTokens": 22559,
+      "outputTokens": 1186,
+      "recordedIntervalSeconds": 81.58,
+      "toolDispatches": 0,
+      "verifiedReplies": 3,
+      "completedMemoryOperations": 9,
+      "firstContentSeconds": [
+        8.805,
+        3.632,
+        5.766
+      ],
+      "foregroundSeconds": [
+        10.828,
+        5.454,
+        7.071
+      ],
+      "fullSettlementSeconds": [
+        35.663,
+        25.862,
+        10.963
+      ],
+      "failureStage": "Correction-related information persisted but the earlier conflicting scope remained. Whether newer information was omitted during retrieval or misapplied after retrieval is not established.",
+      "receiptSha256": "d2e4d9ad3e701bbf459fd82b335c488124b58234a99596903bba86a268cc95cf"
+    }
+  },
+  "sharedResult": {
+    "requiredCorrectionUsedInFinalAnswer": false,
+    "nativeAccountingComplete": true,
+    "withinFrozenLimits": true,
+    "stopSettled": true,
+    "recordedExternalEffects": 0,
+    "cleanupFailures": 0,
+    "humanRatings": [
+      null,
+      null
+    ]
+  },
+  "interpretation": {
+    "quality": "Both failed the original correction-and-later-continuation condition. Do not replace this with a transport pass.",
+    "tokens": "Eva2 used fewer observed tokens for this failed case; no overall efficiency win.",
+    "speed": "Recorded intervals have different startup boundaries (Eva1 starts before worker launch; Eva2 after readiness). No speed win established. Reply/readback and first-content metrics also differ in definition.",
+    "scope": "One case/one epoch; no general comparison conclusion or new function completion. Existing owner acceptances remain unchanged.",
+    "credits": null
+  },
+  "independentAssessment": {
+    "reviewer": "/root/aide_final_evaluation",
+    "artifact": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm01-epoch1/inspect-private/independent-pair-assessment-final.json",
+    "sha256": "cc6dd614d59715917c1d5a84bbea72d506d09dbf375e914611fcdc066b7e02ee",
+    "method": "Original sealed objective conditions and independent retained native database/readback evidence; no extra judge-model call, no hidden contents exposed to builder. Human preference/personality remains unscored.",
+    "originalAndCorrectedAssessmentsRetained": true
+  },
+  "execution": {
+    "eva1Session": 61174,
+    "eva2Session": 59267,
+    "bothExitCode": 0,
+    "bothInspectStatus": "success",
+    "attemptsPerParticipant": 1,
+    "retries": 0,
+    "sourceChangesDuringExecution": false,
+    "preExecutionApproval": "Original automatic rejection preserved; exact command reconsidered with independently verified synthetic-input provenance and existing owner comparison mandate, then permitted via same approval path.",
+    "eva2DependencyRestored": "Identical hash-pinned time-machine3.5.1 test wheels restored before any Eva2 case execution; no product dependency change."
+  },
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "datasetSha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4"
+}

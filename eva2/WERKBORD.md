@@ -61,17 +61,28 @@ uit bestaand ontwikkelbewijs en geïnstalleerde taakgrenzen; geen voorspelde kos
 of claim dat iedere taak binnen die grenzen zal slagen. Geen nieuwe modelcalls.
 [Bevroren uitvoerplan](benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json).
 
-**Nu: P2.1 — Eva1/Eva2-vergelijking voorbereid; uitvoering wacht op toestemming.**
-De automatische goedkeuringscontrole heeft de echte Eva1-proef vóór processtart
-geweigerd: zij verlangt expliciete toestemming voor het versturen van afgeschermde
-proefberichten naar OpenAI. Een gerichte vraag voor één vaste geheugenopdracht op
-Eva1 en Eva2 staat in de chat. Geen proef gestart, nul eindmodelcalls; geen herhaling
-of omweg. Beide aansluitingen zijn nu voorbereid en gericht in de bron gecontroleerd.
-Er draaien geen uitvoerende agents; de gevraagde toestemming blijft open.
-Nog geen eindscore of algemene voorsprong; P2 blijft open. Hermes/OpenClaw missen
-bruikbare toegang; geen nieuwe aanmeldpoging. Stand **27/44 kleine taken**.
-[Afgeschermde eindtaken](benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json)
-· [Actuele meetkoppeling en beperkingen](benchmark/inspect_ai_v1/p1_participants_20260929.json).
+**Nu: P2.1 — eerste vaste geheugenvergelijking uitgevoerd; beide onvoldoende.**
+
+| Eén vaste opdracht, drie gespreksbeurten | Eva1 | Eva2 |
+|---|---:|---:|
+| Correctie later goed toegepast | Nee | Nee |
+| Antwoorden onafhankelijk teruggelezen | 3/3 | 3/3 |
+| Modelaanvragen | 8 | 8 |
+| Invoer-/uitvoertokens | 52.645 / 2.467 | 22.559 / 1.186 |
+
+Bij Eva1 bleef het opgeslagen geheugen na de correctie ongewijzigd. Eva2 sloeg
+correctiegerelateerde informatie op, maar behield de eerdere conflicterende scope.
+Of bij Eva2 de nieuwere informatie niet terugkwam of verkeerd is gebruikt, is nog
+niet vastgesteld. De oorspronkelijke resultaten en onafhankelijke afkeuring blijven
+bewaard; geen herhaling om alsnog een groene uitslag te halen.
+De gemeten totale intervallen (95,426 en 81,580 s) hebben verschillende startgrenzen
+voor opstarten en bewijzen geen snelheidswinst. Minder tokens bij een mislukte taak
+bewijzen geen algemene efficiëntiewinst. Geen menselijke voorkeursscore verzonnen.
+De eerdere automatische weigering is na onafhankelijke bevestiging van fictieve
+proefinvoer via dezelfde goedkeuringsroute opgelost; die vraag hoeft niet meer te
+worden beantwoord. Andere open toestemmingen blijven apart gelden.
+Stand **27/44 kleine taken**; de rest van de oorspronkelijke vergelijking blijft open.
+[Beide uitkomsten en beperkingen](evidence/product/p2-cm01-paired-result-20261004.json).
 
 **Hieronder staat eerdere opleverhistorie. Tellers daarin horen bij de vermelde oplevering.**
 
