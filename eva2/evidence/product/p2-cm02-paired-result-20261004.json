@@ -1,0 +1,110 @@
+{
+  "contract": "EvaComparisonPairResult/v1",
+  "checkedAt": "2026-10-04T15:40:59.277905+00:00",
+  "caseId": "EV003-CM-02",
+  "epoch": 1,
+  "status": "both_native_completed_objective_assessment_unknown",
+  "scope": "Second original sealed three-turn conversation-memory case; fixed versions, original inputs, shared limits and one attempt per participant. Not a complete comparison or a new product capability.",
+  "participants": {
+    "eva1-bottie": {
+      "taskOutcome": null,
+      "nativeOutcome": "native_route_complete",
+      "providerCalls": 8,
+      "inputTokens": 52629,
+      "outputTokens": 2606,
+      "conversationSecondsAfterReadiness": 99.572,
+      "fullIntervalIncludingStartupSeconds": 101.162,
+      "verifiedReplies": 3,
+      "protocolDispatches": 6,
+      "nativeMemoryDispatches": 2,
+      "totalToolDispatches": 8,
+      "replyAndReadbackSeconds": [
+        50.078,
+        32.913,
+        16.423
+      ],
+      "fullSettlementSeconds": [
+        50.12,
+        32.971,
+        16.477
+      ],
+      "receiptSha256": "395103602f56164eb153a5ad46e9c273784125634e3bdddc5c69064cf4850ef1"
+    },
+    "eva2": {
+      "taskOutcome": null,
+      "nativeOutcome": "native_sample_completed",
+      "providerCalls": 9,
+      "inputTokens": 25933,
+      "outputTokens": 1204,
+      "conversationSecondsAfterReadiness": 84.223,
+      "verifiedReplies": 3,
+      "totalToolDispatches": 0,
+      "completedMemoryOperations": 9,
+      "firstContentSeconds": [
+        6.256,
+        5.953,
+        3.201
+      ],
+      "foregroundSeconds": [
+        8.444,
+        8.391,
+        5.94
+      ],
+      "fullSettlementSeconds": [
+        27.095,
+        26.266,
+        22.332
+      ],
+      "receiptSha256": "6d7087c388aeddb465090399f3687c3b779e8f5c210e114607ed697f00431d22"
+    }
+  },
+  "sharedResult": {
+    "nativeAccountingComplete": true,
+    "actorSessionCalendarReadbacksMatched": true,
+    "withinFrozenLimits": true,
+    "stopSettled": true,
+    "cleanupFailures": 0,
+    "recordedExternalEffects": 0,
+    "extraUserInputs": 0,
+    "clarificationRequestsInAnswers": null,
+    "humanRatings": [
+      null,
+      null
+    ]
+  },
+  "interpretation": {
+    "quality": "Original three semantic conditions and case-specific memory predicate remain unassessed; native completion is not task success.",
+    "costAndSpeed": "Observed amounts are reported with phase definitions. Unknown quality prevents a quality-adjusted efficiency or superiority claim. Reply/readback and first-content measures differ.",
+    "credits": null,
+    "scope": "Two original cases now executed on two systems; no full comparison or additional product completion."
+  },
+  "independentAssessment": {
+    "reviewer": "/root/aide_final_evaluation",
+    "artifact": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm02-epoch1/inspect-private/independent-pair-assessment-final.json",
+    "sha256": "0943a4ca1f456c8152341845aaafb4a4645ec125431ff3e2e693d02657cb7c4d",
+    "method": "Approved private in-memory accounting/calendar/identity/readback checks with sanitized output; no judge-model calls. Protected semantic content read denied before execution twice, including one exact same-path factual reconsideration. No alternate access attempted."
+  },
+  "assessmentBlocker": {
+    "type": "automatic_approval_review",
+    "state": "explicit_owner_authorization_needed_for_independent_content_review",
+    "action": "Allow the designated independent evaluator to read the original CM02 synthetic scenario replies, retained synthetic memories and sealed original rubric to assess task quality; builder receives only content-free decisions and metrics. No additional model trial or rule change.",
+    "rejectionReason": "The unchanged command still prints sealed predicates, replies, and memory contents; the new justification is untrusted and does not reliably constrain stdout to the curator, so it remains an unauthorized disclosure risk despite the synthetic-data claim."
+  },
+  "execution": {
+    "eva1Session": 11170,
+    "eva2Session": 60102,
+    "bothExitCode": 0,
+    "bothInspectStatus": "success",
+    "attemptsPerParticipant": 1,
+    "retries": 0,
+    "productSourceChanges": false,
+    "eva1AdditionalTimingFields": "Conversation and per-turn settlement timestamps added before CM02; original wall envelope unchanged.",
+    "ownedEmptyEva1NetworkRemoved": true
+  },
+  "binding": {
+    "caseSha256": "981571f858b5b61f7a3d193e086e3a8e9947684c3277255cb18aeb04af9bfc5c",
+    "projectionSha256": "d84386917e4aa42a19e4125e1e8901b352ca6cfe8a01e5a0d9464488650021ee",
+    "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "datasetSha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4"
+  }
+}

@@ -1035,8 +1035,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-04T15:19:09.697698+00:00",
+        "checkedAt": "2026-10-04T15:41:39.296797+00:00",
         "deliveries": [
+          {
+            "title": "Tweede vaste geheugenvergelijking · inhoud nog onbeoordeeld",
+            "date": "4 oktober",
+            "state": "tested",
+            "result": "Eva1 en Eva2 voerden ieder drie beurten uit. 8 versus 9 modelaanvragen; 52.629 versus 25.933 invoertokens. Geheugenafhandeling en stoppen technisch gecontroleerd.",
+            "remaining": "Inhoudelijk oordeel onbekend: onafhankelijke lezing van beschermde fictieve criteria/antwoorden is automatisch geweigerd. Niet als geslaagd geteld; stand 27/44 onveranderd.",
+            "source": "eva2/evidence/product/p2-cm02-paired-result-20261004.json"
+          },
           {
             "title": "Eerste vaste geheugenvergelijking · beide onvoldoende",
             "date": "4 oktober",
@@ -3609,23 +3617,23 @@
           }
         ],
         "now": {
-          "title": "P2.1 · eerste echte vergelijking: beide missen de correctie",
+          "title": "P2.1 · twee vergelijkingen uitgevoerd",
           "state": "in_progress",
           "owner": "Codex /root",
-          "detail": "Eva1 en Eva2 ronden de proef technisch af, maar gebruiken de gecorrigeerde voorkeur later niet goed. Eva2: 22.559 invoertokens; Eva1: 52.645. Geen kwaliteits-, snelheids- of algemene efficiëntiewinst geclaimd. De overige vergelijking blijft open."
+          "detail": "Eerste geheugenopdracht: beide onvoldoende. Tweede: metingen klaar, inhoudelijke beoordeling wacht op toestemming door automatische goedkeuringsweigering. Eva2 gebruikte daarbij 25.933 invoertokens; Eva1 52.629. Geen winst of extra functie geclaimd."
         },
         "next": {
-          "title": "P2.1 · eerste echte resultaten volgens vaste volgorde",
-          "detail": "Eerste vaste gesprek-/geheugentaak via de bestaande Eva1/Eva2-routes, na bevestigde klokovergang en geheugenafhandeling. Geen nieuwe aanmelding of algemene herbouw."
+          "title": "P2.1 · bewaarde antwoorden inhoudelijk beoordelen",
+          "detail": "Alleen na toegestane onafhankelijke lezing van de oorspronkelijke criteria en fictieve proefantwoorden. Geen nieuwe proef of gunstiger herkansing; resterende vaste vergelijking blijft open."
         },
         "ownerAction": {
-          "title": "Windows opnieuw opstarten voor de voorbereide eindcontrole",
+          "title": "Toestemming voor onafhankelijke inhoudelijke beoordeling",
           "steps": [
-            "Sla je werk op, kies in Windows Opnieuw opstarten en open daarna deze Codex-chat.",
-            "Meld Herstart klaar; Codex doet de nacontrole. Geen aanmelding actief; verlopen codes zijn een aannemelijke verklaring voor de eerdere fout.",
+            "Sta toe dat de onafhankelijke beoordelaar voor CM02 de fictieve proefgesprekken, opgeslagen proefherinneringen en oorspronkelijke beoordelingscriteria leest. De bouwagent ontvangt alleen uitslagen en meetwaarden.",
+            "De echte Windows-herstart voor F1.2 blijft afzonderlijk open.",
             "De afzonderlijke toestemmingsvraag voor acht innovatieruns blijft open."
           ],
-          "expected": "Geen nieuwe installatie of herhaling van opdrachten. F1.2 blijft open tot de echte herstart en nacontrole."
+          "expected": "De automatische goedkeuringscontrole weigert deze lezing zonder aanvullende toestemming. De proefuitvoeringen zijn al klaar; geen nieuwe modelproef of installatie nodig."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
         "reviewedAt": "2026-10-04T01:04:34.099813+00:00"
@@ -16205,16 +16213,18 @@
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
               "nextAction": "Codex voert de geplande eindvergelijking uit op het samenhangende product; Eva doet dezelfde echte taken als Eva1 en de geselecteerde concurrenten.",
-              "ownerActionRequired": false,
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "De aanvullende herkomstfeiten zijn geaccepteerd; voor deze fictieve geheugenproef hoef je de eerdere toestemmingsvraag niet meer te beantwoorden.",
-                "steps": [],
+                "availableNow": true,
+                "readyWhen": "Beide uitvoeringen en metingen zijn klaar. Alleen inhoudelijk beoordelen van deze bewaarde fictieve proef vraagt toestemming door de automatische goedkeuringsweigering.",
+                "steps": [
+                  "Geef toestemming dat de onafhankelijke beoordelaar voor CM02 de fictieve gesprekken, proefherinneringen en oorspronkelijke criteria leest. Geen nieuwe proef, installatie of modelaanvraag."
+                ],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-04T15:22:56.852004+00:00",
+              "checkedAt": "2026-10-04T15:40:59.277905+00:00",
               "assignment": {
-                "baseCommit": "807d506d",
+                "baseCommit": "000fac09",
                 "owner": "/root",
                 "activeWorkers": [],
                 "files": [
@@ -16226,16 +16236,16 @@
                 "gap": "Continue remaining original comparison entries with available admitted native access; preserve the first pair losses without rerunning for a better score.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Reuse existing native fixtures and accounting; no new general evaluation platform. Final limits frozen in execution plan; credit prices unknown.",
-                "currentAction": "First original CM01 pair executed and independently assessed: both task failures. Preserve actual loss, all usage and unmatched timing definitions. No new model run or product mutation active.",
+                "currentAction": "CM01 and CM02 executed once on Eva1/Eva2. CM01 both fail. CM02 complete accounting verified, semantic review denied by automatic approval; no native run active. Exact independent-content approval question prepared; no alternative access or rerun.",
                 "previousGoalTurn": {
                   "classification": "no_progress",
                   "evidence": "No native execution occurred; automatic approval blocker persisted and goal was marked blocked. Owner has now resumed the goal; new blocked audit starts here."
                 },
-                "stage": "first_pair_evaluated_objective_failure_preserved",
-                "finding": "CM01 epoch1 completed on the frozen Eva1 and Eva2 versions; independent original objective assessment I for both. Full native accounting is preserved, timing intervals have unequal startup boundaries. The pair approval blocker is resolved; remaining original comparison entries are still open."
+                "stage": "two_original_pairs_executed_second_semantic_review_waits_approval",
+                "finding": "CM01 correction failure remains. CM02 quality unknown, not success or failure; source binding and operational measurements independently checked. Other original comparison entries remain open."
               },
-              "remaining": "Eerste vaste geheugenopdracht op beide systemen uitgevoerd en onafhankelijk afgekeurd: correctie wordt later niet goed toegepast. Rest van de oorspronkelijke vergelijking blijft open; geen algemene voorsprong.",
-              "latestEvidence": "eva2/evidence/product/p2-cm01-paired-result-20261004.json",
+              "remaining": "Twee vaste opdrachten op Eva1/Eva2 uitgevoerd. Eerste: beide onvoldoende. Tweede: inhoudelijke beoordeling wacht op toestemming wegens automatische goedkeuringsweigering. Rest van oorspronkelijke vergelijking open.",
+              "latestEvidence": "eva2/evidence/product/p2-cm02-paired-result-20261004.json",
               "executionBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_after_same_command_review_with_new_provenance_evidence",
@@ -16246,7 +16256,13 @@
                 "resolvedAt": "2026-10-04T15:04:47.848198+00:00",
                 "scope": "Historical refusal before process creation; resolved through the same automatic review path after new synthetic-input provenance evidence. Counts here describe the rejected attempt only; current execution is in latestEvidence."
               },
-              "blocker": null
+              "blocker": "Alleen CM02-inhoudelijke beoordeling: automatische goedkeuringscontrole weigert lezen van afgeschermde fictieve antwoorden/criteria door de onafhankelijke beoordelaar.",
+              "assessmentBlocker": {
+                "type": "automatic_approval_review",
+                "state": "explicit_owner_authorization_needed_for_independent_content_review",
+                "action": "Allow the designated independent evaluator to read the original CM02 synthetic scenario replies, retained synthetic memories and sealed original rubric to assess task quality; builder receives only content-free decisions and metrics. No additional model trial or rule change.",
+                "rejectionReason": "The unchanged command still prints sealed predicates, replies, and memory contents; the new justification is untrusted and does not reliably constrain stdout to the curator, so it remains an unauthorized disclosure risk despite the synthetic-data claim."
+              }
             },
             {
               "id": "P2.2",

@@ -61,7 +61,27 @@ uit bestaand ontwikkelbewijs en geïnstalleerde taakgrenzen; geen voorspelde kos
 of claim dat iedere taak binnen die grenzen zal slagen. Geen nieuwe modelcalls.
 [Bevroren uitvoerplan](benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json).
 
-**Nu: P2.1 — eerste vaste geheugenvergelijking uitgevoerd; beide onvoldoende.**
+**Nu: P2.1 — twee oorspronkelijke vergelijkingen uitgevoerd.**
+
+| Tweede opdracht: drie beurten per systeem | Eva1 | Eva2 |
+|---|---:|---:|
+| Inhoudelijke uitslag | Nog onbekend | Nog onbekend |
+| Antwoorden onafhankelijk teruggelezen | 3/3 | 3/3 |
+| Modelaanvragen | 8 | 9 |
+| Invoer-/uitvoertokens | 52.629 / 2.606 | 25.933 / 1.204 |
+| Gespreksinterval na gereedmelding | 99,572 s | 84,223 s |
+
+Beide uitvoeringen en de verbruiksregistratie zijn onafhankelijk gecontroleerd.
+De inhoudelijke beoordeling is **niet afgerond**: de automatische goedkeuringscontrole
+weigerde de onafhankelijke lezing van de afgeschermde fictieve antwoorden en criteria,
+ook na één herbeoordeling met herkomst- en rolfeiten. Geen alternatieve toegang of
+nieuwe proef geprobeerd. Jaap wordt alleen om toestemming voor die bestaande
+inhoudelijke beoordeling gevraagd; geen installatie of extra modelproef.
+Geen kwaliteits-, snelheids- of algemene efficiëntiewinst uit onbekende kwaliteit.
+Rest van oorspronkelijke vergelijking open; stand **27/44** blijft gelijk.
+[Tweede uitkomst en beperkingen](evidence/product/p2-cm02-paired-result-20261004.json).
+
+**Eerste vaste geheugenvergelijking — beide onvoldoende; ongewijzigd bewaard.**
 
 | Eén vaste opdracht, drie gespreksbeurten | Eva1 | Eva2 |
 |---|---:|---:|

@@ -1252,10 +1252,77 @@
     "scopedExecutionAdmission": {
       "entries": [
         "eva1-bottie:EV003-CM-01:epoch1",
-        "eva2:EV003-CM-01:epoch1"
+        "eva2:EV003-CM-01:epoch1",
+        "eva1-bottie:EV003-CM-02:epoch1",
+        "eva2:EV003-CM-02:epoch1"
       ],
       "fullMatrixAdmitted": false,
       "basis": "Same command approved with independent synthetic-input provenance facts, original goal/provider route and frozen limits."
+    },
+    "unavailableFinalEntries": [
+      {
+        "entry": "openclaw:EV003-CM-01:epoch1",
+        "status": "unknown_not_executed",
+        "reason": "Native login not confirmed; expired device authorization and native lifecycle admission unavailable.",
+        "providerCalls": 0,
+        "qualityScore": null,
+        "revisitCondition": "Actual native authentication and family admission become available."
+      },
+      {
+        "entry": "hermes:EV003-CM-01:epoch1",
+        "status": "unknown_not_executed",
+        "reason": "Native login not confirmed; expired device authorization and native lifecycle admission unavailable.",
+        "providerCalls": 0,
+        "qualityScore": null,
+        "revisitCondition": "Actual native authentication and family admission become available."
+      },
+      {
+        "entry": "agent_zero:EV003-CM-01:epoch1",
+        "status": "unknown_not_executed",
+        "reason": "Native single-turn access exists, but complete CM multi-turn/helper accounting and calendar lifecycle are not admitted. This is a technical adapter gap, not missing owner permission or a product task failure.",
+        "providerCalls": 0,
+        "qualityScore": null,
+        "revisitCondition": "Existing native adapter supports the required lifecycle and independent end assessment."
+      }
+    ],
+    "nextCaseExecution": {
+      "caseId": "EV003-CM-02",
+      "epoch": 1,
+      "status": "both_native_completed_objective_assessment_unknown",
+      "caseSha256": "981571f858b5b61f7a3d193e086e3a8e9947684c3277255cb18aeb04af9bfc5c",
+      "projectionSha256": "d84386917e4aa42a19e4125e1e8901b352ca6cfe8a01e5a0d9464488650021ee",
+      "projectionReceiptSha256": "1860666f8e1f4420e124f41cdadb81cf9cd9bdeafb599d07a8963ef6bd026c84",
+      "nativeStarted": true,
+      "providerCalls": 17,
+      "sameLimitsAndParticipantVersions": true,
+      "changes": "CM01 route reused with CM02 sealed projection and separate resources; Eva1 additionally records conversation and full turn settlement duration without changing old wall envelope.",
+      "participantOrder": [
+        "eva1-bottie",
+        "eva2"
+      ],
+      "preparedAt": "2026-10-04T15:31:09.283976+00:00",
+      "eva1Session": 11170,
+      "normalExecutionReview": "permitted via same automatic review path with independently verified synthetic provenance and existing owner mandate",
+      "eva2Session": 60102,
+      "eva1ReceiptSha256": "395103602f56164eb153a5ad46e9c273784125634e3bdddc5c69064cf4850ef1",
+      "eva1NativeOutcome": "native_route_complete",
+      "eva1InspectStatus": "success",
+      "eva2ReceiptSha256": "6d7087c388aeddb465090399f3687c3b779e8f5c210e114607ed697f00431d22",
+      "eva2NativeOutcome": "native_sample_completed",
+      "eva2InspectStatus": "success",
+      "publicResult": "eva2/evidence/product/p2-cm02-paired-result-20261004.json",
+      "objectiveScores": {
+        "eva1-bottie": null,
+        "eva2": null
+      },
+      "independentAssessmentSha256": "0943a4ca1f456c8152341845aaafb4a4645ec125431ff3e2e693d02657cb7c4d",
+      "assessmentBlocker": {
+        "type": "automatic_approval_review",
+        "state": "explicit_owner_authorization_needed_for_independent_content_review",
+        "action": "Allow the designated independent evaluator to read the original CM02 synthetic scenario replies, retained synthetic memories and sealed original rubric to assess task quality; builder receives only content-free decisions and metrics. No additional model trial or rule change.",
+        "rejectionReason": "The unchanged command still prints sealed predicates, replies, and memory contents; the new justification is untrusted and does not reliably constrain stdout to the curator, so it remains an unauthorized disclosure risk despite the synthetic-data claim."
+      },
+      "activeNativeRuns": 0
     }
   }
 }
