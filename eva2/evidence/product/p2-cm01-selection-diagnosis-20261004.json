@@ -1,0 +1,76 @@
+{
+  "contract": "EvaComparisonFailureDiagnosis/v1",
+  "checkedAt": "2026-10-04T16:24:09.048099+00:00",
+  "task": "P2.1",
+  "caseId": "EV003-CM-01",
+  "epoch": 1,
+  "participant": "eva2",
+  "status": "selection_provenance_established_semantic_stage_unknown",
+  "basis": "Previously retained native CM01 response IDs and independent database snapshot, schema/source only; no new scenario or modelcall.",
+  "providerCalls": 0,
+  "sourceEqualsFrozenCandidate": {
+    "referenceCommit": "512bdcfcac2239fc4709cdc686fee4a07c941895",
+    "files": [
+      "eva2/src/eva/application/conversation.py",
+      "eva2/src/eva/adapters/projection/hindsight.py",
+      "eva2/src/eva/adapters/model/pydantic_conversation.py"
+    ],
+    "gitDiffEmpty": true
+  },
+  "selection": {
+    "idDefinition": "Host-assigned complete selected semantic fact IDs; not model-declared citations. Does not describe recent conversation timeline or extra raw history fragments.",
+    "nativeIdMapping": "Strip exactly hindsight: from evidence_memory_ids; raw native memory_units.id unchanged.",
+    "selectedCountsByTurn": [
+      0,
+      2,
+      2
+    ],
+    "selectedSourceTurnsByTurn": [
+      [],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "lastTurnSelectedTypes": [
+      "observation",
+      "observation"
+    ],
+    "lastTurnSourceFactCount": [
+      1,
+      1
+    ],
+    "lastTurnSavedMentionedAtPresent": [
+      true,
+      true
+    ],
+    "lastTurnSourceMentionedAtPresent": [
+      true,
+      true
+    ]
+  },
+  "inference": {
+    "established": "Final semantic selection included an observation sourced from the correction turn as well as one from the original turn. The correction turn was not entirely omitted.",
+    "notEstablished": "Whether the selected observation contains the required corrected detail; whether an omitted other fact or model application caused failure. Source-turn membership is not semantic equivalence.",
+    "independentMetadataReview": {
+      "reviewer": "/root/aide_final_evaluation",
+      "assessmentSha256": "cc6dd614d59715917c1d5a84bbea72d506d09dbf375e914611fcdc066b7e02ee",
+      "finding": "Both original assessments lack record-ID-to-predicate mapping. Existing booleans do not establish retrieved_but_ignored."
+    }
+  },
+  "secondarySourceFinding": {
+    "scope": "Observation original-source date can be lost when its own mentioned_at is absent even if source facts have a date.",
+    "locations": [
+      "eva2/src/eva/adapters/projection/hindsight.py:553",
+      "eva2/src/eva/adapters/projection/hindsight.py:1526"
+    ],
+    "causesThisLoss": null,
+    "action": "Not changed speculatively. Pinned API schema/serializer supports mentioned_at and saved selected rows have it; actual raw recall payload was not retained."
+  },
+  "decision": "Keep original objective failure. Do not lower recall thresholds, increase context, change prompts or rebuild memory without the missing causal evidence. Continue other original available comparison entries; sealed candidate and owner M1 acceptance unchanged.",
+  "developmentCredits": null
+}

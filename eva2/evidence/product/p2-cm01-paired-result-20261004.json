@@ -92,5 +92,10 @@
     "eva2DependencyRestored": "Identical hash-pinned time-machine3.5.1 test wheels restored before any Eva2 case execution; no product dependency change."
   },
   "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
-  "datasetSha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4"
+  "datasetSha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4",
+  "diagnosisFollowup": {
+    "evidence": "eva2/evidence/product/p2-cm01-selection-diagnosis-20261004.json",
+    "status": "selection_provenance_established_semantic_stage_unknown",
+    "changesOriginalScore": false
+  }
 }

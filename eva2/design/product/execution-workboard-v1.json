@@ -1035,7 +1035,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-04T16:13:46.091584+00:00",
+        "checkedAt": "2026-10-04T16:24:09.048099+00:00",
         "deliveries": [
           {
             "title": "Agent Zero kan dezelfde meerbeurtenvergelijking doorlopen",
@@ -3625,14 +3625,14 @@
           }
         ],
         "now": {
-          "title": "P2.1 · koppeling klaar; toegang en beoordeling open",
-          "state": "blocked",
-          "owner": "Codex /root",
-          "detail": "Agent Zero meldt verlopen aanmelding: nul modelaanvragen. De koppeling is gereviewd en staat op GitHub. CM02-inhoudelijke beoordeling wacht op de al gevraagde toestemming. Geen proef of agent actief."
+          "title": "P2.1 · volgende oorspronkelijke vergelijking voorbereiden",
+          "state": "in_progress",
+          "owner": "Codex /root + onafhankelijke beoordelaar",
+          "detail": "CM01: context uit de correctiebeurt was geselecteerd, maar inhoudelijke foutoorzaak nog onbekend. Geen speculatieve geheugenwijziging. Nu CM03 voorbereiden via de bestaande Eva1/Eva2-routes."
         },
         "next": {
-          "title": "P2.1 · bestaande resultaten beoordelen, vergelijking vervolgen",
-          "detail": "Na toegang/toestemming hervatten bij de voorbereide oorspronkelijke opdracht; geen nieuwe bouw- of inlogonderzoekronde. Fysieke en gezinsbeoordelingen blijven afzonderlijk open."
+          "title": "P2.1 · CM03 eenmaal uitvoeren op beschikbare kandidaten",
+          "detail": "Oorspronkelijke invoer en voorwaarden behouden. Ontbrekende concurrenttoegang en CM02-beoordeling blijven afzonderlijk zichtbaar; geen eerdere proef herhalen."
         },
         "ownerAction": {
           "title": "Toestemming voor onafhankelijke inhoudelijke beoordeling",
@@ -16231,26 +16231,31 @@
                 ],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-04T16:13:46.091584+00:00",
+              "checkedAt": "2026-10-04T16:24:09.048099+00:00",
               "assignment": {
-                "baseCommit": "f7b118b25165bea8e55d4f1a1ea2dee7b0034e58",
+                "baseCommit": "32a42975e58fa9e326ec5e09c5778b1b048e1bc2",
                 "owner": "/root",
-                "activeWorkers": [],
-                "files": [
-                  "Executor: p1_agentzero_bridge_probe.py and focused lifecycle tests",
-                  "Root: existing clock/readback wiring if required, shared manifest and workboard"
+                "activeWorkers": [
+                  {
+                    "agent": "/root/aide_final_evaluation",
+                    "scope": "Next original CM03 oracle-free inputs and reuse of existing native wrappers; no inference during preparation"
+                  }
                 ],
-                "existing": "Pinned candidate, fixed72-case dataset/scorer/budgets/order; native Eva1/Eva2 conversation fixtures and full Eva2 memory accounting exist.",
-                "gap": "Agent Zero currently tears down after one foreground answer; no complete3-turn/2session CM lifecycle with settled helpers and readbacks.",
+                "files": [
+                  "Executor: source-only shared memory/context route",
+                  "Root: content-free CM01 result metadata and existing workboard"
+                ],
+                "existing": "CM01 native result and independent review prove corrected information was stored but later answer failed. Prior accepted M1 family scope remains.",
+                "gap": "Distinguish missing recall/context selection from incorrect use by the model before proposing a repair.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
-                "estimate": "One existing native bridge extension with focused offline verification; no external inference during construction. Development credits unknown.",
-                "currentAction": "No active model run. Agent Zero adapter/projection/launcher complete; native readiness showed expired owned authentication. Existing CM02 semantic review authorization pending; no repeated login investigation.",
+                "estimate": "Targeted source/metadata check only; zero modelcalls planned. Development credits unknown.",
+                "currentAction": "CM01 content-free diagnosis complete: correction-turn observation was selected, exact semantic failure stage remains unknown. No speculative product repair. Prepare next original fixed case CM03 on available Eva1/Eva2.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "evidence": "Original CM02 executed once on Eva1 and Eva2, independently validated native accounting, published f7b118b2. CM01 actual failure retained; CM02 semantic review explicitly unknown after automatic review denial."
+                  "evidence": "Native Agent Zero multi-turn binding reviewed/published9db2ba35; real readiness recorded expired owned auth, zero inference, published32a42975."
                 },
-                "stage": "native_binding_complete_access_and_semantic_review_pending",
-                "finding": "Zero inference in readiness, isolated container/network/relay removed. Prior CM01 loss and CM02 unknown preserved."
+                "stage": "cm03_original_input_preparation",
+                "finding": "CM01 original loss retained. Native source same as frozen candidate. CM02 review and competitor access remain open."
               },
               "remaining": "Eva1/Eva2 CM01 en CM02 uitgevoerd; CM01 beide onvoldoende, CM02 inhoudelijk onbeoordeeld. Agent Zero-koppeling gereed, maar native aanmelding verlopen. Hermes/OpenClaw-aanmelding niet bevestigd. Geen actuele modelrun.",
               "latestEvidence": "eva2/evidence/product/p2-agentzero-cm-binding-20261004.json",
@@ -16278,7 +16283,8 @@
                 "loginStarted": false,
                 "evidence": "eva2/evidence/product/p2-agentzero-cm-binding-20261004.json",
                 "checkedAt": "2026-10-04T16:13:46.091584+00:00"
-              }
+              },
+              "diagnosisEvidence": "eva2/evidence/product/p2-cm01-selection-diagnosis-20261004.json"
             },
             {
               "id": "P2.2",
