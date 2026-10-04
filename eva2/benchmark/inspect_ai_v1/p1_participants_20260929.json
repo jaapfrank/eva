@@ -487,7 +487,8 @@
         "shape": "Three native turns, two contexts, same isolated memory/default store",
         "externalInferenceRequests": 0,
         "admission": "not_admitted",
-        "remaining": "Exact original scenario projection and scoped execution admission. Final idle-cleanup runtime remains unobserved; learned-memory quality not inferred from fixture."
+        "remaining": "Native authentication must become available. Original CM01 input and reviewed isolated wrapper ready; no final inference executed.",
+        "currentAccess": "owned_native_auth_expired"
       }
     }
   ],
@@ -1295,10 +1296,12 @@
       {
         "entry": "agent_zero:EV003-CM-01:epoch1",
         "status": "unknown_not_executed",
-        "reason": "Native single-turn access exists, but complete CM multi-turn/helper accounting and calendar lifecycle are not admitted. This is a technical adapter gap, not missing owner permission or a product task failure.",
+        "reason": "Native CM lifecycle and original input wrapper prepared and reviewed. Native readiness reports owned_auth_expired before inference. No login or refresh started.",
         "providerCalls": 0,
         "qualityScore": null,
-        "revisitCondition": "Existing native adapter supports the required lifecycle and independent end assessment."
+        "revisitCondition": "Native authenticated access available, then scoped original execution without rebuilding adapter.",
+        "evidence": "eva2/evidence/product/p2-agentzero-cm-binding-20261004.json",
+        "checkedAt": "2026-10-04T16:13:46.091584+00:00"
       }
     ],
     "nextCaseExecution": {
@@ -1354,7 +1357,8 @@
       "shape": "Three native turns, two contexts, same isolated memory/default store",
       "externalInferenceRequests": 0,
       "admission": "not_admitted",
-      "remaining": "Exact original scenario projection and scoped execution admission. Final idle-cleanup runtime remains unobserved; learned-memory quality not inferred from fixture."
+      "remaining": "Native authentication must become available. Original CM01 input and reviewed isolated wrapper ready; no final inference executed.",
+      "currentAccess": "owned_native_auth_expired"
     }
   }
 }

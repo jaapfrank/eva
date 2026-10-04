@@ -1035,14 +1035,14 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-04T16:02:28.959344+00:00",
+        "checkedAt": "2026-10-04T16:13:46.091584+00:00",
         "deliveries": [
           {
             "title": "Agent Zero kan dezelfde meerbeurtenvergelijking doorlopen",
             "date": "4 oktober",
             "state": "tested",
             "result": "Bestaande meetroute uitgebreid: drie beurten, twee sessies, automatische opslag en zelfstandig teruglezen. Gerichte offline proef en onafhankelijke bronreview geslaagd; nul echte modelcalls.",
-            "remaining": "Vergelijkingsgereedschap; geen nieuwe Eva-functie. Geheugenkwaliteit en echte eindopdracht nog onbeoordeeld. Laatste afsluitcorrectie alleen op bron gecontroleerd. Stand 27/44 onveranderd.",
+            "remaining": "Vergelijkingsgereedschap, geen extra Eva-functie. Native aanmelding verlopen: echte proef niet gestart, nul modelcalls. Laatste afsluitcorrectie alleen op bron gecontroleerd; stand 27/44.",
             "source": "eva2/evidence/product/p2-agentzero-cm-binding-20261004.json"
           },
           {
@@ -3625,19 +3625,20 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Agent Zero-koppeling gereed; vaste vergelijking voorbereiden",
-          "state": "in_progress",
-          "owner": "Codex /root + onafhankelijke beoordelaar",
-          "detail": "Drie beurten over twee sessies en echte opslag gecontroleerd, onafhankelijk gereviewd. Nul betaalde modelcalls. Nu dezelfde oorspronkelijke CM01-opdracht koppelen; nog geen kwaliteitsuitslag."
+          "title": "P2.1 · koppeling klaar; toegang en beoordeling open",
+          "state": "blocked",
+          "owner": "Codex /root",
+          "detail": "Agent Zero meldt verlopen aanmelding: nul modelaanvragen. De koppeling is gereviewd en staat op GitHub. CM02-inhoudelijke beoordeling wacht op de al gevraagde toestemming. Geen proef of agent actief."
         },
         "next": {
-          "title": "P2.1 · oorspronkelijke opdracht op Agent Zero uitvoeren",
-          "detail": "Dezelfde vaste criteria en modelroute gebruiken. CM02 inhoudelijk beoordelen zodra de al gevraagde lezing is toegestaan."
+          "title": "P2.1 · bestaande resultaten beoordelen, vergelijking vervolgen",
+          "detail": "Na toegang/toestemming hervatten bij de voorbereide oorspronkelijke opdracht; geen nieuwe bouw- of inlogonderzoekronde. Fysieke en gezinsbeoordelingen blijven afzonderlijk open."
         },
         "ownerAction": {
           "title": "Toestemming voor onafhankelijke inhoudelijke beoordeling",
           "steps": [
             "Sta toe dat de onafhankelijke beoordelaar voor CM02 de fictieve proefgesprekken, opgeslagen proefherinneringen en oorspronkelijke beoordelingscriteria leest. De bouwagent ontvangt alleen uitslagen en meetwaarden.",
+            "Agent Zero meldt ook een verlopen eigen aanmelding. Hermes/OpenClaw zijn niet bevestigd. Na geslaagde bestaande native aanmelding kan de vergelijking verder; geen herbouw nodig.",
             "De echte Windows-herstart voor F1.2 blijft afzonderlijk open.",
             "De afzonderlijke toestemmingsvraag voor acht innovatieruns blijft open."
           ],
@@ -16230,16 +16231,11 @@
                 ],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-04T16:02:28.959344+00:00",
+              "checkedAt": "2026-10-04T16:13:46.091584+00:00",
               "assignment": {
                 "baseCommit": "f7b118b25165bea8e55d4f1a1ea2dee7b0034e58",
                 "owner": "/root",
-                "activeWorkers": [
-                  {
-                    "agent": "/root/aide_final_evaluation",
-                    "scope": "Original CM01 Agent Zero oracle-free projection and admission preparation; no inference"
-                  }
-                ],
+                "activeWorkers": [],
                 "files": [
                   "Executor: p1_agentzero_bridge_probe.py and focused lifecycle tests",
                   "Root: existing clock/readback wiring if required, shared manifest and workboard"
@@ -16248,15 +16244,15 @@
                 "gap": "Agent Zero currently tears down after one foreground answer; no complete3-turn/2session CM lifecycle with settled helpers and readbacks.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "One existing native bridge extension with focused offline verification; no external inference during construction. Development credits unknown.",
-                "currentAction": "Native CM lifecycle wired and independently reviewed. Preparing same original CM01 input and scoped participant admission; no new model run active.",
+                "currentAction": "No active model run. Agent Zero adapter/projection/launcher complete; native readiness showed expired owned authentication. Existing CM02 semantic review authorization pending; no repeated login investigation.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "Original CM02 executed once on Eva1 and Eva2, independently validated native accounting, published f7b118b2. CM01 actual failure retained; CM02 semantic review explicitly unknown after automatic review denial."
                 },
-                "stage": "agent_zero_native_cm_binding_reviewed",
-                "finding": "Public native fixture passed: 3 turns/2 contexts, complete synthetic accounting and durable readback. Final idle cleanup source reviewed separately; no learned-memory quality claim."
+                "stage": "native_binding_complete_access_and_semantic_review_pending",
+                "finding": "Zero inference in readiness, isolated container/network/relay removed. Prior CM01 loss and CM02 unknown preserved."
               },
-              "remaining": "Agent Zero-koppeling gereed voor de oorspronkelijke CM01-vergelijking. Afzonderlijke uitvoering en beoordeling volgen; CM02-inhoudelijke toestemming blijft open.",
+              "remaining": "Eva1/Eva2 CM01 en CM02 uitgevoerd; CM01 beide onvoldoende, CM02 inhoudelijk onbeoordeeld. Agent Zero-koppeling gereed, maar native aanmelding verlopen. Hermes/OpenClaw-aanmelding niet bevestigd. Geen actuele modelrun.",
               "latestEvidence": "eva2/evidence/product/p2-agentzero-cm-binding-20261004.json",
               "executionBlocker": {
                 "type": "automatic_approval_review",
@@ -16268,12 +16264,20 @@
                 "resolvedAt": "2026-10-04T15:04:47.848198+00:00",
                 "scope": "Historical refusal before process creation; resolved through the same automatic review path after new synthetic-input provenance evidence. Counts here describe the rejected attempt only; current execution is in latestEvidence."
               },
-              "blocker": "Alleen CM02-inhoudelijke beoordeling: automatische goedkeuringscontrole weigert lezen van afgeschermde fictieve antwoorden/criteria door de onafhankelijke beoordelaar.",
+              "blocker": "CM02 inhoudelijk beoordelen wacht op de al gevraagde toestemming; Agent Zero-aanmelding verlopen, Hermes/OpenClaw ontbreken. Niet-uitgevoerde vergelijkingen blijven onbekend.",
               "assessmentBlocker": {
                 "type": "automatic_approval_review",
                 "state": "explicit_owner_authorization_needed_for_independent_content_review",
                 "action": "Allow the designated independent evaluator to read the original CM02 synthetic scenario replies, retained synthetic memories and sealed original rubric to assess task quality; builder receives only content-free decisions and metrics. No additional model trial or rule change.",
                 "rejectionReason": "The unchanged command still prints sealed predicates, replies, and memory contents; the new justification is untrusted and does not reliably constrain stdout to the curator, so it remains an unauthorized disclosure risk despite the synthetic-data claim."
+              },
+              "nativeAccessBlocker": {
+                "participant": "agent_zero",
+                "state": "owned_native_auth_expired",
+                "providerCalls": 0,
+                "loginStarted": false,
+                "evidence": "eva2/evidence/product/p2-agentzero-cm-binding-20261004.json",
+                "checkedAt": "2026-10-04T16:13:46.091584+00:00"
               }
             },
             {

@@ -1,8 +1,8 @@
 {
   "contract": "EvaComparisonNativeBindingEvidence/v1",
-  "checkedAt": "2026-10-04T16:02:28.959344+00:00",
+  "checkedAt": "2026-10-04T16:13:46.091584+00:00",
   "task": "P2.1",
-  "status": "offline_native_lifecycle_pass_independently_source_reviewed",
+  "status": "binding_reviewed_native_access_expired_before_inference",
   "participant": "agent_zero",
   "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
   "productChanged": false,
@@ -118,5 +118,25 @@
     "sourceSha256": "434ef173c7e0bc37070b6395a1dcdbf5b1fb02986de12cbc0e85223a39029d40",
     "path": "eva2/reviews/p2-agentzero-cm-binding-20261004.md",
     "scope": "Actual native hooks, settlement, auth-clock isolation, durable readback, final idle cleanup and old development routes. No sealed inputs read; no tests or inference repeated."
+  },
+  "readiness": {
+    "outcome": "unavailable_owned_native_auth_expired",
+    "providerCalls": 0,
+    "loginStarted": false,
+    "receipt": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/readiness/receipt.json",
+    "receiptSha256": "f313ae1a290d0b6f2601c4cee92cc597a0c88732feaecf2c53e7d59d2f5da752",
+    "containerAbsent": true,
+    "networkAbsent": true,
+    "relayClosed": true,
+    "launcherSha256": "4ccf678464bf90b479e9d97de37345d6c8be556407a993cf3a13a76c7f854304",
+    "inspectWrapperSha256": "70f21d3ffddda40ea36a99e2f2191013351712b5e3d9a20577c9a1e0947d297b",
+    "readinessAdmissionSha256": "38092dccd4bae12f7928079e5a2328e9321fc8c8626405e772d5ef1f64618245",
+    "scope": "Readiness stopped before native context startup. No final input sent or auth renewal attempted; last idle-cleanup runtime still unobserved."
+  },
+  "finalSample": {
+    "entry": "agent_zero:EV003-CM-01:epoch1",
+    "status": "unknown_not_executed",
+    "qualityScore": null,
+    "projectionSha256": "0c9aefba2b7ace184151405366630efbb98a5b200d5b3a13f16f27c25d9f12f0"
   }
 }
