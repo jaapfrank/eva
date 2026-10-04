@@ -13,14 +13,21 @@ let explicitSource = false;
 let providerMode = 'fixture';
 let authLease = null;
 let hookManifest = null;
+let calendarFile = null;
+let toolLimit = 4;
 for (let index = 0; index < args.length; index += 1) {
   if (['--resume', '--sample-control'].includes(args[index])) continue;
-  if (['--provider-mode', '--auth-lease', '--hook-manifest'].includes(args[index])) {
+  if (['--provider-mode', '--auth-lease', '--hook-manifest', '--calendar-file', '--max-tool-dispatches'].includes(args[index])) {
     const option = args[index];
     const value = args[++index];
     if (!value) throw new Error('option requires a value');
     if (option === '--provider-mode') providerMode = value;
     else if (option === '--auth-lease') authLease = value;
+    else if (option === '--calendar-file') calendarFile = value;
+    else if (option === '--max-tool-dispatches') {
+      if (!/^[1-9][0-9]*$/.test(value) || !Number.isSafeInteger(Number(value))) throw new Error('positive tool limit required');
+      toolLimit = Number(value);
+    }
     else hookManifest = value;
     continue;
   }
@@ -58,6 +65,8 @@ if (subscription) {
     sourceHashes[relative] = hash;
   }
 } else if (authLease || hookManifest) throw new Error('credentials only permitted in subscription mode');
+const calendar = calendarFile
+  ? (await import('./ev003_node_calendar.mjs')).installScenarioCalendar(calendarFile) : null;
 const nativeModule = relative => pathToFileURL(path.join(sourceRoot, relative)).href;
 const dataDir = fs.realpathSync(process.argv[2]);
 const resume = process.argv.includes('--resume');
@@ -132,11 +141,11 @@ function loadLease() {
 }
 const toolEvents = [];
 function recordTool(name, protocol = false) {
-  const allowed = !stopping && toolEvents.filter(e => e.admitted).length < 4
+  const allowed = !stopping && toolEvents.filter(e => e.admitted).length < toolLimit
     && (protocol ? name === 'commit_turn_understanding' : ['onthoud', 'zoek_geheugen', 'zoek_gesprek'].includes(name));
   toolEvents.push({ request_id: currentRequestId, name, protocol, admitted: allowed,
     outcome: allowed ? 'admitted_not_completion_proof' : 'refused_before_dispatch' });
-  const receipt = JSON.stringify({ contract: 'Cp001NativeToolDispatch/v1', maximum: 4, events: toolEvents });
+  const receipt = JSON.stringify({ contract: 'Cp001NativeToolDispatch/v1', maximum: toolLimit, events: toolEvents });
   const temporary = path.join(dataDir, 'native-tool-dispatch.json.tmp');
   fs.writeFileSync(temporary, receipt, { mode: 0o600 });
   fs.renameSync(temporary, path.join(dataDir, 'native-tool-dispatch.json'));
@@ -349,6 +358,11 @@ send({ ready: true, source_root: sourceRoot, source_sha256: sourceHashes, explic
   resumed: resume, pid: process.pid, network_namespace: fs.readlinkSync('/proc/self/ns/net'),
   key_file_sha256: createHash('sha256').update(fs.readFileSync(keyFile)).digest('hex') });
 async function handle(request) {
+  if (request.calendar_refresh === true) {
+    if (!calendar || Object.keys(request).length !== 1) throw new Error('invalid calendar refresh');
+    send({ calendar: calendar.refresh() });
+    return;
+  }
     if (request.sign_ack) {
       if (!lastExchange || !['valid', 'wrong-key', 'changed-hash'].includes(request.sign_ack)) {
         throw new Error('known ACK case and prior successful chat required');

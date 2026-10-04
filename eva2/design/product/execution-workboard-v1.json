@@ -1035,7 +1035,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-04T00:29:18.816502+00:00",
+        "checkedAt": "2026-10-04T01:04:34.099813+00:00",
         "deliveries": [
           {
             "title": "P1.2 afgerond · vaste eindvergelijking voorbereid",
@@ -3601,14 +3601,14 @@
           }
         ],
         "now": {
-          "title": "P1.2 afgerond · taken, beoordeling en meetbudgetten vast",
-          "state": "completed",
+          "title": "P2.1 · eerste vaste vergelijkingsopdracht voorbereiden",
+          "state": "in_progress",
           "owner": "Codex /root",
-          "detail": "Alle 72 vaste eindtaken, scorers, gelijke eindige meetgrenzen en uitvoervolgorde zijn vastgelegd en onafhankelijk gecontroleerd. Nul modelcalls hiervoor. Stand 27/44 kleine taken; dit is vergelijkingsvoorbereiding, geen nieuwe Eva-functie."
+          "detail": "De kalenderkoppeling is op de echte Eva2-kern en het geheugen gecontroleerd: twee gesprekken, datum vooruit na afgeronde opslag, echte tijdmeting behouden. Nu de eerste vaste Eva1/Eva2-opdracht uitvoeren via de bestaande routes. Dit is proefvoorbereiding; geen nieuwe productfunctie of eindscore."
         },
         "next": {
-          "title": "P2.1 · de vastgelegde eindvergelijking uitvoeren",
-          "detail": "Begin met beschikbare native toegang en bestaande aansluitingen. Elke deelnemer/familie moet eerst aan de vastgelegde toelating voldoen; ontbrekende toegang, audio en menselijke beoordeling blijven expliciet zichtbaar. Nog geen eindrun actief."
+          "title": "P2.1 · eerste echte resultaten volgens vaste volgorde",
+          "detail": "Eerste vaste gesprek-/geheugentaak via de bestaande Eva1/Eva2-routes, na bevestigde klokovergang en geheugenafhandeling. Geen nieuwe aanmelding of algemene herbouw."
         },
         "ownerAction": {
           "title": "Windows opnieuw opstarten voor de voorbereide eindcontrole",
@@ -3620,7 +3620,7 @@
           "expected": "Geen nieuwe installatie of herhaling van opdrachten. F1.2 blijft open tot de echte herstart en nacontrole."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-04T00:29:18.816502+00:00"
+        "reviewedAt": "2026-10-04T01:04:34.099813+00:00"
       },
       "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
     },
@@ -13100,7 +13100,7 @@
           ]
         }
       ],
-      "nextAction": "P2.1: voer de vastgelegde eindvergelijking uit met beschikbare native toegang; gebruik het vaste plan en maak ontbrekende toelating per deelnemer/familie zichtbaar. P1-voorbereiding is afgerond.",
+      "nextAction": "P2.1: eerste vaste scenario via bestaande native Eva1/Eva2 uitvoeren na controle van de benodigde echte ingangen en klok/gebeurtenissen.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -16173,7 +16173,7 @@
           ],
           "outcome": "Volledige vergelijking uitvoeren",
           "effort": "L; runtime unknown",
-          "status": "planned",
+          "status": "in_progress",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Historical wins/losses/unavailable cases and concrete task receipts exist.",
@@ -16192,7 +16192,7 @@
             {
               "id": "P2.1",
               "title": "Vergelijking op eindkandidaat uitvoeren",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
@@ -16203,7 +16203,33 @@
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "checkedAt": "2026-10-04T01:04:34.099813+00:00",
+              "assignment": {
+                "baseCommit": "6bcb9238ea6c6966e35eb493a6ae06ae6ec6c679",
+                "owner": "/root",
+                "activeWorkers": [
+                  "/root/aide_final_evaluation: private first-case projection and native Eva1 execution binding"
+                ],
+                "files": [
+                  "Root: shared evaluator integration, manifest, workboard",
+                  "Curator: private per-case inputs/events only",
+                  "Independent worker: read-only native Eva1 seams"
+                ],
+                "existing": "Pinned candidate, fixed72-case dataset/scorer/budgets/order; native Eva1/Eva2 conversation fixtures and full Eva2 memory accounting exist.",
+                "gap": "Bind first fixed multi-turn scenario to its actual required native clocks/events and durable state before final inference.",
+                "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
+                "estimate": "Reuse existing native fixtures and accounting; no new general evaluation platform. Final limits frozen in execution plan; credit prices unknown.",
+                "currentAction": "Prepare first fixed Eva1 case from existing native launcher; product candidate frozen and hidden inputs retained by evaluator. Actual native two-turn calendar/auth checks completed with synthetic providers only.",
+                "previousGoalTurn": {
+                  "classification": "progress",
+                  "evidence": "6bcb9238: P1.2/P1 original conditions completed, independent preparation GO, fixed plan and live dashboard published."
+                },
+                "stage": "native_calendar_verified_first_case_driver_preparation",
+                "finding": "Independent curator confirmed all12 conversation-memory cases require controlled calendar; current native fixtures do not provide it. Missing evaluator capability, not product failure or external-access blocker. Exact-person Bottie readback added and independently reviewed."
+              },
+              "remaining": "Kalenderovergang en echte credentialtijd zijn nu gericht gecontroleerd. Eerste vaste eindtaak voorbereiden op de bestaande native uitvoerroute; nog geen eindmodelcall of eindscore.",
+              "latestEvidence": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json"
             },
             {
               "id": "P2.2",
@@ -16440,7 +16466,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "P1",
+      "activeSliceId": "P2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

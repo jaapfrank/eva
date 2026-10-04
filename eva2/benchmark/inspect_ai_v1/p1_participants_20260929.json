@@ -1056,6 +1056,86 @@
         "eva2/tests/bootstrap/test_household_voice_authority.py",
         "eva2/tests/bootstrap/test_native_household_responder.py"
       ]
+    },
+    "nativeBottiePersonReadback": {
+      "source": "eva2/benchmark/inspect_ai_v1/ev003_bottie_readback.py",
+      "sourceSha256": "53cffd1d746d05c4f93b5246bcf48086048c0b9d7b75cd42667d188a511c7568",
+      "interface": "read_person_snapshot(database, person=resolved_person, timeout_seconds=remaining)",
+      "scope": "Read-only exact-person memories and own user messages across conversations, including archived memories. Not identity authentication, assistant delivery, recall quality or settlement.",
+      "verification": "One offline SQLite test passed in0.06s; independent source GO /root/aide_final_evaluation; no modelcalls.",
+      "testSourceSha256": "4cf44a41df1f2d04c86d7c2ac34cc4721675824cbc8e7cd614354267b8699fdf"
+    },
+    "nativeCalendarBinding": {
+      "status": "native_two_turn_calendar_and_real_auth_verified_first_case_not_run",
+      "task": "P2.1",
+      "checkedAt": "2026-10-04T01:04:34.088577+00:00",
+      "finding": "All12 sealed conversation-memory cases require a controlled initial calendar date. Current wallclock is not an admitted substitute. Missing test-fixture capability, not product failure or external-access blocker.",
+      "scope": "Native calendar offsets only. Controller advances after required reply/memory settlement and waits for all worker generation receipts. Real monotonic duration, TLS and credential time retained.",
+      "pythonSource": "eva2/benchmark/inspect_ai_v1/ev003_python_calendar.py",
+      "nodeSource": "eva2/benchmark/inspect_ai_v1/ev003_node_calendar.mjs",
+      "dependency": {
+        "name": "time-machine",
+        "version": "3.5.1",
+        "license": "MIT",
+        "scope": "Disposable evaluator Python workers only; no production dependency change",
+        "source": "https://github.com/adamchainz/time-machine",
+        "documentation": "https://time-machine.readthedocs.io/en/latest/usage.html",
+        "cp311WheelSha256": "54bc68d0bbdd1b903c8d46cb0d42b4da7a50391dde4aa644b77e2480083a479d",
+        "cp312WheelSha256": "075cc8ff3bf229d96bc7adb8b26be6b1021ee0a5213efe4f57898cda3a3bd766",
+        "owner": "Codex comparator maintainer",
+        "nextReview": "Before changing the pinned comparator dependency or moving to a new Python runtime",
+        "rollback": "Omit optional calendar flags; existing workers retain their original real-calendar behavior"
+      },
+      "sourceReview": "Independent limited GO /root/aide_final_evaluation for Node/Python clock mechanism; no full-case admission.",
+      "pgDecision": "No PG clock change for normal CM retain/recall: native event timestamp/query_timestamp and occurrence times drive semantics. Optional ingest-age filters and mental-model refresh are not admitted by this conclusion.",
+      "offlineChecks": {
+        "pythonClock": "1 passed in0.023s after correcting escape_hatch call before clock initialization",
+        "nodeClock": "1 passed in56.52ms; actual timers and performance clock retained",
+        "nativeCredentialTime": "Pinned core4cases and Hindsight4cases passed with synthetic JWTs and no network/credentials"
+      },
+      "realModelCalls": 0,
+      "finalCasesExecuted": 0,
+      "qualityScore": null,
+      "newEvaFunction": false,
+      "creditCost": null,
+      "sources": {
+        "eva2/benchmark/inspect_ai_v1/ev003_python_calendar.py": "6d1c759c2eb5ba4b34aad5d94e6163ec490f3d86975e602d7b2fb270a74c932f",
+        "eva2/benchmark/inspect_ai_v1/ev003_node_calendar.mjs": "c1b0c30fa97c511b3b8adde7778442fc82e04cb98a98a9e80169a2fef963c602",
+        "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py": "24cf9cbc538476e6543c9a376db6c6e47ce8e16cf88e9b462ee46fa6799a09b3",
+        "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs": "f3a6c1a8fa27dc04f786a03d180231eeea9e2a3f9a73afa1d1469c94ee3d07c7"
+      },
+      "nativeIntegration": {
+        "receipt": "/home/administrator/project/.eva2-artifacts/ev003-calendar-native-turns-20261004-v1/receipt.json",
+        "result": "/home/administrator/project/.eva2-artifacts/ev003-calendar-native-turns-20261004-v1/resumed-two-turn/result.json",
+        "resultSha256": "43b9e1524222d75e7a7d9b8e4e4cefbc72396abc85d6e31cf48df0dd890ca9db",
+        "outcome": "two_native_turns_memory_completed",
+        "generations": [
+          0,
+          1
+        ],
+        "syntheticProviderResponses": 6,
+        "syntheticUsage": {
+          "input": 158,
+          "output": 42
+        },
+        "realModelCalls": 0,
+        "elapsedSeconds": 18.064,
+        "workerAndAccountingSettlement": true,
+        "ownedContainersAndNetworkRemoved": true,
+        "chronology": "Native mentioned_at/consolidated_at follow scenario dates; SQL created_at/updated_at remain actual time. No ingest-age or mental-model refresh claim."
+      },
+      "preparationFailures": [
+        "Wheel platform selector did not match current manylinux tags; official PyPI hashes used for exact3.5.1 wheels. No older package substituted.",
+        "Python escape_hatch is unavailable before time travel; corrected initial real-time selection, focused test passed.",
+        "Native Hindsight auth probe omitted existing readonly dependency mount on first invocation; fixed mount, original failure retained.",
+        "Postgres temporary Unix-socket readiness preceded final TCP server; resumed from same independently empty fixture database using TCP readiness. No native model work repeated."
+      ],
+      "nativeAuthEvidence": "/home/administrator/project/.eva2-artifacts/ev003-calendar-native-auth-20261004-v1",
+      "bundledReview": {
+        "reviewer": "/root/background_execution_seam",
+        "decision": "Limited GO for current P2.1 preparation, not final execution admission",
+        "scope": "Current worker/calendar source hashes match; native auth and two-turn settlement/accounting evidence retained; parent must enforce settlement before clock-file change."
+      }
     }
   }
 }

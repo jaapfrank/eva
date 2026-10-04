@@ -15,6 +15,7 @@ import hashlib
 import inspect
 import json
 import os
+import signal
 from pathlib import Path
 import time
 from unittest.mock import patch
@@ -146,6 +147,9 @@ def serve_core(args, ledger, result):
         return block_action(result, ledger, call.name)
 
     with ExitStack() as stack:
+        if args.calendar_file:
+            from ev003_python_calendar import protect_native_auth
+            protect_native_auth(stack, core_model=model_module.PydanticConversationModel)
         stack.enter_context(patch.object(model_module, "OpenAICodexProvider", Provider))
         stack.enter_context(patch.object(composition, "create_app", capture_runtime))
         if args.provider_mode == "subscription":
@@ -270,6 +274,10 @@ async def serve_memory(args, ledger, result):
     token = "fixture." + base64.urlsafe_b64encode(json.dumps({"exp": 4102444800}).encode()).decode().rstrip("=") + ".fixture"
     try:
         with ExitStack() as stack:
+            if args.calendar_file:
+                from hindsight_api.engine.providers import codex_auth
+                from ev003_python_calendar import protect_native_auth
+                protect_native_auth(stack, memory_auth_module=codex_auth)
             if args.provider_mode == "synthetic":
                 stack.enter_context(patch.object(CodexLLM, "_load_codex_auth", return_value=(token, "offline-fixture")))
                 stack.enter_context(patch.object(CodexLLM, "_load_codex_refresh_token", return_value=None))
@@ -312,9 +320,13 @@ def main():
     parser.add_argument("--existing-empty-schema", action="store_true")
     parser.add_argument("--provider-mode", choices=("synthetic", "subscription"), default="synthetic")
     parser.add_argument("--provider-proxy", help="Sample-owned HTTP CONNECT proxy; subscription mode only")
+    parser.add_argument("--calendar-file", type=Path)
+    parser.add_argument("--calendar-receipt", type=Path)
     args = parser.parse_args()
     if args.provider_mode == "subscription" and not args.provider_proxy:
         parser.error("subscription mode requires the isolated model-only proxy")
+    if bool(args.calendar_file) != bool(args.calendar_receipt):
+        parser.error("calendar control and private receipt must be supplied together")
     if args.output.exists():
         parser.error("output exists; preserve previous evidence")
     credentials = json.loads(args.control_file.read_text())
@@ -322,7 +334,21 @@ def main():
     result = {"contract": "P1NativeEva2Worker/v1", "kind": args.kind, "native_sources": {},
         "provider_mode": args.provider_mode, "upstream_model_calls": 0, "action_attempts": [], "protocol_consumptions": [], "calls": [], "errors": [], "local_settled": False}
     started = time.monotonic()
+    calendar = None
+    previous_signal_handler = None
     try:
+        if args.calendar_file:
+            from ev003_python_calendar import ScenarioCalendar
+            calendar = ScenarioCalendar(args.calendar_file)
+            def refresh_calendar(*_):
+                state = calendar.refresh()
+                temporary = args.calendar_receipt.with_suffix(".tmp")
+                temporary.write_text(json.dumps(state) + "\n")
+                temporary.chmod(0o600)
+                temporary.replace(args.calendar_receipt)
+            refresh_calendar()
+            previous_signal_handler = signal.signal(signal.SIGUSR1, refresh_calendar)
+            result["calendar"] = {"enabled": True, "refresh": "SIGUSR1_after_native_settlement"}
         if args.kind == "core":
             serve_core(args, ledger, result)
         else:
@@ -339,6 +365,12 @@ def main():
         if not result["control_close_acknowledged"]:
             result["errors"].append({"phase": "control_close", "type": "receipt_not_acknowledged"})
         result["seconds"] = time.monotonic() - started
+        if calendar is not None:
+            if previous_signal_handler is not None:
+                signal.signal(signal.SIGUSR1, previous_signal_handler)
+            result.setdefault("calendar", {})["last_generation"] = (
+                calendar._state["generation"] if calendar._state else None)
+            calendar.restore()
         args.output.write_text(json.dumps(result, indent=2) + "\n")
     return 0 if result["local_settled"] and not result["errors"] else 2
 
