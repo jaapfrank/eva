@@ -61,14 +61,15 @@ uit bestaand ontwikkelbewijs en geïnstalleerde taakgrenzen; geen voorspelde kos
 of claim dat iedere taak binnen die grenzen zal slagen. Geen nieuwe modelcalls.
 [Bevroren uitvoerplan](benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json).
 
-**Nu: P2.1 — kalenderkoppeling voor de vaste vergelijking aansluiten.**
-De twaalf geheugenproeven vereisen een vaste kalenderdatum; huidige tijd gebruiken zou een andere proef zijn. Een kleine geïsoleerde testklok is toegevoegd, met echte verstreken tijd en credentialtijd apart. Bronreview en acht native credentialgevallen zijn akkoord. Ook twee opeenvolgende gesprekken op de native kern/geheugenroute zijn gecontroleerd: datum pas vooruit na afgeronde opslag; zes synthetische antwoorden, echte tijd 18,064 s, nul echte modelcalls. De eerste vaste eindtaak wordt nu voorbereid. Nog geen eindmodelcall of eindscore; P2 blijft open.
-Ontbrekende uitvoeringsaansluitingen blijven expliciete toelatingsvoorwaarden per
-deelnemer/familie; geen nieuwe taken of beoordelingsregels. Werkende persoons- en
-huishoudroutes worden hergebruikt. Echte audio, ontbrekende toegang en menselijke
-beoordeling blijven zichtbaar; geen tekstvervanging of fictieve concurrentieverliezen.
-Eerste scenario-aansluiting actief; nog geen eindmodelcall of nieuwe aanmelding. Stand **27/44 kleine taken**;
-vergelijkingsvoorbereiding telt niet als extra Eva-functie of bewezen voorsprong.
+**Nu: P2.1 — Eva1/Eva2-vergelijking voorbereid; uitvoering wacht op toestemming.**
+De automatische goedkeuringscontrole heeft de echte Eva1-proef vóór processtart
+geweigerd: zij verlangt expliciete toestemming voor het versturen van afgeschermde
+proefberichten naar OpenAI. Een gerichte vraag voor één vaste geheugenopdracht op
+Eva1 en Eva2 staat in de chat. Geen proef gestart, nul eindmodelcalls; geen herhaling
+of omweg. Beide aansluitingen zijn nu voorbereid en gericht in de bron gecontroleerd.
+Er draaien geen uitvoerende agents; de gevraagde toestemming blijft open.
+Nog geen eindscore of algemene voorsprong; P2 blijft open. Hermes/OpenClaw missen
+bruikbare toegang; geen nieuwe aanmeldpoging. Stand **27/44 kleine taken**.
 [Afgeschermde eindtaken](benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json)
 · [Actuele meetkoppeling en beperkingen](benchmark/inspect_ai_v1/p1_participants_20260929.json).
 

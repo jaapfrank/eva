@@ -1139,6 +1139,27 @@
         "scope": "Current worker/calendar source hashes match; native auth and two-turn settlement/accounting evidence retained; parent must enforce settlement before clock-file change."
       },
       "bottieSettlementReceipt": "Before publishing an advance, controller reads the existing active/pending/failed-close counters through calendar_refresh, plus signed ACK, DB readback and parent ledger; after publishing it requires the new generation acknowledgment."
+    },
+    "firstCaseExecution": {
+      "entry": "eva1-bottie:EV003-CM-01:epoch1",
+      "status": "not_run_automatic_approval_rejected",
+      "nativeStarted": false,
+      "providerCalls": 0,
+      "finalScore": null,
+      "checkedAt": "2026-10-04T01:34:59.701612+00:00",
+      "reason": "Automatic approval review rejected the credentialed execution before process creation, requiring explicit owner authorization to transmit protected scenario inputs to OpenAI. One exact Eva1/Eva2 pair approval requested; no retry or alternate route.",
+      "admissionSha256": "61c38921c76300e0c2274c02618dfe8451abeba0bc71bb678f8b777503b4f9fe",
+      "rejectedCommandSha256": "ac17dc6e9afb8cc1a13a8848e4871f70a86203b0caf14663e86071c7efd9bb3f",
+      "rejectionRecordSha256": "bf565f983053d903596b5fe8ad821e195d2aa7fe248bb5681d9d86ac61881863",
+      "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm01-epoch1",
+      "unaffectedWork": "Both participant launchers and Inspect wrappers prepared and source-reviewed; all executors idle, no execution.",
+      "preparedEva2": {
+        "launcherSha256": "6b516056c923822378425934ddb623abab106564613d31b5141f9ec9b6e55feb",
+        "inspectWrapperSha256": "5a7b357eff12b474903ed11b3225ecded57cb704747d1b42b3e30b9e13597229",
+        "status": "source_reviewed_not_executed",
+        "correction": "Protected projection is loaded once through the existing private runtime loader, preserving root-owned input permissions.",
+        "validation": "Syntax only; native calendar/readback route evidence reused. No hidden input read or provider call during preparation."
+      }
     }
   }
 }

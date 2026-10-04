@@ -1035,7 +1035,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-04T01:04:34.099813+00:00",
+        "checkedAt": "2026-10-04T01:34:59.701612+00:00",
         "deliveries": [
           {
             "title": "P1.2 afgerond · vaste eindvergelijking voorbereid",
@@ -3601,10 +3601,10 @@
           }
         ],
         "now": {
-          "title": "P2.1 · eerste vaste vergelijkingsopdracht voorbereiden",
-          "state": "in_progress",
+          "title": "P2.1 · vergelijking voorbereid; wacht op toestemming",
+          "state": "blocked",
           "owner": "Codex /root",
-          "detail": "De kalenderkoppeling is op de echte Eva2-kern en het geheugen gecontroleerd: twee gesprekken, datum vooruit na afgeronde opslag, echte tijdmeting behouden. Nu de eerste vaste Eva1/Eva2-opdracht uitvoeren via de bestaande routes. Dit is proefvoorbereiding; geen nieuwe productfunctie of eindscore."
+          "detail": "Eva1 en Eva2 zijn aangesloten voor de eerste vaste geheugenopdracht. Automatische goedkeuringscontrole heeft uitvoering vóór de start geweigerd; één gerichte toestemmingsvraag staat open. Nul eindmodelcalls, nog geen eindscore. Er draaien nu geen uitvoerende agents."
         },
         "next": {
           "title": "P2.1 · eerste echte resultaten volgens vaste volgorde",
@@ -16192,44 +16192,53 @@
             {
               "id": "P2.1",
               "title": "Vergelijking op eindkandidaat uitvoeren",
-              "status": "in_progress",
+              "status": "blocked",
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
               "nextAction": "Codex voert de geplande eindvergelijking uit op het samenhangende product; Eva doet dezelfde echte taken als Eva1 en de geselecteerde concurrenten.",
-              "ownerActionRequired": false,
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
-                "steps": [],
+                "availableNow": true,
+                "readyWhen": "Beantwoord de gerichte toestemmingsvraag in deze chat.",
+                "steps": [
+                  "Sta desgewenst één vaste geheugenopdracht toe op Eva1 en Eva2 via het bestaande OpenAI-abonnement. De afgeschermde proefberichten gaan naar OpenAI; maximaal 16 modelaanvragen per systeem, geen automatische herhaling; creditkosten onbekend."
+                ],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-04T01:04:34.099813+00:00",
+              "checkedAt": "2026-10-04T01:34:59.701612+00:00",
               "assignment": {
-                "baseCommit": "6bcb9238ea6c6966e35eb493a6ae06ae6ec6c679",
+                "baseCommit": "807d506d",
                 "owner": "/root",
-                "activeWorkers": [
-                  "/root/aide_final_evaluation: private first-case projection and native Eva1 execution binding"
-                ],
+                "activeWorkers": [],
                 "files": [
                   "Root: shared evaluator integration, manifest, workboard",
                   "Curator: private per-case inputs/events only",
                   "Independent worker: read-only native Eva1 seams"
                 ],
                 "existing": "Pinned candidate, fixed72-case dataset/scorer/budgets/order; native Eva1/Eva2 conversation fixtures and full Eva2 memory accounting exist.",
-                "gap": "Bind first fixed multi-turn scenario to its actual required native clocks/events and durable state before final inference.",
+                "gap": "Execute and independently assess the sealed CM01 epoch1 case, Eva1 then Eva2, using the verified native calendar and memory routes.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Reuse existing native fixtures and accounting; no new general evaluation platform. Final limits frozen in execution plan; credit prices unknown.",
-                "currentAction": "Prepare first fixed Eva1 case from existing native launcher; product candidate frozen and hidden inputs retained by evaluator. Actual native two-turn calendar/auth checks completed with synthetic providers only.",
+                "currentAction": "Eva1 and Eva2 native first-case launchers and Inspect wrappers are prepared and source-reviewed. No native process/provider call started. Exact pair execution waits for requested owner authorization after automatic approval rejection.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "6bcb9238: P1.2/P1 original conditions completed, independent preparation GO, fixed plan and live dashboard published."
                 },
-                "stage": "native_calendar_verified_first_case_driver_preparation",
-                "finding": "Independent curator confirmed all12 conversation-memory cases require controlled calendar; current native fixtures do not provide it. Missing evaluator capability, not product failure or external-access blocker. Exact-person Bottie readback added and independently reviewed."
+                "stage": "native_pair_prepared_execution_approval_pending",
+                "finding": "The earlier missing native calendar/readback bindings are now implemented and focused-verified. Both first-case launchers are prepared. Live provider execution was rejected before process creation by automatic approval review and awaits the explicit owner authorization requested in chat."
               },
-              "remaining": "Kalenderovergang en echte credentialtijd zijn nu gericht gecontroleerd. Eerste vaste eindtaak voorbereiden op de bestaande native uitvoerroute; nog geen eindmodelcall of eindscore.",
-              "latestEvidence": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json"
+              "remaining": "Eva1/Eva2-aansluitingen voorbereid; na gevraagde toestemming dezelfde eerste geheugenopdracht uitvoeren en onafhankelijk beoordelen. Nog geen eindscore.",
+              "latestEvidence": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+              "executionBlocker": {
+                "type": "automatic_approval_review",
+                "state": "awaiting_explicit_owner_authorization",
+                "reason": "Rejected live credentialed benchmark transmitting protected scenario inputs to OpenAI without explicit execution/destination authorization.",
+                "nativeStarted": false,
+                "providerCalls": 0,
+                "checkedAt": "2026-10-04T01:28:42.703387+00:00"
+              },
+              "blocker": "Automatische goedkeuringscontrole weigert versturen van de afgeschermde proefberichten naar OpenAI zonder expliciete toestemming. Eén gerichte vraag staat open; geen modelcalls uitgevoerd."
             },
             {
               "id": "P2.2",
