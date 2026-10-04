@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-03T17:58:27.163715+00:00",
+  "lastUpdated": "2026-10-04T23:45:00.513755+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1035,8 +1035,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-04T16:49:05.700560+00:00",
+        "checkedAt": "2026-10-04T23:45:00.513755+00:00",
         "deliveries": [
+          {
+            "title": "HA-automatiseringen krijgen hun achtergrondresultaat terug",
+            "date": "5 oktober",
+            "state": "installed",
+            "result": "Geïnstalleerd: eva2_voice.ask meldt later resultaat via eva2_work_result, gekoppeld aan gesprek én speaker. Geen ongevraagde speakeruitspraak. Echte fictieve HA-uitlezing geslaagd; resultaat na 23,741 s. 71 gerichte controles en onafhankelijke review akkoord.",
+            "remaining": "Volledige I2-waarnemingsautomatisering nog open. Eerste rekenproef mislukt: deze huishoudwerker vereist toolbewijs. Geen extra hoofd- of kleine taak afgevinkt; 27/44 blijft staan.",
+            "source": "eva2/evidence/product/i2-automation-return-installed-20261005.json"
+          },
           {
             "title": "Agent Zero kan dezelfde meerbeurtenvergelijking doorlopen",
             "date": "4 oktober",
@@ -3625,14 +3633,14 @@
           }
         ],
         "now": {
-          "title": "P2.1 · toestemming voor privébeoordeling nodig",
-          "state": "blocked",
-          "owner": "Jaap (toestemming); Codex (vervolg)",
-          "detail": "Uitvoering geblokkeerd: de benodigde toestemming is na drie hervattingsrondes nog onbeantwoord. Geen modelproef of uitvoerende agent actief. Fysieke beoordelingen en werkelijke herstart blijven afzonderlijk open; niets extra afgerond."
+          "title": "I2.2 · terugmelding geïnstalleerd en gecontroleerd",
+          "state": "installed",
+          "owner": "Codex",
+          "detail": "De correctie is afgerond en draait. Eva kan het resultaat van een HA-achtergrondopdracht teruggeven aan de automatisering. De volledige I2-uitkomst is nog open; vervolg nog niet gestart."
         },
         "next": {
-          "title": "Bewaarde resultaten beoordelen en vaste vergelijking vervolgen",
-          "detail": "Na expliciete toestemming: CM02 beoordelen en oorspronkelijke CM03-controls exact verbinden. Aanmeldingen, fysieke speakerervaring, echte herstart en gezinsacceptatie blijven afzonderlijke open punten."
+          "title": "I2.2 · de hele waarnemingsautomatisering laten uitvoeren",
+          "detail": "Eva zelf de passende bronnen en automatisering laten kiezen en gebruiken via bestaande hulpmiddelen. De terugmelding staat. Alleen toestemming voor echte camera-/agendagegevens blijft afzonderlijk open; geen projectbrede stop."
         },
         "ownerAction": {
           "title": "Eén gezamenlijke toestemmingsvraag beantwoorden",
@@ -3641,10 +3649,10 @@
             "De bestaande afzonderlijke vragen voor camera-/agendagebruik, de innovatieproef en de echte herstart blijven open.",
             "Native aanmeldingen van Agent Zero, Hermes en OpenClaw zijn niet actueel bevestigd; geen nieuwe loginronde actief."
           ],
-          "expected": "Automatische review weigert de privéverwerking zonder aanvullende toestemming; geen extra functie of algemene voorsprong geclaimd."
+          "expected": "De vergelijkingsblokkade geldt uitsluitend voor de afgeschermde evaluatie. Onafhankelijk productwerk gaat verder; voor deze callbackoplevering hoef je niets te doen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-04T16:02:28.959344+00:00"
+        "reviewedAt": "2026-10-04T23:45:00.513755+00:00"
       },
       "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
     },
@@ -15177,7 +15185,7 @@
               "kind": "aansluiten",
               "doneWhen": "Eva stelt de gevraagde waarneming en terugmelding zelf in via bestaande algemene hulpmiddelen en passende automatisering, zonder vraag-/apparaatspecifieke kernregel; de werkelijke terugmelding blijft binnen het bestaande mandaat.",
               "owner": "Codex /root",
-              "nextAction": "Eva maakt en gebruikt zelf de passende automatisering en meldt een echte waarneming terug. Codex verbindt alleen ontbrekende algemene tools/uitvoeroverdracht; geen ingebouwde vuilnisbakfunctie.",
+              "nextAction": "De geïnstalleerde terugmelding behouden. De bestaande volledige I2-route afmaken: Eva kiest bronnen, maakt en gebruikt zelf de passende automatisering. Alleen een echte camera-/agendaproef wacht op die afzonderlijke toestemming; generieke uitvoering niet.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -15186,24 +15194,24 @@
                 "blocksIndependentWork": false
               },
               "assignment": {
-                "baseCommit": "02bea1b2",
+                "baseCommit": "b9b6220f",
                 "owner": "/root",
-                "stage": "callback_installed_published_observation_outcome_open",
+                "stage": "automation_result_delivery_installed_checked",
                 "existing": "Installed HA conversation entity and device-authorized EvaVoiceClient; general HA automation writer already available.",
-                "gap": "Live conversation.process schema has no satellite/device field; Eva conversation adapter requires a registered satellite; no eva2_voice action exists. Thus the general HA-automation-to-Eva handoff is absent.",
+                "gap": "HA ask promises caller-controlled presentation but creates a native speaker session; deferred work is always announced. Automation sessions also become eligible as latest initiative speech destination.",
                 "files": [
-                  "eva2/deploy/home-assistant/custom_components/eva2_voice/__init__.py",
-                  "eva2/deploy/home-assistant/custom_components/eva2_voice/client.py",
-                  "eva2/deploy/home-assistant/custom_components/eva2_voice/services.py",
-                  "eva2/deploy/home-assistant/custom_components/eva2_voice/services.yaml",
-                  "eva2/tests/operations/test_ha_phone_entry.py",
-                  "eva2/deploy/home-assistant/README.md"
+                  "Core request/session/native delivery and focused tests: /root",
+                  "HA client/service/descriptions and their focused tests: /root/background_execution_seam"
                 ],
-                "endCondition": "An HA automation can call the existing household Eva runtime with an authorized registered satellite and receive its text response; no private identity, new planner, automatic TTS or example-specific automation. Install and check the actual action.",
+                "endCondition": "Installed HA automation request retains direct response and returns later work through its HA event without announcing or selecting an initiative speaker; existing real I2 observation finish remains open.",
                 "activeWorkers": [],
-                "sourceCommit": "958fccd5"
+                "sourceCommit": "b9b6220f + bounded delivery overlay; installed image/source hashes in evidence",
+                "currentAction": "Callbackcorrectie geïnstalleerd en afgesloten: HA ask houdt de presentatie bij de automatisering; één echte synthetische HA-read kwam correct terug als event. Volgende hele I2-uitkomst nog niet gestart.",
+                "estimate": "71 gerichte checks; twee live proefopdrachten (eerste ongeschikt en mislukt, tweede geslaagd). Alleen achtergronddeelverbruik gemeten; totale credits onbekend.",
+                "knownRemainingGap": "Toolvrije huishoudelijke achtergrondopdrachten kunnen nog ten onrechte worden aangenomen door de uitvoerder die toolbewijs vereist. Geen versoepelde controles of gefingeerde rekenuitkomst."
               },
-              "latestEvidence": "eva2/evidence/product/i2-ha-automation-action-installed-20261002.json"
+              "latestEvidence": "eva2/evidence/product/i2-automation-return-installed-20261005.json",
+              "checkedAt": "2026-10-04T23:45:00.513755+00:00"
             }
           ],
           "responsibilityReview": {
@@ -16235,11 +16243,11 @@
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
-                "readyWhen": "Bestaande meetroutes zijn voorbereid. Alleen de expliciete privéverwerking/toetsing vraagt toestemming; het proefbudget verandert niet.",
+                "readyWhen": "De afzonderlijke vergelijking vraagt toestemming voor de afgeschermde fictieve toetsgegevens. Dit blokkeert geen onafhankelijk productwerk zoals I2.2.",
                 "steps": [
                   "Beantwoord de gezamenlijke vraag of de onafhankelijke beoordelaar de fictieve vergelijkingsgegevens privé mag verwerken en beoordelen; de bouwagent ontvangt alleen uitslagen en meetwaarden."
                 ],
-                "blocksIndependentWork": true
+                "blocksIndependentWork": false
               },
               "checkedAt": "2026-10-04T16:49:05.700560+00:00",
               "assignment": {

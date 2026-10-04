@@ -108,3 +108,11 @@ def test_native_binding_rejects_a_reply_from_another_conversation():
             await responder(runtime)(request())
         assert not runtime.retained
     asyncio.run(run())
+
+
+def test_request_delivery_mode_defaults_to_speaker_and_rejects_unknown_destination():
+    from pydantic import ValidationError
+    assert request().delivery_mode == "speaker"
+    assert request(delivery_mode="automation").delivery_mode == "automation"
+    with pytest.raises(ValidationError):
+        request(delivery_mode="private-owner")

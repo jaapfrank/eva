@@ -142,7 +142,7 @@ def test_ask_returns_text_with_registry_device_and_generated_conversation(ask_se
     assert fixture.clients["room"].calls == [{
         "satellite_id": fixture.room, "device_id": "a"*32,
         "conversation_id": result["conversation_id"],
-        "text": "Bekijk de toegestane situatie.", "language": "nl", "interrupt_existing": False}]
+        "text": "Bekijk de toegestane situatie.", "language": "nl", "interrupt_existing": False, "delivery_mode": "automation"}]
     assert not fixture.clients["garden"].calls
     assert fixture.hass.services.registrations[0][3]["supports_response"] == "optional"
 

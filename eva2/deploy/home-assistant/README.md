@@ -270,6 +270,16 @@ conversation; omitting `language` uses Home Assistant's configured language.
 The action does not invoke TTS or play the answer on the speaker. The automation
 chooses whether and how to use the response.
 
+When Eva accepts background work, its later result is returned through the Home
+Assistant event `eva2_work_result`, not automatic speaker playback. Event data
+contains `conversation_id`, `satellite_id`, `work_id`, `title`, `state`, `text` and
+`result_sha256`. An automation can listen for that event and match the original
+`conversation_id` **and** `satellite_id` (and `work_id` when known), then choose how to present or use
+`text`. The immediate `response_variable` remains the response to the initial
+request; it is not updated when background work finishes. Event publication
+means offered to Home Assistant, not confirmation that an automation consumed
+or spoke the result. Ordinary voice requests retain their speaker delivery.
+
 If the satellite already has an active Eva request, the action fails without
 interrupting that request, including a live voice request. Failed calls are not
 automatically retried. Do not add automatic retries for arbitrary work: an

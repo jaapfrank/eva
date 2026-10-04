@@ -245,3 +245,28 @@ def test_initiative_destination_needs_live_native_session_not_pending_work(datab
     x.policies[0] = x.policies[0].model_copy(update={"state": "revoked"})
     with pytest.raises(ValueError):
         loop._selected()
+
+
+def test_automation_mode_preserves_destination_and_never_becomes_initiative_speaker(database):
+    x = setup(database, "automation-destination")
+    sessions = x.server.sessions
+    speaker = sessions.native(SAT, DEVICE, "same-caller-id")
+    x.clock[0] += timedelta(seconds=1)
+    automation = sessions.native(SAT, DEVICE, "same-caller-id", delivery_mode="automation")
+    assert automation["session_id"] != speaker["session_id"]
+    assert sessions.native(SAT, DEVICE, "same-caller-id") == speaker
+    assert sessions.native(SAT, DEVICE, "same-caller-id", delivery_mode="automation") == automation
+    assert sessions.native_delivery(speaker) == {"mode": "speaker"}
+    assert sessions.native_delivery(automation) == {
+        "mode": "automation", "conversation_id": "same-caller-id"}
+    office = sessions.native("assist_satellite.office", "b" * 32, "same-caller-id", delivery_mode="automation")
+    assert office["session_id"] != automation["session_id"]
+    assert sessions.native_delivery(office) == sessions.native_delivery(automation)
+    assert office["satellite_id"] != automation["satellite_id"]
+    assert sessions.latest_native() == speaker
+    x.clock[0] += timedelta(minutes=31)
+    assert sessions.native_delivery(automation)["conversation_id"] == "same-caller-id"
+    assert sessions.latest_native() is None
+    x.policies[0] = x.policies[0].model_copy(update={"state": "revoked"})
+    with pytest.raises(ValueError):
+        sessions.native_delivery(automation)

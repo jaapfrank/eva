@@ -9,11 +9,11 @@ import pytest
 from eva.bootstrap.native_work_delivery import NativeWorkDelivery
 
 
-def fixture(monkeypatch, idle_states):
+def fixture(monkeypatch, idle_states, satellite="assist_satellite.room"):
     now = datetime.now(timezone.utc)
     def row(session, phase="open", seconds=60):
         return N(payload={"data": {"binding": {"session_id": session,
-            "device_id": "device", "satellite_id": "assist_satellite.room"}}},
+            "device_id": "device", "satellite_id": satellite}}},
             phase=phase, deadline=now + timedelta(seconds=seconds))
     rows = [row("new"), row("old", "closed")]
     connection = Mock(); connection.execute.return_value.all.return_value = rows
@@ -46,13 +46,14 @@ def fixture(monkeypatch, idle_states):
         def current(self): pass
     def session(**kwargs):
         assert kwargs["device_id"] == "device"
-        assert kwargs["satellite_id"] == "assist_satellite.room"
+        assert kwargs["satellite_id"] == satellite
         return Service(kwargs["session_id"])
     server = N(store=store, delivery_session=session,
+        sessions=N(native_delivery=lambda binding: {"mode": "speaker"}),
         authority=N(clock=lambda: now, validate_current=lambda: None, voice=N(token="fixture"),
             sha256="research-policy", policy=N(tenant_id="tenant", installation_id="installation",
                 household_id="household", consent_operation_id="consent", household_policy_sha256="policy",
-                devices={"assist_satellite.room": "device"}, owner_principal_id="owner",
+                devices={satellite: "device"}, owner_principal_id="owner",
                 principal_binding_id="binding")))
     states = iter(idle_states)
     class Client:
@@ -62,7 +63,7 @@ def fixture(monkeypatch, idle_states):
         def get(self, path):
             gets.append(path)
             return N(raise_for_status=lambda: None,
-                json=lambda: {"entity_id": "assist_satellite.room", "state": next(states)})
+                json=lambda: {"entity_id": satellite, "state": next(states)})
         def post(self, path, json):
             announcements.append((path, json))
             return N(raise_for_status=lambda: None)
@@ -123,3 +124,39 @@ def test_announce_transport_failure_is_ambiguous_and_never_deferred(monkeypatch)
     assert all(action != "defer" for _, action, _ in acknowledgments)
     delivery.run_once()
     assert len(announcements) == 1
+
+
+@pytest.mark.parametrize("failed", [False, True])
+@pytest.mark.parametrize("satellite", ["assist_satellite.room", "assist_satellite.office"])
+def test_automation_returns_full_result_as_event_without_audio_or_idle_wait(monkeypatch, failed, satellite):
+    delivery, sent, acknowledgments, polls, gets = fixture(monkeypatch, [], satellite)
+    delivery.server.sessions.native_delivery = lambda binding: {
+        "mode": "automation", "conversation_id": "ha-observation-17"}
+    monkeypatch.setattr("eva.bootstrap.native_work_delivery.readable_work_result", lambda r: "x" * 5000)
+    if failed:
+        def failed_post(self, path, json):
+            sent.append((path, json))
+            raise TimeoutError("event acknowledgement unavailable")
+        monkeypatch.setattr("eva.bootstrap.native_work_delivery.httpx.Client.post", failed_post)
+    delivery.run_once()
+    assert not gets
+    assert len(sent) == 1
+    assert sent[0] == ("/api/events/eva2_work_result", {
+        "conversation_id": "ha-observation-17", "satellite_id": satellite, "work_id": "research",
+        "title": "earlier research", "state": "completed", "text": "x" * 5000,
+        "result_sha256": "hash"})
+    assert acknowledgments[-1][2]["disposition"] == ("ambiguous" if failed else "offered")
+    delivery.run_once()
+    assert len(sent) == 1
+
+
+def test_changed_automation_destination_does_not_publish(monkeypatch):
+    delivery, sent, acknowledgments, polls, gets = fixture(monkeypatch, [])
+    calls = []
+    def destination(binding):
+        calls.append(binding["session_id"])
+        return {"mode": "automation", "conversation_id": "original" if len(calls) < 3 else "changed"}
+    delivery.server.sessions.native_delivery = destination
+    delivery.run_once()
+    assert not sent and not gets
+    assert acknowledgments[-1][2]["disposition"] == "ambiguous"

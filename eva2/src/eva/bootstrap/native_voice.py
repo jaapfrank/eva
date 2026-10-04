@@ -54,7 +54,7 @@ class NativeHouseholdResponder:
             from uuid import UUID
             server = self._work_server
             binding = server.sessions.native(request.satellite_id, request.device_id,
-                                             request.conversation_id)
+                                             request.conversation_id, delivery_mode=request.delivery_mode)
             service = server.session(token=server.authority.voice.token,
                 satellite_id=request.satellite_id, device_id=request.device_id,
                 session_id=binding["session_id"])

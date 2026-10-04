@@ -288,3 +288,35 @@ def test_input_receipt_precedes_delayed_answer_without_changing_canonical_reply(
             assert deltas == ["Het antwoord."]
             assert receipts == (["Een momentje."] if advertise_receipt else [])
     asyncio.run(run())
+
+
+@pytest.mark.parametrize("mode", ["speaker", "automation"])
+def test_delivery_mode_uses_automation_field_only_when_selected(mode):
+    async def run():
+        async def handler(request):
+            data = await request.json()
+            if mode == "automation":
+                assert data.pop("delivery_mode") == "automation"
+            assert set(data) == {"request_id", "satellite_id", "device_id", "conversation_id", "text", "language"}
+            return web.json_response({"request_id": data["request_id"], "reply": "Resultaat",
+                                      "continue_conversation": False})
+        async def interrupt(request):
+            pytest.fail("successful request must not interrupt")
+        async with server(handler, interrupt) as client:
+            result = await client.respond(satellite_id="assist_satellite.room", device_id="a" * 32,
+                conversation_id="automation-fixture", text="Vraag", language="nl", delivery_mode=mode)
+            assert result.text == "Resultaat"
+    asyncio.run(run())
+
+
+@pytest.mark.parametrize("mode", ["unknown", "", None, []])
+def test_invalid_delivery_mode_fails_before_transport(mode):
+    async def run():
+        client = EvaVoiceClient(None, url="http://fixture", token="synthetic",
+                               satellite_ids=frozenset({"assist_satellite.room"}))
+        with pytest.raises(EvaVoiceUnavailable, match="not admitted"):
+            await client.respond(satellite_id="assist_satellite.room", device_id="a" * 32,
+                conversation_id="automation-fixture", text="Vraag", language="nl", delivery_mode=mode)
+        assert client._active == {}
+        await client.close()
+    asyncio.run(run())

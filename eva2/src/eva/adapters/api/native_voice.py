@@ -33,6 +33,7 @@ class VoiceRequest(BaseModel):
     conversation_id: str = Field(min_length=1, max_length=200)
     text: str = Field(min_length=1, max_length=16384)
     language: str = Field(min_length=1, max_length=32)
+    delivery_mode: Literal["speaker", "automation"] = "speaker"
 
 
 class VoiceInterrupt(BaseModel):

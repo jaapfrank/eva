@@ -1,5 +1,18 @@
 # EVA2 werkbord
 
+**Opgeleverd — I2.2: achtergrondresultaat terug naar de HA-automatisering.**
+De correctie is geïnstalleerd. Een echte, tijdelijke fictieve HA-bron is door Eva
+uitgelezen; het juiste resultaat kwam via `eva2_work_result` terug (23,741 s),
+gekoppeld aan gesprek én speaker. Geen ongevraagde speakeruitspraak.
+71 gerichte controles, onafhankelijke review en geïnstalleerde broncontrole akkoord.
+De eerste rekenproef mislukte en blijft zichtbaar in het bewijs.
+
+**Nog open:** de volledige I2-waarnemingsautomatisering en toolvrij huishoudelijk
+achtergrondwerk. Geen complete kleine taak erbij: **27/44**. De eerstvolgende
+I2-uitvoering is nog niet gestart. De vergelijkingsblokkade P2 geldt alleen voor
+die vergelijking en houdt onafhankelijk productwerk niet tegen.
+[Oplevering en beperkingen](evidence/product/i2-automation-return-installed-20261005.json).
+
 **P1 afgerond: versies/toegang, vaste taken, scorers en meetbudgetten. Stand 27/44 kleine taken.**
 De oorspronkelijke voorwaarde is onafhankelijk gecontroleerd. Eva1/Eva2 en Agent Zero
 hebben aantoonbare eigen toegang; Hermes/OpenClaw ontbreken zichtbaar. Dit is afronding

@@ -116,7 +116,7 @@ class HouseholdWorkSessions:
     def __init__(self, store, authority):
         self.store, self.authority = store, authority
 
-    def open(self, satellite_id, device_id, *, native_conversation_key=None):
+    def open(self, satellite_id, device_id, *, native_conversation_key=None, native_delivery=None):
         self.authority.validate_device(satellite_id, device_id)
         now = self.authority.clock()
         policy = self.authority.policy
@@ -165,7 +165,8 @@ class HouseholdWorkSessions:
                 status="active",
                 deadline=expires if native_conversation_key is not None else min(expires, now + timedelta(seconds=15)),
                 data={"binding": binding, "expires_at": expires.isoformat(),
-                      **({"native_conversation_key": native_conversation_key} if native_conversation_key is not None else {})},
+                      **({"native_conversation_key": native_conversation_key} if native_conversation_key is not None else {}),
+                      **({"native_delivery": native_delivery} if native_delivery is not None else {})},
             )
         return binding
 
@@ -197,6 +198,7 @@ class HouseholdWorkSessions:
                 events.c.sequence == 1,
                 data["native_conversation_key"].astext.is_not(None),
                 data["binding"].contains(current), sa.or_(*devices),
+                sa.func.coalesce(data["native_delivery"]["mode"].astext, "speaker") == "speaker",
                 checkpoints.c.phase == "open",
                 checkpoints.c.deadline > self.authority.clock(),
             ).order_by(events.c.occurred_at.desc(), events.c.thread_id.desc())
@@ -206,7 +208,7 @@ class HouseholdWorkSessions:
         # Recheck durable provenance and session validity after selection.
         return self.read(binding["session_id"], binding["satellite_id"], binding["device_id"])
 
-    def native(self, satellite_id, device_id, conversation_id):
+    def native(self, satellite_id, device_id, conversation_id, *, delivery_mode="speaker"):
         """Reuse a bounded HTTP conversation session without a media heartbeat.
 
         Native HA has no persistent audio connection. Its authenticated turns
@@ -214,9 +216,16 @@ class HouseholdWorkSessions:
         of an identified speaker or permission for unsolicited audio.
         """
         self.authority.validate_device(satellite_id, device_id)
+        if delivery_mode not in {"speaker", "automation"}:
+            raise ValueError("native delivery mode is invalid")
+        if not isinstance(conversation_id, str) or not 1 <= len(conversation_id) <= 200:
+            raise ValueError("native conversation identity is invalid")
+        # Keep existing speaker keys stable; the same caller ID cannot change
+        # the destination of work already admitted in another delivery mode.
         key = canonical_sha256({"satellite": satellite_id, "device": device_id,
                                 "conversation": conversation_id,
-                                "authority": self.authority.sha256})
+                                "authority": self.authority.sha256,
+                                **({"delivery_mode": delivery_mode} if delivery_mode != "speaker" else {})})
         with self.store._engine.begin() as c:
             self.store._scope(c)
             c.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key,0))"),
@@ -236,7 +245,29 @@ class HouseholdWorkSessions:
                 )).one()
                 if state.phase == "open" and self.authority.clock() < state.deadline:
                     return self.read(session_id, satellite_id, device_id)
-            return self.open(satellite_id, device_id, native_conversation_key=key)
+            return self.open(satellite_id, device_id, native_conversation_key=key,
+                native_delivery=({"mode": "automation", "conversation_id": conversation_id}
+                                 if delivery_mode == "automation" else None))
+
+    def native_delivery(self, binding):
+        """Read the original output destination through the same checked session."""
+        self.authority.validate_device(binding["satellite_id"], binding["device_id"])
+        with self.store._engine.begin() as connection:
+            self.store._scope(connection)
+            first = self._read_binding(connection, binding["session_id"],
+                                       binding["satellite_id"], binding["device_id"])
+            if first["binding"] != binding or first.get("native_conversation_key") is None:
+                raise ValueError("native delivery binding differs")
+            destination = first.get("native_delivery")
+            if destination is None:
+                return {"mode": "speaker"}
+            if (not isinstance(destination, dict)
+                    or set(destination) != {"mode", "conversation_id"}
+                    or destination["mode"] != "automation"
+                    or not isinstance(destination["conversation_id"], str)
+                    or not 1 <= len(destination["conversation_id"]) <= 200):
+                raise ValueError("native delivery metadata is invalid")
+            return destination
 
     def read_retained_native(self, session_id, satellite_id, device_id):
         """Read an original native destination without renewing its foreground lease."""

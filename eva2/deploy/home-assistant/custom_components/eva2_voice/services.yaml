@@ -4,7 +4,11 @@ ask:
     Stel Eva een vraag of opdracht binnen de bestaande huishoudrechten van een
     gekoppelde speaker. Geeft bij een response_variable de velden text,
     conversation_id en continue_conversation terug. Spreekt zelf niets uit;
-    de automatisering bepaalt wat zij met het antwoord doet. Een aanvraag wordt
+    de automatisering bepaalt wat zij met het antwoord doet. Een later afgerond
+    achtergrondresultaat komt als event eva2_work_result met conversation_id,
+    satellite_id, work_id, title, state, text en result_sha256; ook dit wordt niet automatisch
+    uitgesproken. Koppel het event aan zowel conversation_id als satellite_id.
+    Een aanvraag wordt
     geweigerd als Eva op deze speaker al met een andere aanvraag bezig is.
   fields:
     satellite_id:

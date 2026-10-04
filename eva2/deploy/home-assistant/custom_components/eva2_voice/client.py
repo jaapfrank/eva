@@ -63,8 +63,9 @@ class EvaVoiceClient:
 
     async def respond(self, *, satellite_id: str, device_id: str,
                       conversation_id: str, text: str, language: str, on_delta=None, on_receipt=None,
-                      interrupt_existing: bool = True) -> EvaVoiceAnswer:
+                      interrupt_existing: bool = True, delivery_mode: str = "speaker") -> EvaVoiceAnswer:
         if (self._closed or satellite_id not in self._satellites
+                or not isinstance(delivery_mode, str) or delivery_mode not in {"speaker", "automation"}
                 or not re.fullmatch(r"[0-9a-f]{32}", device_id)
                 or not conversation_id or len(conversation_id) > 200
                 or not text.strip() or len(text) > 16_384
@@ -83,6 +84,8 @@ class EvaVoiceClient:
         payload = {"request_id": request_id, "satellite_id": satellite_id,
                    "device_id": device_id, "conversation_id": conversation_id,
                    "text": text, "language": language}
+        if delivery_mode == "automation":
+            payload["delivery_mode"] = delivery_mode
         previous = self._active.get(satellite_id)
         if previous is not None:
             # Recheck after playback-report waits, with no await before admission.

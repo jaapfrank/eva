@@ -1,4 +1,4 @@
-"""Deliver saved household work to its original native HA satellite once.
+"""Deliver saved household work to its original HA speaker or automation once.
 
 This is a host output adapter, not a new model tool or private speaker identity.
 A service acknowledgement means offered, never proof of audible completion.
@@ -68,21 +68,24 @@ class NativeWorkDelivery:
                     satellite_id=binding["satellite_id"], device_id=binding["device_id"],
                     session_id=binding["session_id"])
                 turn = service.control_turn()
+                destination = self.server.sessions.native_delivery(binding)
+                speaker = destination["mode"] == "speaker"
                 # Only the configured HA endpoint and one exact admitted satellite.
                 with httpx.Client(base_url=self.provider.endpoint_url.rstrip("/"),
                         headers={"Authorization": "Bearer " + self.provider.credential},
                         timeout=4, follow_redirects=False) as client:
                     satellite = binding["satellite_id"]
-                    if satellite not in idle_satellites:
-                        idle_satellites[satellite] = self._idle(client, satellite)
-                    if not idle_satellites[satellite]:
-                        continue
+                    if speaker:
+                        if satellite not in idle_satellites:
+                            idle_satellites[satellite] = self._idle(client, satellite)
+                        if not idle_satellites[satellite]:
+                            continue
                     claim = service.poll(turn)
                     if claim is None:
                         continue
                     work = service._load(claim["work_id"], service.origin(turn))
                     text = readable_work_result(claim["result"])
-                    if len(text) > 4000:
+                    if speaker and len(text) > 4000:
                         text = text[:4000].rsplit(" ", 1)[0] + (
                             " Dit was het eerste deel. Vraag me naar het volledige resultaat.")
                     message = text if work.state in FAILURE_STATES else "Over je opdracht " + work.title + ": " + text
@@ -90,14 +93,24 @@ class NativeWorkDelivery:
                         result_sha256=claim["result_sha256"])
                     if authorized is None:
                         return
-                    if not self._idle(client, binding["satellite_id"]):
+                    if speaker and not self._idle(client, binding["satellite_id"]):
                         service.result_delivery(turn, "defer", work_id=claim["work_id"],
                             result_sha256=claim["result_sha256"])
                         return
                     service.current()
-                    response = client.post("/api/services/assist_satellite/announce",
-                        json={"entity_id": binding["satellite_id"], "message": message,
-                              "preannounce": False})
+                    if self.server.sessions.native_delivery(binding) != destination:
+                        raise ValueError("native result destination changed")
+                    if speaker:
+                        response = client.post("/api/services/assist_satellite/announce",
+                            json={"entity_id": binding["satellite_id"], "message": message,
+                                  "preannounce": False})
+                    else:
+                        response = client.post("/api/events/eva2_work_result", json={
+                            "conversation_id": destination["conversation_id"],
+                            "satellite_id": binding["satellite_id"],
+                            "work_id": claim["work_id"], "title": work.title,
+                            "state": work.state, "text": text,
+                            "result_sha256": claim["result_sha256"]})
                     response.raise_for_status()
                 service.result_delivery(turn, "ack", work_id=claim["work_id"],
                     result_sha256=claim["result_sha256"], disposition="offered")

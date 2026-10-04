@@ -1,0 +1,126 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "recordedAt": "2026-10-04T23:44:17.805575+00:00",
+  "task": "I2.2",
+  "baseCommit": "b9b6220f",
+  "outcome": "Installed HA automation action returns accepted background work through eva2_work_result without unsolicited speech.",
+  "status": "installed_checked",
+  "implementation": {
+    "reused": "Existing HA action, native request/session store and NativeWorkDelivery loop; no new worker/platform/schema.",
+    "destination": "Persist automation destination and original conversation_id; event includes satellite_id.",
+    "legacy": "Speaker remains default for old sessions. Automation sessions cannot become latest initiative speaker.",
+    "deliverySemantics": "Published event is offered, not proof that a consumer processed it. Uncertain send remains ambiguous and is not replayed automatically."
+  },
+  "verification": {
+    "haFocusedTests": 55,
+    "coreFocusedTests": 15,
+    "postgresFocusedTests": 1,
+    "isolatedDatabase": true,
+    "sourceReview": "GO after adding satellite_id correlation; separate reviewer /root/agentzero_cm_review",
+    "installedReadback": {
+      "containers": {
+        "eva2-managed-b-slot3-core": {
+          "image": "sha256:e2529988fcaceb5016a1b5793589b6a3682ecee7bbfe747bfec0d1533202762e",
+          "health": "healthy",
+          "source_hashes": {
+            "src/eva/adapters/api/native_voice.py": "bebd00409bf6a5725eed4a757a3fc6214b06985b2aec7408383ce566b8014e01",
+            "src/eva/bootstrap/native_voice.py": "5f17eb1da947c0b12ea9dd03d69ce340a6ccd0acf23aba37bc8bcf28fcf6fb5a",
+            "src/eva/adapters/postgres/household_work_sessions.py": "9be74d7ccc4e437247c68f8fed5d268ac49801a4602ee962e1ca78a0ab21fdce",
+            "src/eva/bootstrap/native_work_delivery.py": "827cfd6e66208715fdba179de96e8278d647a0d86454fecf17b359965eb2955b"
+          }
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "image": "sha256:4e11e41d08f607773ea4959a53f7d22be819b3fca554bc7d6f6c71476c63249a",
+          "health": "healthy",
+          "source_hashes": {
+            "src/eva/adapters/api/native_voice.py": "bebd00409bf6a5725eed4a757a3fc6214b06985b2aec7408383ce566b8014e01",
+            "src/eva/bootstrap/native_voice.py": "5f17eb1da947c0b12ea9dd03d69ce340a6ccd0acf23aba37bc8bcf28fcf6fb5a",
+            "src/eva/adapters/postgres/household_work_sessions.py": "9be74d7ccc4e437247c68f8fed5d268ac49801a4602ee962e1ca78a0ab21fdce",
+            "src/eva/bootstrap/native_work_delivery.py": "827cfd6e66208715fdba179de96e8278d647a0d86454fecf17b359965eb2955b"
+          }
+        }
+      },
+      "ha_source_hashes": {
+        "client.py": "10dee02413471990c2bf75d44a23e1a71a2d44cb1414e3622160d16ff0a940ea",
+        "services.py": "d8bbdf8f09413a62f7b6fcf02230b1504fcd768961b05a358e61c365a1fd5d36",
+        "services.yaml": "592163279cdb02617e2b3fdbf7af6e0779ebe1d426d13e7a0d9c71a69899d7b7"
+      },
+      "installer": {
+        "verified": true,
+        "images": 8,
+        "source_files": 1225
+      }
+    },
+    "live": {
+      "prompt": "Voer op de achtergrond deze controle uit: lees uitsluitend GET /api/states/sensor.eva2_i2_return_probe_5fc2f31ebf484168be970766d2b26289 via Home Assistant en geef de aangetroffen state plus de bron in je eindresultaat. Dit is een tijdelijke fictieve testbron, geen apparaat. Lees geen andere bronnen en voer geen wijzigingen of fysieke handelingen uit. Je eerste reactie is de ontvangst van de aangenomen opdracht.",
+      "conversation_id": "i2-return-synthetic-82251123f4bb420ea33fd2340691bbd3",
+      "work_id": "work:household-digital:ccfdf5a3-e6c0-58db-a617-9c10418e350c",
+      "state": "succeeded",
+      "ackSeconds": 8.899,
+      "resultSeconds": 23.741,
+      "resultText": "De controle is afgerond. De aangetroffen state is “210”.\n\nBron: GET /api/states/sensor.eva2_i2_return_probe_5fc2f31ebf484168be970766d2b26289 via Home Assistant.\n\nHet uitlezen is geslaagd (HTTP 200). Er zijn geen andere bronnen gelezen en geen wijzigingen of fysieke handelingen uitgevoerd.",
+      "resultSha256": "61ead7848ab32b1024ebc23dccf7f77f0e532fadcb7975d525ecd7a0e7405f40",
+      "storedResultMatchesEvent": true,
+      "toolReceipt": {
+        "method": "GET",
+        "exactSyntheticEntityOnly": true,
+        "httpStatus": 200,
+        "state": "210",
+        "responseSha256": "2c20f190d9f99e409b873e634f8addfad6ac84d2760a9b003c6839eefe21c4ed",
+        "timelinePayloadHashesVerified": true
+      },
+      "syntheticStateCleanup": {
+        "entity_id": "sensor.eva2_i2_return_probe_5fc2f31ebf484168be970766d2b26289",
+        "removed": {
+          "message": "Entity removed."
+        }
+      }
+    }
+  },
+  "usage": {
+    "developmentAndFocusedTestsModelCalls": 0,
+    "liveBackgroundSuccess": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 2,
+      "tool_calls": 1,
+      "input_tokens": 9013,
+      "output_tokens": 220,
+      "total_tokens": 9233,
+      "cost_usd_micros": null
+    },
+    "liveBackgroundInitialFailure": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 1,
+      "tool_calls": 0,
+      "input_tokens": 3589,
+      "output_tokens": 139,
+      "total_tokens": 3728,
+      "cost_usd_micros": null
+    },
+    "foregroundCallsAndTotalProviderCost": "Not fully measured; these background token counts are partial, not total trial or Codex cost.",
+    "developmentCredits": "Unknown"
+  },
+  "initialFailedProbe": {
+    "kind": "Explicit background arithmetic without any allowed source reads",
+    "state": "failed",
+    "errorCode": "incomplete_work",
+    "cause": "No tool receipts; household digital grant offered only HA reads and progress, while arithmetic prompt prohibited these. Existing executor requires verified tool evidence.",
+    "confirmedErrorDigest": "fb82923d6535f283e417a46f1db68a49d26a44033dfa48e65be0db06b2d006a1",
+    "rawAnswerRetained": false,
+    "report": null,
+    "treatment": "Preserved failure; no replay, no weakened completion rules, no claimed arithmetic correctness."
+  },
+  "remaining": [
+    "I2.2 whole observation-to-created-automation-to-useful-result outcome remains open.",
+    "Tool-free household background work admission is a known gap; not fixed by callback delivery.",
+    "No camera/calendar data trial, speaker listening trial or competitive advantage shown."
+  ],
+  "smallTaskCompletionDelta": 0,
+  "smallTasksDone": 27,
+  "smallTasksTotal": 44,
+  "artifactDirectory": "/home/administrator/project/.eva2-artifacts/i2-automation-return-20261005"
+}

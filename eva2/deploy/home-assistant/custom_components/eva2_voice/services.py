@@ -54,7 +54,8 @@ def async_register_services(hass):
             # Await the existing client directly so stop/unload cancellation
             # reaches its request-specific remote interrupt handling.
             answer = await client.respond(satellite_id=satellite_id, device_id=device_id,
-                conversation_id=conversation_id, text=text, language=language, interrupt_existing=False)
+                conversation_id=conversation_id, text=text, language=language, interrupt_existing=False,
+                delivery_mode="automation")
         except EvaVoiceBusy:
             raise ServiceValidationError("Eva is op deze speaker al met een aanvraag bezig.") from None
         except EvaVoiceUnavailable:
