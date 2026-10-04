@@ -1035,7 +1035,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-04T16:24:09.048099+00:00",
+        "checkedAt": "2026-10-04T16:28:32.215948+00:00",
         "deliveries": [
           {
             "title": "Agent Zero kan dezelfde meerbeurtenvergelijking doorlopen",
@@ -3625,24 +3625,23 @@
           }
         ],
         "now": {
-          "title": "P2.1 · volgende oorspronkelijke vergelijking voorbereiden",
-          "state": "in_progress",
-          "owner": "Codex /root + onafhankelijke beoordelaar",
-          "detail": "CM01: context uit de correctiebeurt was geselecteerd, maar inhoudelijke foutoorzaak nog onbekend. Geen speculatieve geheugenwijziging. Nu CM03 voorbereiden via de bestaande Eva1/Eva2-routes."
+          "title": "P2.1 · toestemming voor privébeoordeling nodig",
+          "state": "blocked",
+          "owner": "Jaap (toestemming); Codex (vervolg)",
+          "detail": "CM01-selectie herleid; exacte inhoudelijke foutoorzaak nog onbekend. CM03-instellingen mogen nog niet worden uitgelezen. Eén gezamenlijke vraag staat open. Geen modelproef of uitvoerende agent actief."
         },
         "next": {
-          "title": "P2.1 · CM03 eenmaal uitvoeren op beschikbare kandidaten",
-          "detail": "Oorspronkelijke invoer en voorwaarden behouden. Ontbrekende concurrenttoegang en CM02-beoordeling blijven afzonderlijk zichtbaar; geen eerdere proef herhalen."
+          "title": "Bewaarde resultaten beoordelen en vaste vergelijking vervolgen",
+          "detail": "Na expliciete toestemming: CM02 beoordelen en oorspronkelijke CM03-controls exact verbinden. Aanmeldingen, fysieke speakerervaring, echte herstart en gezinsacceptatie blijven afzonderlijke open punten."
         },
         "ownerAction": {
-          "title": "Toestemming voor onafhankelijke inhoudelijke beoordeling",
+          "title": "Eén gezamenlijke toestemmingsvraag beantwoorden",
           "steps": [
-            "Sta toe dat de onafhankelijke beoordelaar voor CM02 de fictieve proefgesprekken, opgeslagen proefherinneringen en oorspronkelijke beoordelingscriteria leest. De bouwagent ontvangt alleen uitslagen en meetwaarden.",
-            "Agent Zero meldt ook een verlopen eigen aanmelding. Hermes/OpenClaw zijn niet bevestigd. Na geslaagde bestaande native aanmelding kan de vergelijking verder; geen herbouw nodig.",
-            "De echte Windows-herstart voor F1.2 blijft afzonderlijk open.",
-            "De afzonderlijke toestemmingsvraag voor acht innovatieruns blijft open."
+            "Sta toe dat de onafhankelijke beoordelaar de fictieve gegevens uit de vaste vergelijking privé verwerkt en beoordeelt, inclusief controls, antwoorden en criteria. De bouwagent krijgt alleen uitslagen en meetwaarden. Het proefbudget blijft gelijk.",
+            "De bestaande afzonderlijke vragen voor camera-/agendagebruik, de innovatieproef en de echte herstart blijven open.",
+            "Native aanmeldingen van Agent Zero, Hermes en OpenClaw zijn niet actueel bevestigd; geen nieuwe loginronde actief."
           ],
-          "expected": "De automatische goedkeuringscontrole weigert deze lezing zonder aanvullende toestemming. De proefuitvoeringen zijn al klaar; geen nieuwe modelproef of installatie nodig."
+          "expected": "Automatische review weigert de privéverwerking zonder aanvullende toestemming; geen extra functie of algemene voorsprong geclaimd."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
         "reviewedAt": "2026-10-04T16:02:28.959344+00:00"
@@ -16217,7 +16216,7 @@
             {
               "id": "P2.1",
               "title": "Vergelijking op eindkandidaat uitvoeren",
-              "status": "in_progress",
+              "status": "blocked",
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
@@ -16225,22 +16224,17 @@
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
-                "readyWhen": "Beide uitvoeringen en metingen zijn klaar. Alleen inhoudelijk beoordelen van deze bewaarde fictieve proef vraagt toestemming door de automatische goedkeuringsweigering.",
+                "readyWhen": "Bestaande meetroutes zijn voorbereid. Alleen de expliciete privéverwerking/toetsing vraagt toestemming; het proefbudget verandert niet.",
                 "steps": [
-                  "Geef toestemming dat de onafhankelijke beoordelaar voor CM02 de fictieve gesprekken, proefherinneringen en oorspronkelijke criteria leest. Geen nieuwe proef, installatie of modelaanvraag."
+                  "Beantwoord de gezamenlijke vraag of de onafhankelijke beoordelaar de fictieve vergelijkingsgegevens privé mag verwerken en beoordelen; de bouwagent ontvangt alleen uitslagen en meetwaarden."
                 ],
-                "blocksIndependentWork": false
+                "blocksIndependentWork": true
               },
-              "checkedAt": "2026-10-04T16:24:09.048099+00:00",
+              "checkedAt": "2026-10-04T16:28:32.215948+00:00",
               "assignment": {
                 "baseCommit": "32a42975e58fa9e326ec5e09c5778b1b048e1bc2",
                 "owner": "/root",
-                "activeWorkers": [
-                  {
-                    "agent": "/root/aide_final_evaluation",
-                    "scope": "Next original CM03 oracle-free inputs and reuse of existing native wrappers; no inference during preparation"
-                  }
-                ],
+                "activeWorkers": [],
                 "files": [
                   "Executor: source-only shared memory/context route",
                   "Root: content-free CM01 result metadata and existing workboard"
@@ -16249,13 +16243,34 @@
                 "gap": "Distinguish missing recall/context selection from incorrect use by the model before proposing a repair.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Targeted source/metadata check only; zero modelcalls planned. Development credits unknown.",
-                "currentAction": "CM01 content-free diagnosis complete: correction-turn observation was selected, exact semantic failure stage remains unknown. No speculative product repair. Prepare next original fixed case CM03 on available Eva1/Eva2.",
+                "currentAction": "No active trial or worker. CM01 metadata diagnosis published; next original CM03 projection cannot yet be bound because protected control interpretation/readout was rejected. One consolidated owner authorization requested; no retry or alternative disclosure.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "Native Agent Zero multi-turn binding reviewed/published9db2ba35; real readiness recorded expired owned auth, zero inference, published32a42975."
                 },
-                "stage": "cm03_original_input_preparation",
-                "finding": "CM01 original loss retained. Native source same as frozen candidate. CM02 review and competitor access remain open."
+                "stage": "private_comparison_processing_approval_required",
+                "finding": "The current gap is allowed private evaluation-data processing plus the corresponding exact control mapping. Do not guess controls, reinterpret success, modify original criteria or repeat prior cases.",
+                "blockedAudit": {
+                  "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
+                  "consecutiveGoalTurns": 3,
+                  "observations": [
+                    {
+                      "turn": "CM02 original execution/result turn",
+                      "evidence": "p2-cm02-paired-result-20261004.json; semantic review denied, owner input requested"
+                    },
+                    {
+                      "turn": "Agent Zero native CM integration turn",
+                      "evidence": "32a42975; CM02 permission still pending while native bridge completed, native access expired"
+                    },
+                    {
+                      "turn": "CM01 metadata diagnosis and CM03 preparation turn",
+                      "evidence": "b7215099; content-free diagnosis exhausted, next control processing also denied, no input received"
+                    }
+                  ],
+                  "previousTurnClassification": "progress",
+                  "currentTurnClassification": "progress",
+                  "remainingIndependentWork": "No demonstrated product defect with a justified correction remains actionable from allowed evidence. Other original open outcomes require explicit pending approval/access, a new captured concrete HA failure, physical/human observations, or the fixed final evaluation controls. No invented completion."
+                }
               },
               "remaining": "Eva1/Eva2 CM01 en CM02 uitgevoerd; CM01 beide onvoldoende, CM02 inhoudelijk onbeoordeeld. Agent Zero-koppeling gereed, maar native aanmelding verlopen. Hermes/OpenClaw-aanmelding niet bevestigd. Geen actuele modelrun.",
               "latestEvidence": "eva2/evidence/product/p2-agentzero-cm-binding-20261004.json",
@@ -16269,7 +16284,7 @@
                 "resolvedAt": "2026-10-04T15:04:47.848198+00:00",
                 "scope": "Historical refusal before process creation; resolved through the same automatic review path after new synthetic-input provenance evidence. Counts here describe the rejected attempt only; current execution is in latestEvidence."
               },
-              "blocker": "CM02 inhoudelijk beoordelen wacht op de al gevraagde toestemming; Agent Zero-aanmelding verlopen, Hermes/OpenClaw ontbreken. Niet-uitgevoerde vergelijkingen blijven onbekend.",
+              "blocker": "Automatische goedkeuringscontrole blokkeert onafhankelijke privéverwerking van de vaste fictieve vergelijkingsgegevens: CM02-beoordeling en CM03-klok-/sessiebinding. Gezamenlijke eigenaarstoestemming gevraagd. Concurrentaanmeldingen ontbreken apart.",
               "assessmentBlocker": {
                 "type": "automatic_approval_review",
                 "state": "explicit_owner_authorization_needed_for_independent_content_review",
@@ -16284,7 +16299,23 @@
                 "evidence": "eva2/evidence/product/p2-agentzero-cm-binding-20261004.json",
                 "checkedAt": "2026-10-04T16:13:46.091584+00:00"
               },
-              "diagnosisEvidence": "eva2/evidence/product/p2-cm01-selection-diagnosis-20261004.json"
+              "diagnosisEvidence": "eva2/evidence/product/p2-cm01-selection-diagnosis-20261004.json",
+              "controlBindingBlocker": {
+                "case": "EV003-CM-03",
+                "source": "/root/aide_final_evaluation final response in this goal turn",
+                "verifiedSchema": {
+                  "ordinaryTurns": 3,
+                  "identities": 1,
+                  "setupTurns": 0,
+                  "eventRecords": 2,
+                  "extraServiceFileBrowserAudioFixtures": false
+                },
+                "sessionAndClockMapping": "not_established",
+                "projectionWritten": false,
+                "providerCalls": 0,
+                "automaticReviewReasonSummary": "Mixed command would print protected mapping/dispatch values and trigger-derived comparisons/time units beyond schema-only inspection. Rejected before execution.",
+                "safeAlternativeExamined": "Existing deterministic projector was not retained; previous inline transformation and source-only native wrappers do not establish CM03 controls. No guessed projection or alternate disclosure attempted."
+              }
             },
             {
               "id": "P2.2",

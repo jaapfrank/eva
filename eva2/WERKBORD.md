@@ -61,14 +61,18 @@ uit bestaand ontwikkelbewijs en geïnstalleerde taakgrenzen; geen voorspelde kos
 of claim dat iedere taak binnen die grenzen zal slagen. Geen nieuwe modelcalls.
 [Bevroren uitvoerplan](benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json).
 
-**Nu: P2.1 — volgende oorspronkelijke Eva1/Eva2-vergelijking voorbereiden.**
+**Nu: P2.1 — gezamenlijke toestemming voor privéverwerking/beoordeling nodig.**
 
 De CM01-selectie bevatte een observatie uit de eerste uitspraak én uit de
 correctiebeurt. Dit sluit volledige weglating van die beurt uit, maar bewijst
 niet dat het noodzakelijke detail in die observatie zat. De oorzaak blijft
 inhoudelijk onbeslist; geen speculatieve geheugenwijziging of proefherhaling.
 [Gerichte diagnose](evidence/product/p2-cm01-selection-diagnosis-20261004.json).
-De eerstvolgende oorspronkelijke CM03-opdracht wordt met bestaande routes voorbereid.
+CM03 heeft de passende drie-beurtenstructuur, maar de exacte klok-/sessiebinding
+is nog niet vastgesteld. Automatische review blokkeerde de beschermde uitlezing.
+Er staat één gezamenlijke eigenaarvraag open voor privéverwerking en beoordeling
+van de bestaande fictieve vergelijking; budget en criteria blijven gelijk.
+Geen nieuwe modelproef of uitvoerende agent actief.
 
 **Afgerond vergelijkingsgereedschap; concurrenttoegang open.**
 
@@ -80,7 +84,7 @@ gecontroleerd. Dit bewijst geen geheugenkwaliteit en levert geen extra Eva-funct
 Dezelfde oorspronkelijke CM01-opdracht en uitvoerwrapper staan klaar. Native gereedheid
 meldt **verlopen aanmelding**, vóór enige modelaanvraag. Geen login of vernieuwing
 gestart; tijdelijke omgeving afgesloten. CM02-beoordeling wacht apart op de al
-gevraagde toestemming. Er is geen actieve modelproef; de beoordelaar bereidt CM03 voor.
+gevraagde toestemming. Er is geen actieve modelproef. Verdere privéverwerking wacht op toestemming.
 [Bewijs en beperkingen](evidence/product/p2-agentzero-cm-binding-20261004.json).
 
 **Twee oorspronkelijke Eva1/Eva2-vergelijkingen uitgevoerd.**
