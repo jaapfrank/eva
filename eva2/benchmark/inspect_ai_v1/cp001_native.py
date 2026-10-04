@@ -202,6 +202,105 @@ def read_eva2_committed_reply(engine, body: dict, *, timeout_seconds: float):
     return rows[0] if rows else None
 
 
+
+def read_eva2_memory_settlement(core_engine, memory_engine, body: dict, *,
+                                timeout_seconds: float) -> dict:
+    """Observe one turn's full native retention in a disposable scenario database.
+
+    Both readers must target the scenario's independently provisioned databases.
+    All work in its affected bank must settle; no wall-clock guess, old successful
+    consolidation or fixed expected fact can stand in for the current document.
+    This is completion evidence, not semantic quality or provider quiescence.
+    No memory content is returned to the participant by this helper.
+    """
+    import math
+    import sqlalchemy as sa
+    from eva.adapters.postgres.operational_timeline import external_timeline_scope
+
+    if (type(timeout_seconds) not in (int, float)
+            or not math.isfinite(timeout_seconds) or timeout_seconds <= 0):
+        raise ValueError("a positive remaining readback timeout is required")
+    deadline = time.monotonic() + timeout_seconds
+
+    def read(engine, query, parameters):
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise TimeoutError("native memory readback deadline reached")
+        with engine.connect() as connection:
+            connection.execute(sa.text("SET TRANSACTION READ ONLY"))
+            connection.execute(sa.text("SELECT set_config(:key, :value, true)"),
+                               {"key": "statement_timeout",
+                                "value": str(max(1, int(remaining * 1000)))})
+            return [dict(row) for row in connection.execute(
+                sa.text(query), parameters).mappings()]
+
+    scope = external_timeline_scope(body["tenant_id"], body["installation_id"], "scope")
+    rows = read(core_engine, """
+        SELECT q.thread_id, q.payload->'data' AS document,
+               c.phase, c.status, s.payload->'data' AS receipt
+        FROM eva_core.operational_events q
+        JOIN eva_core.operational_checkpoints c USING (tenant_id, installation_id, thread_id)
+        LEFT JOIN eva_core.operational_events s
+          ON s.tenant_id=q.tenant_id AND s.installation_id=q.installation_id
+          AND s.thread_id=q.thread_id AND s.event_type='MEMORY_RETAIN_SUCCEEDED'
+        WHERE q.tenant_id=:tenant AND q.installation_id=:installation
+          AND q.event_type='MEMORY_RETAIN_QUEUED'
+          AND q.payload->'data'->>'principal_id'=:principal
+          AND q.payload->'data'->>'conversation_id'=:conversation
+          AND q.payload->'data'->>'source_ref'=:message
+        """, {"tenant": scope.tenant_id, "installation": scope.installation_id,
+              "principal": body["principal_id"], "conversation": body["conversation_id"],
+              "message": body["message_id"]})
+    result = {"status": "pending", "settled": False, "document_id": None,
+              "bank_id": None, "source_facts": None, "operations": []}
+    if not rows:
+        return {**result, "reason": "no exact native retain document"}
+    if len(rows) != 1:
+        raise ValueError("ambiguous native memory document or receipt")
+    row = rows[0]
+    document, receipt = row["document"], row["receipt"]
+    result["document_id"] = document["document_id"]
+    if (document.get("tenant_id") != body["tenant_id"]
+            or document.get("installation_id") != body["installation_id"]
+            or document.get("audience") != body["audience"]
+            or row["thread_id"] != "memory-retain:" + digest(document["document_id"])):
+        raise ValueError("native retain document scope mismatch")
+    if row["status"] == "needs_help":
+        return {**result, "status": "failed", "reason": "native retention needs help"}
+    if row["phase"] != "memory_retained" or row["status"] != "completed":
+        return {**result, "reason": "native retention pending"}
+    if (not receipt or receipt.get("document_id") != document["document_id"]
+            or receipt.get("content_sha256") != digest(document["content"])):
+        raise ValueError("native retain receipt mismatch")
+    result["bank_id"] = receipt["bank_id"]
+    parameters = {"bank": receipt["bank_id"], "document": document["document_id"]}
+    stored = read(memory_engine, """
+        SELECT original_text FROM documents WHERE bank_id=:bank AND id=:document
+        """, parameters)
+    if len(stored) != 1 or stored[0]["original_text"] != document["content"]:
+        return {**result, "status": "failed", "reason": "retained document readback differs"}
+    facts = read(memory_engine, """
+        SELECT id::text, consolidated_at, consolidation_failed_at FROM memory_units
+        WHERE bank_id=:bank AND document_id=:document AND fact_type IN ('world','experience')
+        """, parameters)
+    result["source_facts"] = len(facts)
+    result["operations"] = read(memory_engine, """
+        SELECT operation_id::text, operation_type, status FROM async_operations
+        WHERE bank_id=:bank ORDER BY created_at, operation_id
+        """, parameters)
+    if any(x["status"] in ("failed", "cancelled") for x in result["operations"]):
+        return {**result, "status": "failed", "reason": "native memory operation failed"}
+    if any(x["consolidation_failed_at"] is not None for x in facts):
+        return {**result, "status": "failed", "reason": "native consolidation failed"}
+    if (not result["operations"]
+            or any(x["status"] != "completed" for x in result["operations"])
+            or any(x["consolidated_at"] is None for x in facts)):
+        return {**result, "reason": "native memory operations or consolidation pending"}
+    if time.monotonic() >= deadline:
+        raise TimeoutError("native memory readback deadline reached")
+    return {**result, "status": "completed", "settled": True}
+
+
 def response_text(participant: str, body: dict, response: dict) -> str:
     """Reject handoffs/errors, mismatched identity and forged content hashes."""
     if not isinstance(response, dict):

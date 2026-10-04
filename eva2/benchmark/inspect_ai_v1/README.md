@@ -577,8 +577,24 @@ case reuses the actual API/PostgreSQL fixture with two configured synthetic
 Its model and semantic memory are stubs; it proves API/journal binding, not physical
 identity verification or semantic recall. Native pairing aliases an additional
 Telegram account to the confirming person; it does not create another person.
-Real shared/unknown-speaker authority, event clocks, full memory settlement and
-allowed action resources remain evaluator provisioning work before final execution.
+`read_eva2_memory_settlement` now reads the exact turn's outbox and retention
+receipt, independently checks the stored Hindsight source document and waits for
+its source facts to be consolidated plus all operations in the disposable scenario
+bank to finish. A previous turn's completed operation is insufficient. Empty fact
+extraction is allowed; no observation is fabricated or required. Use it only with
+serial turns in the explicitly provisioned scenario databases. This observer does
+not poll, retry, stop workers, grade memory quality or prove provider quiescence;
+reuse the existing native worker and shared usage ledger for those responsibilities.
+
+A two-turn offline check used the pinned native core and Hindsight images with
+six synthetic provider responses: both source documents and consolidation completed,
+while missing/wrong-person bindings remained incomplete. Zero real model calls.
+Historical two-call development failures and their budgets are unchanged. See
+`p1_participants_20260929.json#finalDataset.nativeMemoryBinding` for source/evidence
+hashes and limitations. These are synthetic wiring results, not final scores.
+
+Real shared/unknown-speaker authority, event clocks and allowed action resources
+remain evaluator provisioning work before final execution.
 
 The focused public tests use synthetic cases, not the sealed final questions:
 `PYTHONPATH=eva2/src:. python -m pytest -q eva2/tests/benchmark/test_ev003_final_dataset.py`.

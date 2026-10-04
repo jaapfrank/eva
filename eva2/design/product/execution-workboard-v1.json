@@ -1035,8 +1035,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-03T23:49:02.700767+00:00",
+        "checkedAt": "2026-10-04T00:08:57.322683+00:00",
         "deliveries": [
+          {
+            "title": "P1.2 voortgang · volledige geheugenverwerking meegenomen",
+            "date": "4 oktober",
+            "state": "tested",
+            "result": "Twee opeenvolgende gesprekken op de echte kern en Hindsight ronden elk hun eigen opslag en consolidatie af. Verkeerde persoonskoppeling blijft uitgesloten. Onafhankelijke bron- en resultaatreview akkoord. Zes synthetische antwoorden; nul echte modelcalls.",
+            "remaining": "Vergelijkingsvoorbereiding; geen nieuwe Eva-functie, productinstallatie of inhoudelijke geheugenwinst. Overige aansluitingen en meetbudget blijven open; stand 26/44.",
+            "source": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#finalDataset.nativeMemoryBinding"
+          },
           {
             "title": "P1.2 voortgang · echte API en opgeslagen antwoorden gekoppeld",
             "date": "4 oktober",
@@ -3585,14 +3593,14 @@
           }
         ],
         "now": {
-          "title": "P1.2 · echte gesprekroute gekoppeld; geheugenverwerking volgt",
+          "title": "P1.2 · gesprek én geheugen gekoppeld aan vergelijking",
           "state": "in_progress",
           "owner": "Codex /root",
-          "detail": "Twee synthetische personen, nieuw gesprek en herhaling zijn gecontroleerd via de echte API en PostgreSQL. Onafhankelijke review akkoord; model/geheugen waren stubs. Geen eindscore, modelproef of aanmelding actief. P1.2 blijft open."
+          "detail": "Twee opeenvolgende native gesprekken voltooien opslag en consolidatie. Onafhankelijke review akkoord; zes synthetische antwoorden, nul echte modelcalls. Geen modelproef of aanmelding actief; P1.2 blijft open."
         },
         "next": {
-          "title": "P1.2 · volledige geheugenverwerking aan scenario’s koppelen",
-          "detail": "Hergebruik bestaande native geheugen-outbox, Hindsight-operaties en onafhankelijke readbacks. Behoud echte persoons-/audiencegrenzen; daarna klok-/event-/actievoorzieningen en vaste meetbudgetten. De geslaagde API-proef wordt niet ongewijzigd herhaald."
+          "title": "P1.2 · bestaande personen-, gebeurtenis- en actievoorzieningen koppelen",
+          "detail": "Hergebruik werkende aansluitingen voor de vaste eindtaken en leg de meetbudgetten vast. Geslaagde gesprek-/geheugenproeven niet opnieuw uitvoeren zonder relevante wijziging."
         },
         "ownerAction": {
           "title": "Windows opnieuw opstarten voor de voorbereide eindcontrole",
@@ -3604,7 +3612,7 @@
           "expected": "Geen nieuwe installatie of herhaling van opdrachten. F1.2 blijft open tot de echte herstart en nacontrole."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-03T23:49:02.700767+00:00"
+        "reviewedAt": "2026-10-04T00:08:57.322683+00:00"
       },
       "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
     },
@@ -16080,7 +16088,7 @@
               "doneWhen": "Bestaande vergelijkingsprotocollen invullen met taken, scorers en eindig budget vóór uitvoering.",
               "owner": "Codex",
               "assignment": {
-                "baseCommit": "984b5549f2e6c843b8d32d01bccf3d9aa2fc36b2",
+                "baseCommit": "5c6a66a4969c689503d4a7fc5ad152c5b3848e61",
                 "files": [
                   "Root: native integration and shared manifest/workboard",
                   "Curator: private schema/interface mapping only",
@@ -16093,14 +16101,14 @@
                 "activeWorkers": [],
                 "owner": "/root",
                 "support": null,
-                "stage": "native_turn_reply_binding_verified_memory_settlement_next",
-                "currentAction": "Native turn serialization and independent scoped reply readback verified and reviewed. No executor, model run or login active. Next: reuse existing full memory settlement for multi-turn scenarios.",
+                "stage": "native_memory_settlement_verified_other_bindings_next",
+                "currentAction": "Full native memory completion across two serial conversations verified and independently reviewed; zero real model calls. No executor, login or model run remains active. Next: use existing actor/audience and event/action provisioning.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "evidence": "984b5549: P1.1 completed; sealed evaluator binding verified and published."
+                  "evidence": "5c6a66a: resolved native turns and scoped API/PostgreSQL readback verified, independently reviewed and published."
                 }
               },
-              "remaining": "Verzegelde taakset en scorers aangesloten; native Eva2-invoer en exacte API/PostgreSQL-readback met twee synthetische personen gericht gecontroleerd. Open: volledige geheugenverwerking, echte actor-/audience-, klok-/event- en actievoorzieningen; familie-/totaalbudget en uitvoervolgorde. P1.2 is nog niet afgerond.",
+              "remaining": "Afgeschermde taken/scorers en Eva2-gesprek/geheugen gekoppeld: twee native gesprekken inclusief opslag en consolidatie afgerond met synthetische providers. Open: echte actor-/audience-, klok-/event- en actievoorzieningen; familie-/totaalbudget en uitvoervolgorde. Geen eindscore; P1.2 blijft open.",
               "evidence": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#developmentPlan",
               "nextAction": "Gebruik de bestaande taakfamilies en vastgezette referentieversies voor persoonlijkheid, geheugen, initiatief en zelfstandig werk. Vergelijk aanwezige én door Eva toegevoegde mogelijkheden op bruikbaar resultaat, hulp, tijd en totaalverbruik; geen toolaantallen of vooraf gecodeerde voorbeeldadapter. Bestaande afgeschermde beoordeling behouden.",
               "ownerActionRequired": false,
@@ -16110,8 +16118,8 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-03T23:49:02.700767+00:00",
-              "latestEvidence": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#finalDataset.nativeConversationBinding"
+              "checkedAt": "2026-10-04T00:08:57.322683+00:00",
+              "latestEvidence": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json#finalDataset.nativeMemoryBinding"
             }
           ],
           "assignment": {

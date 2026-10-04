@@ -1,6 +1,6 @@
 {
   "contract": "EvaComparisonParticipantInputs/v1",
-  "checkedAt": "2026-10-03T23:49:02.700767+00:00",
+  "checkedAt": "2026-10-04T00:08:57.322683+00:00",
   "stage": "final_dataset_inspect_bound_native_resources_incomplete",
   "protocol": "eva2/design/product/comparable-agent-benchmarks-v1.md#ev-003",
   "scope": "Inputs for existing Inspect runner; not results, a new runtime or a new scorer.",
@@ -852,7 +852,7 @@
     "finalCalibrationStatus": "Candidate frozen for independent curation. Existing functional proof preserved; incomplete usage is not extrapolated into a final task budget. No final matrix admission."
   },
   "finalDataset": {
-    "status": "eva2_native_turn_reply_binding_verified_other_resources_and_budget_open",
+    "status": "eva2_native_turn_reply_and_full_memory_binding_verified_other_resources_and_budget_open",
     "commitment": "eva2/benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json",
     "commitmentSha256": "bbdbf8eff011aeb51c41e2ff6532346dd22615a99102166e4005292100dd03bf",
     "candidate": {
@@ -972,10 +972,66 @@
       },
       "initialPreparationFailure": "A locally reused pytest support module was missing; no test executed. Added only existing local support files, collection preflight passed, then one focused execution passed. Original failure retained.",
       "remaining": [
-        "Full native semantic-memory/outbox/operation settlement across scenario turns.",
         "Actual actor/audience provisioning including shared/unknown speakers and separate Bottie bindings.",
         "Controlled native clocks/events and allowed isolated action resources.",
         "Family budgets and execution order before final inference."
+      ],
+      "productInstalledChanged": false,
+      "newEvaFunction": false,
+      "creditCost": null
+    },
+    "nativeMemoryBinding": {
+      "source": "eva2/benchmark/inspect_ai_v1/cp001_native.py",
+      "sourceSha256": "586322f040fdc42c87559ccea6171c8a9715caf7af9d4298404a711431e01f7b",
+      "interface": "read_eva2_memory_settlement(core_engine, memory_engine, body, timeout_seconds=remaining)",
+      "scope": "Serial native turns in independently provisioned disposable scenario databases; exact native turn/audience/outbox/receipt and source document, all source facts consolidated and affected-bank operations completed. Observer only; shared ledger and worker teardown still required.",
+      "observed": {
+        "outcome": "two_native_turns_memory_completed",
+        "turns": 2,
+        "distinctNativeDocuments": 2,
+        "missingAndWrongActorReadbacks": "incomplete; no prior-turn completion accepted",
+        "syntheticProviderResponses": 6,
+        "realModelCalls": 0,
+        "syntheticTokens": {
+          "input_tokens": 158,
+          "output_tokens": 42,
+          "total_tokens": 200
+        },
+        "elapsedFixtureSeconds": 15.561616485996637,
+        "nativeCleanupErrors": [],
+        "productQualityScore": null
+      },
+      "evidence": {
+        "offline-contract.json": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-memory-settlement-20261004-v1/offline-contract.json",
+          "sha256": "70241ad398bb2b02862df6f04baa63c023302ab14eb9fe059777d526ceb21ec2"
+        },
+        "run.py": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-memory-settlement-20261004-v1/run.py",
+          "sha256": "98423737f00883788ef4448bc82bb24453c9392cb6461e51a119f3d141404474"
+        },
+        "native-two-turn/result.json": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-memory-settlement-20261004-v1/native-two-turn/result.json",
+          "sha256": "874d75d71b2e195caaab886207c134e7d7aff5e83d49ec83b8f951f028ebad67"
+        }
+      },
+      "reusedLauncher": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-eva2-shared-sample-20261003-v1/run-v6.py",
+        "sha256": "823156fca233ba9bb232fceef1cc78c3441db6c2f76048a5023b4fdfe45e3973",
+        "note": "Source lineage only. The executed launcher is independently pinned under evidence/run.py."
+      },
+      "images": {
+        "core": "sha256:fd1c7cd3413405fd6b1b5ce408f2028cffed8de735a301550663e4c891ee5902",
+        "memory": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+        "postgres": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1"
+      },
+      "sourceReview": "/root/background_execution_seam: limited GO against pinned native consolidation semantics. Successful processing may create no observation; source consolidated_at remains required.",
+      "resultReview": "/root/background_execution_seam: limited RESULTAAT-GO; source hashes, two exact source documents, prior-result isolation, wrong actor, shared accounting and cleanup checked without rerun.",
+      "historicalDevelopmentBudget": "Unchanged. This distinct offline fixture permits exactly six synthetic responses for two foreground/extraction/consolidation cycles; it does not admit or extend final or historical inference.",
+      "limitations": [
+        "Synthetic providers; no semantic quality, natural speed or cost advantage measured.",
+        "Serial isolated-bank observer; not physical speaker identity, event-clock or concurrent action admission.",
+        "No final task executed; actual other resource bindings and calibrated final family budgets remain open."
       ],
       "productInstalledChanged": false,
       "newEvaFunction": false,

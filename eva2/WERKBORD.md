@@ -46,12 +46,19 @@ akkoord. Nul echte modelcalls; dit bewijst geen semantische geheugenkwaliteit.
 De ontbrekende lokale pytest-supportmodule uit de eerste voorbereiding is gericht
 hersteld; de oorspronkelijke voorbereidingsfout blijft in het bewijs staan.
 
-Volgende aansluiting: volledige native geheugenverwerking per scenario, daarna
-echte actor-/audience-, klok-/event- en actievoorzieningen plus vaste meetbudgetten.
-De geslaagde API-proef wordt niet opnieuw uitgevoerd zonder relevante wijziging.
-Geen modelproef of nieuwe aanmelding actief. P1.2/P2 blijven open; de actuele
-stand is **26/44 oorspronkelijke kleine taken**. Echte audio, ontbrekende toegang
-en menselijke beoordeling worden niet door een synthetische test vervangen.
+Ook de volledige native geheugenverwerking is nu gekoppeld en gecontroleerd:
+twee opeenvolgende gesprekken op de echte kern en Hindsight ronden ieder hun
+eigen document, extractie en consolidatie af. Een eerdere voltooiing of verkeerde
+persoon maakt de volgende beurt niet ten onrechte klaar. Onafhankelijke bron- en
+resultaatreview akkoord. Zes synthetische providerantwoorden, **nul echte modelcalls**;
+geen meting van semantische kwaliteit, natuurlijke snelheid of creditbesparing.
+Bestaande tweecallproeven blijven ongewijzigd; dit is een afzonderlijke offlinecontrole.
+
+Volgende aansluiting: bestaande actor-/audience-, klok-/event- en actievoorzieningen,
+daarna vaste meetbudgetten en uitvoervolgorde. De geslaagde gesprek-/geheugenproeven
+worden niet ongewijzigd herhaald. Geen modelproef of nieuwe aanmelding actief.
+P1.2/P2 blijven open; stand **26/44 oorspronkelijke kleine taken**. Echte audio,
+ontbrekende toegang en menselijke beoordeling blijven afzonderlijk zichtbaar.
 [Afgeschermde eindtaken](benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json)
 · [Actuele meetkoppeling en beperkingen](benchmark/inspect_ai_v1/p1_participants_20260929.json).
 
