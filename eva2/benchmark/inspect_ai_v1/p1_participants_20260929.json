@@ -1,6 +1,6 @@
 {
   "contract": "EvaComparisonParticipantInputs/v1",
-  "checkedAt": "2026-10-04T00:08:57.322683+00:00",
+  "checkedAt": "2026-10-04T00:29:18.816502+00:00",
   "stage": "final_dataset_inspect_bound_native_resources_incomplete",
   "protocol": "eva2/design/product/comparable-agent-benchmarks-v1.md#ev-003",
   "scope": "Inputs for existing Inspect runner; not results, a new runtime or a new scorer.",
@@ -849,10 +849,10 @@
         "finalBudgetDerived": false
       }
     ],
-    "finalCalibrationStatus": "Candidate frozen for independent curation. Existing functional proof preserved; incomplete usage is not extrapolated into a final task budget. No final matrix admission."
+    "finalCalibrationStatus": "P1.2 final ceilings and order are frozen in the independently reviewed execution plan. Grounded in existing development observations and installed grants, not claimed complete consumption. P2.1 must satisfy native per-participant/family admission before final calls."
   },
   "finalDataset": {
-    "status": "eva2_native_turn_reply_and_full_memory_binding_verified_other_resources_and_budget_open",
+    "status": "tasks_scorers_budgets_and_order_frozen_execution_prerequisites_open",
     "commitment": "eva2/benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json",
     "commitmentSha256": "bbdbf8eff011aeb51c41e2ff6532346dd22615a99102166e4005292100dd03bf",
     "candidate": {
@@ -1036,6 +1036,26 @@
       "productInstalledChanged": false,
       "newEvaFunction": false,
       "creditCost": null
+    },
+    "executionPlan": {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+      "status": "frozen_preparation_complete_native_execution_not_admitted",
+      "review": "Independent preparation GO; no final provider calls admitted."
+    },
+    "nativeAuthorityReuse": {
+      "decision": "Existing native trusted bindings/household authority suffice; no new authentication layer. Bind during participant/family provisioning.",
+      "private": "load_principal_bindings or configured TelegramPrincipalBindings.resolve; reject unknown sender/chat; ConversationTurn.private.",
+      "sharedUnknownSpeaker": "load_household_voice_authority with exact existing IdentityPack/owner/device policy; NativeHouseholdResponder.make_turn or authority.build_service; actor remains household-device and runtime revalidates consent.",
+      "sourceReview": "/root/background_execution_seam: bounded existing-source review; no new calls/tests",
+      "physicalRecognitionClaim": false,
+      "sources": [
+        "eva2/src/eva/adapters/credentials/telegram_bindings.py",
+        "eva2/src/eva/bootstrap/household_voice.py",
+        "eva2/src/eva/bootstrap/native_voice.py",
+        "eva2/tests/bootstrap/test_household_voice_authority.py",
+        "eva2/tests/bootstrap/test_native_household_responder.py"
+      ]
     }
   }
 }

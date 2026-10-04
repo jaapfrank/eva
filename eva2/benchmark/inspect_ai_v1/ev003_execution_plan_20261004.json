@@ -1,0 +1,416 @@
+{
+  "contract": "EvaComparisonExecutionPlan/v1",
+  "status": "frozen_preparation_complete_native_execution_not_admitted",
+  "preparedAt": "2026-10-04T00:24:06.178457+00:00",
+  "task": "P1.2",
+  "scope": "Fixed EV-003 final inputs, scoring references, finite sample/family/aggregate ceilings and deterministic order. Native runtime/resources/accounting remain per-participant/family execution prerequisites. This is Inspect input metadata, not a new runner or result format.",
+  "datasetCommitment": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json",
+    "sha256": "bbdbf8eff011aeb51c41e2ff6532346dd22615a99102166e4005292100dd03bf",
+    "datasetSha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4"
+  },
+  "candidate": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_candidate_freeze_20261004.json",
+    "sha256": "09897a070e8d9163aa8c90475f2eb1fe81697ad05836267e0b8fb1f94bb176b7"
+  },
+  "protocol": {
+    "path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+    "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+    "thresholds_modified": false
+  },
+  "scorer": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+    "sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "resultOwner": "Native Inspect logs/scorer; no duplicated score table",
+    "humanRaters": 2,
+    "humanAndPhysicalEvidenceRequired": true,
+    "thresholdsChanged": false
+  },
+  "models": {
+    "contact": {
+      "model": "gpt-6-sol",
+      "reasoningEffort": "none"
+    },
+    "allResearchWorkAndMemoryHelpers": {
+      "model": "gpt-6-astra",
+      "reasoningEffort": "medium"
+    },
+    "providerRoute": "Existing registered subscription routes only; no paid fallback or automatic model escalation"
+  },
+  "budgetBasis": {
+    "classification": "Engineering ceilings grounded in existing development observations and installed grants; not measured complete-turn consumption, expected expenditure or a guarantee that every scenario will fit.",
+    "contactMemoryUnit": {
+      "providerAttempts": 4,
+      "providerInputTokens": 262144,
+      "providerOutputTokens": 4800,
+      "wallSeconds": 120,
+      "toolDispatches": 4,
+      "speechRequests": 0
+    },
+    "contactMemoryDerivation": "Two foreground responses observed in the accepted M1 recall, plus native extraction/consolidation lifecycle. Four attempts is an explicit composition of separate observations. Per-response limits reuse the existing 65,536 input / 1,200 output runtime envelope. Wall/tool limits retain the known 120-second/four-dispatch dialogue allowance.",
+    "workUnit": {
+      "providerAttempts": 32,
+      "providerInputTokens": 2097152,
+      "providerOutputTokens": 38400,
+      "wallSeconds": 300,
+      "toolDispatches": 31,
+      "speechRequests": 0
+    },
+    "workDerivation": "Reuse the installed 32-response/31-tool/300-second native task grant, supported by HA/browser/learning traces. Count every actual provider attempt, including failed or retried requests, inside the shared envelope even where native grants count completed responses.",
+    "workUnitsPerFamily": "Conversation/memory requires no delegated work unit. Cross-domain, browser, learning and voice allow one possible work admission per maximum user/audio input. Initiative allows the initial opportunity plus three fixture events; opportunities and distractors receive the same allowance. Units are not mandatory toolcalls or a cap on how many useful subtasks an agent may divide its work into.",
+    "speechDerivation": "Voice permits one recognition and one synthesis request per maximum input, plus one interrupted-output continuation. This seven-request ceiling is an explicit engineering choice, not a measured complete voice scenario. All audio processing, waiting, playback and observation remain inside the shared wall budget. Native input/output duration and usage must be recorded before family admission.",
+    "oldDevelopmentLimits": "Unchanged. Historical two-attempt results stay incomplete. The six-response offline memory fixture is wiring evidence, not real model token or latency calibration.",
+    "moneyAndCredits": null,
+    "nativeOutputLimitNote": "Token usage is observed cumulatively; an in-flight provider response may overshoot a requested cap. Record actual overshoot and stop further dispatch. Do not claim a hard provider-side output cap."
+  },
+  "families": [
+    {
+      "family": "conversation_memory",
+      "cases": 12,
+      "epochs": 3,
+      "structuralInputs": {
+        "maximumUserOrAudioInputsIncludingSetup": 4,
+        "totalSetupInputsPerEpoch": 2,
+        "totalUserOrAudioInputsPerEpoch": 38,
+        "totalOtherFixtureEventsPerEpoch": 0,
+        "source": "Independent curator content-free count of sealed dataset; events are not model/tool counts."
+      },
+      "ceilingComposition": {
+        "contactMemoryUnits": 4,
+        "workUnits": 0,
+        "meaning": "Accounting derivation only, not a prescribed solution or separate budgets. Every attempt/dispatch, including planning, initiative, helpers, memory, retries and resumed work, debits the single shared sample envelope."
+      },
+      "perSampleLimits": {
+        "providerAttempts": 16,
+        "providerInputTokens": 1048576,
+        "providerOutputTokens": 19200,
+        "wallSeconds": 480,
+        "toolDispatches": 16,
+        "speechRequests": 0
+      },
+      "aggregateLimitsPerParticipant": {
+        "providerAttempts": 576,
+        "providerInputTokens": 37748736,
+        "providerOutputTokens": 691200,
+        "wallSeconds": 17280,
+        "toolDispatches": 576,
+        "speechRequests": 0
+      }
+    },
+    {
+      "family": "cross_domain_actions",
+      "cases": 12,
+      "epochs": 3,
+      "structuralInputs": {
+        "maximumUserOrAudioInputsIncludingSetup": 2,
+        "totalSetupInputsPerEpoch": 0,
+        "totalUserOrAudioInputsPerEpoch": 13,
+        "totalOtherFixtureEventsPerEpoch": 2,
+        "source": "Independent curator content-free count of sealed dataset; events are not model/tool counts."
+      },
+      "ceilingComposition": {
+        "contactMemoryUnits": 2,
+        "workUnits": 2,
+        "meaning": "Accounting derivation only, not a prescribed solution or separate budgets. Every attempt/dispatch, including planning, initiative, helpers, memory, retries and resumed work, debits the single shared sample envelope."
+      },
+      "perSampleLimits": {
+        "providerAttempts": 72,
+        "providerInputTokens": 4718592,
+        "providerOutputTokens": 86400,
+        "wallSeconds": 840,
+        "toolDispatches": 70,
+        "speechRequests": 0
+      },
+      "aggregateLimitsPerParticipant": {
+        "providerAttempts": 2592,
+        "providerInputTokens": 169869312,
+        "providerOutputTokens": 3110400,
+        "wallSeconds": 30240,
+        "toolDispatches": 2520,
+        "speechRequests": 0
+      }
+    },
+    {
+      "family": "initiative",
+      "cases": 12,
+      "epochs": 3,
+      "structuralInputs": {
+        "maximumUserOrAudioInputsIncludingSetup": 2,
+        "totalSetupInputsPerEpoch": 0,
+        "totalUserOrAudioInputsPerEpoch": 13,
+        "totalOtherFixtureEventsPerEpoch": 25,
+        "source": "Independent curator content-free count of sealed dataset; events are not model/tool counts."
+      },
+      "ceilingComposition": {
+        "contactMemoryUnits": 2,
+        "workUnits": 4,
+        "meaning": "Accounting derivation only, not a prescribed solution or separate budgets. Every attempt/dispatch, including planning, initiative, helpers, memory, retries and resumed work, debits the single shared sample envelope."
+      },
+      "perSampleLimits": {
+        "providerAttempts": 136,
+        "providerInputTokens": 8912896,
+        "providerOutputTokens": 163200,
+        "wallSeconds": 1440,
+        "toolDispatches": 132,
+        "speechRequests": 0
+      },
+      "aggregateLimitsPerParticipant": {
+        "providerAttempts": 4896,
+        "providerInputTokens": 320864256,
+        "providerOutputTokens": 5875200,
+        "wallSeconds": 51840,
+        "toolDispatches": 4752,
+        "speechRequests": 0
+      }
+    },
+    {
+      "family": "browser_computer",
+      "cases": 12,
+      "epochs": 3,
+      "structuralInputs": {
+        "maximumUserOrAudioInputsIncludingSetup": 3,
+        "totalSetupInputsPerEpoch": 0,
+        "totalUserOrAudioInputsPerEpoch": 14,
+        "totalOtherFixtureEventsPerEpoch": 4,
+        "source": "Independent curator content-free count of sealed dataset; events are not model/tool counts."
+      },
+      "ceilingComposition": {
+        "contactMemoryUnits": 3,
+        "workUnits": 3,
+        "meaning": "Accounting derivation only, not a prescribed solution or separate budgets. Every attempt/dispatch, including planning, initiative, helpers, memory, retries and resumed work, debits the single shared sample envelope."
+      },
+      "perSampleLimits": {
+        "providerAttempts": 108,
+        "providerInputTokens": 7077888,
+        "providerOutputTokens": 129600,
+        "wallSeconds": 1260,
+        "toolDispatches": 105,
+        "speechRequests": 0
+      },
+      "aggregateLimitsPerParticipant": {
+        "providerAttempts": 3888,
+        "providerInputTokens": 254803968,
+        "providerOutputTokens": 4665600,
+        "wallSeconds": 45360,
+        "toolDispatches": 3780,
+        "speechRequests": 0
+      }
+    },
+    {
+      "family": "learning_projects",
+      "cases": 12,
+      "epochs": 3,
+      "structuralInputs": {
+        "maximumUserOrAudioInputsIncludingSetup": 2,
+        "totalSetupInputsPerEpoch": 0,
+        "totalUserOrAudioInputsPerEpoch": 24,
+        "totalOtherFixtureEventsPerEpoch": 24,
+        "source": "Independent curator content-free count of sealed dataset; events are not model/tool counts."
+      },
+      "ceilingComposition": {
+        "contactMemoryUnits": 2,
+        "workUnits": 2,
+        "meaning": "Accounting derivation only, not a prescribed solution or separate budgets. Every attempt/dispatch, including planning, initiative, helpers, memory, retries and resumed work, debits the single shared sample envelope."
+      },
+      "perSampleLimits": {
+        "providerAttempts": 72,
+        "providerInputTokens": 4718592,
+        "providerOutputTokens": 86400,
+        "wallSeconds": 840,
+        "toolDispatches": 70,
+        "speechRequests": 0
+      },
+      "aggregateLimitsPerParticipant": {
+        "providerAttempts": 2592,
+        "providerInputTokens": 169869312,
+        "providerOutputTokens": 3110400,
+        "wallSeconds": 30240,
+        "toolDispatches": 2520,
+        "speechRequests": 0
+      }
+    },
+    {
+      "family": "voice_presence",
+      "cases": 12,
+      "epochs": 3,
+      "structuralInputs": {
+        "maximumUserOrAudioInputsIncludingSetup": 3,
+        "totalSetupInputsPerEpoch": 0,
+        "totalUserOrAudioInputsPerEpoch": 26,
+        "totalOtherFixtureEventsPerEpoch": 3,
+        "source": "Independent curator content-free count of sealed dataset; events are not model/tool counts."
+      },
+      "ceilingComposition": {
+        "contactMemoryUnits": 3,
+        "workUnits": 3,
+        "meaning": "Accounting derivation only, not a prescribed solution or separate budgets. Every attempt/dispatch, including planning, initiative, helpers, memory, retries and resumed work, debits the single shared sample envelope."
+      },
+      "perSampleLimits": {
+        "providerAttempts": 108,
+        "providerInputTokens": 7077888,
+        "providerOutputTokens": 129600,
+        "wallSeconds": 1260,
+        "toolDispatches": 105,
+        "speechRequests": 7
+      },
+      "aggregateLimitsPerParticipant": {
+        "providerAttempts": 3888,
+        "providerInputTokens": 254803968,
+        "providerOutputTokens": 4665600,
+        "wallSeconds": 45360,
+        "toolDispatches": 3780,
+        "speechRequests": 252
+      }
+    }
+  ],
+  "aggregateLimits": {
+    "samplesPerParticipant": 216,
+    "fullFiveParticipantSamples": 1080,
+    "perParticipant": {
+      "providerAttempts": 18432,
+      "providerInputTokens": 1207959552,
+      "providerOutputTokens": 22118400,
+      "wallSeconds": 220320,
+      "toolDispatches": 17928,
+      "speechRequests": 252
+    },
+    "fullFiveParticipantMaximum": {
+      "providerAttempts": 92160,
+      "providerInputTokens": 6039797760,
+      "providerOutputTokens": 110592000,
+      "wallSeconds": 1101600,
+      "toolDispatches": 89640,
+      "speechRequests": 1260
+    },
+    "meaning": "Sum of finite ceilings, not forecast consumption or approval to launch the full matrix at once. Unused/unavailable entries cannot donate budget to another sample."
+  },
+  "executionOrder": {
+    "concurrency": 1,
+    "familyOrder": [
+      "conversation_memory",
+      "cross_domain_actions",
+      "initiative",
+      "browser_computer",
+      "learning_projects",
+      "voice_presence"
+    ],
+    "caseOrder": "Ascending public commitment case ID within family",
+    "epochParticipantOrder": [
+      [
+        "eva1-bottie",
+        "eva2",
+        "openclaw",
+        "hermes",
+        "agent_zero"
+      ],
+      [
+        "agent_zero",
+        "hermes",
+        "openclaw",
+        "eva2",
+        "eva1-bottie"
+      ],
+      [
+        "openclaw",
+        "hermes",
+        "agent_zero",
+        "eva1-bottie",
+        "eva2"
+      ]
+    ],
+    "expandedScheduleRecords": 1080,
+    "expandedScheduleSha256": "c95825cd8cdae1eae60fc480312d4b6746c831f803d068ea0b9c9ffbaaa868e8",
+    "hashRecipe": "JSON list of {epoch,family,caseId,caseSha256,participant}; epoch then family then sorted case then specified participant order; sorted keys and compact separators; UTF-8.",
+    "freshState": "Fresh isolated instance/data per case and epoch; preserve state, clocks and counters inside one scenario. Setup inputs and all fixture event handling count."
+  },
+  "executionPrerequisites": [
+    "Pin actual source/images/config/model settings and equal requested capabilities for each participant/family.",
+    "Use the existing trusted native private bindings and household authority; unknown/shared speaker cannot become a private owner.",
+    "Provision actual required fixture resources and controlled native clocks/events; hidden fixture/oracle values remain with the independent curator.",
+    "Demonstrate complete bound accounting for every foreground/planning/helper/memory/retry request, native cancellation and independent effect readback.",
+    "Enforce one cumulative sample and aggregate counter across concurrent tasks, process restart and resume; no reset, free setup, or role exemptions.",
+    "Voice requires actual audio input/output/playback and physical listening; human scores remain independent. Text-only substitutes are not admitted.",
+    "Submit the sealed plan hash, dataset hash, candidate hash and actual adapter/runtime receipts to native Inspect metadata before any final provider call."
+  ],
+  "unavailablePolicy": {
+    "availableAdmittedParticipantsOnly": true,
+    "missingAccessOrAdapter": "unknown_not_loss",
+    "properlyAdmittedProductFailure": "failed_with_original_trace",
+    "retryForBetterScore": false,
+    "changeAfterHiddenResults": false,
+    "budgetRedistribution": false,
+    "automaticFullMatrixLaunch": false,
+    "currentlyAdmittedFinalSamples": 0
+  },
+  "developmentEvidence": [
+    {
+      "path": "eva2/evidence/product/m1-cross-channel-recall-20260929.json",
+      "sha256": "212db4797d77208cef41db8cf8df938f5bce9e8d6b4b56be69aec6b4fe2a9ac9"
+    },
+    {
+      "path": "eva2/evidence/product/p1-known-pair-results-20261003.json",
+      "sha256": "fc082cf46853e9e92e082d9a6daac6bc056fdc4fcff5200c98aaab573b8cb2ee"
+    },
+    {
+      "path": "eva2/evidence/product/p1-hindsight-lifecycle-20261003.json",
+      "sha256": "f2644355591de9357b3d00cc0b1ac968467b4973b4bbcf0bfe3c9e96792876b8"
+    },
+    {
+      "path": "eva2/evidence/product/t2-grouped-reads-installed-20261002.json",
+      "sha256": "e54e853813844aa1c74d4ced2d23075d47b79adfc6ad19e49d41dc3edae064d1"
+    },
+    {
+      "path": "eva2/evidence/product/t2-room-request-20261002.json",
+      "sha256": "41858a21a81a5574ef937306107d9a100e67343174aab2a77711a9017955ae45"
+    },
+    {
+      "path": "eva2/evidence/product/autonomous-browser-installed-20261003.json",
+      "sha256": "742062794d0a7e436958b77e70e370bcc2999e7cf250d24fb5b0a563b6bff37d"
+    },
+    {
+      "path": "eva2/evidence/product/t3-owner-browser-task-20261002.json",
+      "sha256": "8952b528530c4abc957de5eaab47c81a1c398af6fe733f7c90512fc23b8ec7d7"
+    },
+    {
+      "path": "eva2/evidence/product/i1-private-contribution-readback-20261002.json",
+      "sha256": "e82462ac99f58819fbaa1fe07482ef7c1170d9b56be5e077e4550bc3e3a64273"
+    },
+    {
+      "path": "eva2/evidence/product/json-patch-learning-result-20260928.json",
+      "sha256": "a035691c6cfd15d6d25ff44f62fccc19a8a45cae3ef30f568dfc2e6f836fc05c"
+    },
+    {
+      "path": "eva2/evidence/product/json-patch-learning-reuse-20260928.json",
+      "sha256": "50fbc16f7238a9c986a9b9a9b6f60692e6fa73cc5f4704d6929bc7a85f6b9bdd"
+    },
+    {
+      "path": "eva2/evidence/product/l2-next-day-completed-20260930.json",
+      "sha256": "8d87fc38ceba7c7689467787a84af00f0c5274f11872bcbec2b00edbb1be559c"
+    },
+    {
+      "path": "eva2/evidence/product/l2-autonomous-weekend-20260929.json",
+      "sha256": "792a7202bafa3ca9f153b45d419a444622d198675284744b20a48bf44a3b26ec"
+    },
+    {
+      "path": "eva2/evidence/product/c3-audio-stutter-fix-20261001.json",
+      "sha256": "8449606c03051418357d699c9d06852953066517cb21a6e1c79df844c89258a9"
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_composition.py",
+      "sha256": "218ae582c67447672539310cbd7856792af6dd2af05d44afc29a4477e5877191"
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+      "sha256": "007847fc48847bbe4f988de0f2e02648c1222b7501e648c1a4d621156af81899"
+    }
+  ],
+  "frozenAt": "2026-10-04T00:29:18.816502+00:00",
+  "review": {
+    "independentReviewer": "/root/background_execution_seam",
+    "reviewedDraftSha256": "6d0f326b82713ba26ed27a3c81999cd8c797b838c62591ea9c07b0d05d98a863",
+    "verdict": "GO for preparation only; all refs/arithmetic and independently reconstructed schedule verified. No native execution admission.",
+    "curatorBudgetAssessment": "/root/aide_final_evaluation: finite engineering ceilings grounded in separate development observations and installed grants are acceptable without a new live budget-only probe; all native calls must debit one shared sample counter.",
+    "postReviewChanges": "Freeze status/time and this review metadata only. Numerical limits, ordering and prerequisites unchanged.",
+    "modelCallsForPreparation": 0
+  }
+}

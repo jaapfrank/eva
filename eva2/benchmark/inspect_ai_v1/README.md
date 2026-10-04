@@ -600,8 +600,17 @@ The focused public tests use synthetic cases, not the sealed final questions:
 `PYTHONPATH=eva2/src:. python -m pytest -q eva2/tests/benchmark/test_ev003_final_dataset.py`.
 Use the existing pinned Inspect environment; no new dependency is introduced.
 
-This binding does not finish P1.2. Actual native resource/provisioning callbacks,
-family budgets and execution order still need to be fixed before inference.
+P1.2's original preparation condition is now completed by the independently
+reviewed `ev003_execution_plan_20261004.json`: fixed tasks/scorers, finite equal
+sample/family/aggregate ceilings and deterministic order. These are development-
+grounded engineering ceilings, not observed complete consumption or expected
+costs. The original two-attempt development results remain unchanged. The plan
+hash in the participant manifest is frozen before final inference.
+
+Actual native resource/provisioning/accounting callbacks remain P2.1 admission
+requirements per participant/family. The plan does not admit a provider call or
+automatically start the full matrix. Reuse the existing trusted Telegram binding
+and household voice authority; no separate evaluation identity policy.
 Audio requires actual audio resources and listening evidence; human preferences
 require recorded independent judgments. Structural loading proves neither a
 successful task nor competitive superiority. The sealed payloads remain unchanged.

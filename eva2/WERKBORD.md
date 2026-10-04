@@ -1,6 +1,6 @@
 # EVA2 werkbord
 
-**P1.1 afgerond: versies en beschikbare modeltoegang vastgesteld. Stand 26/44 kleine taken.**
+**P1 afgerond: versies/toegang, vaste taken, scorers en meetbudgetten. Stand 27/44 kleine taken.**
 De oorspronkelijke voorwaarde is onafhankelijk gecontroleerd. Eva1/Eva2 en Agent Zero
 hebben aantoonbare eigen toegang; Hermes/OpenClaw ontbreken zichtbaar. Dit is afronding
 van vergelijkingsvoorbereiding, geen nieuwe Eva-functie of algemene voorsprong.
@@ -32,7 +32,7 @@ Geen extra Eva-functie of installatie uit deze meting: stand **25/44**.
 [Alle acht resultaten en beperkingen](evidence/product/p1-known-pair-results-20261003.json).
 [Onafhankelijke resultaatreview](reviews/p1-known-pair-results-20261003.md).
 
-**Nu: P1.2 — afgeschermde eindtaken op de echte Eva-routes aansluiten.**
+**P1.2 afgerond — de oorspronkelijke vergelijkingsspecificatie staat vast.**
 Alle 72 ongeziene scenario’s zijn onafhankelijk vastgelegd. De dunne Inspect-
 koppeling leest alleen toegestane invoer voor deelnemers; verborgen antwoorden
 blijven bij de beoordelaar. Taakslagen, menselijke voorkeur, initiatiefnut en
@@ -54,11 +54,20 @@ resultaatreview akkoord. Zes synthetische providerantwoorden, **nul echte modelc
 geen meting van semantische kwaliteit, natuurlijke snelheid of creditbesparing.
 Bestaande tweecallproeven blijven ongewijzigd; dit is een afzonderlijke offlinecontrole.
 
-Volgende aansluiting: bestaande actor-/audience-, klok-/event- en actievoorzieningen,
-daarna vaste meetbudgetten en uitvoervolgorde. De geslaagde gesprek-/geheugenproeven
-worden niet ongewijzigd herhaald. Geen modelproef of nieuwe aanmelding actief.
-P1.2/P2 blijven open; stand **26/44 oorspronkelijke kleine taken**. Echte audio,
-ontbrekende toegang en menselijke beoordeling blijven afzonderlijk zichtbaar.
+De oorspronkelijke P1.2-eindvoorwaarde is nu gehaald: alle 72 taken in zes
+families, scorers, eindige gelijke sample-/familie-/totaalgrenzen en vaste volgorde
+zijn vastgelegd en onafhankelijk gecontroleerd. De plafonds zijn ontwerpkeuzes
+uit bestaand ontwikkelbewijs en geïnstalleerde taakgrenzen; geen voorspelde kosten
+of claim dat iedere taak binnen die grenzen zal slagen. Geen nieuwe modelcalls.
+[Bevroren uitvoerplan](benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json).
+
+**Hierna: P2.1 — de vastgelegde vergelijking uitvoeren met beschikbare native toegang.**
+Ontbrekende uitvoeringsaansluitingen blijven expliciete toelatingsvoorwaarden per
+deelnemer/familie; geen nieuwe taken of beoordelingsregels. Werkende persoons- en
+huishoudroutes worden hergebruikt. Echte audio, ontbrekende toegang en menselijke
+beoordeling blijven zichtbaar; geen tekstvervanging of fictieve concurrentieverliezen.
+Nog geen eindrun of nieuwe aanmelding actief. Stand **27/44 kleine taken**;
+vergelijkingsvoorbereiding telt niet als extra Eva-functie of bewezen voorsprong.
 [Afgeschermde eindtaken](benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json)
 · [Actuele meetkoppeling en beperkingen](benchmark/inspect_ai_v1/p1_participants_20260929.json).
 
