@@ -26,6 +26,30 @@ It produced no valid answer and has incomplete dispatch/usage coverage. A narrow
 zero counter is not zero cost. The corrected adapter candidate and mocked checks
 do not admit another inference run or turn that failure into a competitor loss.
 
+## Native scenario calendar — 4 October 2026
+
+P2 uses the existing native workers with an optional evaluator-only calendar.
+`calendar-requirements.txt` pins `time-machine`3.5.1 with the official CPython3.11
+(Hindsight) and3.12 (core) wheel hashes. Install it only into a private dependency
+directory for the matching interpreter and mount that directory read-only in the
+worker; do not install it into Eva's production image or the global interpreter.
+The standard Inspect lock and the product candidate remain unchanged.
+
+`EvaScenarioCalendar/v1` contains only `generation` and `offsetMilliseconds` in
+addition to its contract field. The trusted controller publishes it by atomic
+rename. It must independently verify reply, native memory and provider settlement
+before advancing, then await every worker's generation receipt before dispatching
+the next input. Both workers receive the same ticking calendar; parent budgets,
+monotonic duration, native TLS and credential-expiry checks retain actual time.
+Node accepts `calendar_refresh`; Python uses `SIGUSR1` and a private receipt file.
+These optional flags provide no execution permission and do not read hidden oracles.
+
+Normal retain/recall receives explicit event/query dates; native SQL operation
+bookkeeping remains actual time. Optional ingest-age filters and mental-model
+refresh are outside this proven clock scope. See `finalDataset.nativeCalendarBinding`
+in the participant manifest for exact evidence, failures and limitations. Remove
+the optional calendar flags to retain the workers' original real-time behavior.
+
 ## Current participant inputs — 29 September 2026
 
 `p1_participants_20260929.json` pins Eva2, Eva1/Bottie, OpenClaw, Hermes

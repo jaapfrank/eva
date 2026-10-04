@@ -1084,7 +1084,9 @@
         "cp312WheelSha256": "075cc8ff3bf229d96bc7adb8b26be6b1021ee0a5213efe4f57898cda3a3bd766",
         "owner": "Codex comparator maintainer",
         "nextReview": "Before changing the pinned comparator dependency or moving to a new Python runtime",
-        "rollback": "Omit optional calendar flags; existing workers retain their original real-calendar behavior"
+        "rollback": "Omit optional calendar flags; existing workers retain their original real-calendar behavior",
+        "requirements": "eva2/benchmark/inspect_ai_v1/calendar-requirements.txt",
+        "requirementsSha256": "82f6f913cf1ac2cc130af47705c983838219a414cd6dcb2580ca4cd0baa8aa39"
       },
       "sourceReview": "Independent limited GO /root/aide_final_evaluation for Node/Python clock mechanism; no full-case admission.",
       "pgDecision": "No PG clock change for normal CM retain/recall: native event timestamp/query_timestamp and occurrence times drive semantics. Optional ingest-age filters and mental-model refresh are not admitted by this conclusion.",
@@ -1102,7 +1104,7 @@
         "eva2/benchmark/inspect_ai_v1/ev003_python_calendar.py": "6d1c759c2eb5ba4b34aad5d94e6163ec490f3d86975e602d7b2fb270a74c932f",
         "eva2/benchmark/inspect_ai_v1/ev003_node_calendar.mjs": "c1b0c30fa97c511b3b8adde7778442fc82e04cb98a98a9e80169a2fef963c602",
         "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py": "24cf9cbc538476e6543c9a376db6c6e47ce8e16cf88e9b462ee46fa6799a09b3",
-        "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs": "f3a6c1a8fa27dc04f786a03d180231eeea9e2a3f9a73afa1d1469c94ee3d07c7"
+        "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs": "32d837e52a526e3c363c3cf92a2b929936255bedd12781b70c0a766a7fbc321a"
       },
       "nativeIntegration": {
         "receipt": "/home/administrator/project/.eva2-artifacts/ev003-calendar-native-turns-20261004-v1/receipt.json",
@@ -1135,7 +1137,8 @@
         "reviewer": "/root/background_execution_seam",
         "decision": "Limited GO for current P2.1 preparation, not final execution admission",
         "scope": "Current worker/calendar source hashes match; native auth and two-turn settlement/accounting evidence retained; parent must enforce settlement before clock-file change."
-      }
+      },
+      "bottieSettlementReceipt": "Before publishing an advance, controller reads the existing active/pending/failed-close counters through calendar_refresh, plus signed ACK, DB readback and parent ledger; after publishing it requires the new generation acknowledgment."
     }
   }
 }

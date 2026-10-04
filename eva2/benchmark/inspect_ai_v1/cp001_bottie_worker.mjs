@@ -360,7 +360,10 @@ send({ ready: true, source_root: sourceRoot, source_sha256: sourceHashes, explic
 async function handle(request) {
   if (request.calendar_refresh === true) {
     if (!calendar || Object.keys(request).length !== 1) throw new Error('invalid calendar refresh');
-    send({ calendar: calendar.refresh() });
+    send({ calendar: calendar.refresh(), active_provider_attempts: providerControllers.size,
+      pending_provider_controls: pendingControls.size,
+      provider_close_failures: [...providerControllers].filter(c => c.closeFailed).length,
+      quiescent: providerControllers.size === 0 && pendingControls.size === 0 });
     return;
   }
     if (request.sign_ack) {

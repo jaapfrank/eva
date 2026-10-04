@@ -1,0 +1,5 @@
+# Evaluator workers only: CPython3.11/3.12 Linux x86_64 official wheels.
+# Keep production dependencies unchanged. No unpinned fallback/source build.
+time-machine==3.5.1 \
+    --hash=sha256:54bc68d0bbdd1b903c8d46cb0d42b4da7a50391dde4aa644b77e2480083a479d \
+    --hash=sha256:075cc8ff3bf229d96bc7adb8b26be6b1021ee0a5213efe4f57898cda3a3bd766
