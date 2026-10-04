@@ -1035,8 +1035,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-04T15:41:39.296797+00:00",
+        "checkedAt": "2026-10-04T16:02:28.959344+00:00",
         "deliveries": [
+          {
+            "title": "Agent Zero kan dezelfde meerbeurtenvergelijking doorlopen",
+            "date": "4 oktober",
+            "state": "tested",
+            "result": "Bestaande meetroute uitgebreid: drie beurten, twee sessies, automatische opslag en zelfstandig teruglezen. Gerichte offline proef en onafhankelijke bronreview geslaagd; nul echte modelcalls.",
+            "remaining": "Vergelijkingsgereedschap; geen nieuwe Eva-functie. Geheugenkwaliteit en echte eindopdracht nog onbeoordeeld. Laatste afsluitcorrectie alleen op bron gecontroleerd. Stand 27/44 onveranderd.",
+            "source": "eva2/evidence/product/p2-agentzero-cm-binding-20261004.json"
+          },
           {
             "title": "Tweede vaste geheugenvergelijking · inhoud nog onbeoordeeld",
             "date": "4 oktober",
@@ -3617,14 +3625,14 @@
           }
         ],
         "now": {
-          "title": "P2.1 · twee vergelijkingen uitgevoerd",
+          "title": "P2.1 · Agent Zero-koppeling gereed; vaste vergelijking voorbereiden",
           "state": "in_progress",
-          "owner": "Codex /root",
-          "detail": "Eerste geheugenopdracht: beide onvoldoende. Tweede: metingen klaar, inhoudelijke beoordeling wacht op toestemming door automatische goedkeuringsweigering. Eva2 gebruikte daarbij 25.933 invoertokens; Eva1 52.629. Geen winst of extra functie geclaimd."
+          "owner": "Codex /root + onafhankelijke beoordelaar",
+          "detail": "Drie beurten over twee sessies en echte opslag gecontroleerd, onafhankelijk gereviewd. Nul betaalde modelcalls. Nu dezelfde oorspronkelijke CM01-opdracht koppelen; nog geen kwaliteitsuitslag."
         },
         "next": {
-          "title": "P2.1 · bewaarde antwoorden inhoudelijk beoordelen",
-          "detail": "Alleen na toegestane onafhankelijke lezing van de oorspronkelijke criteria en fictieve proefantwoorden. Geen nieuwe proef of gunstiger herkansing; resterende vaste vergelijking blijft open."
+          "title": "P2.1 · oorspronkelijke opdracht op Agent Zero uitvoeren",
+          "detail": "Dezelfde vaste criteria en modelroute gebruiken. CM02 inhoudelijk beoordelen zodra de al gevraagde lezing is toegestaan."
         },
         "ownerAction": {
           "title": "Toestemming voor onafhankelijke inhoudelijke beoordeling",
@@ -3636,7 +3644,7 @@
           "expected": "De automatische goedkeuringscontrole weigert deze lezing zonder aanvullende toestemming. De proefuitvoeringen zijn al klaar; geen nieuwe modelproef of installatie nodig."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-04T01:04:34.099813+00:00"
+        "reviewedAt": "2026-10-04T16:02:28.959344+00:00"
       },
       "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
     },
@@ -16222,30 +16230,34 @@
                 ],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-04T15:40:59.277905+00:00",
+              "checkedAt": "2026-10-04T16:02:28.959344+00:00",
               "assignment": {
-                "baseCommit": "000fac09",
+                "baseCommit": "f7b118b25165bea8e55d4f1a1ea2dee7b0034e58",
                 "owner": "/root",
-                "activeWorkers": [],
+                "activeWorkers": [
+                  {
+                    "agent": "/root/aide_final_evaluation",
+                    "scope": "Original CM01 Agent Zero oracle-free projection and admission preparation; no inference"
+                  }
+                ],
                 "files": [
-                  "Root: shared evaluator integration, manifest, workboard",
-                  "Curator: private per-case inputs/events only",
-                  "Independent worker: read-only native Eva1 seams"
+                  "Executor: p1_agentzero_bridge_probe.py and focused lifecycle tests",
+                  "Root: existing clock/readback wiring if required, shared manifest and workboard"
                 ],
                 "existing": "Pinned candidate, fixed72-case dataset/scorer/budgets/order; native Eva1/Eva2 conversation fixtures and full Eva2 memory accounting exist.",
-                "gap": "Continue remaining original comparison entries with available admitted native access; preserve the first pair losses without rerunning for a better score.",
+                "gap": "Agent Zero currently tears down after one foreground answer; no complete3-turn/2session CM lifecycle with settled helpers and readbacks.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
-                "estimate": "Reuse existing native fixtures and accounting; no new general evaluation platform. Final limits frozen in execution plan; credit prices unknown.",
-                "currentAction": "CM01 and CM02 executed once on Eva1/Eva2. CM01 both fail. CM02 complete accounting verified, semantic review denied by automatic approval; no native run active. Exact independent-content approval question prepared; no alternative access or rerun.",
+                "estimate": "One existing native bridge extension with focused offline verification; no external inference during construction. Development credits unknown.",
+                "currentAction": "Native CM lifecycle wired and independently reviewed. Preparing same original CM01 input and scoped participant admission; no new model run active.",
                 "previousGoalTurn": {
-                  "classification": "no_progress",
-                  "evidence": "No native execution occurred; automatic approval blocker persisted and goal was marked blocked. Owner has now resumed the goal; new blocked audit starts here."
+                  "classification": "progress",
+                  "evidence": "Original CM02 executed once on Eva1 and Eva2, independently validated native accounting, published f7b118b2. CM01 actual failure retained; CM02 semantic review explicitly unknown after automatic review denial."
                 },
-                "stage": "two_original_pairs_executed_second_semantic_review_waits_approval",
-                "finding": "CM01 correction failure remains. CM02 quality unknown, not success or failure; source binding and operational measurements independently checked. Other original comparison entries remain open."
+                "stage": "agent_zero_native_cm_binding_reviewed",
+                "finding": "Public native fixture passed: 3 turns/2 contexts, complete synthetic accounting and durable readback. Final idle cleanup source reviewed separately; no learned-memory quality claim."
               },
-              "remaining": "Twee vaste opdrachten op Eva1/Eva2 uitgevoerd. Eerste: beide onvoldoende. Tweede: inhoudelijke beoordeling wacht op toestemming wegens automatische goedkeuringsweigering. Rest van oorspronkelijke vergelijking open.",
-              "latestEvidence": "eva2/evidence/product/p2-cm02-paired-result-20261004.json",
+              "remaining": "Agent Zero-koppeling gereed voor de oorspronkelijke CM01-vergelijking. Afzonderlijke uitvoering en beoordeling volgen; CM02-inhoudelijke toestemming blijft open.",
+              "latestEvidence": "eva2/evidence/product/p2-agentzero-cm-binding-20261004.json",
               "executionBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_after_same_command_review_with_new_provenance_evidence",

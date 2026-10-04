@@ -46,7 +46,8 @@ class _RealTime:
         return getattr(time, name)
 
 
-def protect_native_auth(stack, *, core_model=None, memory_auth_module=None):
+def protect_native_auth(stack, *, core_model=None, memory_auth_module=None,
+                        agentzero_auth_module=None):
     """Keep the existing token checks unchanged except for their clock source.
 
     No token is supplied, decoded differently, refreshed, extended or accepted by
@@ -68,6 +69,18 @@ def protect_native_auth(stack, *, core_model=None, memory_auth_module=None):
     if memory_auth_module is not None:
         stack.enter_context(patch.object(memory_auth_module, 'time', _RealTime()))
         stack.enter_context(patch.object(memory_auth_module, 'datetime', _RealDateTime))
+    if agentzero_auth_module is not None:
+        # Preserve native expiry AND persisted refresh timestamps on real time.
+        for name in ('should_refresh', 'utc_now_iso'):
+            original = getattr(agentzero_auth_module, name)
+            if not isinstance(original, FunctionType):
+                raise TypeError('native Agent Zero credential function differs')
+            cloned = FunctionType(original.__code__,
+                {**original.__globals__, 'datetime': _RealDateTime},
+                original.__name__, original.__defaults__, original.__closure__)
+            cloned.__kwdefaults__ = original.__kwdefaults__
+            functools.update_wrapper(cloned, original)
+            stack.enter_context(patch.object(agentzero_auth_module, name, cloned))
 
 
 class ScenarioCalendar:

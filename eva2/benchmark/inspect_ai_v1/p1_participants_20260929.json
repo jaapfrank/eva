@@ -472,6 +472,22 @@
           "status": "mocked_native_binding_verified_not_live_admission",
           "evidence": "eva2/evidence/product/p1-final-dataset-agentzero-attempt-20261004.json"
         }
+      },
+      "nativeFinalCMLifecycle": {
+        "status": "offline_native_lifecycle_pass_independently_source_reviewed",
+        "evidence": "eva2/evidence/product/p2-agentzero-cm-binding-20261004.json",
+        "review": "eva2/reviews/p2-agentzero-cm-binding-20261004.md",
+        "sourceHashes": {
+          "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py": "434ef173c7e0bc37070b6395a1dcdbf5b1fb02986de12cbc0e85223a39029d40",
+          "eva2/benchmark/inspect_ai_v1/ev003_python_calendar.py": "2d00941d259ba2576c4c7703e5717834118286b35281002d0f671c379a691c48",
+          "eva2/benchmark/inspect_ai_v1/ev003_agentzero_readback.py": "780c6693aefe51f61e77c3b20d848c9f2c5377772924692bd056b207fdc724a5",
+          "eva2/benchmark/inspect_ai_v1/test_ev003_agentzero_evidence.py": "9005eb777e2ed18bbe060fce5fc1698f20177f1efd85c323fa01b8d163be60c0",
+          "eva2/benchmark/inspect_ai_v1/cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f"
+        },
+        "shape": "Three native turns, two contexts, same isolated memory/default store",
+        "externalInferenceRequests": 0,
+        "admission": "not_admitted",
+        "remaining": "Exact original scenario projection and scoped execution admission. Final idle-cleanup runtime remains unobserved; learned-memory quality not inferred from fixture."
       }
     }
   ],
@@ -1323,6 +1339,22 @@
         "rejectionReason": "The unchanged command still prints sealed predicates, replies, and memory contents; the new justification is untrusted and does not reliably constrain stdout to the curator, so it remains an unauthorized disclosure risk despite the synthetic-data claim."
       },
       "activeNativeRuns": 0
+    },
+    "nativeAgentZeroCMBinding": {
+      "status": "offline_native_lifecycle_pass_independently_source_reviewed",
+      "evidence": "eva2/evidence/product/p2-agentzero-cm-binding-20261004.json",
+      "review": "eva2/reviews/p2-agentzero-cm-binding-20261004.md",
+      "sourceHashes": {
+        "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py": "434ef173c7e0bc37070b6395a1dcdbf5b1fb02986de12cbc0e85223a39029d40",
+        "eva2/benchmark/inspect_ai_v1/ev003_python_calendar.py": "2d00941d259ba2576c4c7703e5717834118286b35281002d0f671c379a691c48",
+        "eva2/benchmark/inspect_ai_v1/ev003_agentzero_readback.py": "780c6693aefe51f61e77c3b20d848c9f2c5377772924692bd056b207fdc724a5",
+        "eva2/benchmark/inspect_ai_v1/test_ev003_agentzero_evidence.py": "9005eb777e2ed18bbe060fce5fc1698f20177f1efd85c323fa01b8d163be60c0",
+        "eva2/benchmark/inspect_ai_v1/cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f"
+      },
+      "shape": "Three native turns, two contexts, same isolated memory/default store",
+      "externalInferenceRequests": 0,
+      "admission": "not_admitted",
+      "remaining": "Exact original scenario projection and scoped execution admission. Final idle-cleanup runtime remains unobserved; learned-memory quality not inferred from fixture."
     }
   }
 }

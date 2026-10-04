@@ -61,7 +61,17 @@ uit bestaand ontwikkelbewijs en geïnstalleerde taakgrenzen; geen voorspelde kos
 of claim dat iedere taak binnen die grenzen zal slagen. Geen nieuwe modelcalls.
 [Bevroren uitvoerplan](benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json).
 
-**Nu: P2.1 — twee oorspronkelijke vergelijkingen uitgevoerd.**
+**Nu: P2.1 — Agent Zero-koppeling gereed; oorspronkelijke vergelijking voorbereiden.**
+
+De bestaande native route doorloopt nu drie beurten over twee sessies met dezelfde
+geheugenopslag, afgehandelde helpers en onafhankelijke readback. De publieke offline
+proef en drie gerichte opslag-/klokcontroles slaagden; onafhankelijke bronreview
+akkoord. **Nul echte modelcalls.** De laatste idle-logafsluiting is alleen op bron
+gecontroleerd. Dit bewijst geen geheugenkwaliteit en levert geen extra Eva-functie.
+Dezelfde oorspronkelijke CM01-opdracht wordt nu gekoppeld; nog geen modelrun actief.
+[Bewijs en beperkingen](evidence/product/p2-agentzero-cm-binding-20261004.json).
+
+**Twee oorspronkelijke Eva1/Eva2-vergelijkingen uitgevoerd.**
 
 | Tweede opdracht: drie beurten per systeem | Eva1 | Eva2 |
 |---|---:|---:|

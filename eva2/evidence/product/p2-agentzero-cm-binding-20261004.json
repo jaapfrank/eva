@@ -1,0 +1,122 @@
+{
+  "contract": "EvaComparisonNativeBindingEvidence/v1",
+  "checkedAt": "2026-10-04T16:02:28.959344+00:00",
+  "task": "P2.1",
+  "status": "offline_native_lifecycle_pass_independently_source_reviewed",
+  "participant": "agent_zero",
+  "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+  "productChanged": false,
+  "finalInferenceAdmitted": false,
+  "realProviderCalls": 0,
+  "sourceHashes": {
+    "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py": "434ef173c7e0bc37070b6395a1dcdbf5b1fb02986de12cbc0e85223a39029d40",
+    "eva2/benchmark/inspect_ai_v1/ev003_python_calendar.py": "2d00941d259ba2576c4c7703e5717834118286b35281002d0f671c379a691c48",
+    "eva2/benchmark/inspect_ai_v1/ev003_agentzero_readback.py": "780c6693aefe51f61e77c3b20d848c9f2c5377772924692bd056b207fdc724a5",
+    "eva2/benchmark/inspect_ai_v1/test_ev003_agentzero_evidence.py": "9005eb777e2ed18bbe060fce5fc1698f20177f1efd85c323fa01b8d163be60c0",
+    "eva2/benchmark/inspect_ai_v1/cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f"
+  },
+  "existing": "Pinned native AgentContext, built-in memory, OAuth route, SDK stream ownership and aggregate ledger reused. Old C01/C04 development entrypoints and limits retained.",
+  "added": [
+    "Three native turns across two contexts sharing the same isolated native memory directory.",
+    "Scenario calendar advances only after helpers, accounting and IO settle; native expiry and refresh timestamps retain actual time.",
+    "Independent durable native chat/FAISS readback; no forced persistence or fabricated memories.",
+    "Only the exact idle SDK logging worker is excluded from pending work and explicitly closed before native shutdown."
+  ],
+  "nativeFixture": {
+    "scope": "Public synthetic lifecycle wiring, not final task quality",
+    "initial": {
+      "exit_code": -2,
+      "seconds": 209.20597936201375,
+      "probe_sha256": "e8f1ac147e98510564f6aabcf3628579a79584c7caa8873138a04228ece37231",
+      "real_provider_calls": 0
+    },
+    "corrected": {
+      "exit_code": 0,
+      "seconds": 17.876319250033703,
+      "probe_sha256": "34def368261c8663fb0cd3f17774d0656ddf9ac9eacc00a27a4965e5b224b6a1",
+      "real_provider_calls": 0,
+      "changed_cause": "exclude exact idle LiteLLM logging worker; retain all other pending tasks"
+    },
+    "nativeConversationSeconds": 6.555587998998817,
+    "turns": 3,
+    "sessions": 2,
+    "providerAttemptsSynthetic": 12,
+    "usageSynthetic": {
+      "input_tokens": 252,
+      "output_tokens": 108,
+      "total_tokens": 360
+    },
+    "protocolTools": 3,
+    "ledgerComplete": true,
+    "activeAttemptsAfter": 0,
+    "pendingNativeIOAfter": 0,
+    "durableResponseCounts": [
+      2,
+      3,
+      2
+    ],
+    "savedMemoryCounts": [
+      6,
+      6,
+      6
+    ],
+    "memoryIntegrity": [
+      {
+        "saved": true,
+        "native_hash_present": true,
+        "native_hash_matches": true,
+        "mapping_matches_documents": true
+      },
+      {
+        "saved": true,
+        "native_hash_present": true,
+        "native_hash_matches": true,
+        "mapping_matches_documents": true
+      },
+      {
+        "saved": true,
+        "native_hash_present": true,
+        "native_hash_matches": true,
+        "mapping_matches_documents": true
+      }
+    ]
+  },
+  "targetedHelperTests": {
+    "status": "passed",
+    "count": 3,
+    "seconds": 9.219,
+    "processExitCode": 0,
+    "network": "unshare --net",
+    "scope": [
+      "Exact native auth code uses actual time during scenario shift, including persisted refresh timestamp.",
+      "Actual native FAISS save file read independently, unchanged when live cache mutates.",
+      "Unexpected pickle global rejected."
+    ],
+    "realProviderCalls": 0
+  },
+  "postFixtureCleanupChange": {
+    "source_sha256": "434ef173c7e0bc37070b6395a1dcdbf5b1fb02986de12cbc0e85223a39029d40",
+    "syntax": "pass",
+    "native_rerun": false,
+    "change": "Cancel and await exact idle LoggingWorker tasks on their owning loop before native terminate; record unknown cleanup and prevent whole completion"
+  },
+  "evidenceFiles": {
+    "/home/administrator/project/.eva2-artifacts/ev003-agentzero-cm-native-fixture-20261004-v1/handoff.json": "894f4af388a9c5e370eb5f68bbb4fa37e6639553abb31fb9c65fe0981e3e906a",
+    "/home/administrator/project/.eva2-artifacts/ev003-agentzero-cm-native-fixture-20261004-v1/cleanup-source-check.json": "523fe5b5b429e8064a1a1d8c1c9fd803e04fd8a8fbfb87759e7d82a9485e6933",
+    "/home/administrator/project/.eva2-artifacts/ev003-agentzero-cm-native-fixture-20261004-v1/corrected-result/native-bridge-report.json": "c116ee8c78379560eee54e51c3270879966b901b0bf8c33375330a401d637a8b"
+  },
+  "limitations": [
+    "Native fixture helpers returned empty extraction lists; six records are built-in knowledge, not newly learned personal facts.",
+    "Native lifecycle PASS precedes the final isolated idle-logging cleanup change; final source syntax and independent source review are recorded separately.",
+    "Comparison-only stop assistance is explicit; stock native stop limitations remain.",
+    "No protected final task executed, no memory-quality or superiority claim. Original three-turn/two-session CM shape only.",
+    "No production restart/install needed; no additional product outcome completed. Development credit cost unknown."
+  ],
+  "review": {
+    "reviewer": "/root/agentzero_cm_review",
+    "result": "no_blocking_findings",
+    "sourceSha256": "434ef173c7e0bc37070b6395a1dcdbf5b1fb02986de12cbc0e85223a39029d40",
+    "path": "eva2/reviews/p2-agentzero-cm-binding-20261004.md",
+    "scope": "Actual native hooks, settlement, auth-clock isolation, durable readback, final idle cleanup and old development routes. No sealed inputs read; no tests or inference repeated."
+  }
+}

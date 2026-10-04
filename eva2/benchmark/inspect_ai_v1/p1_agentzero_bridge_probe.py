@@ -11,6 +11,8 @@ from __future__ import annotations
 import argparse
 import asyncio
 import contextvars
+from contextlib import ExitStack
+from datetime import datetime, UTC
 import hashlib
 import json
 import os
@@ -89,7 +91,7 @@ class NativeSyncOwnership:
                 "quiescent": not self.pending and not self.close_errors}
 
 
-def main() -> None:
+def _main(lifecycle_stack) -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
@@ -102,6 +104,8 @@ def main() -> None:
     parser.add_argument("--readiness-only", action="store_true")
     parser.add_argument("--development-case", choices=["C01", "C04"])
     parser.add_argument("--epoch", type=int, choices=[1, 2])
+    parser.add_argument("--final-cm-inputs", type=Path)
+    parser.add_argument("--final-cm-admission", type=Path)
     args = parser.parse_args()
     subscription = args.provider_mode == "subscription"
     if subscription and args.case != "native-loop":
@@ -110,8 +114,32 @@ def main() -> None:
         parser.error("native-loop requires --bind-stream and the existing --embedding-cache")
     if bool(args.development_case) != bool(args.epoch):
         parser.error("development case and epoch must be supplied together")
-    if subscription and not args.development_case:
+    if subscription and not args.development_case and not args.final_cm_inputs:
         parser.error("subscription requires an explicit original development slot")
+    if bool(args.final_cm_inputs) != bool(args.final_cm_admission):
+        parser.error("final CM inputs and explicit admission must be supplied together")
+    if args.final_cm_inputs and (args.development_case or args.case != "native-loop"):
+        parser.error("final CM and development entrypoints are separate")
+    final_cm = None
+    if args.final_cm_inputs:
+        admission = json.loads(args.final_cm_admission.read_text())
+        raw = args.final_cm_inputs.read_bytes()
+        frozen_plan = Path(__file__).with_name("ev003_execution_plan_20261004.json")
+        plan_sha = "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+        assert admission["admitted"] is True and admission["participant"] == "agent_zero"
+        assert admission["probe_sha256"] == hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+        assert admission["projection_sha256"] == hashlib.sha256(raw).hexdigest()
+        assert admission["plan_sha256"] == plan_sha == hashlib.sha256(frozen_plan.read_bytes()).hexdigest()
+        for filename in ("ev003_python_calendar.py", "ev003_agentzero_readback.py", "cp001_accounting.py"):
+            assert admission["instrumentation_sha256"][filename] == hashlib.sha256(Path(__file__).with_name(filename).read_bytes()).hexdigest()
+        projection = json.loads(raw)
+        assert projection["contract"] == "Ev003PrivateNativeInputs/v1" and projection["oracle_included"] is False
+        assert projection["plan_sha256"] == plan_sha
+        assert projection["case_id"] == admission["case_id"] and projection["case_id"].startswith("EV003-CM-")
+        assert projection["epoch"] == admission["epoch"]
+        final_cm = {"binding": admission, "clock": projection["clock"],
+                    "participant": projection["participants"]["agent_zero"]}
+        del raw, projection
     plan_path = Path(__file__).with_name("p1_participants_20260929.json")
     plan = json.loads(plan_path.read_text())["developmentPlan"]
     selected_slot = None
@@ -138,6 +166,12 @@ def main() -> None:
                   for path in [Path(__file__), Path(__file__).with_name("cp001_accounting.py")]},
         "sourceCommit": PIN, "selectedCase": args.case, "comparisonStreamGuard": args.bind_stream,
     }, indent=2) + "\n")
+    if final_cm:
+        from zoneinfo import ZoneInfo
+        ZoneInfo(final_cm["clock"]["timezone"])
+        os.environ["DEFAULT_USER_TIMEZONE"] = final_cm["clock"]["timezone"]
+        os.environ["TZ"] = final_cm["clock"]["timezone"]
+        time.tzset()
     sys.dont_write_bytecode = True
     sys.path.insert(0, str(source))
     if args.embedding_cache is not None:
@@ -205,6 +239,9 @@ def main() -> None:
         after = litellm.utils.supports_native_streaming(model_name, "openai")
         assert after, "Configured native streaming must survive the SDK capability lookup"
         capability_readback[model_name] = {"before": before, "configured": after}
+    if final_cm:
+        from ev003_python_calendar import protect_native_auth
+        protect_native_auth(lifecycle_stack, agentzero_auth_module=codex)
     auth = codex.load_auth(ensure_fresh=False)
     if codex.should_refresh(auth.access_token, auth.last_refresh):
         (output / "native-readiness.json").write_text(json.dumps({"status": "owned_auth_expired", "provider_calls": 0, "login_started": False}) + "\n")
@@ -220,6 +257,11 @@ def main() -> None:
     app = Flask("p1-native-bridge")
     routes.register_oauth_routes(app)
     limits = json.loads((here / "p1_participants_20260929.json").read_text())["developmentPlan"]["perSampleLimits"]
+    if final_cm:
+        limits = {"providerAttempts": 16, "providerInputTokens": 1048576,
+                  "providerOutputTokens": 19200, "wallSeconds": 480,
+                  "toolDispatches": 16, "externalActions": 0}
+        assert final_cm["binding"]["limits"] == limits
     results = []
 
     if subscription:
@@ -246,6 +288,13 @@ def main() -> None:
         tools = []
         refused_sdk = []
         native_context = None
+        native_contexts = []
+        active_context_ids = {name}
+        calendar = None
+        calendar_file = output / "scenario-clock.json"
+        initial_offset = None
+        cm_turns = []
+        sdk_idle_cleanup = []
         native_io = NativeSyncOwnership(ledger, limits["wallSeconds"])
         restore_native = []
 
@@ -297,7 +346,7 @@ def main() -> None:
             if native_loop:
                 from p1_agentzero_native_probe import ROLE, CONTEXT
                 request_role = ROLE.get()
-                assert CONTEXT.get() == name, "Upstream call escaped its native AgentContext"
+                assert CONTEXT.get() in active_context_ids, "Upstream call escaped its native AgentContext"
             else:
                 assert wire["model"] == model_name and wire["reasoning"]["effort"] == effort
             if native_loop:
@@ -431,7 +480,7 @@ def main() -> None:
             attempts = []
             if native_loop:
                 from p1_agentzero_native_probe import ROLE, CONTEXT
-                assert CONTEXT.get() == name, "SDK call escaped its native AgentContext"
+                assert CONTEXT.get() in active_context_ids, "SDK call escaped its native AgentContext"
                 model_name = request["model"].removeprefix("openai/")
                 reasoning = request.get("extra_body", {}).get("reasoning", request.get("reasoning", {}))
                 effort = reasoning.get("effort") or request.get("reasoning_effort")
@@ -522,8 +571,11 @@ def main() -> None:
             original_tool = agent.Agent._execute_tool_request
             restore_native.append((agent.Agent, "_execute_tool_request", original_tool))
             def check_tool(actor, tool_name):
-                assert actor.context.id == name
-                if ledger.stopped or tool_name != "response":
+                assert actor.context.id in active_context_ids
+                allowed_tools = {"response"}
+                if final_cm:
+                    allowed_tools |= {"memory_load", "memory_save", "memory_delete", "memory_forget"}
+                if ledger.stopped or tool_name not in allowed_tools:
                     ledger.stop_async_attempts("Native comparison tool is not admitted")
                     raise SampleStopped(ledger.stopped)
             async def execute_tool(actor, tool_name, *positional, **kwargs):
@@ -559,7 +611,30 @@ def main() -> None:
             (output / "usr/settings.json").write_text(json.dumps({"workdir_path": str(workdir)}))
             config = initialize.initialize_agent({"mcp_servers": ""})
             model_config.build_embedding_model().embed_query("Synthetic native memory prerequisite")
-            native_context = agent.AgentContext(config=config, id=name)
+            if final_cm:
+                from ev003_python_calendar import ScenarioCalendar
+                participant = final_cm["participant"]
+                turns = participant["turns"]
+                assert len(turns) == 3 and [t["ordinal"] for t in turns] == [0, 1, 2]
+                assert [t["session_index"] for t in turns] == [0, 0, 1]
+                assert participant["provisioning"]["memory_subdir"] == "default"
+                assert isinstance(participant["provisioning"]["actor_id"], str) and participant["provisioning"]["actor_id"]
+                initial = datetime.fromisoformat(final_cm["clock"]["initial"].replace("Z", "+00:00"))
+                assert initial.tzinfo is not None
+                initial_offset = (initial.timestamp() - time.time()) * 1000
+                first = turns[0]["clock"]
+                calendar_file.write_text(json.dumps({"contract": "EvaScenarioCalendar/v1",
+                    "generation": first["generation"],
+                    "offsetMilliseconds": initial_offset + first["offset_delta_milliseconds"]}))
+                calendar = ScenarioCalendar(calendar_file)
+                calendar.refresh()
+                from helpers.localization import Localization
+                assert Localization.get().get_timezone() == final_cm["clock"]["timezone"]
+                lifecycle_stack.callback(calendar.restore)
+                active_context_ids = {turns[0]["context_id"]}
+            native_context = agent.AgentContext(config=config,
+                id=turns[0]["context_id"] if final_cm else name)
+            native_contexts.append(native_context)
         model = model_config.build_chat_model() if role == "foreground_contact" else model_config.build_utility_model()
         model.kwargs["client"] = client
         observed = []
@@ -571,6 +646,105 @@ def main() -> None:
         result = None
         failure = None
         try:
+            if native_loop and final_cm:
+                from ev003_agentzero_readback import read_agentzero_snapshot
+                from helpers.defer import EventLoopThread
+                from plugins._memory.helpers.memory import get_agent_memory_subdir
+                native_io.deadline = time.monotonic() + limits["wallSeconds"]
+                whole_started = time.monotonic()
+                prior_session = 0
+                response_counts = {}
+
+                async def settle_cm():
+                    async def count_pending():
+                        from litellm.litellm_core_utils.logging_worker import LoggingWorker
+                        pending, idle = [], []
+                        for task in asyncio.all_tasks():
+                            if task.done() or task is asyncio.current_task():
+                                continue
+                            coroutine = task.get_coro()
+                            label = getattr(coroutine, "__qualname__", type(coroutine).__name__)
+                            owner = getattr(coroutine, "cr_frame", None)
+                            owner = owner.f_locals.get("self") if owner else None
+                            if (getattr(coroutine, "cr_code", None) is LoggingWorker._worker_loop.__code__
+                                    and isinstance(owner, LoggingWorker) and owner._queue is not None
+                                    and owner._queue.empty() and not owner._running_tasks):
+                                idle.append(label)
+                            else:
+                                pending.append(label)
+                        return {"pending": pending, "idle_sdk_logging": idle}
+                    while True:
+                        if ledger.stopped:
+                            raise SampleStopped(ledger.stopped)
+                        remaining = native_io.deadline - time.monotonic()
+                        if remaining <= 0:
+                            ledger.stop_async_attempts("native sample wall envelope reached")
+                            raise SampleStopped(ledger.stopped)
+                        counts = [asyncio.run_coroutine_threadsafe(count_pending(), item.loop).result(timeout=min(1, remaining))
+                                  for item in list(EventLoopThread._instances.values()) if item.loop and item.loop.is_running()]
+                        report = ledger.report()
+                        (output / "cm-settlement.private.json").write_text(json.dumps({"tasks": counts,
+                            "ledger": report, "native_io": native_io.report()}, indent=2)+"\n")
+                        if (not any(item["pending"] for item in counts) and report["complete"] and report["active_async_attempts"] == 0
+                                and native_io.report()["quiescent"]):
+                            return {"pending_native_tasks": counts, "ledger": report, "native_io": native_io.report()}
+                        await asyncio.sleep(0.02)
+
+                if args.readiness_only:
+                    (output / "native-readiness.json").write_text(json.dumps({"status": "native_context_ready",
+                        "source_pin": PIN, "provider_calls": 0, "mode": args.provider_mode,
+                        "sample": name, "limits": limits}) + "\n")
+                    return
+                for turn in turns:
+                    if cm_turns:
+                        await settle_cm()
+                        state = {"contract": "EvaScenarioCalendar/v1", "generation": turn["clock"]["generation"],
+                                 "offsetMilliseconds": initial_offset + turn["clock"]["offset_delta_milliseconds"]}
+                        temporary = calendar_file.with_suffix(".next")
+                        temporary.write_text(json.dumps(state)); temporary.replace(calendar_file)
+                        assert calendar.refresh() == state
+                    if turn["session_index"] != prior_session:
+                        assert not native_context.is_running()
+                        native_context = agent.AgentContext(config=config, id=turn["context_id"])
+                        native_contexts.append(native_context)
+                        active_context_ids.add(native_context.id)
+                        prior_session = turn["session_index"]
+                    assert native_context.id == turn["context_id"]
+                    memory_subdir = get_agent_memory_subdir(native_context.agent0)
+                    assert memory_subdir == "default", "CM memory must stay in the fresh isolated owner store"
+                    turn_started = time.monotonic()
+                    entry = {"ordinal": turn["ordinal"], "context_id": native_context.id,
+                             "calendar": calendar.refresh(), "native_dispatch_at": datetime.now(UTC).isoformat()}
+                    native_task = native_context.communicate(agent.UserMessage(turn["text"]))
+                    response = native_task.result_sync(timeout=max(.001, native_io.deadline-time.monotonic()))
+                    entry["native_response"] = response
+                    entry["native_response_seconds"] = time.monotonic()-turn_started
+                    entry["settlement"] = await settle_cm()
+                    # Native message_loop_end already persists this context.
+                    # Read those bytes independently; do not manufacture a save.
+                    snapshot = read_agentzero_snapshot(user_dir=output/"usr",
+                        context_id=native_context.id, memory_subdir=memory_subdir)
+                    assert snapshot["chat_exists"] and snapshot["reply_text"] == response, "durable native reply differs"
+                    assert snapshot["response_count"] > response_counts.get(native_context.id, 0), "no new durable native response"
+                    response_counts[native_context.id] = snapshot["response_count"]
+                    integrity = snapshot["memory_index"]
+                    if integrity["saved"]:
+                        assert integrity["mapping_matches_documents"] is True
+                        assert integrity["native_hash_matches"] is not False
+                    entry["independent_readback"] = snapshot
+                    entry["settled_seconds"] = time.monotonic()-turn_started
+                    cm_turns.append(entry)
+                    (output/"cm-turns.private.json").write_text(json.dumps(cm_turns, indent=2)+"\n")
+                result = {"case": name, "turns": cm_turns, "requests": requests_seen,
+                          "sdk_requests": sdk_requests, "tools": tools, "ledger": ledger.report(),
+                          "native_response_seconds": time.monotonic()-whole_started,
+                          "timing_scope": "Entire three-turn native conversation plus helper/memory settlement; startup excluded",
+                          "whole_sample_complete": True, "outcome": "native_cm_observed",
+                          "http_dispatch_attempts": None, "known_partial_dispatches": len(wire_dispatches),
+                          "usage_observation": "SDK-consumed raw usage; native helpers retained",
+                          "refused_sdk": refused_sdk}
+                results.append(result)
+                return
             if native_loop:
                 if subscription:
                     (output / "native-readiness.json").write_text(json.dumps({"status": "native_context_ready", "source_pin": PIN, "provider_calls": 0, "mode": "subscription", "sample": selected_slot["sample_id"], "limits": limits}) + "\n")
@@ -671,9 +845,39 @@ def main() -> None:
             raise
         finally:
             if native_context is not None:
-                native_context.kill_process()
+                for context in native_contexts:
+                    context.kill_process()
                 ledger.stop_async_attempts("Explicit native fixture cleanup")
                 from helpers.defer import DeferredTask, EventLoopThread
+                if final_cm:
+                    async def close_idle_sdk_logging():
+                        from litellm.litellm_core_utils.logging_worker import LoggingWorker
+                        idle, other = [], []
+                        for pending_task in asyncio.all_tasks():
+                            if pending_task.done() or pending_task is asyncio.current_task():
+                                continue
+                            coroutine = pending_task.get_coro()
+                            frame = getattr(coroutine, "cr_frame", None)
+                            owner = frame.f_locals.get("self") if frame else None
+                            if (getattr(coroutine, "cr_code", None) is LoggingWorker._worker_loop.__code__
+                                    and isinstance(owner, LoggingWorker) and owner._queue is not None
+                                    and owner._queue.empty() and not owner._running_tasks):
+                                idle.append(pending_task)
+                            else:
+                                other.append(getattr(coroutine, "__qualname__", type(coroutine).__name__))
+                        for pending_task in idle:
+                            pending_task.cancel()
+                        await asyncio.gather(*idle, return_exceptions=True)
+                        return {"idle_logging_closed": len(idle),
+                                "all_idle_done": all(item.done() for item in idle),
+                                "other_pending": other}
+                    for item in list(EventLoopThread._instances.values()):
+                        if item.loop and item.loop.is_running():
+                            try:
+                                sdk_idle_cleanup.append(asyncio.run_coroutine_threadsafe(
+                                    close_idle_sdk_logging(), item.loop).result(timeout=1))
+                            except BaseException as error:
+                                sdk_idle_cleanup.append({"error_type": type(error).__name__, "all_idle_done": False})
                 for thread_name in list(EventLoopThread._instances):
                     DeferredTask(thread_name=thread_name).kill(terminate_thread=True)
             if task is not None and not task.done():
@@ -713,6 +917,7 @@ def main() -> None:
                 failure.update(externalInferenceRequests=final_dispatches if subscription else 0,
                                known_partial_dispatches=len(wire_dispatches),
                                native_io=native_io.report(), ledger=ledger.report(),
+                               sdk_idle_cleanup=sdk_idle_cleanup,
                                accounting_phase="after_native_and_transport_cleanup")
                 (output / "native-case-failure.json").write_text(json.dumps(failure, indent=2) + "\n")
             if result is not None:
@@ -720,19 +925,23 @@ def main() -> None:
                 result["known_partial_dispatches"] = len(wire_dispatches)
                 result["dispatch_accounting_phase"] = "after_native_and_transport_cleanup"
                 result["fixture_cleanup"] = {"explicit_native_response_close": all(x.native_closed for x in upstreams), "native_io": native_io.report(),
-                                             "ledger": ledger.report(), "refused_sdk": list(refused_sdk)}
-                if subscription:
+                                             "ledger": ledger.report(), "refused_sdk": list(refused_sdk),
+                                             "sdk_idle_cleanup": sdk_idle_cleanup}
+                if subscription or final_cm:
                     result["whole_sample_complete"] = bool(
                         result.get("whole_sample_complete")
                         and native_io.report()["quiescent"]
                         and all(x.native_closed for x in upstreams)
                         and all(x.closed for x in stream_bindings)
-                        and ledger.report()["active_async_attempts"] == 0)
+                        and ledger.report()["active_async_attempts"] == 0
+                        and (not final_cm or (ledger.report()["complete"] and all(
+                            item.get("all_idle_done") and not item.get("other_pending")
+                            for item in sdk_idle_cleanup))))
                 (output / "completed-cases.json").write_text(json.dumps(results, indent=2) + "\n")
 
     async def run():
         if args.case == "native-loop":
-            await case(selected_slot["sample_id"] if selected_slot else "native-loop-sdk-composition", "foreground_contact", stream=True, native_loop=True)
+            await case(final_cm["participant"]["run_id"] if final_cm else selected_slot["sample_id"] if selected_slot else "native-loop-sdk-composition", "foreground_contact", stream=True, native_loop=True)
         if args.case in {"all", "stream-cases", "contact-stream"}:
             await case("native-bridge-contact-stream", "foreground_contact", stream=True)
         if args.case in {"all", "work-nonstream"}:
@@ -757,7 +966,12 @@ def main() -> None:
                               "Streaming capability metadata is a configured declaration, not a live-provider observation; the pinned local SDK catalog lacked these models.",
                               "Only observed async SDK routes; sync/tools and other participant parity remain open."]}
     (output / "native-bridge-report.json").write_text(json.dumps(report, indent=2) + "\n")
-    print(json.dumps(report))
+    print(json.dumps({"output": str(output), "final_cm": True, "admission": "not_admitted"}) if final_cm else json.dumps(report))
+
+
+def main() -> None:
+    with ExitStack() as lifecycle_stack:
+        _main(lifecycle_stack)
 
 
 if __name__ == "__main__":
