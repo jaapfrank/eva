@@ -1035,7 +1035,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-04T16:28:32.215948+00:00",
+        "checkedAt": "2026-10-04T16:44:28.251487+00:00",
         "deliveries": [
           {
             "title": "Agent Zero kan dezelfde meerbeurtenvergelijking doorlopen",
@@ -3628,7 +3628,7 @@
           "title": "P2.1 · toestemming voor privébeoordeling nodig",
           "state": "blocked",
           "owner": "Jaap (toestemming); Codex (vervolg)",
-          "detail": "CM01-selectie herleid; exacte inhoudelijke foutoorzaak nog onbekend. CM03-instellingen mogen nog niet worden uitgelezen. Eén gezamenlijke vraag staat open. Geen modelproef of uitvoerende agent actief."
+          "detail": "Toestemmingsvraag nog onbeantwoord. Bij hervatting geen nieuwe geregistreerde uitvoerfout gevonden; echte computerherstart nog niet gebeurd. Geen modelproef of uitvoerende agent actief."
         },
         "next": {
           "title": "Bewaarde resultaten beoordelen en vaste vergelijking vervolgen",
@@ -14492,6 +14492,17 @@
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
                 "steps": [],
                 "blocksIndependentWork": false
+              },
+              "passiveTelemetryCheck": {
+                "checkedAt": "2026-10-04T16:44:28.251487+00:00",
+                "since": "2026-10-03T16:02:22.253547+00:00",
+                "containers": [
+                  "eva2-managed-b-slot3-core",
+                  "eva2-managed-b-slot3-delegated-work-worker-1"
+                ],
+                "matchingFailureRecords": 0,
+                "logCommandsSucceeded": true,
+                "scope": "Available content-free conversation_model_failure records only. No absence-of-defect claim, no new test, no modelcalls or house action."
               }
             },
             {
@@ -16230,7 +16241,7 @@
                 ],
                 "blocksIndependentWork": true
               },
-              "checkedAt": "2026-10-04T16:28:32.215948+00:00",
+              "checkedAt": "2026-10-04T16:44:28.251487+00:00",
               "assignment": {
                 "baseCommit": "32a42975e58fa9e326ec5e09c5778b1b048e1bc2",
                 "owner": "/root",
@@ -16250,7 +16261,7 @@
                 },
                 "stage": "private_comparison_processing_approval_required",
                 "finding": "The current gap is allowed private evaluation-data processing plus the corresponding exact control mapping. Do not guess controls, reinterpret success, modify original criteria or repeat prior cases.",
-                "blockedAudit": {
+                "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
                   "consecutiveGoalTurns": 3,
                   "observations": [
@@ -16270,6 +16281,21 @@
                   "previousTurnClassification": "progress",
                   "currentTurnClassification": "progress",
                   "remainingIndependentWork": "No demonstrated product defect with a justified correction remains actionable from allowed evidence. Other original open outcomes require explicit pending approval/access, a new captured concrete HA failure, physical/human observations, or the fixed final evaluation controls. No invented completion."
+                },
+                "blockedAudit": {
+                  "goalResumedAt": "2026-10-04T16:39:23+00:00",
+                  "consecutiveGoalTurns": 1,
+                  "condition": "Explicit private comparison processing approval still pending; no new owner approval received",
+                  "previousGoalTurnClassification": "progress",
+                  "previousGoalTurnEvidence": "b7215099 recorded source-turn provenance;99cb4927 preserved required approval and earlier blocked audit.",
+                  "currentGoalTurnClassification": "no_progress",
+                  "revalidation": [
+                    "Goal file unchanged; currentGit99cb4927 before this status record.",
+                    "No conversation_model_failure marker in available core/delegated-worker logs since installed check2026-10-03T16:02:22.253547+00:00. This is not a timeout repair or proof of fault-free operation.",
+                    "Windows boot remains2026-10-01T09:48:48.5000000Z; required post-install actual reboot has not occurred.",
+                    "No modelrun, native authentication renewal or protected-data retry started."
+                  ],
+                  "nextSafeAction": "Await answer to existing consolidated private-processing question; do not invent a product correction or repeat a successful runtime probe."
                 }
               },
               "remaining": "Eva1/Eva2 CM01 en CM02 uitgevoerd; CM01 beide onvoldoende, CM02 inhoudelijk onbeoordeeld. Agent Zero-koppeling gereed, maar native aanmelding verlopen. Hermes/OpenClaw-aanmelding niet bevestigd. Geen actuele modelrun.",
@@ -16452,7 +16478,12 @@
                 "estimate": "One bundled integrated evaluation and actual restart proof using existing facilities; exact model need determined from existing harness; credits unknown."
               },
               "remaining": "Echte Windows-herstart en nacontrole nog nodig. Voorbereiding onafhankelijk goedgekeurd. Tussenvraag duurde 7,136 s; geen snelheidswinst geclaimd.",
-              "latestEvidence": "eva2/evidence/product/f1-joint-check-pre-reboot-20261003.json"
+              "latestEvidence": "eva2/evidence/product/f1-joint-check-pre-reboot-20261003.json",
+              "lastPassiveBootCheck": {
+                "checkedAt": "2026-10-04T16:44:28.251487+00:00",
+                "lastBootUtc": "2026-10-01T09:48:48.5000000Z",
+                "requiredNewBootObserved": false
+              }
             }
           ],
           "responsibilityReview": {
