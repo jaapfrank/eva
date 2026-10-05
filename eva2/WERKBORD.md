@@ -1,6 +1,29 @@
 # EVA2 werkbord
 
-**Laatst afgerond — P2.1: CM12 beoordeeld; beide versies onvoldoende.**
+**Laatste proefuitkomst — P2.1: XD01 niet afgerond.**
+Eva2 voerde één oorspronkelijke combinatieopdracht uit. Het werk eindigde met
+`incomplete_work`; een gewone resultaatopvraag gaf een foutmelding, geen resultaat.
+Twee onafhankelijke uitlezingen bevestigen dat beide diensten ongewijzigd bleven.
+Geen dienstaanvragen of effecten; geen algemene winnaar of nieuwe productfunctie.
+
+| Gemeten XD01-uitvoering | Eva2 |
+| --- | --- |
+| Taakuitkomst | Niet afgerond |
+| Modelaanvragen, inclusief geheugen/werk | 10 |
+| Invoer / uitvoer / totaal | 81.961 / 2.280 / 84.241 tokens |
+| Acties / duur | 6 / 151,547 seconden |
+
+Eva1 kon dit geval niet uitvoeren via haar vastgelegde toegang; dat is geen verlies.
+Menselijke scores en creditkosten blijven onbekend. Vier meetvoorbereidingsfouten
+zonder Eva-modelaanvragen staan apart; ontwikkelverbruik is daarmee niet nul.
+Alle proefwerkers zijn gestopt; oorspronkelijke gegevens en bewijs zijn bewaard.
+**Nu:** beoordeling en technische afsluiting gereed; volgende proef nog niet gestart.
+**Volgende:** de eerstvolgende beschikbare oorspronkelijke vergelijking uit het vaste plan.
+**32/44 oorspronkelijke kleine taken klaar; P2.1 blijft open.**
+[Onafhankelijke uitkomst](evidence/product/p2-xd01-independent-state-20261005.json) ·
+[Bron- en voorbereidingsoverzicht](evidence/product/p2-xd01-runtime-source-20261005.json).
+
+**Eerder beoordeeld — P2.1: CM12; beide versies onvoldoende.**
 Beide oorspronkelijke uitvoeringen hebben alle drie privébeurten en verwerking
 afgerond. De volledige taakuitkomst is voor beide onvoldoende.
 
@@ -27,9 +50,7 @@ Eigen proefresources opgeruimd; oorspronkelijke resultaten en bewijs bewaard.
 
 De twaalf CM-gevallen van epoch1 zijn nu voor Eva1/Eva2 eenmaal uitgevoerd.
 Dit voltooit niet de overige deelnemers, epochs, taakfamilies of menselijke scores.
-**Nu:** XD01 epoch1: twee oorspronkelijke testdiensten en de gepinde browser/MCP-gateway draaien; sessie en 24 bestaande tools aangesloten. Nog geen oorspronkelijke opdracht of modelaanvraag.
-**Volgende uitvoerstap:** dezelfde omgeving hergebruiken voor de gepinde kern en echte achtergrondwerker, met gezamenlijke meting, stoppen en resultaatteruglevering; daarna de oorspronkelijke opdracht uitvoeren. Voorbereiding telt niet als productfunctie; stand blijft **32/44**.
-Bronbewijs: [XD01-voorbereiding](evidence/product/p2-xd01-native-binding-20261005.json).
+**Vervolg:** XD01 is inmiddels eenmaal uitgevoerd en beoordeeld; de recentere uitkomst staat bovenaan.
 **32/44 oorspronkelijke kleine taken klaar; P2.1 blijft open.**
 [Onafhankelijk resultaat](evidence/product/p2-cm12-paired-result-20261005.json) ·
 [Bronbinding](evidence/product/p2-cm12-projection-review-20261005.json) ·

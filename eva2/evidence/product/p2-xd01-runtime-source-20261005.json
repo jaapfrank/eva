@@ -1,0 +1,202 @@
+{
+  "contract": "Eva2Xd01NativeRuntimeSourceReview/v1",
+  "checkedAt": "2026-10-05T18:46:41.932738+00:00",
+  "case": "EV003-XD-01",
+  "epoch": 1,
+  "participant": "eva2",
+  "sourceReview": "GO with mandatory actual in-driver pre-inference checks",
+  "reviewer": "/root/xd01_runtime_review",
+  "curator": "/root/xd01_final_evaluation",
+  "sources": {
+    "launch.py": "fe1815cb1509c36ed1cebcc778c135b2a0fb272b1064e10c2046688245a5e1c9",
+    "inspect-run.py": "dc7a204ad7bf98c44941fd811b42311b6058757015350cf31ffd90623e85d1f5",
+    "runtime_binding.py": "c1ee353fb2b721ae8df8962cd87f67cdf03fbcdee0d3ae594dc18c9d28008375",
+    "capture.py": "07e03bea1d1851ea72821eb886604a79ce95362cb3157622bfd37fbb0c7fad0e"
+  },
+  "privateContractReceipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-xd01-epoch1/runtime-binding-source-contract.json",
+    "sha256": "5bd397d40afc09ba3a76350ae255fcb8efe274a35bb7a50e1019672912395501"
+  },
+  "bindings": {
+    "runtime-binding-manifest.json": "152c49cd40840bdb0981f242ac4b957710effd16fe5ad4671429ecfcd0781d03",
+    "action-control.json": "3cffc1061461d6c17ab0825a8a0bf115c5fe4b33d27faa7abdf7320a955053aa",
+    "resume-20261005.json": "192f4d9e788ea99d5fcc56f88568b9f202d6fc5acb9a3f4202501155318f8c09"
+  },
+  "originalInputSent": false,
+  "modelCalls": 0,
+  "sharedActionNames": 61,
+  "fixedCaseBudget": {
+    "providerAttempts": 72,
+    "providerInputTokens": 4718592,
+    "providerOutputTokens": 86400,
+    "wallSeconds": 840,
+    "toolCalls": 70
+  },
+  "preservedOriginalTurn": true,
+  "normalReturnRoute": "Same-owner ordinary work result access; automatic originating-session delivery not attested",
+  "runtimeCorrections": [
+    "Required normal portable restore authority file plus its private writable directory",
+    "Pinned initializer signature: omit unsupported support_tier argument",
+    "Separate operator read capability for private input; native core/worker remain cap-drop ALL",
+    "Root-seal entire retained execution result directory after native process stops"
+  ],
+  "actualChecksBeforeInference": [
+    "Normal schema/owner authority initialization",
+    "Actual database/catalog provider composition",
+    "Actual action names equal fixed shared action configuration",
+    "Native core/memory/delegated readiness and scenario calendar acknowledgments",
+    "No provider attempts or action dispatches during startup"
+  ],
+  "existingResourceResume": {
+    "sameContainerIds": true,
+    "sameNetworkId": true,
+    "fixtureBytesUnchanged": true,
+    "originalFixtureHttpReads": 0,
+    "namespaceFirewallRestoredBeforeBrowserExec": true,
+    "invalidFixtureHealthObserver": "distroless core image lacks shell; direct TCP check used"
+  },
+  "limitations": [
+    "Source contract uses two explicit transport/state substitutions; actual driver uses none",
+    "Preparation is not a new Eva function or completed P2.1",
+    "This preparation receipt does not score the subsequent original run; see originalResultEvidence."
+  ],
+  "productChange": false,
+  "originalTaskCompletionCounterChanged": false,
+  "preInferenceContinuation": {
+    "checkedAt": "2026-10-05T19:07:24.675967+00:00",
+    "priorState": "preparation_failure_before_original_inference",
+    "cause": "Only diagnostic JSON serialization failed on a nested DelegatedDigitalWorkGrant; normal settings/catalog/profile calculation had succeeded.",
+    "originalTurns": 0,
+    "providerAttempts": 0,
+    "actionReservations": 0,
+    "fixtureRequests": 0,
+    "fixtureEffects": 0,
+    "independentClosureSha256": "25d08c83f7c0e1ee11fe1c54fc967d061a2ef6897cd1ed5ca3964e38665919dc",
+    "preservedPriorReceiptSha256": "e8629d6a239b13ef3c5d9edae46f38674f502e7f4cf24d290976e805e3e31484",
+    "changes": [
+      "Serialize only the three runtime profile hash fields.",
+      "Reuse successful schema/authority preparation in the same live database.",
+      "Stop only owned Python fixture services with SIGINT; preserve unchanged resources if original inference has not started."
+    ],
+    "launcherSha256": "f904044f2b2f71da260434ca28e7417afc94b8d54537065d65b8c19bb9a4865c",
+    "inspectWrapperSha256": "a2431f2fd61e58a1b235a79ae2218a4651f564afa816dea42e70bc95cc2a19ef",
+    "continuationSha256": "2a71b363b203242c78e86d45873f2a02b19f80cebc906c993cff84815cf5384a",
+    "sourceReviewSha256": "6a42503e63d7e90da69161c5f435b00447af30c6d59411d6bb25503b4b8cb66a",
+    "resourceResumeSha256": "8fc8c4326f3800f013f6334724540c9beb555f343cc5dd2210d24e19bc8e9a89",
+    "admissionSha256": "4332626ab9c302ea00046dbfc8576b30a83baa5e5854e374834c689ba16a7983",
+    "independentAdmissionSha256": "4c7d89547002c50edbf2b3eb8addcca2c529c8098637f385a697e89fa679c1d8",
+    "sameDatabase": true,
+    "schemaReinstalled": false,
+    "authorityReinitialized": false,
+    "sameResourceIdsAndImages": true,
+    "fixtureStateUnchanged": true,
+    "browserSessionRestoration": "Same immutable read-only config and isolated contextOptions.storageState; two host-scoped HttpOnly capability cookies.",
+    "mcpConfigSha256": "a2ea7527a3d819d75b56d74a1c6ad1116de1f262ab49a633de6be82cd2e26c8c",
+    "originalCaseRepeated": false,
+    "criteriaChanged": false,
+    "productChange": false,
+    "limitations": [
+      "Preparation repair is not a completed product function or a successful original task outcome.",
+      "Original result and runtime usage remain independently assessed separately."
+    ]
+  },
+  "dependencyContinuation": {
+    "cause": "Earlier temporary calendar dependency vanished; stopped memory worker before core creation or original ingress.",
+    "originalTurns": 0,
+    "providerAttempts": 0,
+    "fixtureEffects": 0,
+    "preservedReceiptSha256": "36161dd61ee62a2078053de658165e5100a4567fa476da0baf97b9ddf44a6a13",
+    "independentClosureSha256": "6a07b2dbe62bfae7e3fadadba5f21dcc3424de5e8ddc39d3a471e49ce1ad23e2",
+    "changes": [
+      "Identical CP311/CP312 time-machine3.5.1 files mounted read-only from persistent storage.",
+      "Reuse confirmed empty binding directory."
+    ],
+    "launcherSha256": "345d95927fd95496b28026fe7d04f075c3964052a8de802dd61fa1f1c91fc92a",
+    "wrapperSha256": "a2431f2fd61e58a1b235a79ae2218a4651f564afa816dea42e70bc95cc2a19ef",
+    "sourceGoSha256": "0b297b4c01eeff6f13fc42c9bec5224a74e8ed833bce2f2daf89aa074cca66da",
+    "continuationSha256": "2423d51f2cc34c9eed4c6092fedc19ec4603245a56c26de77dc5307b26497c21",
+    "dependencyRestoreSha256": "9b17a388524d8ac3c0d28ccfd1cfdf4805d7a23138972f9d5ca8a48403daad9c",
+    "dependencyImportSha256": "130a1811437e16308354e2e64e92824aa8fb1c2e82d4bdbc2c352af910968378",
+    "activeAdmissionSha256": "0db33d72d365537ac975017ca5d29592232373224a9cd4620b38bc3a5e9c2990",
+    "independentAdmissionSha256": "dc47f380a88899fe92b50308886bd3da004391e53e9220ccbf0518561cb290bd",
+    "nativeImageImportChecks": 3,
+    "networkAndModelCallsInChecks": 0,
+    "priorAttemptsPreserved": true,
+    "sameDatabase": true,
+    "sameOriginalFixtures": true,
+    "originalRepeated": false,
+    "criteriaChanged": false,
+    "productChange": false
+  },
+  "metadataContinuation": {
+    "preparationFailure": "Existing calendar directory incorrectly refused",
+    "originalTurns": 0,
+    "providerAttempts": 0,
+    "fixtureEffects": 0,
+    "priorReceiptSha256": "ec22de8d6c766afceccaa395fe7a177236791bb17305a1c204a3adb47acced8a",
+    "independentClosureSha256": "ce6d462a9db6dd7f8b73bdcca6702717ebc704e58d4de172884f84d95239c1d3",
+    "change": "Allow the confirmed existing calendar metadata directory; publish original clock normally.",
+    "launcherSha256": "43b3eea9c9bb11189743841f5d035f810db556e9c00dfffb49e1d0ef3f3cb16e",
+    "continuationSha256": "205cbe3f77dd4b669d260129a4affd315558d6bff389b3884b12b9e8eebb76eb",
+    "sourceGoSha256": "e0cf4dc178ddfb3a1331b74cafb58ecb93ea6a3999997d311b57c72d056abe1f",
+    "admissionSha256": "ac9b0bf7bd4e3313435f1ed50dbb59ef2ef7d90baab350e9051c8161e84ff9b1",
+    "independentAdmissionSha256": "53b2ee415bd96692aaacb987bbd0d9b347b20953ac2fb7cdaee7dbee5d652d81",
+    "priorNarrowReviewLimit": "Previous focused delta review missed the existing calendar collision and did not prove whole startup.",
+    "boundedPreparationReentryReviewed": true,
+    "originalRefusalGatesPreserved": true,
+    "sameDatabase": true,
+    "sameFixtures": true,
+    "productChange": false
+  },
+  "normalSchemaCompletion": {
+    "cause": "Packaged core schema stopped at0007 while delegated startup requires normal restore activation table introduced in0009.",
+    "originalTurns": 0,
+    "providerRequests": 0,
+    "fixtureEffects": 0,
+    "allFourPreparationsPreserved": true,
+    "priorReceiptSha256": "56e9dc1e0bab3694c27ef2c7d84b1c9637f7ee83b7456f50b3510185852285d2",
+    "closureSha256": "d44f764c27ca9fc74e95a20ce885f88d7579c422b60d0ac36daca1eb151e68e0",
+    "operator": "Existing unchanged normal installer and matching catalog, mounted only for isolated operator migration; no runtime source change.",
+    "completionSha256": "d1e79203b759cc4082a49ac233f30c7e751aceab0c5cf238dbaaa51761b6e1aa",
+    "normalGateCheckSha256": "d4de0ee9dc1fe385b15b8eb047a5d08cf5952d3517e4911022b326787fb2b167",
+    "sourcePlanSha256": "4d155ad7f583eaf709b778f19aa9de8093508229b6a17f7ef6b2f25634289395",
+    "independentSchemaProofSha256": "0c87778eb46f7de016537466095cb1260a098462e212128027ce4025d8e860f1",
+    "preservedMemorySchemaTables": 23,
+    "emptyMemoryDataTables": [
+      "banks",
+      "documents",
+      "memory_units",
+      "async_operations"
+    ],
+    "preservedCorePreparationRows": {
+      "events": 1,
+      "checkpoints": 1
+    },
+    "finalSchemaRevision": "4e_0009_restore_hold",
+    "activationRows": 0,
+    "originalWorkRows": 0,
+    "sameDatabase": true,
+    "sameOriginalFixtureBytes": true,
+    "runtimeCandidateChanged": false,
+    "fabricatedActivationOrBarrierBypass": false,
+    "productFunctionCompleted": false,
+    "limitations": [
+      "Original XD01 not yet dispatched or scored.",
+      "Codex development credits unknown; zero original Eva model requests is not zero development cost."
+    ],
+    "nativeContinuation": {
+      "launcherSha256": "144062f954751acc1e572d6d616eaf5b5f6d750ceb289dd5629976ca185252fa",
+      "wrapperSha256": "a2431f2fd61e58a1b235a79ae2218a4651f564afa816dea42e70bc95cc2a19ef",
+      "continuationSha256": "0a109277e6051a1886bb3ef10b7d746f87dcd54318c01a5e94c4cefd2652e1e8",
+      "sourceGoSha256": "05b18b59ca172cfb141e77b83862d24cc2de1a28bc06d1260116101ae4e257b1",
+      "changes": "Only retained empty-memory/schema startup gates; no runtime body, candidate, scorer or envelope change.",
+      "originalStillUnscored": true,
+      "admissionSha256": "984900c91c6555945839f1dddf9d11cdfa39c3f09a9d5e20197c57f19cf63674",
+      "independentAdmissionSha256": "94edf1c57f8231787336eb5b0c8bfcd5fcdd4772bebc9957c0a9b90d0e86d8b1"
+    }
+  },
+  "recordedPhase": "pre_inference_preparation",
+  "historicalSnapshot": true,
+  "originalResultEvidence": "eva2/evidence/product/p2-xd01-independent-state-20261005.json",
+  "scope": "The zero-model counts in this source/preparation receipt describe preparation only. The completed original run and actual usage are recorded separately in originalResultEvidence."
+}

@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-05T13:12:56.137961+00:00",
+  "lastUpdated": "2026-10-05T20:08:39.975911+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1034,14 +1034,22 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T17:54:46.041386+00:00",
+        "checkedAt": "2026-10-05T20:08:39.975911+00:00",
         "deliveries": [
+          {
+            "title": "Combinatieopdracht niet afgerond; beide diensten ongewijzigd",
+            "date": "5 oktober",
+            "state": "investigated",
+            "result": "XD01 onafhankelijk beoordeeld: Eva2 heeft de oorspronkelijke combinatieopdracht niet afgemaakt (incomplete_work). Beide diensten bleven ongewijzigd; geen dienstaanvragen of effecten. De gewone resultaatopvraag gaf een foutmelding, geen afgerond werk. Eén oorspronkelijke uitvoering, geen herhaling of productwijziging.",
+            "remaining": "10 modelaanvragen, 81.961 invoer- en 2.280 uitvoertokens; 84.241 totaal, 151,547 s. Vier voorbereidingsfouten zonder Eva-modelaanvragen blijven apart zichtbaar. Menselijke scores/creditkosten onbekend; Eva1 niet uitvoerbaar, geen winnaar. Geen nieuwe productfunctie, P2.1 open, stand 32/44.",
+            "source": "eva2/evidence/product/p2-xd01-independent-state-20261005.json"
+          },
           {
             "title": "Latere continuïteit: opgeslagen context ontbreekt bij Eva2",
             "date": "5 oktober",
             "state": "tested",
             "result": "CM12 onafhankelijk beoordeeld: beide onvoldoende. Eva1 haalt 1/3 inhoudelijke voorwaarden en 1/2 geheugencontroles; Eva2 2/3 en 2/2. Bij Eva2 is relevante informatie opgeslagen maar niet geselecteerd voor het latere antwoord. Die ontbrekende context is aangetoond; de precieze selectieoorzaak of een reparatie niet.",
-            "remaining": "Volledig gemeten: Eva1 28.297 tokens/5 aanvragen, Eva2 25.893/9; samen 54.190 tokens. Beide voldoen niet aan de volledige oorspronkelijke taak. Creditkosten/menselijke scores onbekend. Geen productwijziging of herhaling; stand 32/44. XD01 nog niet gestart.",
+            "remaining": "Volledig gemeten: Eva1 28.297 tokens/5 aanvragen, Eva2 25.893/9; samen 54.190 tokens. Beide voldoen niet aan de volledige oorspronkelijke taak. Creditkosten/menselijke scores onbekend. Geen productwijziging of herhaling; stand 32/44. XD01 inmiddels eenmaal uitgevoerd en als niet afgerond beoordeeld; zie de recentere uitkomst.",
             "source": "eva2/evidence/product/p2-cm12-paired-result-20261005.json"
           },
           {
@@ -3792,14 +3800,14 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Kern en achtergrondwerker aansluiten",
+          "title": "P2.1 · XD01 beoordeeld: opdracht niet afgerond",
           "state": "in_progress",
           "owner": "/root",
-          "detail": "Testdiensten en bestaande browsergateway draaien. De sessie en 24 tools zijn aangesloten; nu kern en achtergrondwerker aan dezelfde meting verbinden. De echte combinatieopdracht is nog niet uitgevoerd."
+          "detail": "XD01 onafhankelijk beoordeeld: Eva2 heeft de oorspronkelijke combinatieopdracht niet afgemaakt (incomplete_work). Beide diensten bleven ongewijzigd; geen dienstaanvragen of effecten. De gewone resultaatopvraag gaf een foutmelding, geen afgerond werk. Eén oorspronkelijke uitvoering, geen herhaling of productwijziging. Beoordeling en afsluiting zijn klaar; de volgende oorspronkelijke proef is nog niet gestart. P2.1 blijft open, stand 32/44."
         },
         "next": {
-          "title": "XD01 · De echte opdracht uitvoeren",
-          "detail": "Na de laatste native aansluiting de oorspronkelijke opdracht eenmaal laten uitvoeren en de echte resultaten bij beide diensten onafhankelijk teruglezen."
+          "title": "P2.1 · Volgende oorspronkelijke vergelijking",
+          "detail": "De eerstvolgende beschikbare oorspronkelijke vergelijking uit het vaste plan uitvoeren; ontbrekende toegang en menselijke scores expliciet laten staan. XD01 niet herhalen zonder gewijzigde oorzaak; geen nieuwe eisen of taken. Nog niet gestart."
         },
         "ownerAction": {
           "title": "Open beslissingen en gebruiksoordeel",
@@ -3812,7 +3820,7 @@
           "expected": "M3.3 is door Jaap geaccepteerd; daarvoor geen nieuwe beoordeling. De woonkamerproef combineert C3.1 en C4.1. Nut en timing van bestaand initiatief blijven I1.2. 32/44 oorspronkelijke kleine taken klaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-05T17:54:46.041386+00:00"
+        "reviewedAt": "2026-10-05T20:08:39.975911+00:00"
       },
       "reviewedAt": "2026-10-05T00:19:18.098429+00:00",
       "checkedAt": "2026-10-05T17:32:00.922677+00:00"
@@ -16597,7 +16605,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Dezelfde geïsoleerde omgeving hergebruiken voor de gepinde kern en achtergrondwerker; gedeelde meet-/stopbinding en duurzame resultaatteruglevering aansluiten vóór de oorspronkelijke XD01-beurt.",
+              "nextAction": "De eerstvolgende beschikbare oorspronkelijke vergelijking uit het vaste plan uitvoeren; ontbrekende toegang en menselijke scores expliciet laten staan. XD01 niet herhalen zonder gewijzigde oorzaak; geen nieuwe eisen of taken.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -16605,27 +16613,29 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-05T17:54:46.041386+00:00",
+              "checkedAt": "2026-10-05T20:08:39.975911+00:00",
               "assignment": {
                 "baseCommit": "8b85568fbd6ee9a78d67dd9f62ea917d542dfa4d",
                 "owner": "/root",
-                "activeWorkers": [],
+                "activeWorkers": [
+                  "/root"
+                ],
                 "files": [
-                  "/root: native browser/runtime configuration, existing workboard and Git integration",
-                  "/root/background_execution_seam: existing benchmark IPC and native action/delegated accounting hooks + focused test",
-                  "/root/aide_final_evaluation: original sealed generic HTTP fixture implementation, protected data, focused contract test and independent admission"
+                  "/root: private launch.py, inspect-run.py, frozen observer sources, workboard and Git integration",
+                  "/root/xd01_runtime_review: private runtime_binding.py and source-only contract receipt",
+                  "/root/xd01_final_evaluation: protected original admission and independent outcome assessment"
                 ],
                 "existing": "CM01–CM12 epoch1 voor Eva1/Eva2 zijn eenmaal uitgevoerd en onafhankelijk beoordeeld waar het bewijs dat toelaat. Verliezen en onbekende uitkomsten blijven behouden; dit voltooit niet de overige deelnemers/epochs/families.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
-                "estimate": "Voorbereiding en gerichte contractchecks: 0 modelaanvragen. Eventuele oorspronkelijke XD01-proef uitsluitend na volledige native toelating binnen haar bestaande familie-envelop; credits onbekend.",
-                "currentAction": "Twee oorspronkelijke testdiensten en de bestaande browser/MCP-gateway draaien; 24 tools verbonden en domeingebonden sessie gecontroleerd. Volgende stap: kern en echte achtergrondwerker aansluiten. Nog geen oorspronkelijke opdracht of modelaanvraag.",
+                "estimate": "XD01 oorspronkelijk eenmaal uitgevoerd; gemeten gebruik hieronder. Volgende oorspronkelijke proef alleen binnen de reeds vastgelegde familie-envelop. Creditkosten en Codex-ontwikkelverbruik onbekend.",
+                "currentAction": "XD01 onafhankelijk beoordeeld: Eva2 heeft de oorspronkelijke combinatieopdracht niet afgemaakt (incomplete_work). Beide diensten bleven ongewijzigd; geen dienstaanvragen of effecten. De gewone resultaatopvraag gaf een foutmelding, geen afgerond werk. Eén oorspronkelijke uitvoering, geen herhaling of productwijziging. Beoordeling en afsluiting zijn klaar; de volgende oorspronkelijke proef is nog niet gestart. P2.1 blijft open, stand 32/44.",
                 "previousGoalTurn": {
-                  "classification": "progress",
-                  "evidence": "8b85568f: source-reviewed action accounting and sealed local service fixtures; no original XD execution."
+                  "classification": "no_progress",
+                  "evidence": "Terminal and node runtime failed during sandbox setup in three consecutive turns; no project changes. Direct approved execution now reads the goal and repo."
                 },
-                "stage": "xd01_browser_resources_ready_core_worker_pending",
-                "finding": "CM12 onafhankelijk beoordeeld: beide onvoldoende. Eva1 haalt 1/3 inhoudelijke voorwaarden en 1/2 geheugencontroles; Eva2 2/3 en 2/2. Bij Eva2 is relevante informatie opgeslagen maar niet geselecteerd voor het latere antwoord. Die ontbrekende context is aangetoond; de precieze selectieoorzaak of een reparatie niet.",
+                "stage": "xd01_original_independently_assessed",
+                "finding": "XD01 onafhankelijk beoordeeld: Eva2 heeft de oorspronkelijke combinatieopdracht niet afgemaakt (incomplete_work). Beide diensten bleven ongewijzigd; geen dienstaanvragen of effecten. De gewone resultaatopvraag gaf een foutmelding, geen afgerond werk. Eén oorspronkelijke uitvoering, geen herhaling of productwijziging.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
                   "consecutiveGoalTurns": 3,
@@ -16682,24 +16692,33 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "Dezelfde geïsoleerde omgeving hergebruiken voor de gepinde kern en achtergrondwerker; gedeelde meet-/stopbinding en duurzame resultaatteruglevering aansluiten vóór de oorspronkelijke XD01-beurt.",
+                "nextAction": "De eerstvolgende beschikbare oorspronkelijke vergelijking uit het vaste plan uitvoeren; ontbrekende toegang en menselijke scores expliciet laten staan. XD01 niet herhalen zonder gewijzigde oorzaak; geen nieuwe eisen of taken.",
                 "actualUsage": {
-                  "scope": "CM12 native participant execution; Codex development consumption separate and not measured",
-                  "providerAttempts": 14,
-                  "fullyMeasuredAttempts": 14,
-                  "totalInputTokens": 52313,
-                  "totalOutputTokens": 1877,
-                  "totalTokens": 54190,
+                  "originalNativeRuns": 1,
+                  "nativeOutcome": "native_sample_completed",
+                  "productOutcome": "failed/incomplete_work",
+                  "objectiveComplete": false,
+                  "providerAttempts": 10,
+                  "inputTokens": 81961,
+                  "outputTokens": 2280,
+                  "tokens": 84241,
+                  "nativeToolDispatches": 6,
+                  "protocolDispatches": 0,
+                  "sampleSeconds": 151.54694556299364,
+                  "preparationAttempts": 4,
+                  "preparationProviderRequests": 0,
+                  "accountingComplete": true,
                   "creditCost": null,
-                  "extraReviewerModelCalls": 0,
-                  "productChange": false
+                  "developmentCredits": null
                 },
                 "review": "eva2/evidence/product/p2-xd01-binding-source-review-20261005.json",
                 "sourcePreparationEvidence": "eva2/evidence/product/p2-xd01-native-binding-20261005.json",
-                "resourcePreparationEvidence": "eva2/evidence/product/p2-xd01-browser-resources-20261005.json"
+                "resourcePreparationEvidence": "eva2/evidence/product/p2-xd01-browser-resources-20261005.json",
+                "preparationStateEvidence": "eva2/evidence/product/p2-xd01-independent-state-20261005.json",
+                "independentResultEvidence": "eva2/evidence/product/p2-xd01-independent-state-20261005.json"
               },
-              "remaining": "CM01 beide mislukt; CM02 objectief Eva1 1/3/Eva2 3/3; CM03 onvolledige readbacks; CM04 Eva1 onvoldoende/Eva2 onbekend; CM05 Eva2 geslaagd/Eva1 onbekend; CM06 Eva2 geslaagd/Eva1 onvoldoende; CM07 beide onvoldoende en Eva1 groepsaflevering onvolledig; CM08 Eva2 geslaagd/Eva1 onvoldoende; CM09 en CM10 Eva2 geslaagd (elk 3/3+2/2), Eva1 onbekend door onvolledige uitvoering. CM11 Eva1 onvoldoende; Eva2 juiste antwoorden, verplichte geheugenvoorwaarde onbekend. CM12 beide onvoldoende; Eva2 mist opgeslagen context in het latere antwoord. Overige oorspronkelijke gevallen, concurrenttoegang en menselijke beoordeling blijven open. Geen algemene voorsprong of extra productfunctie.",
-              "latestEvidence": "eva2/evidence/product/p2-cm12-paired-result-20261005.json",
+              "remaining": "CM01 beide mislukt; CM02 objectief Eva1 1/3/Eva2 3/3; CM03 onvolledige readbacks; CM04 Eva1 onvoldoende/Eva2 onbekend; CM05 Eva2 geslaagd/Eva1 onbekend; CM06 Eva2 geslaagd/Eva1 onvoldoende; CM07 beide onvoldoende en Eva1 groepsaflevering onvolledig; CM08 Eva2 geslaagd/Eva1 onvoldoende; CM09 en CM10 Eva2 geslaagd (elk 3/3+2/2), Eva1 onbekend door onvolledige uitvoering. CM11 Eva1 onvoldoende; Eva2 juiste antwoorden, verplichte geheugenvoorwaarde onbekend. CM12 beide onvoldoende; Eva2 mist opgeslagen context in het latere antwoord. XD01 Eva2 niet afgerond, Eva1 niet uitvoerbaar via de vastgelegde route (geen verliesclaim). Overige oorspronkelijke gevallen, concurrenttoegang en menselijke beoordeling blijven open. Geen algemene voorsprong of extra productfunctie.",
+              "latestEvidence": "eva2/evidence/product/p2-xd01-independent-state-20261005.json",
               "executionBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_after_same_command_review_with_new_provenance_evidence",
@@ -16779,15 +16798,28 @@
                 "diagnosisEvidence": "eva2/evidence/product/p2-native-stop-boundary-20261005.json"
               },
               "currentAdapterFinding": {
-                "case": "EV003-CM-12",
-                "eva1": "Beoordeelde CM11-privéroute hergebruikt; uitsluitend casus-/hashbinding en oorspronkelijke kalenderdelta aangepast.",
-                "eva2": "Beoordeelde CM11-privéroute met negen bytegelijke bevroren bronnen; uitsluitend casus-/hashbinding en oorspronkelijke kalenderdelta aangepast.",
+                "case": "EV003-XD-01",
+                "eva2": "Bestaande kern, geheugen en gedelegeerde uitvoering via de vaste providerroute; één originele beurt, beide normale dienstreadbacks. Vier meetvoorbereidingsfouten apart vastgelegd.",
+                "eva1": "Niet uitvoerbaar via de vastgelegde algemene diensttoegang; onbekend, geen verliesclaim.",
                 "sourceReviewed": true,
                 "providerCallsDuringPreparation": 0,
                 "productChange": false,
-                "reviewEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json"
+                "reviewEvidence": "eva2/evidence/product/p2-xd01-runtime-source-20261005.json"
               },
-              "latestPreparationIssue": "Native browseromgeving nu aangesloten en sessie gecontroleerd. Kern/werker plus volledige meet-/stopbinding nog open; Codex-uitvoering, geen eigenaarblokkade. Eerste browser-/operatorfouten behouden, geen oorspronkelijke proef herhaald."
+              "latestPreparationIssue": "Meetvoorbereiding bleek niet compleet: verslagserialisatie, verdwenen dependency, bestaande klokmap en achterlopende verpakte migraties. Gerichte correcties bewaard; normale schema-aanvulling gecontroleerd. Geen oorspronkelijke modelinvoer of productverlies; geen eigenaarhandeling nodig.",
+              "independentFinding": {
+                "case": "EV003-XD-01",
+                "eva2Objective": false,
+                "nativeObservationCompleted": true,
+                "nativeWorkCompleted": false,
+                "usageComplete": true,
+                "serviceReadbacks": 2,
+                "serviceEffects": 0,
+                "finding": "XD01 onafhankelijk beoordeeld: Eva2 heeft de oorspronkelijke combinatieopdracht niet afgemaakt (incomplete_work). Beide diensten bleven ongewijzigd; geen dienstaanvragen of effecten. De gewone resultaatopvraag gaf een foutmelding, geen afgerond werk. Eén oorspronkelijke uitvoering, geen herhaling of productwijziging.",
+                "evidence": "eva2/evidence/product/p2-xd01-independent-state-20261005.json",
+                "originalCaseRepeated": false,
+                "productChange": false
+              }
             },
             {
               "id": "P2.2",
