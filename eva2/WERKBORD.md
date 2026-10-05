@@ -1,6 +1,39 @@
 # EVA2 werkbord
 
-**Laatst afgerond — P2.1: CM11 beoordeeld; geen volledige winstclaim.**
+**Laatst afgerond — P2.1: CM12 beoordeeld; beide versies onvoldoende.**
+Beide oorspronkelijke uitvoeringen hebben alle drie privébeurten en verwerking
+afgerond. De volledige taakuitkomst is voor beide onvoldoende.
+
+| Vast CM12-geval | Eva1 | Eva2 |
+| --- | --- | --- |
+| Inhoudelijke voorwaarden | 1/3 | 2/3 |
+| Geheugencontroles | 1/2 | 2/2 |
+| Volledige taakuitkomst | Onvoldoende | Onvoldoende |
+| Afgehandelde beurten | 3/3 | 3/3 |
+| Modelaanvragen | 5 | 9 |
+| Volledig gemeten tokens | 28.297 | 25.893 |
+
+Eva1 heeft geen bruikbare blijvende herinnering voor de latere voortzetting.
+Eva2 heeft de vereiste eerdere informatie wel opgeslagen, maar die ontbreekt
+in de geselecteerde context van de eindbeurt. De ontbrekende context is bewezen;
+de precieze oorzaak van de selectie en een reparatie zijn niet aangetoond.
+
+Samen **14 modelaanvragen en 54.190 tokens**, inclusief geheugenverwerking.
+Geen winnaar of algemene snelheids-/kostenclaim bij onvoldoende taakresultaten.
+Creditkosten, Codex-ontwikkelverbruik en menselijke scores zijn onbekend.
+Een lokale voorbereidingsassertie is vóór native invoer gecorrigeerd; nul extra
+modelcalls. Geen productwijziging, herinstallatie of herhaalde proef.
+Eigen proefresources opgeruimd; oorspronkelijke resultaten en bewijs bewaard.
+
+De twaalf CM-gevallen van epoch1 zijn nu voor Eva1/Eva2 eenmaal uitgevoerd.
+Dit voltooit niet de overige deelnemers, epochs, taakfamilies of menselijke scores.
+**Vervolg:** XD01 epoch1 volgens het vaste manifest; nog niet gestart.
+**32/44 oorspronkelijke kleine taken klaar; P2.1 blijft open.**
+[Onafhankelijk resultaat](evidence/product/p2-cm12-paired-result-20261005.json) ·
+[Bronbinding](evidence/product/p2-cm12-projection-review-20261005.json) ·
+[Technische afsluiting](evidence/product/p2-cm12-execution-close-20261005.json).
+
+**Eerder afgerond — P2.1: CM11 beoordeeld; geen volledige winstclaim.**
 Beide versies voltooiden dezelfde drie oorspronkelijke privébeurten, inclusief
 latere voortzetting. Antwoorden, geheugenreadbacks en verbruik zijn onafhankelijk
 beoordeeld; geen oorspronkelijke invoer of beoordelingsregel gewijzigd.
@@ -27,7 +60,7 @@ Voorbereidingsfouten betroffen uitsluitend lokale bron-/rapportmetadata;
 geen native proef herhaald of modelcall toegevoegd. Bestaande uitvoerders
 hergebruikt, bewijs bewaard, eigen proefresources opgeruimd. Geen productwijziging.
 
-**Vervolg:** CM12 epoch1; nog niet gestart. Geen herhaling van CM01–CM11.
+**Vervolg:** CM12 is inmiddels beoordeeld en staat bovenaan. Deze CM11-uitkomst blijft behouden.
 **32/44 oorspronkelijke kleine taken klaar; P2.1 blijft open.**
 [Onafhankelijk resultaat](evidence/product/p2-cm11-paired-result-20261005.json) ·
 [Bronbinding](evidence/product/p2-cm11-projection-review-20261005.json) ·

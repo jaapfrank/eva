@@ -1,0 +1,124 @@
+{
+  "admitted": true,
+  "caseId": "EV003-CM-12",
+  "caseSha256": "7863be50ba3fde88bcd2466cff48ef0fb9405a72d9bd7c7aa20841aa3b33e837",
+  "commitmentSha256": "bbdbf8eff011aeb51c41e2ff6532346dd22615a99102166e4005292100dd03bf",
+  "contract": "EV003IndependentProjectionReview/v1",
+  "controls": {
+    "actorIndices": [
+      0,
+      0,
+      0
+    ],
+    "actors": 1,
+    "audiences": [
+      "private_person",
+      "private_person",
+      "private_person"
+    ],
+    "clockGenerations": [
+      0,
+      0,
+      1
+    ],
+    "offsetDeltaMilliseconds": [
+      0,
+      0,
+      345600000
+    ],
+    "ordinaryTurns": 3,
+    "previousNativeSettlementRequired": true,
+    "sessionIndices": [
+      0,
+      0,
+      1
+    ],
+    "setupTurns": 0
+  },
+  "datasetSha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4",
+  "epoch": 1,
+  "humanRatings": null,
+  "independentProjectionReceipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm12-epoch1.projection-receipt.private.json",
+    "sha256": "f4614b11576867c26e656156c425fe2af79c4d96924bcd5de736da6b132d3f82"
+  },
+  "nativeRuns": 0,
+  "originalPayloadHashes": {
+    "fixtures": "e9bfe81c63e7d3fb50b183d917e4f854c20087da1b620ae85a1837cb2aeb289f",
+    "oracles": "5331c237e0d21cf196600495fae425f103b2b1f110a438996e6791dfe4e0d8d6",
+    "samples": "cee1b04b7d19877ca3ade6487ac112ea48c46d86aa5f483e28cf67956055c17b"
+  },
+  "ownerAuthorizationSha256": "7470627a9ef09ae8f625e420251a19b36bf950bb17689ee369359e3e2f4df8b5",
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "projection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm12-epoch1.native-inputs.private.json",
+    "sha256": "8b61eb5474edaa6aa875f2c01dc963406044d861631f84454d0624b699ea784c"
+  },
+  "providerCalls": 0,
+  "recordedAt": "2026-10-05T16:53:01.972840+00:00",
+  "requirements": {
+    "allPersonMemoryReadbacks": true,
+    "completeUsageAndStop": true,
+    "existingPrivateDriverCompatible": true,
+    "newExternalAccessOrAction": false,
+    "newProductCapability": false,
+    "providerContextCapture": true
+  },
+  "sourceProjection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm12-epoch1.private.json",
+    "sha256": "6d09f90b9103c396aaa218ff4c48bd8743ec452393d1ab973b8abc950c5f7e1a"
+  },
+  "status": "original_pair_source_admitted_not_executed",
+  "validation": {
+    "canonical_payload_hashes_match": true,
+    "curator_synthetic_not_household_data": true,
+    "eva1_dispatch_annotation_matches_existing_driver": true,
+    "eva2_dispatch_annotation_matches_existing_driver": true,
+    "no_extra_resource_type": true,
+    "oracle_or_expected_answer_in_projection": false,
+    "protected_root0600": true,
+    "unchanged_original_controls": true,
+    "unchanged_original_identity": true,
+    "unchanged_original_text": true
+  },
+  "admittedParticipants": [
+    "eva1-bottie",
+    "eva2"
+  ],
+  "admissions": {
+    "eva1": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm12-epoch1/admission.json",
+      "sha256": "dcf61c00a67ba26b9b11aeb896fda5caafd2b8e2952ff1ee56e76bceda198823"
+    },
+    "eva2": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm12-epoch1/admission.json",
+      "sha256": "167c6dfbf91a78e7294d25552b82e60bab42f20cbbf0a629455ce2ae2abd6c66"
+    }
+  },
+  "independentAdmissionReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm12-epoch1.independent-admission.private.json",
+    "sha256": "2589660eb508071904e3b8ee4836051a1c8ec77ef169319dff9ae430d7dde22e"
+  },
+  "preparations": {
+    "eva1": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm12-epoch1/preparation.json",
+      "sha256": "ef52d3748cb4465522a7ec5832a497d11d08eb20304f06d103c43cb1082f7a89"
+    },
+    "eva2": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm12-epoch1/preparation.json",
+      "sha256": "a8c06ccc983a4a6876edacb266e8b15562332f0cf174db65ff7ad1f90f9deddd"
+    }
+  },
+  "sourceReview": {
+    "decision": "GO",
+    "findings": [],
+    "parameterOnlyDelta": true,
+    "canonicalEva1Worker": "d9135079c1e2ce8b91cb57b4d1d39b376cb031f0fb9bedda2aa1f8958b58c73b",
+    "eva2FrozenSourceFilesUnchanged": 9,
+    "nativeProductImagesUnchanged": true,
+    "rootSyntaxReceiptReused": true,
+    "reviewerTests": 0,
+    "reviewerProviderCalls": 0
+  },
+  "projectionReadyReviewSha256": "1157d407234ed8d996c8117b52a943b9ff5f09b9db7155a30400e4fc9c1e2cf1"
+}
