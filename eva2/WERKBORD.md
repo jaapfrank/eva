@@ -27,7 +27,9 @@ Eigen proefresources opgeruimd; oorspronkelijke resultaten en bewijs bewaard.
 
 De twaalf CM-gevallen van epoch1 zijn nu voor Eva1/Eva2 eenmaal uitgevoerd.
 Dit voltooit niet de overige deelnemers, epochs, taakfamilies of menselijke scores.
-**Vervolg:** XD01 epoch1 volgens het vaste manifest; nog niet gestart.
+**Nu:** XD01 epoch1: lokale testdiensten en gezamenlijke actie-/protocolmeting zijn gebouwd en gereviewd; nog geen native uitvoering of modelaanvraag.
+**Volgende uitvoerstap:** de bestaande gepinde Eva2-browser, kern en echte achtergrondwerker daadwerkelijk aansluiten en daarna de oorspronkelijke opdracht uitvoeren. Geen nieuwe productfunctie of voorgeschreven oplossing. De bevroren Eva1 heeft geen algemene HTTP/browserroute; ontbrekende aansluiting is geen kwaliteitsscore.
+Bronbewijs: [XD01-voorbereiding](evidence/product/p2-xd01-native-binding-20261005.json).
 **32/44 oorspronkelijke kleine taken klaar; P2.1 blijft open.**
 [Onafhankelijk resultaat](evidence/product/p2-cm12-paired-result-20261005.json) ·
 [Bronbinding](evidence/product/p2-cm12-projection-review-20261005.json) ·

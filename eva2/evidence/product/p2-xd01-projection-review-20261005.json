@@ -1,0 +1,157 @@
+{
+  "admitted": false,
+  "caseId": "EV003-XD-01",
+  "caseSha256": "739ee2fbb2b8c11a156f32457aeedfe0792c4fbd737c5e412cd50db832cdc658",
+  "contract": "EV003IndependentProjectionReview/v1",
+  "controls": {
+    "actorIndices": [
+      0
+    ],
+    "actors": 1,
+    "audiences": [
+      "private_person"
+    ],
+    "clockGenerations": [
+      0
+    ],
+    "offsetDeltaMilliseconds": [
+      0
+    ],
+    "ordinaryTurns": 1,
+    "scriptedEvents": 0,
+    "sessionIndices": [
+      0
+    ],
+    "setupTurns": 0
+  },
+  "epoch": 1,
+  "fixtureBinding": {
+    "authority": "One synthetic capability binds the same verified actor at two independently owned services. Original read mandate covers the admitted collections; original records have no separate row/principal/audience ACL. Each service admits one originally mandated create and no update/delete.",
+    "evidence": "Durable initial state, fsynced append-only effect journal and replay-derived final state; evaluator readback is local-only. Explicit idempotency keys replay without a second effect; requests without keys are not silently deduplicated.",
+    "focusedTest": {
+      "path": "eva2/tests/benchmark/test_ev003_collection_fixture.py",
+      "sha256": "9455ff15707cd715b9ac09fd7caa60c0584329926e490e56bb9a3f2849e71624"
+    },
+    "implementation": {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_collection_fixture.py",
+      "sha256": "d3945eb5db82e5b323f24dcf9a74875d97df370391d2a92211f0efa1b7069b6f"
+    },
+    "limits": "Fixture contract evidence only, not native action admission or task success. No general multi-person row-ACL claim. Browser/headless environment and full foreground/background accounting still require bound native admission.",
+    "operator": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-xd01-epoch1/fixture-configs/operator.json",
+      "sha256": "ec1b74020381cb934f29e449d3ab41bed1c0e8a9bd5ce1882be34c9cfbaa4be1"
+    },
+    "originalServicesAndProjectionUnchanged": true,
+    "privateBinding": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/xd01-epoch1.fixture-binding.private.json",
+      "sha256": "c47da7248c2abbf00fe0de66433a43f8c9b12e946a691fb0ff243a5eda2444e7"
+    },
+    "verification": {
+      "authReviewCorrection": "Non-ASCII Authorization compared as UTF-8 bytes and denied as unauthenticated. Only extended malformed-HTTP case repeated: 1 passed in 0.63 s.",
+      "correction": "Only the failed test helper renamed; one affected test passed in 0.64 s. Implementation unchanged between runs.",
+      "initial": "3 passed, 1 test-helper name-shadowing failure before its HTTP requests",
+      "modelCalls": 0,
+      "nativeRuns": 0,
+      "realServiceInstancesStarted": 0,
+      "receipts": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-collection-fixture-20261005/command.json",
+          "sha256": "c79949f53d752eeb0fd57eb4f45fc7ead0ad6dad281c0870bf195e05af4caaa9"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-collection-fixture-20261005/pytest.log",
+          "sha256": "e54ca2a6fa1b6bfe8d34a2899d5869a874e3d336b4317fc0f2d374c163f715b0"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-collection-fixture-20261005/result.json",
+          "sha256": "9ffc5a888fbbf18ec86e97e94ee44c50db2ce5fa230ab0044ecf7f131c0796f0"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-collection-fixture-20261005/corrected-command.json",
+          "sha256": "e8d7e9d29ed10a59f6e155fa3021bae347d82b0a95fc8e8f83652761958d4b13"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-collection-fixture-20261005/corrected-pytest.log",
+          "sha256": "b263d69c44b612282137de0281bd9556f3ac416582ffd664301063cbd8c10652"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-collection-fixture-20261005/corrected-result.json",
+          "sha256": "f1f1b28720f1bf98361adcf45909f6471b484216e01df683221c13ac5a603b16"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-collection-fixture-20261005/auth-correction-command.json",
+          "sha256": "82897d46543c97986a4a5c70df69e0810f198f5a45d8537bb69854673ed72cee"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-collection-fixture-20261005/auth-correction-pytest.log",
+          "sha256": "1ab9905d8b0f34f6d791ff7da4efa2de0f7f3e282a078758cc0496cc0230c0f0"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-collection-fixture-20261005/auth-correction-result.json",
+          "sha256": "b41746948bd9e45b492d28443b671f58f520762a1f2a93036aca749191ee9ead"
+        }
+      ],
+      "uniquePublicSyntheticCasesPassed": 4
+    }
+  },
+  "frozenFamilyLimits": {
+    "providerAttempts": 72,
+    "providerInputTokens": 4718592,
+    "providerOutputTokens": 86400,
+    "speechRequests": 0,
+    "toolDispatches": 70,
+    "wallSeconds": 840
+  },
+  "humanRatings": null,
+  "nativeAdmission": {
+    "eva1-bottie": {
+      "admitted": false,
+      "reason": "No existing admitted binding from pinned native tools to the two generic HTTP services; current native web memory route is insufficient. Not a scored product loss or missing login."
+    },
+    "eva2": {
+      "admitted": false,
+      "reason": "Existing general native service-tool route and local collection fixture bindings must be connected and reviewed; current CM worker refuses all action dispatch."
+    }
+  },
+  "nativeRuns": 0,
+  "originalIndependentReadbacks": 2,
+  "originalPayloadHashes": {
+    "fixtures": "f14274181fc6c807cca84ddf1023f37691d8f91abcd1fd6fafe0bab8b8c4f53b",
+    "oracles": "789c296c2173e659f7cb7caebb887913e0424b8cca75b035ff7854b18179527b",
+    "samples": "7b3e96c9efc5583b0768749194b117d11cb4d71d733eee6d87be51028d123115"
+  },
+  "originalSemanticConditions": 3,
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "projection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/xd01-epoch1.native-inputs.private.json",
+    "sha256": "596ca6a58049c46659bdbcc1c6915068de7b39b664785ffc23a558ba3ace0318"
+  },
+  "providerCalls": 0,
+  "readbackRequirements": [
+    "Both services durable state and append-only authorized effects, before/after retained separately from participant output.",
+    "Exact native identity/audience, response/context, all foreground/background/helper/provider/tool usage and stop/settlement."
+  ],
+  "recordedAt": "2026-10-05T17:10:29.631576+00:00",
+  "resources": {
+    "audioAssets": 0,
+    "browserPages": 0,
+    "contract": "Existing sealed generic collection HTTP services with schema discovery, scoped reads/creates, stable IDs/revisions and evaluator-owned append-only effects journal.",
+    "initialFiles": 0,
+    "localFixtureServices": 2,
+    "newExternalAccessOrRealActions": false
+  },
+  "scope": "Preparation only. No tool sequence, task solution, criteria change, new provider route or inference admission.",
+  "sourceProjection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/xd01-epoch1.private.json",
+    "sha256": "6029f8a7f5d7fa0110f5bf685de8b9cd01311a61ff1c2bbdb358602a96b278eb"
+  },
+  "status": "original_projection_ready_native_action_binding_missing",
+  "validation": {
+    "canonicalPayloadHashesMatch": true,
+    "curatorSyntheticNotHouseholdData": true,
+    "dispatchAnnotationsCanonical": true,
+    "oracleInProjection": false,
+    "privateRoot0600": true,
+    "unchangedOriginalTextIdentitiesControlsAndServiceState": true
+  }
+}

@@ -638,3 +638,35 @@ and household voice authority; no separate evaluation identity policy.
 Audio requires actual audio resources and listening evidence; human preferences
 require recorded independent judgments. Structural loading proves neither a
 successful task nor competitive superiority. The sealed payloads remain unchanged.
+
+## XD action and local service binding
+
+The conversation worker still refuses native actions by default. Action cases
+opt in with --action-control-file; the unchanged native core and optional
+delegated service entrypoint retain task planning and execution. The parent
+ParentProcessAccounting receives the identical Ev003ActionControl/v1 object
+and action_deadline_monotonic bound to the original sample's wall deadline.
+Its existing socket owns one counter for foreground actions, delegated actions
+and protocol:structured_response consumption. A returned invocation is not an
+external effect, a completed task or an independently verified result. Provider
+attempts and token usage continue through the existing provider ledger.
+
+The ev003_collection_fixture.py script serves one evaluator-owned, sealed generic
+HTTP service per process. Use two separate configurations and state directories
+for a two-service case. The fixture presents only schema discovery and collection
+operations; it contains no task solution. The original fixture data, scopes and
+capability token stay private. Durable effect readback is local to the evaluator,
+never a participant HTTP endpoint. Source and configuration hashes, before/after
+state and the append-only journal must accompany a native outcome.
+
+These bindings alone do not admit an XD sample. Admission still requires the
+pinned native tool route, an isolated reachable service/browser environment,
+actual background-worker shutdown, complete shared accounting and independent
+readback. An ordinary HTTP service is not an MCP endpoint. The existing browser
+may be offered as its normal generic client, without instructions selecting a
+solution. No native HTTP capability is added to a frozen participant to make it
+pass. An absent execution adapter remains unknown, not a scored quality loss.
+
+Focused checks: test_ev003_action_accounting.py and
+test_ev003_collection_fixture.py. Relevant retained checks:
+test_cp001_process_accounting.py and test_p1_subscription_binding.py.

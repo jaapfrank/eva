@@ -1,0 +1,95 @@
+{
+  "contract": "EV003BindingSourceReview/v1",
+  "caseId": "EV003-XD-01",
+  "epoch": 1,
+  "recordedAt": "2026-10-05T17:30:56.654980+00:00",
+  "decision": "GO_for_preparation_source_only",
+  "nativeAdmission": false,
+  "nativeRuns": 0,
+  "modelCalls": 0,
+  "sources": [
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_collection_fixture.py",
+      "sha256": "d3945eb5db82e5b323f24dcf9a74875d97df370391d2a92211f0efa1b7069b6f"
+    },
+    {
+      "path": "eva2/tests/benchmark/test_ev003_collection_fixture.py",
+      "sha256": "9455ff15707cd715b9ac09fd7caa60c0584329926e490e56bb9a3f2849e71624"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_action_accounting.py",
+      "sha256": "f804cd0d19e25905c7d802d468f2d70d40acbf6e0dacf633aef91bbbe18c3fa0"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py",
+      "sha256": "e2d1d3d63e64f84da2ddeef2bf032fe9e5b5153a50abddf0db9fe75dc607a774"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py",
+      "sha256": "c4f08df0d4fcaae19ee09326300faf2e5a6af4019ba86c9629e50c4232a8a978"
+    },
+    {
+      "path": "eva2/tests/benchmark/test_ev003_action_accounting.py",
+      "sha256": "df95684531a4056d49c59cf9295d8aa8e4adc63ebf9d948c520ab50bc1bbcb67"
+    }
+  ],
+  "projectionReview": {
+    "path": "eva2/evidence/product/p2-xd01-projection-review-20261005.json",
+    "sha256": "b52ae356a18ff3e19242dbc0cb3b4cf885212cd06683ff46c3cd545d76913749"
+  },
+  "independence": "Curator authored generic collection fixture and its public tests; separate implementation agent reviewed that fixture and identified the corrected auth issue. Curator independently reviewed the agent-owned action/IPC/native-worker source and retained test evidence.",
+  "findings": [
+    "One parent accounting connection reserves native actions and accepted memory structured-output protocol calls under the unchanged sample tool cap and wall deadline. Returned means invocation returned, not verified effect or completed work.",
+    "Existing core execute and execute_step dispatch routes retain original arguments/results. BackgroundConnectorActions.execute delegates to execute_step; only that central background step is wrapped. Native delegated service main and provider aliases remain in use.",
+    "Explicit action configuration is required. Without it, the prior subscription conversation route still denies action dispatch. Parent/local stop is rechecked before invocation; late permit cannot authorize dispatch after observed stop. Pending actions or EOF remain incomplete, with provider usage and close errors preserved.",
+    "Fixture implements ordinary collection HTTP operations, identity-bound grants, append-only before/after effects, replay and local evaluator readback. No solution, provider call, scenario-specific product tool or hidden data is included in public source/tests.",
+    "Non-ASCII Authorization originally raised TypeError; comparison now uses explicit UTF-8 bytes and returns unauthenticated refusal with journal evidence."
+  ],
+  "verification": {
+    "fixtureUniquePublicCasesPassed": 4,
+    "retainedSequence": [
+      "Initial 3 passed / 1 failed: test helper shadowed the http module before that test issued HTTP requests.",
+      "Renamed only that helper; affected case passed 1/1 in 0.64 s.",
+      "Independent auth finding corrected; extended request-error case alone passed 1/1 in 0.63 s."
+    ],
+    "fixtureReceipts": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-collection-fixture-20261005/result.json",
+        "sha256": "9ffc5a888fbbf18ec86e97e94ee44c50db2ce5fa230ab0044ecf7f131c0796f0"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-collection-fixture-20261005/corrected-result.json",
+        "sha256": "f1f1b28720f1bf98361adcf45909f6471b484216e01df683221c13ac5a603b16"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-collection-fixture-20261005/auth-correction-result.json",
+        "sha256": "b41746948bd9e45b492d28443b671f58f520762a1f2a93036aca749191ee9ead"
+      }
+    ],
+    "actionAccounting": {
+      "passed": 5,
+      "pytestSeconds": 1.46,
+      "log": "/home/administrator/project/.eva2-artifacts/p2-xd01-source-review-20261005/action-accounting-test.log",
+      "sha256": "acb30aa6e4aea617d3d6ec065df4d666cbc2624d89090ecaa3c96ab00a2170e9",
+      "executedBy": "source implementation agent",
+      "reviewerRerun": false
+    },
+    "rootReportedExistingChecks": {
+      "passed": 13,
+      "scope": "Existing relevant IPC/provider checks; not rerun by reviewer. Root retained 12 initial passes and one environment dependency startup failure, then ran only that remaining case in the existing compatible interpreter."
+    },
+    "privateConfigPreparationCorrection": "First construction stopped before any writes on an incorrect native audience field name; actual key-only inspection resolved it. Original service objects and both projections unchanged."
+  },
+  "remainingNativeAdmission": [
+    "Bind exact pinned native delegated factory/provider aliases, source hashes and original model profiles in the concrete launcher.",
+    "Bind isolated original fixture origins and unchanged browser/MCP tools, scoped synthetic capability injection and network restrictions; no solution hints or production profiles.",
+    "Verify independent durable service effects, native work/result delivery, full foreground/background/helper accounting and real worker/action/provider stop settlement. Library terminal flags alone are insufficient."
+  ],
+  "limitations": [
+    "No native XD scenario or model request has run.",
+    "No complete-image equivalence, native lifecycle completion, task success, quality, cost or speed claim.",
+    "Eva1 currently lacks the required admitted native general-client binding: unavailable/unknown, not product loss.",
+    "Headless empty browser context is only an explicitly declared environment binding for HTTP service semantics, not GUI or latency parity.",
+    "Original corpus, scoring, limits and closed CM artifacts are unchanged."
+  ]
+}

@@ -38,9 +38,13 @@ def _write(sock, lock, value):
 
 
 class ParentProcessAccounting:
-    def __init__(self, ledger, request_id, socket_path, *, workers):
+    def __init__(self, ledger, request_id, socket_path, *, workers, action_control=None, action_deadline_monotonic=None):
         if not workers or any(not key or not roles for key, roles in workers.items()):
             raise ValueError("explicit worker namespaces and roles required")
+        self.actions = None
+        if action_control is not None:
+            from ev003_action_accounting import ActionBudget
+            self.actions = ActionBudget(ledger, action_control, deadline_monotonic=action_deadline_monotonic)
         self.ledger, self.request_id = ledger, request_id
         self.path = Path(socket_path)
         self.lock = threading.RLock()
@@ -120,11 +124,23 @@ class ParentProcessAccounting:
                             attempt = row["attempt_id"]
                             row["settled"] = (attempt is None or self.ledger.attempts[attempt]["status"] != "pending")
                         response = {"rpc": rpc, "decision": decision}
+                    elif message.get("op") in {"action_reserve", "action_settle"}:
+                        if self.actions is None:
+                            raise ValueError("actions not enabled for sample")
+                        namespace = hello["namespace"]
+                        if message["op"] == "action_reserve":
+                            decision = self.actions.reserve(namespace, message["name"], message["binding"], message["config_sha256"])
+                        else:
+                            self.actions.settle(namespace, message["action_id"], message["status"], message["entered"])
+                            decision = {"settled": True}
+                        response = {"rpc": rpc, "decision": decision}
                     elif message.get("op") == "close":
                         pending = any(not row["settled"] for row in worker["events"].values())
+                        action_pending = self.actions.pending(hello["namespace"]) if self.actions else 0
                         worker["terminal"] = {"reported_settled": message.get("settled") is True,
                             "active_tasks": message.get("active_tasks"), "pending_local": message.get("pending_local"),
                             "cancel_errors": message.get("cancel_errors"),
+                            **({"pending_actions": action_pending} if self.actions else {}),
                             "tracked_http_settled": message.get("settled") is True and not pending
                                 and message.get("active_tasks") == 0 and message.get("pending_local") == 0
                                 and message.get("cancel_errors") == []}
@@ -135,13 +151,15 @@ class ParentProcessAccounting:
                 if self.ledger.stopped:
                     self._broadcast_stop()
                 if message.get("op") == "close":
-                    if not worker["terminal"]["tracked_http_settled"]:
+                    if not worker["terminal"]["tracked_http_settled"] or (self.actions and worker["terminal"]["pending_actions"]):
                         self.stop("child closed without tracked HTTP settlement")
                     return
         except (EOFError, OSError, ValueError, KeyError, TypeError) as error:
             with self.lock:
                 if worker is not None:
                     worker["disconnect"] = type(error).__name__
+                    if self.actions:
+                        self.actions.disconnect(hello["namespace"])
                     for row in worker["events"].values():
                         if row["attempt_id"] is not None and not row["settled"]:
                             self.ledger.incomplete(row["attempt_id"], "process_eof_usage_unknown")
@@ -170,6 +188,7 @@ class ParentProcessAccounting:
     def report(self):
         with self.lock:
             return {"ledger": self.ledger.report(), "errors": list(self.errors),
+                **({"actions": self.actions.report()} if self.actions else {}),
                 "workers": {name: {"connected": w["connected"], "seen": w["seen"],
                     "terminal": w["terminal"], "disconnect": w["disconnect"],
                     "unsettled_events": sum(not e["settled"] for e in w["events"].values())}
@@ -199,6 +218,7 @@ class ProcessSampleLedger:
         self.namespace, self.request_id = namespace, request_id
         self.lock = threading.RLock()
         self.attempts, self.async_attempts, self.cancel_errors = {}, {}, []
+        self.actions = {}
         self.stop_requested, self._stopped = False, None
         self._events, self._waiters = {}, {}
         self._rpc_lock, self._send_lock = threading.Lock(), threading.Lock()
@@ -318,6 +338,29 @@ class ProcessSampleLedger:
             raise SampleStopped(self.stopped or "stopped before permit delivery")
         return attempt
 
+    def reserve_action(self, name, binding, config_sha256):
+        if self.stopped or self.stop_requested:
+            raise SampleStopped("sample stopped before action reservation")
+        decision = self._rpc(op="action_reserve", name=name, binding=binding,
+                             config_sha256=config_sha256)["decision"]
+        if not decision.get("allow"):
+            self.stopped = "parent refused action"
+            raise SampleStopped(self.stopped)
+        index = decision["action_id"]
+        with self.lock:
+            self.actions[index] = {"status": "pending", "entered": None}
+        if self.stopped or self.stop_requested:
+            self.settle_action(index, "incomplete", entered=False)
+            raise SampleStopped("sample stopped before action permit delivery")
+        return index
+
+    def settle_action(self, index, status, *, entered):
+        response = self._rpc(op="action_settle", action_id=index, status=status, entered=entered)
+        if response.get("decision", {}).get("settled") is not True:
+            raise SampleStopped("action settlement unavailable")
+        with self.lock:
+            self.actions[index].update(status=status, entered=entered)
+
     def track_async_attempt(self, attempt):
         loop, task = asyncio.get_running_loop(), asyncio.current_task()
         with self.lock:
@@ -357,12 +400,13 @@ class ProcessSampleLedger:
             return {"stop": self.stopped, "stop_requested": self.stop_requested,
                 "active_async_attempts": len(self.async_attempts), "cancel_errors": list(self.cancel_errors),
                 "attempts": {str(k): dict(v) for k, v in self.attempts.items()},
+                **({"actions": {str(k): dict(v) for k, v in self.actions.items()}} if self.actions else {}),
                 "scope": "local mirror only; authoritative usage is in parent"}
 
     def close(self, *, settled=False):
         acknowledged = False
         try:
-            self._rpc(op="close", settled=settled, active_tasks=len(self.async_attempts),
+            self._rpc(op="close", settled=settled and not any(r["status"] == "pending" for r in self.actions.values()), active_tasks=len(self.async_attempts),
                 pending_local=sum(r["status"] == "pending" for r in self.attempts.values()),
                 cancel_errors=list(self.cancel_errors))
             acknowledged = True

@@ -61,12 +61,14 @@ def bind_memory_client(client, http, args, result, ledger, attestor):
     return original, transport
 
 
-def observe_memory_protocol(parsed, result):
+def observe_memory_protocol(parsed, result, action_accounting=None):
     """Mirror native first-match selection without replacing parser results."""
     _text, tool_calls = parsed
     for call in tool_calls:
         if call.name == "structured_response":
             if isinstance(call.arguments, dict):
+                if action_accounting is not None:
+                    action_accounting.call("protocol:structured_response", lambda: None, binding={})
                 result.setdefault("protocol_consumptions", []).append({
                     "name": call.name, "kind": "native_structured_output",
                     "external_effect": False})
@@ -170,12 +172,18 @@ def serve_core(args, ledger, result):
             protect_native_auth(stack, core_model=model_module.PydanticConversationModel)
         stack.enter_context(patch.object(model_module, "OpenAICodexProvider", Provider))
         stack.enter_context(patch.object(composition, "create_app", capture_runtime))
-        if args.provider_mode == "subscription":
+        if args.provider_mode == "subscription" or args.action_control_file:
             # Keep the normal advertised catalog and planning; observe and stop
             # an actual attempted dispatch before any effect can occur.
             from eva.adapters.postgres.conversation_actions import PostgresConversationActions
-            stack.enter_context(patch.object(PostgresConversationActions, "execute", deny_action))
-            stack.enter_context(patch.object(PostgresConversationActions, "execute_step", deny_action))
+            if args.action_control_file:
+                from ev003_action_accounting import ActionAccounting
+                actions = ActionAccounting(ledger, json.loads(args.action_control_file.read_text()))
+                stack.enter_context(patch.object(PostgresConversationActions, "execute", actions.bind(PostgresConversationActions.execute)))
+                stack.enter_context(patch.object(PostgresConversationActions, "execute_step", actions.bind(PostgresConversationActions.execute_step)))
+            else:
+                stack.enter_context(patch.object(PostgresConversationActions, "execute", deny_action))
+                stack.enter_context(patch.object(PostgresConversationActions, "execute_step", deny_action))
         app = composition.create_runtime_app()
         server = uvicorn.Server(uvicorn.Config(app, host="0.0.0.0", port=args.port, log_level="warning", access_log=False))
         try:
@@ -193,6 +201,57 @@ def serve_core(args, ledger, result):
             result["workers_after_stop"] = workers
             result["local_settled"] = not active and bool(workers) and all(
                 not x["thread_alive"] and not x["service_thread_alive"] for x in workers)
+
+
+def serve_delegated(args, ledger, result):
+    """Run the unchanged native service/lanes; parent owns task admission and stop."""
+    if args.provider_mode != "subscription" or not args.action_control_file:
+        raise ValueError("delegated mode requires explicit subscription and action control")
+    import httpx2
+    from eva.adapters.model import pydantic_conversation as model_module
+    from eva.adapters.model.openai_codex_provider import OpenAICodexProvider, _RawSseUsageAttestor
+    from eva.bootstrap import delegated_work_provider, delegated_work_service
+    from eva.bootstrap.delegated_digital_runner import BackgroundConnectorActions
+    from eva.adapters.postgres.conversation_actions import PostgresConversationActions
+    from cp001_http_accounting import ResponsesSampleTransport
+    from ev003_action_accounting import ActionAccounting
+
+    actions = ActionAccounting(ledger, json.loads(args.action_control_file.read_text()))
+    transports = []
+    for module in (delegated_work_provider, delegated_work_service):
+        filename = Path(module.__file__)
+        result["native_sources"][str(filename)] = hashlib.sha256(filename.read_bytes()).hexdigest()
+    result["native_sources"].update(source_hash(BackgroundConnectorActions))
+
+    class Provider(OpenAICodexProvider):
+        def __init__(self, settings, *, credential_loader):
+            network = subscription_transport(httpx2, args, result)
+            transport = ResponsesSampleTransport(network, ledger, role="helper",
+                endpoint=ENDPOINT, attestor_factory=_RawSseUsageAttestor)
+            transports.append(transport)
+            super().__init__(settings, credential_loader=credential_loader, network_transport=transport)
+
+    with ExitStack() as stack:
+        if args.calendar_file:
+            from ev003_python_calendar import protect_native_auth
+            protect_native_auth(stack, core_model=model_module.PydanticConversationModel)
+        stack.enter_context(patch.object(model_module, "OpenAICodexProvider", Provider))
+        stack.enter_context(patch.object(delegated_work_provider, "OpenAICodexProvider", Provider))
+        # execute delegates to execute_step here: count exactly the central step.
+        stack.enter_context(patch.object(BackgroundConnectorActions, "execute_step",
+                                         actions.bind(BackgroundConnectorActions.execute_step)))
+        for name in ("execute", "execute_step"):
+            stack.enter_context(patch.object(PostgresConversationActions, name,
+                                             actions.bind(getattr(PostgresConversationActions, name))))
+        try:
+            status = delegated_work_service.main([])
+            result["native_service_returncode"] = status
+            result["local_settled"] = status == 0 and not any(t.active_responses for t in transports)
+        finally:
+            result["active_responses"] = sum(t.active_responses for t in transports)
+            if result["active_responses"] or any(r["status"] == "pending" for r in ledger.actions.values()):
+                result["local_settled"] = False
+            result["native_tail_scope"] = "Native service returned after its own lane shutdown; task/effect success requires durable readback."
 
 
 async def serve_memory(args, ledger, result):
@@ -230,6 +289,10 @@ async def serve_memory(args, ledger, result):
     clients, unused_clients, transports, pollers = [], [], [], []
     original_init, original_call, original_poller = CodexLLM.__init__, CodexLLM.call, WorkerPoller.__init__
     signature = inspect.signature(original_call)
+    action_accounting = None
+    if args.action_control_file:
+        from ev003_action_accounting import ActionAccounting
+        action_accounting = ActionAccounting(ledger, json.loads(args.action_control_file.read_text()))
     original_parse = CodexLLM._parse_sse_tool_stream
 
     async def respond(request):
@@ -283,7 +346,7 @@ async def serve_memory(args, ledger, result):
             scope_context.reset(scope)
 
     async def observed_parse(self, response):
-        return observe_memory_protocol(await original_parse(self, response), result)
+        return observe_memory_protocol(await original_parse(self, response), result, action_accounting)
 
     def observe_poller(self, *a, **kw):
         original_poller(self, *a, **kw)
@@ -328,7 +391,7 @@ async def serve_memory(args, ledger, result):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("kind", choices=("core", "memory"))
+    parser.add_argument("kind", choices=("core", "memory", "delegated"))
     parser.add_argument("--control-file", required=True, type=Path)
     parser.add_argument("--database-file", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
@@ -338,6 +401,7 @@ def main():
     parser.add_argument("--existing-empty-schema", action="store_true")
     parser.add_argument("--provider-mode", choices=("synthetic", "subscription"), default="synthetic")
     parser.add_argument("--provider-proxy", help="Sample-owned HTTP CONNECT proxy; subscription mode only")
+    parser.add_argument("--action-control-file", type=Path, help="Explicit parent-matched native action allowlist; omitted preserves conversation deny-all")
     parser.add_argument("--calendar-file", type=Path)
     parser.add_argument("--calendar-receipt", type=Path)
     args = parser.parse_args()
@@ -369,8 +433,10 @@ def main():
             result["calendar"] = {"enabled": True, "refresh": "SIGUSR1_after_native_settlement"}
         if args.kind == "core":
             serve_core(args, ledger, result)
-        else:
+        elif args.kind == "memory":
             asyncio.run(serve_memory(args, ledger, result))
+        else:
+            serve_delegated(args, ledger, result)
     except BaseException as error:
         import traceback
         traceback.print_exc()

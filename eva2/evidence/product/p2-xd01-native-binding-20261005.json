@@ -1,0 +1,107 @@
+{
+  "contract": "EV003NativeBindingPreparation/v1",
+  "recordedAt": "2026-10-05T17:30:42.422805+00:00",
+  "taskId": "P2.1",
+  "caseId": "EV003-XD-01",
+  "epoch": 1,
+  "status": "preparation_source_verified_native_admission_pending",
+  "baseCommit": "0d7709c4a0e099af47d53d9e21442556969da476",
+  "originalPlanSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "originalCaseSha256": "739ee2fbb2b8c11a156f32457aeedfe0792c4fbd737c5e412cd50db832cdc658",
+  "existing": {
+    "eva1": "Pinned native tools have no generic HTTP or browser/MCP client; runProgram remains PrivateNetwork=yes. A new product tool or relaxed native network would change the frozen capability.",
+    "eva2": "Pinned native MCP registration/discovery/execution, normal delegated worker and existing Chromium/Playwright MCP browser can be reused. connect_service alone accepts MCP STREAMABLEHTTP, not arbitrary REST.",
+    "retained": "Original sealed inputs, service data, criteria and family limits; completed CM outcomes including CM12 recall loss. No hidden-content-informed product changes."
+  },
+  "added": [
+    "Opt-in native action accounting through the existing parent/child IPC; one shared counter for foreground, background and existing structured-output protocol consumption.",
+    "Benchmark-only delegated mode invokes the unchanged native service entrypoint and wraps its existing model/tool seams.",
+    "Thin evaluator-owned implementation of the original generic collection HTTP contract, with private actor capability, separate service grants, append-only effects and independent durable readback."
+  ],
+  "sourceHashes": {
+    "eva2/benchmark/inspect_ai_v1/ev003_action_accounting.py": "f804cd0d19e25905c7d802d468f2d70d40acbf6e0dacf633aef91bbbe18c3fa0",
+    "eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py": "e2d1d3d63e64f84da2ddeef2bf032fe9e5b5153a50abddf0db9fe75dc607a774",
+    "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py": "c4f08df0d4fcaae19ee09326300faf2e5a6af4019ba86c9629e50c4232a8a978",
+    "eva2/benchmark/inspect_ai_v1/ev003_collection_fixture.py": "d3945eb5db82e5b323f24dcf9a74875d97df370391d2a92211f0efa1b7069b6f",
+    "eva2/tests/benchmark/test_ev003_action_accounting.py": "df95684531a4056d49c59cf9295d8aa8e4adc63ebf9d948c520ab50bc1bbcb67",
+    "eva2/tests/benchmark/test_ev003_collection_fixture.py": "9455ff15707cd715b9ac09fd7caa60c0584329926e490e56bb9a3f2849e71624"
+  },
+  "checks": {
+    "newActionTests": {
+      "uniquePassed": 5,
+      "seconds": 1.46,
+      "log": "/tmp/ev003-action-accounting-test-20261005.log"
+    },
+    "retainedAccountingAndProviderTests": {
+      "uniquePassed": 13,
+      "firstRunPassed": 12,
+      "initialSetupFailure": "httpx unavailable in selected voice test environment; one unittest did not run.",
+      "secondSetupFailure": "Existing evaluator environment has httpx but no pytest. No test or model was run in that attempt.",
+      "remainingOne": "Passed with its built-in unittest runner in existing cp001 evaluation environment; no dependency installation.",
+      "logs": [
+        "/tmp/ev003-existing-accounting-regression-20261005.log",
+        "/tmp/ev003-existing-accounting-httpx-20261005.log",
+        "/tmp/ev003-existing-accounting-httpx-unittest-20261005.log"
+      ]
+    },
+    "fixtureTests": {
+      "uniquePassed": 4,
+      "reviewCorrection": "Non-ASCII Authorization rejected and journaled; modified malformed-request case passed in 0.63s.",
+      "retainedFailures": "Initial test-helper name error corrected; original test logs and focused corrected runs retained in independent review."
+    },
+    "diffCheck": "passed"
+  },
+  "sourceApplicability": {
+    "coreImage": "sha256:fd1c7cd3413405fd6b1b5ce408f2028cffed8de735a301550663e4c891ee5902",
+    "workerImage": "sha256:30d65117cc0f526bc3ed8859a0eee867ff8fe0943c0bf42c8c09d787c2ca3089",
+    "pinnedMatchingCurrent": [
+      "providers/mcp_registration.py",
+      "adapters/connectors/mcp_registration.py",
+      "bootstrap/delegated_digital_composition.py"
+    ],
+    "pinnedBrowserAutostartSha256": "5f7f3f436038f844c4aeeb8dbe4af62885d5c1afab34dfe60967c378c0cd0e86",
+    "currentBrowserAutostartSha256": "c1f41f77110f1f728dea0c9ec31205a5fd49434aa66ddd25c4611f33bd685bd2",
+    "workerSource": {
+      "bootstrap/delegated_digital_runner.py": "007847fc48847bbe4f988de0f2e02648c1222b7501e648c1a4d621156af81899",
+      "bootstrap/delegated_work_service.py": "c8a4eb235355919ce10d75bf3b01aec3945405a71aebc482575702b647c15b6b"
+    },
+    "limits": "Only named files verified; no full current-HEAD equivalence. Future native run must use the frozen images."
+  },
+  "nativeAdmission": {
+    "eva1-bottie": false,
+    "eva2": false,
+    "remaining": [
+      "Bind empty isolated pinned browser/MCP and exact two original service origins, with no real external effects.",
+      "Configure the pinned core and real delegated worker using normal identity, MCP and task grants.",
+      "Bind shared accounting and original wall deadline; verify native stop/settlement, provider aliases and independent service readback before the original inference."
+    ]
+  },
+  "nativeRuns": 0,
+  "runtimeUsage": {
+    "providerCalls": 0,
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "creditCost": null,
+    "developmentCost": null
+  },
+  "preparationReadFailures": [
+    "One pinned source hash probe requested a host-only operations file absent from the core image; subsequent probe covered only actual core files.",
+    "Read-only package inspection initially resolved Node modules from /home/node; corrected to the known /app package directory.",
+    "One documentation write failed in the orchestration parser before execution; no files were changed by that attempt."
+  ],
+  "productChange": false,
+  "productTaskCompletionChanged": false,
+  "humanRatings": null,
+  "qualityWinner": null,
+  "nextAction": "Complete the concrete isolated native browser/service/worker binding; then request independent source/runtime admission and execute the original XD01 only once.",
+  "review": {
+    "path": "eva2/evidence/product/p2-xd01-binding-source-review-20261005.json",
+    "sha256": "ab3405e6f1d758844ce189e8e0f05aa71add4f966fbf5a6aeee4f7e84cb157f2",
+    "decision": "GO_preparation_source_only",
+    "nativeAdmission": false
+  },
+  "projection": {
+    "path": "eva2/evidence/product/p2-xd01-projection-review-20261005.json",
+    "sha256": "b52ae356a18ff3e19242dbc0cb3b4cf885212cd06683ff46c3cd545d76913749"
+  }
+}
