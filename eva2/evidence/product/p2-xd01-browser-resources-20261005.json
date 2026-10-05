@@ -1,0 +1,112 @@
+{
+  "contract": "EvaComparisonNativeResourceBinding/v1",
+  "checkedAt": "2026-10-05T17:53:49.861078+00:00",
+  "task": "P2.1",
+  "case": "EV003-XD-01",
+  "epoch": 1,
+  "participant": "eva2",
+  "status": "browser_gateway_session_verified_core_worker_binding_pending",
+  "nativeAdmission": false,
+  "originalInputSent": false,
+  "providerCalls": 0,
+  "scope": "Native resource preparation only; no new product completion or final comparison result.",
+  "parentEvidence": "eva2/evidence/product/p2-xd01-native-binding-20261005.json",
+  "cookieSourceEvidence": "eva2/evidence/product/p2-xd01-fixture-cookie-20261005.json",
+  "resourceReceipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-xd01-epoch1/resource-environment/receipt.json",
+    "sha256": "488ae1b113edbe81e6a05964e02615e1c7879e1a11fc1ba2b07fd775ab3fea9e"
+  },
+  "sources": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-xd01-epoch1/prepare_resources.py",
+      "sha256": "09cfdd07c885b8859c23bca47c7e2a3053f8130e07f17c01f4da9f89d9fe2aa9"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-xd01-epoch1/prepare_resources.first.py",
+      "sha256": "5c8825326b7ca4456d140fa1db198ea0d123127ca41ecd7e69318dbf8212bdbd"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-xd01-epoch1/attach_browser_gateway.py",
+      "sha256": "fed4b7fd644e16b5fe772ff69f341987a18caa580513f8cf5d8f5eea718f8550"
+    }
+  ],
+  "services": {
+    "count": 2,
+    "originalConfigsUnchanged": true,
+    "fixtureJournalRequests": 0,
+    "servicesRestarted": false
+  },
+  "browser": {
+    "image": "sha256:63e8e38540462a38c70ef85497c13c412485b39979394ea95da450fca5b4efa8",
+    "headless": true,
+    "freshProfile": true,
+    "sandboxDisabled": false,
+    "network": "Dedicated internal network; Chromium starts after per-namespace rules allowing fixtureHTTP80 and required loopbackCDP/MCP only. No externalDNS/egress.",
+    "fixtureSession": "2 host-only HttpOnly cookies observed in actual MCPcontext; capability values not returned.",
+    "limitations": [
+      "Headless transport binding is not a graphical or speed parity claim.",
+      "HttpOnly does not prevent privileged native browser-code tooling from reading synthetic capabilities.",
+      "No actual fixture HTTP request/effect or final user result observed."
+    ]
+  },
+  "gateway": {
+    "image": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+    "mcpImage": "sha256:e3f6a85f0fd771dd9440584bd905011f1b4ea25b115bfea8b796d17d23e7b767",
+    "toolCount": 24,
+    "catalogSha256": "8ac2caeec0321295bddf7e4fdb70ec8f6ab0e0fb9af735708066aed8ec75530c",
+    "operatorMcpInvocations": 2,
+    "operatorChecks": "Blank snapshot and session metadata only; no task-specific tool/schema/code added."
+  },
+  "preparationFailures": [
+    {
+      "type": "RuntimeError",
+      "message": "resource startup failed; retain exact resource for diagnosis"
+    },
+    {
+      "type": "NameError",
+      "message": "Operator resume namespace omitted __file__; no runtime mutation occurred."
+    },
+    {
+      "type": "ModuleNotFoundError",
+      "message": "Host-side tools module is outside pinned core image; catalog generated with readonly existing operator source mounted."
+    },
+    {
+      "type": "AssertionError",
+      "message": "Separate CDP observer sees default context only; same MCP-context metadata subsequently verified2cookies."
+    },
+    {
+      "type": "StopIteration",
+      "message": "Operator lookup used old tool name; actual pinned catalogue calls it browser_run_code_unsafe. No invocation occurred on missing lookup."
+    }
+  ],
+  "independentSourceReview": {
+    "reviewer": "/root/background_execution_seam",
+    "finding": "Bounded GO for model-free resources after firewallgate and healthstatus corrections; session was initially only config, subsequently observed in actualMCPcontext."
+  },
+  "remaining": [
+    "Connect core and real delegated worker to this exact environment with shared original accounting, stopping and durable result readback; no original scenario started.",
+    "Independent concrete native admission before any original model call."
+  ],
+  "productTasksCompleted": 0,
+  "runtimeCredits": null,
+  "developmentCredits": null,
+  "costNote": "No Eva model/provider call; Codex development credit cost is not measured here.",
+  "independentResourceReview": {
+    "reviewer": "/root/aide_final_evaluation",
+    "receiptSha256": "488ae1b113edbe81e6a05964e02615e1c7879e1a11fc1ba2b07fd775ab3fea9e",
+    "verdict": "GO for bounded resource preparation only",
+    "checked": [
+      "Original operator and service bindings match.",
+      "Both original fixture journals are empty.",
+      "Blank native snapshot returned.",
+      "Actual MCP context has exactly2 original host-only HttpOnly cookies; no value fields returned.",
+      "24 existing tools bound with ordinary catalog function."
+    ],
+    "notProven": [
+      "HTTP fixture authorization/effects",
+      "Native core/delegated/memory lifecycle",
+      "Final comparison admission or task quality"
+    ],
+    "additionalTestsOrModelCalls": 0
+  }
+}

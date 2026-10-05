@@ -94,6 +94,13 @@
       "uniquePublicSyntheticCasesPassed": 4
     }
   },
+  "fixtureCookieDelta": {
+    "currentImplementationSha256": "863d1356aa1a94f5043e33f6bd250b1219dce58040e8cf30a76847329946d158",
+    "currentTestSha256": "201383696751c171665aab1c657b0e95b6eaca3ac7916ade1cfea772d030ae89",
+    "nativeAdmission": false,
+    "path": "eva2/evidence/product/p2-xd01-fixture-cookie-20261005.json",
+    "sha256": "e655be9a33d95bab9edd9218371edb0c9939345982c900104994cadb9c120ba0"
+  },
   "frozenFamilyLimits": {
     "providerAttempts": 72,
     "providerInputTokens": 4718592,

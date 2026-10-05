@@ -165,3 +165,41 @@ def test_malformed_http_is_denied_and_observed_without_headers(tmp_path):
     assert evidence["journal"][0]["principal_id"] == "synthetic-person"
     assert evidence["journal"][1]["principal_id"] is None and evidence["journal"][1]["status"] == 401
     assert not any(entry["applied"] for entry in evidence["journal"]) and TOKEN not in json.dumps(evidence)
+
+
+def test_http_session_cookie_is_same_scoped_capability_without_header_leaks(tmp_path):
+    fixture = CollectionFixture(configuration(tmp_path), tmp_path / "state")
+    server = http_server(fixture)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    conn = http.client.HTTPConnection(*server.server_address, timeout=2)
+    def send(cookie=None, bearer=None, host=None):
+        headers = {"Host": host or fixture.host}
+        if cookie is not None:
+            headers["Cookie"] = cookie
+        if bearer is not None:
+            headers["Authorization"] = bearer
+        conn.request("GET", "/schema", headers=headers)
+        reply = conn.getresponse()
+        return reply.status, json.loads(reply.read())
+    cookie = "ev003_fixture_session=" + TOKEN
+    try:
+        assert send(cookie)[0] == 200
+        assert send("unrelated=public; " + cookie)[0] == 200
+        assert send(bearer="Bearer " + TOKEN)[0] == 200
+        assert send(cookie, bearer="Bearer incorrect") == (401, {"error": "access_denied"})
+        assert send("ev003_fixture_session=incorrect") == (401, {"error": "access_denied"})
+        assert send("another_session=" + TOKEN) == (401, {"error": "access_denied"})
+        assert send(cookie + "; " + cookie) == (401, {"error": "access_denied"})
+        assert send(cookie, host="unadmitted.fixture.test") == (404, {"error": "not_available"})
+    finally:
+        conn.close()
+        server.shutdown()
+        server.server_close()
+        thread.join(timeout=2)
+    evidence = readback(tmp_path / "state")
+    assert len(evidence["journal"]) == 8
+    assert [v["capability_transport"] for v in evidence["journal"][:3]] == ["cookie", "cookie", "bearer"]
+    assert all(v["principal_id"] == "synthetic-person" for v in evidence["journal"][:3])
+    assert not any(v["applied"] for v in evidence["journal"])
+    assert TOKEN not in json.dumps(evidence) and "Cookie" not in json.dumps(evidence)

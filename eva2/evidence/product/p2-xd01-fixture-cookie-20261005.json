@@ -1,0 +1,65 @@
+{
+  "contract": "EV003FixtureTransportDelta/v1",
+  "caseId": "EV003-XD-01",
+  "epoch": 1,
+  "recordedAt": "2026-10-05T17:43:28.944235+00:00",
+  "status": "cookie_transport_prepared_focused_test_passed",
+  "nativeAdmission": false,
+  "basisReview": {
+    "path": "eva2/evidence/product/p2-xd01-binding-source-review-20261005.json",
+    "sha256": "ab3405e6f1d758844ce189e8e0f05aa71add4f966fbf5a6aeee4f7e84cb157f2"
+  },
+  "source": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_collection_fixture.py",
+    "sha256": "863d1356aa1a94f5043e33f6bd250b1219dce58040e8cf30a76847329946d158"
+  },
+  "test": {
+    "path": "eva2/tests/benchmark/test_ev003_collection_fixture.py",
+    "sha256": "201383696751c171665aab1c657b0e95b6eaca3ac7916ade1cfea772d030ae89"
+  },
+  "change": "The same synthetic actor capability may arrive in the ev003_fixture_session cookie. Explicit Authorization remains authoritative; invalid bearer is not upgraded by a cookie. Duplicate/incorrect session cookies are denied. Existing grants, endpoints, durable effects and bearer behavior remain.",
+  "cookieProvisioning": {
+    "name": "ev003_fixture_session",
+    "httpOnly": true,
+    "hostScope": "Each exact original fixture host, no wildcard or leading-dot domain.",
+    "path": "/",
+    "secure": false,
+    "reason": "Original fixture origins are HTTP.",
+    "sameSite": "Set explicitly for the existing fixture browser context."
+  },
+  "evidence": {
+    "focusedCasesPassed": 1,
+    "pytestSeconds": 0.63,
+    "receipts": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-collection-fixture-20261005/cookie-command.json",
+        "sha256": "efcc8bed7a8a394da06fd943b45dc319b1b0b43c8ac91cf19212f571d3a7c10f"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-collection-fixture-20261005/cookie-pytest.log",
+        "sha256": "1ab9905d8b0f34f6d791ff7da4efa2de0f7f3e282a078758cc0496cc0230c0f0"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-collection-fixture-20261005/cookie-result.json",
+        "sha256": "e7931449a76a44f48b4a64aa463a9953457cdf4b193bd09fdb34205212c2ba6c"
+      }
+    ],
+    "scope": "Real loopback HTTP on public toy fixtures only: cookie/bearer success, wrong/duplicate cookie, wrong host, explicit invalid-bearer precedence and no header/token in journal.",
+    "priorEvidenceRetained": true
+  },
+  "unchanged": {
+    "originalCasesProjectionsOracles": true,
+    "privateServiceConfigsAndSyntheticToken": true,
+    "grantsAndSampleLimits": true,
+    "nativeProductSourceImages": true
+  },
+  "limitations": [
+    "No original service data, browser/native participant or model execution.",
+    "Cookies are not port-scoped; concrete browser egress must remain limited to exact original fixture endpoints and required control endpoints.",
+    "HttpOnly prevents document script access, not privileged Playwright context inspection. No claim that the existing entire native tool catalog cannot inspect cookies.",
+    "Fixture schema, ready output and journal never return capability values or request headers; actual participant traces remain private.",
+    "Synthetic fixture capability only; no provider credentials changed or read."
+  ],
+  "nativeRuns": 0,
+  "modelCalls": 0
+}

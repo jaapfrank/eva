@@ -3,7 +3,8 @@
 Each instance owns one service and one verified synthetic principal. Config:
 contract, service (unchanged fixture), access {principal_id, audience_kind,
 token_file}, grants {collection: {operations, create_limit?}}. The bearer is a
-fixture-only capability. It is never copied into state, schema or journals.
+fixture-only capability, accepted as bearer or host-scoped session cookie.
+It is never copied into state, schema or journals.
 Readback is a local evaluator API, never an HTTP endpoint.
 """
 from __future__ import annotations
@@ -17,8 +18,28 @@ import os
 from pathlib import Path
 import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from http.cookies import CookieError, SimpleCookie
 from urllib.parse import unquote, urlsplit
 from uuid import uuid4
+
+
+SESSION_COOKIE = "ev003_fixture_session"
+
+
+def _capability(authorization, cookie_header, token):
+    # An explicit bearer is authoritative; a cookie cannot override its denial.
+    if authorization:
+        return hmac.compare_digest(authorization.encode("utf-8"), ("Bearer " + token).encode("utf-8")), "bearer"
+    jar = SimpleCookie()
+    try:
+        jar.load(cookie_header or "")
+    except CookieError:
+        return False, None
+    occurrences = sum(part.strip().split("=", 1)[0] == SESSION_COOKIE for part in (cookie_header or "").split(";"))
+    item = jar.get(SESSION_COOKIE)
+    if item is None or occurrences != 1:
+        return False, None
+    return hmac.compare_digest(item.value.encode("utf-8"), token.encode("utf-8")), "cookie"
 
 
 def _bytes(value):
@@ -161,14 +182,14 @@ class CollectionFixture:
             _atomic(self.state_dir / "state.json", self.state)
         return entry["status"], copy.deepcopy(entry["response"])
 
-    def request(self, method, target, *, authorization, host, body=None, idempotency_key=None, transport_error=False):
+    def request(self, method, target, *, authorization, host, body=None, idempotency_key=None, transport_error=False, cookie_header=None):
         """Dispatch only ordinary collection operations; never chooses task data."""
         with self.lock:
-            authenticated = hmac.compare_digest((authorization or "").encode("utf-8"), ("Bearer " + self.token).encode("utf-8"))
+            authenticated, auth_transport = _capability(authorization, cookie_header, self.token)
             parsed = urlsplit(target)
             parts = [unquote(v) for v in parsed.path.split("/") if v]
             principal = self.access["principal_id"] if authenticated else None
-            entry = {"principal_id": principal, "audience_kind": self.access["audience_kind"] if authenticated else None,
+            entry = {"principal_id": principal, "capability_transport": auth_transport if authenticated else None, "audience_kind": self.access["audience_kind"] if authenticated else None,
                      "request": {"method": method, "path": parsed.path, "body": copy.deepcopy(body)},
                      "idempotency_key": idempotency_key, "applied": False, "collection": None,
                      "record_id": None, "old": None, "new": None, "status": 400,
@@ -254,11 +275,12 @@ def http_server(fixture, host="127.0.0.1", port=0):
                 body = json.loads(raw) if raw else None
                 status, value = fixture.request(self.command, self.path,
                     authorization=self.headers.get("Authorization"), host=self.headers.get("Host", ""),
-                    body=body, idempotency_key=self.headers.get("Idempotency-Key"))
+                    body=body, idempotency_key=self.headers.get("Idempotency-Key"),
+                    cookie_header="; ".join(self.headers.get_all("Cookie", [])))
             except (ValueError, UnicodeError, TypeError):
                 status, value = fixture.request(self.command, "/",
                     authorization=self.headers.get("Authorization"), host="",
-                    transport_error=True)
+                    transport_error=True, cookie_header="; ".join(self.headers.get_all("Cookie", [])))
             data = _bytes(value)
             self.send_response(status)
             self.send_header("Content-Type", "application/json")
