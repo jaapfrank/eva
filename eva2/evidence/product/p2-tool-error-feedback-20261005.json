@@ -1,7 +1,7 @@
 {
   "contract": "EvaTargetedToolErrorFeedback/v1",
-  "recordedAt": "2026-10-05T21:49:33.370207+00:00",
-  "status": "reviewed_pending_installation",
+  "recordedAt": "2026-10-05T21:56:52.712594+00:00",
+  "status": "installed_verified",
   "existing": "Generic MCP execution/orchestration/actor-bound durable receipts; original rejected calls lost returned provider text.",
   "diagnosisEvidence": "eva2/evidence/product/p2-xd-rejected-diagnostic-20261005.json",
   "change": "Preserve at most two4096-character MCP tool-error messages in the existing rejection event and actor-bound receipt as untrusted diagnostics; effect outcome stays unknown.",
@@ -25,8 +25,10 @@
   },
   "independentReview": {
     "reviewer": "/root/xd01_runtime_review",
-    "status": "source_go_after_correcting_undefined_receipt_variable",
-    "runtimeCalls": 0
+    "status": "bounded_source_and_installation_plan_go",
+    "runtimeCalls": 0,
+    "dockerfile": "eva2/deploy/delegated-work/Dockerfile.source-refresh",
+    "dockerfileSha256": "92cb5a4509f142033c04f20e90f185de2c7f0034ea933b0bd33d29fa14ad9c78"
   },
   "usage": {
     "evaRuntimeModelCalls": 0,
@@ -40,7 +42,41 @@
     "Overall superiority is not established."
   ],
   "installation": {
-    "state": "pending",
-    "scope": "Only three reviewed source files, using existing source-refresh Dockerfile and exact current core/worker baseimages."
-  }
+    "checkedAt": "2026-10-05T21:55:15.675347+00:00",
+    "patchCommit": "51a35567189b348c7877fea89c88f0124105a57e",
+    "sourceRefresh": "git-archive-delta-v1",
+    "files": [
+      "eva/adapters/connectors/mcp_gateway.py",
+      "eva/adapters/postgres/external_conversation_tools.py",
+      "eva/application/orchestration.py"
+    ],
+    "sourceHashes": {
+      "eva/adapters/connectors/mcp_gateway.py": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8",
+      "eva/adapters/postgres/external_conversation_tools.py": "18056cc357af1418eebb6545813d1ef6111d64c99af154f818b4202e6622a5c3",
+      "eva/application/orchestration.py": "ef13b46a1c84bd10d49bb17ea1a726661400e2922087d0d4dc03eb09426ead88"
+    },
+    "runtimes": {
+      "core": {
+        "container": "eva2-managed-b-slot3-core",
+        "image": "sha256:820c3d3af6b242b7f26b237af6eba0f208ebcc40c46b7f235dcd85f8385d1eb0",
+        "baseImage": "sha256:b42a5b8a74eaf7307339b8513fbb1e3343d925039a4e0e7866ddfc4defc05dca",
+        "health": "healthy",
+        "sourceHashesMatch": true,
+        "importsVerified": true
+      },
+      "worker": {
+        "container": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "image": "sha256:fed292a248395d90df3e09c95679056a994249734721731729229c446ce3e6ec",
+        "baseImage": "sha256:42e43365526c6e0f6d9ecb5e0ccd2f5c0829fc7c2c44ab72a5b92ff5a1733468",
+        "health": "healthy",
+        "sourceHashesMatch": true,
+        "importsVerified": true
+      }
+    },
+    "composeImageFieldsChanged": 2,
+    "dataPreserved": true,
+    "voiceServicesChanged": false,
+    "explicitModelOrRpcCalls": 0
+  },
+  "limitConclusion": "The missing diagnostic handoff is repaired and installed. The original tool-level rejection cause and original task success remain unknown/failed; no overall advantage claim."
 }
