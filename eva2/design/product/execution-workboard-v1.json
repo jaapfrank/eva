@@ -1034,8 +1034,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T15:07:27.797858+00:00",
+        "checkedAt": "2026-10-05T15:28:17.128717+00:00",
         "deliveries": [
+          {
+            "title": "Later voortzetten: Eva2 gebruikt herinnering, Eva1 mist die",
+            "date": "5 oktober",
+            "state": "tested",
+            "result": "CM08 onafhankelijk beoordeeld: Eva2 3/3 inhoudelijke voorwaarden; Eva1 1/3. Beide hebben 2/2 onafhankelijke bewijscontroles en volledige native verwerking.",
+            "remaining": "Dit toont een geheugenvoordeel in één vaste proef, geen algemene voorsprong of nieuwe functie. Eva2 24.018 tokens, Eva1 28.402; totaal 13 modelaanvragen/52.420 tokens. Menselijke scores en creditkosten onbekend; geen algemene snelheidsclaim. Stand 32/44; P2.1 blijft open.",
+            "source": "eva2/evidence/product/p2-cm08-paired-result-20261005.json"
+          },
           {
             "title": "Gedeelde bijdrage ontbreekt bij beide Eva-versies",
             "date": "5 oktober",
@@ -3752,14 +3760,14 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Gedeelde bijdrage: beide versies onvoldoende",
+          "title": "P2.1 · CM08: Eva2 haalt de geheugenvoorwaarde",
           "state": "in_progress",
           "owner": "Codex",
-          "detail": "CM07 onafhankelijk beoordeeld: beide inhoudelijk onvoldoende, privégrens in de waargenomen context behouden. Eva2 verwerking afgerond; Eva1 groepsaflevering onvolledig en bewaard. Geen extra productfunctie; 32/44 blijft staan."
+          "detail": "CM08 onafhankelijk beoordeeld: Eva2 haalt 3/3 inhoudelijke voorwaarden, Eva1 1/3. Beide uitvoeringen en 2/2 bewijscontroles voltooid. Eén geval met gemeten geheugenvoordeel; geen algemene voorsprong of extra productfunctie. Stand 32/44."
         },
         "next": {
-          "title": "CM08 · Volgende oorspronkelijke vergelijking",
-          "detail": "Vervolg bij het volgende oorspronkelijke vergelijkingsgeval CM08 epoch1 met dezelfde regels en beschikbare native toegang. Geen herhaling van CM01–CM07. Bind bij andere families de actuele kandidaatversies expliciet; menselijke beoordelingen blijven apart. Nog niet gestart."
+          "title": "CM09 · Volgende oorspronkelijke vergelijking",
+          "detail": "Vervolg bij het volgende oorspronkelijke vergelijkingsgeval CM09 epoch1 met dezelfde regels en beschikbare native toegang. Geen herhaling van CM01–CM08. Andere taakfamilies vragen hun eigen bron-/uitvoerbinding; menselijke beoordelingen blijven apart. Nog niet gestart."
         },
         "ownerAction": {
           "title": "Open beslissingen en gebruiksoordeel",
@@ -3772,7 +3780,7 @@
           "expected": "M3.3 is door Jaap geaccepteerd; daarvoor geen nieuwe beoordeling. De woonkamerproef combineert C3.1 en C4.1. Nut en timing van bestaand initiatief blijven I1.2. 32/44 oorspronkelijke kleine taken klaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-05T15:07:27.797858+00:00"
+        "reviewedAt": "2026-10-05T15:28:17.128717+00:00"
       },
       "reviewedAt": "2026-10-05T00:19:18.098429+00:00"
     },
@@ -16556,7 +16564,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Vervolg bij het volgende oorspronkelijke vergelijkingsgeval CM08 epoch1 met dezelfde regels en beschikbare native toegang. Geen herhaling van CM01–CM07. Bind bij andere families de actuele kandidaatversies expliciet; menselijke beoordelingen blijven apart.",
+              "nextAction": "Vervolg bij het volgende oorspronkelijke vergelijkingsgeval CM09 epoch1 met dezelfde regels en beschikbare native toegang. Geen herhaling van CM01–CM08. Andere taakfamilies vragen hun eigen bron-/uitvoerbinding; menselijke beoordelingen blijven apart.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -16564,27 +16572,27 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-05T15:07:27.797858+00:00",
+              "checkedAt": "2026-10-05T15:28:17.128717+00:00",
               "assignment": {
-                "baseCommit": "837d6df4",
+                "baseCommit": "2a74baff",
                 "owner": "/root",
                 "activeWorkers": [],
                 "files": [
-                  "/root/background_execution_seam: Eva1 CM07 native Telegram fixture/driver only",
-                  "/root: Eva2 CM07 native group consent driver; integration and board",
-                  "/root/aide_final_evaluation: private projection and independent review/results"
+                  "/root/background_execution_seam: Eva1 CM08 driver copies only (prepared)",
+                  "/root/aide_final_evaluation: CM08 protected projection and independent admission/results",
+                  "/root: Eva2 CM08 driver copies and existing workboard"
                 ],
                 "existing": "CM01–CM07 epoch1 zijn uitgevoerd en onafhankelijk beoordeeld waar de vastgelegde waarnemingen dat toelaten. Verliezen, onvolledige uitvoering en ontbrekende menselijke scores blijven behouden.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
-                "estimate": "Werkelijk CM07-verbruik: 10 providerpogingen, 37.684 input- en 2.091 outputtokens; 39.775 totaal. Nul-aanvragenvoorbereiding en onafhankelijke beoordeling apart vastgelegd. Ontwikkel- en creditkosten onbekend.",
-                "currentAction": "CM07 onafhankelijk beoordeeld: beide inhoudelijk onvoldoende, privégrens in de waargenomen context behouden. Eva2 verwerking afgerond; Eva1 groepsaflevering onvolledig en bewaard. Geen extra productfunctie; 32/44 blijft staan.",
+                "estimate": "Werkelijk CM08-verbruik: 13 providerpogingen, 49.985 input- en 2.435 outputtokens; 52.420 totaal. Extra rootvoorbereidingscontrole faalde vóór model/processtart en is apart bewaard. Ontwikkel- en creditkosten onbekend.",
+                "currentAction": "CM08 onafhankelijk beoordeeld: Eva2 haalt 3/3 inhoudelijke voorwaarden, Eva1 1/3. Beide uitvoeringen en 2/2 bewijscontroles voltooid. Eén geval met gemeten geheugenvoordeel; geen algemene voorsprong of extra productfunctie. Stand 32/44.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "evidence": "d90869e0 fixed benchmark terminal ingress; 837d6df4 completed original CM06 pair and independent objective assessment."
+                  "evidence": "2a74baff: original CM07 pair independently assessed and published; both objective outcomes false, 39,775 observed tokens, no repeated model sample."
                 },
-                "stage": "cm07_pair_assessed_next_cm08",
-                "finding": "Beide versies halen 2/3 oorspronkelijke inhoudelijke voorwaarden en 2/2 onafhankelijke readbacks; de gevraagde gedeelde bijdrage ontbreekt. De waargenomen privégrens blijft behouden. Eva1 uitvoering onvolledig, Eva2 verwerking voltooid. Geen algemene voorsprong, vergelijkbare volledige taaktiming of creditkosten bekend.",
+                "stage": "cm08_original_pair_independently_assessed",
+                "finding": "De oorspronkelijke ervaring is bij Eva2 aantoonbaar teruggehaald en gebruikt in de latere voortzetting; Eva1 behield de bron maar gebruikte de relevante inhoud niet. Beide oorspronkelijke uitvoeringen compleet. Menselijke kwaliteit onbekend; geen algemene snelheids- of efficiëntiewinst.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
                   "consecutiveGoalTurns": 3,
@@ -16639,12 +16647,12 @@
                   "resolutionEvidence": "eva2/evidence/product/p2-owner-authorization-20261005.json",
                   "appliesToCurrentTurn": false
                 },
-                "projectionEvidence": "eva2/evidence/product/p2-cm07-projection-review-20261005.json",
-                "admissionEvidence": "eva2/evidence/product/p2-cm07-projection-review-20261005.json",
-                "nextAction": "Vervolg bij het volgende oorspronkelijke vergelijkingsgeval CM08 epoch1 met dezelfde regels en beschikbare native toegang. Geen herhaling van CM01–CM07. Bind bij andere families de actuele kandidaatversies expliciet; menselijke beoordelingen blijven apart."
+                "projectionEvidence": "eva2/evidence/product/p2-cm08-projection-review-20261005.json",
+                "admissionEvidence": "eva2/evidence/product/p2-cm08-projection-review-20261005.json",
+                "nextAction": "Vervolg bij het volgende oorspronkelijke vergelijkingsgeval CM09 epoch1 met dezelfde regels en beschikbare native toegang. Geen herhaling van CM01–CM08. Andere taakfamilies vragen hun eigen bron-/uitvoerbinding; menselijke beoordelingen blijven apart."
               },
-              "remaining": "CM01 beide mislukt; CM02 objectief Eva1 1/3/Eva2 3/3; CM03 onvolledige readbacks; CM04 Eva1 onvoldoende/Eva2 onbekend; CM05 Eva2 geslaagd/Eva1 onbekend; CM06 Eva2 geslaagd (3/3+2/2), Eva1 onvoldoende (1/3+1/2); CM07 beide inhoudelijk onvoldoende (2/3), Eva1 groepsaflevering onvolledig. Overige oorspronkelijke gevallen, concurrenttoegang en menselijke beoordeling blijven open. Geen algemene voorsprong of extra productfunctie.",
-              "latestEvidence": "eva2/evidence/product/p2-cm07-paired-result-20261005.json",
+              "remaining": "CM01 beide mislukt; CM02 objectief Eva1 1/3/Eva2 3/3; CM03 onvolledige readbacks; CM04 Eva1 onvoldoende/Eva2 onbekend; CM05 Eva2 geslaagd/Eva1 onbekend; CM06 Eva2 geslaagd/Eva1 onvoldoende; CM07 beide onvoldoende en Eva1 groepsaflevering onvolledig; CM08 Eva2 geslaagd (3/3+2/2), Eva1 onvoldoende (1/3+2/2). Overige oorspronkelijke gevallen, concurrenttoegang en menselijke beoordeling blijven open. Geen algemene voorsprong of extra productfunctie.",
+              "latestEvidence": "eva2/evidence/product/p2-cm08-paired-result-20261005.json",
               "executionBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_after_same_command_review_with_new_provenance_evidence",
@@ -16699,25 +16707,18 @@
               "independentStoredAssessment": "eva2/evidence/product/p2-cm02-independent-review-20261005.json",
               "bindingReview": "eva2/evidence/product/p2-cm-binding-review-20261005.json",
               "latestExecutionIssue": {
-                "case": "EV003-CM-07",
-                "participant": "eva2",
-                "state": "pre_input_schema_corrected_original_native_run_assessed",
-                "wrapperExit": 1,
-                "resultPresent": false,
-                "cause": "Equivalent descriptive occurred_at dispatch tag differed from required canonical adapter tag; assertion before native setup.",
-                "repeated": false,
+                "case": "EV003-CM-08",
+                "participant": "eva1",
+                "state": "root_preflight_corrected_original_native_run_assessed",
+                "cause": "Extra rootcontrole gebruikte admitted/case_id in plaats van de bestaande Eva1 decision/entry-vorm.",
                 "providerCalls": 0,
-                "productFailureProven": false,
                 "nativeInputs": 0,
-                "originalCasePreserved": true,
-                "failedPreparationRetained": true,
-                "readmission": "admission-after-preflight.json",
-                "readmissionSha256": "62bf5284d70601d5876d4384a03b95569dd99d8e50d3f7e28fd0b5e8e74781f4",
+                "productFailureProven": false,
                 "nativeInputRepeated": false,
-                "scope": "Deze velden beschrijven uitsluitend de nul-aanvragenvoorbereidingsfout; de latere eerste native uitvoering is volledig beoordeeld in latestEvidence."
+                "scope": "Uitsluitend de nul-aanvragenstartcontrole; de daaropvolgende eerste native uitvoering is volledig beoordeeld in latestEvidence."
               },
-              "projectionEvidence": "eva2/evidence/product/p2-cm07-projection-review-20261005.json",
-              "admissionEvidence": "eva2/evidence/product/p2-cm07-projection-review-20261005.json",
+              "projectionEvidence": "eva2/evidence/product/p2-cm08-projection-review-20261005.json",
+              "admissionEvidence": "eva2/evidence/product/p2-cm08-projection-review-20261005.json",
               "previousExecutionIssue": {
                 "case": "EV003-CM-04",
                 "state": "observer_stop_boundary_corrected_upstream_cause_unknown",
@@ -16730,13 +16731,12 @@
                 "diagnosisEvidence": "eva2/evidence/product/p2-native-stop-boundary-20261005.json"
               },
               "currentAdapterFinding": {
-                "case": "EV003-CM-07",
-                "originalSharedAudienceRequired": true,
-                "eva1": "Native Telegram middleware/allowlist/archive/authority exists. Existing test transport method is reused; no fabricated messageContext or product patch.",
-                "eva2": "Native scoped groepsinstemming ingericht en teruggelezen; oorspronkelijke groepscontext en privégrens behouden. Onafhankelijk beoordeeld en eenmaal native uitgevoerd.",
-                "productFailureInferred": false,
-                "providerCalls": 0,
-                "scope": "providerCalls=0 betreft uitsluitend adaptervoorbereiding; werkelijke proefomvang staat in latestEvidence."
+                "case": "EV003-CM-08",
+                "eva1": "Existing CM06 three-turn single-person private route reused; worker, ledger, stop and capture unchanged.",
+                "eva2": "Existing CM06 private-person/session/calendar route reused with nine identical frozen sources.",
+                "sourceReviewed": true,
+                "providerCallsDuringPreparation": 0,
+                "productChange": false
               }
             },
             {

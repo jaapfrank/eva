@@ -1,6 +1,35 @@
 # EVA2 werkbord
 
-**Laatst afgerond — P2.1: gedeelde bijdrage ontbreekt bij beide versies.**
+**Laatst afgerond — P2.1: Eva2 gebruikt de eerdere ervaring in de vervolgtaak.**
+De oorspronkelijke CM08-proef is eenmaal per deelnemer uitgevoerd en onafhankelijk
+beoordeeld. Beide routes hebben alle drie antwoorden en geheugenverwerking voltooid.
+
+| Vast CM08-geval | Eva1 | Eva2 |
+| --- | --- | --- |
+| Inhoudelijke voorwaarden | 1/3 | 3/3 |
+| Onafhankelijke bewijscontroles | 2/2 | 2/2 |
+| Objectief taakresultaat | Onvoldoende | Geslaagd |
+| Modelaanvragen | 5 | 8 |
+| Totaal gemeten tokens | 28.402 | 24.018 |
+
+Eva2 haalde de relevante eerdere ervaring terug en gebruikte die in de gevraagde
+voortzetting. Eva1 behield de informatie, maar gebruikte de relevante inhoud niet
+in het latere antwoord. Dit is een voordeel in één vast geval, geen algemene
+superioriteit of nieuwe productfunctie. Menselijke scores ontbreken. De
+tijdgrenzen verschillen; geen algemene snelheids- of efficiëntiewinstclaim.
+Samen 13 modelaanvragen en 52.420 tokens; creditkosten en Codex-ontwikkelverbruik
+zijn onbekend. De extra lokale startcontrole had een veldnaamfout vóór netwerk,
+proces of modelaanvraag; alleen die controle is gecorrigeerd. De native proef,
+oorspronkelijke criteria en bronnen zijn niet herhaald of gewijzigd.
+Eigen proefresources zijn opgeruimd; resultaten en bewijs blijven bewaard.
+
+**Hierna:** oorspronkelijke CM09 epoch1; nog niet gestart.
+Geen herhaling van CM01–CM08. **32/44 kleine taken klaar; P2.1 blijft open.**
+[Onafhankelijk resultaat](evidence/product/p2-cm08-paired-result-20261005.json) ·
+[Projectie en bronbinding](evidence/product/p2-cm08-projection-review-20261005.json) ·
+[Technische afsluiting vóór beoordeling](evidence/product/p2-cm08-execution-close-20261005.json).
+
+**Eerder afgerond — P2.1: gedeelde bijdrage ontbreekt bij beide versies.**
 CM07 is één keer per deelnemer uitgevoerd en onafhankelijk beoordeeld.
 
 | Vast CM07-geval | Eva1 | Eva2 |
@@ -26,8 +55,7 @@ De bestaande native groepsroutes zijn voor deze vergelijking aangesloten;
 dit is geen nieuwe productfunctie. Eigen proefresources zijn opgeruimd,
 resultaten en bewijs blijven bewaard.
 
-**Hierna:** oorspronkelijke CM08 epoch1 met dezelfde voorwaarden en beschikbare
-toegang; nog niet gestart. Geen herhaling van CM01–CM07.
+**Vervolg:** CM08 is inmiddels beoordeeld en staat bovenaan. Deze CM07-uitkomst blijft behouden.
 **32/44 oorspronkelijke kleine taken klaar; P2.1 blijft open.**
 [Onafhankelijk resultaat](evidence/product/p2-cm07-paired-result-20261005.json) ·
 [Projectie en bronbinding](evidence/product/p2-cm07-projection-review-20261005.json) ·

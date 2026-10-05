@@ -1,0 +1,56 @@
+{
+  "contract": "EvaComparisonExecutionClose/v1",
+  "task": "P2.1",
+  "case": "EV003-CM-08",
+  "epoch": 1,
+  "recordedAt": "2026-10-05T15:23:33.145808+00:00",
+  "wrappers": {
+    "eva1": {
+      "exitCode": 0,
+      "resultSha256": "8a2fd7ef1f0be815538f6fa9db2f5e2cd4753e70ac1a1a6d050e6badf7f2ee3d"
+    },
+    "eva2": {
+      "exitCode": 0,
+      "resultSha256": "36dd68686c66de3910e76c211431819b717cee3b95cf1734f97f39efe9d2119d"
+    }
+  },
+  "preparationIssue": {
+    "participant": "eva1",
+    "phase": "root preflight before network or wrapper launch",
+    "providerCalls": 0,
+    "nativeInputs": 0,
+    "receiptSha256": "0f89ac6daff618ce99551bd87e845fe9f74d078d151a83d215adb627f85a2a8f",
+    "scope": "Extra root schema check corrected; native sources/projection/admission unchanged; no native retry."
+  },
+  "retainedEvidence": {
+    "eva1Database": {
+      "bytes": 1335296,
+      "sha256": "4cbfdbae1bc4907f5dde3502449b767fe331186288ec4b65d1ba3c48eb1ab8df"
+    },
+    "eva2Dumps": {
+      "p1_core": {
+        "exitCode": 0,
+        "bytes": 305582,
+        "sha256": "4ded514154be5fed47806329b6ed252490e328f2dc82e638cd06a297dabe6459"
+      },
+      "p1_memory": {
+        "exitCode": 0,
+        "bytes": 173606,
+        "sha256": "10004079aba409848208b47f71c10238e911c272ed45e2cf401ab638199b75b0"
+      }
+    },
+    "rawProviderCapturesAndPrivateInspectLogsRetained": true
+  },
+  "cleanup": {
+    "ownContainersAbsent": true,
+    "eva1EmptyInternalNetworkRemoved": {
+      "name": "ev003-eva1-cm08-epoch1",
+      "id": "e024a7c99061ef4b81696445ed565e7850a0eba742ccfa65cea0b20653661da4"
+    },
+    "eva2NetworkAbsent": true,
+    "hostArtifactsRetained": true,
+    "productionMutation": false,
+    "cleanupProviderCalls": 0
+  },
+  "resultAssessment": "Independent original semantic assessment pending. Technical closure is not successful task completion or family acceptance."
+}
