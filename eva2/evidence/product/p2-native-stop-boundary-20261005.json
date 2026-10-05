@@ -1,0 +1,78 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "task": "P2.1",
+  "recordedAt": "2026-10-05T13:26:31.373052+00:00",
+  "status": "benchmark_stop_boundary_corrected_offline_reviewed",
+  "triggerEvidence": "eva2/evidence/product/p2-cm04-paired-result-20261005.json",
+  "cause": {
+    "source": "comparison instrumentation",
+    "chain": [
+      "Raw SSE observer converts upstream terminal failure to SampleStopped(BaseException).",
+      "Accounting stream closes and preserves incomplete usage, then rethrows SampleStopped.",
+      "Native conversation response producer catches Exception only; producer exits without terminal queue item.",
+      "Response consumer waits on queue.get; isolated launcher cannot finish its normal server shutdown."
+    ],
+    "upstreamFailureKind": "not retained; exact event/code cannot be recovered",
+    "productDefectProven": false
+  },
+  "change": {
+    "file": "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py",
+    "workerSha256": "369da028e809be574301eeeae17b843183fc42ba1beca9a00ae5249b0eac11c6",
+    "behavior": "Translate only SampleStopped at the benchmark-owned outer runtime.respond boundary, after native stack unwind. Existing native response emits its terminal error. Ledger remains stopped and unknown usage remains unknown.",
+    "productionChanged": false,
+    "historicalCm04Changed": false,
+    "automaticRetryAdded": false
+  },
+  "verification": {
+    "command": [
+      "/home/administrator/project/.eva2-artifacts/native-voice-offline-env-w8rt00c4/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "tests/benchmark/test_p1_subscription_binding.py::NativeStopBoundaryTests::test_failed_sse_settles_unknown_and_native_stream_terminates_without_retry"
+    ],
+    "result": "1 passed in 1.95s",
+    "uniqueTests": 1,
+    "runs": 2,
+    "secondRunReason": "Independent review requested success identity and runtime patch restoration assertions.",
+    "covers": [
+      "old producer missing terminal reproduced",
+      "new terminal EvaTextStreamError",
+      "synthetic provider stream closed",
+      "incomplete usage stays null",
+      "stopped ledger prevents second network dispatch",
+      "same successful args and return object",
+      "real runtime instance patch restored",
+      "unrelated BaseException not converted"
+    ],
+    "limitation": "Thread and queue scheduling are replaced deterministically. This does not prove full HTTP/server/container quiescence or native model quality.",
+    "testSha256": "b09d211777ca409dd12fdbad23656ab4ffc3e4018da1bbe10c3e2b7ad82643a2",
+    "logSha256": "f4ea00f50ce290b49e54b69852d194d58ca6f8d8cb6774ce181cf2db7b9e8c75",
+    "receiptSha256": "c3d246468dad070e0cf22feeca9c479122988416792f633c4e5404a382bd06c6"
+  },
+  "independentReview": {
+    "reviewer": "/root/aide_final_evaluation",
+    "decision": "GO",
+    "evidence": "eva2/evidence/product/p2-native-stop-boundary-review-20261005.json",
+    "originalBindingsVerified": 36
+  },
+  "delivery": {
+    "target": "existing isolated comparison runner only",
+    "rule": "Next new sample freeze must copy and pin this canonical worker in admission.sources; launcher existing /fixture mount remains. Do not mutate old CM04 snapshot. No production image rebuild or restart required.",
+    "next": "Original CM05 epoch1 structure/admission; no CM04 replay."
+  },
+  "usage": {
+    "newModelCalls": 0,
+    "newRuntimeTokens": 0,
+    "developmentCreditCost": null
+  },
+  "claims": {
+    "newCompletedProductFunction": false,
+    "telegramFailureFixed": false,
+    "comparisonWin": false
+  }
+}

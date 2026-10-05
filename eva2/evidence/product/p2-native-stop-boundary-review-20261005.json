@@ -1,0 +1,142 @@
+{
+  "contract": "Ev003NativeStopBoundaryReview/v1",
+  "reviewedAt": "2026-10-05T13:27:17.450208+00:00",
+  "reviewer": "/root/aide_final_evaluation",
+  "task": "P2.1",
+  "decision": "GO",
+  "scope": "Benchmark-only terminal error propagation for SampleStopped; no product/native image changes, no CM04 replay and no new inference admission.",
+  "sources": {
+    "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py": "369da028e809be574301eeeae17b843183fc42ba1beca9a00ae5249b0eac11c6",
+    "eva2/tests/benchmark/test_p1_subscription_binding.py": "b09d211777ca409dd12fdbad23656ab4ffc3e4018da1bbe10c3e2b7ad82643a2"
+  },
+  "findings": {
+    "specificBoundaryOnly": true,
+    "nativeRuntimeRespondInstancePatchable": true,
+    "patchedBeforeNativeAppFactory": true,
+    "restoredByExistingExitStack": true,
+    "successArgumentsAndReturnIdentityPreserved": true,
+    "unrelatedBaseExceptionUnchanged": true,
+    "ledgerUnknownUsagePreserved": true,
+    "noFurtherProviderDispatchAfterStop": true,
+    "noActionOrRetryAdded": true,
+    "terminalNativeErrorProduced": true
+  },
+  "verification": {
+    "sourceAgentTest": "one targeted existing testcase",
+    "pytestPassed": 1,
+    "pytestReportedSeconds": 1.95,
+    "processWallSeconds": 2.7042402530205436,
+    "realModelCalls": 0,
+    "reviewerTestRuns": 0,
+    "scope": "Actual native producer/consumer events plus ResponsesSampleTransport/raw-SSE attestor/shared ledger, with deterministic Thread/Queue substitutes and synthetic failed response. Actual PostgresHindsightMemoryRuntime instance patchability tested via __new__ without DB construction, plus argument/return identity and bound-method restoration.",
+    "limitations": [
+      "No full network/server shutdown or arbitrary cancellation/quiescence proof.",
+      "The specific failed native upstream subtype/error code remains unavailable in original CM04 evidence.",
+      "The fixture correction does not erase, rescore, retry or complete CM04.",
+      "New sample launchers must explicitly hash-bind the changed benchmark worker; old frozen snapshots remain unchanged."
+    ],
+    "retainedEvidence": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-native-stop-boundary-20261005/receipt.json",
+        "sha256": "64950ba3af0956b80d0d2f5502061ef95feb6ab22f49c5e2291dd99ae0fbef8a"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-native-stop-boundary-20261005/test.log",
+        "sha256": "d26d9086271b3c01fd8c7d73af01431a8319e8474b3741d8881689e73c03c3f8"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-native-stop-boundary-20261005/receipt-final.json",
+        "sha256": "c3d246468dad070e0cf22feeca9c479122988416792f633c4e5404a382bd06c6"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-native-stop-boundary-20261005/test-final.log",
+        "sha256": "f4ea00f50ce290b49e54b69852d194d58ca6f8d8cb6774ce181cf2db7b9e8c75"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-native-stop-boundary-20261005/source-hashes.json",
+        "sha256": "17ce3666df4db4e57969eb97487758c92fe71e8cf2be4c9c9675cd447348cf20"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-native-stop-boundary-20261005/source.diff",
+        "sha256": "2343ae550285481a8583cda6f4bc8161fbd1b3efb47d361ef0e6c1565e4d9c7b"
+      }
+    ]
+  },
+  "cm04Preservation": {
+    "privateAssessmentPath": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm04-epoch1.paired-assessment.private.json",
+    "privateAssessmentSha256": "52115b8ac42eae39fb56cab44f2c73996867a9853c6dddb9e8559b7904f58e81",
+    "retainedArtifactAndSourceBindingsChecked": 36,
+    "allMatched": true,
+    "originalOutcomes": {
+      "eva1ObjectiveTaskSuccess": false,
+      "eva2ObjectiveTaskSuccess": null
+    },
+    "originalProviderUsageUnknownRemainsUnknown": true
+  },
+  "nextOriginalCase": {
+    "caseId": "EV003-CM-05",
+    "epoch": 1,
+    "caseSha256": "29dac7cd93cfc54f82ab11d889cd340cdbc5ddb855fc3175852e29243f508a92",
+    "commitmentSha256": "bbdbf8eff011aeb51c41e2ff6532346dd22615a99102166e4005292100dd03bf",
+    "status": "structure_checked_not_execution_admission",
+    "counts": {
+      "setup_dialogue_turns": 0,
+      "scripted_events": 3,
+      "synthetic_identities": 2,
+      "fixture_services": 0,
+      "initial_files": 0,
+      "browser_pages": 0,
+      "required_audio_assets": 0,
+      "semantic_conditions": 3,
+      "independent_readbacks": 2
+    },
+    "ordinaryUserTurns": 4,
+    "actorIndices": [
+      0,
+      1,
+      0,
+      1
+    ],
+    "audienceKind": "private_person",
+    "controlledClockTransitions": 1,
+    "clockGenerationSequence": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "clockValuesRemainPrivate": true,
+    "requiresSettlementBeforeTransition": true,
+    "requiredResourceTypes": [
+      "controlled_clock",
+      "isolated_identity_memory"
+    ],
+    "requiredEvaluatorTypes": [
+      "independent_memory_readback",
+      "native_trace",
+      "semantic_rubric",
+      "two_human_raters"
+    ],
+    "existingMechanismsSufficient": true,
+    "cm04ScriptsDirectlyCompatible": false,
+    "necessaryBinding": "Create the unchanged original four-turn private projection, resolve each verified private context from original controls, and update only exact case/actor/session/clock/turn-count assertions and source/admission hashes in the existing drivers. Bind corrected worker369da028... and keep original fixed plan/limits.",
+    "readbackRequirements": "Both principal-scoped native state and exact offered model-request context, plus complete ingress/reply/usage/stop/effect evidence. Existing CM04 capture/readback mechanisms cover these observation types. No condition is pre-scored.",
+    "newProductCodeRequired": false,
+    "newRunnerRequired": false,
+    "sourceCopiesPrepared": false,
+    "modelsRun": false,
+    "humanRatings": [
+      null,
+      null
+    ]
+  },
+  "contentBoundary": {
+    "scenarioPromptsPublished": false,
+    "expectedAnswersPublished": false,
+    "oracleTextPublished": false,
+    "privateFixtureValuesPublished": false
+  },
+  "criteriaChanged": false,
+  "budgetsChanged": false,
+  "newProviderCalls": 0
+}

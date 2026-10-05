@@ -1034,8 +1034,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T13:12:56.137961+00:00",
+        "checkedAt": "2026-10-05T13:27:53.122623+00:00",
         "deliveries": [
+          {
+            "title": "Vergelijkingsproef blijft niet meer wachten op verdwenen antwoordproducer",
+            "date": "5 oktober",
+            "state": "tested",
+            "result": "Concrete fout in meetinstrumentatie hersteld. Eén gerichte offline regressie en onafhankelijke review akkoord; geen nieuwe modelcalls. Productie-Eva en afgesloten CM04-uitkomst ongewijzigd.",
+            "remaining": "Nog geen volledige serverafsluitproef. Exacte upstreamfout en Telegramincident blijven onbekend; geen extra productfunctie.",
+            "source": "eva2/evidence/product/p2-native-stop-boundary-20261005.json"
+          },
           {
             "title": "P2.1 · Persoonsvergelijking: Eva1 onvoldoende, Eva2 onvolledig",
             "date": "5 oktober",
@@ -3712,14 +3720,14 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Vierde vaste vergelijking vastgelegd",
+          "title": "P2.1 · Afsluitfout gecorrigeerd; volgend geval voorbereiden",
           "state": "in_progress",
           "owner": "Codex",
-          "detail": "Eva1 hield de persoonsgrens, maar haalde het eerdere gegeven niet terug. Eva2 leverde geen volledig antwoord na een afgebroken modelaanvraag; testkern moest worden gestopt. Geen winnaar en geen extra afgeronde functie. Deze poging is afgesloten; vervolg nog niet gestart."
+          "detail": "Oorspronkelijk CM05 voorbereiden: bronagent bindt bestaande drivers aan nieuwe vierbeurtenprojectie en gecorrigeerde worker; onafhankelijke curator bewaakt originele controls, projectie en toelating. Geen nieuwe modelcalls gestart."
         },
         "next": {
-          "title": "Gerichte foutdiagnose vóór nieuwe modelproeven",
-          "detail": "Gebruik de bewaarde foutmetadata om providerafbreking en onvolledige proefafsluiting te verklaren. Geen herhaling van CM04 of wijziging van beoordelingsregels. De bestaande Telegramfout blijft afzonderlijk onopgelost."
+          "title": "Oorspronkelijke vergelijking vervolgen",
+          "detail": "Volgende oorspronkelijke CM05-proef voorbereiden met de gecorrigeerde benchmarkworker expliciet vastgelegd. Criteria en CM04-uitkomst blijven ongewijzigd; nog geen uitvoering gestart."
         },
         "ownerAction": {
           "title": "Open beslissingen en gebruiksoordeel",
@@ -3732,7 +3740,7 @@
           "expected": "M3.3 is door Jaap geaccepteerd; daarvoor geen nieuwe beoordeling. De woonkamerproef combineert C3.1 en C4.1. Nut en timing van bestaand initiatief blijven I1.2. 32/44 oorspronkelijke kleine taken klaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-05T13:12:56.137961+00:00"
+        "reviewedAt": "2026-10-05T13:27:53.122623+00:00"
       },
       "reviewedAt": "2026-10-05T00:19:18.098429+00:00"
     },
@@ -16516,7 +16524,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Diagnoseer de concrete provider-/afsluitfout met de bewaarde metadata en bestaande bron vóór nieuwe modelproeven. Geen gewijzigde criteria, verborgen-resultaatgestuurde productafstemming of automatische CM04-herhaling.",
+              "nextAction": "Volgende oorspronkelijke CM05-proef voorbereiden met de gecorrigeerde benchmarkworker expliciet vastgelegd. Criteria en CM04-uitkomst blijven ongewijzigd; nog geen uitvoering gestart.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -16524,27 +16532,30 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-05T13:12:56.137961+00:00",
+              "checkedAt": "2026-10-05T13:27:53.122623+00:00",
               "assignment": {
-                "baseCommit": "95d59fd1",
+                "baseCommit": "255dc8f5",
                 "owner": "/root",
-                "activeWorkers": [],
+                "activeWorkers": [
+                  "/root/background_execution_seam",
+                  "/root/aide_final_evaluation"
+                ],
                 "files": [
-                  "/root/background_execution_seam: isolated eva1/eva2 CM04 launch.py and inspect-run.py only; frozen runtime unchanged",
-                  "/root/aide_final_evaluation: private original projection, admission and independent assessment",
-                  "/root: admitted execution, public receipts and workboard"
+                  "/root/background_execution_seam: new private CM05 drivers and frozen worker binding only",
+                  "/root/aide_final_evaluation: original CM05 private projection, admission and assessment",
+                  "/root: integration, execution after admission, public evidence and existing workboard"
                 ],
                 "existing": "CM01 and CM02 were already executed; original outcomes and logs are preserved. CM02 objective assessment is now available without a new model call.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
-                "estimate": "Stored CM02 assessment: zero new inference. Next CM sample uses existing frozen limits; no new quota and no automatic full-matrix launch. Actual usage reported; credits unknown.",
-                "currentAction": "CM04-paar uitgevoerd en onafhankelijk beoordeeld. Eva1 mist de terugvraag; Eva2 heeft geen volledig antwoord/usage na upstream protocolafbreking en onvolledige testafsluiting. Bewijs bewaard en eigen proefresources opgeruimd. Geen volgende proef gestart.",
+                "estimate": "Voorbereiding nul nieuwe modelcalls. Indien toegelaten: één oorspronkelijk CM05-paar met bestaande grenzen van maximaal16aanvragen en480s per deelnemer; werkelijke credits onbekend.",
+                "currentAction": "Oorspronkelijk CM05 voorbereiden: bronagent bindt bestaande drivers aan nieuwe vierbeurtenprojectie en gecorrigeerde worker; onafhankelijke curator bewaakt originele controls, projectie en toelating. Geen nieuwe modelcalls gestart.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "evidence": "CM04 original pair and independent assessment retained; native source unchanged, no additional completed product function."
+                  "evidence": "255dc8f5: CM04 original pair executed and independently assessed; retained failure evidence determines current diagnosis."
                 },
-                "stage": "cm04_pair_recorded_one_failure_one_unknown",
-                "finding": "Eva1:2/3 inhoudelijke voorwaarden,1/2 readbacks; taak niet geslaagd. Eva2:0 volledige beurten,1 afgebroken aanvraag met onbekend verbruik. Afsluiting vergde root-ingrijpen; core exit137. Geen vergelijkingswinst of bewezen semantisch Eva2-productverlies.",
+                "stage": "benchmark_stop_boundary_reviewed_next_original_case_preparation",
+                "finding": "SampleStopped verliet de native producer zonder terminalbericht. Benchmark-only vertaling laat de bestaande errorresponse afronden; ledger blijft gestopt en verbruik onbekend. Exacte upstreamfout niet bewaard.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
                   "consecutiveGoalTurns": 3,
@@ -16598,7 +16609,7 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm04-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm04-admission-review-20261005.json",
-                "nextAction": "Diagnoseer de concrete provider-/afsluitfout met de bewaarde metadata en bestaande bron vóór nieuwe modelproeven. Geen gewijzigde criteria, verborgen-resultaatgestuurde productafstemming of automatische CM04-herhaling."
+                "nextAction": "Volgende oorspronkelijke CM05-proef voorbereiden met de gecorrigeerde benchmarkworker expliciet vastgelegd. Criteria en CM04-uitkomst blijven ongewijzigd; nog geen uitvoering gestart."
               },
               "remaining": "CM01 beide mislukt. CM02 objectief Eva1 1/3, Eva2 3/3. CM03 beide3/3 tekst, ontbrekende readback maakt resultaat onbekend. CM04 Eva1 taak niet geslaagd (2/3 inhoud,1/2 readbacks); Eva2 onbekend door afgebroken providerrequest/onvolledige afsluiting. Overige oorspronkelijke gevallen, concurrenttoegang en menselijke beoordeling blijven open. Geen automatische herhaling of algemene winst.",
               "latestEvidence": "eva2/evidence/product/p2-cm04-paired-result-20261005.json",
@@ -16630,7 +16641,7 @@
                 "evidence": "eva2/evidence/product/p2-agentzero-cm-binding-20261004.json",
                 "checkedAt": "2026-10-04T16:13:46.091584+00:00"
               },
-              "diagnosisEvidence": "eva2/evidence/product/p2-cm01-selection-diagnosis-20261004.json",
+              "diagnosisEvidence": "eva2/evidence/product/p2-native-stop-boundary-20261005.json",
               "controlBindingBlocker": {
                 "case": "EV003-CM-03",
                 "source": "/root/aide_final_evaluation final response in this goal turn",
@@ -16657,13 +16668,14 @@
               "bindingReview": "eva2/evidence/product/p2-cm-binding-review-20261005.json",
               "latestExecutionIssue": {
                 "case": "EV003-CM-04",
-                "state": "closed_attempt_cause_not_fully_resolved",
+                "state": "observer_stop_boundary_corrected_upstream_cause_unknown",
                 "evidence": "eva2/evidence/product/p2-cm04-paired-result-20261005.json",
                 "specificUpstreamFailureKind": "not retained",
                 "completeUsage": false,
                 "operatorCoreStopRequired": true,
                 "productFailureProven": false,
-                "repeated": false
+                "repeated": false,
+                "diagnosisEvidence": "eva2/evidence/product/p2-native-stop-boundary-20261005.json"
               }
             },
             {

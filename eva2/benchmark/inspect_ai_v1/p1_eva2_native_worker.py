@@ -81,6 +81,22 @@ def block_action(result, ledger, name):
     raise SampleStopped("unexpected action in fixed conversation case")
 
 
+def native_response_boundary(respond):
+    """Expose a settled benchmark stop through the native HTTP error contract.
+
+    SampleStopped remains a BaseException inside SDK/ledger control to prevent
+    native retries. Translate only after the complete native respond stack has
+    unwound, including its stream ownership cleanup. Never clear the ledger or
+    convert unknown usage into success.
+    """
+    def bound(*args, **kwargs):
+        try:
+            return respond(*args, **kwargs)
+        except SampleStopped as error:
+            raise RuntimeError("comparison sample stopped") from error
+    return bound
+
+
 def source_hash(cls):
     p = Path(inspect.getfile(cls))
     return {str(p): hashlib.sha256(p.read_bytes()).hexdigest()}
@@ -101,6 +117,8 @@ def serve_core(args, ledger, result):
 
     def capture_runtime(runtime, *a, **kw):
         runtimes.append(runtime)
+        stack.enter_context(patch.object(
+            runtime, "respond", native_response_boundary(runtime.respond)))
         return original_factory(runtime, *a, **kw)
 
     class Body(httpx2.AsyncByteStream):

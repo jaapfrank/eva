@@ -1,22 +1,18 @@
 # EVA2 werkbord
 
-**Nu — P2.1: vierde vaste vergelijking uitgevoerd en vastgelegd.**
-Eva1 behoudt in deze proef de persoonsgrens, maar haalt het eerdere gegeven
-bij de terugvraag niet terug: 2/3 inhoudelijke voorwaarden en 1/2 readbacks.
-Eva2 levert geen volledig antwoord: de eerste providerrequest breekt af,
-volledige usage ontbreekt en de testkern sluit niet zelfstandig af.
-Codex stopt uitsluitend die eigen testkern; exit137, dus geen geslaagde
-natuurlijke afsluiting. De oorspronkelijke uitkomst blijft onbekend.
+**Nu — P2.1: afsluitfout in de vergelijking gecorrigeerd.**
+Een meetuitzondering liet de native antwoordproducer eindigen zonder terminalbericht.
+De benchmark vertaalt die nu pas aan de buitenste antwoordgrens: foutantwoord en
+einde van de stream, met behoud van onbekend verbruik en stop op vervolgdispatch.
+Eén gerichte offline regressie en onafhankelijke review geslaagd; nul nieuwe
+modelcalls. Geen productie-installatie nodig voor deze benchmark-only correctie.
 
-De onafhankelijke beoordeling is bewaard; geen winnaar of extra productfunctie.
-7 afgeronde aanvragen: 43.054 input + 1.563 output = 44.617 tokens;
-1 afgebroken aanvraag heeft onbekend verbruik. Creditkosten onbekend.
-Alle proefgegevens zijn behouden; eigen containers en netwerken opgeruimd.
-**32/44 oorspronkelijke kleine taken klaar.** Geen volgende proef gestart.
-Volgende stap: de concrete provider-/afsluitfout gericht verklaren met bestaand
-bewijs, vóór nieuwe modelproeven. Geen automatische herhaling van CM04.
-[Onafhankelijk paarresultaat](evidence/product/p2-cm04-paired-result-20261005.json)
-· [Afsluiting](evidence/product/p2-cm04-execution-close-20261005.json).
+Bronagent en curator bereiden het oorspronkelijke volgende geval CM05 voor:
+vier beurten, twee personen, bestaande klokovergang en vaste beoordeling.
+Nieuwe proefbron moet de gecorrigeerde worker expliciet vastleggen; CM04 wordt
+niet herhaald of gewijzigd. Volledige serverafsluiting nog niet hiermee bewezen.
+**32/44 oorspronkelijke kleine taken klaar.** Geen extra productfunctie.
+[Oorzaak en correctie](evidence/product/p2-native-stop-boundary-20261005.json).
 
 **C1-diagnose: fout blijft open, geen onbewezen reparatie.**
 Een neutrale toolvoorstelproef op de bestaande providerroute kwam correct binnen:
