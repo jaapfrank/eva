@@ -1034,8 +1034,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T13:56:19.749153+00:00",
+        "checkedAt": "2026-10-05T14:08:56.821911+00:00",
         "deliveries": [
+          {
+            "title": "Eva1-meetproef meldt afgebroken invoer direct terug",
+            "date": "5 oktober",
+            "state": "tested",
+            "result": "Aangetoonde meetadapterfout gecorrigeerd: één gekoppelde foutmelding bereikt de uitvoerder. Twee gerichte offline controles en onafhankelijke review akkoord; stop en normaal antwoordpad behouden.",
+            "remaining": "Geen nieuwe productfunctie of modelaanvraag. CM05-uitkomst en 32/44 afgeronde taken ongewijzigd. Geen productie-installatie nodig: dit betreft alleen de vergelijkingsworker.",
+            "source": "eva2/evidence/product/p2-bottie-terminal-ingress-20261005.json"
+          },
           {
             "title": "Vaste geheugenproef: Eva2 geslaagd, Eva1 onvolledig",
             "date": "5 oktober",
@@ -3728,14 +3736,14 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Vijfde vergelijking beoordeeld: Eva2 geslaagd",
+          "title": "P2.1 · Volgende vaste vergelijking voorbereiden",
           "state": "in_progress",
           "owner": "Codex",
-          "detail": "CM05-paar uitgevoerd en onafhankelijk beoordeeld: Eva2 alle vier beurten,3/3 voorwaarden en2/2 readbacks; Eva1 twee beurten compleet en derde onvolledig na geweigerd toolvoorstel/ontbrekende foutterugmelding. Bewijs bewaard, eigen resources weg. Geen volgende proef gestart."
+          "detail": "Curator maakt de oorspronkelijke CM06-projectie; bronagent past alleen bestaande geïsoleerde drivers aan de vereiste structuur aan. Nog geen modelrun. Gereviewde terminalcorrectie wordt expliciet vastgelegd."
         },
         "next": {
-          "title": "Ontbrekende foutterugmelding in de Eva1-meetroute oplossen",
-          "detail": "Verklaar en herstel de aangetoonde ontbrekende Eva1-foutterugmelding in de bestaande meetadapter met een gerichte offline controle vóór een volgend geval. Geen CM05-herhaling of afstemming op verborgen inhoud. Bind voor verdere families de kandidaatversie expliciet; oude T2/T3-images zijn geen actuele acceptatie."
+          "title": "CM06 uitvoeren en afzonderlijk beoordelen",
+          "detail": "Pas na bron-/admissiecontrole één oorspronkelijke poging per beschikbare deelnemer, met oorspronkelijke criteria en verbruiksmeting. Geen gesloten geval herhalen."
         },
         "ownerAction": {
           "title": "Open beslissingen en gebruiksoordeel",
@@ -3748,7 +3756,7 @@
           "expected": "M3.3 is door Jaap geaccepteerd; daarvoor geen nieuwe beoordeling. De woonkamerproef combineert C3.1 en C4.1. Nut en timing van bestaand initiatief blijven I1.2. 32/44 oorspronkelijke kleine taken klaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-05T13:56:19.749153+00:00"
+        "reviewedAt": "2026-10-05T14:08:56.821911+00:00"
       },
       "reviewedAt": "2026-10-05T00:19:18.098429+00:00"
     },
@@ -16532,7 +16540,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Verklaar en herstel de aangetoonde ontbrekende Eva1-foutterugmelding in de bestaande meetadapter met een gerichte offline controle vóór een volgend geval. Geen CM05-herhaling of afstemming op verborgen inhoud. Bind voor verdere families de kandidaatversie expliciet; oude T2/T3-images zijn geen actuele acceptatie.",
+              "nextAction": "Volgende oorspronkelijke vergelijking CM06 epoch1 voorbereiden met de gecorrigeerde meetworker expliciet vastgelegd. CM05 blijft ongewijzigd; geen herhaling of nieuwe criteria. Voor andere families actuele kandidaatversies expliciet binden.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -16540,24 +16548,29 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-05T13:56:19.749153+00:00",
+              "checkedAt": "2026-10-05T14:08:56.821911+00:00",
               "assignment": {
-                "baseCommit": "f1303012",
+                "baseCommit": "e8bcc91d",
                 "owner": "/root",
-                "activeWorkers": [],
+                "activeWorkers": [
+                  "/root/background_execution_seam",
+                  "/root/aide_final_evaluation"
+                ],
                 "files": [
-                  "/root: integrated benchmark stop fix, completed original CM05 pair, public results and existing workboard"
+                  "/root/background_execution_seam: new CM06 execution driver copies only",
+                  "/root/aide_final_evaluation: private CM06 projection and independent review",
+                  "/root: integration and existing workboard"
                 ],
                 "existing": "CM01 and CM02 were already executed; original outcomes and logs are preserved. CM02 objective assessment is now available without a new model call.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
-                "estimate": "Afgesloten paar:16modelaanvragen,62.707input+2.739outputtokens. Ontwikkel- en runtimecredits onbekend. Geen vervolgverbruik gestart.",
-                "currentAction": "CM05-paar uitgevoerd en onafhankelijk beoordeeld: Eva2 alle vier beurten,3/3 voorwaarden en2/2 readbacks; Eva1 twee beurten compleet en derde onvolledig na geweigerd toolvoorstel/ontbrekende foutterugmelding. Bewijs bewaard, eigen resources weg. Geen volgende proef gestart.",
+                "estimate": "Projectie en bronbinding zonder inference. Uitvoering later binnen uitsluitend het oorspronkelijke geregistreerde proefbudget; creditkosten onbekend.",
+                "currentAction": "Curator maakt de oorspronkelijke CM06-projectie; bronagent past alleen bestaande geïsoleerde drivers aan de vereiste structuur aan. Nog geen modelrun. Gereviewde terminalcorrectie wordt expliciet vastgelegd.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "evidence": "255dc8f5: CM04 original pair executed and independently assessed; retained failure evidence determines current diagnosis."
+                  "evidence": "f1303012 corrected benchmark stop boundary; e8bcc91d retained original CM05 pair and independent assessment plus source applicability."
                 },
-                "stage": "cm05_pair_recorded_eva2_pass_eva1_unknown",
+                "stage": "cm06_original_projection_and_admission",
                 "finding": "Eva2 voldoet aan de oorspronkelijke objectieve CM05-voorwaarden. Eva1 blijft unknown, geen afgeleid productverlies. Beide samen16calls/65.446tokens; geen snelheids-/kostenwinstclaim en geen menselijke score.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
@@ -16612,7 +16625,7 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm04-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm04-admission-review-20261005.json",
-                "nextAction": "Verklaar en herstel de aangetoonde ontbrekende Eva1-foutterugmelding in de bestaande meetadapter met een gerichte offline controle vóór een volgend geval. Geen CM05-herhaling of afstemming op verborgen inhoud. Bind voor verdere families de kandidaatversie expliciet; oude T2/T3-images zijn geen actuele acceptatie."
+                "nextAction": "Volgende oorspronkelijke vergelijking CM06 epoch1 voorbereiden met de gecorrigeerde meetworker expliciet vastgelegd. CM05 blijft ongewijzigd; geen herhaling of nieuwe criteria. Voor andere families actuele kandidaatversies expliciet binden."
               },
               "remaining": "CM01 beide mislukt; CM02 objectief Eva1 1/3/Eva2 3/3; CM03 beide tekst3/3 maar onvolledige readbacks; CM04 Eva1 niet geslaagd/Eva2 onbekend; CM05 Eva2 objectief geslaagd (3/3+2/2), Eva1 uitvoering onbekend. Overige oorspronkelijke gevallen, concurrenttoegang en menselijke beoordeling blijven open. Geen algemene voorsprong of nieuwe productfunctie.",
               "latestEvidence": "eva2/evidence/product/p2-cm05-paired-result-20261005.json",
@@ -16644,7 +16657,7 @@
                 "evidence": "eva2/evidence/product/p2-agentzero-cm-binding-20261004.json",
                 "checkedAt": "2026-10-04T16:13:46.091584+00:00"
               },
-              "diagnosisEvidence": "eva2/evidence/product/p2-native-stop-boundary-20261005.json",
+              "diagnosisEvidence": "eva2/evidence/product/p2-bottie-terminal-ingress-20261005.json",
               "controlBindingBlocker": {
                 "case": "EV003-CM-03",
                 "source": "/root/aide_final_evaluation final response in this goal turn",
@@ -16672,13 +16685,14 @@
               "latestExecutionIssue": {
                 "case": "EV003-CM-05",
                 "participant": "eva1-bottie",
-                "state": "native_error_reply_not_delivered_to_launcher",
+                "state": "benchmark_terminal_bridge_corrected_offline",
                 "evidence": "eva2/evidence/product/p2-cm05-paired-result-20261005.json",
                 "completeUsage": true,
                 "safeStopConfirmed": true,
                 "productFailureProven": false,
                 "repeated": false,
-                "nextStepStarted": false
+                "nextStepStarted": false,
+                "diagnosisEvidence": "eva2/evidence/product/p2-bottie-terminal-ingress-20261005.json"
               },
               "projectionEvidence": "eva2/evidence/product/p2-cm05-projection-review-20261005.json",
               "admissionEvidence": "eva2/evidence/product/p2-cm05-projection-review-20261005.json",

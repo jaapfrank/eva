@@ -1,0 +1,90 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "task": "P2.1",
+  "recordedAt": "2026-10-05T14:07:49.440328+00:00",
+  "status": "benchmark_ingress_terminal_corrected_offline_reviewed",
+  "triggerEvidence": "eva2/evidence/product/p2-cm05-paired-result-20261005.json",
+  "cause": {
+    "source": "comparison instrumentation",
+    "chain": [
+      "Refused tool proposal calls stopSample and aborts the shared nativeFetch signal.",
+      "Native API stores its error, but the local fetch aborts before receiving that response.",
+      "Controlled ingress catch previously suppressed any error when already stopping; launcher receives no terminal item and waits until the original deadline."
+    ],
+    "productDefectProven": false
+  },
+  "change": {
+    "file": "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+    "workerSha256": "e0ba9e823e99ef2ac749acfab74118d82633c93d56172ab885f4ea47f92e058d",
+    "behavior": "Send one content-free request-correlated Cp001IngressFailure/v1 terminal item from the existing ingress catch before existing stop handling. status:null does not invent a received HTTP500.",
+    "productionChanged": false,
+    "historicalCm05Changed": false,
+    "automaticRetryAdded": false
+  },
+  "verification": {
+    "command": [
+      "/home/administrator/project/.eva2-artifacts/native-voice-offline-env-w8rt00c4/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "tests/benchmark/test_cp001_native_bottie.py::test_controlled_ingress_abort_delivers_one_correlated_terminal_to_cm_receiver",
+      "tests/benchmark/test_cp001_native_bottie.py::test_subscription_fetch_observer_preserves_native_stream_and_raw_usage"
+    ],
+    "result": "2 passed in 0.22s",
+    "uniqueTests": 2,
+    "runs": 1,
+    "processWallSeconds": 0.4835474459687248,
+    "testSha256": "219c98ac3f14aede584b366e44b6db2e041dbe2db53745f5a69893d7e7fb800e",
+    "covers": [
+      "old silent abort reproduced",
+      "one terminal reaches actual retained CM05 receive function",
+      "stopping remains active and no second dispatch",
+      "successful response unchanged",
+      "raw usage observer and unknown usage checks unchanged"
+    ],
+    "limitation": "Synthetic handler/queue reproduction and source-extracted receiver; no full native/server replay or general shutdown proof.",
+    "artifacts": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-bottie-terminal-ingress-20261005/receipt.json",
+        "sha256": "4368391e8e100079bece48590feee4077d25fb46787e09f96ca644a7795d0a09"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-bottie-terminal-ingress-20261005/test.log",
+        "sha256": "68fb1d1b825a7069f126336d006d1dd78e5e0ac952904651631cd13f7c812100"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-bottie-terminal-ingress-20261005/source-hashes.json",
+        "sha256": "8341abc1d6007a2cb627f4d66f1056a43f85334e367a53342b0888fcd97fb6e4"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-bottie-terminal-ingress-20261005/source.diff",
+        "sha256": "549979e77c08eca5443a459ad77167d7d118d6583619dcf25aad100c2afa5cd9"
+      }
+    ]
+  },
+  "independentReview": {
+    "reviewer": "/root/aide_final_evaluation",
+    "decision": "GO",
+    "evidence": "eva2/evidence/product/p2-bottie-terminal-ingress-review-20261005.json",
+    "originalBindingsVerified": 37
+  },
+  "delivery": {
+    "target": "existing isolated comparison worker only",
+    "rule": "Next new sample must copy the corrected canonical worker, retain its existing capture hook, and pin the resulting observed-worker hash. Old CM05 files and scores remain unchanged. No production rebuild or restart is required.",
+    "next": "Next original case CM06 epoch1; no CM05 replay."
+  },
+  "usage": {
+    "newModelCalls": 0,
+    "newRuntimeTokens": 0,
+    "developmentCreditCost": null
+  },
+  "claims": {
+    "newCompletedProductFunction": false,
+    "telegramFailureFixed": false,
+    "comparisonWin": false
+  }
+}

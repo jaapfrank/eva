@@ -425,6 +425,8 @@ try {
       if (request.sample_role && request.sample_role !== 'contact') throw new Error('controlled fixture supports contact role only');
       ingressActive = true;
       chain = chain.then(() => stopping ? undefined : handle(request)).catch(error => {
+        send({ contract: 'Cp001IngressFailure/v1', status: null,
+          error: 'native_ingress_interrupted', request_id: request.body?.request_id ?? currentRequestId });
         if (!stopping) { handlerError = error; stopSample(); }
       }).finally(() => { ingressActive = false; });
     } else await handle(request);

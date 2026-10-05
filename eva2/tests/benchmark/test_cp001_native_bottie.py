@@ -651,3 +651,62 @@ process.stdout.write(JSON.stringify(run(fs,path,process.argv[2])));
     assert sum(event["admitted"] for event in receipt["events"]) == 4
     assert receipt["events"][0]["protocol"] is True
     assert receipt["events"][-1]["outcome"] == "refused_before_dispatch"
+
+
+def test_controlled_ingress_abort_delivers_one_correlated_terminal_to_cm_receiver():
+    """Real worker handler/chain + retained launcher receiver, no native model/network."""
+    import ast
+    import queue
+    import time
+    launcher = os.environ.get("CP001_CM_LAUNCHER_SOURCE")
+    if not launcher:
+        pytest.skip("explicit retained launcher source required; no scenario data is read")
+    script = r"""
+const fs=require('node:fs');
+const source=fs.readFileSync(process.argv[1],'utf8');
+const handler=source.slice(source.indexOf('async function handle(request)'),source.indexOf('let chain = Promise.resolve();'));
+const chain=source.slice(source.indexOf('      chain = chain.then'),source.indexOf('    } else await handle(request);'));
+const AsyncFunction=Object.getPrototypeOf(async function(){}).constructor;
+(async()=>{
+ for(const kind of ['original-abort','abort','success']){
+  const emitted=[];
+  const prelude=`let stopping=false,currentText='',currentRequestId=null,currentRole='contact',lastExchange=null;
+const sampleControl=true,providerCalls=0,realProviderCalls=0,base='http://synthetic.local';
+const stopController=new AbortController();const stopSample=()=>{stopping=true;stopController.abort()};
+const send=value=>emitted.push(value);const canonicalHttpWireSha256=()=> 'synthetic';
+let dispatches=0;const nativeFetch=async(url,init)=>{dispatches++;if(kind!=='success'){stopSample();if(!init.signal.aborted)throw Error('abort not bound');throw new DOMException('synthetic private detail','AbortError')};return new Response('{"answer":"synthetic"}',{status:200})};
+let chain=Promise.resolve(),handlerError=null,ingressActive=true;
+const request={path:'/api/chat',body:{text:'synthetic',request_id:'synthetic-request'},timeout_ms:1000,max_bytes:65536};`;
+  const old=chain.replace(/        send\(\{ contract: 'Cp001IngressFailure\/v1',[\s\S]*?currentRequestId \}\);\n/,'');
+  const run=new AsyncFunction('kind','emitted',prelude+handler+(kind==='original-abort'?old:chain)+`
+await chain;return {stopping,dispatches,ingressActive};`);
+  const state=await run(kind,emitted);
+  process.stdout.write(JSON.stringify({kind,state,emitted})+'\n');
+ }
+})().catch(e=>{console.error(e);process.exit(1)});
+"""
+    result = subprocess.run(["node", "-e", script, str(BENCHMARK / "cp001_bottie_worker.mjs")],
+        capture_output=True, text=True, check=True, timeout=5)
+    original, aborted, success = [json.loads(line) for line in result.stdout.splitlines()]
+    assert original["emitted"] == []  # Prior queue.get had no terminal to receive.
+    assert aborted["state"]["stopping"] is True
+    assert aborted["state"]["dispatches"] == 1
+    assert aborted["emitted"] == [{"contract": "Cp001IngressFailure/v1", "status": None,
+        "error": "native_ingress_interrupted", "request_id": "synthetic-request"}]
+    assert "synthetic private detail" not in result.stdout
+    assert success["state"]["stopping"] is False
+    assert len(success["emitted"]) == 1 and success["emitted"][0]["status"] == 200
+    assert success["emitted"][0]["body"] == {"answer": "synthetic"}
+
+    # Execute only the retained source's receiver function, never its launcher,
+    # projection loader or model path. A terminal reaches the actual queue API.
+    tree = ast.parse(Path(launcher).read_text())
+    receive = next(node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef) and node.name == "receive")
+    incoming = queue.Queue()
+    incoming.put(json.dumps(aborted["emitted"][0]))
+    namespace = {"time": time, "incoming": incoming, "json": json, "events": [],
+                 "send": lambda value: pytest.fail("unexpected provider dispatch/control")}
+    exec(compile(ast.Module(body=[receive], type_ignores=[]), "retained-receiver", "exec"), namespace)
+    value = namespace["receive"](time.monotonic() + 1)
+    assert value == aborted["emitted"][0] and value["status"] != 200
+    assert incoming.empty() and namespace["events"] == [value]

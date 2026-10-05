@@ -1,25 +1,25 @@
 # EVA2 werkbord
 
-**Laatst opgeleverd — P2.1: vijfde vaste vergelijking onafhankelijk beoordeeld.**
-Eva2 voltooide vier beurten tussen twee personen en voldoet aan alle drie
-oorspronkelijke inhoudelijke voorwaarden en beide verplichte geheugencontroles.
-Eva1 bleef onvolledig: twee beurten afgerond, derde gestart, vierde niet gestart.
-Een extern toolvoorstel werd geweigerd; de voorbereide foutterugmelding bereikte
-de uitvoerder niet. Dat blijft UNKNOWN, geen afgeleid semantisch productverlies.
+**Laatst opgeleverd — P2.1: ontbrekende Eva1-foutterugmelding gecorrigeerd.**
+Een geweigerd toolvoorstel brak de lokale invoer af; de meetadapter stuurde daarna
+geen eindmelding naar de uitvoerder. Die overgang geeft nu één gekoppelde,
+inhoudsvrije foutmelding terug. Stop, normaal antwoordpad en verbruiksmeting blijven
+behouden. Twee gerichte offline controles geslaagd; onafhankelijke review GO.
+Geen nieuwe modelaanvraag, productwijziging of productieherstart.
 
-Samen16modelaanvragen:62.707input+2.739output=65.446tokens; credits onbekend.
-Geen vergelijkbare complete werklast of gelijke tijdsgrens, dus geen snelheids-/
-kostenwinstclaim. Menselijke scores ontbreken. De bevroren CM-kern is beperkt
-herbruikbaar voor de actuele versie, geen bewijs voor hele nieuwe T2/T3-kandidaat.
+**Nu:** curator en bronagent bereiden de oorspronkelijke vergelijking CM06 voor.
+Nog geen modelrun. De proef legt de gecorrigeerde worker expliciet vast.
+Geen herhaling of gewijzigde score van de afgesloten CM05-proef.
+**32/44 oorspronkelijke kleine taken klaar.** Geen extra productfunctie.
 
-**Volgende:** de aangetoonde Eva1-foutterugmelding in de bestaande meetadapter
-gericht oplossen vóór meer proeven. Nog niet gestart; geen CM05-herhaling.
-De eerdere benchmark-afsluitfout is gecorrigeerd en gereviewd; de nieuwe Eva2-proef
-heeft die worker expliciet vastgelegd. Bewijs behouden; eigen resources opgeruimd.
-**32/44 oorspronkelijke kleine taken klaar.** Geen nieuwe productfunctie.
-[Resultaat](evidence/product/p2-cm05-paired-result-20261005.json) ·
-[Bronversies](evidence/product/p2-cm-source-applicability-20261005.json) ·
-[Afsluitcorrectie](evidence/product/p2-native-stop-boundary-20261005.json).
+**Laatste vergelijkingsuitkomst:** CM05 Eva2 3/3 inhoudelijke voorwaarden en
+2/2 verplichte geheugencontroles; Eva1 onvolledig en onbekend, geen afgeleid
+productverlies. Samen 16 modelaanvragen en 65.446 tokens; credits onbekend.
+Geen algemene snelheids-/kostenwinst; menselijke scores ontbreken.
+[Meetcorrectie](evidence/product/p2-bottie-terminal-ingress-20261005.json) ·
+[Review](evidence/product/p2-bottie-terminal-ingress-review-20261005.json) ·
+[CM05-resultaat](evidence/product/p2-cm05-paired-result-20261005.json) ·
+[Bronversies](evidence/product/p2-cm-source-applicability-20261005.json).
 
 **C1-diagnose: fout blijft open, geen onbewezen reparatie.**
 Een neutrale toolvoorstelproef op de bestaande providerroute kwam correct binnen:

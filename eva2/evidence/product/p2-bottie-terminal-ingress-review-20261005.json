@@ -1,0 +1,75 @@
+{
+  "contract": "EvaIndependentBenchmarkAdapterReview/v1",
+  "reviewedAt": "2026-10-05T14:07:18.289071+00:00",
+  "reviewer": "/root/aide_final_evaluation",
+  "task": "P2.1",
+  "decision": "GO",
+  "scope": "Two-line controlled-ingress terminal notification in the existing Eva1 comparison worker, plus its focused regression. No native product change or closed-case replay.",
+  "sourceSha256": {
+    "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs": "e0ba9e823e99ef2ac749acfab74118d82633c93d56172ab885f4ea47f92e058d",
+    "eva2/tests/benchmark/test_cp001_native_bottie.py": "219c98ac3f14aede584b366e44b6db2e041dbe2db53745f5a69893d7e7fb800e"
+  },
+  "findings": {
+    "terminal": "The existing rejection catch emits one content-free Cp001IngressFailure/v1 event correlated to the request. status:null does not claim an observed HTTP500 or a delivered native answer.",
+    "stop": "Existing recordTool -> stopSample aborts owned local/provider work and refuses later provider dispatch. The correction does not clear stop or grant new work.",
+    "accounting": "Provider usage/unknown-usage and failed-close ownership paths are unchanged. The ingress terminal invents no usage.",
+    "success": "The unchanged handler emits one normal response; the focused check preserves status and body.",
+    "receiver": "The actual retained CM05 receive function, extracted by AST without running the launcher or reading inputs, consumes the new terminal promptly."
+  },
+  "reusedVerification": {
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-bottie-terminal-ingress-20261005/receipt.json",
+      "sha256": "4368391e8e100079bece48590feee4077d25fb46787e09f96ca644a7795d0a09"
+    },
+    "testLog": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-bottie-terminal-ingress-20261005/test.log",
+      "sha256": "68fb1d1b825a7069f126336d006d1dd78e5e0ac952904651631cd13f7c812100"
+    },
+    "sourceDiff": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-bottie-terminal-ingress-20261005/source.diff",
+      "sha256": "549979e77c08eca5443a459ad77167d7d118d6583619dcf25aad100c2afa5cd9"
+    },
+    "sourceManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-bottie-terminal-ingress-20261005/source-hashes.json",
+      "sha256": "8341abc1d6007a2cb627f4d66f1056a43f85334e367a53342b0888fcd97fb6e4"
+    },
+    "passed": 2,
+    "pytestSeconds": 0.22,
+    "commandWallSeconds": 0.4835474459687248,
+    "command": [
+      "/home/administrator/project/.eva2-artifacts/native-voice-offline-env-w8rt00c4/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider",
+      "tests/benchmark/test_cp001_native_bottie.py::test_controlled_ingress_abort_delivers_one_correlated_terminal_to_cm_receiver",
+      "tests/benchmark/test_cp001_native_bottie.py::test_subscription_fetch_observer_preserves_native_stream_and_raw_usage"
+    ],
+    "scope": "Actual handler/chain with a synthetic aborted fetch and success response; actual retained queue receiver. Existing raw-observer checks cover complete/missing/invalid usage and close-failure behavior. No live provider or product process."
+  },
+  "historicalEvidenceIntegrity": {
+    "case": "EV003-CM-05",
+    "epoch": 1,
+    "artifactAndCaptureHashesChecked": 37,
+    "allUnchanged": true,
+    "privateAssessmentSha256": "3543ddd0ef4e23451eeb30115a75d9983b13e762bbbbcc272e333e67a23d06ae",
+    "publicResultSha256": "364ee844a72842fb53576e5f770e8e1070e3161eb16c0688b77ad84ceafde1ea",
+    "assessmentOrOutcomeChanged": false
+  },
+  "limitations": [
+    "This is bounded synthetic handler/queue evidence, not a new full native HTTP or cloud execution.",
+    "It does not establish arbitrary full-server shutdown or relabel the closed CM05 result.",
+    "Future original entries require their normal exact source/admission binding; no automatic retry or broader admission is granted."
+  ],
+  "reviewerActivity": {
+    "newTests": 0,
+    "newModelCalls": 0,
+    "newNativeRuns": 0,
+    "productMutations": 0,
+    "sealedDataChanges": 0,
+    "hiddenContentPublished": false
+  }
+}
