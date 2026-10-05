@@ -7,7 +7,7 @@ namespace esphome::va_pipecat {
 class EvaInputProtocol {
  public:
   static constexpr uint8_t CAPTURE=6, CAPTURE_END=7, WAKE=144, PCM=145,
-    LOCAL_STOP=146, MUTED=147, CAPTURED=148, CAPTURE_ENDED=149;
+    LOCAL_STOP=146, MUTED=147, CAPTURED=148, CAPTURE_ENDED=149, END_SESSION=150;
   enum class State { IDLE, ARMED, STARTING, ACTIVE, INTERRUPTED, ENDING, FAILED };
   void reset() {
     const bool muted=muted_;
@@ -30,27 +30,29 @@ class EvaInputProtocol {
 
   bool wake() {
     if (!ready_ || muted_ || failed()) return false;
-    if (state_==State::STARTING || state_==State::ACTIVE) return stop(false);
+    if (state_==State::STARTING || state_==State::ACTIVE) return stop(false, true);
     if (state_!=State::IDLE || woke_) return false;
     woke_=true;
     state_=State::ARMED;
     pending_=WAKE;
     return true;
   }
-  bool stop(bool mute) {
+  bool stop(bool mute, bool resume=false) {
     if (mute) muted_=true;
     if (!ready_ || failed()) return false;
     // No capture exists yet to revoke on the wire. Invalidate the local grant
     // and reconnect rather than accepting a delayed CAPTURE after local stop.
     if (state_==State::ARMED) { fail(); return false; }
-    if (!epoch_ || (state_!=State::ACTIVE && state_!=State::STARTING && state_!=State::INTERRUPTED)) {
+    if (!epoch_ || (state_!=State::ACTIVE && state_!=State::STARTING && state_!=State::INTERRUPTED && state_!=State::ENDING)) {
       if (mute) fail();  // Idle mute ends this connection; never mint a grant.
       return false;
     }
-    if (state_==State::INTERRUPTED && !mute) return false;
-    state_=State::INTERRUPTED;
-    pending_=mute ? MUTED : (pending_==MUTED ? MUTED : LOCAL_STOP);
-    resume_=!muted_;
+    // A terminal control can supersede an in-flight wakeword interruption.
+    // Preserve ENDING so CAPTURE_ENDED can still confirm physical mic shutdown.
+    if ((state_==State::INTERRUPTED || state_==State::ENDING) && !mute && (resume || !resume_)) return false;
+    if (state_!=State::ENDING) state_=State::INTERRUPTED;
+    pending_=muted_ ? MUTED : (resume ? LOCAL_STOP : END_SESSION);
+    resume_=resume && !muted_;
     return true;
   }
   void unmute() { muted_=false; }  // A fresh wake is still required.
@@ -89,7 +91,7 @@ class EvaInputProtocol {
   void committed(const EvaReceipt &record) {
     const uint8_t kind=record.bytes[4];
     if (kind==WAKE) { if (pending_==WAKE) pending_=0; }
-    else if (kind==LOCAL_STOP || kind==MUTED) {
+    else if (kind==LOCAL_STOP || kind==MUTED || kind==END_SESSION) {
       if (pending_==kind) pending_=0;
     } else if (kind==CAPTURED) {
       if (state_==State::STARTING) state_=State::ACTIVE;

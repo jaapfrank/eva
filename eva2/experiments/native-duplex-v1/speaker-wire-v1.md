@@ -57,8 +57,9 @@ De serverextensie vereist expliciete activering van microphone_enabled. De besta
 | apparaat naar server | 147 | MUTED | actief epoch | laatst verstuurde PCM-volgnummer | leeg |
 | server naar apparaat | 7 | CAPTURE_END | actief epoch | 0 | leeg |
 | apparaat naar server | 149 | CAPTURE_ENDED | hetzelfde epoch | 0 | leeg |
+| apparaat naar server | 150 | END_SESSION | actief epoch | laatst verstuurde PCM-volgnummer | leeg |
 
-WAKE is alleen geldig na OPENED en maximaal eenmaal per verbinding. De server mag zonder die lokale grant geen opname starten. MICROPHONE mag pas na CAPTURED volgen. Een LOCAL_STOP maakt een volgende CAPTURE mogelijk nadat CAPTURE_ENDED is bevestigd; dit vereist geen nieuwe WAKE. MUTED staat geen nieuwe opname toe en sluit de sessie. Een normaal afgerond gesprek sluit eveneens de verbinding; opnieuw beginnen vereist een lokale wake.
+WAKE is alleen geldig na OPENED en maximaal eenmaal per verbinding. De server mag zonder die lokale grant geen opname starten. MICROPHONE mag pas na CAPTURED volgen. Een LOCAL_STOP maakt een volgende CAPTURE mogelijk nadat CAPTURE_ENDED is bevestigd; dit vereist geen nieuwe WAKE. END_SESSION (expliciete stopknop of lokaal stopwoord) en MUTED staan geen nieuwe opname toe en sluiten de sessie. LOCAL_STOP blijft uitsluitend de herluisterroute voor een nieuwe lokale wake tijdens een actieve sessie. Een normaal afgerond gesprek sluit eveneens de verbinding; opnieuw beginnen vereist een lokale wake.
 
 De apparaatimplementatie moet lokale stop/mute meteen toepassen. Een enkele geordende zender moet controlerecords en PCM ordenen. Geen oude PCM mag na CAPTURE_ENDED volgen en geen PCM mag door een nieuwe opname-epoch heen lekken. CAPTURE_ENDED is pas geldig als lokale toelating is gesloten en alle eerdere writes zijn afgehandeld. Opnamebuffer-overloop mag niet ongemerkt woorden verwijderen. Tijdens bewust sluiten negeert de server nog onderweg zijnde PCM tot CAPTURE_ENDED, maar controleert wel epoch en volgorde. Een vertraagde microfoonbevestiging blokkeert de afzonderlijke STOP/STOPPED-route niet.
 
@@ -66,8 +67,12 @@ Reconnect maakt een nieuwe verbindingsnonce en vereist een nieuwe lokale WAKE; o
 
 ### Lokale invoerregeling in de firmwarekandidaat
 
-De invoer begint gedempt totdat de fysieke mutestatus is gelezen. Een lokale wake opent een begrensde voorbuffer met het toekomstige opname-epoch; PCM verlaat het apparaat pas na CAPTURED. CAPTURE behoudt die voorbuffer. Stop tijdens deze nog onbevestigde toelating sluit de verbinding, zodat een vertraagde CAPTURE de stop niet kan terugdraaien. Stop tijdens een actieve opname volgt de bestaande LOCAL_STOP/CAPTURE_END-route naar een nieuwe opname zonder wakeword.
+De invoer begint gedempt totdat de fysieke mutestatus is gelezen. Een lokale wake opent een begrensde voorbuffer met het toekomstige opname-epoch; PCM verlaat het apparaat pas na CAPTURED. CAPTURE behoudt die voorbuffer. Stop tijdens deze nog onbevestigde toelating sluit de verbinding, zodat een vertraagde CAPTURE de stop niet kan terugdraaien. Een nieuwe lokale wake tijdens actieve opname volgt LOCAL_STOP/CAPTURE_END naar een nieuwe opname. Een expliciete stop volgt END_SESSION/CAPTURE_END naar sluiting. Een terminale stop mag een reeds lopende LOCAL_STOP-afhandeling overnemen; hij mag nooit alsnog opname heropenen.
 
 `EvaMicrophoneSource` gebruikt ESPHome's ingestelde kanaal-, gain- en bitdiepteomzetting. De raw callback legt vóór omzetting een token vast met verbindingsnummer en opname-epoch. De driver controleert dit opnieuw bij iedere begrensde kopie. Het omzetten van oude audio kan daardoor geen nieuwe opname vullen, ook niet als beide verbindingen epoch 1 gebruiken. De conversiebuffer blijft eigendom van de microfoontaak en wordt niet tijdens stop vrijgegeven. Overschrijding van de 16 KiB verzendbuffer sluit de verbinding; actieve audio wordt nooit stil weggeschoven.
 
 Lokale stop/mute blokkeert ook onmiddellijk de eigen uitvoer. Dit levert nog geen STOPPED op: die bevestiging vereist de normale serveropdracht en de fysieke stopbarrière. Hostproeven vervangen microfoon, speaker, klok en FreeRTOS-locks; gedeelde microfoonbesturing, echo en het tijdstip van werkelijke stilte blijven hardwareproeven.
+
+### Uitrolcompatibiliteit — 5 oktober 2026
+
+Installeer eerst de server die END_SESSION=150 kent, daarna de firmware. De nieuwe server blijft LOCAL_STOP/MUTED van oudere firmware begrijpen. De oude server begrijpt END_SESSION niet. Bij herstel blijft de nieuwe server staan totdat eventuele oude firmware terug is. Het einde van een mediasessie annuleert geen reeds aangenomen achtergrondopdracht. Een nieuwe verbinding vereist opnieuw een lokale WAKE.

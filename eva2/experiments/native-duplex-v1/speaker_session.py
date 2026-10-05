@@ -9,8 +9,8 @@ from speaker_wire import Kind, WireError
 class HouseholdSpeakerSession:
     """Supply to SpeakerEndpoint with microphone_enabled=True.
 
-    Local stop ends old capture, stops playback, then grants fresh capture
-    without requiring another wakeword. Mute ends the entire connection.
+    Active wakeword interruption renews capture within the conversation.
+    Explicit END_SESSION and mute end the entire connection.
     Retired core/STT cleanup never owns new audio or its generation.
     """
 
@@ -62,9 +62,9 @@ class HouseholdSpeakerSession:
                     await source.aclose()
                     retired.add(work)
                     work = None
-                    if kind == Kind.MUTED:
+                    if kind in {Kind.MUTED, Kind.END_SESSION} or channel.closing:
                         return
-                    continue  # Local stop grants a new capture epoch, same household.
+                    continue  # Wakeword interruption grants a fresh capture epoch.
                 await work
                 return  # Ordinary idle/finished conversation requires a fresh wake.
         finally:

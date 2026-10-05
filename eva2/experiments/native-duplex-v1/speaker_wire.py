@@ -40,6 +40,7 @@ class Kind(IntEnum):
     MUTED = 147
     CAPTURED = 148
     CAPTURE_ENDED = 149
+    END_SESSION = 150
 
 
 HEADER = struct.Struct("!4sB3x8sIII")

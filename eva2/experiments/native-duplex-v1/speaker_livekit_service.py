@@ -31,7 +31,7 @@ async def open_livekit_service(config, *, authority):
         backend=HouseholdCoreClient(config.eva_url, config.eva_token,
             satellite_id=grant.binding.satellite_id,device_id=grant.binding.device_id)
         if not await backend.ready(): raise ValueError("Continuous household core is not ready")
-    vad=silero.VAD.load(min_speech_duration=.1,min_silence_duration=.45)
+    vad=make_speaker_vad()
     speech_input=HomeAssistantSpeechInput(base_url=config.ha_url,token=config.ha_token,
         pipeline_id=config.pipeline_id,expected_stt_engine=config.stt_engine,
         expected_pipeline_language=config.pipeline_language)
@@ -62,6 +62,13 @@ async def open_livekit_service(config, *, authority):
         await owned
         if cancelled: raise asyncio.CancelledError
 
+
+
+def make_speaker_vad():
+    # Confirm actual speech before Silero enters its silence-hold state. Merely
+    # increasing AgentSession's interruption duration also counts that silence.
+    return silero.VAD.load(min_speech_duration=.2, min_silence_duration=.45,
+                           activation_threshold=.7)
 
 
 def load_media_authority(*, policy_file, token_file, identity_file):

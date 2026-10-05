@@ -12,9 +12,9 @@ from speaker_livekit_session import LiveKitHouseholdSpeakerSession
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("ending", ["mute", "revoke"])
+@pytest.mark.parametrize("ending", ["mute", "stop", "revoke"])
 @pytest.mark.parametrize("work_enabled", [False, True])
-async def test_same_livekit_session_survives_local_stop_and_mute_closes(tls_pair, monkeypatch, ending, work_enabled):
+async def test_wakeword_interrupt_preserves_session_but_stop_and_mute_close(tls_pair, monkeypatch, ending, work_enabled):
     from uuid import uuid4
     assigned = str(uuid4())
     operations = []
@@ -75,11 +75,11 @@ async def test_same_livekit_session_survives_local_stop_and_mute_closes(tls_pair
             assert await asyncio.wait_for(peer.captures.get(),2)==2
             assert candidate.actual_session is session
             assert first.interrupted
-            if ending=="mute":
+            if ending in {"mute", "stop"}:
                 from speaker_wire import WireError
                 sink=session.output.audio
                 peer.capture_end_gate=asyncio.Event()
-                await peer.send(Kind.MUTED)
+                await peer.send(Kind.MUTED if ending == "mute" else Kind.END_SESSION)
                 async with asyncio.timeout(1):
                     while not sink.closed: await asyncio.sleep(.005)
                 with pytest.raises(WireError):
@@ -90,14 +90,28 @@ async def test_same_livekit_session_survives_local_stop_and_mute_closes(tls_pair
                 valid=False
             await asyncio.wait_for(device,3)
             await wait_released(endpoint)
-    assert admitted==[{"satellite_id":binding.satellite_id,"device_id":binding.device_id}]
+        if ending == "stop":
+            # Reconnection alone must never restart microphone streaming.
+            next_peer = NativePeer()
+            async with client(uri, token, tls_pair[1]) as next_socket:
+                next_device = asyncio.create_task(next_peer.handle(next_socket))
+                await next_peer.opened.wait()
+                await asyncio.sleep(.05)
+                assert next_peer.captures.empty()
+                await next_peer.wake()
+                assert await asyncio.wait_for(next_peer.captures.get(), 2) == 1
+                await next_peer.send(Kind.END_SESSION)
+                await asyncio.wait_for(next_device, 3)
+                await wait_released(endpoint)
+    assert admitted == [{"satellite_id": binding.satellite_id,
+                         "device_id": binding.device_id}] * (2 if ending == "stop" else 1)
     if work_enabled:
         assert operations[0] == "open" and operations[-1] == "close"
         assert "poll" in operations
     else:
         assert operations == []
     failures=endpoint.diagnostics()["recentFailures"]
-    if ending=="mute": assert failures==[]
+    if ending in {"mute", "stop"}: assert failures==[]
     else: assert failures and failures[-1]["type"]=="ValueError"
 
 
@@ -151,3 +165,54 @@ def test_media_authority_reuses_pinned_identity_and_detects_file_rotation(tmp_pa
     authority.validate_current()
     token_path.write_text("different-key")
     with pytest.raises(ValueError):authority.validate_current()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "probabilities,baseline_starts,candidate_starts",
+    [
+        ([.95] * 4, 1, 0),
+        ([.60] * 30, 1, 0),
+        ([.95] * 25, 1, 1),
+    ],
+    ids=["brief-high-confidence-noise", "sustained-uncertain-noise", "clear-speech"],
+)
+async def test_speaker_vad_confirms_speech_before_interrupting(
+    monkeypatch, probabilities, baseline_starts, candidate_starts
+):
+    """Exercise real Silero segmentation with controlled classifier output.
+
+    This isolates the duration/confidence policy; it is not an acoustic claim
+    about a real room. No recording or external speech/model service is used.
+    """
+    from livekit.agents import vad
+    from livekit.plugins import silero
+    from livekit.plugins.silero import onnx_model
+    from speaker_livekit_service import make_speaker_vad
+
+    predictions = iter(())
+    monkeypatch.setattr(
+        onnx_model.OnnxModel, "__call__",
+        lambda self, audio: next(predictions, 0.0),
+    )
+    for factory, expected in [
+        (lambda: silero.VAD.load(min_speech_duration=.1, min_silence_duration=.45),
+         baseline_starts),
+        (make_speaker_vad, candidate_starts),
+    ]:
+        predictions = iter([0.0] * 20 + probabilities + [0.0] * 30)
+        detector = factory()
+        stream = detector.stream()
+        try:
+            for _ in range(20 + len(probabilities) + 30):
+                stream.push_frame(rtc.AudioFrame(bytes(1024), 16000, 1, 512))
+            stream.end_input()
+            events = [event async for event in stream]
+            starts = [event for event in events
+                      if event.type == vad.VADEventType.START_OF_SPEECH]
+            assert len(starts) == expected
+            if factory is make_speaker_vad and starts:
+                # Seven 32ms frames confirm speech, without waiting for STT.
+                assert .2 <= starts[0].timestamp - 20 * .032 <= .3
+        finally:
+            await stream.aclose()

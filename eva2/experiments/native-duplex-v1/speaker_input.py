@@ -80,7 +80,7 @@ class SpeakerMicrophone:
     def receive(self, record: Packet) -> bool:
         """Nonblocking demux on the sole socket reader, before receipt delivery."""
         if record.kind not in {Kind.WAKE, Kind.MICROPHONE, Kind.LOCAL_STOP,
-                               Kind.MUTED, Kind.CAPTURED, Kind.CAPTURE_ENDED}:
+                               Kind.MUTED, Kind.END_SESSION, Kind.CAPTURED, Kind.CAPTURE_ENDED}:
             return False
         self.check()
         if record.kind == Kind.WAKE:
@@ -119,18 +119,26 @@ class SpeakerMicrophone:
                 capture.frames.append(record.payload)
                 self.notify()
             return True
-        if capture.state not in {"active", "opening"} or record.sequence != capture.sequence:
+        terminal = record.kind in {Kind.MUTED, Kind.END_SESSION}
+        states = {"active", "opening", "interrupted", "closing"} if terminal else {"active", "opening"}
+        if capture.state not in states or record.sequence != capture.sequence:
             raise WireError("unexpected local microphone control")
-        capture.state = "interrupted"
+        if capture.state != "closing":
+            capture.state = "interrupted"
         capture.frames.clear()
-        self._muted = record.kind == Kind.MUTED
+        self._muted = self._muted or record.kind == Kind.MUTED
+        self._closing = self._closing or terminal
         if self.control_observer is not None:
             self.control_observer(record.kind)
-        self._armed = not self._muted  # Stop permits a fresh capture without wake.
+        self._armed = not self._closing and record.kind == Kind.LOCAL_STOP
         try:
             self._controls.put_nowait(record.kind)
         except asyncio.QueueFull:
-            raise WireError("unconsumed microphone control") from None
+            if not terminal:
+                raise WireError("unconsumed microphone control") from None
+            # A final stop may overtake a queued wakeword interruption.
+            self._controls.get_nowait()
+            self._controls.put_nowait(record.kind)
         self.notify()
         return True
 
@@ -140,6 +148,10 @@ class SpeakerMicrophone:
             self.check()
             await changed.wait()
         self.check()
+
+    @property
+    def closing(self) -> bool:
+        return self._closing
 
     @property
     def control_pending(self) -> bool:

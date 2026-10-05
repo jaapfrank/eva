@@ -56,7 +56,7 @@ int main() {
   assert(v.eva_mic_fill_==1280);
   capture(v,1);
   assert(v.eva_capture_token_()==old && v.eva_mic_fill_==1280);
-  v.during_send=[&](){v.eva_local_stop();}; // Stop arrives during an actual PCM write.
+  v.during_send=[&](){v.eva_local_wake();}; // Active wake interrupts an actual PCM write.
   v.eva_pump_input_();
   v.eva_pump_input_();
   assert(v.eva_mic_fill_==0 && v.eva_capture_token_()==0);
@@ -71,6 +71,46 @@ int main() {
   receive(v,7,2); v.eva_pump_input_();
   receive(v,6,3); // Server cannot undo hardware mute.
   assert(v.eva_input_.failed() && v.eva_output_.state()==EvaOutputProtocol::State::FAILED);
+
+  // The explicit stop button/word ends the session instead of granting capture 2.
+  v.eva_set_muted(false); open(v); v.eva_local_wake(); v.eva_pump_input_(); capture(v,1);
+  const auto ended=v.eva_capture_token_();
+  v.eva_mic_data_(ended,std::vector<uint8_t>(640,5));
+  v.during_send=[&](){v.eva_local_stop();};
+  v.eva_pump_input_(); v.eva_pump_input_();
+  v.eva_local_wake(); // An active wake cannot undo the terminal control.
+  v.eva_mic_data_(ended,std::vector<uint8_t>(640,6));
+  v.eva_update_microphone_();
+  assert(!v.mic.enabled && v.eva_capture_token_()==0 && v.eva_mic_fill_==0);
+  receive(v,7,1); v.eva_pump_input_();
+  assert(v.eva_input_.state()==EvaInputProtocol::State::IDLE);
+  v.eva_local_wake(); v.eva_pump_input_();
+  assert(v.eva_input_.state()==EvaInputProtocol::State::IDLE);
+  receive(v,6,2); // A stale server continuation cannot reopen the ended session.
+  assert(v.eva_input_.failed());
+
+  // Reconnect keeps the mic closed until a new local wake and fences old audio.
+  open(v); v.eva_update_microphone_();
+  assert(v.eva_input_.state()==EvaInputProtocol::State::IDLE && !v.mic.enabled);
+  v.eva_mic_data_(ended,std::vector<uint8_t>(640,6));
+  v.eva_local_wake(); v.eva_pump_input_(); capture(v,1);
+  v.eva_mic_data_(ended,std::vector<uint8_t>(640,6));
+  assert(v.eva_mic_fill_==0);
+  v.eva_mic_data_(v.eva_capture_token_(),std::vector<uint8_t>(640,7));
+  v.eva_pump_input_();
+  v.eva_local_stop(); v.eva_pump_input_();
+  receive(v,7,1); v.eva_update_microphone_(); v.eva_pump_input_();
+  assert(v.eva_input_.state()==EvaInputProtocol::State::IDLE);
+
+  // Explicit end wins even after wakeword interruption began capture cleanup.
+  open(v); v.eva_local_wake(); v.eva_pump_input_(); capture(v,1);
+  v.eva_local_wake(); v.eva_pump_input_();
+  receive(v,7,1);
+  v.eva_local_stop(); v.eva_local_wake();
+  v.eva_update_microphone_(); v.eva_pump_input_(); v.eva_pump_input_();
+  assert(v.eva_input_.state()==EvaInputProtocol::State::IDLE);
+  receive(v,6,2);
+  assert(v.eva_input_.failed());
 
   // Connection fences also reject an old epoch1 callback after reconnect epoch1.
   v.eva_set_muted(false); open(v); v.eva_local_wake(); v.eva_pump_input_(); capture(v,1);
@@ -154,6 +194,21 @@ int main() {
         ("CAPTURE_ENDED", 2, 0),
     ]
     assert [p.payload for p in before_reconnect if p.kind==wire.Kind.MICROPHONE] == [bytes([3])*640, bytes([4])*640]
+    connections = []
+    for packet in packets:
+        if packet.kind == wire.Kind.OPENED:
+            connections.append([])
+        connections[-1].append(packet)
+    for connection, value in zip(connections[1:3], (5, 7)):
+        assert [(p.kind.name, p.generation, p.sequence) for p in connection] == [
+            ("OPENED", 0, 0), ("WAKE", 0, 0), ("CAPTURED", 1, 0),
+            ("MICROPHONE", 1, 1), ("END_SESSION", 1, 1), ("CAPTURE_ENDED", 1, 0),
+        ]
+        assert [p.payload for p in connection if p.kind == wire.Kind.MICROPHONE] == [bytes([value])*640]
+    assert [(p.kind.name, p.generation, p.sequence) for p in connections[3]] == [
+        ("OPENED", 0, 0), ("WAKE", 0, 0), ("CAPTURED", 1, 0),
+        ("LOCAL_STOP", 1, 0), ("END_SESSION", 1, 0), ("CAPTURE_ENDED", 1, 0),
+    ]
     last_open = max(i for i, packet in enumerate(packets) if packet.kind == wire.Kind.OPENED)
     delayed = packets[last_open:]
     assert [(p.kind.name, p.generation, p.sequence) for p in delayed] == [

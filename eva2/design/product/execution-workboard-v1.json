@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-05T09:03:00.081715+00:00",
+  "lastUpdated": "2026-10-05T09:43:15.051580+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1034,8 +1034,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T09:16:39.964669+00:00",
+        "checkedAt": "2026-10-05T09:43:15.051580+00:00",
         "deliveries": [
+          {
+            "title": "Woonkamer: te gevoelige onderbreking en eindeloos herluisteren gecorrigeerd",
+            "date": "5 oktober",
+            "state": "installed",
+            "result": "VAD vereist duidelijkere, aaneengesloten spraak. Stopknop/lokaal stopwoord sluiten de mediasessie; opnieuw Hey Eva kan nog onderbreken. Server en firmware één keer bijgewerkt en teruggelezen; 42 gerichte controles plus onafhankelijke review.",
+            "remaining": "Nog één fysieke beoordeling: geluidjes, verstaanbaarheid en stopknop. C4.1 blijft open; geen extra afgeronde productfunctie geclaimd.",
+            "source": "eva2/evidence/product/c4-stop-and-noise-installed-20261005.json"
+          },
           {
             "title": "P2.1 · Derde vaste geheugenvergelijking uitgevoerd",
             "date": "5 oktober",
@@ -3688,27 +3696,27 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Derde vergelijkingspaar beoordeeld",
-          "state": "in_progress",
-          "owner": "Codex",
-          "detail": "CM03 éénmaal uitgevoerd op Eva1 en Eva2. Beide voldoen aan 3/3 tekstvoorwaarden; bij beide is slechts 1/2 verplichte geheugencontroles bewezen, dus de taakuitkomst blijft onbekend. CM02: objectieve voorwaarden 1/3 versus 3/3. P2.1 als geheel blijft open; volgende proef nog niet gestart. Telegramuitval op modeldeadline nog niet opgelost. 32/44 oorspronkelijke taken klaar."
+          "title": "C4.1 · Gevoeligheid en stoppen gecorrigeerd en geïnstalleerd",
+          "state": "installed",
+          "owner": "Jaap · korte beoordeling",
+          "detail": "Spraakdienst en woonkamerfirmware bijgewerkt: korte geluidspieken worden gefilterd; stopknop beëindigt de sessie. 42 gerichte controles en onafhankelijke review geslaagd. Praktijkbeoordeling blijft open; 32/44 oorspronkelijke taken klaar."
         },
         "next": {
-          "title": "Volgende oorspronkelijke vergelijkingsgevallen",
-          "detail": "Volgende oorspronkelijke vergelijking heeft aanvullende geverifieerde persoons-/publieksbinding nodig. Bestaande proeven niet herhalen; ontbrekend bewijs en concurrenttoegang blijven zichtbaar. Geen automatische nieuwe batch. Telegramdeadline is als bestaande open gespreksfout vastgelegd; R1 en gezinsbeoordelingen blijven apart."
+          "title": "Eén korte woonkamerbeoordeling; vergelijking blijft vervolgwerk",
+          "detail": "Mute uit, gewoon praten en eenmaal met de knop stoppen. Overkapping pas na werkende woonkamer. P2-uitkomsten behouden; volgende vergelijkingsproef niet gestart."
         },
         "ownerAction": {
           "title": "Open beslissingen en gebruiksoordeel",
           "steps": [
             "P2.1 is toegestaan en wordt uitgevoerd. De afzonderlijke innovatieproef R1 is hiermee niet toegestaan; de open R1-vraag blijft apart.",
             "Voor F1.2: sla je werk op, kies Windows → Opnieuw opstarten en meld daarna Herstart klaar in deze chat. Er is geen automatische herstart ingesteld.",
-            "Woonkamerspeaker is bereikbaar en niet gedempt. De resterende fysieke proef gaat over verstaanbaarheid en direct onderbreken met je stem; de tweede speaker volgt pas als dit in de woonkamer goed werkt.",
+            "Woonkamerspeaker is bereikbaar en meldt mute aan. Zet mute uit, praat gewoon en druk eenmaal op de knop om te stoppen; opnieuw luisteren hoort pas na Hey Eva te beginnen. Geluidgevoeligheid en verstaanbaarheid nog beoordelen.",
             "Persoonlijkheid M3.3 is geaccepteerd. Nut van initiatief en zeven dagen gezinsgebruik blijven jouw beoordeling. Native aanmeldingen voor concurrenten zijn nog niet actueel bevestigd."
           ],
           "expected": "M3.3 is door Jaap geaccepteerd; daarvoor geen nieuwe beoordeling. De woonkamerproef combineert C3.1 en C4.1. Nut en timing van bestaand initiatief blijven I1.2. 32/44 oorspronkelijke kleine taken klaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-05T02:10:42.875801+00:00"
+        "reviewedAt": "2026-10-05T09:43:15.051580+00:00"
       },
       "reviewedAt": "2026-10-05T00:19:18.098429+00:00"
     },
@@ -13637,8 +13645,8 @@
                   }
                 }
               },
-              "checkedAt": "2026-10-05T02:13:15.233372+00:00",
-              "remaining": "Audio- en herkenningscorrecties zijn geïnstalleerd. Op 5 oktober was het apparaat bereikbaar en niet gedempt; verstaanbaarheid, direct doorpraten en microfoononderbreking zijn daarmee nog niet bewezen.",
+              "checkedAt": "2026-10-05T09:43:15.051580+00:00",
+              "remaining": "Spraakroute is geïnstalleerd; onderbreken is deels door Jaap bevestigd. Geluidgevoeligheid en sessiestop op 5 oktober gecorrigeerd. Verstaanbaarheid en gewoon doorpraten blijven fysieke beoordeling; geen tweede-speakerproef vooraf.",
               "installation": "installed_native_continuous_candidate_woonkamer",
               "ownerTrial": {
                 "status": "diagnosis_before_new_owner_trial",
@@ -13658,12 +13666,12 @@
                 "steps": [
                   "Zeg op de woonkamerspeaker: Hey Eva, zoek met bronnen uit wat Home Assistant Cloud voor spraak doet.",
                   "Zeg tijdens het nadenken direct Hoe gaat het met jou? zonder opnieuw Hey Eva.",
-                  "Als haar spraak verstaanbaar is, onderbreek haar direct met Stop even, hoe gaat het met jou? zonder wakeword. Stop de proef als ze stottert of niet antwoordt."
+                  "Als haar spraak verstaanbaar is, onderbreek haar direct met Hoe gaat het met jou? zonder wakeword. Stop de proef als ze stottert of niet antwoordt."
                 ],
                 "expected": "Verstaanbare spraak, direct doorpraten zonder opnieuw wekken en later terugmelding op juiste speaker.",
                 "reportBack": "Meld of de spraak verstaanbaar is, ze de tussenvraag hoort tijdens denken én spreken, en die vraag beantwoordt. Geef bij een fout het concrete symptoom door. Geen tweede-speakerproef nodig.",
                 "blocksIndependentWork": false,
-                "readyWhen": "De correcties zijn geïnstalleerd. Passieve apparaatcontrole op 5 oktober: bereikbaar en mute uit. Eén korte fysieke beoordeling kan nu."
+                "readyWhen": "Woonkamercorrecties voor geluidgevoeligheid en stoppen zijn geïnstalleerd. Laatste controle: bereikbaar, mute aan; zet die uit voor de gezamenlijke C3.1/C4.1-beoordeling."
               }
             },
             {
@@ -13783,13 +13791,13 @@
           },
           "owner": "/root",
           "activeWorker": null,
-          "baseCommit": "7ab5b01d",
+          "baseCommit": "63c46d56819d5c04fea5117e70079e7601d1ffcd",
           "assignment": {
-            "stage": "both_installed_physical_observation_pending",
-            "scope": "C4.1/C4.2 same ordinary HA wakeword stop/relisten module on both devices",
-            "outcome": "Install existing wakeword stop-and-relisten overlay on ordinary HA route while retaining device audio, wake model, settings and shared Eva core.",
-            "result": "Both exact reviewed target binaries uploaded once per device and authenticated after reboot. Both Eva2/Hey Eva selections and mute-on preserved. Physical speaking interruption/new question remain unobserved.",
-            "effort": "Same source reused; existing reviewer checked target transfer, no new source/test round. Two target uploads18.595s/17.468s; zero model/audio/house-action requests; credits unknown."
+            "stage": "woonkamer_corrected_owner_assessment_pending",
+            "scope": "Existing C4.1 false-interruption and explicit session-stop defects",
+            "outcome": "Same continuous speaker conversation with less sensitive VAD and true explicit stop",
+            "result": "Woonkamer firmware and common media service installed and read back. C4.2 firmware unchanged; second-speaker assessment deferred.",
+            "effort": "42 focused tests, bundled review, one server replacement and one OTA; zero experiment model requests; credits unknown."
           },
           "dashboardComponent": "voice",
           "remainingTasks": [
@@ -13799,44 +13807,50 @@
               "status": "in_progress",
               "kind": "verbeteren",
               "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
-              "owner": "Jaap · dezelfde woonkamerbeoordeling; Codex · eventuele correctie",
+              "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
               "assignment": {
-                "baseCommit": "890f0beff3424a736cd5e6f891c2fae776d3c483",
+                "baseCommit": "63c46d56819d5c04fea5117e70079e7601d1ffcd",
                 "owner": "/root",
-                "files": [
-                  "eva2/deploy/home-assistant/voice-pe-interruption.yaml",
-                  "eva2/evidence/product/c4-device-boundary-20261001.json"
-                ],
-                "existing": "Existing stock/recovery firmware, native voice transport, prepared continuous candidate, retained physical failure and server-only pass. Laptop interruption remains accepted.",
-                "gap": "Retained recovery source, matched by firmware build readback, stops voice/media at wakeword without re-listening. Existing uninstalled overlay supplies stop-and-relisten; no new speech engine.",
-                "outcome": "Install existing wakeword stop-and-relisten overlay on ordinary HA route while retaining device audio, wake model, settings and shared Eva core.",
-                "finish": "Existing small task end condition unchanged: during Eva speech interrupt and continue with a new question. Installed transport/source checks do not replace physical proof.",
-                "estimate": "Reuse exact overlay and cached pinned ESPHome2026.6.2 build; focused compile/config/cancellation checks and independent review, then authorized OTA. No planned model/audio/house action; development credits unknown.",
-                "stage": "same_woonkamer_outcome_as_C3.1",
                 "activeWorkers": [],
-                "result": "Earlier wakeword/relisten install remains historical evidence. Woonkamer now has existing continuous candidate plus ARMED pre-roll fix; physical direct speech/interrupt outcome pending."
+                "files": [
+                  "Root: five existing speaker modules, focused tests, service installation and workboard",
+                  "Agent: firmware protocol header and actual-driver tests; independent Python review"
+                ],
+                "existing": "Installed b8001798 native LiveKit speaker route; owner now observes microphone interruption.",
+                "gap": "False interruptions on small noises and inability to stop stream.",
+                "outcome": "Reject short incidental noise while preserving speech interruption and provide a real close/stop path on existing speaker session.",
+                "stage": "installed_owner_physical_assessment_pending",
+                "estimate": "Zero experiment model requests; development credits unknown. Image build 5.84 s, incremental firmware build 48.39 s, OTA 18.11 s.",
+                "result": "42 focused tests passed; reciprocal independent review GO. One service replacement and one authenticated firmware upload. No core/worker restart or rollback."
               },
-              "latestEvidence": "eva2/evidence/product/c3-audio-stutter-fix-20261001.json",
-              "installation": "native_continuous_candidate_replaced_prior_wakeword_overlay",
+              "latestEvidence": "eva2/evidence/product/c4-stop-and-noise-installed-20261005.json",
+              "installation": "installed_noise_filter_and_explicit_session_end_woonkamer",
               "ownerTrial": {
-                "status": "diagnosis_before_new_owner_trial",
-                "steps": [],
-                "expected": "Het gesprek blijft open tijdens denken en spreken; nieuwe vraag krijgt haar eigen antwoord, aangenomen onderzoek blijft lopen.",
-                "blocksIndependentWork": false
+                "status": "partial_with_false_interruptions_and_stop_failure",
+                "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
+                "reportedAt": "2026-10-05T09:21:17.421068+00:00",
+                "scope": "Partial owner confirmation of microphone interruption, not complete C4.1 acceptance.",
+                "blocksIndependentWork": false,
+                "currentCandidateStatus": "not_yet_assessed",
+                "candidateEvidence": "eva2/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "Beoordeel microfoononderbreking binnen dezelfde korte woonkamerproef van C3.1, alleen als de spraak verstaanbaar is. Geen aparte proef of nieuwe spraakmotor.",
+              "nextAction": "Eén korte woonkamerbeoordeling van achtergrondgeluid, doorpraten en stoppen met de knop. Technische correctie is geïnstalleerd; geen tweede-speakerproef.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
+                "purpose": "evaluation",
                 "steps": [
-                  "Gebruik dezelfde woonkamerproef van C3.1; geen tweede proef nodig."
+                  "Zet de fysieke mute uit indien die nog aan staat.",
+                  "Begin met Hey Eva, stel een vraag en praat tijdens haar antwoord direct verder. Let op of gewone achtergrondgeluiden haar nog onterecht onderbreken.",
+                  "Druk tijdens het gesprek eenmaal op de knop om de sessie te stoppen. Zij hoort pas na een nieuwe Hey Eva weer te luisteren."
                 ],
-                "expected": "Oude spraak stopt, nieuwe vraag wordt beantwoord.",
-                "reportBack": "Stopt oude spraak wanneer je haar onderbreekt, hoort ze je en antwoordt ze op de nieuwe vraag? Bij stotteren eerst dat concrete symptoom melden.",
-                "blocksIndependentWork": false,
-                "readyWhen": "Samen met C3.1; alleen door naar onderbreken als haar spraak verstaanbaar is."
+                "expected": "Normale achtergrondgeluiden onderbreken minder snel; echte spraak kan wel onderbreken. Knop beëindigt de sessie; nieuw luisteren pas na Hey Eva.",
+                "reportBack": "Meld of geluidjes nog onterecht onderbreken en of de knop het gesprek nu beëindigt.",
+                "readyWhen": "Geïnstalleerd op 5 oktober. Laatste passieve controle: bereikbaar, fysieke mute aan; zet die uit om te praten.",
+                "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-05T02:13:15.233372+00:00"
+              "checkedAt": "2026-10-05T09:43:15.051580+00:00",
+              "remaining": "Correcties geïnstalleerd en technisch gecontroleerd. Echte geluidgevoeligheid en stoppen met de knop in de kamer nog beoordelen; C4.1 niet volledig geaccepteerd."
             },
             {
               "id": "C4.2",

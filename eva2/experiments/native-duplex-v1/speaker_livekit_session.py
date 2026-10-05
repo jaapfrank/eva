@@ -24,7 +24,9 @@ class LiveKitHouseholdSpeakerSession:
         return AgentSession(stt=HomeAssistantSTT(self.stt_source, self.check),
             tts=HomeAssistantTTS(self.tts_source, self.check), vad=self.vad,
             turn_detection="vad", allow_interruptions=True,
-            min_interruption_duration=.15, false_interruption_timeout=1.5,
+            min_interruption_duration=.2, false_interruption_timeout=None,
+            # This sink confirms physical STOP but cannot pause/resume audio.
+            resume_false_interruption=False,
             aec_warmup_duration=0)
 
     async def __call__(self, binding, wire):
@@ -38,11 +40,11 @@ class LiveKitHouseholdSpeakerSession:
         session = self.make_session()
         sink = SpeakerAudioOutput(wire)
         session.output.audio = sink
-        muted = False
+        locally_closed = False
         def local_control(kind):
-            nonlocal muted
-            if kind == Kind.MUTED:
-                muted = True
+            nonlocal locally_closed
+            if kind in {Kind.MUTED, Kind.END_SESSION}:
+                locally_closed = True
                 sink.closed = True
                 sink.clear_buffer()
         channel.control_observer = local_control
@@ -55,7 +57,7 @@ class LiveKitHouseholdSpeakerSession:
 
         def current_session():
             self.check()
-            if return_closed or muted or closed.is_set():
+            if return_closed or locally_closed or closed.is_set():
                 raise ValueError("household media session closed")
 
         async def watch_authority():
@@ -94,10 +96,10 @@ class LiveKitHouseholdSpeakerSession:
                     return
                 kind = await control
                 tasks.remove(control)
-                if kind == Kind.MUTED:
+                if kind in {Kind.MUTED, Kind.END_SESSION}:
                     return  # finally closes output admission before its first await.
-                # The same session and admitted background tasks survive local
-                # stop. Only capture and audible playback get a new epoch.
+                # Active wakeword interruption preserves the conversation.
+                # Explicit stop/mute above ends media, not admitted work.
                 session.input.audio = None
                 session.clear_user_turn()
                 session.interrupt()
@@ -106,10 +108,12 @@ class LiveKitHouseholdSpeakerSession:
                 await source.aclose()
                 source = None
                 self.check()
+                if locally_closed:
+                    return  # A terminal stop overtook the interruption barrier.
                 source = SpeakerAudioInput(await channel.begin_capture())
                 session.input.audio = source
         except CaptureEnded:
-            if not muted: raise
+            if not locally_closed: raise
         finally:
             # Stop physical audio before potentially slower session/tool cleanup.
             return_closed = True

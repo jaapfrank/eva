@@ -1,5 +1,22 @@
 # EVA2 werkbord
 
+**Geïnstalleerd — C4.1: geluidgevoeligheid en sessiestop gecorrigeerd.**
+Jaap bevestigde onderbreken deels, maar meldde valse onderbrekingen en een stream
+die niet stopte. De bestaande VAD filtert nu kortere/zwakkere geluiden.
+Een expliciete stopknop/lokaal stopwoord beëindigt de mediasessie; een nieuwe
+Hey Eva blijft de bestaande onderbreek-/herluisteractie. Geen nieuwe spraakmotor.
+Spraakdienst en woonkamerfirmware één keer bijgewerkt en teruggelezen.
+42 gerichte controles geslaagd; onafhankelijke review GO. Geen modelproef of rollback.
+
+**Nog van Jaap:** mute uit (laatste apparaatmeting: aan), gewoon praten en tijdens
+het gesprek eenmaal de knop indrukken. Beoordeel onterechte onderbrekingen en of
+nieuw luisteren pas na Hey Eva begint. Praktijkbeoordeling blijft open;
+C4.1 niet volledig geaccepteerd. Geen tweede-speakerproef vooraf.
+**32/44 oorspronkelijke kleine taken klaar.** P2-resultaten behouden;
+volgende vergelijkingsproef nog niet gestart.
+[Installatie en beperkingen](evidence/product/c4-stop-and-noise-installed-20261005.json)
+· [Review](reviews/c4-speaker-stop-20261005.md).
+
 **Gemeld — Telegramuitval op 5 oktober; nog niet opgelost.**
 Twee verzoeken eindigen na circa 62 seconden op de bestaande modeldeadline.
 De oorzaak van de trage providerafronding is nog niet vastgesteld; Telegram toont
@@ -8,7 +25,7 @@ de deadline ten onrechte als onbekende oorzaak. Tot het diagnosemoment
 productieaanpassing gedaan. Daarna is CM03 in afzonderlijke testinstanties gestart.
 [Gerichte diagnose](evidence/product/telegram-model-deadline-observed-20261005.json).
 
-**Nu — P2.1: derde vaste vergelijkingspaar uitgevoerd en beoordeeld.**
+**Laatste vergelijking — P2.1: derde vaste paar uitgevoerd en beoordeeld.**
 Jaap heeft P2.1 toegestaan. De opgeslagen CM02-uitkomst is onafhankelijk beoordeeld:
 Eva1 voldoet aan 1/3 objectieve voorwaarden, Eva2 aan 3/3. De officiële eindscore
 vraagt nog echte menselijke beoordelingen; CM01 blijft voor beide mislukt.

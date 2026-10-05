@@ -1,0 +1,102 @@
+{
+  "taskId": "C4.1",
+  "checkedAt": "2026-10-05T09:43:15.051580+00:00",
+  "status": "installed_owner_acoustic_and_control_trial_pending",
+  "baseCommit": "63c46d56819d5c04fea5117e70079e7601d1ffcd",
+  "ownerReport": {
+    "interruption": "seems_to_work",
+    "defects": [
+      "incidental_noise_interrupts",
+      "stream_does_not_stop"
+    ],
+    "accepted": false
+  },
+  "causes": [
+    "Installed Silero speech starts after 100 ms at default 0.5; LiveKit interruption used 150 ms. Silero silence hold can advance speech duration after a brief noise.",
+    "Firmware encoded both active wakeword and explicit button/stop-word as LOCAL_STOP; server restarted capture by design.",
+    "Physical audio sink does not support pause/resume, so false-interruption resume could not restore interrupted speech."
+  ],
+  "changes": {
+    "vad": {
+      "minimum_speech_seconds": 0.2,
+      "activation_threshold": 0.7,
+      "silence_hold_seconds": 0.45,
+      "interrupt_seconds": 0.2,
+      "unsupported_false_interruption_resume": false
+    },
+    "protocol": "END_SESSION=150 ends media; LOCAL_STOP preserves active wakeword relistening; MUTED stays terminal. Terminal events can overtake pending interruption without recapture.",
+    "backgroundWork": "No task cancellation added; existing task state and return session lifecycle preserved.",
+    "preserved": "Existing LiveKit 1.8, Silero, HA STT/TTS providers, core models, credentials, audio path, AEC configuration and wrapper. Five media modules and one firmware protocol header changed."
+  },
+  "verification": {
+    "focusedTests": {
+      "livekit_and_input": 31,
+      "legacy_service": 9,
+      "actual_cpp_driver_ubsan": 2,
+      "total": 42
+    },
+    "vadPolicy": "Controlled speech-probability fixtures: original accepts 128 ms peak and long 0.60 noise; candidate rejects both; sustained 0.95 speech starts after approximately 224 ms. No measured room-audio accuracy or end-to-end latency claim.",
+    "fixtures": "Distroless image lacks openssl CLI and legacy FFmpeg CLI. Existing local tools/runtime used; attempted cryptography fixture reverted. No production dependency installation.",
+    "review": "eva2/reviews/c4-speaker-stop-20261005.md",
+    "installedService": {
+      "status": "installed_listening",
+      "image": "sha256:a8e63bc3ef1bab49cb030ccb2cc3f4f9ace3550834a492d5121eed7b23b0dd41",
+      "started_at": "2026-10-05T09:40:42.030211438Z",
+      "reviewed_files_match": true,
+      "configuration_and_mounts_preserved": true,
+      "mount_comparison": "unordered destination/source/access set; Docker reordered the list"
+    },
+    "installedFirmware": {
+      "name": "home-assistant-voice-0a16e0",
+      "beforeCompilation": "2026-10-01 18:28:29 +0200",
+      "afterCompilation": "2026-10-05 11:39:39 +0200",
+      "otaSha256": "ba5cb36295e900cb2ed2ce75da7fb6cbcc82ece694d5ea05c0b1da88e0cc600d",
+      "uploadSeconds": 18.105841616052203,
+      "authenticated": true,
+      "wrapperSha256": "070f725dd32c916adfcf19f806a0f8288b03747e98c40ceca7ce4bfbf3eab75b"
+    },
+    "passiveAfterInstall": {
+      "checkedAt": "2026-10-05T09:42:12.198721+00:00",
+      "reachable": true,
+      "mute": true,
+      "captureRequested": false
+    }
+  },
+  "deployment": {
+    "order": [
+      "server",
+      "woonkamer firmware"
+    ],
+    "serverRestarts": 1,
+    "firmwareUploads": 1,
+    "coreOrWorkerRestart": false,
+    "rollback": false,
+    "secondSpeakerFirmwareChanged": false,
+    "privateReceipts": "/home/administrator/project/.eva2-artifacts/c4-speaker-stop-20261005"
+  },
+  "usage": {
+    "plannedModelRequests": 0,
+    "experimentModelRequests": 0,
+    "houseActions": 0,
+    "developmentCredits": "unknown",
+    "runtimeCreditCost": "no test model requests; normal concurrent user runtime not measured",
+    "buildSeconds": {
+      "speakerImage": 5.84,
+      "firmware": 48.39
+    }
+  },
+  "ownerNext": {
+    "steps": [
+      "Zet de fysieke mute uit indien die nog aan staat.",
+      "Begin met Hey Eva, stel een vraag en praat tijdens haar antwoord direct verder. Let op of gewone achtergrondgeluiden haar nog onterecht onderbreken.",
+      "Druk tijdens het gesprek eenmaal op de knop om de sessie te stoppen. Zij hoort pas na een nieuwe Hey Eva weer te luisteren."
+    ],
+    "scope": "One woonkamer assessment; no second-speaker or mandatory website trial."
+  },
+  "limits": [
+    "Owner has not assessed this installed correction. C4.1 remains open; prior partial interruption acceptance retained.",
+    "No general model-semantic stop intent added; explicit device button/local stop-word is distinguished from wakeword.",
+    "Other speaker firmware remains unchanged pending a working woonkamer experience.",
+    "P2 findings and Telegram model-deadline diagnosis unchanged; no new comparison or Telegram fix claimed."
+  ]
+}

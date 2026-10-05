@@ -279,3 +279,32 @@ async def test_bad_stop_receipt_still_joins_owned_microphone_end(tls_pair):
             # Release only the test device's delayed response after server cleanup.
             peer.capture_end_gate.set()
             await asyncio.gather(device, return_exceptions=True)
+
+
+@pytest.mark.parametrize("terminal", [Kind.END_SESSION, Kind.MUTED])
+@run_async
+async def test_terminal_control_overtakes_pending_interrupt_without_rearming(terminal):
+    """End/mute can arrive after local interrupt, including during capture close."""
+    from speaker_input import SpeakerMicrophone, CaptureSource
+    output = SimpleNamespace(_pending={}, _open=True)
+    channel = SpeakerMicrophone(output)
+    channel._wake.set()
+    capture = CaptureSource(channel, 1)
+    capture.state = "active"
+    channel._capture = capture
+    session = b"session!"
+    channel.receive(Packet(Kind.LOCAL_STOP, session, 1))
+    assert capture.state == "interrupted"
+    channel.receive(Packet(terminal, session, 1))
+    assert await channel.next_control() == terminal
+    with pytest.raises(wire.WireError, match="fresh local grant"):
+        await channel.begin_capture()
+
+    # A consumed wake interrupt may already be waiting for CAPTURE_ENDED.
+    capture.state = "closing"
+    channel.receive(Packet(terminal, session, 1))
+    assert capture.state == "closing"
+    channel.receive(Packet(Kind.CAPTURE_ENDED, session, 1))
+    assert capture.state == "ended"
+    with pytest.raises(wire.WireError, match="fresh local grant"):
+        await channel.begin_capture()
