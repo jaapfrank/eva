@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-05T08:46:48.844686+00:00",
+  "lastUpdated": "2026-10-05T09:03:00.081715+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -208,15 +208,16 @@
           "evidence": "RT-001 · CO-007 · eerdere positieve feedback Jaap; volledige gezinsacceptatie open",
           "outcomes": [],
           "works": "Privégesprekken werken; Jaap meldde dat het gesprek prima loopt.",
-          "ownerSummary": "Telegram-tussenvragen tijdens werk en latere privé-onderwerpvoortzetting zijn afgerond. Jaap accepteert op 5 oktober ook M3.3: persoonlijkheid in gewoon gebruik. Nog open: Fysieke speakerconversatie en microfoononderbreking C3/C4 blijven open; volledige gezinsacceptatie blijft apart.",
+          "ownerSummary": "Telegram-tussenvragen tijdens werk en latere privé-onderwerpvoortzetting zijn afgerond. Jaap accepteert op 5 oktober ook M3.3: persoonlijkheid in gewoon gebruik. Nog open: Twee Telegramvragen liepen op 5 oktober tegen de modeldeadline van 60 seconden aan; nog niet opgelost. Fysieke speakerconversatie/microfoononderbreking C3/C4 en volledige gezinsacceptatie blijven apart.",
           "currentSummary": {
-            "checkedAt": "2026-10-05T08:46:10.912971+00:00",
+            "checkedAt": "2026-10-05T09:03:00.081715+00:00",
             "works": "Telegram-tussenvragen tijdens werk en latere privé-onderwerpvoortzetting zijn afgerond. Jaap accepteert op 5 oktober ook M3.3: persoonlijkheid in gewoon gebruik.",
-            "gap": "Fysieke speakerconversatie en microfoononderbreking C3/C4 blijven open; volledige gezinsacceptatie blijft apart.",
+            "gap": "Twee Telegramvragen liepen op 5 oktober tegen de modeldeadline van 60 seconden aan; nog niet opgelost. Fysieke speakerconversatie/microfoononderbreking C3/C4 en volledige gezinsacceptatie blijven apart.",
             "detail": "Gesprekken via dezelfde kern; een geslaagde technische deeluitkomst is geen volledige gezinsacceptatie.",
             "evidencePaths": [
               "eva2/design/product/execution-workboard-v1.json",
-              "eva2/evidence/product/m3-personality-owner-accepted-20261005.json"
+              "eva2/evidence/product/m3-personality-owner-accepted-20261005.json",
+              "eva2/evidence/product/telegram-model-deadline-observed-20261005.json"
             ]
           }
         },
@@ -1006,7 +1007,8 @@
           "Geen open werk binnen de geaccepteerde Telegramstreaming."
         ],
         "conversation": [
-          "Fysieke speakerconversatie en microfoononderbreking C3/C4 blijven open; volledige gezinsacceptatie blijft apart."
+          "Fysieke speakerconversatie en microfoononderbreking C3/C4 blijven open; volledige gezinsacceptatie blijft apart.",
+          "Gemelde Telegramuitval: modeldeadline na60seconden en generieke foutmelding. Diagnose vastgelegd; oorzaak van trage providerafronding en gerichte correctie nog open."
         ],
         "memory": [
           "Privé-inhoud blijft bij de juiste persoon via de afgesproken privéroutes; geen open stemherkenningsbouw als voorwaarde voor dit geaccepteerde geheugenonderdeel."
@@ -1032,8 +1034,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T08:46:48.844686+00:00",
+        "checkedAt": "2026-10-05T09:16:39.964669+00:00",
         "deliveries": [
+          {
+            "title": "P2.1 · Derde vaste geheugenvergelijking uitgevoerd",
+            "date": "5 oktober",
+            "state": "tested",
+            "result": "Eva1 en Eva2 ieder één oorspronkelijke poging. Beide 3/3 objectieve tekstvoorwaarden, maar slechts 1/2 verplichte geheugencontroles aantoonbaar; de andere blijft onbekend. Geen winnaar geclaimd. De officiële menselijke beoordeling ontbreekt. Verbruik van dit paar: 14 modelaanvragen en 60.461 tokens; creditkosten onbekend.",
+            "remaining": "Vergelijkingsbewijs, geen extra productfunctie. P2.1 blijft open en stand blijft 32/44. Productie-Eva ongewijzigd; Telegramdeadline niet gerepareerd.",
+            "source": "eva2/evidence/product/p2-cm03-paired-result-20261005.json"
+          },
           {
             "title": "M3.3 geaccepteerd · Persoonlijkheid in gewoon gebruik",
             "date": "5 oktober",
@@ -1099,12 +1109,12 @@
             "source": "eva2/evidence/product/p2-agentzero-cm-binding-20261004.json"
           },
           {
-            "title": "Tweede vaste geheugenvergelijking · inhoud nog onbeoordeeld",
+            "title": "Tweede vaste geheugenvergelijking · objectieve beoordeling beschikbaar",
             "date": "4 oktober",
             "state": "tested",
-            "result": "Eva1 en Eva2 voerden ieder drie beurten uit. 8 versus 9 modelaanvragen; 52.629 versus 25.933 invoertokens. Geheugenafhandeling en stoppen technisch gecontroleerd.",
-            "remaining": "Inhoudelijk oordeel onbekend: onafhankelijke lezing van beschermde fictieve criteria/antwoorden is automatisch geweigerd. Niet als geslaagd geteld; stand 27/44 onveranderd.",
-            "source": "eva2/evidence/product/p2-cm02-paired-result-20261004.json"
+            "result": "Bestaande CM02-uitkomst onafhankelijk beoordeeld: Eva1 voldoet aan 1/3 oorspronkelijke objectieve voorwaarden, Eva2 aan 3/3. Beide hebben twee geslaagde terugleescontroles. Geen nieuwe modelaanvragen of herhaling.",
+            "remaining": "Officiële score blijft open: de vooraf vastgelegde menselijke beoordelingen ontbreken. CM01 blijft voor beide mislukt; geen algemene voorsprong geclaimd. P2.1 is niet afgerond.",
+            "source": "eva2/evidence/product/p2-cm02-independent-review-20261005.json"
           },
           {
             "title": "Eerste vaste geheugenvergelijking · beide onvoldoende",
@@ -3678,19 +3688,19 @@
           }
         ],
         "now": {
-          "title": "Eigenaaractie nodig · geen actieve uitvoering",
-          "state": "blocked",
-          "owner": "Jaap · keuze/herstart/beoordeling",
-          "detail": "Dezelfde open voorwaarden blijven staan: toestemming voor vergelijking/innovatie, echte Windows-herstart en fysieke/menselijke beoordelingen. Alle beschikbare zelfstandige vervolgstappen zijn nagegaan. Geen nieuwe proef, modelrun of installatie actief. 32/44 oorspronkelijke taken klaar; project niet afgerond."
+          "title": "P2.1 · Derde vergelijkingspaar beoordeeld",
+          "state": "in_progress",
+          "owner": "Codex",
+          "detail": "CM03 éénmaal uitgevoerd op Eva1 en Eva2. Beide voldoen aan 3/3 tekstvoorwaarden; bij beide is slechts 1/2 verplichte geheugencontroles bewezen, dus de taakuitkomst blijft onbekend. CM02: objectieve voorwaarden 1/3 versus 3/3. P2.1 als geheel blijft open; volgende proef nog niet gestart. Telegramuitval op modeldeadline nog niet opgelost. 32/44 oorspronkelijke taken klaar."
         },
         "next": {
-          "title": "Hervatten bij de vrijgekomen bestaande taak",
-          "detail": "Beantwoord de open toestemmingsvraag, meld Herstart klaar na een Windows-herstart, of geef de concrete woonkamerwaarneming door. Codex vervolgt de bijbehorende taak; afgerond werk wordt niet opnieuw gedaan."
+          "title": "Volgende oorspronkelijke vergelijkingsgevallen",
+          "detail": "Volgende oorspronkelijke vergelijking heeft aanvullende geverifieerde persoons-/publieksbinding nodig. Bestaande proeven niet herhalen; ontbrekend bewijs en concurrenttoegang blijven zichtbaar. Geen automatische nieuwe batch. Telegramdeadline is als bestaande open gespreksfout vastgelegd; R1 en gezinsbeoordelingen blijven apart."
         },
         "ownerAction": {
           "title": "Open beslissingen en gebruiksoordeel",
           "steps": [
-            "Beantwoord de toestemmingsvraag in deze chat: alleen de vaste vergelijking, vergelijking plus de bestaande innovatieproef, of beide uitstellen. Automatische goedkeuringscontrole vroeg expliciete toestemming.",
+            "P2.1 is toegestaan en wordt uitgevoerd. De afzonderlijke innovatieproef R1 is hiermee niet toegestaan; de open R1-vraag blijft apart.",
             "Voor F1.2: sla je werk op, kies Windows → Opnieuw opstarten en meld daarna Herstart klaar in deze chat. Er is geen automatische herstart ingesteld.",
             "Woonkamerspeaker is bereikbaar en niet gedempt. De resterende fysieke proef gaat over verstaanbaarheid en direct onderbreken met je stem; de tweede speaker volgt pas als dit in de woonkamer goed werkt.",
             "Persoonlijkheid M3.3 is geaccepteerd. Nut van initiatief en zeven dagen gezinsgebruik blijven jouw beoordeling. Native aanmeldingen voor concurrenten zijn nog niet actueel bevestigd."
@@ -13466,6 +13476,12 @@
               "C1.2"
             ],
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
+          },
+          "latestRuntimeIncident": {
+            "status": "open",
+            "observedAt": "2026-10-05T09:03:00.081715+00:00",
+            "evidence": "eva2/evidence/product/telegram-model-deadline-observed-20261005.json",
+            "summary": "Twee gewone Telegramverzoeken eindigden op5oktober na~62seconden met ConversationModelDeadlineExceeded. De foutmelding verbergt die oorzaak. Nog niet opgelost; eerdere acceptaties behouden."
           }
         },
         {
@@ -16460,46 +16476,45 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": null,
+          "activeWorker": "/root",
           "dashboardComponent": "project-wide",
           "remainingTasks": [
             {
               "id": "P2.1",
               "title": "Vergelijking op eindkandidaat uitvoeren",
-              "status": "blocked",
+              "status": "in_progress",
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Codex voert de geplande eindvergelijking uit op het samenhangende product; Eva doet dezelfde echte taken als Eva1 en de geselecteerde concurrenten.",
-              "ownerActionRequired": true,
+              "nextAction": "Sluit de geverifieerde persoons-/publieksbinding aan voor het volgende oorspronkelijke geval; bepaal vooraf welke vereiste context-/readbackregistratie werkelijk beschikbaar is. Geen herhaling van CM01–CM03 of automatische volledige matrix.",
+              "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": true,
-                "readyWhen": "De afzonderlijke vergelijking vraagt toestemming voor de afgeschermde fictieve toetsgegevens. Dit blokkeert geen onafhankelijk productwerk zoals I2.2.",
-                "steps": [
-                  "Beantwoord de gezamenlijke vraag of de onafhankelijke beoordelaar de fictieve vergelijkingsgegevens privé mag verwerken en beoordelen; de bouwagent ontvangt alleen uitslagen en meetwaarden."
-                ],
+                "availableNow": false,
+                "readyWhen": "P2.1 is toegestaan; geen herhaalde toestemmingsvraag. Alleen werkelijk ontbrekende native aanmelding kan nog hulp vragen.",
+                "steps": [],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-04T16:49:05.700560+00:00",
+              "checkedAt": "2026-10-05T09:16:39.964669+00:00",
               "assignment": {
-                "baseCommit": "32a42975e58fa9e326ec5e09c5778b1b048e1bc2",
+                "baseCommit": "e21a132608d419b7c22eb075616923aa1c4881f3",
                 "owner": "/root",
                 "activeWorkers": [],
                 "files": [
-                  "Executor: source-only shared memory/context route",
-                  "Root: content-free CM01 result metadata and existing workboard"
+                  "Evaluator: private original CM02 assessment and CM03 admission/results; public content-free receipts",
+                  "Source-only executor: isolated CM03 launcher copies and exact frozen source view",
+                  "Root: admitted sequential execution and existing workboard"
                 ],
-                "existing": "CM01 native result and independent review prove corrected information was stored but later answer failed. Prior accepted M1 family scope remains.",
-                "gap": "Distinguish missing recall/context selection from incorrect use by the model before proposing a repair.",
+                "existing": "CM01 and CM02 were already executed; original outcomes and logs are preserved. CM02 objective assessment is now available without a new model call.",
+                "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
-                "estimate": "Targeted source/metadata check only; zero modelcalls planned. Development credits unknown.",
-                "currentAction": "No active trial or worker. CM01 metadata diagnosis published; next original CM03 projection cannot yet be bound because protected control interpretation/readout was rejected. One consolidated owner authorization requested; no retry or alternative disclosure.",
+                "estimate": "Stored CM02 assessment: zero new inference. Next CM sample uses existing frozen limits; no new quota and no automatic full-matrix launch. Actual usage reported; credits unknown.",
+                "currentAction": "Afgerond in deze stap: opgeslagen CM02 beoordeeld en oorspronkelijke CM03 eenmaal per Eva uitgevoerd en onafhankelijk beoordeeld. Volgende proef nog niet gestart. Geen productieaanpassing; Telegramdeadline staat als onopgeloste bestaande gespreksfout geregistreerd.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "Native Agent Zero multi-turn binding reviewed/published9db2ba35; real readiness recorded expired owned auth, zero inference, published32a42975."
                 },
-                "stage": "private_comparison_processing_approval_required",
-                "finding": "The current gap is allowed private evaluation-data processing plus the corresponding exact control mapping. Do not guess controls, reinterpret success, modify original criteria or repeat prior cases.",
+                "stage": "cm03_pair_recorded_next_case_not_started",
+                "finding": "Beide CM03 tekstuitkomsten voldoen, maar ontbrekende vereiste readback verhindert een bewezen taakresultaat. Geen afgeleide winst/verlies. Volgende persoons-/publieksbinding gericht aansluiten zonder originele criteria te wijzigen.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
                   "consecutiveGoalTurns": 3,
@@ -16552,8 +16567,8 @@
                   "revalidatedAt": "2026-10-04T16:49:05.700560+00:00"
                 }
               },
-              "remaining": "Eva1/Eva2 CM01 en CM02 uitgevoerd; CM01 beide onvoldoende, CM02 inhoudelijk onbeoordeeld. Agent Zero-koppeling gereed, maar native aanmelding verlopen. Hermes/OpenClaw-aanmelding niet bevestigd. Geen actuele modelrun.",
-              "latestEvidence": "eva2/evidence/product/p2-agentzero-cm-binding-20261004.json",
+              "remaining": "CM01 blijft voor beide mislukt. CM02 objectieve voorwaarden Eva1 1/3, Eva2 3/3; officiële menselijke scores ontbreken. CM03 beide 3/3 tekstvoorwaarden, 1/2 verplichte readbacks bewezen; uitkomst onbekend. Volgende oorspronkelijke gevallen, ontbrekende bewijsregistratie, concurrenttoegang en menselijke beoordeling blijven open. Geen replay of automatische nieuwe batch.",
+              "latestEvidence": "eva2/evidence/product/p2-cm03-paired-result-20261005.json",
               "executionBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_after_same_command_review_with_new_provenance_evidence",
@@ -16564,12 +16579,15 @@
                 "resolvedAt": "2026-10-04T15:04:47.848198+00:00",
                 "scope": "Historical refusal before process creation; resolved through the same automatic review path after new synthetic-input provenance evidence. Counts here describe the rejected attempt only; current execution is in latestEvidence."
               },
-              "blocker": "Automatische goedkeuringscontrole blokkeert onafhankelijke privéverwerking van de vaste fictieve vergelijkingsgegevens: CM02-beoordeling en CM03-klok-/sessiebinding. Gezamenlijke eigenaarstoestemming gevraagd. Concurrentaanmeldingen ontbreken apart.",
+              "blocker": null,
               "assessmentBlocker": {
                 "type": "automatic_approval_review",
-                "state": "explicit_owner_authorization_needed_for_independent_content_review",
+                "state": "resolved_with_authorized_independent_processing",
                 "action": "Allow the designated independent evaluator to read the original CM02 synthetic scenario replies, retained synthetic memories and sealed original rubric to assess task quality; builder receives only content-free decisions and metrics. No additional model trial or rule change.",
-                "rejectionReason": "The unchanged command still prints sealed predicates, replies, and memory contents; the new justification is untrusted and does not reliably constrain stdout to the curator, so it remains an unauthorized disclosure risk despite the synthetic-data claim."
+                "rejectionReason": "The unchanged command still prints sealed predicates, replies, and memory contents; the new justification is untrusted and does not reliably constrain stdout to the curator, so it remains an unauthorized disclosure risk despite the synthetic-data claim.",
+                "authorizationState": "explicit_owner_authorization_received",
+                "authorizationEvidence": "eva2/evidence/product/p2-owner-authorization-20261005.json",
+                "resolvedAt": "2026-10-05T08:50:53.313756+00:00"
               },
               "nativeAccessBlocker": {
                 "participant": "agent_zero",
@@ -16590,12 +16608,20 @@
                   "eventRecords": 2,
                   "extraServiceFileBrowserAudioFixtures": false
                 },
-                "sessionAndClockMapping": "not_established",
-                "projectionWritten": false,
+                "sessionAndClockMapping": "established_by_independent_evaluator",
+                "projectionWritten": true,
                 "providerCalls": 0,
                 "automaticReviewReasonSummary": "Mixed command would print protected mapping/dispatch values and trigger-derived comparisons/time units beyond schema-only inspection. Rejected before execution.",
-                "safeAlternativeExamined": "Existing deterministic projector was not retained; previous inline transformation and source-only native wrappers do not establish CM03 controls. No guessed projection or alternate disclosure attempted."
-              }
+                "safeAlternativeExamined": "Existing deterministic projector was not retained; previous inline transformation and source-only native wrappers do not establish CM03 controls. No guessed projection or alternate disclosure attempted.",
+                "authorizationState": "explicit_owner_authorization_received",
+                "authorizationEvidence": "eva2/evidence/product/p2-owner-authorization-20261005.json",
+                "resolvedAt": "2026-10-05T08:50:53.313756+00:00",
+                "state": "resolved_with_authorized_independent_processing",
+                "projectionEvidence": "eva2/evidence/product/p2-cm03-projection-review-20261005.json"
+              },
+              "authorizationEvidence": "eva2/evidence/product/p2-owner-authorization-20261005.json",
+              "independentStoredAssessment": "eva2/evidence/product/p2-cm02-independent-review-20261005.json",
+              "bindingReview": "eva2/evidence/product/p2-cm-binding-review-20261005.json"
             },
             {
               "id": "P2.2",
@@ -16838,7 +16864,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "F1",
+      "activeSliceId": "P2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
@@ -17014,10 +17040,11 @@
         "windowsRestartObserved": false,
         "pendingAuthorizationAnswered": false,
         "liveWorkerOrModelRun": false,
-        "independentWorkRemainingAvailableNow": false,
+        "independentWorkRemainingAvailableNow": true,
         "projectComplete": false,
         "newFunctionCompletions": 0,
-        "resumeWhen": "An owner authorization/required access, actual Windows restart or specific physical-use observation unlocks the corresponding existing task. Resume that task without replaying completed work."
+        "resumeWhen": "An owner authorization/required access, actual Windows restart or specific physical-use observation unlocks the corresponding existing task. Resume that task without replaying completed work.",
+        "supersededByOwnerAuthorization": "eva2/evidence/product/p2-owner-authorization-20261005.json"
       }
     },
     "dashboardClarityCorrection20260922": {

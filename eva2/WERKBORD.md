@@ -1,5 +1,31 @@
 # EVA2 werkbord
 
+**Gemeld — Telegramuitval op 5 oktober; nog niet opgelost.**
+Twee verzoeken eindigen na circa 62 seconden op de bestaande modeldeadline.
+De oorzaak van de trage providerafronding is nog niet vastgesteld; Telegram toont
+de deadline ten onrechte als onbekende oorzaak. Tot het diagnosemoment
+(09:03 UTC) had de hervatte vergelijking geen nieuwe modelcall of
+productieaanpassing gedaan. Daarna is CM03 in afzonderlijke testinstanties gestart.
+[Gerichte diagnose](evidence/product/telegram-model-deadline-observed-20261005.json).
+
+**Nu — P2.1: derde vaste vergelijkingspaar uitgevoerd en beoordeeld.**
+Jaap heeft P2.1 toegestaan. De opgeslagen CM02-uitkomst is onafhankelijk beoordeeld:
+Eva1 voldoet aan 1/3 objectieve voorwaarden, Eva2 aan 3/3. De officiële eindscore
+vraagt nog echte menselijke beoordelingen; CM01 blijft voor beide mislukt.
+
+Daarna is CM03 eenmaal op Eva1 en Eva2 uitgevoerd, met oorspronkelijke criteria,
+modellen en vastgezette bronnen. Beide voldoen aan 3/3 tekstvoorwaarden, maar slechts
+1/2 verplichte geheugencontroles is bewezen: de taakuitkomst blijft onbekend.
+Gemeten voor dit paar: 14 modelaanvragen, 60.461 tokens; creditkosten onbekend.
+Codex-ontwikkelverbruik is daarin niet meegerekend.
+Geen algemene voorsprong, productwijziging of extra afgeronde functie geclaimd.
+P2.1 als geheel blijft open. De volgende proef is nog niet gestart; daarvoor is
+de bestaande persoons-/publieksbinding gericht aan te sluiten.
+[CM02-beoordeling](evidence/product/p2-cm02-independent-review-20261005.json)
+· [CM03-paar](evidence/product/p2-cm03-paired-result-20261005.json)
+· [Toestemming](evidence/product/p2-owner-authorization-20261005.json).
+R1-innovatie, echte Windows-herstart en fysieke/gezinsbeoordelingen blijven apart.
+
 **Geaccepteerd — M3.3: persoonlijkheid in gewoon gebruik.**
 Jaap bevestigt op 5 oktober: “is naar mijn idee goed zo”. M3.1 en M3.2 waren
 al klaar; onderdeel M3 en de bestaande stap **Personen en continuïteit** zijn
@@ -26,10 +52,9 @@ Eerdere fouten en beperkingen blijven in het bewijs staan.
 innovatieproef en echte computerherstart met hun bestaande toegangs-/toestemmingsvragen;
 fysieke speakerbeleving, nut/timing van initiatief en zeven dagen gezinsacceptatie.
 De optionele telefoonroute is geen nieuwe verplichte bouwronde.
-Geen nieuwe browser-/installatieproef gepland. **Automatische uitvoering wacht op eigenaaractie.**
-Dezelfde toegang, toestemming en herstart ontbreken in drie opeenvolgende goalrondes.
-Er is geen actieve uitvoerder/modelrun en geen nieuw zelfstandig herstelwerk vastgesteld.
-Hervatten bij de vrijgekomen bestaande taak; het project is niet voltooid.
+Geen nieuwe browser-/installatieproef gepland. De eerdere P2.1-toestemmingsblokkade
+is opgeheven; de vergelijking wordt hervat zoals bovenaan beschreven. Andere
+bestaande toegang en beoordelingen blijven open. Het project is niet voltooid.
 
 **F1.2 — huidige versie voorbereid voor de echte herstart; onafhankelijke review GO.**
 De 3-oktobermeting is behouden. Een nieuwe momentopname bindt de huidige kern,
@@ -40,8 +65,8 @@ een gewijzigde WSL-processtart telt daarvoor niet.
 [Actuele voorbereiding](evidence/product/f1-current-candidate-pre-reboot-20261005.json)
 · [Onafhankelijke review](reviews/f1-current-candidate-20261005.md).
 
-**Wat van Jaap nodig blijft:** beantwoord de gezamenlijke toestemmingsvraag voor
-vergelijking/innovatie; sla je werk op en herstart Windows voor F1.2, meld daarna
+**Wat van Jaap nodig blijft:** alleen de aparte innovatieproef R1 vraagt nog
+een besluit; P2.1 is al toegestaan. Sla je werk op en herstart Windows voor F1.2, meld daarna
 ‘Herstart klaar’. Woonkamerspeaker is bereikbaar en niet gedempt; hoorbaarheid en
 microfoononderbreking blijven een fysieke beoordeling. Geen tweede-speakerproef
 vóór de woonkamer goed werkt. Deze voorbereiding verhoogt geen opleverteller.

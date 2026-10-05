@@ -1,0 +1,77 @@
+{
+  "contract": "EV003IndependentNativeAdmissionReview/v1",
+  "task": "P2.1",
+  "caseId": "EV003-CM-03",
+  "epoch": 1,
+  "reviewedAt": "2026-10-05T09:08:54.274156+00:00",
+  "reviewer": "/root/p2_authorized_evaluation",
+  "decision": "GO_for_two_original_sequential_native_attempts_subject_to_existing_preflight",
+  "criteriaModified": false,
+  "newProviderCallsByReviewer": 0,
+  "productChanges": false,
+  "admissions": {
+    "eva1-bottie": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm03-epoch1/admission.json",
+      "sha256": "298ddc0046e1a4d1e88bff1b35b8bb0dcc84513b3f9f0686afc7a5aff3b462e7",
+      "launcherSha256": "ffff727bddbcf09fb4dd8c30952d4d905b6e1ad367784538c8c360427c4fe349",
+      "inspectWrapperSha256": "5c0b5ac0588089a6dd3f103753ebff72a4572c56fefd76c0f475168f9c5a6572"
+    },
+    "eva2": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm03-epoch1/admission.json",
+      "sha256": "f807b04c07dcd0ed1491f1a8b599414b79388778feaf39b0da43701d7d9c0107",
+      "launcherSha256": "58de184eaab5e1fa400cb511bb41ba6c6f55a8667a6b249c40f02bf3a4130266",
+      "inspectWrapperSha256": "0fb42aeacb89e84df2655b0ff85d8d229e2e00a85eaa8c95bb88a84f0f79862e"
+    }
+  },
+  "binding": {
+    "caseSha256": "434bea7ed83700a755830da0e31afc820c4809d6c5e36326451d97a05a89e7df",
+    "projectionSha256": "d70f338e538a146f7aaa974c55bacce8c74500744e7742d4c58acdec2d0516d7",
+    "privateProjectionReceiptSha256": "5fff60a328fdf27fd04a066f5fa2eb5048dbdc30b3d3f65de324d3e017354ddd",
+    "datasetSha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4",
+    "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "candidate": "original_frozen_candidate_not_current_production"
+  },
+  "models": {
+    "contact": [
+      "gpt-6-sol",
+      "none"
+    ],
+    "all_helpers": [
+      "gpt-6-astra",
+      "medium"
+    ]
+  },
+  "limits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "wallSeconds": 480,
+    "toolCalls": 16,
+    "externalActions": 0
+  },
+  "eva2Images": {
+    "core": "sha256:fd1c7cd3413405fd6b1b5ce408f2028cffed8de735a301550663e4c891ee5902",
+    "memory": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+    "postgres": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1"
+  },
+  "nativeSourceReview": {
+    "allOriginalEva2RuntimeHashesMatch": true,
+    "runtimeFiles": 9,
+    "allOriginalEva1HookSourcesMatch": true,
+    "calendarHistoricalBytesRetained": true,
+    "sourceView": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm03-epoch1/frozen-source",
+    "newSourceHashPins": false
+  },
+  "assessmentBoundaries": {
+    "scope": "One original epoch-one native CM03 attempt per participant under the original sealed budget; no automatic repeat, whole-family admission or final quality pass.",
+    "adapter_interception": "Any bridge-refused advertised action is retained and classified as adapter-limited/unknown, never attributable product failure merely because the bridge stopped it.",
+    "missing_readback": "Actual required evidence must be independently observed. Missing provider-context, active/retrievable memory or other prescribed evidence remains unknown; completed operations and selected IDs alone are not a pass.",
+    "human_records": "Two genuine independent blinded recorded_human semantic decisions remain required by the unchanged scorer. No artificial human records, preference/personality score or AI-judge substitution.",
+    "private_controls": "Original fixture identity, current input, clock/session barriers and data retention remain exact. Oracle and future-event schedule never enter participant prompts.",
+    "source_freeze": "Use original fixed Eva2 core image and exact originally admitted native source bytes. Current production image is not substituted.",
+    "original_criteria": "All original conditions and forbidden-effect/readback requirements remain unchanged; observation limitations never lower them.",
+    "failure_classification": "Only independently established admitted-product failure can be marked failure. Admission, access, adapter or incomplete observation is unknown.",
+    "ownership": "Root launches sequentially after normal tool approval and actual preflight. Evaluator has made zero provider calls."
+  },
+  "nextAction": "Root verifies existing account lease and isolated network preflight, then executes Eva1 followed by Eva2 through the pinned Inspect wrappers. Do not run another case or retry automatically."
+}

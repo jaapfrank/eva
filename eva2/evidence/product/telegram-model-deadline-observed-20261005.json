@@ -1,0 +1,57 @@
+{
+  "contract": "EvaObservedRuntimeIncident/v1",
+  "checkedAt": "2026-10-05T09:03:00.081715+00:00",
+  "source": "Owner requested readback of recent Telegram exchange; existing owner archive plus matching installed-core failure metadata",
+  "status": "diagnosed_not_resolved",
+  "affectedUserOutcomes": [
+    "Accept a follow-up request to investigate a previously discussed household source",
+    "Retrieve the previously stored own contribution"
+  ],
+  "observedFailures": [
+    {
+      "requestAtUtc": "2026-10-05T08:30:00Z",
+      "errorAtUtc": "2026-10-05T08:31:02Z",
+      "providerHttpStatus": 200,
+      "providerCompletedEvents": 0,
+      "providerToolArgumentDeltas": 0
+    },
+    {
+      "requestAtUtc": "2026-10-05T08:49:51Z",
+      "errorAtUtc": "2026-10-05T08:50:53Z",
+      "providerHttpStatus": 200,
+      "providerCompletedEvents": 0,
+      "providerToolArgumentDeltas": 21
+    }
+  ],
+  "confirmedException": {
+    "qualifiedType": "eva.adapters.model.contracts.ConversationModelDeadlineExceeded",
+    "sha256": "4864a34e0ded5aeaea3e7768ead479a3028ac4298c1729cc19425fefc0dac80a",
+    "matchesBothRecordedStreamFailures": true
+  },
+  "causeEstablished": "Existing foreground model phase did not complete within its 60-second wall deadline. The Telegram transport itself allows a longer total interval. Shared streaming API reports only rate-limit failures specifically; deadline falls through to generic unknown-cause presentation.",
+  "notEstablished": [
+    "Why upstream generation did not complete within 60 seconds",
+    "Whether the separate observed voice protocol/async-generator cleanup error shares an underlying cause",
+    "Whether increasing or removing a deadline would yield a correct usable answer"
+  ],
+  "sourceLocations": [
+    "eva2/src/eva/adapters/model/pydantic_conversation.py:1128",
+    "eva2/src/eva/adapters/api/dashboard_conversation.py:190",
+    "/home/administrator/project/Bottie/src/integrations/eva2canary.js:192"
+  ],
+  "comparisonInterference": {
+    "currentP2NewModelCalls": 0,
+    "currentP2ProductionMutations": 0,
+    "currentP2Execution": "stored evidence evaluation and isolated-runner preparation only",
+    "asOf": "2026-10-05T09:03:00.081715+00:00",
+    "scope": "Historical diagnosis-time observation; subsequent isolated CM03 calls are recorded separately."
+  },
+  "actions": {
+    "telegramPollingConsumed": false,
+    "telegramMessagesSent": 0,
+    "productionWrites": 0,
+    "restartOrInstallation": false,
+    "newModelCalls": 0
+  },
+  "scope": "Diagnosis only; no fix or task completion claim. Private Telegram contents and provider payloads not published."
+}

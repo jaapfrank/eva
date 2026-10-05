@@ -1,0 +1,19 @@
+{
+  "taskId": "P2.1",
+  "recordedAt": "2026-10-05T08:50:53.313756+00:00",
+  "source": "Direct owner reply in this chat",
+  "ownerStatement": "P2.1 · Vergelijking op eindkandidaat uitvoeren — Ja dat mag.",
+  "authorizationScope": [
+    "Execute the existing fixed P2.1 final comparison within its existing conditions and provider route.",
+    "The independent evaluator may privately process the sealed fictitious scenarios, responses, original criteria and required clock/session control mapping.",
+    "Builder receives only case identifiers, operational metadata, scores, costs and sanitized findings; no hidden test contents."
+  ],
+  "notIncluded": [
+    "Separate R1 eight-run innovation experiment",
+    "New provider subscription or paid fallback",
+    "Changing original test criteria or hidden-result-driven product tuning",
+    "Inventing missing native participant access or human ratings"
+  ],
+  "existingPlan": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+  "newCompletionClaimed": false
+}

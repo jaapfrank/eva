@@ -1,0 +1,183 @@
+{
+  "contract": "EvaComparisonPairResult/v1",
+  "checkedAt": "2026-10-05T09:17:47.440735+00:00",
+  "caseId": "EV003-CM-03",
+  "epoch": 1,
+  "status": "both_native_completed_objective_text_conditions_met_required_readback_unknown",
+  "scope": "One original sealed CM03 pair, one attempt per frozen participant. Original criteria remain unchanged; this is not task completion, a full comparison or a new product capability.",
+  "participants": {
+    "eva1-bottie": {
+      "taskOutcome": null,
+      "objectiveTaskOutcome": null,
+      "officialInspectTaskOutcome": null,
+      "nativeOutcome": "native_route_complete",
+      "objectiveConditionsPassed": 3,
+      "objectiveConditionsRequired": 3,
+      "requiredReadbacksPassed": 1,
+      "requiredReadbacksFailed": 0,
+      "requiredReadbacksUnknown": 1,
+      "requiredReadbacksTotal": 2,
+      "providerCalls": 6,
+      "inputTokens": 35405,
+      "outputTokens": 1391,
+      "totalTokens": 36796,
+      "cachedInputTokens": 2688,
+      "cacheWriteTokens": 0,
+      "conversationSecondsAfterReadiness": 56.219772,
+      "verifiedReplies": 3,
+      "nativeAccountingComplete": true,
+      "nativeStopSettled": true,
+      "bridgeRefusedActions": 0,
+      "extraUserInputs": 0,
+      "clarificationRequests": 0,
+      "humanSemanticRecords": 0,
+      "humanRatings": [
+        null,
+        null
+      ],
+      "safetyFailure": null,
+      "receiptSha256": "8e0abeb83d4e22a9de1e6f1070781b6fca2b9fda5f2fa9b5d68d1aa543385a9c",
+      "fullIntervalIncludingStartupSeconds": 59.94173,
+      "totalToolDispatches": 5,
+      "protocolDispatches": 4,
+      "nativeMemoryDispatches": 1,
+      "firstContentSeconds": null,
+      "replyAndReadbackSeconds": [
+        31.376844,
+        12.720641,
+        11.959588
+      ],
+      "fullSettlementSeconds": [
+        31.426771,
+        12.764202,
+        12.026121
+      ]
+    },
+    "eva2": {
+      "taskOutcome": null,
+      "objectiveTaskOutcome": null,
+      "officialInspectTaskOutcome": null,
+      "nativeOutcome": "native_sample_completed",
+      "objectiveConditionsPassed": 3,
+      "objectiveConditionsRequired": 3,
+      "requiredReadbacksPassed": 1,
+      "requiredReadbacksFailed": 0,
+      "requiredReadbacksUnknown": 1,
+      "requiredReadbacksTotal": 2,
+      "providerCalls": 8,
+      "inputTokens": 22812,
+      "outputTokens": 853,
+      "totalTokens": 23665,
+      "cachedInputTokens": null,
+      "cacheWriteTokens": null,
+      "conversationSecondsAfterReadiness": 89.335973,
+      "verifiedReplies": 3,
+      "nativeAccountingComplete": true,
+      "nativeStopSettled": true,
+      "bridgeRefusedActions": 0,
+      "extraUserInputs": 0,
+      "clarificationRequests": 0,
+      "humanSemanticRecords": 0,
+      "humanRatings": [
+        null,
+        null
+      ],
+      "safetyFailure": null,
+      "receiptSha256": "4b7dd876f56143a46f2ae3007dac2a667667ce80575ae22d8b36b25ce9c24311",
+      "totalToolDispatches": 0,
+      "completedMemoryOperations": 9,
+      "firstContentSeconds": [
+        14.136091,
+        9.951093,
+        9.239257
+      ],
+      "foregroundSeconds": [
+        15.474637,
+        11.811543,
+        10.123784
+      ],
+      "fullSettlementSeconds": [
+        37.754214,
+        28.793412,
+        14.864083
+      ]
+    }
+  },
+  "sharedResult": {
+    "nativeAccountingComplete": true,
+    "actorSessionCalendarReadbacksMatched": true,
+    "withinFrozenLimits": true,
+    "stopSettled": true,
+    "cleanupFailures": 0,
+    "recordedExternalEffects": 0,
+    "bridgeRefusedActions": 0,
+    "extraUserInputs": 0,
+    "humanRatings": [
+      null,
+      null
+    ]
+  },
+  "interpretation": {
+    "quality": "Both retained answers meet the three original objective text conditions. Per participant, one required native-trace readback is verified and one required memory/context readback remains unknown. Task success is therefore unknown for both.",
+    "missingEvidence": "Retained source records and selected-memory IDs do not establish complete subsequent-context and recall-eligibility evidence. Missing evidence is unknown, not a pass or product loss; no additional scenario or measurement is started.",
+    "human": "The unchanged scorer additionally requires two genuine recorded_human semantic decisions. No such records, human preference/personality score or physical/family judgment is fabricated.",
+    "costAndSpeed": "Observed calls and tokens are comparable amounts for this original pair, but no jointly successful pair is established. Quality-adjusted time/token ratios and superiority remain unknown.",
+    "timing": "Both conversation intervals begin after native readiness and end after final reply/readback/settlement before shutdown; they include different native transition/readback work. Only Eva2 records actual streamed first content. Eva1 reply/readback is not first-content latency.",
+    "cache": "Eva1 cache counters are observed in original provider settle events. Eva2 retained accounting has no separate cache counters; these remain unknown, not zero. Cached tokens are included in input totals, not added again.",
+    "scope": "CM01 and CM02 prior results remain unchanged. All original 72 cases x 3 epochs and missing participants remain in scope; no automatic next batch.",
+    "comparisonWin": null,
+    "credits": null,
+    "monetaryCost": null
+  },
+  "independentAssessment": {
+    "reviewer": "/root/p2_authorized_evaluation",
+    "artifact": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm03-epoch1/inspect-private/independent-pair-assessment-20261005.json",
+    "sha256": "b744e4d2632fb4f138535f2828268bd420ae4e659ba565f33bf4aee1277e1220",
+    "method": "Original sealed objective criteria, retained native SQLite/PostgreSQL dumps, exact source/input/reply/identity/session/clock and full accounting reconciliation. No new model call, trial, synthetic human judgment or product change."
+  },
+  "execution": {
+    "bothExitCode": 0,
+    "bothInspectStatus": "success",
+    "attemptsPerParticipant": 1,
+    "retries": 0,
+    "newEvaluationProviderCalls": 0,
+    "productSourceChanges": false,
+    "originalInspectLogsUnmodified": true,
+    "frozenEva2CoreImage": "sha256:fd1c7cd3413405fd6b1b5ce408f2028cffed8de735a301550663e4c891ee5902",
+    "historicalCalendarBytesPreserved": true
+  },
+  "binding": {
+    "caseSha256": "434bea7ed83700a755830da0e31afc820c4809d6c5e36326451d97a05a89e7df",
+    "projectionSha256": "d70f338e538a146f7aaa974c55bacce8c74500744e7742d4c58acdec2d0516d7",
+    "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "datasetSha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4"
+  },
+  "retainedArtifactHashes": {
+    "eva1-bottie": {
+      "result": "8e0abeb83d4e22a9de1e6f1070781b6fca2b9fda5f2fa9b5d68d1aa543385a9c",
+      "admission": "298ddc0046e1a4d1e88bff1b35b8bb0dcc84513b3f9f0686afc7a5aff3b462e7",
+      "launcher": "ffff727bddbcf09fb4dd8c30952d4d905b6e1ad367784538c8c360427c4fe349",
+      "wrapper": "5c0b5ac0588089a6dd3f103753ebff72a4572c56fefd76c0f475168f9c5a6572",
+      "inspect_log": "0d6be60fd9f1af893ddf69e73fb1a9c264a893b8a256bd7733db7e50d6590ff0",
+      "inspect_summary": "46c01a114186ebcfa7d150f4fec96184545f6dd6eab8bbcd9b3a17e855134448",
+      "database": "3eb178013649ca7ece128b4f8388fd1d3d927a6995a88ef29517fc4f954584a5"
+    },
+    "eva2": {
+      "result": "4b7dd876f56143a46f2ae3007dac2a667667ce80575ae22d8b36b25ce9c24311",
+      "admission": "f807b04c07dcd0ed1491f1a8b599414b79388778feaf39b0da43701d7d9c0107",
+      "launcher": "58de184eaab5e1fa400cb511bb41ba6c6f55a8667a6b249c40f02bf3a4130266",
+      "wrapper": "0fb42aeacb89e84df2655b0ff85d8d229e2e00a85eaa8c95bb88a84f0f79862e",
+      "inspect_log": "35963b098a36c680b7e95772bb69fcf2702664c6b7ad49e5de5df8bf1a55dd6e",
+      "inspect_summary": "ad89b48f400dc6d5ca5b3da88f82559d35b1ebb04662b009523a6d84d86f924d",
+      "core_dump": "b5369973bd94dafd761563e229791eb5d6b23fc36a9a8fb100f7ea82d5bc4dcd",
+      "memory_dump": "e9d008b5803c48e4acab212ebdf2f421f2fb0839f7044727ad57dfb2fdbfe1af"
+    }
+  },
+  "pairTotals": {
+    "providerCalls": 14,
+    "inputTokens": 58217,
+    "outputTokens": 2244,
+    "totalTokens": 60461,
+    "credits": null
+  }
+}

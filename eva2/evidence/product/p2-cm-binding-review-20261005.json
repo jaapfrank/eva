@@ -1,0 +1,36 @@
+{
+  "contract": "EV003NativeBindingCompatibilityReview/v1",
+  "task": "P2.1",
+  "reviewedAt": "2026-10-05T09:03:48.194315+00:00",
+  "reviewer": "/root/p2_authorized_evaluation",
+  "scope": "Content-free structural compatibility of remaining original conversation-memory cases; no admission, score, replacement case or scope removal.",
+  "datasetSha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4",
+  "caseContentExposed": false,
+  "sameExistingSinglePersonTurnSessionCalendarStructure": [
+    "EV003-CM-03",
+    "EV003-CM-06",
+    "EV003-CM-08",
+    "EV003-CM-11",
+    "EV003-CM-12"
+  ],
+  "additionalVerifiedActorAudienceOrSetupBindingRequired": [
+    "EV003-CM-04",
+    "EV003-CM-05",
+    "EV003-CM-07",
+    "EV003-CM-09",
+    "EV003-CM-10"
+  ],
+  "newExternalServiceBrowserFileOrAudioResourcesRequired": [],
+  "qualification": "A matching structural shape is not a claim that the product will satisfy semantic criteria. Each original case needs its exact private projection, source hashes, native admission and original readbacks.",
+  "constraints": [
+    "Frozen C01/C04-origin native guards remain observable. Eva2 intercepts PostgresConversationActions execute/execute_step; Bottie permits only native scoped memory read/write/search plus understanding protocol.",
+    "The frozen ordinary-chat sources expose no dedicated memory-removal tool suppressed by these guards; automatic recall, expanded internal search, persistence and consolidation remain native.",
+    "If an advertised action is intercepted by the bridge, retain its trace and classify that outcome as adapter-limited/unknown, not a product failure.",
+    "Absent required actual context/readback evidence prevents a pass; selected IDs and completed native operations alone are not semantic proof.",
+    "Use exact original controls and equal bindings; do not map another person or unverified/shared audience to the original private owner.",
+    "All 72 cases and three epochs remain in scope. Unavailable entries remain unknown, without budget redistribution or an automatic full-matrix launch."
+  ],
+  "newProviderCalls": 0,
+  "productChanges": false,
+  "humanAssessmentsRemainOpen": true
+}

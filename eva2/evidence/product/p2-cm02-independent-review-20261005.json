@@ -1,0 +1,58 @@
+{
+  "contract": "EV003IndependentStoredEvidenceReview/v1",
+  "reviewedAt": "2026-10-05T08:52:41.283477+00:00",
+  "task": "P2.1",
+  "caseId": "EV003-CM-02",
+  "epoch": 1,
+  "reviewer": "/root/p2_authorized_evaluation",
+  "status": "original_objective_conditions_assessed_human_records_remain_open",
+  "participants": {
+    "eva1-bottie": {
+      "objectiveConditionsMet": false,
+      "objectiveConditionsPassed": 1,
+      "objectiveConditionsRequired": 3,
+      "independentReadbacksPassed": 2,
+      "independentReadbacksRequired": 2,
+      "objectiveTaskOutcome": "I",
+      "officialInspectTaskOutcome": null,
+      "humanSemanticRecords": 0,
+      "humanPreference": null,
+      "personalityQuality": null,
+      "clarificationRequests": 0
+    },
+    "eva2": {
+      "objectiveConditionsMet": true,
+      "objectiveConditionsPassed": 3,
+      "objectiveConditionsRequired": 3,
+      "independentReadbacksPassed": 2,
+      "independentReadbacksRequired": 2,
+      "objectiveTaskOutcome": "C",
+      "officialInspectTaskOutcome": null,
+      "humanSemanticRecords": 0,
+      "humanPreference": null,
+      "personalityQuality": null,
+      "clarificationRequests": 0
+    }
+  },
+  "officialScoreBoundary": "The unchanged FinalDataset.evaluate requires two genuine recorded_human semantic decisions. Technical criterion review is not a human record or final C score. No human scores, preference or full comparison win inferred.",
+  "previousAccessBlocker": "Resolved for the designated evaluator by explicit owner authorization and normal approval review.",
+  "newProviderCalls": 0,
+  "newScenarioRuns": 0,
+  "productChanges": false,
+  "cm01OriginalFailurePreserved": true,
+  "criteriaModified": false,
+  "originalInspectLogsUnchanged": true,
+  "assessment": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm02-epoch1/inspect-private/independent-pair-assessment-authorized-20261005.json",
+    "sha256": "ef37b98f7adbfd4ac80c4405c5014e77ebf3c7b9460879b465120f0a8f197a87",
+    "previousAssessmentSha256": "0943a4ca1f456c8152341845aaafb4a4645ec125431ff3e2e693d02657cb7c4d"
+  },
+  "binding": {
+    "caseSha256": "981571f858b5b61f7a3d193e086e3a8e9947684c3277255cb18aeb04af9bfc5c",
+    "datasetSha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4",
+    "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "projectionSha256": "d84386917e4aa42a19e4125e1e8901b352ca6cfe8a01e5a0d9464488650021ee"
+  },
+  "comparisonWin": null,
+  "credits": null
+}
