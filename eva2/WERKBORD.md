@@ -1,5 +1,31 @@
 # EVA2 werkbord
 
+## 6 oktober — geïnstalleerde cataloguscorrectie
+
+**Spraak blijft geparkeerd. P2.1 blijft open;32/44 oorspronkelijke kleine taken klaar.**
+
+Dezelfde catalogus met24 tools gaat verliesvrij van35.958 naar27.780bytes in de
+modelweergave (22,7% minder). Alle schema’s, complete instructies en het oorspronkelijke
+bewijs blijven behouden. Kern en werker hebben exact de beoordeelde bron; beide
+gezond.134 gerichte tests slagen; één catalogushashassertie faalde al vóór de wijziging
+en is niet aangepast.
+
+Eva rondde via haar eigen browser de gewone openbare documentatievraag af, zonder
+hulp of herstart:42s, gerapporteerd gedeeltelijk57.090invoer+402uitvoer. Daarna haalde
+zij een verse catalogus op en noemde zij de juiste navigatietool en verplichte
+URL-invoer. De nieuwe weergave is op die echte catalogus exact terug uitvouwbaar.
+Foregroundverbruik en creditkosten onbekend; verschillende opdrachten zijn geen
+voor/na-meting van snelheid of kosten. Geen AIDE²-claim of extra groene hoofdfunctie.
+
+**Nu:** onafhankelijke protocolreview afgerond. Het protocol vereist na deze
+wijziging een nieuwe onafhankelijke eindset; de vorige toestemming bindt alleen
+het oude vaste plan. Eén besluit over de aparte eindbeoordeling staat in deze chat.
+Geen nieuwe modelproef loopt. De oorspronkelijke verliezen blijven ongewijzigd.
+[Concrete kandidaat en beoordelingsvoorwaarden](evidence/product/p2-changed-candidate-evaluation-decision-20261006.json).
+[Oplevering en meetbewijs](evidence/product/p2-catalogue-model-view-20261006.json) ·
+[Bestaande beslismatrix Eva1/concurrenten](evidence/product/p2-prebuild-decision-20261005.json).
+
+
 ## 5 oktober — algemene foutterugkoppeling
 
 P2.1: beide onderzochte combinatietaken kregen een MCP-toolfout waarvan de details verloren gingen. De bestaande route bewaart die nu als onbetrouwbare, begrensde diagnostiek; onbekende effecten worden niet herhaald. 90 gerichte tests geslaagd en bronreview akkoord; geïnstalleerde kern en worker gezond en bronhash/import gecontroleerd. Geen spraakwerk, nieuwe taak of extra groene hoofdtaak. Zie evidence/product/p2-tool-error-feedback-20261005.json. De onderliggende taakmislukking blijft staan; algemene voorsprong blijft onbewezen.
@@ -9,7 +35,7 @@ P2.1: beide onderzochte combinatietaken kregen een MCP-toolfout waarvan de detai
 [Beslismatrix vóór verdere bouw](evidence/product/p2-prebuild-decision-20261005.json):
 enkele geheugenvoordelen, geen bewezen algemene voorsprong.
 
-**Laatste proefuitkomst — P2.1: XD02 niet afgerond.**
+**Laatste oorspronkelijke eindproefuitkomst — P2.1: XD02 niet afgerond.**
 Eén oorspronkelijke opdracht eindigde failed/incomplete_work; de owner-foutmelding
 is bereikbaar. Beide diensten onveranderd, nul aanvragen/effecten.
 

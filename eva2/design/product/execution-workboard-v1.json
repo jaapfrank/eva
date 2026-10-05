@@ -123,40 +123,13 @@
       ],
       "priorityDecision": "Eerst de vier huisgenootuitkomsten afmaken; geen actief spraakwerk. Vergelijkingsbewijs bepaalt de verbetering vóór bouwen.",
       "dashboardVerification": {
-        "status": "local_browser_verified_not_full_product_acceptance",
-        "priorityRevision": {
-          "date": "2026-09-07",
-          "result": "Five outcome phases cover the same complete open work queue in exact order; conversation and voice brought forward, no original milestone removed.",
-          "workboardTestsPassed": 17,
-          "browser": "Desktop 1440x1100 and phone 390x844: phase expand/search, source refresh, stale error and dynamic runtime label passed; zero external requests, browser storage or model calls.",
-          "reviewedBy": "/root/identity_pair_review",
-          "reviewDecision": "GO for local UX-000 dashboard and revised priority display only",
-          "reviewedSourceSha256": {
-            "experiments/react-admin-dashboard-v1/src/project-dashboard.jsx": "cea6d896f11fcb96d6488cecabc1b84fe915ed0f7fe387e8f1e5e7c78829490c",
-            "experiments/react-admin-dashboard-v1/src/project-dashboard.css": "38a409637641b50eb5a4c98900ac4a641a734f678caa58958f9bd13eef9d8c47",
-            "experiments/react-admin-dashboard-v1/verify-project.cjs": "8dc3cc7507328a00030855e12e298ceb35a102c633e158de9d897099a1f1a4dc",
-            "tools/check_current_workboard.py": "a64163310c14f1b455503b44a2dfca1c15222fde53e1973f6ac1c27ebd79894b"
-          },
-          "nonclaims": "No runtime improvement, copied competitor code, benchmark win or final acceptance. Local UX-000 closure is bound separately in completions and its evidence receipt."
-        },
-        "url": "http://localhost:44712",
-        "service": "eva2-project-dashboard.service",
-        "hosting": "Loopback Vite preview under persistent user systemd unit with restart on failure; current start verified separately, full reboot not tested.",
-        "checks": [
-          "Existing React-admin production build in project mode",
-          "Real source JSON matches endpoint",
-          "Desktop 1440x1100 and phone 390x844",
-          "Task filtering and capability details",
-          "Refresh and stale-data warning",
-          "POST and cross-origin requests rejected",
-          "Zero external browser requests, storage entries or model calls",
-          "13 workboard tests passed after fixing the root README path validation"
-        ],
-        "review": "Independent bounded source review: GO for local dashboard proof, not production hosting or complete product acceptance.",
-        "remaining": [
-          "Code-level reuse decisions and comparable competitor trials",
-          "Historical shared repository contents not yet split out"
-        ]
+        "checkedAt": "2026-10-05T23:34:24.615510+00:00",
+        "route": "http://127.0.0.1:44712/project-state",
+        "latestInstalledDeliveryPresent": true,
+        "activeTaskPresent": true,
+        "method": "Existing webapp data endpoint; HTML shell alone is not the dashboard data.",
+        "privateContentPrinted": false,
+        "newFrontendSource": false
       },
       "summary": "32/44 oorspronkelijke kleine taken afgerond. Enkele geheugenvoordelen gemeten; algemene voorsprong op Eva1/concurrenten niet bewezen. XD01/XD02 niet afgemaakt. Spraak geparkeerd.",
       "nextOutcomes": [
@@ -1034,8 +1007,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T22:58:07.507610+00:00",
+        "checkedAt": "2026-10-05T23:34:24.615510+00:00",
         "deliveries": [
+          {
+            "title": "Minder herhaalde toolinformatie werkelijk geïnstalleerd",
+            "date": "6 oktober",
+            "state": "installed",
+            "result": "Dezelfde24-toolcatalogus gaat verliesvrij35.958→27.780bytes in modelweergave. Schema’s, gereedschappen, guidance en origineel bewijs behouden. Kern/werker gezond; gewone browseropdracht en versecatalogus-uitleg geslaagd.",
+            "remaining": "Geen nieuw groen hoofdonderdeel of bewezen token-/snelheids-/kostenwinst. P2.1-eindvergelijking blijft open; oude verliezen staan. Spraak geparkeerd.",
+            "source": "eva2/evidence/product/p2-catalogue-model-view-20261006.json"
+          },
           {
             "title": "Eva levert browseronderzoek als gecontroleerd bestand op",
             "date": "6 oktober",
@@ -3824,24 +3805,25 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Minder herhaalde modelinvoer installeren",
+          "title": "P2.1 · Besluit over aparte eindbeoordeling",
           "state": "in_progress",
           "owner": "/root",
-          "detail": "35.958→27.780 bytes op dezelfde grote toolcatalogus, zonder inhoudsverlies. Review akkoord; installatie en één gewone routecontrole volgen. Spraak geparkeerd; algemene winst niet aangetoond."
+          "detail": "De gerichte catalogusverbetering is geïnstalleerd en gecontroleerd. Nieuwe vergelijking niet gestart: na bronwijziging vereist het protocol een nieuwe onafhankelijke eindset. Beantwoord de ene toestemmingsvraag in deze chat. Spraak blijft geparkeerd."
         },
         "next": {
-          "title": "Zelfstandige taakafronding verbeteren",
-          "detail": "Gerichte gewone ontwikkeluitvoering met de bestaande middelen; afgeschermde eindproeven apart houden. Geen nieuwe voorbeeldfunctie of onbewezen voorsprong."
+          "title": "Gewijzigde eindkandidaat eerlijk vergelijken",
+          "detail": "Na toestemming nieuwe freeze/eindset met oorspronkelijke criteria en bestaande verbruiksgrenzen. Oude verliezen blijven staan; geen automatische volledige matrixstart."
         },
         "ownerAction": {
-          "title": "Open beslissingen en gebruiksoordeel",
+          "title": "Eén besluit voor de vergelijking",
           "steps": [
             "Geen spraak-/speakerproef nodig: spraak op jouw verzoek geparkeerd.",
             "P2.1 is toegestaan en wordt uitgevoerd. De afzonderlijke innovatieproef R1 is hiermee niet toegestaan; de open R1-vraag blijft apart.",
             "Voor F1.2: sla je werk op, kies Windows → Opnieuw opstarten en meld daarna Herstart klaar in deze chat. Er is geen automatische herstart ingesteld.",
             "Persoonlijkheid M3.3 is geaccepteerd. Nut van initiatief en zeven dagen gezinsgebruik blijven jouw beoordeling. Native aanmeldingen voor concurrenten zijn nog niet actueel bevestigd."
           ],
-          "expected": "M3.3 blijft geaccepteerd. Nut/initiatief en gezinsacceptatie afzonderlijk open; geen nieuwe spraakhandeling. 32/44 oorspronkelijke taken klaar."
+          "expected": "M3.3 blijft geaccepteerd. Nut/initiatief en gezinsacceptatie afzonderlijk open; geen nieuwe spraakhandeling. 32/44 oorspronkelijke taken klaar.",
+          "detail": "Beantwoord de vraag in deze chat: aparte eindbeoordeling van de gewijzigde kandidaat toestaan, of nieuwe modelproeven uitstellen. Voor spraak hoef je nu niets te doen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
         "reviewedAt": "2026-10-05T21:28:42.222430+00:00"
@@ -16716,39 +16698,42 @@
             {
               "id": "P2.1",
               "title": "Vergelijking op eindkandidaat uitvoeren",
-              "status": "in_progress",
+              "status": "blocked",
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Algemene taakafronding via gewone ontwikkelroute gericht verbeteren; oude eindproef apart houden. Een gewijzigde eindkandidaat krijgt een passende afzonderlijke onafhankelijke beoordeling, zonder oude verliescijfers te herschrijven.",
-              "ownerActionRequired": false,
+              "nextAction": "Na expliciete toestemming gewijzigde kandidaat afzonderlijk bevriezen, nieuwe onafhankelijke ongeziene eindset vastleggen en alleen toegelaten oorspronkelijke vergelijkingen uitvoeren. Originele verliezen en criteria blijven staan.",
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "P2.1 is toegestaan; geen herhaalde toestemmingsvraag. Alleen werkelijk ontbrekende native aanmelding kan nog hulp vragen.",
-                "steps": [],
+                "availableNow": true,
+                "purpose": "decision",
+                "readyWhen": "Concrete kandidaat en ongewijzigde beoordelingsvoorwaarden zijn vastgelegd; onafhankelijke protocolreview afgerond.",
+                "steps": [
+                  "Beantwoord de vraag in deze chat: aparte eindbeoordeling toestaan of nieuwe modelproeven uitstellen."
+                ],
+                "expected": "Eén expliciet besluit over de gewijzigde eindkandidaat; geen R1-proef of automatische volledige matrixstart.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-05T23:11:38.083666+00:00",
+              "checkedAt": "2026-10-05T23:34:24.615510+00:00",
               "assignment": {
-                "baseCommit": "fe29b74f0d64c150075f0c7251647038f75f31be",
+                "baseCommit": "e02192e784dbdcb8a0e23ead621004d94aefb466",
                 "owner": "/root",
                 "activeWorkers": [
                   "/root"
                 ],
                 "files": [
-                  "/root: modelweergave, gerichte regressies, openbare bytevergelijking, installatie, bewijs en Git.",
-                  "/root/xd01_runtime_review: alleen-lezen onafhankelijke review van die concrete delta; geen eindproefgegevens."
+                  "/root: bewaart geïnstalleerde binding, bewijs, werkbord en Git."
                 ],
                 "existing": "CM01–CM12 epoch1 voor Eva1/Eva2 zijn eenmaal uitgevoerd en onafhankelijk beoordeeld waar het bewijs dat toelaat. Verliezen en onbekende uitkomsten blijven behouden; dit voltooit niet de overige deelnemers/epochs/families.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "XD01 oorspronkelijk eenmaal uitgevoerd; gemeten gebruik hieronder. Volgende oorspronkelijke proef alleen binnen de reeds vastgelegde familie-envelop. Creditkosten en Codex-ontwikkelverbruik onbekend.",
-                "currentAction": "Onafhankelijke bronreview GO; 134 tests geslaagd, één bewezen oude catalogusassertie apart. Beide draaiende modules matchen exact de beoordeelde basis. Eén bronbestand wordt samen in kern/werker geïnstalleerd; gewone routecontrole volgt. Geen spraakwerk of algemene voorsprongclaim.",
+                "currentAction": "Geïnstalleerde cataloguscorrectie en beide gewone routes afgerond; Git-broncheckpoint gepubliceerd. Onafhankelijke protocolreview klaar. Eén expliciet besluit over aparte eindbeoordeling open; geen modelproef loopt.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "evidence": "74dcb8d2: openbare browser/documentopdracht werkelijk afgemaakt na operatorcorrectie; bestand/pagina onafhankelijk gecontroleerd; gemeten verbruik en beperkingen gepubliceerd."
+                  "evidence": "e02192e7: verliesvrije gedeelde catalogusguidance, bronreview GO,134 gerichte tests plus oude assertie vastgelegd. Beide images geïnstalleerd/gezond; gewone browseropdracht en verse24-toolcatalogus+schema-uitleg geslaagd. Geen extra producttaak, spraak of algemene winstclaim."
                 },
-                "stage": "lossless_catalogue_view_reviewed_installing",
+                "stage": "changed_candidate_evaluation_owner_decision_pending",
                 "finding": "Beide gesloten vergelijkingen ontvingen result.isError na gateway-RPC. De bestaande adapter verwijderde de detailtekst; de innerlijke foutoorzaak is niet meer vast te stellen.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
@@ -16904,16 +16889,17 @@
                   "testRuntime": "Existing Python3.12.14 plus existing complete package set; no installation."
                 },
                 "changeEvidence": "eva2/evidence/product/p2-tool-error-feedback-20261005.json",
-                "installationEvidence": "eva2/evidence/product/p2-tool-error-feedback-20261005.json",
+                "installationEvidence": "eva2/evidence/product/p2-catalogue-model-view-20261006.json",
                 "backendDiagnosticEvidence": "eva2/evidence/product/p2-xd-backend-log-diagnostic-20261005.json",
                 "nextCandidateBinding": {
                   "originalPlan": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
                   "originalCandidateFreeze": "09897a070e8d9163aa8c90475f2eb1fe81697ad05836267e0b8fb1f94bb176b7",
-                  "changedInstalledCandidateEvidence": "eva2/evidence/product/p2-tool-error-feedback-20261005.json",
+                  "changedInstalledCandidateEvidence": "eva2/evidence/product/p2-catalogue-model-view-20261006.json",
                   "sameFrozenFinalRunAllowed": false,
                   "originalXd03Started": false,
                   "historicalOutcomesRescored": false,
-                  "conclusion": "Development diagnosis stays outside the sealed final cases; a changed candidate is not silently admitted to the old final run."
+                  "conclusion": "Development diagnosis stays outside the sealed final cases; a changed candidate is not silently admitted to the old final run.",
+                  "changedInstalledSourceCommit": "e02192e784dbdcb8a0e23ead621004d94aefb466"
                 },
                 "developmentTask": {
                   "referenceVersion": "Installed diagnostic-delta, sourcepatch51a35567; core820c3d3a and workerfed292a2, evidence p2-tool-error-feedback-20261005.json.",
@@ -16993,9 +16979,11 @@
                   ],
                   "change": "Alleen modelweergave van bewezen geregistreerde catalogus: herhaalde guidance verliesvrij via gedeelde waarde refereren wanneer totale JSONomvang daadwerkelijk kleiner wordt.",
                   "finish": "Verliesvrij terug uitvouwbare invoer, gemeten minder bytes op dezelfde bewaarde openbare catalogus, gerichte tests/review, geïnstalleerde code/health en gewone gebruikersroute gericht gecontroleerd. Geen tokensnelheids- of algemene winstclaim op basis van bytes alleen.",
-                  "runtimeBudget": "Geen modelcalls tijdens diagnose/bytevergelijking; hoogstens noodzakelijke gewone geïnstalleerde routecontrole. Creditkosten onbekend."
+                  "runtimeBudget": "Geen modelcalls tijdens diagnose/bytevergelijking; hoogstens noodzakelijke gewone geïnstalleerde routecontrole. Creditkosten onbekend.",
+                  "outcome": "Installed and focused public route checks verified; lossless model-view bytes reduced22.7% for same24-toolcatalog. Runtime price/latency and overall superiority remain unknown."
                 },
-                "contextChangeEvidence": "eva2/evidence/product/p2-catalogue-model-view-20261006.json"
+                "contextChangeEvidence": "eva2/evidence/product/p2-catalogue-model-view-20261006.json",
+                "independentProtocolDecision": "eva2/evidence/product/p2-changed-candidate-evaluation-decision-20261006.json"
               },
               "remaining": "CM01 beide mislukt; CM02 objectief Eva1 1/3/Eva2 3/3; CM03 onvolledige readbacks; CM04 Eva1 onvoldoende/Eva2 onbekend; CM05 Eva2 geslaagd/Eva1 onbekend; CM06 Eva2 geslaagd/Eva1 onvoldoende; CM07 beide onvoldoende en Eva1 groepsaflevering onvolledig; CM08 Eva2 geslaagd/Eva1 onvoldoende; CM09 en CM10 Eva2 geslaagd (elk 3/3+2/2), Eva1 onbekend door onvolledige uitvoering. CM11 Eva1 onvoldoende; Eva2 juiste antwoorden, verplichte geheugenvoorwaarde onbekend. CM12 beide onvoldoende; Eva2 mist opgeslagen context in het latere antwoord. XD01 Eva2 niet afgerond, Eva1 niet uitvoerbaar via de vastgelegde route (geen verliesclaim). Overige oorspronkelijke gevallen, concurrenttoegang en menselijke beoordeling blijven open. Geen algemene voorsprong of extra productfunctie. XD02: Eva2 niet afgerond; beide diensten ongewijzigd. Algemene voorsprong niet aangetoond.",
               "latestEvidence": "eva2/evidence/product/p2-xd02-independent-state-20261005.json",
@@ -17009,7 +16997,7 @@
                 "resolvedAt": "2026-10-04T15:04:47.848198+00:00",
                 "scope": "Historical refusal before process creation; resolved through the same automatic review path after new synthetic-input provenance evidence. Counts here describe the rejected attempt only; current execution is in latestEvidence."
               },
-              "blocker": null,
+              "blocker": "Een gewijzigde kandidaat vereist volgens het bestaande protocol een nieuwe onafhankelijk gemaakte eindset. De eerdere toestemming bindt het oude vaste plan; de aparte eindbeoordeling vraagt het expliciete besluit dat nu in deze chat staat. Geen nieuwe meetronde gestart.",
               "assessmentBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_with_authorized_independent_processing",

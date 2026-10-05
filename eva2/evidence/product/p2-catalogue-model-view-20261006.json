@@ -35,7 +35,7 @@
   ],
   "candidateSourceSha256": "2888e28a47476f8093463bc4fac5e66f36f6e2223556c8955dc0274de5968d07",
   "contract": "EvaLosslessCatalogueModelView/v1",
-  "status": "reviewed_candidate_installing",
+  "status": "installed_focused_routes_verified",
   "tests": {
     "passed": 134,
     "failed": 1,
@@ -51,7 +51,7 @@
     "All original outcomes and fixed evaluation criteria remain unchanged.",
     "Manual deterministic serialization improvement, not AIDE or AIDE2 self-improvement."
   ],
-  "checkedAt": "2026-10-05T23:11:38.083666+00:00",
+  "checkedAt": "2026-10-05T23:27:46.847424+00:00",
   "independentReview": {
     "reviewer": "/root/xd01_runtime_review",
     "decision": "GO",
@@ -64,7 +64,7 @@
     "installationBaselineSha256": "5eb31eb57b0959d29919e5b3b7e053f588752ce9559433b16c47ef0ac5db2e23"
   },
   "installation": {
-    "state": "prepared",
+    "state": "installed_healthy",
     "baselineConfirmedOnBothContainers": true,
     "changedFiles": [
       "src/eva/adapters/model/pydantic_conversation.py"
@@ -75,6 +75,205 @@
     },
     "speechChanged": false,
     "dependencyChanged": false,
-    "databaseMigration": false
-  }
+    "databaseMigration": false,
+    "coreImage": "sha256:17709b26406e6c96d37665e36d69c8ceaeb96dde355fe07da8fb9a5d415effd6",
+    "workerImage": "sha256:78f38eae86c4935059b18829bb9eb5d055ab67b06d2e4b0da43ec95c6b8aef90",
+    "bothImportsConfirmed": true,
+    "bothInstalledSourceSha256": "2888e28a47476f8093463bc4fac5e66f36f6e2223556c8955dc0274de5968d07",
+    "checkedAt": "2026-10-05T23:14:36.980363+00:00",
+    "verification": {
+      "checkedAt": "2026-10-05T23:14:36.980363+00:00",
+      "containers": [
+        {
+          "role": "core",
+          "image": "sha256:17709b26406e6c96d37665e36d69c8ceaeb96dde355fe07da8fb9a5d415effd6",
+          "health": "healthy",
+          "running": true,
+          "sourceCommit": "e02192e784dbdcb8a0e23ead621004d94aefb466",
+          "sourceSha256": "2888e28a47476f8093463bc4fac5e66f36f6e2223556c8955dc0274de5968d07",
+          "helperImported": true
+        },
+        {
+          "role": "delegated-work-worker",
+          "image": "sha256:78f38eae86c4935059b18829bb9eb5d055ab67b06d2e4b0da43ec95c6b8aef90",
+          "health": "healthy",
+          "running": true,
+          "sourceCommit": "e02192e784dbdcb8a0e23ead621004d94aefb466",
+          "sourceSha256": "2888e28a47476f8093463bc4fac5e66f36f6e2223556c8955dc0274de5968d07",
+          "helperImported": true
+        }
+      ],
+      "sourceRefreshFiles": [
+        "src/eva/adapters/model/pydantic_conversation.py"
+      ],
+      "sourceCommit": "e02192e784dbdcb8a0e23ead621004d94aefb466",
+      "dataVolumesRetained": true,
+      "composeChangedFields": [
+        "services.core.image",
+        "services.delegated-work-worker.image"
+      ]
+    }
+  },
+  "sourceCommit": "e02192e784dbdcb8a0e23ead621004d94aefb466",
+  "ordinaryRouteCheck": {
+    "state": "succeeded",
+    "prompt": "Gebruik je eigen browser om in de officiële MCP Python SDK-clientdocumentatie op https://py.sdk.modelcontextprotocol.io/client/ de uitleg over toolfouten te lezen. Geef een korte Nederlandse uitleg van is_error met die bronlink. Je hoeft niets op te slaan of aan te passen.",
+    "outcome": "Eva leest de bedoelde openbare pagina via haar eigen browser en geeft een juiste korte uitleg met bron terug.",
+    "conditions": [
+      "Existing ordinary owner conversation route and provider; no sealed final-case data.",
+      "No device/person/account changes or new connector; no speech.",
+      "One original task under the existing admitted runtime grant; repeat only for a newly demonstrated changed cause."
+    ],
+    "creditCost": null,
+    "runtimeSuperiorityClaim": false,
+    "startedAt": "2026-10-05T23:15:16.698479+00:00",
+    "workId": "work:eva-chat:42a0872f-ebbf-54a5-8150-e97d06edddad",
+    "sourceMessageId": "dashboard:9f00f357-5712-457a-81e7-bebab73f45bc",
+    "completedAt": "2026-10-05T23:15:58Z",
+    "seconds": 42,
+    "output": "Ik heb de uitleg in mijn eigen browser gelezen. is_error=True betekent dat de toolaanroep een foutresultaat teruggeeft: je ontvangt een gewoon resultaat met foutinformatie in content, niet automatisch een uitzondering in je client. Controleer daarom is_error voordat je structured_content gebruikt.\n\nDat verschilt van een JSON-RPC-foutantwoord: daarbij werpt de client MCPError op. Geef de fouttekst uit content door aan het model, zodat het zijn aanpak kan corrigeren.\n\nBron: https://py.sdk.modelcontextprotocol.io/client/#is_error-whether-the-tool-failed",
+    "outputSha256": "94d8e2e33506644bbb9bc2b81d6c8b64eb813da08d3f2d54f2177b2ce5fc52a8",
+    "reportedUsage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 4,
+      "tool_calls": 3,
+      "input_tokens": 57090,
+      "output_tokens": 402,
+      "total_tokens": 57492,
+      "cost_usd_micros": null
+    },
+    "browserToolReceipts": [
+      {
+        "step": 1,
+        "action": "use_connector_tool",
+        "status": "verified",
+        "proofSource": "mcp_gateway_invocation_response",
+        "toolId": "858f672e-db37-52ff-a713-a616ca5d77ed:fdf02fa16e62b876f8ca5901478a697d2b0f193e426be395b48141fff1dd2ac9"
+      },
+      {
+        "step": 2,
+        "action": "use_connector_tool",
+        "status": "verified",
+        "proofSource": "mcp_gateway_invocation_response",
+        "toolId": "858f672e-db37-52ff-a713-a616ca5d77ed:a7ce6a302090a75eca8f4841068b9ccc23fee836df75b76a46ef9c61753693f9"
+      }
+    ],
+    "independentBrowserPage": [
+      {
+        "url": "https://py.sdk.modelcontextprotocol.io/client/",
+        "title": "The Client - MCP Python SDK",
+        "type": "page"
+      }
+    ],
+    "operatorHelp": false,
+    "resumeRequired": false,
+    "newCatalogReceiptObserved": false,
+    "limit": "This route reused known browser IDs, so it confirms installed browser execution but not fresh shared-guidance catalog consumption."
+  },
+  "catalogueConsumptionCheck": {
+    "state": "succeeded",
+    "whyNecessary": "The successful ordinary browser check used known IDs and produced no catalog receipt. This different observation supplies the missing modified-path evidence; it does not repeat the browser task.",
+    "prompt": "Vraag de actuele geregistreerde catalogus van je eigen browser op. Vertel op basis daarvan welke tool nodig is om een URL te openen, met de verplichte invoervelden. Baseer dat op de actuele catalogus, niet op herinnerde tool-ID’s. Voer geen navigatie uit en start geen ander onderzoek.",
+    "outcome": "Een nieuwe geregistreerde browsercatalogus wordt opgehaald; de gedeelde modelweergave wordt toegepast en het model noemt de juiste navigatietool en verplichte URL-invoer.",
+    "budget": "One focused ordinary catalog observation under existing provider and runtime grant; no new platform, AIDE search, benchmark rerun or browser navigation. Credit cost unknown.",
+    "startedAt": "2026-10-05T23:20:53.588222+00:00",
+    "creditCost": null,
+    "sourceMessageId": "dashboard:330d25a9-cd82-4954-9df8-9147be22395f",
+    "provider": "chatgpt-codex:gpt-6-astra",
+    "replyGeneratedAt": "2026-10-05T23:20:53Z",
+    "output": "Ik heb de actuele geregistreerde catalogus van mijn eigen browser opgevraagd. Voor het openen van een URL staat daarin de tool eva-connector-cf71c26d6ede3e345a227f2a18d7ee6e-browser-navigate, met de beschrijving “Navigate to a URL”.\n\nHet enige verplichte invoerveld is url, van het type string: het webadres waarnaar genavigeerd moet worden. Het invoerobject accepteert geen extra velden.\n\nIk heb geen navigatie uitgevoerd en geen ander onderzoek gestart.",
+    "outputSha256": "364329f6fbafbb7c37c62d59e05188b5382816ce8a2c077bd226c5cfd635a53a",
+    "catalogueProof": [
+      {
+        "step": 1,
+        "toolCount": 24,
+        "encoding": "shared_tool_guidance_v1",
+        "beforeModelViewBytes": 35958,
+        "afterModelViewBytes": 27780,
+        "exactExpansionMatchesOriginal": true,
+        "observationSha256": "8cd01eaceddb7e851f8e0a807c9b2ab5283921b35518814caf69b2a35e5952a2",
+        "modelViewSha256": "cf4aaa118bef337873a10fba7071a8389561d384044492e7aa1d2d8d6b201e11",
+        "navigateTools": []
+      },
+      {
+        "step": 0,
+        "toolCount": 0,
+        "encoding": null,
+        "beforeModelViewBytes": 6482,
+        "afterModelViewBytes": 6482,
+        "exactExpansionMatchesOriginal": true,
+        "observationSha256": "137900ec069bf425992e2bff5da8c7af09b7c7e083d465e424bd10d2514bdfe3",
+        "modelViewSha256": null,
+        "navigateTools": []
+      }
+    ],
+    "navigationTool": {
+      "name": "connector_8ba621d96e3173ddd6c11b3b735992de",
+      "provider_tool_name": "eva-connector-cf71c26d6ede3e345a227f2a18d7ee6e-browser-navigate",
+      "description": "Navigate to a URL",
+      "input_schema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "The URL to navigate to"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "schemaAnswerMatchesStoredOriginal": true,
+    "providerUsage": null,
+    "providerUsageLimit": "Foreground per-phase usage was not returned in this public reply or ordinary conversation event slice. Unknown; no estimate.",
+    "verificationMethod": "Known-message original receipts read under matching tenant scope; view reconstructed with exact installed helper and independently expanded. Source review/test establishes same helper on admission/history. Raw provider request was not captured.",
+    "newBrowserNavigation": false,
+    "newModelCallsDuringProofInspection": 0
+  },
+  "runtimeAccounting": {
+    "ordinaryBackgroundReportedUsage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 4,
+      "tool_calls": 3,
+      "input_tokens": 57090,
+      "output_tokens": 402,
+      "total_tokens": 57492,
+      "cost_usd_micros": null
+    },
+    "foregroundUsage": "unknown",
+    "combinedCompleteUsage": false,
+    "creditCost": null,
+    "codexDevelopmentCredits": null,
+    "comparisonOnSameTaskBeforeAndAfter": false
+  },
+  "preparationCorrections": [
+    {
+      "cause": "Root attempted Git without repository-owner user; Git refused before build.",
+      "correction": "Git reads run as administrator; no global safe-directory change.",
+      "providerCalls": 0
+    },
+    {
+      "cause": "Metadata checker assumed every indexed slot is an external-tool receipt. Slots3/4 empty; not a runtime task failure.",
+      "correction": "Inspect present exact-task receipts; preserve reported usage separately.",
+      "providerCalls": 0
+    }
+  ],
+  "dashboardVerification": {
+    "checkedAt": "2026-10-05T23:34:24.615510+00:00",
+    "route": "http://127.0.0.1:44712/project-state",
+    "latestInstalledDeliveryPresent": true,
+    "activeTaskPresent": true,
+    "method": "Existing webapp data endpoint; HTML shell alone is not the dashboard data.",
+    "privateContentPrinted": false,
+    "newFrontendSource": false
+  },
+  "separateEvaluationDecision": "eva2/evidence/product/p2-changed-candidate-evaluation-decision-20261006.json",
+  "productTaskCompletionCountChanged": false
 }

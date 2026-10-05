@@ -1,0 +1,47 @@
+{
+  "contract": "EvaChangedCandidateEvaluationDecision/v1",
+  "state": "prepared_owner_decision_pending",
+  "recordedAt": "2026-10-05T23:32:17.728880+00:00",
+  "taskId": "P2.1",
+  "newProductTaskIds": false,
+  "independentReviewer": "/root/xd01_final_evaluation",
+  "reviewerProviderCalls": 0,
+  "protocol": {
+    "path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+    "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+    "lines": "99–100",
+    "rule": "Aanpassing maakt de set ontwikkeldata en vereist een nieuwe onafhankelijk gemaakte eindset."
+  },
+  "originalPlan": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+    "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "originalFrozenCandidate": "09897a070e8d9163aa8c90475f2eb1fe81697ad05836267e0b8fb1f94bb176b7",
+    "changedCandidateAdmitted": false,
+    "historicalLossesRewritten": false
+  },
+  "existingAuthorization": {
+    "path": "eva2/evidence/product/p2-owner-authorization-20261005.json",
+    "sha256": "7470627a9ef09ae8f625e420251a19b36bf950bb17689ee369359e3e2f4df8b5",
+    "scope": "Existing fixed plan, original conditions/provider route, independent private processing. Separate new final-set/run not expressly named."
+  },
+  "candidate": {
+    "sourceCommit": "e02192e784dbdcb8a0e23ead621004d94aefb466",
+    "catalogueSourceSha256": "2888e28a47476f8093463bc4fac5e66f36f6e2223556c8955dc0274de5968d07",
+    "coreImage": "sha256:17709b26406e6c96d37665e36d69c8ceaeb96dde355fe07da8fb9a5d415effd6",
+    "workerImage": "sha256:78f38eae86c4935059b18829bb9eb5d055ab67b06d2e4b0da43ec95c6b8aef90",
+    "installedEvidence": "eva2/evidence/product/p2-catalogue-model-view-20261006.json",
+    "freezeState": "Prepared binding; final source/config/native-adapter/model-setting freeze must precede any new protected set commitment."
+  },
+  "successorConditions": [
+    "Separate candidate/version-bound final evaluation; new unseen independently curated final set after candidate freeze.",
+    "Same original six families,12 cases per family,3 epochs; Eva1 reference and original named competitors. Missing native access or required human/physical ratings remains unknown.",
+    "Same original criteria, family envelopes, provider route, native accounting, readbacks, stop and2 independent human assessments.",
+    "Existing Inspect route/scorer/provenance; no new platform or scorer; builder receives only sanitized findings/metrics.",
+    "No silent continuation/rescoring of original final set; no automatic full-matrix start.",
+    "No R1/AIDE experiment or new provider subscription included."
+  ],
+  "requestedOwnerDecision": "Allow a separate final evaluation of the newly frozen installed candidate under those unchanged original conditions, with only available and separately admitted native executions.",
+  "creditCost": null,
+  "codexDevelopmentCredits": null,
+  "runtimeCallsBeforeDecision": 0
+}
