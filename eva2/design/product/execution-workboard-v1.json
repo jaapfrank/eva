@@ -1034,14 +1034,22 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T16:26:49.351673+00:00",
+        "checkedAt": "2026-10-05T16:49:06.353656+00:00",
         "deliveries": [
+          {
+            "title": "Later herinneren: Eva2 antwoordt juist; niet alle geheugenvoorwaarden bewezen",
+            "date": "5 oktober",
+            "state": "tested",
+            "result": "CM11 onafhankelijk beoordeeld: Eva1 onvoldoende (2/3 inhoudelijk, 1/2 geheugencontroles); Eva2 3/3 inhoudelijk, maar één van twee geheugenvoorwaarden onbekend. De juiste huidige herinnering bewijst niet dat oude informatie bij toekomstige retrieval wordt uitgesloten. Beide oorspronkelijke uitvoeringen en verbruiksmetingen zijn volledig; geen algemene winnaar.",
+            "remaining": "Volledig gemeten: Eva1 35.742 tokens/5 aanvragen, Eva2 24.808/8; samen 60.550 tokens. Creditkosten en menselijke scores onbekend. Geen volledige taakpass, algemene snelheidswinst of nieuwe productfunctie. Stand 32/44; P2.1 blijft open. CM12 nog niet gestart.",
+            "source": "eva2/evidence/product/p2-cm11-paired-result-20261005.json"
+          },
           {
             "title": "Gedeelde ingang: Eva2 bewaart de oorspronkelijke privégrens",
             "date": "5 oktober",
             "state": "tested",
             "result": "CM10 onafhankelijk beoordeeld: Eva2 haalt 3/3 oorspronkelijke inhoudelijke voorwaarden en 2/2 bewijscontroles; alle vier beurten en geheugenverwerking voltooid. Eva1 heeft twee van vier beurten voltooid en één poging zonder volledig verbruik; uitkomst onbekend, geen productverlies afgeleid.",
-            "remaining": "19 modelpogingen, 18 volledig gemeten: minimaal 72.426 tokens; werkelijk totaal en credits onbekend. Geen volledige kosten- of snelheidsvergelijking, nieuwe productfunctie of herhaling. Stand 32/44; P2.1 blijft open. CM11 nog niet gestart.",
+            "remaining": "19 modelpogingen, 18 volledig gemeten: minimaal 72.426 tokens; werkelijk totaal en credits onbekend. Geen volledige kosten- of snelheidsvergelijking, nieuwe productfunctie of herhaling. Stand 32/44; P2.1 blijft open. CM11 is inmiddels beoordeeld; zie nieuwste resultaat.",
             "source": "eva2/evidence/product/p2-cm10-paired-result-20261005.json"
           },
           {
@@ -3776,14 +3784,14 @@
           }
         ],
         "now": {
-          "title": "P2.1 · CM10 beoordeeld; Eva2 geslaagd, Eva1 onbekend",
+          "title": "P2.1 · CM11 beoordeeld; geheugenvoorwaarde Eva2 nog onbewezen",
           "state": "in_progress",
           "owner": "Codex",
-          "detail": "CM10 onafhankelijk beoordeeld: Eva2 haalt 3/3 oorspronkelijke inhoudelijke voorwaarden en 2/2 bewijscontroles; alle vier beurten en geheugenverwerking voltooid. Eva1 heeft twee van vier beurten voltooid en één poging zonder volledig verbruik; uitkomst onbekend, geen productverlies afgeleid. De volledige vergelijking blijft open; CM11 nog niet gestart."
+          "detail": "CM11 onafhankelijk beoordeeld: Eva1 onvoldoende (2/3 inhoudelijk, 1/2 geheugencontroles); Eva2 3/3 inhoudelijk, maar één van twee geheugenvoorwaarden onbekend. De juiste huidige herinnering bewijst niet dat oude informatie bij toekomstige retrieval wordt uitgesloten. Beide oorspronkelijke uitvoeringen en verbruiksmetingen zijn volledig; geen algemene winnaar. De volledige vergelijking blijft open; CM12 nog niet gestart."
         },
         "next": {
-          "title": "CM11 · oorspronkelijke vergelijking voortzetten",
-          "detail": "Volgend oorspronkelijk vergelijkingsgeval: CM11 epoch1; nog niet gestart. Hergebruik de beoordeelde native routes en bind alleen de vereiste oorspronkelijke besturing. Geen herhaling van CM01–CM10. Overige taakfamilies, concurrenttoegang en menselijke beoordelingen blijven zichtbaar."
+          "title": "CM12 · oorspronkelijke vergelijking voortzetten",
+          "detail": "Volgend oorspronkelijk vergelijkingsgeval: CM12 epoch1; nog niet gestart. Bestaande native routes hergebruiken en alleen noodzakelijke oorspronkelijke besturing binden. Geen herhaling van CM01–CM11. Overige taakfamilies, concurrenttoegang en menselijke beoordelingen blijven zichtbaar."
         },
         "ownerAction": {
           "title": "Open beslissingen en gebruiksoordeel",
@@ -3796,7 +3804,7 @@
           "expected": "M3.3 is door Jaap geaccepteerd; daarvoor geen nieuwe beoordeling. De woonkamerproef combineert C3.1 en C4.1. Nut en timing van bestaand initiatief blijven I1.2. 32/44 oorspronkelijke kleine taken klaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-05T16:26:49.351673+00:00"
+        "reviewedAt": "2026-10-05T16:49:06.353656+00:00"
       },
       "reviewedAt": "2026-10-05T00:19:18.098429+00:00"
     },
@@ -16580,7 +16588,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Volgend oorspronkelijk vergelijkingsgeval: CM11 epoch1; nog niet gestart. Hergebruik de beoordeelde native routes en bind alleen de vereiste oorspronkelijke besturing. Geen herhaling van CM01–CM10. Overige taakfamilies, concurrenttoegang en menselijke beoordelingen blijven zichtbaar.",
+              "nextAction": "Volgend oorspronkelijk vergelijkingsgeval: CM12 epoch1; nog niet gestart. Bestaande native routes hergebruiken en alleen noodzakelijke oorspronkelijke besturing binden. Geen herhaling van CM01–CM11. Overige taakfamilies, concurrenttoegang en menselijke beoordelingen blijven zichtbaar.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -16588,27 +16596,26 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-05T16:26:49.351673+00:00",
+              "checkedAt": "2026-10-05T16:49:06.353656+00:00",
               "assignment": {
-                "baseCommit": "6df7291f",
+                "baseCommit": "e700143a5d6d9b94dc42ac987bc4b8d1dd24d9cf",
                 "owner": "/root",
                 "activeWorkers": [],
                 "files": [
-                  "/root/aide_final_evaluation: CM10 protected projection, admissions and independent result",
-                  "/root/background_execution_seam: Eva1 CM10 native shared ingress driver only",
-                  "/root: Eva2 CM10 driver, coordinator execution and existing board"
+                  "/root/aide_final_evaluation: protected CM11 projection, admission and independent evaluation",
+                  "/root: native CM11 binding, execution, public evidence and existing board"
                 ],
-                "existing": "CM01–CM10 epoch1 zijn eenmaal uitgevoerd en onafhankelijk beoordeeld voor zover de oorspronkelijke waarnemingen dat toelaten. Verliezen en onbekende uitkomsten blijven behouden.",
+                "existing": "CM01–CM11 epoch1 zijn eenmaal uitgevoerd en onafhankelijk beoordeeld voor zover de oorspronkelijke waarnemingen dat toelaten. Verliezen en onbekende uitkomsten blijven behouden.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
-                "estimate": "Voorbereiding hergebruikt bestaande drivers; nul modelaanvragen. Uitvoering uitsluitend binnen het oorspronkelijke manifest; werkelijk verbruik wordt achteraf gerapporteerd, credits onbekend.",
-                "currentAction": "CM10 afgerond en onafhankelijk beoordeeld. Bewijs en oorspronkelijke fouten bewaard; eigen proefresources opgeruimd. Volgende oorspronkelijke proef CM11 nog niet gestart.",
+                "estimate": "Voorbereiding/review: nul modelaanvragen. Oorspronkelijke CM-proef gebruikt maximaal 16 modelpogingen per deelnemer en bestaande vaste voorwaarden; werkelijk verbruik achteraf, credits onbekend.",
+                "currentAction": "CM11 afgerond en onafhankelijk beoordeeld. Resultaten en oorspronkelijke fouten blijven bewaard; eigen proefresources zijn opgeruimd. CM12 nog niet gestart.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "evidence": "6df7291f: CM09 independently assessed and published; bounded benchmark late-control correction reviewed and committed, original unknowns retained."
+                  "evidence": "e700143a: CM10 original pair independently assessed and published; unknown Eva1 result and original 32/44 task status preserved."
                 },
-                "stage": "cm10_assessed_next_not_started",
-                "finding": "CM10 onafhankelijk beoordeeld: Eva2 haalt 3/3 oorspronkelijke inhoudelijke voorwaarden en 2/2 bewijscontroles; alle vier beurten en geheugenverwerking voltooid. Eva1 heeft twee van vier beurten voltooid en één poging zonder volledig verbruik; uitkomst onbekend, geen productverlies afgeleid.",
+                "stage": "cm11_assessed_next_not_started",
+                "finding": "CM11 onafhankelijk beoordeeld: Eva1 onvoldoende (2/3 inhoudelijk, 1/2 geheugencontroles); Eva2 3/3 inhoudelijk, maar één van twee geheugenvoorwaarden onbekend. De juiste huidige herinnering bewijst niet dat oude informatie bij toekomstige retrieval wordt uitgesloten. Beide oorspronkelijke uitvoeringen en verbruiksmetingen zijn volledig; geen algemene winnaar.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
                   "consecutiveGoalTurns": 3,
@@ -16663,22 +16670,23 @@
                   "resolutionEvidence": "eva2/evidence/product/p2-owner-authorization-20261005.json",
                   "appliesToCurrentTurn": false
                 },
-                "projectionEvidence": "eva2/evidence/product/p2-cm10-projection-review-20261005.json",
-                "admissionEvidence": "eva2/evidence/product/p2-cm10-projection-review-20261005.json",
-                "nextAction": "Volgend oorspronkelijk vergelijkingsgeval: CM11 epoch1; nog niet gestart. Hergebruik de beoordeelde native routes en bind alleen de vereiste oorspronkelijke besturing. Geen herhaling van CM01–CM10. Overige taakfamilies, concurrenttoegang en menselijke beoordelingen blijven zichtbaar.",
+                "projectionEvidence": "eva2/evidence/product/p2-cm11-projection-review-20261005.json",
+                "admissionEvidence": "eva2/evidence/product/p2-cm11-projection-review-20261005.json",
+                "nextAction": "Volgend oorspronkelijk vergelijkingsgeval: CM12 epoch1; nog niet gestart. Bestaande native routes hergebruiken en alleen noodzakelijke oorspronkelijke besturing binden. Geen herhaling van CM01–CM11. Overige taakfamilies, concurrenttoegang en menselijke beoordelingen blijven zichtbaar.",
                 "actualUsage": {
-                  "scope": "CM10 native participant execution; Codex development consumption separate and not measured",
-                  "providerAttempts": 19,
-                  "fullyMeasuredAttempts": 18,
-                  "knownLowerBoundTokens": 72426,
-                  "totalTokens": null,
+                  "scope": "CM11 native participant execution; Codex development consumption separate and not measured",
+                  "providerAttempts": 13,
+                  "fullyMeasuredAttempts": 13,
+                  "totalInputTokens": 57638,
+                  "totalOutputTokens": 2912,
+                  "totalTokens": 60550,
                   "creditCost": null,
                   "extraReviewerModelCalls": 0,
                   "productChange": false
                 }
               },
-              "remaining": "CM01 beide mislukt; CM02 objectief Eva1 1/3/Eva2 3/3; CM03 onvolledige readbacks; CM04 Eva1 onvoldoende/Eva2 onbekend; CM05 Eva2 geslaagd/Eva1 onbekend; CM06 Eva2 geslaagd/Eva1 onvoldoende; CM07 beide onvoldoende en Eva1 groepsaflevering onvolledig; CM08 Eva2 geslaagd/Eva1 onvoldoende; CM09 en CM10 Eva2 geslaagd (elk 3/3+2/2), Eva1 onbekend door onvolledige uitvoering. Overige oorspronkelijke gevallen, concurrenttoegang en menselijke beoordeling blijven open. Geen algemene voorsprong of extra productfunctie.",
-              "latestEvidence": "eva2/evidence/product/p2-cm10-paired-result-20261005.json",
+              "remaining": "CM01 beide mislukt; CM02 objectief Eva1 1/3/Eva2 3/3; CM03 onvolledige readbacks; CM04 Eva1 onvoldoende/Eva2 onbekend; CM05 Eva2 geslaagd/Eva1 onbekend; CM06 Eva2 geslaagd/Eva1 onvoldoende; CM07 beide onvoldoende en Eva1 groepsaflevering onvolledig; CM08 Eva2 geslaagd/Eva1 onvoldoende; CM09 en CM10 Eva2 geslaagd (elk 3/3+2/2), Eva1 onbekend door onvolledige uitvoering. CM11 Eva1 onvoldoende; Eva2 juiste antwoorden, verplichte geheugenvoorwaarde onbekend. Overige oorspronkelijke gevallen, concurrenttoegang en menselijke beoordeling blijven open. Geen algemene voorsprong of extra productfunctie.",
+              "latestEvidence": "eva2/evidence/product/p2-cm11-paired-result-20261005.json",
               "executionBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_after_same_command_review_with_new_provenance_evidence",
@@ -16733,28 +16741,19 @@
               "independentStoredAssessment": "eva2/evidence/product/p2-cm02-independent-review-20261005.json",
               "bindingReview": "eva2/evidence/product/p2-cm-binding-review-20261005.json",
               "latestExecutionIssue": {
-                "case": "EV003-CM-10",
-                "participant": "eva1",
-                "state": "original_native_execution_and_accounting_unknown_preserved",
-                "workerExit": 0,
-                "providerAttempts": 7,
-                "completedProviderAttempts": 6,
-                "usageComplete": false,
-                "knownInputTokens": 34885,
-                "knownOutputTokens": 1317,
-                "providerCloseFailures": 1,
-                "ownedProviderStreamsAtStop": 1,
-                "nativeQuiescence": false,
-                "completedTurns": 2,
-                "expectedTurns": 4,
-                "nativeInputRepeated": false,
-                "scope": "Oorspronkelijke CM10-uitkomst blijft onbekend. Workerexit0 en opgeruimde containers bewijzen geen volledige native afhandeling; ontbrekend verbruik wordt niet aangevuld.",
-                "upstreamCause": "Exact original stream/read/cancel failure remains unknown.",
-                "lateControlProtocolErrorObserved": false,
-                "evidence": "eva2/evidence/product/p2-cm10-paired-result-20261005.json"
+                "case": "EV003-CM-11",
+                "state": "native_complete_with_failed_and_unknown_original_task_conditions",
+                "eva1Objective": false,
+                "eva2Objective": null,
+                "nativeCompleteBoth": true,
+                "usageCompleteBoth": true,
+                "finding": "CM11 onafhankelijk beoordeeld: Eva1 onvoldoende (2/3 inhoudelijk, 1/2 geheugencontroles); Eva2 3/3 inhoudelijk, maar één van twee geheugenvoorwaarden onbekend. De juiste huidige herinnering bewijst niet dat oude informatie bij toekomstige retrieval wordt uitgesloten. Beide oorspronkelijke uitvoeringen en verbruiksmetingen zijn volledig; geen algemene winnaar.",
+                "evidence": "eva2/evidence/product/p2-cm11-paired-result-20261005.json",
+                "originalCaseRepeated": false,
+                "productChange": false
               },
-              "projectionEvidence": "eva2/evidence/product/p2-cm10-projection-review-20261005.json",
-              "admissionEvidence": "eva2/evidence/product/p2-cm10-projection-review-20261005.json",
+              "projectionEvidence": "eva2/evidence/product/p2-cm11-projection-review-20261005.json",
+              "admissionEvidence": "eva2/evidence/product/p2-cm11-projection-review-20261005.json",
               "previousExecutionIssue": {
                 "case": "EV003-CM-04",
                 "state": "observer_stop_boundary_corrected_upstream_cause_unknown",
@@ -16767,27 +16766,23 @@
                 "diagnosisEvidence": "eva2/evidence/product/p2-native-stop-boundary-20261005.json"
               },
               "currentAdapterFinding": {
-                "case": "EV003-CM-10",
-                "eva1": "Bestaande geauthenticeerde HA-ingang zonder geverifieerde menselijke spreker gebruikt na twee private beurten; native 32s-venster behouden.",
-                "eva2": "Bestaande household-responder en normale apparaatconfiguratie gebruikt; apparaataudit is geen persoonsidentiteit. Werkelijke native beurt en modelcontext onafhankelijk gecontroleerd.",
+                "case": "EV003-CM-11",
+                "eva1": "Bestaande CM08 privéroute en nieuwste beoordeelde meetworker hergebruikt; alleen casusbinding en exacte oorspronkelijke kalendercontrole aangepast.",
+                "eva2": "Bestaande CM08 privéroute met negen bytegelijke bevroren bronnen; alleen casusbinding en oorspronkelijke kalendercontrole aangepast.",
                 "sourceReviewed": true,
                 "providerCallsDuringPreparation": 0,
                 "productChange": false,
-                "reviewEvidence": "eva2/evidence/product/p2-cm10-projection-review-20261005.json"
+                "reviewEvidence": "eva2/evidence/product/p2-cm11-projection-review-20261005.json"
               },
               "latestPreparationIssue": {
-                "case": "EV003-CM-10",
-                "rootFailure": "IPAM.Config=None incorrectly iterated before network creation",
-                "dependentCallMistake": "Inspect wrapper called despite preceding nonzero preflight result",
-                "observedWrapperExit": 1,
-                "nativeReceiptPresent": false,
-                "nativeDispatch": "confirmed_not_started_in_failed_preflight",
-                "correction": "Use Config or [] and stop dependent dispatch until verified",
-                "originalCaseRepeated": false,
+                "case": "EV003-CM-11",
+                "rootFailure": "Metadata-only git rev-parse as root refused repository ownership",
+                "correction": "Used repository owner for Git without global config change; already prepared sources retained",
+                "reviewerPreparation": "Two local report-generation source-key/path checks stopped before writing; metadata normalization only",
+                "nativeDispatchAffected": false,
                 "providerAttempts": 0,
-                "reviewEvidence": "eva2/evidence/product/p2-cm10-eva1-preflight-review-20261005.json",
-                "retainedLogDirectory": "inspect-preflight-failure-01",
-                "scope": "Failed preflight only; subsequent live execution reported separately."
+                "originalCaseRepeated": false,
+                "evidence": "eva2/evidence/product/p2-cm11-paired-result-20261005.json"
               }
             },
             {

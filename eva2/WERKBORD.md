@@ -1,6 +1,39 @@
 # EVA2 werkbord
 
-**Laatst afgerond — P2.1: CM10 beoordeeld; Eva2 geslaagd, Eva1 onbekend.**
+**Laatst afgerond — P2.1: CM11 beoordeeld; geen volledige winstclaim.**
+Beide versies voltooiden dezelfde drie oorspronkelijke privébeurten, inclusief
+latere voortzetting. Antwoorden, geheugenreadbacks en verbruik zijn onafhankelijk
+beoordeeld; geen oorspronkelijke invoer of beoordelingsregel gewijzigd.
+
+| Vast CM11-geval | Eva1 | Eva2 |
+| --- | --- | --- |
+| Inhoudelijke voorwaarden | 2/3 | 3/3 |
+| Geheugencontroles | 1 geslaagd, 1 mislukt | 1 geslaagd, 1 onbekend |
+| Volledige taakuitkomst | Onvoldoende | Niet volledig aangetoond |
+| Afgehandelde beurten | 3/3 | 3/3 |
+| Modelaanvragen | 5 | 8 |
+| Volledig gemeten tokens | 35.742 | 24.808 |
+
+Eva1 mist de gevraagde latere herinnering. Eva2 haalt de juiste huidige informatie
+terug, maar de bewaarde trace bewijst niet dat oude informatie later niet meer
+wordt opgehaald. De oorspronkelijke geheugenvoorwaarde blijft daarom onbekend;
+juiste antwoorden alleen leveren geen volledige taakpass op.
+
+Samen **13 modelaanvragen en 60.550 tokens**, inclusief geheugenverwerking.
+Geen algemene snelheids-/kostenwinnaar: de totale tijdgrenzen verschillen en
+volledige taakafronding is voor Eva2 niet aangetoond. Creditkosten,
+Codex-ontwikkelverbruik en menselijke scores zijn onbekend.
+Voorbereidingsfouten betroffen uitsluitend lokale bron-/rapportmetadata;
+geen native proef herhaald of modelcall toegevoegd. Bestaande uitvoerders
+hergebruikt, bewijs bewaard, eigen proefresources opgeruimd. Geen productwijziging.
+
+**Vervolg:** CM12 epoch1; nog niet gestart. Geen herhaling van CM01–CM11.
+**32/44 oorspronkelijke kleine taken klaar; P2.1 blijft open.**
+[Onafhankelijk resultaat](evidence/product/p2-cm11-paired-result-20261005.json) ·
+[Bronbinding](evidence/product/p2-cm11-projection-review-20261005.json) ·
+[Technische afsluiting](evidence/product/p2-cm11-execution-close-20261005.json).
+
+**Eerder afgerond — P2.1: CM10 beoordeeld; Eva2 geslaagd, Eva1 onbekend.**
 De oorspronkelijke proef met een gedeelde ingang is eenmaal per deelnemer
 uitgevoerd. Onafhankelijke beoordeling van antwoorden, aangeboden modelcontext
 en opgeslagen gegevens bevestigt voor Eva2 de oorspronkelijke privégrens.
@@ -27,7 +60,7 @@ gecorrigeerd; fouten en logs blijven apart bewaard. Beide oorspronkelijke proeve
 zijn daarna eenmaal uitgevoerd. Geen herhaling, productwijziging of herinstallatie.
 Eigen proefresources zijn opgeruimd; resultaten en bewijs blijven behouden.
 
-**Vervolg:** CM11 epoch1; nog niet gestart. Geen herhaling van CM01–CM10.
+**Vervolg:** CM11 is inmiddels beoordeeld en staat bovenaan. Deze CM10-uitkomst blijft behouden.
 **32/44 oorspronkelijke kleine taken klaar; P2.1 blijft open.**
 [Onafhankelijk resultaat](evidence/product/p2-cm10-paired-result-20261005.json) ·
 [Bronbinding](evidence/product/p2-cm10-projection-review-20261005.json) ·

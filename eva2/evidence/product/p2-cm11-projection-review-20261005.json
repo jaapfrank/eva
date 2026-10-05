@@ -1,0 +1,113 @@
+{
+  "caseId": "EV003-CM-11",
+  "caseSha256": "2b1365db058d86b2fd926f25def15540d04753867f297559357c3f99b03a589d",
+  "contract": "EvaIndependentProjectionReview/v1",
+  "dispatchTagsValidated": true,
+  "epoch": 1,
+  "externalAccessOrActionsAdded": false,
+  "independentReceipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm11-epoch1.projection-receipt.private.json",
+    "sha256": "12a5db133eb629a0e818092fd7042652c5b71cbf26a2bed2c7731094f1135fd2"
+  },
+  "nativeProjection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm11-epoch1.native-inputs.private.json",
+    "sha256": "fe8f7b027eabfc336973a482a276da48848fb524bc8d6a013676c642576e663c"
+  },
+  "nativeRuns": 0,
+  "originalDataAndCriteriaUnchanged": true,
+  "ownerAuthorizationSha256": "7470627a9ef09ae8f625e420251a19b36bf950bb17689ee369359e3e2f4df8b5",
+  "participantAdmission": {
+    "eva1": true,
+    "eva2": true
+  },
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "protectedContentExported": false,
+  "providerCalls": 0,
+  "recordedAt": "2026-10-05T16:34:33.197182+00:00",
+  "remainingNativeBinding": {
+    "eva1": "Original single native execution and independent result assessment pending.",
+    "eva2": "Original single native execution and independent result assessment pending."
+  },
+  "requirements": [
+    "Exact native identity/audience at each turn and complete offered contact/helper context.",
+    "Durable memory records, eligibility/removal/provenance and selected retrieval before and after transition; self-report is insufficient.",
+    "Exact reply/ACK where native channel supplies it, all provider/tool usage, effect boundary and stop/settlement."
+  ],
+  "sourceProjection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm11-epoch1.private.json",
+    "sha256": "ba2437c55f43de8747cddd779ec023f2c6f20ea82fdcf62f721f004e2f0d43cb"
+  },
+  "status": "original_pair_source_admitted_not_executed",
+  "structural": {
+    "actor_indices": [
+      0,
+      0,
+      0
+    ],
+    "audience_kinds": [
+      "private_person",
+      "private_person",
+      "private_person"
+    ],
+    "clock_generations": [
+      0,
+      0,
+      1
+    ],
+    "offset_delta_milliseconds": [
+      0,
+      0,
+      172800000
+    ],
+    "scenario_turns": 3,
+    "session_indices": [
+      0,
+      0,
+      1
+    ],
+    "setup_turns": 0,
+    "total_turns": 3,
+    "verified_identities": 1
+  },
+  "task": "P2.1",
+  "admissions": {
+    "eva1": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm11-epoch1/admission.json",
+      "sha256": "6962dd0f6b78d34c2f59487b39cdb5ce5a1a4fd7f36a5feeaa420db88b296bd4"
+    },
+    "eva2": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm11-epoch1/admission.json",
+      "sha256": "e331a92720a4e89822ff9f2a91826a45ad089cf9d67b04c21572e7673836601d"
+    }
+  },
+  "independentAdmissionReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm11-epoch1.independent-admission.private.json",
+    "sha256": "f0399b28853504d6b6f6999e64fabfa8b19750782c09a716b34ac11d4b08cc56"
+  },
+  "sourceHashes": {
+    "eva1": {
+      "launch.py": "959a2df2c8d1d9c29984a781a70013661f97cf13003d7be9261d18c6557ebd0e",
+      "inspect-run.py": "6ea9bd10b87a7fdea344770497778dc38d36851e6cca1b499991c1ce818446ff",
+      "capture.mjs": "26965a6de7964efd296bc09ac00c595982328aa7326450d2d3ef7df94f0c055e",
+      "observed-worker.mjs": "9ff97855c3d4f781c323b7656531b3f352866373158a3a862f668c11473200c5"
+    },
+    "eva2": {
+      "launch.py": "1606402152c9185ccc0145a96ffd3e5dba69075cfa1af9eb1df73f1319447c68",
+      "inspect-run.py": "17722c211f552d2613d7a548dfbf65946c28320d01500646a1ad9cdbca7007d3",
+      "capture.py": "d71144d460580dbab89835ee09e12323d93af5f1a81d8e1f051f2d2b6e87764f"
+    }
+  },
+  "boundaries": {
+    "scope": "Exactly original CM11 epoch1, Eva1 then Eva2, one original native run per participant. No automatic retry, extra quota or historical replay.",
+    "controls": "Three private turns, one verified actor, sessions0/0/1 and clock generations0/0/1; exact original offset0/0/172800000ms only after complete previous native settlement. Same retained person memory; only requested new conversation changes.",
+    "source": "CM08 private driver/capture routes reused with case/resource/projection labels and exact original offset assertion. Eva1 canonical d9135079 plus original two-line capture hook; Eva2 nine frozen benchmark files byte-identical to CM08 including worker369da028. No HA/shared route or product/image modification.",
+    "memory": "Existing native memory operations and tool guard remain unchanged. Evaluator does not remove, insert, copy or repair participant memory. Required retained memory eligibility/retrieval/context evidence is assessed only from actual results; admission asserts no semantic success or capability gain.",
+    "accounting": "One parent ledger, full original caps/deadline and all helpers/tool attempts remain shared across the sample. Unknown usage/close ownership remains unknown, exact envelope refusal is distinct from adapter failure.",
+    "readback": "Exact ingress/person/audience and complete offered contact/helper requests retained with ledger binding. Preserve raw memory/provenance/eligibility and selected retrieval plus exact replies/ACK and native settlement. Missing observations remain unknown.",
+    "privacy": "All inputs are unchanged curator-synthetic material, not household data. No credentials/headers captured. Protected input/oracles/results/captures stay evaluator-only; root wrapper seals capture paths after return.",
+    "judgment": "Original three semantic and two readback conditions stay fixed; human ratings remain null. No task pass, cost advantage, or current-HEAD equivalence inferred from source admission.",
+    "evidence": "Existing CM08 route/calendar/accounting evidence and reviewed late-control fix reused. New source syntax/hash receipts read, not rerun; zero reviewer tests/model calls.",
+    "execution": "Root must use normal approval path with current pinned resources/existing valid lease. No new provider route or access grant."
+  },
+  "reviewerTests": 0
+}

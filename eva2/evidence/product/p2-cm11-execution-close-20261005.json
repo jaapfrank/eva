@@ -1,0 +1,58 @@
+{
+  "contract": "EvaFixedComparisonClosure/v1",
+  "caseId": "EV003-CM-11",
+  "epoch": 1,
+  "checkedAt": "2026-10-05T16:41:12.835824+00:00",
+  "nativeSessions": {
+    "eva1": {
+      "sessionId": 64730,
+      "terminalExit": 0,
+      "outcome": "native_route_complete",
+      "resultSha256": "1a4315cc538d4b44e94bb13d625bff765988ea8a9b3fb2e2662b5a6f5e30073d",
+      "databaseSha256": "8e3447063afd86645b84af2a06af9e6af29edf0e5d4dd850cc526539425f0f14"
+    },
+    "eva2": {
+      "sessionId": 93928,
+      "terminalExit": 0,
+      "outcome": "native_sample_completed",
+      "resultSha256": "4b22acb806399e1a80273544c99188741212365698b5eb29e277820e0dd79bc6",
+      "databaseDumps": {
+        "p1_core": {
+          "sha256": "e902c5a37e5bae722b68d5065b388c82a9982cedb32e4bf1cdf3f6df8a60c291",
+          "bytes": 305181
+        },
+        "p1_memory": {
+          "sha256": "16853ebcd8e988cb3f1d1455e688243ceb183ce3973473770fce5eb938543e33",
+          "bytes": 180261
+        }
+      },
+      "workersSettled": true,
+      "cleanupBlockers": []
+    }
+  },
+  "containersAbsent": [
+    "ev003-eva1-cm11-epoch1",
+    "eva2-ev003-cm11-e1-core-20261003",
+    "eva2-ev003-cm11-e1-memory-20261003",
+    "eva2-ev003-cm11-e1-db-20261003"
+  ],
+  "networksAbsent": [
+    "ev003-eva1-cm11-epoch1",
+    "eva2-ev003-cm11-e1-20261003"
+  ],
+  "rootOwnedNetworkClose": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm11-epoch1/root-close.json",
+    "sha256": "8c30bde625adff626d5815cc06ded2b81437e52ccda1a239f3b96c5e7c496a9e"
+  },
+  "evidencePreserved": [
+    "native receipts",
+    "SQLite/PostgreSQL dumps",
+    "private provider captures",
+    "Inspect logs",
+    "original projection and source admissions"
+  ],
+  "semanticAssessment": "independent assessment separate; this is resource and evidence closure only",
+  "newModelCallsDuringClosure": 0,
+  "originalCaseRepeated": false,
+  "productChanges": false
+}

@@ -1,0 +1,336 @@
+{
+  "contract": "EV003OriginalPairedResult/v1",
+  "recordedAt": "2026-10-05T16:47:51.579068+00:00",
+  "task": "P2.1",
+  "caseId": "EV003-CM-11",
+  "epoch": 1,
+  "status": "original_pair_assessed_no_retry",
+  "caseSha256": "2b1365db058d86b2fd926f25def15540d04753867f297559357c3f99b03a589d",
+  "projection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm11-epoch1.native-inputs.private.json",
+    "sha256": "fe8f7b027eabfc336973a482a276da48848fb524bc8d6a013676c642576e663c"
+  },
+  "projectionReview": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-cm11-projection-review-20261005.json",
+    "sha256": "4d60050d5390879197622ea8d332712f1a42f4525c97b73e0e2e12a26278a0cb"
+  },
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "sourceApplicability": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-cm-source-applicability-20261005.json",
+    "sha256": "522d9dbdabc03763cf2f9921e6092012fb21a77299da8334eba7a40428d30a44"
+  },
+  "participants": {
+    "eva1-bottie": {
+      "nativeOutcome": "native_route_complete",
+      "nativeRouteComplete": true,
+      "completedTurns": 3,
+      "expectedTurns": 3,
+      "objectiveComplete": false,
+      "objectiveInterpretation": "Observed original task failure, despite completed native execution.",
+      "semanticConditions": [
+        false,
+        true,
+        true
+      ],
+      "semanticCounts": {
+        "passed": 2,
+        "failed": 1,
+        "unknown": 0,
+        "total": 3
+      },
+      "independentReadbacks": [
+        false,
+        true
+      ],
+      "readbackCounts": {
+        "passed": 1,
+        "failed": 1,
+        "unknown": 0,
+        "total": 2
+      },
+      "replyIntegrity": [
+        true,
+        true,
+        true
+      ],
+      "providerAttempts": 5,
+      "fullyMeasuredAttempts": 5,
+      "unknownUsageAttempts": 0,
+      "accountingComplete": true,
+      "inputTokens": 34191,
+      "outputTokens": 1551,
+      "totalTokens": 35742,
+      "usageByRole": {
+        "contact": {
+          "attempts": 5,
+          "inputTokens": 34191,
+          "outputTokens": 1551
+        }
+      },
+      "protocolToolDispatches": 4,
+      "ordinaryMemoryToolDispatches": 2,
+      "totalToolDispatches": 6,
+      "externalEffectsObserved": 0,
+      "completeProviderCaptures": 5,
+      "readbackLimitation": "Required remaining information is absent from dedicated native person memory in all three snapshots, and later recall returns no useful result. Exact-person raw history remains. No deletion or collision cause is established.",
+      "stop": {
+        "requested": true,
+        "reason": "native comparison stopped",
+        "activeAsyncAttempts": 0,
+        "cancelErrors": [],
+        "workerLocalSettled": true,
+        "controlClosed": true,
+        "providerCloseFailures": 0,
+        "cleanupBlockers": []
+      },
+      "humanRatings": null,
+      "monetaryCost": null,
+      "result": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm11-epoch1/result.private.json",
+        "sha256": "1a4315cc538d4b44e94bb13d625bff765988ea8a9b3fb2e2662b5a6f5e30073d"
+      },
+      "admission": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm11-epoch1/admission.json",
+        "sha256": "6962dd0f6b78d34c2f59487b39cdb5ce5a1a4fd7f36a5feeaa420db88b296bd4"
+      },
+      "independentAssessment": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm11-epoch1.eva1-assessment.private.json",
+        "sha256": "70025fa6f47e29a1713b88d708d9ee63cdd56ffe7a9ae463d0873991e8b46260"
+      },
+      "signedAckReadbacks": [
+        1,
+        1,
+        1
+      ],
+      "memoryRowsByTurn": [
+        0,
+        0,
+        0
+      ],
+      "timing": {
+        "launcherSeconds": 71.49432533199433,
+        "conversationElapsedSeconds": 69.9614783860161,
+        "inspectSampleTotalSeconds": 72.457,
+        "perTurn": [
+          {
+            "ordinal": 0,
+            "firstContentSeconds": 40.61905763699906,
+            "foregroundSeconds": 40.64483588404255,
+            "settledSeconds": 40.71796820999589
+          },
+          {
+            "ordinal": 1,
+            "firstContentSeconds": 16.463584498967975,
+            "foregroundSeconds": 16.466133353998885,
+            "settledSeconds": 16.50276770099299
+          },
+          {
+            "ordinal": 2,
+            "firstContentSeconds": 12.692460736026987,
+            "foregroundSeconds": 12.695075113035273,
+            "settledSeconds": 12.73758686403744
+          }
+        ],
+        "firstContentBoundary": "Request to full JSON reply availability, not streaming first-token latency."
+      },
+      "retainedArtifacts": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm11-epoch1/database.private.sqlite",
+          "sha256": "8e3447063afd86645b84af2a06af9e6af29edf0e5d4dd850cc526539425f0f14"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm11-epoch1/worker.private.log",
+          "sha256": "6e3e5bc9b18d48b88bca77e4b1af02750b36347198a62fad7960498a66ee8a7e"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm11-epoch1/inspect-private/execution-logs/2026-10-05T16-36-27-00-00_ev003-cm11-epoch1-eva1-native_WNMygyneVn3XkNU8dZGWqA.eval",
+          "sha256": "87804ad3d90f561b8ddfe616f732f6ecc6e4619fd8f10aa04d72c1a935adac6a"
+        }
+      ]
+    },
+    "eva2": {
+      "nativeOutcome": "native_sample_completed",
+      "nativeRouteComplete": true,
+      "completedTurns": 3,
+      "expectedTurns": 3,
+      "objectiveComplete": null,
+      "objectiveInterpretation": "Correct answers; full objective completion is unknown because a required memory readback is unproven.",
+      "semanticConditions": [
+        true,
+        true,
+        true
+      ],
+      "semanticCounts": {
+        "passed": 3,
+        "failed": 0,
+        "unknown": 0,
+        "total": 3
+      },
+      "independentReadbacks": [
+        null,
+        true
+      ],
+      "readbackCounts": {
+        "passed": 1,
+        "failed": 0,
+        "unknown": 1,
+        "total": 2
+      },
+      "replyIntegrity": [
+        true,
+        true,
+        true
+      ],
+      "providerAttempts": 8,
+      "fullyMeasuredAttempts": 8,
+      "unknownUsageAttempts": 0,
+      "accountingComplete": true,
+      "inputTokens": 23447,
+      "outputTokens": 1361,
+      "totalTokens": 24808,
+      "usageByRole": {
+        "contact": {
+          "attempts": 3,
+          "inputTokens": 7435,
+          "outputTokens": 258
+        },
+        "helper": {
+          "attempts": 5,
+          "inputTokens": 16012,
+          "outputTokens": 1103
+        }
+      },
+      "protocolToolDispatches": 0,
+      "ordinaryMemoryToolDispatches": 0,
+      "totalToolDispatches": 0,
+      "externalEffectsObserved": 0,
+      "completeProviderCaptures": 8,
+      "readbackLimitation": "Required current recall is correct, with the selected record present verbatim in captured model input. Old source information remains stored; the revised observation records a removal request. This does not establish future retrieval ineligibility; that required conjunct remains unknown.",
+      "stop": {
+        "requested": true,
+        "reason": "sample observation complete",
+        "activeAsyncAttempts": 0,
+        "cancelErrors": [],
+        "workerLocalSettled": true,
+        "controlClosed": true,
+        "providerCloseFailures": 0,
+        "cleanupBlockers": []
+      },
+      "humanRatings": null,
+      "monetaryCost": null,
+      "result": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm11-epoch1/execution/result.json",
+        "sha256": "4b22acb806399e1a80273544c99188741212365698b5eb29e277820e0dd79bc6"
+      },
+      "admission": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm11-epoch1/admission.json",
+        "sha256": "e331a92720a4e89822ff9f2a91826a45ad089cf9d67b04c21572e7673836601d"
+      },
+      "independentAssessment": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm11-epoch1.eva2-assessment.private.json",
+        "sha256": "bf058d7831450e0e732698070ab561372d679b2b86d6d3bca9a3cff145b9567e"
+      },
+      "memoryOperations": {
+        "total": 9,
+        "completed": 9
+      },
+      "memoryRows": {
+        "world": 4,
+        "observation": 2
+      },
+      "selectedMemoryCountsByTurn": [
+        0,
+        2,
+        1
+      ],
+      "timing": {
+        "sampleSeconds": 96.90059049701085,
+        "inspectSampleTotalSeconds": 133.853,
+        "perTurn": [
+          {
+            "ordinal": 0,
+            "firstContentSeconds": 21.767402441008016,
+            "foregroundSeconds": 24.03032996901311,
+            "settledSeconds": 47.010507008002605
+          },
+          {
+            "ordinal": 1,
+            "firstContentSeconds": 6.411861469037831,
+            "foregroundSeconds": 9.17918754403945,
+            "settledSeconds": 36.14871180901537
+          },
+          {
+            "ordinal": 2,
+            "firstContentSeconds": 1.6307089769979939,
+            "foregroundSeconds": 2.404791238019243,
+            "settledSeconds": 5.67218514403794
+          }
+        ],
+        "firstContentBoundary": "Request to first NDJSON content; foreground to complete reply; settlement includes memory completion."
+      },
+      "childLedgerMirrorCaveat": "The complete authoritative parent ledger controls accounting; a post-close child mirror is diagnostic.",
+      "retainedArtifacts": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm11-epoch1/execution/p1_core.sql",
+          "sha256": "e902c5a37e5bae722b68d5065b388c82a9982cedb32e4bf1cdf3f6df8a60c291"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm11-epoch1/execution/p1_memory.sql",
+          "sha256": "16853ebcd8e988cb3f1d1455e688243ceb183ce3973473770fce5eb938543e33"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm11-epoch1/execution/turns.private.json",
+          "sha256": "414bb37bb69e367c151630d333583b3c1a242713821a0ceb37fd45fd1303a421"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm11-epoch1/inspect-private/execution-logs/2026-10-05T16-37-59-00-00_ev003-cm11-epoch1-eva2-native_TCnNQEuJ6s5PMahb2v7Hd8.eval",
+          "sha256": "6fc932e7e46db90f6f9f2f161704343a1ff01c932c5d6e1ca58f1316d354a39a"
+        }
+      ]
+    }
+  },
+  "aggregate": {
+    "providerAttempts": 13,
+    "fullyMeasuredAttempts": 13,
+    "unknownUsageAttempts": 0,
+    "totalInputTokens": 57638,
+    "totalOutputTokens": 2912,
+    "totalTokens": 60550,
+    "tools": {
+      "protocol": 4,
+      "ordinaryMemory": 2,
+      "total": 6
+    },
+    "externalEffectsObserved": 0,
+    "monetaryCost": null
+  },
+  "independentAssessment": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm11-epoch1.paired-assessment.private.json",
+    "sha256": "b3c009484a1c2147c222e0f02ca62608a4cb3a7317b568ffd94c103fe53ca53d"
+  },
+  "closure": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-cm11-execution-close-20261005.json",
+    "sha256": "758f3857f95c48bde81f12d52cb5d9f70a75ccf3cfd7ddc3b7eff19fd947fba3"
+  },
+  "limits": {
+    "providerAttemptsPerParticipant": 16,
+    "inputTokensPerParticipant": 1048576,
+    "outputTokensPerParticipant": 19200,
+    "wallSecondsPerParticipant": 480,
+    "toolsPerParticipant": 16,
+    "automaticRetries": 0
+  },
+  "preparationNote": "Metadata-only Git ownership refusal was corrected using the repository owner without configuration changes or provider/native input. Both original entries executed once. Two local report-generation checks stopped before writing (source key/path shape); no source, result or inference was changed.",
+  "limitations": [
+    "Original bool/null conditions unchanged: false means observed failed requirement; null is unknown, never pass or inferred loss.",
+    "No-erasure observation alone does not prove positive selective forgetting. Correct current retrieval does not prove future exclusion of old information.",
+    "Whole recorded intervals have different boundaries and are not ranked as a speed win; first-content JSON and NDJSON metrics also differ. Per-turn complete-reply and native-settlement intervals are stated explicitly.",
+    "The source-applicability reference limits native/full-HEAD claims. No product or hidden-case tuning, new probe, retry or judge-model call.",
+    "Two human raters, monetary costs and overall superiority remain unknown."
+  ],
+  "humanRatings": null,
+  "overallWinner": null,
+  "reviewerModelCalls": 0,
+  "reviewerTests": 0,
+  "nextCaseStarted": false
+}
