@@ -1,0 +1,122 @@
+{
+  "contract": "EvaPublicDevelopmentOutcome/v1",
+  "checkedAt": "2026-10-05T22:35:53.591477+00:00",
+  "status": "succeeded_after_operator_state_correction",
+  "scope": "Ordinary public development task, outside sealed final comparison.",
+  "outcome": "Existing own-browser research plus saved/read-back document; no new example-specific feature.",
+  "ownerPriority": "Complete non-voice housemate outcomes; preserve comparison wins/losses/unknowns.",
+  "sourceMessageId": "dashboard:1839ee5d-2b0f-40d9-8cdf-b727f3f7bbff",
+  "reference": {
+    "sourcePatch": "51a35567189b348c7877fea89c88f0124105a57e",
+    "evidence": "eva2/evidence/product/p2-tool-error-feedback-20261005.json",
+    "fullFrozenFinalCandidate": false
+  },
+  "initialWork": {
+    "workId": "work:eva-chat:a2abd56a-e304-5363-b1ba-f7f295432032",
+    "state": "failed",
+    "errorCode": "incomplete_work",
+    "createdAt": "2026-10-05T22:20:59Z",
+    "usage": {
+      "measurement": "partial",
+      "modelResponses": 9,
+      "toolCalls": 8,
+      "inputTokens": 172861,
+      "outputTokens": 1595,
+      "totalTokens": 174456,
+      "costUsdMicros": null
+    }
+  },
+  "verifiedCause": {
+    "savedMode": "eva",
+    "savedRevision": 92,
+    "browserRunning": false,
+    "mcpRunning": false,
+    "browserExitCode": 0,
+    "mcpExitCode": 0,
+    "ownerControl": false,
+    "reportedState": "recovery_required",
+    "lastBrowserFinishedAt": "2026-10-05T18:02:51.565606778Z",
+    "lastMcpFinishedAt": "2026-10-05T18:02:45.632432117Z",
+    "whoStoppedContainers": "Not established; no claim of automatic crash or owner revocation."
+  },
+  "operatorCorrection": {
+    "mechanism": "Existing authenticated browser host controller stop at observed revision92; both processes already stopped.",
+    "stoppedRevision": 94,
+    "coreControlWrite": "Rejected by local dashboard access; used existing host credential without changing access.",
+    "stateFileEditedByHand": false,
+    "containersRecreated": false,
+    "imagesChanged": false,
+    "profileChanged": false,
+    "browserActionsReplayed": false
+  },
+  "resumedWork": {
+    "workId": "work:eva-resume:5d5200b8-b517-5eaf-a499-691983d72c30",
+    "parentWorkId": "work:eva-chat:a2abd56a-e304-5363-b1ba-f7f295432032",
+    "generation": 2,
+    "state": "succeeded",
+    "createdAt": "2026-10-05T22:31:01Z",
+    "completedAt": "2026-10-05T22:33:32Z",
+    "elapsedSeconds": 151,
+    "outputSha256": "04ab150f58a18ee7cccc5e89c37dbbf2b6bad725acdc13978df5019d73b6cf95",
+    "apiVerifiedFlag": false,
+    "usage": {
+      "measurement": "partial",
+      "modelResponses": 8,
+      "toolCalls": 7,
+      "inputTokens": 335590,
+      "outputTokens": 1552,
+      "totalTokens": 337142,
+      "costUsdMicros": null
+    }
+  },
+  "independentObservations": {
+    "browserStartedBy": "Eva existing ManagedBrowserAutostart; operator did not start browser/MCP.",
+    "observedActiveRevision": 96,
+    "browserReady": true,
+    "mcpReady": true,
+    "ownedBrowserPage": {
+      "url": "https://py.sdk.modelcontextprotocol.io/client/",
+      "title": "The Client - MCP Python SDK",
+      "type": "page"
+    },
+    "workspacePath": "/proof-state/mcp-foutafhandeling-20261006.md",
+    "retainedInitialFileSha256": "d9b6bb4377357041f2f013ecf1b4c0d6e5333ce7c0e5a8bbf669c55823bfb529",
+    "finalFileSha256": "1cdf95c44dad9f2d7e3dbfe4a9fbb64e47c83cc446c5f0d55eff43830ef459bb",
+    "publicCopy": "eva2/evidence/product/mcp-foutafhandeling-20261006.md",
+    "content": "Correctly distinguishes tool error result from protocol error; includes official source and truthful browser execution statement."
+  },
+  "measuredCombinedUsage": {
+    "measurement": "partial_sum_of_reported_background_usage",
+    "modelResponses": 17,
+    "toolCalls": 15,
+    "inputTokens": 508451,
+    "outputTokens": 3147,
+    "totalTokens": 511598,
+    "costUsdMicros": null,
+    "developmentCredits": null,
+    "foregroundAndMemoryUsageIncluded": "Not established."
+  },
+  "limits": [
+    "Operator repaired stale browser lifecycle state; autonomous recovery not demonstrated.",
+    "Successful ordinary task does not rescore original XD01/XD02 or establish comparative superiority.",
+    "Reported token use is high; cause and reduction not established.",
+    "No speech changes, tests, installations or user trials.",
+    "No product source change or new completed product task.",
+    "No SDK execution test; source research only."
+  ],
+  "contextDiagnosis": {
+    "installedContextFilesMatchWorkingSource": true,
+    "existingDeferredToolDefinitions": true,
+    "existingExactObservationDeduplication": true,
+    "sourceHashes": {
+      "pydantic_conversation.py": "5eb31eb57b0959d29919e5b3b7e053f588752ce9559433b16c47ef0ac5db2e23",
+      "openai_codex_provider.py": "efdaf9e083ef15ee77b16a1015b7cfb1ac5cd82538e47840404fa5a290ca843f",
+      "tool_namespaces.py": "2bdedb62dfb69a055a5559c070235ffd12cb1bcbbeca397c61e94c5216acedc8"
+    },
+    "sourceMechanism": "Each external action continuation rebuilds input with prior tool receipts. The repeated history is established by source, but per-request measured bytes and the dominant source are not retained in this public task result.",
+    "causeProven": false,
+    "optimizationApplied": false,
+    "newProviderCalls": 0,
+    "limits": "A scoped lookup by returned message_id produced no rows; that is not evidence of absent storage or a runtime defect. No broader private journal was dumped."
+  }
+}
