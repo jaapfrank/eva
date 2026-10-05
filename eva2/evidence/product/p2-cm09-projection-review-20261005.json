@@ -1,0 +1,139 @@
+{
+  "admissionDecision": "GO",
+  "admitted": true,
+  "boundsUnchanged": true,
+  "canonicalDispatchAnnotationsVerified": true,
+  "caseId": "EV003-CM-09",
+  "caseSha256": "8ea7c971261766f4e49a403e0577c4728ff2d8e9b998f9665f5172a6eea40ade",
+  "commitmentSha256": "bbdbf8eff011aeb51c41e2ff6532346dd22615a99102166e4005292100dd03bf",
+  "compatibleExistingRoute": "Existing CM04/CM05 private multi-actor native routes with retained passive request capture; no group-transport route.",
+  "contract": "EvaComparisonProjectionReview/v1",
+  "credits": null,
+  "criteriaUnchanged": true,
+  "epoch": 1,
+  "executionStarted": false,
+  "humanRatings": [
+    null,
+    null
+  ],
+  "independentAdmission": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm09-epoch1.independent-admission.private.json",
+    "sha256": "b2a04922bf60b0c2327ae0058e6501b0746668cf6ff1953722cd4a62d81bcf03"
+  },
+  "nativeProjection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm09-epoch1.native-inputs.private.json",
+    "sha256": "464cb9baade67d599766cc4d25c3ccf4c47078e5e7f8098b50c1b8bc01dea132"
+  },
+  "nativeRuns": 0,
+  "newExternalActionsOrAccessRequired": false,
+  "newProductCodeRequired": false,
+  "noExtraFixtureGrantsOrMemoryTransplant": true,
+  "operationRequirements": [
+    "Four exact native replies and signed ACK where native, with all actor/session/audience bindings.",
+    "Full offered provider bodies for both actors, bound to exact turn/request and parent-ledger attempt.",
+    "Retain raw person-scoped memories, source messages and original permission/history events for both persons before and after the actor switch; no model self-report substitution.",
+    "Full native reply/memory/provider/control settlement before actor switch; preserve one database, ACK identity, parent ledger and deadline, with remaining tool allowance on process resume.",
+    "Independent original semantic/readback assessment only from actual retained evidence; two human judgments remain unknown until recorded."
+  ],
+  "oracleInParticipantInput": false,
+  "participantAdmissions": {
+    "eva1": {
+      "launcher_sha256": "63f70ee1c9da203a1c8f18a246ffef337509e0764c36d9a1d629d969cda6eee9",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm09-epoch1/admission.json",
+      "sha256": "20c3e6c1addc6c2ff3203ab0aa926abcc0272369b0befd63030446ac4ec93bdf",
+      "wrapper_sha256": "388b7578f0b26f6870cbbf3105f646b77337b541f4d89154a8abcc6d967d37f1"
+    },
+    "eva2": {
+      "launcher_sha256": "917277bd401fc23565d7cadaf85f6670cbf02058a748e6a2858d8f393fa3adbe",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm09-epoch1/admission.json",
+      "sha256": "41cd26f4cb12c9e9e0919afed4226970548aa61e14b88c08124dde283821ff48",
+      "wrapper_sha256": "6b0a33a41153c3771c4bf66f579cdd350a51a4dc1c43e9076eb6310b88983341"
+    }
+  },
+  "payloadSha256": {
+    "fixtures": "b3672e066b8048e05c384278749c91af278c583e72a097ee424659f785e737fc",
+    "oracles": "f546e9993ddb4c7a3c19477bfaaea4d33d97e406047074b3b2a47b803843debd",
+    "samples": "8b14d88afd27af2555c925e7f9b3a0a17ed159851972c43355c1c29b96ae6f14"
+  },
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "preExecutionRequirements": [
+    "Root verifies dedicated isolated resources and invokes the exact participant wrapper/admission through normal approval.",
+    "Eva1 then Eva2, exactly one original native entry each; no automatic retry or access refresh.",
+    "Keep original retained results private; human scores remain unknown and native failures remain distinct from semantic outcomes."
+  ],
+  "privateReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm09-epoch1.projection-receipt.private.json",
+    "sha256": "b94dddf10829a003732b33fbb4dfad1fefb05a85e5eb1452d74fb7757ba71496"
+  },
+  "providerCalls": 0,
+  "readiness": {
+    "basis": "Existing CM08 local preflight remains unchanged as reported at CM09 dispatch.",
+    "last_checkedAt": "2026-10-05T15:12:19Z",
+    "lease_expiresAt": "2026-10-11T10:34:03Z",
+    "limitation": "Local lease/source availability is not a provider response or account-credit measurement; normal root pre-execution resource checks still apply.",
+    "reported_by": "/root"
+  },
+  "remainingAdmission": [],
+  "reviewedAt": "2026-10-05T15:36:16.474271+00:00",
+  "reviewer": "independent_curator",
+  "sourceDelta": "Original CM09 four-turn private actor/session controls and case/resource labels only; existing actor resume, verified native bodies, all-person snapshots, capture/sealing, ledgers, limits and stop retained.",
+  "sourceProjection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm09-epoch1.private.json",
+    "sha256": "4be0a742a07ed6a0bcb6ff79308c47a2a870364f6203cdc37e383f24f39c753b"
+  },
+  "sourceValidation": {
+    "both_person_snapshots_retained": true,
+    "canonical_original_case_payload_hashes_match": true,
+    "eva1_actor_resume_is_existing_cm05_path": true,
+    "eva1_canonical_worker_calendar_readback_unchanged": true,
+    "eva2_body_uses_per_turn_verified_principal": true,
+    "eva2_nine_frozen_sources_identical_cm08": true,
+    "full_native_settlement_before_actor_switch": true,
+    "full_passive_contextcapture_and_root_sealing_unchanged": true,
+    "new_tests": 0,
+    "no_extra_grants_or_memory_transplant": true,
+    "one_parent_ledger_deadline_and_tool_remainder": true,
+    "oracle_or_expected_answer_in_participant_input": false,
+    "original_bounds_and_scoring_unchanged": true,
+    "original_text_identity_controls_preserved": true,
+    "prior_case_artifacts_unchanged": true,
+    "provider_calls": 0,
+    "source_changes_limited_to_case_control_and_parameter_binding": true,
+    "synthetic_not_household_data": true
+  },
+  "status": "paired_source_projection_admitted",
+  "structure": {
+    "actorIndices": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "actors": 2,
+    "audiences": [
+      "private_person",
+      "private_person",
+      "private_person",
+      "private_person"
+    ],
+    "clockGenerations": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "clockTransitions": 0,
+    "externalServiceFileBrowserAudioResources": false,
+    "ordinaryTurns": 4,
+    "sessionIndices": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "setupTurns": 0
+  },
+  "syntheticDataOnly": true,
+  "task": "P2.1",
+  "unchangedOriginalTextIdentityControls": true
+}

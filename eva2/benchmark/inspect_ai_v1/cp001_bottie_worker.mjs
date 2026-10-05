@@ -100,19 +100,40 @@ let currentRole = 'contact';
 let stopping = false;
 let eventSequence = 0;
 const pendingControls = new Map();
+// One event ID has ordered begin/settle decisions. Retain only replies still
+// expected after local abort; a late permit must never become dispatchable.
+const retiredControls = new Map();
+function retireControl(eventId) {
+  retiredControls.set(eventId, (retiredControls.get(eventId) || 0) + 1);
+}
+function acceptProviderControl(request) {
+  const eventId = request.provider_control;
+  const retired = retiredControls.get(eventId) || 0;
+  if (retired) {
+    if (retired === 1) retiredControls.delete(eventId);
+    else retiredControls.set(eventId, retired - 1);
+    return;
+  }
+  const resolve = pendingControls.get(eventId);
+  if (!resolve) throw new Error('provider control has no pending event');
+  pendingControls.delete(eventId); resolve(request);
+}
 const providerControllers = new Set();
 const stopController = new AbortController();
 function stopSample() {
   stopping = true;
   stopController.abort();
   for (const controller of providerControllers) controller.abort();
-  for (const resolve of pendingControls.values()) resolve({ allow: false });
+  for (const [eventId, resolve] of pendingControls) { retireControl(eventId); resolve({ allow: false }); }
   pendingControls.clear();
 }
 function decision(event, controller) {
-  if (stopping || controller.signal.aborted) { send(event); return Promise.resolve({ allow: false }); }
+  if (stopping || controller.signal.aborted) { stopSample(); retireControl(event.event_id); send(event); return Promise.resolve({ allow: false }); }
   return new Promise(resolve => {
-    const abort = () => { pendingControls.delete(event.event_id); resolve({ allow: false }); };
+    const abort = () => {
+      if (pendingControls.delete(event.event_id)) retireControl(event.event_id);
+      resolve({ allow: false });
+    };
     controller.signal.addEventListener('abort', abort, { once: true });
     pendingControls.set(event.event_id, value => { controller.signal.removeEventListener('abort', abort); resolve(value); });
     send(event);
@@ -415,9 +436,7 @@ try {
   for await (const line of input) {
     const request = JSON.parse(line);
     if (sampleControl && request.provider_control) {
-      const resolve = pendingControls.get(request.provider_control);
-      if (!resolve) throw new Error('provider control has no pending event');
-      pendingControls.delete(request.provider_control); resolve(request); continue;
+      acceptProviderControl(request); continue;
     }
     if (request.stop) { stopSample(); break; }
     if (sampleControl) {

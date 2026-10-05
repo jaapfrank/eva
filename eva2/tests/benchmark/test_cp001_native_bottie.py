@@ -632,6 +632,67 @@ const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
             assert case["closes"] == 1
 
 
+
+def test_subscription_aborted_control_replies_are_consumed_once_without_dispatch():
+    """Use actual observer/control code: aborted terminal deny is not unsolicited."""
+    script = r"""
+const fs=require('node:fs'),assert=require('node:assert/strict');
+const source=fs.readFileSync(process.argv[1],'utf8');
+const control=source.slice(source.indexOf('const pendingControls ='),source.indexOf('function configuredRole('));
+const wrapper=source.slice(source.indexOf('globalThis.fetch = async'),source.indexOf('const { db } ='));
+const AsyncFunction=Object.getPrototypeOf(async function(){}).constructor;
+(async()=>{
+ const results=[];
+ for(const closeFailure of [false,true]) {
+  const events=[];let dispatches=0;
+  const nativeFetch=async()=>{dispatches++;return new Response(new ReadableStream({
+   start(c){c.enqueue(Buffer.from('data: {broken}\n\n'));},
+   cancel(){if(closeFailure)throw Error('synthetic close failure');}
+  }),{status:200});};
+  const run=new AsyncFunction('nativeFetch','events','assert',`
+   let stopping=false,currentRequestId='sample',currentRole='contact',eventSequence=0,realProviderCalls=0;
+   const sampleControl=true,subscription=true,roleContext={getStore:()=> 'contact'};
+   const send=e=>events.push(e),configuredRole=()=> 'contact';
+   const fixtureFetch=()=>{throw Error('fixture path used')};
+   ${control}${wrapper}
+   const request={body:JSON.stringify({model:'gpt-6-sol',reasoning:{effort:'none'}})};
+   const pending=globalThis.fetch('https://chatgpt.com/backend-api/codex/responses',request);
+   assert.equal(events[0].provider_event,'begin');
+   acceptProviderControl({provider_control:events[0].event_id,allow:true,attempt_id:0});
+   const response=await pending;await assert.rejects(response.text());
+   assert.equal(events.length,2);assert.equal(events[1].provider_event,'settle');
+   assert.equal(events[1].status,'error');assert.equal(events[1].usage,null);
+   assert.equal(stopping,true);assert.equal(pendingControls.size,0);
+   acceptProviderControl({provider_control:events[1].event_id,allow:false});
+   assert.equal(retiredControls.size,0);
+   assert.throws(()=>acceptProviderControl({provider_control:events[1].event_id,allow:false}),/no pending event/);
+   assert.throws(()=>acceptProviderControl({provider_control:'unknown',allow:false}),/no pending event/);
+   await assert.rejects(globalThis.fetch('https://chatgpt.com/backend-api/codex/responses',request),/sample stopped/);
+   // An aborted admission and its terminal share one ID, but expect two replies.
+   const controller=new AbortController();
+   const first=decision({provider_event:'begin',event_id:'retired-pair'},controller);
+   const second=decision({provider_event:'settle',event_id:'retired-pair'},controller);
+   assert.equal((await first).allow,false);assert.equal((await second).allow,false);
+   acceptProviderControl({provider_control:'retired-pair',allow:true,attempt_id:9});
+   assert.equal(retiredControls.get('retired-pair'),1);
+   acceptProviderControl({provider_control:'retired-pair',allow:false});
+   assert.throws(()=>acceptProviderControl({provider_control:'retired-pair',allow:false}),/no pending event/);
+   return {active:providerControllers.size,closeFailures:[...providerControllers].filter(c=>c.closeFailed).length,stopping,unknownUsage:events[1].usage===null};
+  `);
+  results.push({closeFailure,...await run(nativeFetch,events,assert),dispatches});
+ }
+ process.stdout.write(JSON.stringify(results));
+})().catch(e=>{console.error(e);process.exit(1)});
+"""
+    result = subprocess.run(
+        ["node", "-e", script, str(BENCHMARK / "cp001_bottie_worker.mjs")],
+        capture_output=True, text=True, check=True, timeout=15,
+    )
+    for case in json.loads(result.stdout):
+        assert case["dispatches"] == 1
+        assert case["stopping"] and case["unknownUsage"]
+        assert case["active"] == case["closeFailures"] == int(case["closeFailure"])
+
 def test_subscription_native_tool_cap_has_independent_receipt(tmp_path):
     script = r"""
 const fs=require('node:fs'),path=require('node:path');

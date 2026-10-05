@@ -1,0 +1,67 @@
+{
+  "contract": "EvaBenchmarkControlCorrection/v1",
+  "task": "P2.1",
+  "recordedAt": "2026-10-05T15:46:46.537205+00:00",
+  "baseCommit": "275830c704e84c298c99d5601e7df204492a81a9",
+  "scope": "Benchmark-only native Eva1 subscription control, for subsequent original comparison entries. No product/production mutation.",
+  "observedFailure": {
+    "case": "EV003-CM-09 epoch1",
+    "kind": "late parent decision for locally retired provider control",
+    "workerError": "provider control has no pending event",
+    "originalWorkerOutcome": "execution_unknown",
+    "upstreamStreamOrCancelCause": "unknown",
+    "originalUsage": "incomplete; unknown attempt remains unknown"
+  },
+  "cause": {
+    "worker": "decision emitted a settlement after abort without keeping a pending decision; abort and sample-stop also removed pending decisions. The parent legitimately answered the emitted event, and the worker rejected that reply as unsolicited.",
+    "references": [
+      "cp001_bottie_worker.mjs at base:105-118,291-295,417-420",
+      "cp001_native.py:534-539"
+    ]
+  },
+  "change": {
+    "mechanism": "Count outstanding replies for retired control IDs; consume each expected late begin/settle response exactly once. Unknown and duplicate controls remain protocol errors.",
+    "stop": "An already aborted decision stops the sample before emitting the non-waiting settlement; late permits never dispatch new work.",
+    "accounting": "No raw usage is fabricated. Failed stream cancellation and retained controller ownership remain visible.",
+    "files": {
+      "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs": "d9135079c1e2ce8b91cb57b4d1d39b376cb031f0fb9bedda2aa1f8958b58c73b",
+      "eva2/tests/benchmark/test_cp001_native_bottie.py": "860ab9f9e5b40c3402aca7be9550d5745000e1017dd2a84602903de188c6b579"
+    }
+  },
+  "verification": {
+    "kind": "two focused offline existing observer/control regressions",
+    "cwd": "/home/administrator/project/Eva2/eva2",
+    "env": {
+      "PYTHONPATH": "src:.",
+      "CRYPTOGRAPHY_OPENSSL_NO_LEGACY": "1"
+    },
+    "argv": [
+      "/home/administrator/project/.eva2-artifacts/native-voice-offline-env-w8rt00c4/venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/benchmark/test_cp001_native_bottie.py::test_subscription_aborted_control_replies_are_consumed_once_without_dispatch",
+      "tests/benchmark/test_cp001_native_bottie.py::test_subscription_fetch_observer_preserves_native_stream_and_raw_usage"
+    ],
+    "exitCode": 0,
+    "passed": 2,
+    "durationSeconds": 0.33,
+    "originalToolChunk": "3fcd2a",
+    "recordingBasis": "Actual executor tool output preserved in this team conversation; no rerun to generate a receipt.",
+    "coverage": [
+      "actual observer and control code, malformed stream, late denied settlement",
+      "failed cancellation remains owned and visible",
+      "late allow/deny for shared begin/settle ID consumed once each",
+      "unknown/duplicate controls rejected; subsequent provider dispatch refused after stop",
+      "existing native stream and raw usage success path preserved"
+    ],
+    "newModelCalls": 0
+  },
+  "limitations": [
+    "Original provider stream/cancellation exception is still unknown.",
+    "No repair or replay of the closed CM09 execution; its unknown outcome and usage are preserved.",
+    "Offline evidence is not a new end-to-end model comparison or product feature."
+  ],
+  "application": "Use this exact reviewed canonical benchmark source for newly prepared entries; old frozen sources and evidence remain unchanged. No product service restart or installation required.",
+  "independentReview": "pending separate bundled source review"
+}

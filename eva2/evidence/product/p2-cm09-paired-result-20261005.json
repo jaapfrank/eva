@@ -1,0 +1,390 @@
+{
+  "contract": "EvaComparisonPairedResult/v1",
+  "reviewedAt": "2026-10-05T15:46:36.711709+00:00",
+  "reviewer": "independent_curator",
+  "task": "P2.1",
+  "caseId": "EV003-CM-09",
+  "epoch": 1,
+  "status": "original_pair_assessed_no_retry",
+  "caseSha256": "8ea7c971261766f4e49a403e0577c4728ff2d8e9b998f9665f5172a6eea40ade",
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "projectionSha256": "464cb9baade67d599766cc4d25c3ccf4c47078e5e7f8098b50c1b8bc01dea132",
+  "participants": {
+    "eva1": {
+      "nativeOutcome": "execution_unknown",
+      "nativeTailComplete": false,
+      "objectiveTaskSuccess": null,
+      "objectiveMeaning": "Unknown: the required later observations were not reached after a native/provider-control interruption; this is not a measured product loss.",
+      "semanticConditions": [
+        null,
+        null,
+        null
+      ],
+      "semanticCounts": {
+        "passed": 0,
+        "failed": 0,
+        "unknown": 3,
+        "required": 3
+      },
+      "independentReadbacks": [
+        null,
+        null
+      ],
+      "readbackCounts": {
+        "passed": 0,
+        "failed": 0,
+        "unknown": 2,
+        "required": 2
+      },
+      "humanRatings": [
+        null,
+        null
+      ],
+      "usage": {
+        "providerAttempts": 5,
+        "completedMeasuredAttempts": 4,
+        "roles": {
+          "contact": 5
+        },
+        "complete": false,
+        "total": {
+          "input_tokens": null,
+          "output_tokens": null,
+          "total_tokens": null
+        },
+        "knownPartialLowerBound": {
+          "input_tokens": 26038,
+          "output_tokens": 1038,
+          "total_tokens": 27076
+        },
+        "money": null
+      },
+      "tools": {
+        "total": 3,
+        "protocol": 3,
+        "ordinary_memory": 0,
+        "other_substantive": 0,
+        "maximum": 16,
+        "counts_are_dispatch_not_success": true
+      },
+      "nativeEvidence": {
+        "outcome": "execution_unknown",
+        "inspect_status": "success",
+        "wrapper_exit": 0,
+        "worker_exit": 1,
+        "tail_complete": false,
+        "planned_turns": 4,
+        "ingress_started_turns": 2,
+        "reply_integrity_verified_turns": 1,
+        "signed_acknowledged_turns": 1,
+        "settled_turns": 1,
+        "actor_switch_reached": false,
+        "final_raw_memory_records": 0,
+        "final_message_records": 3
+      },
+      "failureStage": {
+        "classification": "native_execution_and_accounting_unknown_with_proven_benchmark_control_failure",
+        "first_observed_failure": "fifth provider attempt settles error without usage",
+        "secondary_failure": "benchmark provider_control response arrives without a pending resolver; uncaught Error in observed-worker.mjs:421",
+        "native_ingress_terminal": "Cp001IngressFailure/v1:native_ingress_interrupted",
+        "native_http_status": null,
+        "exact_upstream_event_or_error_code": null,
+        "upstream_versus_initial_observer_failure": "not distinguishable from retained evidence",
+        "product_loss_inferred": false,
+        "retry": false
+      },
+      "timings": {
+        "inspect_interval_seconds_rounded": 105,
+        "inspect_started_at": "2026-10-05T15:37:34+00:00",
+        "inspect_completed_at": "2026-10-05T15:39:19+00:00",
+        "native_full_elapsed_ms": null,
+        "conversation_elapsed_ms": null,
+        "turns": [
+          {
+            "ordinal": 0,
+            "reply_elapsed_ms": 41325.05217503058,
+            "settled_elapsed_ms": 41378.70161299361,
+            "first_content_ms": 41321.711772005074,
+            "verified_end_ms": 41325.03975101281
+          },
+          {
+            "ordinal": 1,
+            "reply_elapsed_ms": 60079.42170999013,
+            "settled_elapsed_ms": null,
+            "first_content_ms": null,
+            "verified_end_ms": null
+          }
+        ],
+        "boundary_note": "Eva1 first_content is response-consumption timing, not equivalent to Eva2 first streaming delta; inspect interval includes setup/teardown and is second-resolution. Missing final elapsed fields remain null."
+      },
+      "stop": {
+        "requested": true,
+        "ledger_active_async_attempts": 0,
+        "ledger_cancel_errors": [],
+        "local_active_provider_attempts": 1,
+        "local_pending_controls": 0,
+        "provider_close_failures": 1,
+        "local_quiescent": false,
+        "relay_closed": true,
+        "worker_exited": true
+      },
+      "effects": {
+        "unrequested_external_effect_observed": false,
+        "admitted_external_actions": 0,
+        "observed_relay_endpoint_only": true,
+        "complete_task_or_privacy_success_claim": false
+      },
+      "receipt": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm09-epoch1/result.private.json",
+        "sha256": "b08330f95ee15c4f14c91b53dbcee0504111dfe485cd4bf90de363e00e6c99d9"
+      },
+      "admission": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm09-epoch1/admission.json",
+        "sha256": "20c3e6c1addc6c2ff3203ab0aa926abcc0272369b0befd63030446ac4ec93bdf"
+      },
+      "assessment": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm09-epoch1.eva1-assessment.private.json",
+        "sha256": "5db1a13be9bef9d4c62c5e2e390f980a6e5917700c661aae884201cce0862b5f"
+      }
+    },
+    "eva2": {
+      "nativeOutcome": "native_sample_completed",
+      "nativeTailComplete": true,
+      "objectiveTaskSuccess": true,
+      "objectiveMeaning": "All original objective semantic and readback conditions satisfied for this entry; human quality remains separately unknown.",
+      "semanticConditions": [
+        true,
+        true,
+        true
+      ],
+      "semanticCounts": {
+        "passed": 3,
+        "failed": 0,
+        "unknown": 0,
+        "required": 3
+      },
+      "independentReadbacks": [
+        true,
+        true
+      ],
+      "readbackCounts": {
+        "passed": 2,
+        "failed": 0,
+        "unknown": 0,
+        "required": 2
+      },
+      "humanRatings": [
+        null,
+        null
+      ],
+      "usage": {
+        "providerAttempts": 12,
+        "completedMeasuredAttempts": 12,
+        "roles": {
+          "contact": 5,
+          "helper": 7
+        },
+        "complete": true,
+        "total": {
+          "input_tokens": 33351,
+          "output_tokens": 1350,
+          "total_tokens": 34701
+        },
+        "knownPartialLowerBound": {
+          "input_tokens": 33351,
+          "output_tokens": 1350,
+          "total_tokens": 34701
+        },
+        "money": null
+      },
+      "tools": {
+        "total": 1,
+        "protocol": 0,
+        "ordinary_memory": 1,
+        "other_substantive": 0,
+        "maximum": 16,
+        "counts_are_dispatch_not_success": true
+      },
+      "nativeEvidence": {
+        "outcome": "native_sample_completed",
+        "inspect_status": "success",
+        "wrapper_exit": 0,
+        "tail_complete": true,
+        "planned_turns": 4,
+        "ingress_started_turns": 4,
+        "reply_integrity_verified_turns": 4,
+        "settled_turns": 4,
+        "actor_switch_reached": true,
+        "errors": [],
+        "cleanup_blockers": []
+      },
+      "failureStage": null,
+      "timings": {
+        "sample_seconds": 131.06352053402225,
+        "inspect_interval_seconds_rounded": 169,
+        "inspect_started_at": "2026-10-05T15:40:03+00:00",
+        "inspect_completed_at": "2026-10-05T15:42:52+00:00",
+        "turns": [
+          {
+            "ordinal": 0,
+            "first_content_seconds": 10.48309832601808,
+            "foreground_seconds": 11.856581929023378,
+            "settled_seconds": 28.93090239103185,
+            "model_first_content_ms": 9595,
+            "model_completed_ms": 10941
+          },
+          {
+            "ordinal": 1,
+            "first_content_seconds": 5.132894176989794,
+            "foreground_seconds": 6.497464813000988,
+            "settled_seconds": 30.96342614997411,
+            "model_first_content_ms": 3405,
+            "model_completed_ms": 4746
+          },
+          {
+            "ordinal": 2,
+            "first_content_seconds": 3.386186526971869,
+            "foreground_seconds": 4.327522737963591,
+            "settled_seconds": 30.54367945395643,
+            "model_first_content_ms": 2031,
+            "model_completed_ms": 2941
+          },
+          {
+            "ordinal": 3,
+            "first_content_seconds": 21.85428872599732,
+            "foreground_seconds": 23.441725764947478,
+            "settled_seconds": 29.33651931298664,
+            "model_first_content_ms": 21528,
+            "model_completed_ms": 23092
+          }
+        ],
+        "boundary_note": "Sample begins after workers ready and excludes setup/final cleanup. Streaming first-content differs from Eva1 response-consumption timing. No paired speed superiority inferred."
+      },
+      "stop": {
+        "requested": true,
+        "reason": "sample observation complete",
+        "ledger_active_async_attempts": 0,
+        "ledger_cancel_errors": [],
+        "both_workers_local_settled": true,
+        "both_control_close_acknowledged": true,
+        "parent_worker_http_settled": true,
+        "unsettled_events": 0,
+        "tunnel_closed": true
+      },
+      "effects": {
+        "unrequested_external_effect_observed": false,
+        "admitted_external_actions": 0,
+        "observed_relay_endpoint_only": true
+      },
+      "receipt": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm09-epoch1/execution/result.json",
+        "sha256": "2ffbda507002ffefbf2d4037388e1121413f5687ffe8050f3115b7c08054c79f"
+      },
+      "admission": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm09-epoch1/admission.json",
+        "sha256": "41cd26f4cb12c9e9e0919afed4226970548aa61e14b88c08124dde283821ff48"
+      },
+      "assessment": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm09-epoch1.eva2-assessment.private.json",
+        "sha256": "27ed83f0d84d53be73647fb644e7f8af006686497f31a4a25463fd954c411886"
+      }
+    }
+  },
+  "pairUsage": {
+    "provider_attempts": 17,
+    "measured_attempts": 16,
+    "unknown_attempts": 1,
+    "complete": false,
+    "input_tokens": null,
+    "output_tokens": null,
+    "total_tokens": null,
+    "known_lower_bound": {
+      "input_tokens": 59389,
+      "output_tokens": 2388,
+      "total_tokens": 61777
+    }
+  },
+  "interpretation": [
+    "Eva2 satisfies the original objective conditions and readbacks; human ratings remain null.",
+    "Eva1 is unknown, not a product loss: only one of four turns reached verified reply, signed ACK and settlement; the second began and the last two did not run.",
+    "Known aggregate usage is a lower bound, not a complete total. The fifth Eva1 provider attempt has unknown usage.",
+    "The retained Eva1 failure proves a benchmark late-control handling error after stream/usage failure; the original upstream or stream-close cause is not retained and is not inferred.",
+    "Inspect success and wrapper exit zero are execution-log completion, not native task success. Resource cleanup does not repair Eva1 local quiescence or unknown accounting.",
+    "Timings retain their actual boundaries; no paired speed or complete-cost advantage is claimed.",
+    "One original epoch for two available participants does not complete the full planned comparison or establish broad superiority."
+  ],
+  "preparation": {
+    "local_start_errors": 0,
+    "native_retries": 0,
+    "original_dataset_criteria_and_budgets_unchanged": true,
+    "projectionReview": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-cm09-projection-review-20261005.json",
+      "sha256": "867f7d8a9f19f94a46043ca9a7979b6b6f9b3535f809a66d95ffd34daf016c71"
+    },
+    "sourceApplicability": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-cm-source-applicability-20261005.json",
+      "sha256": "522d9dbdabc03763cf2f9921e6092012fb21a77299da8334eba7a40428d30a44"
+    },
+    "source_note": "Each run is attributed to its frozen admission and source snapshots; later benchmark source corrections do not relabel these attempts."
+  },
+  "independentAssessment": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm09-epoch1.paired-assessment.private.json",
+    "sha256": "5cbe70ade0b82c2a292fc2b933b4e46bcceb0121b7674a3092ff8ebc711d561d"
+  },
+  "retainedEvidence": {
+    "eva1Sqlite": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm09-epoch1/database.private.sqlite",
+      "sha256": "7b2296264e67bfcaf8c41c80502c13d1d6b2b017fa8800514ca92a728a5a0185"
+    },
+    "eva2CoreDump": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm09-epoch1/execution/p1_core.sql",
+      "sha256": "02caee418a638a5a4fe87b870d655f7ca5c9d7e0a1cb11533997bc65c2476d1d"
+    },
+    "eva2MemoryDump": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm09-epoch1/execution/p1_memory.sql",
+      "sha256": "ac1b72eca65219d18d11730740448e9051d91d2dddbe69056771ea3cefb31025"
+    },
+    "eva1Inspect": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm09-epoch1/inspect-private/execution-logs/2026-10-05T15-37-34-00-00_ev003-cm09-epoch1-eva1-native_f3gJ2zCEah2Q5ChCcH67md.eval",
+      "sha256": "53f884c1baa53729de3f2a9e6a0245d47b3e626a61897a7d46a898946243ad9e"
+    },
+    "eva2Inspect": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm09-epoch1/inspect-private/execution-logs/2026-10-05T15-40-03-00-00_ev003-cm09-epoch1-eva2-native_gA3azugC5Qf6RJMFfVi4Wy.eval",
+      "sha256": "436cdb2e8085cd66bcfdaf5a1012b8f2e58a6be846a844abbc4bfbf5cdb50145"
+    },
+    "eva1WorkerFailureLog": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm09-epoch1/worker.private.log",
+      "sha256": "f785e64ad03cccde6ed172b1553e6ffe56d72685861272b0da68ca033c229267"
+    },
+    "captures": {
+      "eva1": {
+        "count": 5,
+        "all_hashes_and_bindings_verified": true,
+        "ordered_evidence_list_sha256": "0ac5a59246566b8e626d3313d62d4768cbb35a2b386b832b24fcb483beb18927"
+      },
+      "eva2": {
+        "count": 12,
+        "all_hashes_and_bindings_verified": true,
+        "ordered_evidence_list_sha256": "ef2fb47f26740cbba3b3e5a1edf5c8628372dc83739f2323cb5bb4ba60999a73"
+      }
+    },
+    "host_retained": true
+  },
+  "cleanupReview": {
+    "receipt": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-cm09-execution-close-20261005.json",
+      "sha256": "303014bcd6a06d031622d11786ead2dd520901925a38e1f78516c760974019ce"
+    },
+    "own_resources_absent_per_root_receipt": true,
+    "required_durable_databases_captures_and_logs_verified": true,
+    "safe_cleanup_scope": "Only the exact terminal experiment resources identified in the close receipt; all host evidence retained.",
+    "reviewer_mutated_resources": false,
+    "eva1_native_quiescence_proven": false
+  },
+  "contentBoundary": {
+    "protected_inputs_answers_contexts_and_oracles_exported": false,
+    "human_ratings_invented": false,
+    "new_model_calls": 0,
+    "new_tests": 0
+  }
+}

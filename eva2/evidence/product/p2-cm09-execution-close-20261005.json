@@ -1,0 +1,54 @@
+{
+  "contract": "EvaComparisonExecutionClose/v1",
+  "task": "P2.1",
+  "case": "EV003-CM-09",
+  "epoch": 1,
+  "recordedAt": "2026-10-05T15:43:50.274542+00:00",
+  "wrappers": {
+    "eva1": {
+      "exitCode": 0,
+      "nativeOutcome": "execution_unknown",
+      "resultSha256": "b08330f95ee15c4f14c91b53dbcee0504111dfe485cd4bf90de363e00e6c99d9"
+    },
+    "eva2": {
+      "exitCode": 0,
+      "nativeOutcome": "native_sample_completed",
+      "resultSha256": "2ffbda507002ffefbf2d4037388e1121413f5687ffe8050f3115b7c08054c79f"
+    }
+  },
+  "retainedEvidence": {
+    "eva1Database": {
+      "bytes": 1282048,
+      "sha256": "7b2296264e67bfcaf8c41c80502c13d1d6b2b017fa8800514ca92a728a5a0185"
+    },
+    "eva2Dumps": {
+      "p1_core": {
+        "exitCode": 0,
+        "bytes": 319256,
+        "sha256": "02caee418a638a5a4fe87b870d655f7ca5c9d7e0a1cb11533997bc65c2476d1d"
+      },
+      "p1_memory": {
+        "exitCode": 0,
+        "bytes": 199092,
+        "sha256": "ac1b72eca65219d18d11730740448e9051d91d2dddbe69056771ea3cefb31025"
+      }
+    },
+    "rawProviderCapturesAndPrivateInspectLogsRetained": true
+  },
+  "cleanup": {
+    "ownContainersAbsent": true,
+    "eva1EmptyInternalNetworkRemoved": {
+      "name": "ev003-eva1-cm09-epoch1",
+      "id": "171cb20e49d9548d30d3f5984aa7901cb6ebcda07955914604c657db5681e7ba"
+    },
+    "eva2NetworkAbsent": true,
+    "hostArtifactsRetained": true,
+    "productionMutation": false,
+    "cleanupProviderCalls": 0
+  },
+  "limitations": [
+    "Eva1 native worker reported incomplete provider close/unknown usage; wrapper termination and cleanup do not prove full native quiescence or complete task execution.",
+    "Independent original semantic assessment pending. Technical closure is not successful task completion or family acceptance."
+  ],
+  "nativeReplay": false
+}

@@ -1,6 +1,38 @@
 # EVA2 werkbord
 
-**Laatst afgerond — P2.1: Eva2 gebruikt de eerdere ervaring in de vervolgtaak.**
+**Laatst afgerond — P2.1: CM09 beoordeeld; Eva2 geslaagd, Eva1 onbekend.**
+De oorspronkelijke proef is eenmaal per deelnemer uitgevoerd en onafhankelijk
+beoordeeld. De onvolledige Eva1-uitvoering telt niet als productverlies.
+
+| Vast CM09-geval | Eva1 | Eva2 |
+| --- | --- | --- |
+| Inhoudelijke voorwaarden | Onbekend | 3/3 |
+| Onafhankelijke bewijscontroles | Onbekend | 2/2 |
+| Objectief taakresultaat | Onbekend | Geslaagd |
+| Afgehandelde oorspronkelijke beurten | 1/4 | 4/4 |
+| Modelpogingen | 5, waarvan 1 zonder volledige meting | 12 |
+| Gemeten tokens | Minimaal 27.076 | 34.701 |
+
+Samen 17 modelpogingen, 16 volledig gemeten; **61.777 tokens is een ondergrens**.
+Werkelijk totaal, creditkosten, Codex-ontwikkelverbruik en menselijke scores zijn
+onbekend. Geen algemene snelheids-, kosten- of superioriteitsclaim.
+
+De bewezen secundaire fout in de Eva1-meetworker is gericht gecorrigeerd:
+verwachte late control-antwoorden na afbreken worden eenmaal verwerkt. Stoppen,
+onbekend verbruik en mislukte streamafsluiting blijven zichtbaar. Twee gerichte
+offline controles geslaagd (0,33 s), onafhankelijke review GO. Dit betreft alleen
+de vergelijkingscode; geen nieuwe productfunctie of productie-installatie.
+De oorspronkelijke CM09-bronnen en uitslagen blijven ongewijzigd; geen herhaling.
+
+**Volgende:** CM10 epoch1, nog niet gestart. Eerst de beoordeelde meetcorrectie aan
+de nieuwe bronversie binden. **32/44 kleine taken klaar; P2.1 blijft open.**
+[Onafhankelijk resultaat](evidence/product/p2-cm09-paired-result-20261005.json) ·
+[Bronbinding](evidence/product/p2-cm09-projection-review-20261005.json) ·
+[Technische afsluiting](evidence/product/p2-cm09-execution-close-20261005.json) ·
+[Meetcorrectie](evidence/product/p2-bottie-late-control-20261005.json) ·
+[Review](evidence/product/p2-bottie-late-control-review-20261005.json).
+
+**Eerder afgerond — P2.1: Eva2 gebruikt de eerdere ervaring in de vervolgtaak.**
 De oorspronkelijke CM08-proef is eenmaal per deelnemer uitgevoerd en onafhankelijk
 beoordeeld. Beide routes hebben alle drie antwoorden en geheugenverwerking voltooid.
 
@@ -23,8 +55,8 @@ proces of modelaanvraag; alleen die controle is gecorrigeerd. De native proef,
 oorspronkelijke criteria en bronnen zijn niet herhaald of gewijzigd.
 Eigen proefresources zijn opgeruimd; resultaten en bewijs blijven bewaard.
 
-**Hierna:** oorspronkelijke CM09 epoch1; nog niet gestart.
-Geen herhaling van CM01–CM08. **32/44 kleine taken klaar; P2.1 blijft open.**
+**Vervolg:** CM09 is inmiddels beoordeeld en staat bovenaan. Deze CM08-uitkomst blijft behouden.
+**32/44 kleine taken klaar; P2.1 blijft open.**
 [Onafhankelijk resultaat](evidence/product/p2-cm08-paired-result-20261005.json) ·
 [Projectie en bronbinding](evidence/product/p2-cm08-projection-review-20261005.json) ·
 [Technische afsluiting vóór beoordeling](evidence/product/p2-cm08-execution-close-20261005.json).

@@ -1,0 +1,58 @@
+{
+  "contract": "EvaIndependentBoundedSourceReview/v1",
+  "reviewedAt": "2026-10-05T15:49:40.899838+00:00",
+  "decision": "GO",
+  "scope": "Benchmark-only handling of late replies to already retired native provider-control decisions, for future independently admitted cases.",
+  "sources": [
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+      "sha256": "d9135079c1e2ce8b91cb57b4d1d39b376cb031f0fb9bedda2aa1f8958b58c73b"
+    },
+    {
+      "path": "eva2/tests/benchmark/test_cp001_native_bottie.py",
+      "sha256": "860ab9f9e5b40c3402aca7be9550d5745000e1017dd2a84602903de188c6b579"
+    }
+  ],
+  "findings": [
+    "Retired decision replies are counted per event ID, preserving the ordered begin/settle replies that can share one ID; each expected late reply is consumed once.",
+    "Unknown IDs and replies beyond the expected count remain hard errors. A late allow does not resolve a live decision or permit provider dispatch.",
+    "Aborted decisions mark the sample stopped. Subsequent fetch dispatch is refused; normal pending-control resolution retains its original behavior.",
+    "Incomplete usage remains unknown; failed stream-close ownership remains active and prevents a false quiescence claim.",
+    "Only the benchmark worker and its focused test changed. Native product code and historical CM09 source/admission/results are not rewritten."
+  ],
+  "reusedVerification": {
+    "source": "executor tool transcript; accurately transcribed by root evidence",
+    "toolChunk": "3fcd2a",
+    "exitCode": 0,
+    "passed": 2,
+    "seconds": 0.33,
+    "separateLogFileExists": false,
+    "separateLogFileSha256": null,
+    "rootEvidence": {
+      "path": "eva2/evidence/product/p2-bottie-late-control-20261005.json",
+      "sha256": "c32da76b00e6f138dd527827cb0662ce7747f820db7f42921efa813957dd2b45"
+    },
+    "coverage": "Actual extracted control/observer code with synthetic malformed stream and close success/failure, late begin/settle replies, duplicate/unknown rejection and refusal of further dispatch; existing raw observer check retained."
+  },
+  "historicalIntegrity": {
+    "case": "EV003-CM-09",
+    "eva1AssessmentBoundArtifactHashChecks": 15,
+    "eva2AssessmentBoundArtifactHashChecks": 29,
+    "allUnchanged": true,
+    "eva1AssessmentSha256": "5db1a13be9bef9d4c62c5e2e390f980a6e5917700c661aae884201cce0862b5f",
+    "eva2AssessmentSha256": "27ed83f0d84d53be73647fb644e7f8af006686497f31a4a25463fd954c411886",
+    "pairedResultSha256": "408c6573f2afb99b1e986cfb418db719f1ede6d526c823e99e71138876077550"
+  },
+  "limitations": [
+    "Synthetic control/observer evidence is not a new live provider or full-server lifecycle proof.",
+    "Original upstream read/stream-close cause remains unknown; this correction addresses only the proven secondary benchmark control failure.",
+    "CM09 remains Eva1 unknown with incomplete usage and Eva2 objectively passed; no retry, rescore or promotion of historical accounting.",
+    "Future cases still require their ordinary exact source/admission binding; this review starts no execution."
+  ],
+  "reviewerActivity": {
+    "newTests": 0,
+    "newModelCalls": 0,
+    "nativeRuns": 0,
+    "productEdits": 0
+  }
+}
