@@ -1,5 +1,18 @@
 # EVA2 werkbord
 
+**Nu — P2.1: volgende vaste vergelijking met Eva1.**
+Het oorspronkelijke CM04-geval vraagt twee personen en hun eigen context.
+De onafhankelijke evaluator legt de bestaande controles vast; de proefdriver
+krijgt alleen de ontbrekende persoonsbinding. Vereiste geheugencontroles worden
+vooraf nagegaan. Nog geen modelproef gestart; CM01–CM03 blijven behouden.
+
+**C1-diagnose: fout blijft open, geen onbewezen reparatie.**
+Een neutrale toolvoorstelproef op de bestaande providerroute kwam correct binnen:
+12,366 s, 1 modelaanvraag, 637 tokens; geen tool uitgevoerd of bericht verstuurd.
+De vermoedelijke parserfout is hiermee niet aangetoond. Geen SDK-/timeoutwijziging
+of installatie; de eerdere Telegramuitval blijft onopgelost.
+[Diagnose](evidence/product/c1-provider-shape-diagnosis-20261005.json).
+
 **Geïnstalleerd — C3.1: herkenning tijdens spreken en sneller woordtempo.**
 Jaap bevestigt dat doorpraten werkt. De gemelde traagheid is gericht aangepakt:
 de bestaande HA-spraakherkenning begint nu tijdens spreken, niet pas daarna.
@@ -12,7 +25,7 @@ Geen GPT-call; één HA-TTS-aanvraag voor een vaste zin, geen microfoon of speak
 
 **Nog van Jaap:** praat normaal met Eva; beoordeel alleen woordtempo en het
 reageren na uitspreken. Doorpraten zelf is al bevestigd. Geen tweede-speakerproef.
-P2-resultaten behouden; volgende vergelijking niet gestart.
+P2-resultaten behouden; volgende persoonsvergelijking wordt voorbereid.
 [Installatie en meting](evidence/product/c3-fluency-installed-20261005.json)
 · [Onafhankelijke review](reviews/c3-fluency-20261005.md).
 

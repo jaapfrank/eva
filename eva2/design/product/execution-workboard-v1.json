@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-05T10:07:13.191653+00:00",
+  "lastUpdated": "2026-10-05T12:21:55.256399+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1034,7 +1034,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T10:07:13.191653+00:00",
+        "checkedAt": "2026-10-05T12:21:55.256399+00:00",
         "deliveries": [
           {
             "title": "Woonkamer: herkenning tijdens spreken en sneller woordtempo",
@@ -3704,14 +3704,14 @@
           }
         ],
         "now": {
-          "title": "C3.1 · Snellere herkenning en spreektempo geïnstalleerd",
-          "state": "installed",
-          "owner": "Jaap · luisteroordeel",
-          "detail": "Doorpraten is bevestigd. Herkenning loopt nu tijdens spreken; dezelfde stem spreekt 15% sneller met behoud van toonhoogte. Proefzin 6,62 → 5,75 s. Werkelijke gesprekservaring nog beoordelen; geen ChatGPT-Voice-gelijkwaardigheid geclaimd."
+          "title": "P2.1 · Vergelijking persoonsgrenzen met Eva1",
+          "state": "in_progress",
+          "owner": "Codex",
+          "detail": "Het volgende oorspronkelijke geval gebruikt twee personen. Hun toegang en de vereiste geheugencontroles worden vóór de proef aangesloten. Eerdere uitkomsten blijven behouden; geen modelproef gestart."
         },
         "next": {
-          "title": "Normaal gesprek beoordelen; overige vervolgwerk behouden",
-          "detail": "Alleen woordtempo en wachten na je laatste woord beoordelen. P2-resultaten blijven behouden; volgende vergelijkingsproef is niet gestart."
+          "title": "Hetzelfde vaste geval uitvoeren en onafhankelijk beoordelen",
+          "detail": "Na controle van de persoonsbindingen één poging per Eva via de bestaande meetroute. Geen gewijzigde criteria. Telegramuitval blijft onopgelost; de neutrale diagnose gaf geen aantoonbare codefout."
         },
         "ownerAction": {
           "title": "Open beslissingen en gebruiksoordeel",
@@ -3724,7 +3724,7 @@
           "expected": "M3.3 is door Jaap geaccepteerd; daarvoor geen nieuwe beoordeling. De woonkamerproef combineert C3.1 en C4.1. Nut en timing van bestaand initiatief blijven I1.2. 32/44 oorspronkelijke kleine taken klaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-05T10:07:13.191653+00:00"
+        "reviewedAt": "2026-10-05T12:21:55.256399+00:00"
       },
       "reviewedAt": "2026-10-05T00:19:18.098429+00:00"
     },
@@ -13210,7 +13210,7 @@
           ]
         }
       ],
-      "nextAction": "Resterende bestaande eindvoorwaarden afhandelen: toegang/toestemming voor afgeschermde vergelijking en innovatieproef, werkelijke computerherstart en menselijke speaker-/gezinsbeoordeling. Voltooide functies niet opnieuw bouwen of testen.",
+      "nextAction": "Sluit de geverifieerde persoons-/publieksbinding aan voor het volgende oorspronkelijke geval; bepaal vooraf welke vereiste context-/readbackregistratie werkelijk beschikbaar is. Geen herhaling van CM01–CM03 of automatische volledige matrix.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -13497,7 +13497,30 @@
             "status": "open",
             "observedAt": "2026-10-05T09:03:00.081715+00:00",
             "evidence": "eva2/evidence/product/telegram-model-deadline-observed-20261005.json",
-            "summary": "Twee gewone Telegramverzoeken eindigden op5oktober na~62seconden met ConversationModelDeadlineExceeded. De foutmelding verbergt die oorzaak. Nog niet opgelost; eerdere acceptaties behouden."
+            "summary": "Twee gewone Telegramverzoeken eindigden op5oktober na~62seconden met ConversationModelDeadlineExceeded. De foutmelding verbergt die oorzaak. Nog niet opgelost; eerdere acceptaties behouden.",
+            "diagnosticEvidence": "eva2/evidence/product/c1-provider-shape-diagnosis-20261005.json"
+          },
+          "assignment": {
+            "owner": "/root",
+            "activeWorkers": [],
+            "baseCommit": "95d59fd1",
+            "stage": "neutral_probe_pass_cause_unresolved",
+            "existing": "C1 greeting/overlap acceptances retained. Current contact model gpt-6-sol none on existing provider.",
+            "gap": "Owner-observed ordinary requests fail with60s incomplete model phase; additional HTTP200/protocol failures found. No confirmed cause beyond incomplete terminal response yet.",
+            "outcome": "Preserve observed incident; no speculative provider/SDK or timeout change.",
+            "files": [
+              "Root: runtime/provider metadata, isolated neutral probe, integration",
+              "Agent: source-only provider/Pydantic analysis and independent review"
+            ],
+            "estimate": "Read existing logs/source; at most one neutral diagnostic provider request to discriminate stream handling from slow generation. No real tool execution or Telegram publication. Credits unknown.",
+            "finding": "One synthetic hosted-tool proposal completed correctly in12.366s,637tokens. Suspected parser mismatch not established; historical incomplete streams and protocol failures remain unresolved."
+          },
+          "runtimeIncident": {
+            "status": "open_cause_not_established",
+            "evidence": "eva2/evidence/product/telegram-model-deadline-observed-20261005.json",
+            "checkedAt": "2026-10-05T12:21:55.256399+00:00",
+            "acceptedTasksPreserved": true,
+            "diagnosticEvidence": "eva2/evidence/product/c1-provider-shape-diagnosis-20261005.json"
           }
         },
         {
@@ -16495,24 +16518,25 @@
               },
               "checkedAt": "2026-10-05T09:16:39.964669+00:00",
               "assignment": {
-                "baseCommit": "e21a132608d419b7c22eb075616923aa1c4881f3",
+                "baseCommit": "95d59fd1",
                 "owner": "/root",
-                "activeWorkers": [],
+                "activeWorkers": [
+                  "/root/aide_final_evaluation"
+                ],
                 "files": [
-                  "Evaluator: private original CM02 assessment and CM03 admission/results; public content-free receipts",
-                  "Source-only executor: isolated CM03 launcher copies and exact frozen source view",
-                  "Root: admitted sequential execution and existing workboard"
+                  "Evaluator: private original CM04 projection/admission, readback requirements and independent assessment",
+                  "Root: existing native driver actor binding and source-only verification, authorized execution and workboard"
                 ],
                 "existing": "CM01 and CM02 were already executed; original outcomes and logs are preserved. CM02 objective assessment is now available without a new model call.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Stored CM02 assessment: zero new inference. Next CM sample uses existing frozen limits; no new quota and no automatic full-matrix launch. Actual usage reported; credits unknown.",
-                "currentAction": "Afgerond in deze stap: opgeslagen CM02 beoordeeld en oorspronkelijke CM03 eenmaal per Eva uitgevoerd en onafhankelijk beoordeeld. Volgende proef nog niet gestart. Geen productieaanpassing; Telegramdeadline staat als onopgeloste bestaande gespreksfout geregistreerd.",
+                "currentAction": "Volgende oorspronkelijke CM04: onafhankelijke evaluator legt de twee persoonsbindingen en vereiste readbacks vooraf vast. Geen nieuwe modelaanvraag gestart; CM01–CM03 blijven behouden.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "Native Agent Zero multi-turn binding reviewed/published9db2ba35; real readiness recorded expired owned auth, zero inference, published32a42975."
                 },
-                "stage": "cm03_pair_recorded_next_case_not_started",
+                "stage": "cm04_original_actor_binding_preparation",
                 "finding": "Beide CM03 tekstuitkomsten voldoen, maar ontbrekende vereiste readback verhindert een bewezen taakresultaat. Geen afgeleide winst/verlies. Volgende persoons-/publieksbinding gericht aansluiten zonder originele criteria te wijzigen.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",

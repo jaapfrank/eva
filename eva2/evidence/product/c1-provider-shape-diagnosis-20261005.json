@@ -1,0 +1,50 @@
+{
+  "contract": "EvaProviderDiagnostic/v1",
+  "checkedAt": "2026-10-05T12:22:33.457516+00:00",
+  "task": "C1",
+  "sourceCommit": "95d59fd1",
+  "status": "incident_open_no_product_change_justified",
+  "priorEvidence": "eva2/evidence/product/telegram-model-deadline-observed-20261005.json",
+  "existingIncident": {
+    "ownerRequestsTimedOut": 2,
+    "completedResponseAbsent": true,
+    "additionalProtocolFailuresObserved": 3,
+    "cause": "not established"
+  },
+  "diagnostic": {
+    "scope": "One neutral deferred-tool proposal; no real tool execution, private context or Telegram publication",
+    "model": "gpt-6-sol",
+    "reasoning": "none",
+    "provider": "existing authorized Codex provider route",
+    "requests": 1,
+    "inputTokens": 598,
+    "outputTokens": 39,
+    "totalTokens": 637,
+    "seconds": 12.366,
+    "httpStatus": 200,
+    "responseCompleted": true,
+    "toolExecutions": 0,
+    "argumentDeltas": 5,
+    "hostedToolSearchArgumentShape": "dict, then dict containing paths",
+    "pendingBytes": 0,
+    "sourceResultSha256": "fdadc7475bf949e3b380e518f3a51a945b8f1608a01d351ac84ccd229f405ffa"
+  },
+  "decision": {
+    "finding": "The observed native hosted-search and function-argument event sequence is accepted by the existing SDK. The suspected parser mismatch was not reproduced. Historical protocol failures and missing terminal responses remain unexplained.",
+    "change": "none",
+    "deployment": "none",
+    "completionClaim": false,
+    "latencyClaim": "Single synthetic proposal timing; not a greeting, real tool result or general latency estimate."
+  },
+  "independentSourceReview": {
+    "reviewer": "/root/conversation_delay_diagnosis",
+    "finding": "The application waits for a complete, attested response before executing deferred tools. Twenty-one streamed argument fragments do not imply that a requested real-world action executed. Protocol category also covers upstream failure events; counters alone cannot isolate the historical cause.",
+    "modelCalls": 0
+  },
+  "officialReference": "https://developers.openai.com/api/docs/guides/tools-tool-search",
+  "usageLimitations": {
+    "credits": null,
+    "developmentUsageSeparate": true,
+    "repeatedProbe": false
+  }
+}
