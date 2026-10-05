@@ -270,3 +270,47 @@ def test_automation_mode_preserves_destination_and_never_becomes_initiative_spea
     x.policies[0] = x.policies[0].model_copy(update={"state": "revoked"})
     with pytest.raises(ValueError):
         sessions.native_delivery(automation)
+
+
+@pytest.mark.parametrize("mode", ["speaker", "automation", "missing"])
+def test_native_request_claim_uses_persisted_mode_after_audio_deadline(database, mode):
+    from datetime import UTC, datetime
+    from eva.adapters.postgres.voice_requests import PostgresVoiceRequests
+
+    def store():
+        return PostgresVoiceRequests(database, tenant_id="native-request-deadline-" + mode,
+                                     installation_id="synthetic-home")
+
+    args = {"device_id": "a" * 32, "request_id": "b" * 32}
+    now = datetime.now(UTC).replace(microsecond=0)
+    started = now - timedelta(seconds=60)
+    if mode == "missing":
+        key = store()._key(**args)
+        store()._timeline.create_thread(thread_id=key, checkpoint_id=key + ":1",
+            occurred_at=started, data={}, event_type="VOICE_REQUEST_STARTED",
+            phase="voice_running", deadline=None)
+    else:
+        assert store().begin(**args, now=started, delivery_mode=mode)
+    database.dispose()
+    assert not store().begin(**args, now=now, delivery_mode="automation")
+    assert store().claim_reply(**args, now=now, reply_sha256="c" * 64) is (mode == "automation")
+    assert not store().claim_reply(**args, now=now, reply_sha256="c" * 64)
+
+
+@pytest.mark.parametrize("stop_first", [True, False])
+def test_native_automation_stop_survives_late_reply_and_new_store(database, stop_first):
+    from datetime import UTC, datetime
+    from eva.adapters.postgres.voice_requests import PostgresVoiceRequests
+
+    def store():
+        return PostgresVoiceRequests(database, tenant_id="native-automation-stop-" + str(stop_first),
+                                     installation_id="synthetic-home")
+
+    args = {"device_id": "a" * 32, "request_id": "b" * 32}
+    now = datetime.now(UTC).replace(microsecond=0)
+    if not stop_first:
+        assert store().begin(**args, now=now - timedelta(seconds=60), delivery_mode="automation")
+    store().interrupt(**args, now=now)
+    database.dispose()
+    assert not store().begin(**args, now=now, delivery_mode="automation")
+    assert not store().claim_reply(**args, now=now + timedelta(seconds=60), reply_sha256="c" * 64)

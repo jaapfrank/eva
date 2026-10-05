@@ -18,7 +18,7 @@ class Ledger:
         self.reports = []
         self.lock = Lock()
 
-    def begin(self, *, device_id, request_id, now):
+    def begin(self, *, device_id, request_id, now, delivery_mode="speaker"):
         with self.lock:
             key = (device_id, request_id)
             if key in self.states:
@@ -139,7 +139,8 @@ def test_native_new_question_stops_same_speaker_only():
     asyncio.run(run())
 
 
-def test_native_interrupt_suppresses_responder_that_returns_after_cancel():
+@pytest.mark.parametrize("delivery_mode", ["speaker", "automation"])
+def test_native_interrupt_suppresses_responder_that_returns_after_cancel(delivery_mode):
     async def run():
         started = asyncio.Event()
         async def responder(request):
@@ -150,7 +151,7 @@ def test_native_interrupt_suppresses_responder_that_returns_after_cancel():
                 return VoiceReply("Oud antwoord")
         service, ledger, client = setup(responder)
         async with client:
-            data = payload()
+            data = {**payload(), "delivery_mode": delivery_mode}
             question = asyncio.create_task(client.post("/internal/v1/ha-voice/turns", json=data))
             await started.wait()
             stop = {k: data[k] for k in ("device_id", "satellite_id")}
@@ -418,5 +419,36 @@ def test_stream_advertises_shared_input_receipt_without_changing_reply_or_digest
             denied = await client.post("/internal/v1/ha-voice/turns", json=payload(),
                 headers={"Accept": "application/x-ndjson", "Authorization": "Bearer wrong"})
             assert denied.status_code == 401 and "X-Eva-Input-Receipt" not in denied.headers
+        await service.close()
+    asyncio.run(run())
+
+
+@pytest.mark.parametrize("delivery_mode", ["speaker", "automation"])
+def test_automation_handoff_outlives_audio_window_without_changing_speaker_timeout(monkeypatch, delivery_mode):
+    async def run():
+        observed = []
+        original_wait = asyncio.wait_for
+
+        async def elapsed_audio_window(awaitable, timeout):
+            observed.append(timeout)
+            if timeout == 32:
+                awaitable.cancel()
+                raise TimeoutError
+            return await original_wait(awaitable, timeout)
+
+        monkeypatch.setattr(asyncio, "wait_for", elapsed_audio_window)
+        service, ledger, client = setup(answer)
+        data = {**payload(), "delivery_mode": delivery_mode}
+        async with client:
+            if delivery_mode == "speaker":
+                with pytest.raises(TimeoutError):
+                    await service.run(VoiceRequest(**data))
+                assert ledger.states[data["device_id"], data["request_id"]] == "stopped"
+                assert observed == [32]
+            else:
+                reply = await service.run(VoiceRequest(**data))
+                assert reply.text == "Dag!"
+                assert ledger.states[data["device_id"], data["request_id"]] == "claimed"
+                assert observed == [None]
         await service.close()
     asyncio.run(run())

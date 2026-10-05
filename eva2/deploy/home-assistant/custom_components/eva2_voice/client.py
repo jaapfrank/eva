@@ -104,11 +104,21 @@ class EvaVoiceClient:
                 del self._active[satellite_id]
 
     async def _respond(self, payload: dict[str, str], *, on_delta=None, on_receipt=None) -> EvaVoiceAnswer:
+        automation = payload.get("delivery_mode", "speaker") == "automation"
+        # Automation work uses server budgets, not the interactive audio deadline.
+        # Override the shared HA session timeout for this request only.
+        request_options = {}
+        if automation:
+            session_timeout = self._session.timeout
+            request_options["timeout"] = aiohttp.ClientTimeout(
+                total=None, connect=session_timeout.connect, sock_read=None,
+                sock_connect=session_timeout.sock_connect,
+                ceil_threshold=session_timeout.ceil_threshold)
         try:
-            async with asyncio.timeout(32):
+            async with asyncio.timeout(None if automation else 32):
                 async with self._session.post(
                     self._url, json=payload, headers={**self._headers, **({"Accept": "application/x-ndjson"} if on_delta else {})},
-                    allow_redirects=False,
+                    allow_redirects=False, **request_options,
                 ) as response:
                     if response.status != 200:
                         raise EvaVoiceUnavailable("Eva voice response failed")

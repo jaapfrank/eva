@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-04T23:45:00.513755+00:00",
+  "lastUpdated": "2026-10-04T23:48:08.082136+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Alle24 opdrachten: bestaand resultaat, bewijs, resterend tekort, kleinste vervolgstap. B0-keuzebesluit afgerond; C1 volgt via bestaande uitvoering. Hermes-compatibiliteit UNKNOWN, geen automatisch vervangen.",
+      "priorityDecision": "Eén complete gebruikersuitkomst afronden met bestaande middelen. Nu I2.2 afgeleverd; daarna de concreet aangetoonde HA-argumentfout oplossen. Vergelijkingstoestemming blokkeert onafhankelijk productwerk niet.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -158,7 +158,7 @@
           "Historical shared repository contents not yet split out"
         ]
       },
-      "summary": "Eva heeft al bruikbare deelresultaten. De 24 opleveropdrachten zijn geen 24 ontbrekende functies: per opdracht staat nu wat bestaat en of aansluiten, verbeteren of alleen beproeven nodig is.",
+      "summary": "28 van 44 oorspronkelijke kleine taken technisch afgerond. Eva’s zelfgemaakte waarnemingsautomatisering is nu echt uitgevoerd; volledige productonderdelen en menselijke acceptatie blijven afzonderlijk zichtbaar.",
       "nextOutcomes": [
         {
           "title": "Actief · Optionele stemmodule aansluiten",
@@ -1035,8 +1035,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-04T23:45:00.513755+00:00",
+        "checkedAt": "2026-10-05T00:19:18.098429+00:00",
         "deliveries": [
+          {
+            "title": "I2.2 klaar · Eva maakt en gebruikt zelf een waarnemingsautomatisering",
+            "date": "5 oktober",
+            "state": "installed",
+            "result": "Eva koos zelf de vochtbron, bouwde en verbeterde de automatisering. Echte wijzigingen 55→24 en 55→22 leverden het juiste gekoppelde resultaat; tweede terugmelding na 21,804 s. Algemene correctie geïnstalleerd; fictieve proefobjecten opgeruimd.",
+            "remaining": "28/44 oorspronkelijke kleine taken klaar. I2.1 en heel I2 blijven open. Afzonderlijke correctiejob meldde internal_error door ongeldige tool-JSON; die fout blijft zichtbaar en wordt gericht opgevolgd.",
+            "source": "eva2/evidence/product/i2-observation-automation-installed-20261005.json"
+          },
           {
             "title": "HA-automatiseringen krijgen hun achtergrondresultaat terug",
             "date": "5 oktober",
@@ -3633,14 +3641,14 @@
           }
         ],
         "now": {
-          "title": "I2.2 · terugmelding geïnstalleerd en gecontroleerd",
-          "state": "installed",
+          "title": "I2.2 opgeleverd · 28/44 kleine taken afgerond",
+          "state": "completed",
           "owner": "Codex",
-          "detail": "De correctie is afgerond en draait. Eva kan het resultaat van een HA-achtergrondopdracht teruggeven aan de automatisering. De volledige I2-uitkomst is nog open; vervolg nog niet gestart."
+          "detail": "Zelfgekozen bron, zelfgeschreven automatisering en echte terugmelding geïnstalleerd en onafhankelijk gecontroleerd. Geen proef meer actief. De volgende gerichte HA-invoercorrectie staat hieronder."
         },
         "next": {
-          "title": "I2.2 · de hele waarnemingsautomatisering laten uitvoeren",
-          "detail": "Eva zelf de passende bronnen en automatisering laten kiezen en gebruiken via bestaande hulpmiddelen. De terugmelding staat. Alleen toestemming voor echte camera-/agendagegevens blijft afzonderlijk open; geen projectbrede stop."
+          "title": "T2 · Corrigeerbare HA-invoer laten herstellen",
+          "detail": "De exacte fout is vastgesteld. Eva moet ongeldige JSON in één nieuwe toolaanroep kunnen herstellen zonder haar eerdere geslaagde werk opnieuw te doen. Nog niet gebouwd of als klaar geteld."
         },
         "ownerAction": {
           "title": "Eén gezamenlijke toestemmingsvraag beantwoorden",
@@ -3649,12 +3657,12 @@
             "De bestaande afzonderlijke vragen voor camera-/agendagebruik, de innovatieproef en de echte herstart blijven open.",
             "Native aanmeldingen van Agent Zero, Hermes en OpenClaw zijn niet actueel bevestigd; geen nieuwe loginronde actief."
           ],
-          "expected": "De vergelijkingsblokkade geldt uitsluitend voor de afgeschermde evaluatie. Onafhankelijk productwerk gaat verder; voor deze callbackoplevering hoef je niets te doen."
+          "expected": "De vergelijkingsblokkade geldt uitsluitend voor de afgeschermde evaluatie. Onafhankelijk productwerk gaat verder; voor de opgeleverde automatiseringsvaardigheid hoef je niets te doen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-04T23:45:00.513755+00:00"
+        "reviewedAt": "2026-10-05T00:19:18.098429+00:00"
       },
-      "reviewedAt": "2026-10-03T16:07:18.537186+00:00"
+      "reviewedAt": "2026-10-05T00:19:18.098429+00:00"
     },
     "pendingTechnicalReview": {
       "reason": "Historische CO-003-kandidaat van 7 september: het oorspronkelijke bewijs bevat geen commitgebonden definitieve review of livegang. Deze oude kaart wordt daarom niet alsnog afgevinkt. De gebruikersuitkomst is later opgenomen in CO-004/CO-005, live opgeleverd en door Jaap via GE-02 geaccepteerd op 12 september. Het gekozen geheugenonderdeel blijft afgesloten; deze historische registratie is geen actuele bouw- of acceptatieblokkade.",
@@ -13132,7 +13140,7 @@
           ]
         }
       ],
-      "nextAction": "P2.1: eerste vaste scenario via bestaande native Eva1/Eva2 uitvoeren na controle van de benodigde echte ingangen en klok/gebeurtenissen.",
+      "nextAction": "De nieuwe bewezen HA-invoerfout gericht corrigeren via de bestaande uitvoerroute; eerdere geslaagde writes behouden. Historische timeout niet opnieuw proberen zonder nieuw bewijs.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -14493,7 +14501,7 @@
               },
               "latestEvidence": "eva2/evidence/product/t2-readonly-followup-20260929.json",
               "remaining": "Timeout niet gereproduceerd; uitleestaak geslaagd. Oorzaak nog onbekend. Geen ongewijzigde proefherhaling; nieuwe concrete fout met geïnstalleerde meting nodig voor gerichte reparatie.",
-              "nextAction": "Codex verklaart alleen de concrete bewaarde uitvoerfout wanneer deze de gekozen HA-uitkomst raakt; geen ongewijzigde herhaling of preventieve reparatielus.",
+              "nextAction": "De nieuwe bewezen HA-invoerfout gericht corrigeren via de bestaande uitvoerroute; eerdere geslaagde writes behouden. Historische timeout niet opnieuw proberen zonder nieuw bewijs.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -14511,6 +14519,14 @@
                 "matchingFailureRecords": 0,
                 "logCommandsSucceeded": true,
                 "scope": "Available content-free conversation_model_failure records only. No absence-of-defect claim, no new test, no modelcalls or house action."
+              },
+              "newConcreteExecutionFinding": {
+                "observedAt": "2026-10-05T00:19:18.098429+00:00",
+                "evidence": "eva2/evidence/product/i2-observation-automation-installed-20261005.json",
+                "cause": "ConversationConflict:Home Assistant request body must be JSON",
+                "phase": "Before external admission",
+                "nextAction": "Gebruik bestaande continuation om alleen deze corrigeerbare argumentfout terug te geven; autoriteitsfouten en onzekere effecten blijven hard stoppen.",
+                "priorTimeoutStatus": "De historische timeout blijft onverklaard; deze nieuwe concrete fout bewijst die oude oorzaak niet."
               }
             },
             {
@@ -15079,49 +15095,51 @@
           },
           "owner": "/root",
           "assignment": {
-            "baseCommit": "02bea1b2",
+            "baseCommit": "362579f1",
             "owner": "/root",
-            "stage": "callback_installed_published_observation_outcome_open",
-            "existing": "Installed HA conversation entity and device-authorized EvaVoiceClient; general HA automation writer already available.",
-            "gap": "Live conversation.process schema has no satellite/device field; Eva conversation adapter requires a registered satellite; no eva2_voice action exists. Thus the general HA-automation-to-Eva handoff is absent.",
+            "stage": "installed_complete_with_recorded_execution_finding",
+            "existing": "Eva koos zelf de bron, schreef de HA-automatisering en meldde na een echte sensorwijziging de nieuwe waarde terug. Installed callback route retained.",
+            "gap": "Automatiseringsuitkomst bewezen. Afzonderlijke herstelbare JSON-invoerfout blijft als uitvoeringsbevinding open.",
             "files": [
-              "eva2/deploy/home-assistant/custom_components/eva2_voice/__init__.py",
-              "eva2/deploy/home-assistant/custom_components/eva2_voice/client.py",
-              "eva2/deploy/home-assistant/custom_components/eva2_voice/services.py",
-              "eva2/deploy/home-assistant/custom_components/eva2_voice/services.yaml",
-              "eva2/tests/operations/test_ha_phone_entry.py",
-              "eva2/deploy/home-assistant/README.md"
+              "Root: existing task, isolated probe/evidence and only a proven missing general seam",
+              "Independent reviewer: source/evidence review, no shared edits"
             ],
-            "endCondition": "An HA automation can call the existing household Eva runtime with an authorized registered satellite and receive its text response; no private identity, new planner, automatic TTS or example-specific automation. Install and check the actual action.",
+            "endCondition": "Eva stelt de gevraagde waarneming en terugmelding zelf in via bestaande algemene hulpmiddelen en passende automatisering, zonder vraag-/apparaatspecifieke kernregel; de werkelijke terugmelding blijft binnen het bestaande mandaat.",
             "activeWorkers": [],
-            "sourceCommit": "958fccd5"
+            "sourceCommit": "b9b6220f + bounded delivery overlay; installed image/source hashes in evidence",
+            "currentAction": "Oorspronkelijke I2.2-uitkomst geïnstalleerd en onafhankelijk gecontroleerd. Geen actieve proef; volgende gerichte HA-invoercorrectie nog niet gestart.",
+            "estimate": "Eén complete synthetische route met bestaande model/provider/grant; alleen noodzakelijke gewijzigde-oorzaakcorrecties. Werkelijke calls/tokens achteraf; credits onbekend.",
+            "knownRemainingGap": "Toolvrije huishoudelijke achtergrondopdrachten kunnen nog ten onrechte worden aangenomen door de uitvoerder die toolbewijs vereist. Geen versoepelde controles of gefingeerde rekenuitkomst.",
+            "previousCorrectionEvidence": "eva2/evidence/product/i2-automation-return-installed-20261005.json",
+            "evidence": "eva2/evidence/product/i2-observation-automation-installed-20261005.json"
           },
           "evidence": "eva2/evidence/product/local-vision-installed-20260928.json",
-          "remaining": "Algemene vaardigheid nog afmaken: passende bestaande bronnen zelfstandig ontdekken, de gevraagde waarneming als automatisering instellen en met een nuttig resultaat terugkomen. Geen verplichte vuilnisbakfunctie of voorafgaande bronkeuze van Jaap.",
+          "remaining": "I2.2 technisch afgerond. I2.1 camera-/agendabronkeuze en de volledige nuttige initiatiefuitkomst blijven open; één uitvoeringsbevinding over foutieve HA-argumenten blijft zichtbaar.",
           "discoveryEvidence": "eva2/evidence/product/ha-domain-selection-installed-20260928.json",
           "connectionInstalledEvidence": "eva2/evidence/product/initiative-vision-read-installed-20260928.json",
           "reviewPacingEvidence": "eva2/evidence/product/initiative-review-pacing-installed-20260928.json",
           "calendarSourceEvidence": "eva2/evidence/product/initiative-calendar-source-20260928.json",
           "returnServiceEvidence": "eva2/evidence/product/initiative-return-service-installed-20260928.json",
           "activeWorker": null,
-          "latestEvidence": "eva2/evidence/product/i2-ha-automation-action-installed-20261002.json",
+          "latestEvidence": "eva2/evidence/product/i2-observation-automation-installed-20261005.json",
           "currentAssignment": {
-            "baseCommit": "02bea1b2",
+            "baseCommit": "362579f1",
             "owner": "/root",
-            "stage": "callback_installed_published_observation_outcome_open",
-            "existing": "Installed HA conversation entity and device-authorized EvaVoiceClient; general HA automation writer already available.",
-            "gap": "Live conversation.process schema has no satellite/device field; Eva conversation adapter requires a registered satellite; no eva2_voice action exists. Thus the general HA-automation-to-Eva handoff is absent.",
+            "stage": "installed_complete_with_recorded_execution_finding",
+            "existing": "Eva koos zelf de bron, schreef de HA-automatisering en meldde na een echte sensorwijziging de nieuwe waarde terug. Installed callback route retained.",
+            "gap": "Automatiseringsuitkomst bewezen. Afzonderlijke herstelbare JSON-invoerfout blijft als uitvoeringsbevinding open.",
             "files": [
-              "eva2/deploy/home-assistant/custom_components/eva2_voice/__init__.py",
-              "eva2/deploy/home-assistant/custom_components/eva2_voice/client.py",
-              "eva2/deploy/home-assistant/custom_components/eva2_voice/services.py",
-              "eva2/deploy/home-assistant/custom_components/eva2_voice/services.yaml",
-              "eva2/tests/operations/test_ha_phone_entry.py",
-              "eva2/deploy/home-assistant/README.md"
+              "Root: existing task, isolated probe/evidence and only a proven missing general seam",
+              "Independent reviewer: source/evidence review, no shared edits"
             ],
-            "endCondition": "An HA automation can call the existing household Eva runtime with an authorized registered satellite and receive its text response; no private identity, new planner, automatic TTS or example-specific automation. Install and check the actual action.",
+            "endCondition": "Eva stelt de gevraagde waarneming en terugmelding zelf in via bestaande algemene hulpmiddelen en passende automatisering, zonder vraag-/apparaatspecifieke kernregel; de werkelijke terugmelding blijft binnen het bestaande mandaat.",
             "activeWorkers": [],
-            "sourceCommit": "958fccd5"
+            "sourceCommit": "b9b6220f + bounded delivery overlay; installed image/source hashes in evidence",
+            "currentAction": "Oorspronkelijke I2.2-uitkomst geïnstalleerd en onafhankelijk gecontroleerd. Geen actieve proef; volgende gerichte HA-invoercorrectie nog niet gestart.",
+            "estimate": "Eén complete synthetische route met bestaande model/provider/grant; alleen noodzakelijke gewijzigde-oorzaakcorrecties. Werkelijke calls/tokens achteraf; credits onbekend.",
+            "knownRemainingGap": "Toolvrije huishoudelijke achtergrondopdrachten kunnen nog ten onrechte worden aangenomen door de uitvoerder die toolbewijs vereist. Geen versoepelde controles of gefingeerde rekenuitkomst.",
+            "previousCorrectionEvidence": "eva2/evidence/product/i2-automation-return-installed-20261005.json",
+            "evidence": "eva2/evidence/product/i2-observation-automation-installed-20261005.json"
           },
           "dashboardComponent": "initiative",
           "remainingTasks": [
@@ -15181,37 +15199,50 @@
             {
               "id": "I2.2",
               "title": "Waarnemingsopdracht zelf automatiseren en terugmelden",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "aansluiten",
               "doneWhen": "Eva stelt de gevraagde waarneming en terugmelding zelf in via bestaande algemene hulpmiddelen en passende automatisering, zonder vraag-/apparaatspecifieke kernregel; de werkelijke terugmelding blijft binnen het bestaande mandaat.",
               "owner": "Codex /root",
-              "nextAction": "De geïnstalleerde terugmelding behouden. De bestaande volledige I2-route afmaken: Eva kiest bronnen, maakt en gebruikt zelf de passende automatisering. Alleen een echte camera-/agendaproef wacht op die afzonderlijke toestemming; generieke uitvoering niet.",
+              "nextAction": "Geen verplichte herproef. Eva kan via de bestaande algemene HA-tools zelf een waarneming automatiseren en de echte uitlezing terugmelden; echte camera-/agendabronkeuze blijft I2.1.",
               "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
-                "steps": [],
+                "availableNow": true,
+                "readyWhen": "Deze oorspronkelijke kleine vaardigheid is technisch opgeleverd; geen verplichte nieuwe proef van jou.",
+                "steps": [
+                  "Een gewone opdracht beschrijft wat Eva moet waarnemen en wanneer zij moet terugkomen. Eva kiest de bestaande hulpmiddelen en maakt de automatisering zelf.",
+                  "De bewezen uitvoering gebruikte fictieve sensoren; echte camera-/agendagegevens en de menselijke beoordeling blijven apart zichtbaar."
+                ],
                 "blocksIndependentWork": false
               },
               "assignment": {
-                "baseCommit": "b9b6220f",
+                "baseCommit": "362579f1",
                 "owner": "/root",
-                "stage": "automation_result_delivery_installed_checked",
-                "existing": "Installed HA conversation entity and device-authorized EvaVoiceClient; general HA automation writer already available.",
-                "gap": "HA ask promises caller-controlled presentation but creates a native speaker session; deferred work is always announced. Automation sessions also become eligible as latest initiative speech destination.",
+                "stage": "installed_complete_with_recorded_execution_finding",
+                "existing": "Eva koos zelf de bron, schreef de HA-automatisering en meldde na een echte sensorwijziging de nieuwe waarde terug. Installed callback route retained.",
+                "gap": "Automatiseringsuitkomst bewezen. Afzonderlijke herstelbare JSON-invoerfout blijft als uitvoeringsbevinding open.",
                 "files": [
-                  "Core request/session/native delivery and focused tests: /root",
-                  "HA client/service/descriptions and their focused tests: /root/background_execution_seam"
+                  "Root: existing task, isolated probe/evidence and only a proven missing general seam",
+                  "Independent reviewer: source/evidence review, no shared edits"
                 ],
-                "endCondition": "Installed HA automation request retains direct response and returns later work through its HA event without announcing or selecting an initiative speaker; existing real I2 observation finish remains open.",
+                "endCondition": "Eva stelt de gevraagde waarneming en terugmelding zelf in via bestaande algemene hulpmiddelen en passende automatisering, zonder vraag-/apparaatspecifieke kernregel; de werkelijke terugmelding blijft binnen het bestaande mandaat.",
                 "activeWorkers": [],
                 "sourceCommit": "b9b6220f + bounded delivery overlay; installed image/source hashes in evidence",
-                "currentAction": "Callbackcorrectie geïnstalleerd en afgesloten: HA ask houdt de presentatie bij de automatisering; één echte synthetische HA-read kwam correct terug als event. Volgende hele I2-uitkomst nog niet gestart.",
-                "estimate": "71 gerichte checks; twee live proefopdrachten (eerste ongeschikt en mislukt, tweede geslaagd). Alleen achtergronddeelverbruik gemeten; totale credits onbekend.",
-                "knownRemainingGap": "Toolvrije huishoudelijke achtergrondopdrachten kunnen nog ten onrechte worden aangenomen door de uitvoerder die toolbewijs vereist. Geen versoepelde controles of gefingeerde rekenuitkomst."
+                "currentAction": "Oorspronkelijke I2.2-uitkomst geïnstalleerd en onafhankelijk gecontroleerd. Geen actieve proef; volgende gerichte HA-invoercorrectie nog niet gestart.",
+                "estimate": "Eén complete synthetische route met bestaande model/provider/grant; alleen noodzakelijke gewijzigde-oorzaakcorrecties. Werkelijke calls/tokens achteraf; credits onbekend.",
+                "knownRemainingGap": "Toolvrije huishoudelijke achtergrondopdrachten kunnen nog ten onrechte worden aangenomen door de uitvoerder die toolbewijs vereist. Geen versoepelde controles of gefingeerde rekenuitkomst.",
+                "previousCorrectionEvidence": "eva2/evidence/product/i2-automation-return-installed-20261005.json",
+                "evidence": "eva2/evidence/product/i2-observation-automation-installed-20261005.json"
               },
-              "latestEvidence": "eva2/evidence/product/i2-automation-return-installed-20261005.json",
-              "checkedAt": "2026-10-04T23:45:00.513755+00:00"
+              "latestEvidence": "eva2/evidence/product/i2-observation-automation-installed-20261005.json",
+              "checkedAt": "2026-10-05T00:19:18.098429+00:00",
+              "completedAt": "2026-10-05T00:19:18.098429+00:00",
+              "result": "Eva koos zelf de vochtbron, bouwde en verbeterde de automatisering. Echte wijzigingen 55→24 en 55→22 leverden het juiste gekoppelde resultaat; tweede terugmelding na 21,804 s. Algemene correctie geïnstalleerd; fictieve proefobjecten opgeruimd.",
+              "knownExecutionFinding": {
+                "state": "open",
+                "diagnosis": "Ongeldige JSON in een nieuwe HA-toolaanroep werd als hele-taakfout afgehandeld, vóór externe admission. De reeds geschreven automatisering bleef werken; de correctiejob zelf blijft ambiguous.",
+                "evidence": "eva2/evidence/product/i2-observation-automation-installed-20261005.json",
+                "followUp": "Bestaande algemene HA-uitvoering: corrigeerbare invoerfout teruggeven zodat Eva alleen die argumenten herstelt. Geen eerdere writes herhalen."
+              }
             }
           ],
           "responsibilityReview": {
@@ -16606,7 +16637,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "P2",
+      "activeSliceId": "T2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

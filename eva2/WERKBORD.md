@@ -1,17 +1,23 @@
 # EVA2 werkbord
 
-**Opgeleverd — I2.2: achtergrondresultaat terug naar de HA-automatisering.**
-De correctie is geïnstalleerd. Een echte, tijdelijke fictieve HA-bron is door Eva
-uitgelezen; het juiste resultaat kwam via `eva2_work_result` terug (23,741 s),
-gekoppeld aan gesprek én speaker. Geen ongevraagde speakeruitspraak.
-71 gerichte controles, onafhankelijke review en geïnstalleerde broncontrole akkoord.
-De eerste rekenproef mislukte en blijft zichtbaar in het bewijs.
+**Opgeleverd — I2.2: Eva maakt en gebruikt zelf een waarnemingsautomatisering.**
+Eva koos de relevante fictieve bron, schreef zelf de automatisering en verbeterde
+haar configuratie na review. Echte sensorwijzigingen 55→24 en 55→22 leverden de juiste
+inhoudelijke melding op. Tweede resultaat: 21,804 seconden, correct gekoppeld aan
+gesprek en speaker. Beide automatiseringen eindigden; proefobjecten zijn opgeruimd.
+De algemene correctie draait in kern, werker en HA en zit in het installatiepakket.
+88 gerichte controles en onafhankelijke review; **28/44** kleine taken afgerond.
 
-**Nog open:** de volledige I2-waarnemingsautomatisering en toolvrij huishoudelijk
-achtergrondwerk. Geen complete kleine taak erbij: **27/44**. De eerstvolgende
-I2-uitvoering is nog niet gestart. De vergelijkingsblokkade P2 geldt alleen voor
-die vergelijking en houdt onafhankelijk productwerk niet tegen.
-[Oplevering en beperkingen](evidence/product/i2-automation-return-installed-20261005.json).
+**Beperking:** de correctiejob zelf bleef `ambiguous/internal_error`: een volgende
+toolaanroep had ongeldige JSON, vóór externe uitvoering. Het gemaakte werk bleef
+behouden en is daarna werkelijk gebruikt. Die fout is niet als succes omgeboekt.
+I2.1, het volledige initiatiefonderdeel en menselijke acceptatie blijven open.
+[Resultaat, verbruik en beperkingen](evidence/product/i2-observation-automation-installed-20261005.json).
+
+**Volgende — bestaande HA-uitvoering:** die corrigeerbare invoerfout aan Eva
+teruggeven zodat zij alleen de argumenten herstelt. Niet opnieuw eerdere writes
+uitvoeren. Diagnose klaar; productcorrectie nog niet gestart. De historische
+HA-timeout blijft apart onverklaard. Geen nieuwe taak of opgehoogde afrondingsteller.
 
 **P1 afgerond: versies/toegang, vaste taken, scorers en meetbudgetten. Stand 27/44 kleine taken.**
 De oorspronkelijke voorwaarde is onafhankelijk gecontroleerd. Eva1/Eva2 en Agent Zero

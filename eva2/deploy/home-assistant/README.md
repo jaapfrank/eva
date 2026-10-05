@@ -280,6 +280,13 @@ request; it is not updated when background work finishes. Event publication
 means offered to Home Assistant, not confirmation that an automation consumed
 or spoke the result. Ordinary voice requests retain their speaker delivery.
 
+A background result event can arrive before `eva2_voice.ask` returns. Choose a
+unique `conversation_id` before dispatch, pass it with the request, and ensure
+the event receiver is already active. Correlate using both that `conversation_id`
+and the requested `satellite_id`; do not wait for the initial response to set up
+the receiver. Do not automatically retry an uncertain action: a missing response
+does not prove that its work or effects did not occur.
+
 If the satellite already has an active Eva request, the action fails without
 interrupting that request, including a live voice request. Failed calls are not
 automatically retried. Do not add automatic retries for arbitrary work: an

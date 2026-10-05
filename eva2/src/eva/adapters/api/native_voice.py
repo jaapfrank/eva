@@ -64,7 +64,8 @@ class VoiceReply:
 
 
 class RequestLedger(Protocol):
-    def begin(self, *, device_id: str, request_id: str, now: datetime) -> bool: ...
+    def begin(self, *, device_id: str, request_id: str, now: datetime,
+              delivery_mode: str = "speaker") -> bool: ...
     def interrupt(self, *, device_id: str, request_id: str, now: datetime) -> None: ...
     def claim_reply(self, *, device_id: str, request_id: str, now: datetime,
                     reply_sha256: str) -> bool: ...
@@ -165,8 +166,10 @@ class NativeVoiceService:
                 entry = _Running(request_id)
                 self._pending[key] = entry
                 cleanup_required = True
+                admission_options = ({"delivery_mode": "automation"}
+                                     if request.delivery_mode == "automation" else {})
                 admitted = await asyncio.to_thread(self._ledger.begin, device_id=device,
-                                                    request_id=request_id, now=self._now())
+                    request_id=request_id, now=self._now(), **admission_options)
                 if not admitted:
                     cleanup_required = False
                     raise HTTPException(409, "Voice request already seen or stopped")
@@ -186,7 +189,13 @@ class NativeVoiceService:
             # Cancellation propagates into the owned responder. Even a responder
             # that returns after cancellation must pass the stopped/current check.
             assert entry.task is not None
-            reply = await asyncio.wait_for(asyncio.shield(entry.task), timeout=32)
+            # Automations have no speaker listening window. The shared runtime
+            # owns model/work budgets; an audio transport timer must not cancel
+            # a valid task handoff. Explicit stop/disconnect still owns cleanup.
+            reply = await asyncio.wait_for(
+                asyncio.shield(entry.task),
+                timeout=None if request.delivery_mode == "automation" else 32,
+            )
             self._validate_current()
             if (entry.stopped or self._active.get(device) is not entry
                     or not isinstance(reply, VoiceReply) or not isinstance(reply.text, str)

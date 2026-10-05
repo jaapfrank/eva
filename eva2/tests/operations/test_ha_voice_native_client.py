@@ -320,3 +320,55 @@ def test_invalid_delivery_mode_fails_before_transport(mode):
         assert client._active == {}
         await client.close()
     asyncio.run(run())
+
+
+@pytest.mark.parametrize("mode", ["speaker", "automation"])
+def test_delivery_timeout_and_explicit_cancel_preserve_remote_interrupt(monkeypatch, mode):
+    async def run():
+        entered, released = asyncio.Event(), asyncio.Event()
+        seen, deadlines, options = [], [], []
+        native_timeout = asyncio.timeout
+        def observed_timeout(delay):
+            import inspect
+            if inspect.currentframe().f_back.f_code.co_filename == str(_PATH):
+                deadlines.append(delay)
+            return native_timeout(delay)
+        monkeypatch.setattr(_MODULE.asyncio, "timeout", observed_timeout)
+        async def handler(request):
+            seen.append(await request.json())
+            entered.set()
+            await released.wait()
+            return web.json_response({"request_id": seen[0]["request_id"],
+                                      "reply": "Resultaat", "continue_conversation": False})
+        async def interrupt(request):
+            assert request.match_info["request_id"] == seen[0]["request_id"]
+            assert await request.json() == {"satellite_id": "assist_satellite.room", "device_id": "a" * 32}
+            released.set()
+            return web.json_response({"status": "interrupted"})
+        async with server(handler, interrupt) as client:
+            session = client._session
+            class ObservedSession:
+                timeout = session.timeout
+                def post(self, *args, **kwargs):
+                    options.append(kwargs)
+                    return session.post(*args, **kwargs)
+            client._session = ObservedSession()
+            task = asyncio.create_task(client.respond(satellite_id="assist_satellite.room", device_id="a" * 32,
+                conversation_id="deadline-fixture", text="Vraag", language="nl", delivery_mode=mode))
+            await asyncio.wait_for(entered.wait(), 2)
+            assert not task.done()
+            assert deadlines == ([None] if mode == "automation" else [32])
+            if mode == "automation":
+                timeout = options[0]["timeout"]
+                assert timeout.total is None and timeout.sock_read is None
+                assert timeout.connect == session.timeout.connect
+                assert timeout.sock_connect == session.timeout.sock_connect
+                assert timeout.ceil_threshold == session.timeout.ceil_threshold
+            else:
+                assert "timeout" not in options[0]
+            task.cancel()
+            with pytest.raises(asyncio.CancelledError):
+                await task
+            assert released.is_set()
+            assert deadlines[-1] == 2  # Existing bounded interrupt cleanup.
+    asyncio.run(run())

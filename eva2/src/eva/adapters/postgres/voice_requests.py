@@ -36,18 +36,23 @@ class PostgresVoiceRequests:
         digest = hashlib.sha256(f"{device_id}:{request_id}".encode()).hexdigest()
         return f"ha-voice:{digest}"
 
-    def begin(self, *, device_id: str, request_id: str, now: datetime) -> bool:
+    def begin(self, *, device_id: str, request_id: str, now: datetime,
+              delivery_mode: str = "speaker") -> bool:
         """True only for the first admission, never for retries or tombstones.
 
         A worker lost to a crash is deliberately not restarted. The next spoken
         question gets a new ID. No transcript or spoken answer is stored here.
         """
+        if delivery_mode not in {"speaker", "automation"}:
+            raise ValueError("Invalid native request delivery mode")
+        automation = delivery_mode == "automation"
         key = self._key(device_id, request_id)
         try:
             self._timeline.create_thread(
                 thread_id=key, checkpoint_id=f"{key}:1", occurred_at=now,
-                data={}, event_type="VOICE_REQUEST_STARTED", phase="voice_running",
-                deadline=now + timedelta(seconds=32),
+                data={"delivery_mode": "automation"} if automation else {},
+                event_type="VOICE_REQUEST_STARTED", phase="voice_running",
+                deadline=None if automation else now + timedelta(seconds=32),
             )
             return True
         except CheckpointConflict:
@@ -83,7 +88,7 @@ class PostgresVoiceRequests:
 
     def claim_reply(self, *, device_id: str, request_id: str, now: datetime,
                     reply_sha256: str | None = None) -> bool:
-        """Claim one reply before expiry. This is not an audible-delivery receipt.
+        """Claim one reply within its persisted mode. Not an audible-delivery receipt.
 
         HA must still suppress cancelled HTTP responses. A stop after this commit
         cannot retract a response in flight; it remains recorded by interrupt().
@@ -93,8 +98,18 @@ class PostgresVoiceRequests:
                 or not re.fullmatch(r"[0-9a-f]{64}", reply_sha256)):
             raise PlaybackConflict("Invalid reply digest")
         state = self._timeline.load(key)
-        if (state.phase != "voice_running" or state.deadline is None
-                or now >= state.deadline):
+        if state.phase != "voice_running":
+            return False
+        automation = False
+        if state.deadline is None:
+            # Only the immutable admission may remove the audio reply window.
+            # Legacy/malformed requests and stop-before-start tombstones do not.
+            events = self._timeline.events(key)
+            automation = bool(events and events[0].event_type == "VOICE_REQUEST_STARTED"
+                              and events[0].payload.get("data") == {"delivery_mode": "automation"})
+            if not automation:
+                return False
+        elif now >= state.deadline:
             return False
         try:
             self._timeline.transition(
@@ -102,7 +117,7 @@ class PostgresVoiceRequests:
                 checkpoint_id=f"{key}:{state.revision + 1}", occurred_at=now,
                 data={} if reply_sha256 is None else {"reply_sha256": reply_sha256},
                 event_type="VOICE_REPLY_CLAIMED", phase="voice_reply_claimed",
-                status="completed", require_unexpired=True,
+                status="completed", require_unexpired=not automation,
             )
             return True
         except CheckpointConflict:

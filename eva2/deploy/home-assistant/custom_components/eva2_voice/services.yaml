@@ -7,7 +7,10 @@ ask:
     de automatisering bepaalt wat zij met het antwoord doet. Een later afgerond
     achtergrondresultaat komt als event eva2_work_result met conversation_id,
     satellite_id, work_id, title, state, text en result_sha256; ook dit wordt niet automatisch
-    uitgesproken. Koppel het event aan zowel conversation_id als satellite_id.
+    uitgesproken. Het event kan al aankomen voordat deze actie terugkeert.
+    Kies daarom vooraf een unieke conversation_id en zorg dat de ontvanger al
+    actief is voordat de aanvraag wordt verstuurd. Koppel het event aan zowel
+    conversation_id als satellite_id. Herhaal een onzekere aanvraag niet automatisch.
     Een aanvraag wordt
     geweigerd als Eva op deze speaker al met een andere aanvraag bezig is.
   fields:
