@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-04T23:48:08.082136+00:00",
+  "lastUpdated": "2026-10-05T01:17:45.054328+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1035,8 +1035,24 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T00:50:53.708390+00:00",
+        "checkedAt": "2026-10-05T01:17:45.054328+00:00",
         "deliveries": [
+          {
+            "title": "I2 klaar · Bronnen kiezen, waarneming instellen en eigen onderzoek",
+            "date": "5 oktober",
+            "state": "installed",
+            "result": "De oorspronkelijke technische I2-uitkomst is afgerond. Eva kiest bronnen, maakt een waarnemingsautomatisering en kiest/voltooit onderzoek met primaire bronnen. Laatste voorstel: smartphone-updates met echte Apple- en Google-bronnen; opgeslagen en terug bij de opdracht na 35,256s. Onafhankelijke gecombineerde review GO.",
+            "remaining": "30/44 oorspronkelijke kleine taken klaar; geen extra taak toegevoegd voor het onderzoekscriterium. Menselijk nut en gezinsacceptatie blijven apart. Geen nieuwe spontane initiatiefbeslissing geclaimd uit de gevraagde onderwerpkeuze.",
+            "source": "eva2/evidence/product/i2-self-chosen-research-installed-20261005.json"
+          },
+          {
+            "title": "I2.1 klaar · Eva kiest zelf camera en agenda",
+            "date": "5 oktober",
+            "state": "installed",
+            "result": "Uit twee camera’s en twee agenda’s zelfstandig passende bronnen gekozen. Echt beeld gelezen en opruimafspraak gevonden; gecontroleerd resultaat terug bij de oorspronkelijke opdracht na 44,348s. Bestaande installatie hergebruikt.",
+            "remaining": "30/44 oorspronkelijke kleine taken klaar. Eén fictieve praktijkproef; echte privébeelden en gezinsbeoordeling niet uitgevoerd. I2.2 blijft afgerond.",
+            "source": "eva2/evidence/product/i2-source-choice-installed-20261005.json"
+          },
           {
             "title": "T2 klaar · Algemene huisbediening en herstel geïnstalleerd",
             "date": "5 oktober",
@@ -3649,14 +3665,14 @@
           }
         ],
         "now": {
-          "title": "T2 · Algemene huisbediening technisch afgerond",
-          "state": "completed",
+          "title": "T3.3 · Browser overnemen en correct teruggeven",
+          "state": "in_progress",
           "owner": "Codex",
-          "detail": "Alle vier oorspronkelijke T2-taken klaar. Eva herstelde een foutief HA-verzoek, behield haar geslaagde werk en bracht het gecontroleerde resultaat terug. Kern, werker en installatiepakket bijgewerkt; onafhankelijke review akkoord. 29/44 kleine taken klaar."
+          "detail": "De technische stop-/hervatovergang op Eva’s eigen browser afronden met bestaand bewijs en bestaande controller. Persoonlijke Chrome-tabdeling is optioneel; geen nieuwe browserlaag of verplichte eigenaarhandeling."
         },
         "next": {
-          "title": "I2.1 · Zelf relevante bronnen ontdekken en kiezen",
-          "detail": "Bestaande bronkeuze en algemene uitvoering hergebruiken. De echte camera-/agendaproef wacht afzonderlijk op de al open gegevensvraag. Geen nieuwe bronkeuzefunctie of bredere herbouw."
+          "title": "Bestaande overname-overgang controleren",
+          "detail": "Controleer alleen wat nog ontbreekt: lopende bediening stopt, teruggeven vraagt verse waarneming en een oude actie wordt niet herhaald. Geen herhaling van de al afgeronde browseropdracht."
         },
         "ownerAction": {
           "title": "Eén gezamenlijke toestemmingsvraag beantwoorden",
@@ -3668,7 +3684,7 @@
           "expected": "De vergelijkingsblokkade geldt uitsluitend voor de afgeschermde evaluatie. Onafhankelijk productwerk gaat verder; voor de opgeleverde automatiseringsvaardigheid hoef je niets te doen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-05T00:50:53.708390+00:00"
+        "reviewedAt": "2026-10-05T01:17:45.054328+00:00"
       },
       "reviewedAt": "2026-10-05T00:19:18.098429+00:00"
     },
@@ -13148,7 +13164,7 @@
           ]
         }
       ],
-      "nextAction": "I2.1: zelfstandige bronkeuze afronden met bestaande hulpmiddelen en toegestaan bewijs. Alleen de echte camera-/agendaproef wacht op de al open gegevensvraag; die blokkeert geen ander uitvoerbaar werk.",
+      "nextAction": "Controleer alleen wat nog ontbreekt: lopende bediening stopt, teruggeven vraagt verse waarneming en een oude actie wordt niet herhaald. Geen herhaling van de al afgeronde browseropdracht.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -14744,7 +14760,7 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": null,
+          "activeWorker": "/root",
           "assignment": {
             "owner": "/root",
             "baseCommit": "eb78d763",
@@ -14861,12 +14877,12 @@
             {
               "id": "T3.3",
               "title": "Overnemen en correct doorgaan",
-              "status": "pending",
+              "status": "in_progress",
               "kind": "praktijk",
               "doneWhen": "Overname stopt lopende bediening; teruggeven vereist verse waarneming en herhaalt geen oude actie.",
-              "owner": "Jaap (optionele tabselectie/beoordeling); Codex (begeleiding)",
-              "nextAction": "Codex bewaakt de algemene stop-/overnameovergang. Eva kijkt na teruggeven opnieuw en hervat zonder een oude handeling dubbel uit te voeren.",
-              "ownerActionRequired": true,
+              "owner": "Codex (technisch); Jaap (optionele persoonlijke beoordeling)",
+              "nextAction": "Controleer alleen wat nog ontbreekt: lopende bediening stopt, teruggeven vraagt verse waarneming en een oude actie wordt niet herhaald. Geen herhaling van de al afgeronde browseropdracht.",
+              "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": true,
                 "purpose": "practice",
@@ -14883,18 +14899,28 @@
                 "readyWhen": "Optioneel; blokkeert Eva’s zelfstandige browser en overige projectwerk niet."
               },
               "blocker": null,
-              "checkedAt": "2026-10-03T20:25:58.124561+00:00",
+              "checkedAt": "2026-10-05T01:17:45.054328+00:00",
               "assignment": {
-                "stage": "optional_personal_trial_awaits_tab_selection",
+                "stage": "owned_browser_existing_evidence_check",
                 "owner": "/root",
-                "activeWorkers": [],
+                "activeWorkers": [
+                  "/root"
+                ],
                 "currentReadback": {
                   "checkedAt": "2026-10-03T20:30:23.377215+00:00",
                   "state": "disconnected",
                   "connected": false,
                   "busy": false,
                   "freshObservationRequired": true
-                }
+                },
+                "previousStage": "optional_personal_trial_awaits_tab_selection",
+                "baseCommit": "1d755bd3",
+                "existing": "Own autonomous browser installed; owner takeover/resume control and fresh-observation gate already exist.",
+                "gap": "Determine which installed technical takeover behavior remains unproven; optional personal Chrome trial must not be confused with required general engine behavior.",
+                "files": [
+                  "Existing browser controller and bounded evidence only; root owns workboard."
+                ],
+                "estimate": "Reuse installed evidence first; only a missing actual takeover transition may need one harmless check. No model call planned; credits unknown."
               },
               "remaining": "Technische overname en verplichte nieuwe waarneming bestaan en zijn eerder beproefd. Actuele persoonlijke Chrome-route is disconnected; de optionele praktijkproef vraagt een nieuwe expliciete tabselectie. Geen aangetoond bouwtekort."
             }
@@ -14913,7 +14939,29 @@
             ],
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
           },
-          "baseCommit": "80f2c34b93601f6394a4942d90436714867693d6"
+          "baseCommit": "80f2c34b93601f6394a4942d90436714867693d6",
+          "currentAssignment": {
+            "stage": "owned_browser_existing_evidence_check",
+            "owner": "/root",
+            "activeWorkers": [
+              "/root"
+            ],
+            "currentReadback": {
+              "checkedAt": "2026-10-03T20:30:23.377215+00:00",
+              "state": "disconnected",
+              "connected": false,
+              "busy": false,
+              "freshObservationRequired": true
+            },
+            "previousStage": "optional_personal_trial_awaits_tab_selection",
+            "baseCommit": "1d755bd3",
+            "existing": "Own autonomous browser installed; owner takeover/resume control and fresh-observation gate already exist.",
+            "gap": "Determine which installed technical takeover behavior remains unproven; optional personal Chrome trial must not be confused with required general engine behavior.",
+            "files": [
+              "Existing browser controller and bounded evidence only; root owns workboard."
+            ],
+            "estimate": "Reuse installed evidence first; only a missing actual takeover transition may need one harmless check. No model call planned; credits unknown."
+          }
         },
         {
           "id": "T4",
@@ -15109,7 +15157,7 @@
           ],
           "outcome": "Camera, agenda en eigen onderzoek",
           "effort": "M",
-          "status": "in_progress",
+          "status": "completed",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Camera/HA perception, retained initiative decisions, research and result storage exist.",
@@ -15133,63 +15181,55 @@
           },
           "owner": "/root",
           "assignment": {
-            "baseCommit": "362579f1",
             "owner": "/root",
-            "stage": "installed_complete_with_recorded_execution_finding",
-            "existing": "Eva koos zelf de bron, schreef de HA-automatisering en meldde na een echte sensorwijziging de nieuwe waarde terug. Installed callback route retained.",
-            "gap": "Automatiseringsuitkomst bewezen. Afzonderlijke herstelbare JSON-invoerfout blijft als uitvoeringsbevinding open.",
+            "baseCommit": "1d755bd3",
+            "stage": "installed_complete_independent_review_go",
+            "outcome": "Voltooi de oorspronkelijke I2-eis: zelfgekozen onderzoeksvoorstel met werkelijk geraadpleegde brononderbouwing via de bestaande route.",
+            "existing": "Installed inventory filtering, camera/local vision, calendar API and durable background result route exist. I2.2 automation is complete; T2.1 recovery now installed.",
+            "gap": "Resolved: original source-backed self-chosen research result recorded, combined with retained initiative/pacing and installed source/automation outcomes.",
             "files": [
-              "Root: existing task, isolated probe/evidence and only a proven missing general seam",
-              "Independent reviewer: source/evidence review, no shared edits"
+              "Root: existing research route, result/evidence/workboard only; general source correction only for a demonstrated failure."
             ],
-            "endCondition": "Eva stelt de gevraagde waarneming en terugmelding zelf in via bestaande algemene hulpmiddelen en passende automatisering, zonder vraag-/apparaatspecifieke kernregel; de werkelijke terugmelding blijft binnen het bestaande mandaat.",
+            "endCondition": "Self-chosen research produces a source-backed proposal without repeatedly resurfacing suggestions.",
+            "usageEstimate": "Existing proof first; if missing, one permitted public-context execution under unchanged installed provider/grants. Record actual usage; credits unknown.",
             "activeWorkers": [],
-            "sourceCommit": "b9b6220f + bounded delivery overlay; installed image/source hashes in evidence",
-            "currentAction": "Oorspronkelijke I2.2-uitkomst geïnstalleerd en onafhankelijk gecontroleerd. Geen actieve proef; volgende gerichte HA-invoercorrectie nog niet gestart.",
-            "estimate": "Eén complete synthetische route met bestaande model/provider/grant; alleen noodzakelijke gewijzigde-oorzaakcorrecties. Werkelijke calls/tokens achteraf; credits onbekend.",
-            "knownRemainingGap": "Toolvrije huishoudelijke achtergrondopdrachten kunnen nog ten onrechte worden aangenomen door de uitvoerder die toolbewijs vereist. Geen versoepelde controles of gefingeerde rekenuitkomst.",
-            "previousCorrectionEvidence": "eva2/evidence/product/i2-automation-return-installed-20261005.json",
-            "evidence": "eva2/evidence/product/i2-observation-automation-installed-20261005.json"
+            "currentAction": "Technische I2-uitkomst afgerond; geen actieve onderzoeksproef."
           },
           "evidence": "eva2/evidence/product/local-vision-installed-20260928.json",
-          "remaining": "I2.2 technisch afgerond. I2.1 camera-/agendabronkeuze en de volledige nuttige initiatiefuitkomst blijven open; één uitvoeringsbevinding over foutieve HA-argumenten blijft zichtbaar.",
+          "remaining": "Geen zelfstandig technisch werk binnen de oorspronkelijke I2-uitkomst. Nut/timing en gezinsacceptatie blijven I1.2/F2; aparte echte privéproef niet uitgevoerd.",
           "discoveryEvidence": "eva2/evidence/product/ha-domain-selection-installed-20260928.json",
           "connectionInstalledEvidence": "eva2/evidence/product/initiative-vision-read-installed-20260928.json",
           "reviewPacingEvidence": "eva2/evidence/product/initiative-review-pacing-installed-20260928.json",
           "calendarSourceEvidence": "eva2/evidence/product/initiative-calendar-source-20260928.json",
           "returnServiceEvidence": "eva2/evidence/product/initiative-return-service-installed-20260928.json",
           "activeWorker": null,
-          "latestEvidence": "eva2/evidence/product/i2-observation-automation-installed-20261005.json",
+          "latestEvidence": "eva2/evidence/product/i2-self-chosen-research-installed-20261005.json",
           "currentAssignment": {
-            "baseCommit": "362579f1",
             "owner": "/root",
-            "stage": "installed_complete_with_recorded_execution_finding",
-            "existing": "Eva koos zelf de bron, schreef de HA-automatisering en meldde na een echte sensorwijziging de nieuwe waarde terug. Installed callback route retained.",
-            "gap": "Automatiseringsuitkomst bewezen. Afzonderlijke herstelbare JSON-invoerfout blijft als uitvoeringsbevinding open.",
+            "baseCommit": "1d755bd3",
+            "stage": "installed_complete_independent_review_go",
+            "outcome": "Voltooi de oorspronkelijke I2-eis: zelfgekozen onderzoeksvoorstel met werkelijk geraadpleegde brononderbouwing via de bestaande route.",
+            "existing": "Installed inventory filtering, camera/local vision, calendar API and durable background result route exist. I2.2 automation is complete; T2.1 recovery now installed.",
+            "gap": "Resolved: original source-backed self-chosen research result recorded, combined with retained initiative/pacing and installed source/automation outcomes.",
             "files": [
-              "Root: existing task, isolated probe/evidence and only a proven missing general seam",
-              "Independent reviewer: source/evidence review, no shared edits"
+              "Root: existing research route, result/evidence/workboard only; general source correction only for a demonstrated failure."
             ],
-            "endCondition": "Eva stelt de gevraagde waarneming en terugmelding zelf in via bestaande algemene hulpmiddelen en passende automatisering, zonder vraag-/apparaatspecifieke kernregel; de werkelijke terugmelding blijft binnen het bestaande mandaat.",
+            "endCondition": "Self-chosen research produces a source-backed proposal without repeatedly resurfacing suggestions.",
+            "usageEstimate": "Existing proof first; if missing, one permitted public-context execution under unchanged installed provider/grants. Record actual usage; credits unknown.",
             "activeWorkers": [],
-            "sourceCommit": "b9b6220f + bounded delivery overlay; installed image/source hashes in evidence",
-            "currentAction": "Oorspronkelijke I2.2-uitkomst geïnstalleerd en onafhankelijk gecontroleerd. Geen actieve proef; volgende gerichte HA-invoercorrectie nog niet gestart.",
-            "estimate": "Eén complete synthetische route met bestaande model/provider/grant; alleen noodzakelijke gewijzigde-oorzaakcorrecties. Werkelijke calls/tokens achteraf; credits onbekend.",
-            "knownRemainingGap": "Toolvrije huishoudelijke achtergrondopdrachten kunnen nog ten onrechte worden aangenomen door de uitvoerder die toolbewijs vereist. Geen versoepelde controles of gefingeerde rekenuitkomst.",
-            "previousCorrectionEvidence": "eva2/evidence/product/i2-automation-return-installed-20261005.json",
-            "evidence": "eva2/evidence/product/i2-observation-automation-installed-20261005.json"
+            "currentAction": "Technische I2-uitkomst afgerond; geen actieve onderzoeksproef."
           },
           "dashboardComponent": "initiative",
           "remainingTasks": [
             {
               "id": "I2.1",
               "title": "Relevante bronnen zelfstandig ontdekken en kiezen",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "aansluiten",
               "doneWhen": "Eva ontdekt en kiest via bestaande algemene hulpmiddelen de camera-/agendabronnen die bij een gewone waarnemingsopdracht passen; alleen echte onduidelijkheid vraagt een vervolgvraag.",
               "owner": "Codex /root",
               "blocker": null,
-              "checkedAt": "2026-10-02T09:23:08.193130+00:00",
+              "checkedAt": "2026-10-05T01:10:45.821073+00:00",
               "sourceEvidence": [
                 "eva2/evidence/product/ha-domain-selection-installed-20260928.json",
                 "eva2/evidence/product/initiative-calendar-source-20260928.json"
@@ -15200,28 +15240,26 @@
                 "decision": "Bins were an example of general intelligence: discover suitable sources and create the required automation using general tools, not a built-in bin function. A named camera/calendar choice is not a project prerequisite.",
                 "previousBlocker": "Superseded owner-choice requirement; no completed user capability inferred."
               },
-              "nextAction": "Eva ontdekt relevante camera-/agendabronnen bij een gewone opdracht en kiest zelf; alleen echte onduidelijkheid vraagt een vraag. Codex levert algemene toegang, geen vaste bronnencombinatie.",
-              "ownerActionRequired": true,
+              "nextAction": "Geen technisch werk binnen I2.1; behoud dit resultaat. De niet-uitgevoerde privébeelden-/agendaproef blijft apart en is geen voorwaarde voor deze technische bronkeuze-uitkomst.",
+              "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": true,
-                "readyWhen": "Beantwoord alleen de gegevensvraag in deze chat; geen camerakeuze of fysieke proef nodig.",
-                "steps": [
-                  "Mag de ene proef de tuin-camerabeschrijving en gedeelde afvalagenda via de bestaande modelprovider verwerken, of uitsluitend fictieve gegevens?"
-                ],
-                "blocksIndependentWork": false
+                "availableNow": false,
+                "steps": [],
+                "blocksIndependentWork": false,
+                "readyWhen": "Technisch afgerond op geïnstalleerde route; geen eigenaarhandeling of herhaalproef nodig."
               },
               "assignment": {
                 "owner": "/root",
-                "baseCommit": "02bea1b24e72d6bf9043ca63da4d2495d028b757",
-                "stage": "synthetic_source_selection_checked_real_payload_approval_pending",
-                "outcome": "Eva discovers suitable existing sources for an observation request and creates/uses the required automation through general tools.",
-                "existing": "HA discovery, camera/calendar reads, image understanding, automation tools and delegated work already have evidence.",
-                "gap": "Complete ordinary request-to-source choice-to-observation automation-to-return is not established; inspect existing seam before building.",
+                "baseCommit": "1d755bd3",
+                "stage": "installed_outcome_verified",
+                "outcome": "Eva selects appropriate working fictitious camera/calendar sources in one test room through actual HA and installed core, without entity IDs or prescribed tool sequence.",
+                "existing": "Installed inventory filtering, camera/local vision, calendar API and durable background result route exist. I2.2 automation is complete; T2.1 recovery now installed.",
+                "gap": "Resolved by actual installed synthetic source selection; no product-code change.",
                 "files": [
-                  "Only proven missing general execution transition; root owns shared source, evidence and workboard."
+                  "Existing temporary fixture/probe artifacts; root owns board/evidence. Production code only for a demonstrated generic gap."
                 ],
-                "endCondition": "Installed shared execution supports representative source discovery and observation/automation outcome; no example-specific rules or invented owner acceptance.",
-                "usageEstimate": "Reuse saved evidence first; one representative route check and changed-cause verification if necessary. Actual calls/tokens reported, credits unknown.",
+                "endCondition": "Eva ontdekt en kiest via bestaande algemene hulpmiddelen de camera-/agendabronnen die bij een gewone waarnemingsopdracht passen; alleen echte onduidelijkheid vraagt een vervolgvraag.",
+                "usageEstimate": "Reuse prior camera and automation proofs. One native selection task on existing provider/profile/budgets; prior synthetic selection needed8 modelcalls. Capture actual calls/tokens and all failed preparation; credits unknown.",
                 "activeWorkers": []
               },
               "pendingApproval": {
@@ -15230,9 +15268,12 @@
                 "action": "One real household observation using garden-camera interpretation and shared waste calendar through existing model provider",
                 "reason": "Specific sensitive payload transfer not explicitly authorized",
                 "executionStarted": false,
-                "scope": "Only real-payload trial; source review and synthetic checks can continue"
+                "scope": "Only the separate real-payload trial, which remains unexecuted. Not required to repeat the technically completed synthetic I2.1 outcome."
               },
-              "latestEvidence": "eva2/evidence/product/i2-ha-automation-action-installed-20261002.json"
+              "latestEvidence": "eva2/evidence/product/i2-source-choice-installed-20261005.json",
+              "completedAt": "2026-10-05T01:10:45.821073+00:00",
+              "review": "eva2/reviews/i2-source-choice-20261005.md",
+              "result": "Eva koos uit twee camera’s en twee agenda’s zelf de passende bronnen via echte HA-koppelingen. Werkelijke lokale beeldinterpretatie en toekomstig kalendergegeven terug bij dezelfde opdracht in 44,348s. Onafhankelijke review GO; alleen fictieve broninhoud. Geen nieuwe productcode nodig."
             },
             {
               "id": "I2.2",
@@ -15298,7 +15339,38 @@
             "I1",
             "T1"
           ],
-          "dependencyClarification": "Use the actual tools and permitted result channel needed by the selected outcome. Whole-component voice/personality acceptance is not a prerequisite; preserve their own open criteria. HA-dependent initiatives require the relevant T2 operation, not every speaker trial."
+          "dependencyClarification": "Use the actual tools and permitted result channel needed by the selected outcome. Whole-component voice/personality acceptance is not a prerequisite; preserve their own open criteria. HA-dependent initiatives require the relevant T2 operation, not every speaker trial.",
+          "technicalCompletion": {
+            "smallTasksComplete": true,
+            "originalBlueprintReview": "GO",
+            "evidence": [
+              "eva2/evidence/product/i2-source-choice-installed-20261005.json",
+              "eva2/evidence/product/i2-observation-automation-installed-20261005.json",
+              "eva2/evidence/product/i2-self-chosen-research-installed-20261005.json"
+            ],
+            "review": "eva2/reviews/i2-source-choice-20261005.md",
+            "completedAt": "2026-10-05T01:17:45.054328+00:00"
+          },
+          "previousAutomationAssignment": {
+            "baseCommit": "362579f1",
+            "owner": "/root",
+            "stage": "installed_complete_with_recorded_execution_finding",
+            "existing": "Eva koos zelf de bron, schreef de HA-automatisering en meldde na een echte sensorwijziging de nieuwe waarde terug. Installed callback route retained.",
+            "gap": "Automatiseringsuitkomst bewezen. Afzonderlijke herstelbare JSON-invoerfout blijft als uitvoeringsbevinding open.",
+            "files": [
+              "Root: existing task, isolated probe/evidence and only a proven missing general seam",
+              "Independent reviewer: source/evidence review, no shared edits"
+            ],
+            "endCondition": "Eva stelt de gevraagde waarneming en terugmelding zelf in via bestaande algemene hulpmiddelen en passende automatisering, zonder vraag-/apparaatspecifieke kernregel; de werkelijke terugmelding blijft binnen het bestaande mandaat.",
+            "activeWorkers": [],
+            "sourceCommit": "b9b6220f + bounded delivery overlay; installed image/source hashes in evidence",
+            "currentAction": "Oorspronkelijke I2.2-uitkomst geïnstalleerd en onafhankelijk gecontroleerd. Geen actieve proef; volgende gerichte HA-invoercorrectie nog niet gestart.",
+            "estimate": "Eén complete synthetische route met bestaande model/provider/grant; alleen noodzakelijke gewijzigde-oorzaakcorrecties. Werkelijke calls/tokens achteraf; credits onbekend.",
+            "knownRemainingGap": "Toolvrije huishoudelijke achtergrondopdrachten kunnen nog ten onrechte worden aangenomen door de uitvoerder die toolbewijs vereist. Geen versoepelde controles of gefingeerde rekenuitkomst.",
+            "previousCorrectionEvidence": "eva2/evidence/product/i2-automation-return-installed-20261005.json",
+            "evidence": "eva2/evidence/product/i2-observation-automation-installed-20261005.json"
+          },
+          "completedAt": "2026-10-05T01:17:45.054328+00:00"
         },
         {
           "id": "L1",
@@ -16675,7 +16747,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "I2",
+      "activeSliceId": "T3",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

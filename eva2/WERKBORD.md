@@ -1,5 +1,54 @@
 # EVA2 werkbord
 
+**Opgeleverd — I2: oorspronkelijke technische uitkomst compleet.**
+Eva kiest passende camera-/agendabronnen, maakt een waarnemingsautomatisering
+en voltooit een zelfgekozen onderzoeksvoorstel met werkelijk geraadpleegde bronnen.
+De onafhankelijke gecombineerde review is akkoord. Bestaande installatie hergebruikt.
+**30/44 oorspronkelijke kleine taken klaar. Geen nieuwe taken toegevoegd.**
+
+Het laatste onderzoek koos Eva zelf na een algemene opdracht: smartphone-updates.
+Apple- en Google-bronnen, bewaard resultaat en terugmelding zijn gecontroleerd.
+Volledig resultaat na 35,256 seconden; ontvangst na 12 seconden. Twee gemeten
+modelantwoorden, 17.347 invoer-/842 uitvoertokens en twee onderzoekswebtools.
+Creditkosten onbekend. Dit bewijst gevraagde eigen onderwerpkeuze; eerder spontaan
+initiatief en het vermijden van afgewezen voorstellen blijven afzonderlijk bewijs.
+Nut, timing en gezinsacceptatie blijven I1.2/F2.
+[Resultaat en beperkingen](evidence/product/i2-self-chosen-research-installed-20261005.json)
+· [Gecombineerde review](reviews/i2-source-choice-20261005.md).
+
+**Nu — T3.3: browser overnemen en correct teruggeven.**
+Bestaande technische overname op Eva’s eigen browser afronden. Persoonlijke
+Chrome-tabdeling is optioneel. Alleen een ontbrekende werkelijke overgang gericht
+controleren; geen nieuwe browserlaag en geen herhaling van de afgeronde klikopdracht.
+Het app-goal blijft actief.
+
+**Hieronder: eerdere opleveringen; toenmalige tellers en vervolgstappen zijn historisch.**
+
+**Opgeleverd — I2.1: Eva kiest zelf passende camera- en agendabronnen.**
+Via de bestaande geïnstalleerde route koos Eva uit twee camera’s en twee agenda’s.
+Zij las het beeld met lokale vision, vond de volgende opruimafspraak en leverde
+het onderbouwde resultaat bij dezelfde opdracht terug. Onafhankelijke review GO.
+De proef gebruikte uitsluitend fictieve broninhoud in echte HA-koppelingen.
+De tijdelijke proefbronnen zijn volledig verwijderd; geen herinstallatie nodig.
+**30/44 oorspronkelijke kleine taken klaar.**
+
+Volledig resultaat na 44,348 seconden; ontvangst na 11,975 seconden.
+Vijf geregistreerde gespreks-/werkantwoorden: 27.696 invoer- en 605 uitvoertokens.
+Daarnaast één lokale beeldinterpretatie; daarvan zijn tokens onbekend.
+Credits en ontwikkelkosten onbekend; geen algemene snelheid-/kostenwinst.
+[Bewijs en beperkingen](evidence/product/i2-source-choice-installed-20261005.json)
+· [Onafhankelijke review](reviews/i2-source-choice-20261005.md).
+
+**Nu — I2: zelfgekozen onderzoeksvoorstel met echte bronnen afmaken.**
+I2.1 en I2.2 zijn technisch af. Bestaande zelfkeuze, terughalen en het vermijden
+van afgewezen voorstellen zijn gedekt. Nog uit de oorspronkelijke scope: een
+voltooid onderzoeksvoorstel met daadwerkelijk geraadpleegde bronnen. Hiervoor
+de bestaande onderzoeksroute hergebruiken; geen nieuwe taak-ID. Echte privébeelden/agenda,
+menselijke beoordelingen en afgeschermde vergelijkingen blijven afzonderlijk open.
+Het volledige app-goal blijft actief.
+
+**Hieronder: eerdere opleveringen; toenmalige tellers zijn historisch.**
+
 **Opgeleverd — T2: algemene huisbediening technisch afgerond.**
 De vier oorspronkelijke T2-taken zijn klaar. Eva kiest apparaten uit context,
 maakt/wijzigt automatiseringen, controleert resultaten en kan nu een lokaal

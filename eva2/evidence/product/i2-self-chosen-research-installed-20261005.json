@@ -1,0 +1,138 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "task": "I2",
+  "recordedAt": "2026-10-05T01:16:31.050431+00:00",
+  "status": "installed_verified",
+  "baseCommit": "1d755bd3",
+  "originalCriterion": "Self-chosen research produces a source-backed proposal without repeatedly resurfacing suggestions.",
+  "outcome": "Eva kiest zelf een publiek onderzoeksonderwerp, raadpleegt primaire bronnen en bewaart een uitvoerbaar voorstel bij de oorspronkelijke opdracht.",
+  "scope": {
+    "userTriggered": true,
+    "topicSuppliedByCodex": false,
+    "newSpontaneousInitiativeClaim": false,
+    "privateMemoryReferencesInResearchGrant": [],
+    "productCodeChanged": false,
+    "installationRequired": false,
+    "realHouseActions": false,
+    "newTaskId": false
+  },
+  "case": {
+    "registeredAt": "2026-10-05T01:13:47.122300+00:00",
+    "prompt": "Kies zelf één klein onderzoek dat een doorsnee huishouden praktisch kan helpen bij het digitale dagelijks leven. Ik geef je geen onderwerp of bronnen: kies en motiveer zelf wat de moeite waard is, onderzoek het met actuele openbare primaire bronnen en kom terug met één concreet uitvoerbaar voorstel met bronverwijzingen. Dit is een afgebakende ontwikkelproef, geen vastgestelde behoefte van ons gezin. Gebruik alleen openbare informatie; haal geen privégeheugen, huisgegevens, accountinformatie, beelden of agenda op. Verander niets aan apparaten of accounts, doe geen aankopen en verstuur geen berichten. Lever je voorstel en de werkelijk geraadpleegde bronnen als bewaard resultaat bij deze opdracht terug, zonder het uit te spreken.",
+    "criteria": [
+      "Eva selects a concrete topic and justification; neither supplied by Codex.",
+      "Existing installed shared route accepts and completes research with real public source evidence.",
+      "Saved result contains a practical proposal grounded in consulted primary sources; no unsupported household-need claim.",
+      "Stored result and actual callback bind to this conversation.",
+      "No private source reads, external messages, payments or device/account mutations."
+    ],
+    "budget": "One public-context ordinary request under existing installed provider/model/grants. No new allowance, forced idle review or repeated comparison. Actual foreground/work calls and tokens recorded; credit costs unknown."
+  },
+  "installedImages": {
+    "core": "sha256:255ba269c4b4054fde6c7a448e7a5b74763c10d2c07c7eb984ed0801cae884d4",
+    "worker": "sha256:22d51eed06be90e731f71b0a157af91b0c25bd3faaedfc8555415dd2b1e7d40a"
+  },
+  "live": {
+    "workId": "work:household:0d27957d-2873-55b7-a6cb-6aa02a27fb14",
+    "conversationId": "i2-self-chosen-research-20261005",
+    "state": "succeeded",
+    "chosenResearch": {
+      "schema_version": 1,
+      "contract": "PublicResearchRequest/v1",
+      "question": "Kies zelfstandig één klein, praktisch en uitvoerbaar voorstel voor een doorsnee huishouden rond automatische beveiligingsupdates van smartphones. Motiveer waarom dit onderwerp de moeite waard is; onderzoek met actuele openbare primaire bronnen, bij voorkeur officiële Android- en Apple-documentatie. Geef concrete uitvoerbare stappen zonder zelf apparaten of accounts te wijzigen, plus verwijzingen naar werkelijk geraadpleegde bronnen. Bewaar het voorstel en de geraadpleegde bronnen als resultaat van deze opdracht; spreek het voorstel niet uit in de gespreksbevestiging. Gebruik uitsluitend openbare informatie, geen privédata, huisgegevens, accountinformatie, beelden of agenda; geen aankopen of berichten.",
+      "title": "Klein huishoudelijk voorstel: beveiligingsupdates smartphones",
+      "options": [
+        "Automatische beveiligingsupdates voor smartphones"
+      ],
+      "research_mode": "topic",
+      "public_review": "public_unlinked"
+    },
+    "modelProfile": "model:codex:gpt-6-astra:v1",
+    "sources": [
+      {
+        "url": "https://support.apple.com/nl-nl/118575",
+        "title": "Een iPhone of iPad bijwerken - Apple Support (NL)"
+      },
+      {
+        "url": "https://support.google.com/android/answer/7680439?hl=nl",
+        "title": "Je Android-versie checken en updaten - Android Help"
+      }
+    ],
+    "journalEvents": [
+      {
+        "type": "TOOL_REQUEST_ADMITTED",
+        "at": "2026-10-05T01:13:57+00:00"
+      },
+      {
+        "type": "TOOL_PREPARED",
+        "at": "2026-10-05T01:14:08+00:00"
+      },
+      {
+        "type": "TOOL_EXECUTED",
+        "at": "2026-10-05T01:14:31+00:00"
+      },
+      {
+        "type": "STATE_VERIFIED",
+        "at": "2026-10-05T01:14:31+00:00"
+      }
+    ],
+    "sourceArtifactSha256": "686421e49e757d790f920eff9578936780277f10dd9a8f8d5e63487de72e9c2b",
+    "storedResultSha256": "686421e49e757d790f920eff9578936780277f10dd9a8f8d5e63487de72e9c2b",
+    "callbackResultSha256": "686421e49e757d790f920eff9578936780277f10dd9a8f8d5e63487de72e9c2b",
+    "storedResult": "# Onderzoeksresultaat — automatische smartphone-updates\n*Eva · 5 oktober 2026*\n\n## Voorstel — advies\nVoer één korte **updatecontrole per smartphone** uit: laat updates automatisch installeren waar dat mogelijk is en rond openstaande installaties af.\n\n## Waarom — bronfeit\nApple noemt actuele software belangrijk voor beveiliging en beveelt automatische updates aan. Google meldt dat de meeste Android-systeemupdates en beveiligingspatches automatisch worden geïnstalleerd. ([support.apple.com](https://support.apple.com/nl-nl/118575))\n\n## Uitvoering door de eigenaar\n- **iPhone:** open *Instellingen → Algemeen → Software-update → Automatische updates*. Zet **Installeer automatisch** aan; alleen downloaden is onvoldoende. Laat de telefoon ’s nachts opladen met wifi. ([support.apple.com](https://support.apple.com/nl-nl/118575))\n- **Android:** open *Instellingen → Systeem → Software-updates*. Controleer de status en volg eventuele installatieaanwijzingen. Gebruik wifi en minstens 75% acculading. Herstart een Pixel na installatie: pas dan wordt de update actief. ([support.google.com](https://support.google.com/android/answer/7680439?hl=nl))\n\n## Criteria en beperkingen\n**Advies:** beschouw de controle als afgerond wanneer automatische installatie op iPhone aanstaat en geen installatie- of herstartactie openstaat.\n\n**Bronfeit:** Android-updateschema’s verschillen per toestel, fabrikant en provider; de algemene documentatie geeft geen universele automatiseringsschakelaar. Daarom kan dit onderzoek geen volledige dekking voor ieder toestel garanderen. ([support.google.com](https://support.google.com/android/answer/7680439?hl=nl))\n\n**Conclusie — gevolgtrekking:** een kleine, kosteloze maatregel die afhankelijkheid van handmatig bijwerken vermindert.\n\n*Voorstel en geraadpleegde primaire bronnen staan hierboven als gespreksresultaat; afzonderlijke bestandsopslag is hier niet beschikbaar. Er zijn geen apparaten gewijzigd of privégegevens gebruikt.*\n\n## Bronnen\n\n- [Een iPhone of iPad bijwerken - Apple Support (NL)](https://support.apple.com/nl-nl/118575)\n- [Je Android-versie checken en updaten - Android Help](https://support.google.com/android/answer/7680439?hl=nl)",
+    "acknowledgementSeconds": 12.0,
+    "resultSeconds": 35.256,
+    "sourceProvider": "chatgpt-codex-web-search:gpt-6-astra"
+  },
+  "usage": {
+    "foreground": {
+      "input_tokens": 3997,
+      "measurement": "measured",
+      "model_attempts": 1,
+      "output_tokens": 276,
+      "tool_calls": 1
+    },
+    "researchWorker": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "measured",
+      "completed_model_responses": 1,
+      "tool_calls": 2,
+      "input_tokens": 13350,
+      "output_tokens": 566,
+      "total_tokens": 13916,
+      "cost_usd_micros": 161800
+    },
+    "knownResponses": 2,
+    "knownInputTokens": 17347,
+    "knownOutputTokens": 842,
+    "researchWebToolCalls": 2,
+    "creditsAndMoney": null,
+    "developmentCredits": null,
+    "costCaveat": "cost_usd_micros is the existing configured profile calculation, not measured billing or Codex credit consumption."
+  },
+  "retainedCoverage": {
+    "spontaneousSelection": "eva2/evidence/product/AU-008-current-review-delivery-2026-09-12.json",
+    "executedPrivateDelivery": "eva2/evidence/product/i1-private-contribution-readback-20261002.json",
+    "storedResultRecall": "eva2/evidence/product/own-initiative-return-20260928.json",
+    "rejectedProposalAvoided": "eva2/evidence/product/initiative-feedback-choice-20260928.json",
+    "pacing": "eva2/evidence/product/initiative-review-pacing-installed-20260928.json",
+    "sourceChoice": "eva2/evidence/product/i2-source-choice-installed-20261005.json",
+    "observationAutomation": "eva2/evidence/product/i2-observation-automation-installed-20261005.json"
+  },
+  "review": "eva2/reviews/i2-source-choice-20261005.md",
+  "limitations": [
+    "This is topic choice under a general user request, not a newly observed unsolicited household opportunity or a single new end-to-end spontaneous initiative trial.",
+    "The task has a durable database/journal result with bound sources; no separate workspace file was created or claimed.",
+    "Proposal usefulness and initiative timing/hindrance remain human judgments under I1.2/F2.",
+    "General research quality, every future task, physical speaker intelligibility and competitive superiority are not proved.",
+    "Earlier denied private-payload, innovation and protected evaluation actions remain separate; no authorization inferred."
+  ],
+  "artifactDirectory": "/home/administrator/project/.eva2-artifacts/i2-self-chosen-research-20261005",
+  "artifactHashes": {
+    "case.json": "6174276f41a33122024ebc939900b982f98fd3d48552b96c6c8a74c4c8a88804",
+    "live-manifest.json": "0cc33d2bd419183ed0a64a9832bf7af99ad7b90aa37eb74ef5ea44933271e39c",
+    "work-proof.json": "be98df49745bfa260acc3fdde6b0488739fa7584153a292916700621b3fa8b36"
+  },
+  "reviewDecision": "GO for original combined technical I2"
+}

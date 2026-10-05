@@ -1,0 +1,131 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "recordedAt": "2026-10-05T01:10:45.821073+00:00",
+  "task": "I2.1",
+  "status": "installed_verified",
+  "baseCommit": "1d755bd3",
+  "outcome": "Eva kiest zelf passende camera- en agendabronnen, leest ze via bestaande algemene hulpmiddelen en levert een onderbouwd antwoord terug bij de oorspronkelijke opdracht.",
+  "originalFinishCondition": "Eva ontdekt en kiest via bestaande algemene hulpmiddelen de camera-/agendabronnen die bij een gewone waarnemingsopdracht passen; alleen echte onduidelijkheid vraagt een vervolgvraag.",
+  "existingReused": [
+    "Installed shared conversation/background execution",
+    "HA inventory area selection and general API",
+    "Existing generic camera and local_calendar integrations",
+    "Existing local vision interpretation",
+    "Durable tool receipts and original-conversation callback"
+  ],
+  "productCodeChanged": false,
+  "installationRequired": false,
+  "installedImages": {
+    "core": "sha256:255ba269c4b4054fde6c7a448e7a5b74763c10d2c07c7eb984ed0801cae884d4",
+    "worker": "sha256:22d51eed06be90e731f71b0a157af91b0c25bd3faaedfc8555415dd2b1e7d40a"
+  },
+  "predeclaredCase": {
+    "registeredAt": "2026-10-05T01:01:57.378033+00:00",
+    "prompt": "Kijk in de proefwerkplaats wat er nog op de werktafel staat en wanneer de volgende opruimronde gepland is. Kies passende bronnen zelf en leg kort uit wat je hebt gevonden. Gebruik uitsluitend de fictieve bronnen binnen de proefruimte Eva2 proefwerkplaats (ruimte-id eva2_proefwerkplaats). Lees geen beelden, agenda-inhoud of andere broninhoud buiten die proefruimte. Verander niets en maak geen nieuwe automatisering; dit is alleen een eenmalige waarneming. Geef het resultaat terug bij deze opdracht, zonder het uit te spreken.",
+    "criteria": [
+      "A native accepted task through the installed shared core selects and fetches suitable camera/calendar sources from actual HA APIs.",
+      "Actual image interpretation is used, not injected descriptive tool output.",
+      "Final answer grounds both scene and next cleanup time in bound receipts; no unsupported claim about real household conditions.",
+      "No prescribed source entity IDs or tool order in the prompt, no unnecessary owner camera/calendar choice.",
+      "No writes, automation recreation or source content outside the synthetic test room.",
+      "Stored result returns to the original conversation; no repeated I2.2 automation experiment."
+    ],
+    "budget": "One installed task under existing provider/model/resource grants. Prior synthetic source-selection evidence used8 modelcalls; record actual consumption. No new credit limit or timeout increase. Repeat only for a concrete changed cause or missing evidence.",
+    "sourceEntityIdsSuppliedInPrompt": false,
+    "toolOrderPrescribed": false
+  },
+  "actualRoute": {
+    "synthetic": true,
+    "actualHAIntegrations": true,
+    "actualLocalVision": true,
+    "mockedToolResponses": false,
+    "inventoryCandidates": {
+      "cameras": 2,
+      "calendars": 2
+    },
+    "chosenSources": [
+      "Werktafel overzicht",
+      "Onderhoud en opruimen"
+    ],
+    "receipts": 3,
+    "imageSha256": "ebf563d271ff775f0be1446d74d80b00cd6bbc0b2692f4fc1d21d6b65ef315d7",
+    "imageFinding": "Two red cubes/boxes and a green bottle on a brown table.",
+    "calendarFinding": {
+      "summary": "Opruimronde proefwerkplaats",
+      "start": "2026-10-06 09:30:00",
+      "end": "2026-10-06 10:00:00",
+      "timezoneInActualStateResponse": null
+    },
+    "writes": 0,
+    "unnecessaryOwnerChoice": false,
+    "outsideFixtureSourceContentInReceipts": false,
+    "workId": "work:household-digital:40fd4913-faae-54d6-b3a8-46c6df9d4aef",
+    "state": "succeeded",
+    "conversationId": "i2-source-choice-20261005",
+    "resultMatchesStoredWork": true,
+    "resultSha256": "99cdd28a37a92c413f905936f2f2a2a55825ad8390dc8fb54929d3c4780739a8",
+    "result": "Ik heb uitsluitend ‘Werktafel overzicht’ en ‘Onderhoud en opruimen’ gebruikt, beide geregistreerd binnen Eva2 proefwerkplaats.\n\nVolgens de automatische beeldbeschrijving staan op de bruine werktafel twee rode blokjes links en een groene fles rechts. Dit is een beeldinterpretatie, geen onafhankelijk bevestigde waarneming; het opnametijdstip ontbreekt, dus de actualiteit is onzeker.\n\nDe fictieve agenda vermeldt de volgende opruimronde op 6 oktober 2026 van 09.30 tot 10.00 uur. Er is geen tijdzone meegegeven. Ik heb niets gewijzigd, geen automatisering gemaakt en niets uitgesproken.",
+    "acknowledgementSeconds": 11.975,
+    "resultSeconds": 44.348
+  },
+  "runtimeUsage": {
+    "foreground": {
+      "input_tokens": 4039,
+      "measurement": "measured",
+      "model_attempts": 1,
+      "output_tokens": 239,
+      "tool_calls": 1
+    },
+    "worker": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 4,
+      "tool_calls": 3,
+      "input_tokens": 23657,
+      "output_tokens": 366,
+      "total_tokens": 24023,
+      "cost_usd_micros": null
+    },
+    "knownConversationWorkerResponses": 5,
+    "knownInputTokens": 27696,
+    "knownOutputTokens": 605,
+    "additionalLocalVisionInterpretations": 1,
+    "visionTokens": null,
+    "creditsAndMoney": null,
+    "developmentUsage": null,
+    "scope": "Stored foreground and worker usage only; local vision and concurrent background/development consumption not fully measured."
+  },
+  "cleanup": {
+    "verified": true,
+    "ownConfigEntriesRemoved": 4,
+    "ownEntitiesAbsent": true,
+    "ownAreaRemoved": true,
+    "ownImagesAndDirectoryRemoved": true,
+    "haRestart": false
+  },
+  "review": "eva2/reviews/i2-source-choice-20261005.md",
+  "preparationFailures": [
+    "HA addon shell lacked docker; used existing self-describing config-flow API.",
+    "Pillow unavailable; generated synthetic images with standard library without installing dependencies.",
+    "Fixture helper expected an envelope although ws_call returns the unwrapped result; recovered the existing area without duplicate creation."
+  ],
+  "limitations": [
+    "One declared synthetic installed-route case, not an unseen benchmark or broad vision-quality measurement.",
+    "The room boundary and allowedSources document are not a new technical access-control mechanism. Receipt inspection establishes scope for this run only.",
+    "Actual calendar state omits timezone; fixture event preflight has +02:00. Eva correctly reports the data she received.",
+    "Image capture time is unknown; local interpretation is not an independently verified real-household observation.",
+    "No real private-image/calendar permission, family acceptance, natural speaker conversation or general speed/cost superiority inferred.",
+    "I2.2 remains covered by its existing installed automation evidence. Original self-chosen research/pacing clause is assessed separately from this new result."
+  ],
+  "retainedAutomationEvidence": "eva2/evidence/product/i2-observation-automation-installed-20261005.json",
+  "artifactDirectory": "/home/administrator/project/.eva2-artifacts/i2-source-choice-20261005",
+  "artifactHashes": {
+    "case.json": "71b96e9bd7bdd9fcf897f45ca2b9b20c711d23c10b8aff3debe4e1a3494ad2e7",
+    "live-manifest.json": "fb156c139b716ed19b76a6486accc43d9d4533ea18d47a3311c700288339c0f2",
+    "work-40fd4913-faae-54d6-b3a8-46c6df9d4aef.json": "72e204d092c511524e2144f8a97f3530080fb4b53b8e17a255f5398228739e96",
+    "fixture-preflight.json": "1926a6078e464c0a59ea1db742ea3b86c2bac48c6228f255c9f9ee6124212494",
+    "installed-images.json": "8841c2942a127020232e8b907a4bc8b27e712521ef4b67c72dd5fb4061c0b19c",
+    "cleanup.json": "5010e7f32dd4134563423363439496e61dc5d9823a3b288141bc2132202dd64e"
+  }
+}
