@@ -1,18 +1,25 @@
 # EVA2 werkbord
 
-**Nu — P2.1: afsluitfout in de vergelijking gecorrigeerd.**
-Een meetuitzondering liet de native antwoordproducer eindigen zonder terminalbericht.
-De benchmark vertaalt die nu pas aan de buitenste antwoordgrens: foutantwoord en
-einde van de stream, met behoud van onbekend verbruik en stop op vervolgdispatch.
-Eén gerichte offline regressie en onafhankelijke review geslaagd; nul nieuwe
-modelcalls. Geen productie-installatie nodig voor deze benchmark-only correctie.
+**Laatst opgeleverd — P2.1: vijfde vaste vergelijking onafhankelijk beoordeeld.**
+Eva2 voltooide vier beurten tussen twee personen en voldoet aan alle drie
+oorspronkelijke inhoudelijke voorwaarden en beide verplichte geheugencontroles.
+Eva1 bleef onvolledig: twee beurten afgerond, derde gestart, vierde niet gestart.
+Een extern toolvoorstel werd geweigerd; de voorbereide foutterugmelding bereikte
+de uitvoerder niet. Dat blijft UNKNOWN, geen afgeleid semantisch productverlies.
 
-Bronagent en curator bereiden het oorspronkelijke volgende geval CM05 voor:
-vier beurten, twee personen, bestaande klokovergang en vaste beoordeling.
-Nieuwe proefbron moet de gecorrigeerde worker expliciet vastleggen; CM04 wordt
-niet herhaald of gewijzigd. Volledige serverafsluiting nog niet hiermee bewezen.
-**32/44 oorspronkelijke kleine taken klaar.** Geen extra productfunctie.
-[Oorzaak en correctie](evidence/product/p2-native-stop-boundary-20261005.json).
+Samen16modelaanvragen:62.707input+2.739output=65.446tokens; credits onbekend.
+Geen vergelijkbare complete werklast of gelijke tijdsgrens, dus geen snelheids-/
+kostenwinstclaim. Menselijke scores ontbreken. De bevroren CM-kern is beperkt
+herbruikbaar voor de actuele versie, geen bewijs voor hele nieuwe T2/T3-kandidaat.
+
+**Volgende:** de aangetoonde Eva1-foutterugmelding in de bestaande meetadapter
+gericht oplossen vóór meer proeven. Nog niet gestart; geen CM05-herhaling.
+De eerdere benchmark-afsluitfout is gecorrigeerd en gereviewd; de nieuwe Eva2-proef
+heeft die worker expliciet vastgelegd. Bewijs behouden; eigen resources opgeruimd.
+**32/44 oorspronkelijke kleine taken klaar.** Geen nieuwe productfunctie.
+[Resultaat](evidence/product/p2-cm05-paired-result-20261005.json) ·
+[Bronversies](evidence/product/p2-cm-source-applicability-20261005.json) ·
+[Afsluitcorrectie](evidence/product/p2-native-stop-boundary-20261005.json).
 
 **C1-diagnose: fout blijft open, geen onbewezen reparatie.**
 Een neutrale toolvoorstelproef op de bestaande providerroute kwam correct binnen:

@@ -1,0 +1,487 @@
+{
+  "contract": "Ev003IndependentPairedResult/v1",
+  "reviewedAt": "2026-10-05T13:54:06.073995+00:00",
+  "reviewer": "/root/aide_final_evaluation",
+  "task": "P2.1",
+  "caseId": "EV003-CM-05",
+  "epoch": 1,
+  "status": "one_objective_pass_one_native_execution_unknown",
+  "caseSha256": "29dac7cd93cfc54f82ab11d889cd340cdbc5ddb855fc3175852e29243f508a92",
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "projectionSha256": "0eccc4e3e8c54e21b501ab12ce4014ccba2dfbf95b7ae865cc3da4087e60eabf",
+  "authorizationEvidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-owner-authorization-20261005.json",
+    "sha256": "7470627a9ef09ae8f625e420251a19b36bf950bb17689ee369359e3e2f4df8b5"
+  },
+  "participants": {
+    "eva1-bottie": {
+      "outcome": "execution_unknown",
+      "inspectStatus": "success",
+      "objective": {
+        "taskSuccess": null,
+        "status": "unknown",
+        "semanticConditions": [
+          null,
+          null,
+          null
+        ],
+        "semanticCounts": {
+          "pass": 0,
+          "fail": 0,
+          "unknown": 3
+        },
+        "independentReadbacks": [
+          null,
+          null
+        ],
+        "readbackCounts": {
+          "pass": 0,
+          "fail": 0,
+          "unknown": 2
+        },
+        "humanRatings": [
+          null,
+          null
+        ],
+        "humanDimensionsUnscored": [
+          "warmth",
+          "relevance",
+          "independent judgement"
+        ],
+        "explanation": "Incomplete native route after a refused action and undelivered native error. Full-case semantic and mandatory readback conditions remain unknown, not a competitor loss."
+      },
+      "native": {
+        "plannedTurns": 4,
+        "startedTurns": 3,
+        "completedTurns": 2,
+        "calendarAcknowledgedGenerations": [
+          0,
+          1
+        ],
+        "sameDatabasePreserved": true,
+        "captureCount": 6,
+        "captureCompleteForAllAttempts": true,
+        "sourceHashesMatchAdmission": true,
+        "frozenProductImagesUnchanged": true
+      },
+      "usage": {
+        "providerAttempts": 6,
+        "completedAttempts": 6,
+        "inputTokens": 34891,
+        "outputTokens": 1508,
+        "accountingComplete": true,
+        "byRole": {
+          "contact": {
+            "attempts": 6,
+            "inputTokens": 34891,
+            "outputTokens": 1508
+          },
+          "helper": {
+            "attempts": 0,
+            "inputTokens": 0,
+            "outputTokens": 0
+          }
+        },
+        "money": null
+      },
+      "tools": {
+        "admittedDispatches": 5,
+        "protocolDispatches": 4,
+        "ordinaryMemoryDispatches": 1,
+        "refusedProposals": 1,
+        "externalEffectsDispatched": 0
+      },
+      "timing": {
+        "sampleSeconds": null,
+        "fullConversationSeconds": null,
+        "inspectWrapperSeconds": 482.0,
+        "inspectStartedAt": "2026-10-05T13:37:14+00:00",
+        "inspectCompletedAt": "2026-10-05T13:45:16+00:00",
+        "inspectTimestampResolution": "one second",
+        "wallLimitSeconds": 480,
+        "perTurn": [
+          {
+            "ordinal": 0,
+            "status": "complete",
+            "providerAttempts": 2,
+            "usage": {
+              "input_tokens": 9335,
+              "output_tokens": 527
+            },
+            "exactReplyReadback": true,
+            "signedAckCount": 1,
+            "firstContentMs": 29430.98955100868,
+            "foregroundMs": 29434.423435945064,
+            "settledMs": 29488.57197497273
+          },
+          {
+            "ordinal": 1,
+            "status": "complete",
+            "providerAttempts": 3,
+            "usage": {
+              "input_tokens": 17528,
+              "output_tokens": 763
+            },
+            "exactReplyReadback": true,
+            "signedAckCount": 1,
+            "firstContentMs": 42415.65805400023,
+            "foregroundMs": 42418.65299100755,
+            "settledMs": 42483.786097029224
+          },
+          {
+            "ordinal": 2,
+            "status": "started_without_delivered_reply",
+            "providerAttempts": 1,
+            "usage": {
+              "input_tokens": 8028,
+              "output_tokens": 218
+            },
+            "exactReplyReadback": null,
+            "signedAckCount": null,
+            "firstContentMs": null,
+            "foregroundMs": null,
+            "settledMs": null
+          },
+          {
+            "ordinal": 3,
+            "status": "not_started",
+            "providerAttempts": 0,
+            "usage": {
+              "input_tokens": 0,
+              "output_tokens": 0
+            },
+            "exactReplyReadback": null,
+            "signedAckCount": null,
+            "firstContentMs": null,
+            "foregroundMs": null,
+            "settledMs": null
+          }
+        ],
+        "boundaryCaveat": "Eva1 first-content is availability of the native JSON reply after buffering; Eva2 first-content is the native text stream. Full native elapsed fields are absent for failed Eva1; Inspect wrapper includes setup/teardown. These are not equal completed-task timing intervals."
+      },
+      "stop": {
+        "settled": true,
+        "activeProviderAttempts": 0,
+        "pendingControls": 0,
+        "providerCloseFailures": 0,
+        "externalEffectsObserved": 0,
+        "usageComplete": true,
+        "ledgerStop": "sample launcher shutdown"
+      },
+      "failure": {
+        "class": "execution_unknown",
+        "launcherErrorClass": "Empty",
+        "stage": "third native HTTP response waiting after one completed provider attempt",
+        "observedCause": "A non-admitted external-service tool proposal was refused before dispatch. The retained native database contains its HTTP500 boundary error, while no corresponding worker stdout response reached the launcher; queue.get expired at the original global deadline.",
+        "productVersusAdapter": "Refused proposal is observed native behavior. Missing delivery of the boundary error is an adapter/response transition limitation; the exact lower-level cause is not established. No complete-case product loss is inferred.",
+        "thirdPreparedHttpStatus": 500,
+        "thirdReplyDelivered": false,
+        "fourthInputDispatched": false
+      },
+      "resultArtifact": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm05-epoch1/result.private.json",
+        "sha256": "b78de1aba6fd79e1b750f7a86a86bcd2ae4d6c9101f644e525fb105430c3896e"
+      }
+    },
+    "eva2": {
+      "outcome": "native_sample_completed",
+      "inspectStatus": "success",
+      "objective": {
+        "taskSuccess": true,
+        "status": "pass",
+        "semanticConditions": [
+          true,
+          true,
+          true
+        ],
+        "semanticCounts": {
+          "pass": 3,
+          "fail": 0,
+          "unknown": 0
+        },
+        "independentReadbacks": [
+          true,
+          true
+        ],
+        "readbackCounts": {
+          "pass": 2,
+          "fail": 0,
+          "unknown": 0
+        },
+        "humanRatings": [
+          null,
+          null
+        ],
+        "humanDimensionsUnscored": [
+          "warmth",
+          "relevance",
+          "independent judgement"
+        ],
+        "explanation": "All original objective conditions and mandatory independent readbacks are evidenced for this case; human quality is not automatically passed."
+      },
+      "native": {
+        "plannedTurns": 4,
+        "startedTurns": 4,
+        "completedTurns": 4,
+        "calendarAcknowledgedGenerations": [
+          0,
+          1
+        ],
+        "sameDatabasePreserved": true,
+        "captureCount": 10,
+        "captureCompleteForAllAttempts": true,
+        "sourceHashesMatchAdmission": true,
+        "frozenProductImagesUnchanged": true
+      },
+      "usage": {
+        "providerAttempts": 10,
+        "completedAttempts": 10,
+        "inputTokens": 27816,
+        "outputTokens": 1231,
+        "accountingComplete": true,
+        "byRole": {
+          "contact": {
+            "attempts": 4,
+            "inputTokens": 9191,
+            "outputTokens": 281
+          },
+          "helper": {
+            "attempts": 6,
+            "inputTokens": 18625,
+            "outputTokens": 950
+          }
+        },
+        "money": null
+      },
+      "tools": {
+        "protocolConsumptions": 0,
+        "refusedProposals": 0,
+        "externalEffectsDispatched": 0,
+        "completeReceipts": true
+      },
+      "timing": {
+        "sampleSeconds": 118.20460188394645,
+        "fullConversationSeconds": null,
+        "inspectWrapperSeconds": 157.0,
+        "inspectStartedAt": "2026-10-05T13:46:16+00:00",
+        "inspectCompletedAt": "2026-10-05T13:48:53+00:00",
+        "inspectTimestampResolution": "one second",
+        "wallLimitSeconds": 480,
+        "perTurn": [
+          {
+            "ordinal": 0,
+            "status": "complete",
+            "providerAttempts": 3,
+            "usage": {
+              "input_tokens": 9173,
+              "output_tokens": 641
+            },
+            "exactReplyReadback": true,
+            "signedAckCount": null,
+            "firstContentMs": 20406.38325898908,
+            "foregroundMs": 22856.472763989586,
+            "settledMs": 45944.39673202578
+          },
+          {
+            "ordinal": 1,
+            "status": "complete",
+            "providerAttempts": 3,
+            "usage": {
+              "input_tokens": 8735,
+              "output_tokens": 515
+            },
+            "exactReplyReadback": true,
+            "signedAckCount": null,
+            "firstContentMs": 11302.418156003114,
+            "foregroundMs": 13466.463185031898,
+            "settledMs": 34831.250926014036
+          },
+          {
+            "ordinal": 2,
+            "status": "complete",
+            "providerAttempts": 2,
+            "usage": {
+              "input_tokens": 4981,
+              "output_tokens": 46
+            },
+            "exactReplyReadback": true,
+            "signedAckCount": null,
+            "firstContentMs": 6890.0514780543745,
+            "foregroundMs": 8341.299750027247,
+            "settledMs": 13619.613408052828
+          },
+          {
+            "ordinal": 3,
+            "status": "complete",
+            "providerAttempts": 2,
+            "usage": {
+              "input_tokens": 4927,
+              "output_tokens": 29
+            },
+            "exactReplyReadback": true,
+            "signedAckCount": null,
+            "firstContentMs": 6817.426382040139,
+            "foregroundMs": 7676.52751004789,
+            "settledMs": 12751.001729047857
+          }
+        ],
+        "boundaryCaveat": "Eva1 first-content is availability of the native JSON reply after buffering; Eva2 first-content is the native text stream. Full native elapsed fields are absent for failed Eva1; Inspect wrapper includes setup/teardown. These are not equal completed-task timing intervals."
+      },
+      "stop": {
+        "settled": true,
+        "activeProviderAttempts": 0,
+        "pendingControls": 0,
+        "providerCloseFailures": 0,
+        "externalEffectsObserved": 0,
+        "usageComplete": true,
+        "ledgerStop": "sample observation complete"
+      },
+      "failure": null,
+      "resultArtifact": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm05-epoch1/execution/result.json",
+        "sha256": "a87e044ee9768758b852b4d4bea96c8c9096fdd675ad1bfd43c39a47c17c7f4e"
+      }
+    }
+  },
+  "pairUsage": {
+    "providerAttempts": 16,
+    "inputTokens": 62707,
+    "outputTokens": 2739,
+    "accountingComplete": true,
+    "money": null
+  },
+  "interpretation": {
+    "objectivePassMeaning": "Eva2 met all three original objective semantic conditions and both mandatory independent readbacks in this single case. This is not a human preference/personality score or broad superiority finding.",
+    "eva1UnknownNotLoss": true,
+    "humanScoresKnown": false,
+    "overallComparisonWinner": null,
+    "speedOrCostSuperiorityClaim": false,
+    "reason": "Eva1 did not complete the same four-turn workload. Known usage is retained, but unequal completion and timing boundaries do not establish overall efficiency superiority.",
+    "firstContentComparison": "Eva1 JSON buffering and Eva2 streamed text have different first-content boundaries.",
+    "sourceApplicability": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-cm-source-applicability-20261005.json",
+      "sha256": "522d9dbdabc03763cf2f9921e6092012fb21a77299da8334eba7a40428d30a44"
+    },
+    "sourceApplicabilityLimit": "Formally bound to frozen F1 comparison images/configuration. Existing selected CM source-equivalence evidence is limited; do not relabel as a whole-image or current-installation measurement.",
+    "fixedScopeUnchanged": true,
+    "automaticRetry": false
+  },
+  "independentAssessment": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm05-epoch1.paired-assessment.private.json",
+    "sha256": "3543ddd0ef4e23451eeb30115a75d9983b13e762bbbbcc272e333e67a23d06ae"
+  },
+  "retainedEvidence": {
+    "eva1": {
+      "artifacts": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm05-epoch1/admission.json",
+          "sha256": "60ff36f6c1a9365fc149f04e59b9aa2f3e36187dc97839ad52bf6f279026beaf"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm05-epoch1/launch.py",
+          "sha256": "b0c68884dcf3962515978037c2b12476c15f951506b7551c9f706f9a746bf674"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm05-epoch1/inspect-run.py",
+          "sha256": "131b439d673bfa1695a5f08367fdfea27804380eeccb762d6b89c43e4dcda31d"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm05-epoch1/result.private.json",
+          "sha256": "b78de1aba6fd79e1b750f7a86a86bcd2ae4d6c9101f644e525fb105430c3896e"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm05-epoch1/inspect-private/execution-logs/2026-10-05T13-37-14-00-00_ev003-cm05-epoch1-eva1-native_Q2nqwaP7JtgNpfq3ePhsvW.eval",
+          "sha256": "b68f1d8539a600c4727d3c22f685d6071718a80fa3066884528a6860752ead1d"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm05-epoch1/worker.private.log",
+          "sha256": "a1fddf36a1218379b4cd5593482008b89f2fd0435a30e734ea65e0965deb15d4"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm05-epoch1/database.private.sqlite",
+          "sha256": "b5044cf76cbb940343ea23843309458d11abd8b0430ae0293803848d906ec9a1"
+        }
+      ],
+      "captureCount": 6,
+      "captureRecordsBoundByPrivateAssessment": true
+    },
+    "eva2": {
+      "artifacts": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm05-epoch1/admission.json",
+          "sha256": "b894852891a61eab41f7ca0b012aebba216900a64a0c2f88b011468ea72143a8"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm05-epoch1/launch.py",
+          "sha256": "accd6fb58eade096a17392a1c8e5587453e42403f2d67e55d252ba6057255dac"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm05-epoch1/inspect-run.py",
+          "sha256": "c81d33b87ed3f3d90619a99f1a2f99d8764d40e6e9cbf7150507010ca3f3091d"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm05-epoch1/execution/result.json",
+          "sha256": "a87e044ee9768758b852b4d4bea96c8c9096fdd675ad1bfd43c39a47c17c7f4e"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm05-epoch1/inspect-private/execution-logs/2026-10-05T13-46-16-00-00_ev003-cm05-epoch1-eva2-native_UwwMwPtmKwuJzboez7E42m.eval",
+          "sha256": "917e1ee8735c251781000b010294d3e99147e70fa7e77ac4c2d4ba11f8c9e4d9"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm05-epoch1/execution/core/result.json",
+          "sha256": "c6ee19a8472a3034e231e8f2e54de6f5b2b71e2ba363d8a8f9cee1feb0ffb66e"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm05-epoch1/execution/memory/result.json",
+          "sha256": "299524aa3e1093395947bb1ebfbb9c31e9301692ca7a1b2cdf7ac9ff24eccfcd"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm05-epoch1/execution/turns.private.json",
+          "sha256": "88b57d0f44f309d4d36a18128e2d897729e1796d228b2430c400109e0e2a6190"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm05-epoch1/execution/eva2-ev003-cm05-e1-core-20261003.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm05-epoch1/execution/eva2-ev003-cm05-e1-core-20261003.stderr.log",
+          "sha256": "c3feef78fd99bf03779a3d23d51b07fcdfe1d98ebaa8856f875cf53ec7512f18"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm05-epoch1/execution/eva2-ev003-cm05-e1-memory-20261003.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm05-epoch1/execution/eva2-ev003-cm05-e1-memory-20261003.stderr.log",
+          "sha256": "df531ed3ebbfd60da224dc8ebb38cb53474531beb5d8c942560dd16a0d200724"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm05-epoch1/execution/p1_core.sql",
+          "sha256": "7741ae66d709455c063c917285fdc4c48f9593106dfa81db0819b8f359ec0655"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm05-epoch1/execution/p1_memory.sql",
+          "sha256": "20fdb2189ccd0e9fbda100ebb0480f12eed1ca3c85ae7ee2c1495cbd44a25e03"
+        }
+      ],
+      "captureCount": 10,
+      "captureRecordsBoundByPrivateAssessment": true
+    }
+  },
+  "cleanupReview": {
+    "durableOutsideContainers": true,
+    "dbBackupsHashesVerified": true,
+    "captureHashesAndRootModesVerified": true,
+    "nativeReceiptsAndLogsRetained": true,
+    "observedCurrentResources": "Exact CM05 Eva1 container and network, and exact CM05 Eva2 core/memory/database containers and network are already absent at independent readback. No further cleanup action is required.",
+    "noProductOrOtherCaseCleanup": true
+  },
+  "contentBoundary": {
+    "hiddenInputsAnswersOrRubricsPublished": false,
+    "curatorSyntheticOnly": true,
+    "privateAssessmentRoot0600": true,
+    "newReviewerModelCalls": 0,
+    "newReviewerTests": 0,
+    "priorCasesUnchanged": true
+  }
+}

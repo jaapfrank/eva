@@ -1,0 +1,192 @@
+{
+  "contract": "EvaComparisonSourceApplicability/v1",
+  "recordedDate": "2026-10-05",
+  "task": "P2.1",
+  "status": "limited_cm_source_equivalence_not_candidate_replacement",
+  "scope": "Existing CM01–CM05 native conversation/memory route; no new execution or semantic assessment.",
+  "images": {
+    "comparisonCore": "sha256:fd1c7cd3413405fd6b1b5ce408f2028cffed8de735a301550663e4c891ee5902",
+    "comparisonDelegatedWorker": "sha256:30d65117cc0f526bc3ed8859a0eee867ff8fe0943c0bf42c8c09d787c2ca3089",
+    "installedCoreObserved": "sha256:b42a5b8a74eaf7307339b8513fbb1e3343d925039a4e0e7866ddfc4defc05dca",
+    "installedDelegatedWorkerFromReleaseEvidence": "sha256:42e43365526c6e0f6d9ecb5e0ccd2f5c0829fc7c2c44ab72a5b92ff5a1733468",
+    "cmHindsightFromLauncher": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+    "cmPostgresFromLauncher": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1"
+  },
+  "method": {
+    "frozenHashes": "/home/administrator/project/.eva2-artifacts/f1-integrated-candidate-20261003/core-candidate-source.json",
+    "frozenHashesReceiptSha256": "e5e9a21cfa7a2942924c0d7fc7315059eec502e1aa90c3cc0b007419c428031f",
+    "installedHashes": "Read-only docker exec of /usr/local/bin/python: SHA256 of exactly these /opt/eva source files; no application factory, credentials or scenario state loaded.",
+    "installedImage": "Read-only docker inspect of eva2-managed-b-slot3-core .Image.",
+    "measurementRepeatedForThisRecord": false,
+    "originalToolChunks": [
+      "7a34c1",
+      "639ff3"
+    ],
+    "fileCount": 22,
+    "equalCount": 20,
+    "differentCount": 2
+  },
+  "files": [
+    {
+      "path": "src/eva/application/conversation.py",
+      "frozenSha256": "7e64d5f146c8d6a0bdac4a6d5564d2f92954b6764fdb8af6ec54bf3ef9502a62",
+      "installedSha256": "7e64d5f146c8d6a0bdac4a6d5564d2f92954b6764fdb8af6ec54bf3ef9502a62",
+      "equal": true
+    },
+    {
+      "path": "src/eva/bootstrap/runtime.py",
+      "frozenSha256": "1ec444b7e676b45cd48987dd54cbbabae97420c93768ab098733e7baa9ebd66b",
+      "installedSha256": "1ec444b7e676b45cd48987dd54cbbabae97420c93768ab098733e7baa9ebd66b",
+      "equal": true
+    },
+    {
+      "path": "src/eva/bootstrap/household_work.py",
+      "frozenSha256": "385b0cab56ead7f079fafa20e0cabac7a106d6dc11f011a63c78355f647d9e80",
+      "installedSha256": "385b0cab56ead7f079fafa20e0cabac7a106d6dc11f011a63c78355f647d9e80",
+      "equal": true
+    },
+    {
+      "path": "src/eva/bootstrap/private_conversation_resources.py",
+      "frozenSha256": "2b2456f507fa1cabc4c3c30bd13ec60abe9a9776fc2fd2842971da633f478f65",
+      "installedSha256": "2b2456f507fa1cabc4c3c30bd13ec60abe9a9776fc2fd2842971da633f478f65",
+      "equal": true
+    },
+    {
+      "path": "src/eva/providers/mcp_autonomy.py",
+      "frozenSha256": "a44543c27c89d54df1cc2a1c4a8cb25f02f7f784885c16c62b8801c7a9ead7a6",
+      "installedSha256": "a44543c27c89d54df1cc2a1c4a8cb25f02f7f784885c16c62b8801c7a9ead7a6",
+      "equal": true
+    },
+    {
+      "path": "src/eva/providers/mcp_discovery.py",
+      "frozenSha256": "e89dbc2a60121b6d74698cc3b6cdcd2d10dedb56b21e12c27e3c9bb2f4c2f855",
+      "installedSha256": "0a9026763ffc4e7ce7b960730e7289287fe19eb50efa3f77a9cbec6ab0d2e1f8",
+      "equal": false
+    },
+    {
+      "path": "src/eva/adapters/model/pydantic_conversation.py",
+      "frozenSha256": "5eb31eb57b0959d29919e5b3b7e053f588752ce9559433b16c47ef0ac5db2e23",
+      "installedSha256": "5eb31eb57b0959d29919e5b3b7e053f588752ce9559433b16c47ef0ac5db2e23",
+      "equal": true
+    },
+    {
+      "path": "src/eva/adapters/model/openai_codex_provider.py",
+      "frozenSha256": "efdaf9e083ef15ee77b16a1015b7cfb1ac5cd82538e47840404fa5a290ca843f",
+      "installedSha256": "efdaf9e083ef15ee77b16a1015b7cfb1ac5cd82538e47840404fa5a290ca843f",
+      "equal": true
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_conversation.py",
+      "frozenSha256": "baf8264a083326d2f6cd0790b3efecda67c2895f6e4c2e6fe7644a49a7c2acb0",
+      "installedSha256": "baf8264a083326d2f6cd0790b3efecda67c2895f6e4c2e6fe7644a49a7c2acb0",
+      "equal": true
+    },
+    {
+      "path": "src/eva/adapters/api/app.py",
+      "frozenSha256": "aa9efedb22108666f318a1a020cdfcc75e6770cd3506de4af7fda190a8f661a0",
+      "installedSha256": "aa9efedb22108666f318a1a020cdfcc75e6770cd3506de4af7fda190a8f661a0",
+      "equal": true
+    },
+    {
+      "path": "src/eva/adapters/projection/hindsight.py",
+      "frozenSha256": "bc0febb9274502bfba9c56461025a0cd6ddc0a0f0d7a940ed1c3cda0b11cbe54",
+      "installedSha256": "bc0febb9274502bfba9c56461025a0cd6ddc0a0f0d7a940ed1c3cda0b11cbe54",
+      "equal": true
+    },
+    {
+      "path": "src/eva/adapters/postgres/external_conversation_tools.py",
+      "frozenSha256": "fcd9c2c4414309bfbfd39436122939868b2588199e3374d032a4b69918e95553",
+      "installedSha256": "fcd9c2c4414309bfbfd39436122939868b2588199e3374d032a4b69918e95553",
+      "equal": true
+    },
+    {
+      "path": "src/eva/adapters/postgres/conversation_actions.py",
+      "frozenSha256": "2a552bc54d3a176db74562c2c9866d2151557e1c98c3d7cffaf70fca0c014227",
+      "installedSha256": "2a552bc54d3a176db74562c2c9866d2151557e1c98c3d7cffaf70fca0c014227",
+      "equal": true
+    },
+    {
+      "path": "src/eva/adapters/postgres/conversation_journal.py",
+      "frozenSha256": "1012e0b868cb830dc07616bd3b65ddea6473997c3ed9f3d5fa97f898dae82b10",
+      "installedSha256": "1012e0b868cb830dc07616bd3b65ddea6473997c3ed9f3d5fa97f898dae82b10",
+      "equal": true
+    },
+    {
+      "path": "src/eva/application/memory.py",
+      "frozenSha256": "5336de7e0754368fd2c008e75b2e937e18ad21e15d10b1696399530dc6b4c37c",
+      "installedSha256": "5336de7e0754368fd2c008e75b2e937e18ad21e15d10b1696399530dc6b4c37c",
+      "equal": true
+    },
+    {
+      "path": "src/eva/application/memory_background.py",
+      "frozenSha256": "7239107217649f513cd2cd09020723026e617351adafb9b22b94d7a6b373ebf8",
+      "installedSha256": "7239107217649f513cd2cd09020723026e617351adafb9b22b94d7a6b373ebf8",
+      "equal": true
+    },
+    {
+      "path": "src/eva/application/memory_audience.py",
+      "frozenSha256": "4aef5ec9ca0b6467d67a1531bfe7dee2f09a99a48cd2cfdb378325ac5828c9fa",
+      "installedSha256": "4aef5ec9ca0b6467d67a1531bfe7dee2f09a99a48cd2cfdb378325ac5828c9fa",
+      "equal": true
+    },
+    {
+      "path": "src/eva/application/work_context.py",
+      "frozenSha256": "3d24a0d9131fd86ec7fbe2ca3a5337a02b9073d2b9d60b367952d30e8d933acd",
+      "installedSha256": "3d24a0d9131fd86ec7fbe2ca3a5337a02b9073d2b9d60b367952d30e8d933acd",
+      "equal": true
+    },
+    {
+      "path": "src/eva/bootstrap/contact_catalog.py",
+      "frozenSha256": "2a27f9d3bb3b310c63d124faf57d235265c88f14abb04d9b2cfe8c24c1494c81",
+      "installedSha256": "2a27f9d3bb3b310c63d124faf57d235265c88f14abb04d9b2cfe8c24c1494c81",
+      "equal": true
+    },
+    {
+      "path": "src/eva/adapters/postgres/memory_outbox.py",
+      "frozenSha256": "a5dd61f6f6ded20c1c9c02964c74b5d6ee0d0c50e04fe2788cd66b5bed98fa51",
+      "installedSha256": "a5dd61f6f6ded20c1c9c02964c74b5d6ee0d0c50e04fe2788cd66b5bed98fa51",
+      "equal": true
+    },
+    {
+      "path": "src/eva/adapters/postgres/private_memory_aliases.py",
+      "frozenSha256": "2e29752fc5cb360753ba167c8a777eb69a4ca93c9b19ed289262566fca8241e1",
+      "installedSha256": "2e29752fc5cb360753ba167c8a777eb69a4ca93c9b19ed289262566fca8241e1",
+      "equal": true
+    },
+    {
+      "path": "src/eva/bootstrap/household_digital_work.py",
+      "frozenSha256": "f1f8aba4ef988989d8b73326b2fa21e55bca1be737e3222e014e15fedda8b319",
+      "installedSha256": "c7a23349301d68ed556028ad4e32c082c4531c147757739ca4e2acccb4f47467",
+      "equal": false
+    }
+  ],
+  "sourceReferences": [
+    "eva2/benchmark/inspect_ai_v1/ev003_candidate_freeze_20261004.json",
+    "eva2/evidence/product/f1-integrated-installed-20261003.json",
+    "eva2/evidence/product/f1-current-candidate-pre-reboot-20261005.json",
+    "eva2/evidence/product/t2-ha-input-recovery-installed-20261005.json",
+    "eva2/evidence/product/t3-owned-handoff-installed-20261005.json",
+    "eva2/evidence/product/i2-source-choice-installed-20261005.json",
+    "eva2/evidence/product/i2-self-chosen-research-installed-20261005.json"
+  ],
+  "cmConfigurationConditions": [
+    "Fresh isolated native core and Hindsight databases; trusted resolved private-person turns through existing API.",
+    "Fixed comparison contact model gpt-6-sol/none and helper/memory model gpt-6-astra/medium, not an assertion that installed production defaults are identical.",
+    "Existing CM launcher config omits HA/MCP credentials and catalogs; changed household authorization and connector readiness paths are not exercised by this private CM configuration.",
+    "Controlled calendar, shared accounting, capture and shutdown instrumentation remain separately source-bound per admitted run. Benchmark-only stop-boundary correction does not replace native product image."
+  ],
+  "conclusion": "No source change was observed in the selected exercised conversation/memory core. Existing CM evidence remains formally bound to the frozen fd1c7cd image and its admitted configuration; it supplies limited evidence about unchanged components, not complete verification of installed b42a5b8.",
+  "limitations": [
+    "This is a selected 22-file comparison, not a whole-image/dependency/configuration equivalence audit.",
+    "Hindsight and PostgreSQL image pins are taken from existing launcher source; current service images were not independently remeasured here.",
+    "T2 also changed HA request guidance/native voice and household read compatibility; T3 changed browser readiness. Those families cannot inherit current-candidate acceptance from CM results.",
+    "Do not relabel old results as measurements of the current installation or silently change the frozen candidate for later scenarios.",
+    "No protected scenario inputs, answers or grading rules were inspected. CM05 execution/admission and outcome remain recorded separately."
+  ],
+  "usage": {
+    "newModelCalls": 0,
+    "newTests": 0,
+    "runtimeMutations": 0,
+    "developmentCredits": null
+  }
+}

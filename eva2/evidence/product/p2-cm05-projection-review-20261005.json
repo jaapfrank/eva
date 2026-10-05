@@ -1,0 +1,86 @@
+{
+  "caseId": "EV003-CM-05",
+  "caseSha256": "29dac7cd93cfc54f82ab11d889cd340cdbc5ddb855fc3175852e29243f508a92",
+  "commitmentSha256": "bbdbf8eff011aeb51c41e2ff6532346dd22615a99102166e4005292100dd03bf",
+  "contract": "Ev003IndependentProjectionReview/v1",
+  "criteriaChanged": false,
+  "epoch": 1,
+  "hiddenContentPublished": false,
+  "humanRatings": [
+    null,
+    null
+  ],
+  "inferenceAdmitted": true,
+  "nativeMechanismsReused": true,
+  "nativeProjection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm05-epoch1.native-inputs.private.json",
+    "sha256": "0eccc4e3e8c54e21b501ab12ce4014ccba2dfbf95b7ae865cc3da4087e60eabf"
+  },
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "privateReceipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm05-epoch1.projection-receipt.private.json",
+    "sha256": "654195e5ffbf8e9a9473a413975893861cdc53b7bddce5577cb21ed21c70808e"
+  },
+  "productCodeChanged": false,
+  "providerCalls": 0,
+  "readbackTypes": [
+    "principal_scoped_native_memory",
+    "full_offered_provider_context",
+    "identity_audience_ingress_reply",
+    "provider_tool_stop_effect_trace"
+  ],
+  "remaining": "Root executes exact admitted entries once after existing access/resource preflight; independent objective assessment requires actual retained artifacts, human ratings remain unknown.",
+  "reviewer": "/root/aide_final_evaluation",
+  "sealedDataChanged": false,
+  "sourceProjection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm05-epoch1.private.json",
+    "sha256": "8069fa352db38d08c2140ec6cd84df34cdf6a077578910a4baf386bf3258afe6"
+  },
+  "status": "original_projection_and_native_entry_admission_complete_not_executed",
+  "structure": {
+    "actor_indices": [
+      0,
+      1,
+      0,
+      1
+    ],
+    "actors": 2,
+    "clock_generations": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "external_service_file_browser_audio_resources": false,
+    "ordinary_turns": 4,
+    "scripted_events": 3,
+    "session_indices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "setup_turns": 0
+  },
+  "projectionStatusAtCreation": "original_private_projection_prepared_not_execution_admission",
+  "admissionScope": "Exactly original CM05 epoch1 for Eva1 then Eva2 under unchanged plan; root normal execution approval and access/resource preflight; zero retries.",
+  "independentAdmission": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm05-epoch1.independent-admission.private.json",
+    "sha256": "1b4d6cbcd4da03b3971f82314df0336db13394ef4a0546187afbf4c71c13afc0"
+  },
+  "participantAdmissions": {
+    "eva1": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm05-epoch1/admission.json",
+      "sha256": "60ff36f6c1a9365fc149f04e59b9aa2f3e36187dc97839ad52bf6f279026beaf",
+      "launcher_sha256": "b0c68884dcf3962515978037c2b12476c15f951506b7551c9f706f9a746bf674",
+      "wrapper_sha256": "131b439d673bfa1695a5f08367fdfea27804380eeccb762d6b89c43e4dcda31d"
+    },
+    "eva2": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm05-epoch1/admission.json",
+      "sha256": "b894852891a61eab41f7ca0b012aebba216900a64a0c2f88b011468ea72143a8",
+      "launcher_sha256": "accd6fb58eade096a17392a1c8e5587453e42403f2d67e55d252ba6057255dac",
+      "wrapper_sha256": "c81d33b87ed3f3d90619a99f1a2f99d8764d40e6e9cbf7150507010ca3f3091d"
+    }
+  },
+  "sourceDelta": "Only approved benchmark worker terminal-stop correction plus case-specific four-turn fixture bindings; product images and sealed data unchanged."
+}

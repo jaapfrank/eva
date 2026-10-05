@@ -1,0 +1,29 @@
+{
+  "contract": "EvaComparisonExecutionClose/v1",
+  "task": "P2.1",
+  "caseId": "EV003-CM-05",
+  "epoch": 1,
+  "checkedAt": "2026-10-05T13:50:17.405455+00:00",
+  "wrappers": {
+    "eva1": {
+      "terminalExit": 0,
+      "taskSuccessInferred": false
+    },
+    "eva2": {
+      "terminalExit": 0,
+      "taskSuccessInferred": false
+    }
+  },
+  "resources": {
+    "cm05ContainersPresent": false,
+    "eva2NetworkPresent": false,
+    "removedEva1EmptyNetworkId": "33e40ec9597651445e5a104ed0142a348d111ad16ce462e9dc346863d01aeae2",
+    "nameLabelIdAndEmptyVerified": true
+  },
+  "retainedHostArtifacts": true,
+  "productionTouched": false,
+  "noNewInferenceForCleanup": true,
+  "resultAssessment": "Independent original assessment complete: Eva2 objective pass; Eva1 native execution unknown; no general winner.",
+  "assessmentEvidence": "eva2/evidence/product/p2-cm05-paired-result-20261005.json",
+  "retainedEvidenceIndependentlyVerified": true
+}
