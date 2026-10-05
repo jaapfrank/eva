@@ -1,10 +1,22 @@
 # EVA2 werkbord
 
-**Nu — P2.1: volgende vaste vergelijking met Eva1.**
-Het oorspronkelijke CM04-geval vraagt twee personen en hun eigen context.
-De onafhankelijke evaluator legt de bestaande controles vast; de proefdriver
-krijgt alleen de ontbrekende persoonsbinding. Vereiste geheugencontroles worden
-vooraf nagegaan. Nog geen modelproef gestart; CM01–CM03 blijven behouden.
+**Nu — P2.1: vierde vaste vergelijking uitgevoerd en vastgelegd.**
+Eva1 behoudt in deze proef de persoonsgrens, maar haalt het eerdere gegeven
+bij de terugvraag niet terug: 2/3 inhoudelijke voorwaarden en 1/2 readbacks.
+Eva2 levert geen volledig antwoord: de eerste providerrequest breekt af,
+volledige usage ontbreekt en de testkern sluit niet zelfstandig af.
+Codex stopt uitsluitend die eigen testkern; exit137, dus geen geslaagde
+natuurlijke afsluiting. De oorspronkelijke uitkomst blijft onbekend.
+
+De onafhankelijke beoordeling is bewaard; geen winnaar of extra productfunctie.
+7 afgeronde aanvragen: 43.054 input + 1.563 output = 44.617 tokens;
+1 afgebroken aanvraag heeft onbekend verbruik. Creditkosten onbekend.
+Alle proefgegevens zijn behouden; eigen containers en netwerken opgeruimd.
+**32/44 oorspronkelijke kleine taken klaar.** Geen volgende proef gestart.
+Volgende stap: de concrete provider-/afsluitfout gericht verklaren met bestaand
+bewijs, vóór nieuwe modelproeven. Geen automatische herhaling van CM04.
+[Onafhankelijk paarresultaat](evidence/product/p2-cm04-paired-result-20261005.json)
+· [Afsluiting](evidence/product/p2-cm04-execution-close-20261005.json).
 
 **C1-diagnose: fout blijft open, geen onbewezen reparatie.**
 Een neutrale toolvoorstelproef op de bestaande providerroute kwam correct binnen:
@@ -25,7 +37,7 @@ Geen GPT-call; één HA-TTS-aanvraag voor een vaste zin, geen microfoon of speak
 
 **Nog van Jaap:** praat normaal met Eva; beoordeel alleen woordtempo en het
 reageren na uitspreken. Doorpraten zelf is al bevestigd. Geen tweede-speakerproef.
-P2-resultaten behouden; volgende persoonsvergelijking wordt voorbereid.
+P2-resultaten behouden; CM04 staat bovenaan met de werkelijke uitkomst.
 [Installatie en meting](evidence/product/c3-fluency-installed-20261005.json)
 · [Onafhankelijke review](reviews/c3-fluency-20261005.md).
 

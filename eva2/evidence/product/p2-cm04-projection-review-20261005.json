@@ -1,0 +1,64 @@
+{
+  "contract": "EV003IndependentProjectionReview/v1",
+  "reviewedAt": "2026-10-05T12:34:57.798749+00:00",
+  "reviewer": "/root/aide_final_evaluation",
+  "task": "P2.1",
+  "caseId": "EV003-CM-04",
+  "epoch": 1,
+  "status": "original_private_projection_prepared_not_execution_admission",
+  "newProviderCalls": 0,
+  "productChanges": false,
+  "criteriaModified": false,
+  "hiddenContentPublished": false,
+  "binding": {
+    "caseSha256": "3fc5969a7b595fd7faf54e3df1e1e430972ce078fb35109428b3c352cc00d73f",
+    "datasetSha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4",
+    "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "nativeProjectionSha256": "1c5ca0e1fbb5f4d2be2a1b33c5f690fedf6afd71a57fbe7ddd20e053ac553286",
+    "sourceProjectionSha256": "9d12611685be51936ab3fe8895a877370317d9f8218b392930b450e6046340f7",
+    "privateReceiptSha256": "feaeffa05468574c29921b8c5044e6ad66cd02d264c21addc1e3450e09065dae",
+    "sourceProjectionStage": "Final resolved control metadata; original texts, principals, initial clock and event controls independently verified unchanged."
+  },
+  "opaquePaths": {
+    "nativeProjection": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm04-epoch1.native-inputs.private.json",
+    "sourceProjection": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm04-epoch1.private.json"
+  },
+  "operationalStructure": {
+    "turns": 3,
+    "actors": 2,
+    "actorIndices": [
+      0,
+      1,
+      0
+    ],
+    "sessions": 3,
+    "sessionIndices": [
+      0,
+      1,
+      2
+    ],
+    "clockGenerations": [
+      0,
+      0,
+      0
+    ],
+    "calendarAdvance": false,
+    "setupTurns": 0
+  },
+  "readiness": {
+    "existingNativeActorRoutesFound": true,
+    "productAuthChangeNeeded": false,
+    "modelContextTraceRequired": true,
+    "memorySnapshotsAloneSufficient": false,
+    "executionAdmitted": false,
+    "remaining": "Private observational request capture tied to actor/turn/provider attempt and exact request-byte preservation, followed by one bundled independent admission."
+  },
+  "approvalReview": {
+    "initialOutputRequestRejected": true,
+    "reason": "Printing redacted control sentences could still reveal protected scenario content outside operational metadata.",
+    "sameReviewReconsideredWithAuthorizationEvidence": true,
+    "authorizationEvidence": "eva2/evidence/product/p2-owner-authorization-20261005.json",
+    "result": "Private control interpretation by the designated independent evaluator allowed; builder receives only operational metadata.",
+    "workaroundUsed": false
+  }
+}

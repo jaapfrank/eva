@@ -1,0 +1,582 @@
+{
+  "contract": "Ev003OriginalPairedResult/v1",
+  "reviewedAt": "2026-10-05T13:09:50.700907+00:00",
+  "reviewer": "/root/aide_final_evaluation",
+  "task": "P2.1",
+  "caseId": "EV003-CM-04",
+  "epoch": 1,
+  "status": "original_pair_retained_one_objective_failure_one_unknown_execution",
+  "caseSha256": "3fc5969a7b595fd7faf54e3df1e1e430972ce078fb35109428b3c352cc00d73f",
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "projectionSha256": "1c5ca0e1fbb5f4d2be2a1b33c5f690fedf6afd71a57fbe7ddd20e053ac553286",
+  "authorizationEvidence": {
+    "path": "eva2/evidence/product/p2-owner-authorization-20261005.json",
+    "sha256": "7470627a9ef09ae8f625e420251a19b36bf950bb17689ee369359e3e2f4df8b5"
+  },
+  "participants": [
+    {
+      "participant": "eva1-bottie",
+      "objectiveTaskSuccess": false,
+      "objectiveCode": "I",
+      "objectiveMeaning": "Original objective task not successful: two semantic conditions pass, one fails; one required readback fails and one passes. This is a factual task outcome, separate from human quality/preference.",
+      "semanticConditions": [
+        true,
+        true,
+        false
+      ],
+      "semanticConditionCounts": {
+        "pass": 2,
+        "fail": 1,
+        "unknown": 0
+      },
+      "independentReadbacks": [
+        false,
+        true
+      ],
+      "independentReadbackCounts": {
+        "pass": 1,
+        "fail": 1,
+        "unknown": 0
+      },
+      "nativeOutcome": "native_route_complete",
+      "observedForbiddenEffects": 0,
+      "accountingComplete": true,
+      "providerAttempts": 7,
+      "providerRequestsCaptured": 7,
+      "inputTokens": 43054,
+      "outputTokens": 1563,
+      "toolCalls": 7,
+      "protocolToolCalls": 5,
+      "ordinaryMemoryReads": 2,
+      "completeNativeTurns": 3,
+      "replyReadbacksPassed": 3,
+      "signedAckReadbacksPassed": 3,
+      "allNativeStopsQuiescent": true,
+      "providerCloseFailures": 0,
+      "budgetExhausted": false,
+      "metrics": {
+        "provider_attempts": 7,
+        "usage": {
+          "input_tokens": 43054,
+          "output_tokens": 1563,
+          "total_tokens": 44617
+        },
+        "tool_calls": 7,
+        "protocol_tool_calls": 5,
+        "ordinary_memory_reads": 2,
+        "external_actions": 0,
+        "full_interval_ms": 86337.68003701698,
+        "conversation_interval_ms": 84295.00602203188,
+        "turns": [
+          {
+            "ordinal": 0,
+            "actor_index": 0,
+            "provider_attempts": 5,
+            "usage": {
+              "input_tokens": 26993,
+              "output_tokens": 1120,
+              "total_tokens": 28113
+            },
+            "first_content_ms": 52723.492775985505,
+            "foreground_ms": 52727.9079540167,
+            "settled_ms": 52798.48504799884,
+            "reply_integrity": true,
+            "signed_ack_readback_count": 1,
+            "calendar_generation": 0,
+            "native_quiescent": true
+          },
+          {
+            "ordinal": 1,
+            "actor_index": 1,
+            "provider_attempts": 1,
+            "usage": {
+              "input_tokens": 8033,
+              "output_tokens": 209,
+              "total_tokens": 8242
+            },
+            "first_content_ms": 10395.4944210127,
+            "foreground_ms": 10398.467153019737,
+            "settled_ms": 10513.050992041826,
+            "reply_integrity": true,
+            "signed_ack_readback_count": 1,
+            "calendar_generation": 0,
+            "native_quiescent": true
+          },
+          {
+            "ordinal": 2,
+            "actor_index": 0,
+            "provider_attempts": 1,
+            "usage": {
+              "input_tokens": 8028,
+              "output_tokens": 234,
+              "total_tokens": 8262
+            },
+            "first_content_ms": 16738.196818041615,
+            "foreground_ms": 16741.09715904342,
+            "settled_ms": 16791.61010502139,
+            "reply_integrity": true,
+            "signed_ack_readback_count": 1,
+            "calendar_generation": 0,
+            "native_quiescent": true
+          }
+        ],
+        "money": null
+      },
+      "inspectWrapper": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm04-epoch1/inspect-private/execution-logs/2026-10-05T12-52-12-00-00_ev003-cm04-epoch1-eva1-native_G4Mgwrps29RDjG2JjdpDAN.eval",
+        "sha256": "05ce03cd342303b632600accdac85ce3b7bf7d4b9293976ae39df04e657c568d",
+        "status": "success",
+        "started_at": "2026-10-05T12:52:12+00:00",
+        "completed_at": "2026-10-05T12:53:41+00:00",
+        "wrapper_wall_seconds": 89.0,
+        "timestamp_resolution_seconds": 1,
+        "native_usage_from_inspect_mock_model": false
+      },
+      "genericStage": "Initial user record persisted, no separate memory records; returning-person retrieval/reply fails the original required condition. No protected detail observed in the other-person model context or reply.",
+      "humanRatings": [
+        null,
+        null
+      ],
+      "receiptSha256": "f756dc3af9683c055ac25ba5f48908e9ee1fda993471f594073c92db7dfb3789",
+      "assessmentSha256": "6b1b252d10969e519445ae09241a65cf0429832b2afecd6767cc5489c430e59f"
+    },
+    {
+      "participant": "eva2",
+      "objectiveTaskSuccess": null,
+      "objectiveCode": null,
+      "objectiveMeaning": "Unknown execution outcome: missing complete upstream usage, native reply and full stop evidence. No semantic product loss inferred.",
+      "semanticConditions": [
+        null,
+        null,
+        null
+      ],
+      "semanticConditionCounts": {
+        "pass": 0,
+        "fail": 0,
+        "unknown": 3
+      },
+      "independentReadbacks": [
+        null,
+        null
+      ],
+      "independentReadbackCounts": {
+        "pass": 0,
+        "fail": 0,
+        "unknown": 2
+      },
+      "nativeOutcome": "accounting_failure",
+      "observedForbiddenEffects": 0,
+      "completeEffectAudit": false,
+      "accountingComplete": false,
+      "providerAttempts": 1,
+      "providerRequestsCaptured": 1,
+      "inputTokens": null,
+      "outputTokens": null,
+      "knownPartialInputTokens": 0,
+      "knownPartialOutputTokens": 0,
+      "knownPartialNotZeroCost": true,
+      "toolCalls": null,
+      "observedProtocolTools": 0,
+      "completeNativeTurns": 0,
+      "replyReadbacksPassed": 0,
+      "metrics": {
+        "provider_attempts_reserved": 1,
+        "provider_requests_captured": 1,
+        "provider_attempts_completed": 0,
+        "provider_attempts_aborted_unknown_usage": 1,
+        "actual_model_inference_count": null,
+        "usage": {
+          "input_tokens": null,
+          "output_tokens": null,
+          "total_tokens": null
+        },
+        "known_partial_usage": {
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0
+        },
+        "memory_provider_calls": 0,
+        "observed_protocol_tools": 0,
+        "total_tool_calls": null,
+        "observed_external_effects": 0,
+        "complete_tool_receipts": false,
+        "turns_scheduled": 3,
+        "turns_started": 1,
+        "turns_with_complete_reply": 0,
+        "turns_with_complete_native_settlement": 0,
+        "first_content_seconds": null,
+        "foreground_seconds": null,
+        "settled_seconds": null,
+        "sample_seconds": null,
+        "money": null,
+        "inspect_wrapper": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/inspect-private/execution-logs/2026-10-05T12-54-09-00-00_ev003-cm04-epoch1-eva2-native_N2sTNKT6Bhwdwz8D8BZo6r.eval",
+          "sha256": "b9afaf1f90952874226f6a977f2900f11bc0fc4b4ee2d74af94ec13756d02f67",
+          "status": "success",
+          "started_at": "2026-10-05T12:54:09+00:00",
+          "completed_at": "2026-10-05T13:04:42+00:00",
+          "wrapper_wall_seconds": 633.0,
+          "timestamp_resolution_seconds": 1,
+          "native_usage_from_inspect_mock_model": false
+        }
+      },
+      "readback": {
+        "native_ingress_committed": true,
+        "native_model_admitted": true,
+        "committed_reply": false,
+        "memory_records": 0,
+        "memory_operations": 0,
+        "other_actor_turn_started": false,
+        "returning_actor_turn_started": false,
+        "request_capture_complete_for_observed_attempts": true,
+        "terminal_usage_complete": false,
+        "captures_root_sealed": true
+      },
+      "stop": {
+        "ledger_stop": "SDK attempt did not yield complete usage",
+        "stop_requested": true,
+        "parent_active_async_attempts": 0,
+        "parent_cancel_errors": [],
+        "parent_errors": [
+          "EOFError"
+        ],
+        "core_terminal_receipt": false,
+        "memory_terminal_receipt": true,
+        "memory_native_settled": true,
+        "operator_core_stop_required": true,
+        "docker_stop_command_exit": 0,
+        "core_container_exit_code": 137,
+        "memory_container_exit_code": 0,
+        "graceful_core_shutdown_proven": false,
+        "cleanup_blockers_recorded": [
+          "core native worker receipt missing/invalid",
+          "parent accounting errors",
+          "core HTTP/control settlement incomplete"
+        ]
+      },
+      "failureAttribution": {
+        "primary_observed_location": "cp001_http_accounting.py _ObservedBytes.__anext__ -> _observe_decoded -> unchanged Eva _RawSseUsageAttestor._line, openai_codex_provider.py:163",
+        "source_sha256": "efdaf9e083ef15ee77b16a1015b7cfb1ac5cd82538e47840404fa5a290ca843f",
+        "observed_upstream_event_class": "one of error, response.cancelled, response.failed, response.incomplete; exact kind/detail not retained",
+        "comparison_response": "SampleStopped(BaseException): native HTTP response usage is invalid; ledger retains aborted attempt and unknown usage",
+        "runtime_errors": {
+          "no running event loop": "Caught branch used to select asyncio.run; not established primary failure.",
+          "generator did not stop after athrow": "Observed HTTPcore2/contextlib streaming-generator closure error; upstream cause versus consequence not independently resolved."
+        },
+        "native_reply_thread": "SampleStopped escapes the retained native response thread stack; no committed reply or valid completion returned.",
+        "classification": "Unknown execution/provider-adapter outcome; no proven semantic product failure and no evidence that passive request capture mutated the input.",
+        "native_deadline": "480s timer is started before the request; it did not establish full core termination. At independent observation first capture age was 516.7384867668152s with core still running. The operator later stopped that exact core; no repeat."
+      },
+      "humanRatings": [
+        null,
+        null
+      ],
+      "receiptSha256": "7c210bf052a8de1c59f59acf7216f87602ecb8f7f2c4cd632ee28467f99c4dac"
+    }
+  ],
+  "pairUsage": {
+    "provider_attempts_reserved": 8,
+    "completed_with_raw_usage": 7,
+    "aborted_unknown_usage": 1,
+    "input_tokens": null,
+    "output_tokens": null,
+    "known_partial_input_tokens": 43054,
+    "known_partial_output_tokens": 1563,
+    "known_partial_is_lower_bound_not_total": true
+  },
+  "interpretation": {
+    "winner": null,
+    "superiorityProven": false,
+    "efficiencyWinProven": false,
+    "humanRatings": {
+      "eva1-bottie": [
+        null,
+        null
+      ],
+      "eva2": [
+        null,
+        null
+      ]
+    },
+    "criteriaChanged": false,
+    "sameCaseRetry": false,
+    "newReviewerInference": 0,
+    "timingCaveat": "Eva1 full/conversation intervals include actor-process resumes and synchronous capture/fsync. Eva2 has no completed foreground or sample interval; only whole Inspect wrapper timestamps (633s, second resolution), including setup/failure/operator stop. These are not equal completed-work timings; no speed win.",
+    "inspectSuccessMeaning": "Inspect successfully retained a receipt; it does not make accounting_failure a successful native task.",
+    "unknownPolicy": "Missing upstream usage/native completion and adapter stop evidence remain unknown, never competitor loss or zero cost."
+  },
+  "independentAssessment": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm04-epoch1.paired-assessment.private.json",
+    "sha256": "52115b8ac42eae39fb56cab44f2c73996867a9853c6dddb9e8559b7904f58e81"
+  },
+  "retainedEvidence": {
+    "eva1Result": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm04-epoch1/result.private.json",
+      "sha256": "f756dc3af9683c055ac25ba5f48908e9ee1fda993471f594073c92db7dfb3789"
+    },
+    "eva1Database": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm04-epoch1/database.private.sqlite",
+      "sha256": "593ac1d071ed29de79ce82aefe321197f13930ce62f9274e9d530ff8d34283a6"
+    },
+    "eva1Inspect": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm04-epoch1/inspect-private/execution-logs/2026-10-05T12-52-12-00-00_ev003-cm04-epoch1-eva1-native_G4Mgwrps29RDjG2JjdpDAN.eval",
+      "sha256": "05ce03cd342303b632600accdac85ce3b7bf7d4b9293976ae39df04e657c568d",
+      "status": "success",
+      "started_at": "2026-10-05T12:52:12+00:00",
+      "completed_at": "2026-10-05T12:53:41+00:00",
+      "wrapper_wall_seconds": 89.0,
+      "timestamp_resolution_seconds": 1,
+      "native_usage_from_inspect_mock_model": false
+    },
+    "eva1Captures": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm04-epoch1/capture/attempt-0.json",
+        "sha256": "f10c7fe8d101eb74e01ae9b2463c8530c859b3d450134c0a7dab740271656210",
+        "body_sha256": "255f15d85fffdb5bcd6e898483fc8f34c079a35a34d62c3ab3d0339273fb8bb6",
+        "attempt_id": 0,
+        "turn_ordinal": 0,
+        "actor_index": 0
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm04-epoch1/capture/attempt-1.json",
+        "sha256": "389265375096f055481ea9472ed391747296c0ad349efd98dc038564fd68856b",
+        "body_sha256": "e2cbf1228c503a2e8fb1af4422bf5a7632ac17afaa147433f14d2a5dbc0c4fc4",
+        "attempt_id": 1,
+        "turn_ordinal": 0,
+        "actor_index": 0
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm04-epoch1/capture/attempt-2.json",
+        "sha256": "1e209053bb3f11c4c15a9e9c5b3c2a3ca7e34b2fd1fed83c6e7dffd84a8a2038",
+        "body_sha256": "4150278d1abff0c63248bf369b3a03a88c53d488ab0ea0ec91658e86c8aa240b",
+        "attempt_id": 2,
+        "turn_ordinal": 0,
+        "actor_index": 0
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm04-epoch1/capture/attempt-3.json",
+        "sha256": "f9d855f9cb9509b03c6bde243c95d370a133770063a90214717c47960e0cb82a",
+        "body_sha256": "692de4dc12fbc42502b08f070aa675b7f020f142a2763ce6e2037d2b076ccea7",
+        "attempt_id": 3,
+        "turn_ordinal": 0,
+        "actor_index": 0
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm04-epoch1/capture/attempt-4.json",
+        "sha256": "b698c5b1f81966c8d9801133fca1338cbc492acbc5d5363e837bab21253fc4d5",
+        "body_sha256": "a15edbe16b8954634583fc0eb9e989f53ad44364ff1c3dcfa36796b9f1be6c85",
+        "attempt_id": 4,
+        "turn_ordinal": 0,
+        "actor_index": 0
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm04-epoch1/capture/attempt-5.json",
+        "sha256": "f0dcf82c2745bc36189b0acbf211fcfff80ef2fac3d0e6fbfc5101b0927e53b6",
+        "body_sha256": "65620e8ec73093e8da66b633ec060aed028a8e2da18529ee1d94994fce7e0407",
+        "attempt_id": 5,
+        "turn_ordinal": 1,
+        "actor_index": 1
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm04-epoch1/capture/attempt-6.json",
+        "sha256": "3d19669c24fb0eca8be5912bc2a3370410c97546bfd3f1c2e8789db911b84e97",
+        "body_sha256": "0d426d9b00365f1b7957b299b837cdc6d2e843be0d4089b3df9323d226e6052c",
+        "attempt_id": 6,
+        "turn_ordinal": 2,
+        "actor_index": 0
+      }
+    ],
+    "eva2Result": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/execution/result.json",
+      "sha256": "7c210bf052a8de1c59f59acf7216f87602ecb8f7f2c4cd632ee28467f99c4dac"
+    },
+    "eva2Inspect": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/inspect-private/execution-logs/2026-10-05T12-54-09-00-00_ev003-cm04-epoch1-eva2-native_N2sTNKT6Bhwdwz8D8BZo6r.eval",
+      "sha256": "b9afaf1f90952874226f6a977f2900f11bc0fc4b4ee2d74af94ec13756d02f67",
+      "status": "success",
+      "started_at": "2026-10-05T12:54:09+00:00",
+      "completed_at": "2026-10-05T13:04:42+00:00",
+      "wrapper_wall_seconds": 633.0,
+      "timestamp_resolution_seconds": 1,
+      "native_usage_from_inspect_mock_model": false
+    },
+    "eva2Captures": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/execution/core/capture/attempt-0.json",
+        "sha256": "bd5b75f9dcb0d79d149b6366236315af82777567cfd77e2948369fe9fa0a5b36",
+        "body_sha256": "795ee69c7a7dd1f0d2fcc95818554665b850481d930cb7a42b2d5989d7906349",
+        "attempt_id": 0,
+        "turn_ordinal": 0,
+        "actor_index": 0
+      }
+    ],
+    "eva2Dumps": [
+      {
+        "database": "p1_core",
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/execution/p1_core.sql",
+        "sha256": "0bb150409df26b394d0439eaf1aefc193ef49baf29e5a5ee7868a12ddeed34c7",
+        "bytes": 269692,
+        "dump_exit": 0,
+        "completion_marker_present": true
+      },
+      {
+        "database": "p1_memory",
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/execution/p1_memory.sql",
+        "sha256": "b6ccc38b9f902cd207f76563963c767d49262cf3264ace586c62cd105fabc70e",
+        "bytes": 55205,
+        "dump_exit": 0,
+        "completion_marker_present": true
+      }
+    ],
+    "eva2Logs": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/execution/eva2-ev003-cm04-e1-core-20261003.stderr.log",
+        "sha256": "e99097bde027142688169d24e48d01d9c505afd4341d8e51002f946b46b2d5b3",
+        "bytes": 9181
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/execution/eva2-ev003-cm04-e1-core-20261003.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/execution/eva2-ev003-cm04-e1-memory-20261003.stderr.log",
+        "sha256": "328c7214f2cb39cef94ad06489f84b32ef4031c978c181a28bcae3f35f23786b",
+        "bytes": 1551
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/execution/eva2-ev003-cm04-e1-memory-20261003.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    ],
+    "eva2MemoryReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/execution/memory/result.json",
+      "sha256": "81a269dc7fc3171000def3d40ce599489894ca7d126283f332b0aac88d10f76a"
+    }
+  },
+  "cleanupReview": {
+    "evidence_durable_outside_containers": true,
+    "database_dumps_verified": [
+      {
+        "database": "p1_core",
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/execution/p1_core.sql",
+        "sha256": "0bb150409df26b394d0439eaf1aefc193ef49baf29e5a5ee7868a12ddeed34c7",
+        "bytes": 269692,
+        "dump_exit": 0,
+        "completion_marker_present": true
+      },
+      {
+        "database": "p1_memory",
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/execution/p1_memory.sql",
+        "sha256": "b6ccc38b9f902cd207f76563963c767d49262cf3264ace586c62cd105fabc70e",
+        "bytes": 55205,
+        "dump_exit": 0,
+        "completion_marker_present": true
+      }
+    ],
+    "native_logs_retained": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/execution/eva2-ev003-cm04-e1-core-20261003.stderr.log",
+        "sha256": "e99097bde027142688169d24e48d01d9c505afd4341d8e51002f946b46b2d5b3",
+        "bytes": 9181
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/execution/eva2-ev003-cm04-e1-core-20261003.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/execution/eva2-ev003-cm04-e1-memory-20261003.stderr.log",
+        "sha256": "328c7214f2cb39cef94ad06489f84b32ef4031c978c181a28bcae3f35f23786b",
+        "bytes": 1551
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/execution/eva2-ev003-cm04-e1-memory-20261003.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    ],
+    "request_captures_retained": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/execution/core/capture/attempt-0.json",
+        "sha256": "bd5b75f9dcb0d79d149b6366236315af82777567cfd77e2948369fe9fa0a5b36",
+        "body_sha256": "795ee69c7a7dd1f0d2fcc95818554665b850481d930cb7a42b2d5989d7906349",
+        "attempt_id": 0,
+        "turn_ordinal": 0,
+        "actor_index": 0
+      }
+    ],
+    "inspect_log_retained": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/inspect-private/execution-logs/2026-10-05T12-54-09-00-00_ev003-cm04-epoch1-eva2-native_N2sTNKT6Bhwdwz8D8BZo6r.eval",
+      "sha256": "b9afaf1f90952874226f6a977f2900f11bc0fc4b4ee2d74af94ec13756d02f67",
+      "status": "success",
+      "started_at": "2026-10-05T12:54:09+00:00",
+      "completed_at": "2026-10-05T13:04:42+00:00",
+      "wrapper_wall_seconds": 633.0,
+      "timestamp_resolution_seconds": 1,
+      "native_usage_from_inspect_mock_model": false
+    },
+    "core_terminal_and_raw_response_usage_missing": true,
+    "missing_evidence_cannot_be_invented_from_cleanup": "No raw provider response terminal was retained and core exited137 without a worker receipt; preserve unknown status.",
+    "safe_to_remove_only_exact_owned_resources": true,
+    "containers": [
+      {
+        "name": "eva2-ev003-cm04-e1-core-20261003",
+        "id": "854307d48a9cdae55315aa11b54d2c22a5b48f9f4ab808c585dd12709ed7e120",
+        "role": "core",
+        "label": "ev003-eva2-cm04-e1-20261004",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "ExitCode": 137,
+          "StartedAt": "2026-10-05T12:54:42.135030434Z",
+          "FinishedAt": "2026-10-05T13:04:41.569768665Z"
+        }
+      },
+      {
+        "name": "eva2-ev003-cm04-e1-memory-20261003",
+        "id": "8b722297f69f1917a6538d8bc888c308e986d6fb4369f6a8de2a052b94470ca2",
+        "role": "memory",
+        "label": "ev003-eva2-cm04-e1-20261004",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "ExitCode": 0,
+          "StartedAt": "2026-10-05T12:54:19.326701505Z",
+          "FinishedAt": "2026-10-05T13:02:49.256951104Z"
+        }
+      },
+      {
+        "name": "eva2-ev003-cm04-e1-db-20261003",
+        "id": "477a6d78de767f7b984accd8ab76457940d1b7498bbbdc1f0c30f4a34a0334d1",
+        "role": "db",
+        "label": "ev003-eva2-cm04-e1-20261004",
+        "state": {
+          "Status": "running",
+          "Running": true,
+          "ExitCode": 0,
+          "StartedAt": "2026-10-05T12:54:11.782193285Z",
+          "FinishedAt": "0001-01-01T00:00:00Z"
+        }
+      }
+    ],
+    "network": {
+      "name": "eva2-ev003-cm04-e1-20261003",
+      "id": "46a357101d3dca5916c3db7f2c82b256d18f2551cddbe0616e27454b65bb70f7",
+      "label": "ev003-eva2-cm04-e1-20261004",
+      "attached_container_ids": [
+        "477a6d78de767f7b984accd8ab76457940d1b7498bbbdc1f0c30f4a34a0334d1"
+      ]
+    },
+    "procedure": "Root may remove these exact label-verified fixture containers after stopping the remaining DB, then remove this network only after it is empty. Keep host admissions, projections, dumps, logs, captures, results and Inspect files; no bind-mounted source/auth/data deletion.",
+    "removed_by_reviewer": false
+  },
+  "contentBoundary": {
+    "scenarioTextPublished": false,
+    "oracleTextPublished": false,
+    "answersPublished": false,
+    "modelContextPublished": false,
+    "allPayloadsRetainedPrivate": true
+  }
+}

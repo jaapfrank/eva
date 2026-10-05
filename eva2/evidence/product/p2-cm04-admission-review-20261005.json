@@ -1,0 +1,62 @@
+{
+  "contract": "EV003IndependentNativeAdmissionReview/v1",
+  "task": "P2.1",
+  "caseId": "EV003-CM-04",
+  "epoch": 1,
+  "reviewedAt": "2026-10-05T12:51:45.161796+00:00",
+  "reviewer": "/root/aide_final_evaluation",
+  "decision": "GO_for_two_original_sequential_native_attempts_subject_to_existing_preflight",
+  "criteriaModified": false,
+  "newProviderCallsByReviewer": 0,
+  "productChanges": false,
+  "admissions": {
+    "eva1-bottie": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm04-epoch1/admission.json",
+      "sha256": "c7029fe2ebfbc0f4ad8a0664d36fd4773ff014b2a36e7c0b3f61d21eb8a6a96d"
+    },
+    "eva2": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm04-epoch1/admission.json",
+      "sha256": "d4e48515f08f166b8f1c01b983ae05125d86fd8ed9130c040c8b5b25cc3f9216"
+    }
+  },
+  "independentReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm04-epoch1.independent-admission.private.json",
+    "sha256": "5023cf62223c4efad0e24616609b8ec48f62236c24c756d197aad9e179942317"
+  },
+  "projectionEvidence": "eva2/evidence/product/p2-cm04-projection-review-20261005.json",
+  "limits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "wallSeconds": 480,
+    "toolCalls": 16,
+    "externalActions": 0
+  },
+  "models": {
+    "contact": [
+      "gpt-6-sol",
+      "none"
+    ],
+    "helpers": [
+      "gpt-6-astra",
+      "medium"
+    ]
+  },
+  "readiness": {
+    "existingInterpreterVerified": true,
+    "inspectVersion": "0.3.263",
+    "leaseExpirationUtc": "2026-10-11T10:34:03+00:00",
+    "networkRangesNoOverlap": true,
+    "offlineRequestByteActorAttemptBinding": "passed",
+    "rootCaptureClosure": "passed",
+    "remainingReviewBlockers": 0
+  },
+  "limitations": [
+    "Only original CM04 epoch1 pair; no replay or automatic matrix.",
+    "Capture I/O and Eva1 actor process rotation are included; no timing-neutrality claim.",
+    "Human semantic scores remain separate and absent; no AI substitute.",
+    "Actual source-bound captures, replies and memory readbacks must be assessed after execution.",
+    "Initial incorrect offline fixture tuple was corrected and the failed result retained. Reviewer-found non-provider HTTP interference corrected before native execution."
+  ],
+  "nextAction": "Execute admitted Eva1 then Eva2, preserve complete accounting and private evidence, obtain independent result assessment."
+}

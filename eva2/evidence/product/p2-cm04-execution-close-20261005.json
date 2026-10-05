@@ -1,0 +1,12 @@
+{
+  "contract": "EV003ExecutionClose/v1",
+  "caseId": "EV003-CM-04",
+  "epoch": 1,
+  "independentPublicResultSha256": "78f45b31404e259bcfb067d0c54fa0d17c371fcaf7f698955e451709934d25b6",
+  "retainedArtifactsHashesRechecked": true,
+  "ownProbeContainersRemoved": 3,
+  "ownProbeNetworkRemoved": true,
+  "hostEvidenceRetained": true,
+  "productionChanged": false,
+  "newProviderCalls": 0
+}
