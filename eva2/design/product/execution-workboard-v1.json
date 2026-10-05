@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-05T01:55:56.276013+00:00",
+  "lastUpdated": "2026-10-05T02:10:42.875801+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1031,7 +1031,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T01:55:56.276013+00:00",
+        "checkedAt": "2026-10-05T02:10:42.875801+00:00",
         "deliveries": [
           {
             "title": "T3 klaar · Browser gebruiken, overnemen en hervatten",
@@ -3669,26 +3669,27 @@
           }
         ],
         "now": {
-          "title": "Technisch afgerond · Taken afmaken en terugmelden",
-          "state": "completed",
-          "owner": "Codex",
-          "detail": "T1, T2, T3 en T4 zijn technisch klaar. Laatste oplevering: browserovername en correct hervatten; eerdere taakresultaten en acceptaties behouden."
+          "title": "F1.2 · Voorbereiding klaar; echte herstart open",
+          "state": "tested",
+          "owner": "Jaap · herstart; Codex · nacontrole",
+          "detail": "De actuele kern, werker en browserhelper zijn vastgelegd; dezelfde twee resultaten, bestanden en herinnering zijn behouden. Onafhankelijke voorbereiding GO. Windows nog niet herstart. Geen actieve modelproef of installatie; 31/44 oorspronkelijke taken klaar."
         },
         "next": {
-          "title": "Resterende eindvoorwaarden",
-          "detail": "Resterende bestaande eindvoorwaarden afhandelen: toegang/toestemming voor afgeschermde vergelijking en innovatieproef, werkelijke computerherstart en menselijke speaker-/gezinsbeoordeling. Voltooide functies niet opnieuw bouwen of testen."
+          "title": "Herstart controleren; vergelijking en innovatie na toestemming",
+          "detail": "Meld Herstart klaar na Windows opnieuw opstarten. De gezamenlijke toestemmingsvraag voor vergelijking/innovatie staat open. Fysieke speakerbeleving, persoonlijkheid, nut van initiatief en gezinsacceptatie blijven apart."
         },
         "ownerAction": {
-          "title": "Eén gezamenlijke toestemmingsvraag beantwoorden",
+          "title": "Open beslissingen en gebruiksoordeel",
           "steps": [
-            "Sta toe dat de onafhankelijke beoordelaar de fictieve gegevens uit de vaste vergelijking privé verwerkt en beoordeelt, inclusief controls, antwoorden en criteria. De bouwagent krijgt alleen uitslagen en meetwaarden. Het proefbudget blijft gelijk.",
-            "De bestaande afzonderlijke vragen voor camera-/agendagebruik, de innovatieproef en de echte herstart blijven open.",
-            "Native aanmeldingen van Agent Zero, Hermes en OpenClaw zijn niet actueel bevestigd; geen nieuwe loginronde actief."
+            "Beantwoord de toestemmingsvraag in deze chat: alleen de vaste vergelijking, vergelijking plus de bestaande innovatieproef, of beide uitstellen. Automatische goedkeuringscontrole vroeg expliciete toestemming.",
+            "Voor F1.2: sla je werk op, kies Windows → Opnieuw opstarten en meld daarna Herstart klaar in deze chat. Er is geen automatische herstart ingesteld.",
+            "Woonkamerspeaker is bereikbaar en niet gedempt. De resterende fysieke proef gaat over verstaanbaarheid en direct onderbreken met je stem; de tweede speaker volgt pas als dit in de woonkamer goed werkt.",
+            "Persoonlijkheid, nut van initiatief en zeven dagen gezinsgebruik blijven jouw beoordeling. Native aanmeldingen voor concurrenten zijn nog niet actueel bevestigd."
           ],
-          "expected": "Deze resterende toegang en menselijke beoordelingen staan los van de opgeleverde technische functies. Er loopt geen verborgen brede herbouw of nieuwe browserproef."
+          "expected": "Deze handelingen zijn nodig voor de bestaande eindvoorwaarden. Zij maken de opgeleverde functies niet opnieuw ongedaan; 31/44 oorspronkelijke kleine taken blijven klaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-05T01:17:45.054328+00:00"
+        "reviewedAt": "2026-10-05T02:10:42.875801+00:00"
       },
       "reviewedAt": "2026-10-05T00:19:18.098429+00:00"
     },
@@ -16624,7 +16625,7 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": "/root",
+          "activeWorker": null,
           "dashboardComponent": "project-wide",
           "remainingTasks": [
             {
@@ -16669,11 +16670,11 @@
               "kind": "eindcontrole",
               "doneWhen": "Gebundelde eindcontrole, computerherstart en onafhankelijke review; alleen concrete resterende fouten corrigeren.",
               "owner": "Codex",
-              "nextAction": "Codex controleert het complete geheel gebundeld met onafhankelijke review. Geen nieuwe volledige test-/installatieronde per klein taakje.",
+              "nextAction": "Na Jaaps Windows-herstart dezelfde diensten, configuratie, twee bewaarde resultaten, bestanden en geheugen controleren; daarna gewone herinnering/resultaatopvraag en onafhankelijke eindcontrole. Oorspronkelijke opdrachten niet herhalen.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
-                "readyWhen": "Voorbereiding gereed; geen actieve native aanmelding.",
+                "readyWhen": "Actuele geïnstalleerde versie vastgelegd en voorbereiding onafhankelijk goedgekeurd. Sla eerst je open werk op.",
                 "steps": [
                   "Sla je werk op en kies in Windows Opnieuw opstarten.",
                   "Open daarna deze Codex-chat en meld Herstart klaar."
@@ -16681,26 +16682,27 @@
                 "expected": "Codex controleert dezelfde diensten, geheugen, resultaten en bestanden zonder oorspronkelijke taken opnieuw uit te voeren.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-03T16:50:38.310133+00:00",
+              "checkedAt": "2026-10-05T02:10:42.875801+00:00",
               "assignment": {
-                "baseCommit": "512bdcfcac2239fc4709cdc686fee4a07c941895",
+                "baseCommit": "62955fec",
                 "owner": "/root",
-                "support": "Independent preparation review completed; no worker currently running",
-                "stage": "owner_windows_restart_requested",
+                "support": "Independent current-candidate preparation GO; no executor currently running",
+                "stage": "current_candidate_preparation_reviewed",
                 "existing": "F1.1 installed GO; same core/worker sources, verified package binding and existing component evidence.",
                 "gap": "Joint endcheck and actual computer restart of the composed candidate not yet evidenced.",
-                "currentAction": "Preparation accepted and published. Native login has ended; owner Windows restart requested. No active evaluator or new test call.",
+                "currentAction": "Preparation complete and independently reviewed. Current installed candidate and the same original synthetic data are bound. Await actual owner-initiated Windows restart; then run the existing after-reboot snapshot and ordinary recall/result access without replaying original tasks.",
                 "files": [
                   "existing F1 endcheck/provenance artifacts",
                   "existing boot observer configuration if needed"
                 ],
                 "finish": "Gebundelde eindcontrole, computerherstart en onafhankelijke review; alleen concrete resterende fouten corrigeren.",
-                "estimate": "One bundled integrated evaluation and actual restart proof using existing facilities; exact model need determined from existing harness; credits unknown."
+                "estimate": "One bundled integrated evaluation and actual restart proof using existing facilities; exact model need determined from existing harness; credits unknown.",
+                "activeWorkers": []
               },
-              "remaining": "Echte Windows-herstart en nacontrole nog nodig. Voorbereiding onafhankelijk goedgekeurd. Tussenvraag duurde 7,136 s; geen snelheidswinst geclaimd.",
-              "latestEvidence": "eva2/evidence/product/f1-joint-check-pre-reboot-20261003.json",
+              "remaining": "Echte Windows-herstart en nacontrole met gewone herinnering/resultaatopvraag nog nodig. De actuele voorbereiding is onafhankelijk goedgekeurd. Eerder gemeten tussenvraag 7,136 s; geen snelheidswinst geclaimd.",
+              "latestEvidence": "eva2/evidence/product/f1-current-candidate-pre-reboot-20261005.json",
               "lastPassiveBootCheck": {
-                "checkedAt": "2026-10-04T16:44:28.251487+00:00",
+                "checkedAt": "2026-10-05T02:02:00.071522+00:00",
                 "lastBootUtc": "2026-10-01T09:48:48.5000000Z",
                 "requiredNewBootObserved": false
               }

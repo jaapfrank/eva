@@ -20,6 +20,21 @@ fysieke speakerbeleving, persoonlijkheid/initiatief en zeven dagen gezinsaccepta
 De optionele telefoonroute is geen nieuwe verplichte bouwronde.
 Geen nieuwe browser-/installatieproef gepland. Het app-goal blijft actief.
 
+**F1.2 — huidige versie voorbereid voor de echte herstart; onafhankelijke review GO.**
+De 3-oktobermeting is behouden. Een nieuwe momentopname bindt de huidige kern,
+werker en browserhelper, met dezelfde twee taakresultaten, bestanden en herinnering.
+Twintig containers draaien en elf diensten zijn actief. Geen oorspronkelijke
+opdracht herhaald, geen modelcall en geen installatie. Windows is nog niet herstart;
+een gewijzigde WSL-processtart telt daarvoor niet.
+[Actuele voorbereiding](evidence/product/f1-current-candidate-pre-reboot-20261005.json)
+· [Onafhankelijke review](reviews/f1-current-candidate-20261005.md).
+
+**Wat van Jaap nodig blijft:** beantwoord de gezamenlijke toestemmingsvraag voor
+vergelijking/innovatie; sla je werk op en herstart Windows voor F1.2, meld daarna
+‘Herstart klaar’. Woonkamerspeaker is bereikbaar en niet gedempt; hoorbaarheid en
+microfoononderbreking blijven een fysieke beoordeling. Geen tweede-speakerproef
+vóór de woonkamer goed werkt. Deze voorbereiding verhoogt geen opleverteller.
+
 **Hieronder: eerdere opleveringen; toenmalige tellers en vervolgstappen zijn historisch.**
 
 **Opgeleverd — I2: oorspronkelijke technische uitkomst compleet.**

@@ -1,0 +1,112 @@
+{
+  "contract": "EvaInstalledProductEvidence/v1",
+  "checked_at": "2026-10-05T02:02:00.071522+00:00",
+  "task_id": "F1.2",
+  "status": "current_candidate_pre_restart_bound",
+  "whole_task_completed": false,
+  "base_commit": "62955fecab735364e32c2c9467d16cc5e9c36448",
+  "outcome": "Existing F1 restart preparation now binds the installed T2/I2/T3 candidate and the same original synthetic records. This is preparation, not a completed restart or new product function.",
+  "product_source_changed": false,
+  "installation_repeated": false,
+  "prior_evidence": "eva2/evidence/product/f1-joint-check-pre-reboot-20261003.json",
+  "current_candidate_evidence": [
+    "eva2/evidence/product/t2-ha-input-recovery-installed-20261005.json",
+    "eva2/evidence/product/i2-source-choice-installed-20261005.json",
+    "eva2/evidence/product/i2-self-chosen-research-installed-20261005.json",
+    "eva2/evidence/product/t3-owned-handoff-installed-20261005.json"
+  ],
+  "restart_preparation": {
+    "checkedAt": "2026-10-05T02:02:00.071522+00:00",
+    "snapshotSha256": "ed0e41ac1c76c542c0fd3c68d6a1e90f226234343d3ee972f11f99e1696d6033",
+    "counts": {
+      "containers": 20,
+      "hostUnits": 11,
+      "hostClients": 3,
+      "work": 2,
+      "documents": 2
+    },
+    "windowsBootUtc": "2026-10-01T09:48:48.5000000Z",
+    "containerChanges": [
+      {
+        "container": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "changedFields": [
+          "image",
+          "configSha256"
+        ],
+        "priorImage": "sha256:30d65117cc0f526bc3ed8859a0eee867ff8fe0943c0bf42c8c09d787c2ca3089",
+        "currentImage": "sha256:42e43365526c6e0f6d9ecb5e0ccd2f5c0829fc7c2c44ab72a5b92ff5a1733468"
+      },
+      {
+        "container": "eva2-managed-b-slot3-core",
+        "changedFields": [
+          "image",
+          "configSha256"
+        ],
+        "priorImage": "sha256:fd1c7cd3413405fd6b1b5ce408f2028cffed8de735a301550663e4c891ee5902",
+        "currentImage": "sha256:b42a5b8a74eaf7307339b8513fbb1e3343d925039a4e0e7866ddfc4defc05dca"
+      }
+    ],
+    "sameSyntheticData": {
+      "work": true,
+      "deliveryEvents": true,
+      "memoryDocument": true,
+      "documents": true
+    },
+    "windowsBootChanged": false,
+    "kernelBootChanged": false,
+    "wslInitStartChanged": true,
+    "sameHostUnits": true,
+    "sameHostClients": true,
+    "allContainersRunning": true,
+    "allHostUnitsActive": true,
+    "helperBindings": {
+      "/usr/local/lib/eva-owner-browser/recover_firewall.py": "84b932f979f6bbe969674a1dec851e359bdcf6f03f043f77ebef9e619a3bbb91",
+      "/etc/eva/owner-browser/recovery.sha256": "e0bda8928fdd507b94c3ae20cfeae2de8b780fbe3a7dd616cf3d01a7ef34ceb5"
+    },
+    "privateEvidenceHashes": {
+      "/home/administrator/project/.eva2-artifacts/f1-current-candidate-20261005/before-reboot.private.json": "ed0e41ac1c76c542c0fd3c68d6a1e90f226234343d3ee972f11f99e1696d6033",
+      "/home/administrator/project/.eva2-artifacts/f1-current-candidate-20261005/snapshot-reboot.py": "f8df3d5f370544b6bb08c0805d7777dc7a78756fbd86e012904d83f6959ba11b",
+      "/home/administrator/project/.eva2-artifacts/f1-current-candidate-20261005/collect-core.py": "55748d823370d0f594ebf71552c27538958ff6ff368c49ec100354140c7c8c45",
+      "/home/administrator/project/.eva2-artifacts/f1-current-candidate-20261005/candidate-delta.json": "3d25149385c86fba8cc169e9f8b73e793d9b2cf9ac1c9a35c3248bf14ac629ba",
+      "/home/administrator/project/.eva2-artifacts/f1-current-candidate-20261005/supplemental-host-bindings.json": "de1587d611ab352cfeee87617d3e155632469129a913ab52658a67617d460a4d",
+      "/home/administrator/project/.eva2-artifacts/f1-current-candidate-20261005/speaker-metadata.json": "e11aaf2f28a5d015991a21b4dce540bcd37835df013cffcd7469c817a27aa0ce"
+    }
+  },
+  "speaker_metadata": {
+    "connected": true,
+    "identity_verified": true,
+    "mute": false,
+    "firmware_reported": "ESPHome 2026.6.2",
+    "compilation_time_reported": "2026-10-01 18:28:29 +0200",
+    "connection_attempts": 1,
+    "audio_logs_or_transcripts_collected": false,
+    "native_audio_transport_health": "not_exposed_by_selected_device_metadata",
+    "audibility_or_microphone_barge_in_proven": false
+  },
+  "verification": {
+    "original_before_snapshot_preserved": true,
+    "event_query_limited_to_original_synthetic_threads": 4,
+    "original_tasks_replayed": false,
+    "model_calls": 0,
+    "credits": null,
+    "old_postboot_model_canary_armed": false,
+    "actual_windows_restart_performed": false,
+    "human_acceptance": false
+  },
+  "independent_review": {
+    "path": "eva2/reviews/f1-current-candidate-20261005.md",
+    "decision": "Preparation GO only; actual Windows restart and ordinary post-restart recall/results remain open",
+    "sha256": "e76570d81825b9d57ed53a3a6207e488eb047fa5ef3061a5099435b29f7e8623"
+  },
+  "remaining": [
+    "Owner saves ongoing work and restarts Windows. No restart performed by Codex.",
+    "After restart, invoke the existing snapshot helper with after-reboot and compare the same bindings, synthetic records and supplemental helper hashes without task replay.",
+    "Check ordinary memory recall and result access after restart; complete independent final review."
+  ],
+  "limitations": [
+    "All 20 containers were running and all 11 host services active at capture; this does not establish every product behavior or a Windows restart.",
+    "Windows boot and kernel boot are unchanged. Changed WSL PID1 start ticks do not count as the required Windows restart.",
+    "F1.2 stays open. Previous focused integration and installed feature evidence are reused, not rerun.",
+    "No new completion, competitive advantage, speed improvement or family acceptance claimed."
+  ]
+}
