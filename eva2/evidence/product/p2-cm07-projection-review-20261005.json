@@ -1,0 +1,178 @@
+{
+  "contract": "P2OriginalCaseProjectionAndAdmission/v1",
+  "taskId": "P2.1",
+  "caseId": "EV003-CM-07",
+  "epoch": 1,
+  "decision": "GO_for_one_original_pair_execution",
+  "recordedAt": "2026-10-05T14:45:42.873811+00:00",
+  "reviewer": "/root/aide_final_evaluation",
+  "caseSha256": "6dcf9f8130feb52cd92603d3cabb7a982a7c9915ce79636e1e532f6c6ec8489f",
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "ownerAuthorizationSha256": "7470627a9ef09ae8f625e420251a19b36bf950bb17689ee369359e3e2f4df8b5",
+  "projection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm07-epoch1.native-inputs.private.json",
+    "sha256": "e92514182db380e8eb78ca684f7a5b68fbe510cf8745849f12fcd750d2af8747"
+  },
+  "sourceProjection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm07-epoch1.private.json",
+    "sha256": "378e138864423a2fe8736fad39a8e6141ece0aa3388c86b33df832a9abe36a77"
+  },
+  "projectionReceipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm07-epoch1.projection-receipt.private.json",
+    "sha256": "d45cf6f2cd9ecbaceacc5a9af70d9a37570456b8c587916135acb7969b6c4cef"
+  },
+  "independentReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm07-epoch1.independent-admission.private.json",
+    "sha256": "41f0c76d440ec905f2d2bd53e2fe4fdb09a17def8644ef5832b11cc6ff8ff9a9"
+  },
+  "controls": {
+    "turns": 2,
+    "actor_indices": [
+      0,
+      1
+    ],
+    "session_indices": [
+      0,
+      1
+    ],
+    "clock_generations": [
+      0,
+      0
+    ],
+    "audiences": [
+      "private_person",
+      "telegram_group"
+    ],
+    "native_group_members": [
+      0,
+      1
+    ]
+  },
+  "limits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "wallSeconds": 480,
+    "toolCalls": 16,
+    "externalActions": 0
+  },
+  "participantOrder": [
+    "eva1-bottie",
+    "eva2"
+  ],
+  "admissions": {
+    "eva1-bottie": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm07-epoch1/admission.json",
+      "sha256": "4cbaae84e00af1afd4021989a1c0f389c784d29bcbe98d318f6dbad74d6e6441"
+    },
+    "eva2": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm07-epoch1/admission.json",
+      "sha256": "54aa86c9fc860e85f5feab6eeee360c77f1fbea2da8694d44f1f333a31155169"
+    }
+  },
+  "sourceBindings": {
+    "eva1": {
+      "launch.py": "84dba82fead235303351254dd86b90da867fcc1748244553333a3cdfc2fd2bfb",
+      "inspect-run.py": "6f2ae0df501eedddb2dc274af7f3b2b24b7bbb9d05283ed38511ceeeb015d203",
+      "capture.mjs": "3596e3c127977ad656dcc97fcab5976a8fc7ac7396b108b16168c8771af888f6",
+      "observed-worker.mjs": "64e3dea1e66d7c5d6daca047da44d36365d3671f4dc38334be2e99d9ca3e0c12",
+      "telegram-fixture.mjs": "2f0c799cbce1f1b01d3ae429219646ad8321e6503e07fbf81456b1d11f7d52e3",
+      "offline-check.py": "8361c60ad620e3c22439de6801baf61edea383bcc1be8d0fa27781d4e41039b3"
+    },
+    "eva2": {
+      "launch.py": "317cf82906b25fed7c6ceb8fe4f007cfa3d09865d02a742b8e9a272d2fde337d",
+      "capture.py": "4330e6e9387b9f9ff56617ca6212228c891da6101192b0e206cfd189dbdc28c0",
+      "inspect-run.py": "4df4254c551c059c09c8f117c8935234ab4a32d632bd66b2f9e9ac32e2d82431"
+    },
+    "eva2_frozen_sources": {
+      "eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py": "cf204745b51bb0eac27f25bed31b9a9054ef90d722ff30a6a222d5d5b2d19f72",
+      "eva2/benchmark/inspect_ai_v1/p1_model_tunnel.py": "12bd58796a92eb09096dab3a484ed3aeb6d5c8f1724fccdc2827ffa3f269bb08",
+      "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py": "369da028e809be574301eeeae17b843183fc42ba1beca9a00ae5249b0eac11c6",
+      "eva2/benchmark/inspect_ai_v1/p1_hindsight_lifecycle_probe.py": "263a131e454392198c108e7897d1f6ef69c5f05ac6f932fd536f60a0f9d0e83d",
+      "eva2/benchmark/inspect_ai_v1/p1_hindsight_accounting_probe.py": "512766ab2dd0e0804062acdbb3b1c962613503b6266b8d78b7326b63762aed1e",
+      "eva2/benchmark/inspect_ai_v1/cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f",
+      "eva2/benchmark/inspect_ai_v1/ev003_python_calendar.py": "6d1c759c2eb5ba4b34aad5d94e6163ec490f3d86975e602d7b2fb270a74c932f",
+      "eva2/benchmark/inspect_ai_v1/cp001_http_accounting.py": "4d9b60a996b4fb221b5ad2cd77072ac36432b5349c3f0fbf96c81ba640ff8b85",
+      "eva2/benchmark/inspect_ai_v1/cp001_native.py": "586322f040fdc42c87559ccea6171c8a9715caf7af9d4298404a711431e01f7b"
+    }
+  },
+  "evidence": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm07-epoch1/offline-corrected-close/result.json",
+      "sha256": "a3aa4ac29125ab562f475d704457c477aebed081a63f8929302cb1f4df131a7d",
+      "scope": "Existing public synthetic native middleware/SQLite/stop PASS 2.163151984976139s; 2 synthetic calls 34 input/10 output; zero real calls"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm07-epoch1/group-id-shape-check.json",
+      "sha256": "9584c71b5d5a765b9e65547d741ae2a7dc015a47c34898311eac46ecc1027dfd",
+      "scope": "Five public source-extracted type-conversion shapes; no native rerun"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm07-epoch1/offline/result.json",
+      "sha256": "3a320d0406da82a87fcbb650d913ef00fadf99c6baae2f0029fee10f41e2328f",
+      "scope": "Retained initial mount/setup failure before native start"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm07-epoch1/offline-corrected-mount/result.json",
+      "sha256": "c48a013bdbb87fb2000b3451c9191ece8ca89bc0777a829a4939ca6b250f7259",
+      "scope": "Retained native ingress succeeded but initial stop receipt attempted DB read after close"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm07-epoch1/pinned-group-binding.json",
+      "sha256": "37090d5f32c2e39991f6a85d9d1d3e9a8e8548613fa49fc43e5b154e7eb9a5c5",
+      "scope": "Pinned image factory passes same real consentstore to runtime and private-memory resources; no whole-current-image equivalence claim"
+    }
+  ],
+  "assessmentBoundaries": {
+    "scope": "Exactly original CM07 epoch1, Eva1 then Eva2, one attempt each; no automatic retry, extra scenario, quota redistribution or broader participant admission.",
+    "scoring": "Three original semantic conditions and two original independent readbacks unchanged. Actual observed evidence assessed independently after execution; human ratings remain null until genuinely recorded.",
+    "readback": "Exact ingress/reply identities and native audience, both private-person stores and group-scoped native retention, full offered provider bodies for all roles, usage/stop/effect and pending-work evidence. Missing evidence remains unknown.",
+    "source": "Frozen product/native files and images unchanged. Eva1 uses explicit evaluator-only Bot transport composition and lifecycle observation through module load hooks; no model prompt, authority, memory policy or timer acceleration. Eva2 only provisions existing native scoped consent and validates per-turn audience.",
+    "accounting": "One authoritative parent ledger and original deadline cover both turns and Eva1 resumed process; remaining tool allowance carried forward. Unknown usage, native failure, adapter failure and envelope refusal remain distinct.",
+    "privacy": "Only original curator-synthetic test data; no imported household data. No headers/auth captured. Inputs/answers/context remain evaluator-only; root wrapper seals capture directories root0700 and files root0600 after subprocess return or failure.",
+    "timing": "Passive capture write/fsync and native transport/resume overhead remain in measured intervals. Buffered JSON/local Telegram delivery and streaming content timing differ; no latency-neutral or cost-efficiency claim.",
+    "ownership": "Root executes once through normal approval pathway after dedicated internal resources and actual existing-access preflight. Reviewer runs no provider calls or test executions.",
+    "limitations": "Local Telegram transport proves native middleware/sender/archive/outbox path, not real Telegram cloud delivery or full service scheduling. Existing stop-boundary synthetic evidence is not arbitrary full-server shutdown proof. Current installed production source applicability remains separately limited."
+  },
+  "leaseAvailability": {
+    "checkedAt": "2026-10-05T14:44:17.034798+00:00",
+    "scope": "Local file metadata and access-token expiry only; no token/account output or provider/auth request.",
+    "core": {
+      "available": true,
+      "uid": 1000,
+      "gid": 65532,
+      "mode": "0640",
+      "unexpired": true,
+      "expiresAt": "2026-10-11T10:34:03+00:00"
+    },
+    "memory": {
+      "available": true,
+      "uid": 1000,
+      "gid": 1000,
+      "mode": "0600",
+      "unexpired": true,
+      "expiresAt": "2026-10-11T10:34:03+00:00"
+    },
+    "limitation": "Does not prove provider acceptance or known credits."
+  },
+  "semanticConditions": 3,
+  "independentReadbacks": 2,
+  "semanticScore": null,
+  "humanRatings": [
+    null,
+    null
+  ],
+  "originalCaseAndTextPreserved": true,
+  "sealedDatasetModified": false,
+  "productSourceOrImagesChanged": false,
+  "reviewerNewTests": 0,
+  "reviewerProviderCalls": 0,
+  "realCallsForThisEntry": 0,
+  "closedCasesRetried": false,
+  "preAdmissionCorrections": [
+    "Derived Eva2 group-message prefix corrected, first draft retained; original sealed data unchanged.",
+    "Eva2 active consent lookup normalizes original clock instant to UTC whole seconds.",
+    "Eva1 transport translates canonical negative group-ID string to validated JS-safe integer only."
+  ],
+  "actualExecutionStatus": "not_started"
+}

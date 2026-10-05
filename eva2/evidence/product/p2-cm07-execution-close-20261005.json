@@ -1,0 +1,31 @@
+{
+  "contract": "EvaComparisonExecutionClose/v1",
+  "task": "P2.1",
+  "caseId": "EV003-CM-07",
+  "epoch": 1,
+  "checkedAt": "2026-10-05T14:58:26.875211+00:00",
+  "wrappers": {
+    "eva1": {
+      "terminalExit": 0,
+      "taskSuccessInferred": false
+    },
+    "eva2": {
+      "preflightExit": 1,
+      "preflightNativeInputs": 0,
+      "preflightModelCalls": 0,
+      "correctedNativeTerminalExit": 0,
+      "taskSuccessInferred": false
+    }
+  },
+  "resources": {
+    "cm07ContainersPresent": false,
+    "eva2NetworkPresent": false,
+    "removedEva1EmptyNetworkId": "4879c369f92157372c1b832bc91a49f5aa048129c1c9f0cb16ed852131111f77",
+    "nameLabelIdAndEmptyVerified": true
+  },
+  "retainedHostArtifacts": true,
+  "productionTouched": false,
+  "noNewInferenceForCleanup": true,
+  "resultAssessment": "Independent assessment pending; operational exit does not prove complete task/delivery.",
+  "eva1NativeTail": "Independent evaluator observed pending synthetic outbox entry; retained SQLite preserved; do not infer quiescent native delivery from process termination."
+}

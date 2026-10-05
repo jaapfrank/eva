@@ -1,6 +1,39 @@
 # EVA2 werkbord
 
-**Laatst opgeleverd — P2.1: zesde vaste geheugenvergelijking afgerond.**
+**Laatst afgerond — P2.1: gedeelde bijdrage ontbreekt bij beide versies.**
+CM07 is één keer per deelnemer uitgevoerd en onafhankelijk beoordeeld.
+
+| Vast CM07-geval | Eva1 | Eva2 |
+| --- | --- | --- |
+| Inhoudelijke voorwaarden | 2/3 | 2/3 |
+| Onafhankelijke bewijscontroles | 2/2 | 2/2 |
+| Objectief taakresultaat | Onvoldoende | Onvoldoende |
+| Verwerking | Groepsaflevering onvolledig | Voltooid |
+| Modelaanvragen | 3 | 7 |
+| Totaal gemeten tokens | 18.469 | 21.306 |
+
+De gevraagde bijdrage ontbrak, hoewel informatie was opgeslagen. In de waargenomen
+gedeelde context bleef privé-informatie afgeschermd. Eva1 heeft één bewaarde
+onvoltooide uitgaande aflevering; die is niet opnieuw afgespeeld.
+Geen algemene voorsprong of vergelijkbare volledige taaktiming. Menselijke scores
+ontbreken. Samen 10 modelaanvragen en 39.775 tokens; creditkosten en afzonderlijk
+Codex-ontwikkelverbruik zijn onbekend.
+
+Een Eva2-voorbereidingsfout vóór invoer en modelaanvragen is apart behouden.
+Alleen twee afgeleide schematags zijn gecorrigeerd; de oorspronkelijke invoer en
+criteria bleven gelijk. Geen modelproef herhaald en geen productie-installatie.
+De bestaande native groepsroutes zijn voor deze vergelijking aangesloten;
+dit is geen nieuwe productfunctie. Eigen proefresources zijn opgeruimd,
+resultaten en bewijs blijven bewaard.
+
+**Hierna:** oorspronkelijke CM08 epoch1 met dezelfde voorwaarden en beschikbare
+toegang; nog niet gestart. Geen herhaling van CM01–CM07.
+**32/44 oorspronkelijke kleine taken klaar; P2.1 blijft open.**
+[Onafhankelijk resultaat](evidence/product/p2-cm07-paired-result-20261005.json) ·
+[Projectie en bronbinding](evidence/product/p2-cm07-projection-review-20261005.json) ·
+[Technische afsluiting vóór beoordeling](evidence/product/p2-cm07-execution-close-20261005.json).
+
+**Eerder afgerond — P2.1: zesde vaste geheugenvergelijking.**
 De oorspronkelijke proef is eenmaal per deelnemer uitgevoerd en onafhankelijk
 beoordeeld. Alle drie beurten, geheugenverwerking en verbruik zijn vastgelegd.
 
@@ -18,9 +51,8 @@ scores ontbreken. Tijdsmetingen hebben verschillende start-/uitvoergrenzen;
 geen algemene snelheids- of creditbesparingsclaim. Samen 14 modelaanvragen en
 59.434 tokens; ontwikkelverbruik en creditkosten onbekend.
 
-**Nu:** deze vergelijking is afgesloten; geen modelproef actief.
-**Volgende:** oorspronkelijk CM07 epoch1, nog niet gestart. Geen afgesloten geval
-herhalen. **32/44 oorspronkelijke kleine taken klaar; P2.1 blijft open.**
+**Vervolg:** CM07 is inmiddels uitgevoerd en staat bovenaan. Deze CM06-uitkomst blijft behouden.
+**32/44 oorspronkelijke kleine taken klaar; P2.1 blijft open.**
 [Onafhankelijk resultaat](evidence/product/p2-cm06-paired-result-20261005.json) ·
 [Projectie en bronbinding](evidence/product/p2-cm06-projection-review-20261005.json) ·
 [Technische afsluiting vóór beoordeling](evidence/product/p2-cm06-execution-close-20261005.json).
