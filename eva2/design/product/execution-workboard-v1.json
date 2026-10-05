@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-05T02:10:42.875801+00:00",
+  "lastUpdated": "2026-10-05T02:13:15.233372+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1031,7 +1031,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T02:10:42.875801+00:00",
+        "checkedAt": "2026-10-05T02:13:15.233372+00:00",
         "deliveries": [
           {
             "title": "T3 klaar · Browser gebruiken, overnemen en hervatten",
@@ -3686,7 +3686,7 @@
             "Woonkamerspeaker is bereikbaar en niet gedempt. De resterende fysieke proef gaat over verstaanbaarheid en direct onderbreken met je stem; de tweede speaker volgt pas als dit in de woonkamer goed werkt.",
             "Persoonlijkheid, nut van initiatief en zeven dagen gezinsgebruik blijven jouw beoordeling. Native aanmeldingen voor concurrenten zijn nog niet actueel bevestigd."
           ],
-          "expected": "Deze handelingen zijn nodig voor de bestaande eindvoorwaarden. Zij maken de opgeleverde functies niet opnieuw ongedaan; 31/44 oorspronkelijke kleine taken blijven klaar."
+          "expected": "De woonkamerproef combineert C3.1 en C4.1. Persoonlijkheid en nut van bestaand initiatief kun je in gewoon Telegramgebruik beoordelen. Deze beoordelingen veranderen eerder geaccepteerd werk niet; 31/44 oorspronkelijke kleine taken blijven klaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
         "reviewedAt": "2026-10-05T02:10:42.875801+00:00"
@@ -13572,7 +13572,7 @@
               "status": "in_progress",
               "kind": "aansluiten",
               "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
-              "owner": "Codex /root",
+              "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
               "blocker": null,
               "latestEvidence": "eva2/evidence/product/c3-audio-stutter-fix-20261001.json",
               "assignment": {
@@ -13587,7 +13587,7 @@
                 "actual": "2 HA adapter tests,17 shared-source tests,17 packaged native and17 older owner-module tests;2 C++ host cases. No new model/audio/house-action request before owner trial; credits unknown.",
                 "activeWorkers": [],
                 "stage": "passive_status_checked_current_conversation_unconfirmed",
-                "currentAction": "Diagnose the existing Woonkamer listen/conversation route first; no new owner trial or second-speaker trial requested.",
+                "currentAction": "Installed corrections await one physical household observation. Latest passive metadata checked5October; no audible speech or microphone acceptance claimed. No executor currently running.",
                 "finding": "Actual installed output, TTS, explicit wire stop and next-generation completion passed. Ordinary physical conversation and microphone barge-in remain unaccepted; latest owner rejects second-speaker trial while first fails. Do not infer a new regression from this sequencing correction.",
                 "result": "Shared empty-STT correction and bounded native output installed. Actual3s72000-frame and HA TTS108864-frame playback complete; physical STOP203ms and following4800frames pass. No owner microphone/voice-quality acceptance invented.",
                 "estimate": "Focused diagnosis, directed correction, review and installation; unknown credits. No new speech engine.",
@@ -13609,8 +13609,8 @@
                   }
                 }
               },
-              "checkedAt": "2026-10-01T17:17:30.789196+00:00",
-              "remaining": "Output en lege-herkenningscorrecties geïnstalleerd; gewone verstaanbare conversatie en microfoononderbreking nog niet bevestigd. Huidig symptoom wordt verduidelijkt zonder uitgebreide herhaalproef.",
+              "checkedAt": "2026-10-05T02:13:15.233372+00:00",
+              "remaining": "Audio- en herkenningscorrecties zijn geïnstalleerd. Op 5 oktober was het apparaat bereikbaar en niet gedempt; verstaanbaarheid, direct doorpraten en microfoononderbreking zijn daarmee nog niet bewezen.",
               "installation": "installed_native_continuous_candidate_woonkamer",
               "ownerTrial": {
                 "status": "diagnosis_before_new_owner_trial",
@@ -13622,16 +13622,20 @@
                 "speakerIdentity": "not yet specified",
                 "scope": "Direct continuation seems possible; intelligibility and reliable replies are not accepted."
               },
-              "nextAction": "Ondersteunend stemwerk, geen voorwaarde voor autonome programmeer-/huisopdrachten. Codex herstelt alleen een aangetoonde audio-overgang; Eva gebruikt dezelfde gedeelde kern. Fysieke verstaanbaarheid blijft apart open.",
-              "ownerActionRequired": false,
+              "nextAction": "Beoordeel één gewoon gesprek op de geïnstalleerde woonkamerroute. Bij stotteren of uitblijvend antwoord: geef het concrete symptoom door zodat Codex die overgang kan herstellen. Geen tweede-speakerproef voordat de woonkamer goed werkt.",
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
+                "availableNow": true,
                 "purpose": "evaluation",
-                "steps": [],
+                "steps": [
+                  "Zeg op de woonkamerspeaker: Hey Eva, zoek met bronnen uit wat Home Assistant Cloud voor spraak doet.",
+                  "Zeg tijdens het nadenken direct Hoe gaat het met jou? zonder opnieuw Hey Eva.",
+                  "Als haar spraak verstaanbaar is, onderbreek haar direct met Stop even, hoe gaat het met jou? zonder wakeword. Stop de proef als ze stottert of niet antwoordt."
+                ],
                 "expected": "Verstaanbare spraak, direct doorpraten zonder opnieuw wekken en later terugmelding op juiste speaker.",
-                "reportBack": "Alleen het huidige symptoom beschrijven als bekend; nieuwe fysieke beoordeling volgt na gerichte correctie.",
+                "reportBack": "Meld of de spraak verstaanbaar is, ze de tussenvraag hoort tijdens denken én spreken, en die vraag beantwoordt. Geef bij een fout het concrete symptoom door. Geen tweede-speakerproef nodig.",
                 "blocksIndependentWork": false,
-                "readyWhen": "Codex onderzoekt eerst de bestaande woonkamerfout. Nu geen uitgebreide herhaalproef of technische herstelhandeling nodig."
+                "readyWhen": "De correcties zijn geïnstalleerd. Passieve apparaatcontrole op 5 oktober: bereikbaar en mute uit. Eén korte fysieke beoordeling kan nu."
               }
             },
             {
@@ -13767,7 +13771,7 @@
               "status": "in_progress",
               "kind": "verbeteren",
               "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
-              "owner": "Codex /root",
+              "owner": "Jaap · dezelfde woonkamerbeoordeling; Codex · eventuele correctie",
               "assignment": {
                 "baseCommit": "890f0beff3424a736cd5e6f891c2fae776d3c483",
                 "owner": "/root",
@@ -13792,17 +13796,19 @@
                 "expected": "Het gesprek blijft open tijdens denken en spreken; nieuwe vraag krijgt haar eigen antwoord, aangenomen onderzoek blijft lopen.",
                 "blocksIndependentWork": false
               },
-              "nextAction": "Codex sluit echte microfoononderbreking op de bestaande route aan. Geen nieuwe spraakmotor; algemeen autonoom werk wacht hier niet op.",
-              "ownerActionRequired": false,
+              "nextAction": "Beoordeel microfoononderbreking binnen dezelfde korte woonkamerproef van C3.1, alleen als de spraak verstaanbaar is. Geen aparte proef of nieuwe spraakmotor.",
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
-                "steps": [],
+                "availableNow": true,
+                "steps": [
+                  "Gebruik dezelfde woonkamerproef van C3.1; geen tweede proef nodig."
+                ],
                 "expected": "Oude spraak stopt, nieuwe vraag wordt beantwoord.",
-                "reportBack": "Word je direct gehoord en krijg je het juiste antwoord?",
+                "reportBack": "Stopt oude spraak wanneer je haar onderbreekt, hoort ze je en antwoordt ze op de nieuwe vraag? Bij stotteren eerst dat concrete symptoom melden.",
                 "blocksIndependentWork": false,
-                "readyWhen": "Eerst moet Woonkamer een normaal verstaanbaar gesprek voeren. Geen aparte uitgebreide proef gevraagd."
+                "readyWhen": "Samen met C3.1; alleen door naar onderbreken als haar spraak verstaanbaar is."
               },
-              "checkedAt": "2026-10-01T17:14:58.487433+00:00"
+              "checkedAt": "2026-10-05T02:13:15.233372+00:00"
             },
             {
               "id": "C4.2",
@@ -14248,7 +14254,8 @@
                 "blocksIndependentWork": false
               },
               "nextAction": "Beoordeel natuurlijke betrokkenheid tijdens gewoon gebruik. De gerichte eigen-contextfout is geïnstalleerd; dagplannen blijven algemeen. I2-bronontdekking is zelfstandig vervolgwerk en wacht niet op dit menselijke oordeel.",
-              "ownerActionRequired": false
+              "ownerActionRequired": true,
+              "checkedAt": "2026-10-05T02:13:15.233372+00:00"
             }
           ],
           "latestEvidence": "eva2/evidence/product/m3-self-context-installed-20261002.json",
@@ -15171,7 +15178,7 @@
               "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
               "owner": "Jaap",
               "nextAction": "Beoordeel nut en hinder van werkelijk uitgevoerde bijdragen; gebruik feedback later en laat Eva bij ongeschikte aanleiding stil blijven. Geen nieuwe beoordeling van alleen reflectietekst.",
-              "ownerActionRequired": false,
+              "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
                 "readyWhen": "De restjesplanner is op 30 september privé afgeleverd. Je kunt het nut en moment van die bestaande bijdrage beoordelen; geen speakerproef of nieuwe opdracht vereist.",
@@ -15182,7 +15189,8 @@
                 "expected": "Nuttige aanwezigheid en passend stil blijven.",
                 "reportBack": "Bijdrage, moment en je oordeel.",
                 "blocksIndependentWork": false
-              }
+              },
+              "checkedAt": "2026-10-05T02:13:15.233372+00:00"
             }
           ],
           "latestEvidence": "eva2/evidence/product/i1-private-contribution-readback-20261002.json",
@@ -15873,8 +15881,8 @@
                 "estimate": "Targeted existing-route preflight and bounded runnable continuation; no live model calls in preparation. Preserve explicit original experiment accounting; credits unknown.",
                 "activeWorkers": []
               },
-              "remaining": "Vorige onderzoeksronde afgesloten zonder bewezen voordeel. Codex bereidt een geldig vervolg met gewijzigde oorzaak/hypothese voor; geen automatische herhaling of nieuwe eigenaarbeslissing.",
-              "checkedAt": "2026-10-03T15:31:02.940717+00:00",
+              "remaining": "De eerder mislukte onderzoeksronde blijft afgesloten. De afzonderlijke vooraf vastgelegde 8-run vervolgproef is voorbereid en onafhankelijk beoordeeld; uitvoering wacht op expliciete toestemming na weigering door de automatische goedkeuringscontrole. Nog geen nieuwe modelcalls uitgevoerd.",
+              "checkedAt": "2026-10-05T02:13:15.233372+00:00",
               "blocker": "Automatische goedkeuringsreview heeft de concrete 8-run vervolguitvoering geweigerd wegens ontbrekende expliciete eigenaarstoestemming voor dit nieuwe modelverbruik. Nog geen modelcalls of uitvoeringsproces gestart.",
               "previousBlocker": "Vaste proef onvolledig: referentie bereikte12modelreacties vóór tweede deelresultaat. Kandidaat/B/herhalingen niet gemeten; eindvoorwaarde vergelijking niet gehaald. Deze ronde afgeslotenUNKNOWN zonder automatische vervolgproef.",
               "ownerActionRequired": true,
@@ -15883,7 +15891,7 @@
                 "availableNow": true,
                 "readyWhen": "De concrete proef en vaste meetgrenzen zijn gereed; de goedkeuringsvraag staat in deze chat.",
                 "steps": [
-                  "Beantwoord of de 8-run vervolgproef met maximaal96nieuwe modelreacties mag worden uitgevoerd."
+                  "Beantwoord de gezamenlijke vraag in deze chat: alleen vergelijking toestaan, vergelijking én innovatieproef toestaan, of beide voorlopig uitstellen. Voor innovatie geldt de bestaande proef van 8 runs met maximaal 96 nieuwe modelreacties; werkelijke creditkosten zijn onbekend."
                 ],
                 "blocksIndependentWork": false
               }

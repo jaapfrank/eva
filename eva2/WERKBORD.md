@@ -34,6 +34,9 @@ vergelijking/innovatie; sla je werk op en herstart Windows voor F1.2, meld daarn
 ‘Herstart klaar’. Woonkamerspeaker is bereikbaar en niet gedempt; hoorbaarheid en
 microfoononderbreking blijven een fysieke beoordeling. Geen tweede-speakerproef
 vóór de woonkamer goed werkt. Deze voorbereiding verhoogt geen opleverteller.
+De kleine taken C3.1/C4.1 tonen nu één gezamenlijke fysieke proef; M3.3 en I1.2
+tonen terecht dat jouw oordeel nodig is. R1.1 verwijst naar de voorbereide
+vervolgproef en open toestemming, niet meer naar nog te maken voorbereiding.
 
 **Hieronder: eerdere opleveringen; toenmalige tellers en vervolgstappen zijn historisch.**
 
