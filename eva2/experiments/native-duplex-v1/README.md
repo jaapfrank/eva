@@ -217,3 +217,19 @@ apparaatsleutel. Er is niets geflasht of live gestart. De echte proef omvat
 wakeword, tegelijk spreken/echo, lokale stop/mute, een tweede vraag tijdens
 onderzoek en de latere aflevering van het resultaat. Synthetische TLS/PCM-
 proeven bewijzen deze fysieke kwaliteit of eigenaaracceptatie niet.
+
+
+### Installed fluency adjustment — 5 October 2026
+
+The speaker factory now supplies its existing VAD to HomeAssistantSTT, using
+the same streaming input adapter as the web route. Recognition begins while PCM
+arrives; the core still receives only a complete final segment. VAD and endpoint
+thresholds remain unchanged.
+
+Only the speaker wraps its existing HA voice in TempoTTS at rate 1.15.
+The installed PyAV/FFmpeg atempo filter preserves pitch and streams decoded
+mono 24 kHz PCM without changing the wire or firmware. Cancellation closes the
+provider/decoder; EOF drains the filter. Other routes keep their original tempo.
+The change reduces spoken duration; it does not make model thinking faster.
+See eva2/evidence/product/c3-fluency-installed-20261005.json for measurements
+and the remaining owner assessment.

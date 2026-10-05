@@ -216,3 +216,53 @@ async def test_speaker_vad_confirms_speech_before_interrupting(
                 assert .2 <= starts[0].timestamp - 20 * .032 <= .3
         finally:
             await stream.aclose()
+
+
+@pytest.mark.asyncio
+async def test_speaker_factory_streams_microphone_to_ha_before_speech_ends():
+    """Use the real speaker factory; the source is a deterministic local double."""
+    from types import SimpleNamespace
+    from livekit.agents import stt, vad
+    from test_streaming_input import Detector, collect, frame
+
+    detector = Detector()
+    provider_started = asyncio.Event()
+    pcm = bytearray()
+
+    async def transcribe(chunks):
+        async for chunk in chunks:
+            pcm.extend(chunk)
+            provider_started.set()
+        return "Dit is de volledige vraag."
+
+    candidate = LiveKitHouseholdSpeakerSession(
+        core_url="http://127.0.0.1:1", household_token="synthetic-household",
+        stt_source=SimpleNamespace(transcribe=transcribe), tts_source=None,
+        vad=detector, check=lambda: None,
+    )
+    session = candidate.make_session()
+    stream = session.stt.stream()
+    events = []
+    consumer = asyncio.create_task(collect(stream, events))
+    try:
+        detector.emit(vad.VADEventType.START_OF_SPEECH, [frame(1)])
+        await asyncio.wait_for(provider_started.wait(), 1)
+        assert pcm == bytes(frame(1).data)
+        assert not any(event.type == stt.SpeechEventType.FINAL_TRANSCRIPT for event in events)
+        detector.emit(vad.VADEventType.INFERENCE_DONE, [frame(2)])
+        detector.emit(vad.VADEventType.END_OF_SPEECH)
+        stream.end_input()
+        await asyncio.wait_for(consumer, 1)
+        assert pcm == bytes(frame(1).data) + bytes(frame(2).data)
+        assert [event.type for event in events] == [
+            stt.SpeechEventType.START_OF_SPEECH,
+            stt.SpeechEventType.END_OF_SPEECH,
+            stt.SpeechEventType.FINAL_TRANSCRIPT,
+        ]
+        assert events[-1].alternatives[0].text == "Dit is de volledige vraag."
+    finally:
+        await stream.aclose()
+        if not consumer.done():
+            consumer.cancel()
+        await asyncio.gather(consumer, return_exceptions=True)
+        await session.aclose()

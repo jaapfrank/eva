@@ -51,6 +51,78 @@ class HomeAssistantTTS(tts.TTS):
         self.check()
         return HAChunkedStream(tts=self, input_text=text, conn_options=conn_options)
 
+
+class TempoTTS(tts.TTS):
+    """Apply pitch-preserving tempo using the installed FFmpeg audio filter."""
+
+    def __init__(self, source, *, rate: float = 1.0):
+        if source.num_channels != 1:
+            raise ValueError("speech tempo requires a mono source")
+        if not 0.8 <= rate <= 1.3:
+            raise ValueError("speech tempo is outside the supported range")
+        super().__init__(capabilities=tts.TTSCapabilities(streaming=False),
+                         sample_rate=source.sample_rate, num_channels=source.num_channels)
+        self.source, self.rate = source, rate
+
+    def synthesize(self, text, *, conn_options=DEFAULT_API_CONNECT_OPTIONS):
+        return TempoChunkedStream(tts=self, input_text=text, conn_options=conn_options)
+
+    async def aclose(self):
+        await self.source.aclose()
+
+
+class TempoChunkedStream(tts.ChunkedStream):
+    async def _run(self, output_emitter):
+        import av
+        from fractions import Fraction
+
+        sample_rate = self._tts.sample_rate
+        graph = av.filter.Graph()
+        inlet = graph.add("abuffer", sample_rate=str(sample_rate),
+                          sample_fmt="s16", channel_layout="mono",
+                          time_base=f"1/{sample_rate}")
+        tempo = graph.add("atempo", str(self._tts.rate))
+        format_node = graph.add("aformat", "sample_fmts=s16:channel_layouts=mono")
+        outlet = graph.add("abuffersink")
+        inlet.link_to(tempo)
+        tempo.link_to(format_node)
+        format_node.link_to(outlet)
+        graph.configure()
+
+        output_emitter.initialize(request_id=str(uuid4()), sample_rate=sample_rate,
+                                  num_channels=1, mime_type="audio/pcm",
+                                  frame_size_ms=20)
+        def drain():
+            while True:
+                try:
+                    frame = graph.pull()
+                except (av.error.BlockingIOError, av.error.EOFError):
+                    return
+                # Filter planes can include aligned padding beyond actual PCM.
+                output_emitter.push(bytes(frame.planes[0])[:frame.samples * 2])
+
+        position = 0
+        # Closing/cancelling this stream also closes the provider and decoder.
+        async with self._tts.source.synthesize(
+            self.input_text, conn_options=self._conn_options
+        ) as source:
+            async for event in source:
+                audio = event.frame
+                if audio.sample_rate != sample_rate or audio.num_channels != 1:
+                    raise ValueError("speech tempo requires matching mono PCM")
+                frame = av.AudioFrame(format="s16", layout="mono",
+                                      samples=audio.samples_per_channel)
+                frame.planes[0].update(bytes(audio.data))
+                frame.sample_rate = sample_rate
+                frame.time_base = Fraction(1, sample_rate)
+                frame.pts = position
+                position += audio.samples_per_channel
+                graph.push(frame)
+                drain()
+        graph.push(None)
+        drain()
+        output_emitter.flush()
+
 def streaming_speech_output(source, check=lambda: None):
     """Stream explicit complete first sentences without the default 20-char wait."""
     return tts.StreamAdapter(

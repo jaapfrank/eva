@@ -1,5 +1,21 @@
 # EVA2 werkbord
 
+**Geïnstalleerd — C3.1: herkenning tijdens spreken en sneller woordtempo.**
+Jaap bevestigt dat doorpraten werkt. De gemelde traagheid is gericht aangepakt:
+de bestaande HA-spraakherkenning begint nu tijdens spreken, niet pas daarna.
+Dezelfde stem spreekt 15% sneller via toonhoogtebehoudende audioverwerking.
+Eén vaste proefzin werd 6,624 s normaal en 5,752 s versneld; actuele totale
+gespreksvertraging en subjectieve natuurlijkheid zijn hiermee niet bewezen.
+28 unieke gerichte controles en onafhankelijke review geslaagd. Eén spraakdienst
+vervangen; firmware, kern, werker en stop-/geluidcorrecties behouden.
+Geen GPT-call; één HA-TTS-aanvraag voor een vaste zin, geen microfoon of speakerproef.
+
+**Nog van Jaap:** praat normaal met Eva; beoordeel alleen woordtempo en het
+reageren na uitspreken. Doorpraten zelf is al bevestigd. Geen tweede-speakerproef.
+P2-resultaten behouden; volgende vergelijking niet gestart.
+[Installatie en meting](evidence/product/c3-fluency-installed-20261005.json)
+· [Onafhankelijke review](reviews/c3-fluency-20261005.md).
+
 **Geïnstalleerd — C4.1: geluidgevoeligheid en sessiestop gecorrigeerd.**
 Jaap bevestigde onderbreken deels, maar meldde valse onderbrekingen en een stream
 die niet stopte. De bestaande VAD filtert nu kortere/zwakkere geluiden.

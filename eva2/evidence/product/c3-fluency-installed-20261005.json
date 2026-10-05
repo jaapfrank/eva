@@ -1,0 +1,100 @@
+{
+  "taskId": "C3.1",
+  "checkedAt": "2026-10-05T10:07:13.191653+00:00",
+  "status": "installed_fluency_correction_owner_assessment_pending",
+  "baseCommit": "8311b1d4a15db1a6906469f58e9d19842fe5a41c",
+  "ownerReport": {
+    "continuousConversation": "works",
+    "speechTempo": "mainly the words themselves are too slow",
+    "turnEnd": "takes too long to recognize finished question",
+    "fullNaturalnessAccepted": false
+  },
+  "cause": "Speaker omitted vad= in existing HomeAssistantSTT constructor, so LiveKit collected full utterance before HA STT began. Existing web streaming adapter starts recognition during speech. No need to lower endpoint or VAD thresholds.",
+  "changes": [
+    "Connect existing streaming STT adapter to speaker factory.",
+    "Apply pitch-preserving FFmpeg atempo1.15 using installed PyAV18.1.0. Existing HA Cloud voice retained.",
+    "Keep .2 s speech confirmation, .7 activation, .45 s silence and existing LiveKit endpointing. Preserve C4 explicit stop and noise correction."
+  ],
+  "preexistingEvidence": "eva2/evidence/product/voice-streaming-input-2026-09-11.json (historical experiment, not a current latency guarantee)",
+  "providerReference": {
+    "url": "https://raw.githubusercontent.com/home-assistant/core/dev/homeassistant/components/cloud/tts.py",
+    "finding": "Cloud TTS supports voice/gender/audio_output rather than a tempo option; used local audio transformation, no provider switch."
+  },
+  "verification": {
+    "agentStreamingAndSpeakerTests": {
+      "passed": 26,
+      "seconds": 14.29
+    },
+    "finalCombinedSpeakerAndTempoTests": {
+      "passed": 17,
+      "seconds": 8.91
+    },
+    "uniqueRelevantTests": 28,
+    "overlap": "15 speaker tests shared; 11 existing streaming tests and 2 tempo tests. Totals not added twice.",
+    "baselineFailure": "New factory regression fails on original non-streaming source before candidate passes.",
+    "tone": "3 s 440 Hz test becomes2.628875 s; frequency within3 Hz; final tail retained with at most20 ms zero padding. First output before upstream ends; cancellation closes source.",
+    "testDevelopment": "Initial tail assertions used amplitude threshold then off-by-one indexing; corrected to count actual trailing-zero samples. No product change to relax audio behavior.",
+    "realTtsMeasurement": {
+      "fixed_sentence": "Hallo, ik ben Eva. Zo klinkt mijn stem wanneer we rustig samen praten.",
+      "tts_requests": 1,
+      "gpt_requests": 0,
+      "microphone_capture": false,
+      "speaker_playback": false,
+      "tts_first_chunk_seconds": 0.5840253279893659,
+      "tts_total_seconds": 0.6585902689839713,
+      "baseline": {
+        "pcm_frames": 158976,
+        "audio_seconds": 6.624,
+        "first_pcm_seconds": 0.005665111995767802,
+        "processing_seconds": 0.05724675802048296
+      },
+      "candidate": {
+        "pcm_frames": 138045,
+        "audio_seconds": 5.751875,
+        "first_pcm_seconds": 0.012302625051233917,
+        "processing_seconds": 0.09169974201358855
+      },
+      "audio_duration_reduction_percent": 13.166138285024154,
+      "scope": "One HA TTS synthesis reused for both decoded audio variants; no end-to-end conversational latency or subjective naturalness claim."
+    },
+    "review": "eva2/reviews/c3-fluency-20261005.md",
+    "installed": {
+      "status": "installed_listening",
+      "image": "sha256:70da12beedad0291e38340471036d15aa390dfb22980f0260257b343ea3b908a",
+      "started_at": "2026-10-05T10:05:49.914343208Z",
+      "checked_at": "2026-10-05T10:07:13.191653+00:00",
+      "config_and_mounts_preserved": true,
+      "runtime_probe": {
+        "hashes": {
+          "media.py": "a6df0cf6e5aac061df3dab8093d14582b278b533cd488c2204054633f20541a5",
+          "speaker_livekit_session.py": "902f711b7fe0659021edc93165ce64c5a2bcc28bc52bcadcbe5c79c632b17148"
+        },
+        "stt_streaming": true,
+        "tts_rate": 1.15,
+        "tts_channels": 1,
+        "tts_sample_rate": 24000
+      },
+      "service_replacements": 1,
+      "firmware_changes": 0,
+      "core_worker_changes": 0,
+      "readiness": "Initial log read preceded listening announcement; later read confirms listening. No reinstallation."
+    }
+  },
+  "usage": {
+    "gptRequests": 0,
+    "ttsRequests": 1,
+    "microphoneCapture": false,
+    "physicalPlayback": false,
+    "houseActions": 0,
+    "developmentCredits": "unknown",
+    "runtimeSpeechCreditCost": "not exposed; existing HA provider route",
+    "buildSeconds": 5.85
+  },
+  "limits": [
+    "Current physical end-of-question to first-answer latency not measured; do not reuse historical1.996-to0.234s as current result.",
+    "Subjective tempo/naturalness and continued physical stop remain owner assessment.",
+    "Provider/model thinking time remains; no ChatGPT Voice equivalence claim.",
+    "Firmware, core/worker, private memory, background-work state and previous acceptances unchanged."
+  ],
+  "privateReceipts": "/home/administrator/project/.eva2-artifacts/c3-fluency-20261005"
+}

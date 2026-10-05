@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-05T09:43:15.051580+00:00",
+  "lastUpdated": "2026-10-05T10:07:13.191653+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1034,8 +1034,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T09:43:15.051580+00:00",
+        "checkedAt": "2026-10-05T10:07:13.191653+00:00",
         "deliveries": [
+          {
+            "title": "Woonkamer: herkenning tijdens spreken en sneller woordtempo",
+            "date": "5 oktober",
+            "state": "installed",
+            "result": "Bestaande streamingherkenning aangesloten; lokale audioversnelling 1.15 behoudt stem en toonhoogte. Vaste proefzin 6,624 → 5,752 s. 28 unieke gerichte controles en onafhankelijke review; geïnstalleerde dienst teruggelezen.",
+            "remaining": "Jouw oordeel over tempo en werkelijke wachttijd. Doorpraten is al bevestigd; de verbetering bewijst nog geen ChatGPT-Voice-vloeiendheid.",
+            "source": "eva2/evidence/product/c3-fluency-installed-20261005.json"
+          },
           {
             "title": "Woonkamer: te gevoelige onderbreking en eindeloos herluisteren gecorrigeerd",
             "date": "5 oktober",
@@ -3696,27 +3704,27 @@
           }
         ],
         "now": {
-          "title": "C4.1 · Gevoeligheid en stoppen gecorrigeerd en geïnstalleerd",
+          "title": "C3.1 · Snellere herkenning en spreektempo geïnstalleerd",
           "state": "installed",
-          "owner": "Jaap · korte beoordeling",
-          "detail": "Spraakdienst en woonkamerfirmware bijgewerkt: korte geluidspieken worden gefilterd; stopknop beëindigt de sessie. 42 gerichte controles en onafhankelijke review geslaagd. Praktijkbeoordeling blijft open; 32/44 oorspronkelijke taken klaar."
+          "owner": "Jaap · luisteroordeel",
+          "detail": "Doorpraten is bevestigd. Herkenning loopt nu tijdens spreken; dezelfde stem spreekt 15% sneller met behoud van toonhoogte. Proefzin 6,62 → 5,75 s. Werkelijke gesprekservaring nog beoordelen; geen ChatGPT-Voice-gelijkwaardigheid geclaimd."
         },
         "next": {
-          "title": "Eén korte woonkamerbeoordeling; vergelijking blijft vervolgwerk",
-          "detail": "Mute uit, gewoon praten en eenmaal met de knop stoppen. Overkapping pas na werkende woonkamer. P2-uitkomsten behouden; volgende vergelijkingsproef niet gestart."
+          "title": "Normaal gesprek beoordelen; overige vervolgwerk behouden",
+          "detail": "Alleen woordtempo en wachten na je laatste woord beoordelen. P2-resultaten blijven behouden; volgende vergelijkingsproef is niet gestart."
         },
         "ownerAction": {
           "title": "Open beslissingen en gebruiksoordeel",
           "steps": [
             "P2.1 is toegestaan en wordt uitgevoerd. De afzonderlijke innovatieproef R1 is hiermee niet toegestaan; de open R1-vraag blijft apart.",
             "Voor F1.2: sla je werk op, kies Windows → Opnieuw opstarten en meld daarna Herstart klaar in deze chat. Er is geen automatische herstart ingesteld.",
-            "Woonkamerspeaker is bereikbaar en meldt mute aan. Zet mute uit, praat gewoon en druk eenmaal op de knop om te stoppen; opnieuw luisteren hoort pas na Hey Eva te beginnen. Geluidgevoeligheid en verstaanbaarheid nog beoordelen.",
+            "Woonkamer: gebruik Eva gewoon en beoordeel het snellere woordtempo en reageren na uitspreken. Doorpraten werkt volgens Jaap. Zet mute uit als die aan staat. Stopknopbeoordeling C4.1 blijft afzonderlijk open; Overkapping pas na prettige woonkamerervaring.",
             "Persoonlijkheid M3.3 is geaccepteerd. Nut van initiatief en zeven dagen gezinsgebruik blijven jouw beoordeling. Native aanmeldingen voor concurrenten zijn nog niet actueel bevestigd."
           ],
           "expected": "M3.3 is door Jaap geaccepteerd; daarvoor geen nieuwe beoordeling. De woonkamerproef combineert C3.1 en C4.1. Nut en timing van bestaand initiatief blijven I1.2. 32/44 oorspronkelijke kleine taken klaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-05T09:43:15.051580+00:00"
+        "reviewedAt": "2026-10-05T10:07:13.191653+00:00"
       },
       "reviewedAt": "2026-10-05T00:19:18.098429+00:00"
     },
@@ -13608,70 +13616,47 @@
               "status": "in_progress",
               "kind": "aansluiten",
               "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
-              "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
+              "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
               "blocker": null,
-              "latestEvidence": "eva2/evidence/product/c3-audio-stutter-fix-20261001.json",
+              "latestEvidence": "eva2/evidence/product/c3-fluency-installed-20261005.json",
               "assignment": {
-                "baseCommit": "890f0beff3424a736cd5e6f891c2fae776d3c483",
+                "baseCommit": "8311b1d4a15db1a6906469f58e9d19842fe5a41c",
                 "owner": "/root",
-                "files": [
-                  "eva2/experiments/native-duplex-v1/",
-                  "existing native speaker/media service and focused tests only if a measured fault requires a correction"
-                ],
-                "outcome": "Resolve the observed stutter and missing responses on the existing continuous speaker route.",
-                "endCondition": "Onderzoeksopdracht aannemen, weer luisteren en nieuwe vraag beantwoorden terwijl werk loopt; actuele verstaanbaarheid en werkelijke afspeelbevestiging ontbreken nog.",
-                "actual": "2 HA adapter tests,17 shared-source tests,17 packaged native and17 older owner-module tests;2 C++ host cases. No new model/audio/house-action request before owner trial; credits unknown.",
                 "activeWorkers": [],
-                "stage": "passive_status_checked_current_conversation_unconfirmed",
-                "currentAction": "Installed corrections await one physical household observation. Latest passive metadata checked5October; no audible speech or microphone acceptance claimed. No executor currently running.",
-                "finding": "Actual installed output, TTS, explicit wire stop and next-generation completion passed. Ordinary physical conversation and microphone barge-in remain unaccepted; latest owner rejects second-speaker trial while first fails. Do not infer a new regression from this sequencing correction.",
-                "result": "Shared empty-STT correction and bounded native output installed. Actual3s72000-frame and HA TTS108864-frame playback complete; physical STOP203ms and following4800frames pass. No owner microphone/voice-quality acceptance invented.",
-                "estimate": "Focused diagnosis, directed correction, review and installation; unknown credits. No new speech engine.",
-                "scope": "Existing Woonkamer listen/conversation diagnosis. Preserve installed EOF/output/no-speech corrections; source or firmware changes only after identifying a concrete failing transition.",
-                "independentReview": "GO after removing stale owner-retry/second-speaker instruction and old EOF build scope; /root/open_questions_triage reviewed all four changed files. No runtime behavior or new acceptance changed.",
-                "passiveDiagnosis": {
-                  "checkedAt": "2026-10-01T17:16:14.672337+00:00",
-                  "deviceReachable": true,
-                  "mute": false,
-                  "firmwareCompile": "2026-10-01 18:28:29 +0200",
-                  "passiveLogSeconds": 20,
-                  "observedLogLines": 0,
-                  "finding": "Current Woonkamer device is reachable with installed firmware and unmuted. No event observed in passive sample; this does not prove wakeword, recognition, intelligibility or barge-in. No current failing transition established.",
-                  "calls": {
-                    "model": 0,
-                    "speechRecognition": 0,
-                    "speechOutput": 0,
-                    "firmwareWrites": 0
-                  }
-                }
+                "stage": "installed_fluency_assessment_pending",
+                "existing": "Installed native LiveKit route; owner confirms continuous conversation. Earlier stop/noise fix retained.",
+                "gap": "Slow speech delivery and delayed end-of-question response.",
+                "outcome": "Use existing STT/TTS routes to remove measured avoidable waiting and adjust proven speech-tempo issue.",
+                "files": [
+                  "Root: TTS/output diagnosis, integration/deployment, workboard",
+                  "Agent: read-only STT/endpoint diagnosis then bounded source/review as assigned"
+                ],
+                "estimate": "Focused existing-media inspection and tests; at most targeted fixed-phrase audio timing if needed. No planned GPT calls or firmware change. Credits unknown.",
+                "result": "Bestaande streaming-STT aangesloten; stemtempo 1.15 met toonhoogtebehoud. 28 unieke gerichte controles, onafhankelijke review, één dienstvervanging. Eén vaste HA-zin: 6.624 naar 5.751875 s. Firmware/core/werker ongewijzigd."
               },
-              "checkedAt": "2026-10-05T09:43:15.051580+00:00",
-              "remaining": "Spraakroute is geïnstalleerd; onderbreken is deels door Jaap bevestigd. Geluidgevoeligheid en sessiestop op 5 oktober gecorrigeerd. Verstaanbaarheid en gewoon doorpraten blijven fysieke beoordeling; geen tweede-speakerproef vooraf.",
-              "installation": "installed_native_continuous_candidate_woonkamer",
+              "checkedAt": "2026-10-05T10:07:13.191653+00:00",
+              "remaining": "Doorpraten is door Jaap bevestigd. Late herkenningsstart en traag woordtempo zijn technisch gecorrigeerd en geïnstalleerd. Natuurlijke ervaring en actuele wachttijd nog door Jaap te beoordelen.",
+              "installation": "installed_streaming_input_and_115_percent_speech_tempo",
               "ownerTrial": {
-                "status": "diagnosis_before_new_owner_trial",
-                "steps": [],
-                "expected": "Het gesprek blijft open tijdens denken en spreken; nieuwe vraag krijgt haar eigen antwoord, aangenomen onderzoek blijft lopen.",
+                "status": "continuous_conversation_works_fluency_gap",
+                "reportedAt": "2026-10-05T09:57:36.657632+00:00",
+                "report": "Doorpraten werkt. Eva spreekt erg traag en herkent het einde van de vraag laat; het rondje blijft draaien. Nog niet vloeiend zoals ChatGPT Voice.",
                 "blocksIndependentWork": false,
-                "report": "Gesprekken via de voice pe lijken nu wel full duplex te zijn. Alleen het apparaat lijkt overbelast ofzo? Hetgeen dat eva zegt is niet echt te verstaan ze stottert en het lijkt op overbelasting. Ook blijft hij continue snel rond spinnen blauw. Er komt ook niet altijd antwoord.",
-                "reportedAt": "2026-10-01T14:00:10.348297+00:00",
-                "speakerIdentity": "not yet specified",
-                "scope": "Direct continuation seems possible; intelligibility and reliable replies are not accepted."
+                "currentCandidateStatus": "fluency_correction_not_yet_assessed"
               },
-              "nextAction": "Beoordeel één gewoon gesprek op de geïnstalleerde woonkamerroute. Bij stotteren of uitblijvend antwoord: geef het concrete symptoom door zodat Codex die overgang kan herstellen. Geen tweede-speakerproef voordat de woonkamer goed werkt.",
+              "nextAction": "Praat gewoon verder met Eva en beoordeel alleen of het woordtempo prettiger is en ze na je vraag eerder reageert. Geen herhaalde onderzoekstaak of tweede-speakerproef nodig.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
                 "purpose": "evaluation",
                 "steps": [
-                  "Zeg op de woonkamerspeaker: Hey Eva, zoek met bronnen uit wat Home Assistant Cloud voor spraak doet.",
-                  "Zeg tijdens het nadenken direct Hoe gaat het met jou? zonder opnieuw Hey Eva.",
-                  "Als haar spraak verstaanbaar is, onderbreek haar direct met Hoe gaat het met jou? zonder wakeword. Stop de proef als ze stottert of niet antwoordt."
+                  "Gebruik de woonkamerspeaker zoals gewoonlijk; zet mute uit als die aan staat.",
+                  "Let op het tempo van de woorden en de tijd tussen jouw laatste woord en haar reactie."
                 ],
-                "expected": "Verstaanbare spraak, direct doorpraten zonder opnieuw wekken en later terugmelding op juiste speaker.",
-                "reportBack": "Meld of de spraak verstaanbaar is, ze de tussenvraag hoort tijdens denken én spreken, en die vraag beantwoordt. Geef bij een fout het concrete symptoom door. Geen tweede-speakerproef nodig.",
-                "blocksIndependentWork": false,
-                "readyWhen": "Woonkamercorrecties voor geluidgevoeligheid en stoppen zijn geïnstalleerd. Laatste controle: bereikbaar, mute aan; zet die uit voor de gezamenlijke C3.1/C4.1-beoordeling."
+                "expected": "Dezelfde stem en toonhoogte, circa 15% sneller spreken. Spraakherkenning start tijdens spreken in plaats van pas erna.",
+                "reportBack": "Meld of het woordtempo nu prettig is en of de reactie na uitspreken natuurlijker voelt. Doorpraten zelf is al bevestigd.",
+                "readyWhen": "Geïnstalleerd en teruggelezen op 5 oktober; geen firmwarewijziging.",
+                "blocksIndependentWork": false
               }
             },
             {

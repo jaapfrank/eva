@@ -7,7 +7,7 @@ household-authority check are required. No owner backend is accepted.
 import asyncio
 from livekit.agents import AgentSession
 from eva.voice_service.agent import BridgeState, EvaAgent, HouseholdCoreClient
-from eva.voice_service.media import HomeAssistantSTT, HomeAssistantTTS
+from eva.voice_service.media import HomeAssistantSTT, HomeAssistantTTS, TempoTTS
 from speaker_livekit_audio import SpeakerAudioInput, SpeakerAudioOutput
 from speaker_wire import Kind, WireError
 from speaker_input import CaptureEnded
@@ -21,8 +21,9 @@ class LiveKitHouseholdSpeakerSession:
         self.vad, self.check, self.notify = vad, check, notify
 
     def make_session(self):
-        return AgentSession(stt=HomeAssistantSTT(self.stt_source, self.check),
-            tts=HomeAssistantTTS(self.tts_source, self.check), vad=self.vad,
+        return AgentSession(stt=HomeAssistantSTT(self.stt_source, self.check, vad=self.vad),
+            tts=TempoTTS(HomeAssistantTTS(self.tts_source, self.check), rate=1.15),
+            vad=self.vad,
             turn_detection="vad", allow_interruptions=True,
             min_interruption_duration=.2, false_interruption_timeout=None,
             # This sink confirms physical STOP but cannot pause/resume audio.
