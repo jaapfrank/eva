@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-05T02:13:15.233372+00:00",
+  "lastUpdated": "2026-10-05T02:15:04.662049+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1031,7 +1031,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T02:13:15.233372+00:00",
+        "checkedAt": "2026-10-05T02:15:04.662049+00:00",
         "deliveries": [
           {
             "title": "T3 klaar · Browser gebruiken, overnemen en hervatten",
@@ -3669,14 +3669,14 @@
           }
         ],
         "now": {
-          "title": "F1.2 · Voorbereiding klaar; echte herstart open",
-          "state": "tested",
-          "owner": "Jaap · herstart; Codex · nacontrole",
-          "detail": "De actuele kern, werker en browserhelper zijn vastgelegd; dezelfde twee resultaten, bestanden en herinnering zijn behouden. Onafhankelijke voorbereiding GO. Windows nog niet herstart. Geen actieve modelproef of installatie; 31/44 oorspronkelijke taken klaar."
+          "title": "Eigenaaractie nodig · geen actieve uitvoering",
+          "state": "blocked",
+          "owner": "Jaap · keuze/herstart/beoordeling",
+          "detail": "Dezelfde open voorwaarden blijven staan: toestemming voor vergelijking/innovatie, echte Windows-herstart en fysieke/menselijke beoordelingen. Alle beschikbare zelfstandige vervolgstappen zijn nagegaan. Geen nieuwe proef, modelrun of installatie actief. 31/44 oorspronkelijke taken klaar; project niet afgerond."
         },
         "next": {
-          "title": "Herstart controleren; vergelijking en innovatie na toestemming",
-          "detail": "Meld Herstart klaar na Windows opnieuw opstarten. De gezamenlijke toestemmingsvraag voor vergelijking/innovatie staat open. Fysieke speakerbeleving, persoonlijkheid, nut van initiatief en gezinsacceptatie blijven apart."
+          "title": "Hervatten bij de vrijgekomen bestaande taak",
+          "detail": "Beantwoord de open toestemmingsvraag, meld Herstart klaar na een Windows-herstart, of geef de concrete woonkamerwaarneming door. Codex vervolgt de bijbehorende taak; afgerond werk wordt niet opnieuw gedaan."
         },
         "ownerAction": {
           "title": "Open beslissingen en gebruiksoordeel",
@@ -16979,6 +16979,20 @@
         "review": "GO /root/completion_diagnosis; completed task objects, all task statuses/finish conditions and owner trials retained.",
         "selectedVoice": "Full-duplex audio/speakers remain requested for Jaap; optional for other installations, realizable by Eva when chosen.",
         "comparisonCoverage": "Compare relevant user capability families across pinned Eva1/Eva2/framework reference versions, including capabilities Eva adds on demand. No mandatory bundled tool inventory; all existing slices remain mapped to four product outcomes plus supporting delivery/acceptance. Unknowns and losses remain visible; no automatic future-release scope growth."
+      },
+      "continuationBlockAudit20261005": {
+        "checkedAt": "2026-10-05T02:15:04.662049+00:00",
+        "previousTurnClassification": "progress: corrected contradictory owner-action instructions; no new product function",
+        "sameGateConditionObservedInConsecutiveGoalTurns": 3,
+        "condition": "Remaining executable comparison/innovation requires the pending explicit authorization; restart evaluation requires a new Windows boot; physical/human acceptance remains unobserved. Independent review found no confirmed additional code defect to repair without new evidence.",
+        "windowsLastBootUtc": "2026-10-01T09:48:48.5000000Z",
+        "windowsRestartObserved": false,
+        "pendingAuthorizationAnswered": false,
+        "liveWorkerOrModelRun": false,
+        "independentWorkRemainingAvailableNow": false,
+        "projectComplete": false,
+        "newFunctionCompletions": 0,
+        "resumeWhen": "An owner authorization/required access, actual Windows restart or specific physical-use observation unlocks the corresponding existing task. Resume that task without replaying completed work."
       }
     },
     "dashboardClarityCorrection20260922": {

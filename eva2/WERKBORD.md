@@ -18,7 +18,10 @@ Eerdere fouten en beperkingen blijven in het bewijs staan.
 innovatieproef en echte computerherstart met hun bestaande toegangs-/toestemmingsvragen;
 fysieke speakerbeleving, persoonlijkheid/initiatief en zeven dagen gezinsacceptatie.
 De optionele telefoonroute is geen nieuwe verplichte bouwronde.
-Geen nieuwe browser-/installatieproef gepland. Het app-goal blijft actief.
+Geen nieuwe browser-/installatieproef gepland. **Automatische uitvoering wacht op eigenaaractie.**
+Dezelfde toegang, toestemming en herstart ontbreken in drie opeenvolgende goalrondes.
+Er is geen actieve uitvoerder/modelrun en geen nieuw zelfstandig herstelwerk vastgesteld.
+Hervatten bij de vrijgekomen bestaande taak; het project is niet voltooid.
 
 **F1.2 — huidige versie voorbereid voor de echte herstart; onafhankelijke review GO.**
 De 3-oktobermeting is behouden. Een nieuwe momentopname bindt de huidige kern,
