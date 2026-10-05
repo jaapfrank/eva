@@ -1,5 +1,10 @@
 # EVA2 werkbord
 
+## 5 oktober — algemene foutterugkoppeling
+
+P2.1: beide onderzochte combinatietaken kregen een MCP-toolfout waarvan de details verloren gingen. De bestaande route bewaart die nu als onbetrouwbare, begrensde diagnostiek; onbekende effecten worden niet herhaald.90 gerichte tests geslaagd en bronreview akkoord; installatie volgt. Geen spraakwerk, nieuwe taak of extra groene hoofdtaak. Zie evidence/product/p2-tool-error-feedback-20261005.json. De onderliggende taakmislukking en algemene voorsprong blijven onbewezen.
+
+
 **Actief: Eva afmaken; spraak geparkeerd op verzoek van Jaap.**
 [Beslismatrix vóór verdere bouw](evidence/product/p2-prebuild-decision-20261005.json):
 enkele geheugenvoordelen, geen bewezen algemene voorsprong.

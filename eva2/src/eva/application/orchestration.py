@@ -175,6 +175,12 @@ class OwnerAlertPort(Protocol):
 class ToolExecutionRejected(RuntimeError):
     """A provider definitively rejected the call; retrying cannot help."""
 
+    def __init__(self, message: str, *, diagnostic: dict[str, JsonValue] | None = None) -> None:
+        super().__init__(message)
+        if diagnostic is not None:
+            validate_json_value(diagnostic)
+        self.diagnostic = diagnostic
+
 
 def _now() -> datetime:
     return datetime.now(tz=UTC).replace(microsecond=0)
@@ -273,7 +279,9 @@ class VerifiedToolOrchestrator:
                 phase="tool_rejected",
                 status="failed",
                 event_type="TOOL_REJECTED",
-                data={"reason": str(error)},
+                data={"reason": str(error), **(
+                    {"diagnostic": error.diagnostic} if error.diagnostic is not None else {}
+                )},
             )
             return self._result("rejected", request, state, None)
         except Exception as error:

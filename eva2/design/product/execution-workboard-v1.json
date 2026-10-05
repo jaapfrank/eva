@@ -1034,7 +1034,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T21:28:42.222430+00:00",
+        "checkedAt": "2026-10-05T21:37:20.302385+00:00",
         "deliveries": [
           {
             "title": "XD02 niet afgerond; algemene voorsprong niet bewezen",
@@ -3808,10 +3808,10 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Vergelijking vóór verdere bouw",
+          "title": "P2.1 · Algemene uitvoerfout lokaliseren",
           "state": "in_progress",
           "owner": "/root",
-          "detail": "Enkele geheugenvoordelen, onvoldoende combinatie-uitvoering, geen bewezen totale voorsprong. Spraak geparkeerd; geen volgende modelproef gestart."
+          "detail": "Verloren foutdetails gericht hersteld;90 checks en bronreview geslaagd. Alleen deze3bestanden worden nu geïnstalleerd. Geen nieuwe hoofdtaak klaar."
         },
         "next": {
           "title": "Algemene taakuitvoering gericht afmaken",
@@ -16712,29 +16712,28 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-05T21:28:42.222430+00:00",
+              "checkedAt": "2026-10-05T21:49:33.370207+00:00",
               "assignment": {
-                "baseCommit": "6cdb8cd66d86bcde7746aa5263a80f508477e55f",
+                "baseCommit": "fe29b74f0d64c150075f0c7251647038f75f31be",
                 "owner": "/root",
                 "activeWorkers": [
                   "/root"
                 ],
                 "files": [
-                  "/root: XD02 private launcher/wrapper/resourcehelpers/fresh provisioning; werkbord en Git",
-                  "/root/xd01_runtime_review: XD02 runtime_binding.py en gebundeld bronreviewcontract",
-                  "/root/xd01_final_evaluation: protected XD02 oorspronkelijke projectie/fixtureconfig/admission/eindbeoordeling; contentvrij bewijs"
+                  "/root: gewone bronanalyse van algemene MCP-afwijzing en afronding; bestaand werkbord",
+                  "/root/xd01_final_evaluation: contentvrije categorie uit bestaande afgesloten XD01/XD02-logs; geen codewijziging of proef"
                 ],
                 "existing": "CM01–CM12 epoch1 voor Eva1/Eva2 zijn eenmaal uitgevoerd en onafhankelijk beoordeeld waar het bewijs dat toelaat. Verliezen en onbekende uitkomsten blijven behouden; dit voltooit niet de overige deelnemers/epochs/families.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "XD01 oorspronkelijk eenmaal uitgevoerd; gemeten gebruik hieronder. Volgende oorspronkelijke proef alleen binnen de reeds vastgelegde familie-envelop. Creditkosten en Codex-ontwikkelverbruik onbekend.",
-                "currentAction": "XD02 en beslismatrix vastgelegd; spraak uit actief werk. Geen volgende modelproef gestart.",
+                "currentAction": "Begrensde bronreview GO en90 tests geslaagd. Alleen3bronbestanden op bestaande kern/worker-baseimages installeren; geen spraak-/schema-/dependency-update.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "XD02 eenmalig uitgevoerd en onafhankelijk beoordeeld; usage/readbacks/closure bewaard. Spraak uit actief werk; beschikbare vergelijking toont geen algemene voorsprong."
                 },
-                "stage": "xd02_assessed_prebuild_decision_recorded",
-                "finding": "XD02: één oorspronkelijke opdracht eindigde failed/incomplete_work. Owner-foutmelding bereikbaar; beide diensten ongewijzigd, nul aanvragen/effecten. Observercompletion is geen voltooid werk.",
+                "stage": "bounded_error_feedback_installing",
+                "finding": "Beide gesloten vergelijkingen ontvingen result.isError na gateway-RPC. De bestaande adapter verwijderde de detailtekst; de innerlijke foutoorzaak is niet meer vast te stellen.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
                   "consecutiveGoalTurns": 3,
@@ -16861,7 +16860,34 @@
                   "evidence": "eva2/evidence/product/p2-xd02-independent-state-20261005.json",
                   "originalCaseRepeated": false,
                   "productChange": false
-                }
+                },
+                "diagnosisScope": {
+                  "outcome": "Exacte falende algemene overgang en kleinste voldoende vervolgactie, of expliciet ontbrekende diagnostiek.",
+                  "finish": "Bronroute met bestaand bewijs gebonden; geen speculatieve reparatie.",
+                  "runtimeCalls": 0,
+                  "developmentCredits": null,
+                  "originalCasesRepeated": false
+                },
+                "diagnosisEvidence": "eva2/evidence/product/p2-xd-rejected-diagnostic-20261005.json",
+                "changeDesign": {
+                  "preserve": "Bestaande MCP-uitvoering, actor-/mandaatgrenzen, status rejected en geen automatische herhaling van onbekende effecten.",
+                  "gap": "Teruggekomen toolfouttekst verdwijnt vóór duurzame gebeurtenis en modelreceipt.",
+                  "modules": [
+                    "application/orchestration.py",
+                    "adapters/connectors/mcp_gateway.py",
+                    "adapters/postgres/external_conversation_tools.py"
+                  ],
+                  "installation": "Alleen3 bronbestanden op exact huidige kern/worker-baseimages via bestaande source-refresh; werkelijke bronhashes matchen referentie vóór wijziging. Geen spraak-/schema-/dependency-update.",
+                  "finish": "Begrensde fouttekst bereikbaar op geïnstalleerde route, tests/review geslaagd; oorspronkelijke taakmislukkingen blijven mislukt, geen algemene winstclaim."
+                },
+                "verification": {
+                  "testsPassed": 90,
+                  "seconds": 21.22,
+                  "productModelCalls": 0,
+                  "developmentCredits": null,
+                  "testRuntime": "Existing Python3.12.14 plus existing complete package set; no installation."
+                },
+                "changeEvidence": "eva2/evidence/product/p2-tool-error-feedback-20261005.json"
               },
               "remaining": "CM01 beide mislukt; CM02 objectief Eva1 1/3/Eva2 3/3; CM03 onvolledige readbacks; CM04 Eva1 onvoldoende/Eva2 onbekend; CM05 Eva2 geslaagd/Eva1 onbekend; CM06 Eva2 geslaagd/Eva1 onvoldoende; CM07 beide onvoldoende en Eva1 groepsaflevering onvolledig; CM08 Eva2 geslaagd/Eva1 onvoldoende; CM09 en CM10 Eva2 geslaagd (elk 3/3+2/2), Eva1 onbekend door onvolledige uitvoering. CM11 Eva1 onvoldoende; Eva2 juiste antwoorden, verplichte geheugenvoorwaarde onbekend. CM12 beide onvoldoende; Eva2 mist opgeslagen context in het latere antwoord. XD01 Eva2 niet afgerond, Eva1 niet uitvoerbaar via de vastgelegde route (geen verliesclaim). Overige oorspronkelijke gevallen, concurrenttoegang en menselijke beoordeling blijven open. Geen algemene voorsprong of extra productfunctie. XD02: Eva2 niet afgerond; beide diensten ongewijzigd. Algemene voorsprong niet aangetoond.",
               "latestEvidence": "eva2/evidence/product/p2-xd02-independent-state-20261005.json",

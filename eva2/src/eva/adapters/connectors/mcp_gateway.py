@@ -713,15 +713,19 @@ class McpGatewayToolAdapter:
         if not isinstance(result, dict):
             raise RuntimeError("MCP gateway returned no tool result")
         if result.get("isError") is True:
+            blocks = result.get("content", [])
+            texts = [item["text"][:4096] for item in blocks[:2]
+                     if isinstance(item, dict) and item.get("type") == "text"
+                     and isinstance(item.get("text"), str)] if isinstance(blocks, list) else []
             if preserve_read_error:
                 # A tool-level read error is an observed outcome, not an unknown
                 # write effect. Keep bounded provider text as untrusted data.
-                blocks = result.get("content", [])
-                texts = [item["text"][:4096] for item in blocks[:2]
-                         if isinstance(item, dict) and item.get("type") == "text"
-                         and isinstance(item.get("text"), str)] if isinstance(blocks, list) else []
                 return {"eva_mcp_read_error": {"messages": texts or ["MCP read failed"]}}
-            raise ToolExecutionRejected("MCP tool rejected the operation")
+            raise ToolExecutionRejected("MCP tool rejected the operation", diagnostic={
+                "source": "mcp_gateway_tool_error", "untrusted": True,
+                "messages": texts or ["MCP tool reported an error without a text message."],
+                "effect_outcome": "unknown",
+            })
         structured = result.get("structuredContent")
         if structured is not None:
             if not isinstance(structured, dict):

@@ -1,0 +1,46 @@
+{
+  "contract": "EvaTargetedToolErrorFeedback/v1",
+  "recordedAt": "2026-10-05T21:49:33.370207+00:00",
+  "status": "reviewed_pending_installation",
+  "existing": "Generic MCP execution/orchestration/actor-bound durable receipts; original rejected calls lost returned provider text.",
+  "diagnosisEvidence": "eva2/evidence/product/p2-xd-rejected-diagnostic-20261005.json",
+  "change": "Preserve at most two4096-character MCP tool-error messages in the existing rejection event and actor-bound receipt as untrusted diagnostics; effect outcome stays unknown.",
+  "sourceHashes": {
+    "eva2/src/eva/application/orchestration.py": "ef13b46a1c84bd10d49bb17ea1a726661400e2922087d0d4dc03eb09426ead88",
+    "eva2/src/eva/adapters/connectors/mcp_gateway.py": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8",
+    "eva2/src/eva/adapters/postgres/external_conversation_tools.py": "18056cc357af1418eebb6545813d1ef6111d64c99af154f818b4202e6622a5c3",
+    "eva2/tests/connectors/test_mcp_error_diagnostics.py": "1dc1720370baf71c3d354962a4e929f2f7a089806ea18ca1471b7ca12e0b584b"
+  },
+  "verification": {
+    "passed": 90,
+    "seconds": 21.22,
+    "collectionFailuresBeforeTests": 4,
+    "collectionFailureCauses": [
+      "source import path missing",
+      "system Python missing httpx2",
+      "standalone Python missing tester pygments",
+      "mixed system path provided incompatible typing_extensions"
+    ],
+    "newPackageInstallations": 0
+  },
+  "independentReview": {
+    "reviewer": "/root/xd01_runtime_review",
+    "status": "source_go_after_correcting_undefined_receipt_variable",
+    "runtimeCalls": 0
+  },
+  "usage": {
+    "evaRuntimeModelCalls": 0,
+    "originalComparisonRepeats": 0,
+    "developmentCredits": null,
+    "monetaryCost": null
+  },
+  "limits": [
+    "No original task failure repaired or rescored.",
+    "No automatic retry, permission change or successful-effect inference.",
+    "Overall superiority is not established."
+  ],
+  "installation": {
+    "state": "pending",
+    "scope": "Only three reviewed source files, using existing source-refresh Dockerfile and exact current core/worker baseimages."
+  }
+}
