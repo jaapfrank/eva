@@ -1,11 +1,19 @@
 # EVA2 werkbord
 
+**Geaccepteerd — M3.3: persoonlijkheid in gewoon gebruik.**
+Jaap bevestigt op 5 oktober: “is naar mijn idee goed zo”. M3.1 en M3.2 waren
+al klaar; onderdeel M3 en de bestaande stap **Personen en continuïteit** zijn
+hiermee afgerond. **32/44 oorspronkelijke
+kleine taken klaar.** Geen nieuwe proef, modelcall of installatie nodig.
+[Eigenaaracceptatie](evidence/product/m3-personality-owner-accepted-20261005.json).
+
+
 **Opgeleverd — T3 en de technische stap ‘Taken afmaken en terugmelden’.**
 T1, T2, T3 en T4 zijn technisch afgerond. Eva gebruikt haar eigen browser,
 bewaart het gebruikersresultaat, stopt bediening bij overname en kijkt opnieuw
 voordat zij verdergaat. Een oude klik wordt niet alsnog uitgevoerd.
 De gerichte correcties staan samen in kern, werker en installatiepakket.
-**31/44 oorspronkelijke kleine taken klaar; geen extra taken toegevoegd.**
+Bij de T3-oplevering waren 31/44 kleine taken klaar; na M3.3 zijn dat **32/44**.
 
 Laatste controle: gateway werkelijk onbereikbaar, hervatten, werkelijke gezondheid
 afwachten en verse browserwaarneming. Geslaagd zonder actieherhaling of modelcall.
@@ -16,7 +24,7 @@ Eerdere fouten en beperkingen blijven in het bewijs staan.
 
 **Resteert volgens de oorspronkelijke lijst:** afgeschermde eindvergelijking,
 innovatieproef en echte computerherstart met hun bestaande toegangs-/toestemmingsvragen;
-fysieke speakerbeleving, persoonlijkheid/initiatief en zeven dagen gezinsacceptatie.
+fysieke speakerbeleving, nut/timing van initiatief en zeven dagen gezinsacceptatie.
 De optionele telefoonroute is geen nieuwe verplichte bouwronde.
 Geen nieuwe browser-/installatieproef gepland. **Automatische uitvoering wacht op eigenaaractie.**
 Dezelfde toegang, toestemming en herstart ontbreken in drie opeenvolgende goalrondes.
@@ -37,8 +45,8 @@ vergelijking/innovatie; sla je werk op en herstart Windows voor F1.2, meld daarn
 ‘Herstart klaar’. Woonkamerspeaker is bereikbaar en niet gedempt; hoorbaarheid en
 microfoononderbreking blijven een fysieke beoordeling. Geen tweede-speakerproef
 vóór de woonkamer goed werkt. Deze voorbereiding verhoogt geen opleverteller.
-De kleine taken C3.1/C4.1 tonen nu één gezamenlijke fysieke proef; M3.3 en I1.2
-tonen terecht dat jouw oordeel nodig is. R1.1 verwijst naar de voorbereide
+De kleine taken C3.1/C4.1 tonen één gezamenlijke fysieke proef; I1.2 vraagt
+nog jouw oordeel. M3.3 is inmiddels geaccepteerd. R1.1 verwijst naar de voorbereide
 vervolgproef en open toestemming, niet meer naar nog te maken voorbereiding.
 
 **Hieronder: eerdere opleveringen; toenmalige tellers en vervolgstappen zijn historisch.**

@@ -1,0 +1,35 @@
+{
+  "taskId": "M3.3",
+  "status": "completed_owner_accepted",
+  "checkedAt": "2026-10-05T08:46:10.912971+00:00",
+  "source": "Direct owner statement in current chat",
+  "ownerStatement": "M3.3 · Persoonlijkheid in gewoon gebruik beoordelen is naar mijn idee goed zo.",
+  "acceptedOutcome": "Persoonlijkheid in gewoon gebruik (M3.3).",
+  "retainedTechnicalEvidence": [
+    "eva2/evidence/product/m3-expired-preference-20260929.json",
+    "eva2/evidence/product/m3-style-fidelity-20260929.json",
+    "eva2/evidence/product/m3-self-context-installed-20261002.json"
+  ],
+  "implementation": "Existing installed routes retained; owner acceptance registration only. No new code, Eva model call, test, restart or installation.",
+  "parentClosure": "M3.1 and M3.2 were already completed; M3.3 is now explicitly owner-accepted. M1 and M2 were also completed, so existing step2 Personen en continuïteit is complete without reopening prior acceptance.",
+  "previousOwnerFeedbackRetained": true,
+  "ownerAcceptance": {
+    "accepted": true,
+    "statementRecordedAt": "2026-10-05T08:46:10.912971+00:00"
+  },
+  "limits": [
+    "The owner did not specify a new channel trial or provide conversation text; no fresh speed, voice, privacy or competitor measurement is inferred.",
+    "This accepts M3.3, not the separate I1.2 initiative-timing judgment, physical speaker trials or F2 family/project acceptance."
+  ],
+  "newDevelopmentProbeUsage": {
+    "modelCalls": 0,
+    "toolHouseActions": 0,
+    "credits": null
+  },
+  "scopeReview": {
+    "reviewer": "/root/t3_installed_review",
+    "decision": "M3 and existing step2 can close; F2, I1.2, F1, physical voice and final comparison remain separate.",
+    "basis": "Existing original M3 specification, completed M3.1/M3.2 evidence, current M1/M2 status and direct owner acceptance.",
+    "newRuntimeCalls": 0
+  }
+}

@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-05T02:15:04.662049+00:00",
+  "lastUpdated": "2026-10-05T08:46:48.844686+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -204,18 +204,19 @@
           "live": "partial",
           "accepted": "partial",
           "gap": "Volledige gezinsbeoordeling en langdurige stabiliteit",
-          "detail": "Privégesprekken werken; Jaap meldde dat de gesprekken echt beter zijn. De antwoordstream is nu afzonderlijk groen en live. Deze bredere kaart omvat ook menselijke warmte, eigen oordeel en langdurige continuïteit: daarom is de volledige acceptatie nog niet af.",
+          "detail": "Telegram-tussenvragen tijdens werk en latere privé-onderwerpvoortzetting zijn afgerond. Jaap accepteert op 5 oktober ook M3.3: persoonlijkheid in gewoon gebruik. Fysieke speakerconversatie en microfoononderbreking C3/C4 blijven open; volledige gezinsacceptatie blijft apart.",
           "evidence": "RT-001 · CO-007 · eerdere positieve feedback Jaap; volledige gezinsacceptatie open",
           "outcomes": [],
           "works": "Privégesprekken werken; Jaap meldde dat het gesprek prima loopt.",
-          "ownerSummary": "Telegram-tussenvragen tijdens werk en latere privé-onderwerpvoortzetting zijn afgerond. De bestaande geheugen- en gespreksacceptaties blijven behouden. Nog open: Natuurlijkheid/persoonlijkheid M3.3 en fysieke speakerconversatie C3/C4 blijven open.",
+          "ownerSummary": "Telegram-tussenvragen tijdens werk en latere privé-onderwerpvoortzetting zijn afgerond. Jaap accepteert op 5 oktober ook M3.3: persoonlijkheid in gewoon gebruik. Nog open: Fysieke speakerconversatie en microfoononderbreking C3/C4 blijven open; volledige gezinsacceptatie blijft apart.",
           "currentSummary": {
-            "checkedAt": "2026-10-03T13:00:37.521696+00:00",
-            "works": "Telegram-tussenvragen tijdens werk en latere privé-onderwerpvoortzetting zijn afgerond. De bestaande geheugen- en gespreksacceptaties blijven behouden.",
-            "gap": "Natuurlijkheid/persoonlijkheid M3.3 en fysieke speakerconversatie C3/C4 blijven open.",
+            "checkedAt": "2026-10-05T08:46:10.912971+00:00",
+            "works": "Telegram-tussenvragen tijdens werk en latere privé-onderwerpvoortzetting zijn afgerond. Jaap accepteert op 5 oktober ook M3.3: persoonlijkheid in gewoon gebruik.",
+            "gap": "Fysieke speakerconversatie en microfoononderbreking C3/C4 blijven open; volledige gezinsacceptatie blijft apart.",
             "detail": "Gesprekken via dezelfde kern; een geslaagde technische deeluitkomst is geen volledige gezinsacceptatie.",
             "evidencePaths": [
-              "eva2/design/product/execution-workboard-v1.json"
+              "eva2/design/product/execution-workboard-v1.json",
+              "eva2/evidence/product/m3-personality-owner-accepted-20261005.json"
             ]
           }
         },
@@ -1005,7 +1006,7 @@
           "Geen open werk binnen de geaccepteerde Telegramstreaming."
         ],
         "conversation": [
-          "Natuurlijkheid/persoonlijkheid M3.3 en fysieke speakerconversatie C3/C4 blijven open."
+          "Fysieke speakerconversatie en microfoononderbreking C3/C4 blijven open; volledige gezinsacceptatie blijft apart."
         ],
         "memory": [
           "Privé-inhoud blijft bij de juiste persoon via de afgesproken privéroutes; geen open stemherkenningsbouw als voorwaarde voor dit geaccepteerde geheugenonderdeel."
@@ -1031,8 +1032,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T02:15:04.662049+00:00",
+        "checkedAt": "2026-10-05T08:46:48.844686+00:00",
         "deliveries": [
+          {
+            "title": "M3.3 geaccepteerd · Persoonlijkheid in gewoon gebruik",
+            "date": "5 oktober",
+            "state": "accepted",
+            "result": "Jaap: is naar mijn idee goed zo. M3.1 en M3.2 waren al klaar; daarmee is het bestaande onderdeel Voorkeuren en persoonlijkheid ontwikkelen afgerond. Ook de bestaande stap Personen en continuïteit is hiermee afgerond.",
+            "remaining": "32/44 oorspronkelijke kleine taken klaar. Stem, beoordeling van nut/timing van initiatief, vergelijking en gezinsacceptatie blijven afzonderlijk open. Geen nieuwe proef of installatie.",
+            "source": "eva2/evidence/product/m3-personality-owner-accepted-20261005.json"
+          },
           {
             "title": "T3 klaar · Browser gebruiken, overnemen en hervatten",
             "date": "5 oktober",
@@ -3672,7 +3681,7 @@
           "title": "Eigenaaractie nodig · geen actieve uitvoering",
           "state": "blocked",
           "owner": "Jaap · keuze/herstart/beoordeling",
-          "detail": "Dezelfde open voorwaarden blijven staan: toestemming voor vergelijking/innovatie, echte Windows-herstart en fysieke/menselijke beoordelingen. Alle beschikbare zelfstandige vervolgstappen zijn nagegaan. Geen nieuwe proef, modelrun of installatie actief. 31/44 oorspronkelijke taken klaar; project niet afgerond."
+          "detail": "Dezelfde open voorwaarden blijven staan: toestemming voor vergelijking/innovatie, echte Windows-herstart en fysieke/menselijke beoordelingen. Alle beschikbare zelfstandige vervolgstappen zijn nagegaan. Geen nieuwe proef, modelrun of installatie actief. 32/44 oorspronkelijke taken klaar; project niet afgerond."
         },
         "next": {
           "title": "Hervatten bij de vrijgekomen bestaande taak",
@@ -3684,9 +3693,9 @@
             "Beantwoord de toestemmingsvraag in deze chat: alleen de vaste vergelijking, vergelijking plus de bestaande innovatieproef, of beide uitstellen. Automatische goedkeuringscontrole vroeg expliciete toestemming.",
             "Voor F1.2: sla je werk op, kies Windows → Opnieuw opstarten en meld daarna Herstart klaar in deze chat. Er is geen automatische herstart ingesteld.",
             "Woonkamerspeaker is bereikbaar en niet gedempt. De resterende fysieke proef gaat over verstaanbaarheid en direct onderbreken met je stem; de tweede speaker volgt pas als dit in de woonkamer goed werkt.",
-            "Persoonlijkheid, nut van initiatief en zeven dagen gezinsgebruik blijven jouw beoordeling. Native aanmeldingen voor concurrenten zijn nog niet actueel bevestigd."
+            "Persoonlijkheid M3.3 is geaccepteerd. Nut van initiatief en zeven dagen gezinsgebruik blijven jouw beoordeling. Native aanmeldingen voor concurrenten zijn nog niet actueel bevestigd."
           ],
-          "expected": "De woonkamerproef combineert C3.1 en C4.1. Persoonlijkheid en nut van bestaand initiatief kun je in gewoon Telegramgebruik beoordelen. Deze beoordelingen veranderen eerder geaccepteerd werk niet; 31/44 oorspronkelijke kleine taken blijven klaar."
+          "expected": "M3.3 is door Jaap geaccepteerd; daarvoor geen nieuwe beoordeling. De woonkamerproef combineert C3.1 en C4.1. Nut en timing van bestaand initiatief blijven I1.2. 32/44 oorspronkelijke kleine taken klaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
         "reviewedAt": "2026-10-05T02:10:42.875801+00:00"
@@ -13035,21 +13044,24 @@
         {
           "number": 2,
           "title": "Personen en continuïteit",
-          "state": "open",
+          "state": "completed",
           "existingCards": [
             "CO-008",
             "CO-004",
             "CO-005"
           ],
           "doneWhen": "Later terugkomen op onderwerp en correctie bij geverifieerde persoon; geen privécontext naar dochter, onbekende spreker of onbevoegde toehoorder.",
-          "preserve": "Bestaat: geaccepteerd onthouden, corrigeren, inzien/wissen en geïnstalleerde privégrenzen. Resteert: gewijzigde koppelingen en langdurige gezinscontinuïteit. Geen nieuw geheugensysteem; privé blijft Telegram.",
+          "preserve": "Geaccepteerd onthouden, corrigeren, inzien/wissen, privégrenzen en latere onderwerpvoortzetting behouden. Tijdelijke voorkeur en stijlcorrectie afgerond; persoonlijkheid M3.3 op 5 oktober door Jaap geaccepteerd. Zeven dagen gezinspraktijk en eindoordeel blijven F2.",
           "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
           "historicalPlanningEffortHours": "4–12",
           "blueprintSlices": [
             "M1",
             "M2",
             "M3"
-          ]
+          ],
+          "completedAt": "2026-10-05T08:46:48.844686+00:00",
+          "technicalCompletion": "Oorspronkelijke M1/M2-acceptaties behouden; M3.1/M3.2 technisch afgerond en M3.3 nu expliciet door Jaap geaccepteerd. Fysieke spraak en volledige gezins-/projectacceptatie blijven afzonderlijk.",
+          "latestEvidence": "eva2/evidence/product/m3-personality-owner-accepted-20261005.json"
         },
         {
           "number": 3,
@@ -14112,7 +14124,7 @@
           ],
           "outcome": "Voorkeuren en persoonlijkheid ontwikkelen",
           "effort": "M",
-          "status": "in_progress",
+          "status": "completed",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Shared character, preferences and memory correction exist; Eva1 supplies valued humor/judgment.",
@@ -14130,7 +14142,7 @@
           "assignment": {
             "owner": "/root",
             "baseCommit": "8903990e",
-            "stage": "installed_self_context_owner_evaluation_open",
+            "stage": "owner_accepted",
             "outcome": "Natuurlijker gewone gesprekken met een herkenbaar eigen oordeel en passende nieuwsgierigheid; dezelfde Eva via alle kanalen.",
             "existing": "Shared identity, signed pack, style mirror and grounded own-state context; previous memory/style acceptances retained.",
             "gap": "Trusted private Telegram alias misses canonical owner native initiatives; old projection lacks bounded saved results and actual phase.",
@@ -14143,10 +14155,11 @@
             ],
             "activeWorkers": [],
             "endCondition": "Small shared-policy correction installed on actual affected route, with relevant focused checks and owner evaluation explicitly separate. No channel scripts, fixed greetings or invented inner life.",
-            "usageEstimate": "Measured synthetic comparison: 4 Sol/none calls, 5116 input and 207 output tokens; 0 tools. Actual private readback used no model. Credit costs unknown."
+            "usageEstimate": "Measured synthetic comparison: 4 Sol/none calls, 5116 input and 207 output tokens; 0 tools. Actual private readback used no model. Credit costs unknown.",
+            "currentAction": "M3.1/M3.2 technical results retained; M3.3 now explicitly accepted by owner."
           },
           "evidence": "eva2/evidence/product/undated-memory-context-20260928.json",
-          "remaining": "M3.3 blijft niet geaccepteerd. Eigen opgeslagen bijdragen bereiken nu dezelfde privécontext voor eigenaar en Telegram. Eén fictieve bijdragevraag verbeterde; dagplannen blijven algemeen. Natuurlijkheid, humor, eigen oordeel en gezinswaarde zijn hiermee niet afgerond.",
+          "remaining": "Geen resterende oorspronkelijke M3-taak. M3.1 en M3.2 waren afgerond; Jaap accepteert nu M3.3. Fysieke spraak, nut/timing van initiatief, eindvergelijking en volledige gezinsacceptatie blijven afzonderlijk.",
           "temporalChainEvidence": "eva2/evidence/product/m3-retain-recall-chain-20260928.json",
           "styleFeedbackEvidence": "eva2/evidence/product/style-reflection-refresh-20260928.json",
           "automaticFeedbackEvidence": "eva2/evidence/product/m3-automatic-feedback-20260928.json",
@@ -14204,23 +14217,25 @@
             {
               "id": "M3.3",
               "title": "Persoonlijkheid in gewoon gebruik beoordelen",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "gebruikersproef",
               "doneWhen": "Jaap beoordeelt eigen oordeel, humor en initiatief; technische test verzint geen gezinsacceptatie.",
-              "owner": "Jaap (beoordeling); Codex (contextcorrectie geïnstalleerd)",
+              "owner": "Jaap",
               "ownerTrial": {
-                "status": "not_accepted",
-                "reportedAt": "2026-10-01T13:15:57.030822+00:00",
-                "report": "Ik vind haar antwoorden en dergelijke nog niet echt als een persoon klinken die een eigen persoonlijkheid heeft. Ze is nogal statisch.",
+                "status": "accepted",
+                "reportedAt": "2026-10-05T08:46:10.912971+00:00",
+                "report": "M3.3 · Persoonlijkheid in gewoon gebruik beoordelen is naar mijn idee goed zo.",
                 "blocksIndependentWork": false,
                 "candidateInstalledAt": "2026-10-02T09:17:28.439624+00:00",
-                "newVersionEvaluation": "open"
+                "newVersionEvaluation": "accepted",
+                "source": "Direct owner statement in current chat",
+                "acceptedScope": "Persoonlijkheid in gewoon gebruik beoordelen (M3.3)."
               },
               "blocker": null,
               "assignment": {
                 "owner": "/root",
                 "baseCommit": "8903990e",
-                "stage": "installed_self_context_owner_evaluation_open",
+                "stage": "owner_accepted",
                 "outcome": "Natuurlijker gewone gesprekken met een herkenbaar eigen oordeel en passende nieuwsgierigheid; dezelfde Eva via alle kanalen.",
                 "existing": "Shared identity, signed pack, style mirror and grounded own-state context; previous memory/style acceptances retained.",
                 "gap": "Trusted private Telegram alias misses canonical owner native initiatives; old projection lacks bounded saved results and actual phase.",
@@ -14233,32 +14248,40 @@
                 ],
                 "activeWorkers": [],
                 "endCondition": "Small shared-policy correction installed on actual affected route, with relevant focused checks and owner evaluation explicitly separate. No channel scripts, fixed greetings or invented inner life.",
-                "usageEstimate": "Measured synthetic comparison: 4 Sol/none calls, 5116 input and 207 output tokens; 0 tools. Actual private readback used no model. Credit costs unknown."
+                "usageEstimate": "Measured synthetic comparison: 4 Sol/none calls, 5116 input and 207 output tokens; 0 tools. Actual private readback used no model. Credit costs unknown.",
+                "currentAction": "Owner accepted M3.3 in ordinary use on5October2026; no active implementation or repeat trial."
               },
-              "latestEvidence": "eva2/evidence/product/m3-self-context-installed-20261002.json",
+              "latestEvidence": "eva2/evidence/product/m3-personality-owner-accepted-20261005.json",
               "technicalDelivery": {
                 "status": "installed",
                 "verifiedAt": "2026-10-02T09:17:28.439624+00:00",
                 "evidence": "eva2/evidence/product/m3-self-context-installed-20261002.json",
                 "scope": "Eigen initiatiefstatus, opgeslagen resultaat en feedback in gedeelde privégesprekscontext; geen volledige persoonlijkheidsafronding."
               },
-              "result": "Geïnstalleerde kern en werker gezond; bronhashes gelijk aan beoordeelde kandidaat. Echte privécontext voor eigenaar en vertrouwde Telegramalias gelijk. 17 controles en onafhankelijke review GO. Fictieve bijdragevraag feitelijk beter; dagplannen nog algemeen.",
+              "result": "Jaap accepteert M3.3: de persoonlijkheid in gewoon gebruik is naar zijn idee goed zo. De bestaande geïnstalleerde correcties en eerdere technische bewijzen blijven behouden.",
               "ownerInstructions": {
-                "availableNow": true,
-                "steps": [
-                  "Vraag in Telegram: /eva2 Wat heb je uit jezelf al gedaan waar je tevreden over bent?",
-                  "Praat daarna gewoon verder. Geef alleen aan wanneer een antwoord nog statisch of onjuist voelt."
-                ],
-                "expected": "Eva kan haar echte opgeslagen bijdragen gebruiken en onderscheidt uitgevoerd werk van nieuwe plannen. Deze gerichte verbetering bewijst nog geen volledige persoonlijkheid.",
-                "reportBack": "Een concreet antwoord en wat eraan ontbreekt; geen nieuwe technische proef nodig.",
+                "availableNow": false,
+                "readyWhen": "Door Jaap geaccepteerd op 5 oktober 2026. Geen handeling meer nodig voor M3.3.",
+                "steps": [],
                 "blocksIndependentWork": false
               },
-              "nextAction": "Beoordeel natuurlijke betrokkenheid tijdens gewoon gebruik. De gerichte eigen-contextfout is geïnstalleerd; dagplannen blijven algemeen. I2-bronontdekking is zelfstandig vervolgwerk en wacht niet op dit menselijke oordeel.",
-              "ownerActionRequired": true,
-              "checkedAt": "2026-10-05T02:13:15.233372+00:00"
+              "nextAction": "Door Jaap geaccepteerd; geen nieuwe M3.3-gebruiksproef nodig.",
+              "ownerActionRequired": false,
+              "checkedAt": "2026-10-05T08:46:10.912971+00:00",
+              "ownerTrialHistory": [
+                {
+                  "status": "not_accepted",
+                  "reportedAt": "2026-10-01T13:15:57.030822+00:00",
+                  "report": "Ik vind haar antwoorden en dergelijke nog niet echt als een persoon klinken die een eigen persoonlijkheid heeft. Ze is nogal statisch.",
+                  "blocksIndependentWork": false,
+                  "candidateInstalledAt": "2026-10-02T09:17:28.439624+00:00",
+                  "newVersionEvaluation": "open"
+                }
+              ],
+              "completedAt": "2026-10-05T08:46:10.912971+00:00"
             }
           ],
-          "latestEvidence": "eva2/evidence/product/m3-self-context-installed-20261002.json",
+          "latestEvidence": "eva2/evidence/product/m3-personality-owner-accepted-20261005.json",
           "responsibilityReview": {
             "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
             "role": "gedeeld gedrag",
@@ -14270,7 +14293,9 @@
               "M3.3"
             ],
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
-          }
+          },
+          "completedAt": "2026-10-05T08:46:10.912971+00:00",
+          "result": "Voorkeuren en persoonlijkheid ontwikkelen afgerond binnen de bestaande M3-scope; Jaaps gewone-gebruiksbeoordeling is vastgelegd."
         },
         {
           "id": "T1",
