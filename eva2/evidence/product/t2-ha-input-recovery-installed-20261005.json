@@ -1,0 +1,192 @@
+{
+  "task": "T2.1",
+  "recordedAt": "2026-10-05T00:48:39.818089+00:00",
+  "status": "installed_verified",
+  "baseCommit": "bc6116aaae1389792c6de5678abec9c59027b5a4",
+  "outcome": "Eva herstelt een lokaal afgewezen HA-JSON-verzoek binnen dezelfde aangenomen opdracht, behoudt eerdere geslaagde acties en brengt het gecontroleerde resultaat terug. Nieuwe gesprekken blijven oude taakcontext lezen na gewijzigde toolinstructies.",
+  "originalFinishCondition": "Een concrete falende uitvoerstap verklaard en verbeterd; geen ongewijzigde proefherhaling of timeoutverhoging zonder bewijs.",
+  "existingReused": [
+    "General Home Assistant REST/WebSocket tool",
+    "Durable indexed tool receipts and continuation on success=false",
+    "Native household background execution and eva2_work_result return",
+    "Current core/worker/installer package; no new platform or schema"
+  ],
+  "changes": [
+    "Only JSON parse failures produce persisted local rejection before HA transport; other validation remains hard.",
+    "Retained task reads no longer require identical model configuration fingerprint. Exact executable release, current identity/policy/grant and data schema stay enforced.",
+    "Native failure logs expose bounded code locations and exception type, without exception text, prompts, credentials or frame locals."
+  ],
+  "installed": {
+    "images": {
+      "core": "sha256:255ba269c4b4054fde6c7a448e7a5b74763c10d2c07c7eb984ed0801cae884d4",
+      "worker": "sha256:22d51eed06be90e731f71b0a157af91b0c25bd3faaedfc8555415dd2b1e7d40a"
+    },
+    "source_files": {
+      "src/eva/adapters/connectors/home_assistant_api.py": "a7ea7034a6f75beb580f879a04a3c1261714960a4a29fa6c91071b9e4536bc85",
+      "src/eva/adapters/api/native_voice.py": "5ce562ece3e253961a397c874e758fd60d801de5f8b6300d5589c01ea1f9b0da",
+      "src/eva/bootstrap/household_digital_work.py": "c7a23349301d68ed556028ad4e32c082c4531c147757739ca4e2acccb4f47467"
+    },
+    "package_verification": {
+      "verified": true,
+      "files": 1225,
+      "images": 8
+    },
+    "installedAt": "2026-10-05T00:45:26.205912+00:00",
+    "runtime_source_verified": true,
+    "ha_restart": false,
+    "schema_change": false
+  },
+  "focusedVerification": {
+    "connector": {
+      "passed": 22,
+      "seconds": 1.79
+    },
+    "nativeRoute": {
+      "passed": 28,
+      "seconds": 2.38
+    },
+    "postgresFinal": {
+      "passed": 6,
+      "seconds": 12.33
+    },
+    "independentReview": "eva2/reviews/t2-ha-input-recovery-20261005.md",
+    "offlineCasesUsedControlledModels": true
+  },
+  "live": {
+    "work_id": "work:household-digital:59a67638-36ab-5ca8-be71-7dbcd4f2a939",
+    "state": "succeeded",
+    "conversation_id": "t2-json-repaired-6c5e15022020",
+    "acknowledgementSeconds": 24.078,
+    "resultSeconds": 65.444,
+    "sameConversationAndSatelliteReturned": true,
+    "resultMatchesPersistedWork": true,
+    "finalSyntheticState": "22",
+    "steps": [
+      {
+        "at": "2026-10-05T00:45:37+00:00",
+        "method": "GET",
+        "path": "/api/states/sensor.eva2_t2_json_6c5e15022020",
+        "response_pointer": "",
+        "body_json": "",
+        "success": true,
+        "request_sent": true,
+        "http_status": 200,
+        "error_code": null,
+        "value": null
+      },
+      {
+        "at": "2026-10-05T00:45:44+00:00",
+        "method": "GET",
+        "path": "/api/states/sensor.eva2_t2_json_6c5e15022020",
+        "response_pointer": "/state",
+        "body_json": "",
+        "success": true,
+        "request_sent": true,
+        "http_status": 200,
+        "error_code": null,
+        "value": "55"
+      },
+      {
+        "at": "2026-10-05T00:45:50+00:00",
+        "method": "POST",
+        "path": "/api/states/sensor.eva2_t2_json_6c5e15022020",
+        "response_pointer": "",
+        "body_json": "{\"state\":\"22\"}",
+        "success": true,
+        "request_sent": true,
+        "http_status": 200,
+        "error_code": null,
+        "value": null
+      },
+      {
+        "at": "2026-10-05T00:45:56+00:00",
+        "method": "POST",
+        "path": "/api/template",
+        "response_pointer": "",
+        "body_json": "{\"template\":",
+        "success": false,
+        "request_sent": false,
+        "http_status": null,
+        "error_code": "invalid_body_json",
+        "value": null
+      },
+      {
+        "at": "2026-10-05T00:46:02+00:00",
+        "method": "POST",
+        "path": "/api/template",
+        "response_pointer": "",
+        "body_json": "{\"template\":\"{{ states('sensor.eva2_t2_json_6c5e15022020') }}\"}",
+        "success": true,
+        "request_sent": true,
+        "http_status": 200,
+        "error_code": null,
+        "value": "22"
+      }
+    ],
+    "successfulWrites": 1,
+    "localRejectedSteps": 1,
+    "successfulHAResponses": 4,
+    "result": "De proef is afgerond. De fictieve proefbron stond op 55 en is met één geslaagde schrijfactie op 22 gezet.\n\nHet opzettelijk ongeldige leesverzoek is precies één keer gedaan en lokaal afgewezen: het is niet naar Home Assistant verstuurd. Daarna heb ik uitsluitend dat leesverzoek met correcte JSON hersteld. De template-API gaf daadwerkelijk 22 terug; daarmee is de nieuwe waarde gecontroleerd.\n\nDe schrijfactie is niet herhaald. Er zijn geen andere bronnen gelezen of gewijzigd en geen fysieke handelingen uitgevoerd.",
+    "cleanup": {
+      "entity": "sensor.eva2_t2_json_6c5e15022020",
+      "before_state": "22",
+      "delete_http_status": 200,
+      "absence_confirmed_http_status": 404,
+      "scope": "Only the exact synthetic source created for this probe. No physical device or automation."
+    }
+  },
+  "runtimeUsage": {
+    "foreground": {
+      "input_tokens": 4045,
+      "measurement": "measured",
+      "model_attempts": 1,
+      "output_tokens": 334,
+      "tool_calls": 1
+    },
+    "background": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 6,
+      "tool_calls": 5,
+      "input_tokens": 34670,
+      "output_tokens": 536,
+      "total_tokens": 35206,
+      "cost_usd_micros": null
+    },
+    "knownInputTokens": 38715,
+    "knownOutputTokens": 870,
+    "knownModelResponses": 7,
+    "moneyOrCredits": null,
+    "limits": "Measured stored turn/work usage only; other concurrent service/background consumption not included. No credit conversion inferred."
+  },
+  "failedAttempts": [
+    {
+      "stage": "Initial installed proof",
+      "result": "Native ingress admitted and initial memory completed; no model admission or delegated work. Existing response handler hid exception cause."
+    },
+    {
+      "stage": "Same bounded request after adding diagnostic locations",
+      "seconds": 2.785,
+      "result": "DelegatedWorkConflict in retained household active_context -> read_spec. Tool descriptor changes affect model configuration fingerprint; old task reads incorrectly demanded that execution fingerprint. No model or HA action in this attempt."
+    }
+  ],
+  "limitations": [
+    "A deliberately requested malformed input is a controlled recovery probe, not an unseen autonomy benchmark.",
+    "The historical HA timeout is still unexplained; this finding does not establish its cause.",
+    "24.078 seconds acknowledgement and 65.444 seconds total do not establish fast natural conversation.",
+    "One recovery run; no broad quality, physical speaker or competitor superiority claim.",
+    "The first GET read only entity identity; Eva used another GET for state. This extra tool/model work remains visible.",
+    "This completes one original small outcome only; entire project and human acceptance stay open."
+  ],
+  "artifactHashes": {
+    "repaired-manifest.json": "3f0726b35f39115eb2c590343f26a90fd9dd3cabd0b24e90cfcdcb3070cd95b3",
+    "work-59a67638-36ab-5ca8-be71-7dbcd4f2a939.json": "3101bb25aaec6cf56b7ba289a8c507c9ac1116134af823be2101a00dbe7ffcf5",
+    "final-installation.json": "c9d3fe54336c5c1df165bf18a8c8a5457b1abb312c85a3cced01446c4451778b",
+    "cleanup.json": "86ef5cb0965e67fe72f53b3fa118bd5f5532e8e5bd1333b176e980504ae3981a",
+    "connector-test.log": "a3d09eeef3be36aa2f0a3c778c6b199d094179fd91831667cfde203770bfca30",
+    "native-test.log": "58c643947c21b59599cc107b1dd213e5c80d550e0dd3ac12e41fb9d79f93d919",
+    "profile-test.log": "10c5be70f709919c43b89765a0d374bb2a4d1110187dd0bdf7c4e9ee4b94833b",
+    "diagnostic-failure.json": "26afecf62d18e7f1b31c5f0fc6791380615e8b9ba324c152b33529facb2dedc9"
+  }
+}

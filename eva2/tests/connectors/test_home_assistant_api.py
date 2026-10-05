@@ -101,3 +101,41 @@ def test_background_completion_rejects_missing_or_malformed_api_result(result):
     receipt = SimpleNamespace(call=SimpleNamespace(name="home_assistant_request", arguments={}),
         output={"status": "verified", "result": result})
     assert not _has_completed_tool_evidence([receipt])
+
+
+@pytest.mark.parametrize("transport,path", [("rest", "/api/template"), ("websocket", "")])
+def test_malformed_json_is_a_local_failed_receipt_without_transport(monkeypatch, transport, path):
+    from eva.application.conversation import ConversationActionCall
+    def no_transport(*args, **kwargs):
+        pytest.fail("invalid JSON must never open HA transport")
+    monkeypatch.setattr("eva.adapters.connectors.home_assistant_api.httpx.Client", no_transport)
+    tool = HomeAssistantApiTool(base_url="http://ha.local", token="local-fixture")
+    tool.admin._session = no_transport
+    call = ConversationActionCall("bad-json", "home_assistant_request",
+        args(transport=transport, path=path, method="POST", body_json='{"template":'))
+    prepared = asyncio.run(tool.prepare(None, call))
+    request = SimpleNamespace(arguments=prepared.arguments)
+    dispatch = asyncio.run(tool.execute(request))
+    proof = asyncio.run(tool.observe(request, dispatch))
+    result = proof.evidence["observation"]
+    assert result["success"] is False and result["request_sent"] is False
+    assert result["error_code"] == "invalid_body_json"
+    assert proof.evidence["source"] == "home_assistant_request_validation"
+    assert "http_status" not in result and "response_json" not in result
+    assert proof.evidence["external_state_verified"] is False
+
+
+@pytest.mark.parametrize("changes", [
+    {"path": "https://elsewhere/api/", "body_json": "{"},
+    {"transport": "websocket", "path": "/api/", "body_json": "{"},
+    {"transport": "websocket", "path": "", "body_json": '{"type":"auth"}'},
+    {"transport": "websocket", "path": "", "body_json": '{"type":"get_services","access_token":"not-allowed"}'},
+])
+def test_request_boundary_failures_are_not_correctable_json_receipts(changes):
+    from eva.application.conversation import ConversationActionCall
+    tool = HomeAssistantApiTool(base_url="http://ha.local", token="local-fixture")
+    call = ConversationActionCall("bad-boundary", "home_assistant_request", args(**changes))
+    with pytest.raises(ConversationConflict):
+        asyncio.run(tool.prepare(None, call))
+    with pytest.raises(ConversationConflict):
+        asyncio.run(tool.execute(SimpleNamespace(arguments=call.arguments)))

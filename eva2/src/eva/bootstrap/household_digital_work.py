@@ -57,8 +57,12 @@ class HouseholdDigitalAuthority:
             "engine_release_sha256", "output_schema_sha256")
         legacy_read = (not require_current_release and profile.accepts_prior_profile(
             spec.grant, actual.worker_profile_release_sha256))
+        # Tool descriptions/provider configuration seal execution, not ownership
+        # of retained task data. Reading still validates the current actor, grant,
+        # policy, origin and data schema; dispatch retains the exact model release.
         if (any(getattr(actual, key) != getattr(current, key) for key in release_fields
-                if not (legacy_read and key == "worker_profile_release_sha256"))
+                if not (legacy_read and key == "worker_profile_release_sha256")
+                and not (not require_current_release and key == "model_profile_release_sha256"))
                 or (require_current_release and actual.worker_program_sha256 != current.worker_program_sha256)
                 or not profile.accepts_grant(spec.grant)
                 or spec.model_profile_id != profile.model_profile_id

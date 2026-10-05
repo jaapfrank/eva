@@ -15,6 +15,8 @@ from datetime import UTC, datetime
 import hmac
 import json
 import hashlib
+import logging
+from pathlib import PurePath
 import re
 from typing import Literal, Protocol
 
@@ -23,6 +25,24 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, ConfigDict, Field
 
 from eva.application.audio_playback import AudioPlaybackResult, PlaybackConflict
+
+
+_LOG = logging.getLogger(__name__)
+
+
+def _log_response_failure(error: Exception, request_id: str) -> None:
+    """Keep diagnosable code locations without logging messages or frame locals."""
+    frames = []
+    traceback = error.__traceback__
+    while traceback is not None:
+        code = traceback.tb_frame.f_code
+        frames.append([PurePath(code.co_filename).name, code.co_name, traceback.tb_lineno])
+        traceback = traceback.tb_next
+    _LOG.error("native_voice_response_failed %s", json.dumps({
+        "request_id_sha256": hashlib.sha256(request_id.encode()).hexdigest(),
+        "exception_type": type(error).__name__,
+        "frames": frames[-16:],
+    }, separators=(",", ":")))
 
 
 class VoiceRequest(BaseModel):
@@ -322,7 +342,8 @@ def install_native_voice(app: FastAPI, service: NativeVoiceService | None) -> No
             raise HTTPException(409, "Voice request stopped") from None
         except HTTPException:
             raise
-        except Exception:
+        except Exception as error:
+            _log_response_failure(error, payload.request_id)
             raise HTTPException(503, "Voice response unavailable") from None
         finally:
             if not worker.done():
@@ -368,7 +389,8 @@ def native_stream_response(service, payload):
                 ensure_ascii=False) + "\n").encode()
         except asyncio.CancelledError:
             raise
-        except Exception:
+        except Exception as error:
+            _log_response_failure(error, payload.request_id)
             yield (json.dumps({"request_id": payload.request_id, "type": "error"}) + "\n").encode()
         finally:
             accepting = False

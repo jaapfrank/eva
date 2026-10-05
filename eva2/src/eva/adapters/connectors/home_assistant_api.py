@@ -26,6 +26,10 @@ _ACTION = "home_assistant_request"
 _MAX_BYTES = 2_097_152
 
 
+class _InvalidRequestBody(ConversationConflict):
+    """Correctable JSON syntax error, detected before any HA transport."""
+
+
 class HomeAssistantApiTool:
     action_names = (_ACTION,)
 
@@ -84,9 +88,10 @@ class HomeAssistantApiTool:
                     "limit": {"type": "integer", "minimum": 1, "maximum": 50}},
                 "required": ["transport", "method", "path", "body_json", "response_pointer", "offset", "limit"]},
             completion_guidance=(
-                "result is the persisted API response, not independent physical-state proof. "
+                "result is a persisted API response or local request rejection, not physical-state proof. "
+                "request_sent=false means local validation rejected the input before HA transport. "
                 "Check http_status/success and response_json before claiming success. Read changes "
-                "back with another request. A verified receipt only confirms receipt of the API response. "
+                "back with another request. A verified receipt confirms a persisted API response or local rejection; inspect success and request_sent. "
                 "If success is false, inspect the error and correct the request or read current state; "
                 "do not claim completion. Never repeat an uncertain write automatically. "
                 "Use ordinary Dutch names in your reply, not API implementation details."
@@ -106,10 +111,6 @@ class HomeAssistantApiTool:
                 raise ConversationConflict("Home Assistant API text is invalid")
         if a["response_pointer"] and not a["response_pointer"].startswith("/"):
             raise ConversationConflict("Response pointer must be a JSON Pointer")
-        try:
-            body = json.loads(a["body_json"]) if a["body_json"] else None
-        except ValueError as error:
-            raise ConversationConflict("Home Assistant request body must be JSON") from error
         if a["transport"] == "rest":
             path = a["path"]
             parsed = urlsplit(path)
@@ -118,7 +119,13 @@ class HomeAssistantApiTool:
                 or "\\" in decoded or any(part in {".", ".."} for part in decoded.split("/"))
                 or any(ord(char) < 32 for char in path) or "%" in decoded):
                 raise ConversationConflict("Home Assistant path must remain on the configured API")
-        elif (a["path"] or not isinstance(body, dict) or not isinstance(body.get("type"), str)
+        elif a["path"]:
+            raise ConversationConflict("WebSocket request path must be empty")
+        try:
+            body = json.loads(a["body_json"]) if a["body_json"] else None
+        except ValueError as error:
+            raise _InvalidRequestBody("Home Assistant request body must be JSON") from error
+        if a["transport"] == "websocket" and (not isinstance(body, dict) or not isinstance(body.get("type"), str)
               or not body["type"] or "id" in body or "access_token" in body
               or body["type"] in {"auth", "subscribe_events", "subscribe_trigger"}):
             raise ConversationConflict("Use a single authenticated WebSocket command without id or token")
@@ -128,7 +135,12 @@ class HomeAssistantApiTool:
         del turn
         if call.name != _ACTION:
             raise ConversationConflict("Home Assistant API tool is unavailable")
-        args, _ = self._arguments(call.arguments)
+        try:
+            args, _ = self._arguments(call.arguments)
+        except _InvalidRequestBody:
+            # Preserve this attempted step and its local negative receipt through
+            # the existing durable route. execute validates again before transport.
+            args = dict(call.arguments)
         camera_get = (args["transport"] == "rest" and args["method"] == "GET"
                       and re.fullmatch(r"/api/camera_proxy/camera\.[a-z0-9_]+", urlsplit(args["path"]).path))
         return ConversationToolPreparation(
@@ -139,7 +151,12 @@ class HomeAssistantApiTool:
         )
 
     def _request(self, arguments):
-        a, body = self._arguments(arguments)
+        try:
+            a, body = self._arguments(arguments)
+        except _InvalidRequestBody:
+            return {"success": False, "request_sent": False,
+                "error_code": "invalid_body_json",
+                "guidance": "body_json must contain valid JSON. This request was not sent to Home Assistant. Correct its JSON and submit a new tool step; preserve previous successful actions and do not repeat earlier writes. This rejection is not task completion."}
         if a["transport"] == "rest":
             with httpx.Client(timeout=15, follow_redirects=False, trust_env=False) as client:
                 with client.stream(a["method"], self.base_url + a["path"],
@@ -216,5 +233,7 @@ class HomeAssistantApiTool:
             or dispatch.details.get("request_sha256") != canonical_sha256(request.arguments)
             or dispatch.provider_ref != canonical_sha256(result)):
             raise RuntimeError("Home Assistant durable API response differs")
+        source = ("home_assistant_request_validation" if result.get("request_sent") is False
+                  else "home_assistant_api_response")
         return ToolProofObservation("verified", {}, {"observation": result,
-            "source": "home_assistant_api_response", "external_state_verified": False})
+            "source": source, "external_state_verified": False})

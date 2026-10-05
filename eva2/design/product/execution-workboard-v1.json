@@ -1035,8 +1035,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T00:19:18.098429+00:00",
+        "checkedAt": "2026-10-05T00:50:53.708390+00:00",
         "deliveries": [
+          {
+            "title": "T2 klaar · Algemene huisbediening en herstel geïnstalleerd",
+            "date": "5 oktober",
+            "state": "installed",
+            "result": "De vier oorspronkelijke HA-taken zijn afgerond. Laatste proef: één schrijfactie, foutieve JSON lokaal afgewezen, zelf gecorrigeerd en juiste waarde teruggelezen. Eindresultaat terug bij de oorspronkelijke opdracht na65,444s.",
+            "remaining": "29/44 kleine taken klaar. Historische timeout niet verklaard; snelheid en fysieke speakerbeleving blijven aparte beperkingen. Geen volledige project- of gezinsacceptatie.",
+            "source": "eva2/evidence/product/t2-ha-input-recovery-installed-20261005.json"
+          },
           {
             "title": "I2.2 klaar · Eva maakt en gebruikt zelf een waarnemingsautomatisering",
             "date": "5 oktober",
@@ -3641,14 +3649,14 @@
           }
         ],
         "now": {
-          "title": "I2.2 opgeleverd · 28/44 kleine taken afgerond",
+          "title": "T2 · Algemene huisbediening technisch afgerond",
           "state": "completed",
           "owner": "Codex",
-          "detail": "Zelfgekozen bron, zelfgeschreven automatisering en echte terugmelding geïnstalleerd en onafhankelijk gecontroleerd. Geen proef meer actief. De volgende gerichte HA-invoercorrectie staat hieronder."
+          "detail": "Alle vier oorspronkelijke T2-taken klaar. Eva herstelde een foutief HA-verzoek, behield haar geslaagde werk en bracht het gecontroleerde resultaat terug. Kern, werker en installatiepakket bijgewerkt; onafhankelijke review akkoord. 29/44 kleine taken klaar."
         },
         "next": {
-          "title": "T2 · Corrigeerbare HA-invoer laten herstellen",
-          "detail": "De exacte fout is vastgesteld. Eva moet ongeldige JSON in één nieuwe toolaanroep kunnen herstellen zonder haar eerdere geslaagde werk opnieuw te doen. Nog niet gebouwd of als klaar geteld."
+          "title": "I2.1 · Zelf relevante bronnen ontdekken en kiezen",
+          "detail": "Bestaande bronkeuze en algemene uitvoering hergebruiken. De echte camera-/agendaproef wacht afzonderlijk op de al open gegevensvraag. Geen nieuwe bronkeuzefunctie of bredere herbouw."
         },
         "ownerAction": {
           "title": "Eén gezamenlijke toestemmingsvraag beantwoorden",
@@ -3660,7 +3668,7 @@
           "expected": "De vergelijkingsblokkade geldt uitsluitend voor de afgeschermde evaluatie. Onafhankelijk productwerk gaat verder; voor de opgeleverde automatiseringsvaardigheid hoef je niets te doen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-05T00:19:18.098429+00:00"
+        "reviewedAt": "2026-10-05T00:50:53.708390+00:00"
       },
       "reviewedAt": "2026-10-05T00:19:18.098429+00:00"
     },
@@ -13140,7 +13148,7 @@
           ]
         }
       ],
-      "nextAction": "De nieuwe bewezen HA-invoerfout gericht corrigeren via de bestaande uitvoerroute; eerdere geslaagde writes behouden. Historische timeout niet opnieuw proberen zonder nieuw bewijs.",
+      "nextAction": "I2.1: zelfstandige bronkeuze afronden met bestaande hulpmiddelen en toegestaan bewijs. Alleen de echte camera-/agendaproef wacht op de al open gegevensvraag; die blokkeert geen ander uitvoerbaar werk.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -14440,7 +14448,7 @@
           "dependsOn": [],
           "outcome": "Algemene huisbediening",
           "effort": "M",
-          "status": "in_progress",
+          "status": "completed",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "General HA API for both speakers; real harmless automation created, edited and read back.",
@@ -14457,14 +14465,14 @@
           "baseCommit": "e566149d67301eed16af9883a33466c0861492d6",
           "owner": "/root",
           "effortNotice": "One task up to existing5min deadline, then inspection/review/cleanup; approximately15min active work.",
-          "latestEvidence": "eva2/evidence/product/t2-grouped-reads-installed-20261002.json",
+          "latestEvidence": "eva2/evidence/product/t2-ha-input-recovery-installed-20261005.json",
           "assignment": {
-            "stage": "installed_reviewed_efficiency_improvement_complete",
+            "stage": "original_t2_outcomes_installed_complete",
             "outcome": "Preserve proven contextual room control while reducing independent state-read model rounds through existing generic HA API.",
             "scope": "Shared conversation guidance and grouped HA reads; no task-specific rule.",
             "doneWhen": "Same complete selection/effect/readback/restoration with fewer model rounds and measured usage; preserve failure/unknown handling and prior task acceptance.",
             "ownership": "Coordinator; independent review GO",
-            "result": "Actual new room execution succeeded; measured model rounds/input lower in one case, full readback retained. Independent final GO. No new task count; T2.1 unproved historical timeout stays open.",
+            "result": "T2.1–T2.4 afgerond volgens bestaande eindvoorwaarden. Bewijs voor contextuele huisbediening, automatiseringen, resultaatcontrole en herstel behouden. Geen algemene snelheids-, foutloosheids- of gezinsacceptatieclaim.",
             "baseCommit": "7eab21f277b595c13291c0f5459f3a6dd0754ef3",
             "files": [
               "eva2/src/eva/adapters/connectors/home_assistant_api.py",
@@ -14476,36 +14484,43 @@
             "estimate": "One small shared guidance change, existing focused checks and bundled independent review/install. One changed-cause request for actual measured outcome; no unchanged repeats. Credits unknown.",
             "activeWorkers": []
           },
-          "nextAction": "T2.2/T2.3/T2.4 functionally complete; retain installed measured read improvement. T2.1 awaits concrete failure evidence, no unchanged repetition. Continue independent T3.",
+          "nextAction": "De vier oorspronkelijke T2-taken zijn technisch afgerond. Algemene huisbediening via de gedeelde kern blijft geïnstalleerd; fysieke speakerbeleving valt onder C3/C4.",
           "dashboardComponent": "tools",
           "remainingTasks": [
             {
               "id": "T2.1",
               "title": "Resterende HA-timeout gericht oplossen",
-              "status": "planned",
+              "status": "completed",
               "kind": "verbeteren",
               "doneWhen": "Een concrete falende uitvoerstap verklaard en verbeterd; geen ongewijzigde proefherhaling of timeoutverhoging zonder bewijs.",
-              "owner": "Codex",
+              "owner": "Codex /root",
               "assignment": {
-                "baseCommit": "ec315626",
-                "outcome": "Identify the failed Astra tool-followup boundary and fix only a demonstrated remaining cause.",
+                "baseCommit": "bc6116aaae1389792c6de5678abec9c59027b5a4",
+                "owner": "/root",
+                "stage": "installed_live_recovery_completed",
+                "activeWorkers": [],
+                "existing": "General HA API, durable indexed tool receipts and continuation after result.success=false already installed.",
+                "gap": "Malformed body_json raises before preparation and aborts the whole work despite prior successful writes. Exact failure fingerprint recorded in I2.2 evidence.",
+                "outcome": "Eva corrects malformed new HA-request JSON within the same task, preserving previous successful steps and requiring actual successful readback.",
                 "files": [
-                  "eva2/src/eva/adapters/model/openai_codex_provider.py",
-                  "focused provider tests",
-                  "eva2/evidence/product/t2-timeout-diagnosis-20260929.json"
+                  "eva2/src/eva/adapters/connectors/home_assistant_api.py",
+                  "focused connector/Postgres tests",
+                  "same file in core/worker/package; root owns board/evidence"
                 ],
-                "estimate": "One ordinary owner request, existing task/provider caps, no automatic repeat; credits unknown.",
-                "doneWhen": "Concrete failure linked to recorded request/stream and smallest sufficient correction, or explicit evidence gap with no speculative timeout increase.",
-                "stage": "bounded_diagnosis_finished_cause_unproven",
-                "activeWorkers": []
+                "estimate": "Reuse installed code; focused adapter and durable sequence verification, one installed synthetic recovery if it resolves remaining proof. Actual runtime usage recorded; credits unknown.",
+                "endCondition": "Een concrete falende uitvoerstap verklaard en verbeterd; geen ongewijzigde proefherhaling of timeoutverhoging zonder bewijs.",
+                "historicalTimeout": "Cause remains unproven; this correction must not be reported as the historical timeout diagnosis.",
+                "independentReview": "eva2/reviews/t2-ha-input-recovery-20261005.md",
+                "result": "Eén schrijfactie, lokale JSON-afwijzing zonder HA-transport, gecorrigeerde uitlezing en juiste terugmelding op geïnstalleerde versie. Oude taakcontext blijft leesbaar na gewijzigde toolinstructies; uitvoering houdt exact profiel.",
+                "actual": "22 adaptergevallen,28 routegevallen,6 opslaggevallen; live herstel65,444s/ontvangst24,078s. 7 bekende modelantwoorden;38.715 invoer-/870 uitvoertokens. Geld/credits onbekend."
               },
-              "latestEvidence": "eva2/evidence/product/t2-readonly-followup-20260929.json",
-              "remaining": "Timeout niet gereproduceerd; uitleestaak geslaagd. Oorzaak nog onbekend. Geen ongewijzigde proefherhaling; nieuwe concrete fout met geïnstalleerde meting nodig voor gerichte reparatie.",
-              "nextAction": "De nieuwe bewezen HA-invoerfout gericht corrigeren via de bestaande uitvoerroute; eerdere geslaagde writes behouden. Historische timeout niet opnieuw proberen zonder nieuw bewijs.",
+              "latestEvidence": "eva2/evidence/product/t2-ha-input-recovery-installed-20261005.json",
+              "remaining": "Oorspronkelijke kleine eindvoorwaarde gehaald voor een concrete verklaarde uitvoerfout. De historische HA-timeout blijft onverklaard; geen algemene foutloosheids- of snelheidsclaim.",
+              "nextAction": "Geen herhaling nodig. Gewone HA-opdrachten blijven beschikbaar via dezelfde kern; alleen een nieuwe concrete fout gericht opvolgen.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
-                "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
+                "readyWhen": "Afgerond; geen verplichte gebruikersproef of technische handeling nodig.",
                 "steps": [],
                 "blocksIndependentWork": false
               },
@@ -14527,7 +14542,10 @@
                 "phase": "Before external admission",
                 "nextAction": "Gebruik bestaande continuation om alleen deze corrigeerbare argumentfout terug te geven; autoriteitsfouten en onzekere effecten blijven hard stoppen.",
                 "priorTimeoutStatus": "De historische timeout blijft onverklaard; deze nieuwe concrete fout bewijst die oude oorzaak niet."
-              }
+              },
+              "checkedAt": "2026-10-05T00:50:53.708390+00:00",
+              "completedAt": "2026-10-05T00:50:53.708390+00:00",
+              "blocker": null
             },
             {
               "id": "T2.2",
@@ -14682,7 +14700,27 @@
             },
             "candidateEvidence": "eva2/evidence/product/t2-grouped-reads-installed-20261002.json",
             "remaining": "148s is still slow; intake/first effect slower and output tokens higher. No repeated optimisation chain. Historical timeout remains unproved."
-          }
+          },
+          "currentAssignment": {
+            "baseCommit": "bc6116aaae1389792c6de5678abec9c59027b5a4",
+            "owner": "/root",
+            "stage": "bounded_argument_recovery_implementation",
+            "activeWorkers": [
+              "/root"
+            ],
+            "existing": "General HA API, durable indexed tool receipts and continuation after result.success=false already installed.",
+            "gap": "Malformed body_json raises before preparation and aborts the whole work despite prior successful writes. Exact failure fingerprint recorded in I2.2 evidence.",
+            "outcome": "Eva corrects malformed new HA-request JSON within the same task, preserving previous successful steps and requiring actual successful readback.",
+            "files": [
+              "eva2/src/eva/adapters/connectors/home_assistant_api.py",
+              "focused connector/Postgres tests",
+              "same file in core/worker/package; root owns board/evidence"
+            ],
+            "estimate": "Reuse installed code; focused adapter and durable sequence verification, one installed synthetic recovery if it resolves remaining proof. Actual runtime usage recorded; credits unknown.",
+            "endCondition": "Een concrete falende uitvoerstap verklaard en verbeterd; geen ongewijzigde proefherhaling of timeoutverhoging zonder bewijs.",
+            "historicalTimeout": "Cause remains unproven; this correction must not be reported as the historical timeout diagnosis."
+          },
+          "completedAt": "2026-10-05T00:50:53.708390+00:00"
         },
         {
           "id": "T3",
@@ -16637,7 +16675,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "T2",
+      "activeSliceId": "I2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

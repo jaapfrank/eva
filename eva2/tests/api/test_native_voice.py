@@ -452,3 +452,75 @@ def test_automation_handoff_outlives_audio_window_without_changing_speaker_timeo
                 assert observed == [None]
         await service.close()
     asyncio.run(run())
+
+
+@pytest.mark.parametrize("stream", [False, True], ids=["json", "ndjson"])
+def test_response_failure_logs_only_bounded_code_locations(stream, caplog):
+    import hashlib
+    import json
+    import logging
+
+    exception_message = "private-exception-message"
+    prompt = "private-household-prompt"
+    token = "synthetic"
+    local_secret = "private-frame-local"
+
+    def fail_with_private_context(depth, private_prompt):
+        private_local = local_secret
+        if depth:
+            return fail_with_private_context(depth - 1, private_prompt)
+        assert private_local
+        raise RuntimeError(f"{exception_message}: {private_prompt}; token={token}")
+
+    async def responder(request):
+        fail_with_private_context(24, request.text)
+
+    async def run():
+        service, ledger, client = setup(responder)
+        data = {**payload(), "text": prompt, "delivery_mode": "automation"}
+        try:
+            async with client:
+                response = await client.post("/internal/v1/ha-voice/turns", json=data,
+                    headers={"Accept": "application/x-ndjson"} if stream else {})
+            if stream:
+                assert response.status_code == 200
+                assert [json.loads(line) for line in response.text.splitlines()] == [
+                    {"request_id": data["request_id"], "type": "error"}]
+            else:
+                assert response.status_code == 503
+                assert response.json() == {"detail": "Voice response unavailable"}
+
+            records = [record for record in caplog.records
+                       if record.name == "eva.adapters.api.native_voice"]
+            assert len(records) == 1
+            record = records[0]
+            assert record.levelno == logging.ERROR
+            assert record.exc_info is None and record.stack_info is None
+            message = record.getMessage()
+            prefix = "native_voice_response_failed "
+            assert message.startswith(prefix)
+            diagnostic = json.loads(message[len(prefix):])
+            assert set(diagnostic) == {"request_id_sha256", "exception_type", "frames"}
+            assert diagnostic["request_id_sha256"] == hashlib.sha256(data["request_id"].encode()).hexdigest()
+            assert diagnostic["exception_type"] == "RuntimeError"
+            assert len(diagnostic["frames"]) == 16
+            assert diagnostic["frames"][-1][:2] == ["test_native_voice.py", "fail_with_private_context"]
+            for filename, function, line in diagnostic["frames"]:
+                assert filename and "/" not in filename and "\\" not in filename
+                assert isinstance(function, str) and function
+                assert type(line) is int and line > 0
+
+            exposed = caplog.text + response.text + str(response.headers)
+            for secret in (exception_message, prompt, token, local_secret):
+                assert secret not in exposed
+            assert data["request_id"] not in caplog.text
+            assert "RuntimeError" not in response.text
+            assert ledger.states[data["device_id"], data["request_id"]] == "stopped"
+            assert not ledger.digests
+        finally:
+            await service.close()
+            await client.aclose()
+        assert not service._workers
+
+    with caplog.at_level(logging.ERROR, logger="eva.adapters.api.native_voice"):
+        asyncio.run(run())

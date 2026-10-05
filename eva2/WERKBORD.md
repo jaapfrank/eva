@@ -1,23 +1,33 @@
 # EVA2 werkbord
 
-**Opgeleverd — I2.2: Eva maakt en gebruikt zelf een waarnemingsautomatisering.**
-Eva koos de relevante fictieve bron, schreef zelf de automatisering en verbeterde
-haar configuratie na review. Echte sensorwijzigingen 55→24 en 55→22 leverden de juiste
-inhoudelijke melding op. Tweede resultaat: 21,804 seconden, correct gekoppeld aan
-gesprek en speaker. Beide automatiseringen eindigden; proefobjecten zijn opgeruimd.
-De algemene correctie draait in kern, werker en HA en zit in het installatiepakket.
-88 gerichte controles en onafhankelijke review; **28/44** kleine taken afgerond.
+**Opgeleverd — T2: algemene huisbediening technisch afgerond.**
+De vier oorspronkelijke T2-taken zijn klaar. Eva kiest apparaten uit context,
+maakt/wijzigt automatiseringen, controleert resultaten en kan nu een lokaal
+foutief HA-verzoek zelf corrigeren zonder haar eerdere geslaagde werk te herhalen.
+De geïnstalleerde herstelproef schreef één keer en las daarna werkelijk 22 terug.
+Resultaat terug bij de oorspronkelijke opdracht na 65,444 seconden; ontvangst na 24,078 seconden.
+Kern, werker en bestaand installatiepakket gecontroleerd; onafhankelijke review akkoord.
+**29/44 oorspronkelijke kleine taken klaar.**
 
-**Beperking:** de correctiejob zelf bleef `ambiguous/internal_error`: een volgende
-toolaanroep had ongeldige JSON, vóór externe uitvoering. Het gemaakte werk bleef
-behouden en is daarna werkelijk gebruikt. Die fout is niet als succes omgeboekt.
-I2.1, het volledige initiatiefonderdeel en menselijke acceptatie blijven open.
-[Resultaat, verbruik en beperkingen](evidence/product/i2-observation-automation-installed-20261005.json).
+Nieuwe gesprekken kunnen bestaande taakstatussen blijven lezen wanneer algemene
+toolinstructies wijzigen. Uitvoering en gegevensrechten blijven gecontroleerd.
+22 adapter-, 28 route- en 6 opslaggevallen geslaagd. De live proef gebruikte 7 bekende
+modelantwoorden: 38.715 invoer-/870 uitvoertokens; creditkosten onbekend.
+De historische HA-timeout blijft onverklaard; dit is geen snelheids-, foutloosheids-
+of fysieke speakeracceptatieclaim.
+[Resultaat en beperkingen](evidence/product/t2-ha-input-recovery-installed-20261005.json).
 
-**Volgende — bestaande HA-uitvoering:** die corrigeerbare invoerfout aan Eva
-teruggeven zodat zij alleen de argumenten herstelt. Niet opnieuw eerdere writes
-uitvoeren. Diagnose klaar; productcorrectie nog niet gestart. De historische
-HA-timeout blijft apart onverklaard. Geen nieuwe taak of opgehoogde afrondingsteller.
+**Daarvoor opgeleverd — I2.2: zelf een waarnemingsautomatisering maken en gebruiken.**
+Eva koos de relevante fictieve bron, schreef en verbeterde de automatisering.
+Echte sensorwijzigingen 55→24 en 55→22 leverden de juiste gekoppelde melding op.
+Proefobjecten zijn opgeruimd; oorspronkelijke acceptaties blijven behouden.
+[Bewijs](evidence/product/i2-observation-automation-installed-20261005.json).
+
+**Volgende — I2.1: zelfstandig relevante bronnen ontdekken en kiezen.**
+Bestaande bronkeuze en algemene uitvoering hergebruiken. De echte camera-/agendaproef
+wacht apart op de al open gegevensvraag; geen vooraf gekozen vuilnisbakfunctie,
+nieuwe hoofdtaak of brede herbouw. Andere uitvoerbare taken worden niet door die
+ene externe afhankelijkheid stilgezet. Het volledige app-goal blijft actief.
 
 **P1 afgerond: versies/toegang, vaste taken, scorers en meetbudgetten. Stand 27/44 kleine taken.**
 De oorspronkelijke voorwaarde is onafhankelijk gecontroleerd. Eva1/Eva2 en Agent Zero

@@ -673,3 +673,141 @@ def test_household_scheduled_resume_keeps_time_after_delayed_admission(database,
     assert claim is not None and claim.spec.work_id == successor_id
     assert claim.spec.parent_task_id == first_id
     assert HouseholdScheduledWork(x.server).run_once() == "idle"
+
+
+@pytest.mark.parametrize("recover", [False, True])
+def test_household_repairs_local_json_without_repeating_successful_write(database, monkeypatch, recover):
+    from contextlib import contextmanager
+    from eva.application.conversation import ConversationConflict
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+    x = digital_setup(database, "hh-json-recovery-" + str(recover))
+    turn = x.service.turn(str(uuid4()), "Bewaar de proefwaarde, lees haar terug en herstel een foutief argument zelf.")
+    admitted = x.service.execute("digital", turn, request_key="json-recovery", task=turn.text)
+    store = x.server.store
+    spec = store.load(admitted["work"]["work_id"], **x.service._owner,
+                      household_origin=x.service.origin(turn)).spec
+    PostgresConversationJournal(database, x.server.conversation_scope).commit_reply(turn,
+        GroundedReply(turn.conversation_id, turn.message_id, "Ik neem dit aan.", (), turn.occurred_at, "contact"))
+    transports = []
+    class Response:
+        status_code = 200
+        headers = {"content-type": "application/json"}
+        def iter_bytes(self): yield b'{"state":"22"}'
+    class Client:
+        def __init__(self, **kwargs): pass
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+        @contextmanager
+        def stream(self, method, url, **kwargs):
+            transports.append((method, url, kwargs["json"]))
+            yield Response()
+    monkeypatch.setattr("eva.adapters.connectors.home_assistant_api.httpx.Client", Client)
+    api = HomeAssistantApiTool(base_url="http://ha.invalid", token="fixture")
+    route = PostgresExternalConversationTools(database, api, api, authorize_turn=x.service.validate_authority)
+    seen = []
+    class Memory:
+        def recall_for_presence(self, query): return HindsightMemoryEngine._empty_presence(query)
+    class Model:
+        def generate(self, source, identity, memory, recent_messages, *, completed_action=None, **kwargs):
+            if completed_action is None:
+                identifier, path, body = "write", "/api/states/sensor.json_fixture", '{"state":"22"}'
+            elif completed_action.call.call_id == "write":
+                identifier, path, body = "invalid", "/api/template", '{"template":'
+            elif completed_action.call.call_id == "invalid":
+                seen.append(completed_action)
+                result = completed_action.output["result"]
+                assert result["request_sent"] is False and result["success"] is False
+                assert completed_action.output["proof"]["evidence"]["source"] == "home_assistant_request_validation"
+                if recover:
+                    assert "home_assistant_request" in kwargs["available_actions"]
+                    identifier, path, body = "read", "/api/template", '{"template":"fixture state"}'
+                else:
+                    identifier = None
+            else:
+                assert json.loads(completed_action.output["result"]["response_json"]) == {"state": "22"}
+                identifier = None
+            call = None if identifier is None else ConversationActionCall(identifier, "home_assistant_request",
+                dict(transport="rest", method="POST", path=path, body_json=body, response_pointer="", offset=0, limit=10))
+            return ConversationModelResult("De proefwaarde is 22." if call is None else None,
+                "controlled", call, usage=ConversationModelUsage.measured(
+                    tool_calls=int(call is not None), input_tokens=30, output_tokens=10))
+    runner = DelegatedDigitalRunner(store, x.profile,
+        source_loader=HouseholdDigitalSourceLoader(database, x.server.conversation_scope, x.server.authority),
+        memory=Memory(), model=Model(), identity=IdentityProfile("Eva", "Warm", ("Be honest",)),
+        connector_tools=(route,), clock=lambda:x.clock[0])
+    claim = store.claim_next(worker_id="worker:hh-json", release=x.profile.release, now=x.clock[0])
+    call = store.start_call(claim, now=x.clock[0])
+    outcome = asyncio.run(runner.run(spec, call_id=call.call_id))
+    assert len(seen) == 1
+    assert [url for _, url, _ in transports] == (["http://ha.invalid/api/states/sensor.json_fixture",
+        "http://ha.invalid/api/template"] if recover else ["http://ha.invalid/api/states/sensor.json_fixture"])
+    # A fresh wrapper replays the persisted rejection without preparing or sending.
+    with background_execution(BackgroundExecutionScope(turn, spec.execution_id, lambda candidate: None)):
+        fresh = PostgresExternalConversationTools(database, api, api, authorize_turn=x.service.validate_authority)
+        assert fresh.pending(turn, step_index=1) == seen[0]
+        assert fresh.execute(turn, seen[0].call, step_index=1) == seen[0]
+        with pytest.raises(ConversationConflict, match="replay differs"):
+            fresh.execute(turn, ConversationActionCall("invalid", "home_assistant_request",
+                {**seen[0].call.arguments, "body_json": "{}"}), step_index=1)
+    assert len(transports) == (2 if recover else 1)
+    if recover:
+        assert outcome.status == "succeeded", outcome
+        store.record_success(call, outcome.result, now=x.clock[0])
+        delivered = x.service.poll(turn)
+        assert delivered["result"] == "De proefwaarde is 22."
+        assert delivered["origin_message_id"] == turn.message_id
+    else:
+        assert outcome.status == "incomplete_work" and outcome.result is None
+
+
+def test_native_retained_digital_work_survives_model_configuration_update(database):
+    from tests.postgres.test_native_task_continuity import native
+
+    x = digital_setup(database, "hh-native-model-profile-read")
+    original = native(x, "before-profile-update")
+    identifier = original.service.execute("digital", original.turn, request_key="start",
+        task="Controleer de fictieve proefwaarde.")["work"]["work_id"]
+    previous = original.service._load(identifier, original.service.origin(original.turn)).spec
+    original.service.current("close")
+
+    old_authority = x.server.authority
+    current_profile = replace(x.profile, configuration_sha256="f" * 64)
+    assert previous.model_profile_release_sha256 != current_profile.release.model_profile_release_sha256
+    authority = with_household_digital(old_authority.parent, current_profile,
+        old_authority._settings_loader)
+    x.server.authority = authority
+    x.server.store._household_authorizer = authority.validate_spec
+    x.profile = current_profile
+
+    current = native(x, "after-profile-update")
+    metadata = current.service.active_work_metadata(current.turn)
+    assert {job["work_id"] for job in metadata["jobs"]} == {identifier}
+    actions = ScopedDelegatedWorkActions(None, x.server)
+    assert identifier in "\n".join(actions.active_context(current.turn))
+    result = current.service.execute("get", current.turn, request_key="read-old", work_id=identifier)
+    assert result["work"]["work_id"] == identifier
+    assert result["work"]["state"] == "admitted"
+    authority.validate_read_spec(previous)
+
+    # Read compatibility must not relabel old work as executable by this release.
+    with pytest.raises(ValueError, match="differs from current authority"):
+        authority.validate_spec(previous)
+    assert x.server.store.claim_next(worker_id="worker:new-model-profile",
+        release=current_profile.release, now=x.clock[0]) is None
+    assert not x.server.store.household_authority_current(SimpleNamespace(spec=previous))
+
+    invalid_grant = previous.grant.model_copy(update={
+        "maximum_claims_before_call_start": previous.grant.maximum_claims_before_call_start + 1})
+    with pytest.raises(ValueError, match="differs from current authority"):
+        authority.validate_read_spec(previous.model_copy(update={"grant": invalid_grant}))
+    assert current.service.execute("get", current.turn, request_key="read-still-valid",
+        work_id=identifier)["work"]["work_id"] == identifier
+
+    x.policies[0] = x.policies[0].model_copy(update={"state": "revoked"})
+    with pytest.raises(ValueError):
+        authority.validate_read_spec(previous)
+    with pytest.raises(ValueError):
+        current.service.active_work_metadata(current.turn)
+    with pytest.raises(ValueError):
+        current.service.execute("get", current.turn, request_key="revoked-read", work_id=identifier)
+    assert actions.active_context(current.turn) == ()
