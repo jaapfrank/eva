@@ -1,0 +1,45 @@
+{
+  "contract": "EvaComparisonExecutionClosure/v1",
+  "checkedAt": "2026-10-05T16:21:16.122080+00:00",
+  "case": "EV003-CM-10",
+  "epoch": 1,
+  "eva1": {
+    "wrapperExit": 0,
+    "nativeOutcome": "execution_unknown",
+    "nativeTailComplete": false,
+    "receiptSha256": "3d540a29b7f7d450782614497fb7ce5a9c8507be3b9fa7fd756c09bf580a5d4c",
+    "databaseBackupSha256": "3901503c10e1e30200307286545f2851531353e97588c60857250ecbe49efcaf",
+    "databaseBackupVerified": true,
+    "sourceReview": "p2-cm10-projection-review-20261005.json",
+    "preflightFailure": "p2-cm10-eva1-preflight-review-20261005.json",
+    "accountingAndQuiescence": "remain unknown/incomplete; cleanup is not native success"
+  },
+  "eva2": {
+    "wrapperExit": 0,
+    "nativeOutcome": "native_sample_completed",
+    "receiptSha256": "9e611bee5b995190d330894e595ab302d41b2e70c18d3f491c033bf1edae556b",
+    "databaseDumpsVerified": true,
+    "workerSettlementVerified": true,
+    "cleanupBlockers": []
+  },
+  "hostEvidenceRetained": true,
+  "ownContainersAbsent": [
+    "ev003-eva1-cm10-epoch1",
+    "eva2-ev003-cm10-e1-core-20261003",
+    "eva2-ev003-cm10-e1-memory-20261003",
+    "eva2-ev003-cm10-e1-db-20261003"
+  ],
+  "removedOwnEmptyNetwork": {
+    "id": "12baf755966151a90469b83a9aa9631cbe47f84a653c125d397e7cb93f05922a",
+    "name": "ev003-eva1-cm10-epoch1",
+    "subnet": "10.254.248.0/24",
+    "gateway": "10.254.248.1",
+    "internal": true,
+    "createdAt": "2026-10-05T16:14:45.533871+00:00",
+    "earlierPreflight": "root TypeError on IPAM.Config=None before network created; exact failed native wrapper reviewed separately"
+  },
+  "eva2OwnNetworkAbsent": true,
+  "newModelCallsDuringClosure": 0,
+  "productionMutations": 0,
+  "assessment": "Independent original semantic/readback review pending separately."
+}

@@ -1,0 +1,125 @@
+{
+  "contract": "EvaIndependentProjectionReview/v1",
+  "recordedAt": "2026-10-05T16:13:00.194707+00:00",
+  "task": "P2.1",
+  "caseId": "EV003-CM-10",
+  "epoch": 1,
+  "caseSha256": "f4079147cdf844ff2c77ea2eed2416b508fb917229ac6b5e6265470b06afbf75",
+  "status": "original_pair_source_admitted_not_executed",
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "sourceProjection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm10-epoch1.private.json",
+    "sha256": "f98dace1058d2f7b723e6dfe135a6fbb6a8ad197c04d190c805393418cb09bbc"
+  },
+  "nativeProjection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm10-epoch1.native-inputs.private.json",
+    "sha256": "9b794404639c35468cbc81f3b7ae557964be843c2469e005bddb78f55508876d"
+  },
+  "independentReceipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm10-epoch1.projection-receipt.private.json",
+    "sha256": "b397dd23e1bc1e01a432b46eeaad064d74a4d34633a07cfef0bfa703577feccd"
+  },
+  "structural": {
+    "actor_indices": [
+      0,
+      1,
+      null,
+      null
+    ],
+    "session_indices": [
+      0,
+      1,
+      2,
+      2
+    ],
+    "clock_generations": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "offset_delta_milliseconds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "audience_kinds": [
+      "private_person",
+      "private_person",
+      "shared_unverified",
+      "shared_unverified"
+    ],
+    "setup_turns": 2,
+    "scenario_turns": 2,
+    "total_turns": 4,
+    "verified_identities": 2,
+    "sessions": 3,
+    "clock_advances": 0
+  },
+  "requirements": [
+    "Both private setup replies and memory settlement, counted within the same unchanged sample envelope.",
+    "Native identity/admission and retrieval decisions for the actual unverified shared session.",
+    "Exact offered contact/helper context, independent reply/readback and complete usage/stop coverage."
+  ],
+  "remainingNativeBinding": {
+    "eva1": "Source-bound original execution admitted; actual completion, usage, readbacks and unknown-human behavior remain unmeasured.",
+    "eva2": "Source-bound original execution admitted; actual completion, usage, readbacks and unknown-human behavior remain unmeasured."
+  },
+  "externalAccessOrActionsAdded": false,
+  "ownerAuthorizationSha256": "7470627a9ef09ae8f625e420251a19b36bf950bb17689ee369359e3e2f4df8b5",
+  "originalDataAndCriteriaUnchanged": true,
+  "participantAdmission": {
+    "eva1": true,
+    "eva2": true
+  },
+  "providerCalls": 0,
+  "nativeRuns": 0,
+  "protectedContentExported": false,
+  "authorityInterpretation": "Unknown human identity does not require unauthenticated transport. Registered shared transport is admissible only as separate native provenance, without private human substitution or extra facts.",
+  "dispatchTagsValidated": true,
+  "admissions": {
+    "eva1": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm10-epoch1/admission.json",
+      "sha256": "2147068beb83fe2498de7e2650d32f8d4e621a00bd1bb4e0ab4197083a365170"
+    },
+    "eva2": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm10-epoch1/admission.json",
+      "sha256": "10bf0d65a6ea432de0537b7d3ed36f7a12c011df4bc1dc0032df0b99a307debe"
+    }
+  },
+  "independentAdmissionReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm10-epoch1.independent-admission.private.json",
+    "sha256": "11afbf09e26187173facb73a10ef418866dd1f6c763c7924ec7c27044007dd53"
+  },
+  "sourceHashes": {
+    "eva1": {
+      "launch.py": "f79c3a7d2968a80d3897ddbb80c808c2f9884bd2d49cfd4fffb20bb75b8e8719",
+      "inspect-run.py": "4fc9c0cd8181a09aece4b6d609860794d2d5c4afde501e9af4547fd0738b4188",
+      "capture.mjs": "3ff86bd8fe7fe36a95f282a0c07f06586097801163f66e3c5f09c550e474812a",
+      "observed-worker.mjs": "22b9d5bfaea9882c36c413ad1182d7cd42251806f2bf9ac98264157a15105ee3",
+      "ha-fixture.mjs": "0e8825576fc41ac04af56586857b1720f1cdc859d753e8dca8edbe29264e4520",
+      "native-ha-sources.json": "bfc2e2eae6aa00dc659baedf5492a5926ddbd7f182e74d5c119c81bd3bfcf70a"
+    },
+    "eva2": {
+      "launch.py": "e14998b4638ba7076b030d4e024af0f6dea6ca6ad42dc8ef9c83712446860d9c",
+      "inspect-run.py": "2e07efc6ae763ce83346df5a944c11dd99f76678909c5230f2380e1f7d356f27",
+      "capture.py": "1c8d98cd9bc718ada05d2e6a1caea0016f710dfe29f098e9936231b9086bd60a"
+    }
+  },
+  "validation": "Eva1 new HA composition has source and syntax checks only before this original run; no prior end-to-end runtime success is claimed. Eva2 exact pinned RuntimeSettings/HouseholdVoiceAuthority configuration passed network-none without app/database/provider execution. Existing accounting/calendar evidence is reused; reviewer ran no tests or models.",
+  "boundaries": {
+    "scope": "Exactly the original EV003-CM-10 epoch1, Eva1 then Eva2, one native attempt per participant. No retry, extra sample, quota redistribution or admission of other entries.",
+    "original_controls": "Two private setup turns, then two turns by an unverified human in one shared session. Actors [0,1,null,null], sessions [0,1,2,2], clock generation zero throughout. Original text, criteria and fixed values are unchanged.",
+    "authority": "Authenticated local HA/device transport is not human authentication. No null-to-owner substitution, claimed-name identity, private-to-shared publication, fixture privacy filter or inserted personal facts. Native identity and context decisions remain observable and unmodified.",
+    "eva1_route": "Real authenticated HA websocket event capability, native voiceRequestProvenance identityTrusted=false, original agent/store and native32s delivery. Local REST offer and authentic ACK traverse native durable authority stages. Read-only promise/context observers and teardown handles do not replace native decisions. Private setup uses existing startWeb and signed ACK with shared SQLite across actor resume.",
+    "eva2_route": "Real native HA VoiceRequest ingress and ordinary isolated HouseholdVoiceAuthority policy/token/device binding. Native make_turn is observed and its exact return passed through unchanged. Device actor is audit provenance, not either private human. Same core/Hindsight/ledger handles private setup and shared turns.",
+    "readback": "Exact offered contact/helper bodies, actual identity/audience/ingress, reply and durable memory/ACK/journal readbacks are retained privately. Both-person snapshots remain available. Missing required observations stay unknown, never a fabricated pass or inferred product loss.",
+    "accounting": "Original one parent ledger and wall deadline span all setup/scenario turns and Eva1 resume. Native32s is not replaced by480s. Tool/effect limits, unknown usage and stop/close ownership remain unchanged. Root executes only through normal approval with valid existing access.",
+    "validation": "Eva1 new HA composition has source and syntax checks only before this original run; no prior end-to-end runtime success is claimed. Eva2 exact pinned RuntimeSettings/HouseholdVoiceAuthority configuration passed network-none without app/database/provider execution. Existing accounting/calendar evidence is reused; reviewer ran no tests or models.",
+    "timing": "Actor resume, transport startup/ACK and passive capture fsync are measured where applicable; compare only matching actual interval definitions. No prospective speed/cost advantage.",
+    "privacy": "All outgoing case content is curator-authored synthetic data. No real household data, secrets or request headers are captured. Protected prompts, responses, context and oracle remain evaluator-only; root wrapper seals capture/admission files root0600/directories0700 after child return.",
+    "scoring": "Original objective conditions are assessed only after observed execution. Human preference/personality and physical audio ratings remain null. No audio/hearing/service-scheduler or broader live-admission claim."
+  },
+  "reviewerTests": 0
+}

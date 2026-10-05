@@ -1,6 +1,40 @@
 # EVA2 werkbord
 
-**Laatst afgerond — P2.1: CM09 beoordeeld; Eva2 geslaagd, Eva1 onbekend.**
+**Laatst afgerond — P2.1: CM10 beoordeeld; Eva2 geslaagd, Eva1 onbekend.**
+De oorspronkelijke proef met een gedeelde ingang is eenmaal per deelnemer
+uitgevoerd. Onafhankelijke beoordeling van antwoorden, aangeboden modelcontext
+en opgeslagen gegevens bevestigt voor Eva2 de oorspronkelijke privégrens.
+Dit is geen fysieke speakerproef of bewijs van menselijke sprekerherkenning.
+
+| Vast CM10-geval | Eva1 | Eva2 |
+| --- | --- | --- |
+| Inhoudelijke voorwaarden | Onbekend | 3/3 |
+| Onafhankelijke bewijscontroles | Onbekend | 2/2 |
+| Objectief taakresultaat | Onbekend | Geslaagd |
+| Afgehandelde oorspronkelijke beurten | 2/4 | 4/4 |
+| Modelpogingen | 7, waarvan 1 zonder volledige meting | 12 |
+| Gemeten tokens | Minimaal 36.202 | 36.224 |
+
+Samen 19 modelpogingen, 18 volledig gemeten; **72.426 tokens is een ondergrens**.
+Werkelijk totaal, creditkosten, Codex-ontwikkelverbruik en menselijke scores zijn
+onbekend. Eva1 heeft een onvolledige providerafsluiting; de precieze oorzaak is
+niet vastgesteld. Geen productverlies of volledige kosten-/snelheidswinst afgeleid.
+
+De coördinator maakte vóór de uitvoering een vermijdbare netwerkcontrolefout
+en startte vervolgens ten onrechte de afhankelijke meetwrapper. Die poging stopte
+vóór native invoer en modelaanvragen: nul modelcalls. Alleen de voorbereiding is
+gecorrigeerd; fouten en logs blijven apart bewaard. Beide oorspronkelijke proeven
+zijn daarna eenmaal uitgevoerd. Geen herhaling, productwijziging of herinstallatie.
+Eigen proefresources zijn opgeruimd; resultaten en bewijs blijven behouden.
+
+**Vervolg:** CM11 epoch1; nog niet gestart. Geen herhaling van CM01–CM10.
+**32/44 oorspronkelijke kleine taken klaar; P2.1 blijft open.**
+[Onafhankelijk resultaat](evidence/product/p2-cm10-paired-result-20261005.json) ·
+[Bronbinding](evidence/product/p2-cm10-projection-review-20261005.json) ·
+[Technische afsluiting](evidence/product/p2-cm10-execution-close-20261005.json) ·
+[Afzonderlijke voorbereidingsfout](evidence/product/p2-cm10-eva1-preflight-review-20261005.json).
+
+**Eerder afgerond — P2.1: CM09 beoordeeld; Eva2 geslaagd, Eva1 onbekend.**
 De oorspronkelijke proef is eenmaal per deelnemer uitgevoerd en onafhankelijk
 beoordeeld. De onvolledige Eva1-uitvoering telt niet als productverlies.
 
@@ -24,8 +58,8 @@ offline controles geslaagd (0,33 s), onafhankelijke review GO. Dit betreft allee
 de vergelijkingscode; geen nieuwe productfunctie of productie-installatie.
 De oorspronkelijke CM09-bronnen en uitslagen blijven ongewijzigd; geen herhaling.
 
-**Volgende:** CM10 epoch1, nog niet gestart. Eerst de beoordeelde meetcorrectie aan
-de nieuwe bronversie binden. **32/44 kleine taken klaar; P2.1 blijft open.**
+**Vervolg:** CM10 is inmiddels beoordeeld en staat bovenaan. Deze CM09-uitkomst blijft behouden.
+**32/44 kleine taken klaar; P2.1 blijft open.**
 [Onafhankelijk resultaat](evidence/product/p2-cm09-paired-result-20261005.json) ·
 [Bronbinding](evidence/product/p2-cm09-projection-review-20261005.json) ·
 [Technische afsluiting](evidence/product/p2-cm09-execution-close-20261005.json) ·

@@ -1,0 +1,77 @@
+{
+  "contract": "Ev003IndependentPreinputFailureReview/v1",
+  "recordedAt": "2026-10-05T16:15:40.281086+00:00",
+  "reviewer": "/root/aide_final_evaluation",
+  "entry": "eva1-bottie:EV003-CM-10:epoch1",
+  "decision": "GO_continue_original_never_dispatched_entry",
+  "failure": {
+    "stage": "launcher dedicated network inspect before native projection load, data allocation, ledger, relay or container start",
+    "exceptionClass": "subprocess.CalledProcessError",
+    "sourceFile": "launch.py",
+    "sourceLine": 115,
+    "cause": "Dedicated network absent at the failed preflight. Root separately reported earlier IPAM.Config None TypeError and nonzero-command sequencing error.",
+    "inspectStatus": "error",
+    "launcherExit": 1,
+    "nativeOutcome": null
+  },
+  "providerAttempts": 0,
+  "nativeInputsDispatched": 0,
+  "nativeWorkersStarted": 0,
+  "sampleBudgetConsumed": {
+    "providerAttempts": 0,
+    "inputTokens": 0,
+    "outputTokens": 0
+  },
+  "retainedMarkers": {
+    "startedJson": false,
+    "resultReceipt": false,
+    "captureDirectory": false,
+    "nativeInputBindingFiles": false
+  },
+  "authoritativeLogs": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm10-epoch1/inspect-private/execution-logs/2026-10-05T16-13-55-00-00_ev003-cm10-epoch1-eva1-native_cQM6Myg7TX2HnSHeVD5cr5.eval",
+      "sha256": "163a77f7e6e6b55ff4bf73bd3a9a5e04069951f9625e81bb4765b94cbb2a22dc",
+      "bytes": 10323
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm10-epoch1/inspect-private/execution.stderr",
+      "sha256": "cc692647430f0f1afc8a9cc9f2d9065d75dde7a9125e19278baa67e6597793d8",
+      "bytes": 1023
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm10-epoch1/inspect-private/execution.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm10-epoch1/inspect-private/inspect-result-summary.json",
+      "sha256": "d072fcc9c85876426d1b2e50b50e6f0e549d8d60949603ea4940584a26676299",
+      "bytes": 381
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm10-epoch1/inspect-private/inspect-run-binding.json",
+      "sha256": "dd33bc7ef2c6e3b4e473e76836bf0393f42751561ba48aa13720a75ccc87807d",
+      "bytes": 2194
+    }
+  ],
+  "unchangedBinding": {
+    "admission": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm10-epoch1/admission.json",
+      "sha256": "2147068beb83fe2498de7e2650d32f8d4e621a00bd1bb4e0ab4197083a365170"
+    },
+    "launcherSha256": "f79c3a7d2968a80d3897ddbb80c808c2f9884bd2d49cfd4fffb20bb75b8e8719",
+    "wrapperSha256": "4fc9c0cd8181a09aece4b6d609860794d2d5c4afde501e9af4547fd0738b4188",
+    "projectionSha256": "9b794404639c35468cbc81f3b7ae557964be843c2469e005bddb78f55508876d"
+  },
+  "continuationConditions": [
+    "Retain the entire failed Inspect directory and stderr/stdout under an explicit preflight-failure location; record relocation without modifying its files.",
+    "Use the same original frozen sources, projection, rules, limits and admission; root corrects only pre-input network preparation/check sequencing.",
+    "Continue only once after actual network/resource validation through the normal approval route; no automatic retry or additional quota."
+  ],
+  "scope": "The wrapper loaded a sealed Inspect Sample locally, but no participant received it and no native/model request started. This is retained adapter setup failure, not task failure or original model retry. No criteria or source change.",
+  "reviewerTests": 0,
+  "reviewerProviderCalls": 0,
+  "taskScore": null,
+  "humanScores": null
+}

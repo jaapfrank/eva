@@ -1,0 +1,343 @@
+{
+  "contract": "EvaIndependentPairedResult/v1",
+  "recordedAt": "2026-10-05T16:25:27.900235+00:00",
+  "task": "P2.1",
+  "caseId": "EV003-CM-10",
+  "epoch": 1,
+  "status": "original_pair_assessed",
+  "caseSha256": "f4079147cdf844ff2c77ea2eed2416b508fb917229ac6b5e6265470b06afbf75",
+  "projection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm10-epoch1.native-inputs.private.json",
+    "sha256": "9b794404639c35468cbc81f3b7ae557964be843c2469e005bddb78f55508876d"
+  },
+  "projectionReview": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-cm10-projection-review-20261005.json",
+    "sha256": "66ee9b3d46dba1f3001df80f14041d4e40741bedab08602b53d1cc5c2cb0c5a6"
+  },
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "sourceApplicability": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-cm-source-applicability-20261005.json",
+    "sha256": "522d9dbdabc03763cf2f9921e6092012fb21a77299da8334eba7a40428d30a44"
+  },
+  "participants": {
+    "eva1-bottie": {
+      "objectiveSuccess": null,
+      "objectiveMeaning": "Unknown: original shared task did not complete with sufficient native/accounting coverage",
+      "semanticConditions": [
+        null,
+        null,
+        null
+      ],
+      "semanticCounts": {
+        "passed": 0,
+        "failed": 0,
+        "unknown": 3,
+        "total": 3
+      },
+      "independentReadbacks": [
+        null,
+        null
+      ],
+      "readbackCounts": {
+        "passed": 0,
+        "failed": 0,
+        "unknown": 2,
+        "total": 2
+      },
+      "nativeOutcome": "execution_unknown",
+      "nativeComplete": false,
+      "turns": {
+        "expected": 4,
+        "started": 3,
+        "completed": 2
+      },
+      "providerAttempts": 7,
+      "fullyMeasuredAttempts": 6,
+      "unknownUsageAttempts": 1,
+      "usage": {
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null
+      },
+      "knownLowerBoundUsage": {
+        "input_tokens": 34885,
+        "output_tokens": 1317,
+        "total_tokens": 36202
+      },
+      "roles": {
+        "contact": 7,
+        "helper": 0
+      },
+      "tools": {
+        "total": 5,
+        "protocol": 4,
+        "ordinary": 1,
+        "externalEffects": 0
+      },
+      "timing": {
+        "perTurn": [
+          {
+            "ordinal": 0,
+            "foregroundSeconds": 31.62310582504142,
+            "settledSeconds": 31.676584744011052
+          },
+          {
+            "ordinal": 1,
+            "foregroundSeconds": 31.12688741501188,
+            "settledSeconds": 31.183505001012236
+          },
+          {
+            "ordinal": 2,
+            "foregroundSeconds": null,
+            "settledSeconds": null
+          },
+          {
+            "ordinal": 3,
+            "foregroundSeconds": null,
+            "settledSeconds": null,
+            "started": false
+          }
+        ],
+        "sampleSeconds": null,
+        "inspectSolverSeconds": 69.35,
+        "boundary": "Inspect solver interval includes native startup, one actor resume, input, failure and teardown; no separate full sample interval recorded on this error path."
+      },
+      "stop": {
+        "ledgerStop": "SDK attempt did not yield complete usage",
+        "usageComplete": false,
+        "providerCloseFailures": 1,
+        "ownedProviderStreamsAtStop": 1,
+        "nativeHaTasksSettled": true,
+        "nativeHaTransportClosed": true,
+        "nativeQuiescence": false,
+        "workerExit": 0
+      },
+      "result": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm10-epoch1/result.private.json",
+        "sha256": "3d540a29b7f7d450782614497fb7ce5a9c8507be3b9fa7fd756c09bf580a5d4c"
+      },
+      "assessment": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm10-epoch1.eva1-assessment.private.json",
+        "sha256": "1f2a387bc999c1b756d5407a5e74cabd701e1600807439099b54b045d8048507"
+      },
+      "humanRatings": null,
+      "failureAttribution": {
+        "stage": "First shared-human turn; provider attempt6 returned error/null usage, followed by native_ingress_interrupted. No complete shared reply/ACK; fourth turn never started.",
+        "upstreamReadOrCancelCause": null,
+        "lateControlProtocolErrorObserved": false,
+        "relayConnectionResetObserved": true,
+        "relayResetCausalityEstablished": false,
+        "wrapperSuccessIsTaskSuccess": false
+      },
+      "database": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm10-epoch1/database.private.sqlite",
+        "sha256": "3901503c10e1e30200307286545f2851531353e97588c60857250ecbe49efcaf"
+      }
+    },
+    "eva2": {
+      "objectiveSuccess": true,
+      "objectiveMeaning": "Original conditions satisfied in retained evidence",
+      "semanticConditions": [
+        true,
+        true,
+        true
+      ],
+      "semanticCounts": {
+        "passed": 3,
+        "failed": 0,
+        "unknown": 0,
+        "total": 3
+      },
+      "independentReadbacks": [
+        true,
+        true
+      ],
+      "readbackCounts": {
+        "passed": 2,
+        "failed": 0,
+        "unknown": 0,
+        "total": 2
+      },
+      "nativeOutcome": "native_sample_completed",
+      "nativeComplete": true,
+      "turns": {
+        "expected": 4,
+        "started": 4,
+        "completed": 4
+      },
+      "providerAttempts": 12,
+      "fullyMeasuredAttempts": 12,
+      "unknownUsageAttempts": 0,
+      "usage": {
+        "input_tokens": 34940,
+        "output_tokens": 1284,
+        "total_tokens": 36224
+      },
+      "knownLowerBoundUsage": {
+        "input_tokens": 34940,
+        "output_tokens": 1284,
+        "total_tokens": 36224
+      },
+      "roles": {
+        "contact": {
+          "attempts": 4,
+          "inputTokens": 9222,
+          "outputTokens": 256
+        },
+        "helper": {
+          "attempts": 8,
+          "inputTokens": 25718,
+          "outputTokens": 1028
+        }
+      },
+      "tools": {
+        "total": 0,
+        "protocol": 0,
+        "ordinary": 0,
+        "externalEffects": 0
+      },
+      "timing": {
+        "perTurn": [
+          {
+            "ordinal": 0,
+            "firstContentSeconds": 8.339952029986307,
+            "foregroundSeconds": 10.089052743976936,
+            "settledSeconds": 26.476400184968952,
+            "nativeModelTimingMs": {
+              "completed_ms": 9260,
+              "first_content_ms": 7554
+            }
+          },
+          {
+            "ordinal": 1,
+            "firstContentSeconds": 5.255963193019852,
+            "foregroundSeconds": 6.978966991999187,
+            "settledSeconds": 22.34179817303084,
+            "nativeModelTimingMs": {
+              "completed_ms": 6755,
+              "first_content_ms": 5054
+            }
+          },
+          {
+            "ordinal": 2,
+            "firstContentSeconds": null,
+            "foregroundSeconds": 2.834149944013916,
+            "settledSeconds": 18.663862166984472,
+            "nativeModelTimingMs": {
+              "completed_ms": 2477,
+              "first_content_ms": 1449
+            }
+          },
+          {
+            "ordinal": 3,
+            "firstContentSeconds": null,
+            "foregroundSeconds": 3.0826190020306967,
+            "settledSeconds": 17.123315256030764,
+            "nativeModelTimingMs": {
+              "completed_ms": 2380,
+              "first_content_ms": 1110
+            }
+          }
+        ],
+        "sampleSeconds": 90.07034747803118,
+        "inspectSolverSeconds": 127.938,
+        "boundary": "Sample interval begins after native worker readiness and ends after all four replies and memory settlement; Inspect solver additionally includes preparation and teardown. Shared HTTP ingress returns JSON, so its firstContentSeconds is null; native provider timing is separate."
+      },
+      "stop": {
+        "ledgerStop": "sample observation complete",
+        "usageComplete": true,
+        "workersSeenTerminalClosed": 2,
+        "unsettledReservations": 0,
+        "workerErrors": 0,
+        "nativeTasksSettled": true,
+        "controlCloseAcknowledged": true,
+        "cleanupBlockers": 0,
+        "childPostCloseDiagnostic": "Local mirrors record parent disconnected after acknowledged closure; authoritative parent has completed usage and both terminal receipts."
+      },
+      "result": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm10-epoch1/execution/result.json",
+        "sha256": "9e611bee5b995190d330894e595ab302d41b2e70c18d3f491c033bf1edae556b"
+      },
+      "assessment": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm10-epoch1.eva2-assessment.private.json",
+        "sha256": "0421247c463ade5017bc9ff518bccaaf36c3668349b9624f596ed48766bf8b71"
+      },
+      "humanRatings": null,
+      "memoryCompletion": {
+        "operations": 12,
+        "allCompleted": true,
+        "worldFacts": 4,
+        "observations": 4,
+        "futureUnrunIdentityBehaviorClaimed": false
+      },
+      "databaseDumps": {
+        "p1_core": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm10-epoch1/execution/p1_core.sql",
+          "sha256": "4011af3e7249e46b76b964adf0751c50948c328c6b52817984edee4d71b8f658"
+        },
+        "p1_memory": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm10-epoch1/execution/p1_memory.sql",
+          "sha256": "9e66e5f8783af828fab66a8c88de1dbf9900d342cb350d727013194030a289ff"
+        }
+      }
+    }
+  },
+  "aggregate": {
+    "providerAttempts": 19,
+    "fullyMeasuredAttempts": 18,
+    "unknownUsageAttempts": 1,
+    "totalInputTokens": null,
+    "totalOutputTokens": null,
+    "totalTokens": null,
+    "knownLowerBoundInputTokens": 69825,
+    "knownLowerBoundOutputTokens": 2601,
+    "knownLowerBoundTokens": 72426,
+    "tools": {
+      "total": 5,
+      "protocol": 4,
+      "ordinary": 1
+    },
+    "externalEffectsObserved": 0,
+    "monetaryCost": null
+  },
+  "independentAssessment": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm10-epoch1.paired-assessment.private.json",
+    "sha256": "4ab8cf635acb8edfcd555ee9db8eb7d54b8acd170f319f8870664be89bfc3afc"
+  },
+  "closure": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-cm10-execution-close-20261005.json",
+    "sha256": "4d6ab491508c1740f76942200254223044ed2dce5ebc614a0dbd28884734ded8"
+  },
+  "preflightFailure": {
+    "participant": "eva1-bottie",
+    "stage": "Root network preflight, before native input/provider dispatch",
+    "providerAttempts": 0,
+    "preservedSeparately": true,
+    "review": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-cm10-eva1-preflight-review-20261005.json",
+      "sha256": "c1e017747770cc500e1f0339793d95feef8b825649fc560e84b983f1e0ac7fa7"
+    },
+    "logRelocation": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm10-epoch1/preflight-log-relocation.json",
+      "sha256": "1e68379f65d3b6420f9d4533770fc5e9ee82bc809b8ef425861a217302a00f23"
+    }
+  },
+  "limits": {
+    "providerAttemptsPerParticipant": 16,
+    "wallSecondsPerParticipant": 480,
+    "nativeSharedDeliverySeconds": 32,
+    "automaticRetries": 0
+  },
+  "limitations": [
+    "Eva1 task outcome remains unknown; wrapper/Inspect success and workerexit0 do not resolve its incomplete provider closure or usage.",
+    "Eva2 satisfies the original objective conditions and readbacks in this single original case; this is no overall product superiority or full comparison completion.",
+    "Recorded sample/Inspect/foreground/provider-first-content boundaries differ. Eva1 stopped before completing the case, so no full cost or speed winner is claimed.",
+    "Human preference/personality and physical audio judgments remain unscored; registered synthetic HA transport is not hearing or human speaker recognition.",
+    "Original pinned native versions apply; no full current-HEAD equivalence, historical outcome rewrite, product tuning, or case retry."
+  ],
+  "humanRatings": null,
+  "overallWinner": null,
+  "reviewerModelCalls": 0,
+  "reviewerTests": 0,
+  "nextCaseStarted": false
+}
