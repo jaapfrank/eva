@@ -108,3 +108,20 @@ def test_endpoint_must_be_canonical_and_client_is_not_in_repr():
     with pytest.raises(ValueError, match="canonical"):
         BrowserAutostartConfig("https://BROWSER.example/mcp", Client())
     assert "Client" not in repr(BrowserAutostartConfig("https://browser.example/mcp", Client()))
+
+
+@pytest.mark.parametrize("state, revision", [
+    ("stopped", 2), ("owner", 2), ("recovery_required", 2), ("eva", 4),
+])
+def test_readiness_generation_check_never_starts_or_resumes(state, revision):
+    client = Client(state)
+    client.current["revision"] = revision
+    with pytest.raises(ConversationConflict):
+        asyncio.run(helper(client).verify_generation("own-browser", 2))
+    assert client.calls == ["status"]
+
+
+def test_readiness_generation_check_confirms_exact_live_generation():
+    client = Client("eva")
+    asyncio.run(helper(client).verify_generation("own-browser", 1))
+    assert client.calls == ["status"]

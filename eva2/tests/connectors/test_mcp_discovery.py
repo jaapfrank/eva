@@ -201,10 +201,21 @@ class BrowserPreparation:
         self.calls = []
         self.blocked = False
         self.revision = 7
+        self.generation_checks = []
         self.connector_id = "connector-1"
 
     def matches(self, connector_id):
         return connector_id == self.connector_id
+
+    def session_binding(self, connector_id):
+        return connector_id
+
+    async def verify_generation(self, connector_id, revision):
+        self.generation_checks.append(revision)
+        if self.blocked:
+            raise ConversationConflict("owner control")
+        if not self.matches(connector_id) or revision != self.revision:
+            raise ConversationConflict("browser generation changed")
 
     async def ensure_available(self, connector_id):
         if not self.matches(connector_id):
@@ -381,3 +392,214 @@ def test_unmanaged_connector_keeps_default_gateway_transport(monkeypatch):
     assert config.session_id is None
     assert browser.calls == []
     assert requests == ["GET"]
+
+
+def test_browser_waits_for_real_gateway_health_before_admitting_and_caches(monkeypatch):
+    registry, browser, _, adapter = browser_adapter(monkeypatch)
+    reads, waits = [], []
+    async def sleep(seconds):
+        waits.append(seconds)
+    def request_json(self, method, path, payload):
+        assert method == "GET" and payload is None
+        reads.append(path)
+        return {"tools": [{**row, "reachable": len(reads) > 1} for row in ROWS],
+                "nextCursor": None}
+    monkeypatch.setattr(McpGatewayToolAdapter, "_request_json", request_json)
+    monkeypatch.setattr("eva.providers.mcp_discovery.asyncio.sleep", sleep)
+    command = prepare_browser_command(adapter)
+    assert len(reads) == 2 and waits == [5]
+    assert browser.generation_checks == [7, 7, 7]
+    assert registry.resolved == [(command.tool_configuration_sha256, "execute")] * 3
+    assert adapter._cache[command.tool_configuration_sha256][1]._verified_input_schemas
+    prepare_browser_command(adapter)
+    assert len(reads) == 2 and waits == [5]  # Healthy generation stays fast.
+
+
+@pytest.mark.parametrize("change", [
+    {"enabled": False}, {"deprecated": True}, {"integration_type": "REST"},
+    {"visibility": "unknown"}, {"input_schema": None}, {"reachable": None},
+    {"reachable": "false"},
+])
+def test_browser_does_not_wait_for_unsafe_or_unknown_catalog_fields(monkeypatch, change):
+    _, browser, _, adapter = browser_adapter(monkeypatch)
+    reads = []
+    def request_json(self, method, path, payload):
+        reads.append(method)
+        return {"tools": [{**row, "reachable": False, **change} for row in ROWS],
+                "nextCursor": None}
+    async def forbidden_sleep(_seconds):
+        pytest.fail("unsafe catalog was treated as a pending health check")
+    monkeypatch.setattr(McpGatewayToolAdapter, "_request_json", request_json)
+    monkeypatch.setattr("eva.providers.mcp_discovery.asyncio.sleep", forbidden_sleep)
+    with pytest.raises(RuntimeError, match="not safely executable"):
+        prepare_browser_command(adapter)
+    assert reads == ["GET"] and not adapter._cache
+    assert browser.generation_checks == []
+
+
+@pytest.mark.parametrize("initially_unreachable", [False, True])
+def test_browser_health_never_bypasses_sealed_schema(monkeypatch, initially_unreachable):
+    _, _, _, adapter = browser_adapter(monkeypatch)
+    reads = []
+    async def sleep(_seconds):
+        pass
+    def request_json(self, method, path, payload):
+        reads.append(method)
+        changed = {**SCHEMA, "properties": {"key": {"type": "integer"}}}
+        return {"tools": [{**ROWS[0], "input_schema": changed,
+                           "reachable": not initially_unreachable or len(reads) > 1}],
+                "nextCursor": None}
+    monkeypatch.setattr(McpGatewayToolAdapter, "_request_json", request_json)
+    monkeypatch.setattr("eva.providers.mcp_discovery.asyncio.sleep", sleep)
+    with pytest.raises(RuntimeError, match="sealed catalog"):
+        prepare_browser_command(adapter)
+    assert reads == ["GET"] * (2 if initially_unreachable else 1)
+    assert not adapter._cache
+
+
+@pytest.mark.parametrize("change", ["owner", "revision", "revoked", "binding", "cancel"])
+@pytest.mark.parametrize("when", ["waiting", "health_returned"])
+def test_browser_health_wait_rechecks_generation_grant_and_cancellation(monkeypatch, change, when):
+    from eva.application.cancellation import CancellationSignal, WorkInterrupted, cancellation_scope
+    registry, browser, _, adapter = browser_adapter(monkeypatch)
+    signal = CancellationSignal()
+    reads = []
+    def change_authority():
+        if change == "owner":
+            browser.blocked = True
+        elif change == "revision":
+            browser.revision += 2
+        elif change == "revoked":
+            registry.revoked = True
+        elif change == "binding":
+            old = registry.by_tool["tool-read"]
+            registry.by_hash[old.spec.configuration_sha256] = replace(
+                old, config=replace(old.config, bearer_token="rotated-token"))
+        else:
+            signal.cancel()
+    async def sleep(_seconds):
+        if when == "waiting":
+            change_authority()
+    def request_json(self, method, path, payload):
+        assert method == "GET"
+        reads.append(method)
+        ready = len(reads) > 1
+        if ready and when == "health_returned":
+            change_authority()
+        return {"tools": [{**row, "reachable": ready} for row in ROWS], "nextCursor": None}
+    monkeypatch.setattr(McpGatewayToolAdapter, "_request_json", request_json)
+    monkeypatch.setattr("eva.providers.mcp_discovery.asyncio.sleep", sleep)
+    with cancellation_scope(signal), pytest.raises((ConversationConflict, WorkInterrupted)):
+        prepare_browser_command(adapter)
+    assert len(reads) == (1 if when == "waiting" else 2)
+    assert not adapter._cache
+
+
+def test_browser_gateway_health_wait_is_bounded_by_pinned_cycle_and_existing_io(monkeypatch):
+    _, _, _, adapter = browser_adapter(monkeypatch)
+    actual_timeout, actual_sleep = asyncio.timeout, asyncio.sleep
+    budgets, reads = [], []
+    def timeout(seconds):
+        budgets.append(seconds)
+        return actual_timeout(0.01)
+    async def sleep(_seconds):
+        await actual_sleep(0.001)
+    def request_json(self, method, path, payload):
+        assert method == "GET"
+        reads.append(method)
+        return {"tools": [{**row, "reachable": False} for row in ROWS], "nextCursor": None}
+    monkeypatch.setattr(McpGatewayToolAdapter, "_request_json", request_json)
+    monkeypatch.setattr("eva.providers.mcp_discovery.asyncio.timeout", timeout)
+    monkeypatch.setattr("eva.providers.mcp_discovery.asyncio.sleep", sleep)
+    with pytest.raises(ConversationConflict, match="gateway health is not ready"):
+        prepare_browser_command(adapter)
+    assert budgets == [60 + _binding("read").config.request_timeout_seconds]
+    assert reads and not adapter._cache
+
+
+def test_unmanaged_unreachable_catalog_is_not_waited_or_admitted(monkeypatch):
+    _, browser, _, adapter = browser_adapter(monkeypatch)
+    browser.connector_id = "another-browser"
+    reads = []
+    def request_json(self, method, path, payload):
+        reads.append(method)
+        return {"tools": [{**row, "reachable": False} for row in ROWS], "nextCursor": None}
+    async def forbidden_sleep(_seconds):
+        pytest.fail("unmanaged connector entered browser readiness")
+    monkeypatch.setattr(McpGatewayToolAdapter, "_request_json", request_json)
+    monkeypatch.setattr("eva.providers.mcp_discovery.asyncio.sleep", forbidden_sleep)
+    with pytest.raises(RuntimeError, match="unreachable"):
+        prepare_browser_command(adapter)
+    assert reads == ["GET"] and not adapter._cache and not browser.calls
+
+
+def test_browser_health_cycle_keeps_paginated_reads_below_gateway_rate_limit(monkeypatch):
+    _, _, _, adapter = browser_adapter(monkeypatch)
+    elapsed = 0
+    reads = []
+    async def sleep(seconds):
+        nonlocal elapsed
+        elapsed += seconds
+    def request_json(self, method, path, payload):
+        assert method == "GET" and payload is None
+        reads.append((elapsed, path))
+        # Catalog pages share ContextForge's 100 rpm /tools allowance.
+        assert sum(elapsed - at < 60 for at, _ in reads) <= 100
+        if "cursor=" not in path:
+            return {"tools": [ROWS[1]], "nextCursor": "second-page"}
+        return {"tools": [{**ROWS[0], "reachable": elapsed >= 60}],
+                "nextCursor": None}
+    monkeypatch.setattr(McpGatewayToolAdapter, "_request_json", request_json)
+    monkeypatch.setattr("eva.providers.mcp_discovery.asyncio.sleep", sleep)
+    command = prepare_browser_command(adapter)
+    assert elapsed == 60
+    assert len(reads) == 26
+    assert adapter._cache[command.tool_configuration_sha256][1]._verified_input_schemas
+
+
+def test_browser_health_wait_does_not_retry_rate_limit_response(monkeypatch):
+    _, _, _, adapter = browser_adapter(monkeypatch)
+    reads = []
+    async def sleep(_seconds):
+        pass
+    def request_json(self, method, path, payload):
+        assert method == "GET"
+        reads.append(method)
+        if len(reads) == 2:
+            raise RuntimeError("MCP gateway request failed (429)")
+        return {"tools": [{**row, "reachable": False} for row in ROWS],
+                "nextCursor": None}
+    monkeypatch.setattr(McpGatewayToolAdapter, "_request_json", request_json)
+    monkeypatch.setattr("eva.providers.mcp_discovery.asyncio.sleep", sleep)
+    with pytest.raises(RuntimeError, match="429"):
+        prepare_browser_command(adapter)
+    assert reads == ["GET", "GET"] and not adapter._cache
+
+
+def test_browser_health_poll_pause_is_immediately_cancellable(monkeypatch):
+    from eva.application.cancellation import CancellationSignal, WorkInterrupted, cancellation_scope
+    _, _, _, adapter = browser_adapter(monkeypatch)
+    real_sleep = asyncio.sleep
+    reached_pause = asyncio.Event()
+    signal = CancellationSignal()
+    reads = []
+    async def sleep(seconds):
+        reached_pause.set()
+        await real_sleep(seconds)
+    def request_json(self, method, path, payload):
+        reads.append(method)
+        return {"tools": [{**row, "reachable": False} for row in ROWS],
+                "nextCursor": None}
+    monkeypatch.setattr(McpGatewayToolAdapter, "_request_json", request_json)
+    monkeypatch.setattr("eva.providers.mcp_discovery.asyncio.sleep", sleep)
+    async def run():
+        with cancellation_scope(signal):
+            task = asyncio.create_task(adapter.planner().prepare(TURN, ConversationActionCall(
+                "cancel-wait", "use_connector_tool",
+                {"tool_id": "tool-read", "arguments_json": '{"key":"entry"}'})))
+            await reached_pause.wait()
+            signal.cancel()
+            with pytest.raises(WorkInterrupted):
+                await asyncio.wait_for(task, 0.5)
+    asyncio.run(run())
+    assert reads == ["GET"] and not adapter._cache

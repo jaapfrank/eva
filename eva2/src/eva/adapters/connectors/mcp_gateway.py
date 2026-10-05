@@ -27,6 +27,10 @@ from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.canonical_json import canonical_sha256
 
 
+class McpGatewayToolUnreachable(RuntimeError):
+    """Catalog admission is refused until the gateway reports actual reachability."""
+
+
 class McpGatewayUnavailable(RuntimeError):
     """Gateway transport failed; private exception context is never its message."""
 
@@ -811,11 +815,14 @@ def mcp_gateway_catalog_binding(
     if (
         selected["integration_type"] != "MCP"
         or selected["enabled"] is not True
-        or selected["reachable"] is not True
         or selected["deprecated"] is not False
         or selected["visibility"] not in {"private", "team", "public"}
         or not isinstance(input_schema, dict)
     ):
+        raise RuntimeError("MCP gateway tool is not safely executable")
+    if row.get("reachable") is False:
+        raise McpGatewayToolUnreachable("MCP gateway tool is not safely executable: unreachable")
+    if selected["reachable"] is not True:
         raise RuntimeError("MCP gateway tool is not safely executable")
     return selected
 

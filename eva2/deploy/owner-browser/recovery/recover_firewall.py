@@ -145,6 +145,38 @@ def desired_rules(hook):
     return result
 
 
+def exact_hooks_reachable(hook_rules, wanted_hooks):
+    """Require our exact hooks before any rule that could match our sources."""
+    remaining = {tuple(rule) for rule in wanted_hooks}
+    protected = {ipaddress.IPv4Network(rule[3]) for rule in wanted_hooks}
+    hook = wanted_hooks[0][1]
+    for rule in hook_rules:
+        if tuple(rule) in remaining:
+            remaining.remove(tuple(rule))
+            if not remaining:
+                return True
+            continue
+        # Only simple, positive, single-host source jumps are understood here.
+        # Their targets cannot affect us because the source match excludes us.
+        if rule[:3] != ["-A", hook, "-s"]:
+            return False
+        if len(rule) == 10 and rule[4:7] == ["-m", "comment", "--comment"] and rule[7]:
+            jump = rule[8:]
+        elif len(rule) == 6:
+            jump = rule[4:]
+        else:
+            return False
+        if jump[0] != "-j" or re.fullmatch(r"[A-Za-z0-9_][A-Za-z0-9_-]{0,28}", jump[1]) is None:
+            return False
+        try:
+            source = ipaddress.IPv4Network(rule[3])
+        except ValueError:
+            return False
+        if source.prefixlen != 32 or str(source) != rule[3] or source in protected:
+            return False
+    return False
+
+
 def restore_rules(config):
     # Rebuild a missing chain or finish our exact interrupted prefix. Never flush
     # unrelated rules or accept a same-named chain with different contents.
@@ -167,7 +199,7 @@ def restore_rules(config):
         observed = [shlex.split(line) for line in iptables("-S", chain).stdout.splitlines() if line.startswith("-A ")]
         hook_rules = [shlex.split(line) for line in iptables("-S", hook).stdout.splitlines() if line.startswith("-A ")]
         wanted_hooks = [["-A", hook, "-s", n["address"] + "/32", "-m", "comment", "--comment", config["instance"], "-j", chain] for n in config["networks"]]
-        if observed != expected or sorted(hook_rules[:2]) != sorted(wanted_hooks):
+        if observed != expected or not exact_hooks_reachable(hook_rules, wanted_hooks):
             raise RuntimeError("browser firewall readback differs")
     return {hook: iptables("-S", chain).stdout for hook, chain in CHAINS.items()}
 

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 from dataclasses import dataclass, replace
 import json
 from threading import Lock
@@ -11,7 +12,9 @@ from eva.adapters.connectors.mcp_gateway import (
     McpGatewayConfig,
     McpGatewayToolAdapter,
     McpGatewayToolSpec,
+    McpGatewayToolUnreachable,
 )
+from eva.application.cancellation import check_cancellation, run_cancellable
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationConflict,
@@ -26,6 +29,12 @@ from eva.application.schema_validation import validate_schema_value
 from eva.adapters.connectors.browser_autostart import ManagedBrowserAutostart, managed_browser_session_id
 
 
+# Pinned ContextForge mcpgateway/config.py health_check_interval is 60 seconds.
+# This covers its next real health tick, not a retry budget for browser actions.
+_MANAGED_BROWSER_GATEWAY_HEALTH_INTERVAL_SECONDS = 60
+# /tools uses ContextForge's shared 100 rpm tier and may require multiple pages.
+# Twelve catalog reads per health cycle leave room for pagination and other work.
+_MANAGED_BROWSER_CATALOG_POLL_SECONDS = _MANAGED_BROWSER_GATEWAY_HEALTH_INTERVAL_SECONDS / 12
 _USE_ACTION = "use_connector_tool"
 _MAX_ARGUMENT_BYTES = 65_536
 _USE_DESCRIPTOR = ConversationToolDescriptor(
@@ -161,7 +170,8 @@ class McpDiscoveryToolAdapter:
         return McpDiscoveryToolPlanner(self._registry, self)
 
     async def _verified_adapter(self, binding: McpExecutionBinding, *,
-                                prepare_browser: bool = False) -> McpGatewayToolAdapter:
+                                prepare_browser: bool = False,
+                                phase: Literal["execute", "observe"] = "execute") -> McpGatewayToolAdapter:
         config = binding.config
         managed = (self._browser_autostart is not None
                    and self._browser_autostart.matches(binding.connector_id))
@@ -182,13 +192,54 @@ class McpDiscoveryToolAdapter:
                 # Sealed result replay does not need a live generation or status call.
                 return cached[1]
         adapter = McpGatewayToolAdapter(config, (binding.spec,))
-        await adapter.verify_catalog()
+        try:
+            await adapter.verify_catalog()
+        except McpGatewayToolUnreachable:
+            if not (prepare_browser and managed):
+                raise
+            await run_cancellable(lambda: self._await_browser_catalog(
+                adapter, binding, revision, phase=phase))
         with self._cache_lock:
             # This is only an optimization; evicted generations remain in the registry.
             if len(self._cache) >= 128:
                 self._cache.pop(next(iter(self._cache)))
             self._cache[digest] = (config, adapter)
         return adapter
+
+    async def _await_browser_catalog(self, adapter: McpGatewayToolAdapter,
+                                     binding: McpExecutionBinding, revision: int, *,
+                                     phase: Literal["execute", "observe"]) -> None:
+        browser = self._browser_autostart
+        assert browser is not None
+
+        async def check_authority() -> None:
+            check_cancellation()
+            await browser.verify_generation(binding.connector_id, revision)
+            current = self._registry.resolve_configuration(
+                binding.spec.configuration_sha256, phase=phase)
+            if current != binding:
+                raise ConversationConflict("connector binding changed during browser readiness")
+            check_cancellation()
+
+        # No control-plane writes and no tool invocation: only wait for the
+        # gateway's existing health process, then apply unchanged catalog seals.
+        try:
+            async with asyncio.timeout(
+                _MANAGED_BROWSER_GATEWAY_HEALTH_INTERVAL_SECONDS
+                + binding.config.request_timeout_seconds
+            ):
+                while True:
+                    await check_authority()
+                    await asyncio.sleep(_MANAGED_BROWSER_CATALOG_POLL_SECONDS)
+                    await check_authority()
+                    try:
+                        await adapter.verify_catalog()
+                    except McpGatewayToolUnreachable:
+                        continue
+                    await check_authority()
+                    return
+        except TimeoutError as error:
+            raise ConversationConflict("managed browser gateway health is not ready") from error
 
     async def _adapter_for_request(
         self, command: ToolRequest, *, phase: Literal["execute", "observe"]
@@ -229,7 +280,7 @@ class McpDiscoveryToolAdapter:
                 # Sealed replay and uncertain captures must not start infrastructure.
                 kind = "invoke" if binding.spec.operation_kind == "invoke" else "read"
                 prepare_browser = recovered_result(command, kind) is None
-        return await self._verified_adapter(binding, prepare_browser=prepare_browser)
+        return await self._verified_adapter(binding, prepare_browser=prepare_browser, phase=phase)
 
     async def execute(self, command: ToolRequest) -> ToolDispatchResult:
         adapter = await self._adapter_for_request(command, phase="execute")

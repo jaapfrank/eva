@@ -1,0 +1,278 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "recordedAt": "2026-10-05T01:55:56.276013+00:00",
+  "task": "T3.3",
+  "status": "installed_verified",
+  "baseCommit": "ad191138",
+  "outcome": "Eva’s eigen browser kan tijdens bediening worden overgenomen; na teruggeven wordt de oude verwijzing geweigerd en volgt precies één nieuwe actie op basis van een verse waarneming.",
+  "originalFinishCondition": "Overname stopt lopende bediening; teruggeven vereist verse waarneming en herhaalt geen oude actie.",
+  "existingReused": [
+    "Installed Chromium/Playwright and browser controller",
+    "Registered MCP gateway/discovery and sealed catalog",
+    "Generation-bound browser session",
+    "Previously completed ordinary own-browser and shared-Chrome tasks"
+  ],
+  "predeclaredCase": {
+    "task": "T3.3",
+    "registeredAt": "2026-10-05T01:25:52.325626+00:00",
+    "baseCommit": "ad191138",
+    "originalFinishCondition": "Overname stopt lopende bediening; teruggeven vereist verse waarneming en herhaalt geen oude actie.",
+    "scope": "Installed own browser controller plus currently registered gateway adapter; synthetic in-memory data page. Prior ordinary model-driven browser task retained. No personal Chrome or private page.",
+    "criteria": [
+      "Restore diagnosed controller dependency without changing firewall rules.",
+      "Controlled recovery from recorded recovery_required state, not overriding a human owner session.",
+      "Takeover during a click on a disabled synthetic button stops MCP and the pending request, without a delayed effect.",
+      "After resume the old reference fails before a fresh observation.",
+      "A fresh snapshot shows zero effects; enable and one new click produce exactly one effect.",
+      "Leave no background task, private data change or synthetic page work pending."
+    ],
+    "budget": "One harmless installed transport sequence, zero Eva modelcalls; no new subsystem or repeated model-driven task.",
+    "preflight": "Controller restored; current status revision72/recovery_required, owner_control=false. Controlled test may use existing recover then resume.",
+    "nonClaims": [
+      "Not human takeover acceptance or full autonomous conversation performance.",
+      "No general guarantee that every JavaScript effect is cancellable after dispatch."
+    ]
+  },
+  "dependency": {
+    "installedAt": "2026-10-05T01:25:06.209669+00:00",
+    "helperSha256": "84b932f979f6bbe969674a1dec851e359bdcf6f03f043f77ebef9e619a3bbb91",
+    "firewallRulesUnchanged": true,
+    "firewallState": "active",
+    "controllerState": "active",
+    "priorFailure": "Own hooks incorrectly required absolute first two positions despite disjoint source-bound hooks of another installed instance.",
+    "coreImagesChanged": false,
+    "profileOrDataChanged": false,
+    "preparationFailure": "Initial root Git read was rejected as wrong repository user before any installation; rerun uses administrator for Git."
+  },
+  "focusedTests": {
+    "command": "python3 -m pytest /home/administrator/project/Eva2/eva2/tests/operations/test_browser_firewall_recovery.py -q",
+    "passed": 37,
+    "seconds": 0.25,
+    "provenance": "Existing author tool execution chunk3ad393; no rerun solely for a logfile.",
+    "readinessInitial": {
+      "passed": 129,
+      "seconds": 14.73,
+      "commandArtifact": "readiness-test-command.json"
+    },
+    "cadenceCorrection": {
+      "passed": 46,
+      "seconds": 0.68,
+      "commandArtifact": "readiness-rate-test-command.json",
+      "scope": "Only affected discovery/readiness tests; earlier full focused gateway/autostart evidence reused."
+    }
+  },
+  "installedRoute": {
+    "initialRevision": 76,
+    "takeoverRevision": 78,
+    "resumeRevision": 80,
+    "syntheticPage": true,
+    "privatePageRead": false,
+    "modelCalls": 0,
+    "pendingClick": "Disabled synthetic counter button; registered adapter coroutine pending before takeover. No independent MCP dispatch log captured.",
+    "takeoverAtSeconds": 3.052,
+    "pendingConfirmedAtSeconds": 2.72,
+    "takeoverResponseUpperBoundSeconds": 0.332,
+    "takeoverResult": {
+      "owner_control": true,
+      "mcp_ready": false,
+      "browser_ready": true
+    },
+    "pendingHTTPResult": {
+      "kind": "TimeoutError",
+      "atSeconds": 15.813,
+      "immediateCancellationClaim": false
+    },
+    "oldReference": {
+      "target": "e4",
+      "beforeFreshSnapshot": true,
+      "result": "ToolExecutionRejected: MCP tool rejected the operation",
+      "rawProviderReasonRetained": false
+    },
+    "freshSnapshotCounter": 0,
+    "counterAfterEnableAndTwoSeconds": 0,
+    "newActionCount": 1,
+    "finalCounter": 1,
+    "cleanupURL": "about:blank",
+    "finalState": "eva",
+    "replayedOriginalCounterSequence": false,
+    "finalStateRevision": 92
+  },
+  "readinessFinding": {
+    "status": "installed_verified",
+    "cause": "Pinned gateway health process marks reachable=false after3failed checks. Controller resume can be ready before that health metadata converges.",
+    "correction": "Managed-browser admission alone waits for actual catalog health, with unchanged seals, current authority and exact controller generation; no tool action or gateway-state write is retried.",
+    "healthIntervalSeconds": 60,
+    "catalogPollSeconds": 5,
+    "deadline": "Existing60s health cycle plus configured request I/O limit.",
+    "observedGatewayReadLimit": {
+      "requestsPerMinute": 100,
+      "burst": 20,
+      "shared": true
+    },
+    "initialCandidateFailure": "1s paginated catalog polling hit HTTP429 after52s; preserved in installed-readiness-events.jsonl. Only cadence corrected, no rollback.",
+    "installedFinalProof": {
+      "initialRevision": 90,
+      "resumedRevision": 92,
+      "reachableImmediatelyAfterResume": false,
+      "admissionWaitSeconds": 36.584,
+      "reachableAfterAdmission": true,
+      "freshSnapshotURL": "about:blank",
+      "actionRetries": 0,
+      "modelCalls": 0
+    },
+    "extraControlChecks": "One metadata diagnosis and one changed-cause installed readiness case, then cadence-corrected case. Original click/counter sequence was not repeated."
+  },
+  "retainedEvidence": [
+    "eva2/evidence/product/autonomous-browser-installed-20261003.json",
+    "eva2/evidence/product/t3-owner-browser-task-20261002.json",
+    "eva2/evidence/product/chrome-inflight-recovery-2026-09-12.json"
+  ],
+  "review": "eva2/reviews/t3-owned-handoff-20261005.md",
+  "preparationFailures": [
+    "Initial controller was down because firewall verifier rejected existing disjoint instance hooks; source readback fixed, exact firewall bytes unchanged.",
+    "Expected transport TimeoutError was misclassified as asyncio wait_for deadline by the probe. Continued from recorded owner revision78 without replay.",
+    "After resume, gateway catalog validation rejected preparation before any old-reference dispatch. Continued after actual gateway became available.",
+    "Probe expected an isError result but existing adapter raises ToolExecutionRejected. Continued after saved rejection without repeating the old reference.",
+    "Installed readiness branch correctly awaited actual reachable=false, but1s catalog polling reached actual gateway rate limit; cadence correction required. Earlier counter and handoff proof retained."
+  ],
+  "limitations": [
+    "This is a synthetic installed transport/control check, not a new model-driven benchmark or personal Chrome acceptance.",
+    "The pending click is evidenced by the adapter call and unchanged effects after resume/enabling; no independent server dispatch trace.",
+    "The tool rejects the old reference before fresh observation; raw provider reason was not captured, so no exact provider error wording claimed.",
+    "The in-flight HTTP call waits for its existing timeout after MCP shutdown. No instant return or universal rollback of already executed effects claimed.",
+    "Personal takeover experience and broader family acceptance remain separate.",
+    "After prolonged browser unavailability the configured gateway health cycle can add tens of seconds; observed36.584s. This fixes erroneous rejection, not a speed improvement.",
+    "Healthy/cache-hit behavior has no readiness sleep. The focused cadence case covers the current catalog; arbitrary catalog size or concurrent request load is not guaranteed.",
+    "Actual billed credits/development cost are unknown; zero Eva modelcalls applies to these browser/control probes only."
+  ],
+  "runtimeUsage": {
+    "modelCalls": 0,
+    "runtimeModelTokens": 0,
+    "credits": null,
+    "developmentUsage": null
+  },
+  "artifactDirectory": "/home/administrator/project/.eva2-artifacts/t3-owned-handoff-20261005",
+  "artifactHashes": {
+    "case.json": "b7c34e7c685572a0229ac09e02a981e9a2c3913006c7b29f28aec91c18263f7c",
+    "dependency-installed.json": "c41a7b07bf0ee3b1fc7df6184300fe285e8dd3d758ecac817116e65e4871af55",
+    "probe-events.jsonl": "6643ba28e3d0e2501cfc0c5c533fa6eefcb9185541e3c4da95f41115036a3d56",
+    "continuation-events.jsonl": "2bfcd170c017f03669135af7cf6defffa8bbefa2a0e7a813a6c114001a5d73fd",
+    "after-catalog-refresh-events.jsonl": "1b9ab0b55cb780bb9e78c386aa0d1a863c0b6bd663135cea8353dd4b1475a161",
+    "after-rejection-events.jsonl": "51b4c6a479297cd3ce756614401f0728cda34c6786abb0abb7e2828bc2e1c24f",
+    "probe.py": "9787f5d0f84edc471c10710e2e6adf835c10da089fd5d7858da4bdb255401f12",
+    "continuation.py": "4e6cd097daa1dca3d962adecf3efe966c7a06a8ba902852176c2dd1991b1fbe8",
+    "after-catalog-refresh.py": "9aec9501ad35442fefeacd7950959c456a2e0aa1d1e028adb6e0ba6d3835a69c",
+    "after-rejection.py": "3519d8807a8135c7df5774875eb3b99d2f10e35848576cf5b71e5cc952145b39",
+    "readiness-health-history.json": "818a272cca62504c5bd3c5371e9dad2d2c90fdba6a2decc7e7d12b8d26542546",
+    "readiness-metadata-events.jsonl": "0ff2f40dc453e8febe8f121efead54545eb7e0d386301abd790927f42a6bb33f",
+    "readiness-test-command.json": "7c63187fb7847623e856a78fd00a7fc85683fad35cff596d84835985c3082420",
+    "readiness-tests.log": "d66e208b6753ec37452404f6eb1b37d5424674fe323be0c10d2430c0eb1047a5",
+    "readiness-rate-test-command.json": "ee6e82edd8070ec390aa3ed844724a18bd28e128bba5ad0585a65a3ea11f212f",
+    "readiness-rate-tests.log": "c98078564aea86d4caf23a44ffafec5b43a23169bd9f4e418783a6c5264516a1",
+    "installed-readiness-events.jsonl": "a2ec448faa55869bb102ed81c0b53e62e0a3925f4c4b6db529b02a3c8ab76b24",
+    "cadence-case-start.jsonl": "fdf3f2921ae5770605aac14839ede4119c86b53f23d3038551c2153e4e7532fc",
+    "installed-cadence-probe.py": "9d39ab9aa60e739691426b54ba2a27c2b6ccd7ac89ea9725e0c898d5eebc6436",
+    "installed-cadence-events.jsonl": "bd7b05ebd642d1872e00410e256e96700b54cb04cf2a0cc12d51956652f5acf8",
+    "cadence-installed.json": "856d5cb04a7e60774429c793f4b47b80ce533d7af5001aa7b232ecaed7442629",
+    "cadence-package.json": "678b5db92ab0f5a05e55ec3ac87a0460525bfd9f5ea604d3f507b6f1c08da497",
+    "cadence-package-images.json": "87d916db2985eb287bc1334cfcebcac2cef2ad151ad14d977d71c64d9a3502e6"
+  },
+  "installedReadinessFirstCandidate": {
+    "images": {
+      "core": {
+        "base": "sha256:255ba269c4b4054fde6c7a448e7a5b74763c10d2c07c7eb984ed0801cae884d4",
+        "image": "sha256:718af476f460337923bb2df970da468da979f07a389ba3dcac7553623356c9ba",
+        "tag": "eva2/t3-readiness-core:20261005"
+      },
+      "worker": {
+        "base": "sha256:22d51eed06be90e731f71b0a157af91b0c25bd3faaedfc8555415dd2b1e7d40a",
+        "image": "sha256:12af71a771d0d53ec181b1f2fdf057f0eb7f68ebff64797797de3ee53c02a385",
+        "tag": "eva2/t3-readiness-worker:20261005"
+      }
+    },
+    "source_files": {
+      "src/eva/adapters/connectors/mcp_gateway.py": "d49e58d4fb11eefc0139c249918e5fcdaac870cf9d831459da9ba7ae1574b122",
+      "src/eva/adapters/connectors/browser_autostart.py": "c1f41f77110f1f728dea0c9ec31205a5fd49434aa66ddd25c4611f33bd685bd2",
+      "src/eva/providers/mcp_discovery.py": "7c1906e630f56b388a992f1832f55a838faf6ea45913656229f652e5a50c526f"
+    },
+    "installedAt": "2026-10-05T01:45:07.752568+00:00",
+    "configChanged": [
+      "services.core.image",
+      "services.delegated-work-worker.image"
+    ],
+    "haRestart": false,
+    "browserRestart": false,
+    "schemaChange": false,
+    "containers": {
+      "core": {
+        "image": "sha256:718af476f460337923bb2df970da468da979f07a389ba3dcac7553623356c9ba",
+        "running": true,
+        "sourceHashesMatch": true
+      },
+      "worker": {
+        "image": "sha256:12af71a771d0d53ec181b1f2fdf057f0eb7f68ebff64797797de3ee53c02a385",
+        "running": true,
+        "sourceHashesMatch": true
+      }
+    },
+    "preparationNote": "Before mutation, image-name equality check rejected existing tag aliases; exact resolved base digests then verified."
+  },
+  "installed": {
+    "images": {
+      "core": {
+        "base": "sha256:718af476f460337923bb2df970da468da979f07a389ba3dcac7553623356c9ba",
+        "image": "sha256:b42a5b8a74eaf7307339b8513fbb1e3343d925039a4e0e7866ddfc4defc05dca",
+        "tag": "eva2/t3-readiness-cadence-core:20261005"
+      },
+      "worker": {
+        "base": "sha256:12af71a771d0d53ec181b1f2fdf057f0eb7f68ebff64797797de3ee53c02a385",
+        "image": "sha256:42e43365526c6e0f6d9ecb5e0ccd2f5c0829fc7c2c44ab72a5b92ff5a1733468",
+        "tag": "eva2/t3-readiness-cadence-worker:20261005"
+      }
+    },
+    "source_files": {
+      "src/eva/adapters/connectors/mcp_gateway.py": "d49e58d4fb11eefc0139c249918e5fcdaac870cf9d831459da9ba7ae1574b122",
+      "src/eva/adapters/connectors/browser_autostart.py": "c1f41f77110f1f728dea0c9ec31205a5fd49434aa66ddd25c4611f33bd685bd2",
+      "src/eva/providers/mcp_discovery.py": "0a9026763ffc4e7ce7b960730e7289287fe19eb50efa3f77a9cbec6ab0d2e1f8"
+    },
+    "installedAt": "2026-10-05T01:53:18.211736+00:00",
+    "configChanged": [
+      "services.core.image",
+      "services.delegated-work-worker.image"
+    ],
+    "haRestart": false,
+    "browserRestart": false,
+    "schemaChange": false,
+    "containers": {
+      "core": {
+        "image": "sha256:b42a5b8a74eaf7307339b8513fbb1e3343d925039a4e0e7866ddfc4defc05dca",
+        "running": true,
+        "sourceHashesMatch": true
+      },
+      "worker": {
+        "image": "sha256:42e43365526c6e0f6d9ecb5e0ccd2f5c0829fc7c2c44ab72a5b92ff5a1733468",
+        "running": true,
+        "sourceHashesMatch": true
+      }
+    }
+  },
+  "installerPackage": {
+    "verified": true,
+    "package": "/home/administrator/project/.eva2-artifacts/installer-optional-browser-20261002/package",
+    "sourceFiles": {
+      "src/eva/adapters/connectors/mcp_gateway.py": "d49e58d4fb11eefc0139c249918e5fcdaac870cf9d831459da9ba7ae1574b122",
+      "src/eva/adapters/connectors/browser_autostart.py": "c1f41f77110f1f728dea0c9ec31205a5fd49434aa66ddd25c4611f33bd685bd2",
+      "src/eva/providers/mcp_discovery.py": "0a9026763ffc4e7ce7b960730e7289287fe19eb50efa3f77a9cbec6ab0d2e1f8",
+      "deploy/owner-browser/recovery/recover_firewall.py": "84b932f979f6bbe969674a1dec851e359bdcf6f03f043f77ebef9e619a3bbb91"
+    },
+    "totalFiles": 1225,
+    "imageCount": 8,
+    "verificationReceiptSha256": "989bab38be7d310f10f0faabf01da59b22f228b4133a886a744e5d32506e9645",
+    "runtimeImagePreserved": "sha256:35eba561f26f4745b7995ae849c9341c441361a74106326308781e7e3ffc7a69",
+    "candidateCoreImage": "sha256:b42a5b8a74eaf7307339b8513fbb1e3343d925039a4e0e7866ddfc4defc05dca"
+  },
+  "retainedOriginalOutcome": {
+    "T3": "Completed declared browser task, durable user result, controlled takeover and fresh observation. Existing T3.1/T3.2 acceptance/evidence retained.",
+    "step3": "Technical aggregation of original completed T1/T2/T3/T4; not a claim to every possible digital task or family acceptance."
+  }
+}

@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-05T01:17:45.054328+00:00",
+  "lastUpdated": "2026-10-05T01:55:56.276013+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Eén complete gebruikersuitkomst afronden met bestaande middelen. Nu I2.2 afgeleverd; daarna de concreet aangetoonde HA-argumentfout oplossen. Vergelijkingstoestemming blokkeert onafhankelijk productwerk niet.",
+      "priorityDecision": "Technische gebruikersuitkomsten afgerond houden. Geen zelfstandige nieuwe browserbouw nodig. Resterende oorspronkelijke eindvoorwaarden volgen hun echte toegang en menselijke afhankelijkheden.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -158,19 +158,15 @@
           "Historical shared repository contents not yet split out"
         ]
       },
-      "summary": "28 van 44 oorspronkelijke kleine taken technisch afgerond. Eva’s zelfgemaakte waarnemingsautomatisering is nu echt uitgevoerd; volledige productonderdelen en menselijke acceptatie blijven afzonderlijk zichtbaar.",
+      "summary": "31 van 44 oorspronkelijke kleine taken technisch afgerond. Taken afmaken en terugmelden (T1–T4) is technisch compleet. I2 is afgerond; eindvergelijking, innovatieproef en menselijke acceptatie blijven apart open.",
       "nextOutcomes": [
         {
-          "title": "Actief · Optionele stemmodule aansluiten",
-          "detail": "Bij een nieuwe gewone installatie kan de bestaande stemmodule worden gekozen of weggelaten, met dezelfde kern en een beschikbare HA-spraakpipeline, zonder handgeschreven configuratie."
+          "title": "Opgeleverd · Taken afmaken en terugmelden",
+          "detail": "T1/T2/T3/T4 technisch afgerond, inclusief huisbediening, opgeslagen resultaten, browserovername en hervatting."
         },
         {
-          "title": "Daarna · O1.2 oorspronkelijke modulekeuzes",
-          "detail": "Telegram- en e-mailconfiguratie zijn meegeleverd; daadwerkelijke nieuwe kanaal-/inboxproeven zijn nog niet uitgevoerd. Overige gewone modulekeuzes blijven open. Geen herbouw van geïnstalleerd browser-, leer- of herstelwerk."
-        },
-        {
-          "title": "Vervolgens · Bestaande onafhankelijke producttaken",
-          "detail": "Innovatieproef R1 en resterende algemene mogelijkheden volgens hun huidige afhankelijkheden; eindvergelijking en gezamenlijke kandidaat blijven afzonderlijk gepland."
+          "title": "Nog nodig · Bestaande eindvoorwaarden",
+          "detail": "Resterende bestaande eindvoorwaarden afhandelen: toegang/toestemming voor afgeschermde vergelijking en innovatieproef, werkelijke computerherstart en menselijke speaker-/gezinsbeoordeling. Voltooide functies niet opnieuw bouwen of testen."
         }
       ],
       "openRisks": [
@@ -518,22 +514,22 @@
           "tested": "yes",
           "live": "yes",
           "accepted": "no",
-          "gap": "Persoonlijke Chrome is disconnected en niet bezig. Eigenaarverbinding en acceptatie blijven open; de oude proefbrowser staat uit.",
-          "detail": "Actuele diagnose13september: de persoonlijke Chrome-route45164 via44718 is disconnected, busyfalse. De twee oude VB003containers zijn exited zonder automatische herstart; controller45163 luistert niet. Een tijdelijke kopie van hun toestand meldt recovery_required, geen actuele toestemming. Beide routes hebben verschillende contracten; geen URLwissel of oudebrowserherstart. Historische herstelproeven blijven bewaard en gelden niet als huidige eigenaarverbinding.",
-          "evidence": "Technische browserroute en transportherstel: eva2/evidence/product/chrome-inflight-recovery-2026-09-12.json",
+          "gap": "Optionele persoonlijke overnamebeleving en gezinsacceptatie blijven apart. Gatewayherstel na langere uitval kan tientallen seconden vragen; geen algemene snelheid-/kostenwinst of alle-websitesclaim.",
+          "detail": "T3 technisch afgerond met bestaand taakbewijs en nieuwe geïnstalleerde overname-/hervatcontrole. Kern/werker/pakket gelijk; firewallregels ongewijzigd.",
+          "evidence": "eva2/evidence/product/t3-owned-handoff-installed-20261005.json",
           "outcomes": [],
-          "works": "Browserbediening en herstel zijn historisch getest. De persoonlijke Chrome-route is momenteel niet verbonden.",
-          "tryIt": "Open Browser in het eigenaarsdashboard; neem over en geef terug.",
-          "currentRouteEvidence": "eva2/evidence/product/browser-current-route-audit-2026-09-13.json",
-          "ownerSummary": "Eva gebruikt zelfstandig haar eigen browser en heeft een volledige lees-/klikopdracht uitgevoerd. Ook de gedeelde Chrome-opdracht T3.2 is afgerond. Nog open: T3.3 persoonlijke overname en correct doorgaan blijft afzonderlijk open. Zelfstandig browsergebruik vraagt geen tabdeelhandeling; snelheid en verbruik zijn nog ongunstig.",
+          "works": "Eva gebruikt zelfstandig haar bestaande browser, voltooit een gewone browseropdracht en bewaart het resultaat. Overname stopt bediening; hervatten vereist verse waarneming zonder oude actie.",
+          "tryIt": "Vraag Eva in gewone chat een website te bekijken of een browseropdracht uit te voeren. Eva gebruikt haar eigen browser. Persoonlijke Chrome-tabdeling is alleen nodig als je juist dat tabblad wilt laten gebruiken.",
+          "currentRouteEvidence": "eva2/evidence/product/t3-owned-handoff-installed-20261005.json",
+          "ownerSummary": "Eva gebruikt zelfstandig haar bestaande browser, voltooit een gewone browseropdracht en bewaart het resultaat. Overname stopt bediening; hervatten vereist verse waarneming zonder oude actie. Optionele persoonlijke overnamebeleving en gezinsacceptatie blijven apart. Gatewayherstel na langere uitval kan tientallen seconden vragen; geen algemene snelheid-/kostenwinst of alle-websitesclaim.",
           "currentSummary": {
-            "checkedAt": "2026-10-03T13:00:37.521696+00:00",
-            "works": "Eva gebruikt zelfstandig haar eigen browser en heeft een volledige lees-/klikopdracht uitgevoerd. Ook de gedeelde Chrome-opdracht T3.2 is afgerond.",
-            "gap": "T3.3 persoonlijke overname en correct doorgaan blijft afzonderlijk open. Zelfstandig browsergebruik vraagt geen tabdeelhandeling; snelheid en verbruik zijn nog ongunstig.",
-            "detail": "Op de bestaande eigen browser én de nieuwe optionele installatie zijn navigatie, klikken en terugmelding werkelijk gecontroleerd. Geen claim over alle websites en aanmeldingen.",
+            "checkedAt": "2026-10-05T01:55:56.276013+00:00",
+            "works": "Eva gebruikt zelfstandig haar bestaande browser, voltooit een gewone browseropdracht en bewaart het resultaat. Overname stopt bediening; hervatten vereist verse waarneming zonder oude actie.",
+            "gap": "Optionele persoonlijke overnamebeleving en gezinsacceptatie blijven apart. Gatewayherstel na langere uitval kan tientallen seconden vragen; geen algemene snelheid-/kostenwinst of alle-websitesclaim.",
+            "detail": "T3 technisch afgerond met bestaand taakbewijs en nieuwe geïnstalleerde overname-/hervatcontrole. Kern/werker/pakket gelijk; firewallregels ongewijzigd.",
             "evidencePaths": [
+              "eva2/evidence/product/t3-owned-handoff-installed-20261005.json",
               "eva2/evidence/product/autonomous-browser-installed-20261003.json",
-              "eva2/evidence/product/optional-browser-installed-20261003.json",
               "eva2/evidence/product/t3-owner-browser-task-20261002.json"
             ]
           }
@@ -1028,15 +1024,23 @@
           "R1 vergelijking van uitvoerbare ervaring, geplande eindvergelijking en gezinsbeoordeling blijven open."
         ],
         "browser": [
-          "T3.3 persoonlijke overname en correct doorgaan blijft afzonderlijk open. Zelfstandig browsergebruik vraagt geen tabdeelhandeling; snelheid en verbruik zijn nog ongunstig."
+          "Optionele persoonlijke overnamebeleving en gezinsacceptatie blijven apart. Gatewayherstel na langere uitval kan tientallen seconden vragen; geen algemene snelheid-/kostenwinst of alle-websitesclaim."
         ],
         "installation": [
           "F1.2 gezamenlijke eindcontrole en computerherstart. Werkelijke nieuwe Telegram-/inboxproeven en gezinsacceptatie blijven afzonderlijk open."
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T01:17:45.054328+00:00",
+        "checkedAt": "2026-10-05T01:55:56.276013+00:00",
         "deliveries": [
+          {
+            "title": "T3 klaar · Browser gebruiken, overnemen en hervatten",
+            "date": "5 oktober",
+            "state": "installed",
+            "result": "De oorspronkelijke browseruitkomst is technisch compleet. Oude klik wordt niet herhaald; verse waarneming en precies één nieuwe actie gecontroleerd. Kern, werker, browserhelper en installatiepakket bijgewerkt. Hiermee zijn T1–T4 en de technische stap Taken afmaken en terugmelden afgerond.",
+            "remaining": "31/44 oorspronkelijke kleine taken klaar. Na lange browseruitval kan gatewayherstel nog tientallen seconden duren (gemeten36,584s). Optionele persoonlijke beoordeling en gezinsacceptatie blijven apart.",
+            "source": "eva2/evidence/product/t3-owned-handoff-installed-20261005.json"
+          },
           {
             "title": "I2 klaar · Bronnen kiezen, waarneming instellen en eigen onderzoek",
             "date": "5 oktober",
@@ -3665,14 +3669,14 @@
           }
         ],
         "now": {
-          "title": "T3.3 · Browser overnemen en correct teruggeven",
-          "state": "in_progress",
+          "title": "Technisch afgerond · Taken afmaken en terugmelden",
+          "state": "completed",
           "owner": "Codex",
-          "detail": "De technische stop-/hervatovergang op Eva’s eigen browser afronden met bestaand bewijs en bestaande controller. Persoonlijke Chrome-tabdeling is optioneel; geen nieuwe browserlaag of verplichte eigenaarhandeling."
+          "detail": "T1, T2, T3 en T4 zijn technisch klaar. Laatste oplevering: browserovername en correct hervatten; eerdere taakresultaten en acceptaties behouden."
         },
         "next": {
-          "title": "Bestaande overname-overgang controleren",
-          "detail": "Controleer alleen wat nog ontbreekt: lopende bediening stopt, teruggeven vraagt verse waarneming en een oude actie wordt niet herhaald. Geen herhaling van de al afgeronde browseropdracht."
+          "title": "Resterende eindvoorwaarden",
+          "detail": "Resterende bestaande eindvoorwaarden afhandelen: toegang/toestemming voor afgeschermde vergelijking en innovatieproef, werkelijke computerherstart en menselijke speaker-/gezinsbeoordeling. Voltooide functies niet opnieuw bouwen of testen."
         },
         "ownerAction": {
           "title": "Eén gezamenlijke toestemmingsvraag beantwoorden",
@@ -3681,7 +3685,7 @@
             "De bestaande afzonderlijke vragen voor camera-/agendagebruik, de innovatieproef en de echte herstart blijven open.",
             "Native aanmeldingen van Agent Zero, Hermes en OpenClaw zijn niet actueel bevestigd; geen nieuwe loginronde actief."
           ],
-          "expected": "De vergelijkingsblokkade geldt uitsluitend voor de afgeschermde evaluatie. Onafhankelijk productwerk gaat verder; voor de opgeleverde automatiseringsvaardigheid hoef je niets te doen."
+          "expected": "Deze resterende toegang en menselijke beoordelingen staan los van de opgeleverde technische functies. Er loopt geen verborgen brede herbouw of nieuwe browserproef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
         "reviewedAt": "2026-10-05T01:17:45.054328+00:00"
@@ -13049,7 +13053,7 @@
         {
           "number": 3,
           "title": "Taken afmaken en terugmelden",
-          "state": "open",
+          "state": "completed",
           "existingCards": [
             "AU-002",
             "VB-004",
@@ -13065,7 +13069,10 @@
             "T2",
             "T3",
             "T4"
-          ]
+          ],
+          "completedAt": "2026-10-05T01:55:56.276013+00:00",
+          "technicalCompletion": "Originele T1/T2/T3/T4 technisch afgerond met behouden eigen bewijs; T3-overname en gatewayhervatting zijn de laatste aanvulling. Menselijke/projectacceptatie apart.",
+          "latestEvidence": "eva2/evidence/product/t3-owned-handoff-installed-20261005.json"
         },
         {
           "number": 4,
@@ -13164,7 +13171,7 @@
           ]
         }
       ],
-      "nextAction": "Controleer alleen wat nog ontbreekt: lopende bediening stopt, teruggeven vraagt verse waarneming en een oude actie wordt niet herhaald. Geen herhaling van de al afgeronde browseropdracht.",
+      "nextAction": "Resterende bestaande eindvoorwaarden afhandelen: toegang/toestemming voor afgeschermde vergelijking en innovatieproef, werkelijke computerherstart en menselijke speaker-/gezinsbeoordeling. Voltooide functies niet opnieuw bouwen of testen.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -14746,12 +14753,12 @@
           ],
           "outcome": "Browser- en diensttaak met overname",
           "effort": "L",
-          "status": "in_progress",
+          "status": "completed",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Isolated browser and shared Chrome, takeover and fresh-observation recovery exist.",
-            "remainingGap": "Own-browser automatic startup and a full task are installed and verified. Personal manual takeover T3.3 stays optional/open; generic browser speed and cost remain limitations.",
-            "nextAction": "No owner tab-sharing prerequisite. Preserve previous shared-Chrome acceptance and the installed own-browser result.",
+            "remainingGap": "Original declared browser outcome technically completed. Personal takeover experience is optional; broad site coverage, speed and cost superiority remain unclaimed.",
+            "nextAction": "Gebruik Eva’s eigen browser vanuit een gewone opdracht. Alleen als je juist je persoonlijke tabblad wilt laten gebruiken, deel je dat tabblad; persoonlijke overname beoordelen is optioneel.",
             "evidencePaths": [
               "eva2/evidence/product/personal-chrome-controls-installed-20260922.json",
               "eva2/evidence/product/chrome-inflight-recovery-2026-09-12.json",
@@ -14760,27 +14767,35 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": "/root",
+          "activeWorker": null,
           "assignment": {
+            "stage": "completed_installed_reviewed",
             "owner": "/root",
-            "baseCommit": "eb78d763",
-            "stage": "completed_autonomous_own_browser_installed",
-            "existing": "Maintained Chromium/Playwright browser, fixed controller, registry/gateway and execution engine already exist.",
-            "gap": "Autostart installed. Ordinary task exposes per-call gateway sessions losing snapshot refs; exact header-bound diagnostic succeeds.",
-            "files": [
-              "eva2/src/eva/adapters/connectors/browser_autostart.py",
-              "eva2/src/eva/providers/mcp_autonomy.py",
-              "eva2/src/eva/providers/mcp_discovery.py",
-              "eva2/src/eva/bootstrap/background_browser_context.py",
-              "eva2/src/eva/bootstrap/delegated_digital_composition.py",
-              "focused browser tests and existing evidence/workboard",
-              "eva2/src/eva/adapters/connectors/mcp_gateway.py"
-            ],
-            "doneWhen": "Ordinary owner task starts and uses the existing own browser without owner UI, returns a checked real page result, and is installed in matching core/worker. Personal manual takeover is separate.",
-            "estimate": "Reuse installed browser and existing controller. One bounded ordinary public-page task after focused verification. Actual model tokens measured; credits unknown.",
             "activeWorkers": [],
-            "result": "Current own-browser task completed from stopped without owner UI or manual task assistance. Separate readback confirms result, independent final review GO. 81.506 seconds, 101588 input and 782 output tokens (partial); prior failures and limits retained.",
-            "outcome": "Existing browser task runs without owner tab sharing or manual start; preserve accepted shared-Chrome proof."
+            "currentReadback": {
+              "checkedAt": "2026-10-03T20:30:23.377215+00:00",
+              "state": "disconnected",
+              "connected": false,
+              "busy": false,
+              "freshObservationRequired": true
+            },
+            "previousStage": "optional_personal_trial_awaits_tab_selection",
+            "baseCommit": "ad191138",
+            "existing": "Own autonomous browser installed; owner takeover/resume control and fresh-observation gate already exist.",
+            "gap": "Determine which installed technical takeover behavior remains unproven; optional personal Chrome trial must not be confused with required general engine behavior.",
+            "files": [
+              "Existing browser controller and bounded evidence only; root owns workboard."
+            ],
+            "estimate": "Reuse installed evidence first; only a missing actual takeover transition may need one harmless check. No model call planned; credits unknown.",
+            "dependency": "Installed firewall verifier fixed; browser control restored. Actual resume exposes stale gateway tool reachability before first use; narrow integration correction in progress.",
+            "currentAction": "Completed installed takeover and truthful gateway readiness; no further probe planned.",
+            "sourceFiles": [
+              "src/eva/adapters/connectors/mcp_gateway.py",
+              "src/eva/adapters/connectors/browser_autostart.py",
+              "src/eva/providers/mcp_discovery.py"
+            ],
+            "result": "Original end condition met; retained old failures and measured36.584s health wait; no action retry or modelcalls.",
+            "review": "eva2/reviews/t3-owned-handoff-20261005.md"
           },
           "dashboardComponent": "browser",
           "remainingTasks": [
@@ -14877,11 +14892,11 @@
             {
               "id": "T3.3",
               "title": "Overnemen en correct doorgaan",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "praktijk",
               "doneWhen": "Overname stopt lopende bediening; teruggeven vereist verse waarneming en herhaalt geen oude actie.",
               "owner": "Codex (technisch); Jaap (optionele persoonlijke beoordeling)",
-              "nextAction": "Controleer alleen wat nog ontbreekt: lopende bediening stopt, teruggeven vraagt verse waarneming en een oude actie wordt niet herhaald. Geen herhaling van de al afgeronde browseropdracht.",
+              "nextAction": "Gebruik Eva’s eigen browser vanuit een gewone opdracht. Alleen als je juist je persoonlijke tabblad wilt laten gebruiken, deel je dat tabblad; persoonlijke overname beoordelen is optioneel.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": true,
@@ -14899,13 +14914,11 @@
                 "readyWhen": "Optioneel; blokkeert Eva’s zelfstandige browser en overige projectwerk niet."
               },
               "blocker": null,
-              "checkedAt": "2026-10-05T01:17:45.054328+00:00",
+              "checkedAt": "2026-10-05T01:55:56.276013+00:00",
               "assignment": {
-                "stage": "owned_browser_existing_evidence_check",
+                "stage": "completed_installed_reviewed",
                 "owner": "/root",
-                "activeWorkers": [
-                  "/root"
-                ],
+                "activeWorkers": [],
                 "currentReadback": {
                   "checkedAt": "2026-10-03T20:30:23.377215+00:00",
                   "state": "disconnected",
@@ -14914,19 +14927,31 @@
                   "freshObservationRequired": true
                 },
                 "previousStage": "optional_personal_trial_awaits_tab_selection",
-                "baseCommit": "1d755bd3",
+                "baseCommit": "ad191138",
                 "existing": "Own autonomous browser installed; owner takeover/resume control and fresh-observation gate already exist.",
                 "gap": "Determine which installed technical takeover behavior remains unproven; optional personal Chrome trial must not be confused with required general engine behavior.",
                 "files": [
                   "Existing browser controller and bounded evidence only; root owns workboard."
                 ],
-                "estimate": "Reuse installed evidence first; only a missing actual takeover transition may need one harmless check. No model call planned; credits unknown."
+                "estimate": "Reuse installed evidence first; only a missing actual takeover transition may need one harmless check. No model call planned; credits unknown.",
+                "dependency": "Installed firewall verifier fixed; browser control restored. Actual resume exposes stale gateway tool reachability before first use; narrow integration correction in progress.",
+                "currentAction": "Completed installed takeover and truthful gateway readiness; no further probe planned.",
+                "sourceFiles": [
+                  "src/eva/adapters/connectors/mcp_gateway.py",
+                  "src/eva/adapters/connectors/browser_autostart.py",
+                  "src/eva/providers/mcp_discovery.py"
+                ],
+                "result": "Original end condition met; retained old failures and measured36.584s health wait; no action retry or modelcalls.",
+                "review": "eva2/reviews/t3-owned-handoff-20261005.md"
               },
-              "remaining": "Technische overname en verplichte nieuwe waarneming bestaan en zijn eerder beproefd. Actuele persoonlijke Chrome-route is disconnected; de optionele praktijkproef vraagt een nieuwe expliciete tabselectie. Geen aangetoond bouwtekort."
+              "remaining": "Geen zelfstandig technisch werk binnen T3.3. Optionele persoonlijke Chrome-overname en gezinsacceptatie blijven aparte menselijke beoordelingen.",
+              "latestEvidence": "eva2/evidence/product/t3-owned-handoff-installed-20261005.json",
+              "completedAt": "2026-10-05T01:55:56.276013+00:00",
+              "result": "Technische overname afgerond op de geïnstalleerde eigen browser: oude bediening gestopt, oude verwijzing geweigerd, teller0 vóór en na vrijgeven; precies één nieuwe actie geeft1. Eerste gebruik na gatewayuitval wacht nu op echte beschikbaarheid. Onafhankelijke review gebundeld; persoonlijke beleving apart."
             }
           ],
-          "latestEvidence": "eva2/evidence/product/autonomous-browser-installed-20261003.json",
-          "nextAction": "Own browser is available for ordinary tasks. Personal takeover remains an optional separate T3.3 assessment.",
+          "latestEvidence": "eva2/evidence/product/t3-owned-handoff-installed-20261005.json",
+          "nextAction": "Gebruik Eva’s eigen browser vanuit een gewone opdracht. Alleen als je juist je persoonlijke tabblad wilt laten gebruiken, deel je dat tabblad; persoonlijke overname beoordelen is optioneel.",
           "responsibilityReview": {
             "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
             "role": "algemene uitvoering",
@@ -14941,11 +14966,9 @@
           },
           "baseCommit": "80f2c34b93601f6394a4942d90436714867693d6",
           "currentAssignment": {
-            "stage": "owned_browser_existing_evidence_check",
+            "stage": "completed_installed_reviewed",
             "owner": "/root",
-            "activeWorkers": [
-              "/root"
-            ],
+            "activeWorkers": [],
             "currentReadback": {
               "checkedAt": "2026-10-03T20:30:23.377215+00:00",
               "state": "disconnected",
@@ -14954,14 +14977,47 @@
               "freshObservationRequired": true
             },
             "previousStage": "optional_personal_trial_awaits_tab_selection",
-            "baseCommit": "1d755bd3",
+            "baseCommit": "ad191138",
             "existing": "Own autonomous browser installed; owner takeover/resume control and fresh-observation gate already exist.",
             "gap": "Determine which installed technical takeover behavior remains unproven; optional personal Chrome trial must not be confused with required general engine behavior.",
             "files": [
               "Existing browser controller and bounded evidence only; root owns workboard."
             ],
-            "estimate": "Reuse installed evidence first; only a missing actual takeover transition may need one harmless check. No model call planned; credits unknown."
-          }
+            "estimate": "Reuse installed evidence first; only a missing actual takeover transition may need one harmless check. No model call planned; credits unknown.",
+            "dependency": "Installed firewall verifier fixed; browser control restored. Actual resume exposes stale gateway tool reachability before first use; narrow integration correction in progress.",
+            "currentAction": "Completed installed takeover and truthful gateway readiness; no further probe planned.",
+            "sourceFiles": [
+              "src/eva/adapters/connectors/mcp_gateway.py",
+              "src/eva/adapters/connectors/browser_autostart.py",
+              "src/eva/providers/mcp_discovery.py"
+            ],
+            "result": "Original end condition met; retained old failures and measured36.584s health wait; no action retry or modelcalls.",
+            "review": "eva2/reviews/t3-owned-handoff-20261005.md"
+          },
+          "previousAutonomousBrowserAssignment": {
+            "owner": "/root",
+            "baseCommit": "eb78d763",
+            "stage": "completed_autonomous_own_browser_installed",
+            "existing": "Maintained Chromium/Playwright browser, fixed controller, registry/gateway and execution engine already exist.",
+            "gap": "Autostart installed. Ordinary task exposes per-call gateway sessions losing snapshot refs; exact header-bound diagnostic succeeds.",
+            "files": [
+              "eva2/src/eva/adapters/connectors/browser_autostart.py",
+              "eva2/src/eva/providers/mcp_autonomy.py",
+              "eva2/src/eva/providers/mcp_discovery.py",
+              "eva2/src/eva/bootstrap/background_browser_context.py",
+              "eva2/src/eva/bootstrap/delegated_digital_composition.py",
+              "focused browser tests and existing evidence/workboard",
+              "eva2/src/eva/adapters/connectors/mcp_gateway.py"
+            ],
+            "doneWhen": "Ordinary owner task starts and uses the existing own browser without owner UI, returns a checked real page result, and is installed in matching core/worker. Personal manual takeover is separate.",
+            "estimate": "Reuse installed browser and existing controller. One bounded ordinary public-page task after focused verification. Actual model tokens measured; credits unknown.",
+            "activeWorkers": [],
+            "result": "Current own-browser task completed from stopped without owner UI or manual task assistance. Separate readback confirms result, independent final review GO. 81.506 seconds, 101588 input and 782 output tokens (partial); prior failures and limits retained.",
+            "outcome": "Existing browser task runs without owner tab sharing or manual start; preserve accepted shared-Chrome proof."
+          },
+          "completedAt": "2026-10-05T01:55:56.276013+00:00",
+          "checkedAt": "2026-10-05T01:55:56.276013+00:00",
+          "result": "Oorspronkelijke technische T3-uitkomst compleet: gewone browseropdracht, bewaard gebruikersresultaat, overname en hervatten met verse waarneming. Geen claim over alle websites, bestanden of bureaubladprogramma’s."
         },
         {
           "id": "T4",
@@ -16747,7 +16803,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "T3",
+      "activeSliceId": "F1",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

@@ -53,6 +53,19 @@ class ManagedBrowserAutostart:
             )
         return state
 
+    async def verify_generation(self, connector_id: str, revision: int) -> None:
+        """Read back the same live generation without starting or resuming anything."""
+        if not self.matches(connector_id):
+            raise ConversationConflict("browser session binding differs")
+        check_cancellation()
+        try:
+            observed = await self.config.client.status()
+            check_cancellation()
+            if self._state(observed) != "eva" or observed["revision"] != revision:
+                raise ConversationConflict("managed browser generation changed during readiness")
+        except BrowserSessionError as error:
+            raise ConversationConflict("managed browser readiness status is uncertain") from error
+
     async def ensure_available(self, connector_id: str) -> int | None:
         if not self.matches(connector_id):
             return

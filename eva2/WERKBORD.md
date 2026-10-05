@@ -1,5 +1,27 @@
 # EVA2 werkbord
 
+**Opgeleverd — T3 en de technische stap ‘Taken afmaken en terugmelden’.**
+T1, T2, T3 en T4 zijn technisch afgerond. Eva gebruikt haar eigen browser,
+bewaart het gebruikersresultaat, stopt bediening bij overname en kijkt opnieuw
+voordat zij verdergaat. Een oude klik wordt niet alsnog uitgevoerd.
+De gerichte correcties staan samen in kern, werker en installatiepakket.
+**31/44 oorspronkelijke kleine taken klaar; geen extra taken toegevoegd.**
+
+Laatste controle: gateway werkelijk onbereikbaar, hervatten, werkelijke gezondheid
+afwachten en verse browserwaarneming. Geslaagd zonder actieherhaling of modelcall.
+Gemeten healthwachttijd36,584seconden; dit is geen snelheidswinst.
+Eerdere fouten en beperkingen blijven in het bewijs staan.
+[Bewerkte functie en bewijs](evidence/product/t3-owned-handoff-installed-20261005.json)
+· [Onafhankelijke review](reviews/t3-owned-handoff-20261005.md).
+
+**Resteert volgens de oorspronkelijke lijst:** afgeschermde eindvergelijking,
+innovatieproef en echte computerherstart met hun bestaande toegangs-/toestemmingsvragen;
+fysieke speakerbeleving, persoonlijkheid/initiatief en zeven dagen gezinsacceptatie.
+De optionele telefoonroute is geen nieuwe verplichte bouwronde.
+Geen nieuwe browser-/installatieproef gepland. Het app-goal blijft actief.
+
+**Hieronder: eerdere opleveringen; toenmalige tellers en vervolgstappen zijn historisch.**
+
 **Opgeleverd — I2: oorspronkelijke technische uitkomst compleet.**
 Eva kiest passende camera-/agendabronnen, maakt een waarnemingsautomatisering
 en voltooit een zelfgekozen onderzoeksvoorstel met werkelijk geraadpleegde bronnen.
