@@ -114,9 +114,35 @@
       "tool_namespaces.py": "2bdedb62dfb69a055a5559c070235ffd12cb1bcbbeca397c61e94c5216acedc8"
     },
     "sourceMechanism": "Each external action continuation rebuilds input with prior tool receipts. The repeated history is established by source, but per-request measured bytes and the dominant source are not retained in this public task result.",
-    "causeProven": false,
+    "causeProven": "Repeated catalog guidance is proven; not a complete causal allocation of all runtime tokens.",
     "optimizationApplied": false,
     "newProviderCalls": 0,
-    "limits": "A scoped lookup by returned message_id produced no rows; that is not evidence of absent storage or a runtime defect. No broader private journal was dumped."
+    "limits": "A scoped lookup by returned message_id produced no rows; that is not evidence of absent storage or a runtime defect. No broader private journal was dumped.",
+    "scopeCorrection": "The ordinary journal uses external_timeline_scope(runtime tenant/installation), not the separate fixed workboard/dashboard scope. The correct scoped lookup found the exact source event and17 model records; earlier zero-row lookups were an operator diagnostic binding error.",
+    "measuredInputSequence": {
+      "initial": [
+        7073,
+        8826,
+        10530,
+        17198,
+        19958,
+        25942,
+        27553,
+        27833,
+        27948
+      ],
+      "resume": [
+        29165,
+        39008,
+        39647,
+        40307,
+        45552,
+        47047,
+        47367,
+        47497
+      ]
+    },
+    "identifiedRepetition": "The24-tool catalog measured35,307 result bytes; completion_guidance fields total10,416 bytes and repeat the same text. New model view deterministically retains that text once.",
+    "newEvidence": "eva2/evidence/product/p2-catalogue-model-view-20261006.json"
   }
 }

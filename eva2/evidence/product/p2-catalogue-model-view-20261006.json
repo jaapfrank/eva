@@ -1,0 +1,80 @@
+{
+  "newProviderCalls": 0,
+  "originalReceiptChanged": false,
+  "catalogues": [
+    {
+      "step": 1,
+      "toolCount": 4,
+      "receiptSourceSha256": "17dfaf3b6fc7f654f69c9b5582ed67f8538ac96dea58be044d30930ba4a41a74",
+      "beforeModelViewBytes": 5727,
+      "afterModelViewBytes": 4869,
+      "allSchemasAndValuesPreserved": true,
+      "originalProofUnchanged": true,
+      "savedBytes": 858
+    },
+    {
+      "step": 3,
+      "toolCount": 9,
+      "receiptSourceSha256": "727d3235a13dbc74945e8d207b02a1b389a14a0a85e097dbdf4fc34c23531f02",
+      "beforeModelViewBytes": 10251,
+      "afterModelViewBytes": 9740,
+      "allSchemasAndValuesPreserved": true,
+      "originalProofUnchanged": true,
+      "savedBytes": 511
+    },
+    {
+      "step": 8,
+      "toolCount": 24,
+      "receiptSourceSha256": "d52b490572262588f0abe26a68b82e836b6c1a620ce95730127def56141aa296",
+      "beforeModelViewBytes": 35958,
+      "afterModelViewBytes": 27780,
+      "allSchemasAndValuesPreserved": true,
+      "originalProofUnchanged": true,
+      "savedBytes": 8178
+    }
+  ],
+  "candidateSourceSha256": "2888e28a47476f8093463bc4fac5e66f36f6e2223556c8955dc0274de5968d07",
+  "contract": "EvaLosslessCatalogueModelView/v1",
+  "status": "reviewed_candidate_installing",
+  "tests": {
+    "passed": 134,
+    "failed": 1,
+    "seconds": 4.08,
+    "preExistingFailure": "test_action_tool_catalog_remains_canonically_byte_equal",
+    "expectedHash": "4b2ed4d6d8b444a917aee8c34ed92c13b08f72f94effed8f3ce1423ebdd9d905",
+    "unchangedBaselineHash": "691af67f30c20513938543868c75b726bf48244932f4ed69fbdf356d6512080b",
+    "testRuleChanged": false
+  },
+  "limits": [
+    "Offline byte comparison on retained ordinary public development receipts; no hidden final-case data.",
+    "No runtime token, latency, credit-cost or competitor superiority claim.",
+    "All original outcomes and fixed evaluation criteria remain unchanged.",
+    "Manual deterministic serialization improvement, not AIDE or AIDE2 self-improvement."
+  ],
+  "checkedAt": "2026-10-05T23:11:38.083666+00:00",
+  "independentReview": {
+    "reviewer": "/root/xd01_runtime_review",
+    "decision": "GO",
+    "sourceSha256": "2888e28a47476f8093463bc4fac5e66f36f6e2223556c8955dc0274de5968d07",
+    "testSha256": "1e360d7bbe02b3eb40f052848a0a4b35ba8d35649eea123ec6a10bb8a3457cff",
+    "finding": "Lossless reconstruction, schemas, tool IDs and original proof retained; shared encoding used only when complete model view is smaller. Same helper in admission and actual tool-return history. No authority/stop/provider/tool selection change.",
+    "reviewerModelOrRuntimeCalls": 0,
+    "reviewerTestRuns": 0,
+    "preExistingCatalogAssertion": "Unchanged HEAD first667 source lines and unchanged test; not a delta regression.",
+    "installationBaselineSha256": "5eb31eb57b0959d29919e5b3b7e053f588752ce9559433b16c47ef0ac5db2e23"
+  },
+  "installation": {
+    "state": "prepared",
+    "baselineConfirmedOnBothContainers": true,
+    "changedFiles": [
+      "src/eva/adapters/model/pydantic_conversation.py"
+    ],
+    "baseImages": {
+      "core": "sha256:820c3d3af6b242b7f26b237af6eba0f208ebcc40c46b7f235dcd85f8385d1eb0",
+      "delegated-work-worker": "sha256:fed292a248395d90df3e09c95679056a994249734721731729229c446ce3e6ec"
+    },
+    "speechChanged": false,
+    "dependencyChanged": false,
+    "databaseMigration": false
+  }
+}

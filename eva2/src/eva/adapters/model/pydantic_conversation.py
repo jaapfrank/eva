@@ -670,8 +670,43 @@ class PydanticConversationModel:
         return ConversationCredentialStatus(True, "ready", expires_at)
 
     @staticmethod
+    def _catalogue_model_view(result: dict[str, Any]) -> dict[str, Any]:
+        """Losslessly share identical tool guidance without dropping any schema."""
+        shared_key = "model_view_shared_tool_guidance"
+        tools = result.get("tools")
+        if shared_key in result or not isinstance(tools, list):
+            return result
+        counts: dict[str, int] = {}
+        for tool in tools:
+            guidance = tool.get("completion_guidance") if isinstance(tool, dict) else None
+            if isinstance(guidance, str) and guidance:
+                counts[guidance] = counts.get(guidance, 0) + 1
+        shared = [guidance for guidance, count in counts.items() if count > 1]
+        if not shared:
+            return result
+        references = {guidance: index for index, guidance in enumerate(shared)}
+        viewed_tools = []
+        for tool in tools:
+            guidance = tool.get("completion_guidance") if isinstance(tool, dict) else None
+            if isinstance(guidance, str) and guidance in references:
+                viewed_tools.append({
+                    **tool,
+                    "completion_guidance": {
+                        "model_view_reference": f"/result/{shared_key}/{references[guidance]}"
+                    },
+                })
+            else:
+                viewed_tools.append(tool)
+        view = {**result, shared_key: shared, "tools": viewed_tools}
+        # Sharing short values can cost more than repeating them. Keep the exact
+        # original representation unless this catalogue actually becomes smaller.
+        if len(canonical_json_bytes(view)) >= len(canonical_json_bytes(result)):
+            return result
+        return view
+
+    @staticmethod
     def _receipt_model_view(output: dict[str, Any]) -> dict[str, Any]:
-        """Reference an exact duplicated observation; keep durable receipts intact."""
+        """Losslessly reference duplicates in model input; keep durable receipts intact."""
         proof = output.get("proof")
         evidence = proof.get("evidence") if isinstance(proof, dict) else None
         observation = evidence.get("observation") if isinstance(evidence, dict) else None
@@ -694,10 +729,31 @@ class PydanticConversationModel:
                 canonical_json_bytes(proof)
             ).hexdigest(),
         }
-        return {
+        view = (
+            PydanticConversationModel._catalogue_model_view(result)
+            if evidence.get("source") == "registered_mcp_catalog"
+            else result
+        )
+        baseline = {
             **output,
             "proof": {**proof, "evidence": {**evidence, "observation": reference}},
         }
+        if view is result:
+            return baseline
+        # The hashes still attest the retained original proof/observation.
+        # Explicitly identify the lossless representation at the reference.
+        encoded_reference = {
+            **reference,
+            "model_view_encoding": "shared_tool_guidance_v1",
+            "model_view_sha256": hashlib.sha256(canonical_json_bytes(view)).hexdigest(),
+        }
+        candidate = {
+            **output,
+            "result": view,
+            "proof": {**proof, "evidence": {**evidence, "observation": encoded_reference}},
+        }
+        return (candidate if len(canonical_json_bytes(candidate)) < len(canonical_json_bytes(baseline))
+                else baseline)
 
     @staticmethod
     def _phase_admission_body(
