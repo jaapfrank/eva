@@ -1,0 +1,111 @@
+{
+  "contract": "Ev003IndependentProjectionReview/v1",
+  "status": "original_projection_and_native_entry_admission_complete_not_executed",
+  "reviewer": "/root/aide_final_evaluation",
+  "caseId": "EV003-CM-06",
+  "caseSha256": "59183433a985806ee2d3995ba3094442669d80565f866284e15dc1fdeb00e7d8",
+  "epoch": 1,
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "commitmentSha256": "bbdbf8eff011aeb51c41e2ff6532346dd22615a99102166e4005292100dd03bf",
+  "sourceProjection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm06-epoch1.private.json",
+    "sha256": "dfec8f3bdfe52a71edd2ff184545d659ed497192033c3f4aba4bcdfa66d7f512"
+  },
+  "nativeProjection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm06-epoch1.native-inputs.private.json",
+    "sha256": "c2311aa5358cc054bf04cf1c6c2629ad2727b066342b6e33fac1372d3278ad43"
+  },
+  "privateReceipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm06-epoch1.projection-receipt.private.json",
+    "sha256": "8f1135b62721635a4db2b6371056f442be6f91c15639696cfef185e6655720a3"
+  },
+  "structure": {
+    "ordinary_turns": 3,
+    "actors": 1,
+    "actor_indices": [
+      0,
+      0,
+      0
+    ],
+    "session_indices": [
+      0,
+      0,
+      1
+    ],
+    "clock_generations": [
+      0,
+      0,
+      1
+    ],
+    "setup_turns": 0,
+    "scripted_events": 2,
+    "external_service_file_browser_audio_resources": false
+  },
+  "readbackTypes": [
+    "principal_scoped_memory_and_provenance",
+    "exact_ingress_reply_and_identity",
+    "complete_offered_provider_context",
+    "usage_stop_effect_and_pending_work"
+  ],
+  "nativeMechanismsReused": true,
+  "requiredBenchmarkSourceDelta": {
+    "eva1CanonicalWorkerSha256": "e0ba9e823e99ef2ac749acfab74118d82633c93d56172ab885f4ea47f92e058d",
+    "eva1CaptureHook": "Same reviewed passive endpoint request capture; bind composed worker hash before admission.",
+    "eva2WorkerSha256": "369da028e809be574301eeeae17b843183fc42ba1beca9a00ae5249b0eac11c6"
+  },
+  "remaining": "Root prepares only the dedicated isolated resource namespaces and executes the exact admitted Inspect wrappers once, Eva1 then Eva2, under the existing approval pathway. Preserve all outcomes; no automatic retry.",
+  "inferenceAdmitted": true,
+  "providerCalls": 0,
+  "humanRatings": [
+    null,
+    null
+  ],
+  "criteriaChanged": false,
+  "sealedDataChanged": false,
+  "productCodeChanged": false,
+  "hiddenContentPublished": false,
+  "projectionStatusAtCreation": "original_private_projection_prepared_not_execution_admission",
+  "independentAdmission": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm06-epoch1.independent-admission.private.json",
+    "sha256": "90f9aec3a6f760bd95c5da5c7bcd0cddea71d00a498102d1c3e22648b2bbceac"
+  },
+  "participantAdmissions": {
+    "eva1": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm06-epoch1/admission.json",
+      "sha256": "1e2adba5557530db6a7a940bfff999480d4edacbfb4a8dccab7557d241158c48"
+    },
+    "eva2": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/admission.json",
+      "sha256": "80cdfe60b1d12fb69eb4b5b65a4e8374ec61688d39c72a26559249361ade5136"
+    }
+  },
+  "leaseAvailability": {
+    "checkedAt": "2026-10-05T14:11:31.227854+00:00",
+    "scope": "Existing native lease file availability/metadata and JWT expiration only; no provider/auth request, refresh, account/token output.",
+    "core": {
+      "available": true,
+      "uid": 1000,
+      "gid": 65532,
+      "mode": "0640",
+      "unexpired": true,
+      "expiresAt": "2026-10-11T10:34:03+00:00"
+    },
+    "memory": {
+      "available": true,
+      "uid": 1000,
+      "gid": 1000,
+      "mode": "0600",
+      "unexpired": true,
+      "expiresAt": "2026-10-11T10:34:03+00:00"
+    },
+    "limitation": "Local availability/expiration is not a successful provider request or an account credit measurement."
+  },
+  "limits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "wallSeconds": 480,
+    "toolCalls": 16,
+    "externalActions": 0
+  }
+}

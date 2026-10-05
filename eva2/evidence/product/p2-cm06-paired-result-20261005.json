@@ -1,0 +1,452 @@
+{
+  "contract": "Ev003IndependentPairedResult/v1",
+  "reviewedAt": "2026-10-05T14:22:03.429652+00:00",
+  "reviewer": "/root/aide_final_evaluation",
+  "task": "P2.1",
+  "caseId": "EV003-CM-06",
+  "epoch": 1,
+  "status": "one_objective_pass_one_objective_fail",
+  "caseSha256": "59183433a985806ee2d3995ba3094442669d80565f866284e15dc1fdeb00e7d8",
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "projectionSha256": "c2311aa5358cc054bf04cf1c6c2629ad2727b066342b6e33fac1372d3278ad43",
+  "participants": {
+    "eva1-bottie": {
+      "outcome": "native_route_complete",
+      "inspectStatus": "success",
+      "objective": {
+        "taskSuccess": false,
+        "status": "fail",
+        "semanticConditions": [
+          false,
+          true,
+          false
+        ],
+        "semanticCounts": {
+          "pass": 1,
+          "fail": 2,
+          "unknown": 0
+        },
+        "independentReadbacks": [
+          false,
+          true
+        ],
+        "readbackCounts": {
+          "pass": 1,
+          "fail": 1,
+          "unknown": 0
+        },
+        "humanRatings": [
+          null,
+          null
+        ],
+        "humanDimensionsUnscored": [
+          "warmth",
+          "relevance",
+          "independent judgement"
+        ],
+        "explanation": "The completed later conversation did not recover the required original qualified state or its source distinction. The answer avoided inventing a commitment, but that does not satisfy the positive recall requirements."
+      },
+      "native": {
+        "plannedTurns": 3,
+        "completedTurns": 3,
+        "exactReplyReadbacks": 3,
+        "calendarAcknowledgedGenerations": [
+          0,
+          1
+        ],
+        "sameActorAndDatabasePreserved": true,
+        "sessionIndices": [
+          0,
+          0,
+          1
+        ],
+        "captureCount": 6,
+        "captureCompleteForAllAttempts": true,
+        "sourceHashesMatchAdmission": true,
+        "memoryRecordsObserved": 0
+      },
+      "usage": {
+        "providerAttempts": 6,
+        "completedAttempts": 6,
+        "inputTokens": 35379,
+        "outputTokens": 1452,
+        "accountingComplete": true,
+        "byRole": {
+          "contact": {
+            "attempts": 6,
+            "inputTokens": 35379,
+            "outputTokens": 1452
+          },
+          "helper": {
+            "attempts": 0,
+            "inputTokens": 0,
+            "outputTokens": 0
+          }
+        },
+        "money": null
+      },
+      "tools": {
+        "admittedDispatches": 5,
+        "protocolDispatches": 4,
+        "ordinaryMemoryDispatches": 1,
+        "refusedProposals": 0,
+        "externalEffectsDispatched": 0
+      },
+      "timing": {
+        "nativeLaunchThroughFinalSettlementSeconds": 89.5973552170326,
+        "conversationThroughFinalSettlementSeconds": 87.9332734500058,
+        "sampleSeconds": null,
+        "inspectWrapperSeconds": 92.0,
+        "inspectStartedAt": "2026-10-05T14:14:45+00:00",
+        "inspectCompletedAt": "2026-10-05T14:16:17+00:00",
+        "inspectTimestampResolution": "one second",
+        "wallLimitSeconds": 480,
+        "perTurn": [
+          {
+            "ordinal": 0,
+            "providerAttempts": 3,
+            "usage": {
+              "inputTokens": 17572,
+              "outputTokens": 720
+            },
+            "exactReplyReadback": true,
+            "signedAckCount": 1,
+            "firstContentMs": 46833.282892999705,
+            "foregroundMs": 46837.350425019395,
+            "settledMs": 46878.77552199643
+          },
+          {
+            "ordinal": 1,
+            "providerAttempts": 2,
+            "usage": {
+              "inputTokens": 9779,
+              "outputTokens": 415
+            },
+            "exactReplyReadback": true,
+            "signedAckCount": 1,
+            "firstContentMs": 23652.797605027445,
+            "foregroundMs": 23655.449500016402,
+            "settledMs": 23746.25221802853
+          },
+          {
+            "ordinal": 2,
+            "providerAttempts": 1,
+            "usage": {
+              "inputTokens": 8028,
+              "outputTokens": 317
+            },
+            "exactReplyReadback": true,
+            "signedAckCount": 1,
+            "firstContentMs": 17262.641199980862,
+            "foregroundMs": 17265.999422990717,
+            "settledMs": 17304.399115033448
+          }
+        ]
+      },
+      "stop": {
+        "settled": true,
+        "activeProviderAttempts": 0,
+        "pendingControls": 0,
+        "providerCloseFailures": 0,
+        "externalEffectsObserved": 0,
+        "ledgerStop": "native comparison stopped"
+      },
+      "evidenceStage": "Original messages persisted in native conversation storage, but no separate native memory facts were present in any retained snapshot. The later native conversation search returned no usable results, and the final offered context did not contain the required prior evidence. No finer product root cause is inferred.",
+      "resultArtifact": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm06-epoch1/result.private.json",
+        "sha256": "89b9cabba70bbefee04db5d2b5dc817bd3a7b2a78f704249bc34bdb008d7e04c"
+      },
+      "admission": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm06-epoch1/admission.json",
+        "sha256": "1e2adba5557530db6a7a940bfff999480d4edacbfb4a8dccab7557d241158c48"
+      }
+    },
+    "eva2": {
+      "outcome": "native_sample_completed",
+      "inspectStatus": "success",
+      "objective": {
+        "taskSuccess": true,
+        "status": "pass",
+        "semanticConditions": [
+          true,
+          true,
+          true
+        ],
+        "semanticCounts": {
+          "pass": 3,
+          "fail": 0,
+          "unknown": 0
+        },
+        "independentReadbacks": [
+          true,
+          true
+        ],
+        "readbackCounts": {
+          "pass": 2,
+          "fail": 0,
+          "unknown": 0
+        },
+        "humanRatings": [
+          null,
+          null
+        ],
+        "humanDimensionsUnscored": [
+          "warmth",
+          "relevance",
+          "independent judgement"
+        ],
+        "explanation": "All three original semantic conditions and both mandatory readbacks are evidenced, including the required later recall and source distinction."
+      },
+      "native": {
+        "plannedTurns": 3,
+        "completedTurns": 3,
+        "exactReplyReadbacks": 3,
+        "calendarAcknowledgedGenerations": [
+          0,
+          1
+        ],
+        "sameActorAndDatabasePreserved": true,
+        "sessionIndices": [
+          0,
+          0,
+          1
+        ],
+        "captureCount": 8,
+        "captureCompleteForAllAttempts": true,
+        "sourceHashesMatchAdmission": true,
+        "memoryRecordsObserved": 3
+      },
+      "usage": {
+        "providerAttempts": 8,
+        "completedAttempts": 8,
+        "inputTokens": 21681,
+        "outputTokens": 922,
+        "accountingComplete": true,
+        "byRole": {
+          "contact": {
+            "attempts": 3,
+            "inputTokens": 5919,
+            "outputTokens": 156
+          },
+          "helper": {
+            "attempts": 5,
+            "inputTokens": 15762,
+            "outputTokens": 766
+          }
+        },
+        "money": null
+      },
+      "tools": {
+        "protocolConsumptions": 0,
+        "refusedProposals": 0,
+        "externalEffectsDispatched": 0,
+        "completeReceipts": true
+      },
+      "timing": {
+        "nativeLaunchThroughFinalSettlementSeconds": null,
+        "conversationThroughFinalSettlementSeconds": null,
+        "sampleSeconds": 74.88529130700044,
+        "inspectWrapperSeconds": 113.0,
+        "inspectStartedAt": "2026-10-05T14:16:55+00:00",
+        "inspectCompletedAt": "2026-10-05T14:18:48+00:00",
+        "inspectTimestampResolution": "one second",
+        "wallLimitSeconds": 480,
+        "perTurn": [
+          {
+            "ordinal": 0,
+            "providerAttempts": 3,
+            "usage": {
+              "inputTokens": 8133,
+              "outputTokens": 378
+            },
+            "exactReplyReadback": true,
+            "signedAckCount": null,
+            "firstContentMs": 8291.718013002537,
+            "foregroundMs": 10681.313074019272,
+            "settledMs": 31247.384632006288
+          },
+          {
+            "ordinal": 1,
+            "providerAttempts": 3,
+            "usage": {
+              "inputTokens": 8554,
+              "outputTokens": 478
+            },
+            "exactReplyReadback": true,
+            "signedAckCount": null,
+            "firstContentMs": 3727.6737499632873,
+            "foregroundMs": 5781.8115199916065,
+            "settledMs": 25902.39639696665
+          },
+          {
+            "ordinal": 2,
+            "providerAttempts": 2,
+            "usage": {
+              "inputTokens": 4994,
+              "outputTokens": 66
+            },
+            "exactReplyReadback": true,
+            "signedAckCount": null,
+            "firstContentMs": 3871.8414930044673,
+            "foregroundMs": 5998.174275038764,
+            "settledMs": 9505.77918998897
+          }
+        ]
+      },
+      "stop": {
+        "settled": true,
+        "activeProviderAttempts": 0,
+        "pendingControls": 0,
+        "providerCloseFailures": 0,
+        "externalEffectsObserved": 0,
+        "ledgerStop": "sample observation complete"
+      },
+      "evidenceStage": "Original source facts persisted and a derived observation retained their distinct provenance. That observation was selected and actually offered to the final contact model; the retained final answer satisfies the original endpoint.",
+      "resultArtifact": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/execution/result.json",
+        "sha256": "0b28b361995f6a9590b5f502a96154639e0d3dd984a569aba73cddde66ba8d02"
+      },
+      "admission": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/admission.json",
+        "sha256": "80cdfe60b1d12fb69eb4b5b65a4e8374ec61688d39c72a26559249361ade5136"
+      }
+    }
+  },
+  "pairUsage": {
+    "providerAttempts": 14,
+    "inputTokens": 57060,
+    "outputTokens": 2374,
+    "accountingComplete": true,
+    "money": null
+  },
+  "interpretation": {
+    "objectiveFailMeaning": "Eva1 completed the original native route but failed the required later recall/provenance endpoint; this is an observed task failure, not an access/adapter-unavailable result.",
+    "objectivePassMeaning": "Eva2 met all three original semantic conditions and both mandatory independent readbacks in this single original case.",
+    "humanScoresKnown": false,
+    "overallComparisonWinner": null,
+    "speedOrCostSuperiorityClaim": false,
+    "timingCaveat": "Eva1 first-content is buffered native JSON-reply availability; Eva2 is streamed text. Eva1 launch/conversation intervals and Eva2 sample interval have separately stated starts; Inspect includes setup/teardown. Report observations without an equal-boundary or general speed/efficiency claim.",
+    "sourceApplicability": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-cm-source-applicability-20261005.json",
+      "sha256": "522d9dbdabc03763cf2f9921e6092012fb21a77299da8334eba7a40428d30a44"
+    },
+    "sourceApplicabilityLimit": "Formally bound to the original frozen F1 comparison images and admitted configuration. Selected unchanged CM-source evidence does not make this a whole-image/current-installation comparison.",
+    "fixedScopeUnchanged": true,
+    "automaticRetry": false
+  },
+  "independentAssessment": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm06-epoch1.paired-assessment.private.json",
+    "sha256": "f01b67cff13cc2fa577ff883c37fd6bdfb684796d1ae25df62c84274a2744bd8"
+  },
+  "retainedEvidence": {
+    "eva1": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm06-epoch1/result.private.json",
+        "sha256": "89b9cabba70bbefee04db5d2b5dc817bd3a7b2a78f704249bc34bdb008d7e04c"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm06-epoch1/admission.json",
+        "sha256": "1e2adba5557530db6a7a940bfff999480d4edacbfb4a8dccab7557d241158c48"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm06-epoch1/launch.py",
+        "sha256": "3c74bffa75eeee66cfd019e39ddb3184e5c2db3892979003f27f70d6dd974b60"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm06-epoch1/inspect-run.py",
+        "sha256": "070b531b105c5514d57e172397182f8a29bfbe3bbf58b16c0354f5f96834609a"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm06-epoch1/inspect-private/execution-logs/2026-10-05T14-14-45-00-00_ev003-cm06-epoch1-eva1-native_CfZvXSyXGNRnqbestCJtsJ.eval",
+        "sha256": "8f9366bbb461a00c3e986d9f185f9144375842c8abcc67806b3c60691d47a94d"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm06-epoch1/database.private.sqlite",
+        "sha256": "8d2d1733bbe46603b3d7ed3831927f190c62ef26cec82094af260cd603a5e47f"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva1-cm06-epoch1/worker.private.log",
+        "sha256": "6e3e5bc9b18d48b88bca77e4b1af02750b36347198a62fad7960498a66ee8a7e"
+      }
+    ],
+    "eva2": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/execution/result.json",
+        "sha256": "0b28b361995f6a9590b5f502a96154639e0d3dd984a569aba73cddde66ba8d02"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/admission.json",
+        "sha256": "80cdfe60b1d12fb69eb4b5b65a4e8374ec61688d39c72a26559249361ade5136"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/launch.py",
+        "sha256": "91b9d57be64bfec4a2281a25d9054dcbee20556d00cacf1da35075854c62f7e7"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/inspect-run.py",
+        "sha256": "8593393de0fa2738102f0c9b13eb0abf6c6203af7f5e96f0a9ed50d25ce13c4b"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/inspect-private/execution-logs/2026-10-05T14-16-55-00-00_ev003-cm06-epoch1-eva2-native_FeVGyavfyxQB6GywdoBgRc.eval",
+        "sha256": "bf53faebb3bbcc1e084c7f4b41455c04ba280151d6d747a0170a908809923e8e"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/execution/core/result.json",
+        "sha256": "0f8f0f0c45355b82cba4724ac8b7d0fb614476c8d757579f5b2d1e4904acd11e"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/execution/memory/result.json",
+        "sha256": "a3796c5933d2cace6edab92e0e3d305a0074288f2ef4599d731498d3afab57e0"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/execution/turns.private.json",
+        "sha256": "06c6dc6d9a159c1a6b01d4aba0862e82f89e2721bcd61b31a59ebbd7a51e3696"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/execution/eva2-ev003-cm06-e1-core-20261003.stderr.log",
+        "sha256": "b4b57bb5e2f5d205155b486b847b15b4b29bf3e359af0dc3aa1fa6da04fe2038"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/execution/eva2-ev003-cm06-e1-memory-20261003.stderr.log",
+        "sha256": "e6b9ed4f8f3020189620b8e19bbd6e592849a50ce07441a31aa08ed3517e64a0"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/execution/eva2-ev003-cm06-e1-core-20261003.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/execution/eva2-ev003-cm06-e1-memory-20261003.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/execution/p1_core.sql",
+        "sha256": "092c67760cd0cd9b476dca2a8cdf3b770bba5bc761ebd07b60ea738d3417996b"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/eva2-cm06-epoch1/execution/p1_memory.sql",
+        "sha256": "9434477239fb22ecc58f91866f20e3d5dde7b232d47681de26504ca03b1b7cb7"
+      }
+    ]
+  },
+  "cleanupReview": {
+    "durableOutsideContainers": true,
+    "databaseBackupHashesVerified": true,
+    "captureBodyHashesAndRootModesVerified": true,
+    "nativeReceiptsAndLogsRetained": true,
+    "rootCleanupReceipt": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-cm06-execution-close-20261005.json",
+      "sha256": "a03b0f4eacad64734212394174e8f768e1b8e622269a9ae72ee08b5e565ceb0c"
+    },
+    "noFurtherCleanupRequested": true
+  },
+  "contentBoundary": {
+    "hiddenInputsAnswersOrRubricsPublished": false,
+    "humanRatings": [
+      null,
+      null
+    ],
+    "newReviewerModelCalls": 0,
+    "newReviewerTests": 0,
+    "priorCasesUnchanged": true
+  }
+}

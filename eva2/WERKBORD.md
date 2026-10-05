@@ -1,25 +1,35 @@
 # EVA2 werkbord
 
-**Laatst opgeleverd — P2.1: ontbrekende Eva1-foutterugmelding gecorrigeerd.**
-Een geweigerd toolvoorstel brak de lokale invoer af; de meetadapter stuurde daarna
-geen eindmelding naar de uitvoerder. Die overgang geeft nu één gekoppelde,
-inhoudsvrije foutmelding terug. Stop, normaal antwoordpad en verbruiksmeting blijven
-behouden. Twee gerichte offline controles geslaagd; onafhankelijke review GO.
-Geen nieuwe modelaanvraag, productwijziging of productieherstart.
+**Laatst opgeleverd — P2.1: zesde vaste geheugenvergelijking afgerond.**
+De oorspronkelijke proef is eenmaal per deelnemer uitgevoerd en onafhankelijk
+beoordeeld. Alle drie beurten, geheugenverwerking en verbruik zijn vastgelegd.
 
-**Nu:** curator en bronagent bereiden de oorspronkelijke vergelijking CM06 voor.
-Nog geen modelrun. De proef legt de gecorrigeerde worker expliciet vast.
-Geen herhaling of gewijzigde score van de afgesloten CM05-proef.
-**32/44 oorspronkelijke kleine taken klaar.** Geen extra productfunctie.
+| Vast CM06-geval | Eva1 | Eva2 |
+| --- | --- | --- |
+| Inhoudelijke voorwaarden | 1/3 | 3/3 |
+| Onafhankelijke geheugencontroles | 1/2 | 2/2 |
+| Objectief taakresultaat | Onvoldoende | Geslaagd |
+| Modelaanvragen | 6 | 8 |
+| Totaal gemeten tokens | 36.831 | 22.603 |
 
-**Laatste vergelijkingsuitkomst:** CM05 Eva2 3/3 inhoudelijke voorwaarden en
-2/2 verplichte geheugencontroles; Eva1 onvolledig en onbekend, geen afgeleid
-productverlies. Samen 16 modelaanvragen en 65.446 tokens; credits onbekend.
-Geen algemene snelheids-/kostenwinst; menselijke scores ontbreken.
+Eva1 haalde de vereiste eerdere informatie en herkomst niet terug; Eva2 wel.
+Dit is een voordeel in één vast scenario, geen algemene voorsprong. Menselijke
+scores ontbreken. Tijdsmetingen hebben verschillende start-/uitvoergrenzen;
+geen algemene snelheids- of creditbesparingsclaim. Samen 14 modelaanvragen en
+59.434 tokens; ontwikkelverbruik en creditkosten onbekend.
+
+**Nu:** deze vergelijking is afgesloten; geen modelproef actief.
+**Volgende:** oorspronkelijk CM07 epoch1, nog niet gestart. Geen afgesloten geval
+herhalen. **32/44 oorspronkelijke kleine taken klaar; P2.1 blijft open.**
+[Onafhankelijk resultaat](evidence/product/p2-cm06-paired-result-20261005.json) ·
+[Projectie en bronbinding](evidence/product/p2-cm06-projection-review-20261005.json) ·
+[Technische afsluiting vóór beoordeling](evidence/product/p2-cm06-execution-close-20261005.json).
+
+**Gericht hersteld:** de Eva1-meetadapter meldt afgebroken invoer nu direct terug,
+zonder stop of verbruik te wijzigen. Twee offline controles en onafhankelijke
+review GO; geen productherinstallatie. Eerdere CM05-uitkomst blijft ongewijzigd.
 [Meetcorrectie](evidence/product/p2-bottie-terminal-ingress-20261005.json) ·
-[Review](evidence/product/p2-bottie-terminal-ingress-review-20261005.json) ·
-[CM05-resultaat](evidence/product/p2-cm05-paired-result-20261005.json) ·
-[Bronversies](evidence/product/p2-cm-source-applicability-20261005.json).
+[Review](evidence/product/p2-bottie-terminal-ingress-review-20261005.json).
 
 **C1-diagnose: fout blijft open, geen onbewezen reparatie.**
 Een neutrale toolvoorstelproef op de bestaande providerroute kwam correct binnen:
@@ -40,7 +50,7 @@ Geen GPT-call; één HA-TTS-aanvraag voor een vaste zin, geen microfoon of speak
 
 **Nog van Jaap:** praat normaal met Eva; beoordeel alleen woordtempo en het
 reageren na uitspreken. Doorpraten zelf is al bevestigd. Geen tweede-speakerproef.
-P2-resultaten behouden; CM04 staat bovenaan met de werkelijke uitkomst.
+De actuele P2-vergelijking staat bovenaan; eerdere uitslagen blijven behouden.
 [Installatie en meting](evidence/product/c3-fluency-installed-20261005.json)
 · [Onafhankelijke review](reviews/c3-fluency-20261005.md).
 

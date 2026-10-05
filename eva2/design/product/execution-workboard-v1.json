@@ -1034,8 +1034,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T14:08:56.821911+00:00",
+        "checkedAt": "2026-10-05T14:24:22.840065+00:00",
         "deliveries": [
+          {
+            "title": "Latere herinnering: Eva2 slaagt, Eva1 mist vereiste informatie",
+            "date": "5 oktober",
+            "state": "tested",
+            "result": "Zesde oorspronkelijke geheugenproef onafhankelijk beoordeeld. Eva2 haalt 3/3 inhoudelijke voorwaarden en 2/2 geheugencontroles; Eva1 1/3 en 1/2. Beide volledige uitvoeringen en verbruik gecontroleerd.",
+            "remaining": "Eén vaste proef op de gebonden versies; geen algemene voorsprong of extra functie. Samen 14 modelaanvragen, 59.434 tokens; creditkosten onbekend. Stand 32/44. Volledige vergelijking en menselijke scores blijven open.",
+            "source": "eva2/evidence/product/p2-cm06-paired-result-20261005.json"
+          },
           {
             "title": "Eva1-meetproef meldt afgebroken invoer direct terug",
             "date": "5 oktober",
@@ -3736,14 +3744,14 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Volgende vaste vergelijking voorbereiden",
+          "title": "P2.1 · Zesde vaste vergelijking afgerond",
           "state": "in_progress",
           "owner": "Codex",
-          "detail": "Curator maakt de oorspronkelijke CM06-projectie; bronagent past alleen bestaande geïsoleerde drivers aan de vereiste structuur aan. Nog geen modelrun. Gereviewde terminalcorrectie wordt expliciet vastgelegd."
+          "detail": "CM06 onafhankelijk beoordeeld: Eva2 objectief geslaagd, Eva1 onvoldoende op latere herinnering/herkomst. Beide uitvoeringen volledig; samen 14 modelaanvragen en 59.434 tokens. Vervolg CM07 nog niet gestart."
         },
         "next": {
-          "title": "CM06 uitvoeren en afzonderlijk beoordelen",
-          "detail": "Pas na bron-/admissiecontrole één oorspronkelijke poging per beschikbare deelnemer, met oorspronkelijke criteria en verbruiksmeting. Geen gesloten geval herhalen."
+          "title": "Volgende oorspronkelijke vergelijking: CM07",
+          "detail": "Vervolg bij het volgende oorspronkelijke vergelijkingsgeval CM07 epoch1 met dezelfde regels en beschikbare native toegang. Geen herhaling van CM01–CM06. Bind bij andere families de actuele kandidaatversies expliciet; menselijke beoordelingen blijven apart."
         },
         "ownerAction": {
           "title": "Open beslissingen en gebruiksoordeel",
@@ -3756,7 +3764,7 @@
           "expected": "M3.3 is door Jaap geaccepteerd; daarvoor geen nieuwe beoordeling. De woonkamerproef combineert C3.1 en C4.1. Nut en timing van bestaand initiatief blijven I1.2. 32/44 oorspronkelijke kleine taken klaar."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-05T14:08:56.821911+00:00"
+        "reviewedAt": "2026-10-05T14:24:22.840065+00:00"
       },
       "reviewedAt": "2026-10-05T00:19:18.098429+00:00"
     },
@@ -16540,7 +16548,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Volgende oorspronkelijke vergelijking CM06 epoch1 voorbereiden met de gecorrigeerde meetworker expliciet vastgelegd. CM05 blijft ongewijzigd; geen herhaling of nieuwe criteria. Voor andere families actuele kandidaatversies expliciet binden.",
+              "nextAction": "Vervolg bij het volgende oorspronkelijke vergelijkingsgeval CM07 epoch1 met dezelfde regels en beschikbare native toegang. Geen herhaling van CM01–CM06. Bind bij andere families de actuele kandidaatversies expliciet; menselijke beoordelingen blijven apart.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -16548,14 +16556,11 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-05T14:08:56.821911+00:00",
+              "checkedAt": "2026-10-05T14:24:22.840065+00:00",
               "assignment": {
-                "baseCommit": "e8bcc91d",
+                "baseCommit": "d90869e0",
                 "owner": "/root",
-                "activeWorkers": [
-                  "/root/background_execution_seam",
-                  "/root/aide_final_evaluation"
-                ],
+                "activeWorkers": [],
                 "files": [
                   "/root/background_execution_seam: new CM06 execution driver copies only",
                   "/root/aide_final_evaluation: private CM06 projection and independent review",
@@ -16564,14 +16569,14 @@
                 "existing": "CM01 and CM02 were already executed; original outcomes and logs are preserved. CM02 objective assessment is now available without a new model call.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
-                "estimate": "Projectie en bronbinding zonder inference. Uitvoering later binnen uitsluitend het oorspronkelijke geregistreerde proefbudget; creditkosten onbekend.",
-                "currentAction": "Curator maakt de oorspronkelijke CM06-projectie; bronagent past alleen bestaande geïsoleerde drivers aan de vereiste structuur aan. Nog geen modelrun. Gereviewde terminalcorrectie wordt expliciet vastgelegd.",
+                "estimate": "Werkelijk CM06-verbruik: 14 providerpogingen, 57.060 input- en 2.374 outputtokens. Correctie/review zonder extra modelcalls. Ontwikkel- en creditkosten onbekend.",
+                "currentAction": "CM06 onafhankelijk beoordeeld: Eva2 objectief geslaagd, Eva1 onvoldoende op latere herinnering/herkomst. Beide uitvoeringen volledig; samen 14 modelaanvragen en 59.434 tokens. Vervolg CM07 nog niet gestart.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "evidence": "f1303012 corrected benchmark stop boundary; e8bcc91d retained original CM05 pair and independent assessment plus source applicability."
+                  "evidence": "d90869e0 corrected benchmark terminal ingress; original CM06 pair independently assessed and retained in eva2/evidence/product/p2-cm06-paired-result-20261005.json"
                 },
-                "stage": "cm06_original_projection_and_admission",
-                "finding": "Eva2 voldoet aan de oorspronkelijke objectieve CM05-voorwaarden. Eva1 blijft unknown, geen afgeleid productverlies. Beide samen16calls/65.446tokens; geen snelheids-/kostenwinstclaim en geen menselijke score.",
+                "stage": "cm06_original_pair_independently_assessed",
+                "finding": "Eva2 3/3 inhoudelijke voorwaarden en 2/2 onafhankelijke geheugencontroles; Eva1 1/3 en 1/2. In dit vaste geval meer gemeten geheugenkwaliteit. Menselijke scores ontbreken; geen algemene superioriteits-, snelheids- of creditbesparingsclaim.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
                   "consecutiveGoalTurns": 3,
@@ -16623,12 +16628,12 @@
                   ],
                   "revalidatedAt": "2026-10-04T16:49:05.700560+00:00"
                 },
-                "projectionEvidence": "eva2/evidence/product/p2-cm04-projection-review-20261005.json",
-                "admissionEvidence": "eva2/evidence/product/p2-cm04-admission-review-20261005.json",
-                "nextAction": "Volgende oorspronkelijke vergelijking CM06 epoch1 voorbereiden met de gecorrigeerde meetworker expliciet vastgelegd. CM05 blijft ongewijzigd; geen herhaling of nieuwe criteria. Voor andere families actuele kandidaatversies expliciet binden."
+                "projectionEvidence": "eva2/evidence/product/p2-cm06-projection-review-20261005.json",
+                "admissionEvidence": "eva2/evidence/product/p2-cm06-projection-review-20261005.json",
+                "nextAction": "Vervolg bij het volgende oorspronkelijke vergelijkingsgeval CM07 epoch1 met dezelfde regels en beschikbare native toegang. Geen herhaling van CM01–CM06. Bind bij andere families de actuele kandidaatversies expliciet; menselijke beoordelingen blijven apart."
               },
-              "remaining": "CM01 beide mislukt; CM02 objectief Eva1 1/3/Eva2 3/3; CM03 beide tekst3/3 maar onvolledige readbacks; CM04 Eva1 niet geslaagd/Eva2 onbekend; CM05 Eva2 objectief geslaagd (3/3+2/2), Eva1 uitvoering onbekend. Overige oorspronkelijke gevallen, concurrenttoegang en menselijke beoordeling blijven open. Geen algemene voorsprong of nieuwe productfunctie.",
-              "latestEvidence": "eva2/evidence/product/p2-cm05-paired-result-20261005.json",
+              "remaining": "CM01 beide mislukt; CM02 objectief Eva1 1/3/Eva2 3/3; CM03 onvolledige readbacks; CM04 Eva1 onvoldoende/Eva2 onbekend; CM05 Eva2 geslaagd/Eva1 onbekend; CM06 Eva2 geslaagd (3/3+2/2), Eva1 onvoldoende (1/3+1/2). Overige oorspronkelijke gevallen, concurrenttoegang en menselijke beoordeling blijven open. Geen algemene voorsprong of extra productfunctie.",
+              "latestEvidence": "eva2/evidence/product/p2-cm06-paired-result-20261005.json",
               "executionBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_after_same_command_review_with_new_provenance_evidence",
@@ -16694,8 +16699,8 @@
                 "nextStepStarted": false,
                 "diagnosisEvidence": "eva2/evidence/product/p2-bottie-terminal-ingress-20261005.json"
               },
-              "projectionEvidence": "eva2/evidence/product/p2-cm05-projection-review-20261005.json",
-              "admissionEvidence": "eva2/evidence/product/p2-cm05-projection-review-20261005.json",
+              "projectionEvidence": "eva2/evidence/product/p2-cm06-projection-review-20261005.json",
+              "admissionEvidence": "eva2/evidence/product/p2-cm06-projection-review-20261005.json",
               "previousExecutionIssue": {
                 "case": "EV003-CM-04",
                 "state": "observer_stop_boundary_corrected_upstream_cause_unknown",

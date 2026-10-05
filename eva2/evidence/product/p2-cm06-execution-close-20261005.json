@@ -1,0 +1,27 @@
+{
+  "contract": "EvaComparisonExecutionClose/v1",
+  "task": "P2.1",
+  "caseId": "EV003-CM-06",
+  "epoch": 1,
+  "checkedAt": "2026-10-05T14:19:20.786426+00:00",
+  "wrappers": {
+    "eva1": {
+      "terminalExit": 0,
+      "taskSuccessInferred": false
+    },
+    "eva2": {
+      "terminalExit": 0,
+      "taskSuccessInferred": false
+    }
+  },
+  "resources": {
+    "cm06ContainersPresent": false,
+    "eva2NetworkPresent": false,
+    "removedEva1EmptyNetworkId": "275737d163415197e6ef19896d3fe7e8854fb79d754abfac1c9b78739d2a59bb",
+    "nameLabelIdAndEmptyVerified": true
+  },
+  "retainedHostArtifacts": true,
+  "productionTouched": false,
+  "noNewInferenceForCleanup": true,
+  "resultAssessment": "Independent assessment pending; wrapper exit is not task success."
+}
