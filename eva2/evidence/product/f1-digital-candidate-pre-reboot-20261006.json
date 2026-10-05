@@ -1,0 +1,171 @@
+{
+  "contract": "EvaInstalledProductEvidence/v1",
+  "checked_at": "2026-10-05T23:58:12.229163+00:00",
+  "task_id": "F1.2",
+  "status": "local_package_aligned_current_pre_restart_bound",
+  "whole_task_completed": false,
+  "base_commit": "ab9e2211",
+  "outcome": "Existing local package contains the four already reviewed/installed digital deltas and current living-core image; original F1 data retained in refreshed pre-restart baseline.",
+  "product_source_changed": false,
+  "installation_repeated": false,
+  "prior_evidence": "eva2/evidence/product/f1-current-candidate-pre-reboot-20261005.json",
+  "current_candidate_evidence": [
+    "eva2/evidence/product/p2-tool-error-feedback-20261005.json",
+    "eva2/evidence/product/p2-catalogue-model-view-20261006.json"
+  ],
+  "package_binding": {
+    "checkedAt": "2026-10-05T23:45:31.208864+00:00",
+    "package": "/home/administrator/project/.eva2-artifacts/installer-optional-browser-20261002/package",
+    "oldManifestSha256": "f2185b13461339ae61cccc516150dd5f64d3a6a7e60557351e8f9ef79c425518",
+    "newManifestSha256": "ab828c28d45baeb2f53b2cf29b856dba2d947372fff8256cc5b7791a44259e05",
+    "sourceChanges": {
+      "src/eva/application/orchestration.py": {
+        "before": "569a7b41896a8e87ca42d9c91b5a8ccc70c9fe8fb18313fa4fbf764e21603dc8",
+        "after": "ef13b46a1c84bd10d49bb17ea1a726661400e2922087d0d4dc03eb09426ead88"
+      },
+      "src/eva/adapters/connectors/mcp_gateway.py": {
+        "before": "d49e58d4fb11eefc0139c249918e5fcdaac870cf9d831459da9ba7ae1574b122",
+        "after": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8"
+      },
+      "src/eva/adapters/postgres/external_conversation_tools.py": {
+        "before": "fcd9c2c4414309bfbfd39436122939868b2588199e3374d032a4b69918e95553",
+        "after": "18056cc357af1418eebb6545813d1ef6111d64c99af154f818b4202e6622a5c3"
+      },
+      "src/eva/adapters/model/pydantic_conversation.py": {
+        "before": "5eb31eb57b0959d29919e5b3b7e053f588752ce9559433b16c47ef0ac5db2e23",
+        "after": "2888e28a47476f8093463bc4fac5e66f36f6e2223556c8955dc0274de5968d07"
+      }
+    },
+    "oldCore": "sha256:b42a5b8a74eaf7307339b8513fbb1e3343d925039a4e0e7866ddfc4defc05dca",
+    "newCore": "sha256:17709b26406e6c96d37665e36d69c8ceaeb96dde355fe07da8fb9a5d415effd6",
+    "currentWorkerRecorded": "sha256:78f38eae86c4935059b18829bb9eb5d055ab67b06d2e4b0da43ec95c6b8aef90",
+    "verification": {
+      "sourceFilesVerified": 1225,
+      "imagesInspected": 8,
+      "livingCoreImage": "sha256:17709b26406e6c96d37665e36d69c8ceaeb96dde355fe07da8fb9a5d415effd6",
+      "packageManifestSha256": "ab828c28d45baeb2f53b2cf29b856dba2d947372fff8256cc5b7791a44259e05",
+      "manifest_sha256": "88a7c6f6913749230f41108b6448072586299e83d91eea1091382ecd2e7dec1b",
+      "image_set_sha256": "4461090a4996af76a0625ad7f32afe7cdacd926cb4de7c16aedfbf7659442984",
+      "verification_receipt_sha256": "345499fb13f331d7051aaddcf4f5710740698c14ef16b60ba50c95e4df2dc518"
+    },
+    "historicalBaseCommitRetained": true,
+    "immutablePythonRetained": true,
+    "allOtherSourceEntriesRetained": true,
+    "allOtherImagePinsRetained": true,
+    "newRuntimeInstallation": false,
+    "providerCalls": 0,
+    "modelCalls": 0,
+    "speechChanged": false
+  },
+  "restart_preparation": {
+    "checkedAt": "2026-10-05T23:48:12.557251+00:00",
+    "baselineSha256": "d29042208a5a25c2021930d090b0cf301f642de61ccb5f02869a339f8ea4b7dc",
+    "priorBaselineSha256": "ed0e41ac1c76c542c0fd3c68d6a1e90f226234343d3ee972f11f99e1696d6033",
+    "sameOriginalSyntheticData": {
+      "work": true,
+      "deliveryEvents": true,
+      "memoryDocument": true,
+      "documents": true,
+      "hostUnits": true,
+      "hostClients": true
+    },
+    "containerChanges": [
+      {
+        "name": "eva2-household-speaker-1",
+        "changedFields": [
+          "id",
+          "image",
+          "configSha256"
+        ],
+        "beforeImage": "sha256:b8001798c65f79e44b5a659ea7295103a633f63f03efc39106114bcc8208894f",
+        "afterImage": "sha256:70da12beedad0291e38340471036d15aa390dfb22980f0260257b343ea3b908a"
+      },
+      {
+        "name": "eva2-managed-b-slot3-core",
+        "changedFields": [
+          "id",
+          "image",
+          "configSha256"
+        ],
+        "beforeImage": "sha256:b42a5b8a74eaf7307339b8513fbb1e3343d925039a4e0e7866ddfc4defc05dca",
+        "afterImage": "sha256:17709b26406e6c96d37665e36d69c8ceaeb96dde355fe07da8fb9a5d415effd6"
+      },
+      {
+        "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "changedFields": [
+          "id",
+          "image",
+          "configSha256"
+        ],
+        "beforeImage": "sha256:42e43365526c6e0f6d9ecb5e0ccd2f5c0829fc7c2c44ab72a5b92ff5a1733468",
+        "afterImage": "sha256:78f38eae86c4935059b18829bb9eb5d055ab67b06d2e4b0da43ec95c6b8aef90"
+      }
+    ],
+    "allContainersRunning": true,
+    "allHostUnitsActive": true,
+    "windowsBootChanged": false,
+    "windowsBootUtc": "2026-10-01T09:48:48.5000000Z",
+    "sourceScriptsUnchanged": {
+      "snapshot-reboot.py": true,
+      "collect-core.py": true
+    },
+    "modelCalls": 0,
+    "providerCalls": 0,
+    "originalTasksReplayed": false,
+    "actualWindowsRestartPerformed": false,
+    "preparationCorrection": "Metadata checker used camelCase instead of existing snake_case boot key. Corrected against retained snapshot; snapshot not repeated."
+  },
+  "verification_entry": {
+    "python": "package/python-runtime/bin/python",
+    "function": "eva.operations.installer_development_candidate.verify_installer_development_candidate",
+    "inspect_image": "Actual Docker inspect of eight declared local image pins",
+    "receipt_checked": "require_verified",
+    "source_sha256": "679cc6f8de3df7db768b5d11f2d6a09589dd6f343c4a205c55f3d9d1e855e860",
+    "runs": 1,
+    "new_test_suite": false
+  },
+  "counts": {
+    "containers": 20,
+    "hostUnits": 11,
+    "hostClients": 3,
+    "work": 2,
+    "documents": 2
+  },
+  "private_evidence_hashes": {
+    "/home/administrator/project/.eva2-artifacts/f1-digital-candidate-20261006/package-binding.json": "b292e6f597496cf8fef71abf9da4b0e9dab8a2b3b7f9647b5cc6aef5dac85790",
+    "/home/administrator/project/.eva2-artifacts/f1-digital-candidate-20261006/baseline-delta.json": "e81b5153d6c5ff690be777d1e74217182acbda2127224f620a76a31e010c0d8b",
+    "/home/administrator/project/.eva2-artifacts/f1-digital-candidate-20261006/before-reboot.private.json": "d29042208a5a25c2021930d090b0cf301f642de61ccb5f02869a339f8ea4b7dc",
+    "/home/administrator/project/.eva2-artifacts/f1-digital-candidate-20261006/snapshot-reboot.py": "f8df3d5f370544b6bb08c0805d7777dc7a78756fbd86e012904d83f6959ba11b",
+    "/home/administrator/project/.eva2-artifacts/f1-digital-candidate-20261006/collect-core.py": "55748d823370d0f594ebf71552c27538958ff6ff368c49ec100354140c7c8c45"
+  },
+  "independent_review": {
+    "reviewer": "/root/xd01_runtime_review",
+    "decision": "GO for package binding and snapshot preparation only",
+    "path": "eva2/reviews/f1-digital-candidate-20261006.md",
+    "sha256": "b03549721512bb0e12fa86dd8a632566fea0c6ce9bf5667a1aee209e03f44896",
+    "runtime_model_provider_test_install_calls": 0
+  },
+  "verification": {
+    "controlled_model_calls": 0,
+    "provider_calls": 0,
+    "original_tasks_replayed": false,
+    "new_runtime_installation": false,
+    "actual_windows_restart_performed": false,
+    "speech_changed": false,
+    "credit_cost": null,
+    "codex_development_credit_cost": null
+  },
+  "registrationPreparationCorrection": "Administrator hashread of the private baseline stopped before file writes. Existing root artifact read supplied only hashes/public metadata; no data or task replay.",
+  "limitations": [
+    "Existing local development package, not public platform release. Historical base/runtime retained; explicit four-file digital overlay and living-core pin only.",
+    "Worker image provenance only; no unsupported installer slot added.",
+    "Incidental preexisting speaker-image change against prior snapshot recorded; speech not changed, investigated or tested this turn.",
+    "Running state and retained data are pre-restart observations, not every product behavior or completed Windows restart.",
+    "F1.2 open; no new function, AIDE2 improvement, competitive advantage, speed/cost claim."
+  ],
+  "remaining": [
+    "Owner saves work and restarts Windows; no automatic restart.",
+    "Compare same original bindings/data after restart without original task replay.",
+    "Ordinary memory recall/result access after restart, then independent final review."
+  ]
+}

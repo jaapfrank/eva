@@ -1,5 +1,23 @@
 # EVA2 werkbord
 
+## 6 oktober — lokaal pakket gelijk aan huidige digitale Eva
+
+Vier al beoordeelde en geïnstalleerde digitale broncorrecties en de actuele kernpin
+zitten nu ook in het bestaande lokale pakket. Bestaande verifier en onafhankelijke
+review akkoord; overige bronnen, pins en interpreter behouden. Geen publieke
+release of extra afgeronde productfunctie.
+
+Dezelfde twee resultaten, documenten, geheugen en hostbindings zijn behouden in
+de actuele herstartbaseline. Windows is nog niet opnieuw gestart. Geen nieuwe
+Eva-modelcalls, herinstallatie of spraakwerk voor deze pakketcorrectie.
+
+**Nu:** geen uitvoerder/modelproef loopt. F1.2 wacht voor nacontrole op:
+werk opslaan → Windows opnieuw opstarten → hier **Herstart klaar** melden.
+De aparte besluitvraag voor P2.1 staat al in deze chat; R1 heeft zijn eigen open
+toestemming. Spraak blijft geparkeerd; **32/44 oorspronkelijke taken klaar**.
+[Concrete pakketbinding en resterend werk](evidence/product/f1-digital-candidate-pre-reboot-20261006.json)
+· [Onafhankelijke review](reviews/f1-digital-candidate-20261006.md).
+
 ## 6 oktober — geïnstalleerde cataloguscorrectie
 
 **Spraak blijft geparkeerd. P2.1 blijft open;32/44 oorspronkelijke kleine taken klaar.**
