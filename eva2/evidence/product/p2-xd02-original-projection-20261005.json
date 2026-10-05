@@ -1,0 +1,203 @@
+{
+  "contract": "ev003-xd02-independent-projection-admission-metadata-v1",
+  "recordedAt": "2026-10-05T20:33:48.579765+00:00",
+  "reviewer": "independent protected-data curator",
+  "taskId": "P2.1",
+  "caseId": "EV003-XD-02",
+  "epoch": 1,
+  "participant": "eva2",
+  "status": "historical_original_projection_and_pre_inference_preparation_snapshot",
+  "schedule": {
+    "nextAscendingCrossDomainCaseAfter": "EV003-XD-01",
+    "epochParticipantOrder": [
+      "eva1-bottie",
+      "eva2",
+      "openclaw",
+      "hermes",
+      "agent_zero"
+    ],
+    "unavailableEntriesRemainUnknown": "Eva1 missing general service access and expired external participant access remain unknown; no login or new adapter.",
+    "concurrency": 1
+  },
+  "hashes": {
+    "caseSha256": "de9c2827e88ba35f8482630c029caa79a3b7b08ae541fc252ec9d538d14e10fe",
+    "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "datasetSha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4",
+    "commitmentSha256": "bbdbf8eff011aeb51c41e2ff6532346dd22615a99102166e4005292100dd03bf",
+    "candidateSha256": "09897a070e8d9163aa8c90475f2eb1fe81697ad05836267e0b8fb1f94bb176b7",
+    "protocolSha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+    "evaluatorSha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b"
+  },
+  "sourceProjection": {
+    "sha256": "26903bf71320be3a6b2abf97c9d0c5c7a2c0a68c1fe2d11118eddee68b8cd683"
+  },
+  "nativeProjection": {
+    "sha256": "a435f6116b80a89e05b5864edf008a04291613d086f7deebf12555f93641874e"
+  },
+  "counts": {
+    "originalOrdinaryTurns": 1,
+    "setupTurns": 0,
+    "fixtureEvents": 0,
+    "identities": 1,
+    "actors": 1,
+    "roles": 1,
+    "sessions": 1,
+    "services": 2,
+    "semanticConditions": 3,
+    "requiredIndependentReadbacks": 2,
+    "initialFiles": 0,
+    "browserPages": 0,
+    "audioAssets": 0
+  },
+  "calendarProjection": {
+    "originalClockPreservedPrivately": true,
+    "sameFrozenInitialClockAsPriorProjection": true,
+    "controlledNativeClock": true,
+    "generations": [
+      0
+    ],
+    "offsetDeltasMilliseconds": [
+      0
+    ],
+    "logicalTransitions": 0,
+    "nativeSourceSha256": "2d00941d259ba2576c4c7703e5717834118286b35281002d0f671c379a691c48"
+  },
+  "sourceReuse": {
+    "genericCollectionFixtureSha256": "863d1356aa1a94f5043e33f6bd250b1219dce58040e8cf30a76847329946d158",
+    "sameGenericServiceContracts": true,
+    "sameNativeOnePrivateActorOneTurnBodySchema": true,
+    "sameNativeModelsAndImagesRequired": true,
+    "sameNativeOwnerResultFetchRule": true,
+    "normalFreshCoreSchemaHeadRequired": "4e_0009_restore_hold",
+    "noRestoreRowsRequired": true,
+    "persistentExactCalendarDependencyMountRequired": true,
+    "newEvaluatorToolOrExampleImplementation": false
+  },
+  "remainingBeforeNativeAdmission": [
+    "Fresh original service state and scoped authority, concrete reviewed source pins, normal complete schema/composition/readiness and zero-startup gates remain before one original entry."
+  ],
+  "limits": {
+    "providerAttempts": 72,
+    "providerInputTokens": 4718592,
+    "providerOutputTokens": 86400,
+    "wallSeconds": 840,
+    "toolDispatches": 70,
+    "speechRequests": 0
+  },
+  "originalQuestionDataCriteriaAndMandateUnchanged": true,
+  "oracleExcludedFromParticipantProjection": true,
+  "modelCalls": 0,
+  "fixtureServiceRequests": 0,
+  "nativeLoginAttempts": 0,
+  "originalInputSent": false,
+  "semanticScore": null,
+  "humanRatings": null,
+  "runtimeCredits": null,
+  "completionClaimed": false,
+  "independentPrivateReceiptSha256": "8d4f48dd8d262cfe140e9f7fec6f7830e4f722b8651b85a34d4ff08c455f1fe8",
+  "originalFixturePrincipalPreservedExactly": true,
+  "fixturePreparation": {
+    "operatorSha256": "4fa0484a6c344cf1224da4daefac4effb628443f077ca82b3285515253e0fc79",
+    "configSha256": [
+      "08022bc8142d63a4734bc93819688d7687f43c3529da4e4b27f3f3b1c357afa4",
+      "cc411f4b5da1f54f902c6b88f4230b24ea3bb96c078a2f134de867fc06000cb3"
+    ],
+    "bindingSha256": "b1451b485f8104282d8d6b8909b1296f84b06622bfb3af986a8c45610f4990cf",
+    "originalServicesAndMandateUnchanged": true,
+    "sameVerifiedPrivateActor": true,
+    "originalOfferedAccountCapabilitiesPreserved": true,
+    "taskOrOracleDerivedFiltersOrQuotasAdded": false,
+    "serviceInstancesStarted": 0,
+    "originalRequests": 0,
+    "originalEffects": 0,
+    "modelCalls": 0,
+    "nativeLoginAttempts": 0,
+    "nativeExecutionAdmitted": false
+  },
+  "admitted": true,
+  "admissionSha256": "7101204c87e9a5d5f98c7acc401a1e56e82b99d6c8b5a79022b75e790a3fe610",
+  "independentActualFreshAdmissionSha256": "530d59cd660c5bd23b07a04c8fcc3fea88c39deb04a78795059de2b8fa87be1f",
+  "runtimeSourceReviewSha256": "57e1935eb60f6d4f38dbdfd59a2cadb7a387ed8a30ba3c0dbbb961d02934e2ae",
+  "nativePreparationSha256": "0b5af849f71c58f86ff3cb85137d8f9b9e13f35c6847b4326c5495cb3c247d9e",
+  "resourceReceiptSha256": "03cf0185085d54700f85716cf0ae1e6318bd4f136f7f039228e1e978ad6262fe",
+  "actualPreparation": {
+    "originalTurns": 0,
+    "providerAttempts": 0,
+    "nativeWorkersStarted": 0,
+    "fixtureRequests": 0,
+    "fixtureEffects": 0,
+    "coreWorkRows": 0,
+    "restoreActivationRows": 0,
+    "memoryTables": 0,
+    "normalSchemaVersion": "4e_0009_restore_hold",
+    "normalActionCount": 61,
+    "preservedPreparationEvents": 1,
+    "preservedPreparationCheckpoints": 1,
+    "recordedPhase": "pre-inference",
+    "historicalSnapshot": true,
+    "actualResultEvidence": "eva2/evidence/product/p2-xd02-independent-state-20261005.json"
+  },
+  "beforeOriginalDispatch": "The exact reviewed launcher must still pass normal composition, all three readiness and zero startup provider/action gates before the first and only original ingress.",
+  "humanScore": null,
+  "nativeProjectionSha256": "ae03bb551cd02e9d80e24434c95ca45a0ed0b39557d4d8f0a09e45c83ad82dce",
+  "preparationFailure": {
+    "ordinal": 1,
+    "transition": "native private audience wire conversion before original ingress",
+    "cause": "operation audience-ID did not match unchanged principal-ID",
+    "nativeReceiptSha256": "792465c10355e63ad82324d1e83a5c086ff003a2a133c226a0d2e9cac051931f",
+    "independentClosureSha256": "844f0d1f23c6af2efca843143f66a4ac455da5047a7da7f2ce4f0818af1800c6",
+    "originalTurns": 0,
+    "providerAttempts": 0,
+    "realModelCalls": 0,
+    "fixtureRequests": 0,
+    "fixtureEffects": 0,
+    "nativeActions": 0,
+    "protocolConsumptions": 0,
+    "allNativeWorkersStopped": true,
+    "sameFiveResourcesRetainedRunning": true,
+    "databasePreserved": true,
+    "initializedEmptyMemoryTables": 23,
+    "normalPreparationEvents": 1,
+    "normalPreparationCheckpoints": 1,
+    "semanticScore": null,
+    "humanRatings": null,
+    "scoredProductOutcome": false,
+    "recordedPhase": "pre-inference",
+    "historicalSnapshot": true,
+    "actualResultEvidence": "eva2/evidence/product/p2-xd02-independent-state-20261005.json"
+  },
+  "operationProjectionCorrection": {
+    "oldSha256": "a435f6116b80a89e05b5864edf008a04291613d086f7deebf12555f93641874e",
+    "newSha256": "ae03bb551cd02e9d80e24434c95ca45a0ed0b39557d4d8f0a09e45c83ad82dce",
+    "receiptSha256": "5be501c8298015720dfaa8028e01817e9c585967dcf1cdedb53a4fae45630689",
+    "onlyAudienceIdChanged": true,
+    "originalsUnchanged": true
+  },
+  "nextTransition": "Resume retained normal state with initialized empty memory through the existing reviewed startup and zero-consumption gates; new exact source binding and admission required.",
+  "independentResumeAdmissionSha256": "eb13291a9a6100c6284517e06dc7a27ef48ab488cfcf3ca6ebd28759563a242f",
+  "retainedEmptyState": {
+    "memoryTables": 23,
+    "banks": 0,
+    "documents": 0,
+    "memoryUnits": 0,
+    "memoryOperations": 0,
+    "coreWorkRows": 0,
+    "restoreActivationRows": 0,
+    "normalPreparationEvents": 1,
+    "normalPreparationCheckpoints": 1,
+    "recordedPhase": "pre-inference",
+    "historicalSnapshot": true,
+    "actualResultEvidence": "eva2/evidence/product/p2-xd02-independent-state-20261005.json"
+  },
+  "recordedPhase": "pre-inference",
+  "historicalSnapshot": true,
+  "zeroCountsDescribeOnlyPreparation": true,
+  "actualResultEvidence": {
+    "path": "eva2/evidence/product/p2-xd02-independent-state-20261005.json",
+    "sha256": "1adc87b33ba3d8cdf701f0f7e583354cfbf5ea799084aabf56a7506159b703db",
+    "recordedPhase": "original_execution_final",
+    "originalRuns": 1,
+    "providerCalls": 8,
+    "taskCompleted": false
+  }
+}

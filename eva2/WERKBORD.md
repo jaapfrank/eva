@@ -1,6 +1,30 @@
 # EVA2 werkbord
 
-**Laatste proefuitkomst — P2.1: XD01 niet afgerond.**
+**Actief: Eva afmaken; spraak geparkeerd op verzoek van Jaap.**
+[Beslismatrix vóór verdere bouw](evidence/product/p2-prebuild-decision-20261005.json):
+enkele geheugenvoordelen, geen bewezen algemene voorsprong.
+
+**Laatste proefuitkomst — P2.1: XD02 niet afgerond.**
+Eén oorspronkelijke opdracht eindigde failed/incomplete_work; de owner-foutmelding
+is bereikbaar. Beide diensten onveranderd, nul aanvragen/effecten.
+
+| Gemeten XD02-uitvoering | Eva2 |
+| --- | --- |
+| Taakuitkomst | Niet afgerond |
+| Modelcalls / tokens | 8 / 56.816 |
+| Invoer / uitvoer | 55.594 / 1.222 |
+| Acties / duur | 5 / 55,723 s |
+
+Drie native workers en vijf externe resources gestopt; database/dumps/bewijs behouden.
+Eerdere meetfout had nul modelcalls en blijft apart. Afwijzingsoorzaak onbekend;
+geen bewezen uitvoerbindingdefect, extra functie of algemene winnaar.
+Creditkosten en menselijke scores onbekend.
+**Volgende:** algemene afwijzings-/afrondingsovergang gericht verklaren uit bestaand
+bewijs vóór bouwen. Geen volgende modelproef gestart.
+**32/44 oorspronkelijke kleine taken klaar.**
+[Onafhankelijke uitkomst](evidence/product/p2-xd02-independent-state-20261005.json).
+
+**Eerdere proefuitkomst — P2.1: XD01 niet afgerond.**
 Eva2 voerde één oorspronkelijke combinatieopdracht uit. Het werk eindigde met
 `incomplete_work`; een gewone resultaatopvraag gaf een foutmelding, geen resultaat.
 Twee onafhankelijke uitlezingen bevestigen dat beide diensten ongewijzigd bleven.
@@ -17,7 +41,7 @@ Eva1 kon dit geval niet uitvoeren via haar vastgelegde toegang; dat is geen verl
 Menselijke scores en creditkosten blijven onbekend. Vier meetvoorbereidingsfouten
 zonder Eva-modelaanvragen staan apart; ontwikkelverbruik is daarmee niet nul.
 Alle proefwerkers zijn gestopt; oorspronkelijke gegevens en bewijs zijn bewaard.
-**Nu:** beoordeling en technische afsluiting gereed; volgende proef nog niet gestart.
+**Vervolg:** XD02 inmiddels onafhankelijk als niet afgerond beoordeeld; zie nieuwste uitkomst.
 **Volgende:** de eerstvolgende beschikbare oorspronkelijke vergelijking uit het vaste plan.
 **32/44 oorspronkelijke kleine taken klaar; P2.1 blijft open.**
 [Onafhankelijke uitkomst](evidence/product/p2-xd01-independent-state-20261005.json) ·

@@ -1,0 +1,61 @@
+{
+  "contract": "EvaPrebuildEvidenceDecision/v1",
+  "recordedAt": "2026-10-05T21:28:42.222430+00:00",
+  "task": "P2.1",
+  "overallSuperiorityProven": false,
+  "rows": [
+    {
+      "outcome": "Geheugen",
+      "state": "partial_advantage",
+      "finding": "Eva2 slaagt in CM06/CM08 waar Eva1 faalt; CM12 onvoldoende voor beide.",
+      "sources": [
+        "eva2/evidence/product/p2-cm06-paired-result-20261005.json",
+        "eva2/evidence/product/p2-cm08-paired-result-20261005.json",
+        "eva2/evidence/product/p2-cm12-paired-result-20261005.json"
+      ]
+    },
+    {
+      "outcome": "Persoonlijkheid",
+      "state": "unknown_comparative_advantage",
+      "finding": "M3.3 door Jaap geaccepteerd; geen gemeten vergelijkingswinst.",
+      "sources": [
+        "eva2/design/product/execution-workboard-v1.json"
+      ]
+    },
+    {
+      "outcome": "Eigen initiatief",
+      "state": "unknown_comparative_advantage",
+      "finding": "Bestaand geïnstalleerd bewijs behouden; nut/timing en voorsprong nog niet aangetoond.",
+      "sources": [
+        "eva2/design/product/execution-workboard-v1.json"
+      ]
+    },
+    {
+      "outcome": "Zelfstandig werk",
+      "state": "demonstrated_gap",
+      "finding": "XD01/XD02 niet afgemaakt. Eva1-toegang voor deze gevallen ontbreekt; geen verliesclaim voor Eva1.",
+      "sources": [
+        "eva2/evidence/product/p2-xd01-independent-state-20261005.json",
+        "eva2/evidence/product/p2-xd02-independent-state-20261005.json"
+      ]
+    }
+  ],
+  "competitors": {
+    "state": "unknown",
+    "sourceReviewDate": "2026-10-02",
+    "source": "eva2/design/blueprint-2026-09-28/platform-decision.md",
+    "finding": "Relevante bestaande uitvoer-/uitbreidingsmechanismen gedocumenteerd; geen complete gelijkwaardige productvergelijking. Documentatie of ontbrekende toegang bewijst geen winnaar."
+  },
+  "costSpeed": {
+    "overallWinProven": false,
+    "creditCost": null,
+    "developmentCredits": null,
+    "note": "Vaste metrics behouden; mislukte taken/ongelijke tijdsgrenzen bewijzen geen algemene efficiëntiewinst."
+  },
+  "decision": "Spraak uit actieve bouw. Algemene taakafronding gericht verklaren vóór verder bouwen; geen algemene voorsprong beloven, brede herbouw of nieuwe voorbeeldfunctie.",
+  "originalTaskCount": 44,
+  "completedTasks": 32,
+  "newTaskIds": false,
+  "frozenCriteriaChanged": false,
+  "newModelCalls": 0
+}

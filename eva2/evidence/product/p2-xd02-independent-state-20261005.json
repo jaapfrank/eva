@@ -1,0 +1,127 @@
+{
+  "contract": "EV003IndependentPublicResult/v1",
+  "recordedAt": "2026-10-05T21:24:06.340341+00:00",
+  "recordedPhase": "original_execution_final",
+  "historicalSnapshot": false,
+  "caseId": "EV003-XD-02",
+  "epoch": 1,
+  "participant": "eva2",
+  "status": "original_task_not_completed",
+  "nativeObservationOutcome": "native_sample_completed",
+  "originalRuns": 1,
+  "nativeWork": {
+    "terminalState": "failed",
+    "errorCode": "incomplete_work",
+    "normalOwnerFailureAvailable": true,
+    "successResultAvailable": false,
+    "automaticOriginDeliveryAttested": false
+  },
+  "fixedCriteria": {
+    "semanticConditionsRequired": 3,
+    "independentReadbacksRequired": 2,
+    "independentFixtureSnapshotsObserved": 2,
+    "nativeCompletionGatePassed": false,
+    "semanticDecisionsRecorded": 0,
+    "semanticConditionRatings": [
+      null,
+      null,
+      null
+    ],
+    "assessmentOrder": "Frozen native noncompletion failure gate applies before readback predicates and semantic rating gates."
+  },
+  "fixtureOutcome": {
+    "requests": 0,
+    "effects": 0,
+    "journalsEmpty": true,
+    "bothStatesEqualOriginalInitial": true,
+    "forbiddenEffectsObserved": false
+  },
+  "runtimeUsage": {
+    "providerAttempts": 8,
+    "coreCalls": 1,
+    "memoryCalls": 2,
+    "delegatedCalls": 5,
+    "inputTokens": 55594,
+    "outputTokens": 1222,
+    "totalTokens": 56816,
+    "nativeActions": 5,
+    "protocolActions": 0,
+    "speechRequests": 0,
+    "sampleSeconds": 55.72251763398526,
+    "foregroundSeconds": 8.216959023033269,
+    "terminalSettlementSeconds": 53.8927154840203,
+    "firstContentSeconds": null,
+    "accountingComplete": true,
+    "capturesComplete": true,
+    "capturedAttempts": 8,
+    "withinFixedFamilyEnvelope": true,
+    "monetaryCost": null,
+    "runtimeCredits": null
+  },
+  "closure": {
+    "nativeWorkersStopped": 3,
+    "externalResourcesStopped": 5,
+    "allHTTPAndControlSettled": true,
+    "pendingActions": 0,
+    "activeAsyncAttempts": 0,
+    "cleanupBlockers": 0,
+    "databaseAndDumpsPreserved": true,
+    "memoryUnitsRetained": 2,
+    "memoryOperationsCompleted": 3,
+    "protectedArtifactsSealed": true
+  },
+  "recordedToolTransition": {
+    "inventoryAndDiscovery": "verified",
+    "invocations": [
+      "verified",
+      "rejected"
+    ],
+    "rejectedInvocationResultAvailable": false,
+    "bothToolIdsInDiscoveredCatalogue": true,
+    "concreteRejectionCause": null,
+    "bindingFaultEstablished": false,
+    "nativeFailureCauseBeyondIncompleteWork": null
+  },
+  "frozenNativeFailureBranch": {
+    "value": "I",
+    "taskSuccess": false,
+    "evaluatorSha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "receiptSha256": "2b7f843ff4ecc8b59339370586b3f6adca0359a379f8c4e444417e36f9567086",
+    "newModelCalls": 0,
+    "originalInspectScoresChanged": false
+  },
+  "officialInspectSemanticScore": null,
+  "humanRatings": null,
+  "humanPreference": null,
+  "qualityWinner": null,
+  "generalSuperiorityEstablished": false,
+  "eva1OriginalXD": "unknown documented external native-adapter limitation",
+  "preparation": {
+    "recordedPhase": "pre-inference",
+    "historicalSnapshot": true,
+    "closedFailures": 1,
+    "originalTurns": 0,
+    "modelCalls": 0,
+    "fixtureRequests": 0,
+    "fixtureEffects": 0,
+    "closureSha256": "844f0d1f23c6af2efca843143f66a4ac455da5047a7da7f2ce4f0818af1800c6",
+    "keptSeparateFromOriginalRuntimeUsage": true
+  },
+  "evidence": {
+    "nativeReceiptSha256": "b31ff4bc29d2f4cbd66db3fd7f08a1a4d32dd9af387ab7733af62be97136e83b",
+    "independentAssessmentSha256": "10b954e5d921199dc3e5af76fae4614b585e0a36ba097b7236fdd58033a2b238",
+    "admissionSha256": "7101204c87e9a5d5f98c7acc401a1e56e82b99d6c8b5a79022b75e790a3fe610",
+    "sourceReviewSha256": "57e1935eb60f6d4f38dbdfd59a2cadb7a387ed8a30ba3c0dbbb961d02934e2ae",
+    "projectionSha256": "ae03bb551cd02e9d80e24434c95ca45a0ed0b39557d4d8f0a09e45c83ad82dce",
+    "fixtureReadbackSha256": [
+      "5cb0197b4e9047d3a2a2bded93123f1eb1c9c57902feebb4e9d0901aeed51900",
+      "4e9ee9d1b1b23a9e51874cb6dcf52d0d4fe2320ef8d4327fa2d6712f071fafc0"
+    ]
+  },
+  "reviewer": {
+    "modelCalls": 0,
+    "fixtureRequests": 0,
+    "newEvaluationInfrastructure": false,
+    "originalRetries": 0
+  }
+}

@@ -1,5 +1,22 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaarprioriteit 5 oktober 2026 — eerst Eva afmaken, spraak later
+
+Maak eerst de vier bestaande huisgenootuitkomsten af: persoonlijkheid, geheugen,
+eigen initiatief en zelfstandig werk. Geen verdere spraakbouw, speakerinstallatie
+of fysieke spraakproef in deze fase. Bestaande werking, gegevens en acceptaties
+blijven behouden; open spraaktaken zijn geparkeerd, niet voltooid.
+
+Vóór verdere bouw toont de bestaande vergelijking waar Eva2 Eva1/concurrenten
+werkelijk overtreft en waar niet. Enkele geheugenvoordelen zijn gemeten; algemene
+voorsprong niet. XD01/XD02-combinatiewerk is niet afgemaakt. Zie
+eva2/evidence/product/p2-prebuild-decision-20261005.json.
+Gebruik bestaande bronnen/resultaten; geen nieuwe brede audit of algemene herbouw.
+Verklaar een concreet uitvoeringstekort en kies de kleinste voldoende verbetering
+of aantoonbaar betere bestaande bouwsteen vóór bouwen. Geen toekomstige superioriteit
+als feit, nieuwe taak-ID's, veranderde toetsregels of voorgebouwde voorbeeldfunctie.
+Originele eindvoorwaarden, acceptaties, AIDE²/R1 en gezinsbeoordeling blijven bewaard.
+
 ## Eigenaarmandaat 3 oktober 2026 — zelfstandig browsergebruik en installatie
 
 Jaap heeft beide voorgelegde wijzigingen expliciet toegestaan: de bestaande
