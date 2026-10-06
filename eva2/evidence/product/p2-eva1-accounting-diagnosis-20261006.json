@@ -1,0 +1,412 @@
+{
+  "schema": "eva2.p2.eva1-accounting-diagnosis.v1",
+  "recordedAtUtc": "2026-10-06T16:03:30.667812+00:00",
+  "taskId": "P2.1",
+  "status": "native_fail_closed_proven_lease_access_seam_identified_historical_errno_not_retained",
+  "scope": {
+    "retainedClosedComparisonOnly": true,
+    "newCases": 0,
+    "privateFinalReplays": 0,
+    "newProviderCalls": 0,
+    "scorerChanged": false,
+    "productSourceChanged": false,
+    "workerSourceChanged": false,
+    "workboardChanged": false,
+    "gitOperations": false,
+    "servicesStarted": 0,
+    "permissionsChanged": false,
+    "leaseChanged": false,
+    "diagnosisIsProductCompletion": false,
+    "P2_1Complete": false
+  },
+  "conclusion": {
+    "established": "The three native durable replies were the same built-in interpreter_unavailable failure presentation after three failed interpreter attempts. Native reply durability is genuine, but does not establish semantic task completion. The retained observer saw no provider begin/settle event, so its ledger had no settled attempts and correctly remained incomplete.",
+    "specificAccessSeam": "The retained launcher runs the worker as administrator (UID1000) while pointing its lazy auth-lease reader inside a root-owned mode0700 managed-slot ancestor. A read-only open under that user returns EACCES. File metadata and lease schema themselves pass the worker guard.",
+    "historicalAttribution": "Ancestor/file permission ctimes and account database ctimes precede the retained execution. This strongly supports pre-provider lease traversal failure in that execution; the historical original low-level exception name/code/message was not retained, so exact historical EACCES is an inference, not an original exception attestation.",
+    "providerBeginReachability": "No begin event was retained. On the bound observed fetch route begin/admission precedes nativeFetch; the collector retains events before processing provider control. No evidence of dropped provider control events was found. Pre-fetch native failures are outside that event boundary.",
+    "legitimateSuccessfulDeterministicBranch": false,
+    "startupReachedReady": true,
+    "actualUpstreamCalls": "unknown",
+    "zeroHistoricalModelCallClaimAllowed": false,
+    "observerFailureProven": false,
+    "exactHistoricalLowLevelErrnoProven": false,
+    "confidence": "high for failure-presentation provenance and current EACCES; high supported historical access inference with explicit missing original exception evidence"
+  },
+  "retainedFacts": {
+    "durableNativeReplies": 3,
+    "uniqueReplySha256Count": 1,
+    "replySha256": "0ea5c1259e828327739367e88ee0352c5c24e164f700d326c727427156c711e0",
+    "replyExactMatchesPreparedFailureLiteral": true,
+    "turnUnderstandingTimelineIds": [
+      2,
+      6,
+      10
+    ],
+    "turnUnderstandingRecords": [
+      {
+        "timelineId": 2,
+        "source": "fail_closed",
+        "interpretationSucceeded": false,
+        "attempts": 1,
+        "error": "interpreter_unavailable",
+        "attemptFailureCode": "interpreter_unavailable",
+        "failureClass": "connection_error",
+        "internalProviderAttempts": 1,
+        "providerStatusRetained": false,
+        "rawErrorNameRetained": false,
+        "rawLowLevelErrorCodeRetained": false
+      },
+      {
+        "timelineId": 6,
+        "source": "fail_closed",
+        "interpretationSucceeded": false,
+        "attempts": 1,
+        "error": "interpreter_unavailable",
+        "attemptFailureCode": "interpreter_unavailable",
+        "failureClass": "connection_error",
+        "internalProviderAttempts": 1,
+        "providerStatusRetained": false,
+        "rawErrorNameRetained": false,
+        "rawLowLevelErrorCodeRetained": false
+      },
+      {
+        "timelineId": 10,
+        "source": "fail_closed",
+        "interpretationSucceeded": false,
+        "attempts": 1,
+        "error": "interpreter_unavailable",
+        "attemptFailureCode": "interpreter_unavailable",
+        "failureClass": "connection_error",
+        "internalProviderAttempts": 1,
+        "providerStatusRetained": false,
+        "rawErrorNameRetained": false,
+        "rawLowLevelErrorCodeRetained": false
+      }
+    ],
+    "internalProviderAttemptsAreUpstreamCallAttestation": false,
+    "runtimeStatus": {
+      "lastSuccessAt": 0,
+      "lastFailureAt": 1791380227107,
+      "failureKind": "connection_error",
+      "statusCode": null,
+      "providerCode": null,
+      "providerParam": null,
+      "consecutiveFailures": 6
+    },
+    "nativeProviderEvents": 0,
+    "registeredProviderAttempts": 0,
+    "ledgerComplete": false,
+    "usage": {
+      "input_tokens": null,
+      "output_tokens": null,
+      "total_tokens": null
+    },
+    "stop": {
+      "workerExitCode": 0,
+      "nativeEof": true,
+      "readerStopped": true,
+      "activeProviderAttempts": 0,
+      "pendingProviderControls": 0,
+      "toolDispatches": 0,
+      "providerCloseFailures": 0,
+      "quiescent": true
+    },
+    "stderr": {
+      "bytes": 38,
+      "lines": 1,
+      "EACCESMarkers": 0,
+      "ENOENTMarkers": 0,
+      "AbortErrorMarkers": 0,
+      "TypeErrorMarkers": 0,
+      "leasePathPresent": false,
+      "rawErrorMarkerRetained": false
+    }
+  },
+  "sourceBinding": {
+    "sourceRoot": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/source",
+    "workerPath": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+    "workerSha256": "d9135079c1e2ce8b91cb57b4d1d39b376cb031f0fb9bedda2aa1f8958b58c73b",
+    "hookManifestPath": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/hook-manifest.json",
+    "hookManifestSha256": "d2f99e4b61126c9b325415e6b1fb923cf52df04842b14da3b02b3f9aece0a291",
+    "allTenReadySourceHashesMatchCurrentPreparedSource": true,
+    "fourHookManifestHashesMatch": true,
+    "personaAllSourceManifestHashMatches": true,
+    "preparedHashes": {
+      "src/mind/agent.js": "1129f4a5143adffccee0b2d56dd268e57581ad771a6ec9c226671ae104c6bb4d",
+      "src/brain/llm.js": "96864aaf070a18b0282b9fda2c5203419077f1cca33c3fb49c19b41732f07f22",
+      "src/brain/oauth.js": "3a769d430a8f346d1b38b1e5cd5b46e2696fe161d58334a76bc4035f50b714b9",
+      "src/mind/understanding.js": "b6d9f062da50ddae2fb7a9493807ae52b68307ea9549d9747d1da920f5e80d6d",
+      "src/mind/persona.js": "320be2c4e33d16dec05eb7c11f2619c4323e1cbd40978dc03df3b841e56a8cf5"
+    }
+  },
+  "technicalLocations": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/one_pair_processor.py",
+      "line": 77,
+      "function": "run",
+      "role": "Retained runuser administrator launch and auth-lease pointer"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+      "line": 148,
+      "function": "loadLease",
+      "role": "Lazy read uses O_RDONLY|O_NOFOLLOW; guard checks file metadata after open"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+      "line": 178,
+      "function": "native-control.authStatus",
+      "role": "Delegates to lazy loadLease; ready construction does not exercise this"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/source/src/brain/oauth.js",
+      "line": 54,
+      "function": "authStatus",
+      "role": "Calls native control authStatus before requestOnce fetch"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/source/src/brain/llm.js",
+      "line": 350,
+      "function": "requestOnce",
+      "role": "Authorization read before fetch at line397"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/source/src/brain/llm.js",
+      "line": 265,
+      "function": "beginProviderAttempt",
+      "role": "Internal requestAttempts increment before request dispatch, not measured upstream dispatch"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/source/src/mind/understanding.js",
+      "line": 3560,
+      "function": "understandTurn",
+      "role": "Maps thrown completion error to interpreter_unavailable"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/source/src/mind/understanding.js",
+      "line": 3419,
+      "function": "interpreterFailureEvidence",
+      "role": "Retains only broad failureClass/providerStatus/providerAttempts; discards original error name/code/message"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/source/src/mind/agent.js",
+      "line": 4490,
+      "function": "recordSemanticTurnTimeline",
+      "role": "Saves reduced interpreter evidence in timeline meta"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/source/src/mind/agent.js",
+      "line": 5626,
+      "function": "finishSemanticFailureTurn",
+      "role": "Selects local presentation and passes it as fallback"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/source/src/mind/agent.js",
+      "line": 5423,
+      "function": "composeEvaReply",
+      "role": "Returns grounded fallback on caught non-supersession failure"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/source/src/mind/persona.js",
+      "line": 48,
+      "branch": "SEMANTIC_FAILURE_PRESENTATIONS.interpreter_unavailable",
+      "role": "Exact private reply hash match; text withheld"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+      "line": 243,
+      "function": "globalThis.fetch",
+      "role": "Provider begin/admission precedes nativeFetch at line253"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py",
+      "line": 54,
+      "function": "BottieIO.transact",
+      "role": "Appends received event before provider control processing"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/cp001_accounting.py",
+      "line": 262,
+      "role": "Zero-attempt ledger is intentionally incomplete; no scorer/accounting rule change proposed"
+    }
+  ],
+  "currentReadOnlyPermissionCheck": {
+    "leasePath": "/var/lib/eva2/managed-b-slot3/model-access-lease/auth.json",
+    "effectiveUid": 1000,
+    "effectiveGid": 1000,
+    "supplementaryGroups": [
+      4,
+      24,
+      27,
+      30,
+      46,
+      100,
+      108,
+      1000
+    ],
+    "osAccessReadable": false,
+    "readOnlyNoFollowOpenSucceeded": false,
+    "errorClass": "PermissionError",
+    "errno": 13,
+    "errnoName": "EACCES",
+    "ancestors": [
+      {
+        "path": "/var/lib/eva2",
+        "uid": 0,
+        "gid": 65532,
+        "mode": "0750",
+        "ctimeUtc": "2026-09-28T22:37:37.508466+00:00"
+      },
+      {
+        "path": "/var/lib/eva2/managed-b-slot3",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0700",
+        "ctimeUtc": "2026-09-29T08:49:13.302894+00:00"
+      },
+      {
+        "path": "/var/lib/eva2/managed-b-slot3/model-access-lease",
+        "uid": 1000,
+        "gid": 65532,
+        "mode": "2750",
+        "ctimeUtc": "2026-10-01T10:34:05.455325+00:00"
+      }
+    ],
+    "leaseFile": {
+      "uid": 1000,
+      "gid": 65532,
+      "mode": "0640",
+      "size": 1884,
+      "regularFile": true,
+      "symlink": false,
+      "ctimeUtc": "2026-10-01T10:34:05.455325+00:00",
+      "sha256": "d688349a5689c2872b0f19b7f06ff1ec8da08719241d43855de39c5445b3c6ad",
+      "nativeMetadataGuardMatches": true,
+      "nativeSchemaGuardMatches": true,
+      "credentialHeaderSyntaxValid": true,
+      "upstreamAuthorization": "unknown"
+    },
+    "accountDatabaseCtimesPredateRun": true,
+    "ancestorAndLeaseCtimesPredateRun": true,
+    "retainedNativeReadyMtimeUtc": "2026-10-06T13:37:06.051998+00:00",
+    "historicalWorkerKernelCredentialsCaptured": false,
+    "originalHistoricalEACCESErrorCaptured": false
+  },
+  "excludedHypotheses": {
+    "normalSemanticDeterministicAnswer": "Excluded for these retained replies by exact built-in failure-literal hash and false interpretationSucceeded records.",
+    "workerNeverStarted": "Excluded by retained native ready, durable HTTP replies, source hashes and clean terminal.",
+    "wrappedGateAwareRequestIdentity": "The prepared WeakSet identity guard is only reached for retryState.boundedIdenticalTransportRetriesUsed===1 (llm.js:265-270), after a preceding proven native HTTP503 failure and one admitted bounded retry. No preceding provider begin/settle event exists. Not established as the cause of these initial failures.",
+    "upstream401403OrRateLimit": "No HTTP status/providerCode retained; not established. Current failure is at local permission-only open."
+  },
+  "preciselyMissingEvidence": {
+    "location": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/source/src/mind/understanding.js:3419 and /home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/source/src/mind/agent.js:4490",
+    "missing": "Original pre-fetch error name, low-level error code and syscall/path attribution were discarded before durable failure meta. Retained stderr has no corresponding marker. Kernel credentials and credential-path traversal check at the original worker run were not separately captured.",
+    "cannotRetroactivelyRecover": "The generic connection_error class and internal providerAttempts=1 do not encode whether the thrown error was EACCES, credential guard failure, or another local pre-fetch error.",
+    "retainHistoricalUnknowns": true
+  },
+  "smallestFollowupCandidate": {
+    "changeClass": "trial_setup_credential_path_binding_only",
+    "implemented": false,
+    "action": "For a separately authorized future execution, bind the same existing access-only lease bytes to a private trial snapshot reachable by the existing UID1000. Preserve owner1000/group65532/mode0640, the frozen lease schema, and the existing protected managed-slot ancestors. Perform a no-network read-only preflight under the actual worker UID before admitting any future input.",
+    "existingPublisherPath": "/home/administrator/project/Eva2/eva2/src/eva/operations/model_credentials.py",
+    "existingExactBytePublisherLine": 135,
+    "existingExactBytePublisherFunction": "_publish_bytes",
+    "publisherSha256": "7a43b1249aa976225393f644f57baf1ac035800bf51ce78e3646baaa85e90897",
+    "guardLocations": [
+      55,
+      163,
+      165
+    ],
+    "contractConstantsLine": 21,
+    "rebuildWarning": "publish_access_lease at line199 calls build_access_lease at line86. Giving an already materialized lease to that builder rewrites source_sha256; it does not preserve exact lease bytes.",
+    "closedComparisonReplayAllowed": false,
+    "scorerOrLedgerRelaxationAllowed": false,
+    "newProductBuildNeededByThisDiagnosis": false
+  },
+  "bindings": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-next-native-comparison-partial-result-20261006.json",
+      "sha256": "4abdef6434cfeaa7bd6a6a1ffb121600e3c2659a2c82950b8dfc38b1355b04f0"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/one_pair_processor.py",
+      "sha256": "9ee9e0be857be1a10f012441d2b9ffc843de241205105aa9483c69a675c2d5a6"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/eva1-native-ready.json",
+      "sha256": "8a3c319e8b1270aa181e67df6fc052d2bef7c67a5f0f5eb85fa14df8e5271366"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/eva1-native-events.json",
+      "sha256": "5164b62e9819a273fab7946e6650c7b415995e28e589fb42bafeb8084e5c1bb4"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/eva1-turn-0.json",
+      "sha256": "889faf6c5292430e08ccdc1a222392c5db120f7d5082317d24c04ccf42771d1a"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/eva1-turn-1.json",
+      "sha256": "d7f1b5d901b8e68e26ce8e89f9fce36f297b3150a78da5869a09f2bc846db9f3"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/eva1-turn-2.json",
+      "sha256": "94ade56315e368ecb7432709097c65e2a67a56b49c5651f106aef8a1f57e80a3"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/eva1-stop.json",
+      "sha256": "a50e5bb90ad7aa62227fee6612654f283fda41955c485bebf17f6f849c62be33"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/eva1-stderr.private.log",
+      "sha256": "ff3b869d1415a6f8e740e22b0cdebc1fc769e71a168de8c45ca27ce8fe0c0ecc"
+    },
+    {
+      "path": "/tmp/cp001-bottie-p2-next-cm-20261006/eva.db",
+      "sha256": "54c1f96cd2086057d17cb871e6e9276d468933f6730f05e6ce5b70412c1081b4",
+      "readMode": "file URI mode=ro; PRAGMA query_only=ON; no retained sidecars"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py",
+      "sha256": "0a3366f227bbb6299459ac3de6217cea0d0c9457014453c45096f216e7f68279"
+    }
+  ],
+  "resources": {
+    "terminalTool": "exec_command",
+    "terminalSessionsRetained": [],
+    "allCommandsCompleted": true,
+    "evidenceReadbackChunks": [
+      "804b70",
+      "177a29",
+      "36b6b2",
+      "e8b358",
+      "fc8fa0",
+      "0497f8",
+      "06d3f6"
+    ],
+    "sqliteServiceStarted": false,
+    "providerCallsPlanned": 0,
+    "providerCallsMadeByDiagnosis": 0,
+    "developmentCredits": "unknown",
+    "creditCost": "unknown",
+    "zeroCreditClaim": false,
+    "newOwnedFiles": [
+      "eva2/evidence/product/p2-eva1-accounting-diagnosis-20261006.json"
+    ]
+  },
+  "disclosure": {
+    "privateInputsRepliesExpectedFactsScoringRulesDisclosed": false,
+    "privateSourceDumpDisclosed": false,
+    "credentialValuesDisclosed": false,
+    "builderReceivesOnlyTechnicalLocationsCodesCountsBooleansHashesAndUnknowns": true,
+    "privateReplyMatchingUsedOnlyForBranchProvenance": true,
+    "protectedDatasetAndScorerReadOrChanged": false
+  },
+  "verification": {
+    "jsonReadbackVerified": true,
+    "allElevenRetainedBindingHashesMatch": true,
+    "retainedSqliteHashUnchangedAfterReadOnlyInspection": true,
+    "launcherContainingFunctionVerifiedByAST": "run:58",
+    "zeroAttemptAccountingRuleReadbackVerified": true,
+    "terminalChunk": "06d3f6"
+  }
+}

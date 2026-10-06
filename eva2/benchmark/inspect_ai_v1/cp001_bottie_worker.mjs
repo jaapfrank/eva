@@ -173,6 +173,9 @@ function recordTool(name, protocol = false) {
   if (!allowed) { stopSample(); throw new Error('native sample tool boundary reached'); }
 }
 if (subscription) {
+  // Check access as the actual worker user before reporting native readiness.
+  // A valid file's metadata does not prove its parent path is traversable.
+  loadLease();
   // Fixed hooks are installed only into the explicitly hashed disposable source.
   globalThis[Symbol.for('eva.cp001.native-control.v1')] = Object.freeze({
     authStatus() { loadLease(); return { status: 'ok' }; },

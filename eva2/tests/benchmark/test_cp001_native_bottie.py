@@ -9,6 +9,7 @@ import select
 import shutil
 import sqlite3
 import subprocess
+import sys
 import tempfile
 from types import SimpleNamespace
 
@@ -20,6 +21,7 @@ SPEC = importlib.util.spec_from_file_location(
     "cp001_bottie_native", BENCHMARK / "cp001_native.py"
 )
 native = importlib.util.module_from_spec(SPEC)
+sys.modules[SPEC.name] = native
 SPEC.loader.exec_module(native)
 
 
@@ -455,6 +457,12 @@ def test_controlled_native_provider_binding_usage_and_stop_before_retry(monkeypa
                     assert not ledger.report()["complete"]
                 else:
                     assert ledger.attempts[0]["status"] == "completed"
+                interrupted = receive()
+                assert interrupted == {
+                    "contract": "Cp001IngressFailure/v1", "status": None,
+                    "error": "native_ingress_interrupted",
+                    "request_id": body["request_id"],
+                }
                 stopped = receive()
                 assert stopped["stopped"] and stopped["provider_stub_calls"] == (0 if reserved_before_stop else 1)
                 assert stopped["active_provider_attempts"] == stopped["pending_provider_controls"] == 0
@@ -697,8 +705,9 @@ def test_subscription_native_tool_cap_has_independent_receipt(tmp_path):
     script = r"""
 const fs=require('node:fs'),path=require('node:path');
 const source=fs.readFileSync(process.argv[1],'utf8');
-const block=source.slice(source.indexOf('const toolEvents = [];'),source.indexOf('if (subscription) {\n  // Fixed hooks'));
-const run=new Function('fs','path','dataDir',`let stopping=false,currentRequestId='sample';const stopSample=()=>{stopping=true};${block}
+const start=source.indexOf('const toolEvents = [];');
+const block=source.slice(start,source.indexOf('if (subscription) {',start));
+const run=new Function('fs','path','dataDir',`let stopping=false,currentRequestId='sample';const toolLimit=4;const stopSample=()=>{stopping=true};${block}
 recordTool('commit_turn_understanding',true);
 recordTool('onthoud');recordTool('zoek_geheugen');recordTool('zoek_gesprek');
 let refused=false;try{recordTool('onthoud')}catch{refused=true}

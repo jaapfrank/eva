@@ -1,3 +1,11 @@
+## 6 oktober — P2.1 Eva1-proefaansluiting gecorrigeerd
+
+Drie bewaarde Eva1-reacties zijn generieke interpreterfouten, geen snelle inhoudelijke antwoorden. De proefuitvoerder kon alsUID1000 het bestaande modeltoegangspad niet lezen. Nu is exact dezelfde access-only inhoud via de bestaande publisher in een private proefmap bereikbaar, en de bestaande worker controleert dit vóór gereedmelding. Het oude pad/rechten/provider/source blijven gelijk. Echte no-input-opstart: oud onterecht ready, nieuw EACCES vóór ready, nieuw met leesbare kopie ready en schone stop.10 gerichte bestaande checks geslaagd,2 optionele checks niet uitgevoerd; onafhankelijke GO.0 echte modelcalls, creditkosten onbekend. Geen productimage/reinstall of nieuwe functie;34/44 blijft gelijk.
+
+P2.1 blijft open. Historische errno en oorspronkelijke onbekende uitkomsten worden niet achteraf ingevuld. Volgende stap is één oorspronkelijke ongeziene vergelijking met deze toegang en de bestaande asynchrone geheugenobservatie; nog niet actief. Geen gesloten casusherhaling of spraakbouw.
+
+[Correctie beschikbaar](evidence/product/p2-eva1-access-correction-available-20261006.json) · [Bewaarde diagnose](evidence/product/p2-eva1-accounting-diagnosis-20261006.json) · [Onafhankelijke review](reviews/p2-eva1-lease-preflight-review-20261006.json).
+
 ## 6 oktober — P2.1 asynchrone meetcorrectie beschikbaar
 
 De bewaarde database bewijst dat de callback de exacte geheugenbron heeft gequeued nadat de eerste observatie geen document vond. De job bleef queued; volledige geheugenverwerking is niet aangetoond. De bestaande meetwrapper wacht nu alleen op pending binnen de oorspronkelijke resterende proeftijd. Identiteit, privacy, duurzame readback, fouten en consolidatievoorwaarden blijven gelijk. Zes gerichte ontwikkelcontroles en achttien bestaande native controles slagen; onafhankelijke GO. De echte processor importeert ditzelfde bestand en trekt reeds verstreken tijd af. Geen productimage/reinstall nodig; de correctie is via de bestaande benchmarkroute beschikbaar.

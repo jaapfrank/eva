@@ -1,0 +1,282 @@
+{
+  "contract": "EvaP2Eva1LeasePreflightReview/v1",
+  "recordedAtUtc": "2026-10-06T16:10:10.440328+00:00",
+  "taskId": "P2.1",
+  "reviewer": "/root/p2_eva1_lease_review_20261006",
+  "baseCommit": "5b5582af9b444dcf4fb37c1c92adfe11956d7cab",
+  "status": "GO_scoped_access_preflight_for_next_independently_admitted_unseen_original_case",
+  "blockingDefects": [],
+  "summary": "The smallest access correction is sufficient for the existing worker to reject an unreadable lease before ready and to become ready under the scoped exact-byte lease binding. The focused test harness now registers its dynamic module, asserts the existing request-bound interruption before final stop, and extracts the existing tool guard with its unchanged default limit. This review does not establish upstream authorization, semantic success, comparative superiority or P2.1 completion.",
+  "scope": {
+    "changedWorker": "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+    "ownedReviewOnly": "eva2/reviews/p2-eva1-lease-preflight-review-20261006.json",
+    "privateFinalPromptsRepliesExpectedFactsAndScorerRead": false,
+    "privateFinalCasesReplayed": 0,
+    "newFinalCasesRun": 0,
+    "newNativeWorkersOrServicesStartedByReviewer": 0,
+    "newModelCallsByReviewer": 0,
+    "sourceTestWorkboardOrGitEditsByReviewer": false,
+    "permissionChangesByReviewer": false,
+    "credentialValuesDisclosed": false,
+    "changedTestHarness": "eva2/tests/benchmark/test_cp001_native_bottie.py"
+  },
+  "sourceDelta": {
+    "oldWorkerSha256": "d9135079c1e2ce8b91cb57b4d1d39b376cb031f0fb9bedda2aa1f8958b58c73b",
+    "reviewedWorkerSha256": "4ee595e33a6de19825d1b71da475c7efeb0ea285782b0c9a7cb3fa0ca1409dd7",
+    "oldWorkerReconstructedByRemovingOnlyDeclaredThreeLineAddition": true,
+    "change": "Call existing loadLease() at subscription setup, before hook installation, native product imports, server start and ready.",
+    "fixtureModeUnchanged": true,
+    "leaseGuardUnchanged": true,
+    "sourceAndHookGuardsUnchanged": true,
+    "providerEndpointAndRoleModelsEffortsUnchanged": true,
+    "providerAdmissionSettlementStopAndAccountingUnchanged": true,
+    "leaseStillReloadedBeforeNativeAuthorizationAndAccess": true,
+    "noProductImageRebuildRequired": "The existing benchmark launch loads the reviewed public worker path directly; source/hook/model binding remains the same disposable native route.",
+    "testHarnessDelta": {
+      "addedLines": [
+        "import sys",
+        "sys.modules[SPEC.name] = native"
+      ],
+      "placement": "Register the dynamically loaded module before SPEC.loader.exec_module(native).",
+      "productSourceChangedByLoaderCorrection": false,
+      "testInputsAndFixturesChanged": false,
+      "existingLedgerStopNoRetryToolCapAssertionsPreserved": true,
+      "addedRequestBoundInterruptionAssertion": true,
+      "stopRaceExpectation": "Consume and assert the exact Cp001IngressFailure/v1 correlated to the existing request_id before consuming the unchanged stopped, zero-active, no-retry terminal checks.",
+      "toolGuardExtraction": "Bound the unchanged recordTool block by the first subsequent if(subscription) block, rather than a comment altered by the preflight insertion; initialize its pre-existing toolLimit=4 in the isolated harness.",
+      "toolCapChanged": false,
+      "providerAccountingOrScorerRulesChanged": false
+    }
+  },
+  "independentLeaseChecks": {
+    "rootReadMode": "O_RDONLY | O_NOFOLLOW; values examined only in process; only hashes, booleans and metadata emitted.",
+    "rootEffectiveUid": 0,
+    "sourcePath": "/var/lib/eva2/managed-b-slot3/model-access-lease/auth.json",
+    "snapshotPath": "/tmp/eva2-p2-bottie-lease-20261006-fo79ie9s/auth.json",
+    "leaseSha256": "d688349a5689c2872b0f19b7f06ff1ec8da08719241d43855de39c5445b3c6ad",
+    "exactByteEqual": true,
+    "sourceHashMatchesPriorDiagnosis": true,
+    "sourceFileAndAncestorOwnershipModesAndCtimesMatchPriorDiagnosis": true,
+    "sourceFile": {
+      "uid": 1000,
+      "gid": 65532,
+      "mode": "0640",
+      "regular": true,
+      "symlink": false,
+      "nlink": 1,
+      "size": 1884,
+      "ctimeUtc": "2026-10-01T10:34:05.455325+00:00"
+    },
+    "snapshotDirectory": {
+      "uid": 1000,
+      "gid": 65532,
+      "mode": "2750",
+      "directory": true,
+      "symlink": false
+    },
+    "snapshotFile": {
+      "uid": 1000,
+      "gid": 65532,
+      "mode": "0640",
+      "regular": true,
+      "symlink": false,
+      "nlink": 1,
+      "size": 1884
+    },
+    "originalBlockingAncestor": {
+      "path": "/var/lib/eva2/managed-b-slot3",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0700",
+      "ctimeUtc": "2026-09-29T08:49:13.302894+00:00"
+    },
+    "workerMetadataAndSchemaGuardPasses": true,
+    "credentialHeaderSyntaxValid": true,
+    "hasRefreshAuthority": false,
+    "expiryBeyondOneHourAtIndependentCheck": true,
+    "independentCheckAtUtc": "2026-10-06T16:05:57.879373+00:00",
+    "actualUserRead": {
+      "uid": 1000,
+      "gid": 1000,
+      "supplementaryGroups": [
+        4,
+        24,
+        27,
+        30,
+        46,
+        100,
+        108,
+        1000
+      ],
+      "snapshotReadSucceeded": true,
+      "snapshotReadSha256MatchesSource": true,
+      "originalPathReadSucceeded": false,
+      "originalPathErrno": 13,
+      "originalPathErrnoName": "EACCES"
+    },
+    "existingPublisherReviewed": "eva.operations.model_credentials._publish_bytes preserves already-materialized bytes and the existing directory/file contract; no lease builder or refresh path was substituted."
+  },
+  "preparedSourceBinding": {
+    "hookManifestSha256": "d2f99e4b61126c9b325415e6b1fb923cf52df04842b14da3b02b3f9aece0a291",
+    "contractMatches": "Cp001BottieNativeHooks/v1",
+    "allFourHookSourceHashesMatch": true,
+    "allReadySourceHashesMatchCurrentPreparedSource": true,
+    "preparedNativeSourceChanged": false
+  },
+  "retainedNoInputStartupChecks": {
+    "logRoot": "/home/administrator/project/.eva2-artifacts/p2-eva1-lease-preflight-20261006",
+    "launchUidEvidence": "Retained preflight report says UID1000; independent actual-user lease read confirms access semantics. Kernel credentials of the already-terminated launches were not independently recaptured.",
+    "previousInaccessible": {
+      "stdoutSha256": "d50b76a17bcf59572ced31f65cc7b675d62fb74048bbee11012f63af43a5e2dc",
+      "stderrSha256": "ff3b869d1415a6f8e740e22b0cdebc1fc769e71a168de8c45ca27ce8fe0c0ecc",
+      "stdoutRecords": 2,
+      "onlyReadyAndStop": true,
+      "ready": true,
+      "retainedExitCode": 0,
+      "realModelCalls": 0,
+      "providerStubCalls": 0,
+      "providerEvents": 0,
+      "quiescent": true,
+      "pendingProviderControls": 0,
+      "activeProviderAttempts": 0,
+      "providerCloseFailures": 0,
+      "toolDispatches": 0,
+      "recordedWorkerStillPresentAtReview": false,
+      "finding": "The previous worker reported ready without reading the inaccessible lease."
+    },
+    "correctedInaccessible": {
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "54eb890c6faccdd2f7963b42efda932ec24233cfbf49a8ef7aa0365ac283d428",
+      "stdoutRecords": 0,
+      "ready": false,
+      "retainedExitCode": 1,
+      "stderrEACCES": true,
+      "stderrOriginalLeasePath": true,
+      "providerEvents": 0,
+      "finding": "The corrected worker throws EACCES at startup before native product import, server start, ready or model dispatch.",
+      "zeroModelCallsBasis": "Static startup ordering and no submitted input, rather than a terminal counter omitted by startup failure."
+    },
+    "correctedScoped": {
+      "stdoutSha256": "1e8ebfb1091702ae1f3842d749fd0c7d5e1393a02e6fcfeb4945cc3c82bc166d",
+      "stderrSha256": "ff3b869d1415a6f8e740e22b0cdebc1fc769e71a168de8c45ca27ce8fe0c0ecc",
+      "stdoutRecords": 2,
+      "onlyReadyAndStop": true,
+      "ready": true,
+      "retainedExitCode": 0,
+      "realModelCalls": 0,
+      "providerStubCalls": 0,
+      "providerEvents": 0,
+      "quiescent": true,
+      "pendingProviderControls": 0,
+      "activeProviderAttempts": 0,
+      "providerCloseFailures": 0,
+      "toolDispatches": 0,
+      "recordedWorkerStillPresentAtReview": false,
+      "finding": "The corrected worker is available through the existing native route using the exact-byte scoped lease snapshot."
+    },
+    "noRawPrivateLogDumpDisclosed": true
+  },
+  "focusedVerification": {
+    "nodeSyntaxCheck": {
+      "command": "node --check eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+      "exitCode": 0,
+      "newWorkerOrModelStarted": false
+    },
+    "reviewerRepeatedNativeTests": false,
+    "coordinatorExistingRegression": {
+      "provenance": "Coordinator messages in this delegated review; tests not rerun by reviewer.",
+      "initialBatchPassed": 7,
+      "initialBatchSkipped": 2,
+      "initialHarnessFailureCause": "Two strict stop-race expectations omitted the existing request-bound ingress-failure terminal; the isolated tool-cap extraction relied on the displaced comment and omitted the existing toolLimit variable.",
+      "correctedStopRaceCasesPassed": 2,
+      "correctedToolCapCasePassed": 1,
+      "distinctFocusedCasesPassedAcrossRuns": 10,
+      "optionalCasesSkipped": 2,
+      "skipReason": "Optional explicit-source/restart cases lacked the required explicit fixture.",
+      "fullSuiteAllPassClaim": false,
+      "coordinatorNodeSyntaxCheckPassed": true,
+      "noFurtherReviewTestsRequestedOrRun": true
+    }
+  },
+  "nextExecutionBoundary": {
+    "accessPreparationGO": true,
+    "caseAdmissionStillIndependent": true,
+    "allowed": "Use this reviewed worker and scoped exact-byte lease binding only for a separately admitted, still-unseen original case under the existing fixed source, model/provider, identity, deadline, tool, stop and accounting rules.",
+    "leaseMustStillBeCurrentReadableAndLongEnoughAtLaunch": true,
+    "closedOriginalCaseReplayAllowed": false,
+    "fullMatrixAdmissionGranted": false,
+    "newCriteriaOrDatasetChangesAllowed": false,
+    "upstreamAuthorizationProven": false,
+    "usableSemanticResultProven": false,
+    "comparativeWinnerProven": false,
+    "P2_1Complete": false,
+    "historicalExactEACCESProven": false,
+    "historicalActualUpstreamCallCount": "unknown",
+    "historicalUnknownsPreserved": true
+  },
+  "resources": {
+    "reviewerTerminalCommandsCompleted": true,
+    "newNativeWorkers": 0,
+    "newModelCalls": 0,
+    "developmentCredits": null,
+    "creditCost": null,
+    "zeroCreditClaim": false
+  },
+  "bindings": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+      "sha256": "4ee595e33a6de19825d1b71da475c7efeb0ea285782b0c9a7cb3fa0ca1409dd7"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_cp001_native_bottie.py",
+      "sha256": "876acd25c39270c4af46705d0d7446c6701deeb384f1fd897608a355eda7d783"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-eva1-accounting-diagnosis-20261006.json",
+      "sha256": "50eaeb6fc2d4da3370a7dc7265db1a7285e4aced8bc7dffebac9b3e2b93f933b"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-eva1-scoped-lease-prepared-20261006.json",
+      "sha256": "37f83e66c47d6a42ff8d0238cc2cc3e796a425006a3ed1aac6d3919cadb269b2"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-eva1-lease-preflight-20261006.json",
+      "sha256": "b515443c7ca6d33e1799565d8b3a85a4fa44ca3c89f4c4f2ce2b1d7ee9817bb4"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py",
+      "sha256": "0a3366f227bbb6299459ac3de6217cea0d0c9457014453c45096f216e7f68279"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/cp001_accounting.py",
+      "sha256": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/src/eva/operations/model_credentials.py",
+      "sha256": "7a43b1249aa976225393f644f57baf1ac035800bf51ce78e3646baaa85e90897"
+    }
+  ],
+  "receiptBindingRefresh": {
+    "recordedAtUtc": "2026-10-06T16:10:10.440328+00:00",
+    "priorReceiptSha256": "f9972629130ea7dbee0ec90a90848c26f08cba24a117f8507c2fc5a0be53b933",
+    "currentReceiptSha256": "b515443c7ca6d33e1799565d8b3a85a4fa44ca3c89f4c4f2ce2b1d7ee9817bb4",
+    "deltaOnly": [
+      "focusedChecks",
+      "testSourceSha256",
+      "conclusion"
+    ],
+    "removingAddedFieldsReconstructsExactPreviouslyBoundReceipt": true,
+    "newFocusedCheckSummaryConsistentWithCoordinatorResult": true,
+    "initialHarnessSetupReasons": [
+      "dynamic module not registered before dataclass import",
+      "stop harness omitted existing request-bound ingress terminal",
+      "tool harness selected an obsolete exact comment",
+      "default pytest temporary root has a different owner",
+      "isolated tool harness omitted existing toolLimit binding"
+    ],
+    "receiptTestHashMatchesReviewedFinalTestHarness": true,
+    "newConclusionPreservesUnknownUpstreamAuthorizationAndTaskSuccess": true,
+    "priorStartupResultsSnapshotSourceModelLimitsAndGOUnchanged": true,
+    "newReviewerTestsNativeWorkersModelCallsOrServices": 0
+  }
+}

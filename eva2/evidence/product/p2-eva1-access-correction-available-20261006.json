@@ -1,0 +1,56 @@
+{
+  "contract": "EvaP2Eva1AccessCorrectionAvailable/v1",
+  "task": "P2.1",
+  "recordedAt": "2026-10-06T16:10:24.550711+00:00",
+  "status": "scoped_correction_available_in_existing_benchmark_route",
+  "change": {
+    "existing": "Exact prepared native source, model roles, ordinary SQLite/HTTP path and access-only lease already exist.",
+    "gap": "Existing UID1000 worker cannot traverse the managed slot lease parent; earlier ready did not call lazy loadLease.",
+    "correction": "Existing access-only bytes published using existing publisher to a private UID1000-readable trial directory. Existing loadLease now runs before native readiness.",
+    "workerPath": "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+    "workerSha256": "4ee595e33a6de19825d1b71da475c7efeb0ea285782b0c9a7cb3fa0ca1409dd7",
+    "preparedNativeSourceChanged": false,
+    "modelRouteChanged": false,
+    "managedLeaseOrParentPermissionsChanged": false,
+    "productImageOrRuntimeChanged": false,
+    "noProductReinstallationNeeded": true
+  },
+  "evidence": {
+    "diagnosis": "eva2/evidence/product/p2-eva1-accounting-diagnosis-20261006.json",
+    "leaseSnapshot": "eva2/evidence/product/p2-eva1-scoped-lease-prepared-20261006.json",
+    "nativeStartup": "eva2/evidence/product/p2-eva1-lease-preflight-20261006.json",
+    "review": "eva2/reviews/p2-eva1-lease-preflight-review-20261006.json"
+  },
+  "verification": {
+    "actualWorkerUid": 1000,
+    "previousReadyAcceptedUnreadableLease": true,
+    "currentUnreadableLeaseRejectedBeforeReady": true,
+    "currentScopedLeaseReadyAndQuiescentStop": true,
+    "nodeSyntaxCheckPassed": true,
+    "distinctExistingChecksPassed": 10,
+    "optionalChecksSkipped": 2,
+    "wholeSuiteAllPassedClaim": false,
+    "allNativeProcessesStopped": true
+  },
+  "preservation": {
+    "originalTaskIdsFinishConditionsAcceptanceUnchanged": true,
+    "caseReplay": false,
+    "newFinalCaseRun": false,
+    "scoringCriteriaOrModelLimitsChanged": false,
+    "speechWork": false
+  },
+  "usage": {
+    "newRealModelCalls": 0,
+    "syntheticCheckUsageNotAggregated": true,
+    "developmentCredits": null,
+    "creditCost": null
+  },
+  "limitations": [
+    "Exact historical errno was not retained; original unknown results remain unknown.",
+    "Native readiness and local readability do not prove upstream authorization or successful task result.",
+    "No new completed housemate function or general comparative advantage.",
+    "P2 original coverage and human ratings, R1 and family acceptance remain open."
+  ],
+  "nextAction": "Admit and execute one original unseen comparison case using this same source/lease binding and the corrected remaining-deadline memory observer; no automatic full matrix or closed-case replay.",
+  "P2_1Complete": false
+}
