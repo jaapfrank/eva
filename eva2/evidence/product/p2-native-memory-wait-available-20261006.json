@@ -1,0 +1,65 @@
+{
+  "contract": "EvaP2NativeMemoryObservationCorrection/v1",
+  "taskId": "P2.1",
+  "recordedAt": "2026-10-06T15:52:22.273835+00:00",
+  "status": "reviewed_correction_available_in_existing_benchmark_route",
+  "concreteCause": "The HTTP reply precedes the background retention callback. The first snapshot was pending; retained DB later has the exact queued source document. The original observer stopped the sample before native processing.",
+  "retainedDiagnosis": {
+    "path": "eva2/evidence/product/p2-retain-transition-diagnosis-20261006.json",
+    "sha256": "366cd1d212ff486d144f8f533df811067e22166706f497731ed16b2488536b3f",
+    "successfulRetentionProven": false
+  },
+  "correction": {
+    "path": "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py",
+    "sha256": "0a3366f227bbb6299459ac3de6217cea0d0c9457014453c45096f216e7f68279",
+    "behavior": "Poll only pending native readbacks within the existing remaining sample deadline; fail/identity/privacy/completion checks unchanged.",
+    "readerSha256": "57a1996e868887b53af445870616538d51c0b92bdf2ce20dacdbfb5d3db7fc78"
+  },
+  "actualAvailability": {
+    "modulePath": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py",
+    "sameExistingProcessorImportConfirmed": true,
+    "callerBinding": "eva2/evidence/product/p2-native-memory-observer-binding-20261006.json",
+    "callerBindingSha256": "345a8f4bcaf35de72c2eeb8b8984508bf1e9b37d42f725adac09b2927d77ff84",
+    "originalSampleDeadlineRemainderConfirmed": true,
+    "productImageOrRuntimeChanged": false,
+    "newProductInstallationNeeded": false
+  },
+  "verification": {
+    "focusedDevelopmentChecks": {
+      "testFile": "eva2/tests/benchmark/test_p2_memory_settlement.py",
+      "sha256": "fbc4bc6fb03106191566c98d57c6137ca3cea6467e816af86bce591eccbe3563",
+      "methods": 6,
+      "passed": 6,
+      "realModelCalls": 0
+    },
+    "existingNativeIngressAccountingGuards": {
+      "testFile": "eva2/tests/benchmark/test_cp001_native.py",
+      "methods": 18,
+      "passed": 18
+    },
+    "baselineWitness": "Exact HEAD memory_settlement function returns the first pending snapshot in the asynchronous development check; revised observer reaches verified completion only after the existing reader completes. This is controlled wiring evidence, not native retention quality."
+  },
+  "independentReview": {
+    "path": "eva2/reviews/p2-native-memory-wait-review-20261006.json",
+    "sha256": "66b78f96cc09fae991946abd02377b68d863f9e49b22cddf84d625a6e073f09b",
+    "verdict": "GO_FOR_BOUNDED_EXISTING_OBSERVER_CORRECTION"
+  },
+  "preservation": {
+    "closedCaseRepeated": false,
+    "closedPartialReceiptUnchanged": true,
+    "originalScorerCriteriaChanged": false,
+    "originalEnvelopeChanged": false,
+    "newTaskIds": false,
+    "oldAcceptanceChanged": false,
+    "newRealProviderCalls": 0,
+    "newSpeechWork": false
+  },
+  "limitations": [
+    "Native extraction/consolidation success and complete paired quality remain UNKNOWN.",
+    "No actual next native final sample has been run.",
+    "Eva1 zero registered attempts still have incomplete accounting and an unknown cause.",
+    "This correction is not a new household feature or overall superiority."
+  ],
+  "developmentCredits": "UNKNOWN",
+  "P2_1Complete": false
+}

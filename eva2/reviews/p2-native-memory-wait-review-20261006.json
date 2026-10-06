@@ -1,0 +1,69 @@
+{
+  "contract": "EvaP2NativeMemoryWaitReview/v1",
+  "task_id": "P2.1",
+  "reviewed_at": "2026-10-06T15:50:32Z",
+  "reviewer": "/root/p2_memory_wait_review_20261006",
+  "base_commit": "9f63e01e07912e04afdb3510c8c61ac64a211b22",
+  "decision": "GO_FOR_BOUNDED_EXISTING_OBSERVER_CORRECTION",
+  "concrete_defects": [],
+  "scope": "Public memory_settlement diff, six focused development tests, unchanged native settlement reader/accounting/CM plan and public driver/import route. Protected processor binding is separately attested by the independent curator; no private source, prompts, replies, oracle, scorer or credentials were read by this reviewer.",
+  "source_sha256": {
+    "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py": "0a3366f227bbb6299459ac3de6217cea0d0c9457014453c45096f216e7f68279",
+    "eva2/tests/benchmark/test_p2_memory_settlement.py": "fbc4bc6fb03106191566c98d57c6137ca3cea6467e816af86bce591eccbe3563",
+    "eva2/benchmark/inspect_ai_v1/cp001_native.py": "57a1996e868887b53af445870616538d51c0b92bdf2ce20dacdbfb5d3db7fc78",
+    "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_driver.py": "347c1047df78ed30cf17853524cd8647140d7241dff425d5d416a61fc2c048ce",
+    "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_resume.py": "fccb4bfc867e4f847e8f0df156930ff4ac197c444d14439d751b9c975b919f12",
+    "eva2/evidence/product/p2-retain-transition-diagnosis-20261006.json": "366cd1d212ff486d144f8f533df811067e22166706f497731ed16b2488536b3f",
+    "eva2/evidence/product/p2-native-memory-observer-binding-20261006.json": "345a8f4bcaf35de72c2eeb8b8984508bf1e9b37d42f725adac09b2927d77ff84"
+  },
+  "findings": {
+    "smallest_correction_supported": "Existing evidence distinguishes an early pending snapshot before durable callback admission from completed native retention. Waiting only on pending addresses that observation gap without fabricating downstream success.",
+    "deadline": "One outer monotonic deadline is initialized from the supplied positive finite remaining timeout. Every reader call receives its diminishing remainder. Both pending waits and reader work consume that remainder; expired reader results cannot become completion.",
+    "terminal_behavior": "Completed/failed results pass through unchanged before deadline expiry. Validation exceptions propagate immediately. No exception retry, completion fallback or scope bypass was added.",
+    "native_checks_preserved": "The unchanged cp001_native.py reader still checks exact tenant/installation/principal/conversation/source, audience, document-thread identity, matching receipt/content, stored document, failed operations/consolidation and pending work in the affected bank. No document or receipt is synthesized.",
+    "accounting_preserved": "Glue polling performs existing read-only observations. It does not invoke providers, create requests, alter shared ledger limits, reset counters, refresh scenario clocks or change native dispatch/accounting bindings. Any retention helper attempts remain subject to the unchanged parent ledger.",
+    "caller_binding": "Independent curator attestation binds unchanged protected processor SHA9ee9e0be857be1a10f012441d2b9ffc843de241205105aa9483c69a675c2d5a6: direct memory_settlement import, original sample start/deadline outside the turn loop, and observer/core_exchange receive original deadline minus current monotonic time. No new observer wall budget.",
+    "source_availability": "Reviewer imported the existing host BENCH module without invoking runtime work and confirmed memory_settlement resolves to /home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py and its reader to the existing cp001_native.py. No product image rebuild or installation is needed for this evaluator source correction.",
+    "claims_and_workboard": "Observed workboard diff preserves 34/44, keeps P2.1 open, and retains unknown memory processing/quality and both formal outcomes. A source measurement correction is not a newly accepted product function."
+  },
+  "unchanged_cm_per_sample_limits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "wallSeconds": 480,
+    "toolDispatches": 16,
+    "speechRequests": 0
+  },
+  "focused_verification": {
+    "command": "python3 -m unittest eva2/tests/benchmark/test_p2_memory_settlement.py -v",
+    "result": "PASS",
+    "tests": 6,
+    "cases": [
+      "pending before queue, pending queued work, completed native result",
+      "one diminishing deadline despite continuous pending",
+      "terminal failure passes through once",
+      "identity/ambiguous-document exceptions are not retried",
+      "completion returned after expiry is rejected",
+      "invalid timeout rejected before reader invocation"
+    ],
+    "native_reader_plan_driver_resume_worktree_diff": "NONE"
+  },
+  "reviewer_actions": {
+    "private_source_case_or_scorer_files_read": 0,
+    "auth_files_read": 0,
+    "database_connections": 0,
+    "container_operations": 0,
+    "runtime_or_model_trials": 0,
+    "provider_or_paid_calls": 0,
+    "replay_inputs": 0,
+    "product_code_or_image_changes": 0,
+    "development_credits": "UNKNOWN"
+  },
+  "limitations": [
+    "GO applies to this exact source correction and focused verification; it does not admit a replay or restart of the closed sample.",
+    "No live native retention, callback timing, provider quiescence, semantic memory quality, comparative winner or overall superiority is proven by these deterministic tests.",
+    "Actual protected processor binding/deadline evidence is independent curator AST attestation, distinct from this reviewer's direct public source and module-resolution checks.",
+    "Original criteria, final comparison coverage, human/family assessments and existing acceptances remain unchanged."
+  ]
+}

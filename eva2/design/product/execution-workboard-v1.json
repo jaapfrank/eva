@@ -1007,8 +1007,23 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-06T15:35:05.933696+00:00",
+        "checkedAt": "2026-10-06T15:52:22.273835+00:00",
         "deliveries": [
+          {
+            "title": "P2.1 · Te vroege geheugenmeting gecorrigeerd",
+            "state": "investigated",
+            "date": "6 oktober",
+            "result": "Exacte geheugenqueue teruggevonden na de vroege uitlezing. Bestaande meetroute wacht nu alleen op pending binnen dezelfde proeftijd; 6 gerichte controles en 18 bestaande native controles slagen, onafhankelijke GO. Zelfde importpad beschikbaar; 0 nieuwe modelcalls.",
+            "remaining": "Geen nieuwe huisgenootfunctie, voltooide geheugenproef of winnaar. Gesloten resultaat blijft onbekend en wordt niet herhaald.",
+            "source": "eva2/evidence/product/p2-native-memory-wait-available-20261006.json",
+            "review": "eva2/reviews/p2-native-memory-wait-review-20261006.json",
+            "evidencePaths": [
+              "eva2/evidence/product/p2-native-memory-wait-available-20261006.json",
+              "eva2/evidence/product/p2-retain-transition-diagnosis-20261006.json",
+              "eva2/evidence/product/p2-native-memory-observer-binding-20261006.json",
+              "eva2/reviews/p2-native-memory-wait-review-20261006.json"
+            ]
+          },
           {
             "title": "P2.1 · Gedeeltelijke uitvoering eerlijk vastgelegd",
             "state": "investigated",
@@ -3922,25 +3937,25 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Gedeeltelijke proef: nog geen winnaar",
-          "state": "in_progress",
+          "title": "P2.1 · Meetcorrectie afgerond; vergelijking nog open",
+          "state": "investigated",
           "owner": "Codex",
-          "detail": "Eva1 gaf drie bewaarde reacties, maar modelverbruik is onvolledig. Eva2 gaf één bevestigd antwoord in 7,924 s; de exacte geheugenregistratie bleef onbevestigd. Beide einduitslagen zijn onbekend.",
-          "remaining": "De huidige casus wordt niet herhaald. Codex onderzoekt uitsluitend de ontbrekende geheugenovergang met bestaande bron en bewijs.",
-          "source": "eva2/evidence/product/p2-next-native-comparison-partial-result-20261006.json",
+          "detail": "De bestaande evaluator gebruikt nu de gecorrigeerde geheugenobservatie. Er draait geen nieuwe eindproef. Eva1-modelaccounting is de volgende concrete overgang.",
+          "remaining": "P2.1 blijft open: volledige oorspronkelijke dekking, betrouwbare Eva1-modelaccounting en menselijke beoordeling ontbreken; succesvolle native geheugenverwerking nog niet aangetoond.",
+          "source": "eva2/evidence/product/p2-native-memory-wait-available-20261006.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "reviewedAt": "2026-10-06T15:35:05.933696+00:00"
+          "reviewedAt": "2026-10-06T15:52:22.273835+00:00"
         },
         "next": {
-          "title": "Ontbrekende geheugenovergang verklaren",
+          "title": "Eva1-modelaccounting verklaren",
           "state": "planned",
           "owner": "Codex",
-          "detail": "De ontbrekende exacte geheugenregistratie gericht onderscheiden van meet-/runtimeaansluiting met bestaande bron en bewaard bewijs; geen huidige casus herhalen.",
-          "remaining": "Oorspronkelijke vergelijking en menselijke beoordelingen blijven open; geen algemene voorsprong of productafronding geclaimd."
+          "detail": "Bewaarde Eva1-route inhoudsvrij lokaliseren: waarom drie native reacties geen geregistreerde modelpoging/complete accounting hebben. Daarna pas nieuw ongezien oorspronkelijk eindgeval voorbereiden met gecorrigeerde observatie.",
+          "remaining": "Geen gesloten proefreplay, nieuwe platformronde of automatische volledige matrix."
         },
         "ownerAction": {
           "title": "Geen extra handeling voor P2.1",
-          "detail": "Technische bestanden en aparte eindvergelijking zijn toegestaan. Dit resterende technische werk is voor Codex.",
+          "detail": "Toegang en eindvergelijking zijn toegestaan. De resterende technische admission is voor Codex.",
           "state": "investigated",
           "taskId": "P2.1"
         },
@@ -19298,7 +19313,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "De ontbrekende exacte geheugenregistratie gericht onderscheiden van meet-/runtimeaansluiting met bestaande bron en bewaard bewijs; geen huidige casus herhalen.",
+              "nextAction": "Bewaarde Eva1-route inhoudsvrij lokaliseren: waarom drie native reacties geen geregistreerde modelpoging/complete accounting hebben. Daarna pas nieuw ongezien oorspronkelijk eindgeval voorbereiden met gecorrigeerde observatie.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -19306,14 +19321,11 @@
                 "expected": "Geen extra eigenaarhandeling voor deze proef; technische toegang en uitvoering zijn toegestaan.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-06T15:35:05.933696+00:00",
+              "checkedAt": "2026-10-06T15:52:22.273835+00:00",
               "assignment": {
-                "baseCommit": "f5479df9c0b75ae224d12769b1f7fbc217889971",
+                "baseCommit": "9f63e01e07912e04afdb3510c8c61ac64a211b22",
                 "owner": "/root",
-                "activeWorkers": [
-                  "/root",
-                  "/root/p2_independent_final_20261006"
-                ],
+                "activeWorkers": [],
                 "files": [
                   "/root: existing workboard/WERKBORD/integration.",
                   "/root/p2_independent_final_20261006: p2-eva1-operational-provenance-20261006.json only; operational whitelist, protected contents stayprivate."
@@ -19322,12 +19334,12 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Bounded next-execution admission using existing source/bindings;0runtimecalls, no installs/newplatform/case replay. DevelopmentcreditsUNKNOWN.",
-                "currentAction": "De ontbrekende exacte geheugenregistratie gericht onderscheiden van meet-/runtimeaansluiting met bestaande bron en bewaard bewijs; geen huidige casus herhalen.",
+                "currentAction": "Correctie afgerond en beschikbaar; volgend werk gepland bij de resterende Eva1-admission/accounting.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "evidence": "New ordinary isolated runtime probe localized HTTP500 to incorrect database-login binding; corrected separate login+public initializer, independentlyGO, samefixture HTTP200/durable readback.0realmodelcalls, no closedcase replay/productcompletion."
+                  "evidence": "Existing dashboard service restarted; Windows exact localhost URL and WSL project-state HTTP200 confirmed. No product task completion."
                 },
-                "stage": "partial_pair_retained_memory_transition",
+                "stage": "native_memory_observer_correction_delivered",
                 "finding": "Nieuwe openbare native proef: HTTP500 vóór modelaanroep. Account eva_dbos kan SET LOCAL ROLE eva_runtime niet uitvoeren. Oude gesloten eindproef: exacte oorzaak blijft onbekend.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
@@ -19628,9 +19640,33 @@
                 "latestPreparationResult": "eva2/evidence/product/p2-next-native-comparison-result-20261006.json",
                 "latestDirectOwnerAccessStatement": "full access now.",
                 "latestPartialResult": "eva2/evidence/product/p2-next-native-comparison-partial-result-20261006.json",
-                "continuationReview": "eva2/reviews/p2-native-clock-continuation-followup-review-20261006.json"
+                "continuationReview": "eva2/reviews/p2-native-clock-continuation-followup-review-20261006.json",
+                "fileResponsibility": {
+                  "/root": [
+                    "native readback/API integration if concretely demonstrated",
+                    "existing workboard"
+                  ],
+                  "/root/p2_independent_final_20261006": [
+                    "independent content-free retained callback diagnosis only"
+                  ]
+                },
+                "changePlan": {
+                  "alreadyWorks": "Foreground reply and exact durable retention queue committed by the existing callback.",
+                  "gap": "The adapter takes one early snapshot and aborts while native retention is queued.",
+                  "smallestCorrection": "Wait only on pending using the current remaining sample deadline; no new inputs/model replay or product runtime change.",
+                  "modules": [
+                    "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py",
+                    "focused development tests"
+                  ],
+                  "availableHow": "Existing processor imports the same public glue path; no product image rebuild/install needed.",
+                  "finishEvidence": "Deterministic asynchronous development checks, existing native scope/failure guards and independent review of unchanged criteria/deadline."
+                },
+                "retentionDiagnosis": "eva2/evidence/product/p2-retain-transition-diagnosis-20261006.json",
+                "observerBinding": "eva2/evidence/product/p2-native-memory-observer-binding-20261006.json",
+                "observerCorrection": "eva2/evidence/product/p2-native-memory-wait-available-20261006.json",
+                "observerReview": "eva2/reviews/p2-native-memory-wait-review-20261006.json"
               },
-              "remaining": "Nieuw paar gedeeltelijk uitgevoerd; beide formele uitslagen onbekend. Oorspronkelijke P2.1-dekking en menselijke beoordelingen blijven open.",
+              "remaining": "P2.1 blijft open: volledige oorspronkelijke dekking, betrouwbare Eva1-modelaccounting en menselijke beoordeling ontbreken; succesvolle native geheugenverwerking nog niet aangetoond.",
               "latestEvidence": "eva2/evidence/product/p2-next-native-comparison-partial-result-20261006.json",
               "executionBlocker": {
                 "type": "automatic_approval_review",
@@ -19733,7 +19769,7 @@
                 "originalCaseRepeated": false,
                 "productChange": false
               },
-              "latestPreparationEvidence": "eva2/evidence/product/p2-current-candidate-freeze-20261006.json",
+              "latestPreparationEvidence": "eva2/evidence/product/p2-native-memory-wait-available-20261006.json",
               "ownerAuthorizationEvidence": "eva2/evidence/product/p2-owner-final-authorization-20261006.json",
               "currentEvaluationEvidence": "eva2/evidence/product/p2-next-native-comparison-partial-result-20261006.json",
               "nativeAdmissionBlocker": {

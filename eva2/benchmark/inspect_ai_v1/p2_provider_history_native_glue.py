@@ -4,7 +4,7 @@ No task/oracle is defined here. Bind this adapter before independent curation.
 All text, native replies and raw events stay in the evaluator-owned output.
 """
 from __future__ import annotations
-import json, os, queue, sqlite3, subprocess, threading, time
+import json, math, os, queue, sqlite3, subprocess, threading, time
 from pathlib import Path
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
@@ -120,8 +120,28 @@ def core_exchange(base_url, body, core_engine, *, timeout_seconds):
         timeout_seconds=timeout_seconds)
 
 def memory_settlement(core_engine, memory_engine, body, timeout_seconds):
-    return read_eva2_memory_settlement(core_engine,memory_engine,body,
-        timeout_seconds=timeout_seconds)
+    """Await native retention without extending the remaining sample deadline.
+
+    The HTTP reply precedes its background retention callback. A pending
+    snapshot, including a queue not yet committed, is not a terminal result.
+    The existing reader still owns all identity and completion checks.
+    """
+    if (type(timeout_seconds) not in (int, float)
+            or not math.isfinite(timeout_seconds) or timeout_seconds <= 0):
+        raise ValueError("a positive remaining readback timeout is required")
+    deadline = time.monotonic() + timeout_seconds
+    while True:
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise TimeoutError("native memory settlement deadline reached")
+        result = read_eva2_memory_settlement(core_engine, memory_engine, body,
+            timeout_seconds=remaining)
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise TimeoutError("native memory settlement deadline reached")
+        if result["status"] != "pending":
+            return result
+        time.sleep(min(0.1, remaining))
 
 def core_parent(ledger, sample_id, directory):
     directory=Path(directory)

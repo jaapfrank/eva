@@ -1,3 +1,15 @@
+## 6 oktober — P2.1 asynchrone meetcorrectie beschikbaar
+
+De bewaarde database bewijst dat de callback de exacte geheugenbron heeft gequeued nadat de eerste observatie geen document vond. De job bleef queued; volledige geheugenverwerking is niet aangetoond. De bestaande meetwrapper wacht nu alleen op pending binnen de oorspronkelijke resterende proeftijd. Identiteit, privacy, duurzame readback, fouten en consolidatievoorwaarden blijven gelijk. Zes gerichte ontwikkelcontroles en achttien bestaande native controles slagen; onafhankelijke GO. De echte processor importeert ditzelfde bestand en trekt reeds verstreken tijd af. Geen productimage/reinstall nodig; de correctie is via de bestaande benchmarkroute beschikbaar.
+
+Geen gesloten vragen herhaald, nieuwe modelcalls of nieuwe productafronding. 34/44 blijft staan. P2.1 blijft open; volgende gerichte stap is de incomplete Eva1-modelaccounting bij de drie bewaarde native reacties verklaren. Er is geen nieuwe eindproef actief. Spraak blijft geparkeerd en alle eerdere acceptaties behouden.
+
+[Correctie en beschikbaarheid](evidence/product/p2-native-memory-wait-available-20261006.json) · [Bewaarde oorzaak](evidence/product/p2-retain-transition-diagnosis-20261006.json) · [Onafhankelijke GO](reviews/p2-native-memory-wait-review-20261006.json).
+
+## 6 oktober — P2.1 bewaarde geheugenovergang gericht verklaren
+
+De vorige beurt herstelde de dashboardbereikbaarheid (Windows localhost en project-state HTTP200); geen nieuwe productafronding. Nu onderzoekt root de openbare API/readback-overgang, terwijl de onafhankelijke curator uitsluitend bestaande technische callback/events verwerkt. Doel: ontbrekende geheugenregistratie onderscheiden van te vroeg meten of een callbackfout. Geen nieuwe modelproef, herhaalde vragen, scorerwijziging of spraakbouw. De huidige 34/44, originele eindvoorwaarden en acceptaties blijven behouden; normale uitvoering gebruikt de nieuwe full-accessconfiguratie zonder escalatieaanvragen.
+
 ## 6 oktober — P2.1 gedeeltelijk uitgevoerd, geen winnaar bewezen
 
 De toegestane afzonderlijke vergelijking is gedeeltelijk uitgevoerd. Eva1 heeft drie duurzame reacties maar onvolledige modelaccounting; Eva2 heeft één bevestigde reactie na 7,924 s en één echte modelpoging (2235 in / 80 uit). De exacte geheugenregistratie bleef onbevestigd, waardoor de tweede en derde Eva2-beurt niet zijn ingediend. De daaropvolgende cleanupfout gebruikte een verouderd resultaatpad. Beide oorspronkelijke eindscores blijven onbekend. Alle proefprocessen zijn gestopt; er zijn geen vragen herhaald. Geen algemene voorsprong, productverlies of nieuwe afgeronde functie geclaimd; creditkosten onbekend.

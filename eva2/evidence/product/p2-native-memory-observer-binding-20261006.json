@@ -1,0 +1,77 @@
+{
+  "contract": "EvaP2NativeMemoryObserverBinding/v1",
+  "task_id": "P2.1",
+  "date": "2026-10-06",
+  "scope": "one_closed_run_static_ast_only",
+  "processor_sha256": "9ee9e0be857be1a10f012441d2b9ffc843de241205105aa9483c69a675c2d5a6",
+  "exact_retained_processor_found": true,
+  "processor_unchanged": true,
+  "public_module": "p2_provider_history_native_glue",
+  "public_symbol": "memory_settlement",
+  "public_glue_sha256": "0a3366f227bbb6299459ac3de6217cea0d0c9457014453c45096f216e7f68279",
+  "public_glue_sha256_matches_independent_review": true,
+  "binding": {
+    "direct_public_import": true,
+    "import_line": 13,
+    "observer_call_line": 163,
+    "observer_positional_argument_count": 4,
+    "observer_timeout_argument_index": 4,
+    "core_exchange_call_line": 157,
+    "core_exchange_uses_same_original_remaining_deadline": true
+  },
+  "original_sample_wall_budget_binding": {
+    "cm_wall_seconds": 480,
+    "sample_start_line": 135,
+    "sample_deadline_line": 136,
+    "sample_start_is_monotonic": true,
+    "sample_deadline_equals_start_plus_original_cm480": true,
+    "observer_argument_equals_original_deadline_minus_current_monotonic": true,
+    "sample_deadline_initialization_precedes_first_core_exchange": true,
+    "sample_deadline_initialization_outside_turn_loop": true,
+    "sample_deadline_refreshed_inside_turn_or_observer_loop": false,
+    "fresh_observer_wall_budget_minted": false,
+    "generic_deadline_defect_observed": false
+  },
+  "safe_technical_caller_lines": [
+    {
+      "line": 13,
+      "structure": "from p2_provider_history_native_glue import memory_settlement"
+    },
+    {
+      "line": 135,
+      "structure": "original_sample_start = time.monotonic()"
+    },
+    {
+      "line": 136,
+      "structure": "original_sample_deadline = original_sample_start + CM480"
+    },
+    {
+      "line": 157,
+      "structure": "core_exchange(... original_sample_deadline - time.monotonic() ...)"
+    },
+    {
+      "line": 163,
+      "structure": "memory_settlement(..., original_sample_deadline - time.monotonic())"
+    }
+  ],
+  "verification_boundary": {
+    "source_structure_only": true,
+    "no_processor_import_or_execution": true,
+    "existing_public_module_resolution_check_owned_by_independent_reviewer": true,
+    "retained_runtime_import_path_resolution_reexecuted": false
+  },
+  "actions": {
+    "db_starts": 0,
+    "container_operations": 0,
+    "new_model_or_provider_calls": 0,
+    "new_case_or_replay_inputs": 0,
+    "scorer_executions": 0,
+    "original_receipts_changed": 0,
+    "development_credits": "UNKNOWN"
+  },
+  "confidentiality": {
+    "private_source_text_released": false,
+    "private_questions_answers_facts_cases_or_scorer_released": false
+  },
+  "verdict": "The unchanged retained generic processor directly calls the public memory observer with time left in the original Eva2 sample wall envelope. Static binding and remaining-budget propagation are confirmed."
+}

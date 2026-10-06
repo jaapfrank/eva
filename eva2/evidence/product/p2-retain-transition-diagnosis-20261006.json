@@ -1,0 +1,130 @@
+{
+  "contract": "EvaP2RetainTransitionDiagnosis/v1",
+  "task_id": "P2.1",
+  "diagnosed_at": "2026-10-06",
+  "closed_partial_result_sha256": "4abdef6434cfeaa7bd6a6a1ffb121600e3c2659a2c82950b8dfc38b1355b04f0",
+  "scope": "one_retained_turn_readonly_no_replay",
+  "verdict": {
+    "code": "FIRST_SNAPSHOT_BEFORE_DURABLE_RETENTION_ADMISSION",
+    "callback_completed_and_queued_exact_source": true,
+    "first_snapshot_had_exact_queue_record": false,
+    "final_snapshot_has_exact_queue_record": true,
+    "retention_processing_observed": false,
+    "native_retention_succeeded": "UNKNOWN",
+    "cause": "The first settlement SQL snapshot preceded durable callback admission. The immediate close left the exact job queued; no processing transition is retained.",
+    "downstream_success_if_kept_open": "UNKNOWN",
+    "enqueue_minus_first_poll_milliseconds": "UNKNOWN",
+    "timestamp_limit": "Operational event/checkpoint timestamps use the request/scenario time and do not establish wall-clock delay."
+  },
+  "first_settlement": {
+    "status": "pending",
+    "settled": false,
+    "fixed_reason": "no exact native retain document",
+    "single_snapshot": true
+  },
+  "final_retained_state": {
+    "exact_reader_queued_rows": 1,
+    "conversation_event_order": [
+      "INGRESS_COMMITTED",
+      "REPLY_COMMITTED",
+      "MEMORY_RETAIN_QUEUED"
+    ],
+    "memory_event_order": [
+      "MEMORY_RETAIN_QUEUED"
+    ],
+    "conversation_checkpoint": {
+      "phase": "memory_queued",
+      "status": "completed",
+      "revision": 3
+    },
+    "memory_checkpoint": {
+      "phase": "memory_queued",
+      "status": "active",
+      "revision": 1
+    },
+    "memory_skipped_events": 0,
+    "memory_success_events": 0,
+    "checkpoint_error_counts": {
+      "retry_count": 0,
+      "nonempty_last_error_fingerprints": 0
+    },
+    "queued_source_comparisons": {
+      "scope_matches": true,
+      "tenant_matches": true,
+      "installation_matches": true,
+      "principal_matches": true,
+      "conversation_matches": true,
+      "document_matches": true,
+      "source_ref_matches": true,
+      "body_matches_direct_user_request": true,
+      "audience_matches": true,
+      "source_trust_is_direct_user": true
+    },
+    "hindsight_counts": {
+      "async_operations": {
+        "total_rows": 0,
+        "exact_document_rows": null
+      },
+      "banks": {
+        "total_rows": 1,
+        "exact_document_rows": null
+      },
+      "documents": {
+        "total_rows": 0,
+        "exact_document_rows": 0
+      },
+      "memory_units": {
+        "total_rows": 0,
+        "exact_document_rows": 0
+      }
+    }
+  },
+  "native_config_checks": {
+    "initiative_task_guard_matches": false,
+    "request_scope_matches_core_config": true,
+    "core_model": "gpt-6-sol",
+    "core_effort": "none",
+    "core_existing_upstream_model_calls": 1,
+    "memory_existing_upstream_model_calls": 0,
+    "clock_generation": {
+      "core": 0,
+      "memory": 0
+    },
+    "clock_offset_milliseconds": {
+      "core": 0,
+      "memory": 0
+    },
+    "clock_advances": 0,
+    "callback_or_body_scope_skip_observed": false,
+    "storage_budget_refusal_observed": false,
+    "worker_error_observed": false,
+    "further_runtime_model_storage_failure": "UNKNOWN"
+  },
+  "native_source_sha256": {
+    "/opt/eva/src/eva/bootstrap/runtime.py": "1ec444b7e676b45cd48987dd54cbbabae97420c93768ab098733e7baa9ebd66b",
+    "/opt/eva/src/eva/adapters/model/openai_codex_provider.py": "27400f795e7491c8f1031ab0a44d912a6f82ece165c25def4e9122820fbd4fbd",
+    "/app/api/hindsight_api/engine/memory_engine.py": "12ec0ef2d30514813c778d05597f0b8f0e8af3fee18d5acfd9eb6e166dd9ab5a",
+    "/app/api/hindsight_api/engine/providers/codex_llm.py": "b4cda4b56b3a6cc1f6bca64eaca7cbc7c75b5e8420d6bb77750c0d6304098afe",
+    "/app/api/hindsight_api/worker/poller.py": "f845467c37cee58c21033a195a971a907cf92154172ad5194d5fcc258451cd53"
+  },
+  "readonly_actions": {
+    "exact_existing_disposable_db_id": "cac6d3eb42094cca6c4da898d3906fd1756b595bd840def759fb79229e3f0300",
+    "exact_existing_db_start_count": 2,
+    "exact_existing_db_stop_count": 2,
+    "strict_readonly_transaction_count": 12,
+    "core_start_count": 0,
+    "memory_start_count": 0,
+    "semantic_or_schema_writes": 0,
+    "final_all_three_services_stopped": true,
+    "query_error_code": null
+  },
+  "limits_preserved": {
+    "task_ids_unchanged": true,
+    "criteria_unchanged": true,
+    "no_private_values_released_to_builder": true,
+    "new_provider_or_model_calls": 0,
+    "new_sample_or_replay_calls": 0,
+    "development_credits": "UNKNOWN"
+  },
+  "bounded_correction_supported": "Wait on pending settlement within the already established remaining sample timeout, retaining the existing semantic checks and failure criteria; this diagnosis does not prove a successful retain or comparative quality."
+}
