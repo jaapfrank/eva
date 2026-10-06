@@ -1,3 +1,11 @@
+## 6 oktober — vier productuitkomsten en actuele taakstand zichtbaar
+
+De oude **2/9-hoofdteller** gebruikte historische kaarten/eisen, terwijl de actuele kleine lijst **34/44** uit het bouwplan gebruikt. Deze twee tellers waren niet vergelijkbaar. Van de34afrondingen zijn10installatie-, vergelijkings- of eindcontroletaken (O/P/F).
+
+De hoofdpagina toont nu de vier bestaande eigenaaruitkomsten: **persoonlijkheid M3.3 geaccepteerd**, **gekozen geheugenfuncties geaccepteerd**, **initiatief geleverd met I1.2-gezinsbeoordeling open**, **zelfstandig werk nog onvoldoende als geheel; XD01/XD02 geen bevestigd eindresultaat**. Historische technische groepen en oorspronkelijke criteria blijven als ingeklapte details bewaard. I2 en F1.2 worden niet meer ten onrechte als open beschreven. Geen taak, status, eindvoorwaarde of acceptatie veranderd; dit is geen nieuwe productafronding.
+
+Juiste projectbuild en live HTTP-gegevens/bundel gecontroleerd; onafhankelijke [GO](reviews/dashboard-four-outcomes-20261006.json). Geen runtimewijziging, modelproef of spraakwerk.
+
 ## 6 oktober — aparte eindvergelijking gesloten; geen geldig kwaliteitspaar
 
 | Nieuwe ronde | Werkelijk resultaat |

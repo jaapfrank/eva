@@ -1,0 +1,24 @@
+{
+  "contract": "EvaDashboardFourOutcomesLive/v1",
+  "checkedAt": "2026-10-06T09:57:46.323560+00:00",
+  "route": "http://127.0.0.1:44712/",
+  "httpStatus": 200,
+  "actualSmallTasks": 44,
+  "completedSmallTasks": 34,
+  "completedSupportingOPFTasks": 10,
+  "outcomes": [
+    "Persoonlijkheid",
+    "Geheugen",
+    "Eigen initiatief",
+    "Zelfstandig werk"
+  ],
+  "servedAsset": "/assets/index-CBgJhfFf.js",
+  "servedAssetMatchesBuiltBytes": true,
+  "verification": "Existing project-profile build, live HTTP data/schema and served bundle; no additional rendered-browser assessment.",
+  "allOriginalSmallTaskObjectsUnchanged": true,
+  "originalNineTechnicalGroupsRetained": true,
+  "newProductCompletion": false,
+  "controlledModelCalls": 0,
+  "review": "eva2/reviews/dashboard-four-outcomes-20261006.json",
+  "reviewSha256": "d3fd470b310c2279dd99386b74987734f252e226f3c4b3d9320f284e933f44a4"
+}

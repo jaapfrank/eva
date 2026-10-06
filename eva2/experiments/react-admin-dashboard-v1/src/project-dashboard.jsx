@@ -143,15 +143,16 @@ function DeliveryOverview({ project, runtime, stale, onWork, onHistory, onCompar
   if (!overview) return <p role="alert">Het actuele opleveroverzicht ontbreekt.</p>;
   const latest = overview.deliveries.find(item => ['installed', 'accepted'].includes(item.state));
   const freshness = projectFreshness(overview.reviewedAt, Date.now());
-  const complete = project.capabilities.filter(item => item.product.complete);
-  const unfinished = project.capabilities.length - complete.length;
+  const smallTasks = (project.deliveryPlan?.implementationSlices || []).flatMap(slice => slice.remainingTasks || []);
+  const finishedTasks = smallTasks.filter(task => task.status === 'completed').length;
   const runtimeKnown = !stale && Number.isFinite(Date.parse(runtime?.checkedAt));
   const runtimeReady = runtimeKnown && runtime.state === 'ready';
   return <div className="delivery-overview control-room owner-overview">
     <section className="owner-summary" aria-label="Project en installatie">
       <div className="owner-product-status"><span className="summary-kicker">PROJECT</span><h2>Eva is nog in ontwikkeling</h2>
-        <div className="scope-counts"><span><b>{complete.length}</b> afgebakende functies klaar</span><span><b>{unfinished}</b> nog af te maken</span></div>
-        <p>{complete.length ? `Afgebakend klaar: ${complete.map(item => item.title).join(' · ')}.` : 'Nog geen volledig onderdeel afgerond.'}</p>
+        <p>{project.housemateSummary?.headline || "Actuele productstatus ontbreekt."}</p>
+        <div className="scope-counts"><span><b>{finishedTasks}/{smallTasks.length}</b> bouw- en bewijstaken afgerond</span></div>
+        <small>Dit is geen aantal afgeronde huisgenootfuncties of productpercentage.</small>
       </div>
       <div className={`owner-runtime-status ${runtimeReady ? 'reachable' : 'attention'}`}><span className="summary-kicker">INSTALLATIE · LOS VAN PROJECTVOORTGANG</span>
         <h2><span aria-hidden="true">{runtimeReady ? '●' : '○'}</span> {runtimeReady ? 'Eva-kern bereikbaar' : runtimeKnown && runtime.state === 'not_ready' ? 'Eva-kern vraagt aandacht' : runtimeKnown ? 'Eva-kern niet bereikbaar' : 'Bereikbaarheid onbekend'}</h2>
@@ -169,13 +170,14 @@ function DeliveryOverview({ project, runtime, stale, onWork, onHistory, onCompar
       <article className="board-lane upcoming"><h2><span aria-hidden="true">→</span> Hierna</h2><small>{overview.next.state}</small><h3>{overview.next.title}</h3><details><summary>Volgende stap</summary><p>{overview.next.detail}</p><button className="board-link" onClick={onWork}>Hele uitvoervolgorde →</button></details></article>
       <article className="board-lane waiting"><h2><span aria-hidden="true">◷</span> Van jou nodig</h2><small>Blokkeert ander werk niet</small><h3>{overview.ownerAction.title}</h3><p className="lane-summary">{overview.ownerAction.steps[0]}</p><details className="owner-next-action"><summary>Zo doe je dat</summary><ol>{overview.ownerAction.steps.map(step => <li key={step}>{step}</li>)}</ol><p>{overview.ownerAction.expected}</p>{overview.ownerAction.url && <a href={overview.ownerAction.url}>{overview.ownerAction.linkLabel || 'Open de proef'} →</a>}</details></article>
     </section>
-    <section className="task-list-entry" aria-label="Resterende concrete taken"><div><h2>Welke taken moeten nog af?</h2><p>De 9 grote onderdelen zijn de einduitkomst. Bekijk daarnaast alle 24 bouwopdrachten en hun concrete resterende acties.</p></div><button onClick={onWork}>Bekijk alle open taken per onderdeel →</button></section>
-    <section className="product-map" aria-label="Status per onderdeel"><div className="overview-section-title"><h2>Wat kun je gebruiken — wat ontbreekt?</h2><span>Groen = genoemde scope klaar · amber = nog werk open</span></div>
+    {project.housemateSummary && <section aria-label="Vier huisgenootuitkomsten"><div className="overview-section-title"><h2>De vier huisgenootuitkomsten</h2><span>Acceptatie geldt voor de genoemde scope</span></div><div className="comparison-outcomes">{project.housemateSummary.rows.map(row => <article key={row.name} className={row.state}><h3>{row.name}</h3><ComparisonState value={row}/><p>{row.result}</p><p><b>Nog open:</b> {row.remaining}</p></article>)}</div><p>{project.housemateSummary.note}</p></section>}
+    <section className="task-list-entry" aria-label="Resterende concrete taken"><div><h2>Welke taken moeten nog af?</h2><p>De vier huisgenootuitkomsten zijn het product. De bestaande 24 bouwopdrachten en 44 kleine taken bevatten ook ondersteuning en bewijs.</p></div><button onClick={onWork}>Bekijk alle open taken per onderdeel →</button></section>
+    <details className="product-map"><summary>Technische onderdelen en historische eindvoorwaarden</summary><p>De negen oorspronkelijke technische groepen blijven als detailarchief behouden. Hun oude kaartstatus is geen teller van de vier actuele productuitkomsten.</p>
       <div className="component-list">{project.capabilities.map(item => <details className={`component-row ${item.product.complete ? 'complete' : 'unfinished'}`} key={item.id}>
         <summary><span aria-hidden="true" className="tile-icon">{componentIcons[item.id]}</span><strong>{item.title}</strong><span className="component-state">{item.product.complete ? '✓ Klaar binnen scope' : '◷ Nog af te maken'}</span><span className="component-visible-scope">{item.ownerSummary || item.product.scope}</span><span aria-hidden="true">⌄</span></summary>
         <div className="component-detail"><p><b>Omvang:</b> {item.product.scope}</p><p><b>Al geleverd:</b> {item.product.delivery.result}</p>{item.product.remaining.length > 0 && <ul>{item.product.remaining.map(text => <li key={text}>{text}</li>)}</ul>}<p><b>Technisch:</b> {item.product.tested.label}<br/><b>Door jou:</b> {item.product.jaap.label}</p></div>
       </details>)}</div>
-    </section>
+    </details>
     <section className="comparison-entry"><h2>Eva2 tegenover Eva1 en concurrenten</h2><p>{project.comparisonResults?.followup?.headline || project.comparisonResults?.headline || "Nog geen volledige vergelijking."}</p><button className="board-link" onClick={onComparison}>Bekijk resultaten, verliezen en verbruik →</button></section>
     <div className="overview-shortcuts"><button className="board-link" onClick={onWork}>Werk & volgorde →</button><span>Klik op een onderdeel voor de volledige scope.</span><button className="board-link" onClick={onHistory}>Opleveringen & testuitslagen →</button></div>
   </div>;

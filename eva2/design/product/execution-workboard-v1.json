@@ -282,9 +282,9 @@
           "works": "Eva koos vanuit jouw bestaande huiswens zelfstandig een beoordelingskaart en leverde deze als privaat document op.",
           "ownerSummary": "I1.1: een eigen bijdrage is werkelijk uitgevoerd en privé teruggelezen; bestaande initiatiefroute behouden. Nog open: I1.2 nut/stilte beoordelen. I2: relevante waarnemingsbronnen zelf kiezen en de opdracht werkelijk automatiseren/terugmelden blijft open.",
           "currentSummary": {
-            "checkedAt": "2026-10-03T13:00:37.521696+00:00",
+            "checkedAt": "2026-10-06T09:54:42.358033+00:00",
             "works": "I1.1: een eigen bijdrage is werkelijk uitgevoerd en privé teruggelezen; bestaande initiatiefroute behouden.",
-            "gap": "I1.2 nut/stilte beoordelen. I2: relevante waarnemingsbronnen zelf kiezen en de opdracht werkelijk automatiseren/terugmelden blijft open.",
+            "gap": "I1.1 geleverd en I2 technisch afgerond. I1.2: nut, timing en hinder in echt gezinsgebruik beoordelen; volledige acceptatie blijft apart.",
             "detail": "De eigen bijdrage is een concreet resultaat. Herhaald passend gezinsinitiatief en algemene waarnemingsopdrachten zijn nog geen afgerond geheel.",
             "evidencePaths": [
               "eva2/evidence/product/i1-private-contribution-readback-20261002.json"
@@ -525,9 +525,9 @@
           "works": "O1 modulaire installatie en O2 update/herstel technisch afgerond; F1.1 combineert de geleverde kern/werker en bindt het gewone pakket aan dezelfde kern.",
           "ownerSummary": "O1 modulaire installatie en O2 update/herstel technisch afgerond; F1.1 combineert de geleverde kern/werker en bindt het gewone pakket aan dezelfde kern. Nog open: F1.2 gezamenlijke eindcontrole en computerherstart blijven open. Werkelijke nieuwe Telegram-/inboxproeven en gezinsacceptatie blijven afzonderlijk open.",
           "currentSummary": {
-            "checkedAt": "2026-10-03T16:07:18.537186+00:00",
+            "checkedAt": "2026-10-06T09:54:42.358033+00:00",
             "works": "O1 modulaire installatie en O2 update/herstel technisch afgerond; F1.1 combineert de geleverde kern/werker en bindt het gewone pakket aan dezelfde kern.",
-            "gap": "F1.2 gezamenlijke eindcontrole en computerherstart blijven open. Werkelijke nieuwe Telegram-/inboxproeven en gezinsacceptatie blijven afzonderlijk open.",
+            "gap": "O1/O2 en F1.1/F1.2 technisch afgerond, inclusief de bevestigde computerherstart. Vergelijking en gezinsacceptatie blijven afzonderlijk.",
             "detail": "F1.1 eenmaal geïnstalleerd en onafhankelijk GO. Bestaande gegevens en 18 overige diensten behouden. Geen claim dat alle gebruikservaringen opnieuw zijn beproefd.",
             "evidencePaths": [
               "eva2/evidence/product/f1-integrated-installed-20261003.json",
@@ -987,7 +987,7 @@
           "Privé-inhoud blijft bij de juiste persoon via de afgesproken privéroutes; geen open stemherkenningsbouw als voorwaarde voor dit geaccepteerde geheugenonderdeel."
         ],
         "initiative": [
-          "I1.2 nut/stilte beoordelen. I2: relevante waarnemingsbronnen zelf kiezen en de opdracht werkelijk automatiseren/terugmelden blijft open."
+          "I1.1 geleverd en I2 technisch afgerond. I1.2: nut, timing en hinder in echt gezinsgebruik beoordelen; volledige acceptatie blijft apart."
         ],
         "tools": [
           "Ongeziene diensten, persoonlijke accounts en combinatietaken via de algemene uitvoering afmaken.",
@@ -1003,7 +1003,7 @@
           "Optionele persoonlijke overnamebeleving en gezinsacceptatie blijven apart. Gatewayherstel na langere uitval kan tientallen seconden vragen; geen algemene snelheid-/kostenwinst of alle-websitesclaim."
         ],
         "installation": [
-          "F1.2 gezamenlijke eindcontrole en computerherstart. Werkelijke nieuwe Telegram-/inboxproeven en gezinsacceptatie blijven afzonderlijk open."
+          "O1/O2 en F1.1/F1.2 technisch afgerond, inclusief de bevestigde computerherstart. Vergelijking en gezinsacceptatie blijven afzonderlijk."
         ]
       },
       "deliveryOverview": {
@@ -6381,6 +6381,57 @@
           ],
           "automaticReviewNote": "De automatische goedkeuringscontrole wees het tonen van beschermde beoordelaarsbron en ruwe resultaatdetails af. Alleen inhoudsvrije, toegestane status en metingen zijn gepubliceerd."
         }
+      },
+      "housemateSummary": {
+        "checkedAt": "2026-10-06T09:54:42.358033+00:00",
+        "basis": "De vier eigenaaruitkomsten uit ownerHousematePlan20261002 en bestaande acceptaties/bewijzen; geen nieuwe taakafronding.",
+        "headline": "Persoonlijkheid en gekozen geheugenfuncties geaccepteerd. Initiatief en zelfstandig werk nog niet als geheel afgerond.",
+        "note": "De 44 kleine taken bevatten ook bouw, installatie, onderzoek en publicatie. Hun teller is geen productpercentage. Vergelijking, zeven dagen gezinsgebruik en jouw eindoordeel blijven afzonderlijk; spraak is geparkeerd.",
+        "rows": [
+          {
+            "name": "Persoonlijkheid",
+            "state": "observed",
+            "label": "Door jou geaccepteerd · M3.3",
+            "result": "Warmte, eigen oordeel en stijl in gewoon gebruik: jouw acceptatie van 5 oktober blijft staan. Dit is de M3-scope; geen bewijs van algemene voorsprong.",
+            "remaining": "Geen oorspronkelijke M3-taak open. Volledige gezinsacceptatie blijft F2.",
+            "evidencePaths": [
+              "eva2/evidence/product/m3-personality-owner-accepted-20261005.json"
+            ]
+          },
+          {
+            "name": "Geheugen",
+            "state": "observed",
+            "label": "Gekozen functies geaccepteerd",
+            "result": "Onthouden, corrigeren, inzien en vergeten zijn geaccepteerd. Later een onderwerp vervolgen is door jou bevestigd (M1.2).",
+            "remaining": "Geaccepteerde scope behouden. De vergelijking bevat ook geheugenverliezen; geen foutloos of algemeen beter geheugen geclaimd.",
+            "evidencePaths": [
+              "eva2/design/product/execution-workboard-v1.json",
+              "eva2/evidence/product/p2-published-results-20261006.json"
+            ]
+          },
+          {
+            "name": "Eigen initiatief",
+            "state": "incomplete",
+            "label": "Resultaat geleverd · oordeel open",
+            "result": "Een zelfgekozen bijdrage is werkelijk uitgevoerd en privé teruggelezen (I1.1). Algemene bronkeuze en automatisering I2 zijn technisch afgerond.",
+            "remaining": "I1.2: nut, timing en hinder tijdens werkelijk gezinsgebruik beoordelen. Dit is een menselijk oordeel, geen ontbrekende camera- of afvalfunctie.",
+            "evidencePaths": [
+              "eva2/evidence/product/i1-private-contribution-readback-20261002.json",
+              "eva2/evidence/product/i2-self-chosen-research-installed-20261005.json"
+            ]
+          },
+          {
+            "name": "Zelfstandig werk",
+            "state": "incomplete",
+            "label": "Nog onvoldoende als geheel",
+            "result": "Onderzoek, browser/HA-uitvoering, leren, hervatten en een toegepaste codeverbetering hebben deelbewijs. XD01/XD02-combinatiewerk heeft geen bevestigd eindresultaat.",
+            "remaining": "Betrouwbaar combinatiewerk en de oorspronkelijke R1/P2-beoordeling blijven onbewezen of open. Veel afgeronde deeltaken bewijzen dit geheel niet.",
+            "evidencePaths": [
+              "eva2/evidence/product/p2-published-results-20261006.json",
+              "eva2/evidence/product/p2-provider-history-independent-result-20261006.json"
+            ]
+          }
+        ]
       }
     },
     "pendingTechnicalReview": {
