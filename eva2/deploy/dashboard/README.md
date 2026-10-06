@@ -20,6 +20,19 @@ Jouw geheugenbronnen, dashboard status 200, non-dashboard path and foreign Origi
 403. The existing browser/status endpoint returns 503 independently of access.
 Owner acceptance of memory behavior is still pending.
 
+## Windows project dashboard address
+
+The project dashboard on port 44712 remains the existing WSL user service.
+Windows can resolve `localhost` to `::1` before `127.0.0.1`. On this installation,
+Windows IPv6 loopback requests time out while IPv4 requests work. Use
+http://127.0.0.1:44712/ for the project dashboard.
+
+Copy `start-project-dashboard.ps1` to `%LOCALAPPDATA%\Eva2\dashboard` and run it
+with a hidden window. It starts WSL and the existing project dashboard service.
+A Windows Startup shortcut to that script restores the same address after sign-in.
+The launcher does not replace Eva,
+the dashboard build, its project-state source or the model provider.
+
 Streaming responses flush filtered upstream headers immediately, before any body
 chunk. This lets the existing input receipt arrive while Eva is generating the
 answer. Verify with `node --test eva2/tests/api/test_local_owner_streaming.mjs`

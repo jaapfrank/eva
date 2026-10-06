@@ -1,0 +1,35 @@
+{
+  "schema": "Eva2ProjectDashboardLocalAccess/v1",
+  "checkedAt": "2026-10-06T16:26:18Z",
+  "usableRoute": "http://127.0.0.1:44712/",
+  "windowsChecks": {
+    "html": 200,
+    "javascriptAsset": 200,
+    "projectState": 200,
+    "currentDashboardTask": "P2.1 · Nieuwe eindvergelijking voorbereiden",
+    "defaultCurlLocalhost": 200,
+    "explicitIpv6": "connection_timeout"
+  },
+  "installation": {
+    "existingService": "eva2-project-dashboard.service",
+    "serviceActive": true,
+    "startupScript": "C:/Users/jaapf/AppData/Local/Eva2/dashboard/start-project-dashboard.ps1",
+    "startupShortcut": "C:/Users/jaapf/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/Eva2 project dashboard.lnk",
+    "startupWindow": "hidden",
+    "startupCommandExecuted": true,
+    "newListenerRetained": false
+  },
+  "independentReview": {
+    "reviewer": "/root/p2_eva1_lease_review_20261006",
+    "verdict": "GO",
+    "checks": "Source/installed copy identical; PowerShell syntax valid; existing service only; shortcut uses hidden window."
+  },
+  "limitations": [
+    "Windows IPv6-localhost remains unavailable; the explicit IPv4 link is usable.",
+    "Browser automation could not start because of a Windows sandbox-helper setup error; HTML/asset/data were checked over Windows HTTP.",
+    "A new Windows sign-in was not performed; the installed startup command was executed directly."
+  ],
+  "newProviderCalls": 0,
+  "newCompletedProductTasks": 0,
+  "coreAndWorkerImagesUnchanged": true
+}

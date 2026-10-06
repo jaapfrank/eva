@@ -1,3 +1,13 @@
+## 6 oktober — Dashboard bereikbaar via de vaste IPv4-link
+
+Open http://127.0.0.1:44712/. Windows HTML, JavaScript-asset en actuele projectstatus geven HTTP 200. Het dashboard toont P2.1: nieuwe eindvergelijking voorbereiden; nog geen nieuwe modelrun. Een verborgen Windows-opstartkoppeling start WSL en de bestaande dashboarddienst na aanmelden. De opstartopdracht is rechtstreeks uitgevoerd; een nieuwe Windows-aanmelding is niet beproefd.
+
+Windows IPv6-localhost blijft onbereikbaar; de expliciete IPv4-link voorkomt die route. De browsertool kon niet starten door zijn Windows sandbox-helper setupfout. Geen kernwijziging, nieuwe luisterdienst of productafronding; eerdere dashboard-/productacceptaties en 34/44 blijven behouden. [Bereikbaarheidscontrole](evidence/product/project-dashboard-local-access-20261006.json).
+
+## 6 oktober — P2.1 toegestane nieuwe eindvergelijking voorbereiden
+
+De gerichte Eva1-proefaansluiting is gereviewd en gepubliceerd opff4c30cc. De oude corpus gebruikt dezelfde invoer per epoch; een ongebruikte epoch is dus geen ongezien nieuw geval. Die corpus wordt niet herhaald op de gewijzigde kandidaat. Jaap heeft de aparte nieuwe eindvergelijking al toegestaan: dezelfde oorspronkelijke taken, criteria, providerroute en grenzen, met onafhankelijke nieuwe eindinvoer na actuele bronbinding. De evaluator bereidt dit via de bestaande methode voor; één geval na geldige admission, geen volledige matrix of spraakbouw. Nog geen nieuwe modelrun;34/44 blijft gelijk. Root beheert het dashboard en ontvangt alleen oordeel/meting.
+
 ## 6 oktober — P2.1 Eva1-proefaansluiting gecorrigeerd
 
 Drie bewaarde Eva1-reacties zijn generieke interpreterfouten, geen snelle inhoudelijke antwoorden. De proefuitvoerder kon alsUID1000 het bestaande modeltoegangspad niet lezen. Nu is exact dezelfde access-only inhoud via de bestaande publisher in een private proefmap bereikbaar, en de bestaande worker controleert dit vóór gereedmelding. Het oude pad/rechten/provider/source blijven gelijk. Echte no-input-opstart: oud onterecht ready, nieuw EACCES vóór ready, nieuw met leesbare kopie ready en schone stop.10 gerichte bestaande checks geslaagd,2 optionele checks niet uitgevoerd; onafhankelijke GO.0 echte modelcalls, creditkosten onbekend. Geen productimage/reinstall of nieuwe functie;34/44 blijft gelijk.
