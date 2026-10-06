@@ -1,0 +1,118 @@
+{
+  "contract": "P2CM02HumanReviewPreparation/v1",
+  "task": "P2.1",
+  "status": "two_private_blinded_packets_available_quality_UNKNOWN",
+  "recordedAtUtc": "2026-10-06T17:59:21.880270+00:00",
+  "runHandle": "ev003-successor-native-cm02-20261006-0734716d",
+  "caseId": "EV003-CM-02",
+  "epoch": 1,
+  "caseSha256": "f882c57fd68b8a4222c6a2bcdcb4caf7ad0bc1f5adf9b660bd8ae6d249c60393",
+  "datasetCommitmentSha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+  "existingRouteCheck": {
+    "runSpecificPacketOrRendererFound": false,
+    "existingTrustedPreparationMethod": "ev003_final_dataset.py:141 FinalDataset.with_oracle",
+    "newPlatformOrScorer": false
+  },
+  "originalRequirements": {
+    "ai_judge_allowed": false,
+    "automatic_pass_allowed": false,
+    "blind_participant_labels": true,
+    "counterbalanced_order": true,
+    "dimensions": [
+      "warmth",
+      "relevance",
+      "independent judgement"
+    ],
+    "disagreement": "retain separately; initiative disagreement is not useful; original protocol thresholds unchanged",
+    "independent": true,
+    "raters": 2,
+    "required": true
+  },
+  "packets": [
+    {
+      "slot": 1,
+      "packetId": "eec51102-8375-4ece-882e-47ed8aaf90d3",
+      "privatePreparedDirectory": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm02-20261006-0734716d/human-review-preparation-20261006/rater-1",
+      "humanAccessibleDirectory": "C:/Users/jaapf/.codex/attachments/eec51102-8375-4ece-882e-47ed8aaf90d3/p2-cm02-rater-1",
+      "fileHashes": {
+        "input-turn-1.txt": "93287439ce9bc399ad7ba6d7a7b0877edb22455e83ebfe49331d77f3f0c5c526",
+        "input-turn-2.txt": "e22f423c34a0736ecd3b1eb2cd7da2c8de445269f25c80b3c0511be349cebc6f",
+        "B-answer-turn-1.txt": "37ee77939ee1f7b63d47fcc27ab27eed717121a49539415a9d76dd3d9083827f",
+        "A-answer-turn-2.txt": "9e5277d7fcb706ffed48ae7ae2a6b239be8307548fff914f3bb6d291b4da66bd",
+        "A-answer-turn-1.txt": "3dfc36862b208af5e9f0c18086d738964033a050e12b95b4a1fc7ab4da5ffe71",
+        "A-answer-turn-3.txt": "9c09feb891f5c1335c7562a7505f06429da07c2e510e9e26cd0d9264c5c0b3f8",
+        "B-answer-turn-3.txt": "67d89fdff5ce693449917371ed6f4b41761320e262bf2528d127ce94424d887b",
+        "input-turn-3.txt": "76dfdabdeaec57ee3f66636bcb4f45538e3bb7bee5a2e38aeb7b63157ce1d25a",
+        "instructions.txt": "fd881035d5a40ba3f27653a870bbe4b55598aae194ee308be50f749c8c701143",
+        "B-answer-turn-2.txt": "4c746e7379c737d26ab3d421bfe5da49bf97fa5f2c1449d4fa30730e7852be1f",
+        "review.html": "4e9d9a2dc68be53a47a7d6a4e620acbea66535c2134756c5ef4c87a0db457f86",
+        "answer-sheet.md": "4e88369b910cdd521be440b3e9d9584c002c810932f21fb165da6c88c3232961"
+      }
+    },
+    {
+      "slot": 2,
+      "packetId": "c05e90fe-c091-4577-9955-9ff3970270c0",
+      "privatePreparedDirectory": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm02-20261006-0734716d/human-review-preparation-20261006/rater-2",
+      "humanAccessibleDirectory": "C:/Users/jaapf/.codex/attachments/c05e90fe-c091-4577-9955-9ff3970270c0/p2-cm02-rater-2",
+      "fileHashes": {
+        "input-turn-1.txt": "93287439ce9bc399ad7ba6d7a7b0877edb22455e83ebfe49331d77f3f0c5c526",
+        "input-turn-2.txt": "e22f423c34a0736ecd3b1eb2cd7da2c8de445269f25c80b3c0511be349cebc6f",
+        "B-answer-turn-1.txt": "3dfc36862b208af5e9f0c18086d738964033a050e12b95b4a1fc7ab4da5ffe71",
+        "A-answer-turn-2.txt": "4c746e7379c737d26ab3d421bfe5da49bf97fa5f2c1449d4fa30730e7852be1f",
+        "A-answer-turn-1.txt": "37ee77939ee1f7b63d47fcc27ab27eed717121a49539415a9d76dd3d9083827f",
+        "A-answer-turn-3.txt": "67d89fdff5ce693449917371ed6f4b41761320e262bf2528d127ce94424d887b",
+        "B-answer-turn-3.txt": "9c09feb891f5c1335c7562a7505f06429da07c2e510e9e26cd0d9264c5c0b3f8",
+        "input-turn-3.txt": "76dfdabdeaec57ee3f66636bcb4f45538e3bb7bee5a2e38aeb7b63157ce1d25a",
+        "instructions.txt": "fd881035d5a40ba3f27653a870bbe4b55598aae194ee308be50f749c8c701143",
+        "B-answer-turn-2.txt": "9e5277d7fcb706ffed48ae7ae2a6b239be8307548fff914f3bb6d291b4da66bd",
+        "review.html": "49519f21bfa6f07bd47546f701b504b7601fe68114468e8df3e87dbe068a9cb7",
+        "answer-sheet.md": "fafa468b121fd1640c55d925c65cce49e6dffb18ddec567bcf74fa2e45e1fb46"
+      }
+    }
+  ],
+  "protectedMappingProvenance": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm02-20261006-0734716d/human-review-preparation-20261006/mapping-and-provenance.private.json",
+    "sha256": "4281e49eeb890d3c820ca5e80f54eb4cc034dd43e07e19c3ed12c35b5bc3c41c",
+    "outsideGit": true,
+    "disclosedToBuilder": false
+  },
+  "checks": {
+    "originalCaseAndCriteriaUnchanged": true,
+    "allThreeInputsIdenticalAcrossParticipants": true,
+    "allSixAnswerTextsByteEqualToNativeDurableReplies": true,
+    "responsesDisplayedExactly": true,
+    "counterbalancedAnonymousAB": true,
+    "noParticipantModelCostOrPriorWinnerLabelsInPackets": true,
+    "noAutomaticDecisionOrAIJudge": true,
+    "independentAnswerSheetsInitiallyBlank": true,
+    "allOriginalSourceHashesUnchanged": true,
+    "noNetworkScriptOrSubmissionRoute": true,
+    "humanAccessibleCopiesExactBytes": true,
+    "htmlParsedResponsesEqualExactStoredAnswerFiles": true,
+    "bothReviewFilesOpenedReadOnlyByWindowsOwner": true,
+    "participantProductLabelsAbsentFromBothReviewHtmlFiles": true
+  },
+  "humanSteps": [
+    "Assign each private packet to a different actual human; give only that rater their own packet and answer-sheet.",
+    "Each rater opens review.html, independently reads original context, exact saved answers and unchanged semantic conditions.",
+    "Each human independently fills answer-sheet.md and saves answer-sheet-completed.md in their own assigned folder, with actual ID, declarations, each original condition, own aggregate judgment and preference.",
+    "When both completed files are ready, notify the coordinator with only file paths; the independent evaluator reads them privately. An unfilled packet creates no human decision."
+  ],
+  "recordedHumanRaters": 0,
+  "requiredHumanRaters": 2,
+  "quality": "UNKNOWN",
+  "historicalScoresImmutable": true,
+  "newModelCalls": 0,
+  "newProviderCalls": 0,
+  "newSampleCalls": 0,
+  "newExecutorCalls": 0,
+  "scorerInvocations": 0,
+  "creditCost": "UNKNOWN",
+  "scopeLimit": "Preparation only for retained CM02/epoch1. P2.1 remains open for genuine human judgments and remaining original coverage.",
+  "handback": {
+    "completedFilename": "answer-sheet-completed.md",
+    "location": "Each human saves only their own completed sheet in their assigned packet directory, without changing the original answer-sheet.md.",
+    "ownerStep": "Tell the curator that the two completed sheets are ready; share only their file paths, not protected content, with the coordinator.",
+    "curatorStep": "Read both genuine completed sheets privately through the existing evaluator boundary; retain the individual decisions and evidence hashes. No automatic grading or scorer rerun is authorized by preparation."
+  }
+}

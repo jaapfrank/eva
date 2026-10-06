@@ -1,0 +1,24 @@
+{
+  "contract": "P2CM02HumanReviewPreparationIndependentReview/v1",
+  "recordedOn": "2026-10-06",
+  "reviewer": "/root/p2_eva1_lease_review_20261006",
+  "decision": "GO_FOR_TECHNICAL_PUBLICATION_ONLY",
+  "artifact": {
+    "path": "eva2/evidence/product/p2-cm02-human-review-preparation-20261006.json",
+    "sha256": "afee026d6b320d5900c78607a939e2a670d4bd3ec9d79a7b268032c9cb7d0ab8"
+  },
+  "checks": [
+    "Private packets and Windows copies match retained hashes.",
+    "Three input turns match across participants; anonymous A/B answer hashes are counterbalanced.",
+    "Original logs/result/protocol/scorer remain unchanged.",
+    "Original human requirements and three conditions are preserved; no AI substitute or automatic pass.",
+    "Zero new model/provider/sample/executor/scorer calls and zero recorded human judgments."
+  ],
+  "quality": "UNKNOWN",
+  "qualityGO": false,
+  "humanRatifyingReview": false,
+  "semanticConditionsStatus": "UNKNOWN",
+  "originalRaterCount": 2,
+  "newProductFunctionCompleted": false,
+  "approvalProvenance": "Direct final technical review message from named independent reviewer; coordinator saved this content-free record."
+}

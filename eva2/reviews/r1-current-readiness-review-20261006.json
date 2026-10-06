@@ -1,0 +1,34 @@
+{
+  "contract": "EvaR1TechnicalReadinessIndependentReview/v1",
+  "recordedOn": "2026-10-06",
+  "reviewer": "/root/p2_eva1_lease_review_20261006",
+  "decision": "GO_FOR_PUBLICATION_AND_BLOCKED_STATUS",
+  "artifact": {
+    "path": "eva2/reviews/r1-current-readiness-20261006.json",
+    "sha256": "99edd49e2b8ece44d298f4b536a493ad5481961afdd7e5d453c7e0a5859131cf"
+  },
+  "scope": "Targeted public source, freeze/provenance, accounting semantics and integrated R1 status. No private case, answer or oracle inspection, model call or experiment.",
+  "findings": [
+    "All 11 frozen public files and original protocol/driver/result/provenance bindings verified.",
+    "Frozen followup accounts only historical 30226/5057/14 and one previous run; it cannot include the closed 6267/133/4 plus one unattested attempt and second started run.",
+    "65536 is provisional input-token headroom checked against the frozen total input cap, not a measured request-byte or token upper bound for the lost attempt. Corrected wording verified.",
+    "Known cumulative lower bound and explicitly unusable unproven margin are correct; missing usage is not zero.",
+    "Installed generic provider compatibility does not make the already-used original admission valid again.",
+    "R1.1 remains blocked/incomplete; original UNKNOWN outcomes, cost uncertainty, caps and conditions preserved. No AIDE2 or product-function completion claim."
+  ],
+  "integrationReviewed": {
+    "workboardSha256": "11cccefbf5d9c5ab75cc7bac7424d0899d3fc57a1b2306f7ab0dcc49e2c6af51",
+    "humanBoardSha256": "2073748c702581d36ce80f6eb6d213908b46536ab39235323b7365b159b84778",
+    "r1ActiveExecution": false,
+    "r1ActiveWorkers": [],
+    "currentSeparateWork": "P2.1 stored blind human-review preparation"
+  },
+  "usage": {
+    "providerCalls": 0,
+    "executorCalls": 0,
+    "newExperimentRuns": 0,
+    "developmentCredits": "UNKNOWN"
+  },
+  "approvalProvenance": "Direct final review message from the named independent reviewer in this goal turn; artifact saved by coordinator.",
+  "newExecutionGO": false
+}

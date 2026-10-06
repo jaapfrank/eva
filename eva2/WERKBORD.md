@@ -1,3 +1,13 @@
+## 6 oktober — Antwoordkwaliteit beoordelen; R1-gereedheid afgesloten
+
+Vorige goalturn: daadwerkelijke voortgang op ad570046 — één ongebruikt oorspronkelijk CM02-paar uitgevoerd, native/readbackcontroles en volledige accounting afgerond, onafhankelijk GO gepubliceerd. Geen inhoudelijke kwaliteitswinnaar of nieuwe productfunctie; 34/44 behouden.
+
+De gerichte R1.1-gereedheidscontrole is afgesloten met **NO_GO voor de bestaande toelating**. De uitvoerbare varianten en geïnstalleerde providerbinding zijn bevestigd. De oude driver mist echter het afgesloten vervolgverbruik; één poging heeft onbekend verbruik en de toelating is al gebruikt. Bekende cumulatieve ondergrens: 36.493 invoer- en 5.190 uitvoertokens, plus één niet volledig gemeten poging. Geen geldige hervatting aangetoond; geen replay, nieuwe set, accountingreset, vervangende proef of spraakbouw. Deze controle gebruikte nul provider-/executor-/authcalls en voltooit R1.1 niet. [Gereedheidsuitkomst](reviews/r1-current-readiness-20261006.json).
+
+P2.1: **twee blinde beoordelingspakketten staan werkelijk klaar** voor Windows-eigenaar, met de opgeslagen antwoorden en ongewijzigde oorspronkelijke voorwaarden. Twee verschillende mensen bekijken ieder hun eigen review.html en vullen hun eigen answer-sheet.md in; bewaar als answer-sheet-completed.md in dezelfde map en meld dat beide klaarstaan. Concrete mappen staan bij ‘Van jou nodig’ in het dashboard. Mapping blijft privé; oorspronkelijke logs/scorer en ruwe uitslagen ongewijzigd. [Pakketprovenance](evidence/product/p2-cm02-human-review-preparation-20261006.json) en [onafhankelijke technische GO](reviews/p2-cm02-human-review-preparation-review-20261006.json).
+
+Antwoordkwaliteit bepaalt het voordeel; Eva1 is geen juistheidsnorm. Meer modelpogingen bewijzen geen slechtere Eva en minder tokens geen beter antwoord. Voor dit CM02-paar zijn nu nul van de twee echte beoordelingen vastgelegd; kwaliteit blijft UNKNOWN. Geen nieuwe model-/sample-/executor-/scorercalls of extra productafronding; 34/44 blijft gelijk. Pakketvoorbereiding is afgesloten, geen actieve proef/werker. Overige oorspronkelijke vergelijkingsdekking kan onafhankelijk verder; geen automatische brede matrix of replay. R1-NO_GO is onafhankelijk gereviewd en blokkeert deze beoordeling niet.
+
 ## 6 oktober — P2.1 proefpaar afgerond; inhoudelijke beoordeling apart
 
 De vorige goalturn leverde daadwerkelijke voortgang: dashboardclientcrash hersteld en gerenderd; twee bewezen evaluatorfouten gecorrigeerd, gereviewd en gepubliceerd op c8eb179d. Gesloten CM01 blijft onbekend; geen herhaling of herscore.

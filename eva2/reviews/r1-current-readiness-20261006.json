@@ -1,0 +1,126 @@
+{
+  "contract": "EvaR1TechnicalReadiness/v1",
+  "recordedOn": "2026-10-06",
+  "preparedBy": "/root/r1_final_followup_20261006",
+  "integrationCommit": "ad570046ac2364f8822ce43299fbd2798e2ad82e",
+  "decision": "NO_GO_FOR_NEW_EXECUTION_UNDER_EXISTING_ADMISSION",
+  "scope": "Read-only preparation for frozen R1.1; no replay, rescoring, release, new variant or context-selection substitute.",
+  "sourceBindings": {
+    "criteria.json": "4cf7fe60ff3e26fd0a36d03797645bcb1a19abbaac41e0c5c8461982e09b556c",
+    "freeze.json": "58fe749426d2ee0243876b8b74bb3875fe4d39c0e73ca543651e4c0cb0b9fedb",
+    "compare.py": "d65ec27f5c4f90f2fe9e469bd747e25046e532507028cf6a98b33a59f7fcc7e3",
+    "generated-artifact.json": "cd3153b774514f97d09e004bd4a30502c777ca1363bea1075bc5b296829bee18",
+    "predictor_source": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+    "followup/PROTOCOL.md": "65c6a254a5489e135025d238bba4909b9a422b0f4ca13cd8b0a5606450c0ec02",
+    "followup/compare_followup.py": "c6e10918fc43fa76afb0534bfb7ab5eddef7c9b54029be485def20e88c192887",
+    "provider-assistant-continuation-20261006.json": "4371a83cdc165c97fb928c2c531c5d53e3efe1d91574530b240bf71f81753894",
+    "r1-followup-result-20261006.json": "465b79a3ab3384226e591fa436a8efc005809aa249c91efbdaf278dee876edc2"
+  },
+  "sourceRoot": "/home/administrator/project/Eva2/eva2/experiments/r1-executable-experience-20260930",
+  "followupSubdirectory": "followup-20261003",
+  "sourceFreeze": {
+    "originalFilesChecked": 11,
+    "allExistAndMatch": true,
+    "observation": "Coordinator exact metadata; generic curatorMatches extractor false was a filename-extraction error, not a commitment mismatch."
+  },
+  "variants": {
+    "actuallyDistinct": true,
+    "sourceRunnable": true,
+    "baseline": "Same generated ordinary method, authoritative state/contract reads, full sequence validation and host guards.",
+    "intervention": "Candidate-only simulate_plan via the frozen version-1 advisory predictor and existing isolated procedure executor; same reasoning owner and ordinary fallback for unknown versions.",
+    "proofLimit": "Retained wire/guard evidence and 15 offline scheduler checks establish the existing route; no fresh executor/model call here. This is a transition-predictor comparison, not a registered context-selection experiment."
+  },
+  "runtime": {
+    "providerSourceSha256": "27400f795e7491c8f1031ab0a44d912a6f82ece165c25def4e9122820fbd4fbd",
+    "coreImage": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+    "workerImage": "sha256:fee8313778ab2a619d90e356a81a5c03f8789edaa9da181515923973f6814f14",
+    "coreAndWorker": "healthy, exact source verified read-only by coordinator",
+    "workProfile": [
+      "gpt-6-astra",
+      "medium"
+    ],
+    "contactProfile": [
+      "gpt-6-sol",
+      "none"
+    ],
+    "SDK": {
+      "pydantic-ai-slim": "2.37.0",
+      "openai": "3.6.0",
+      "httpx2": "2.12.0"
+    },
+    "procedureClientSha256": "9099a5f4daec4329afb2f1fca44819b3c3dd628efcc1e3ef70bf0a390b372a02",
+    "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+    "lease": "Existing subscription/access-lease route reused; no credential content or new auth probe.",
+    "genericProviderCompatibility": "GO; 40 retained offline provider checks and installed exact-source receipt.",
+    "exactHistoricalR1FaultCause": "UNKNOWN"
+  },
+  "oldHandles": {
+    "authoritativeObservation": "Coordinator /proc scan found no live compare.py, compare_followup.py or generate.py process matching the exact public source or /tmp/r1-independent-evaluation-20261006 staging prefixes.",
+    "noNewOrOutstandingRunClaimed": true,
+    "closedReportsRetained": true
+  },
+  "originalCaps": {
+    "taskRunsPerOriginalRound": 8,
+    "modelResponsesPerRun": 12,
+    "toolOperationsPerRun": 24,
+    "totalInputTokens": 600000,
+    "totalOutputTokens": 48000,
+    "toolResultCharactersPerRun": 36000,
+    "predictedPlansPerRun": 6,
+    "transitionsPerPlan": 12
+  },
+  "historicalAccounting": {
+    "original": {
+      "inputTokens": 30226,
+      "outputTokens": 5057,
+      "attestedResponses": 14,
+      "startedTaskRuns": 1
+    },
+    "closedFollowup": {
+      "inputTokens": 6267,
+      "outputTokens": 133,
+      "attestedResponses": 4,
+      "unattestedAttempts": 1,
+      "startedTaskRuns": 1
+    },
+    "cumulativeKnownLowerBound": {
+      "inputTokens": 36493,
+      "outputTokens": 5190,
+      "attestedResponses": 18,
+      "recordsIncludingUnknown": 19,
+      "startedTaskRuns": 2
+    },
+    "actualTotals": "UNKNOWN",
+    "arithmeticMarginExcludingUnknown": {
+      "inputTokens": 563507,
+      "outputTokens": 42810,
+      "usableAllowanceProven": false
+    },
+    "lostAttemptUpperBound": "No retained token reservation or defensible input/output-token upper bound established. Budget.admit checks 65536 units of provisional input-token headroom per in-flight call against maximum_total_input_tokens; it does not measure request bytes or preserve an upper bound for the lost attempt. Provider maximum_request_bytes=65536 is separate and does not prove lost input/output token usage. No output-token reservation is retained.",
+    "learningAndHelpers": "Original totals include both synthesis attempts, validation/repair, ordinary work and social calls. Preserve all failed/unattended usage; unknown costs remain unknown."
+  },
+  "admission": {
+    "historicalAdmissionSha256": "7207b10c33eaefc0b63af0fbe6154511ba843e00d6c52129e021182e6ccd6238",
+    "runtimeAdmissionSha256": "aaf406269571598e1c53de9252a68b95dcca49a344229cef2c4ce0496ab520ce",
+    "casesSha256": "105478417bb112c846d25b33c3c044dcaefdb0678e771d66780fd95eacd56dd3",
+    "scorerSha256": "43ef6000b182b8bf789d0bcaeaf0897fa40985d5ad2f64d9f8d7b5b56e93e462",
+    "state": "Already used and separately closed UNKNOWN; first ordinary case A entered, candidate not run.",
+    "originalExplicitAmendment": "previousTaskRuns1/followupTaskRuns8/historicalPlannedTotal9 was separately admitted, not silently called compliance with eight cumulative runs.",
+    "unusedIndependentAdmission": "None found in the two exact original private directories by coordinator metadata inspection.",
+    "concreteDriverGap": "Frozen main seeds only September30 30226/5057/14calls and requires previousTaskRuns=1. It cannot include the closed October6 usage/unknown attempt and two cumulative started runs. Reusing current admission would replay closed inputs and reset/omit research accounting."
+  },
+  "hardConditions": "Original privacy/audience/authority/stop/idempotency/state-integrity guards, no real house effects, fixed model roles, independent scorer and unknown/unsettled-usage stop all retained. Promotion stays original section9; five-use horizon missing, no amortized saving claim. No arbitrary elapsed-time quota added.",
+  "smallestValidNextStep": "No runnable continuation is admissible with these unchanged existing files/admissions. Preserve both closed UNKNOWN rounds and unknown usage. First resolve only the exact cumulative-accounting/admission prerequisite through authoritative existing metadata and independent admission; if it cannot be satisfied within original caps without replay or a new envelope, keep R1 execution parked and record the unmet technical-distinction requirement. Do not implement a substitute context selector, fresh set, revised candidate, larger cap or accounting reset automatically.",
+  "usageThisPreparation": {
+    "providerCalls": 0,
+    "executorCalls": 0,
+    "authCalls": 0,
+    "experimentRuns": 0,
+    "developmentCredits": "UNKNOWN"
+  },
+  "protectedCasesRepliesOracleScorerImplementationRead": false,
+  "R1_1Completed": false,
+  "AIDE2BenefitProven": false,
+  "newProductFunctionCompleted": false,
+  "writeNote": "Reviewer exec/apply_patch paths unavailable; sanitized receipt supplied to coordinator for saving and bundled independent review. No successful artifact write claimed by reviewer."
+}

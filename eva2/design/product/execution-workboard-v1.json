@@ -1016,7 +1016,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-06T16:15:03.110550+00:00",
+        "checkedAt": "2026-10-06T18:03:57.821159+00:00",
         "deliveries": [
           {
             "title": "Dashboardcrash hersteld",
@@ -3977,33 +3977,38 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Proef en geheugencontrole afgerond; antwoordkwaliteit open",
-          "state": "in_progress",
+          "title": "P2.1 · Blinde antwoordbeoordeling staat klaar",
+          "state": "Voorbereiding afgerond",
           "owner": "Codex",
-          "detail": "Geheugen opgeslagen en later opgehaald: beide slagen. Welke Eva inhoudelijk beter antwoordt, is nog niet vastgesteld. Eva1 46.737 tokens / 51,672s; Eva2 27.095 tokens / 79,839s inclusief geheugen. Twee echte semantische beoordelingen ontbreken; geen winnaar.",
-          "remaining": "Vergelijking nog niet afgerond; 34/44 blijft gelijk. Geen herhaling/herscore van de gestopte poging. Originele criteria en menselijke beoordelingen blijven behouden.",
-          "source": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json",
+          "detail": "Twee anonieme pakketten met de werkelijk opgeslagen antwoorden en oorspronkelijke eisen zijn beschikbaar. Technische voorbereiding onafhankelijk gecontroleerd; geen nieuwe modelproef of aangepaste beoordelingsregels.",
+          "remaining": "0/2 echte menselijke beoordelingen; inhoudelijke winnaar nog onbekend. P2.1 en R1.1 niet voltooid;34/44 oorspronkelijke kleine taken blijft gelijk.",
+          "source": "eva2/evidence/product/p2-cm02-human-review-preparation-20261006.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "reviewedAt": "2026-10-06T17:41:34.682732+00:00"
+          "reviewedAt": "2026-10-06T18:03:57.821159+00:00"
         },
         "next": {
-          "title": "R1.1 · Bestaande innovatieproef voorbereiden",
-          "state": "planned",
-          "owner": "Codex",
-          "detail": "Oorspronkelijke begrensde vergelijking en leerverbruik op de aantoonbaar gecorrigeerde providerroute voorbereiden. Historische onbekende R1-uitkomst bewaren; geen automatische replay of AIDE²-winstclaim.",
-          "remaining": "Vergelijkingsdekking en menselijke beoordelingen blijven zichtbaar.",
-          "source": "eva2/evidence/product/provider-assistant-continuation-20261006.json"
+          "title": "P2.1 · Beoordelingen en resterende dekking",
+          "state": "Gepland",
+          "owner": "Codex / onafhankelijke beoordelaars",
+          "detail": "Verwerk echte afzonderlijke kwaliteitsbeoordelingen zodra ze beschikbaar zijn. De overige oorspronkelijke dekking volgt alleen met geldige gelijkwaardige toelating; geen automatische brede matrix of herhaling.",
+          "remaining": "P2.1 blijft open; R1 heeft een aantoonbare accounting-/toelatingsafhankelijkheid. Spraak blijft geparkeerd.",
+          "source": "eva2/evidence/product/p2-cm02-human-review-preparation-20261006.json"
         },
         "ownerAction": {
-          "title": "Geen extra handeling voor P2.1",
-          "detail": "Bestaande toestemming en providerroute blijven geldig; geen nieuwe aanmelding gevraagd.",
-          "steps": [],
-          "expected": "Geen extra handeling nodig; Codex verzorgt de technische voorbereiding.",
-          "state": "none",
-          "taskId": "P2.1"
+          "title": "Beoordeel de antwoorden anoniem",
+          "state": "requested",
+          "taskId": "P2.1",
+          "detail": "Jij en een tweede persoon kunnen ieder afzonderlijk een opgeslagen antwoordpaar beoordelen. Er hoeft geen nieuwe opdracht naar Eva.",
+          "steps": [
+            "Laat twee verschillende mensen ieder hun eigen anonieme beoordelingspakket bekijken; bespreek antwoorden niet vooraf.",
+            "Beoordelaar1: open C:/Users/jaapf/.codex/attachments/eec51102-8375-4ece-882e-47ed8aaf90d3/p2-cm02-rater-1/review.html.",
+            "Beoordelaar2: open C:/Users/jaapf/.codex/attachments/c05e90fe-c091-4577-9955-9ff3970270c0/p2-cm02-rater-2/review.html.",
+            "Vul ieder het eigen answer-sheet.md in en bewaar het als answer-sheet-completed.md in dezelfde map. Meld in deze chat dat beide klaarstaan."
+          ],
+          "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-06T17:41:34.682732+00:00"
+        "reviewedAt": "2026-10-06T18:03:57.821159+00:00"
       },
       "reviewedAt": "2026-10-06T09:49:07.102699+00:00",
       "checkedAt": "2026-10-06T09:49:07.102699+00:00",
@@ -6415,7 +6420,7 @@
         "codexDevelopmentCredits": null,
         "followup": {
           "contract": "EvaPublishedComparisonFollowup/v1",
-          "publishedAt": "2026-10-06T17:41:34.682732+00:00",
+          "publishedAt": "2026-10-06T18:03:57.821159+00:00",
           "status": "native_pair_complete_original_readbacks_pass_quality_unknown",
           "headline": "Geheugen opgeslagen en later opgehaald: beide slagen. Welke Eva inhoudelijk beter antwoordt, is nog niet vastgesteld.",
           "scope": "CM02/epoch1 uit de bestaande vastgelegde eindset, één uitvoering per systeem. De oorspronkelijke inhoudelijke voorwaarden zijn leidend; Eva1 is geen juistheidsnorm.",
@@ -6462,8 +6467,8 @@
           ],
           "humanHelpNote": "Tijdens de proef geen ongeplande evaluatorinterventie of gebruikershulp. Benodigde hulp voor een inhoudelijk geslaagde opdracht blijft onbekend.",
           "remaining": "P2.1 blijft open: oorspronkelijke volledige dekking en kwaliteitsbeoordelingen ontbreken. R1/AIDE² en gezinsacceptatie blijven afzonderlijk open; 34/44 oorspronkelijke kleine taken blijft gelijk.",
-          "nextAction": "Geen herhaling van dit geval. De oorspronkelijke overige dekking en twee onafhankelijke antwoordbeoordelingen blijven open; de volgende bestaande technische opdracht is R1.1 op de gecorrigeerde providerroute voorbereiden.",
-          "ownerActionRequired": false,
+          "nextAction": "Twee anonieme menselijk te beoordelen pakketten staan klaar. Gebruik de opgeslagen antwoorden en oorspronkelijke voorwaarden; Eva1 is geen juistheidsnorm. Kwaliteit blijftUNKNOWN tot echte beoordeling. Overige oorspronkelijke dekking blijftopen.",
+          "ownerActionRequired": true,
           "resources": "Proefpaar en aanvullende read-only beoordeling afgesloten. Alle drie containers, native processen, workers en modeltunnel gestopt; geen nieuwe model-/proefaanvragen tijdens de inhoudelijke readback. Bewijs en oude ruwe uitslagen behouden.",
           "evidenceBindings": [
             {
@@ -6475,7 +6480,15 @@
               "sha256": "4e252f0cc692443b035c478f3659ac51cd32ebcd67c2f8e8205418c14cd62d8d"
             }
           ],
-          "automaticReviewNote": "Gebundelde onafhankelijke GO voor native rapport én oorspronkelijke inhoudsvrije readbackbeoordeling. Eén metadatafout in vier sample-ID-bindingen gericht gecorrigeerd; geen nieuwe uitvoering, herscoring of gewijzigde criteria."
+          "automaticReviewNote": "Gebundelde onafhankelijke GO voor native rapport én oorspronkelijke inhoudsvrije readbackbeoordeling. Eén metadatafout in vier sample-ID-bindingen gericht gecorrigeerd; geen nieuwe uitvoering, herscoring of gewijzigde criteria.",
+          "humanReviewPreparation": {
+            "status": "two_blind_packets_available",
+            "recordedHumanRaters": 0,
+            "requiredHumanRaters": 2,
+            "source": "eva2/evidence/product/p2-cm02-human-review-preparation-20261006.json",
+            "review": "eva2/reviews/p2-cm02-human-review-preparation-review-20261006.json",
+            "newModelCalls": 0
+          }
         }
       },
       "housemateSummary": {
@@ -18760,21 +18773,21 @@
               "kind": "onderzoek",
               "doneWhen": "Eén passende geïsoleerde vergelijking met gewone bestaande werkwijzen, inclusief leerverbruik.",
               "owner": "Codex",
-              "latestEvidence": "eva2/evidence/product/provider-assistant-continuation-20261006.json",
+              "latestEvidence": "eva2/reviews/r1-current-readiness-20261006.json",
               "assignment": {
                 "owner": "/root",
-                "baseCommit": "264186f63777ff85f61cf0b4c592ed6dc3b18daf",
-                "stage": "generic_provider_correction_installed_r1_result_unknown",
+                "baseCommit": "ad570046ac2364f8822ce43299fbd2798e2ad82e",
+                "stage": "original_readiness_closed_no_go",
                 "outcome": "Determine a distinct, bounded intervention for change-aware reuse before comparing it with the existing ordinary skill route.",
                 "existing": "JSON Patch learning and different-input reuse already work; copy execution and precondition checks are not a new task model. Full learning replay is not admitted by the existing experiment envelope.",
-                "gap": "Old driver stopped all eight planned runs on the first per-run response exhaustion. New programming tools do not change that cause. Independent review checks a separate driver which preserves a local failed outcome and continues fixed arms, while hard boundary/global/unknown failures still stop.",
+                "gap": "Codex: oude R1-driver mist het afgesloten vervolgverbruik; één poging heeft onbekend verbruik en de oorspronkelijke onafhankelijke toelating is al gebruikt. Geen geldige hervatting binnen bestaande voorwaarden aangetoond.",
                 "files": [
-                  "/root: bestaande openbare provider-/testcode en gerichte diagnose; workboard/WERKBORD/Git-integratie.",
-                  "/root/r1_final_followup_20261006: afzonderlijke gesanitiseerde metadataregistratie en review; geen bron, geheime inhoud, scorer of proef."
+                  "/root: werkbord/WERKBORD/Git-integratie; uitsluitend noodzakelijke bestaande broncorrectie na concreet aangetoond tekort.",
+                  "/root/r1_final_followup_20261006: gesanitiseerde technische R1-gereedheid/provenance; geen bron, geheime inhoud naar root, scorer, werkbord of Git."
                 ],
-                "currentAction": "Generieke SDKassistantgeschiedenis-correctie geïnstalleerd in gezonde kern/werker; historisch R1-verzoek ontbreekt, dus exacte oorzaak/innovatievoordeel blijft UNKNOWN. Geen herhaalde oude proef.",
-                "finish": "Existing R1.1 finish condition retained: isolated comparison with ordinary methods, including learning cost. Source preparation alone does not complete R1 or technical distinction.",
-                "estimate": "Eén generieke offline reproductie plus bestaande metadatareview.0 geplande gecontroleerde providercalls; geen willekeurige tijd-/pogingquota; Codexcredits onbekend.",
+                "currentAction": "Gereedheidscontrole afgesloten: geen bruikbare bestaande toelating;0 provider-/executor-/authcalls. Oorspronkelijke resultaten behouden; R1 niet herhaald.",
+                "finish": "Oorspronkelijke R1.1-eindvoorwaarde behouden; deze gereedheidscontrole voltooit die niet.",
+                "estimate": "Gerichte technische voorbereiding met bestaande bron/bewijs en0 geplande provider-/proefcalls. Vervolg alleen binnen oorspronkelijke vastgelegde experimentgrenzen; Codexcredits onbekend.",
                 "activeWorkers": [],
                 "actualUsage": {
                   "newKnownInputTokens": 6267,
@@ -18785,15 +18798,23 @@
                 },
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "evidence": "264186f6: P2.2 oorspronkelijke publicatie voltooid en onafhankelijk GO; echte liveweergave/cijfers,44eindvoorwaarden en vroegere acceptaties behouden.34/44,geen extra productfunctie."
+                  "evidence": "ad570046: één oorspronkelijk ongebruikt CM02-paar daadwerkelijk uitgevoerd, beide native/readbackcontroles afgerond, complete accounting/tijd inclusief helpers en onafhankelijke GO gepubliceerd. Antwoordkwaliteit UNKNOWN en34/44 behouden; geen nieuwe productfunctie."
+                },
+                "currentPreparationUsage": {
+                  "providerCalls": 0,
+                  "executorCalls": 0,
+                  "authCalls": 0,
+                  "experimentRuns": 0,
+                  "creditCost": "UNKNOWN",
+                  "scope": "This closed readiness check; historical usage retained separately."
                 }
               },
-              "remaining": "Geïnstalleerde providerreparatie voltooit R1.1 niet; oorspronkelijke geïsoleerde vergelijking en leerverbruik blijven open.",
-              "checkedAt": "2026-10-06T08:35:48.905367+00:00",
-              "blocker": "Oorspronkelijke R1.1-vergelijking is UNKNOWN. Algemene providerincompatibiliteit is gerepareerd; een nieuwe afwijkende, onafhankelijk toegelaten R1-proef is nog niet uitgevoerd en dit bewijst geen exacte oude oorzaak.",
+              "remaining": "Oorspronkelijke R1.1-vergelijking en gemeten AIDE²/innovatievoordeel blijven open. Providercompatibiliteit bevestigd; geen nieuwe uitvoering of voltooiing.",
+              "checkedAt": "2026-10-06T17:57:44.357521+00:00",
+              "blocker": "Codex: oude R1-driver mist het afgesloten vervolgverbruik; één poging heeft onbekend verbruik en de oorspronkelijke onafhankelijke toelating is al gebruikt. Geen geldige hervatting binnen bestaande voorwaarden aangetoond.",
               "previousBlocker": "Vaste proef onvolledig: referentie bereikte12modelreacties vóór tweede deelresultaat. Kandidaat/B/herhalingen niet gemeten; eindvoorwaarde vergelijking niet gehaald. Deze ronde afgeslotenUNKNOWN zonder automatische vervolgproef.",
               "ownerActionRequired": false,
-              "nextAction": "Gebruik de aantoonbaar gecorrigeerde generieke providerafhankelijkheid bij afzonderlijke oorspronkelijke R1-admission; geen replay of automatische AIDE²-winstclaim.",
+              "nextAction": "Bewaar beide afgesloten onbekende rondes. Hervat alleen bij geldige cumulatieve accounting en onafhankelijke toelating binnen oorspronkelijke voorwaarden; geen automatische nieuwe set, budgetreset of vervangende proef. P2-beoordeling kan onafhankelijk verder.",
               "ownerInstructions": {
                 "availableNow": false,
                 "steps": [],
@@ -18801,7 +18822,9 @@
                 "blocksIndependentWork": false
               },
               "ownerAuthorizationEvidence": "eva2/evidence/product/owner-resume-20261006.json",
-              "previousBlocker20261006": "Codex: vaste proef gestopt bij providerconfiguration-fout en onvolledig gemeten poging. Kandidaat/vergelijking niet uitgevoerd; geen handeling van Jaap nodig."
+              "previousBlocker20261006": "Codex: vaste proef gestopt bij providerconfiguration-fout en onvolledig gemeten poging. Kandidaat/vergelijking niet uitgevoerd; geen handeling van Jaap nodig.",
+              "activeExecution": false,
+              "review": "eva2/reviews/r1-current-readiness-review-20261006.json"
             },
             {
               "id": "R1.2",
@@ -19352,33 +19375,38 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Dit CM02-paar is afgesloten. Bewaar beide geslaagde oorspronkelijke readbacks, drie onbekende semantische voorwaarden en volledige gebruiks-/tijdmeting. Oorspronkelijke overige dekking en twee echte onafhankelijke blinde antwoordbeoordelingen blijven open; geen replay.",
-              "ownerActionRequired": false,
+              "nextAction": "Verwerk de twee echte oorspronkelijke blinde beoordelingen zodra ingevuld; geen AI-vervanging of herscoring van oude logs. Bestaande resterende oorspronkelijke vergelijkingsdekking kan onafhankelijk verder, uitsluitend met geldige toelating en zonder replay.",
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
-                "steps": [],
-                "expected": "Geen extra eigenaarhandeling voor deze proef; technische toegang en uitvoering zijn toegestaan.",
+                "availableNow": true,
+                "steps": [
+                  "Laat twee verschillende mensen ieder hun eigen anonieme beoordelingspakket bekijken; bespreek antwoorden niet vooraf.",
+                  "Beoordelaar1: open C:/Users/jaapf/.codex/attachments/eec51102-8375-4ece-882e-47ed8aaf90d3/p2-cm02-rater-1/review.html.",
+                  "Beoordelaar2: open C:/Users/jaapf/.codex/attachments/c05e90fe-c091-4577-9955-9ff3970270c0/p2-cm02-rater-2/review.html.",
+                  "Vul ieder het eigen answer-sheet.md in en bewaar het als answer-sheet-completed.md in dezelfde map. Meld in deze chat dat beide klaarstaan."
+                ],
+                "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-06T17:41:34.682732+00:00",
+              "checkedAt": "2026-10-06T18:03:57.821159+00:00",
               "assignment": {
-                "baseCommit": "c8eb179d62f9ff892395d896468c9ab0c2b4eba2",
+                "baseCommit": "ad570046ac2364f8822ce43299fbd2798e2ad82e",
                 "owner": "/root",
                 "activeWorkers": [],
                 "files": [
-                  "/root: existing workboard/WERKBORD and integration only.",
-                  "/root/p2_eva1_accounting_diagnosis_20261006: p2-original-next-cm02-admission-20261006.json, p2-original-next-cm02-result-20261006.json and private evaluator artifacts only."
+                  "/root: bestaande werkbord/WERKBORD/Git-integratie.",
+                  "/root/p2_eva1_accounting_diagnosis_20261006: private geblindeerde beoordelingsbestanden en gesanitiseerde provenance; geen beschermde inhoud naar root/Git."
                 ],
                 "existing": "CM01–CM12 epoch1 voor Eva1/Eva2 zijn eenmaal uitgevoerd en onafhankelijk beoordeeld waar het bewijs dat toelaat. Verliezen en onbekende uitkomsten blijven behouden; dit voltooit niet de overige deelnemers/epochs/families.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
-                "estimate": "Eén oorspronkelijk Eva1/Eva2-paar binnen vaste CM-per-samplegrenzen; volledige accounting. Geen automatische brede matrix. Creditkosten onbekend.",
-                "currentAction": "CM02/epoch1 afgesloten, volledig geschoond gepubliceerd na gebundelde GO. Beide oorspronkelijke readbacks True; drie semantische voorwaarden UNKNOWN bij0/2 menselijke beoordelaars. Geen kwaliteitswinnaar, herscore, replay of nieuw productresultaat.",
+                "estimate": "Voorbereiding afgerond met0nieuwe model-/samplecalls; daadwerkelijke menselijke beoordeling en overige dekking blijven open.",
+                "currentAction": "Twee onafhankelijke blinde beoordelingspakketten werkelijk beschikbaar voor Windows-eigenaar, technisch GO.0nieuwe calls/0menselijke beoordelingen; kwaliteitUNKNOWN. Voorbereiding afgesloten, geen actieve sample of werkergroep.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "Eén onafhankelijk toegelaten ongebruikt CM02-paar werkelijk uitgevoerd en afgesloten; volledige accounting incl6helpers, oorspronkelijke readbacks geslaagd bijbeide, eindrapport GO en dashboard actueel. Kwaliteit UNKNOWN en34/44 behouden; geen nieuwe Eva-functie."
                 },
-                "stage": "successor_cm02_closed_original_readbacks_pass_quality_unknown",
+                "stage": "stored_blind_packets_available",
                 "currentNativePreparation": {
                   "runHandle": "ev003-successor-native-cm02-20261006-0734716d",
                   "sessionId": 62472,
@@ -19880,7 +19908,9 @@
                 "evidence": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json"
               },
               "activeExecution": false,
-              "currentReadbackAssessmentEvidence": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json"
+              "currentReadbackAssessmentEvidence": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json",
+              "humanReviewPreparationEvidence": "eva2/evidence/product/p2-cm02-human-review-preparation-20261006.json",
+              "humanReviewPreparationReview": "eva2/reviews/p2-cm02-human-review-preparation-review-20261006.json"
             },
             {
               "id": "P2.2",
