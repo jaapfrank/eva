@@ -1,0 +1,68 @@
+{
+  "contract": "EvaPublishedComparisonFollowup/v1",
+  "publishedAt": "2026-10-06T09:43:27.482877+00:00",
+  "status": "selected_round_closed_unknown_no_valid_quality_pair",
+  "headline": "Nieuwe vergelijking: geen geldig kwaliteitspaar; beide uitslagen onbekend.",
+  "scope": "Eén nieuw afgeschermd contact-/geheugengeval, één uitvoering per systeem, epoch 1. Geen herhaling of volledige matrix.",
+  "generalSuperiorityProven": false,
+  "validQualityComparisonPairs": 0,
+  "rows": [
+    {
+      "name": "Eva1",
+      "quality": {
+        "state": "unknown",
+        "label": "Onbekend"
+      },
+      "nativeReplies": "3/3 teruggelezen",
+      "execution": "Native route meldde voltooiing; inhoudelijk succes niet beoordeeld.",
+      "transportMs": [
+        431.504,
+        385.919,
+        553.005
+      ],
+      "providerAttemptsRegistered": 0,
+      "observedToolDispatches": 0,
+      "completeInputTokens": null,
+      "completeOutputTokens": null
+    },
+    {
+      "name": "Eva2",
+      "quality": {
+        "state": "unknown",
+        "label": "Onbekend"
+      },
+      "nativeReplies": "0/1 teruggelezen",
+      "execution": "Geen bevestigd antwoord; meetprocessor meldde ValueError. Exacte foutbron onbekend.",
+      "transportMs": [
+        25.474
+      ],
+      "providerAttemptsRegistered": 0,
+      "observedToolDispatches": 0,
+      "completeInputTokens": null,
+      "completeOutputTokens": null
+    }
+  ],
+  "usage": "0 modelpogingen en 0 upstreamaanroepen geregistreerd binnen de gebruikte meetpunten. Volledig SDK-tokenverbruik en creditkosten onbekend; dit bewijst geen nulverbruik.",
+  "timingNote": "De tijden meten transport en teruglezen of een fout. Ze meten geen eerste modeltoken, gesproken antwoord of bewezen snelheid van Eva.",
+  "configurationNotes": [
+    "Eva1: bestaande vergelijkingsvariant met hetzelfde snelle model; geen meting van de ongewijzigde Eva1-installatie.",
+    "Eva2: dezelfde vastgelegde kernbron, maar geïsoleerde configuratie: geheugenhulpmiddel Astra/medium, achtergrondwerk en optionele opgeslagen procedures uit. De geïnstalleerde geheugenroute gebruikt Luna/low.",
+    "Zelfstandig werk, procedureleren, fysieke persoonsherkenning en de andere concurrenten zijn in deze ronde niet beoordeeld."
+  ],
+  "humanHelpNote": "Tijdens het geval is geen hulp gegeven. Benodigde hulp voor een geslaagde opdracht en de menselijke kwaliteitsbeoordeling blijven onbekend.",
+  "remaining": "Volledige P2.1 en R1.1 blijven open. Eerdere geheugenvoordelen, verliezen, acceptaties en 34/44 oorspronkelijke kleine taken blijven behouden.",
+  "nextAction": "Codex moet eerst de exacte native invoer-/antwoordroute en de herkomst van de meetfout aantonen met openbare diagnostiek. Geen nieuwe modelproef zolang een geldige vergelijking niet vaststaat.",
+  "ownerActionRequired": false,
+  "resources": "Eigen proefprocessen gestopt; bewijs en gegevens bewaard. De bestaande installatie is niet gewijzigd door deze proef.",
+  "evidenceBindings": [
+    {
+      "path": "eva2/evidence/product/p2-provider-history-independent-result-20261006.json",
+      "sha256": "fa5b77de9837dcf8f42d5ffd49ffa67ae0c5ca3433660ae4656794f54ae1c871"
+    },
+    {
+      "path": "eva2/evidence/product/p2-published-results-20261006.json",
+      "sha256": "7d4164584fc0cc9ebcfd8644f2d5939b3414d65770572e90aa725c1800b2bbad"
+    }
+  ],
+  "automaticReviewNote": "De automatische goedkeuringscontrole wees het tonen van beschermde beoordelaarsbron en ruwe resultaatdetails af. Alleen inhoudsvrije, toegestane status en metingen zijn gepubliceerd."
+}

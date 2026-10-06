@@ -1,0 +1,89 @@
+{
+  "contract": "EvaComparisonDatasetCommitment/v1",
+  "candidate": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_provider_history_20261006.json",
+    "sha256": "10d8621b2000cd0380254f6e1274620bebaafe0aa420f577fee6731987322d7e"
+  },
+  "protocol": {
+    "path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+    "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479"
+  },
+  "dataset": {
+    "different_scenarios": 1,
+    "families": {
+      "conversation_memory": 1
+    },
+    "epochs": 3,
+    "inference_admitted": false,
+    "dataset_total_sha256": "44d7bbee97f4e79af217fcd9522d3030132c5931a950b99aee3a74a8c6a027f3"
+  },
+  "private_payloads": [
+    {
+      "name": "samples.jsonl",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-provider-history-final-20261006/holdout/samples.jsonl",
+      "sha256": "a9cf0122c706a9184b6e8d0d402422deb6efd806d3a53b6611a79cbfa020a8cc",
+      "bytes": 268,
+      "records": 1
+    },
+    {
+      "name": "fixtures.jsonl",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-provider-history-final-20261006/holdout/fixtures.jsonl",
+      "sha256": "d9c5a310d0160e6b607b86789cb57e9198f35801af8de08bd3920dfa0250635d",
+      "bytes": 737,
+      "records": 1
+    },
+    {
+      "name": "oracles.jsonl",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-provider-history-final-20261006/holdout/oracles.jsonl",
+      "sha256": "5ba33393b3b8b3f9e38240adbffcd5a1088e45b088e5e593fb293375c0b26070",
+      "bytes": 925,
+      "records": 1
+    }
+  ],
+  "cases": [
+    {
+      "id": "EV003-PH-CM-01",
+      "family": "conversation_memory",
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "required_evaluator_types": [
+        "independent_memory_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "payload_sha256": {
+        "samples": "66dc4dc479de2120b8d299ce520ae31d72070c5162dde46bdd4f51e0d04ef287",
+        "fixtures": "d7939ad905512a3383701fe2bf7a4b12bb037622204d6550cdcba044c9216306",
+        "oracles": "1751bf64596063bf554b71c7f8138a9e29e80de61dc423774814b2152543c7aa"
+      },
+      "case_sha256": "7b89be4c630649fbce8b7af027b28e9201c19eab9dfb01056dbf3d4e92def59f"
+    }
+  ],
+  "selectedExecution": {
+    "epoch": 1,
+    "participants": [
+      "eva1-bottie",
+      "eva2"
+    ],
+    "newUnseenCase": true,
+    "fullMatrixAdmitted": false,
+    "originalFullScopePreserved": true
+  },
+  "admission": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-provider-history-final-20261006/admission.json",
+    "sha256": "e6765d96aa8f851b66bb592513d63d2fcfd97965f834f734c62398a6c6a68005"
+  },
+  "adapterBindings": {
+    "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_provider_history_20261006.json": "10d8621b2000cd0380254f6e1274620bebaafe0aa420f577fee6731987322d7e",
+    "eva2/reviews/p2-provider-history-native-driver-review-20261006.json": "e4da92b50ec406ffd41f443104cba9ad7904074a95341c31a3f7cb2c6f8fe7bb",
+    "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_driver.py": "347c1047df78ed30cf17853524cd8647140d7241dff425d5d416a61fc2c048ce",
+    "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py": "f6288c6f2364efbe7a8aa635e30baf6af64031debe91d47da6ecddfa807eab1c",
+    "eva2/benchmark/inspect_ai_v1/p2_native_scope_initializer.py": "f331e4838e65091adccfe906ac532719a1a916ef15e191351e6deb90aecab8ae",
+    "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b"
+  },
+  "criteria": "Unchanged original scorer; missing two actual independent blinded semantic/human ratings remain unknown."
+}

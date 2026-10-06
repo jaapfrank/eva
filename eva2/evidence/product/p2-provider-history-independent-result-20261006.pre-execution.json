@@ -1,0 +1,296 @@
+{
+  "contract": "EvaProviderHistoryIndependentComparisonResult/v1",
+  "recordedAt": "2026-10-06T08:38:48.058318+00:00",
+  "reviewer": "/root/p2_independent_final_20261006",
+  "taskId": "P2.1",
+  "status": "public_candidate_delta_and_functional_role_go_native_execution_not_started",
+  "candidate": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_provider_history_20261006.json",
+    "sha256": "10d8621b2000cd0380254f6e1274620bebaafe0aa420f577fee6731987322d7e",
+    "sourceCommit": "bd20df8e904c1a6aa6cf9081acb3cad1831beefc",
+    "actualInstalledRuntimeVerified": true,
+    "sourceLayers": {
+      "baseImages": {
+        "core": "sha256:17709b26406e6c96d37665e36d69c8ceaeb96dde355fe07da8fb9a5d415effd6",
+        "worker": "sha256:78f38eae86c4935059b18829bb9eb5d055ab67b06d2e4b0da43ec95c6b8aef90"
+      },
+      "deltaCommit": "bd20df8e904c1a6aa6cf9081acb3cad1831beefc",
+      "deltaFiles": [
+        "src/eva/adapters/model/openai_codex_provider.py"
+      ],
+      "providerSha256": "27400f795e7491c8f1031ab0a44d912a6f82ece165c25def4e9122820fbd4fbd",
+      "allOtherSourceAndDependencyLayersUnchanged": true
+    }
+  },
+  "selectedScope": {
+    "family": "conversation_memory",
+    "newUnseenCases": 1,
+    "selectedEpoch": 1,
+    "participants": [
+      "eva1-bottie_equal_contact_variant",
+      "eva2"
+    ],
+    "automaticFullMatrix": false,
+    "oldCasesReplayedOrRescored": false,
+    "newDatasetCurated": false
+  },
+  "independentAdmission": {
+    "candidateDelta": "GO",
+    "functionalModelRoles": "GO_for_predeclared_ordinary_CM_native_route_only",
+    "roleEvidence": {
+      "path": "eva2/evidence/product/p2-next-admission-20261006.json",
+      "sha256": "d4e0a5954510040cb68d8f6d64b6140d7029db03dd3aa2b147aff5d1cf773873"
+    },
+    "actualInstalledRuntimeChecks": [
+      {
+        "name": "eva2-managed-b-slot3-core",
+        "image": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+        "runningAndHealthy": true,
+        "ConfigHashMatches": true,
+        "HostConfigHashMatches": true,
+        "MountsHashMatches": true,
+        "allVerifiedDigitalSourceHashesMatch": true
+      },
+      {
+        "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "image": "sha256:fee8313778ab2a619d90e356a81a5c03f8789edaa9da181515923973f6814f14",
+        "runningAndHealthy": true,
+        "ConfigHashMatches": true,
+        "HostConfigHashMatches": true,
+        "MountsHashMatches": true,
+        "allVerifiedDigitalSourceHashesMatch": true
+      }
+    ],
+    "providerFileMatchesSourceAndInstalledImages": true,
+    "originalEvaluationSourceBindings": [
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/bridge_probe.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/cp001.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/cp001_accounting.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/cp001_fixture_worker.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/cp001_http_accounting.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/cp001_journal_admission.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/cp001_native.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/cp001_reader_receipt.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/ev002_baseline.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/ev003_action_accounting.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/ev003_agentzero_readback.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/ev003_bottie_readback.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/ev003_collection_fixture.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/ev003_node_calendar.mjs",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/ev003_node_calendar.test.mjs",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/ev003_python_calendar.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/ev003_python_calendar_native_probe.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_agentzero_native_probe.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_agentzero_preset_probe.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_agentzero_request_probe.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_agentzero_transport_probe.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_hermes_login.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_hindsight_accounting_probe.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_hindsight_lifecycle_probe.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_httpx2_accounting_probe.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_model_tunnel.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_openclaw_catalog_probe.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_openclaw_config_probe.mjs",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_openclaw_host_config_probe.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/test_ev003_agentzero_evidence.py",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/pylock.toml",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/calendar-requirements.txt",
+        "matchesFreeze": true
+      }
+    ],
+    "immutableReferenceBindings": [
+      {
+        "path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+        "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/evidence/product/f1-integrated-installed-20261003.json",
+        "sha256": "07623bbc8c0d979c96e55917253e4c48052effd8e90f3636cc19edbd5fd35e6d",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/evidence/product/p2-tool-error-feedback-20261005.json",
+        "sha256": "8702347d2960ec7b3059dd844ca9ec86c98fbedd65337aa5a4cfeda4af2eb00a",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/evidence/product/p2-catalogue-model-view-20261006.json",
+        "sha256": "a0bd348e02dc5d69b1c888770aacb3792ead636406bf51cdd1e04e6a37b7cb1d",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/evidence/product/f1-digital-candidate-pre-reboot-20261006.json",
+        "sha256": "bcf78e19f3d64428ee359846e89888adef1d678955dfd7a203292d6d20f45a0e",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/evidence/product/p2-changed-candidate-evaluation-decision-20261006.json",
+        "sha256": "ec6a0c3e43ac07f10524c771627e63be17e8e09772957bdf65705af825194de5",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
+        "sha256": "71478165fea4a469e01debdf8107999d9fc84c3e4fe9d4fd4112297b9ba6607f",
+        "matchesFreeze": true
+      },
+      {
+        "path": "eva2/evidence/product/p2-owner-final-authorization-20261006.json",
+        "sha256": "07a2d89326fa9a79d60c1e15ea64be6f8ff34be2b6333c7ec02a267e63491baf",
+        "matchesFreeze": true
+      }
+    ],
+    "executionGo": false,
+    "reason": "Exact new candidate and public functional role chain are independently verified. A fresh native sample/resource/admission binding is not yet provisioned; no model call may follow solely from this source review."
+  },
+  "execution": {
+    "controlledProviderAttempts": 0,
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "toolDispatches": 0,
+    "nativeSamples": 0,
+    "freshCaseExposedToParticipant": false,
+    "priorRuntimesOrDatasetsModified": false
+  },
+  "automaticApprovalReview": {
+    "rejectedAction": "Read and print protected previous evaluator native launcher source and private-input-derived schema from the sealed artifact directory.",
+    "statedReason": "Independent processing approval does not authorize disclosure of protected evaluator implementation/data into agent context; a safer public-interface-only check is available.",
+    "response": "The rejected action stopped. No indirect read, copy, encoding, rerun or substitute route was used to bypass the rejection.",
+    "effect": "No source data from that rejected command was returned. Fresh curation/execution remains unstarted; public candidate checks and original scoring contract were completed separately."
+  },
+  "nextRequiredTransition": "A source-bound admitted fresh native launcher/provisioning interface using the existing public worker/accounting/scorer contracts, without exposing protected prior evaluator source, changing criteria or replaying old cases. No guessed real inference route.",
+  "originalScopePreserved": {
+    "sixFamiliesTwelveCasesThreeEpochs": true,
+    "twoActualIndependentBlindedSemanticRatersStillRequired": true,
+    "twoActualHumanPreferenceRatersMissing": true,
+    "fullP21Finish": false,
+    "generalSuperiorityClaim": null,
+    "P22PublicationUnchanged": true,
+    "speech": "parked",
+    "unavailableCompetitors": "UNKNOWN_not_losses"
+  },
+  "costs": {
+    "controlledRuntimeCreditCost": null,
+    "codexDevelopmentCredits": null,
+    "noUnattestedUsageReplacedWithZero": true
+  },
+  "productWorkboardGitEdits": 0
+}

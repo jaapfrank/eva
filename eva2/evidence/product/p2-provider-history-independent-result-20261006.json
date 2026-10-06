@@ -1,0 +1,390 @@
+{
+  "advice": "Preserve the sealed round without replay or product-loss attribution. The unresolved first native Eva2 request/return transition and zero-call Eva1 path need public, content-free source/entry evidence before a later valid comparison can be admitted. No superiority, migration or new optimization-platform conclusion follows from this round.",
+  "aggregate": {
+    "completeSdkInputTokens": null,
+    "completeSdkOutputTokens": null,
+    "costs": {
+      "codexDevelopmentCredits": "UNKNOWN",
+      "evaRuntimeBilledCredits": "UNKNOWN",
+      "zeroCostClaim": false
+    },
+    "humanSemanticRaters": 0,
+    "knownCollectedInputTokens": 0,
+    "knownCollectedOutputTokens": 0,
+    "nativeObservedUpstreamModelCalls": 0,
+    "observedNativeActionDispatches": 0,
+    "observedNativeToolDispatches": 0,
+    "registeredProviderAttempts": 0,
+    "validQualityComparisonPairs": 0
+  },
+  "automaticApprovalReview": [
+    {
+      "action": "Read/print old protected evaluator launcher implementation or private-input-derived schema",
+      "alternative": "Use only original public native interfaces and newly authorized isolated independent processing; old protected launcher unchanged.",
+      "dataReturned": false,
+      "decision": "REJECTED",
+      "reason": "Protected final-evaluation source/input boundary could be disclosed."
+    },
+    {
+      "action": "Print entire literal_observations field from private result",
+      "alternative": "Field omitted entirely; only explicitly whitelisted numeric metrics, score flags, booleans and standardized failure classes published.",
+      "dataReturned": false,
+      "decision": "REJECTED",
+      "reason": "Could disclose hidden case-derived personal facts."
+    }
+  ],
+  "bindings": {
+    "candidate": {
+      "protected": false,
+      "publicPath": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_provider_history_20261006.json",
+      "sha256": "10d8621b2000cd0380254f6e1274620bebaafe0aa420f577fee6731987322d7e"
+    },
+    "datasetCommitment": {
+      "protected": false,
+      "publicPath": "eva2/benchmark/inspect_ai_v1/ev003_provider_history_dataset_commitment_20261006.json",
+      "sha256": "52da8464812d5a6f052d3429615d60f64f6e05b42e22e385a4f52ec007917077"
+    },
+    "executionPlan": {
+      "protected": false,
+      "publicPath": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    },
+    "finalBottieNativeTerminal": {
+      "protected": true,
+      "publicPath": null,
+      "sha256": "a50e5bb90ad7aa62227fee6612654f283fda41955c485bebf17f6f849c62be33"
+    },
+    "finalCoreNativeTerminal": {
+      "protected": true,
+      "publicPath": null,
+      "sha256": "a21ba96b8c7db47ec3748f94d5e88526b13b7251f2a484a4e6caacadb8bf9d50"
+    },
+    "finalMemoryNativeTerminal": {
+      "protected": true,
+      "publicPath": null,
+      "sha256": "564fc9c1d17d96ae213e0a9059647c14d2a091193cdd28a4aeae41475034dab5"
+    },
+    "finalParent": {
+      "protected": true,
+      "publicPath": null,
+      "sha256": "55d4e4167cdf4bcbb45384655dbc9f0aa7306cd8c5a8be49cb91469e46545d21"
+    },
+    "independentDriverReview": {
+      "protected": false,
+      "publicPath": "eva2/reviews/p2-provider-history-native-driver-review-20261006.json",
+      "sha256": "e4da92b50ec406ffd41f443104cba9ad7904074a95341c31a3f7cb2c6f8fe7bb"
+    },
+    "modelRoleAdmission": {
+      "protected": false,
+      "publicPath": "eva2/evidence/product/p2-next-admission-20261006.json",
+      "sha256": "d4e0a5954510040cb68d8f6d64b6140d7029db03dd3aa2b147aff5d1cf773873"
+    },
+    "mountOrderPermutationProof": {
+      "protected": true,
+      "publicPath": null,
+      "sha256": "99c4922331afb8540da33e8423db7ec2b389f3237baeb83a1360196a592678ca"
+    },
+    "nativeDriver": {
+      "protected": false,
+      "publicPath": "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_driver.py",
+      "sha256": "347c1047df78ed30cf17853524cd8647140d7241dff425d5d416a61fc2c048ce"
+    },
+    "nativeGlue": {
+      "protected": false,
+      "publicPath": "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py",
+      "sha256": "f6288c6f2364efbe7a8aa635e30baf6af64031debe91d47da6ecddfa807eab1c"
+    },
+    "originalScorer": {
+      "protected": false,
+      "publicPath": "eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+      "sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b"
+    },
+    "ownerAuthorization": {
+      "protected": false,
+      "publicPath": "eva2/evidence/product/p2-owner-final-authorization-20261006.json",
+      "sha256": "07a2d89326fa9a79d60c1e15ea64be6f8ff34be2b6333c7ec02a267e63491baf"
+    },
+    "preCallCanonicalConfigurationBinding": {
+      "protected": true,
+      "publicPath": null,
+      "sha256": "5d9e95027da519abc0c3ae9298f1a18eb2245cd01ee61d35739c67f4cf4cc0c8"
+    },
+    "privateAdmission": {
+      "protected": true,
+      "publicPath": null,
+      "sha256": "e6765d96aa8f851b66bb592513d63d2fcfd97965f834f734c62398a6c6a68005"
+    },
+    "privateResult": {
+      "protected": true,
+      "publicPath": null,
+      "sha256": "f808c1a0c3a8655dc14ae016a0673eb1af2234fad3597b361961ba30dd9bebce"
+    },
+    "processorPreCallEnvironmentBinding": {
+      "protected": true,
+      "publicPath": null,
+      "sha256": "59eb98a0e4edfa2edfd7fb585229858b10b916b60bbd9b83332c68a380afec05"
+    },
+    "protocol": {
+      "protected": false,
+      "publicPath": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+      "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479"
+    },
+    "resourceClosure": {
+      "protected": true,
+      "publicPath": null,
+      "sha256": "64103266f6e0dec1bc115e28c87b71099397b3c234f1ddc6b1f8a36f44b70055"
+    },
+    "zeroCallImportFailure": {
+      "protected": true,
+      "publicPath": null,
+      "sha256": "0d3d450e7466dc7c03260bb13698e0e3fb3990f534fa9efe65c09eef79b8673e"
+    },
+    "zeroCallMountOrderFailure": {
+      "protected": true,
+      "publicPath": null,
+      "sha256": "321abec0ed5a37c12217d1c5d3aedf05e3ee1aface6fa5aebcea16c042dd6d5a"
+    },
+    "zeroCallResumeAdapter": {
+      "protected": false,
+      "publicPath": "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_resume.py",
+      "sha256": "fccb4bfc867e4f847e8f0df156930ff4ac197c444d14439d751b9c975b919f12"
+    }
+  },
+  "configurationVariants": {
+    "capabilityBoundary": "Trusted synthetic connector/private principal in fresh isolated databases; no physical speaker recognition or broad privacy/authority proof.",
+    "eva1": "Existing original disposable equal-model/native-control-hook Bottie variant; native understand/compose contact Sol/none. Not literal stock Eva1 configuration.",
+    "eva2": "Frozen core/worker sources/images with original CM isolation: contact Sol/none, Hindsight helper Astra/medium instead of installed memory Luna/low; background/delegated work and optional procedure references disabled.",
+    "literalInstalledEva2Configuration": false,
+    "procedureLearningOrAutonomyEvaluated": false,
+    "procedureReferencesDisabledEffect": "Designation/list/resolve/optional run and saved-procedure context excluded; ordinary Hindsight conversation memory, outbox, recall, person and recent-context route retained."
+  },
+  "contract": "EvaP2ProviderHistoryIndependentFinalResult/v1",
+  "createdAt": "2026-10-06",
+  "generalSuperiorityProven": false,
+  "hardConditions": {
+    "accountingErrors": 0,
+    "bottieQuiescent": true,
+    "caseResponsesAndDataProtected": true,
+    "coreAndMemoryLocalSettled": true,
+    "fullPrivacyAuthorityAndUserStopAssessment": "UNKNOWN",
+    "nativeProviderInFlightAtClosure": 0,
+    "noAdaptiveBuilderInterventionAfterCaseEntry": true,
+    "noUnexpectedNativeToolOrActionDispatchObserved": true
+  },
+  "newProductCompletionClaim": false,
+  "p2_1Complete": false,
+  "participants": [
+    {
+      "activeAsyncProviderAttemptsAtClosure": 0,
+      "caseId": "EV003-PH-CM-01",
+      "completeSdkUsage": {
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null
+      },
+      "epoch": 1,
+      "exactOriginModuleAndLine": "UNKNOWN",
+      "humanAssistanceProvidedDuringCase": 0,
+      "humanAssistanceRequiredForSuccessfulOutcome": "UNKNOWN",
+      "humanSemanticRaters": 0,
+      "knownCollectedUsage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "nativeCompletionReported": true,
+      "nativeErrorCode": "UNKNOWN",
+      "observedNativeActionDispatches": 0,
+      "observedNativeToolDispatches": 0,
+      "observedNativeUpstreamCalls": 0,
+      "originalFormalScore": "UNKNOWN",
+      "participant": "eva1-bottie",
+      "productFailureAttribution": "UNKNOWN",
+      "providerAttemptsRegistered": 0,
+      "sanitizedMeasurementFailureClass": null,
+      "sdkUsageComplete": false,
+      "semanticQuality": "UNKNOWN",
+      "transport": [
+        {
+          "acknowledgement_ms": null,
+          "elapsed_ms": 431.5041169993492,
+          "exchangeStatus": "readback_verified",
+          "first_content_ms": 426.4258469993365,
+          "nativeDurableReadbackVerified": true,
+          "submittedNativeRequests": 1,
+          "turnIndex": 0,
+          "verified_end_ms": 431.5027859993279
+        },
+        {
+          "acknowledgement_ms": null,
+          "elapsed_ms": 385.91892600015854,
+          "exchangeStatus": "readback_verified",
+          "first_content_ms": 382.5357450004958,
+          "nativeDurableReadbackVerified": true,
+          "submittedNativeRequests": 1,
+          "turnIndex": 1,
+          "verified_end_ms": 385.91780600108905
+        },
+        {
+          "acknowledgement_ms": null,
+          "elapsed_ms": 553.004867000709,
+          "exchangeStatus": "readback_verified",
+          "first_content_ms": 549.7068370004854,
+          "nativeDurableReadbackVerified": true,
+          "submittedNativeRequests": 1,
+          "turnIndex": 2,
+          "verified_end_ms": 553.0042099999264
+        }
+      ],
+      "usageAndToolLimitations": "Counts apply only to the admitted instrumented native entrypoints; no general platform-cost or capability claim.",
+      "usageBoundary": "Shared native provider attestation ledger; null complete usage is not a billed zero-cost assertion.",
+      "winnerClaim": false
+    },
+    {
+      "activeAsyncProviderAttemptsAtClosure": 0,
+      "caseId": "EV003-PH-CM-01",
+      "completeSdkUsage": {
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null
+      },
+      "epoch": 1,
+      "exactOriginModuleAndLine": "UNKNOWN",
+      "humanAssistanceProvidedDuringCase": 0,
+      "humanAssistanceRequiredForSuccessfulOutcome": "UNKNOWN",
+      "humanSemanticRaters": 0,
+      "knownCollectedUsage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "nativeCompletionReported": false,
+      "nativeErrorCode": "UNKNOWN",
+      "observedNativeActionDispatches": 0,
+      "observedNativeToolDispatches": 0,
+      "observedNativeUpstreamCalls": 0,
+      "originalFormalScore": "UNKNOWN",
+      "participant": "eva2",
+      "productFailureAttribution": "UNKNOWN",
+      "providerAttemptsRegistered": 0,
+      "sanitizedMeasurementFailureClass": "ValueError",
+      "sdkUsageComplete": false,
+      "semanticQuality": "UNKNOWN",
+      "transport": [
+        {
+          "acknowledgement_ms": null,
+          "elapsed_ms": 25.47366500039061,
+          "exchangeStatus": "execution_unknown",
+          "first_content_ms": null,
+          "nativeDurableReadbackVerified": false,
+          "submittedNativeRequests": 1,
+          "turnIndex": 0,
+          "verified_end_ms": null
+        }
+      ],
+      "usageAndToolLimitations": "Counts apply only to the admitted instrumented native entrypoints; no general platform-cost or capability claim.",
+      "usageBoundary": "Shared native provider attestation ledger; null complete usage is not a billed zero-cost assertion.",
+      "winnerClaim": false
+    }
+  ],
+  "preCallCorrections": [
+    {
+      "cause": "Host interpreter missing existing eva2/src source path",
+      "correction": "Only host PYTHONPATH plus existing bench path; all 18 public imports passed before case entry.",
+      "participantStartsBeforeCorrection": 0,
+      "registeredProviderAttemptsBeforeCorrection": 0
+    },
+    {
+      "cause": "New unused processor expected a nonexistent settlement status",
+      "correction": "Exact public native return status completed with settled=True; original input/oracle/scorer preserved.",
+      "priorProcessorSha256": "dea1bb68c95b2bc6154d78f4ac79407c0ca2ef8d44529e97b1882bf612674fb1",
+      "processorSha256": "46b3f7830bcd2e434efdcf822b0b2262f8e72ab2a3b45a9fe99eaa2afe01666f",
+      "registeredProviderAttemptsBeforeCorrection": 0
+    },
+    {
+      "cause": "Docker Mounts array iteration order changed an unsorted metadata digest",
+      "correction": "Exact Image/Config/HostConfig and full mount set equality proven by hash-matching permutations; canonical Destination ordering only. Existing B5 containers, credentials, DBs and clock generation 0 retained.",
+      "registeredProviderAttemptsBeforeCorrection": 0
+    }
+  ],
+  "priorProgress": {
+    "closedHistoricalRoundsReplayedOrRescored": false,
+    "path": "eva2/evidence/product/p2-provider-history-independent-result-20261006.pre-execution.json",
+    "sha256": "5c2854386013e460005c1671473b22135a85734af650fe734a0a3d3faf1fbc01"
+  },
+  "remainingOriginalAssessment": {
+    "P2_1": "OPEN; no valid quality pair in this round, original coverage and actual independent human ratings remain incomplete.",
+    "familyAcceptance": "Separate original human/family acceptance remains open.",
+    "namedCompetitors": {
+      "Agent Zero": "UNKNOWN: not admitted/executed in this round.",
+      "Hermes": "UNKNOWN: no native equivalent available participant was admitted/executed in this round.",
+      "OpenClaw": "UNKNOWN: no native equivalent available participant was admitted/executed in this round.",
+      "OpenCode": "UNKNOWN: not admitted/executed in this round."
+    },
+    "speech": "PARKED; no speech work or assessment."
+  },
+  "resourceClosure": {
+    "accountingSocketExists": false,
+    "containers": [
+      {
+        "exitCode": 0,
+        "name": "eva2-p2ph-cm-core-b5-20261006",
+        "running": false
+      },
+      {
+        "exitCode": 0,
+        "name": "eva2-p2ph-cm-memory-b5-20261006",
+        "running": false
+      },
+      {
+        "exitCode": 0,
+        "name": "eva2-p2ph-cm-db-20261006",
+        "running": false
+      }
+    ],
+    "contract": "EvaP2NativeResourceClosure/v1",
+    "dataDeleted": false,
+    "productionChanged": false
+  },
+  "sanitizedDiagnosticBoundary": {
+    "alreadyRecordedPublicCodeFrames": [],
+    "causeAttribution": "UNKNOWN",
+    "eva2ObservedExchangeStatus": "execution_unknown",
+    "measurementFailureClass": "ValueError",
+    "nativeHttpStatus": "UNKNOWN",
+    "newInferenceForDiagnostics": false,
+    "replayedForDiagnosis": false
+  },
+  "scope": {
+    "automaticFullMatrix": false,
+    "caseCount": 1,
+    "caseFamily": "conversation_memory",
+    "coverage": "One selected contact/correction/later-memory case; zero valid semantic comparison pairs. Other original cases, epochs, five remaining families and actual human assessments remain outside this result.",
+    "epochExecuted": 1,
+    "hiddenContentPublished": false,
+    "newCriteria": false,
+    "originalProtocolEpochs": 3,
+    "originalSampleLimits": {
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "speechRequests": 0,
+      "toolDispatches": 16,
+      "wallSeconds": 480
+    },
+    "participants": [
+      "eva1-bottie",
+      "eva2"
+    ],
+    "providerRoute": "Existing native ChatGPT/Codex subscription route, readonly existing lease, no auth or provider change."
+  },
+  "setupFailures": "Earlier source-path, resource/output, schema placeholder, ordinary runtime-role preparation, offline cache, optional procedure startup and public health-path measurement failures remain preserved in separate setup artifacts. They are measurement preparation failures, not participant quality losses; no controlled model attempts were recorded during setup.",
+  "status": "selected_round_closed_unknown_no_valid_quality_pair",
+  "summary": "One new sealed CM case, epoch 1, Eva1 then Eva2, was executed once through native ingress. The instrumented native entrypoints observed no upstream model calls. Eva1 returned three durable replies; Eva2 first request produced execution_unknown without a confirmed reply. Both original outcomes remain UNKNOWN. This is not a valid model-quality comparison.",
+  "timingBoundary": {
+    "elapsed_ms": "One exchange including its measured readback or failure; no retry.",
+    "first_content_ms": "Whole native HTTP JSON body receipt; not first token, speech latency or a model response-speed measurement.",
+    "interpretation": "Sub-second deterministic/native ingress measurements with no observed model dispatch cannot establish faster model answers.",
+    "verified_end_ms": "Whole reply plus independent exact durable DB readback."
+  }
+}

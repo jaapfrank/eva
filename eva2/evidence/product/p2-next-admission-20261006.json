@@ -1,0 +1,547 @@
+{
+  "contract": "EvaNextNativeAdmissionDecision/v1",
+  "taskId": "P2.1",
+  "recordedAt": "2026-10-06T08:35:17.130414+00:00",
+  "reviewer": "/root/p2_independent_final_20261006",
+  "sourceBaseCommit": "bd20df8e904c1a6aa6cf9081acb3cad1831beefc",
+  "authorization": "Owner explicitly approved the separate end comparison on the existing criteria/provider route/envelopes; preparation here contains no execution.",
+  "status": "functional_model_roles_bound_selected_cm_pair_awaiting_new_candidate_freeze",
+  "selectedAssessment": {
+    "family": "conversation_memory",
+    "userOutcome": "Ordinary person-authorized chat retains a correction and uses relevant memory during later conversation.",
+    "participants": [
+      "eva1-bottie",
+      "eva2"
+    ],
+    "size": "One independently curated still-unseen original-family case, one original epoch, two native participant entries only. No automatic following cases,epochs or matrix.",
+    "basis": "This is the already existing ordinary private-contact/native-memory/later-session route. Both products have retained exact native replies and sample-wide accounting on that shape; no external service/browser/file/audio adapter is required.",
+    "whySelected": "It is the smallest documented paired digital outcome that avoids the unresolved general-action resource admission. It advances existing original coverage, not a new memory product feature.",
+    "caseSelection": "No hidden case,prompt,value,oracle or rubric has been read or selected in this source-only task. Curate only after a genuine new candidate freeze; preserve original family criteria/envelope and already used cases.",
+    "roleVariant": "Existing explicitly labelled disposable equal-contact-model Eva1 variant; original native foreground callsites map to contact. Native model-call topology and helper counts need not be equal. Untouched stock Eva1 is not relabelled as this variant; no general superiority or efficiency ranking."
+  },
+  "availableTransitions": [
+    {
+      "transition": "trusted identity/audience and ordinary ingress",
+      "source": "eva2/benchmark/inspect_ai_v1/cp001_native.py:144-166",
+      "property": "eva2_request_for_turn serializes a previously resolved ConversationTurn;it does not infer a private owner. Existing Bottie handle uses /api/chat and native ACK."
+    },
+    {
+      "transition": "exact native reply and memory readback",
+      "sources": [
+        "eva2/benchmark/inspect_ai_v1/cp001_native.py:169-196",
+        "eva2/benchmark/inspect_ai_v1/ev003_bottie_readback.py:15",
+        "eva2/evidence/product/p2-independent-partial-results-20261006.json"
+      ],
+      "property": "Use source-bound real scoped journal/database readback with canonical native conversation identity. The past missing web:prefix error stays an evaluator error and is not replayed."
+    },
+    {
+      "transition": "native scenario clocks",
+      "sources": [
+        "eva2/benchmark/inspect_ai_v1/ev003_node_calendar.mjs:7",
+        "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py:419-433"
+      ],
+      "property": "Existing source-bound calendar refresh/ACK preserves native auth/monotonic domains. No HTTP service clock is needed for this selected contact/memory-only shape."
+    },
+    {
+      "transition": "shared provider/tool accounting and stop",
+      "sources": [
+        "eva2/benchmark/inspect_ai_v1/cp001_accounting.py:158",
+        "eva2/benchmark/inspect_ai_v1/cp001_http_accounting.py:110",
+        "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs:217-232",
+        "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py:52-61"
+      ],
+      "property": "Every dispatched foreground/helper/memory request and native tool dispatch is charged to one unchanged sample ledger;failed/unknown attempts and native cancellation remain visible."
+    }
+  ],
+  "smallestOutstandingAdmissionTransition": {
+    "name": "actual_new_candidate_freeze_and_exact_native_binding",
+    "functionalPurposeCondition": "Resolved prospectively from unchanged native callsite/function/dispatcher source for the selected ordinary CM route; see functionalModelRoleAdmission.",
+    "minimum": "Bind the actual newly installed source/images/config and existing native equal-contact variant to the reviewed functional map; preserve original provider/role/criteria/envelopes and fresh independent curation after freeze.",
+    "noSourceOnlyGo": "This artifact does not activate a model sample, inspect hidden cases or certify an installed new candidate. No new role platform/hook, model-policy change, artificial helper call or guessed endpoint is justified.",
+    "scope": "The one previously selected paired ordinary CM assessment only."
+  },
+  "candidateGate": {
+    "newFreezePresent": false,
+    "pendingOwnerReportedDevelopment": "Provider source correction is coordinator-reported reviewed/built; actual installation and new full candidate freeze remain pending. Previous closed freeze is not substituted.",
+    "requiredBeforeExecution": "Finish and bind the actual provider delta/source/images/config to the original provider route,then freeze the full candidate before independent unseen curation and exact runtime admission. Reuse valid unchanged admission parts and check the delta;no paid route,fallback,authentication change or silent old-freeze substitution.",
+    "approvalIsNotRuntimeEvidence": true,
+    "coordinatorLatestReport": {
+      "sourceCommit": "bd20df8e904c1a6aa6cf9081acb3cad1831beefc",
+      "reportedProviderReview": "GO for smallest plain-assistant-history compatibility correction; source checkpoint published.",
+      "reportedCoreImage": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+      "reportedWorkerImage": "sha256:fee8313778ab2a619d90e356a81a5c03f8789edaa9da181515923973f6814f14",
+      "notYetRuntimeEvidence": "Coordinator reports new images not runtime-active and candidate freeze not supplied; independent model-role review has not performed installation or SDK/model validation."
+    }
+  },
+  "generalActionGapNotSelectedForThisPair": {
+    "source": "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs:164-173",
+    "fact": "recordTool admits only onthoud,zoek_geheugen,zoek_gesprek or commit_turn_understanding;any other advertised native tool stops before dispatch. Eva2 has an existing action_control_file→ActionAccounting transition in p1_eva2_native_worker.py:175-186 and219-242;equivalent Eva1 action admission is not established.",
+    "consequence": "A cross-domain/browser/learning action comparison cannot be called equal solely because both products support tools. The missing transition is native general-action allowlist/authority→actual existing executor→shared accounting→independent effect readback for Eva1;not a missing product feature or competitor loss.",
+    "notAuthorizedByThisDecision": "No extra tool,fixture endpoint,hint,service metadata injection,new discovery layer or recreated native capability. Original source-discovery/time uncertainty remains unchanged;no spent final case is repaired or rerun."
+  },
+  "unchangedBudget": {
+    "source": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+    "family": "conversation_memory",
+    "perSampleLimits": {
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "wallSeconds": 480,
+      "toolDispatches": 16,
+      "speechRequests": 0
+    },
+    "aggregateLimitsPerParticipant": {
+      "providerAttempts": 576,
+      "providerInputTokens": 37748736,
+      "providerOutputTokens": 691200,
+      "wallSeconds": 17280,
+      "toolDispatches": 576,
+      "speechRequests": 0
+    },
+    "providerRoute": "Existing registered subscription routes only; no paid fallback or automatic model escalation",
+    "models": {
+      "contact": {
+        "model": "gpt-6-sol",
+        "reasoningEffort": "none"
+      },
+      "allResearchWorkAndMemoryHelpers": {
+        "model": "gpt-6-astra",
+        "reasoningEffort": "medium"
+      },
+      "providerRoute": "Existing registered subscription routes only; no paid fallback or automatic model escalation"
+    },
+    "subsetDoesNotExpandBudget": true,
+    "allFailedPreparationAndActualAttemptsCountWhenDispatched": true,
+    "noAutomaticRunStarted": true,
+    "runtimeCreditCost": null,
+    "codexDevelopmentCredits": null
+  },
+  "preservation": {
+    "closedRoundsRescored": false,
+    "closedCasesReplayed": false,
+    "privateDatasetRead": false,
+    "newCriteriaOrTaskIds": false,
+    "oldLossesAndUsagePreserved": true,
+    "P22PublicationUnchanged": true,
+    "humanRatingsStillRequiredByOriginalScorer": true,
+    "fullP21AndGeneralSuperiorityStillOpen": true,
+    "speech": "parked_no_action"
+  },
+  "sourceBindings": [
+    {
+      "path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+      "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+      "sha256": "d9135079c1e2ce8b91cb57b4d1d39b376cb031f0fb9bedda2aa1f8958b58c73b"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/cp001_native.py",
+      "sha256": "586322f040fdc42c87559ccea6171c8a9715caf7af9d4298404a711431e01f7b"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py",
+      "sha256": "c4f08df0d4fcaae19ee09326300faf2e5a6af4019ba86c9629e50c4232a8a978"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_bottie_readback.py",
+      "sha256": "53cffd1d746d05c4f93b5246bcf48086048c0b9d7b75cd42667d188a511c7568"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_node_calendar.mjs",
+      "sha256": "c1b0c30fa97c511b3b8adde7778442fc82e04cb98a98a9e80169a2fef963c602"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_python_calendar.py",
+      "sha256": "2d00941d259ba2576c4c7703e5717834118286b35281002d0f671c379a691c48"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/cp001_accounting.py",
+      "sha256": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/cp001_http_accounting.py",
+      "sha256": "4d9b60a996b4fb221b5ad2cd77072ac36432b5349c3f0fbf96c81ba640ff8b85"
+    },
+    {
+      "path": "eva2/evidence/product/p2-cm-binding-review-20261005.json",
+      "sha256": "2331d2838bbcb5b92c8b07b597b44f043500512ac4d12ca661173ff798bbe653"
+    },
+    {
+      "path": "eva2/evidence/product/p2-independent-partial-results-20261006.json",
+      "sha256": "541018d2900403c5e000b3b1aa386fb22e38292fbdf537fa2bd2c0a62a6da601"
+    },
+    {
+      "path": "eva2/reviews/p2-native-admission-contract-review-20261006.json",
+      "sha256": "5ddad1db2d7d84ef1dab5398ac974677cfd527e5ae0fab06a1f18b5b7c8598d1"
+    },
+    {
+      "path": "eva2/evidence/product/p1-native-source-binding-20261003.json",
+      "sha256": "c645465ac4c0f901e1db13db71bcf32e72a6945ff4e36393647200931cb33abf",
+      "boundary": "Public source read for prospective purpose mapping; not a new runtime freeze."
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/p1_bottie_equal_model.patch",
+      "sha256": "e7473bd4f5ea80477b6ae8462cf3b390491d85266ebbb301f5a77bffefbb8646",
+      "boundary": "Public source read for prospective purpose mapping; not a new runtime freeze."
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_postrestart_20261006.json",
+      "sha256": "1ea836919ba4c245f3d5d85e94332c39edfdd84e6fba214abb5f44ab89cbcae3",
+      "boundary": "Public source read for prospective purpose mapping; not a new runtime freeze."
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/runtime.py",
+      "sha256": "33f6d10ca3398165bd49e34d4fc0d73ff04c23ad8ce862f6b7182da083b4400a",
+      "boundary": "Public source read for prospective purpose mapping; not a new runtime freeze."
+    },
+    {
+      "path": "eva2/src/eva/application/conversation.py",
+      "sha256": "7e64d5f146c8d6a0bdac4a6d5564d2f92954b6764fdb8af6ec54bf3ef9502a62",
+      "boundary": "Public source read for prospective purpose mapping; not a new runtime freeze."
+    },
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "2888e28a47476f8093463bc4fac5e66f36f6e2223556c8955dc0274de5968d07",
+      "boundary": "Public source read for prospective purpose mapping; not a new runtime freeze."
+    }
+  ],
+  "workPerformed": {
+    "controlledProviderCalls": 0,
+    "nativeRuns": 0,
+    "authOrResourceChanges": 0,
+    "productOrWorkboardOrGitEdits": 0,
+    "privateCasePromptRubricReads": 0,
+    "codexDevelopmentCredits": null
+  },
+  "nextAllowedAction": "Coordinator supplies actual new installed candidate/native source-config freeze. After exact delta admission against this source-bound functional map, independent curator may prepare only the already selected single still-unseen paired original CM assessment, one original epoch. No model inference is authorized by this source-only artifact.",
+  "priorDecision": {
+    "sha256": "70be113c46fed9cf36eb1b9cb5f51529d78d21757222ff470cc8ca626a461cad",
+    "hashBoundary": "Exact previous file bytes before this source-only amendment.",
+    "decision": {
+      "contract": "EvaNextNativeAdmissionDecision/v1",
+      "taskId": "P2.1",
+      "recordedAt": "2026-10-06T08:26:19.340720+00:00",
+      "reviewer": "/root/p2_independent_final_20261006",
+      "sourceBaseCommit": "264186f63777ff85f61cf0b4c592ed6dc3b18daf",
+      "authorization": "Owner explicitly approved the separate end comparison on the existing criteria/provider route/envelopes; preparation here contains no execution.",
+      "status": "one_existing_native_pair_selected_execution_not_yet_admitted",
+      "selectedAssessment": {
+        "family": "conversation_memory",
+        "userOutcome": "Ordinary person-authorized chat retains a correction and uses relevant memory during later conversation.",
+        "participants": [
+          "eva1-bottie",
+          "eva2"
+        ],
+        "size": "One independently curated still-unseen original-family case, one original epoch, two native participant entries only. No automatic following cases,epochs or matrix.",
+        "basis": "This is the already existing ordinary private-contact/native-memory/later-session route. Both products have retained exact native replies and sample-wide accounting on that shape; no external service/browser/file/audio adapter is required.",
+        "whySelected": "It is the smallest documented paired digital outcome that avoids the unresolved general-action resource admission. It advances existing original coverage, not a new memory product feature.",
+        "caseSelection": "No hidden case,prompt,value,oracle or rubric has been read or selected in this source-only task. Curate only after a genuine new candidate freeze; preserve original family criteria/envelope and already used cases.",
+        "roleVariant": "Existing disposable equal-contact-model Eva1 source variant, separately labelled from untouched production Eva1. Full functional-role parity still needs the public callsite admission below; no automatic superiority or speed/cost ranking."
+      },
+      "availableTransitions": [
+        {
+          "transition": "trusted identity/audience and ordinary ingress",
+          "source": "eva2/benchmark/inspect_ai_v1/cp001_native.py:144-166",
+          "property": "eva2_request_for_turn serializes a previously resolved ConversationTurn;it does not infer a private owner. Existing Bottie handle uses /api/chat and native ACK."
+        },
+        {
+          "transition": "exact native reply and memory readback",
+          "sources": [
+            "eva2/benchmark/inspect_ai_v1/cp001_native.py:169-196",
+            "eva2/benchmark/inspect_ai_v1/ev003_bottie_readback.py:15",
+            "eva2/evidence/product/p2-independent-partial-results-20261006.json"
+          ],
+          "property": "Use source-bound real scoped journal/database readback with canonical native conversation identity. The past missing web:prefix error stays an evaluator error and is not replayed."
+        },
+        {
+          "transition": "native scenario clocks",
+          "sources": [
+            "eva2/benchmark/inspect_ai_v1/ev003_node_calendar.mjs:7",
+            "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py:419-433"
+          ],
+          "property": "Existing source-bound calendar refresh/ACK preserves native auth/monotonic domains. No HTTP service clock is needed for this selected contact/memory-only shape."
+        },
+        {
+          "transition": "shared provider/tool accounting and stop",
+          "sources": [
+            "eva2/benchmark/inspect_ai_v1/cp001_accounting.py:158",
+            "eva2/benchmark/inspect_ai_v1/cp001_http_accounting.py:110",
+            "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs:217-232",
+            "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py:52-61"
+          ],
+          "property": "Every dispatched foreground/helper/memory request and native tool dispatch is charged to one unchanged sample ledger;failed/unknown attempts and native cancellation remain visible."
+        }
+      ],
+      "smallestOutstandingAdmissionTransition": {
+        "name": "functional purpose at existing provider request boundary",
+        "evidence": [
+          "cp001_bottie_worker.mjs:143-146 configuredRole and183-185 bindRequest derive role from model/effort;221-224 compare the same derived classification.",
+          "p1_eva2_native_worker.py:154-160 derives core role from model;52-61 and226-232 explicitly classify memory/delegated providers as helper.",
+          "Original execution plan models requires Sol/none for contact and Astra/medium for research/work/memory helpers;model equality alone does not prove request-purpose equality."
+        ],
+        "minimum": "Bind the next candidate existing request callsites to their public native function purpose before inference;verify foreground contact versus every actual research/work/memory helper against the original map. Use retained source metadata/hooks and unchanged ledger;do not infer purpose from an answer,cache label or selected model after the fact.",
+        "noSourceOnlyGo": "This review neither changes hooks/product code nor proves the pending SDK assistant-history compatibility correction. If actual purpose cannot be bound within the unchanged native route,that participant/variant stays UNKNOWN rather than changing criteria or silently remapping its model.",
+        "scope": "One selected contact/memory pair only;not a mandate to build a role system or general evaluation platform."
+      },
+      "candidateGate": {
+        "newFreezePresent": false,
+        "pendingOwnerReportedDevelopment": "Root is investigating an assistant-text/SDK continuation-history provider incompatibility;no new frozen candidate has been supplied.",
+        "requiredBeforeExecution": "Finish and bind the actual provider delta/source/images/config to the original provider route,then freeze the full candidate before independent unseen curation and exact runtime admission. Reuse valid unchanged admission parts and check the delta;no paid route,fallback,authentication change or silent old-freeze substitution.",
+        "approvalIsNotRuntimeEvidence": true
+      },
+      "generalActionGapNotSelectedForThisPair": {
+        "source": "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs:164-173",
+        "fact": "recordTool admits only onthoud,zoek_geheugen,zoek_gesprek or commit_turn_understanding;any other advertised native tool stops before dispatch. Eva2 has an existing action_control_file→ActionAccounting transition in p1_eva2_native_worker.py:175-186 and219-242;equivalent Eva1 action admission is not established.",
+        "consequence": "A cross-domain/browser/learning action comparison cannot be called equal solely because both products support tools. The missing transition is native general-action allowlist/authority→actual existing executor→shared accounting→independent effect readback for Eva1;not a missing product feature or competitor loss.",
+        "notAuthorizedByThisDecision": "No extra tool,fixture endpoint,hint,service metadata injection,new discovery layer or recreated native capability. Original source-discovery/time uncertainty remains unchanged;no spent final case is repaired or rerun."
+      },
+      "unchangedBudget": {
+        "source": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+        "family": "conversation_memory",
+        "perSampleLimits": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "wallSeconds": 480,
+          "toolDispatches": 16,
+          "speechRequests": 0
+        },
+        "aggregateLimitsPerParticipant": {
+          "providerAttempts": 576,
+          "providerInputTokens": 37748736,
+          "providerOutputTokens": 691200,
+          "wallSeconds": 17280,
+          "toolDispatches": 576,
+          "speechRequests": 0
+        },
+        "providerRoute": "Existing registered subscription routes only; no paid fallback or automatic model escalation",
+        "models": {
+          "contact": {
+            "model": "gpt-6-sol",
+            "reasoningEffort": "none"
+          },
+          "allResearchWorkAndMemoryHelpers": {
+            "model": "gpt-6-astra",
+            "reasoningEffort": "medium"
+          },
+          "providerRoute": "Existing registered subscription routes only; no paid fallback or automatic model escalation"
+        },
+        "subsetDoesNotExpandBudget": true,
+        "allFailedPreparationAndActualAttemptsCountWhenDispatched": true,
+        "noAutomaticRunStarted": true,
+        "runtimeCreditCost": null,
+        "codexDevelopmentCredits": null
+      },
+      "preservation": {
+        "closedRoundsRescored": false,
+        "closedCasesReplayed": false,
+        "privateDatasetRead": false,
+        "newCriteriaOrTaskIds": false,
+        "oldLossesAndUsagePreserved": true,
+        "P22PublicationUnchanged": true,
+        "humanRatingsStillRequiredByOriginalScorer": true,
+        "fullP21AndGeneralSuperiorityStillOpen": true,
+        "speech": "parked_no_action"
+      },
+      "sourceBindings": [
+        {
+          "path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+          "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479"
+        },
+        {
+          "path": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+          "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+        },
+        {
+          "path": "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+          "sha256": "d9135079c1e2ce8b91cb57b4d1d39b376cb031f0fb9bedda2aa1f8958b58c73b"
+        },
+        {
+          "path": "eva2/benchmark/inspect_ai_v1/cp001_native.py",
+          "sha256": "586322f040fdc42c87559ccea6171c8a9715caf7af9d4298404a711431e01f7b"
+        },
+        {
+          "path": "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py",
+          "sha256": "c4f08df0d4fcaae19ee09326300faf2e5a6af4019ba86c9629e50c4232a8a978"
+        },
+        {
+          "path": "eva2/benchmark/inspect_ai_v1/ev003_bottie_readback.py",
+          "sha256": "53cffd1d746d05c4f93b5246bcf48086048c0b9d7b75cd42667d188a511c7568"
+        },
+        {
+          "path": "eva2/benchmark/inspect_ai_v1/ev003_node_calendar.mjs",
+          "sha256": "c1b0c30fa97c511b3b8adde7778442fc82e04cb98a98a9e80169a2fef963c602"
+        },
+        {
+          "path": "eva2/benchmark/inspect_ai_v1/ev003_python_calendar.py",
+          "sha256": "2d00941d259ba2576c4c7703e5717834118286b35281002d0f671c379a691c48"
+        },
+        {
+          "path": "eva2/benchmark/inspect_ai_v1/cp001_accounting.py",
+          "sha256": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f"
+        },
+        {
+          "path": "eva2/benchmark/inspect_ai_v1/cp001_http_accounting.py",
+          "sha256": "4d9b60a996b4fb221b5ad2cd77072ac36432b5349c3f0fbf96c81ba640ff8b85"
+        },
+        {
+          "path": "eva2/evidence/product/p2-cm-binding-review-20261005.json",
+          "sha256": "2331d2838bbcb5b92c8b07b597b44f043500512ac4d12ca661173ff798bbe653"
+        },
+        {
+          "path": "eva2/evidence/product/p2-independent-partial-results-20261006.json",
+          "sha256": "541018d2900403c5e000b3b1aa386fb22e38292fbdf537fa2bd2c0a62a6da601"
+        },
+        {
+          "path": "eva2/reviews/p2-native-admission-contract-review-20261006.json",
+          "sha256": "5ddad1db2d7d84ef1dab5398ac974677cfd527e5ae0fab06a1f18b5b7c8598d1"
+        }
+      ],
+      "workPerformed": {
+        "controlledProviderCalls": 0,
+        "nativeRuns": 0,
+        "authOrResourceChanges": 0,
+        "productOrWorkboardOrGitEdits": 0,
+        "privateCasePromptRubricReads": 0,
+        "codexDevelopmentCredits": null
+      },
+      "nextAllowedAction": "Coordinator provides the actual new candidate freeze and a source-bound functional-role admission delta. Independent curator may then prepare only the selected unchanged-family paired assessment. No original inference is admitted by this source-only artifact."
+    }
+  },
+  "functionalModelRoleAdmission": {
+    "decision": "GO_for_source_bound_model_role_condition_of_selected_ordinary_CM_route_only",
+    "executionGo": false,
+    "noNewModelPolicyOrHookRequired": true,
+    "originalCriterion": "Sol/none for foreground contact; Astra/medium for every actual research/work/memory model helper. Identical helper topology or artificial helper calls are not a criterion.",
+    "providerRoute": "Existing registered subscription route to https://chatgpt.com/backend-api/codex/responses. Actual endpoint/model/reasoning-effort must match before dispatch; no API-key/paid fallback or role escalation.",
+    "callsiteMapping": [
+      {
+        "participant": "eva1-bottie_equal_contact_variant",
+        "callsite": "/home/administrator/project/Bottie/src/mind/agent.js:4250,4335-4378",
+        "function": "understandRuntimeTurn -> understandTurn -> complete -> chatComplete",
+        "purposeEvidence": "The native function interprets and binds the actual current interactive user turn and its first decision; agent.js:4364-4366 explicitly identifies the compact interactive route rather than coding/research. understanding.js:3457,3522,3544-3557 calls the supplied completion for that current envelope.",
+        "purpose": "foreground_contact_turn_interpretation",
+        "modelSource": "config.modelVoice = EVA_MODEL_VOICE; ordinary chat effort config.reasoningChat = EVA_REASONING_CHAT at agent.js:4367-4370; native config.js:511-518.",
+        "admittedModel": "gpt-6-sol",
+        "admittedReasoningEffort": "none",
+        "actualConfiguredBinding": "Original public p1-native-source-binding-20261003.json equalModelVariant.models already declares EVA_MODEL_VOICE=gpt-6-sol and EVA_REASONING_CHAT=none; actual disposable source/environment must match this preserved variant before the new run.",
+        "dispatcher": "/home/administrator/project/Bottie/src/brain/llm.js:580-618 serializes model and explicit reasoning;335-399 keeps native registered subscription dispatch.",
+        "nativeAccounting": "cp001_bottie_worker.mjs:183-185 scopes the native request;217-245 checks exact endpoint and wire settings then emits request_id/role/model/reasoning_effort before dispatch.",
+        "nativePurposeMarker": "Source-set prompt_cache_key eva-turn-understanding-chat at agent.js:4371-4374 identifies this branch inside the actual native request; purpose is established from the source/function, not inferred from this marker or model alone."
+      },
+      {
+        "participant": "eva1-bottie_equal_contact_variant",
+        "callsite": "/home/administrator/project/Bottie/src/mind/agent.js:5271,5362,5381-5396",
+        "function": "composeEvaReply -> chatComplete",
+        "purposeEvidence": "The native function composes only the immediate user-facing reply after interpretation/execution, with tools=[] and evidence from the current turn. No new research/task execution is delegated by this call.",
+        "purpose": "foreground_contact_reply_or_native_reply_repair",
+        "modelSource": "config.modelVoice at native agent.js:5389; original stock composer effort low at5390. The pre-existing, explicitly declared p1_bottie_equal_model.patch changes only that effort expression to config.reasoningReply; variant EVA_REASONING_REPLY=none.",
+        "admittedModel": "gpt-6-sol",
+        "admittedReasoningEffort": "none",
+        "variantBoundary": "Stock low-effort reply is not equivalent to the original none-effort criterion. Only the already declared disposable equal-contact variant is eligible; production Eva1 remains unchanged.",
+        "dispatcherAndAccounting": "Same native chatComplete/body/subscription hook/ledger chain as turn interpretation. All existing native repair attempts count; no best-of retry.",
+        "nativePurposeMarker": "Source-set eva-grounded-reply or eva-grounded-reply-repair at agent.js:5391, not a newly injected purpose or input."
+      },
+      {
+        "participant": "eva1-bottie",
+        "callsite": "/home/administrator/project/Bottie/src/mind/tools.js:3874-3896,3953-4019;src/db.js:4150-4174,4308-4350",
+        "function": "handleOnthoud/handleZoekGeheugen/handleZoekGesprek -> native SQLite functions",
+        "purpose": "native_memory_tool_execution_without_provider_model_call",
+        "admittedModel": null,
+        "admittedReasoningEffort": null,
+        "purposeEvidence": "The admitted handlers import addMemory/searchMemories/searchTelegramMessages from db.js and execute native DB/search/filter operations. They do not invoke a separate memory LLM.",
+        "accounting": "cp001_bottie_worker.mjs:164-189 preserves actual allowed tool/protocol dispatch accounting. Native database work remains in elapsed time and tool observations; absence of a helper LLM is not missing accounting and is not replaced by a forced Astra call."
+      },
+      {
+        "participant": "eva2",
+        "callsite": "eva2/src/eva/bootstrap/runtime.py:1896-1914;eva2/src/eva/application/conversation.py:833-835,1065-1104",
+        "function": "LivingConversation ordinary user turn -> contact_model.generate -> PydanticConversationModel provider",
+        "purpose": "foreground_contact_reply_and_native_memory_search_receipt_continuation",
+        "purposeEvidence": "runtime constructs a distinct contact model from conversation_contact_model/effort. LivingConversation selects it for ordinary non-initiative contact and for actual memory-search/status/acceptance receipts; tool execution or initiative work selects the separate work model.",
+        "admittedModel": "gpt-6-sol",
+        "admittedReasoningEffort": "none",
+        "modelSource": "RuntimeSettings contact validation at runtime.py:268-277; constructor1896-1909; provider takes self._model/self._reasoning_effort at pydantic_conversation.py:1094-1105. The preserved previous public runtime binding recorded EVA_CONVERSATION_CONTACT_MODEL=gpt-6-sol and CONTACT_REASONING_EFFORT=none; new freeze must independently retain them.",
+        "actualDispatchAccounting": "p1_eva2_native_worker.py:154-164 wraps the real provider; cp001_http_accounting.py:128-139 checks actual POST endpoint/model/effort against the one sample ledger before dispatch.",
+        "purposeTraceBoundary": "The generic core wrapper alone derives role from settings.model_name and does not contain a functional-purpose field. Purpose is bound prospectively to the actual source-selected model instance above; model name by itself is not the admission proof."
+      },
+      {
+        "participant": "eva2",
+        "callsite": "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py:52-61,322-346,365-372",
+        "function": "native MemoryEngine/Hindsight CodexLLM.call -> retained native client -> bound helper transport",
+        "purpose": "memory_model_helper",
+        "purposeEvidence": "The worker retains native memory engine, actual CodexLLM.call/parser/client options and schema/scope; only existing transport observation is bound. Unlike a foreground reply that uses memory, this is a separate native memory model call.",
+        "admittedModel": "gpt-6-astra",
+        "admittedReasoningEffort": "medium",
+        "actualDispatchAccounting": "bind_memory_client explicitly supplies role=helper at52-61; actual wire model/effort are checked by ResponsesSampleTransport and ProviderSampleLedger.begin:177-189. A different actual memory setting refuses dispatch, not silent contact classification.",
+        "configurationBoundary": "The exact new native memory image/config/role settings remain a candidate-freeze prerequisite. This source-only mapping establishes purpose and required wire settings, not an unseen runtime configuration.",
+        "noTopologyParityClaim": "Count every actual helper/retry/preparation dispatch and its tokens. Eva1 DB-only memory need not generate a corresponding helper model call."
+      },
+      {
+        "participant": "eva2",
+        "callsite": "eva2/src/eva/bootstrap/runtime.py:1812-1823;eva2/src/eva/application/conversation.py:1077-1081;eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py:226-232",
+        "function": "work/initiative model or delegated-work provider",
+        "purpose": "research_work_helper_if_actually_dispatched",
+        "admittedModel": "gpt-6-astra",
+        "admittedReasoningEffort": "medium",
+        "scope": "Not requested by the selected ordinary CM outcome. If actually dispatched, it receives no free/foreground relabelling: same sample ledger, helper role, actual settings and original authority/limits."
+      }
+    ],
+    "nonComparableNativePaths": [
+      {
+        "participant": "eva1-bottie",
+        "source": "/home/administrator/project/Bottie/src/mind/agent.js:2805,9680-9684,9960-9964",
+        "fact": "Other existing monitoring/autonomous continuation/read-investigation decision callsites use modelVoice with native autonomy effort or explicit low (ordinary recovery). They are not the proven ordinary contact callsites. The existing equal-contact variant does not remap them to Astra/medium.",
+        "consequence": "No inferred contact equivalence or policy change for these paths. Sol/low or another unsupported setting is refused by configuredRole before native provider dispatch. If a selected execution requires an unbound functional path, report the admission/role mismatch explicitly as UNKNOWN, preserve all already dispatched usage and do not modify or replay the case to improve its score."
+      }
+    ],
+    "traceLimits": {
+      "existingProviderBeginCarries": [
+        "request_id",
+        "role",
+        "model",
+        "reasoning_effort"
+      ],
+      "existingBeginDoesNotCarry": "A separately attested function/callsite or purpose identifier.",
+      "whatThisProves": "The previously missing public functional map for the bounded ordinary foreground route and explicit separate memory-helper route, combined with unchanged source-bound constructors/dispatch guards.",
+      "whatThisDoesNotProve": "Universal role observability, equal native architectures, unseen future callsite purposes, new candidate runtime identity, or complete task execution/results.",
+      "preExecutionRequirement": "Pin these callsite/config/variant/worker/dispatcher hashes in the actual new candidate/native bindings; if any relevant function or requested settings differ, admission remains UNKNOWN before inference rather than deriving purpose from a returned answer."
+    },
+    "executionConsequence": "Functional-role uncertainty no longer requires implementation or a new role layer for this selected ordinary CM pair. Execution is still NOT admitted: coordinator must supply actual installed candidate freeze and source/config/images binding. Independent curator may then prepare just the single still-unseen original-family case and one original epoch under unchanged limits; no closed case replay or automatic next matrix.",
+    "controlledModelCalls": 0
+  },
+  "nativeOriginalPublicSourceBindings": [
+    {
+      "path": "/home/administrator/project/Bottie/src/config.js",
+      "sha256": "d80810b1ba973ebd5ab37f21f99c8ac953af13e12a47d6e3544e976064035f90",
+      "matchesOriginalPublicNativePin": true
+    },
+    {
+      "path": "/home/administrator/project/Bottie/src/mind/agent.js",
+      "sha256": "566f36c7819d97f90ec2c5917bcf8edf67d8d4014ad5d05a6810cda02a619383",
+      "matchesOriginalPublicNativePin": true
+    },
+    {
+      "path": "/home/administrator/project/Bottie/src/mind/understanding.js",
+      "sha256": "c49f38ebd78b48fada86df1f6017212dea2b3c514b8ba08b955e9ca7016c6c71"
+    },
+    {
+      "path": "/home/administrator/project/Bottie/src/mind/tools.js",
+      "sha256": "4dd4474278836e4a7b2883c9271a6e140b3db7ced738359de2b34bf3b392c212"
+    },
+    {
+      "path": "/home/administrator/project/Bottie/src/brain/llm.js",
+      "sha256": "9390dbc97d282a406a8d1a631c3b29f7aadfe7628419a1ed785ad4dcccc65ed6",
+      "matchesOriginalPublicNativePin": true
+    },
+    {
+      "path": "/home/administrator/project/Bottie/src/db.js",
+      "sha256": "ed9834e415019f61705b6cd3fb47539b3bd7684a56f68a64759b04885cafa73c"
+    }
+  ]
+}

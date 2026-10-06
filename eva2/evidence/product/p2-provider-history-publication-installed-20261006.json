@@ -1,0 +1,50 @@
+{
+  "contract": "EvaComparisonFollowupPublicationInstalled/v1",
+  "checkedAt": "2026-10-06T09:46:55.693734+00:00",
+  "route": "http://127.0.0.1:44712/",
+  "tab": "Concurrenten & keuzes",
+  "projectStateStatus": 200,
+  "pageStatus": 200,
+  "assetStatus": 200,
+  "newAsset": "/assets/index-C5tC4566.js",
+  "servedAssetMatchesBuiltArtifact": true,
+  "publicFollowupMatchesArtifact": true,
+  "formalScores": [
+    "UNKNOWN",
+    "UNKNOWN"
+  ],
+  "validQualityComparisonPairs": 0,
+  "previousCmRowsRetained": 12,
+  "previousXdRowsRetained": 2,
+  "originalSmallTasks": 44,
+  "completedSmallTasks": 34,
+  "P2_1Complete": false,
+  "R1_1Complete": false,
+  "newModelTrialsDuringPublication": 0,
+  "renderedBrowserVerification": false,
+  "verificationBoundary": "Project-profile production build, live HTTP data and exact served JS bundle; no claim of a new rendered browser assessment.",
+  "dataPreserved": true,
+  "speechChanged": false,
+  "bindings": [
+    {
+      "path": "eva2/evidence/product/p2-provider-history-published-results-20261006.json",
+      "sha256": "1dbf8bd468f7cffb2c175983565f48db68dfa5b0416daa653f35a7e3ed6db37b"
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx",
+      "sha256": "065ab9256a114663dc7deeb8e26969a7836924d92f28e41fd9e8371088c4b634"
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/project-dist/index.html",
+      "sha256": "2485f4ab6a5bd867faa9cb921b80745e9d5edb1c1728d871c444e7cda53bba44"
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/project-dist/asset-manifest.json",
+      "sha256": "3ff837ac8961c7568b76f8d4a59c0513c06f3a5f538fc10c1949545370eeb606"
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/project-dist/assets/index-C5tC4566.js",
+      "sha256": "9bc30bd16d6e316a7b14d35e5638bfde55f5575778f775461c33431d846d0751"
+    }
+  ]
+}

@@ -1,0 +1,237 @@
+{
+  "contract": "EvaP2ProviderHistoryNativeSourceReview/v1",
+  "reviewedAt": "2026-10-06T09:16:04.149196+00:00",
+  "reviewer": "/root/r1_final_followup_20261006",
+  "decision": "GO_FOR_PREDECLARED_SINGLE_CM_PAIR_AS_EXPLICIT_CONFIGURATION_VARIANT",
+  "sourceBindings": {
+    "driverPath": "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_driver.py",
+    "driverSha256": "347c1047df78ed30cf17853524cd8647140d7241dff425d5d416a61fc2c048ce",
+    "gluePath": "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py",
+    "glueSha256": "f6288c6f2364efbe7a8aa635e30baf6af64031debe91d47da6ecddfa807eab1c",
+    "supersededPreReviewDriverHashes": [
+      "9d4d562c82eaf8aac8eef55ec11a1e2ace3996e8eb54404a62ea46510bdbbf15",
+      "deeca61a130e972f1ea69afb76386fefcedaa5b0d874a55e2c35340a840b70ed"
+    ],
+    "publicDependencySha256": {
+      "p1_eva2_native_worker.py": "c4f08df0d4fcaae19ee09326300faf2e5a6af4019ba86c9629e50c4232a8a978",
+      "p1_model_tunnel.py": "12bd58796a92eb09096dab3a484ed3aeb6d5c8f1724fccdc2827ffa3f269bb08",
+      "cp001_native.py": "586322f040fdc42c87559ccea6171c8a9715caf7af9d4298404a711431e01f7b",
+      "cp001_process_accounting.py": "e2d1d3d63e64f84da2ddeef2bf032fe9e5b5153a50abddf0db9fe75dc607a774",
+      "cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f",
+      "cp001_bottie_worker.mjs": "d9135079c1e2ce8b91cb57b4d1d39b376cb031f0fb9bedda2aa1f8958b58c73b",
+      "ev003_python_calendar.py": "2d00941d259ba2576c4c7703e5717834118286b35281002d0f671c379a691c48"
+    },
+    "supersededPreparationDriverHashes": [
+      "20e2045b246f67bf0bc84ddfd76d7f623b4b7a6c985becfc2afc9fe8a8422688",
+      "21593891b442efca7696acbf41903b59aedebb40ffe17a8d6e33d906dd9ea0ab",
+      "fe5b8d213cab2ca43289135d60ccee0fbedea5bd58a7b67734b8c55c94c35bbd"
+    ],
+    "causalSourceSha256": {
+      "eva2/src/eva/providers/procedure_reference_actions.py": "33461c2b20e33d277da37aac3985930489f3222a62cd41f63589fa643ecb67d5",
+      "eva2/src/eva/bootstrap/runtime.py": "33f6d10ca3398165bd49e34d4fc0d73ff04c23ad8ce862f6b7182da083b4400a",
+      "eva2/src/eva/application/conversation.py": "7e64d5f146c8d6a0bdac4a6d5564d2f92954b6764fdb8af6ec54bf3ef9502a62",
+      "eva2/design/product/comparable-agent-benchmarks-v1.md": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+      "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    }
+  },
+  "scope": "Public driver/glue source and relevant public original native contracts only. One predeclared conversation/memory pair, one epoch. No case/oracle/scorer/private prior launcher or processing code was read.",
+  "sourceChecks": {
+    "originalNativeMechanismsReused": true,
+    "originalPerSampleLimitsUnchanged": true,
+    "nativeSubscriptionTransportAndParentAccountingReused": true,
+    "nativeRawUsageAndUnattestedStopBoundariesRetained": true,
+    "nativeScenarioCalendarAndActualAuthClockRetained": true,
+    "actualCoreProcessUser": "65532:65532",
+    "actualMemoryProcessUser": "1000:65532",
+    "controlNamespaces": "core permits contact/helper; memory permits helper only; distinct per-namespace token and UID-readable 0600 file",
+    "readonlyCoreLeaseMount": true,
+    "readonlyMemoryLeaseCacheMountSelection": true,
+    "readonlyIdentityAndCalendarDependencyMounts": true,
+    "coreAppDSNSelectedInsteadOfProductionDSN": true,
+    "nativeFreshMemoryDatabaseCheckRetained": true,
+    "backgroundAndDelegatedWorkDisabledForCM": true,
+    "nativeDispatchDenialRetainedWithoutActionAllowlist": true,
+    "productionPersonalMemoryDatabaseOrHouseIntegrationMounted": false,
+    "BottieReadback": "Read-only SQLite prepared public_body_json joined to exact web ingress request/conversation; original independent_readback validates native response identity/content.",
+    "BottieAck": "Existing native sign_ack valid signs last successful HTTP delivery tuple; actual /api/http-delivery/ack receives native signed body. No fabricated ACK/oracle is supplied.",
+    "profiles": {
+      "contact": "gpt-6-sol/none",
+      "helper": "gpt-6-astra/medium"
+    },
+    "memoryHelperVariantExplicitlyLabeled": "Installed gpt-5.6-luna/low versus comparison gpt-6-astra/medium; not an unchanged installed baseline",
+    "oneProtectedProcessorEntryAfterCurationAndAdmission": true,
+    "priorOutputsAndControlFilesPreservedByNewB2Paths": true,
+    "noCaseOrOracleDefinedInPublicGlue": true,
+    "publicSourceParsesWithoutExecution": true,
+    "priorOutputsAndControlFilesPreservedByNewB5Paths": true,
+    "existingNativeEmptySchemaGuardReused": true,
+    "originalNativeHealthRoutes": "Core /healthz; memory /health. Both require health 200 and original scenario clock receipt.",
+    "readonlyInstalledCacheAndCudaBindings": true,
+    "procedureReferenceOptInExplicitlyDisabledInSource": true,
+    "conversationMemoryProviderIndependentOfProcedureOptIn": true,
+    "originalMemoryRecallOutboxPersonScopeAndRecentHistoryWiringPreserved": true
+  },
+  "contentFreeActualAdmissionReportedByRoot": {
+    "reviewerDidNotReadCredentialFiles": true,
+    "resource": {
+      "uid": 65532,
+      "gid": 65532,
+      "mode": "0711"
+    },
+    "coreDsn": {
+      "uid": 65532,
+      "gid": 65532,
+      "mode": "0600",
+      "database": "eva_core_sample",
+      "role": "eva_dbos",
+      "actualNonSuperuserLoginVerified": true
+    },
+    "memoryDsn": {
+      "uid": 1000,
+      "gid": 65532,
+      "mode": "0600",
+      "database": "eva_memory_sample",
+      "role": "postgres",
+      "newIsolatedClusterOnly": true
+    },
+    "runtimeBudget": {
+      "uid": 65532,
+      "gid": 65532,
+      "mode": "0600",
+      "originalNumericLimitsEqual": true
+    },
+    "network": {
+      "name": "eva2-p2ph-cm-20261006",
+      "internal": true,
+      "subnet": "198.18.221.0/24"
+    }
+  },
+  "concreteBlocker": null,
+  "remainingAdmissionBeforeCaseEntry": [
+    "The independent evaluator commits original plan/candidate/config/catalog/runtime/dataset bindings for the single pair before its first provider call.",
+    "Both arms retain the original required CM capabilities, cases, criteria, provider roles, single sample envelope and cancellation/accounting boundaries.",
+    "No additional epoch, hidden retry, production gateway mount, usage reset or changed scorer is authorized."
+  ],
+  "reviewerActions": {
+    "privateCaseOracleScorerFilesRead": 0,
+    "previousPrivateLauncherRead": 0,
+    "modelsLoaded": 0,
+    "providerCalls": 0,
+    "experimentsExecuted": 0,
+    "databaseConnections": 0,
+    "productOrDriverCodeChanges": 0
+  },
+  "limits": [
+    "GO is a public source/configuration admission review for the already declared one CM pair, one epoch; no score or semantic result is supplied.",
+    "Installed Eva2 functionality has not been removed by this isolated comparison setting.",
+    "Procedure reuse and autonomy are excluded from this variant claim; a CM result cannot settle those product outcomes.",
+    "Actual resource readiness and zero pre-case attempts are evaluator-reported metadata, explicitly distinguished from reviewer source inspection.",
+    "Bottie process/lease/fresh state and protected curation/scoring remain the independent evaluator responsibility; reviewer reads no cases, oracle, scorer or previous private launcher.",
+    "All earlier setup failures and output paths remain retained; no unmodified retry or better-score rerun is approved."
+  ],
+  "reviewHistory": [
+    {
+      "reviewedAt": "2026-10-06T09:08:04.922828+00:00",
+      "decision": "NO_GO_FOR_CASE_ENTRY_UNTIL_CONCRETE_NATIVE_CACHE_STARTUP_GAP_RESOLVED",
+      "reviewSha256": "5757e94b056326909eb67461a3bc035371004a7a6308f2ed8cbc8e9c7d3f9d11",
+      "driverSha256": "20e2045b246f67bf0bc84ddfd76d7f623b4b7a6c985becfc2afc9fe8a8422688",
+      "glueSha256": "f6288c6f2364efbe7a8aa635e30baf6af64031debe91d47da6ecddfa807eab1c",
+      "concreteBlocker": {
+        "source": "Independent P2 agent reported native memory startup reached but missing existing installed model cache, before case curation/upstream calls.",
+        "driverLocation": "memory mount selection at lines119-121",
+        "cause": "Selection based only on destination containing .codex/cache does not include the parent volume that supplies the actual installed local embedding cache.",
+        "effect": "Native memory factory is not ready, so cases cannot run on the claimed original native resource route.",
+        "controlledProviderCallsReported": 0,
+        "casesCuratedOrEnteredReported": 0,
+        "smallestNeededChange": "Bind only the actual existing model-cache directory read-only using admitted mount metadata, then obtain original native health/calendar/accounting readiness. No download, model/profile substitution, new memory layer or case retry.",
+        "freshStateAfterSetupFailure": "If startup already initialized schema, use only original existing-empty-schema guard after banks/documents/memory_units/async_operations are independently confirmed empty; no reset or scope widening."
+      },
+      "resolution": "The actual installed model weights/cache and CUDA mount were subsequently bound read-only, with original offline flags and native process/device settings. This was preparation before any case or provider attempt."
+    }
+  ],
+  "preparationResolution": {
+    "cache": {
+      "provenance": "Independent evaluator-reported content-free installed model-cache metadata; reviewer inspected matching public read-only mount code, not cache contents or private input.",
+      "manifestSha256": "d36643cf722fd407088141414422b54669dcea290b83733b572655e3edf3c4cb",
+      "directories": 2,
+      "files": 43,
+      "bytes": 226325451,
+      "kind": "Existing local BGE-small embedding and MiniLM reranker weights/configs/symlink blobs; no credential/user data reported.",
+      "installedCudaPath": "/var/lib/eva2/hindsight-cuda/torch-2.10.0-cu128-b8e1c087cc91",
+      "cudaDestination": "/opt/eva-cuda",
+      "readonly": true,
+      "device": "nvidia.com/gpu=all",
+      "embeddingCpu": true,
+      "rerankerCpu": false,
+      "offlineFlagsPreserved": [
+        "HF_HUB_OFFLINE",
+        "HF_HUB_DISABLE_TELEMETRY",
+        "TRANSFORMERS_OFFLINE"
+      ]
+    },
+    "emptyState": {
+      "source": "Independent evaluator reported read-only SQL metadata before case entry.",
+      "memoryBankDocumentFactAsyncOperationCounts": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "coreStaticFixtureRows": 5,
+      "coreFixtureEvents": 0,
+      "existingEmptySchemaGuard": "Original native --existing-empty-schema guard validates zero logical data; no drop/reset or used-clock reset."
+    },
+    "b4ReadinessFailure": {
+      "cause": "Driver probed /health on core, whose existing native route is /healthz; factories were already healthy.",
+      "classification": "Pre-input measurement adapter failure; not a product loss.",
+      "change": "Only use the original per-worker health route and new b5 evidence paths; preserve b4 setup output.",
+      "controlledProviderAttemptsBeforeCaseEntry": 0
+    },
+    "b5Readiness": {
+      "source": "Independent evaluator content-free report; not a new reviewer runtime query.",
+      "receiptPath": "/tmp/eva2-ev003-provider-history-cm01-e1-20261006/resources-ready-b5.json",
+      "coreHealth": 200,
+      "memoryHealth": 200,
+      "clockContract": "EvaScenarioCalendar/v1",
+      "clockGeneration": 0,
+      "clockOffsetMilliseconds": 0,
+      "controlledProviderAttemptsBeforeCuration": 0,
+      "hiddenCasesEnteredBeforeReview": 0
+    }
+  },
+  "configurationVariantDecision": {
+    "literalInstalledEva2Configuration": false,
+    "procedureReferences": {
+      "installed": true,
+      "comparison": false,
+      "cause": "The opt-in provider requires an owner mandate and MCP gateway; mounting the real owner gateway would violate isolated CM resource admission.",
+      "actualRemovedCapabilities": [
+        "designate_reusable_procedure",
+        "list_reusable_procedures",
+        "resolve_reusable_procedure",
+        "run_reusable_procedure when an executor is configured",
+        "active context from explicitly saved reusable procedure references"
+      ],
+      "notJustAPathCorrection": true,
+      "retained": "LivingConversation receives the separate semantic memory provider and private-history search; PostgresHindsightMemoryRuntime and the cold-path memory outbox/erasure pipeline remain constructed independently of this opt-in provider.",
+      "scopeMapping": "The original public CM family requires conversation continuity, memory correction/forgetting and person boundaries with controlled clock and isolated identity/memory. Learned skill/procedure reuse belongs to the separately declared learning/project family. This GO does not cover that family.",
+      "notInferredFromWorkUnitBudget": true,
+      "nativeActionDenialRetained": true
+    },
+    "memoryHelpers": {
+      "installed": "gpt-5.6-luna/low",
+      "comparison": "gpt-6-astra/medium",
+      "originalDeclaredRoleMapPreserved": true
+    },
+    "unchangedCopiedSettings": [
+      "identity pack/name/description/trust",
+      "recall token/node/budget settings",
+      "contact/work profile settings",
+      "cold-path idle interval",
+      "personal-interest lease interval"
+    ],
+    "existingCmExclusions": "Background autonomous and delegated work remain disabled; no house gateway, private production memory database or side-effect permission is introduced.",
+    "preCaseAdmission": "Record these exact config changes, resulting public tool catalog, source hashes and requested CM capabilities in the original sealed native admission before the one planned pair. This is the existing equal-capability/config-pinning prerequisite, not a new criterion.",
+    "claimBoundary": "Results describe this isolated CM configuration variant only; they are not results for unchanged installed Eva2, autonomous procedure execution, learning/projects, the entire CM family or overall competitive superiority."
+  }
+}

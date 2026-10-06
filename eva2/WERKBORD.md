@@ -1,8 +1,19 @@
-## 6 oktober — providercorrectie geïnstalleerd; aparte eindvergelijking actief
+## 6 oktober — aparte eindvergelijking gesloten; geen geldig kwaliteitspaar
 
-De kleinste **generieke providervervolgcorrectie draait in kern én werker**: bronhash exact, beide healthy;40/40 offlineproviderchecks en per nieuweimage2/2 echteSDKmockgevallen. Geen nieuwe dependencies/schema/spraakwijziging. Geen echte modelcalls tijdens reparatie/installatie. Gesloten R1-bewijs is intern behouden zonder inhoud naar host/chat te kopiëren. R1 blijft UNKNOWN; deze reparatie bewijst geen innovatie of voltooiing van R1.1.
+| Nieuwe ronde | Werkelijk resultaat |
+| --- | --- |
+| Eva1 | Drie native antwoorden opgeslagen en teruggelezen; formele kwaliteit **UNKNOWN**. |
+| Eva2 | Geen bevestigd antwoord; de meetprocessor meldde ValueError, exacte foutbron **UNKNOWN**. |
+| Vergelijking | **0 geldige kwaliteitsparen; geen winnaar of snelheidsvoordeel.** |
+| Verbruik | 0 aanroepen geregistreerd binnen de meetpunten; volledig SDK-verbruik en creditkosten **onbekend**, geen nulverbruikclaim. |
 
-**P2.1 actief:** kandidaat en functionele modelrollen onafhankelijk GO. Verse geïsoleerde testpersoon/schema/geheugenbudget/applicatielogin zijn gereed; de onafhankelijke beoordelaar sluit de bestaande native meet- en scoreinterfaces aan voor één ongeziene gewone contact/geheugenpair tegenover Eva1. Setup gebruikte0 gecontroleerde providercalls; modelverbruik van de echte proef wordt apart gerapporteerd. Jaaps toestemming geldt; geen automatische volledige matrix. Alle criteria/44 taken/acceptaties behouden.34/44 blijft34/44; beperkte vergelijking is geen nieuwe huisgenootfunctie. Geen nieuwe handeling van Jaap nodig.
+Eén nieuw contact-/geheugengeval, epoch 1, beide systemen eenmaal. De configuraties waren geïsoleerde vergelijkingsvarianten, niet de letterlijke geïnstalleerde configuraties. Zelfstandig werk en procedureleren zijn niet beoordeeld. Voorbereidingsfouten en eerdere resultaten blijven apart bewaard. Proefprocessen gestopt, bewijs bewaard; geen herhaling of automatische volledige matrix.
+
+De generieke providervervolgcorrectie blijft geïnstalleerd in kern en werker, met onafhankelijke GO en gerichte offlinecontrole. Zij bewijst geen AIDE²- of vergelijkingsvoordeel. **34/44 oorspronkelijke kleine taken klaar; P2.1 en R1.1 blijven open.** Spraak geparkeerd. Nu geen handeling van Jaap nodig.
+
+**Hierna, nog niet gestart:** Codex verklaart gericht de exacte native meetroute en meetfoutbron met openbare diagnostiek vóór een nieuwe modelproef. Het bestaande dashboard toont de onbekende uitslag naast de onveranderde eerdere winsten/verliezen. Publicatie onafhankelijk **GO**; live HTTP-gegevens en exacte projectbundel gecontroleerd. Geen nieuwe browserrenderbeoordeling geclaimd.
+
+[Openbare uitkomst](evidence/product/p2-provider-history-independent-result-20261006.json) · [Dashboardpublicatie](evidence/product/p2-provider-history-published-results-20261006.json) · [Onafhankelijke GO](reviews/p2-provider-history-publication-review-20261006.json).
 
 ## 6 oktober — bewezen providervervolgfout en aparte vergelijking
 
