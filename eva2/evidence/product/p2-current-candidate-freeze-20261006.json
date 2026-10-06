@@ -1,0 +1,69 @@
+{
+  "contract": "EvaChangedCandidateBindingEvidence/v1",
+  "taskId": "P2.1",
+  "checkedAt": "2026-10-06T00:15:32.108720+00:00",
+  "state": "candidate_binding_independently_reviewed_owner_decision_pending",
+  "wholeTaskCompleted": false,
+  "candidateFreeze": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_candidate_freeze_20261006.json",
+    "sha256": "b145e0c7a6cecc69b3306aad5dba2f6afbb25e907ac56137d194822cc321c4cf",
+    "repositoryCheckpoint": "d76c7fb09149156838aab392cdce5bd067241c77",
+    "sourceIdentity": "Exact installed image/overlay provenance; not full repository HEAD installation"
+  },
+  "outcome": "Current installed digital candidate, actual core/worker model roles, configuration digests and existing evaluation-code bytes bound before any separate independent final set.",
+  "binding": {
+    "images": {
+      "eva2-managed-b-slot3-core": "sha256:17709b26406e6c96d37665e36d69c8ceaeb96dde355fe07da8fb9a5d415effd6",
+      "eva2-managed-b-slot3-delegated-work-worker-1": "sha256:78f38eae86c4935059b18829bb9eb5d055ab67b06d2e4b0da43ec95c6b8aef90"
+    },
+    "digitalSourceFilesPerImage": 4,
+    "evaluationSourcesAndLocks": 38,
+    "models": {
+      "foreground_contact": {
+        "model": "gpt-6-sol",
+        "reasoning": "none"
+      },
+      "all_model_helpers_including_memory": {
+        "model": "gpt-6-astra",
+        "reasoning": "medium"
+      },
+      "policy": "Exact role settings shared by all participants; no automatic model fallback or effort escalation in this run. Unsupported role setting is unavailable before inference."
+    },
+    "configurationDigests": "Config, HostConfig and mounts; canonical encoding recorded in frozen metadata"
+  },
+  "independentReview": {
+    "reviewer": "/root/xd01_runtime_review",
+    "decision": "GO for binding, claims and bytehashes only",
+    "freezeSha256": "b145e0c7a6cecc69b3306aad5dba2f6afbb25e907ac56137d194822cc321c4cf",
+    "findings": "All38 public pins match current bytes and Git d76c7fb0. Original freeze, plan/scorer and public referencehashes preserved. Current images/config/source/roles consistent. Other participant pins historical, no availability claim.",
+    "scope": "Prior substantive code reviews reused, no broad38-file content review",
+    "providerModelRuntimeTestHelperInstallCalls": 0,
+    "hiddenDataRead": false,
+    "writes": 0,
+    "preparationCorrection": "Local metadata checker syntax corrected before data read; no product/probe execution."
+  },
+  "verification": {
+    "realModelCalls": 0,
+    "providerCalls": 0,
+    "newTests": 0,
+    "newDatasetCases": 0,
+    "oldFinalCasesReplayed": false,
+    "originalScorerChanged": false,
+    "sourceOrInstallationChanged": false,
+    "speechChanged": false,
+    "creditCost": null,
+    "codexDevelopmentCredits": null,
+    "preparationCorrection": "Minimal image has no sha256sum. Interpreter entrypoint inspected; same read-only source hashing uses existing /usr/local/bin/python instead. No provider or model call."
+  },
+  "remaining": [
+    "Separate pending owner decision for changed-candidate final evaluation; no new final set or inference started.",
+    "Independent unseen final-set commitment after candidate freeze; preserve original criteria and historical losses.",
+    "Native access, actual helper-model settings, accounting, envelopes, stop/readback and human assessment per execution; missing participant access remains unknown.",
+    "F1.2 actual Windows restart/post-restart checks, R1 separate approval and human/family acceptance remain open. Speech parked."
+  ],
+  "limits": [
+    "Exact candidate preparation, not completed P2.1, new function, general superiority or AIDE2 improvement.",
+    "Other participant source pins are references and do not prove current native availability.",
+    "Role policy and observed core/worker settings are bound. Native isolated memory-helper settings remain an execution prerequisite; not inferred from a declaration."
+  ]
+}

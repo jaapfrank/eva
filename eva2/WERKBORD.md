@@ -1,5 +1,19 @@
 # EVA2 werkbord
 
+## 6 oktober — exacte kandidaat voor de eindvergelijking
+
+P2.1: huidige kern/werkerimages, configuratiehashes, vier digitale broncorrecties,
+daadwerkelijke modelrollen en 38 bestaande meetbron-/lockbestanden vastgelegd.
+Contact blijft gpt-6-sol/none; onderzoek/werk gpt-6-astra/medium.
+Oude freeze, meetregels en verliezen behouden; geen verborgen eindset gelezen,
+nieuwe modelproef, herinstallatie of spraakwerk.
+
+**Nu:** onafhankelijke bindingreview GO; goal **geblokkeerd**, geen modelproef of uitvoerder loopt. De bestaande afzonderlijke besluitvraag
+voor de nieuwe eindbeoordeling staat nog open. Windows-herstart voor F1.2 en R1-
+toestemming blijven afzonderlijk; **32/44 oorspronkelijke taken klaar**.
+[Concrete kandidaatbinding](benchmark/inspect_ai_v1/ev003_candidate_freeze_20261006.json)
+· [Onafhankelijke GO en grenzen](evidence/product/p2-current-candidate-freeze-20261006.json).
+
 ## 6 oktober — lokaal pakket gelijk aan huidige digitale Eva
 
 Vier al beoordeelde en geïnstalleerde digitale broncorrecties en de actuele kernpin

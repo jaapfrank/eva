@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-05T23:58:12.229163+00:00",
+  "lastUpdated": "2026-10-06T00:16:45.415750+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1007,8 +1007,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-05T23:58:12.229163+00:00",
+        "checkedAt": "2026-10-06T00:16:45.415750+00:00",
         "deliveries": [
+          {
+            "title": "Huidige eindkandidaat exact en onafhankelijk vastgelegd",
+            "date": "6 oktober",
+            "state": "investigated",
+            "result": "Actuele core/worker, configuratiehashes, broncorrecties en modelrollen gebonden aan38 bestaande evaluatiebron-/lockpins. Onafhankelijke GO; oorspronkelijke regels en verliezen behouden. Geen nieuwe Eva-modelcalls of verborgen eindset gelezen.",
+            "remaining": "Voorbereiding, geen extra afgeronde functie. Separate eindbeoordelingsbesluit staat open; nog geen nieuwe eindset of inference uitgevoerd. Algemene voorsprong onbekend.",
+            "source": "eva2/evidence/product/p2-current-candidate-freeze-20261006.json"
+          },
           {
             "title": "Lokaal installatiepakket gelijk aan huidige digitale Eva",
             "date": "6 oktober",
@@ -3813,10 +3821,10 @@
           }
         ],
         "now": {
-          "title": "F1.2 · Pakket bijgewerkt; herstart nog open",
+          "title": "P2.1 · Kandidaatbinding gereed; besluit open",
           "state": "blocked",
-          "owner": "Jaap · Windows-herstart; Codex · nacontrole",
-          "detail": "Vier reeds geïnstalleerde digitale broncorrecties en kernpin zitten nu ook in het gewone lokale pakket. Bestaande verifier en onafhankelijke review akkoord; oorspronkelijke data behouden. Geen modelproef of installatie loopt. Geen nieuwe functie groen; spraak geparkeerd."
+          "owner": "Jaap · besluit; Codex · toegelaten eindbeoordeling",
+          "detail": "Actuele images/configuratie,4 digitale broncorrecties, modelrollen en38 meetbron-/lockpins onafhankelijk gebonden. Geen nieuwe dataset/modelproef loopt. F1.2 herstart en R1-besluit blijven afzonderlijk; spraak geparkeerd."
         },
         "next": {
           "title": "Gewijzigde eindkandidaat eerlijk vergelijken",
@@ -3834,10 +3842,10 @@
           "detail": "Beantwoord de vraag in deze chat: aparte eindbeoordeling van de gewijzigde kandidaat toestaan, of nieuwe modelproeven uitstellen. Voor spraak hoef je nu niets te doen."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-05T23:58:12.229163+00:00"
+        "reviewedAt": "2026-10-06T00:15:32.108720+00:00"
       },
-      "reviewedAt": "2026-10-05T23:58:12.229163+00:00",
-      "checkedAt": "2026-10-05T23:58:12.229163+00:00",
+      "reviewedAt": "2026-10-06T00:15:32.108720+00:00",
+      "checkedAt": "2026-10-06T00:16:45.415750+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -13219,7 +13227,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 8,
+      "currentStep": 7,
       "steps": [
         {
           "number": 1,
@@ -13382,7 +13390,7 @@
           ]
         }
       ],
-      "nextAction": "F1.2-pakketbinding gereed: na echte Windows-herstart dezelfde gegevens en gewone geheugen-/resultaatopvraag controleren. P2.1 gewijzigde-kandidaatbeoordeling en R1.1 wachten op afzonderlijke bestaande eigenaarbesluiten; geen actieve modelproef. Spraak geparkeerd.",
+      "nextAction": "P2.1 aparte eindbeoordelingsbesluit afwachten; exacte kandidaatbinding en onafhankelijke GO gereed. Alleen bij besluit de toegelaten vergelijkingsroute vervolgen. F1.2 nacontrole na echte Windows-herstart; R1 apart besluit; menselijke acceptatie en spraak afzonderlijk.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -16722,13 +16730,11 @@
                 "expected": "Eén expliciet besluit over de gewijzigde eindkandidaat; geen R1-proef of automatische volledige matrixstart.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-05T23:34:24.615510+00:00",
+              "checkedAt": "2026-10-06T00:15:32.108720+00:00",
               "assignment": {
-                "baseCommit": "e02192e784dbdcb8a0e23ead621004d94aefb466",
+                "baseCommit": "d76c7fb09149156838aab392cdce5bd067241c77",
                 "owner": "/root",
-                "activeWorkers": [
-                  "/root"
-                ],
+                "activeWorkers": [],
                 "files": [
                   "/root: bewaart geïnstalleerde binding, bewijs, werkbord en Git."
                 ],
@@ -16736,12 +16742,12 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "XD01 oorspronkelijk eenmaal uitgevoerd; gemeten gebruik hieronder. Volgende oorspronkelijke proef alleen binnen de reeds vastgelegde familie-envelop. Creditkosten en Codex-ontwikkelverbruik onbekend.",
-                "currentAction": "Geïnstalleerde cataloguscorrectie en beide gewone routes afgerond; Git-broncheckpoint gepubliceerd. Onafhankelijke protocolreview klaar. Eén expliciet besluit over aparte eindbeoordeling open; geen modelproef loopt.",
+                "currentAction": "Exacte huidige kandidaatbinding onafhankelijk goedgekeurd. Geen nieuwe dataset/proef/uitvoering gestart; de bestaande afzonderlijke besluitvraag blijft open.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "e02192e7: verliesvrije gedeelde catalogusguidance, bronreview GO,134 gerichte tests plus oude assertie vastgelegd. Beide images geïnstalleerd/gezond; gewone browseropdracht en verse24-toolcatalogus+schema-uitleg geslaagd. Geen extra producttaak, spraak of algemene winstclaim."
                 },
-                "stage": "changed_candidate_evaluation_owner_decision_pending",
+                "stage": "changed_candidate_frozen_reviewed_owner_decision_pending",
                 "finding": "Beide gesloten vergelijkingen ontvingen result.isError na gateway-RPC. De bestaande adapter verwijderde de detailtekst; de innerlijke foutoorzaak is niet meer vast te stellen.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
@@ -16991,7 +16997,11 @@
                   "outcome": "Installed and focused public route checks verified; lossless model-view bytes reduced22.7% for same24-toolcatalog. Runtime price/latency and overall superiority remain unknown."
                 },
                 "contextChangeEvidence": "eva2/evidence/product/p2-catalogue-model-view-20261006.json",
-                "independentProtocolDecision": "eva2/evidence/product/p2-changed-candidate-evaluation-decision-20261006.json"
+                "independentProtocolDecision": "eva2/evidence/product/p2-changed-candidate-evaluation-decision-20261006.json",
+                "candidateFreeze": "eva2/benchmark/inspect_ai_v1/ev003_candidate_freeze_20261006.json",
+                "candidateFreezeSha256": "b145e0c7a6cecc69b3306aad5dba2f6afbb25e907ac56137d194822cc321c4cf",
+                "support": "Independent binding GO /root/xd01_runtime_review; no live executor",
+                "candidateFreezeEvidence": "eva2/evidence/product/p2-current-candidate-freeze-20261006.json"
               },
               "remaining": "CM01 beide mislukt; CM02 objectief Eva1 1/3/Eva2 3/3; CM03 onvolledige readbacks; CM04 Eva1 onvoldoende/Eva2 onbekend; CM05 Eva2 geslaagd/Eva1 onbekend; CM06 Eva2 geslaagd/Eva1 onvoldoende; CM07 beide onvoldoende en Eva1 groepsaflevering onvolledig; CM08 Eva2 geslaagd/Eva1 onvoldoende; CM09 en CM10 Eva2 geslaagd (elk 3/3+2/2), Eva1 onbekend door onvolledige uitvoering. CM11 Eva1 onvoldoende; Eva2 juiste antwoorden, verplichte geheugenvoorwaarde onbekend. CM12 beide onvoldoende; Eva2 mist opgeslagen context in het latere antwoord. XD01 Eva2 niet afgerond, Eva1 niet uitvoerbaar via de vastgelegde route (geen verliesclaim). Overige oorspronkelijke gevallen, concurrenttoegang en menselijke beoordeling blijven open. Geen algemene voorsprong of extra productfunctie. XD02: Eva2 niet afgerond; beide diensten ongewijzigd. Algemene voorsprong niet aangetoond.",
               "latestEvidence": "eva2/evidence/product/p2-xd02-independent-state-20261005.json",
@@ -17095,7 +17105,8 @@
                 "evidence": "eva2/evidence/product/p2-xd01-independent-state-20261005.json",
                 "originalCaseRepeated": false,
                 "productChange": false
-              }
+              },
+              "latestPreparationEvidence": "eva2/evidence/product/p2-current-candidate-freeze-20261006.json"
             },
             {
               "id": "P2.2",
@@ -17356,7 +17367,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "F1",
+      "activeSliceId": "P2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
@@ -17430,7 +17441,7 @@
       },
       "autonomousTechnicalGoal20261002": {
         "preparedAt": "2026-10-01T22:46:25.288933+00:00",
-        "state": "active_current_owner_priority",
+        "state": "blocked_existing_owner_decisions_and_actual_restart",
         "goalSource": "C:/Users/jaapf/.codex/attachments/d91353b6-5d5a-4de3-bb46-8f22daaa18ef/goal-objective.md",
         "replacementAppObjective": "Voer het volledige bestaande Eva2-plan uit volgens de nieuwste eigenaarcorrectie in eva2/PROJECTDOEL.md en de actuele kleine taken. Centrale uitkomst: Eva als autonome, warme en vaardige digitale huisgenoot die zelf onderzoekt, programmeert, verbetert en nuttig werk afmaakt. Eerst L3.2/L3.3: ontbrekende algemene programmeer-/uitvoerings-/releaseovergangen aansluiten en Eva een echte verbetering laten opleveren. Spraak is ondersteunend. Behoud alle planeisen, acceptaties en het technische eindpunt; geen brede herbouw of test-/installatielussen. Houd het bestaande dashboard en Git bij; onafhankelijke eindvergelijking en gezinsacceptatie blijven zichtbaar.",
         "reason": "Remove obsolete C1/provider snapshot; prioritize complete installed user outcomes and separate autonomous technical completion from family acceptance.",
@@ -17440,12 +17451,12 @@
         "retainedProjectEnd": "Full agreed comparison, seven days family use and explicit owner judgment remain open F2 work until actually fulfilled.",
         "externalDependencyRule": "Only demonstrated external access or human observation may remain open. Ordinary development defects are actionable work, not external blockers.",
         "preserveScopeAndCounts": true,
-        "appGoalStatusChecked": "active",
+        "appGoalStatusChecked": "blocked",
         "appObjectiveUpdatedByTool": false,
         "independentReview": "GO /root/open_questions_triage: complete project requirements, innovation/comparison/F2 retained; autonomous technical endpoint separate; product tasks/acceptance unchanged; goal paused and not falsely edited/activated.",
-        "appStatus": "active",
+        "appStatus": "blocked",
         "goalFile": "C:/Users/jaapf/.codex/attachments/36ce6909-bc80-479f-81f1-2154560c75b3/goal-objective.md",
-        "statusCheckedAt": "2026-10-05T23:58:12.229163+00:00"
+        "statusCheckedAt": "2026-10-06T00:16:45.415750+00:00"
       },
       "ownerAutonomyPriority20261002": {
         "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
@@ -17539,16 +17550,35 @@
         "resumeWhen": "An owner authorization/required access, actual Windows restart or specific physical-use observation unlocks the corresponding existing task. Resume that task without replaying completed work.",
         "supersededByOwnerAuthorization": "eva2/evidence/product/p2-owner-authorization-20261005.json",
         "latestContinuation": {
-          "checkedAt": "2026-10-05T23:58:12.229163+00:00",
-          "classification": "progress: actual local package aligned to installed digital candidate; same original-data baseline independently reviewed",
-          "currentEvidence": "eva2/evidence/product/f1-digital-candidate-pre-reboot-20261006.json",
+          "checkedAt": "2026-10-06T00:15:32.108720+00:00",
+          "classification": "progress: exact current installed candidate/config/models/evaluation-byte binding completed and independently reviewed",
+          "currentEvidence": "eva2/evidence/product/p2-current-candidate-freeze-20261006.json",
           "newFunctionCompletions": 0,
           "liveWorkerOrModelRun": false,
           "projectComplete": false,
           "pendingDecisionEvidence": "eva2/evidence/product/p2-changed-candidate-evaluation-decision-20261006.json",
           "windowsRestartObserved": false,
-          "previousGoalTurnProgress": "Installed lossless catalogue correction and ordinary own-browser/fresh catalogue routes verified; published ab9e2211.",
-          "condition": "Separate P2/R1 owner decisions, actual Windows restart and human acceptance still open; speech parked."
+          "blockingCondition": "P2 separate changed-candidate evaluation owner decision unanswered; R1 execution authorization unanswered; Windows restart absent; remaining human/parked voice tasks not independently actionable.",
+          "sameConditionConsecutiveGoalTurns": 3,
+          "goalTurnTrace": [
+            {
+              "checkpoint": "ab9e2211",
+              "progress": "Installed catalogue delta; separate changed-candidate question became pending."
+            },
+            {
+              "checkpoint": "d76c7fb0",
+              "progress": "Local package alignment/original-data restart baseline; same decisions/restart remained pending."
+            },
+            {
+              "checkpoint": "current candidate freeze b145e0c7",
+              "progress": "Exact candidate freeze reviewed; same owner decisions/restart unchanged."
+            }
+          ],
+          "meaningfulIndependentWorkRemainingNow": false,
+          "goalStatusChangeEligible": "blocked status applied; requested endstate not achieved",
+          "requiredAction": "One owner decision, actual Windows restart or required human observation unlocks its corresponding existing task. No new repeated model run without authorization.",
+          "goalStatusObserved": "blocked",
+          "goalStatusSource": "Successful update_goal(status=blocked), after third consecutive same-condition audit."
         }
       },
       "ownerPriority20261005": {
