@@ -1,0 +1,31 @@
+{
+  "contract": "P2HermesOriginalCm02ActualReady/v1",
+  "task": "P2.1",
+  "recordedAt": "2026-10-06T23:32:53.409743+00:00",
+  "entry": "hermes:EV003-CM-02:epoch1",
+  "exec_session": 46977,
+  "status": "actual_resources_ready_final_input_review_pending",
+  "preparation_admission_sha256": "535cd6cbcaab9319c5299ab67ddc49af945e31c9088c94a6b14d24c9a070af93",
+  "actual_ready": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/execution/actual-ready-technical.private.json",
+    "sha256": "e4588bb1cd2339e84390bff3d57308d5105883f3c6545fae5a165c3e9de2844f"
+  },
+  "actual_authority_after_reservation_sha256": "c81407bafcf16f8fe539a0e5a823adcd4c6272b2b3ee952aa7e65994faedb6b5",
+  "expected_original_authority_before_sha256": "c81cf6f0832ec1f81f760f2962b29e8bb91de5faa7c9378135a4543bbd147559",
+  "single_original_slot_reserved": true,
+  "provider_attempts": 0,
+  "input_released": false,
+  "native_context_started": false,
+  "absolute_original_deadline_created": false,
+  "native_uid": 1000,
+  "root_authority_unreadable_by_native_uid": true,
+  "parent_controller_errors": [],
+  "network_external_events": [],
+  "final_draft_sha256": "b1c7445682439984f81532cc8e35efe356b6bb0b9f93ba161b30b9988a79019d",
+  "release_draft_sha256": "31e843db579818307efb7604fe66418d5e8d24a1c9961d9a3d086eb0f316e1cd",
+  "source_pins_match": 52,
+  "auth_same_own_sha256": "c8f3c66b5b613d9d2369529a63e077d9ec5befccffd4ae225f88e195c16400b2",
+  "input_admitted": false,
+  "quality": "UNKNOWN",
+  "new_product_function_completed": false
+}

@@ -43,6 +43,7 @@ class HermesSDKAccounting:
         self.lock, self.calls, self.streams, self.clients = threading.RLock(), [], {}, {}
         self.monotonic = time.monotonic
         self.wire_dispatches = []
+        self.current_turn = None
 
     def check(self):
         from cp001_accounting import SampleStopped
@@ -148,6 +149,18 @@ class HermesSDKAccounting:
         with self.lock:
             if attempt in self.wire_dispatches:
                 raise ValueError("SDK retry is disabled; native retries require a new parent admission")
+            if self.output is not None:
+                # Retain the exact final serialized body for independent context readback.
+                # Headers/auth never enter this private artifact or the technical receipt.
+                raw = request.content
+                name = f"model-context-{len(self.wire_dispatches):04d}.private.json"
+                path = self.output.parent / name
+                fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+                with os.fdopen(fd, "wb") as capture:
+                    capture.write(raw); capture.flush(); os.fsync(capture.fileno())
+                record["model_context"] = {"file": name, "sha256": hashlib.sha256(raw).hexdigest(),
+                    "bytes": len(raw), "turn": dict(self.current_turn) if self.current_turn is not None else None}
+            self.check()  # Retention I/O must not consume the remaining dispatch window.
             self.wire_dispatches.append(attempt)
             record["http_entered_monotonic"] = self.monotonic(); self._save()
         request.extensions["timeout"] = {key: max(.001, self.deadline-self.monotonic())
@@ -455,6 +468,9 @@ def run_native_cm(args):
                     skip_memory=False,skip_background_review=False,session_id=turn["context_id"],session_db=db,
                     platform="cli",user_id=participant["provisioning"]["actor_id"],cwd=str(profile),run_budget_seconds=max(.001,deadline-observer.monotonic()))
                 agents.append(actor);prior_session=turn["session_index"]
+            with observer.lock:
+                observer.current_turn = {"ordinal": turn["ordinal"], "session_index": turn["session_index"],
+                    "calendar_generation": turn["clock"]["generation"]}
             started=observer.monotonic();result=actor.run_conversation(turn["text"])
             final=result.get("final_response")
             if not isinstance(final,str):raise ValueError("native final response absent")
@@ -467,6 +483,8 @@ def run_native_cm(args):
                    "native_result":result,"independent_readback":snapshot,"settlement":settlement,
                    "elapsed_seconds":observer.monotonic()-started,"calendar":calendar.refresh()}
             turn_results.append(entry);(output/"cm-turns.private.json").write_text(json.dumps(turn_results,indent=2,default=str)+"\n")
+            with observer.lock:
+                observer.current_turn = None
     except BaseException as exc:
         error=technical_error(exc)
     finally:

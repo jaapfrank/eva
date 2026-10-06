@@ -1,0 +1,37 @@
+{
+  "contract": "P2HermesOriginalCm02InputAdmission/v1",
+  "task": "P2.1",
+  "recordedAt": "2026-10-06T23:35:25.126218+00:00",
+  "entry": "hermes:EV003-CM-02:epoch1",
+  "exec_session": 46977,
+  "decision": "GO_ONE_ORIGINAL_CM02_INPUT_RELEASE",
+  "review": {
+    "path": "eva2/reviews/p2-hermes-cm02-actual-ready-input-review-20261007.json",
+    "sha256": "58f3dabed6b0b9126c3089b583bf4254299383774d23a3b1814dbe975bad4ad6"
+  },
+  "final_admission": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/final-input-admission.private.json",
+    "sha256": "2d1b7d18645707e87fc78e5d4853e48a4c56d728bad0a211386ce1665aca0282"
+  },
+  "actual_ready_sha256": "e4588bb1cd2339e84390bff3d57308d5105883f3c6545fae5a165c3e9de2844f",
+  "original_plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "original_dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "original_case_sha256": "f882c57fd68b8a4222c6a2bcdcb4caf7ad0bc1f5adf9b660bd8ae6d249c60393",
+  "source_sha256": {
+    "launcher_sha256": "f12332e72f54d270b4e4e2e4834b597abbde713a4a81ba4cdd11d7e00b339feb",
+    "probe_sha256": "4792738899f2e29ce38c41eb1be2ebfaa7ca90ad39bf33c84f67232b254a7f96",
+    "inspect_wrapper_sha256": "dfb24c2a40e6a6d58ac39f59f7c7a51e6e1f6387aa2d08a712faef3dfcc2700b"
+  },
+  "authority_after_original_reservation_sha256": "c81407bafcf16f8fe539a0e5a823adcd4c6272b2b3ee952aa7e65994faedb6b5",
+  "historical_rows_unchanged": 9,
+  "sample_provider_attempts_before_release": 0,
+  "original_models_provider_limits_preserved": true,
+  "release": "Root O_EXCL execute-once; native480deadline persisted before child/input.",
+  "quality": "UNKNOWN",
+  "human_ratings": [
+    null,
+    null
+  ],
+  "new_product_function_completed": false,
+  "credit_cost": null
+}

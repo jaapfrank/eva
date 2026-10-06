@@ -1,0 +1,435 @@
+{
+  "contract": "P2IndependentOriginalHermesCm02Result/v1",
+  "date": "2026-10-07",
+  "task": "P2.1",
+  "entry": "hermes:EV003-CM-02:epoch1",
+  "status": "closed_native_complete_objective_readbacks_supported_official_quality_unknown",
+  "reviewer": "/root/aide_final_evaluation",
+  "binding": {
+    "case_id": "EV003-CM-02",
+    "epoch": 1,
+    "case_sha256": "f882c57fd68b8a4222c6a2bcdcb4caf7ad0bc1f5adf9b660bd8ae6d249c60393",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "native_source_pin": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
+    "adapter_sha256": "4792738899f2e29ce38c41eb1be2ebfaa7ca90ad39bf33c84f67232b254a7f96",
+    "launcher_sha256": "f12332e72f54d270b4e4e2e4834b597abbde713a4a81ba4cdd11d7e00b339feb",
+    "inspect_wrapper_sha256": "dfb24c2a40e6a6d58ac39f59f7c7a51e6e1f6387aa2d08a712faef3dfcc2700b",
+    "projection_sha256": "d99f7ab31660717151c09b70657a853a3903fef2c617e439762ba74339c37d76"
+  },
+  "original_objective_observations": {
+    "indices_zero_based": true,
+    "observed_factual_support": [
+      true,
+      true,
+      true
+    ],
+    "counts": {
+      "supported": 3,
+      "contradicted": 0,
+      "unknown": 0
+    },
+    "basis": "Independent curator compared retained native replies, durable memory and actual final model context with the unchanged sealed predicates; these observations are not human semantic ratings.",
+    "required_readbacks": [
+      {
+        "index": 0,
+        "passed": true,
+        "basis": "Original temporal distinction explicit in durable memory and present byte-for-byte in final model context; final reply applies it."
+      },
+      {
+        "index": 1,
+        "passed": true,
+        "basis": "Private actor/session binding, all7provider attempts and request bodies,2native tool entries, durable replies, usage, effects and native/parent settlement observed."
+      }
+    ],
+    "earlier_memory_entry_also_retained": true,
+    "earlier_entry_coexistence_alone_not_failed_predicate": true
+  },
+  "fixed_scorer": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+    "sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "inspect_status": "success",
+    "raw_inspect_semantic_score": null,
+    "value": "unknown",
+    "task_success": null,
+    "semantic_judgments_required": 2,
+    "semantic_judgments_recorded": 0,
+    "human_semantic_ratings": [
+      null,
+      null
+    ],
+    "human_preference_ratings": [
+      null,
+      null
+    ],
+    "reason": "The unchanged scorer requires two actual independent blinded semantic decisions; factual/readback evidence cannot supply them.",
+    "scorer_rerun": false,
+    "ai_judge_calls": 0,
+    "quality_or_superiority_claim": null
+  },
+  "native_observations": {
+    "turns_completed": 3,
+    "durable_reply_readbacks_verified": 3,
+    "sessions": 2,
+    "one_verified_private_actor": true,
+    "session_sequence": [
+      0,
+      0,
+      1
+    ],
+    "clock_generations": [
+      0,
+      0,
+      1
+    ],
+    "original_clock_delta_exact": true,
+    "clock_changed_after_settlement": true,
+    "same_memory_across_session_switch": true,
+    "snapshot_rows_match_closed_readonly_sqlite": true,
+    "exact_request_bodies_retained": 7,
+    "private_context_files_root0600": true,
+    "native_auth_copied": false
+  },
+  "usage": {
+    "provider_attempts": 7,
+    "completed_attempts": 7,
+    "sdk_usage_complete": true,
+    "input_tokens": 17519,
+    "output_tokens": 345,
+    "total_tokens": 17864,
+    "roles": {
+      "contact": {
+        "attempts": 5,
+        "usage": {
+          "input_tokens": 16995,
+          "output_tokens": 209,
+          "total_tokens": 17204
+        }
+      },
+      "helper": {
+        "attempts": 2,
+        "usage": {
+          "input_tokens": 524,
+          "output_tokens": 136,
+          "total_tokens": 660
+        }
+      }
+    },
+    "models": {
+      "contact": "gpt-6-sol/none",
+      "helper": "gpt-6-astra/medium"
+    },
+    "native_tool_reservations": 2,
+    "native_tool_entries": 2,
+    "tool_names": [
+      "memory",
+      "memory"
+    ],
+    "tool_cap_enforced": true,
+    "external_actions": 0,
+    "speech_requests": 0,
+    "credit_cost": null,
+    "native_estimated_money_not_actual_subscription_cost": true
+  },
+  "limits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "toolDispatches": 16,
+    "wallSeconds": 480,
+    "externalActions": 0,
+    "speechRequests": 0
+  },
+  "timing": {
+    "recorded_sample_seconds": 26.036861851003778,
+    "sample_boundary": "Monotonic deadline before child/input launch through child exit, including native startup/all turns/helpers/child close; excludes resource preparation and parent cleanup.",
+    "per_turn_foreground_seconds": [
+      5.030126033001579,
+      4.529766683001071,
+      1.5168347220023861
+    ],
+    "foreground_boundary": "run_conversation invocation through return, before settlement/readback.",
+    "per_turn_settled_seconds": [
+      5.032163941999897,
+      4.53201882000576,
+      3.3744515479993424
+    ],
+    "settled_boundary": "Same turn start through native/helper/SDK settlement and independent saved-state readback.",
+    "per_turn_first_content_seconds": [
+      null,
+      null,
+      null
+    ],
+    "first_content_limitation": "SDK timestamps exist, but exact per-turn start timestamps were not retained for user-facing first-content intervals.",
+    "wall_expired": false,
+    "normalized_speed_win": null
+  },
+  "closure": {
+    "native_outcome": "native_cm_completed",
+    "wrapper_exit": 0,
+    "tracked_http_settled": true,
+    "parent_close_acknowledged": true,
+    "parent_errors": [],
+    "unsettled_events": 0,
+    "native_reviews_pending": 0,
+    "native_idle_queue_pending": 0,
+    "close_errors": [],
+    "scenario_clock_restored": true,
+    "relay_closed": true,
+    "container_absent": true,
+    "network_absent": true,
+    "host_evidence_retained": true,
+    "diagnostics": [
+      "Two helper GeneratorExit observations after valid usage settlement; no parent settlement or close errors.",
+      "Local child disconnect mirror follows acknowledged terminal close; authoritative parent has complete usage and clean terminal receipts."
+    ]
+  },
+  "same_original_case_comparison": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-original-next-cm02-result-20261006.json",
+    "sha256": "1a053eba446056bf5f024fc8dcd9d9a6f2cfa28b471083dab4002227ddbfc144",
+    "case_dataset_plan_match": true,
+    "participants": [
+      {
+        "participant": "eva1-bottie",
+        "provider_attempts": 7,
+        "usage": {
+          "input_tokens": 44420,
+          "output_tokens": 2317,
+          "total_tokens": 46737
+        },
+        "native_complete": true,
+        "recorded_elapsed_seconds": 51.671866760996636,
+        "required_readbacks": [
+          true,
+          true
+        ],
+        "official_score": "unknown"
+      },
+      {
+        "participant": "eva2",
+        "provider_attempts": 9,
+        "usage": {
+          "input_tokens": 25903,
+          "output_tokens": 1192,
+          "total_tokens": 27095
+        },
+        "native_complete": true,
+        "recorded_elapsed_seconds": 79.83911028099828,
+        "required_readbacks": [
+          true,
+          true
+        ],
+        "official_score": "unknown"
+      },
+      {
+        "participant": "hermes",
+        "provider_attempts": 7,
+        "usage": {
+          "input_tokens": 17519,
+          "output_tokens": 345,
+          "total_tokens": 17864
+        },
+        "native_complete": true,
+        "recorded_elapsed_seconds": 26.036861851003778,
+        "required_readbacks": [
+          true,
+          true
+        ],
+        "official_score": "unknown"
+      }
+    ],
+    "scope": "Known native provider tokens and original independent readbacks in this one case/epoch. All three readback results supported; all official quality scores unknown.",
+    "timing_caveat": "Native startup/resource boundaries differ; recorded intervals do not establish a normalized speed or quality-adjusted efficiency winner.",
+    "context_caveat": "Hermes retains full outbound bodies; prior Eva1/Eva2 attestation covers native memory/retrieval context, not exact outbound prompt equality.",
+    "quality_winner": null,
+    "money_winner": null,
+    "previous_results_changed_or_rescored": false
+  },
+  "cumulative_authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256": "277b45f6b42963af86471f60661d54363103646fa455bd0ecdfae0f08484a767",
+    "rows": 10,
+    "prior9row_values_and_revisions_unchanged": true,
+    "selected_revision": 15,
+    "registered_provider_attempts": 52,
+    "registered_unknown_usage_attempts": 3,
+    "known_usage_lower_bound": {
+      "input_tokens": 196192,
+      "output_tokens": 6627,
+      "total_tokens": 202819
+    },
+    "whole_registry_usage_complete": false,
+    "whole_registry_total_usage": null,
+    "historical_baseline_cm01_raw_measurement_unknown_retained": true,
+    "reset_or_budget_donation": false
+  },
+  "preparation": {
+    "old_cm01_not_upgraded_or_replayed": true,
+    "metadata_map_mismatch_corrected_before_release": true,
+    "old_draft_sha256": "b1c7445682439984f81532cc8e35efe356b6bb0b9f93ba161b30b9988a79019d",
+    "corrected_draft_sha256": "6f583a43f21e385d976d832ae0939bb16686691fafa835d11853efd607a91e14",
+    "preparation_not_product_failure": true
+  },
+  "evidence": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/execution/receipt.json",
+      "sha256": "bd22e525b3624ba9a17674e188b003218477a9d9af91dac3f9a9d7a5f13b88bc"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/execution/sample/native-cm-technical.json",
+      "sha256": "f7889a3726759935a85f301c1464ff3a2278e4d84352ac0a2e663cf0f20007d1"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/execution/sample/cm-turns.private.json",
+      "sha256": "395d24c5e5a023b183a889284df12883e741b3766a9a69a1284ae49fabceeaa3"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/execution/sample/native-responses.private.json",
+      "sha256": "8b480475269cc96e30f96aa0c795a30361b187505bd00f9b2114ff0574e99663"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/execution/sample/sdk-attempts-technical.json",
+      "sha256": "e991f4aee346559d82588f2eeee258d065869833ba69879a9a2571be4979b488"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/execution/parent-accounting-report.private.json",
+      "sha256": "6ae230d9c568aa9b9ee2cb6f4610edac9465c9514bb69e7d7b0a591e7384f4b0"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/execution/parent-accounting-after-close.private.json",
+      "sha256": "524597c62900f9c7468482c6d16c626ffb9e8c8a82e12778f1ca5d68a1619e9b"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/inspect-private/inspect-result-summary.json",
+      "sha256": "a7965dec4f61731a64f43fc315c3073ca4c0a34c6d6a85eec596a0694fcd7f9a"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/inspect-private/inspect-run-binding.json",
+      "sha256": "7bad111446b91fed8cd3510a5f7bdf374e238ec58f917f95861bacce2b8e9d51"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/final-input-admission.private.json",
+      "sha256": "2d1b7d18645707e87fc78e5d4853e48a4c56d728bad0a211386ce1665aca0282"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/execute-once.private.json",
+      "sha256": "f2755776734b5aef258f1b04dd4835062e6b78e40485e648eb1e0199dffe3316"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/execution/native-profile/memories/USER.md",
+      "sha256": "6f5dfaaec78c9eef77b8e4461420a7fcd07185d057c4cacd29ea4a62ddc11a07"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/execution/native-profile/state.db",
+      "sha256": "cf2e8acb158cea3dd43b23e52955e33d22e2b5cf543f694144e628fc51a7463e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/sample-deadlines/hermes-absolute-deadline.json",
+      "sha256": "30991469a66707bc268992538b5f31f7ea8a9e62d9da8b2c941b5a06610a0ce7"
+    }
+  ],
+  "private_context_index": [
+    {
+      "attempt_id": 0,
+      "role": "helper",
+      "relative_path": "execution/sample/model-context-0000.private.json",
+      "file": "model-context-0000.private.json",
+      "sha256": "ab6bc5d6d43623f561b247b7729e3848bc70268ae01a539946b63007452a528c",
+      "bytes": 1414,
+      "turn": {
+        "ordinal": 0,
+        "session_index": 0,
+        "calendar_generation": 0
+      }
+    },
+    {
+      "attempt_id": 1,
+      "role": "contact",
+      "relative_path": "execution/sample/model-context-0001.private.json",
+      "file": "model-context-0001.private.json",
+      "sha256": "71d65b5ba510749ea017bdbbdfb6adafb573449423d5502456a4a091e43a8961",
+      "bytes": 16165,
+      "turn": {
+        "ordinal": 0,
+        "session_index": 0,
+        "calendar_generation": 0
+      }
+    },
+    {
+      "attempt_id": 2,
+      "role": "contact",
+      "relative_path": "execution/sample/model-context-0002.private.json",
+      "file": "model-context-0002.private.json",
+      "sha256": "23fa05fefff958b0f2f75bfe510645bc4f3dea78e8d123f6e08953380aa2fbb1",
+      "bytes": 16874,
+      "turn": {
+        "ordinal": 0,
+        "session_index": 0,
+        "calendar_generation": 0
+      }
+    },
+    {
+      "attempt_id": 3,
+      "role": "contact",
+      "relative_path": "execution/sample/model-context-0003.private.json",
+      "file": "model-context-0003.private.json",
+      "sha256": "eeca653b38918ff3ae440bccdc3b777a94e16ac3527bebd49703670f2cdb17ad",
+      "bytes": 16059,
+      "turn": {
+        "ordinal": 1,
+        "session_index": 0,
+        "calendar_generation": 0
+      }
+    },
+    {
+      "attempt_id": 4,
+      "role": "contact",
+      "relative_path": "execution/sample/model-context-0004.private.json",
+      "file": "model-context-0004.private.json",
+      "sha256": "00898075d10d759c26c218135ba70af66f79b8d62a51cdcec0efb1c7afd4d0fe",
+      "bytes": 16637,
+      "turn": {
+        "ordinal": 1,
+        "session_index": 0,
+        "calendar_generation": 0
+      }
+    },
+    {
+      "attempt_id": 5,
+      "role": "helper",
+      "relative_path": "execution/sample/model-context-0005.private.json",
+      "file": "model-context-0005.private.json",
+      "sha256": "c2ce802a3afe157a22e283d234030ba22f8c831b4d30c33ab65192940b93a386",
+      "bytes": 1277,
+      "turn": {
+        "ordinal": 2,
+        "session_index": 1,
+        "calendar_generation": 1
+      }
+    },
+    {
+      "attempt_id": 6,
+      "role": "contact",
+      "relative_path": "execution/sample/model-context-0006.private.json",
+      "file": "model-context-0006.private.json",
+      "sha256": "611647c11a979fef45cb5a8ab29a4123bc55d078caee062000fe4cabbea6d00c",
+      "bytes": 16719,
+      "turn": {
+        "ordinal": 2,
+        "session_index": 1,
+        "calendar_generation": 1
+      }
+    }
+  ],
+  "integrity": {
+    "sealed_payload_hashes_verified": true,
+    "original_inputs_rules_oracles_unchanged": true,
+    "closed_cm01_result_sha256": "7ce13747387afb29447bcbd5315a0a8d499da65e7dbe3687084f038058a86581",
+    "original_native_executions": 1,
+    "retries": 0,
+    "reviewer_provider_calls": 0,
+    "reviewer_tests": 0,
+    "protected_contents_disclosed_to_builder": false,
+    "new_product_function_completed": false
+  }
+}

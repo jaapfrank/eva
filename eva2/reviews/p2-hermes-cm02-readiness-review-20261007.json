@@ -1,0 +1,147 @@
+{
+  "contract": "P2HermesOriginalNextReadinessReview/v1",
+  "task": "P2.1",
+  "date": "2026-10-07",
+  "reviewer": "independent evaluator",
+  "basis": "7c6ab7648d9e3cca03baf4466f839623fd2d7fcc",
+  "verdict": "GO_SOURCE_AND_MINIMAL_ORIGINAL_CM02_PREPARATION",
+  "original_execution_admitted": false,
+  "original_entry": {
+    "participant": "hermes",
+    "case_id": "EV003-CM-02",
+    "epoch": 1,
+    "case_sha256": "f882c57fd68b8a4222c6a2bcdcb4caf7ad0bc1f5adf9b660bd8ae6d249c60393",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "unused_in_current_authority": true,
+    "next_original_hermes_case": true
+  },
+  "authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256": "c81cf6f0832ec1f81f760f2962b29e8bb91de5faa7c9378135a4543bbd147559",
+    "rows": 9,
+    "hermes_entries": [
+      "hermes:EV003-CM-01:epoch1"
+    ],
+    "read_only_sql": true,
+    "next_original_envelope_fits_existing_participant_and_family_limits": true,
+    "new_reservations": 0
+  },
+  "shape": {
+    "setup_turns": 0,
+    "user_turns": 3,
+    "actors": [
+      0,
+      0,
+      0
+    ],
+    "sessions": [
+      0,
+      0,
+      1
+    ],
+    "clock_generations": [
+      0,
+      0,
+      1
+    ],
+    "clock_offset_deltas_ms": [
+      0,
+      0,
+      2160000000
+    ],
+    "audience": "verified private person only",
+    "services": 0,
+    "browser_pages": 0,
+    "files": 0,
+    "audio": false,
+    "semantic_conditions": 3,
+    "independent_readbacks": 2
+  },
+  "projection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/cm02-epoch1.native-inputs.private.json",
+    "sha256": "d99f7ab31660717151c09b70657a853a3903fef2c617e439762ba74339c37d76",
+    "equality_receipt": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/projection-equality-technical.private.json",
+    "equality_sha256": "087e5bc9494524fda3e7d720708ea0b909c1044c7f1508d69f051ac639a4eebb",
+    "protection": "root directory0700/files0600",
+    "original_input_clock_actor_equal": true,
+    "oracle_included": false,
+    "original_criteria_changed": false
+  },
+  "source_delta": {
+    "path": "eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py",
+    "sha256": "4792738899f2e29ce38c41eb1be2ebfaa7ca90ad39bf33c84f67232b254a7f96",
+    "previous_sha256": "da70070bed6b0cecbad4a6319bdbb0c737ba0c007ed5e6571efc5d2f5cf200bf",
+    "finding": "Exact final request.content is retained before dispatch without request or header mutation; O_EXCL/0600/fsync, technical file/hash/bytes plus turn/session/calendar correlation. Existing parent stop/deadline is rechecked after retention. Foreground and helper SDK requests share the same guard.",
+    "tool_counter_review": "eva2/reviews/p2-hermes-tool-accounting-correction-review-20261006.json",
+    "tool_counter_review_sha256": "f8e15c16ff6900ce00048680463858738c473f20456fbf175f76420ccc256ce9",
+    "tool_counter_evidence_scope": "One focused native batch contract check plus19reused IPC checks; not19new native tool fixtures."
+  },
+  "existing_route_compatibility": {
+    "same_actor_native_profile": true,
+    "same_session_first_two_turns": true,
+    "new_session_same_memory_third_turn": true,
+    "clock_change_only_after_native_settlement": true,
+    "native_memory_and_background_review_enabled": true,
+    "one_parent_ledger_and_absolute_deadline": true,
+    "limits": {
+      "provider_requests": 16,
+      "input_tokens": 1048576,
+      "output_tokens": 19200,
+      "seconds": 480,
+      "tool_dispatches": 16,
+      "external_actions": 0
+    },
+    "model_policy": "contact gpt-6-sol/none; helpers gpt-6-astra/medium; no fallback"
+  },
+  "required_retained_evidence": [
+    "Native returned replies and independently reopened SessionDB messages/session identity after every settled turn.",
+    "Exact native MEMORY.md/USER.md bytes and hashes after settlement; same isolated memory profile across the original session switch.",
+    "Every permitted final provider request body, bound to attempt/role/model/effort and active original turn/session/calendar; private only, no auth headers.",
+    "All native inline/fallback tool reservations and entered/completed outcomes under shared16cap; all provider raw usage or explicit unknown.",
+    "Native background review/idle queue, SDK streams/clients and parent close acknowledgement; absolute480second envelope from original ingress."
+  ],
+  "checks_reused": {
+    "test_path": "eva2/tests/benchmark/test_cp001_process_accounting.py",
+    "test_sha256": "fd42e0e113573b43710a01f3949e855969ff013b42732e0ede568d3e13a2a601",
+    "passed": 20,
+    "failed": 0,
+    "seconds": 4.55,
+    "log": "/home/administrator/project/.eva2-artifacts/p2-hermes-context-retention-20261007/final-pytest.log",
+    "log_sha256": "8c973ec2a4d15ccd59cfb9d02039a7ea050663d72d7e8c3cf0b8fb50ab1aae16",
+    "evidence": "eva2/evidence/product/p2-hermes-context-retention-20261007.json",
+    "evidence_sha256": "3dbd26432bc4f20c423de52c02ce4c3eb718fd1615ef611affc5a99cf7ad33ff",
+    "earlier_environment_failures_preserved": [
+      "pytest temporary directory ownership",
+      "AF_UNIX socket path length"
+    ],
+    "reviewer_tests": 0,
+    "model_calls": 0
+  },
+  "remaining_before_execution": [
+    "Hash-bound new CM02 parent/Inspect adaptation, exact unused-entry guard and preservedCM01history; same current authority with no reset.",
+    "Independent bundled review of that concrete adaptation and protected projection before resource preparation/input admission.",
+    "Actual future context, native settlement and semantic/readback outcomes must be observed; this source review supplies no future pass."
+  ],
+  "preserved_cm01": {
+    "result": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
+    "sha256": "7ce13747387afb29447bcbd5315a0a8d499da65e7dbe3687084f038058a86581",
+    "assessment": "eva2/evidence/product/p2-hermes-cm01-independent-assessment-20261007.json",
+    "assessment_sha256": "23b6e87b7515a66931d6583e2dcc11f496400f61362bf620bf1ec9dd3e47466d",
+    "sdk_attempts_known": 7,
+    "original_tool_coverage": "UNKNOWN",
+    "original_sample_score": "UNKNOWN",
+    "replay_or_rescore": false
+  },
+  "limits": {
+    "original_tasks_rules_budget_unchanged": true,
+    "resources_started": 0,
+    "native_runs": 0,
+    "provider_calls": 0,
+    "semantic_score": null,
+    "human_ratings": null,
+    "credits": "UNKNOWN",
+    "runtime_release": false,
+    "superiority_claim": false
+  }
+}

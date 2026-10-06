@@ -1,0 +1,52 @@
+{
+  "contract": "P2HermesCm02IndependentResultReview/v1",
+  "date": "2026-10-07",
+  "task": "P2.1",
+  "reviewer": "/root/aide_final_evaluation",
+  "verdict": "GO_ADDITIVE_REPORT_PUBLICATION",
+  "result_path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-original-cm02-result-20261007.json",
+  "result_sha256": "99155b69aec5b0d7002da32a114af36bd3b49e8947e43f816c86f9b37f545f79",
+  "scope": "Closed original Hermes CM02 and bounded retained same-case comparison; no replay, product tuning or human-score substitution.",
+  "findings": {
+    "native_completion": true,
+    "sdk_accounting_complete": true,
+    "tool_entries": 2,
+    "exact_model_contexts": 7,
+    "factual_observations": [
+      true,
+      true,
+      true
+    ],
+    "original_readbacks": [
+      true,
+      true
+    ],
+    "official_task_success": null,
+    "required_human_semantic_ratings": [
+      null,
+      null
+    ]
+  },
+  "verified": [
+    "Final admission changes only reviewed admitted/status/provenance fields; original source/projection/plan/scorer hashes preserved.",
+    "Three durable reply snapshots match actual closed SQLite records, private actor and original sessions.",
+    "All seven body hashes/models/efforts checked; final native context contains exact updated durable memory, two distinct memory calls agree with native tool entries.",
+    "SDK/parent usage agrees; native and control settlement clean; output remains root protected and containers/network absent.",
+    "Ten authority rows: nine historical values/revisions unchanged;52registered attempts,3unknown usages,202819known-token lower bound.",
+    "Prior Eva1/Eva2 readbacks/usage reused without rescoring; full-context and timing boundaries differ, no quality/speed/cost winner."
+  ],
+  "limitations": [
+    "Official semantic/preference scores require two real independent blinded human judgments.",
+    "Subscription money/credits remain unknown.",
+    "No next case or repeat admitted."
+  ],
+  "review_activity": {
+    "new_model_calls": 0,
+    "tests": 0,
+    "new_runtime_probes": 0,
+    "sealed_edits": 0,
+    "authority_edits": 0,
+    "owned_new_files": 2
+  },
+  "artifact_generation_note": "First report-writing invocation used unprivileged UID and failed before any file write; final protected read/write used the existing root evaluator route. No native run or evidence changed."
+}

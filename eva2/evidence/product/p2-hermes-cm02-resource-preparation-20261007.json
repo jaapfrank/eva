@@ -1,0 +1,28 @@
+{
+  "contract": "P2HermesOriginalCm02ResourcePreparation/v1",
+  "task": "P2.1",
+  "recordedAt": "2026-10-06T23:32:02.041684+00:00",
+  "entry": "hermes:EV003-CM-02:epoch1",
+  "status": "resource_preparation_admitted_input_not_admitted",
+  "review": {
+    "path": "eva2/reviews/p2-hermes-cm02-parent-preparation-review-20261007.json",
+    "sha256": "e1c80309254d600987cf2b9374d1a83f9bd78e00b5c814f9b59f8b3d9a17e922"
+  },
+  "normal_preparation_admission": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/reviewed-resource-preparation-admission.private.json",
+    "sha256": "535cd6cbcaab9319c5299ab67ddc49af945e31c9088c94a6b14d24c9a070af93"
+  },
+  "draft_admission_sha256": "a5204665ef19669831aad08141249a6892e0936893a9c6dc7083dd864b9e9588",
+  "original_authority_before_sha256": "c81cf6f0832ec1f81f760f2962b29e8bb91de5faa7c9378135a4543bbd147559",
+  "source_sha256": {
+    "launcher_sha256": "f12332e72f54d270b4e4e2e4834b597abbde713a4a81ba4cdd11d7e00b339feb",
+    "probe_sha256": "4792738899f2e29ce38c41eb1be2ebfaa7ca90ad39bf33c84f67232b254a7f96",
+    "inspect_wrapper_sha256": "dfb24c2a40e6a6d58ac39f59f7c7a51e6e1f6387aa2d08a712faef3dfcc2700b"
+  },
+  "changes_from_reviewed_draft": "Only resource_preparation_admitted/review_status/actual review provenance; no source/input/limits/provider changes.",
+  "resource_preparation_admitted": true,
+  "input_admitted": false,
+  "model_calls": 0,
+  "native_contexts": 0,
+  "credit_cost": null
+}

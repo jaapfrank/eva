@@ -453,3 +453,44 @@ def test_hermes_raw_sdk_usage_survives_parent_settlement_rejection(tmp_path):
         assert observer.calls[0]["status"]=="parent_settlement_failed"
         assert peer.close(settled=True)
     finally:parent.close()
+
+
+def test_hermes_exact_http_context_private_retention_before_dispatch(tmp_path):
+    import hashlib
+    import stat
+    from types import SimpleNamespace
+    from cp001_accounting import SampleStopped
+    parent, peer, observer = hermes_parent_peer(tmp_path, "hermes-context", attempts=3)
+    output = tmp_path / "private-context"; output.mkdir(mode=0o700)
+    observer.output = output / "sdk-attempts-technical.json"
+    marker = "PUBLIC FIXTURE MEMORY — no protected evaluation input"
+    raw = json.dumps({"model": "gpt-6-astra", "reasoning": {"effort": "medium"},
+        "input": [{"role": "user", "content": marker}]}, ensure_ascii=False, indent=1).encode()
+    request = hermes_fake_request()
+    request.content = raw
+    request.headers = {"Authorization": "Bearer public-fixture-header"}
+    observer.current_turn = {"ordinal": 2, "session_index": 1, "calendar_generation": 1}
+    def native(**kwargs):
+        observer.guard_http(request)
+        # Verified at the real HTTP boundary, before a (fixture) transport result.
+        capture = output / "model-context-0000.private.json"
+        assert capture.read_bytes() == raw
+        assert stat.S_IMODE(capture.stat().st_mode) == 0o600
+        row = observer.calls[-1]["model_context"]
+        assert row == {"file": capture.name, "sha256": hashlib.sha256(raw).hexdigest(),
+            "bytes": len(raw), "turn": observer.current_turn}
+        return SimpleNamespace(usage=SimpleNamespace(input_tokens=17, output_tokens=5, total_tokens=22))
+    try:
+        observer.sync(native, (), {})
+        assert marker not in observer.output.read_text()
+        assert "public-fixture-header" not in observer.output.read_text()
+        assert b"public-fixture-header" not in (output / "model-context-0000.private.json").read_bytes()
+        # A retained file is never overwritten by a fresh HTTP attempt.
+        occupied = output / "model-context-0001.private.json"
+        occupied.write_bytes(b"preserved")
+        with pytest.raises(FileExistsError): observer.sync(native, (), {})
+        assert occupied.read_bytes() == b"preserved"
+        assert len(observer.wire_dispatches) == 1
+        assert peer.close(settled=True)
+    finally:
+        parent.close()

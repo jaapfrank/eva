@@ -1,3 +1,11 @@
+## 7 oktober — P2.1: Hermes-CM02 uitgevoerd en onafhankelijk beoordeeld
+
+Beide eigen aanmeldingen zijn bevestigd. Eén oorspronkelijke Hermes-geheugenproef is afgerond: **3 berichten over 2 gesprekken, 7 modelpogingen, 17.519 invoer- en 345 uitvoertokens**. Het native interval duurde 26,037 seconden. Alle 7 modelcontexten en 2 geheugenhandelingen zijn bewaard; uitvoering, afsluiting en kalenderherstel zijn bevestigd. Geen herhaling, gewijzigde criteria of spraakwerk.
+
+Onafhankelijk zijn **3/3 feitelijke antwoordvoorwaarden en 2/2 geheugencontroles ondersteund**. Eva1 en Eva2 ondersteunen in dezelfde oorspronkelijke case ook 2/2 geheugencontroles. Officiële kwaliteit blijft onbekend: twee echte onafhankelijke menselijke beoordelingen ontbreken. Verschillende meetgrenzen en onbekende antwoordkwaliteit verhinderen een algemene snelheid- of efficiëntiewinnaar; creditkosten zijn onbekend. [Resultaat](evidence/product/p2-hermes-original-cm02-result-20261007.json) · [Review](reviews/p2-hermes-original-cm02-result-review-20261007.json).
+
+De bestaande contextregistratie is gericht aangevuld en 20 gerelateerde IPC/SDK-controles slagen. Eén metadatahashmap is vóór invoer gecorrigeerd zonder herstart. De oorspronkelijke verbruiksregistratie bevat nu 52 pogingen: 196.192 invoer- en 6.627 uitvoertokens als ondergrens; het SDK-verbruik van 3 historische pogingen blijft onbekend. **34/44 blijft gelijk**; dit is een vergelijkingsresultaat, geen nieuwe Eva-productfunctie. Oude CM01- en OpenClaw-beperkingen blijven behouden. Het dashboard toont deze uitslag; bron en rapporten worden samen gepubliceerd. Geen modelproef of uitvoerder actief; resterende vergelijking is nog niet gestart.
+
 ## 7 oktober — onafhankelijke beoordeling van de bewaarde Hermes-uitkomst
 
 Bijgewerkte informatie overleefde de sessiegrens en werd in het latere antwoord gebruikt. Twee feitelijke onderdelen zijn bevestigd; één kwalitatief onderdeel blijft onbekend. De volledige oorspronkelijke readbacks ontbreken door niet-bewaarde eindmodelcontext en onvolledige toolmeting. Officiële beoordeling en twee menselijke oordelen blijven UNKNOWN. [Beoordeling](evidence/product/p2-hermes-cm01-independent-assessment-20261007.json); geen nieuwe calls, herhaling, gewijzigde criteria of extra productafronding. OpenClaw-meetbinding blijft de actieve technische opdracht.

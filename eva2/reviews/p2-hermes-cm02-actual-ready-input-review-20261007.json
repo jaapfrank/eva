@@ -1,0 +1,103 @@
+{
+  "contract": "P2HermesCm02ActualReadyInputReview/v1",
+  "date": "2026-10-07",
+  "task": "P2.1",
+  "reviewer": "independent evaluator",
+  "verdict": "GO_ONE_ORIGINAL_CM02_INPUT_RELEASE",
+  "entry": "hermes:EV003-CM-02:epoch1",
+  "scope": "One original unused entry through the already waiting Inspect/parent process; no retry, added quota, case change or new runtime route.",
+  "directory": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1",
+  "bindings": {
+    "resource_preparation_admission_sha256": "535cd6cbcaab9319c5299ab67ddc49af945e31c9088c94a6b14d24c9a070af93",
+    "actual_ready_sha256": "e4588bb1cd2339e84390bff3d57308d5105883f3c6545fae5a165c3e9de2844f",
+    "inspect_binding_sha256": "7bad111446b91fed8cd3510a5f7bdf374e238ec58f917f95861bacce2b8e9d51",
+    "corrected_final_draft_file": "final-input-admission-binding-correction.private.json",
+    "corrected_final_draft_sha256": "6f583a43f21e385d976d832ae0939bb16686691fafa835d11853efd607a91e14",
+    "release_draft_sha256": "31e843db579818307efb7604fe66418d5e8d24a1c9961d9a3d086eb0f316e1cd",
+    "projection_sha256": "d99f7ab31660717151c09b70657a853a3903fef2c617e439762ba74339c37d76",
+    "launcher_sha256": "f12332e72f54d270b4e4e2e4834b597abbde713a4a81ba4cdd11d7e00b339feb",
+    "probe_sha256": "4792738899f2e29ce38c41eb1be2ebfaa7ca90ad39bf33c84f67232b254a7f96",
+    "inspect_wrapper_sha256": "dfb24c2a40e6a6d58ac39f59f7c7a51e6e1f6387aa2d08a712faef3dfcc2700b"
+  },
+  "actual_ready_checks": {
+    "exec_session": 46977,
+    "provider_attempts": 0,
+    "input_released": false,
+    "native_context_started": false,
+    "sample_deadline_created": false,
+    "parent_errors": [],
+    "network_external_events": [],
+    "actual_container_image_label_namespace_match": true,
+    "actual_network_internal_only_expected_container": true,
+    "inert_sleep_container_only": true,
+    "namespace_egress": "Loopback and exact existing gateway relay TCP port only; all other IPv4/IPv6 output rejected.",
+    "native_uid": 1000,
+    "native_authority_unreadable": true,
+    "release_absent": true,
+    "projection_root0600": true,
+    "existing52pins_preserved": true,
+    "native_owned_auth_freshness_receipt_sha256": "529253a3c3a4e494a9967eedb379a33395d469a9c300b343145fa2651a666eca",
+    "credential_values_read": false
+  },
+  "authority": {
+    "before_sha256": "c81cf6f0832ec1f81f760f2962b29e8bb91de5faa7c9378135a4543bbd147559",
+    "after_reservation_sha256": "c81407bafcf16f8fe539a0e5a823adcd4c6272b2b3ee952aa7e65994faedb6b5",
+    "historical_snapshot_sha256": "0681ebb951d94b240500da4a917ac87bd7cf9c0407248cc3c0242339e8cabe82",
+    "all9historical_values_and_revisions_exact": true,
+    "current_rows": 10,
+    "only_added_entry": "hermes:EV003-CM-02:epoch1",
+    "new_entry_revision": 0,
+    "new_entry_attempts": 0,
+    "same_original_reservation": true,
+    "historical_unknowns_preserved": true,
+    "reset_copy_or_budget_donation": false
+  },
+  "pre_release_correction": {
+    "original_final_draft_sha256": "b1c7445682439984f81532cc8e35efe356b6bb0b9f93ba161b30b9988a79019d",
+    "finding": "Final source_sha256 used module-map keys while parent release equality requires the three launcher/probe/Inspect keys.",
+    "resolution": "Corrected only final metadata; original map retained under module_source_sha256, all file/instrumentation pins unchanged. Old draft preserved, no release or native input occurred.",
+    "source_changes": false
+  },
+  "allowed_finalization": {
+    "final_admission": "Create final-input-admission.private.json from the reviewed corrected draft; change only admitted/review status and independent review provenance. Preserve all original entry, source, case, authority and limit bindings.",
+    "release": "Fill final admission SHA and completed review metadata in the existing release draft, then create execute-once.private.json once with O_EXCL. Preserve exact three-source map, entry/run handle and actual-ready hash.",
+    "original_envelope": {
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "toolDispatches": 16,
+      "wallSeconds": 480,
+      "externalActions": 0,
+      "speechRequests": 0
+    },
+    "execution_owner": "root coordinator",
+    "reviewer_executes": false
+  },
+  "preserved_conditions": {
+    "case_sha256": "f882c57fd68b8a4222c6a2bcdcb4caf7ad0bc1f5adf9b660bd8ae6d249c60393",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "original_inputs_rules_scorer_unchanged": true,
+    "three_turns_one_private_actor_two_sessions_clock_after_settlement": true,
+    "same_memory_and_native_review_enabled": true,
+    "absolute_deadline_before_input_no_turn_reset": true,
+    "closed_cm01_unchanged": true,
+    "bindings_for_helper_foreground_requests_tools_contexts_and_stop_retained": true
+  },
+  "limitations": {
+    "actual_sample_outcome": "NOT_YET_OBSERVED",
+    "quality": null,
+    "human_ratings": [
+      null,
+      null
+    ],
+    "money": "UNKNOWN",
+    "no_superiority_claim": true,
+    "reviewer_new_tests": 0,
+    "reviewer_model_calls": 0
+  },
+  "public_ready_evidence": {
+    "path": "eva2/evidence/product/p2-hermes-cm02-actual-ready-20261007.json",
+    "sha256": "004ca6fa43fc7e0a35b296a30a57007ec2752f5cdd3f2af338b3c2fff7df6cf4"
+  }
+}

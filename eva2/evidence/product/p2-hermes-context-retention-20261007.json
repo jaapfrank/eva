@@ -1,0 +1,79 @@
+{
+  "contract": "P2HermesExactContextRetention/v1",
+  "task": "P2.1",
+  "recordedAt": "2026-10-06T23:26:33.848319+00:00",
+  "status": "focused_source_checks_passed_independent_review_pending",
+  "scope": "Future original unused native Hermes case only; existing closed CM01 unchanged.",
+  "source": {
+    "path": "eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py",
+    "sha256": "4792738899f2e29ce38c41eb1be2ebfaa7ca90ad39bf33c84f67232b254a7f96",
+    "previous_sha256": "da70070bed6b0cecbad4a6319bdbb0c737ba0c007ed5e6571efc5d2f5cf200bf"
+  },
+  "delta": {
+    "boundary": "HermesSDKAccounting.guard_http before actual SDK HTTP dispatch",
+    "retained_bytes": "Exact request.content, unchanged; headers excluded",
+    "private_file": "O_EXCL,0600,flush/fsync before dispatch; relative file/hash/byte count only in technical receipt",
+    "correlation": "Original ordinal/session index/calendar generation active until native settlement and durable readback, including helper calls",
+    "post_retention_guard": "Same existing parent stop and original absolute deadline checked again after retention I/O",
+    "model_provider_clock_tool_rules": "Unchanged",
+    "original_sample_replay": false,
+    "new_platform": false
+  },
+  "checks": {
+    "test": "eva2/tests/benchmark/test_cp001_process_accounting.py",
+    "test_sha256": "fd42e0e113573b43710a01f3949e855969ff013b42732e0ede568d3e13a2a601",
+    "passed": 20,
+    "failed": 0,
+    "reported_seconds": 4.55,
+    "final_source_bound": true,
+    "new_check": "Exact wire bytes before transport,0600,header/content exclusion from technical receipts,and no overwrite; existing SDK/deadline/stop/parent checks retained",
+    "environment_failures": [
+      "Default pytest temp root owned by another UID; no tests reached runtime",
+      "Long pytest base path exceeded AF_UNIX socket path; corrected only the test invocation to a fresh short temp path"
+    ],
+    "pre_guard_candidate_passed": 20,
+    "log_artifacts": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-hermes-context-retention-20261007/environment-unix-path.log",
+        "sha256": "8e41c5e84da9fe010fe97f1710d60172a64b3fa7c95acbc8b07aac4de9d39cb1"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-hermes-context-retention-20261007/pre-post-capture-guard.log",
+        "sha256": "03b9e67787c2f09b7c86d013c62570c8ce3d77de18f557f13f1e764fbdd4ce64"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-hermes-context-retention-20261007/final-pytest.log",
+        "sha256": "8c973ec2a4d15ccd59cfb9d02039a7ea050663d72d7e8c3cf0b8fb50ab1aae16"
+      }
+    ],
+    "runtime_model_calls": 0,
+    "native_sample_starts": 0
+  },
+  "authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256": "c81cf6f0832ec1f81f760f2962b29e8bb91de5faa7c9378135a4543bbd147559",
+    "unchanged_expected_sha256": "c81cf6f0832ec1f81f760f2962b29e8bb91de5faa7c9378135a4543bbd147559",
+    "new_reservations": 0
+  },
+  "closed_sample": {
+    "result": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
+    "sha256": "7ce13747387afb29447bcbd5315a0a8d499da65e7dbe3687084f038058a86581",
+    "changed": false,
+    "rescore": false
+  },
+  "next": {
+    "candidate_original_case": "EV003-CM-02:epoch1",
+    "technical_assessor": "/root/aide_final_evaluation",
+    "original_case_oracle_or_answers_released_to_builder": false,
+    "resource_preparation_admitted": false,
+    "new_inference_admitted": false,
+    "independent_review_pending": true
+  },
+  "publication_limits": {
+    "actual_full_context_readback_of_future_sample": "NOT_PERFORMED",
+    "answer_quality": "UNKNOWN",
+    "extra_product_function_completed": false,
+    "runtime_installed": false,
+    "credits": "UNKNOWN"
+  }
+}

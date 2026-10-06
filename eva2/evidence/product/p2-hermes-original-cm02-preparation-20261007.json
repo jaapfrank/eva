@@ -1,0 +1,104 @@
+{
+  "contract": "P2HermesOriginalCm02Preparation/v1",
+  "task": "P2.1",
+  "recordedAt": "2026-10-06T23:29:41.310888+00:00",
+  "status": "exact_parent_inspect_preparation_review_pending",
+  "entry": "hermes:EV003-CM-02:epoch1",
+  "case_sha256": "f882c57fd68b8a4222c6a2bcdcb4caf7ad0bc1f5adf9b660bd8ae6d249c60393",
+  "original_plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "original_dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "structural_controls": {
+    "turns": 3,
+    "setup_turns": 0,
+    "actors": 1,
+    "private_verified_actor": true,
+    "session_indices": [
+      0,
+      0,
+      1
+    ],
+    "clock_generations": [
+      0,
+      0,
+      1
+    ],
+    "extra_browser_service_file_physical_fixtures": false
+  },
+  "preparation": {
+    "cm02-epoch1.native-inputs.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/cm02-epoch1.native-inputs.private.json",
+      "sha256": "d99f7ab31660717151c09b70657a853a3903fef2c617e439762ba74339c37d76"
+    },
+    "projection-equality-technical.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/projection-equality-technical.private.json",
+      "sha256": "087e5bc9494524fda3e7d720708ea0b909c1044c7f1508d69f051ac639a4eebb"
+    },
+    "launch-parent-accounted-cm02.private.py": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/launch-parent-accounted-cm02.private.py",
+      "sha256": "f12332e72f54d270b4e4e2e4834b597abbde713a4a81ba4cdd11d7e00b339feb"
+    },
+    "inspect-run-parent-accounted-cm02.private.py": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/inspect-run-parent-accounted-cm02.private.py",
+      "sha256": "dfb24c2a40e6a6d58ac39f59f7c7a51e6e1f6387aa2d08a712faef3dfcc2700b"
+    },
+    "parent-cm02-preparation-draft.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/parent-cm02-preparation-draft.private.json",
+      "sha256": "a5204665ef19669831aad08141249a6892e0936893a9c6dc7083dd864b9e9588"
+    },
+    "bound-no-input-contract.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/bound-no-input-contract.private.json",
+      "sha256": "49f6beae438f19371c6023eb745de56647c96a0526075e8f6bfbad5469619f0a"
+    },
+    "native-owned-auth-freshness-technical.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/native-owned-auth-freshness-technical.private.json",
+      "sha256": "529253a3c3a4e494a9967eedb379a33395d469a9c300b343145fa2651a666eca"
+    }
+  },
+  "changes": [
+    "Original CM01 template identifiers changed only for the new unused CM02 slot/profile/output/runhandle",
+    "Exact unused entry checked while earlier CM01 retained and receipt hash-bound; no whole-participant history rejection or reset",
+    "Already reviewed native toolcounter and exact context-retention corrections are bound for the future case",
+    "Fresh native config/SOUL match original frozen profile bytes; no memories/session/auth copied"
+  ],
+  "checks": {
+    "launcher_check_exit": 0,
+    "source_pins_verified": 52,
+    "original_authority_sha256": "c81cf6f0832ec1f81f760f2962b29e8bb91de5faa7c9378135a4543bbd147559",
+    "authority_read_only_technical_metadata": true,
+    "registry_constructed": false,
+    "original_input_decoded_by_builder": false,
+    "auth_native_offline_expiry_check": "fresh through original480; no auth HTTP",
+    "models": 0,
+    "native_contexts": 0,
+    "resource_starts": 0,
+    "new_reservations": 0
+  },
+  "original_limits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "toolDispatches": 16,
+    "wallSeconds": 480,
+    "externalActions": 0,
+    "speechRequests": 0
+  },
+  "models": {
+    "contact": "gpt-6-sol/none",
+    "helper": "gpt-6-astra/medium",
+    "provider": "own native openai-codex"
+  },
+  "curator_source_review": {
+    "path": "eva2/reviews/p2-hermes-cm02-readiness-review-20261007.json",
+    "sha256": "bd741ad666b29906499e1108e870e4700d130ccc7fa3f771fb926268bc676685",
+    "decision": "GO_SOURCE_AND_MINIMAL_ORIGINAL_CM02_PREPARATION"
+  },
+  "actual_preparation_admitted": false,
+  "actual_input_admitted": false,
+  "quality": "UNKNOWN",
+  "human_ratings": [
+    null,
+    null
+  ],
+  "credit_cost": null,
+  "new_product_function_completed": false
+}

@@ -1,0 +1,85 @@
+{
+  "contract": "P2HermesCm02ParentPreparationReview/v1",
+  "date": "2026-10-07",
+  "task": "P2.1",
+  "verdict": "GO_PREPARE_ONLY",
+  "reviewer": "independent evaluator",
+  "entry": "hermes:EV003-CM-02:epoch1",
+  "scope": "Only the new parent/Inspect preparation binding; no original input release or model execution admitted by this review.",
+  "bindings": {
+    "directory": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1",
+    "launcher": {
+      "file": "launch-parent-accounted-cm02.private.py",
+      "sha256": "f12332e72f54d270b4e4e2e4834b597abbde713a4a81ba4cdd11d7e00b339feb"
+    },
+    "inspect": {
+      "file": "inspect-run-parent-accounted-cm02.private.py",
+      "sha256": "dfb24c2a40e6a6d58ac39f59f7c7a51e6e1f6387aa2d08a712faef3dfcc2700b"
+    },
+    "draft": {
+      "file": "parent-cm02-preparation-draft.private.json",
+      "sha256": "a5204665ef19669831aad08141249a6892e0936893a9c6dc7083dd864b9e9588"
+    },
+    "projection_sha256": "d99f7ab31660717151c09b70657a853a3903fef2c617e439762ba74339c37d76",
+    "equality_sha256": "087e5bc9494524fda3e7d720708ea0b909c1044c7f1508d69f051ac639a4eebb",
+    "adapter_sha256": "4792738899f2e29ce38c41eb1be2ebfaa7ca90ad39bf33c84f67232b254a7f96",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+  },
+  "reviewed_delta": [
+    "CM01-to-CM02 entry, paths, run labels, fresh native profile and sealed Sample selection only.",
+    "Read-only exact unused-entry check replaces blanket rejection of any Hermes history; closedCM01receipt hash remains explicit and unchanged.",
+    "Same native source, image, provider route, model roles, memory-enabled ordinary agent, parent ledger and original limits.",
+    "Inspect original scorer remains in place; only accounting evidence is supplied at execution, with semantic/human decisions unknown."
+  ],
+  "technical_checks": {
+    "frozen_pins": 52,
+    "noncredential_pins_independently_matched": 51,
+    "mismatches": 0,
+    "credential_contents_read_by_reviewer": false,
+    "owned_auth_freshness_receipt": {
+      "file": "native-owned-auth-freshness-technical.private.json",
+      "sha256": "529253a3c3a4e494a9967eedb379a33395d469a9c300b343145fa2651a666eca",
+      "native_expiry_helper_fresh_through480": true,
+      "auth_http_requests": 0
+    },
+    "config_and_soul_byte_equal_closed_original": true,
+    "fresh_profile_no_state_memory_or_auth_copy": true,
+    "runtime_execution_release_absent": true,
+    "authority_sha256": "c81cf6f0832ec1f81f760f2962b29e8bb91de5faa7c9378135a4543bbd147559",
+    "authority_rows": 9,
+    "cm02_rows": 0,
+    "root_check_only_pass_reused": true,
+    "reviewer_tests_or_runtime_checks": 0
+  },
+  "preparation_boundary": {
+    "allowed": "Create the exact original sample envelope reservation and isolated parent IPC/network resources; retain an actual-ready technical receipt and wait for separate reviewed release.",
+    "provider_attempts_before_release": 0,
+    "native_context_before_release": false,
+    "projection_not_decoded_by_prepare": true,
+    "deadline_not_started_before_release": true,
+    "actual_input_release_admitted": false,
+    "required_next": "Review retained actual-ready/zero-dispatch metadata and final source-bound input admission together before creating execute-once release.",
+    "parent_deadline": "Original480seconds persisted before child launch/input FD delivery; no per-turn reset; all three turns and native background work share it."
+  },
+  "preservation": {
+    "closed_cm01_receipt_sha256": "8e99c58ab663a49aaaea8c109362ebe9278c3925c2eca37d6aac6eaac98ed954",
+    "closed_cm01_result_sha256": "7ce13747387afb29447bcbd5315a0a8d499da65e7dbe3687084f038058a86581",
+    "cm01_replay_or_rescore": false,
+    "same_dataset_plan_rules_budget": true,
+    "unknown_scores_retained": true
+  },
+  "prior_review": {
+    "path": "eva2/reviews/p2-hermes-cm02-readiness-review-20261007.json",
+    "sha256": "bd741ad666b29906499e1108e870e4700d130ccc7fa3f771fb926268bc676685"
+  },
+  "review_activity": {
+    "files_changed": "This additive review only",
+    "resources_started": 0,
+    "reservations_created": 0,
+    "provider_calls": 0,
+    "tests_run": 0,
+    "sample_admitted": false,
+    "quality_claim": false,
+    "credits": "UNKNOWN"
+  }
+}

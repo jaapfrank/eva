@@ -1016,8 +1016,17 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-06T23:19:05.676197+00:00",
+        "checkedAt": "2026-10-06T23:45:19.764253+00:00",
         "deliveries": [
+          {
+            "title": "P2.1 · Hermes-geheugenvoorwaarden onafhankelijk bevestigd",
+            "state": "tested",
+            "date": "2026-10-07",
+            "result": "Drie oorspronkelijke berichten over twee gesprekken: 3/3 feitelijke antwoordvoorwaarden en 2/2 geheugencontroles ondersteund. 7 modelpogingen, 17.519 invoer- en 345 uitvoertokens; alle modelcontexten en 2 geheugenhandelingen teruggelezen. Eén oorspronkelijke uitvoering afgesloten.",
+            "remaining": "Eva1 en Eva2 ondersteunen in deze case ook 2/2 geheugencontroles. Menselijke kwaliteit, vergelijkbare snelheidswinst en volledige vergelijking blijven open; 34/44 verandert niet.",
+            "source": "eva2/evidence/product/p2-hermes-original-cm02-result-20261007.json",
+            "review": "eva2/reviews/p2-hermes-original-cm02-result-review-20261007.json"
+          },
           {
             "title": "P2.1 · OpenClaw-aanmelding bevestigd; proefbeperking vastgesteld",
             "state": "investigated",
@@ -4042,14 +4051,14 @@
           }
         ],
         "now": {
-          "title": "P2.1 · OpenClaw-meetbeperking vastgelegd",
+          "title": "P2.1 · Hermes-geheugenresultaat beschikbaar",
           "state": "in_progress",
           "owner": "Codex",
-          "detail": "OpenClaw en Hermes zijn aangemeld. Hermes heeft de oorspronkelijke gespreksproef uitgevoerd en de correctie later gebruikt. OpenClaw bouwt een native Sol/none-aanvraag, maar daarin spreken proefdatum en systeemdatum elkaar tegen. Die beperking is onafhankelijk bevestigd; geen oorspronkelijke OpenClaw-proef gestart. Broncheckpoint staat op GitHub; het dashboard is bijgewerkt.",
-          "remaining": "P2.1 blijft open: oorspronkelijke vergelijkingsdekking en echte menselijke antwoordbeoordelingen ontbreken. Geen nieuwe aanmelding of OpenClaw-modelproef nodig voor deze afgesloten bevinding.",
-          "source": "eva2/evidence/product/p2-openclaw-native-composition-20261007.json",
+          "detail": "Hermes CM02 onafhankelijk beoordeeld: 3/3 feitelijke voorwaarden en 2/2 geheugencontroles ondersteund. Eva1 en Eva2 ondersteunen beide geheugencontroles ook. Geen kwaliteitswinnaar. Proef afgesloten; geen actieve modelproef of uitvoerder.",
+          "remaining": "Oorspronkelijke resterende vergelijking en twee menselijke kwaliteitsbeoordelingen; spraak blijft geparkeerd.",
+          "source": "eva2/evidence/product/p2-hermes-original-cm02-result-20261007.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "reviewedAt": "2026-10-06T23:17:57.944196+00:00"
+          "reviewedAt": "2026-10-06T23:45:19.764253+00:00"
         },
         "next": {
           "title": "Bestaande kwaliteitsbeoordelingen en vergelijkingsdekking",
@@ -4081,7 +4090,7 @@
           }
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-06T22:04:30.799923+00:00"
+        "reviewedAt": "2026-10-06T23:45:19.764253+00:00"
       },
       "reviewedAt": "2026-10-06T09:49:07.102699+00:00",
       "checkedAt": "2026-10-06T09:49:07.102699+00:00",
@@ -4149,7 +4158,7 @@
       "comparisonResults": {
         "contract": "EvaPublishedComparisonResults/v1",
         "taskId": "P2.2",
-        "publishedAt": "2026-10-06T22:04:30.799923+00:00",
+        "publishedAt": "2026-10-06T23:43:08.489461+00:00",
         "originalDoneWhen": "Resultaten op kwaliteit, snelheid, zelfstandigheid en verbruik samen tonen; geen onbewezen algemene voorsprong.",
         "status": "published_partial_comparison_results",
         "fullComparisonCompleted": false,
@@ -4320,16 +4329,16 @@
           }
         ],
         "runtimeTotals": {
-          "providerAttempts": 45,
+          "providerAttempts": 52,
           "inputTokens": null,
           "outputTokens": null,
-          "knownInputTokensLowerBound": 178673,
-          "knownOutputTokensLowerBound": 6282,
+          "knownInputTokensLowerBound": 196192,
+          "knownOutputTokensLowerBound": 6627,
           "registeredUnknownUsageAttempts": 3,
           "usageComplete": false,
           "allFailedAdapterAndInconclusiveNativeAttemptsIncluded": false,
           "actualNativeAttempts": null,
-          "registeredSampleRows": 9,
+          "registeredSampleRows": 10,
           "nativeToolDispatches": null,
           "creditCost": null,
           "codexDevelopmentCredits": null,
@@ -4338,14 +4347,14 @@
             "helperAstraMedium": null
           },
           "scope": "Current unchanged frozen-set cumulative authority only. Historical other-set attempts stay separately retained; full token totals and all-scope native/tool counts UNKNOWN.",
-          "source": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
-          "authoritySha256": "c81cf6f0832ec1f81f760f2962b29e8bb91de5faa7c9378135a4543bbd147559"
+          "source": "eva2/evidence/product/p2-hermes-original-cm02-result-20261007.json",
+          "authoritySha256": "277b45f6b42963af86471f60661d54363103646fa455bd0ecdfae0f08484a767"
         },
         "housemateOutcomes": [
           {
             "name": "Geheugen",
             "state": "observed",
-            "result": "Eén nieuwe recallvoorsprong; eerdere CM06/CM08-voordelen behouden. Oud CM01/CM07/CM12 niet gehaald. Geen algemene geheugenwinst bewezen."
+            "result": "Eerdere specifieke Eva2-geheugenvoordelen blijven behouden. Nieuwste CM02: Eva1, Eva2 en Hermes ondersteunen2/2geheugencontroles. Geen unieke of algemene geheugenvoorsprong bewezen."
           },
           {
             "name": "Persoonlijkheid",
@@ -4436,14 +4445,15 @@
           },
           {
             "name": "Hermes",
-            "state": "incomplete",
-            "reason": "Drie gespreksbeurten uitgevoerd over twee sessies. Bijgewerkte informatie is bewaard en in het latere antwoord gebruikt; twee feitelijke onderdelen zijn bevestigd. Volledige modelcontext en toolmeting ontbreken. De officiële uitslag en twee menselijke kwaliteitsbeoordelingen blijven onbekend.",
+            "state": "observed",
+            "reason": "Eigen login bevestigd. Oorspronkelijke CM02:3/3feitelijke antwoordvoorwaarden en2/2geheugencontroles ondersteund; exacte modelcontext bewaard, volledige SDK-/toolmeting en afsluiting bevestigd. Eva1/Eva2 ondersteunen in dezelfde case ook beide geheugencontroles. Menselijke kwaliteit en algemene voorsprong blijven onbekend. Oud CM01-meetgat blijft behouden.",
             "accessState": "authenticated",
-            "executionState": "original_cm01_closed_sdk_known_tool_coverage_unknown",
-            "checkedAt": "2026-10-06T22:00:35.691227+00:00",
-            "source": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
-            "label": "Gespreksroute bevestigd · meetbeperking",
-            "independentAssessmentSource": "eva2/evidence/product/p2-hermes-cm01-independent-assessment-20261007.json"
+            "executionState": "original_cm02_complete_readbacks_supported_human_quality_unknown",
+            "checkedAt": "2026-10-06T23:43:08.489461+00:00",
+            "source": "eva2/evidence/product/p2-hermes-original-cm02-result-20261007.json",
+            "label": "Geheugenvoorwaarden ondersteund · kwaliteit open",
+            "independentAssessmentSource": "eva2/evidence/product/p2-hermes-cm01-independent-assessment-20261007.json",
+            "review": "eva2/reviews/p2-hermes-original-cm02-result-review-20261007.json"
           },
           {
             "name": "Agent Zero",
@@ -6549,163 +6559,91 @@
           {
             "path": "eva2/reviews/p2-openclaw-native-binding-final-review-20261007.json",
             "sha256": "41612c1f5feee987cb5bf0a6a9945b30733384fe50bb84a9c2a2ef6c750e4161"
+          },
+          {
+            "path": "eva2/evidence/product/p2-hermes-original-cm02-result-20261007.json",
+            "sha256": "99155b69aec5b0d7002da32a114af36bd3b49e8947e43f816c86f9b37f545f79"
+          },
+          {
+            "path": "eva2/reviews/p2-hermes-original-cm02-result-review-20261007.json",
+            "sha256": "517fbe75f9ef16ad584be3ed9729f3ddc23c30dae49a1ee7c755532e2da767dd"
           }
         ],
         "controlledProviderCallsForPublication": 0,
         "codexDevelopmentCredits": null,
         "followup": {
-          "contract": "EvaPublishedComparisonFollowup/v1",
-          "publishedAt": "2026-10-06T19:52:47.123266+00:00",
-          "status": "cm02_cm03_complete_cm04_execution_unknown",
-          "headline": "Eva1 is geen juistheidsnorm. Inhoudelijke kwaliteit blijft open; CM04 leverde geen antwoord op.",
-          "scope": "Oorspronkelijke CM02/CM03-paren en beschikbare Eva2-CM04/epoch1. De eigen opdrachtvoorwaarden bepalen kwaliteit, los van de Eva1-antwoorden. Geen wijzigingen aan vragen/criteria.",
-          "generalSuperiorityProven": false,
-          "validQualityComparisonPairs": 0,
+          "headline": "CM02: Eva1, Eva2 en Hermes ondersteunen beide geheugencontroles. Geen kwaliteitswinnaar.",
+          "scope": "Eén oorspronkelijke CM02/epoch1: Hermes nu uitgevoerd, behouden Eva1/Eva2-resultaten van dezelfde case/dataset/plan hergebruikt. Eerdere uitkomsten blijven apart.",
           "rows": [
             {
-              "name": "Eva1 · CM02",
+              "name": "Eva1",
               "quality": {
                 "state": "unknown",
-                "label": "Nog niet vastgesteld"
+                "label": "Menselijke kwaliteit nog open"
               },
-              "nativeReplies": "3/3 teruggelezen",
-              "execution": "Oorspronkelijke geheugenopslag-/opvraagcontrole en native trace geslaagd. Antwoordcorrectheid nog niet beoordeeld.",
+              "nativeReplies": "3 / 3",
+              "execution": "Beide oorspronkelijke geheugencontroles ondersteund; native uitvoering compleet. Geen nieuwe herscore.",
               "transportMs": [],
               "providerAttemptsRegistered": 7,
-              "observedToolDispatches": 7,
+              "observedToolDispatches": null,
               "completeInputTokens": 44420,
               "completeOutputTokens": 2317
             },
             {
-              "name": "Eva2 · CM02",
+              "name": "Eva2",
               "quality": {
                 "state": "unknown",
-                "label": "Nog niet vastgesteld"
+                "label": "Menselijke kwaliteit nog open"
               },
-              "nativeReplies": "3/3 teruggelezen",
-              "execution": "Oorspronkelijke geheugenopslag-/opvraagcontrole en native trace geslaagd. Antwoordcorrectheid nog niet beoordeeld.",
+              "nativeReplies": "3 / 3",
+              "execution": "Beide oorspronkelijke geheugencontroles ondersteund; native uitvoering compleet. Geen nieuwe herscore.",
               "transportMs": [],
               "providerAttemptsRegistered": 9,
-              "observedToolDispatches": 0,
+              "observedToolDispatches": null,
               "completeInputTokens": 25903,
               "completeOutputTokens": 1192
             },
             {
-              "name": "Eva1 · CM03",
+              "name": "Hermes",
               "quality": {
                 "state": "unknown",
-                "label": "Nog niet vastgesteld"
+                "label": "Menselijke kwaliteit nog open"
               },
-              "nativeReplies": "3/3 teruggelezen",
-              "execution": "Native antwoordprovenance en volledige accounting bevestigd. Geheugeninhoud en antwoordcorrectheid nog niet inhoudelijk beoordeeld.",
+              "nativeReplies": "3 / 3",
+              "execution": "3/3 feitelijke voorwaarden en2/2geheugencontroles; alle7modelcontexten bewaard.",
               "transportMs": [],
-              "providerAttemptsRegistered": 6,
-              "observedToolDispatches": 5,
-              "completeInputTokens": 35355,
-              "completeOutputTokens": 1315
-            },
-            {
-              "name": "Eva2 · CM03",
-              "quality": {
-                "state": "unknown",
-                "label": "Nog niet vastgesteld"
-              },
-              "nativeReplies": "3/3 teruggelezen",
-              "execution": "Native antwoordprovenance en volledige accounting bevestigd. Geheugeninhoud en antwoordcorrectheid nog niet inhoudelijk beoordeeld.",
-              "transportMs": [],
-              "providerAttemptsRegistered": 8,
-              "observedToolDispatches": 0,
-              "completeInputTokens": 22689,
-              "completeOutputTokens": 863
-            },
-            {
-              "name": "Eva1 · CM04",
-              "quality": {
-                "state": "unknown",
-                "label": "Niet vergelijkbaar"
-              },
-              "nativeReplies": "Niet uitgevoerd",
-              "execution": "De gebonden ingang ondersteunt de oorspronkelijke persoonswissel niet. UNKNOWN; geen verlies voor Eva1.",
-              "transportMs": [],
-              "providerAttemptsRegistered": 0,
-              "observedToolDispatches": null,
-              "completeInputTokens": null,
-              "completeOutputTokens": null
-            },
-            {
-              "name": "Eva2 · CM04",
-              "quality": {
-                "state": "unknown",
-                "label": "Geen bevestigd antwoord"
-              },
-              "nativeReplies": "0/1 teruggelezen",
-              "execution": "Eerste poging HTTP503; SDKusage UNKNOWN, geen antwoord of inhoudelijk oordeel.",
-              "transportMs": [],
-              "providerAttemptsRegistered": 1,
-              "observedToolDispatches": 0,
-              "completeInputTokens": null,
-              "completeOutputTokens": null
+              "providerAttemptsRegistered": 7,
+              "observedToolDispatches": 2,
+              "completeInputTokens": 17519,
+              "completeOutputTokens": 345
             }
           ],
-          "usage": "CM02: Eva1 7 pogingen/46.737 token s; Eva2 9/27.095. CM03: Eva1 6/36.670; Eva2 8/23.552, inclusief geheugenhelpers. CM04: één afgebroken Eva2-poging; tokensUNKNOWN. Meer calls bewijzen geen slechtere kwaliteit, minder tokens geen slimmer/goedkoper resultaat. Credits onbekend.",
-          "timingNote": "CM03 eerste inhoud per beurt: Eva1 13,633/9,739/6,529 s; Eva2 9,777/23,097/4,931s. Totale observatie inclusief geheugen 32,289 tegenover 70,774s. CM04 geen eerste inhoud:3,799s tot afbreken is geen antwoordsnelheid. Geen algemene snelheidsscore.",
+          "usage": "Deze Hermes-proef:7modelpogingen,17.519invoer-/345uitvoertokens. Geld-/creditkosten onbekend.",
+          "humanHelpNote": "Twee echte onafhankelijke menselijke kwaliteitsbeoordelingen ontbreken; geen modelscore of hulpmeting verzonnen.",
+          "nextAction": "Alleen de werkelijk resterende vaste vergelijking voortzetten na gerichte toelating; gesloten proeven behouden. Geen automatische brede matrix of spraakwerk.",
+          "remaining": "P2.1 en algemene voorsprong blijven open. Nieuwe bron-/meetdekking is geen extra Eva-productfunctie.",
+          "timingNote": "Geregistreerde native intervallen: Eva1 51,672s, Eva2 79,839s, Hermes 26,037s. Opstart-/resourcegrenzen verschillen; dit bewijst geen vergelijkbare snelheids- of kwaliteitgewogen efficiëntiewinst. Eerste inhoud per beurt ontbreekt voor Hermes.",
           "configurationNotes": [
-            "Contact gpt-6-sol/none; onderzoeks-/geheugenhelpers gpt-6-astra/medium op dezelfde providerroute.",
-            "Eva2 gebruikt de oorspronkelijke genormaliseerde vergelijkingsvariant voor geheugen (Astra/medium); de geïnstalleerde geheugenroute gebruikt Luna/low. Geen prestatieclaim over dat geïnstalleerde profiel.",
-            "CM02: Beide oorspronkelijke onafhankelijke controles slagen: gedateerde geheugenstatus/laatste native opgehaalde context en native trace. Dit bewijst geen exacte verzonden promptbytes, antwoordcorrectheid of kwaliteitswinnaar.",
-            "De twee vereiste echte onafhankelijke semantische/menselijke beoordelingen ontbreken. Geen AI-review als vervanging, geen winnaar of algemene voorsprong.",
-            "Zelfstandig combinatie-/programmeerwerk en de andere concurrenten zijn door deze twee contact-/geheugengevallen niet afgerond.",
-            "CM03: native antwoordprovenance en drie geheugenverwerkingen bevestigd; inhoudelijke geheugenvoorwaarden en antwoordkwaliteit nog UNKNOWN. Dezelfde oorspronkelijke genormaliseerde modelrollen, geen geïnstalleerde-Luna-prestatieclaim.",
-            "CM04: oorspronkelijke actor/private-audience/session via bestaande Eva2API; Eva1 voor dit geval unavailableUNKNOWN. Eén eigen originele Eva2-envelope op dezelfde cumulatieve DB; geen budgetdonatie/reset."
+            "Eigen native logins, oorspronkelijke CM02 actor-/sessie-/klokcontrols en vaste modelrollen behouden.",
+            "Hermes:5Sol/none-contactpogingen en2Astra/medium-helperpogingen; volledige SDKusage en2native memorytools.",
+            "Alle7serialized contextbodies behouden en onafhankelijk gecontroleerd; officiële score blijftUNKNOWN tot echte menselijke beoordeling."
           ],
-          "humanHelpNote": "Tijdens de proef geen ongeplande evaluatorinterventie of gebruikershulp. Benodigde hulp voor een inhoudelijk geslaagde opdracht blijft onbekend.",
-          "remaining": "P2.1 blijft open: oorspronkelijke dekking en inhoudelijke beoordelingen ontbreken. CM04-usageUNKNOWN blokkeert nieuwe Eva2-toelating onder dezelfde guard. R1/gezinsacceptatie apart open; 34/44 onveranderd.",
-          "nextAction": "Beoordeel de twee reeds beschikbare anonieme CM02-pakketten. De geïnstalleerde foutregistratie is gereed; gesloten CM04/UNKNOWN-accounting blijft behouden. OpenClaw-klokbinding NO_GO; geen replay, stil modelalternatief of nieuwe brede matrix.",
-          "ownerActionRequired": true,
-          "resources": "Oorspronkelijke gesloten cases blijven gesloten. Alle publieke OpenClaw-testprocessen en netwerknamespaces zijn beëindigd; twee echte unregisterqueues geflusht. Volledige native turnafsluiting is niet bewezen.",
+          "resources": "Oorspronkelijke limieten en cumulatieve authority behouden. Eén oorspronkelijke Hermes-uitvoering, geen replay of volgende sampleadmission.",
+          "automaticReviewNote": "Onafhankelijke terminale review: GO voor deze beperkte publicatie. Geen vragen/antwoorden/oracle op het dashboard.",
           "evidenceBindings": [
+            {
+              "path": "eva2/evidence/product/p2-hermes-original-cm02-result-20261007.json",
+              "sha256": "99155b69aec5b0d7002da32a114af36bd3b49e8947e43f816c86f9b37f545f79"
+            },
+            {
+              "path": "eva2/reviews/p2-hermes-original-cm02-result-review-20261007.json",
+              "sha256": "517fbe75f9ef16ad584be3ed9729f3ddc23c30dae49a1ee7c755532e2da767dd"
+            },
             {
               "path": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json",
               "sha256": "1a053eba446056bf5f024fc8dcd9d9a6f2cfa28b471083dab4002227ddbfc144"
-            },
-            {
-              "path": "eva2/evidence/product/p2-original-next-cm02-admission-20261006.json",
-              "sha256": "4e252f0cc692443b035c478f3659ac51cd32ebcd67c2f8e8205418c14cd62d8d"
-            },
-            {
-              "path": "eva2/evidence/product/p2-original-next-cm03-result-20261006.json",
-              "sha256": "dd0b14b39758a39b7653994accaac62afb786d606673eadb6a1afac2a27f742c"
-            },
-            {
-              "path": "eva2/reviews/p2-cm03-final-technical-review-20261006.json",
-              "sha256": "e3b299460d46546c060c443ce3a536ee5d4882e3792cf5c0e2d159cff2b9ac27"
-            },
-            {
-              "path": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
-              "sha256": "05ce75636961143997b1bdc5566c9af7bf39c623b211bc5bcd7f8b97de2e82b8"
-            },
-            {
-              "path": "eva2/evidence/product/p2-original-next-cm04-admission-20261006.json",
-              "sha256": "ac8428b1823f55f8d0f0eacfebdef9306ce26047131283e000d083a669e7b26d"
-            },
-            {
-              "path": "eva2/reviews/p2-cm04-final-technical-review-20261006.json",
-              "sha256": "8fa1af2e3c296f051732329afcac2d23937c0c092453609e7b79d75b240c3841"
-            },
-            {
-              "path": "eva2/reviews/p2-cm04-native-admission-review-20261006.json",
-              "sha256": "3165ea45916c36abf676874d3030c5a69b4f31db3aa99d3951a4b86ac6a25bc6"
             }
-          ],
-          "automaticReviewNote": "CM02/CM03 technische controles en CM04 eerlijke UNKNOWN-publicatie onafhankelijk GO. Geen AI-kwaliteitsoordeel of algemene winnaar.",
-          "humanReviewPreparation": {
-            "status": "two_blind_packets_available",
-            "recordedHumanRaters": 0,
-            "requiredHumanRaters": 2,
-            "source": "eva2/evidence/product/p2-cm02-human-review-preparation-20261006.json",
-            "review": "eva2/reviews/p2-cm02-human-review-preparation-review-20261006.json",
-            "newModelCalls": 0
-          }
+          ]
         },
         "competitorAccessRestoration": {
           "source": "eva2/evidence/product/p2-competitor-device-login-20261006.json",
@@ -6741,7 +6679,166 @@
             }
           },
           "scope": "Previous publication snapshot; retained historical counts are not summed into the current authority lower bounds."
-        }
+        },
+        "historicalFollowups": [
+          {
+            "preservedAt": "2026-10-06T23:43:08.489461+00:00",
+            "value": {
+              "contract": "EvaPublishedComparisonFollowup/v1",
+              "publishedAt": "2026-10-06T19:52:47.123266+00:00",
+              "status": "cm02_cm03_complete_cm04_execution_unknown",
+              "headline": "Eva1 is geen juistheidsnorm. Inhoudelijke kwaliteit blijft open; CM04 leverde geen antwoord op.",
+              "scope": "Oorspronkelijke CM02/CM03-paren en beschikbare Eva2-CM04/epoch1. De eigen opdrachtvoorwaarden bepalen kwaliteit, los van de Eva1-antwoorden. Geen wijzigingen aan vragen/criteria.",
+              "generalSuperiorityProven": false,
+              "validQualityComparisonPairs": 0,
+              "rows": [
+                {
+                  "name": "Eva1 · CM02",
+                  "quality": {
+                    "state": "unknown",
+                    "label": "Nog niet vastgesteld"
+                  },
+                  "nativeReplies": "3/3 teruggelezen",
+                  "execution": "Oorspronkelijke geheugenopslag-/opvraagcontrole en native trace geslaagd. Antwoordcorrectheid nog niet beoordeeld.",
+                  "transportMs": [],
+                  "providerAttemptsRegistered": 7,
+                  "observedToolDispatches": 7,
+                  "completeInputTokens": 44420,
+                  "completeOutputTokens": 2317
+                },
+                {
+                  "name": "Eva2 · CM02",
+                  "quality": {
+                    "state": "unknown",
+                    "label": "Nog niet vastgesteld"
+                  },
+                  "nativeReplies": "3/3 teruggelezen",
+                  "execution": "Oorspronkelijke geheugenopslag-/opvraagcontrole en native trace geslaagd. Antwoordcorrectheid nog niet beoordeeld.",
+                  "transportMs": [],
+                  "providerAttemptsRegistered": 9,
+                  "observedToolDispatches": 0,
+                  "completeInputTokens": 25903,
+                  "completeOutputTokens": 1192
+                },
+                {
+                  "name": "Eva1 · CM03",
+                  "quality": {
+                    "state": "unknown",
+                    "label": "Nog niet vastgesteld"
+                  },
+                  "nativeReplies": "3/3 teruggelezen",
+                  "execution": "Native antwoordprovenance en volledige accounting bevestigd. Geheugeninhoud en antwoordcorrectheid nog niet inhoudelijk beoordeeld.",
+                  "transportMs": [],
+                  "providerAttemptsRegistered": 6,
+                  "observedToolDispatches": 5,
+                  "completeInputTokens": 35355,
+                  "completeOutputTokens": 1315
+                },
+                {
+                  "name": "Eva2 · CM03",
+                  "quality": {
+                    "state": "unknown",
+                    "label": "Nog niet vastgesteld"
+                  },
+                  "nativeReplies": "3/3 teruggelezen",
+                  "execution": "Native antwoordprovenance en volledige accounting bevestigd. Geheugeninhoud en antwoordcorrectheid nog niet inhoudelijk beoordeeld.",
+                  "transportMs": [],
+                  "providerAttemptsRegistered": 8,
+                  "observedToolDispatches": 0,
+                  "completeInputTokens": 22689,
+                  "completeOutputTokens": 863
+                },
+                {
+                  "name": "Eva1 · CM04",
+                  "quality": {
+                    "state": "unknown",
+                    "label": "Niet vergelijkbaar"
+                  },
+                  "nativeReplies": "Niet uitgevoerd",
+                  "execution": "De gebonden ingang ondersteunt de oorspronkelijke persoonswissel niet. UNKNOWN; geen verlies voor Eva1.",
+                  "transportMs": [],
+                  "providerAttemptsRegistered": 0,
+                  "observedToolDispatches": null,
+                  "completeInputTokens": null,
+                  "completeOutputTokens": null
+                },
+                {
+                  "name": "Eva2 · CM04",
+                  "quality": {
+                    "state": "unknown",
+                    "label": "Geen bevestigd antwoord"
+                  },
+                  "nativeReplies": "0/1 teruggelezen",
+                  "execution": "Eerste poging HTTP503; SDKusage UNKNOWN, geen antwoord of inhoudelijk oordeel.",
+                  "transportMs": [],
+                  "providerAttemptsRegistered": 1,
+                  "observedToolDispatches": 0,
+                  "completeInputTokens": null,
+                  "completeOutputTokens": null
+                }
+              ],
+              "usage": "CM02: Eva1 7 pogingen/46.737 token s; Eva2 9/27.095. CM03: Eva1 6/36.670; Eva2 8/23.552, inclusief geheugenhelpers. CM04: één afgebroken Eva2-poging; tokensUNKNOWN. Meer calls bewijzen geen slechtere kwaliteit, minder tokens geen slimmer/goedkoper resultaat. Credits onbekend.",
+              "timingNote": "CM03 eerste inhoud per beurt: Eva1 13,633/9,739/6,529 s; Eva2 9,777/23,097/4,931s. Totale observatie inclusief geheugen 32,289 tegenover 70,774s. CM04 geen eerste inhoud:3,799s tot afbreken is geen antwoordsnelheid. Geen algemene snelheidsscore.",
+              "configurationNotes": [
+                "Contact gpt-6-sol/none; onderzoeks-/geheugenhelpers gpt-6-astra/medium op dezelfde providerroute.",
+                "Eva2 gebruikt de oorspronkelijke genormaliseerde vergelijkingsvariant voor geheugen (Astra/medium); de geïnstalleerde geheugenroute gebruikt Luna/low. Geen prestatieclaim over dat geïnstalleerde profiel.",
+                "CM02: Beide oorspronkelijke onafhankelijke controles slagen: gedateerde geheugenstatus/laatste native opgehaalde context en native trace. Dit bewijst geen exacte verzonden promptbytes, antwoordcorrectheid of kwaliteitswinnaar.",
+                "De twee vereiste echte onafhankelijke semantische/menselijke beoordelingen ontbreken. Geen AI-review als vervanging, geen winnaar of algemene voorsprong.",
+                "Zelfstandig combinatie-/programmeerwerk en de andere concurrenten zijn door deze twee contact-/geheugengevallen niet afgerond.",
+                "CM03: native antwoordprovenance en drie geheugenverwerkingen bevestigd; inhoudelijke geheugenvoorwaarden en antwoordkwaliteit nog UNKNOWN. Dezelfde oorspronkelijke genormaliseerde modelrollen, geen geïnstalleerde-Luna-prestatieclaim.",
+                "CM04: oorspronkelijke actor/private-audience/session via bestaande Eva2API; Eva1 voor dit geval unavailableUNKNOWN. Eén eigen originele Eva2-envelope op dezelfde cumulatieve DB; geen budgetdonatie/reset."
+              ],
+              "humanHelpNote": "Tijdens de proef geen ongeplande evaluatorinterventie of gebruikershulp. Benodigde hulp voor een inhoudelijk geslaagde opdracht blijft onbekend.",
+              "remaining": "P2.1 blijft open: oorspronkelijke dekking en inhoudelijke beoordelingen ontbreken. CM04-usageUNKNOWN blokkeert nieuwe Eva2-toelating onder dezelfde guard. R1/gezinsacceptatie apart open; 34/44 onveranderd.",
+              "nextAction": "Beoordeel de twee reeds beschikbare anonieme CM02-pakketten. De geïnstalleerde foutregistratie is gereed; gesloten CM04/UNKNOWN-accounting blijft behouden. OpenClaw-klokbinding NO_GO; geen replay, stil modelalternatief of nieuwe brede matrix.",
+              "ownerActionRequired": true,
+              "resources": "Oorspronkelijke gesloten cases blijven gesloten. Alle publieke OpenClaw-testprocessen en netwerknamespaces zijn beëindigd; twee echte unregisterqueues geflusht. Volledige native turnafsluiting is niet bewezen.",
+              "evidenceBindings": [
+                {
+                  "path": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json",
+                  "sha256": "1a053eba446056bf5f024fc8dcd9d9a6f2cfa28b471083dab4002227ddbfc144"
+                },
+                {
+                  "path": "eva2/evidence/product/p2-original-next-cm02-admission-20261006.json",
+                  "sha256": "4e252f0cc692443b035c478f3659ac51cd32ebcd67c2f8e8205418c14cd62d8d"
+                },
+                {
+                  "path": "eva2/evidence/product/p2-original-next-cm03-result-20261006.json",
+                  "sha256": "dd0b14b39758a39b7653994accaac62afb786d606673eadb6a1afac2a27f742c"
+                },
+                {
+                  "path": "eva2/reviews/p2-cm03-final-technical-review-20261006.json",
+                  "sha256": "e3b299460d46546c060c443ce3a536ee5d4882e3792cf5c0e2d159cff2b9ac27"
+                },
+                {
+                  "path": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
+                  "sha256": "05ce75636961143997b1bdc5566c9af7bf39c623b211bc5bcd7f8b97de2e82b8"
+                },
+                {
+                  "path": "eva2/evidence/product/p2-original-next-cm04-admission-20261006.json",
+                  "sha256": "ac8428b1823f55f8d0f0eacfebdef9306ce26047131283e000d083a669e7b26d"
+                },
+                {
+                  "path": "eva2/reviews/p2-cm04-final-technical-review-20261006.json",
+                  "sha256": "8fa1af2e3c296f051732329afcac2d23937c0c092453609e7b79d75b240c3841"
+                },
+                {
+                  "path": "eva2/reviews/p2-cm04-native-admission-review-20261006.json",
+                  "sha256": "3165ea45916c36abf676874d3030c5a69b4f31db3aa99d3951a4b86ac6a25bc6"
+                }
+              ],
+              "automaticReviewNote": "CM02/CM03 technische controles en CM04 eerlijke UNKNOWN-publicatie onafhankelijk GO. Geen AI-kwaliteitsoordeel of algemene winnaar.",
+              "humanReviewPreparation": {
+                "status": "two_blind_packets_available",
+                "recordedHumanRaters": 0,
+                "requiredHumanRaters": 2,
+                "source": "eva2/evidence/product/p2-cm02-human-review-preparation-20261006.json",
+                "review": "eva2/reviews/p2-cm02-human-review-preparation-review-20261006.json",
+                "newModelCalls": 0
+              }
+            }
+          }
+        ]
       },
       "housemateSummary": {
         "checkedAt": "2026-10-06T09:54:42.358033+00:00",
@@ -19632,7 +19729,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Binnen bestaande P2.1 uitsluitend ontbrekende originele OpenClaw native-klok/geheugenreadbackbinding gericht aansluiten indien bestaande middelen dat toelaten; geen nieuwe laag/matrix of herhaling van gesloten cases. Echte menselijke kwaliteitbeoordelingen blijven apart.",
+              "nextAction": "Gebruik deze beperkte, onafhankelijke CM02-uitkomst bij het bestaande vergelijkingsbesluit. Alleen resterende oorspronkelijke uitvoerbare vergelijking gericht toelaten; menselijke kwaliteit blijft apart. Geen herhaling of brede matrix.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -19645,9 +19742,9 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-06T23:19:05.676197+00:00",
+              "checkedAt": "2026-10-06T23:45:19.764253+00:00",
               "assignment": {
-                "baseCommit": "45896f3f9500a4505330e37e4cb26881eabe94e6",
+                "baseCommit": "7c6ab7648d9e3cca03baf4466f839623fd2d7fcc",
                 "owner": "/root",
                 "activeWorkers": [],
                 "files": [
@@ -19659,24 +19756,27 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte voorbereiding0provider-/samplecalls. Eerst originele ongebruiktheid en werkelijk bruikbare oorspronkelijke toelating vaststellen; uitvoeringsraming pas uit het bestaande plan en de concrete binding. Geen nieuwe quota, gratis teller, set of brede matrix; credits onbekend.",
-                "currentAction": "Broncheckpoint en resultaat gepubliceerd; geen native proef actief. Bestaande kwaliteitsbeoordelingen en oorspronkelijke nog toegelaten dekking blijven apart open.",
+                "currentAction": "Hermes CM02 afgesloten en onafhankelijk beoordeeld: 3/3 feitelijke antwoordvoorwaarden en 2/2 geheugencontroles ondersteund. Het resultaat staat in het dashboard. Geen modelproef of uitvoerder actief; resterende vergelijking is nog niet gestart.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "evidence": "eva2/evidence/product/p2-http-failure-diagnostics-20261006.json",
-                  "meaning": "Gerichte oorspronkelijke diagnostische afhankelijkheid uitgevoerd, onafhankelijk GO, exact geïnstalleerd en gezonde kern bevestigd. Geen nieuwe productfunctie; login vereist."
+                  "evidence": [
+                    "eva2/evidence/product/p2-hermes-cm01-independent-assessment-20261007.json",
+                    "eva2/evidence/product/p2-openclaw-native-composition-20261007.json"
+                  ],
+                  "meaning": "Bewaarde Hermes-correctie inhoudelijk vastgesteld; gewone OpenClaw-uitgaande Sol/none en onverenigbare kalenderdragers daadwerkelijk vastgesteld. Bron/bewijs gepubliceerd; volgende OpenClaw-proef daardoor niet geadmitteerd. Geen nieuwe Eva-productfunctie."
                 },
-                "stage": "openclaw_original_calendar_binding_no_go",
+                "stage": "hermes_cm02_closed_independent_result_available",
                 "currentNativePreparation": {
-                  "runHandle": "ev003-successor-native-cm04-20261006-e87d5a92",
-                  "sessionId": 54196,
-                  "actualTransition": "Terminal54196/exit0; alle3proefservices/tunnels gestopt, één aborted poging, SDK/kwaliteitUNKNOWN. Geen volgende proef.",
+                  "runHandle": "ev003-hermes-successor-cm02-parent-20261007-v1",
+                  "sessionId": 46977,
+                  "actualTransition": "Exec46977/exit0, Inspectsuccess. Onafhankelijke inhoud/readbacks3/3feitelijk en2/2geheugen bevestigd; human qualityUNKNOWN. Alle native middelen gesloten.",
                   "participantInputReleased": true,
                   "budgetChanged": false,
                   "preparationProviderCalls": 0,
                   "nativeExecutionActive": false,
                   "resourcePreparationActive": false,
                   "noActiveProcesses": true,
-                  "registeredSampleProviderAttempts": 1
+                  "registeredSampleProviderAttempts": 7
                 },
                 "evaluatorCorrection": {
                   "source": "eva2/evidence/product/p2-original-next-cm-result-20261006.json",
@@ -19773,13 +19873,13 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "Binnen bestaande P2.1 uitsluitend ontbrekende originele OpenClaw native-klok/geheugenreadbackbinding gericht aansluiten indien bestaande middelen dat toelaten; geen nieuwe laag/matrix of herhaling van gesloten cases. Echte menselijke kwaliteitbeoordelingen blijven apart.",
+                "nextAction": "Gebruik deze beperkte, onafhankelijke CM02-uitkomst bij het bestaande vergelijkingsbesluit. Alleen resterende oorspronkelijke uitvoerbare vergelijking gericht toelaten; menselijke kwaliteit blijft apart. Geen herhaling of brede matrix.",
                 "actualUsage": {
+                  "scope": "This original Hermes CM02 only; earlier comparisons remain separate.",
                   "newProviderAttemptsRegistered": 7,
-                  "newInputTokens": 17498,
-                  "newOutputTokens": 275,
+                  "newInputTokens": 17519,
+                  "newOutputTokens": 345,
                   "newSdkUsage": "KNOWN",
-                  "scope": "This original Hermes sample only; earlier native AgentZero6 attempts remain separately recorded. Development/fake tests had0modelinference.",
                   "developmentCredits": "UNKNOWN",
                   "runtimeCredits": "UNKNOWN"
                 },
@@ -20086,8 +20186,11 @@
                 },
                 "currentGoalTurn": {
                   "classification": "progress",
-                  "previousTurnEvidence": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
-                  "meaning": "Vorige beurt heeft de gewone Hermes-route uitgevoerd en gepubliceerd. Vervolg behandelt alleen ontbrekende OpenClaw-meetbinding binnen P2.1."
+                  "evidence": [
+                    "eva2/evidence/product/p2-hermes-original-cm02-result-20261007.json",
+                    "eva2/reviews/p2-hermes-original-cm02-result-review-20261007.json"
+                  ],
+                  "meaning": "Eén oorspronkelijke Hermes CM02 uitgevoerd en onafhankelijk beoordeeld met bewaarde eindmodelcontexten. Geen nieuwe productfunctie of algemene kwaliteitswinnaar."
                 },
                 "agentzeroReadiness": {
                   "stage": "verified",
@@ -20357,13 +20460,57 @@
                 },
                 "independentReviewNext": {
                   "agent": "/root/aide_final_evaluation",
-                  "status": "completed_source_publication_go_original_sample_no_go",
-                  "scope": "Concrete OpenClaw whole-native time/session/memory/tool/settlement binding before original input.",
-                  "review": "eva2/reviews/p2-openclaw-native-binding-final-review-20261007.json"
+                  "status": "complete_additive_report_go",
+                  "scope": "Original retained CM02 replies/context/memory/usage/tool/stop readbacks after terminal; human quality separate.",
+                  "result": "eva2/evidence/product/p2-hermes-original-cm02-result-20261007.json",
+                  "review": "eva2/reviews/p2-hermes-original-cm02-result-review-20261007.json"
+                },
+                "contextRetentionCorrection": {
+                  "status": "independent_source_go",
+                  "source": "eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py",
+                  "delta": "Exact serialized request body retained before dispatch; private0600/O_EXCL/fsync; technical metadata only hash/file/bytes/original turn index. Original clock/model/provider/toolguard retained.",
+                  "models": 0,
+                  "runtimeInstalled": false,
+                  "closedSampleChanged": false,
+                  "focusedChecksPassed": 20,
+                  "finalSourceRecheckPending": false,
+                  "evidence": "eva2/evidence/product/p2-hermes-context-retention-20261007.json",
+                  "review": "eva2/reviews/p2-hermes-cm02-readiness-review-20261007.json"
+                },
+                "hermesCm02Preparation": {
+                  "state": "closed_independently_reviewed",
+                  "entry": "hermes:EV003-CM-02:epoch1",
+                  "source": "eva2/evidence/product/p2-hermes-original-cm02-preparation-20261007.json",
+                  "sourceReview": "eva2/reviews/p2-hermes-cm02-readiness-review-20261007.json",
+                  "resourceStarts": 1,
+                  "newReservations": 1,
+                  "modelCalls": 0,
+                  "originalClosedCaseChanged": false,
+                  "projectedOracleIncluded": false,
+                  "credits": "UNKNOWN",
+                  "actualReadyEvidence": "eva2/evidence/product/p2-hermes-cm02-actual-ready-20261007.json",
+                  "execSession": 46977,
+                  "admissionEvidence": "eva2/evidence/product/p2-hermes-original-cm02-admission-20261007.json",
+                  "actualModelCalls": 7,
+                  "sdkInputTokens": 17519,
+                  "sdkOutputTokens": 345,
+                  "elapsedSeconds": 26.036861851003778,
+                  "modelContextsRetained": 7,
+                  "toolsEntered": 2,
+                  "nativeComplete": true,
+                  "containerAbsent": true,
+                  "networkAbsent": true,
+                  "resultEvidence": "eva2/evidence/product/p2-hermes-original-cm02-result-20261007.json",
+                  "resultSha256": "99155b69aec5b0d7002da32a114af36bd3b49e8947e43f816c86f9b37f545f79",
+                  "reviewEvidence": "eva2/reviews/p2-hermes-original-cm02-result-review-20261007.json",
+                  "reviewSha256": "517fbe75f9ef16ad584be3ed9729f3ddc23c30dae49a1ee7c755532e2da767dd",
+                  "officialQuality": "UNKNOWN",
+                  "factualSupported": 3,
+                  "requiredReadbacksPassed": 2
                 }
               },
               "remaining": "CM02/CM03 technisch uitgevoerd; antwoordkwaliteit UNKNOWN. CM04 na één poging onbeslist en gesloten; geen algemene voorsprong. Oorspronkelijke dekking, twee CM02-beoordelingen en oorzaak/accounting blijven open.",
-              "latestEvidence": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
+              "latestEvidence": "eva2/evidence/product/p2-hermes-original-cm02-result-20261007.json",
               "executionBlocker": {
                 "owner": "Codex",
                 "kind": "native503_unresolved_sdk_usage",
