@@ -1,3 +1,17 @@
+## 6 oktober — P2.1 native ontwikkelroute werkelijk hersteld
+
+De verkeerde proeflogin is gericht vervangen door een aparte beperkte applicatielogin in dezelfde geïsoleerde database. Beide rolwissels werken; de bestaande kern geeft op dezelfde openbare synthetische ontwikkelvraag HTTP200 met exact onafhankelijk teruggelezen antwoord. Schema, gegevens, cache, actiegrenzen en oorspronkelijke HTTP500-bewijs blijven behouden. Onafhankelijke review: GO. Verbruik: 0 echte modelcalls, 1 synthetische contactpoging (17/7 testtokens); ontwikkelcreditkosten onbekend. Proefresources zijn gestopt met gegevensbehoud. Dit herstelt een meetvoorwaarde, geen nieuwe huisgenootfunctie; 34/44 blijft gelijk. P2.1, R1 en de beoordeling van zelfstandig werk blijven open. Vervolg is geldige onafhankelijke vergelijking onder bestaande voorwaarden, geen replay of automatische volledige matrix.
+
+## 6 oktober — P2.1 concrete proefloginfout herstellen
+
+De eerste echte openbare native request levert HTTP500 vóór modelgebruik: de proeflogin eva_dbos kan de bestaande gespreksrol eva_runtime niet aannemen. Codex corrigeert de aparte applicatielogin in dezelfde geïsoleerde database, met behoud van schema, gegevens, cache, budget en actiegrenzen. De eerdere gesloten eindproef blijft onbekend; deze nieuwe diagnose bewijst haar oude oorzaak niet. Geen afgeronde productfunctie en geen nieuwe eigenaarhandeling. Publieke broncorrectie en onafhankelijke review worden samen met de gerichte native controle afgerond.
+
+## 6 oktober — P2.1 daadwerkelijke invoer lokaal valideren
+
+Hervat vanaf e0bbdc06. Vorige goalturn: publieke foutmetadata gerepareerd,26offlinecontroles en onafhankelijke GO; geen productafronding. De nu ontbrekende gerichte admissionvraag is of de bewaarde werkelijk ingediende request via de bestaande productfunctie _turn_from_wire geldig is. De onafhankelijke beoordelaar heeft dit in-process gecontroleerd: **geldig**, en exact terugserialiseren via de bestaande native adapter klopt. Root ontvangt alleen inhoudsvrij oordeel/bronbinding. Geen serververzoek, modelproef, gesloten eindvraagherhaling of scorerwijziging.0geplande providercalls; ontwikkelcredits onbekend. Oorspronkelijke P2.1-eindvoorwaarde en34/44 behouden. [Schema-evidence](evidence/product/p2-native-wire-admission-20261006.json).
+
+Volgende overgang: één gewone niet-finale native HTTP/runtime-proef wordt voorbereid met bestaande worker/glue/initializer en syntheticprovider in een nieuwe afgescheiden scope. Geen echte OpenAI-call, gesloten eindvraag, productie-/persoonlijke data of nieuw platform; geen kwaliteitsclaim. Alleen een werkelijk aangetoonde falende overgang rechtvaardigt een broncorrectie.
+
 ## 6 oktober — P2.1: oorzaak onbekend, meetmetadata gericht gecorrigeerd
 
 Onafhankelijke inhoudsvrije diagnose bevestigt dat de werkelijk ingediende request bij de nieuwe scope paste. De vermoedelijke vaste-IDfout is dus niet aangetoond. HTTPstatus en foutframe ontbreken; de oude oorzaak blijft **UNKNOWN**.

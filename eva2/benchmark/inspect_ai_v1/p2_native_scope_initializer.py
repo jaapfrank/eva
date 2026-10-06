@@ -35,8 +35,16 @@ def initialize_scope(
     if url.database != expected_database:
         raise ValueError("Database scope differs from the explicit isolated target")
     runtime_url = sa.engine.make_url(runtime_database_dsn)
-    if runtime_url.database != expected_database or runtime_url.username != "eva_dbos":
-        raise ValueError("Runtime requires the ordinary application role in the isolated target")
+    # Eva's fixed schema roles are NOLOGIN groups, not application accounts.
+    # The core switches transactions to eva_runtime; a DBOS-only login cannot
+    # admit a conversation. The caller provisions a separate restricted login.
+    schema_roles = {"eva_runtime", "eva_dbos", "eva_migrator", "eva_backup"}
+    if (
+        runtime_url.database != expected_database
+        or not runtime_url.username
+        or runtime_url.username in schema_roles
+    ):
+        raise ValueError("Runtime requires a separate application login in the isolated target")
     runtime_root = runtime_root.resolve()
     if not str(runtime_root).startswith("/tmp/eva2-ev003-provider-history-"):
         raise ValueError("Runtime files must use the dedicated temporary evaluation root")
@@ -106,7 +114,7 @@ def initialize_scope(
             "tenant_id": tenant, "installation_id": installation, "principal_id": principal,
             "schemaRevision": schema.final_revision,
             "seedFacts": ["static/" + name for name in facts],
-            "budgetValuesUnchanged": True, "runtimeDatabaseRole": "eva_dbos",
+            "budgetValuesUnchanged": True, "runtimeDatabaseRole": runtime_url.username,
             "sourceBudgetSha256": original_budget.source_budget_sha256,
             "runtimeBudgetSha256": hashlib.sha256(scoped_budget.to_bytes()).hexdigest(),
             "files": list(files), "providerCalls": 0,

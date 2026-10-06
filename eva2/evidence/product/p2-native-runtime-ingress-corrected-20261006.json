@@ -1,0 +1,270 @@
+{
+  "P2_1Complete": false,
+  "actionGuard": {
+    "allExternalActionsDeniedBeforeDispatch": true,
+    "allowed": [
+      "protocol:structured_response"
+    ],
+    "parameterAlias": {
+      "criteriaOrHardValueChanged": false,
+      "toolCalls": 16,
+      "toolDispatches": 16
+    },
+    "staticUnexpectedActionGuardPassed": true
+  },
+  "changedCause": "restricted login now explicitly allowed SET ROLE eva_runtime and eva_dbos; original groups unchanged NOLOGIN",
+  "contract": "EvaP2PublicNativeRuntimeIngressProbe/v1",
+  "databaseDependencyBinding": {
+    "PGMajorAfter": 16,
+    "PGMajorBefore": 16,
+    "newId": "fd89430f65ff122c53c183e3eb8b0f67b6aa51507bda05c301586416fdc52346",
+    "newImage": "sha256:c8483555ce48101872f888c1df8a895ff689d6c7c7a5f7ac266475f9dfe89e0b",
+    "oldId": "617d6c7cc5842a59972b02300fc583991505e9e9c00501da80c304da3b918458",
+    "oldImage": "sha256:e17e86066e5ef83e0952a9347f5c792b7ece00972e2aa787a6986f471b3dd3d5",
+    "previousInitializedSchemaRetained": true,
+    "sameDataVolume": true,
+    "volumeSha256": "83e3204d3e4788f5b6a987930128e85b641dc61cb48382e1c5ae7bdc5f5356a4"
+  },
+  "developmentCredits": "UNKNOWN",
+  "developmentOutputIsNotProductFunction": true,
+  "exchange": {
+    "diagnostic": null,
+    "elapsed_ms": 19706.906966001043,
+    "first_content_ms": 19684.000597000704,
+    "http_status": 200,
+    "replyReadbackVerified": true,
+    "requests": 1,
+    "status": "readback_verified",
+    "verified_end_ms": 19706.906257999435
+  },
+  "finalScorerInvoked": false,
+  "fixtureNotFinalCase": true,
+  "fixturePublic": true,
+  "fixtureText": "Voor deze openbare ontwikkelproef: ik vind kamillethee lekker.",
+  "hiddenCaseScorerOrProcessorRead": false,
+  "humanRatings": 0,
+  "images": {
+    "core": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+    "database": "sha256:c8483555ce48101872f888c1df8a895ff689d6c7c7a5f7ac266475f9dfe89e0b",
+    "memory": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710"
+  },
+  "intelligenceSpeedSuperiorityClaim": false,
+  "nativeLoginCorrection": {
+    "HTTPRequests": 0,
+    "NOINHERIT": true,
+    "PGMajor": 16,
+    "SET_ROLE_Verified": {
+      "eva_dbos": true,
+      "eva_runtime": true
+    },
+    "adminGrantOption": false,
+    "containerId": "fd89430f65ff122c53c183e3eb8b0f67b6aa51507bda05c301586416fdc52346",
+    "contract": "EvaP2PublicRestrictedNativeLoginCorrection/v1",
+    "coreDatabase": "eva2_p2_public_ingress_20261006",
+    "databaseSchemaTableFunctionOwnershipCount": 0,
+    "directGrantsExactlyTwoSetOnly": true,
+    "groupPrivilegeSnapshotBeforeAndAfter": "4611618c212ebc2c252421c23e7f4cb16abb53a7a86fc0d3cf5489b51bb361f4",
+    "groupPrivilegesUnchanged": true,
+    "groupsRemainSeparateNOLOGIN": true,
+    "image": "sha256:c8483555ce48101872f888c1df8a895ff689d6c7c7a5f7ac266475f9dfe89e0b",
+    "initializerExecuted": false,
+    "initializerSourceSHA": "b0f2baed6805a3aacfe963df4b60230aa221084a37169147ee260497678862cb",
+    "login": "eva_p2_public_ingress_login",
+    "loginFlagsRestricted": true,
+    "migratorBackupAuthority": false,
+    "privateCoreDSNOnlyRebound": true,
+    "realModelCalls": 0,
+    "runtimeSeedOrSchemaChanged": false,
+    "sameInitializedDataVolume": true,
+    "scriptSHA": "43371c90f2afa4cbe5e9df47f67eb77c926ccba6d95c0623a1a60d3f445853e7",
+    "status": "runtime_role_binding_corrected",
+    "transitiveAuthorityExactlyTwoNativeGroups": true
+  },
+  "nativeStartupFacts": {
+    "actualCandidateApiSourceSha256": "aa9efedb22108666f318a1a020cdfcc75e6770cd3506de4af7fda190a8f661a0",
+    "actualHTTPRequests": 1,
+    "coreHealth200BeforeFixture": true,
+    "exactIndependentDurableReadbackVerified": true,
+    "memoryHealth200BeforeFixture": true,
+    "replyContractAndIdentityValidated": true
+  },
+  "nativeTerminal": {
+    "core": {
+      "actionAttempts": 0,
+      "localSettled": true,
+      "nativeCalls": 1,
+      "nativeErrorClasses": [],
+      "providerMode": "synthetic",
+      "upstreamModelCalls": 0
+    },
+    "memory": {
+      "actionAttempts": 0,
+      "localSettled": true,
+      "nativeCalls": 0,
+      "nativeErrorClasses": [],
+      "providerMode": "synthetic",
+      "upstreamModelCalls": 0
+    }
+  },
+  "newEnvironmentOrInstallation": false,
+  "originalHTTP500ReceiptRetained": true,
+  "originalPerSampleLimits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "parentErrors": [],
+  "preHTTPPreparationFailures": [
+    {
+      "canonicalCode": "existing_pure_model_dependency_binding_differs",
+      "cause": "is_file follows 18 snapshot symlinks; 18 zero-byte lock files also entered raw count; 25 unique regular nonlock objects retain 226325451 bytes",
+      "databaseReinitialized": false,
+      "failureClass": "RuntimeError",
+      "httpRequests": 0,
+      "oldScriptSha256": "acea9637a82ceed157268bba3530df41e105e454a476e776d2a23a5c2c152fce",
+      "participantAttempts": 0,
+      "phase": "pre_native_cache_binding",
+      "realModelCalls": 0
+    },
+    {
+      "HTTPRequests": 0,
+      "class": "ValueError",
+      "configurationCorrection": {
+        "after": "openai-codex",
+        "before": "codex",
+        "criterionChanged": false,
+        "parameter": "HINDSIGHT_API_LLM_PROVIDER",
+        "source": "hindsight_api.engine.llm_wrapper:394-395"
+      },
+      "phase": "native_memory_constructor",
+      "providerAttempts": 0,
+      "publicCallsite": "hindsight_api.engine.memory_engine.MemoryEngine.__init__:1538"
+    }
+  ],
+  "previousCorrectedReceiptSha256": "b81b44fb89aa11ae99081c8c2ff670448cd6a38384ffdb8d33ba8e413cd0e949",
+  "providerMode": "synthetic",
+  "publicExceptionFrames": [
+    {
+      "function": "respond",
+      "line": 1187,
+      "module": "eva2/src/eva/adapters/api/app.py"
+    },
+    {
+      "function": "respond",
+      "line": 1165,
+      "module": "eva2/src/eva/bootstrap/runtime.py"
+    },
+    {
+      "function": "admit",
+      "line": 89,
+      "module": "eva2/src/eva/adapters/postgres/conversation_journal.py"
+    },
+    {
+      "function": "create_thread",
+      "line": 259,
+      "module": "eva2/src/eva/adapters/postgres/operational_timeline.py"
+    },
+    {
+      "function": "_scope",
+      "line": 235,
+      "module": "eva2/src/eva/adapters/postgres/operational_timeline.py"
+    }
+  ],
+  "pureDependencyManifestSha256": "1534f671cb41b4fe41d9ee41c26d405af8325ef57fde0a30ea0649f7520244a5",
+  "pureThirdPartyWeightsAndCudaReadonly": true,
+  "realModelCalls": 0,
+  "resourceClosure": {
+    "accountingSocketPathAbsent": true,
+    "activeAccountedAsyncAttempts": 0,
+    "actualContainerMetadata": [
+      {
+        "containerId": "222969936cc8ad77cdda3e052976501a81444577f62c3d31333fa3d312d46ddc",
+        "exitCode": 0,
+        "image": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+        "name": "eva2-p2dev-ingress-core-20261006",
+        "running": false
+      },
+      {
+        "containerId": "02a1564929e920f724c15c77da92d0e8b570e6d30493aee9ea4eb488af0905cc",
+        "exitCode": 0,
+        "image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+        "name": "eva2-p2dev-ingress-memory-20261006",
+        "running": false
+      },
+      {
+        "containerId": "fd89430f65ff122c53c183e3eb8b0f67b6aa51507bda05c301586416fdc52346",
+        "exitCode": 0,
+        "image": "sha256:c8483555ce48101872f888c1df8a895ff689d6c7c7a5f7ac266475f9dfe89e0b",
+        "name": "eva2-p2dev-ingress-db-20261006",
+        "running": false
+      }
+    ],
+    "closedFinalContainersOrDataRead": false,
+    "containersStopped": true,
+    "dataRetained": true,
+    "productionRuntimeChanged": false
+  },
+  "scopeClarifications": {
+    "finalDatasetScorerOrProcessorRead": false,
+    "formalP2_1ComparisonComplete": false,
+    "genuineIntelligenceOrModelSpeedTest": false,
+    "humanRatings": 0,
+    "oldClosedFinalCause": "UNKNOWN",
+    "ordinaryPublicDevelopmentFixtureOnly": true,
+    "procedureLearningAutonomyEvaluation": false,
+    "recheckDueToObservedChangedDatabaseRoleCause": true,
+    "syntheticUsageIsNotActualPaidModelConsumption": true
+  },
+  "setupFailure": null,
+  "sourceBindings": {
+    "actionControl": "9c4f45d012f25f74ab9017b2a3982661c34b87d4293f8467085b81ae6f9deae6",
+    "glue": "620c6f5b0cf83078e3a71dacd8be320edb2debea74c35d6421c939e0835fb93f",
+    "initializer": "b0f2baed6805a3aacfe963df4b60230aa221084a37169147ee260497678862cb",
+    "loginCorrectionScript": "43371c90f2afa4cbe5e9df47f67eb77c926ccba6d95c0623a1a60d3f445853e7",
+    "nativeAdapter": "57a1996e868887b53af445870616538d51c0b92bdf2ce20dacdbfb5d3db7fc78",
+    "originalHTTP500Receipt": "d053fd49a1871183e1258619ce084cf1fa1d58be889c8b0ff71b6eec4853ebaa",
+    "productApi": "aa9efedb22108666f318a1a020cdfcc75e6770cd3506de4af7fda190a8f661a0",
+    "worker": "c4f08df0d4fcaae19ee09326300faf2e5a6af4019ba86c9629e50c4232a8a978"
+  },
+  "status": "native_ingress_corrected_verified_synthetic_only",
+  "syntheticLedger": {
+    "active_async_attempts": 0,
+    "attempts": [
+      {
+        "id": 0,
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none",
+        "role": "contact",
+        "sample_id": "p2-public-native-ingress-development-20261006",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 17,
+          "output_tokens": 7,
+          "total_tokens": 24
+        }
+      }
+    ],
+    "cancel_errors": [],
+    "complete": true,
+    "coverage": "Only native entrypoints actually bound by the caller",
+    "known_partial_usage": {
+      "input_tokens": 17,
+      "output_tokens": 7,
+      "total_tokens": 24
+    },
+    "live_admission": false,
+    "provider_attempts": 1,
+    "sample_id": "p2-public-native-ingress-development-20261006",
+    "stop": "public synthetic development probe complete",
+    "stop_requested": true,
+    "total_usage": {
+      "input_tokens": 17,
+      "output_tokens": 7,
+      "total_tokens": 24
+    }
+  },
+  "temporaryLauncherSha256": "0689fa52e652d0d0fdeca7ece6fb441cc5a431fd3eb3f6dd8383c9bfce16f927"
+}

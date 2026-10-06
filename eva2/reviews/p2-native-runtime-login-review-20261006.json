@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-06",
+  "reviewer": "/root/r1_final_followup_20261006",
+  "decision": "GO",
+  "scope": "Public initializer source and separate ordinary native-probe login setup only",
+  "sourceBindings": [
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/p2_native_scope_initializer.py",
+      "sha256": "b0f2baed6805a3aacfe963df4b60230aa221084a37169147ee260497678862cb"
+    },
+    {
+      "path": "eva2/migrations/versions/4b_0000_core_namespace.py",
+      "sha256": "59fc8da9f1e152b69d953746187e413fe0602dff7df7de0b01160e3d3867cb6c"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/conversation_journal.py",
+      "sha256": "1012e0b868cb830dc07616bd3b65ddea6473997c3ed9f3d5fa97f898dae82b10"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/operational_timeline.py",
+      "sha256": "192a91439d861824bcae40c5b1c6ecb1a77a52154e0240d10fd79111b4e5473c"
+    },
+    {
+      "path": "eva2/evidence/product/p2-native-runtime-ingress-probe-20261006.json",
+      "sha256": "d053fd49a1871183e1258619ce084cf1fa1d58be889c8b0ff71b6eec4853ebaa"
+    },
+    {
+      "path": "eva2/evidence/product/p2-native-runtime-login-setup-diagnosis-20261006.json",
+      "sha256": "2d59f932e018f5dd428392333296947a8306a749c362d560d84bc7ffce4636d6"
+    }
+  ],
+  "findings": [
+    {
+      "status": "PASS",
+      "claim": "The four fixed schema roles are NOLOGIN groups. The conversation journal uses eva_runtime and the operational timeline explicitly executes SET LOCAL ROLE eva_runtime before model work. A DBOS-only login does not satisfy this contract."
+    },
+    {
+      "status": "PASS",
+      "claim": "The source change rejects fixed group names as application logins and reports the supplied separate login. It does not add provisioning, role grants, ownership, schema mutation, fixture changes or budget changes."
+    },
+    {
+      "status": "PASS",
+      "claim": "A separate restricted login with explicit SET membership on eva_runtime and eva_dbos matches the existing runtime contract and PostgreSQL 16 role semantics. INHERIT FALSE prevents automatic inheritance; SET TRUE permits the required explicit switch."
+    }
+  ],
+  "approvedSetup": {
+    "database": "eva2_p2_public_ingress_20261006",
+    "container": "eva2-p2dev-ingress-db-20261006",
+    "containerId": "fd89430f65ff122c53c183e3eb8b0f67b6aa51507bda05c301586416fdc52346",
+    "image": "sha256:c8483555ce48101872f888c1df8a895ff689d6c7c7a5f7ac266475f9dfe89e0b",
+    "retainedDataVolumeBindingSha256": "83e3204d3e4788f5b6a987930128e85b641dc61cb48382e1c5ae7bdc5f5356a4",
+    "applicationLogin": "eva_p2_native_runtime",
+    "loginAttributes": {
+      "LOGIN": true,
+      "SUPERUSER": false,
+      "CREATEDB": false,
+      "CREATEROLE": false,
+      "INHERIT": false,
+      "REPLICATION": false,
+      "BYPASSRLS": false
+    },
+    "memberships": [
+      {
+        "role": "eva_runtime",
+        "INHERIT": false,
+        "SET": true,
+        "ADMIN": false
+      },
+      {
+        "role": "eva_dbos",
+        "INHERIT": false,
+        "SET": true,
+        "ADMIN": false
+      }
+    ],
+    "restore": "Restore eva_dbos to NOLOGIN only in this retained isolated probe cluster; preserve the other fixed-role flags.",
+    "preserve": "Retained database/schema/data, cache, controls, images and original numeric experiment bounds. Do not rerun initialize_scope, reseed or rewrite the nonempty database.",
+    "exclusions": [
+      "No production role change",
+      "No admin, migrator or backup membership",
+      "No new ownership or DDL rights",
+      "No final R1/P2 case replay",
+      "No model or product-quality claim"
+    ]
+  },
+  "preHTTPVerification": {
+    "owner": "Coordinator/evaluator, separate live receipt",
+    "performedByReviewer": false,
+    "required": [
+      "Recheck exact retained isolated database/container before grants",
+      "Verify actual restricted login flags and session_user/current_database",
+      "Verify SET-enabled, non-inherited, non-admin membership only in the required role groups; no indirect administrative membership or ownership",
+      "Verify both explicit SET LOCAL ROLE switches in rollback transactions before the same public synthetic fixture is continued"
+    ],
+    "note": "The initializer validates configured username/database only; runtimeDatabaseRole is not proof of actual PostgreSQL flags or ability. Live checks are to be preserved in p2-native-runtime-ingress-corrected-20261006.json."
+  },
+  "attribution": {
+    "ordinaryProbe": "The observed admission failure and public role contract justify this setup correction.",
+    "historicalClosedFinalCause": "UNKNOWN",
+    "productCompletion": false,
+    "P2_1Completion": false,
+    "R1_1Completion": false,
+    "comparisonAdvantage": "Not established"
+  },
+  "references": [
+    "https://www.postgresql.org/docs/16/role-membership.html",
+    "https://www.postgresql.org/docs/16/sql-grant.html",
+    "https://www.postgresql.org/docs/16/sql-set-role.html"
+  ],
+  "reviewActivity": {
+    "publicStaticReview": true,
+    "privateCasesScorersLaunchersRead": false,
+    "databaseQueries": 0,
+    "roleGrants": 0,
+    "runtimeWorkerRuns": 0,
+    "modelCalls": 0,
+    "testsRepeated": 0,
+    "developmentCreditCost": "UNKNOWN"
+  },
+  "limitations": [
+    "This GO authorizes the specific setup plan and source correction, not evidence that live role checks or the resumed fixture have succeeded."
+  ]
+}

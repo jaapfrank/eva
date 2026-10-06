@@ -1,0 +1,36 @@
+{
+  "contract": "EvaP2NativeRuntimeCorrectionAvailability/v1",
+  "checkedAt": "2026-10-06T10:54:17.911971+00:00",
+  "taskId": "P2.1",
+  "status": "public_source_and_isolated_native_setup_verified",
+  "source": {
+    "path": "eva2/benchmark/inspect_ai_v1/p2_native_scope_initializer.py",
+    "sha256": "b0f2baed6805a3aacfe963df4b60230aa221084a37169147ee260497678862cb"
+  },
+  "review": {
+    "path": "eva2/reviews/p2-native-runtime-login-review-20261006.json",
+    "sha256": "60134c0567f7b3ac8f3ee8be34b70a10470b06ea6e0eaef82a25e879f78ee070"
+  },
+  "actualVerification": {
+    "path": "eva2/evidence/product/p2-native-runtime-ingress-corrected-20261006.json",
+    "sha256": "8009ad3c3e3957a2048c727739f644887834e66cd6ba48dadfe0946dc60dbd05"
+  },
+  "reviewPlanLogin": "eva_p2_native_runtime",
+  "actualSeparateLogin": "eva_p2_public_ingress_login",
+  "nameDifferenceChangesAuthority": false,
+  "runtimeScope": "Only retained isolated eva2_p2_public_ingress_20261006; no production source/image/config/data change.",
+  "verification": {
+    "HTTPStatus": 200,
+    "exactDurableReadback": true,
+    "realModelCalls": 0,
+    "syntheticProviderAttempts": 1,
+    "actualActions": 0,
+    "previousFailedRequestRetained": true,
+    "allProbeContainersStoppedDataRetained": true
+  },
+  "P2_1Complete": false,
+  "productOutcomeComplete": false,
+  "R1Complete": false,
+  "next": "Admit the original independent comparison under unchanged criteria/provider route; no closedcase replay, new platform or automatic full matrix.",
+  "developmentCredits": null
+}

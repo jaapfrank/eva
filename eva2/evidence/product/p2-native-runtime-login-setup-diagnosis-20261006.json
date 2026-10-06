@@ -1,0 +1,57 @@
+{
+  "HTTPRequests": 0,
+  "P2_1Complete": false,
+  "closedFinalCause": "UNKNOWN; current ordinary synthetic failure does not prove earlier final-cause identity",
+  "contract": "EvaP2PublicNativeLoginSetupDiagnosis/v1",
+  "credentialsPrinted": false,
+  "developmentCredits": "UNKNOWN",
+  "hiddenCaseOrScorerRead": false,
+  "launcher": {
+    "coreDatabasePointerLine": 32,
+    "coreRuntimeDatabaseEnvironmentLine": 65,
+    "independentHostReadbackLine": 109,
+    "path": "/tmp/eva2-ev003-provider-history-public-ingress-20261006/run-public-development.py",
+    "sha256": "b32794873cf13e93982de932195e219fd9266c166974bbf5b0a67ac1634e9b0c"
+  },
+  "loginCreation": {
+    "credentialsDisclosed": false,
+    "exactOriginalSqlStanza": "UNKNOWN_NOT_RETAINED",
+    "historicalConstruction": "inline setup before public launcher; not a retained source file",
+    "observedConfiguredLoginRole": "eva_dbos",
+    "observedNonsuperuser": true
+  },
+  "observedFailure": {
+    "HTTPStatus": 500,
+    "canonicalCode": "database_role_switch_denied",
+    "causeIsOwnOrdinaryProbeSetup": true,
+    "expectedPublicRoleDeniedConfirmed": true,
+    "observedDriverExceptionClass": "psycopg.errors.InsufficientPrivilege",
+    "observedExceptionClass": "sqlalchemy.exc.ProgrammingError",
+    "observedSQLState": "UNKNOWN",
+    "originalClosedFinalFailureCause": "UNKNOWN",
+    "phase": "runtime_journal_admission",
+    "publicCodeFrame": {
+      "function": "_scope",
+      "line": 235,
+      "module": "eva2/src/eva/adapters/postgres/operational_timeline.py"
+    },
+    "publicSourceOperation": "SET LOCAL ROLE eva_runtime",
+    "replayed": false,
+    "sourceSha256": "192a91439d861824bcae40c5b1c6ecb1a77a52154e0240d10fd79111b4e5473c"
+  },
+  "realModelCalls": 0,
+  "runtimeStarted": false,
+  "scope": "new public ordinary development probe only; no closed final source, fixture, scorer or processor",
+  "smallestRecommendedCorrection": {
+    "actualExecution": "none; recommendation only; no grant, role change, start, replay or request performed in this supplemental step",
+    "coreConnection": "separate restricted LOGIN role; ordinary DSN uses that login",
+    "initializerAdmission": "validate actual restricted login and ability to explicitly SET ROLE to both native groups, rather than require URL username eva_dbos",
+    "loginAuthority": "NOINHERIT, NOSUPERUSER, NOBYPASSRLS, NOCREATEDB, NOCREATEROLE, NOREPLICATION; no schema/table owner or migrator authority",
+    "memoryConnection": "retain existing separately isolated memory binding; do not copy its privileged connection into core",
+    "oldGroupRepair": "eva_dbos must remain/restored NOLOGIN after replacing only the own probe core-login binding",
+    "retain": "same initialized PG16 volume, core database/schema, memory database/schema, fixed public rows, resource budget values, candidate images and action-control limits",
+    "roleMembership": "existing eva_runtime and eva_dbos remain separate NOLOGIN groups; separate login may explicitly SET ROLE to either, without ADMIN grant option or inherited access"
+  },
+  "status": "source_only_smallest_setup_correction_identified",
+  "syntheticProviderAttempts": 0
+}

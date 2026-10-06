@@ -1,0 +1,70 @@
+{
+  "P2_1Complete": false,
+  "actualRetainedWire": true,
+  "bindings": {
+    "productApi": {
+      "protected": false,
+      "publicPath": "eva2/src/eva/adapters/api/app.py",
+      "sha256": "aa9efedb22108666f318a1a020cdfcc75e6770cd3506de4af7fda190a8f661a0"
+    },
+    "productAudience": {
+      "protected": false,
+      "publicPath": "eva2/src/eva/application/memory_audience.py",
+      "sha256": "4aef5ec9ca0b6467d67a1531bfe7dee2f09a99a48cd2cfdb378325ac5828c9fa"
+    },
+    "productTurn": {
+      "protected": false,
+      "publicPath": "eva2/src/eva/application/conversation.py",
+      "sha256": "7e64d5f146c8d6a0bdac4a6d5564d2f92954b6764fdb8af6ec54bf3ef9502a62"
+    },
+    "publicGlue": {
+      "protected": false,
+      "publicPath": "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py",
+      "sha256": "620c6f5b0cf83078e3a71dacd8be320edb2debea74c35d6421c939e0835fb93f"
+    },
+    "publicNativeAdapter": {
+      "protected": false,
+      "publicPath": "eva2/benchmark/inspect_ai_v1/cp001_native.py",
+      "sha256": "57a1996e868887b53af445870616538d51c0b92bdf2ce20dacdbfb5d3db7fc78"
+    },
+    "retainedActualWireRecord": {
+      "protected": true,
+      "publicPath": null,
+      "sha256": "e72a9d9b9b91cbd086b0ebe4a19438dc6d68619f8b412154ed8d003bed530928"
+    }
+  },
+  "caseId": "EV003-PH-CM-01",
+  "caseReplayed": false,
+  "closedRoundUnchanged": true,
+  "contract": "EvaP2RetainedNativeWireAdmission/v1",
+  "criteriaChanged": false,
+  "date": "2026-10-06",
+  "developmentCredits": "UNKNOWN",
+  "epoch": 1,
+  "finalScorerInvoked": false,
+  "hiddenContentOrIdsPublished": false,
+  "nativeServerOrRuntimeStarted": false,
+  "newProviderOrModelCalls": 0,
+  "originalCauseAttribution": "UNKNOWN",
+  "productOrAdapterSourceChanged": false,
+  "protectedInputOrSourceCopied": false,
+  "publicAdapterContracts": {
+    "currentGlue": "Posts serialized native body; preserves only standardized numeric status/phase diagnostics; NativeHTTPResponse wraps successful JSON; NativeIngressError carries safe failure code/status and discards server error details.",
+    "currentResponseValidation": "Public response_text verifies native reply contract, identity and text hash before exact independent committed readback.",
+    "eva2RequestForTurn": "Serializes already resolved ConversationTurn into /internal/v1/turns/respond with existing audience wire; no authority inference or history injection.",
+    "productTurnFromWire": "Checks allowed/required keys; builds native audience and ConversationTurn; validates optional observation binding and recent context.",
+    "schemaPassMeaning": "In-process input/schema evidence only; not runtime ingress, provider, memory, quality, authority acceptance or a successful user outcome."
+  },
+  "publicTypedValidation": {
+    "canonicalFailureClass": null,
+    "classification": "VALID",
+    "currentPublicSerializerExactRoundTrip": true,
+    "missingPublicDependency": null,
+    "passes": true,
+    "phase": "existing_public_product_wire_validator",
+    "sourceLine": 462,
+    "validator": "eva.adapters.api.app._turn_from_wire"
+  },
+  "resourcesStarted": false,
+  "status": "retained_wire_schema_valid"
+}
