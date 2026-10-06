@@ -1,0 +1,116 @@
+{
+  "schema": "P2HermesToolAccountingCorrection/v1",
+  "preparedAtUtc": "2026-10-06T22:01:30.036075+00:00",
+  "task": "P2.1",
+  "status": "source_candidate_contract_passed_independent_review_pending",
+  "originalClosedSample": {
+    "runHandle": "ev003-hermes-successor-cm01-parent-20261006-v1",
+    "caseId": "EV003-CM-01",
+    "epoch": 1,
+    "executedAdapter": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/executed-p1_hermes_startup_probe-77017.private.py",
+      "sha256": "77017aa6b009a512317aa0705b2ce9ce15a0f103d53814076d50d324ff520519"
+    },
+    "admissionSha256": "691521d9d2a7ad0d56d25afe4e9f7463c0e7f9ff813aca9023961efefbfc9f08",
+    "result": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
+      "sha256": "7ce13747387afb29447bcbd5315a0a8d499da65e7dbe3687084f038058a86581"
+    },
+    "rawAdapterObservedTools": 0,
+    "nativeMainToolLowerBound": 2,
+    "originalTotalToolCount": "UNKNOWN",
+    "original16ToolCapEnforcement": "UNKNOWN",
+    "replay": false,
+    "rescore": false,
+    "reviewedResultBeforeEndAttestationSha256": "772861ba76a0a4fdac4499551eea83de94b72a8e3b4177d71d0dd9946a38ba96",
+    "resultVersion": "7ce137 post independentEndReview attestation; original technical review binds772861 pre-attestation; raw fields unchanged"
+  },
+  "sourceCorrection": {
+    "adapter": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py",
+      "sha256": "da70070bed6b0cecbad4a6319bdbb0c737ba0c007ed5e6571efc5d2f5cf200bf"
+    },
+    "delta": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/hermes-tool-counter-correction.private.patch",
+      "sha256": "6233bba72d8f6e2b9bf05b6cec5e1ae3ac4f7ac953b192e328186c03238779d9"
+    },
+    "surface": "existing AIAgent._execute_tool_calls batch; existing inline memory executor and registry fallback",
+    "causeSource": {
+      "nativeExecutor": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/agent/tool_executor.py",
+        "sha256": "f34672aea4869e04ceec2927b01d2eabf17f5b600e58d6db79c2abac7d0c6b4c"
+      },
+      "inlineBranchLine": 1618,
+      "registryFallbackLine": 1648
+    },
+    "semantics": [
+      "one shared lock reserves all announced tool attempts before a native batch starts",
+      "original cap16 and native memory allowlist retained for all actors",
+      "parent stop and original absolute deadline checked at batch admission and immediately before inline/fallback dispatch",
+      "same batch session/call-id reservations reused by registry fallback without double counting",
+      "native inline table and batch method restored by existing native cleanup"
+    ],
+    "toolCountDefinition": "admitted tool attempts; a native-skipped attempt retains its reservation and entered=false",
+    "sdkCodeChanged": false,
+    "nativeSourceChanged": false,
+    "modelsChanged": false,
+    "criteriaOrLimitsChanged": false,
+    "newNativeSample": false,
+    "correctedAdapterNativeSampleExecution": "NOT_PERFORMED"
+  },
+  "developmentContract": {
+    "test": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_hermes_native_tool_accounting.py",
+      "sha256": "8c7c8fcb4b0cbd3fd128b494e67953aa368c8034d17cc6139ccc2dcb69919146"
+    },
+    "fixture": "public data only; actual pinned AIAgent._execute_tool_calls signature/planner and _resolve_sequential_dispatch/INLINE memory executor/MemoryStore; no AIAgent constructor",
+    "command": [
+      "unshare",
+      "--net",
+      "/usr/bin/env",
+      "HERMES_NATIVE_SOURCE=/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source",
+      "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-native-env/bin/python",
+      "/home/administrator/project/Eva2/eva2/tests/benchmark/test_hermes_native_tool_accounting.py"
+    ],
+    "finalSourceBoundResult": "PASS",
+    "tests": 1,
+    "seconds": 1.562,
+    "earlierSameFocusedTestExecutions": 1,
+    "earlierCandidateResult": "PASS",
+    "earlierCandidateSeconds": 1.916,
+    "checks": {
+      "nativeInlineMemoryWrite": true,
+      "realNativeRegistryFallbackSelection": true,
+      "batchFallbackNoDoubleCounting": true,
+      "sixteenAdmittedAttempts": true,
+      "seventeenthRejectedBeforeNativeDispatch": true,
+      "parentStopBeforeInlineBody": true,
+      "unadmittedBatchRejectedBeforeDispatch": true
+    },
+    "network": "disabled private namespace",
+    "providerCalls": 0,
+    "sampleInputs": 0,
+    "actualAuthorityOpened": false,
+    "authStoreOpened": false,
+    "existingSdkIpcChecksReused": {
+      "test": {
+        "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_cp001_process_accounting.py",
+        "sha256": "f1c876762818ee42c28825c48514af1d2f700e1bcd0bd45be98f1b385de50d7f"
+      },
+      "retainedPassed": 19,
+      "newSdkTestRuns": 0
+    }
+  },
+  "authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "closedResultSha256": "c81cf6f0832ec1f81f760f2962b29e8bb91de5faa7c9378135a4543bbd147559",
+    "mutatedByDevelopment": false,
+    "newReservation": false,
+    "unknownsPreserved": true
+  },
+  "independentReview": {
+    "status": "PENDING",
+    "reviewer": "/root/p2_eva1_lease_review_20261006",
+    "scope": "future source-only toolcounter correction; not original sample resource or quality completion"
+  }
+}

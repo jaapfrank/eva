@@ -1,0 +1,220 @@
+{
+  "contract": "P2HermesParentAccountingPreparation/v1",
+  "task": "P2.1",
+  "sourceBasis": "5967b72ba324e5251c3460d9e8e6e0eb7a1018a8",
+  "status": "admitted_one_available_successor_original_cm_sample",
+  "participant": "hermes",
+  "entry": "hermes:EV003-CM-01:epoch1",
+  "caseId": "EV003-CM-01",
+  "epoch": 1,
+  "runHandle": "ev003-hermes-successor-cm01-parent-20261006-v1",
+  "providerCalls": 0,
+  "nativeResourcesStarted": 3,
+  "nativeContextsStarted": 0,
+  "sampleInputReleased": false,
+  "absoluteDeadlineCreated": false,
+  "executeOnceCreated": false,
+  "newAggregateReservations": 0,
+  "nativeParticipantSourceChanged": false,
+  "benchmarkAdapterChanged": true,
+  "modelRoles": {
+    "contact": {
+      "model": "gpt-6-sol",
+      "reasoning_effort": "none"
+    },
+    "helpers": {
+      "model": "gpt-6-astra",
+      "reasoning_effort": "medium"
+    }
+  },
+  "originalPerSampleLimits": {
+    "externalActions": 0,
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "originalOrderUnchanged": true,
+  "originalConcurrency": 1,
+  "availabilityAndEpochOrderReviewRequired": true,
+  "quality": "UNKNOWN",
+  "recordedHumanRatings": 0,
+  "requiredIndependentBlindedHumanRatings": 2,
+  "noAIJudge": true,
+  "entitlement": "UNKNOWN_until_actual_same_native_dispatch",
+  "credits": "UNKNOWN",
+  "sameAuthority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256": "a25612099447b7c128e0598fc08b73e0272ad542c4634e3131357f14b03d9090",
+    "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "datasetSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "readOnlyPreparation": true,
+    "hermesRows": 0,
+    "selectedSlotUnused": true,
+    "existingRows": 8,
+    "existingUnknownsPreserved": true,
+    "noResetNoCopyNoDonor": true
+  },
+  "nativeBoundary": {
+    "nativeAIAgentPreserved": true,
+    "nativeOwnAuthStore": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-native-owned/auth.json",
+    "authSha256": "c8f3c66b5b613d9d2369529a63e077d9ec5befccffd4ae225f88e195c16400b2",
+    "credentialCopied": false,
+    "nativeProfileModeGlobalOwnFallback": true,
+    "freshSampleProfile": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-native-owned/profiles/ev003-cm01-epoch1-parent-20261006-v1",
+    "ordinaryResponsesDispatch": true,
+    "parentBeforeEverySDKAndHTTP": true,
+    "nativeUIDCannotReadAuthority": true,
+    "sdkRetries": 0,
+    "nativeStreamRetryLimit": 1,
+    "allHelperAndFailureUsageIncluded": true,
+    "technicalFailureClassStatusCodeRetained": true,
+    "errorBodiesExcluded": true,
+    "nativeSessionDBReadOnlyReadbacks": true,
+    "nativeMemoryFileReadbacks": true,
+    "nativeCloseAndHTTPParentCloseSeparate": true
+  },
+  "sourceHashes": {
+    "adapter": "77017aa6b009a512317aa0705b2ce9ce15a0f103d53814076d50d324ff520519",
+    "launcher": "da54654c8b8917361562622edb2447ec245fc9a0084d2060203ffa0f34b34066",
+    "inspectWrapper": "251cc9d29540b05723ce011d872af70bdfe1fecb39202f31022d64555b9f8d79",
+    "nativeSourcePin": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
+    "instrumentation": {
+      "cp001_accounting.py": "7841f6c450e1bc031662b190685ec15a4e5112b7ed3cf9183117c19197a49291",
+      "cp001_native.py": "57a1996e868887b53af445870616538d51c0b92bdf2ce20dacdbfb5d3db7fc78",
+      "cp001_process_accounting.py": "e2d1d3d63e64f84da2ddeef2bf032fe9e5b5153a50abddf0db9fe75dc607a774",
+      "ev003_python_calendar.py": "2d00941d259ba2576c4c7703e5717834118286b35281002d0f671c379a691c48",
+      "p2_provider_history_native_glue.py": "2087ffaf4854a91908e780d5f6ad72092ff277669696dd688f93335c03df6b0a"
+    },
+    "projector": "414736c6ad13bf84b439f1584eab5e4359bdfee1355b30b9909cd94bb50553a8",
+    "deadlineHelper": "fd942c3d15df5559099460eb2277fb5f241d4fa9c5f5c932a4146c5b438f0519"
+  },
+  "privateTechnicalBindings": {
+    "parent-cm01-admission.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/parent-cm01-admission.private.json",
+      "sha256": "6d992f7a47858049b07851bf6cd3a95b851aec2f3e0b3bec9081e67fefc4e97a"
+    },
+    "bound-no-input-contract.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/bound-no-input-contract.private.json",
+      "sha256": "be6cc789abd7f21a64ef2cf307742f13b5541459773659aaa6471db4b6f9cc4f"
+    },
+    "projection-contract-technical.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/projection-contract-technical.private.json",
+      "sha256": "21ec619f9d8c04641aebf690adc87c388d6046098a9ea5c3118a1053b6d4a1d9"
+    },
+    "authority-before-technical.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/authority-before-technical.private.json",
+      "sha256": "18a33e801edc831abc40186d9e74e397b8de4e805bb0b55bc3c9c5635823f130"
+    },
+    "native-owned-auth-freshness-technical.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/native-owned-auth-freshness-technical.private.json",
+      "sha256": "70e20801525ca6ade4514fd0e0dbdeec8f42836afeecb2df5ab652907ba1eb12"
+    },
+    "hermes-parent-adapter-diff.private.patch": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/hermes-parent-adapter-diff.private.patch",
+      "sha256": "98107c6445f4fafcb9526ea1ab0e4734263a309af808d5f5609c2330b89802d9"
+    }
+  },
+  "focusedChecks": {
+    "file": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_cp001_process_accounting.py",
+    "sha256": "f1c876762818ee42c28825c48514af1d2f700e1bcd0bd45be98f1b385de50d7f",
+    "passed": 19,
+    "elapsed_seconds": 4.46,
+    "provider_calls": 0,
+    "native_calls": 0
+  },
+  "proposedResourcePreparationCommand": [
+    "/home/administrator/project/.eva2-artifacts/cp001-eval-env-20260912/bin/python",
+    "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/inspect-run-parent-accounted-cm01.private.py",
+    "--prepare",
+    "--admission",
+    "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/parent-cm01-admission.private.json"
+  ],
+  "commandNotStarted": false,
+  "deadlinePath": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/sample-deadlines/hermes-absolute-deadline.json",
+  "executeOncePath": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execute-once.private.json",
+  "executionGate": "GO_exact_single_original_Hermes_CM01_epoch1; root_execute_once_only",
+  "independentReviewStatus": "GO_actual_input_binding",
+  "sdkUsageRetentionDelta": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/sdk-usage-retention-diff.private.patch",
+    "sha256": "0cf91412491ad91a270786f944cf8d96a9a11f9159c7d6731887b06e08abf6ee",
+    "reviewedOldAdapterSha256": "67ce477f8f39676ea7625f3f2cebad31864423315c444950f02603ed06cf0355",
+    "rawSDKUsagePreservedBeforeIPC": true,
+    "zeroNativeCalls": true,
+    "zeroInference": true
+  },
+  "nativeBootstrapEmptyDirectoryGuardDelta": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/empty-native-directory-guard-diff.private.patch",
+    "sha256": "025750ed59cec5cdc5256beaec00927699cbaa88e4f48a57979487c0e9fe810c",
+    "oldLauncherSha256": "f754b2b97bea0c7e014dddf009cb8f800b299ece42cc55a3bca250cc1e1e4282",
+    "sameProfilePreserved": true,
+    "noMemoryFilesOrStateDB": true,
+    "noReset": true
+  },
+  "knownSDKUsageRPCFailureStatusDelta": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/known-usage-rpc-failure-status-diff.private.patch",
+    "sha256": "4dda92bf938b2e20be1c63785591348c6db0909187fbfc102a086a67464e3597",
+    "onlyStatusClassificationChanged": true,
+    "knownRawUsagePreserved": true,
+    "zeroNativeCalls": true,
+    "zeroInference": true
+  },
+  "admitted": true,
+  "resourcePreparationAdmitted": true,
+  "independentTechnicalReview": {
+    "reviewer": "/root/p2_eva1_lease_review_20261006",
+    "status": "GO_no_input_resource_preparation_only",
+    "review_path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-parent-accounting-admission-review-20261006.json",
+    "review_sha256": "72ded1cacdc89b26baedaae4fa02831b0d490613baaece4dbf71737dc4eaddf6",
+    "reviewed_public_sha256": "dfcf7ca37670e31236d2e520902af28969a861b3422dd16b195c944a37071db3",
+    "reviewed_private_admission_sha256": "6547681db433df52caa4132eb419f58acb13e4a6fe021a12cf775ffe08ce8f67",
+    "separate_actual_input_go_required": true
+  },
+  "execSession": 54988,
+  "actualReadiness": {
+    "status": "READY_no_input_resource_only",
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/actual-ready-technical.private.json",
+    "sha256": "130707ef29eb66c958a3cb062f13a6dad6f4ddbd60e999deb08f3b0acf57b04a",
+    "authorityPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "authorityAfterReservationSha256": "5d935c44bd8ad0e176b70f8ca905eb7b7f91383f02686e4e5d282c39be29377c",
+    "authorityTechnicalPath": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/actual-authority-technical.private.json",
+    "authorityTechnicalSha256": "dd68f3459c24828e607c248f6421f754fa133af4864f89f89d2aef818346297a",
+    "inputReleasePreparationPath": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/input-release-preparation-technical.private.json",
+    "inputReleasePreparationSha256": "e93bd1ca436279899c2bb088eb052ec6d3009c369a7ae9f832627f23b7c7c4fc",
+    "containerId": "9ae6ce0f18bffb2ee2ed926fd3f3e83b99f6c6aaf276caaed3ffd6555439c443",
+    "networkId": "cf08e5061dd052194e07af84c6da66f73854420c549f41c9c2f8214c101a87f2",
+    "namespace": "net:[4026533541]",
+    "namespaceCarrierImage": "sha256:4355cfe6db617e43e81d1679bf8c7b8beed71db8ec137378dbb46e809a2452d7",
+    "nativeUID": 1000,
+    "nativeGID": 1000,
+    "nativeContextStarted": false,
+    "providerCalls": 0,
+    "inputReleased": false,
+    "sampleDeadlineCreated": false,
+    "scenarioClockFileCreated": false,
+    "initialScenarioClockGeneration": 0,
+    "sourcePinsUnchanged": true,
+    "controllerErrors": [],
+    "networkExternalEvents": [],
+    "authSha256": "c8f3c66b5b613d9d2369529a63e077d9ec5befccffd4ae225f88e195c16400b2",
+    "independentReviewStatus": "GO_exact_actual_input_gate"
+  },
+  "source_sha256": {
+    "launcher_sha256": "da54654c8b8917361562622edb2447ec245fc9a0084d2060203ffa0f34b34066",
+    "probe_sha256": "77017aa6b009a512317aa0705b2ce9ce15a0f103d53814076d50d324ff520519",
+    "inspect_wrapper_sha256": "251cc9d29540b05723ce011d872af70bdfe1fecb39202f31022d64555b9f8d79"
+  },
+  "independentActualInputReview": {
+    "reviewer": "/root/p2_eva1_lease_review_20261006",
+    "status": "GO_exact_actual_input_gate",
+    "scope": "one original available Hermes CM01/epoch1 on existing54988 only",
+    "reviewedPublicSha256": "1e41be80cd7082faf25282323d5729f16366612273a45d7a08b7998415355548",
+    "reviewedReadySha256": "130707ef29eb66c958a3cb062f13a6dad6f4ddbd60e999deb08f3b0acf57b04a",
+    "reviewedReleasePreparationSha256": "e93bd1ca436279899c2bb088eb052ec6d3009c369a7ae9f832627f23b7c7c4fc",
+    "reviewPath": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-parent-accounting-admission-review-20261006.json",
+    "originalOrderAvailabilityAndConcurrencyPreserved": true,
+    "newCallsOrProbes": 0
+  }
+}

@@ -1,0 +1,366 @@
+{
+  "contract": "P2OpenClawOwnedNativeAccess/v1",
+  "task": "P2.1",
+  "participant": "openclaw",
+  "integrationCheckpoint": "5967b72ba324e5251c3460d9e8e6e0eb7a1018a8",
+  "decision": {
+    "ownedNativeAccountAndCatalog": "GO",
+    "ordinaryOriginalSampleInput": "NO_GO",
+    "noSampleReleased": true
+  },
+  "scope": "Own native account/catalog metadata and bounded installed ordinary dispatch-source inspection only. No model response, source correction, sample admission or product-quality claim.",
+  "ownedNativeObservation": {
+    "account": {
+      "present": true,
+      "requiresOpenaiAuth": true,
+      "rpcErrorCode": null,
+      "type": "chatgpt"
+    },
+    "accountRefreshRequested": false,
+    "catalog": {
+      "modelCount": 9,
+      "ids": [
+        "gpt-6-astra",
+        "gpt-6-sol",
+        "gpt-6-luna",
+        "gpt-reserve",
+        "gpt-5.6-sol",
+        "gpt-5.6-terra",
+        "gpt-5.6-luna",
+        "gpt-5.5",
+        "codex-auto-review"
+      ],
+      "pages": 1,
+      "nextCursor": null,
+      "selected": {
+        "gpt-6-sol": {
+          "id": "gpt-6-sol",
+          "model": "gpt-6-sol",
+          "hidden": false,
+          "defaultReasoningEffort": "medium",
+          "supportedReasoningEfforts": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max",
+            "ultra"
+          ],
+          "inputModalities": [
+            "text",
+            "image"
+          ]
+        },
+        "gpt-6-astra": {
+          "id": "gpt-6-astra",
+          "model": "gpt-6-astra",
+          "hidden": false,
+          "defaultReasoningEffort": "medium",
+          "supportedReasoningEfforts": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max",
+            "ultra"
+          ],
+          "inputModalities": [
+            "text",
+            "image"
+          ]
+        }
+      }
+    },
+    "catalogIsNotInferenceEntitlement": true,
+    "elapsedSeconds": 1.2281759600009536,
+    "inferenceRPCs": 0,
+    "loginRPCs": 0,
+    "managedEntrySha256": "61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70",
+    "nativeExitCode": 0,
+    "nativeInitializeSucceeded": true,
+    "nativeUid": 1000,
+    "ownAuthBytesUnchanged": true,
+    "ownAuthSha256After": "b099dbc54c0a77b6bf492afaf23cc27ef610b9f86f77cf4b12d7909f5201c611",
+    "ownAuthSha256Before": "b099dbc54c0a77b6bf492afaf23cc27ef610b9f86f77cf4b12d7909f5201c611",
+    "packageManifestSha256": "98862962c00eef34e3946f14a4345c26efbaaa733f8c6188069654a234adeee0",
+    "pid": 3436053,
+    "processGroupAbsent": true,
+    "profile": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home",
+    "rpcMethods": [
+      "initialize",
+      "initialized",
+      "account/read",
+      "model/list"
+    ],
+    "stderrBytes": 414,
+    "stderrSha256": "8ec6f89e4b16ecfbd69fb70b8bc006497ecbc0e233148ff5c5eccd4583e231b8",
+    "threadRPCs": 0,
+    "turnRPCs": 0
+  },
+  "installed": {
+    "openclawVersion": "2026.9.6",
+    "pluginVersion": "2026.9.6",
+    "managedCodexVersion": "0.155.1",
+    "openclawManifestSha256": "53e483cf761dfe5d773b1b1a3f26a07146c6d5d1f7c2ead25e8a2e422c4d3cbf",
+    "openclawEntrySha256": "4dd36d2ed0cb154456c4a09a951a2e8f2508a5dd6ff2fe0688d4e1c8f773fcb5",
+    "pluginManifestSha256": "487c9e30a10e22b167be27884eba958e5204296ae799caa16138090e489a5315",
+    "contactConfigSha256": "b59a1b86fcaa20df5b16fe515fa64c9d5be9a4cc2fbde9ad8f9279a98adeffc0",
+    "workConfigSha256": "77c3dfb2a122acf5e1908406d9600791c9645d526e39d03795c49470542f64e8"
+  },
+  "ordinaryRoute": {
+    "reuse": "Existing OpenClaw codex agent harness, canonical openai/ model refs, persisted owned role configs and agent-scoped codex-home. Bare Codex metadata is not a replacement participant runner.",
+    "configContact": "openai/gpt-6-sol; thinking off; agentRuntime codex",
+    "configWork": "openai/gpt-6-astra; thinking medium; agentRuntime codex",
+    "ownHomeResolvesFromAgentDir": true,
+    "source": {
+      "runAttemptSha256": "1232e529e6309af58f13f5f4ec88673231507304ce698d4c50f1021c1c8de376",
+      "threadLifecycleSha256": "d278e65190cb7e9a9187962fd413187bdd09e5e431454e9287f29ab15f6d9bce",
+      "modelCatalogSha256": "f5e11bf8db5f227d18e539335046cac0cc97985118b33ee2ec4922d164431851",
+      "configSecuritySha256": "4b828cf9f2a72b2d9b233cd21f3189c815860393ec836d75799e45420af8a14f",
+      "harnessSha256": "7b42f27d8af06db2dc477c90d466435ed15f721735b4f82266daab3f072880aa",
+      "usageSnapshotSha256": "cd45867a5875a597575645490e9bd3f842782d3a17faaa8dd1f9caf416e1855f"
+    },
+    "contactEffortFinding": {
+      "modelCatalogHasSol": true,
+      "catalogDeclaresNone": false,
+      "catalogDefault": "medium",
+      "nativeOffBranch": "thread-lifecycle:66 returns none only if compat.supportedReasoningEfforts includes none; otherwise null.",
+      "catalogCompatBinding": "model-catalog:35-37 forwards observed supportedReasoningEfforts into model.compat.",
+      "ordinaryPayloadEffortFromObservedCatalog": null,
+      "originalRequiredEffort": "none",
+      "exactOriginalEffortPreserved": false,
+      "providerRejectionEstablished": false,
+      "actualInferenceEntitlement": "UNKNOWN",
+      "noInventedCompatibilityOrSubstituteModel": true
+    },
+    "workEffortFinding": {
+      "catalogDeclaresMedium": true,
+      "builderForwardsMedium": true
+    },
+    "accountingSeams": {
+      "dispatch": "run-attempt:8114 client.request turn/start; native request-builder at8016.",
+      "tokenUsage": "run-attempt:1637 thread/tokenUsage/updated.",
+      "accountUsage": "usage-BML0r-ua:8 reads account rate-limit snapshot; cannot stand in for SDK per-attempt usage.",
+      "allSdkHelperFailureUsageAndParentGuardBinding": "NOT_ESTABLISHED",
+      "futureBinding": "Reuse existing parent/aggregate accounting on this participant's original slot, before every actual dispatch; preserve failure UNKNOWN and native deadline/stop. No new registry or donor budget."
+    }
+  },
+  "sameAuthority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256": "a25612099447b7c128e0598fc08b73e0272ad542c4634e3131357f14b03d9090",
+    "rowCount": 8,
+    "openclawRows": 0,
+    "unchangedByRead": true,
+    "newReservationOrRegistry": false,
+    "priorAgentZeroAndEva2UnknownRowsRetained": true,
+    "originalPlanSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "currentDatasetSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "rootReportedOriginalCm01Epoch1SlotUnused": true
+  },
+  "limitations": [
+    "Native own account present and current model/list response do not establish inference entitlement or response quality.",
+    "Metadata catalog refresh/network activity was not separately instrumented; native returned catalog may include cached data.",
+    "Native off=null does not prove which effort the provider would apply or a failed provider call; it does not attest the original none envelope.",
+    "No whole OpenClaw host inference/helper/tool/accounting/stop loop ran. Sandbox/tool functionality remains unverified.",
+    "No provider/model/sample execution, protected case content, source upgrade, credentials copy, adoption, fresh ledger or budget reset."
+  ],
+  "consumption": {
+    "nativeMetadataSessions": 1,
+    "modelResponses": 0,
+    "sampleReservations": 0,
+    "threadOrTurnRpc": 0,
+    "loginRpc": 0,
+    "testsRun": 0,
+    "developmentCredits": "UNKNOWN",
+    "externalNetworkAttempts": "Not separately instrumented; metadata discovery only permitted."
+  },
+  "nextStep": "Keep the original fast model/effort and unused slot unchanged. Preserve this catalog/status checkpoint; first resolve the concrete off/null versus original none binding on the existing native route, and bind existing per-dispatch parent accounting in a concrete candidate before any sample admission.",
+  "recordedAt": "2026-10-06T21:26:08.710064+00:00",
+  "explicitNativeEffortOptionReview": {
+    "scope": "Existing native configuration and explicit per-turn parameter carrier only; no turn, question, inference, reservation, code patch or catalog compatibility injection.",
+    "previousAccessEvidenceSha256": "e2b52c88070053b34edd21cf7fdb294cf5e9c336cdbe52d57a9dbb07da85d4d6",
+    "nativeConfigReadback": {
+      "authBytesUnchanged": true,
+      "authSha256Before": "b099dbc54c0a77b6bf492afaf23cc27ef610b9f86f77cf4b12d7909f5201c611",
+      "configFileBytesUnchanged": true,
+      "configFileSha256Before": null,
+      "configReadSucceeded": true,
+      "effectiveModel": "gpt-6-sol",
+      "effectiveModelReasoningEffort": "none",
+      "inference": 0,
+      "initializeSucceeded": true,
+      "nativeExitCode": 0,
+      "nativeStartupArgs": [
+        "app-server",
+        "--listen",
+        "stdio://",
+        "-c",
+        "model=\"gpt-6-sol\"",
+        "-c",
+        "model_reasoning_effort=\"none\""
+      ],
+      "nativeTurnEffortApplied": "UNKNOWN",
+      "processGroupAbsent": true,
+      "providerAcceptance": "UNKNOWN",
+      "rpcErrorCode": null,
+      "rpcMethods": [
+        "initialize",
+        "initialized",
+        "config/read"
+      ],
+      "sourceChanged": false,
+      "stderrBytes": 414,
+      "stderrSha256": "448a4b45fdf0743a2b1b4dab37c993b1a449f392ab1d6ffb2fb1cffdd85adf4f",
+      "threadRpc": 0,
+      "turnRpc": 0
+    },
+    "nativeVersionSpecificSchema": {
+      "generationExitCode": 0,
+      "generationCommand": "Pinned codex app-server generate-json-schema --out an ephemeral temporary directory, removed after inspection.",
+      "generatedTurnStartParamsSha256": "a3835e8c1e942e4b358e1a670939b89918b16c4d13105a579899892b7ade6dea",
+      "generatedClientRequestSha256": "85d6d137bab416d9ad47982adf354d707713042da5d37f934d0b2ed386e53ca4",
+      "reasoningEffortType": {
+        "type": "string",
+        "minLength": 1,
+        "description": "A non-empty reasoning effort value advertised by the model."
+      },
+      "turnEffortField": "effort: ReasoningEffort | null; override for this and subsequent turns.",
+      "collaborationReasoningEffortField": "Settings.reasoning_effort: ReasoningEffort | null.",
+      "noneIsSyntacticallyPermitted": true,
+      "closedSupportedEffortEnum": false,
+      "generatedTemporarySchemaFilesRetained": false
+    },
+    "existingOpenClawOption": {
+      "path": "plugins.entries.codex.config.appServer.args",
+      "schemaSource": "config-parsing-CcB9iPoq.mjs:141-146",
+      "schemaSourceSha256": "b575cd3df4cd10160f16a6122fb102aa498f3a2f38557f9be0dfdaf13f410148",
+      "startSource": "config-options-BvaRs51b.mjs:388",
+      "startSourceSha256": "895e2e9d65aae3241d0caf775872c2c6006a7e91e3bee26a7165c942b9aab170",
+      "managedCommandPreserved": true,
+      "configuredModelAndEffortAccepted": true
+    },
+    "conclusion": {
+      "explicitNativeConfigAndProtocolCarrier": "GO",
+      "ordinaryOriginalSampleInput": "NOT_GRANTED",
+      "standardOffNullDoesNotEstablishNoExplicitOption": true,
+      "requestedContactModel": "gpt-6-sol",
+      "requestedContactEffort": "none",
+      "requestedHelperModel": "gpt-6-astra",
+      "requestedHelperEffort": "medium",
+      "minimalPossibleCoupling": "Use the existing per-run appServer.args for native config. If the ordinary builder still supplies null, carry the original normalized role setting explicitly into both existing turn/start.effort and collaborationMode.settings.reasoning_effort immediately before existing dispatch. Preserve all other native turn/control settings, model catalog and compat unchanged; root owns any concrete adapter candidate.",
+      "nativeConfigAcceptanceIsNotActualTurnOrProviderAcceptance": true,
+      "catalogStillDoesNotAdvertiseNone": true,
+      "nativeTurnOrProviderAcceptance": "UNKNOWN",
+      "installedFrameworkReplacementRequired": false,
+      "sourcePatchPerformed": false,
+      "accountingAndActualInputBindingsStillRequired": true
+    },
+    "consumptionAddition": {
+      "nativeConfigMetadataSessions": 1,
+      "nativeSchemaGenerationCommands": 1,
+      "totalNativeMetadataSessionsAcrossAccessAndPrecision": 2,
+      "inference": 0,
+      "threadCalls": 0,
+      "turnCalls": 0,
+      "reservations": 0,
+      "tests": 0
+    },
+    "officialDocumentation": [
+      {
+        "title": "OpenAI Configuration Reference",
+        "url": "https://learn.chatgpt.com/docs/config-file/config-reference",
+        "use": "Supports the native model_reasoning_effort configuration field; available levels depend on model and client. Installed-version readback, not current generic docs, proves this config value."
+      },
+      {
+        "title": "OpenAI Codex App Server",
+        "url": "https://learn.chatgpt.com/docs/app-server",
+        "use": "Documents version-specific schema generation, per-turn effort override and config/read. Actual installed 0.155.1 generated schema is the protocol binding."
+      }
+    ],
+    "recordedAt": "2026-10-06T21:32:13.303561+00:00",
+    "nativeBinarySha256": "0753dfe1d8b87a52436deb13eb1c549661ef4c84fee2c5aa688385eebeccb761"
+  },
+  "parentTransportCandidate": {
+    "status": "candidate_zero_inference_checked_not_sample_admitted",
+    "reviewedPreviousAccessReceiptSha256": "e5b053c471974a867b43a4278c7bef2bfcd0663923263e5baf957d6eed6fe5e0",
+    "source": {
+      "path": "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "7bca5405f478616b52a3511bc436e06d451b6893a55311d534795587d3c5ed4d"
+    },
+    "focusedTests": {
+      "path": "eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "sha256": "0c4f0522ae271c53b7c0273f14aa5e79f1cbb1cd67164cc182f8e7ac2da26c00",
+      "passed": 10,
+      "reportedDurationMs": 3055.950152,
+      "inferenceCalls": 0,
+      "nativeContexts": 0,
+      "actualAuthorityReservations": 0,
+      "scope": "Public fixtures only: actual pinned client/proxy loaded with fake upstream HTTP and WS; real existing ParentProcessAccounting protocol with fixture-only memory ledger. No ordinary complete native model run."
+    },
+    "nativeSourcePins": {
+      "dist/.setup/client-Cs08OXVQ.mjs": "f661febe01d4708bdafd2c0f49be288b6466c07cbedd74b79c887cbe0deb77da",
+      "dist/.setup/inference-proxy-b-aJMSxm.mjs": "eb514a3aba831f47742be8e23db369280ebd020da27b7c52d1e8029066dd9b1d",
+      "dist/.setup/shared-client-DA4VR4Eb.mjs": "079bf068c24205f3ff6dd359f5edde2a14359bcef80608f32e68706ff47a334d",
+      "dist/.setup/run-attempt-BHu11r7h.mjs": "1232e529e6309af58f13f5f4ec88673231507304ce698d4c50f1021c1c8de376",
+      "dist/.setup/harness-a_MsE4-_.mjs": "7b42f27d8af06db2dc477c90d466435ed15f721735b4f82266daab3f072880aa"
+    },
+    "ordinaryAgentCommand": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-runtime/node_modules/openclaw/dist/agent-command-Dyd2gex-.mjs",
+      "sha256": "7e0df74907df6d06e2c19d1fb099c647f254e05136ef038999dc5a32a9e3dcdc",
+      "scope": "Existing installed agentCommand/native harness boundary; complete case loop not executed or newly built."
+    },
+    "implementation": {
+      "installedFilesChanged": false,
+      "installedOwnAuthCatalogAndProviderRoutePreserved": true,
+      "instrumentation": "Evaluator in-memory Node registerHooks overlay on exactly two pinned native modules; no second proxy/framework/runtime.",
+      "rpcCarrier": "Existing turn/start effort and collaborationMode.settings.reasoning_effort explicitly Sol/none.",
+      "physicalCarrier": "Existing proxy operation metadata selects contact Sol/none versus child/compaction/memory Astra/medium; only model/reasoning fields normalized.",
+      "httpBoundary": "Existing fetchWithSsrFGuard call, including its runtime dispatcher; each invocation parent-admitted before physical fetch.",
+      "wsBoundary": "Existing remote.send response frame; each frame parent-admitted and terminal raw usage parent-settled before original forwarding permits next response.",
+      "usage": "Only raw Responses input/output/total integer usage; missing, invalid or failed unmeasured usage stops. Rate-limit/thread token summaries excluded.",
+      "rawUsageRetention": "Known usage retained even when parent settlement refuses; authoritative rejection kept separate.",
+      "privacy": "No bodies, requests, answers, toolargs, credentials, native route secrets or exception messages retained in technical rows.",
+      "unboundNativeOperation": "Fails closed before external dispatch."
+    },
+    "cm01Admission": {
+      "decision": "NO_GO",
+      "reason": "Original Rust/Codex-child scenario-clock binding and original three-turn/two-session durable memory/readback/cleanup binding are not established. Node Date instrumentation alone does not prove native child time. No new clock layer or added prompt text.",
+      "ownLoginCatalogAndExplicitConfigAvailable": true,
+      "ordinaryOpenClawProductFailureProved": false,
+      "originalCM01SlotUnused": true,
+      "sameAuthorityReservedOrModified": false,
+      "quality": "UNKNOWN",
+      "executionStarted": false,
+      "inputReleased": false
+    },
+    "independentReview": {
+      "decision": "GO_SOURCE_ONLY",
+      "reviewer": "Independent curator crossreview /root/p2_eva1_accounting_diagnosis_20261006",
+      "recordedAt": "2026-10-06T21:59:37.774655+00:00",
+      "reviewedReceiptSha256": "9a2b883171c823722e865c00125fd61ce5dc7fa16df09b1edb26f9eddd26070f",
+      "sourceSha256": "7bca5405f478616b52a3511bc436e06d451b6893a55311d534795587d3c5ed4d",
+      "testSourceSha256": "0c4f0522ae271c53b7c0273f14aa5e79f1cbb1cd67164cc182f8e7ac2da26c00",
+      "scope": "Only bounded native transport/parent-accounting candidate and safe failure metadata; no native resource or original CM01 sample admission.",
+      "findings": [
+        "Parent admission precedes every physical HTTP dispatch and WS response frame; split-SSE raw usage and failed UNKNOWN-stop remain bound to native proxy pins.",
+        "Caught HTTP/WS transport metadata retains lexical class/code and integer HTTP status100-599, excludes message/body/request/credentials; unpropagated upstream SDK class remains UNKNOWN.",
+        "Existing10public fixture checks with0native/0inference reused without reviewer repetition."
+      ],
+      "nativeCM01Decision": "NO_GO",
+      "nativeCM01MissingBindings": [
+        "Rust/Codex-child original scenario clock",
+        "Original three-turn/two-session durable memory/readback/cleanup"
+      ],
+      "ordinaryOpenClawProductFailureProved": false,
+      "sourceOnlyGOIsNotSampleGO": true,
+      "reviewerNewTestsNativeStartsProviderCallsOrAuthorityReservations": 0
+    },
+    "diagnosticsDelta": {
+      "previousCandidateSha256": "fae861693ffa4c21d163721858e59d83177900d8f83a85680d78aa7f02108f56",
+      "previousReceiptSha256": "a410611b566c2900be196db2a6a89d90fbec97ab59a373a53cab617b80e52ced",
+      "scope": "Only caught native transport exception class/code/integerHTTP status in HTTP fetch and WS error/send callback; message/body/request/credential excluded. Upstream SDK class remains UNKNOWN when not propagated.",
+      "focusedPrivacyFixture": "HTTP and WS exception metadata preserved; private message/body absent from serialized technical rows.",
+      "newInferenceOrNativeCalls": 0
+    }
+  }
+}

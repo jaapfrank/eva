@@ -1,0 +1,65 @@
+{
+  "contract": "P2HermesToolAccountingCorrectionReview/v1",
+  "task": "P2.1",
+  "reviewer": "Independent bundled source-only review /root/p2_eva1_lease_review_20261006",
+  "recordedAt": "2026-10-06T22:03:00.152704+00:00",
+  "decision": "GO_SOURCE_ONLY",
+  "scope": "Only future evaluator tool-counter correction, without native sample release, replay or retrospective resource/quality completion.",
+  "reviewedCorrection": {
+    "path": "eva2/evidence/product/p2-hermes-tool-accounting-correction-20261006.json",
+    "sha256": "c8e3514c61d91939645d305d2e8014aad0bec5048e42989f3059f67da1c4dfeb"
+  },
+  "source": {
+    "path": "eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py",
+    "sha256": "da70070bed6b0cecbad4a6319bdbb0c737ba0c007ed5e6571efc5d2f5cf200bf"
+  },
+  "deltaSha256": "6233bba72d8f6e2b9bf05b6cec5e1ae3ac4f7ac953b192e328186c03238779d9",
+  "test": {
+    "path": "eva2/tests/benchmark/test_hermes_native_tool_accounting.py",
+    "sha256": "8c7c8fcb4b0cbd3fd128b494e67953aa368c8034d17cc6139ccc2dcb69919146"
+  },
+  "nativeToolExecutorSha256": "f34672aea4869e04ceec2927b01d2eabf17f5b600e58d6db79c2abac7d0c6b4c",
+  "findings": [
+    "Shared observer RLock reserves every announced native batch before original native execution, using original16 cap and memory-only allowlist for all actors.",
+    "Actual native inline memory executor and registry fallback check parent stop/original absolute deadline immediately before dispatch; session/call-id batch reservations avoid fallback double counting.",
+    "Direct dispatch without an active batch reservation reserves its own attempt; skipped native attempts remain reserved with entered=false.",
+    "Existing native cleanup restores the inline executor table, registry hook and batch method.",
+    "SDK route/accounting, own auth, installed native source, models, original criteria/limits and aggregate authority remain unchanged."
+  ],
+  "reusedDevelopmentEvidence": {
+    "finalSourceFocusedContractPassed": 1,
+    "reportedSeconds": 1.562,
+    "earlierSameFocusedTestRuns": 1,
+    "earlierCandidateReportedSeconds": 1.916,
+    "actualPinnedNativeBatchPlannerAndInlineMemoryExecutor": true,
+    "registryFallbackAndNoDoubleCounting": true,
+    "sixteenAdmittedAttempts": true,
+    "seventeenthRejectedBeforeNativeBody": true,
+    "stopBeforeInlineBody": true,
+    "unadmittedNameRejectedBeforeBody": true,
+    "networkDisabled": true,
+    "providerCalls": 0,
+    "nativeAIAgentConstructorOrContextStarted": false,
+    "authOrActualAuthorityOpened": false,
+    "reviewerNewTests": 0
+  },
+  "closedSamplePreservation": {
+    "executedAdapterSha256": "77017aa6b009a512317aa0705b2ce9ce15a0f103d53814076d50d324ff520519",
+    "immutableAdmissionSha256": "691521d9d2a7ad0d56d25afe4e9f7463c0e7f9ff813aca9023961efefbfc9f08",
+    "reviewedResultBeforeEndAttestationSha256": "772861ba76a0a4fdac4499551eea83de94b72a8e3b4177d71d0dd9946a38ba96",
+    "publishedResultOnlyEndAttestationSha256": "7ce13747387afb29447bcbd5315a0a8d499da65e7dbe3687084f038058a86581",
+    "closedReviewPath": "eva2/reviews/p2-hermes-parent-accounting-admission-review-20261006.json",
+    "closedReviewSha256": "13f92cc87c569a6b928f034ec1f4266451ff7e13d7144ed25f20b317f0de138b",
+    "sameAuthoritySha256": "c81cf6f0832ec1f81f760f2962b29e8bb91de5faa7c9378135a4543bbd147559",
+    "originalToolCount": "UNKNOWN",
+    "original16ToolCapEnforcement": "UNKNOWN",
+    "originalQuality": "UNKNOWN",
+    "recordedHumanRatings": 0,
+    "requiredIndependentBlindedHumanRatings": 2,
+    "closedSampleReplayedOrRescored": false,
+    "noResetCopyDonationOrNewReservation": true,
+    "correctedSourceNativeSampleExecution": "NOT_PERFORMED"
+  },
+  "publicationDecision": "GO for this limited source-correction evidence; no full original sample resource or quality GO.",
+  "reviewerNewNativeStartsProviderCallsOrProtectedContentReads": 0
+}

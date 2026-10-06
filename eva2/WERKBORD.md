@@ -1,3 +1,21 @@
+## 7 oktober — eigen aanmeldingen bevestigd; Hermes-proef daadwerkelijk uitgevoerd
+
+OpenClaw en Hermes zijn beide via hun eigen native profiel aangemeld. Geen nieuwe loginhandeling van Jaap nodig. Agent Zero’s eigen aanmelding en eerdere modeltoegang blijven bevestigd. [Loginbewijs](evidence/product/p2-competitor-device-login-20261006.json).
+
+Hermes heeft één oorspronkelijke CM01/epoch1 via AIAgent afgewerkt: **3 beurten over 2 sessies, 7 HTTP200-modelpogingen, 17.498 invoer-/275 uitvoertokens, 25,6 seconden**. Drie opgeslagen antwoorden en geheugenbestanden zijn teruggelezen; de oorspronkelijke proef en processen/netwerk zijn gesloten. [Resultaat](evidence/product/p2-hermes-original-cm01-result-20261006.json) en [beperkte onafhankelijke publicatie-GO](reviews/p2-hermes-parent-accounting-admission-review-20261006.json).
+
+De oorspronkelijke meetadapter miste 2 inline-geheugenhandelingen; volledige tooltelling/16-cap en echte antwoordkwaliteit blijven UNKNOWN. De algemene batchteller is daarna apart gecorrigeerd: bestaande inline/fallback-route, vóór uitvoering begrenzen, geen dubbeltelling. Eén gerichte fixture op de echte gepinde executor slaagt zonder modelcalls; [broncorrectie](evidence/product/p2-hermes-tool-accounting-correction-20261006.json) en [onafhankelijke bron-GO](reviews/p2-hermes-tool-accounting-correction-review-20261006.json). Dit nieuwe bronbewijs herhaalt of vervangt de gesloten native proef niet.
+
+OpenClaw’s bestaande HTTP/WS-proxyaccounting en oorspronkelijke modelinstellingen hebben bron-GO met 10 publieke fixturechecks; login/catalogus/config zijn bevestigd. Native Codex-kindklok en oorspronkelijke geheugen/readback/cleanup zijn niet gebonden: geen oorspronkelijke CM01-invoer of modelcall. [Exacte status](evidence/product/p2-openclaw-native-access-20261006.json). Dit is geen bewezen productverlies of kwaliteitswinnaar.
+
+Dezelfde huidige cumulatieve authority bevat 45 geregistreerde modelpogingen met **178.673 invoer-/6.282 uitvoertokens als ondergrens**; 3 pogingen hebben onbekend SDKgebruik, dus totaalverbruik en creditkosten blijven onbekend. Oude 8 records/UNKNOWN-guards behouden, historische andere proefsets niet stil samengevoegd. Deze reparatie/vergelijking is geen nieuwe Eva-functie: **34/44 oorspronkelijke kleine taken**, acceptaties en geparkeerde spraak blijven gelijk. P2.1 is open; echte menselijke beoordeling blijft afzonderlijk. Geen actieve uitvoerder/modelproef; resterende vergelijking nog niet gestart.
+
+## 6 oktober — beide aanmeldingen voltooid; kleinste native koppelingen afmaken
+
+OpenClaw en Hermes hebben beide een eigen werkende login en native modelcatalogus. Jaap hoeft niet opnieuw aan te melden. Twee bestaande uitvoerders maken binnen P2.1 afzonderlijk de gewone benchmarkroute af: Hermes krijgt de bestaande parent-accounting op alle fysieke SDK-dispatches; OpenClaw krijgt de oorspronkelijke expliciete Sol/none- en Astra/medium-parameters plus dezelfde registratie. Native frameworks, eigen auth, oorspronkelijke criteria en authority blijven behouden. Onafhankelijke crossreview gaat vooraf aan originele invoer. Geen nieuwe brede matrix, core-installatie, voicebouw of herhaling van gesloten cases.
+
+[OpenClaw-routebewijs](evidence/product/p2-openclaw-native-access-20261006.json) en [Hermes-routebewijs](evidence/product/p2-hermes-owned-route-binding-20261006.json). Aanmelding/configuratie bewijst geen antwoordkwaliteit of nieuwe productfunctie; oorspronkelijke34/44 en eerdere acceptaties blijven staan. De twee echte blinde CM02-beoordelingen blijven apart open. Oudere aanmeldvragen hieronder zijn historische standen en gelden niet meer.
+
 ## 6 oktober — drie eigen logins hersteld; uitvoerroutes afzonderlijk beoordelen
 
 OpenClaw en Hermes zijn via verse native deviceflows werkelijk aangemeld (beide exit0, eigen store UID1000/mode0600, geen credentialkopie of modelinferentie tijdens login). [Loginbewijs](evidence/product/p2-competitor-device-login-20261006.json). Hun catalogus en bestaande gewone uitvoerroute worden nu gecontroleerd.

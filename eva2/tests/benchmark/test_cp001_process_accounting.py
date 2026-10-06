@@ -309,3 +309,147 @@ def test_agentzero_final_parent_guard_precedes_private_input_read(monkeypatch, t
         _main(lifecycle)
     assert result.value.code == 2
     assert not (tmp_path / "unused").exists()
+
+
+def hermes_parent_peer(tmp_path, name, *, attempts=2, deadline=None):
+    from cp001_process_accounting import ProcessSampleLedger
+    from p1_hermes_startup_probe import HermesSDKAccounting
+    directory = tmp_path / name; directory.mkdir(mode=0o700)
+    book = ProviderSampleLedger(name, {"providerAttempts": attempts,
+        "providerInputTokens": 24000, "providerOutputTokens": 4096},
+        {"contact": ("gpt-6-sol", "none"), "helper": ("gpt-6-astra", "medium")})
+    parent = ParentProcessAccounting(book, name, directory / "control.sock",
+        workers={"hermes": {"contact", "helper"}}).start()
+    peer = ProcessSampleLedger(**parent.credentials("hermes"))
+    observer = HermesSDKAccounting(peer, time.monotonic()+10 if deadline is None else deadline)
+    return parent, peer, observer
+
+
+def hermes_fake_request(model="gpt-6-astra", effort="medium"):
+    from types import SimpleNamespace
+    return SimpleNamespace(method="POST", url=SimpleNamespace(host="chatgpt.com", path="/backend-api/codex/responses"),
+        content=json.dumps({"model": model,"reasoning":{"effort":effort}}).encode(), extensions={})
+
+
+def test_hermes_parent_precedes_contact_and_nested_helper_sdk_dispatch(tmp_path):
+    from types import SimpleNamespace
+    from cp001_accounting import SampleStopped
+    parent, peer, observer = hermes_parent_peer(tmp_path,"hermes-sdk")
+    calls=[]
+    def wire(**kwargs):
+        assert parent.ledger.report()["provider_attempts"] == len(calls)+1
+        assert kwargs["model"] in {"gpt-6-sol","gpt-6-astra"}
+        observer.guard_http(hermes_fake_request(kwargs["model"],kwargs["reasoning"]["effort"]))
+        calls.append(kwargs)
+        return SimpleNamespace(usage=SimpleNamespace(input_tokens=17,output_tokens=5,total_tokens=22))
+    try:
+        token=observer.role.set("contact")
+        observer.sync(wire,(),{"model":"discarded","reasoning":{"effort":"medium"}})
+        observer.role.reset(token)
+        # Native helper factories may wrap Responses through a compatibility resource.
+        observer.sync(lambda **kwargs: observer.sync(wire,(),kwargs),(),{"model":"discarded"})
+        assert len(calls)==2 and calls[0]["reasoning"]["effort"]=="none"
+        assert calls[1]["model"]=="gpt-6-astra" and calls[1]["reasoning"]["effort"]=="medium"
+        with pytest.raises(SampleStopped):observer.sync(wire,(),{})
+        assert parent.ledger.report()["total_usage"]["total_tokens"]==44
+        assert len(observer.wire_dispatches)==2 and peer.close(settled=True)
+    finally:parent.close()
+
+
+def test_hermes_helper_stream_failure_records_class_before_unknown_stop(tmp_path):
+    from cp001_accounting import SampleStopped
+    parent, peer, observer=hermes_parent_peer(tmp_path,"hermes-helper-fail")
+    class NativeFailure(Exception):
+        status_code=502;code="upstream_failure"
+    class FailedStream:
+        def __iter__(self):raise NativeFailure("private body must not be copied")
+        def close(self):pass
+    try:
+        stream=observer.sync(lambda **kwargs:FailedStream(),(),{"stream":True})
+        with pytest.raises(NativeFailure):list(stream)
+        row=observer.calls[0]
+        assert row["error"]=={"error_class":"NativeFailure","http_status":502,"error_code":"upstream_failure"}
+        assert "private body" not in json.dumps(row)
+        report=parent.ledger.report()
+        assert report["provider_attempts"]==1 and report["attempts"][0]["usage"] is None and not report["complete"]
+        # Native explicit retry still reaches the parent guard, and is refused after UNKNOWN.
+        with pytest.raises(SampleStopped):observer.sync(lambda **kwargs:None,(),{})
+        assert not observer.streams and peer.close(settled=True)
+    finally:parent.close()
+
+
+def test_hermes_sdk_retry_cannot_reuse_one_parent_admission(tmp_path):
+    parent,peer,observer=hermes_parent_peer(tmp_path,"hermes-sdk-retry")
+    def native(**kwargs):
+        observer.guard_http(hermes_fake_request())
+        observer.guard_http(hermes_fake_request())
+    try:
+        with pytest.raises(ValueError):observer.sync(native,(),{})
+        assert len(observer.wire_dispatches)==1
+        assert parent.ledger.report()["provider_attempts"]==1
+        assert not parent.ledger.report()["complete"] and peer.close(settled=True)
+    finally:parent.close()
+
+
+@pytest.mark.parametrize("late",[False,True])
+def test_hermes_original_deadline_and_stop_guard_before_http(tmp_path,late):
+    from cp001_accounting import SampleStopped
+    parent,peer,observer=hermes_parent_peer(tmp_path,"hermes-deadline"+str(late))
+    dispatched=[]
+    def native(**kwargs):
+        if late:parent.stop("fixture stop after SDK reservation")
+        else:observer.deadline=time.monotonic()-1
+        wait_until(lambda: bool(peer.stopped)) if late else None
+        observer.guard_http(hermes_fake_request());dispatched.append(True)
+    try:
+        with pytest.raises(SampleStopped):observer.sync(native,(),{})
+        assert not dispatched and not observer.wire_dispatches
+        assert parent.ledger.report()["attempts"][0]["usage"] is None
+        assert peer.close(settled=True)
+    finally:parent.close()
+
+
+def test_hermes_async_stream_raw_usage_and_parent_close(tmp_path):
+    import asyncio
+    from types import SimpleNamespace
+    parent,peer,observer=hermes_parent_peer(tmp_path,"hermes-async")
+    class Stream:
+        async def __aiter__(self):
+            yield SimpleNamespace(type="response.output_text.delta")
+            yield SimpleNamespace(response=SimpleNamespace(usage=SimpleNamespace(input_tokens=17,output_tokens=5,total_tokens=22)))
+        async def close(self):pass
+    async def run():
+        async def native(**kwargs):
+            observer.guard_http(hermes_fake_request());return Stream()
+        stream=await observer.asynchronous(native,(),{"stream":True})
+        async for event in stream:pass
+    try:
+        asyncio.run(run())
+        assert observer.calls[0]["first_content_monotonic"]>=observer.calls[0]["started_monotonic"]
+        assert parent.ledger.report()["complete"] and not observer.streams
+        assert peer.report()["active_async_attempts"]==0 and peer.close(settled=True)
+    finally:parent.close()
+
+
+def test_hermes_input_guard_does_not_decode_without_parent_deadline(tmp_path):
+    from argparse import Namespace
+    from p1_hermes_startup_probe import run_native_cm
+    args=Namespace(source=tmp_path,owned_profile=tmp_path,profile=tmp_path,output=tmp_path/"not-created",
+        parent_accounting_control=None,absolute_deadline_file=None,sample_id=None)
+    with pytest.raises(ValueError):run_native_cm(args)
+    assert not args.output.exists()
+
+
+def test_hermes_raw_sdk_usage_survives_parent_settlement_rejection(tmp_path):
+    from types import SimpleNamespace
+    from cp001_accounting import SampleStopped
+    parent,peer,observer=hermes_parent_peer(tmp_path,"h-reject")
+    try:
+        # Actual parent rejects this usage total after the native response arrived.
+        with pytest.raises(SampleStopped):
+            observer.sync(lambda **kwargs:SimpleNamespace(usage=SimpleNamespace(
+                input_tokens=30000,output_tokens=5,total_tokens=30005)),(),{})
+        assert observer.calls[0]["usage"]=={"input_tokens":30000,"output_tokens":5,"total_tokens":30005}
+        assert observer.calls[0]["status"]=="parent_settlement_failed"
+        assert peer.close(settled=True)
+    finally:parent.close()

@@ -1016,7 +1016,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-06T20:52:50.843524+00:00",
+        "checkedAt": "2026-10-06T22:04:30.799923+00:00",
         "deliveries": [
           {
             "title": "P2.1 · Agent Zero eigen login en native opstart hersteld",
@@ -4015,48 +4015,43 @@
           "title": "P2.1 · OpenClaw en Hermes: uitvoerroute",
           "state": "in_progress",
           "owner": "Codex",
-          "detail": "Beide eigen aanmeldingen zijn voltooid. Hun catalogus en gewone uitvoerroute worden gecontroleerd. Agent Zero-modeltoegang bevestigd; oorspronkelijke taak bleef onvolledig door twee native-proxyHTTP502's.",
-          "remaining": "Geen modelproef of kwaliteitswinst bewezen. OpenClaw/Hermes eigen login blijft nodig; oorspronkelijke CM04-UNKNOWN en accountingguard blijven behouden.",
-          "source": "eva2/evidence/product/p2-competitor-device-login-20261006.json",
+          "detail": "Eigen aanmeldingen hersteld; oorspronkelijke Hermes CM01 gesloten en beperkt onafhankelijk gepubliceerd (3beurten/7HTTP200/17498in+275out/25,6s). Algemene inline-toolteller apart bronmatig gecorrigeerd en onafhankelijk GO; oorspronkelijke tool-/kwaliteitsUNKNOWN blijft. OpenClaw transportbronGO, native klok/readbackmeting nog niet toegelaten. Geen actieve uitvoerders of modelproef.",
+          "remaining": "P2.1 nog niet volledig afgerond: OpenClaw meetbinding, oorspronkelijke overige vergelijkingsuitkomsten en echte kwaliteitsbeoordelingen blijven zichtbaar. Vervolg nog niet gestart.",
+          "source": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "reviewedAt": "2026-10-06T21:20:14.960463+00:00"
+          "reviewedAt": "2026-10-06T22:04:30.799923+00:00"
         },
         "next": {
-          "title": "Oorspronkelijke native uitvoerroute bevestigen",
+          "title": "Resterende oorspronkelijke vergelijkingsbinding",
           "state": "planned",
           "owner": "Codex",
-          "detail": "Eerst concrete bron-/profiel-/accountingbinding; daarna een oorspronkelijk ongebruikt slot indien toegelaten. Geen nieuwe matrix, modellen, budget of herhaling van gesloten proeven.",
-          "remaining": "De nieuwe foutregistratie herstelt geen verloren meting en geeft geen nieuwe Eva2-sampletoelating.",
-          "source": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json"
+          "detail": "Binnen bestaande P2.1 uitsluitend ontbrekende originele OpenClaw native-klok/geheugenreadbackbinding gericht aansluiten indien bestaande middelen dat toelaten; geen nieuwe laag/matrix of herhaling van gesloten cases. Echte menselijke kwaliteitbeoordelingen blijven apart.",
+          "remaining": "Niet actief; geen brede matrix gestart. Volledige gezinsacceptatie en eerdere spraakparkering blijven afzonderlijk.",
+          "source": "eva2/evidence/product/p2-openclaw-native-access-20261006.json"
         },
         "ownerAction": {
-          "title": "OpenClaw/Hermes aanmelden · antwoordbeoordeling apart",
+          "title": "Aanmeldingen voltooid · antwoordbeoordeling apart",
           "state": "requested",
           "taskId": "P2.1",
-          "detail": "De twee aanmeldprocessen zijn geëindigd zonder login; de codes zijn verlopen. Alleen de echte aanmelding vraagt jouw handeling. De eerdere twee blinde antwoordbeoordelingen blijven afzonderlijk open.",
+          "detail": "OpenClaw en Hermes zijn aangemeld; geen verdere loginhandeling nodig. Twee echte blinde antwoordbeoordelingen staan afzonderlijk open en blokkeren deze technische koppeling niet.",
           "steps": [
-            "Meld hier wanneer je klaar bent om OpenClaw en Hermes aan te melden; de eerdere codes zijn verlopen.",
-            "Codex start dan verse native aanmeldingen. Open https://auth.openai.com/codex/device en voer de verse codes na elkaar in.",
-            "Meld dat beide klaar zijn; Codex controleert de opgeslagen eigen profielen en gewone routes.",
             "Laat twee verschillende mensen ieder hun eigen anonieme beoordelingspakket bekijken; bespreek antwoorden niet vooraf.",
             "Beoordelaar1: open C:/Users/jaapf/.codex/attachments/eec51102-8375-4ece-882e-47ed8aaf90d3/p2-cm02-rater-1/review.html.",
             "Beoordelaar2: open C:/Users/jaapf/.codex/attachments/c05e90fe-c091-4577-9955-9ff3970270c0/p2-cm02-rater-2/review.html.",
             "Vul ieder het eigen answer-sheet.md in en bewaar het als answer-sheet-completed.md in dezelfde map. Meld in deze chat dat beide klaarstaan."
           ],
-          "expected": "Twee opgeslagen eigen aanmeldingen; Codex controleert die. Antwoordkwaliteit blijft een afzonderlijke menselijke beoordeling.",
+          "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
           "accessSignIn": {
             "taskId": "P2.1",
-            "title": "OpenClaw en Hermes aanmelden",
-            "steps": [
-              "Meld hier wanneer je klaar bent om OpenClaw en Hermes aan te melden; de eerdere codes zijn verlopen.",
-              "Codex start dan verse native aanmeldingen. Open https://auth.openai.com/codex/device en voer de verse codes na elkaar in.",
-              "Meld dat beide klaar zijn; Codex controleert de opgeslagen eigen profielen en gewone routes."
-            ],
-            "codeStorage": "Codes remain in the active chat only; no tokens or login codes in repository."
+            "title": "OpenClaw en Hermes aangemeld",
+            "steps": [],
+            "codeStorage": "Codes remain in the active chat only; no tokens or login codes in repository.",
+            "status": "completed",
+            "source": "eva2/evidence/product/p2-competitor-device-login-20261006.json"
           }
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-06T20:52:50.843524+00:00"
+        "reviewedAt": "2026-10-06T22:04:30.799923+00:00"
       },
       "reviewedAt": "2026-10-06T09:49:07.102699+00:00",
       "checkedAt": "2026-10-06T09:49:07.102699+00:00",
@@ -4124,7 +4119,7 @@
       "comparisonResults": {
         "contract": "EvaPublishedComparisonResults/v1",
         "taskId": "P2.2",
-        "publishedAt": "2026-10-06T08:03:21.061347+00:00",
+        "publishedAt": "2026-10-06T22:04:30.799923+00:00",
         "originalDoneWhen": "Resultaten op kwaliteit, snelheid, zelfstandigheid en verbruik samen tonen; geen onbewezen algemene voorsprong.",
         "status": "published_partial_comparison_results",
         "fullComparisonCompleted": false,
@@ -4263,21 +4258,47 @@
             "toolDispatches": 5,
             "semanticScore": null,
             "creditCost": null
+          },
+          {
+            "case": "hermes:EV003-CM-01:epoch1",
+            "providerAttempts": 7,
+            "inputTokens": 17498,
+            "outputTokens": 275,
+            "firstContentSeconds": null,
+            "sampleSecondsIncludingMemory": 25.636614,
+            "unplannedHumanHelp": 0,
+            "humanMinutes": 0,
+            "toolDispatches": null,
+            "knownNativeToolCallsLowerBound": 2,
+            "semanticScore": null,
+            "creditCost": null,
+            "sdkUsageComplete": true,
+            "toolAccountingComplete": false,
+            "scope": "Original native CM01; lifecycle/SDK proved, complete tools and semantic quality UNKNOWN. No general performance winner.",
+            "source": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json"
           }
         ],
         "runtimeTotals": {
-          "providerAttempts": 36,
-          "inputTokens": 172220,
-          "outputTokens": 6605,
-          "allFailedAdapterAndInconclusiveNativeAttemptsIncluded": true,
-          "actualNativeAttempts": 5,
-          "nativeToolDispatches": 14,
+          "providerAttempts": 45,
+          "inputTokens": null,
+          "outputTokens": null,
+          "knownInputTokensLowerBound": 178673,
+          "knownOutputTokensLowerBound": 6282,
+          "registeredUnknownUsageAttempts": 3,
+          "usageComplete": false,
+          "allFailedAdapterAndInconclusiveNativeAttemptsIncluded": false,
+          "actualNativeAttempts": null,
+          "registeredSampleRows": 9,
+          "nativeToolDispatches": null,
           "creditCost": null,
           "codexDevelopmentCredits": null,
           "providerRoleCounts": {
-            "contactSolNone": 19,
-            "helperAstraMedium": 17
-          }
+            "contactSolNone": null,
+            "helperAstraMedium": null
+          },
+          "scope": "Current unchanged frozen-set cumulative authority only. Historical other-set attempts stay separately retained; full token totals and all-scope native/tool counts UNKNOWN.",
+          "source": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
+          "authoritySha256": "c81cf6f0832ec1f81f760f2962b29e8bb91de5faa7c9378135a4543bbd147559"
         },
         "housemateOutcomes": [
           {
@@ -4364,22 +4385,22 @@
           {
             "name": "OpenClaw",
             "state": "incomplete",
-            "reason": "Verse eigen device-aanmelding geslaagd en native opgeslagen, UID1000/mode0600. Catalogus en gewone uitvoerroute worden nu gecontroleerd; nog geen inhoudelijke kwaliteitsuitslag.",
+            "reason": "Eigen login/catalogus en expliciete Sol/none-config bevestigd. Bestaande HTTP/WS-proxy accountingbron onafhankelijk GO/10publieke fixturechecks. Native Codex-kindklok en originele geheugen/readback/cleanup niet gebonden; geen CM01-invoer/modelcall. Dit bewijst geen onwerkende gewone OpenClaw.",
             "accessState": "authenticated",
-            "executionState": "native_route_metadata_check",
-            "checkedAt": "2026-10-06T21:20:14.960463+00:00",
-            "source": "eva2/evidence/product/p2-competitor-device-login-20261006.json",
-            "label": "Aangemeld · route wordt gecontroleerd"
+            "executionState": "source_transport_reviewed_native_clock_readback_unbound",
+            "checkedAt": "2026-10-06T22:00:35.691227+00:00",
+            "source": "eva2/evidence/product/p2-openclaw-native-access-20261006.json",
+            "label": "Aangemeld · vergelijking nog niet toegelaten"
           },
           {
             "name": "Hermes",
             "state": "incomplete",
-            "reason": "Verse eigen device-aanmelding geslaagd en native opgeslagen, UID1000/mode0600. Catalogus en gewone uitvoerroute worden nu gecontroleerd; nog geen inhoudelijke kwaliteitsuitslag.",
+            "reason": "Eigen AIAgent-proef met3beurten/2sessies voltooid;7HTTP200/17498in+275out in25,6s,3duurzame readbacks en echte afsluiting onafhankelijk bevestigd. Oorspronkelijke tooltelling/16-cap en inhoudelijke kwaliteitUNKNOWN; native2memorycalls zichtbaar. Geen kwaliteitswinnaar.",
             "accessState": "authenticated",
-            "executionState": "native_route_metadata_check",
-            "checkedAt": "2026-10-06T21:20:14.960463+00:00",
-            "source": "eva2/evidence/product/p2-competitor-device-login-20261006.json",
-            "label": "Aangemeld · route wordt gecontroleerd"
+            "executionState": "original_cm01_closed_sdk_known_tool_coverage_unknown",
+            "checkedAt": "2026-10-06T22:00:35.691227+00:00",
+            "source": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
+            "label": "Gespreksroute bevestigd · meetbeperking"
           },
           {
             "name": "Agent Zero",
@@ -6636,14 +6657,39 @@
           }
         },
         "competitorAccessRestoration": {
-          "source": "eva2/evidence/product/p2-competitor-access-restoration-20261006.json",
-          "checkedAt": "2026-10-06T20:40:32.810643+00:00",
-          "status": "agentzero_access_restored_openclaw_hermes_login_required",
+          "source": "eva2/evidence/product/p2-competitor-device-login-20261006.json",
+          "checkedAt": "2026-10-06T22:00:35.691227+00:00",
+          "status": "all_three_owned_authentication_restored_native_results_separate",
           "providerInferenceRequests": 0,
           "qualityVerdict": "unknown",
           "agentzeroReadinessSource": "eva2/evidence/product/p2-agentzero-owned-readiness-20261006.json",
           "agentzeroReadinessReview": "eva2/reviews/p2-agentzero-owned-readiness-review-20261006.json",
-          "agentzeroNativeReadiness": "verified"
+          "agentzeroNativeReadiness": "verified",
+          "scope": "Device/login restoration itself had no model inference; ordinary follow-up samples are recorded separately.",
+          "nativeExecutionFollowupAttempts": {
+            "agent_zero": 6,
+            "hermes": 7,
+            "openclaw": 0
+          },
+          "hermesNativeResultSource": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
+          "openclawSourceOnlyReviewSource": "eva2/evidence/product/p2-openclaw-native-access-20261006.json"
+        },
+        "historicalRuntimeTotalsBeforeCurrentAuthorityPublication": {
+          "values": {
+            "providerAttempts": 36,
+            "inputTokens": 172220,
+            "outputTokens": 6605,
+            "allFailedAdapterAndInconclusiveNativeAttemptsIncluded": true,
+            "actualNativeAttempts": 5,
+            "nativeToolDispatches": 14,
+            "creditCost": null,
+            "codexDevelopmentCredits": null,
+            "providerRoleCounts": {
+              "contactSolNone": 19,
+              "helperAstraMedium": 17
+            }
+          },
+          "scope": "Previous publication snapshot; retained historical counts are not summed into the current authority lower bounds."
         }
       },
       "housemateSummary": {
@@ -19535,7 +19581,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Bevestig eigen catalogus en bestaande gewone route van de nu aangemelde OpenClaw/Hermes. Gebruik uitsluitend originele ongebruikte slots met dezelfde criteria/authority als concrete toelating haalbaar is; geen Agent Zero-replay.",
+              "nextAction": "Binnen bestaande P2.1 uitsluitend ontbrekende originele OpenClaw native-klok/geheugenreadbackbinding gericht aansluiten indien bestaande middelen dat toelaten; geen nieuwe laag/matrix of herhaling van gesloten cases. Echte menselijke kwaliteitbeoordelingen blijven apart.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -19548,28 +19594,27 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-06T21:20:14.960463+00:00",
+              "checkedAt": "2026-10-06T22:04:30.799923+00:00",
               "assignment": {
                 "baseCommit": "ff5e3e47e02e1b47831d2b6014055657864ee402",
                 "owner": "/root",
-                "activeWorkers": [
-                  "/root/p2_eva1_accounting_diagnosis_20261006"
-                ],
+                "activeWorkers": [],
                 "files": [
-                  "/root: bestaand werkbord/WERKBORD, Git en technische toegangsregistratie.",
-                  "/root/p2_eva1_accounting_diagnosis_20261006: bestaande Agent Zero benchmarkaccountingadapter/gerichte tests en private toelatingsvoorbereiding."
+                  "/root: bestaand werkbord/WERKBORD, eigen loginbewijs, gedeelde bronintegratie en Git.",
+                  "/root/p2_eva1_accounting_diagnosis_20261006: bestaande Hermes-proefadapter, noodzakelijke gerichte tests/private voorbereiding/evidence; onafhankelijke OpenClaw-review.",
+                  "/root/p2_eva1_lease_review_20261006: bestaande OpenClaw-proefadapter/config, noodzakelijke gerichte tests/private voorbereiding/evidence; onafhankelijke Hermes-review."
                 ],
                 "existing": "CM01–CM12 epoch1 voor Eva1/Eva2 zijn eenmaal uitgevoerd en onafhankelijk beoordeeld waar het bewijs dat toelaat. Verliezen en onbekende uitkomsten blijven behouden; dit voltooit niet de overige deelnemers/epochs/families.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte voorbereiding0provider-/samplecalls. Eerst originele ongebruiktheid en werkelijk bruikbare oorspronkelijke toelating vaststellen; uitvoeringsraming pas uit het bestaande plan en de concrete binding. Geen nieuwe quota, gratis teller, set of brede matrix; credits onbekend.",
-                "currentAction": "OpenClaw27215 en Hermes30337 werkelijk exit0; eigen authstores UID1000/mode0600 bevestigd, geen inference. Curator controleert hun eigen catalogus/bestaande gewone adapterroute. Agent Zero-uitkomst onafhankelijk GO afgesloten, volledige taak/SDKtotal/kwaliteit UNKNOWN.",
+                "currentAction": "Eigen aanmeldingen hersteld; oorspronkelijke Hermes CM01 gesloten en beperkt onafhankelijk gepubliceerd (3beurten/7HTTP200/17498in+275out/25,6s). Algemene inline-toolteller apart bronmatig gecorrigeerd en onafhankelijk GO; oorspronkelijke tool-/kwaliteitsUNKNOWN blijft. OpenClaw transportbronGO, native klok/readbackmeting nog niet toegelaten. Geen actieve uitvoerders of modelproef.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "eva2/evidence/product/p2-http-failure-diagnostics-20261006.json",
                   "meaning": "Gerichte oorspronkelijke diagnostische afhankelijkheid uitgevoerd, onafhankelijk GO, exact geïnstalleerd en gezonde kern bevestigd. Geen nieuwe productfunctie; login vereist."
                 },
-                "stage": "openclaw_hermes_owned_catalog_and_route_metadata",
+                "stage": "native_access_followup_closed_published",
                 "currentNativePreparation": {
                   "runHandle": "ev003-successor-native-cm04-20261006-e87d5a92",
                   "sessionId": 54196,
@@ -19677,12 +19722,13 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "Bevestig eigen catalogus en bestaande gewone route van de nu aangemelde OpenClaw/Hermes. Gebruik uitsluitend originele ongebruikte slots met dezelfde criteria/authority als concrete toelating haalbaar is; geen Agent Zero-replay.",
+                "nextAction": "Binnen bestaande P2.1 uitsluitend ontbrekende originele OpenClaw native-klok/geheugenreadbackbinding gericht aansluiten indien bestaande middelen dat toelaten; geen nieuwe laag/matrix of herhaling van gesloten cases. Echte menselijke kwaliteitbeoordelingen blijven apart.",
                 "actualUsage": {
-                  "newProviderAttemptsRegistered": 1,
-                  "newInputTokens": null,
-                  "newOutputTokens": null,
-                  "newSdkUsage": "UNKNOWN",
+                  "newProviderAttemptsRegistered": 7,
+                  "newInputTokens": 17498,
+                  "newOutputTokens": 275,
+                  "newSdkUsage": "KNOWN",
+                  "scope": "This original Hermes sample only; earlier native AgentZero6 attempts remain separately recorded. Development/fake tests had0modelinference.",
                   "developmentCredits": "UNKNOWN",
                   "runtimeCredits": "UNKNOWN"
                 },
@@ -19937,15 +19983,13 @@
                   ]
                 },
                 "changePlan": {
-                  "alreadyWorks": "Foreground reply and exact durable retention queue committed by the existing callback.",
-                  "gap": "The adapter takes one early snapshot and aborts while native retention is queued.",
-                  "smallestCorrection": "Wait only on pending using the current remaining sample deadline; no new inputs/model replay or product runtime change.",
-                  "modules": [
-                    "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py",
-                    "focused development tests"
-                  ],
-                  "availableHow": "Existing processor imports the same public glue path; no product image rebuild/install needed.",
-                  "finishEvidence": "Deterministic asynchronous development checks, existing native scope/failure guards and independent review of unchanged criteria/deadline."
+                  "existing": "Eigen native logins en catalogi werken; originele framework/installatie/uitvoering behouden.",
+                  "gap": "Hermes mist de parentregistratie op iedere echte SDK-dispatch. OpenClaw thinking off levert null en dus mogelijk standaard medium; oorspronkelijke Sol/none vereist expliciete native configuratie/parameters plus dezelfde dispatchregistratie.",
+                  "smallestSufficient": "Alleen bestaande adapters koppelen aan bestaande ProcessSampleLedger/ParentProcessAccounting en expliciete oorspronkelijke rolparameters; geen frameworkvervanging of cataloguscompatwijziging.",
+                  "availability": "Gewone native benchmarkroute in bestaande installatie; geen Eva-corewijziging of nieuwe runtime-release vereist.",
+                  "finish": "Concrete onafhankelijke binding, originele ongebruikte case volgens ongewijzigd plan, eerlijk resultaat/readbacks/verbruik/afsluiting. Geen nieuwe matrix of gesloten replay.",
+                  "preparationProviderCalls": 0,
+                  "creditCost": null
                 },
                 "retentionDiagnosis": "eva2/evidence/product/p2-retain-transition-diagnosis-20261006.json",
                 "observerBinding": "eva2/evidence/product/p2-native-memory-observer-binding-20261006.json",
@@ -19991,8 +20035,8 @@
                 },
                 "currentGoalTurn": {
                   "classification": "progress",
-                  "evidence": "eva2/evidence/product/p2-agentzero-original-cm01-result-20261006.json",
-                  "meaning": "Eigen native auth hersteld, accounting op bestaande authority aangesloten en één originele CM01 uitgevoerd/afgesloten. Contactmodeltoegang bevestigd; volledige taak en kwaliteit UNKNOWN. Geen nieuwe productteller."
+                  "evidence": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
+                  "meaning": "Eigen logins afgerond, oorspronkelijke native Hermes route eenmaal uitgevoerd en onafhankelijk beperkt gepubliceerd; concrete algemene benchmark-teller gecorrigeerd zonder replay. Geen nieuwe Eva-productfunctie."
                 },
                 "agentzeroReadiness": {
                   "stage": "verified",
@@ -20113,6 +20157,67 @@
                     "state": "native_login_saved"
                   },
                   "nativeInferenceDuringLogin": 0
+                },
+                "currentStageBaseCommit": "5967b72ba324e5251c3460d9e8e6e0eb7a1018a8",
+                "nativeRouteMetadata": [
+                  {
+                    "participant": "openclaw",
+                    "path": "eva2/evidence/product/p2-openclaw-native-access-20261006.json",
+                    "sha256": "e82706f33277989a5da4279f26f1060156d03d309992366824fbcf2ffc83de99"
+                  },
+                  {
+                    "participant": "hermes",
+                    "path": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
+                    "sha256": "7ce13747387afb29447bcbd5315a0a8d499da65e7dbe3687084f038058a86581"
+                  }
+                ],
+                "hermesCurrentBinding": {
+                  "path": "eva2/evidence/product/p2-hermes-parent-accounting-binding-20261006.json",
+                  "sha256": "691521d9d2a7ad0d56d25afe4e9f7463c0e7f9ff813aca9023961efefbfc9f08",
+                  "adapterSha256": "77017aa6b009a512317aa0705b2ce9ce15a0f103d53814076d50d324ff520519",
+                  "reviewPath": "eva2/reviews/p2-hermes-parent-accounting-admission-review-20261006.json",
+                  "reviewSha256": "77e4c84caf870abe5f8178fca18c3a18ce40e156b41102fc40677f99a8dcd7d0",
+                  "sessionId": 54988,
+                  "runHandle": "ev003-hermes-successor-cm01-parent-20261006-v1",
+                  "inputReleased": true,
+                  "resourcePreparationActive": false,
+                  "nativeExecutionActive": false,
+                  "newProviderCallsAtStart": 0,
+                  "releaseSha256": "94a4415a6d0913ff11d707b3a6a40cba15ebf54a05cf2c0be3e66a2154e0d8b9",
+                  "releaseAt": "2026-10-06T21:51:00.432568+00:00",
+                  "terminalExitCode": 0,
+                  "providerAttempts": 7,
+                  "completedNativeTurns": 3,
+                  "elapsedSeconds": 25.636614,
+                  "originalDeadlineExpired": false,
+                  "resultReview": "limited_technical_publication_go",
+                  "quality": "UNKNOWN",
+                  "nativeFrameworkReplaced": false,
+                  "sdkAccountingComplete": true,
+                  "inputTokens": 17498,
+                  "outputTokens": 275,
+                  "toolAccountingComplete": false,
+                  "independentNativeToolCallsObserved": 2,
+                  "preDispatchToolCapEnforcement": "UNKNOWN",
+                  "actualSDKUsageComplete": true,
+                  "rawOriginalScore": "UNKNOWN",
+                  "resultPath": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
+                  "resultSha256": "7ce13747387afb29447bcbd5315a0a8d499da65e7dbe3687084f038058a86581",
+                  "finalReviewPath": "eva2/reviews/p2-hermes-parent-accounting-admission-review-20261006.json",
+                  "finalReviewSha256": "13f92cc87c569a6b928f034ec1f4266451ff7e13d7144ed25f20b317f0de138b",
+                  "wholeResourcePredicate": "UNKNOWN"
+                },
+                "hermesToolCounterCorrection": {
+                  "sourcePath": "eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py",
+                  "sourceSha256": "da70070bed6b0cecbad4a6319bdbb0c737ba0c007ed5e6571efc5d2f5cf200bf",
+                  "receiptPath": "eva2/evidence/product/p2-hermes-tool-accounting-correction-20261006.json",
+                  "receiptSha256": "c8e3514c61d91939645d305d2e8014aad0bec5048e42989f3059f67da1c4dfeb",
+                  "reviewPath": "eva2/reviews/p2-hermes-tool-accounting-correction-review-20261006.json",
+                  "reviewSha256": "f8e15c16ff6900ce00048680463858738c473f20456fbf175f76420ccc256ce9",
+                  "focusedNativeExecutorFixturePassed": 1,
+                  "providerCalls": 0,
+                  "nativeCaseRepeated": false,
+                  "newSourceNativeSampleProven": false
                 }
               },
               "remaining": "CM02/CM03 technisch uitgevoerd; antwoordkwaliteit UNKNOWN. CM04 na één poging onbeslist en gesloten; geen algemene voorsprong. Oorspronkelijke dekking, twee CM02-beoordelingen en oorzaak/accounting blijven open.",

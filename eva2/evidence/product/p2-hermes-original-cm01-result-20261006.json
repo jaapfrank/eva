@@ -1,0 +1,592 @@
+{
+  "contract": "P2HermesOriginalCm01Result/v1",
+  "task": "P2.1",
+  "status": "native_original_sample_completed_sdk_usage_complete_quality_and_tool_coverage_unknown",
+  "entry": "hermes:EV003-CM-01:epoch1",
+  "runHandle": "ev003-hermes-successor-cm01-parent-20261006-v1",
+  "caseId": "EV003-CM-01",
+  "epoch": 1,
+  "participant": "hermes",
+  "execSession": 54988,
+  "launcherExit": 0,
+  "nativeChildExit": 0,
+  "nativeOutcome": "native_cm_completed",
+  "technicalNativeResultComplete": true,
+  "originalInspectStatus": "success",
+  "originalSemanticScore": null,
+  "originalHumanRatings": [
+    null,
+    null
+  ],
+  "quality": "UNKNOWN",
+  "noAIJudge": true,
+  "noProductWinner": true,
+  "usage": {
+    "provider_attempts": 7,
+    "completed_sdk_attempts": 7,
+    "aborted_attempts": 0,
+    "usage_unknown_sdk_attempts": 0,
+    "sdk_usage_complete": true,
+    "input_tokens": 17498,
+    "output_tokens": 275,
+    "total_tokens": 17773,
+    "roles": {
+      "contact": {
+        "attempts": 5,
+        "input_tokens": 16981,
+        "output_tokens": 240,
+        "total_tokens": 17221
+      },
+      "helper": {
+        "attempts": 2,
+        "input_tokens": 517,
+        "output_tokens": 35,
+        "total_tokens": 552
+      }
+    },
+    "per_attempt": [
+      {
+        "attempt_id": 0,
+        "role": "contact",
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none",
+        "status": "completed",
+        "http_status": 200,
+        "usage": {
+          "input_tokens": 3339,
+          "output_tokens": 62,
+          "total_tokens": 3401
+        },
+        "post_settlement_error": null,
+        "elapsed_sdk_seconds": 2.4813222629964002,
+        "first_text_delta_seconds": null
+      },
+      {
+        "attempt_id": 1,
+        "role": "helper",
+        "model": "gpt-6-astra",
+        "reasoning_effort": "medium",
+        "status": "completed",
+        "http_status": 200,
+        "usage": {
+          "input_tokens": 276,
+          "output_tokens": 20,
+          "total_tokens": 296
+        },
+        "post_settlement_error": {
+          "error_class": "GeneratorExit",
+          "http_status": null,
+          "error_code": null
+        },
+        "elapsed_sdk_seconds": 2.984172127995407,
+        "first_text_delta_seconds": 1.5649504769971827
+      },
+      {
+        "attempt_id": 2,
+        "role": "contact",
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none",
+        "status": "completed",
+        "http_status": 200,
+        "usage": {
+          "input_tokens": 3478,
+          "output_tokens": 43,
+          "total_tokens": 3521
+        },
+        "post_settlement_error": null,
+        "elapsed_sdk_seconds": 2.094391048005491,
+        "first_text_delta_seconds": 1.2237942780047888
+      },
+      {
+        "attempt_id": 3,
+        "role": "contact",
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none",
+        "status": "completed",
+        "http_status": 200,
+        "usage": {
+          "input_tokens": 3319,
+          "output_tokens": 51,
+          "total_tokens": 3370
+        },
+        "post_settlement_error": null,
+        "elapsed_sdk_seconds": 1.4443865940047544,
+        "first_text_delta_seconds": null
+      },
+      {
+        "attempt_id": 4,
+        "role": "contact",
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none",
+        "status": "completed",
+        "http_status": 200,
+        "usage": {
+          "input_tokens": 3442,
+          "output_tokens": 29,
+          "total_tokens": 3471
+        },
+        "post_settlement_error": null,
+        "elapsed_sdk_seconds": 1.6576426149986219,
+        "first_text_delta_seconds": 1.1009664529992733
+      },
+      {
+        "attempt_id": 5,
+        "role": "helper",
+        "model": "gpt-6-astra",
+        "reasoning_effort": "medium",
+        "status": "completed",
+        "http_status": 200,
+        "usage": {
+          "input_tokens": 241,
+          "output_tokens": 15,
+          "total_tokens": 256
+        },
+        "post_settlement_error": {
+          "error_class": "GeneratorExit",
+          "http_status": null,
+          "error_code": null
+        },
+        "elapsed_sdk_seconds": 1.600987742000143,
+        "first_text_delta_seconds": 1.3654122660009307
+      },
+      {
+        "attempt_id": 6,
+        "role": "contact",
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none",
+        "status": "completed",
+        "http_status": 200,
+        "usage": {
+          "input_tokens": 3403,
+          "output_tokens": 55,
+          "total_tokens": 3458
+        },
+        "post_settlement_error": null,
+        "elapsed_sdk_seconds": 1.7259101119998377,
+        "first_text_delta_seconds": 1.0531358690059278
+      }
+    ],
+    "credit_cost": null,
+    "cost_status": "UNKNOWN"
+  },
+  "toolAccounting": {
+    "adapter_observed_dispatches": 0,
+    "retained_native_main_tool_lower_bound": 2,
+    "retained_native_main_tool_names": [
+      "memory"
+    ],
+    "complete_tool_count": null,
+    "full_tool_cap_enforcement": "UNKNOWN",
+    "original_cap": 16,
+    "native_source_path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/agent/tool_executor.py",
+    "native_source_sha256": "f34672aea4869e04ceec2927b01d2eabf17f5b600e58d6db79c2abac7d0c6b4c",
+    "native_inline_precedence_line": 1618,
+    "registry_hook_line": 1648,
+    "cause": "inline_memory_dispatch_precedes_observed_registry_entrypoint",
+    "classification": "evaluator_observation_and_guard_gap_not_product_failure",
+    "raw_native_turns_path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/sample/cm-turns.private.json",
+    "raw_native_turns_sha256": "841f3f347ce2e53cbf382c69bcd0912a3483a3a99228e8399cf861a9c53d7f29",
+    "executed_adapter_path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/executed-p1_hermes_startup_probe-77017.private.py",
+    "executed_adapter_sha256": "77017aa6b009a512317aa0705b2ce9ce15a0f103d53814076d50d324ff520519"
+  },
+  "turns": [
+    {
+      "ordinal": 0,
+      "session_index": 0,
+      "native_completed": true,
+      "native_failed": false,
+      "native_partial": false,
+      "native_interrupted": false,
+      "native_reply_equals_independent_saved_reply": true,
+      "native_response_count": 1,
+      "saved_message_count": 4,
+      "memory_file_hashes": {
+        "USER.md": "f821a8fae5a707fc56e693ce1df03a93b9ab3ae705fabb4c076941f5d81e0ed6"
+      },
+      "native_settlement": {
+        "sdk_pending": 0,
+        "native_reviews_pending": 0,
+        "idle_queue_pending": 0
+      },
+      "calendar_generation": 0,
+      "elapsed_including_settlement_seconds": 5.860581121996802,
+      "per_turn_first_content_seconds": null
+    },
+    {
+      "ordinal": 1,
+      "session_index": 0,
+      "native_completed": true,
+      "native_failed": false,
+      "native_partial": false,
+      "native_interrupted": false,
+      "native_reply_equals_independent_saved_reply": true,
+      "native_response_count": 2,
+      "saved_message_count": 8,
+      "memory_file_hashes": {
+        "USER.md": "506e3ecbf8247c4d4295853a9196ee11eadb086aaf6aa8e874e56c456e454284"
+      },
+      "native_settlement": {
+        "sdk_pending": 0,
+        "native_reviews_pending": 0,
+        "idle_queue_pending": 0
+      },
+      "calendar_generation": 0,
+      "elapsed_including_settlement_seconds": 3.234871151005791,
+      "per_turn_first_content_seconds": null
+    },
+    {
+      "ordinal": 2,
+      "session_index": 1,
+      "native_completed": true,
+      "native_failed": false,
+      "native_partial": false,
+      "native_interrupted": false,
+      "native_reply_equals_independent_saved_reply": true,
+      "native_response_count": 1,
+      "saved_message_count": 2,
+      "memory_file_hashes": {
+        "USER.md": "506e3ecbf8247c4d4295853a9196ee11eadb086aaf6aa8e874e56c456e454284"
+      },
+      "native_settlement": {
+        "sdk_pending": 0,
+        "native_reviews_pending": 0,
+        "idle_queue_pending": 0
+      },
+      "calendar_generation": 1,
+      "elapsed_including_settlement_seconds": 1.8954315330047393,
+      "per_turn_first_content_seconds": null
+    }
+  ],
+  "memoryReadbacks": {
+    "successful_durable_reply_readbacks": 3,
+    "settlements": 3,
+    "native_sessions": 2,
+    "native_memory_file_retained_across_session_boundary": true,
+    "semantic_memory_correctness": "UNKNOWN",
+    "exact_final_model_prompt_readback": "NOT_RETAINED"
+  },
+  "deadline": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/sample-deadlines/hermes-absolute-deadline.json",
+    "sha256": "2671ca31cc8e85fdff96051d218626270c8995e3a7e122d66f4e992816cf4db6",
+    "monotonic_start": 54520.615892229,
+    "monotonic_deadline": 55000.615892229,
+    "wall_seconds": 480,
+    "elapsed_native_seconds": 25.636614086004556,
+    "wall_expired": false,
+    "renewed_or_reset": false
+  },
+  "closure": {
+    "parent_http_close_acknowledged": true,
+    "parent_tracked_http_settled": true,
+    "parent_pending_local": 0,
+    "parent_errors": [],
+    "parent_cancel_errors": [],
+    "native_pending_at_close": {
+      "background_reviews": 0,
+      "idle_queue": 0
+    },
+    "native_close_errors": [],
+    "scenario_clock_restored": true,
+    "native_process_exited": true,
+    "tunnel_closed": true,
+    "container_absent": true,
+    "network_absent": true,
+    "post_close_local_mirror_label": "parent disconnected; accounting unknown",
+    "post_close_local_label_does_not_override_authoritative_sdk_usage": true,
+    "relay_close_error_classes": [
+      "ConnectionResetError"
+    ],
+    "stop_verified": true
+  },
+  "sameAuthority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "before_sha256": "a25612099447b7c128e0598fc08b73e0272ad542c4634e3131357f14b03d9090",
+    "after_sha256": "c81cf6f0832ec1f81f760f2962b29e8bb91de5faa7c9378135a4543bbd147559",
+    "rows": [
+      {
+        "participant": "agent_zero",
+        "sample_id": "agent_zero:EV003-CM-01:epoch1",
+        "family": "conversation_memory",
+        "revision": 13,
+        "value_sha256": "a928f347b5183f5564fadfaba3320188dcd8b6d0f547d0250e9474ff0cba3dea",
+        "usage_unknown": true,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "selected": false
+      },
+      {
+        "participant": "eva1-bottie",
+        "sample_id": "eva1-successor-cm01-epoch1-d171470a",
+        "family": "conversation_memory",
+        "revision": 0,
+        "value_sha256": "ad6f6c73d8d238cadcf739df871694a04a6c410747b537380c66bd2c9a108966",
+        "usage_unknown": false,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "selected": false
+      },
+      {
+        "participant": "eva1-bottie",
+        "sample_id": "eva1-successor-cm02-epoch1-0734716d",
+        "family": "conversation_memory",
+        "revision": 0,
+        "value_sha256": "813a3a8a0f86ea158e3ee38b8e371f2b73932e2f3ea329d46fb75a73e4288773",
+        "usage_unknown": false,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "selected": false
+      },
+      {
+        "participant": "eva1-bottie",
+        "sample_id": "eva1-successor-cm03-epoch1-17ce05e0",
+        "family": "conversation_memory",
+        "revision": 12,
+        "value_sha256": "d4068711e5dc1d6f64e41ea3cfa69631092b3de4bfa989a7b7faff3834dbba1c",
+        "usage_unknown": false,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "selected": false
+      },
+      {
+        "participant": "eva2",
+        "sample_id": "eva2-successor-cm01-epoch1-d171470a",
+        "family": "conversation_memory",
+        "revision": 0,
+        "value_sha256": "54e77d993c7a520295afbc1486a762f5902c959f6b3c013ed7f771cd7a225921",
+        "usage_unknown": false,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "selected": false
+      },
+      {
+        "participant": "eva2",
+        "sample_id": "eva2-successor-cm02-epoch1-0734716d",
+        "family": "conversation_memory",
+        "revision": 0,
+        "value_sha256": "238ba99d431c174f023ae23bf1288051e855dd1c9ed3089a90206aada42c53ba",
+        "usage_unknown": false,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "selected": false
+      },
+      {
+        "participant": "eva2",
+        "sample_id": "eva2-successor-cm03-epoch1-17ce05e0",
+        "family": "conversation_memory",
+        "revision": 22,
+        "value_sha256": "1e39df936f4c56c1446f337b84af46bd3228dec246933c15f9f6a7245843f09d",
+        "usage_unknown": false,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "selected": false
+      },
+      {
+        "participant": "eva2",
+        "sample_id": "eva2-successor-cm04-epoch1-e87d5a92",
+        "family": "conversation_memory",
+        "revision": 5,
+        "value_sha256": "7cb6e90a5905b9387ed5f48259d91d8bef38f38f92f84007b261a313b4c2be1c",
+        "usage_unknown": true,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "selected": false
+      },
+      {
+        "participant": "hermes",
+        "sample_id": "hermes:EV003-CM-01:epoch1",
+        "family": "conversation_memory",
+        "revision": 15,
+        "value_sha256": "1c7c24bc53617bc70d9bdcf4006ef78525233aa6b61663cfad3f9d2e61be0769",
+        "usage_unknown": false,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "selected": true
+      }
+    ],
+    "historical_eight_row_bytes_preserved": true,
+    "known_provider_attempts": 45,
+    "known_input_token_lower_bound": 178673,
+    "known_output_token_lower_bound": 6282,
+    "registered_unknown_usage_attempts": 3,
+    "unresolved_usage_rows": [
+      {
+        "participant": "agent_zero",
+        "sample_id": "agent_zero:EV003-CM-01:epoch1"
+      },
+      {
+        "participant": "eva2",
+        "sample_id": "eva2-successor-cm04-epoch1-e87d5a92"
+      }
+    ],
+    "whole_current_registry_usage_complete": false,
+    "whole_current_registry_total_usage": null,
+    "historical_baseline_cm01_raw_sdk_unknown_preserved": true,
+    "selected_hermes_sdk_usage_complete": true,
+    "no_reset_no_copy_no_donation": true,
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca"
+  },
+  "binding": {
+    "admission_sha256": "691521d9d2a7ad0d56d25afe4e9f7463c0e7f9ff813aca9023961efefbfc9f08",
+    "release_sha256": "94a4415a6d0913ff11d707b3a6a40cba15ebf54a05cf2c0be3e66a2154e0d8b9",
+    "model_roles": {
+      "contact": {
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none"
+      },
+      "helpers": {
+        "model": "gpt-6-astra",
+        "reasoning_effort": "medium"
+      }
+    },
+    "original_limits": {
+      "externalActions": 0,
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "speechRequests": 0,
+      "toolDispatches": 16,
+      "wallSeconds": 480
+    },
+    "source_pin": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
+    "adapter_executed_sha256": "77017aa6b009a512317aa0705b2ce9ce15a0f103d53814076d50d324ff520519",
+    "launcher_sha256": "da54654c8b8917361562622edb2447ec245fc9a0084d2060203ffa0f34b34066",
+    "inspect_wrapper_sha256": "251cc9d29540b05723ce011d872af70bdfe1fecb39202f31022d64555b9f8d79",
+    "instrumentation_sha256": {
+      "cp001_accounting.py": "7841f6c450e1bc031662b190685ec15a4e5112b7ed3cf9183117c19197a49291",
+      "cp001_native.py": "57a1996e868887b53af445870616538d51c0b92bdf2ce20dacdbfb5d3db7fc78",
+      "cp001_process_accounting.py": "e2d1d3d63e64f84da2ddeef2bf032fe9e5b5153a50abddf0db9fe75dc607a774",
+      "ev003_python_calendar.py": "2d00941d259ba2576c4c7703e5717834118286b35281002d0f671c379a691c48",
+      "p2_provider_history_native_glue.py": "2087ffaf4854a91908e780d5f6ad72092ff277669696dd688f93335c03df6b0a"
+    },
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca"
+  },
+  "technicalEvidence": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/receipt.json",
+      "sha256": "8e99c58ab663a49aaaea8c109362ebe9278c3925c2eca37d6aac6eaac98ed954"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/sample/native-cm-technical.json",
+      "sha256": "0e29b6552074161deb206c6c9bb33406ece01acc8d6f03ff095826a179e25fcb"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/sample/sdk-attempts-technical.json",
+      "sha256": "605669ca9a61027ddd577411feb8cf6e870ef770edc8e65844ae323918f76d79"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/sample/cm-turns.private.json",
+      "sha256": "841f3f347ce2e53cbf382c69bcd0912a3483a3a99228e8399cf861a9c53d7f29"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/sample/native-responses.private.json",
+      "sha256": "98f8e3b814bae9ad001f8b059233558c9e7c910b80da107cb28e7961eb2b4810"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/parent-accounting-report.private.json",
+      "sha256": "f6bdc8669c7732bf32ea9c8ba614588037b3190823148c31e6d0709f924ec7e1"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/parent-accounting-after-close.private.json",
+      "sha256": "f86a3b33ff33ee133b3598e0b0f610883cf49f884c5b99634b32293134f975fa"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/inspect-private/inspect-result-summary.json",
+      "sha256": "ca2be36a7aadedfbcac0d7017fa485ac43a22851872d878047607247f13012d6"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/sample-deadlines/hermes-absolute-deadline.json",
+      "sha256": "2671ca31cc8e85fdff96051d218626270c8995e3a7e122d66f4e992816cf4db6"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execute-once.private.json",
+      "sha256": "94a4415a6d0913ff11d707b3a6a40cba15ebf54a05cf2c0be3e66a2154e0d8b9"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/executed-p1_hermes_startup_probe-77017.private.py",
+      "sha256": "77017aa6b009a512317aa0705b2ce9ce15a0f103d53814076d50d324ff520519"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/final-authority-technical.private.json",
+      "sha256": "0681ebb951d94b240500da4a917ac87bd7cf9c0407248cc3c0242339e8cabe82"
+    }
+  ],
+  "limitsOfMeasurement": [
+    "Two genuine independent blinded human ratings are absent; no semantic pass or quality winner.",
+    "Full tool-dispatch coverage and cap enforcement were not proved; native main-tool lower bound2 differs from adapter0.",
+    "Per-turn absolute first-content markers are absent; per-SDK text-delta latencies are retained separately.",
+    "Completed helper stream iteration retains GeneratorExit observations; their SDK usage is already complete.",
+    "Child close ACK covers tracked HTTP; normal process exit and namespace/tunnel closure are separate evidence."
+  ],
+  "safeProjection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/safe-terminal-projection.private.json",
+    "sha256": "e0f3227cbb2a3a232e643cddfa4f96795dc4dc962aeeead1cea2d48624e6d0db"
+  },
+  "independentEndReview": {
+    "reviewer": "/root/p2_eva1_lease_review_20261006",
+    "status": "GO_technical_report_and_publication_only",
+    "reviewedResultSha256": "772861ba76a0a4fdac4499551eea83de94b72a8e3b4177d71d0dd9946a38ba96",
+    "safeProjectionSha256": "e0f3227cbb2a3a232e643cddfa4f96795dc4dc962aeeead1cea2d48624e6d0db",
+    "reviewPath": "eva2/reviews/p2-hermes-parent-accounting-admission-review-20261006.json",
+    "reviewSha256": "13f92cc87c569a6b928f034ec1f4266451ff7e13d7144ed25f20b317f0de138b",
+    "scope": "SDK/native/readback/closure technical reporting; complete tool count and original16cap UNKNOWN;0of2human judgments and semantic quality UNKNOWN; no product winner or AI judge",
+    "executedSourceSha256": "77017aa6b009a512317aa0705b2ce9ce15a0f103d53814076d50d324ff520519",
+    "admissionSha256": "691521d9d2a7ad0d56d25afe4e9f7463c0e7f9ff813aca9023961efefbfc9f08"
+  },
+  "nextStep": "Preserve this closed original sample. Correct only the general inline-tool accounting seam with zero-provider development proof; no replay."
+}

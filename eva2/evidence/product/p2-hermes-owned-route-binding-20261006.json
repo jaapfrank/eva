@@ -1,0 +1,238 @@
+{
+  "catalog": {
+    "catalogIsNotEntitlementProof": true,
+    "http": [
+      {
+        "status": 200,
+        "url": "https://chatgpt.com/backend-api/codex/models?client_version=99.0.0"
+      }
+    ],
+    "modelSubstitution": false,
+    "nativeReadback": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/native-owned-status-catalog-technical.private.json",
+      "sha256": "feaef7fb9289d0c9dfcaf2b8351e981f8216a61ae5035ac333b477bba9ed2ef4"
+    },
+    "rawListsOriginalContactModel": true,
+    "rawListsOriginalHelperModel": true,
+    "rawModelCount": 10
+  },
+  "checkedAt": "2026-10-06T21:26:17.428853+00:00",
+  "contract": "P2HermesOwnedNativeRouteBinding/v1",
+  "credits": "UNKNOWN",
+  "evidence": {
+    "originalOwnerLogin": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-competitor-device-login-20261006.json",
+      "sha256": "2af3ae9d1ed4dd739875396c63d6e6ec88fc4608e6190aa292bb2b778d8cf41e"
+    },
+    "precedingFinalAuthority": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/execution/final-authority-technical.private.json",
+      "sha256": "11c37e438fda2830d02928d66baf58b258cab7ced8a2a4c0d38e7cbb85e797b5"
+    }
+  },
+  "executionGate": {
+    "closedAgentZeroOrOtherCaseReplayAllowed": false,
+    "finalInputAdmitted": false,
+    "independentConcreteReviewRequired": true,
+    "newModelCallReleased": false,
+    "resourcePreparationAdmitted": false
+  },
+  "nativeOwnAuth": {
+    "authStoreUnchangedBySuccessfulResolverAndCatalog": true,
+    "baseUrl": "https://chatgpt.com/backend-api/codex",
+    "earlierStatusGetterNativeOwnPoolMigration": {
+      "afterSha256": "c8f3c66b5b613d9d2369529a63e077d9ec5befccffd4ae225f88e195c16400b2",
+      "beforeSha256": "a4bb7b4ff4a092c1a2824439684bb164eba956f3a6d0aab44b2ba6a8035761b0",
+      "contextStarts": 0,
+      "correctedReportBoundary": "Use native resolve_codex_runtime_credentials(read_only=True) and bind current own pool state; no second device login/refresh/credentialcopy.",
+      "errorClass": "AssertionError",
+      "nativeInternalOwnPoolAdded": true,
+      "nativeStatusGetterSource": "hermes_cli/auth_nous.py:1292",
+      "originalCatalogMetadataOutput": "UNKNOWN",
+      "preservedOriginalProviderAndMatchingOwnPool": true,
+      "providerInferenceRequests": 0,
+      "refreshOrLoginRequests": 0,
+      "sampleInputs": 0
+    },
+    "externalLoginAdoption": false,
+    "gid": 1000,
+    "mode": "0o600",
+    "nativeOwnPoolEntries": 1,
+    "nativeOwnPoolTokenPairsMatchSingleton": true,
+    "nativeResolverReadOnly": true,
+    "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-native-owned/auth.json",
+    "provider": "openai-codex",
+    "sha256": "c8f3c66b5b613d9d2369529a63e077d9ec5befccffd4ae225f88e195c16400b2",
+    "source": "hermes-auth-store",
+    "uid": 1000
+  },
+  "nativeOwnProfilePath": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-native-owned",
+  "nativeSourceCommit": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
+  "ordinaryRoute": {
+    "existingStartupIsNotCmExecution": true,
+    "nativeExplicitStreamingRetry": {
+      "eachRetryMustBeSeparatelyParentAdmittedAndObserved": true,
+      "file": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/agent/codex_runtime.py",
+      "retrySettingLine": 1009
+    },
+    "nativeFinalWireSanitizer": {
+      "file": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/agent/codex_runtime.py",
+      "firstLine": 978,
+      "lastLine": 999,
+      "modelEntitlementOrResponseAcceptanceProven": false,
+      "originalNoneEffortReplacedByDefault": false,
+      "sourceInspection": "Copies request and removes only unsupported prompt_cache_retention; model and reasoning fields remain untouched."
+    },
+    "nativeForegroundPath": {
+      "dispatchLine": 1090,
+      "entry": "active_client.responses.create",
+      "file": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/agent/codex_runtime.py",
+      "method": "run_codex_stream"
+    },
+    "nativeHelperPath": {
+      "dispatchLine": 1577,
+      "entry": "self._client.responses.create",
+      "file": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/agent/auxiliary_client.py",
+      "nativeSdkRetriesZeroLine": 195
+    },
+    "nativeRequestScopedClient": {
+      "file": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/agent/client_lifecycle.py",
+      "nativeSdkRetriesZeroLine": 446
+    },
+    "retainedOriginalRequestAssembly": {
+      "contact": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-request-v1-contact.json",
+        "sha256": "737c12032a0e303267c6c0bceb85db9595248397ff46620fe10a987e5d976542"
+      },
+      "contactModel": "gpt-6-sol",
+      "contactReasoningEffort": "none",
+      "helper": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-request-v1-work.json",
+        "sha256": "a6f0ba0b93a1b4669807a33e0fb39125aad2748c8e000299e62aed4d0bca972d"
+      },
+      "helperModel": "gpt-6-astra",
+      "helperReasoningEffort": "medium",
+      "providerInferenceRequests": 0,
+      "scope": "Existing native constructor/request assembly, not model execution."
+    },
+    "sourceFiles": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/agent/codex_runtime.py",
+        "sha256": "c0f8253c5b3a1473b465037d49df7f9709c18b0e91dc8d310eeb6a047d44fb5f"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/agent/auxiliary_client.py",
+        "sha256": "e83807074f3577ac3980f43bfd578ffcc95efb591e38a9427d0e7d33ec7d8e4a"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/agent/client_lifecycle.py",
+        "sha256": "0eb16cba17558274183ac3c47c67583baa1cd495842f96d20c671446725e0ece"
+      }
+    ],
+    "state": "actual_model_execution_not_yet_performed"
+  },
+  "originalModelRoles": {
+    "contact": {
+      "model": "gpt-6-sol",
+      "reasoningEffort": "none"
+    },
+    "helper": {
+      "model": "gpt-6-astra",
+      "reasoningEffort": "medium"
+    }
+  },
+  "originalPerSampleLimits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "originalUnusedSlot": {
+    "actualAuthority": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+      "sha256": "a25612099447b7c128e0598fc08b73e0272ad542c4634e3131357f14b03d9090"
+    },
+    "actualAuthorityRowCount": 8,
+    "caseId": "EV003-CM-01",
+    "commitment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/dataset-commitment.private.json",
+      "sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d"
+    },
+    "epoch": 1,
+    "family": "conversation_memory",
+    "hermesRows": 0,
+    "newRegistryBootstrapResetOrDonatedEnvelope": false,
+    "originalEpochParticipantOrder": [
+      [
+        "eva1-bottie",
+        "eva2",
+        "openclaw",
+        "hermes",
+        "agent_zero"
+      ],
+      [
+        "agent_zero",
+        "hermes",
+        "openclaw",
+        "eva2",
+        "eva1-bottie"
+      ],
+      [
+        "openclaw",
+        "hermes",
+        "agent_zero",
+        "eva1-bottie",
+        "eva2"
+      ]
+    ],
+    "otherParticipantsUsageUnknownRetained": true,
+    "plan": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    },
+    "priorClosedNativeAuthAndStartupProbesNotRelabeledAsFinalCoverage": true,
+    "sameCommittedDatasetSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "sampleId": "hermes:EV003-CM-01:epoch1",
+    "slotExecuted": false,
+    "slotInputReleased": false,
+    "slotReserved": false
+  },
+  "participant": "hermes",
+  "quality": "UNKNOWN",
+  "recordedRealIndependentBlindedHumanRaters": 0,
+  "requiredRealIndependentBlindedHumanRaters": 2,
+  "resources": {
+    "nativeContextsStarted": 0,
+    "nativeSdkClientsWithModelDispatchStarted": 0,
+    "newExecSession": null,
+    "processOrContainerStarted": false,
+    "providerInferenceRequests": 0,
+    "registeredAttemptOrEnvelopeReservationsAdded": 0,
+    "sampleDeadlineCreated": false,
+    "sampleInputsReleased": 0
+  },
+  "smallestSufficientProposedAdapter": {
+    "criteriaLimitsCorpusModelsProviderChanged": false,
+    "implementationStarted": false,
+    "nativeParticipantSourceChange": false,
+    "nativeUidMayOpenPrivateAuthority": false,
+    "neededTransitions": [
+      "before every physical native SDK dispatch, parent admission with exact contact/helper model role and remaining original envelope",
+      "settle complete raw SDK usage for every foreground/helper/retry; failed or cancelled usage remains UNKNOWN and original stop guard applies",
+      "account native helper client factories and ensure a nested compatibility Chat-to-Responses dispatch has one owner, not two reservations",
+      "use original three native conversation turns and fresh isolated product state, preserve session transition and clock, independently read native saved chat/memory then prove native and transport closure"
+    ],
+    "newRunnerOrLedgerLayer": false,
+    "reuse": [
+      "existing native AIAgent and own Hermes auth resolver",
+      "existing SDK Responses/Chat entrypoints and native retry ownership",
+      "existing ParentProcessAccounting + ProcessSampleLedger + ledger_for",
+      "same authoritative PersistentAggregateLedger under participant hermes",
+      "existing original event projector and original 480-second durable absolute deadline helper"
+    ]
+  },
+  "sourceBasis": "5967b72ba324e5251c3460d9e8e6e0eb7a1018a8",
+  "status": "owned_auth_catalog_confirmed_minimal_sdk_binding_proposed_not_admitted",
+  "taskId": "P2.1"
+}
