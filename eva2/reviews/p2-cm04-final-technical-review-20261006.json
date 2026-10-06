@@ -1,0 +1,139 @@
+{
+  "contract": "EvaP2CM04FinalTechnicalIndependentReview/v1",
+  "task": "P2.1",
+  "recordedAt": "2026-10-06T19:50:56.631888+00:00",
+  "reviewer": "/root/p2_eva1_lease_review_20261006",
+  "caseId": "EV003-CM-04",
+  "epoch": 1,
+  "runHandle": "ev003-successor-native-cm04-20261006-e87d5a92",
+  "execSession": 54196,
+  "decision": "GO_technical_UNKNOWN_report_and_publication_only",
+  "reviewedResult": {
+    "path": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
+    "sha256BeforeIndependentEndReview": "b55d6e6989e73421d2ad2076dbe23eb71c5c0fd2f5772edca74ce1acd4108ce0"
+  },
+  "safeTechnicalProjection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm04-20261006-e87d5a92/final-accounting-closure-technical.private.json",
+    "sha256": "14a5c5d7d8cb9ae4b3a3d70edbcd5b3de665a53e814c24880805bdf77c2377d2"
+  },
+  "provenance": {
+    "admittedReceiptSha256": "ac8428b1823f55f8d0f0eacfebdef9306ce26047131283e000d083a669e7b26d",
+    "executeOnceSha256": "051979ae263997ae33befc711f76ccea63e96666a5dcd62333b0f9fb44ebeff5",
+    "immutableAdmissionReviewSha256": "3165ea45916c36abf676874d3030c5a69b4f31db3aa99d3951a4b86ac6a25bc6",
+    "originalPlanSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "originalProtocolSha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+    "originalScorerSha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "originalCaseSha256": "a9d08889d8115e68ce68d2851d5ed73bd34f73e655620b096409babaeef292a5",
+    "offeredArtifactSourceAdmissionReleaseAndReviewHashesMatched": true,
+    "originalControlsModelsOrderCriteriaAndLimitsUnchanged": true,
+    "publicCauseAggregateAndClosureEqualSafeProjection": true
+  },
+  "nativeOutcome": {
+    "status": "execution_UNKNOWN",
+    "terminalExitCode": 0,
+    "providerAttempts": 1,
+    "contactAttempts": 1,
+    "helperAttempts": 0,
+    "contactModel": "gpt-6-sol",
+    "contactReasoningEffort": "none",
+    "attemptStatus": "aborted",
+    "SDKUsage": null,
+    "accountingComplete": false,
+    "knownPartialUsageZerosAreNotActualTokenUsage": true,
+    "completedNativeTurns": 0,
+    "verifiedReplyReadbacks": 0,
+    "nativeMemorySettlements": 0,
+    "originalRawScore": "unknown",
+    "originalScorerExecutedOnce": true,
+    "nativeCompletion": false,
+    "validResourceComparison": false,
+    "tokenEnvelopeAdherence": "UNKNOWN",
+    "elapsedSeconds": 3.798973805998685,
+    "deadlineSeconds": 480,
+    "deadlineNeverRenewed": true,
+    "wallExpired": false,
+    "deadlineSha256": "4eef3a48a0d765da28aa7e72f6c4ab65b66222c21b967d034832d114c6f42814"
+  },
+  "causeClassification": {
+    "retainedIngressHTTPStatus": 503,
+    "retainedDiagnosticCode": "http_rejected",
+    "failureOrigin": "unknown",
+    "underlyingProviderCause": "UNKNOWN",
+    "underlyingProviderErrorClass": null,
+    "underlyingProviderErrorCode": null,
+    "upstreamHTTPStatus": null,
+    "currentAPI503BoundaryIsGeneric": true,
+    "HTTPBodyAloneDoesNotRecoverUnderlyingCause": true,
+    "historicalAPIExceptionBranchRetroproved": false,
+    "specificUpstreamCorrectionSupported": false,
+    "productLossEstablished": false
+  },
+  "cumulativeAuthority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256": "df393c77dc4ed0a92da335ed8d29189132460f59db6f6fd470f31b8a805c6aef",
+    "sameOriginalAuthority": true,
+    "readonlyReviewChangedDatabase": false,
+    "rowCount": 7,
+    "originalFullEnvelopes": {
+      "eva1-bottie": 3,
+      "eva2": 4
+    },
+    "CM04Eva2Revision": 5,
+    "CM04Eva2UsageUnknown": true,
+    "CM04Eva2ProviderDispatchNotReached": false,
+    "historicalCM03RevisionsPreserved": {
+      "eva1-bottie": 12,
+      "eva2": 22
+    },
+    "knownObservedLowerBound": {
+      "providerAttempts": 32,
+      "inputTokens": 131196,
+      "outputTokens": 5810
+    },
+    "actualTokenTotalsComplete": false,
+    "historicalCM01BaselineRawSDKUnknownRetainedSeparateFromPreDispatchZeroAttestation": true,
+    "resetCopyRebootstrapOrDonation": false,
+    "furtherEva2Admission": "blocked_by_existing_original_unresolved_usage_guard",
+    "guardSourceSha256": "5507ff2c379f955319161c8da2015b8459d6c9610cfa529842904d5706d22e5f"
+  },
+  "closure": {
+    "stopVerified": true,
+    "servicesStopped": 3,
+    "allServicesRunning": false,
+    "allServiceStopExitCodes": 0,
+    "allServiceNativeExitCodes": 0,
+    "bothNativeControllersSettled": true,
+    "activeNativeResponses": 0,
+    "parentAccountingErrors": 0,
+    "tunnelClosed": true,
+    "tunnelConnectedEvents": 1,
+    "nativeActionAttempts": 0,
+    "toolDispatchesObserved": 0,
+    "speechRequests": 0,
+    "noForbiddenEffect": true,
+    "closureSha256": "133fd72468aa3ab702787a60c443664c69dd4f1f16f0791f7938518adb7bc805"
+  },
+  "publicationLimits": {
+    "baseline": "unavailable_UNKNOWN",
+    "validCompletedPair": false,
+    "quality": "UNKNOWN",
+    "recordedHumanRaters": 0,
+    "requiredRealIndependentBlindedHumanRaters": 2,
+    "AIJudgeUsed": false,
+    "Eva1CorrectnessOracle": false,
+    "productOrComparativeWinOrLossEstablished": false,
+    "nativeTechnicalCompletionClaim": false,
+    "P2_1Complete": false,
+    "SDKRuntimeTokensAndCreditsAndMoney": "UNKNOWN",
+    "replayResetNextCaseOrNewProviderCallAuthorized": false,
+    "protectedStimulusAnswerOracleToolArgumentsOrActorControlsIncluded": false
+  },
+  "reviewActions": {
+    "boundedStaticHashAndReadonlyAggregateReviewOnly": true,
+    "protectedStimuliAnswersOrOraclesRead": false,
+    "newTestsProbesNativeProviderModelSampleOrScorerCalls": 0,
+    "sourceWorkboardOrGitChanges": 0
+  },
+  "concretePublicationDefects": [],
+  "attestationIntegration": "Curator may add only independentEndReview metadata to the same result, preserving all reviewed score, usage, cause, closure, source and original criteria fields."
+}

@@ -1016,8 +1016,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-06T19:07:10.844849+00:00",
+        "checkedAt": "2026-10-06T19:52:47.123266+00:00",
         "deliveries": [
+          {
+            "title": "P2.1 · CM04 afgesloten zonder bevestigd resultaat",
+            "state": "Onbeslist",
+            "detail": "Eén afgebroken poging, HTTP503 na 3,799s. SDKusage en antwoordkwaliteit UNKNOWN; alle proefdiensten gestopt. Onafhankelijke technische review bevestigt deze beperkte uitslag.",
+            "remaining": "Geen extra Eva-productfunctie. Exacte upstreamfout en inhoudelijke vergelijking nog open.",
+            "source": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
+            "reviewedAt": "2026-10-06T19:52:47.123266+00:00"
+          },
           {
             "title": "P2.1 · CM03-proefpaar uitgevoerd en technisch gecontroleerd",
             "state": "tested",
@@ -3986,22 +3994,22 @@
           }
         ],
         "now": {
-          "title": "P2.1 · CM03 afgerond als proef; kwaliteit nog onbekend",
-          "state": "Proef afgesloten",
+          "title": "P2.1 · Meetfout bij Codex; vergelijking onbeslist",
+          "state": "blocked",
           "owner": "Codex",
-          "detail": "Beide drie oorspronkelijke beurten uitgevoerd, volledige modelaccounting en alle proefprocessen gestopt. Meetrapport onafhankelijk technisch GO. Antwoordkwaliteit nog niet vastgesteld; geen extra Eva-productfunctie afgerond.",
-          "remaining": "Twee echte blinde CM02-beoordelingen blijven open. Overige oorspronkelijke dekking en R1 apart zichtbaar; geen inhoudelijke of algemene winnaar.",
-          "source": "eva2/evidence/product/p2-original-next-cm03-result-20261006.json",
+          "detail": "CM04 brak na 3,8 seconden af met HTTP503. Geen bevestigd antwoord; tokengebruik en onderliggende oorzaak onbekend. De proef is gestopt en onafhankelijk gerapporteerd; geen nieuwe functie afgerond.",
+          "remaining": "Codex moet ontbrekende technische foutregistratie gericht oplossen. Oorspronkelijke accountingguard blokkeert nieuwe Eva2-proeven. Geen handeling van jou nodig voor deze fout.",
+          "source": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "reviewedAt": "2026-10-06T19:07:10.844849+00:00"
+          "reviewedAt": "2026-10-06T19:52:47.123266+00:00"
         },
         "next": {
-          "title": "P2.1 · Kwaliteit en overige oorspronkelijke dekking",
+          "title": "P2.1 · Concrete fout vaststellen",
           "state": "planned",
-          "owner": "Codex / onafhankelijke beoordelaars",
-          "detail": "Verwerk echte blinde CM02-beoordelingen zodra beschikbaar. Overige oorspronkelijke dekking kan apart verder met gecontroleerde gelijkwaardige toelating; geen herhaling, nieuwe set of automatische brede matrix.",
-          "remaining": "P2.1 en R1 blijven open. Spraak is geparkeerd; oorspronkelijke eindvoorwaarden en gezinsacceptatie behouden.",
-          "source": "eva2/evidence/product/p2-original-next-cm03-result-20261006.json"
+          "owner": "Codex",
+          "detail": "Leg de ontbrekende technische foutclass/code/status vast op de bestaande provider-/SDK-grens vóór de generieke API503. Behoud gesloten CM04 en onbekend SDKgebruik; geen replay of nieuwe Eva2-toelating voorbij de oorspronkelijke accountingguard. Twee echte CM02-beoordelingen blijven apart open.",
+          "remaining": "Antwoordkwaliteit volgens de oorspronkelijke opdrachtvoorwaarden beoordelen. Eva1 geldt niet als waarheid; kosten en snelheid blijven aparte metingen.",
+          "source": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json"
         },
         "ownerAction": {
           "title": "Beoordeel de antwoorden anoniem",
@@ -4017,7 +4025,7 @@
           "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-06T19:07:10.844849+00:00"
+        "reviewedAt": "2026-10-06T19:52:47.123266+00:00"
       },
       "reviewedAt": "2026-10-06T09:49:07.102699+00:00",
       "checkedAt": "2026-10-06T09:49:07.102699+00:00",
@@ -6429,10 +6437,10 @@
         "codexDevelopmentCredits": null,
         "followup": {
           "contract": "EvaPublishedComparisonFollowup/v1",
-          "publishedAt": "2026-10-06T19:07:10.844849+00:00",
-          "status": "native_pairs_complete_quality_unknown",
-          "headline": "CM02 en CM03 uitgevoerd. Welke Eva inhoudelijk beter antwoordt, is nog niet vastgesteld.",
-          "scope": "CM02/epoch1 en CM03/epoch1 uit de bestaande eindset, één uitvoering per systeem en geval. De oorspronkelijke opdrachtvoorwaarden bepalen kwaliteit; Eva1 is geen juistheidsnorm.",
+          "publishedAt": "2026-10-06T19:52:47.123266+00:00",
+          "status": "cm02_cm03_complete_cm04_execution_unknown",
+          "headline": "Eva1 is geen juistheidsnorm. Inhoudelijke kwaliteit blijft open; CM04 leverde geen antwoord op.",
+          "scope": "Oorspronkelijke CM02/CM03-paren en beschikbare Eva2-CM04/epoch1. De eigen opdrachtvoorwaarden bepalen kwaliteit, los van de Eva1-antwoorden. Geen wijzigingen aan vragen/criteria.",
           "generalSuperiorityProven": false,
           "validQualityComparisonPairs": 0,
           "rows": [
@@ -6491,23 +6499,52 @@
               "observedToolDispatches": 0,
               "completeInputTokens": 22689,
               "completeOutputTokens": 863
+            },
+            {
+              "name": "Eva1 · CM04",
+              "quality": {
+                "state": "unknown",
+                "label": "Niet vergelijkbaar"
+              },
+              "nativeReplies": "Niet uitgevoerd",
+              "execution": "De gebonden ingang ondersteunt de oorspronkelijke persoonswissel niet. UNKNOWN; geen verlies voor Eva1.",
+              "transportMs": [],
+              "providerAttemptsRegistered": 0,
+              "observedToolDispatches": null,
+              "completeInputTokens": null,
+              "completeOutputTokens": null
+            },
+            {
+              "name": "Eva2 · CM04",
+              "quality": {
+                "state": "unknown",
+                "label": "Geen bevestigd antwoord"
+              },
+              "nativeReplies": "0/1 teruggelezen",
+              "execution": "Eerste poging HTTP503; SDKusage UNKNOWN, geen antwoord of inhoudelijk oordeel.",
+              "transportMs": [],
+              "providerAttemptsRegistered": 1,
+              "observedToolDispatches": 0,
+              "completeInputTokens": null,
+              "completeOutputTokens": null
             }
           ],
-          "usage": "CM02: Eva1 7 pogingen/46.737 tokens; Eva2 9/27.095. CM03: Eva1 6/36.670; Eva2 8/23.552. Inclusief geheugenhelpers. Meer calls bewijzen geen slechtere kwaliteit; minder tokens geen slimmer of goedkoper resultaat. Creditkosten en ontwikkelcredits onbekend.",
-          "timingNote": "CM03 eerste inhoud per beurt: Eva1 13,633 / 9,739 / 6,529 s; Eva2 9,777 / 23,097 / 4,931 s. Totale observatie inclusief geheugen: 32,289 tegenover 70,774 s. CM02-metingen blijven in het eerdere rapport. Geen algemene snelheidsscore.",
+          "usage": "CM02: Eva1 7 pogingen/46.737 token s; Eva2 9/27.095. CM03: Eva1 6/36.670; Eva2 8/23.552, inclusief geheugenhelpers. CM04: één afgebroken Eva2-poging; tokensUNKNOWN. Meer calls bewijzen geen slechtere kwaliteit, minder tokens geen slimmer/goedkoper resultaat. Credits onbekend.",
+          "timingNote": "CM03 eerste inhoud per beurt: Eva1 13,633/9,739/6,529 s; Eva2 9,777/23,097/4,931s. Totale observatie inclusief geheugen 32,289 tegenover 70,774s. CM04 geen eerste inhoud:3,799s tot afbreken is geen antwoordsnelheid. Geen algemene snelheidsscore.",
           "configurationNotes": [
             "Contact gpt-6-sol/none; onderzoeks-/geheugenhelpers gpt-6-astra/medium op dezelfde providerroute.",
             "Eva2 gebruikt de oorspronkelijke genormaliseerde vergelijkingsvariant voor geheugen (Astra/medium); de geïnstalleerde geheugenroute gebruikt Luna/low. Geen prestatieclaim over dat geïnstalleerde profiel.",
             "CM02: Beide oorspronkelijke onafhankelijke controles slagen: gedateerde geheugenstatus/laatste native opgehaalde context en native trace. Dit bewijst geen exacte verzonden promptbytes, antwoordcorrectheid of kwaliteitswinnaar.",
             "De twee vereiste echte onafhankelijke semantische/menselijke beoordelingen ontbreken. Geen AI-review als vervanging, geen winnaar of algemene voorsprong.",
             "Zelfstandig combinatie-/programmeerwerk en de andere concurrenten zijn door deze twee contact-/geheugengevallen niet afgerond.",
-            "CM03: native antwoordprovenance en drie geheugenverwerkingen bevestigd; inhoudelijke geheugenvoorwaarden en antwoordkwaliteit nog UNKNOWN. Dezelfde oorspronkelijke genormaliseerde modelrollen, geen geïnstalleerde-Luna-prestatieclaim."
+            "CM03: native antwoordprovenance en drie geheugenverwerkingen bevestigd; inhoudelijke geheugenvoorwaarden en antwoordkwaliteit nog UNKNOWN. Dezelfde oorspronkelijke genormaliseerde modelrollen, geen geïnstalleerde-Luna-prestatieclaim.",
+            "CM04: oorspronkelijke actor/private-audience/session via bestaande Eva2API; Eva1 voor dit geval unavailableUNKNOWN. Eén eigen originele Eva2-envelope op dezelfde cumulatieve DB; geen budgetdonatie/reset."
           ],
           "humanHelpNote": "Tijdens de proef geen ongeplande evaluatorinterventie of gebruikershulp. Benodigde hulp voor een inhoudelijk geslaagde opdracht blijft onbekend.",
-          "remaining": "P2.1 blijft open: oorspronkelijke volledige dekking en kwaliteitsbeoordelingen ontbreken. R1/AIDE² en gezinsacceptatie blijven afzonderlijk open; 34/44 oorspronkelijke kleine taken blijft gelijk.",
-          "nextAction": "Verwerk echte blinde CM02-beoordelingen zodra beschikbaar. Overige oorspronkelijke dekking kan apart verder met gecontroleerde gelijkwaardige toelating; geen herhaling, nieuwe set of automatische brede matrix.",
+          "remaining": "P2.1 blijft open: oorspronkelijke dekking en inhoudelijke beoordelingen ontbreken. CM04-usageUNKNOWN blokkeert nieuwe Eva2-toelating onder dezelfde guard. R1/gezinsacceptatie apart open; 34/44 onveranderd.",
+          "nextAction": "Leg de ontbrekende technische foutclass/code/status vast op de bestaande provider-/SDK-grens vóór de generieke API503. Behoud gesloten CM04 en onbekend SDKgebruik; geen replay of nieuwe Eva2-toelating voorbij de oorspronkelijke accountingguard. Twee echte CM02-beoordelingen blijven apart open.",
           "ownerActionRequired": true,
-          "resources": "Beide oorspronkelijke proefparen gesloten. Native processen, containers en modeltunnels gestopt; geen vervolgcase of herhaling gestart.",
+          "resources": "CM02/CM03 en CM04 gesloten; alle betreffende native processen/tunnels gestopt. Geen vervolgcase, replay of herhaling actief.",
           "evidenceBindings": [
             {
               "path": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json",
@@ -6524,9 +6561,25 @@
             {
               "path": "eva2/reviews/p2-cm03-final-technical-review-20261006.json",
               "sha256": "e3b299460d46546c060c443ce3a536ee5d4882e3792cf5c0e2d159cff2b9ac27"
+            },
+            {
+              "path": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
+              "sha256": "05ce75636961143997b1bdc5566c9af7bf39c623b211bc5bcd7f8b97de2e82b8"
+            },
+            {
+              "path": "eva2/evidence/product/p2-original-next-cm04-admission-20261006.json",
+              "sha256": "ac8428b1823f55f8d0f0eacfebdef9306ce26047131283e000d083a669e7b26d"
+            },
+            {
+              "path": "eva2/reviews/p2-cm04-final-technical-review-20261006.json",
+              "sha256": "8fa1af2e3c296f051732329afcac2d23937c0c092453609e7b79d75b240c3841"
+            },
+            {
+              "path": "eva2/reviews/p2-cm04-native-admission-review-20261006.json",
+              "sha256": "3165ea45916c36abf676874d3030c5a69b4f31db3aa99d3951a4b86ac6a25bc6"
             }
           ],
-          "automaticReviewNote": "CM02 native/readbackpublicatie en CM03 technische rapportage onafhankelijk GO. Geen AI-kwaliteitsoordeel: beide oorspronkelijke inhoudelijke beoordelingen blijven UNKNOWN.",
+          "automaticReviewNote": "CM02/CM03 technische controles en CM04 eerlijke UNKNOWN-publicatie onafhankelijk GO. Geen AI-kwaliteitsoordeel of algemene winnaar.",
           "humanReviewPreparation": {
             "status": "two_blind_packets_available",
             "recordedHumanRaters": 0,
@@ -16071,7 +16124,7 @@
           ]
         }
       ],
-      "nextAction": "Verwerk echte blinde CM02-beoordelingen zodra beschikbaar. Overige oorspronkelijke dekking kan apart verder met gecontroleerde gelijkwaardige toelating; geen herhaling, nieuwe set of automatische brede matrix.",
+      "nextAction": "Leg de ontbrekende technische foutclass/code/status vast op de bestaande provider-/SDK-grens vóór de generieke API503. Behoud gesloten CM04 en onbekend SDKgebruik; geen replay of nieuwe Eva2-toelating voorbij de oorspronkelijke accountingguard. Twee echte CM02-beoordelingen blijven apart open.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -19417,11 +19470,11 @@
             {
               "id": "P2.1",
               "title": "Vergelijking op eindkandidaat uitvoeren",
-              "status": "in_progress",
+              "status": "blocked",
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Verwerk echte blinde CM02-beoordelingen zodra beschikbaar. Overige oorspronkelijke dekking kan apart verder met gecontroleerde gelijkwaardige toelating; geen herhaling, nieuwe set of automatische brede matrix.",
+              "nextAction": "Leg de ontbrekende technische foutclass/code/status vast op de bestaande provider-/SDK-grens vóór de generieke API503. Behoud gesloten CM04 en onbekend SDKgebruik; geen replay of nieuwe Eva2-toelating voorbij de oorspronkelijke accountingguard. Twee echte CM02-beoordelingen blijven apart open.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -19434,36 +19487,37 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-06T19:07:10.844849+00:00",
+              "checkedAt": "2026-10-06T19:52:47.123266+00:00",
               "assignment": {
-                "baseCommit": "470c6a9ba942d4042a068b036bbaf9183f7a8e40",
+                "baseCommit": "e432fa0347df9e5d946809e33e52a76948aa07f9",
                 "owner": "/root",
                 "activeWorkers": [],
                 "files": [
-                  "/root: bestaande accounting/glue, gerichte tests, correctieproof en gedeelde werkbord/WERKBORD/Git-integratie.",
-                  "/root/p2_eva1_accounting_diagnosis_20261006: private CM03-uitvoering en gesaniteerde admission/resultaat; geen beschermde inhoud naar root/Git.",
-                  "/root/p2_eva1_lease_review_20261006: onafhankelijke gebundelde review van dezelfde concrete code, binding, resultaat en afsluiting."
+                  "/root: actuele werkbord/WERKBORD en eventuele noodzakelijke algemene bronintegratie/Git.",
+                  "/root/p2_eva1_accounting_diagnosis_20261006: volgende oorspronkelijke-casevoorbereiding en gesaniteerde metadata/resultaat, private inputs/orakels blijven privé.",
+                  "/root/p2_eva1_lease_review_20261006: onafhankelijke concrete toelatings-/eindreview van dezelfde uitkomst; geen eigen uitvoering."
                 ],
                 "existing": "CM01–CM12 epoch1 voor Eva1/Eva2 zijn eenmaal uitgevoerd en onafhankelijk beoordeeld waar het bewijs dat toelaat. Verliezen en onbekende uitkomsten blijven behouden; dit voltooit niet de overige deelnemers/epochs/families.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
-                "estimate": "Voorbereiding0modelcalls. Origineel per deelnemer16providerpogingen inclhelpers; geen nieuw quotum of automatische matrix. Werkelijk verwacht verbruik/kosten onbekend; vorige CM02-paar16pogingen/70.323input/3.509output afzonderlijk behouden.",
-                "currentAction": "CM03 uitgevoerd en gesloten: beide3nativebeurten, completeaccounting,3Eva2geheugenverwerkingen,14pogingen/58.044input/2.178output. Onafhankelijke technischeGO gepubliceerd. Geen actieve proef/werker of vervolgcase; antwoordkwaliteitUNKNOWN.",
+                "estimate": "Gerichte voorbereiding0provider-/samplecalls. Eerst originele ongebruiktheid en werkelijk bruikbare oorspronkelijke toelating vaststellen; uitvoeringsraming pas uit het bestaande plan en de concrete binding. Geen nieuwe quota, gratis teller, set of brede matrix; credits onbekend.",
+                "currentAction": "CM04 éénmaal uitgevoerd en gesloten: HTTP503 na 3,799s, één aborted contactpoging, SDKusage/kwaliteit UNKNOWN. Native diensten/tunnels gestopt; technische publicatie onafhankelijk GO. Geen nieuwe productfunctie, replay of actieve volgende proef.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "evidence": "470c6a9b: twee blinde menselijke beoordelingspakketten werkelijk beschikbaar, bron/logs behouden en onafhankelijk technisch GO. R1-readiness beslist NO_GO bestaande toelating; geen nieuwe modelcalls of productafronding."
+                  "evidence": "e432fa03: één oorspronkelijk CM03-paar eenmaal uitgevoerd; volledige native accounting/readbacks/stop, onafhankelijke technische GO, duurzame oorspronkelijke aggregate-accounting gekoppeld en dashboard/Git gepubliceerd. Kwaliteit UNKNOWN en34/44 behouden; geen nieuwe Eva-functie."
                 },
-                "stage": "cm03_closed_published_native_result_quality_unknown",
+                "stage": "cm04_closed_unknown_result_published",
                 "currentNativePreparation": {
-                  "runHandle": "ev003-successor-native-cm03-20261006-17ce05e0",
-                  "sessionId": 74218,
-                  "actualTransition": "Terminal74218/exit0; beide drie native beurten, volledige accounting en stop. Onafhankelijke technische rapportageGO; inhoudelijke kwaliteit UNKNOWN.",
+                  "runHandle": "ev003-successor-native-cm04-20261006-e87d5a92",
+                  "sessionId": 54196,
+                  "actualTransition": "Terminal54196/exit0; alle3proefservices/tunnels gestopt, één aborted poging, SDK/kwaliteitUNKNOWN. Geen volgende proef.",
                   "participantInputReleased": true,
                   "budgetChanged": false,
                   "preparationProviderCalls": 0,
-                  "registeredSampleProviderAttempts": 14,
                   "nativeExecutionActive": false,
-                  "noActiveProcesses": true
+                  "resourcePreparationActive": false,
+                  "noActiveProcesses": true,
+                  "registeredSampleProviderAttempts": 1
                 },
                 "evaluatorCorrection": {
                   "source": "eva2/evidence/product/p2-original-next-cm-result-20261006.json",
@@ -19560,29 +19614,20 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "Met bundeltoestemming de bestaande technische Eva1-proefbinding ophalen en daadwerkelijke native bron/manifest/model/leasegereedheid bevestigen.",
+                "nextAction": "Leg de ontbrekende technische foutclass/code/status vast op de bestaande provider-/SDK-grens vóór de generieke API503. Behoud gesloten CM04 en onbekend SDKgebruik; geen replay of nieuwe Eva2-toelating voorbij de oorspronkelijke accountingguard. Twee echte CM02-beoordelingen blijven apart open.",
                 "actualUsage": {
-                  "caseId": "EV003-XD-02",
-                  "originalNativeRuns": 1,
-                  "nativeOutcome": "native_sample_completed",
-                  "productOutcome": "failed/incomplete_work",
-                  "objectiveComplete": false,
-                  "providerAttempts": 8,
-                  "inputTokens": 55594,
-                  "outputTokens": 1222,
-                  "tokens": 56816,
-                  "nativeToolDispatches": 5,
-                  "protocolDispatches": 0,
-                  "sampleSeconds": 55.723,
-                  "foregroundSeconds": 8.217,
-                  "settledSeconds": 53.893,
-                  "preparationAttempts": 1,
-                  "preparationProviderRequests": 0,
-                  "accountingComplete": true,
-                  "creditCost": null,
-                  "developmentCredits": null
+                  "newProviderAttemptsRegistered": 1,
+                  "newInputTokens": null,
+                  "newOutputTokens": null,
+                  "newSdkUsage": "UNKNOWN",
+                  "developmentCredits": "UNKNOWN",
+                  "runtimeCredits": "UNKNOWN"
                 },
-                "review": "eva2/evidence/product/p2-xd01-binding-source-review-20261005.json",
+                "review": {
+                  "path": "eva2/reviews/p2-cm04-final-technical-review-20261006.json",
+                  "sha256": "8fa1af2e3c296f051732329afcac2d23937c0c092453609e7b79d75b240c3841",
+                  "conclusion": "GO honest UNKNOWN publication only; no completed native response, SDKusage or quality win."
+                },
                 "sourcePreparationEvidence": "eva2/evidence/product/p2-xd01-native-binding-20261005.json",
                 "resourcePreparationEvidence": "eva2/evidence/product/p2-xd01-browser-resources-20261005.json",
                 "preparationStateEvidence": "eva2/evidence/product/p2-xd01-independent-state-20261005.json",
@@ -19603,13 +19648,28 @@
                 "currentSourceReviewStatus": "targeted_resume_delta_go",
                 "latestPreparationIssue": "Een projectieaudience bleef na actorcorrectie verwijzen naar de conceptmapping. Normale API weigert dit vóór invoer; geen productverlies. Eén operationeel veld gecorrigeerd en meetvoorbereiding bewaard. Bestaande lege memoryschema hervatten, geen reset of resourceherbouw.",
                 "currentExecution": {
-                  "caseId": "EV003-XD-02",
-                  "originalNativeRuns": 1,
-                  "nativeObservationOutcome": "native_sample_completed",
-                  "originalTaskOutcome": "failed/incomplete_work",
-                  "nativeReceiptSha256": "b31ff4bc29d2f4cbd66db3fd7f08a1a4d32dd9af387ab7733af62be97136e83b",
-                  "independentEvidence": "eva2/evidence/product/p2-xd02-independent-state-20261005.json",
-                  "allNativeAndExternalProcessesStopped": true
+                  "runHandle": "ev003-successor-native-cm04-20261006-e87d5a92",
+                  "sessionId": 54196,
+                  "participantOrder": [
+                    "eva2"
+                  ],
+                  "caseId": "EV003-CM-04",
+                  "epoch": 1,
+                  "admissionSha256": "ac8428b1823f55f8d0f0eacfebdef9306ce26047131283e000d083a669e7b26d",
+                  "releaseSha256": "051979ae263997ae33befc711f76ccea63e96666a5dcd62333b0f9fb44ebeff5",
+                  "reviewPath": "eva2/reviews/p2-cm04-native-admission-review-20261006.json",
+                  "reviewSha256": "3165ea45916c36abf676874d3030c5a69b4f31db3aa99d3951a4b86ac6a25bc6",
+                  "active": false,
+                  "quality": "UNKNOWN",
+                  "terminalExitCode": 0,
+                  "providerAttemptsRegistered": 1,
+                  "accountingComplete": false,
+                  "rawScore": "unknown",
+                  "servicesStopped": true,
+                  "resultPath": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
+                  "resultSha256": "05ce75636961143997b1bdc5566c9af7bf39c623b211bc5bcd7f8b97de2e82b8",
+                  "finalReviewPath": "eva2/reviews/p2-cm04-final-technical-review-20261006.json",
+                  "finalReviewSha256": "8fa1af2e3c296f051732329afcac2d23937c0c092453609e7b79d75b240c3841"
                 },
                 "prebuildDecisionEvidence": "eva2/evidence/product/p2-prebuild-decision-20261005.json",
                 "independentFinding": {
@@ -19843,19 +19903,16 @@
                   "noActiveProcesses": true
                 }
               },
-              "remaining": "CM02 en CM03 native uitgevoerd en onafhankelijk technisch gereviewd. Antwoordkwaliteit blijft UNKNOWN; overige oorspronkelijke dekking en twee echte CM02-beoordelingen open. Geen algemene voorsprong of extra productafronding.",
-              "latestEvidence": "eva2/evidence/product/p2-original-next-cm03-result-20261006.json",
+              "remaining": "CM02/CM03 technisch uitgevoerd; antwoordkwaliteit UNKNOWN. CM04 na één poging onbeslist en gesloten; geen algemene voorsprong. Oorspronkelijke dekking, twee CM02-beoordelingen en oorzaak/accounting blijven open.",
+              "latestEvidence": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
               "executionBlocker": {
-                "type": "automatic_approval_review",
-                "state": "resolved_after_same_command_review_with_new_provenance_evidence",
-                "reason": "Rejected live credentialed benchmark transmitting protected scenario inputs to OpenAI without explicit execution/destination authorization.",
-                "nativeStarted": false,
-                "providerCalls": 0,
-                "checkedAt": "2026-10-04T01:28:42.703387+00:00",
-                "resolvedAt": "2026-10-04T15:04:47.848198+00:00",
-                "scope": "Historical refusal before process creation; resolved through the same automatic review path after new synthetic-input provenance evidence. Counts here describe the rejected attempt only; current execution is in latestEvidence."
+                "owner": "Codex",
+                "kind": "native503_unresolved_sdk_usage",
+                "externalOwnerActionRequired": false,
+                "evidence": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
+                "reason": "Eén aborted contactpoging, SDKusageNULL; bestaande cumulatieve toelatingsguard sluit nieuwe Eva2-sample uit. Ontbrekende gestructureerde upstreamfoutregistratie verklaard; geen concrete upstreamcorrectie bewezen."
               },
-              "blocker": null,
+              "blocker": "Codex: eerste native poging HTTP503; upstreamoorzaak en SDKusage onbekend. Oorspronkelijke cumulatieve guard blokkeert nieuwe Eva2-toelating.",
               "assessmentBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_with_authorized_independent_processing",
@@ -19932,7 +19989,7 @@
                 "productChange": false,
                 "reviewEvidence": "eva2/evidence/product/p2-xd01-runtime-source-20261005.json"
               },
-              "latestPreparationIssue": "CM02 oorspronkelijke readbackvoorwaarden geslaagd. CM03 native antwoordprovenance/accounting/stop bevestigd, inhoudelijke voorwaarden UNKNOWN. Nul van twee vereiste echte CM02-beoordelingen ontvangen.",
+              "latestPreparationIssue": "CM04 terminale UNKNOWN-rapportage onafhankelijk GO; exacte upstreamoorzaak niet vastgelegd, generieke HTTP503 en incompleet SDKgebruik behouden.",
               "independentFinding": {
                 "case": "EV003-XD-01",
                 "eva2Objective": false,
@@ -19946,9 +20003,9 @@
                 "originalCaseRepeated": false,
                 "productChange": false
               },
-              "latestPreparationEvidence": "eva2/evidence/product/p2-original-next-cm03-admission-20261006.json",
+              "latestPreparationEvidence": "eva2/evidence/product/p2-original-next-cm04-admission-20261006.json",
               "ownerAuthorizationEvidence": "eva2/evidence/product/p2-owner-final-authorization-20261006.json",
-              "currentEvaluationEvidence": "eva2/evidence/product/p2-original-next-cm03-result-20261006.json",
+              "currentEvaluationEvidence": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
               "nativeAdmissionBlocker": {
                 "kind": "comparison_admission_and_original_coverage",
                 "reason": "Full original equal native admission, remaining coverage and two human ratings not established. Source review finished; private metadata omission/root404 is not a demonstrated product bug.",
@@ -19970,29 +20027,55 @@
               "humanReviewPreparationEvidence": "eva2/evidence/product/p2-cm02-human-review-preparation-20261006.json",
               "humanReviewPreparationReview": "eva2/reviews/p2-cm02-human-review-preparation-review-20261006.json",
               "currentBoundPreparation": {
-                "caseId": "EV003-CM-03",
+                "runHandle": "ev003-successor-native-cm04-20261006-e87d5a92",
+                "sessionId": 54196,
+                "caseId": "EV003-CM-04",
                 "epoch": 1,
-                "runHandle": "ev003-successor-native-cm03-20261006-17ce05e0",
-                "admissionPath": "eva2/evidence/product/p2-original-next-cm03-admission-20261006.json",
-                "admissionSha256": "27fe6709c2000c92847902b106a5810a27f55e5fc2bd08b3fd6c9ecf59bbdde7",
-                "newProviderCalls": 14,
-                "resourceStartApproved": true,
-                "inputReleased": true,
-                "execSession": 74218,
-                "reviewPath": "eva2/reviews/p2-cm03-aggregate-binding-review-20261006.json",
-                "reviewSha256": "b858f4e7cc7cbcac5fac9f123fdb5b85ec4d7b821f7ee29da0d8eec1c4635d09",
-                "nativeProcessState": "terminal_exit0_services_stopped",
-                "resumeApproved": true,
-                "runtimeReadyEvidenceSha256": "07a7be8bbe9cf67f1280262b5c229a6fd4a11a2375bec4a046f69f669855c8b6",
-                "releaseSha256": "3ef1de9a995547188e2aa8f3f2abdb782f229871e5de9c434e924404695bc464",
-                "participantAttempts": {
-                  "eva1": 6,
-                  "eva2": 8
+                "state": "closed_execution_unknown",
+                "source": "original successor dataset and immutable admitted native resources",
+                "admissionPath": "eva2/evidence/product/p2-original-next-cm04-admission-20261006.json",
+                "admissionSha256": "ac8428b1823f55f8d0f0eacfebdef9306ce26047131283e000d083a669e7b26d",
+                "releaseSha256": "051979ae263997ae33befc711f76ccea63e96666a5dcd62333b0f9fb44ebeff5",
+                "resultPath": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
+                "resultSha256": "05ce75636961143997b1bdc5566c9af7bf39c623b211bc5bcd7f8b97de2e82b8",
+                "finalReviewPath": "eva2/reviews/p2-cm04-final-technical-review-20261006.json",
+                "finalReviewSha256": "8fa1af2e3c296f051732329afcac2d23937c0c092453609e7b79d75b240c3841",
+                "authoritativeAggregatePath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+                "authoritativeAggregateSha256": "df393c77dc4ed0a92da335ed8d29189132460f59db6f6fd470f31b8a805c6aef"
+              },
+              "currentPreparationFinding": {
+                "caseId": "EV003-CM-04",
+                "epoch": 1,
+                "caseSha256": "a9d08889d8115e68ce68d2851d5ed73bd34f73e655620b096409babaeef292a5",
+                "originalSlotUnused": true,
+                "failingComponent": "existing control projector",
+                "exceptionClass": "ValueError",
+                "sourceSha256": "414736c6ad13bf84b439f1584eab5e4359bdfee1355b30b9909cd94bb50553a8",
+                "registeredProviderAttempts": 0,
+                "resourcesStarted": 0,
+                "participantInputs": 0,
+                "aggregateDbRetainedSha256": "bc7840a8866100c33a42e3fde7664112a2d461706bc53f7c90d375ade5ae612e",
+                "classification": "evaluator_control_gap_before_input_not_product_loss",
+                "baselineBinding": "immutable configured webSender; native worker exposes chat and ACK only",
+                "baselineDisposition": "unavailable_unknown_not_product_loss",
+                "eva2NativeCapability": "Original uniquely resolved canonical fixture principals and private audience supported by existing ConversationTurn/eva2_request_for_turn; generic evaluator mapping/readback correction proposed.",
+                "comparisonPairReady": false,
+                "proposedControlMapping": {
+                  "kind": "resolve_original_actor_and_audience_per_event",
+                  "principalProvisioning": "existing ExactNoor4DRow and PostgresNoor4DRepository.upsert_exact in fresh isolated sample DB",
+                  "nativeTurnAndReadback": "both use the exact originally resolved principal/conversation",
+                  "productCodeChanged": false,
+                  "originalInputsOrCriteriaChanged": false,
+                  "resourceStartOrInputApproved": false
                 },
-                "resultPath": "eva2/evidence/product/p2-original-next-cm03-result-20261006.json",
-                "resultSha256": "dd0b14b39758a39b7653994accaac62afb786d606673eadb6a1afac2a27f742c",
-                "finalReviewPath": "eva2/reviews/p2-cm03-final-technical-review-20261006.json",
-                "finalReviewSha256": "e3b299460d46546c060c443ce3a536ee5d4882e3792cf5c0e2d159cff2b9ac27"
+                "preparedAdmissionSha256": "0af73021d8aed15e68914318c913f14ba336425042859b0db54bcdf1ab57f298",
+                "offlineContractStatus": "PASS",
+                "offlineContractSha256": "31e344be511d0049ecbe98c18f1c9b9f1210340085ec7f198a21f842e54b4f7e",
+                "prestartCorrection": "DB->AUTHORITY; exact delta onafhankelijk GO vóór start, geen modelcall.",
+                "resourceStartOrInputApproved": "resource_preparation_only; input_not_released",
+                "finalAuthoritySha256": "df393c77dc4ed0a92da335ed8d29189132460f59db6f6fd470f31b8a805c6aef",
+                "failureCause": "HTTP503 at first native ingress; upstreamcause unavailable after generic API RuntimeError boundary.",
+                "newSampleUsage": "UNKNOWN"
               }
             },
             {
