@@ -1016,8 +1016,25 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-06T22:04:30.799923+00:00",
+        "checkedAt": "2026-10-06T23:17:57.944196+00:00",
         "deliveries": [
+          {
+            "title": "P2.1 · OpenClaw-aanmelding bevestigd; proefbeperking vastgesteld",
+            "state": "investigated",
+            "date": "2026-10-07",
+            "result": "Gewone native thread en uitgaande Sol/none-aanvraag waargenomen. Tien bestaande transport-/IPC-controles slagen. Onafhankelijke review bevestigt de beperkte bevinding; geen echte modelcall.",
+            "remaining": "De aanvraag bevat tegenstrijdige proef- en systeemdatums. Oorspronkelijke proef niet toegelaten; geen antwoordkwaliteit, volledige toolmeting of native eindafsluiting bewezen. Dit is geen extra afgeronde Eva-functie.",
+            "source": "eva2/evidence/product/p2-openclaw-native-composition-20261007.json",
+            "review": "eva2/reviews/p2-openclaw-native-binding-final-review-20261007.json"
+          },
+          {
+            "title": "P2.1 · Bewaarde Hermes-uitkomst onafhankelijk beoordeeld",
+            "state": "tested",
+            "date": "2026-10-07",
+            "result": "Bijgewerkte informatie bleef bewaard tussen twee sessies en kwam terug in het latere antwoord. Twee feitelijke onderdelen zijn bevestigd, zonder nieuwe modelcalls.",
+            "remaining": "Volledige modelcontext en oorspronkelijke toolmeting ontbreken. Eén inhoudelijk onderdeel en twee menselijke beoordelingen zijn onbekend; dit bewijst geen kwaliteitswinnaar of extra afgeronde productfunctie.",
+            "source": "eva2/evidence/product/p2-hermes-cm01-independent-assessment-20261007.json"
+          },
           {
             "title": "P2.1 · OpenClaw en Hermes aangemeld; eerste Hermes-gespreksproef uitgevoerd",
             "state": "tested",
@@ -4025,28 +4042,28 @@
           }
         ],
         "now": {
-          "title": "P2.1 · OpenClaw en Hermes: uitvoerroute",
+          "title": "P2.1 · OpenClaw-meetbeperking vastgelegd",
           "state": "in_progress",
           "owner": "Codex",
-          "detail": "OpenClaw en Hermes zijn aangemeld. Hermes heeft de eerste proef met drie gespreksbeurten en geheugen over twee sessies uitgevoerd. Antwoordkwaliteit blijft afzonderlijk te beoordelen. OpenClaw is nog niet klaar voor dezelfde vergelijkingsmeting. Er loopt momenteel geen modelproef.",
-          "remaining": "P2.1 nog niet volledig afgerond: OpenClaw meetbinding, oorspronkelijke overige vergelijkingsuitkomsten en echte kwaliteitsbeoordelingen blijven zichtbaar. Vervolg nog niet gestart.",
-          "source": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
+          "detail": "OpenClaw en Hermes zijn aangemeld. Hermes heeft de oorspronkelijke gespreksproef uitgevoerd en de correctie later gebruikt. OpenClaw bouwt een native Sol/none-aanvraag, maar daarin spreken proefdatum en systeemdatum elkaar tegen. Die beperking is onafhankelijk bevestigd; geen oorspronkelijke OpenClaw-proef gestart. Broncheckpoint en dashboard worden gepubliceerd.",
+          "remaining": "Bevinding en broncheckpoint publiceren. P2.1 blijft open: oorspronkelijke dekking en echte menselijke antwoordbeoordelingen ontbreken.",
+          "source": "eva2/evidence/product/p2-openclaw-native-composition-20261007.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "reviewedAt": "2026-10-06T22:04:30.799923+00:00"
+          "reviewedAt": "2026-10-06T23:17:57.944196+00:00"
         },
         "next": {
-          "title": "Resterende oorspronkelijke vergelijkingsbinding",
+          "title": "Bestaande kwaliteitsbeoordelingen en vergelijkingsdekking",
           "state": "planned",
           "owner": "Codex",
-          "detail": "Binnen bestaande P2.1 uitsluitend ontbrekende originele OpenClaw native-klok/geheugenreadbackbinding gericht aansluiten indien bestaande middelen dat toelaten; geen nieuwe laag/matrix of herhaling van gesloten cases. Echte menselijke kwaliteitbeoordelingen blijven apart.",
-          "remaining": "Niet actief; geen brede matrix gestart. Volledige gezinsacceptatie en eerdere spraakparkering blijven afzonderlijk.",
-          "source": "eva2/evidence/product/p2-openclaw-native-access-20261006.json"
+          "detail": "De twee oorspronkelijke anonieme CM02-pakketten staan klaar. De OpenClaw-proef is onder de bestaande klokvoorwaarden niet toegelaten; geen automatische nieuwe matrix, klokombouw of herhaling van gesloten cases.",
+          "remaining": "Menselijke beoordelingen en nog ontbrekende oorspronkelijke dekking blijven zichtbaar. Eerdere acceptaties en geparkeerde spraak blijven staan.",
+          "source": "eva2/evidence/product/p2-cm02-human-review-preparation-20261006.json"
         },
         "ownerAction": {
           "title": "Aanmeldingen voltooid · antwoordbeoordeling apart",
           "state": "requested",
           "taskId": "P2.1",
-          "detail": "OpenClaw en Hermes zijn aangemeld; geen verdere loginhandeling nodig. Twee echte blinde antwoordbeoordelingen staan afzonderlijk open en blokkeren deze technische koppeling niet.",
+          "detail": "OpenClaw en Hermes zijn aangemeld; geen verdere loginhandeling nodig. De twee bestaande echte blinde antwoordbeoordelingen blijven afzonderlijk open. De OpenClaw-klokbeperking vraagt geen handeling van jou.",
           "steps": [
             "Laat twee verschillende mensen ieder hun eigen anonieme beoordelingspakket bekijken; bespreek antwoorden niet vooraf.",
             "Beoordelaar1: open C:/Users/jaapf/.codex/attachments/eec51102-8375-4ece-882e-47ed8aaf90d3/p2-cm02-rater-1/review.html.",
@@ -4288,7 +4305,18 @@
             "sdkUsageComplete": true,
             "toolAccountingComplete": false,
             "scope": "Original native CM01; lifecycle/SDK proved, complete tools and semantic quality UNKNOWN. No general performance winner.",
-            "source": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json"
+            "source": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
+            "independentRetainedAssessment": {
+              "source": "eva2/evidence/product/p2-hermes-cm01-independent-assessment-20261007.json",
+              "sha256": "23b6e87b7515a66931d6583e2dcc11f496400f61362bf620bf1ec9dd3e47466d",
+              "factualSupported": 2,
+              "factualUnknown": 1,
+              "updatedMemorySurvivedSessionBoundary": true,
+              "officialTaskSuccess": null,
+              "requiredReadbacksComplete": false,
+              "recordedHumanRatings": 0,
+              "newProviderCalls": 0
+            }
           }
         ],
         "runtimeTotals": {
@@ -4398,22 +4426,24 @@
           {
             "name": "OpenClaw",
             "state": "incomplete",
-            "reason": "Eigen login/catalogus en expliciete Sol/none-config bevestigd. Bestaande HTTP/WS-proxy accountingbron onafhankelijk GO/10publieke fixturechecks. Native Codex-kindklok en originele geheugen/readback/cleanup niet gebonden; geen CM01-invoer/modelcall. Dit bewijst geen onwerkende gewone OpenClaw.",
+            "reason": "Eigen login en native uitvoerroute tot de exacte Sol/none-aanvraag bevestigd. In dezelfde modelaanvraag staan de ingestelde proefdatum en de echte systeemdatum. Daardoor is de oorspronkelijke klokgebonden proef niet toegelaten. Geen echt modelantwoord of kwaliteitsuitslag; tool-/sessie-/eindafsluitmeting onvolledig.",
             "accessState": "authenticated",
-            "executionState": "source_transport_reviewed_native_clock_readback_unbound",
-            "checkedAt": "2026-10-06T22:00:35.691227+00:00",
-            "source": "eva2/evidence/product/p2-openclaw-native-access-20261006.json",
-            "label": "Aangemeld · vergelijking nog niet toegelaten"
+            "executionState": "native_exact_model_body_observed_original_calendar_no_go",
+            "checkedAt": "2026-10-06T23:13:45.108885+00:00",
+            "source": "eva2/evidence/product/p2-openclaw-native-composition-20261007.json",
+            "label": "Aangemeld · proefdatum conflicteert",
+            "review": "eva2/reviews/p2-openclaw-native-binding-final-review-20261007.json"
           },
           {
             "name": "Hermes",
             "state": "incomplete",
-            "reason": "Eigen AIAgent-proef met3beurten/2sessies voltooid;7HTTP200/17498in+275out in25,6s,3duurzame readbacks en echte afsluiting onafhankelijk bevestigd. Oorspronkelijke tooltelling/16-cap en inhoudelijke kwaliteitUNKNOWN; native2memorycalls zichtbaar. Geen kwaliteitswinnaar.",
+            "reason": "Drie gespreksbeurten uitgevoerd over twee sessies. Bijgewerkte informatie is bewaard en in het latere antwoord gebruikt; twee feitelijke onderdelen zijn bevestigd. Volledige modelcontext en toolmeting ontbreken. De officiële uitslag en twee menselijke kwaliteitsbeoordelingen blijven onbekend.",
             "accessState": "authenticated",
             "executionState": "original_cm01_closed_sdk_known_tool_coverage_unknown",
             "checkedAt": "2026-10-06T22:00:35.691227+00:00",
             "source": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
-            "label": "Gespreksroute bevestigd · meetbeperking"
+            "label": "Gespreksroute bevestigd · meetbeperking",
+            "independentAssessmentSource": "eva2/evidence/product/p2-hermes-cm01-independent-assessment-20261007.json"
           },
           {
             "name": "Agent Zero",
@@ -6511,6 +6541,14 @@
           {
             "path": "eva2/evidence/product/p2-xd02-independent-state-20261005.json",
             "sha256": "1adc87b33ba3d8cdf701f0f7e583354cfbf5ea799084aabf56a7506159b703db"
+          },
+          {
+            "path": "eva2/evidence/product/p2-openclaw-native-composition-20261007.json",
+            "sha256": "443dc2739b86471c39a7dd25bb51e8c0ca16248c71425b2c893c15e1aa1e4b58"
+          },
+          {
+            "path": "eva2/reviews/p2-openclaw-native-binding-final-review-20261007.json",
+            "sha256": "41612c1f5feee987cb5bf0a6a9945b30733384fe50bb84a9c2a2ef6c750e4161"
           }
         ],
         "controlledProviderCallsForPublication": 0,
@@ -6622,9 +6660,9 @@
           ],
           "humanHelpNote": "Tijdens de proef geen ongeplande evaluatorinterventie of gebruikershulp. Benodigde hulp voor een inhoudelijk geslaagde opdracht blijft onbekend.",
           "remaining": "P2.1 blijft open: oorspronkelijke dekking en inhoudelijke beoordelingen ontbreken. CM04-usageUNKNOWN blokkeert nieuwe Eva2-toelating onder dezelfde guard. R1/gezinsacceptatie apart open; 34/44 onveranderd.",
-          "nextAction": "Leg de ontbrekende technische foutclass/code/status vast op de bestaande provider-/SDK-grens vóór de generieke API503. Behoud gesloten CM04 en onbekend SDKgebruik; geen replay of nieuwe Eva2-toelating voorbij de oorspronkelijke accountingguard. Twee echte CM02-beoordelingen blijven apart open.",
+          "nextAction": "Beoordeel de twee reeds beschikbare anonieme CM02-pakketten. De geïnstalleerde foutregistratie is gereed; gesloten CM04/UNKNOWN-accounting blijft behouden. OpenClaw-klokbinding NO_GO; geen replay, stil modelalternatief of nieuwe brede matrix.",
           "ownerActionRequired": true,
-          "resources": "CM02/CM03 en CM04 gesloten; alle betreffende native processen/tunnels gestopt. Geen vervolgcase, replay of herhaling actief.",
+          "resources": "Oorspronkelijke gesloten cases blijven gesloten. Alle publieke OpenClaw-testprocessen en netwerknamespaces zijn beëindigd; twee echte unregisterqueues geflusht. Volledige native turnafsluiting is niet bewezen.",
           "evidenceBindings": [
             {
               "path": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json",
@@ -19607,9 +19645,9 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-06T22:04:30.799923+00:00",
+              "checkedAt": "2026-10-06T23:17:57.944196+00:00",
               "assignment": {
-                "baseCommit": "ff5e3e47e02e1b47831d2b6014055657864ee402",
+                "baseCommit": "45896f3f9500a4505330e37e4cb26881eabe94e6",
                 "owner": "/root",
                 "activeWorkers": [],
                 "files": [
@@ -19621,13 +19659,13 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte voorbereiding0provider-/samplecalls. Eerst originele ongebruiktheid en werkelijk bruikbare oorspronkelijke toelating vaststellen; uitvoeringsraming pas uit het bestaande plan en de concrete binding. Geen nieuwe quota, gratis teller, set of brede matrix; credits onbekend.",
-                "currentAction": "Eigen aanmeldingen hersteld; oorspronkelijke Hermes CM01 gesloten en beperkt onafhankelijk gepubliceerd (3beurten/7HTTP200/17498in+275out/25,6s). Algemene inline-toolteller apart bronmatig gecorrigeerd en onafhankelijk GO; oorspronkelijke tool-/kwaliteitsUNKNOWN blijft. OpenClaw transportbronGO, native klok/readbackmeting nog niet toegelaten. Geen actieve uitvoerders of modelproef.",
+                "currentAction": "Afgesloten OpenClaw-voorbereiding en onafhankelijke Hermes-beoordeling gebundeld publiceren; geen native proef actief.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "eva2/evidence/product/p2-http-failure-diagnostics-20261006.json",
                   "meaning": "Gerichte oorspronkelijke diagnostische afhankelijkheid uitgevoerd, onafhankelijk GO, exact geïnstalleerd en gezonde kern bevestigd. Geen nieuwe productfunctie; login vereist."
                 },
-                "stage": "native_access_followup_closed_published",
+                "stage": "openclaw_original_calendar_binding_no_go",
                 "currentNativePreparation": {
                   "runHandle": "ev003-successor-native-cm04-20261006-e87d5a92",
                   "sessionId": 54196,
@@ -20048,8 +20086,8 @@
                 },
                 "currentGoalTurn": {
                   "classification": "progress",
-                  "evidence": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
-                  "meaning": "Eigen logins afgerond, oorspronkelijke native Hermes route eenmaal uitgevoerd en onafhankelijk beperkt gepubliceerd; concrete algemene benchmark-teller gecorrigeerd zonder replay. Geen nieuwe Eva-productfunctie."
+                  "previousTurnEvidence": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
+                  "meaning": "Vorige beurt heeft de gewone Hermes-route uitgevoerd en gepubliceerd. Vervolg behandelt alleen ontbrekende OpenClaw-meetbinding binnen P2.1."
                 },
                 "agentzeroReadiness": {
                   "stage": "verified",
@@ -20171,7 +20209,7 @@
                   },
                   "nativeInferenceDuringLogin": 0
                 },
-                "currentStageBaseCommit": "5967b72ba324e5251c3460d9e8e6e0eb7a1018a8",
+                "currentStageBaseCommit": "45896f3f",
                 "nativeRouteMetadata": [
                   {
                     "participant": "openclaw",
@@ -20231,6 +20269,89 @@
                   "providerCalls": 0,
                   "nativeCaseRepeated": false,
                   "newSourceNativeSampleProven": false
+                },
+                "openclawBindingFollowup": {
+                  "startedAt": "2026-10-06T22:08:22.325432+00:00",
+                  "status": "in_progress",
+                  "sourceEvidence": "eva2/evidence/product/p2-openclaw-native-access-20261006.json",
+                  "existingCapabilities": "Eigen aanmelding, native route en parenttransport-adapter bestaan.",
+                  "specificGap": "Gewone native agentregistratie bevestigd via echte bestaande installatielocatie; volledige oorspronkelijke kalender/context/tool/afsluitbinding nog controleren.",
+                  "filesOwned": [
+                    "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+                    "eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs"
+                  ],
+                  "expectedResult": "Met bestaande middelen een concrete oorspronkelijke meettoelating of precies onderbouwde onbeschikbaarheid; geen nieuw platform.",
+                  "verification": "Gerichte broncontrole; bij gewijzigde bron één passende nul-inferentiecontrole; onafhankelijke review vóór inputvrijgave.",
+                  "estimatedNewRuntimeModelCalls": 0,
+                  "developmentCredits": "UNKNOWN",
+                  "currentFinding": "Native owner-root-preservatie voorkomt dat het tijdelijke profiel de echte pakketregistratie verliest. Gewone metadata-inspectie: origin global, trusted-official, codex-harnas aanwezig, geen diagnostics. Geen nieuwe installatie of trustwijziging.",
+                  "timeProtocolReviewer": "/root/aide_final_evaluation",
+                  "lastPublicCheck": {
+                    "nativePluginRegistration": "confirmed",
+                    "ordinaryNativeThreadStarted": true,
+                    "exactSerializedModel": "gpt-6-sol",
+                    "exactSerializedEffort": "none",
+                    "bodySha256": "65be9f8ebb58ccc0f293508ee31542812844d6248d39210f0330925dd21a8fe5",
+                    "controlledCalendarDate": "2020-01-02",
+                    "conflictingNativeCalendarDate": "2026-10-07",
+                    "originalSampleAdmission": "NO_GO",
+                    "completedNativeTurns": 0,
+                    "realProviderCalls": 0,
+                    "physicalMockCalls": 0,
+                    "developmentPermits": 1,
+                    "developmentUsage": "UNKNOWN",
+                    "originalInputOpened": false,
+                    "originalAuthorityModified": false,
+                    "nativeClosedProven": false,
+                    "nativeUnregisterQueuesFlushed": 2,
+                    "kernelNamespaceProcesses": 0,
+                    "operatorByteEqualityScope": "enumerated files only; native registry not independently proven",
+                    "noFurtherCompositionOrClockRebuild": true
+                  },
+                  "nativeOwnerRootsMetadata": {
+                    "checkedAt": "2026-10-06T22:43:38.606146+00:00",
+                    "sha256": "82fefc8227701dc8b8c5c47a523e54b7707b78ad5fd6e06c5e82add73a621890",
+                    "origin": "global",
+                    "trust": "trusted-official",
+                    "agentHarnessIds": [
+                      "codex"
+                    ],
+                    "diagnostics": [],
+                    "version": "2026.9.6",
+                    "independentReviewer": "/root/aide_final_evaluation",
+                    "originalOperatorBytesChanged": false,
+                    "providerCalls": 0,
+                    "originalInputOpened": false
+                  },
+                  "finalEvidence": "eva2/evidence/product/p2-openclaw-native-composition-20261007.json",
+                  "focusedRegression": {
+                    "passed": 10,
+                    "failed": 0,
+                    "compositionSkipped": 1,
+                    "sourceSha256": "d894b39f516c21f875e691d0ceee39ef2e37980380b9282b6a62a4cbef2377ca",
+                    "testSha256": "2608b6d69dfe8216d8c22ef6a37dd786540e3ab21354e213990ae80062633116",
+                    "realProviderCalls": 0
+                  }
+                },
+                "hermesRetainedAssessment": {
+                  "status": "complete_original_official_quality_unknown",
+                  "source": "eva2/evidence/product/p2-hermes-cm01-independent-assessment-20261007.json",
+                  "sha256": "23b6e87b7515a66931d6583e2dcc11f496400f61362bf620bf1ec9dd3e47466d",
+                  "factualSupported": 2,
+                  "factualUnknown": 1,
+                  "requiredReadbacks": [
+                    null,
+                    null
+                  ],
+                  "officialTaskSuccess": null,
+                  "newProviderCalls": 0,
+                  "reviewer": "/root/aide_final_evaluation"
+                },
+                "independentReviewNext": {
+                  "agent": "/root/aide_final_evaluation",
+                  "status": "completed_source_publication_go_original_sample_no_go",
+                  "scope": "Concrete OpenClaw whole-native time/session/memory/tool/settlement binding before original input.",
+                  "review": "eva2/reviews/p2-openclaw-native-binding-final-review-20261007.json"
                 }
               },
               "remaining": "CM02/CM03 technisch uitgevoerd; antwoordkwaliteit UNKNOWN. CM04 na één poging onbeslist en gesloten; geen algemene voorsprong. Oorspronkelijke dekking, twee CM02-beoordelingen en oorzaak/accounting blijven open.",

@@ -1,12 +1,14 @@
-/** Public native transport fixtures only: no account, Codex process or model request. */
+/** Public fixtures. Ordinary native composition uses own auth with mocked upstream and no real inference. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import { registerHooks } from 'node:module';
 import { spawn } from 'node:child_process';
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdtempSync, rmSync, readFileSync, writeFileSync, chmodSync, renameSync } from 'node:fs';
+import { randomUUID } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import { pathToFileURL } from 'node:url';
+import { dirname } from 'node:path';
 import { OpenClawProcessLedger, OpenClawAccounting, NATIVE_PINS, installOpenClawAccounting } from '../../benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs';
 
 class FakeLedger {
@@ -199,4 +201,96 @@ await test('actual installed proxy and native client load exact overlay; public 
       }finally{local.terminate();}
     }
   } finally {await proxy?.close();hook.close();fake.deregister();delete globalThis.__openclawPublicFakeFetch;delete globalThis.__openclawPublicFakeWebSocket;}
+});
+
+// One bundled actual ordinary CLI fixture. Its profile is supplied by the private
+// preparation owner; all input/tool responses below are public and upstream is fake.
+await test('public ordinary actor composition binds native calendar, model bodies, tools and one-shot readbacks',
+  {skip:process.env.OPENCLAW_PUBLIC_COMPOSITION !== '1'}, async()=>{
+  const plugin=process.env.OPENCLAW_PINNED_PLUGIN;const host=process.env.OPENCLAW_PINNED_HOST;
+  const workspace=process.env.OPENCLAW_PUBLIC_WORKSPACE;const clockFile=process.env.OPENCLAW_PUBLIC_CLOCK;
+  const contexts=process.env.OPENCLAW_PUBLIC_CONTEXTS;const operatorState=process.env.OPENCLAW_OPERATOR_STATE_DIR;
+  assert.ok(plugin && host && workspace && clockFile && contexts && operatorState && process.env.OPENCLAW_CONFIG_PATH);
+  const {a:withPluginInstallRoots,i:resolvePluginInstallRoots}=await import(pathToFileURL(host+'/dist/install-root-context-DEOzYnOP.mjs'));
+  assert.equal(process.env.HOME,dirname(operatorState),'native HOME must belong to the existing UID1000 operator');
+  return await withPluginInstallRoots(resolvePluginInstallRoots({...process.env,OPENCLAW_STATE_DIR:operatorState}),async()=>{
+  const ledger=new FakeLedger();const deadline=Number(process.hrtime.bigint())/1e9+120;
+  const o=new OpenClawAccounting(ledger,deadline,{clockFile,privateModelContextDir:contexts,observeTools:true});
+  const publishClock=(generation,offsetMilliseconds)=>{
+    const path=clockFile+'.tmp';writeFileSync(path,JSON.stringify({contract:'EvaScenarioCalendar/v1',generation,offsetMilliseconds}),{mode:0o600});renameSync(path,clockFile);
+  };
+  const target=Date.parse('2020-01-02T12:00:00.000Z');const offset=target-Date.now();publishClock(0,offset);
+  writeFileSync(workspace+'/MEMORY.md','Public persistent memory marker: blue notebook.\n',{mode:0o600});
+  writeFileSync(workspace+'/USER.md','Public fixture owner.\n',{mode:0o600});
+  const completed=[];let physical=0;let toolRequested=false;let counter=0;
+  const fakeTerminal=body=>{
+    const responseId='public-response-'+(++counter);const tool=body.tools?.find(t=>t.name==='memory_get');
+    const output=!toolRequested && tool ? (toolRequested=true,Array.from({length:16},(_,i)=>({type:'function_call',id:'public-function-'+counter+'-'+i,call_id:'public-call-'+counter+'-'+i,name:tool.name,arguments:JSON.stringify({path:'MEMORY.md'})})))
+      : [{type:'message',id:'public-message-'+counter,role:'assistant',status:'completed',content:[{type:'output_text',text:'Public fixture reply.',annotations:[]}]}];
+    const response={id:responseId,object:'response',created_at:1,status:'completed',model:body.model,output,usage};
+    return [{type:'response.created',response:{...response,status:'in_progress',output:[]}},
+      ...output.flatMap((item,i)=>[{type:'response.output_item.added',output_index:i,item},...(item.type==='message'?
+        [{type:'response.content_part.added',item_id:item.id,output_index:i,content_index:0,part:item.content[0]},
+         {type:'response.output_text.delta',item_id:item.id,output_index:i,content_index:0,delta:item.content[0].text},
+         {type:'response.output_text.done',item_id:item.id,output_index:i,content_index:0,text:item.content[0].text},
+         {type:'response.content_part.done',item_id:item.id,output_index:i,content_index:0,part:item.content[0]}]:[]),
+        {type:'response.output_item.done',output_index:i,item}]),{type:'response.completed',response}];
+  };
+  globalThis.__openclawPublicFakeFetch=async params=>{
+    assert.equal(ledger.rows.at(-1).status,'pending');physical++;
+    const bytes=Buffer.from(await new Response(params.init.body).arrayBuffer());const body=JSON.parse(bytes);
+    const capture=o.calls.at(-1).native_model_context;assert.deepEqual(readFileSync(capture.path),bytes);
+    completed.push({body,transport:'http'});
+    return {response:new Response(fakeTerminal(body).map(value=>'data: '+JSON.stringify(value)+'\n\n').join(''),{headers:{'content-type':'text/event-stream'}}),release:async()=>{}};
+  };
+  class FakeRemote extends EventEmitter {
+    static OPEN=1;
+    constructor(target){super();assert.equal(target.protocol,'wss:');this.readyState=0;this.bufferedAmount=0;queueMicrotask(()=>{this.readyState=1;this.emit('open');});}
+    send(bytes,options,callback){assert.equal(ledger.rows.at(-1).status,'pending');physical++;
+      assert.deepEqual(readFileSync(o.calls.at(-1).native_model_context.path),bytes);
+      const body=JSON.parse(bytes);completed.push({body,transport:'websocket'});callback();
+      for(const value of fakeTerminal(body)) queueMicrotask(()=>this.emit('message',Buffer.from(JSON.stringify(value)),false));}
+    terminate(){if(this.readyState===3)return;this.readyState=3;this.emit('close');}
+  }
+  globalThis.__openclawPublicFakeWebSocket=FakeRemote;
+  const wsSDK=pathToFileURL(host+'/dist/plugin-sdk/websocket-runtime.js').href;
+  const fake=registerHooks({resolve(specifier,context,next){
+    if(context.parentURL?.endsWith('/inference-proxy-b-aJMSxm.mjs')){
+      if(specifier==='openclaw/plugin-sdk/ssrf-runtime') return {url:'data:text/javascript,'+encodeURIComponent('export const fetchWithSsrFGuard=p=>globalThis.__openclawPublicFakeFetch(p);export const isBlockedHostnameOrIp=()=>false;export const resolvePinnedHostnameWithPolicy=()=>({lookup:()=>{throw new Error("External DNS forbidden")}});'),shortCircuit:true};
+      if(specifier==='openclaw/plugin-sdk/websocket-runtime') return {url:'data:text/javascript,'+encodeURIComponent(`export {WebSocketServer,rejectWebSocketUpgrade} from ${JSON.stringify(wsSDK)};export const WebSocket=globalThis.__openclawPublicFakeWebSocket;`),shortCircuit:true};
+      if(specifier==='openclaw/plugin-sdk/fetch-runtime') return {url:'data:text/javascript,'+encodeURIComponent('export const createNodeProxyAgent=()=>null;'),shortCircuit:true};
+    }return next(specifier,context);
+  }});
+  const hook=installOpenClawAccounting(o,plugin,NATIVE_PINS,{hostRoot:host});
+  const logs=[];const runtime={log:line=>logs.push(line),error:line=>logs.push(line),exit:code=>{if(code)throw new Error('native fixture exit');}};
+  const sessions=[randomUUID(),randomUUID()];let completedNativeTurns=0;let close=null;let capRefused=false;
+  try {
+    const {agentCliCommand}=await import(pathToFileURL(host+'/dist/agent-via-gateway-Canl_hfN.mjs'));
+    for(let ordinal=0;ordinal<3;ordinal++){
+      if(ordinal===2)publishClock(1,offset+86400000);
+      const sessionId=sessions[ordinal===2?1:0];
+      const result=await agentCliCommand({local:true,json:true,agent:'main',message:'Public fixture conversation.',sessionId,
+        sessionKey:'agent:main:public-fixture:'+sessionId,runId:'public-fixture-turn-'+ordinal,timeout:120,deliver:false},runtime);
+      assert.ok(result);await o.nativeSettlement();completedNativeTurns++;
+    }
+    assert.deepEqual(o.scenarioReadbacks.map(row=>row.generation),[0,0,1]);
+    assert.ok(physical>=3);assert.equal(ledger.rows.length,physical);
+    assert.ok(ledger.rows.every(row=>row.status==='completed'));assert.ok(o.calls.every(row=>row.native_model_context));
+    assert.ok(toolRequested,'native memory_get must be offered and executed by the ordinary loop');
+    assert.equal(o.tools.size,16);assert.equal([...o.tools.values()].filter(row=>row.dispatched).length,16);assert.equal(o.toolCoverage,true);
+    for(const [index,{body}] of completed.entries()){
+      const text=JSON.stringify(body);const applicationDates=[...text.matchAll(/Current date(?: and time)?: (\d{4}-\d{2}-\d{2})/g)].map(m=>m[1]);
+      assert.ok(applicationDates.length,'serialized ordinary temporal context missing');
+      const nativeDates=[...text.matchAll(/<current_date>(\d{4}-\d{2}-\d{2})<\/current_date>/g)].map(m=>m[1]);
+      assert.ok(nativeDates.every(date=>applicationDates.includes(date)),'second contradictory native model-visible calendar');
+    }
+    // The same installed pre-execution observer must reject a 17th identity before a body callback.
+    let deniedBodyCalls=0;assert.throws(()=>{o.nativeToolBefore({toolUseId:'public-cap-denied-17',toolName:'memory_get',rawPayload:{session_id:sessions[1]}});deniedBodyCalls++;},/original tool cap/);
+    assert.equal(deniedBodyCalls,0);assert.equal(o.tools.size,16);capRefused=true;
+    close=await o.closeNative(plugin);assert.equal(close.native_closed,true);assert.equal(close.pending_sdk,0);assert.equal(close.pending_tools,0);
+  } finally {
+    close=await o.closeNative(plugin);hook.close();fake.deregister();delete globalThis.__openclawPublicFakeFetch;delete globalThis.__openclawPublicFakeWebSocket;
+    if(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT)writeFileSync(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT,JSON.stringify({schema:'OpenClawPublicOrdinaryComposition/v1',completedNativeTurns,physicalFakeCalls:physical,sdkRows:ledger.rows,scenarioReadbacks:o.scenarioReadbacks,modelBodyCaptures:o.calls.map(row=>row.native_model_context).filter(Boolean),nativeToolRows:o.tools.size,nativeDispatchedTools:[...o.tools.values()].filter(row=>row.dispatched).length,toolCoverage:o.toolCoverage,seventeenthSameObserverRefusedBeforeBody:capRefused,negativeCapScope:'same native pre-execution observer after the three ordinary completed turns; no extra provider request',close:{native_closed:close.native_closed,pending_sdk:close.pending_sdk,pending_tools:close.pending_tools,tool_coverage:close.tool_coverage,native_dispatched_tools:close.native_dispatched_tools,cancel_errors:close.cancel_errors,native_unregister_queues:close.native_unregister_queues,native_module_bindings:close.native_module_bindings}},null,2)+'\n',{mode:0o600});
+  }
+  });
 });

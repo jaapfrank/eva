@@ -1,0 +1,211 @@
+{
+  "contract": "P2IndependentClosedSampleAssessment/v1",
+  "date": "2026-10-07",
+  "task": "P2.1",
+  "entry": "hermes:EV003-CM-01:epoch1",
+  "reviewer": "/root/aide_final_evaluation",
+  "status": "retained_objective_evidence_assessed_official_completion_unknown",
+  "scope": "Original retained Hermes CM01 only; independent evaluator review, no new participant or judge execution.",
+  "binding": {
+    "case_id": "EV003-CM-01",
+    "epoch": 1,
+    "case_sha256": "8a0dfda44e84e2e4d80fc8aad7856eebad5d96e2b67dc490bedbff06e69b81bd",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "executed_adapter_sha256": "77017aa6b009a512317aa0705b2ce9ce15a0f103d53814076d50d324ff520519",
+    "source_pin": "f97608f178d1ffeca59860195ab7da295f7c8e5f"
+  },
+  "objective_condition_observations": {
+    "condition_indices_zero_based": true,
+    "observed_factual_support": [
+      true,
+      null,
+      true
+    ],
+    "counts": {
+      "supported": 2,
+      "contradicted": 0,
+      "unknown": 1
+    },
+    "basis": "Previously retained native answers, independently saved replies and native durable-memory snapshots, compared by the independent curator with the unchanged sealed predicates.",
+    "unknown_reason": "The remaining qualitative semantic component is not established by these factual observations; no human rating was invented.",
+    "not_official_human_semantic_scores": true
+  },
+  "durable_observations": {
+    "exact_reply_readbacks_verified": 3,
+    "native_turns_completed": 3,
+    "native_sessions": 2,
+    "updated_information_persisted": true,
+    "updated_information_survived_session_boundary": true,
+    "observed_final_reply_reflects_updated_scope": true,
+    "earlier_memory_entry_also_retained": true,
+    "earlier_entry_coexistence_alone_is_not_a_failed_original_predicate": true,
+    "exact_final_model_context_retained": false
+  },
+  "original_required_readbacks": [
+    {
+      "index": 0,
+      "passed": null,
+      "reason": "Durable-memory and final-reply components are observed; the exact final model-context component was not retained."
+    },
+    {
+      "index": 1,
+      "passed": null,
+      "reason": "Full native tool-dispatch coverage and original tool-cap enforcement are unproved; known SDK usage does not complete the full trace."
+    }
+  ],
+  "fixed_scorer": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+    "sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "application": "Unchanged rules reviewed against retained evidence; no scorer or participant rerun.",
+    "rules": "Required readbacks and two actual independent blinded semantic decisions remain required; adapter observation gaps are not product failures.",
+    "value": "unknown",
+    "task_success": null,
+    "semantic_judgments_recorded": 0,
+    "semantic_judgments_required": 2,
+    "human_semantic_ratings": [
+      null,
+      null
+    ],
+    "human_preference_ratings": [
+      null,
+      null
+    ],
+    "quality_or_superiority_claim": null,
+    "new_execution_admission": false
+  },
+  "usage": {
+    "provider_attempts": 7,
+    "completed_sdk_attempts": 7,
+    "sdk_input_tokens": 17498,
+    "sdk_output_tokens": 275,
+    "sdk_total_tokens": 17773,
+    "sdk_usage_complete": true,
+    "complete_tool_count": null,
+    "observed_native_tool_lower_bound": 2,
+    "original_tool_cap": 16,
+    "full_tool_cap_enforcement": "UNKNOWN",
+    "credit_cost": null,
+    "whole_comparison_usage_complete": false
+  },
+  "timing": {
+    "native_elapsed_seconds": 25.636614086004556,
+    "per_turn_including_settlement_seconds": [
+      5.860581121996802,
+      3.234871151005791,
+      1.8954315330047393
+    ],
+    "per_turn_first_content_seconds": [
+      null,
+      null,
+      null
+    ],
+    "original_wall_cap_seconds": 480,
+    "wall_expired": false,
+    "comparable_speed_win": null
+  },
+  "closure": {
+    "tracked_http_settled": true,
+    "native_reviews_pending": 0,
+    "native_idle_queue_pending": 0,
+    "process_exited": true,
+    "tunnel_closed": true,
+    "container_and_network_absent": true,
+    "historical_relay_close_error": "ConnectionResetError",
+    "native_full_tool_observation_gap_preserved": true
+  },
+  "integrity": {
+    "original_result_and_all_12_referenced_technical_artifact_hashes_verified_unchanged": true,
+    "sealed_payload_file_hashes_verified_unchanged": true,
+    "original_data_criteria_and_sources_unchanged": true,
+    "original_authority_not_modified": true,
+    "model_calls": 0,
+    "runtime_calls": 0,
+    "tests": 0,
+    "replays": 0,
+    "ai_judge_calls": 0,
+    "protected_contents_disclosed_to_builder": false
+  },
+  "evidence": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
+      "sha256": "7ce13747387afb29447bcbd5315a0a8d499da65e7dbe3687084f038058a86581"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/receipt.json",
+      "sha256": "8e99c58ab663a49aaaea8c109362ebe9278c3925c2eca37d6aac6eaac98ed954"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/sample/native-cm-technical.json",
+      "sha256": "0e29b6552074161deb206c6c9bb33406ece01acc8d6f03ff095826a179e25fcb"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/sample/sdk-attempts-technical.json",
+      "sha256": "605669ca9a61027ddd577411feb8cf6e870ef770edc8e65844ae323918f76d79"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/sample/cm-turns.private.json",
+      "sha256": "841f3f347ce2e53cbf382c69bcd0912a3483a3a99228e8399cf861a9c53d7f29"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/sample/native-responses.private.json",
+      "sha256": "98f8e3b814bae9ad001f8b059233558c9e7c910b80da107cb28e7961eb2b4810"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/parent-accounting-report.private.json",
+      "sha256": "f6bdc8669c7732bf32ea9c8ba614588037b3190823148c31e6d0709f924ec7e1"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/parent-accounting-after-close.private.json",
+      "sha256": "f86a3b33ff33ee133b3598e0b0f610883cf49f884c5b99634b32293134f975fa"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/inspect-private/inspect-result-summary.json",
+      "sha256": "ca2be36a7aadedfbcac0d7017fa485ac43a22851872d878047607247f13012d6"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/sample-deadlines/hermes-absolute-deadline.json",
+      "sha256": "2671ca31cc8e85fdff96051d218626270c8995e3a7e122d66f4e992816cf4db6"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execute-once.private.json",
+      "sha256": "94a4415a6d0913ff11d707b3a6a40cba15ebf54a05cf2c0be3e66a2154e0d8b9"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/executed-p1_hermes_startup_probe-77017.private.py",
+      "sha256": "77017aa6b009a512317aa0705b2ce9ce15a0f103d53814076d50d324ff520519"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-route-preparation-20261006-v1/execution/final-authority-technical.private.json",
+      "sha256": "0681ebb951d94b240500da4a917ac87bd7cf9c0407248cc3c0242339e8cabe82"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+      "sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-owner-authorization-20261005.json",
+      "sha256": "7470627a9ef09ae8f625e420251a19b36bf950bb17689ee369359e3e2f4df8b5"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-owner-final-authorization-20261006.json",
+      "sha256": "07a2d89326fa9a79d60c1e15ea64be6f8ff34be2b6333c7ec02a267e63491baf"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/dataset-commitment.private.json",
+      "sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/holdout/samples.jsonl",
+      "sha256": "8aceffaab3fa8e8bffa8861b61ce6c85ba9afdcee86e442e337226a5c0827591"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/holdout/fixtures.jsonl",
+      "sha256": "b46a84be227cdf70e77d35988d7823f6d1f7912e1a767c2f642da73f9bc9ee7b"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/holdout/oracles.jsonl",
+      "sha256": "b5dc052eafd074f29acf7db0d57e142d5449d83c3060566d0e62be9176416c5e"
+    }
+  ]
+}

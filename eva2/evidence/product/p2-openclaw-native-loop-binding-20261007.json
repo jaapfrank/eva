@@ -1,0 +1,186 @@
+{
+  "schema": "P2OpenClawNativeLoopBinding/v1",
+  "recordedDate": "2026-10-07",
+  "task": "P2.1",
+  "integrationBase": "45896f3f9500a4505330e37e4cb26881eabe94e6",
+  "status": "NO_GO_ORIGINAL_SAMPLE",
+  "decision": {
+    "ordinaryInstalledAdapterAvailable": false,
+    "originalCm01Epoch1Admitted": false,
+    "reason": "The ordinary installed local CLI loads the codex plugin through a config-origin path, but native reserved ownership rejects its harness registration. No authentic supported global or bundled registration was established in the bounded installed metadata check.",
+    "failurePhase": "native plugin registration before Codex context and physical provider dispatch",
+    "quality": "UNKNOWN",
+    "productLossEstablished": false,
+    "requiredNextBoundary": "A genuine supported ordinary Codex plugin ownership/registration binding must exist before the same ordinary route can establish the remaining original sample controls. No ownership spoof, trust bypass, package installation or alternate harness was applied."
+  },
+  "candidate": {
+    "source": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "2fbd4d5301bc939a7ec1c2834dd0d91345db86e7ed459e7afa7e20df82f25288"
+    },
+    "focusedTest": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "sha256": "4c394d2cc3c5e70ee534b166d2084f108a0457614b0b2ddc60df07fc4c409642"
+    },
+    "disposition": "Preserved evaluator coupling candidate; syntax checked, complete ordinary native composition not established.",
+    "scope": [
+      "existing physical HTTP/WS parent accounting and raw failure/usage correlation",
+      "existing application temporal formatter through ev003_node_calendar",
+      "sealed unchanged native outgoing request body capture",
+      "existing native pre-tool/dynamic callback observation",
+      "existing ordinary thread/background/readback/close boundaries"
+    ],
+    "frameworkFilesModified": false,
+    "syntaxCheckExitCodes": {
+      "source": 0,
+      "focusedTest": 0
+    },
+    "oldFocusedFakeChecks": "Previous source-only checks were not repeated and do not establish the new full ordinary loop."
+  },
+  "ordinaryEntry": {
+    "wrapper": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-runtime/node_modules/openclaw/dist/agent-via-gateway-Canl_hfN.mjs",
+      "sha256": "554274dcc44aa607803b062d578549cd2433ea4f5f8edd18785e87f1c4692757"
+    },
+    "export": "agentCliCommand",
+    "options": {
+      "local": true,
+      "json": true,
+      "agent": "main",
+      "thinking": "off",
+      "deliver": false
+    },
+    "boundPerTurnArguments": [
+      "message",
+      "sessionId",
+      "sessionKey",
+      "runId",
+      "timeout"
+    ],
+    "nativeWrapperLines": "788-805",
+    "nativeOneShotCliRunParity": "Confirmed by independent source review; ordinary local CLI cleanup and state lock/signal handling are retained. This does not claim gateway/daemon post-return maintenance parity.",
+    "contactRole": "gpt-6-sol/none",
+    "helperRole": "gpt-6-astra/medium",
+    "requestedNativeEffort": "Explicit supported native turn parameters/config, not catalog alteration or silent effort substitution.",
+    "ownedAuthHome": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home",
+    "ownedAuthPriorSha256": "b099dbc54c0a77b6bf492afaf23cc27ef610b9f86f77cf4b12d7909f5201c611",
+    "authCopiedOrModified": false
+  },
+  "retainedPublicComposition": {
+    "inputClass": "public development fixture only; no original case input",
+    "entry": "ordinary agentCliCommand",
+    "output": {
+      "path": "/tmp/eva-p2-openclaw-public-native-20261007-m39_dz6c/composition-output.public.txt",
+      "sha256": "7ce3b2e77956305a750c7ad3e4c707f80d2cd422cc3aedeb57c1cfcd877e8801"
+    },
+    "exitCode": 1,
+    "selectedTestDurationMilliseconds": 14339.845,
+    "errorClass": "Error",
+    "safeError": "Agent harness runtime codex unavailable: owner-plugin-degraded, ownerPluginId=codex; plugin loaded but did not register the harness.",
+    "nativeCodexContextsStarted": 0,
+    "physicalProviderDispatches": 0,
+    "inferenceCalls": 0,
+    "capturedNativeModelBodies": 0,
+    "originalSampleReservations": 0,
+    "actualAuthorityOpened": false,
+    "unmodifiedCompositionRerun": false
+  },
+  "nativeOwnershipDiagnosis": {
+    "inspectOutput": {
+      "path": "/tmp/eva-p2-openclaw-public-native-20261007-m39_dz6c/plugin-inspect-output.public.txt",
+      "sha256": "41888b9baf9ce69081ec9aff747d9e1fdcbf97dab4f303f85eae45c166c5368f"
+    },
+    "inspectCommand": "ordinary installed plugins inspect codex --runtime --json under the same public fixture profile",
+    "inspectExitCode": 0,
+    "loadedPluginStatus": "loaded",
+    "trustReason": "record-missing",
+    "safeRegistrationDiagnostics": [
+      "native compaction requires the registry-owned codex harness",
+      "only bundled plugins can claim reserved command ownership: codex"
+    ],
+    "ownershipGate": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-runtime/node_modules/openclaw/dist/loader-runtime-load-CMBCNIWa.mjs",
+      "sha256": "78bbdb00acb979102867f1ee27151afcfddb4c8d75752ee6ff27c9d9ada6cb15"
+    },
+    "ownershipGateLines": "3360-3367, 3893-3895",
+    "acceptedOwnership": "bundled origin, or codex with global origin and official @openclaw/codex package/root",
+    "currentDiscovery": "plugins.load.paths, config origin",
+    "pluginManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/package.json",
+      "sha256": "487c9e30a10e22b167be27884eba958e5204296ae799caa16138090e489a5315"
+    },
+    "pluginIndex": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/index.js",
+      "sha256": "39cab0ffd08b96ea830b152f2adfcb1e1a11d9d25911423889351862e773e4e8"
+    },
+    "installedPluginVersion": "2026.9.6",
+    "nativeRegistrationUnavailableForThisProfile": true,
+    "boundedInstalledMetadata": {
+      "originalContactConfig": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/contact.json",
+        "sha256": "b59a1b86fcaa20df5b16fe515fa64c9d5be9a4cc2fbde9ad8f9279a98adeffc0"
+      },
+      "originalNativeHomeConfig": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/openclaw.json",
+        "sha256": "ffa94d9d6959d11b0cf35b21cf2a796b70a153ffbb53c76e7171d410d373a87a"
+      },
+      "fixtureConfig": {
+        "path": "/tmp/eva-p2-openclaw-public-native-20261007-m39_dz6c/openclaw.json",
+        "sha256": "2dd8687ff95d20dcfb9035d87de59ab238a5480d2a1f51f59acd7a747b26717d"
+      },
+      "pluginInstallRecordInCheckedConfigs": false,
+      "supportedInstalledGlobalOrBundledRegistrationEstablished": false,
+      "limitation": "This conclusion binds the actual checked ordinary profile and retained installed artifacts; it is not a claim that every possible future native installation route is impossible."
+    },
+    "originOrTrustSpoofApplied": false,
+    "newNativeInstallationOrFrameworkPatch": false
+  },
+  "remainingOriginalMeasurementBindings": {
+    "clockContract": "Original controlled application calendar/event time; execution deadline, auth/TLS and OS/storage bookkeeping remain real.",
+    "existingTemporalCarrier": "Actual native temporal-context formatter can receive the existing scenario calendar. No added prompt text or new clock layer.",
+    "nativeSerializedCalendarContext": "NOT_REACHED",
+    "secondContradictoryModelVisibleCalendar": "UNKNOWN; no serialized native model body was produced, so neither conflict nor absence of conflict is established.",
+    "threeTurnsTwoSessionsWithRetainedMemory": "NOT_REACHED",
+    "originalModelContextReadbacks": "NOT_REACHED",
+    "tool16PreExecutionCoverageAndActualDispatchCount": "NOT_REACHED",
+    "completeNativeBackgroundSettlementAndCleanup": "NOT_REACHED",
+    "allPhysicalHttpWsAttemptsAndUsageOnOrdinaryActorLoop": "NOT_REACHED",
+    "sourceOnlyCandidateIsNotSampleReadiness": true
+  },
+  "reusableCandidateInterface": {
+    "constructor": "new OpenClawAccounting(ledger, originalMonotonicDeadline, {clockFile, privateModelContextDir, observeTools:true})",
+    "install": "installOpenClawAccounting(observer, pluginRoot, {hostRoot:HOST}) with exact NATIVE_PINS, NATIVE_SCENARIO_PIN and NATIVE_LOOP_PINS",
+    "closeNativeFields": [
+      "clients",
+      "transport_results",
+      "cancel_errors",
+      "native_closed",
+      "pending_sdk",
+      "pending_tools",
+      "tool_coverage",
+      "native_dispatched_tools"
+    ],
+    "ledgerCloseArguments": [
+      "activeTasks",
+      "pendingLocal",
+      "cancelErrors",
+      "nativeSettled"
+    ],
+    "closeCounts": "Only actual native results/counts may populate parent close; no inferred native_pending_at_close or fabricated zero-count proof."
+  },
+  "preservation": {
+    "oldAccessReceipt": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-native-access-20261006.json",
+      "sha256": "e82706f33277989a5da4279f26f1060156d03d309992366824fbcf2ffc83de99"
+    },
+    "originalPlanCriteriaCasesModelsAndLimitsChanged": false,
+    "originalCasePayloadReadByBuilder": false,
+    "originalSlotUsed": false,
+    "authorityWrittenOrCopied": false,
+    "authoritativeHistoricalUnknownChangedToZero": false,
+    "sampleOrModelReplay": false,
+    "humanRatingsAdded": 0,
+    "qualityWinnerClaimed": false,
+    "sharedWorkboardGitOrOtherParticipantFilesModified": false
+  }
+}

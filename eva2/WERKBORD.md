@@ -1,3 +1,11 @@
+## 7 oktober — onafhankelijke beoordeling van de bewaarde Hermes-uitkomst
+
+Bijgewerkte informatie overleefde de sessiegrens en werd in het latere antwoord gebruikt. Twee feitelijke onderdelen zijn bevestigd; één kwalitatief onderdeel blijft onbekend. De volledige oorspronkelijke readbacks ontbreken door niet-bewaarde eindmodelcontext en onvolledige toolmeting. Officiële beoordeling en twee menselijke oordelen blijven UNKNOWN. [Beoordeling](evidence/product/p2-hermes-cm01-independent-assessment-20261007.json); geen nieuwe calls, herhaling, gewijzigde criteria of extra productafronding. OpenClaw-meetbinding blijft de actieve technische opdracht.
+
+## 7 oktober — P2.1 vervolgt met bestaande OpenClaw-tijd/geheugenroute
+
+**Laatste stand:** beide eigen aanmeldingen werken. De gewone OpenClaw-route bereikt een native thread en bouwt een echte modelaanvraag met **gpt-6-sol/none**. In diezelfde aanvraag staan echter zowel de ingestelde proefdatum als de echte systeemdatum. De oorspronkelijke klokgebonden proef is daarom **niet toegelaten**; geen oorspronkelijke vraag, modelcall, kwaliteitsverlies of extra afgeronde functie. De aparte lokale mockdelegatie en volledige tool-/sessie-/turnafsluiting zijn niet bewezen. Publieke testprocessen/netwerknamespaces zijn gestopt en twee echte unregisterqueues zijn geflusht; bytegelijkheid geldt alleen voor gecontroleerde bestanden, niet aantoonbaar voor de actuele registry. [Onafhankelijke eindreview](reviews/p2-openclaw-native-binding-final-review-20261007.json). Geen verdere klok-/frameworkbouw of herhaling. [Afgesloten voorbereiding](evidence/product/p2-openclaw-native-composition-20261007.json): tien bestaande transport-/IPC-controles geslaagd, één compositie overgeslagen. Geen uitvoerder of native proef meer actief; broncheckpoint wordt gebundeld. **34/44** en oorspronkelijke eindvoorwaarden blijven gelijk.
+
 ## 7 oktober — eigen aanmeldingen bevestigd; Hermes-proef daadwerkelijk uitgevoerd
 
 OpenClaw en Hermes zijn beide via hun eigen native profiel aangemeld. Geen nieuwe loginhandeling van Jaap nodig. Agent Zero’s eigen aanmelding en eerdere modeltoegang blijven bevestigd. [Loginbewijs](evidence/product/p2-competitor-device-login-20261006.json).

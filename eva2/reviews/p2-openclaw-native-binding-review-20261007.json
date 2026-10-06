@@ -1,0 +1,151 @@
+{
+  "contract": "P2IndependentNativeBindingReview/v1",
+  "date": "2026-10-07",
+  "reviewer": "/root/aide_final_evaluation",
+  "task": "P2.1",
+  "entry": "openclaw:EV003-CM-01:epoch1",
+  "status": "immutable_preparatory_snapshot_NO_GO_original_sample",
+  "publication": "GO_for_honest_preparatory_source_and_retained_failure_only",
+  "original_sample_admitted": false,
+  "original_sample_started": false,
+  "quality_score": null,
+  "human_ratings": [
+    null,
+    null
+  ],
+  "decisive_observation": {
+    "ordinary_entry": "installed agentCliCommand local branch",
+    "failure_category": "owner-plugin-degraded",
+    "plugin_status": "loaded",
+    "trust_reason": "record-missing",
+    "registered_agent_harnesses": 0,
+    "stage": "ordinary_plugin_registration_before_native_turn_or_provider_dispatch",
+    "classification": "native_installation_adapter_binding_unavailable_not_login_failure_or_product_quality_loss",
+    "public_fixture": {
+      "tests": 1,
+      "passed": 0,
+      "failed": 1,
+      "duration_ms": 15699.327994,
+      "real_provider_calls": 0,
+      "original_inputs_used": false
+    }
+  },
+  "source_findings": {
+    "native_local_cli_one_shot_is_ordinary": true,
+    "one_shot_scope": "Installed CLI sets both cleanup flags, owns state lock/signal bridge and skips its optional post-return maintenance. This is not gateway/daemon equivalence.",
+    "native_transcript_and_cli_compaction_preserved_by_entry": true,
+    "temporal_hook_scope": "Existing native synchronous application formatter only; real auth, Rust OS and monotonic deadlines remain unchanged.",
+    "exact_serialized_body_time_consistency_proved": false,
+    "tool_cap_design": "Single sample observer reserves native PreToolUse and dynamic callbacks before dispatch against original16; parent provider ledger remains separate. Actual ordinary native tool coverage is not established by the failed fixture.",
+    "native_tool_cap_and_lifecycle_proved": false,
+    "context_capture_design": "Exact transmitted request-body bytes only, private retained artifacts; no auth headers and no provider-internal-context claim.",
+    "private_driver_readback_corrections": "Use actual native SQLite session entry/effective session ID, mirrored history, visible response extraction and reject missing readbacks; real lifecycle/parent close ACK must gate completion.",
+    "installed_product_source_changed": false,
+    "publication_is_runtime_release": false
+  },
+  "ownership_boundary": {
+    "pinned_loader_lines": [
+      3360,
+      3367,
+      3893,
+      3895
+    ],
+    "accepted_native_ownership": "bundled or genuine global official @openclaw/codex",
+    "current_candidate_origin": "config",
+    "genuine_same_version_supported_installer_correction": "May be independently evaluated; does not alter this retained NO_GO snapshot. No forged trust/origin, alternate lower-level bypass or original input without subsequent native evidence."
+  },
+  "immutable_original_binding": {
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "case_sha256": "8a0dfda44e84e2e4d80fc8aad7856eebad5d96e2b67dc490bedbff06e69b81bd",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "authority_sha256": "c81cf6f0832ec1f81f760f2962b29e8bb91de5faa7c9378135a4543bbd147559",
+    "same_authority_unchanged": true,
+    "original_slot_unused": true,
+    "limits_changed": false,
+    "new_reservations": 0
+  },
+  "publication_delta_review": {
+    "files": [
+      "eva2/WERKBORD.md",
+      "eva2/design/product/execution-workboard-v1.json"
+    ],
+    "hermes_original_result_and_scorer_preserved": true,
+    "hermes_factual_support_counts": {
+      "supported": 2,
+      "unknown": 1
+    },
+    "hermes_complete_readbacks": [
+      null,
+      null
+    ],
+    "hermes_official_quality": "UNKNOWN",
+    "openclaw_login_distinct_from_harness_admission": true,
+    "new_original_openclaw_sample_claim": false,
+    "completion_count": "34/44 unchanged",
+    "runtime_release_or_superiority_claim": false,
+    "temporal_wording_note": "The content-free calendar scope is source-decided; ordinary registration and actual complete body/tool/closure proof remain pending."
+  },
+  "review_activity": {
+    "tests_run": 0,
+    "model_calls": 0,
+    "native_runs": 0,
+    "source_edits": 0,
+    "authority_mutations": 0,
+    "protected_contents_disclosed": false,
+    "owned_inspect_wrapper_preparation_only": true
+  },
+  "evidence": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "2fbd4d5301bc939a7ec1c2834dd0d91345db86e7ed459e7afa7e20df82f25288"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "sha256": "4c394d2cc3c5e70ee534b166d2084f108a0457614b0b2ddc60df07fc4c409642"
+    },
+    {
+      "path": "/tmp/eva-p2-openclaw-public-native-20261007-m39_dz6c/composition-output.public.txt",
+      "sha256": "7ce3b2e77956305a750c7ad3e4c707f80d2cd422cc3aedeb57c1cfcd877e8801"
+    },
+    {
+      "path": "/tmp/eva-p2-openclaw-public-native-20261007-m39_dz6c/plugin-inspect-output.public.txt",
+      "sha256": "41888b9baf9ce69081ec9aff747d9e1fdcbf97dab4f303f85eae45c166c5368f"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-runtime/node_modules/openclaw/dist/loader-runtime-load-CMBCNIWa.mjs",
+      "sha256": "78bbdb00acb979102867f1ee27151afcfddb4c8d75752ee6ff27c9d9ada6cb15"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-runtime/node_modules/openclaw/dist/agent-via-gateway-Canl_hfN.mjs",
+      "sha256": "554274dcc44aa607803b062d578549cd2433ea4f5f8edd18785e87f1c4692757"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-runtime/node_modules/openclaw/dist/run-CjhhEQ1q.mjs",
+      "sha256": "2887f8393a009e880688c2fddecbc093f072bfaeb6e8029ad7d549fd6f016e1d"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/cm01-epoch1.native-inputs.private.json",
+      "sha256": "2abe017212dfc53c19b91b10eed991172cc55af80a95b3de0ec92cf6d4e4135e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/projection-contract-technical.private.json",
+      "sha256": "9292921a96eacb7891751e198a4ebac9b832f952ff5a7b83f3011f7263bfdba2"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/launch-parent-accounted-cm01.private.py",
+      "sha256": "77525848c40ce2a163d2d1cbc323071d5507d165203f67efb2a756e18ff37cfc"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/native-openclaw-cm.private.mjs",
+      "sha256": "327ef8fd92dd5f465f02e735c4e081193460a9cf19f61f160f1dc7356e22d21b"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/inspect-run-parent-accounted-cm01.private.py",
+      "sha256": "b09b2d09ea7deed7b1ba9443fe7e9358881739f07aeaa4379c8fb0d24e786089"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-cm01-independent-assessment-20261007.json",
+      "sha256": "23b6e87b7515a66931d6583e2dcc11f496400f61362bf620bf1ec9dd3e47466d"
+    }
+  ]
+}

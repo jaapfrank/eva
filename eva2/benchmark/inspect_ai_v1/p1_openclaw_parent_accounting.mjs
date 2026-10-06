@@ -4,7 +4,10 @@
 import net from 'node:net';
 import { createHash } from 'node:crypto';
 import { registerHooks } from 'node:module';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { openSync, writeFileSync, fsyncSync, closeSync, lstatSync, readFileSync, realpathSync, constants } from 'node:fs';
+import { join, resolve, dirname } from 'node:path';
+import { installScenarioCalendar } from './ev003_node_calendar.mjs';
 
 const KEY = Symbol.for('eva.cp001.openclaw.accounting');
 const MAX_FRAME = 65536;
@@ -13,6 +16,14 @@ export const NATIVE_PINS = Object.freeze({
   'client-Cs08OXVQ.mjs': 'f661febe01d4708bdafd2c0f49be288b6466c07cbedd74b79c887cbe0deb77da',
   'inference-proxy-b-aJMSxm.mjs': 'eb514a3aba831f47742be8e23db369280ebd020da27b7c52d1e8029066dd9b1d',
 });
+export const NATIVE_MANIFEST_PIN = '487c9e30a10e22b167be27884eba958e5204296ae799caa16138090e489a5315';
+export const NATIVE_QUEUE_PIN = '079bf068c24205f3ff6dd359f5edde2a14359bcef80608f32e68706ff47a334d';
+export const NATIVE_SCENARIO_PIN = 'd278e65190cb7e9a9187962fd413187bdd09e5e431454e9287f29ab15f6d9bce';
+export const NATIVE_LOOP_PINS = Object.freeze({
+  'run-attempt-BHu11r7h.mjs': '1232e529e6309af58f13f5f4ec88673231507304ce698d4c50f1021c1c8de376',
+  'native-hook-relay-Bfyv8cuh.mjs': 'e58fa02170a4d63f7c2e98de8c7514ac46906fae19538b131fd6e2f2b1fedb6a',
+});
+const digest = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const monotonic = () => Number(process.hrtime.bigint()) / 1e9;
 const safeUsage = (value) => {
   const u = value?.response?.usage ?? value?.usage;
@@ -116,26 +127,62 @@ export class OpenClawProcessLedger {
     return decision?.allow === true;
   }
   incomplete(id) { return this.settle(id, null); }
-  async close() {
+  async close({ activeTasks = 0, pendingLocal = 0, cancelErrors = [], nativeSettled = true } = {}) {
     const count = [...this.attempts.values()].filter(r => ['pending','settling'].includes(r.status)).length;
-    const answer = await this.rpc({ op: 'close', settled: count === 0, active_tasks: 0, pending_local: count, cancel_errors: [] });
+    const answer = await this.rpc({ op: 'close', settled: count === 0 && pendingLocal === 0 && activeTasks === 0 && nativeSettled, active_tasks: activeTasks, pending_local: count + pendingLocal, cancel_errors: cancelErrors });
     this.closed = true; this.socket.end(); this.socket.destroy(); return answer.closed === true;
   }
 }
 
 /** Observes original Responses bytes, never transcript/model-catalog/rate-limit summaries. */
 export class OpenClawAccounting {
-  constructor(ledger, deadline, { now = monotonic, save = () => {} } = {}) {
+  constructor(ledger, deadline, { now = monotonic, save = () => {}, clockFile = null, privateModelContextDir = null, observeTools = false } = {}) {
     if (!Number.isFinite(deadline)) throw new Error('original absolute deadline required');
     this.ledger = ledger; this.deadline = deadline; this.now = now; this.save = save;
     this.calls = []; this.active = new Set(); this.wsAttempts = new WeakMap();
+    this.clockFile = clockFile; this.scenarioReadbacks = []; this.previousScenario = null;
+    this.privateModelContextDir = privateModelContextDir; this.observeTools = observeTools;
+    this.tools = new Map(); this.clients = new Map(); this.nativeReadbacks = [];
+    this.nativeModuleBindings = new Map(); this.nativeQueues = new Map();
+    this.toolCoverage = true; this.privateSequence = 0; this.nativeCloseReads = new Map(); this.nativeClosed = new Map();
     this.stop = () => { for (const cancel of this.active) cancel(); };
     ledger.stopHandlers?.add(this.stop);
   }
   check() { this.ledger.check(); if (this.now() >= this.deadline) { this.ledger.stop('original deadline'); throw new Error('original deadline'); } }
-  turnParams(method, params) {
+  /** Native temporal formatter only: auth/TLS/Rust clocks and monotonic time stay actual. */
+  temporalContext(build) {
+    if (!this.clockFile) return build();
+    this.check();
+    if (this.active.size || this.calls.some(row => ['pending','settling'].includes(row.status))
+        || [...this.tools.values()].some(row => ['reserved','running'].includes(row.status))) {
+      throw new Error('native work must settle before scenario context');
+    }
+    const calendar = installScenarioCalendar(this.clockFile);
+    try {
+      const state = calendar.refresh(); const previous = this.previousScenario;
+      if (previous && (state.generation < previous.generation || state.offsetMilliseconds < previous.offsetMilliseconds
+          || (state.generation === previous.generation && state.offsetMilliseconds !== previous.offsetMilliseconds))) {
+        throw new Error('scenario calendar moved backwards or changed without a generation');
+      }
+      const result = build();
+      const temporal = result?.openclaw_temporal_context;
+      if (result?.then || temporal?.kind !== 'application' || typeof temporal.value !== 'string'
+          || digest(calendar.refresh()) !== digest(state)) throw new Error('native temporal context contract differs');
+      this.previousScenario = state;
+      this.scenarioReadbacks.push({ generation: state.generation, canonical_clock_state_sha256: digest(state),
+        native_temporal_context_sha256: digest(temporal) });
+      return result;
+    } finally { calendar.restore(); }
+  }
+  turnParams(method, params, client) {
+    if (this.observeTools && client && !this.clients.has(client)) this.clients.set(client, new Set());
+    if (this.observeTools && client && method === 'turn/start' && typeof params?.threadId === 'string') this.clients.get(client).add(params.threadId);
     if (method !== 'turn/start') return params;
     this.check();
+    if (this.clockFile && (!params.additionalContext?.openclaw_temporal_context
+        || digest(params.additionalContext.openclaw_temporal_context) !== this.scenarioReadbacks.at(-1)?.native_temporal_context_sha256)) {
+      throw new Error('native scenario temporal context not bound');
+    }
     // Normal foreground turn; native child/compaction/memory operation roles are bound at transport.
     return { ...params, model: 'gpt-6-sol', effort: 'none', ...(params.collaborationMode ? {
       collaborationMode: { ...params.collaborationMode, settings: { ...params.collaborationMode.settings,
@@ -150,6 +197,136 @@ export class OpenClawAccounting {
     const role = helper ? 'helper' : 'contact';
     const model = helper ? 'gpt-6-astra' : 'gpt-6-sol'; const effort = helper ? 'medium' : 'none';
     return { body: { ...body, model, reasoning: { ...(body.reasoning ?? {}), effort } }, accounting: { role, model, effort } };
+  }
+  retainPrivate(bytes, label) {
+    if (!this.privateModelContextDir) throw new Error('private native context directory required');
+    const dir = resolve(this.privateModelContextDir); const stat = lstatSync(dir);
+    if (!stat.isDirectory() || stat.isSymbolicLink() || (stat.mode & 0o777) !== 0o700 || stat.uid !== process.getuid()) {
+      throw new Error('private native context directory ownership or mode differs');
+    }
+    if (!Buffer.isBuffer(bytes) || bytes.length > MAX_NATIVE_BODY) throw new Error('exact native context bytes required');
+    const path = join(dir, `${++this.privateSequence}-${label}.json`);
+    const fd = openSync(path, constants.O_WRONLY | constants.O_CREAT | constants.O_EXCL | constants.O_NOFOLLOW, 0o600);
+    try { writeFileSync(fd, bytes); fsyncSync(fd); } finally { closeSync(fd); }
+    const directory = openSync(dir, constants.O_RDONLY | constants.O_DIRECTORY | constants.O_NOFOLLOW);
+    try { fsyncSync(directory); } finally { closeSync(directory); }
+    return { path, sha256: createHash('sha256').update(bytes).digest('hex'), bytes: bytes.length };
+  }
+  captureContext(row, bytes) {
+    if (!this.privateModelContextDir) return;
+    row.native_model_context = this.retainPrivate(bytes, `attempt-${this.calls.length}-${row.transport}`);
+    this.save(this.calls.map(({ cleanup, ...row }) => row));
+  }
+  /** One cap for existing native PreToolUse and unique dynamic callback executions. */
+  reserveTool(id, name, threadId) {
+    this.check();
+    if (!this.observeTools) return null;
+    if (typeof id !== 'string' || !id || typeof name !== 'string' || !name) throw new Error('exact native tool identity required');
+    let row = this.tools.get(id);
+    if (row) {
+      if (row.name_sha256 !== digest(name) || (threadId && row.thread_id && row.thread_id !== threadId)) throw new Error('native tool identity changed');
+      return row;
+    }
+    if ([...this.tools.values()].filter(row => row.status !== 'cancelled').length >= 16) {
+      this.ledger.stop('original tool cap'); throw new Error('original tool cap');
+    }
+    row = { tool_id_sha256: digest(id), name_sha256: digest(name), thread_id: threadId ?? null,
+      status: 'reserved', dispatched: false, reserved_monotonic: this.now() };
+    this.tools.set(id, row); return row;
+  }
+  nativeToolBefore(invocation) {
+    const payload = invocation.rawPayload;
+    const threadId = payload?.child_thread_id ?? payload?.session_id;
+    return this.reserveTool(invocation.toolUseId, invocation.toolName, threadId);
+  }
+  nativeToolAfter(invocation) {
+    if (!this.observeTools) return;
+    const row = this.tools.get(invocation.toolUseId);
+    if (!row) { this.toolCoverage = false; this.ledger.stop('native tool was not admitted'); throw new Error('native tool was not admitted'); }
+    row.dispatched = true; row.status = 'settled'; row.settled_monotonic = this.now();
+  }
+  cancelNativeTool(invocation) {
+    const row = this.tools.get(invocation.toolUseId);
+    if (row?.status === 'reserved' && !row.dispatched) row.status = 'cancelled';
+  }
+  async dynamicTool(call, body) {
+    const row = this.reserveTool(call.callId, call.tool, call.threadId);
+    if (row) {
+      if (row.dispatched) throw new Error('native dynamic tool executed twice');
+      row.status = 'running'; row.dispatched = true;
+    }
+    try { return await body(); }
+    finally { if (row) { row.status = 'settled'; row.settled_monotonic = this.now(); } }
+  }
+  nativeNotification(client, notification) {
+    if (!this.observeTools) return;
+    const p = notification.params; const threadId = p?.threadId ?? p?.thread?.id;
+    if (typeof threadId === 'string') this.clients.get(client)?.add(threadId);
+    if (notification.method !== 'item/completed' || !p?.item) return;
+    // All installed non-tool item variants; a new variant cannot silently escape coverage.
+    if (['userMessage','agentMessage','plan','reasoning','contextCompaction','enteredReviewMode','exitedReviewMode'].includes(p.item.type)) return;
+    const row = this.tools.get(p.item.id);
+    if (!row || ['reserved','cancelled'].includes(row.status)) {
+      this.toolCoverage = false; this.ledger.stop('native tool completion without dispatch observation');
+    }
+  }
+  async readNativeClient(client) {
+    if (client.serverRequests.active.size || client.pending.size) throw new Error('native request remains pending');
+    const reads = [];
+    for (const threadId of this.clients.get(client) ?? []) {
+      const options = { timeoutMs: Math.max(1, Math.min(5000, (this.deadline - this.now()) * 1000)) };
+      const { thread } = await client.request('thread/read', {threadId,includeTurns:true}, options);
+      const { data } = await client.request('thread/backgroundTerminals/list', {threadId}, options);
+      if (thread.id !== threadId || !['idle','notLoaded'].includes(thread.status?.type)
+          || !Array.isArray(thread.turns) || thread.turns.some(turn => turn.status === 'inProgress')
+          || !Array.isArray(data) || data.length) throw new Error('native turn or background terminal remains active');
+      reads.push({ thread_id: threadId, turn_count: thread.turns.length, active_turns: 0, background_terminals: 0,
+        private_native_thread: this.retainPrivate(Buffer.from(JSON.stringify({thread})), 'native-thread-readback') });
+    }
+    return reads;
+  }
+  async beforeNativeClose(client) {
+    if (!this.observeTools || !this.clients.has(client) || client.closed) return;
+    if (!await this.settled()) throw new Error('native work remains unsettled at close');
+    this.nativeCloseReads.set(client, await this.readNativeClient(client));
+  }
+  async nativeSettlement() {
+    this.check();
+    if (!this.observeTools || !this.clients.size || !await this.settled()) throw new Error('native actor lifecycle not settled');
+    await this.flushNativeQueues();
+    const reads = [];
+    for (const client of this.clients.keys()) {
+      if (client.closed) {
+        const retained = this.nativeCloseReads.get(client);
+        if (!retained || this.nativeClosed.get(client)?.cleanup !== 'closed') throw new Error('native close/readback was not confirmed');
+        reads.push(...retained);
+      } else reads.push(...await this.readNativeClient(client));
+    }
+    if (!reads.length) throw new Error('native original turn readback unavailable');
+    this.nativeReadbacks.push(reads); return reads;
+  }
+  async flushNativeQueues() {
+    if (this.clients.size && !this.nativeQueues.size) throw new Error('actual native unregister queue unavailable');
+    const results = [];
+    for (const { packageRoot, queue } of this.nativeQueues.values()) {
+      await queue.flush(); results.push({ package_root: packageRoot, flushed: true });
+    }
+    return results;
+  }
+  async closeNative() {
+    const results = [];
+    this.stop();
+    const errors = [];
+    for (const client of this.clients.keys()) {
+      try { results.push(client.closed ? this.nativeClosed.get(client) : await client.closeAndWait()); }
+      catch (error) { results.push(this.nativeClosed.get(client) ?? null); errors.push(nativeFailure(error)); }
+    }
+    let queues = [];
+    try { queues = await this.flushNativeQueues(); } catch(error) { errors.push(nativeFailure(error)); }
+    return { clients: results.length, transport_results: results, cancel_errors: errors, native_closed: results.length > 0 && errors.length === 0 && results.every(result => result?.cleanup === 'closed'), pending_sdk: this.calls.filter(r=>['pending','settling'].includes(r.status)).length,
+      pending_tools: [...this.tools.values()].filter(r=>['reserved','running'].includes(r.status)).length,
+      native_unregister_queues: queues, native_module_bindings: [...this.nativeModuleBindings.values()],
+      tool_coverage: this.toolCoverage, native_dispatched_tools: [...this.tools.values()].filter(r=>r.dispatched).length };
   }
   async begin(binding, transport) {
     this.check();
@@ -186,6 +363,7 @@ export class OpenClawAccounting {
     let guarded;
     try {
       this.check();
+      this.captureContext(row, binding.nativeBodyBytes);
       row.dispatched = true; row.dispatched_monotonic = this.now(); this.save(this.calls.map(({ cleanup, ...row }) => row));
       guarded = await original({ ...params, signal: AbortSignal.any([controller.signal, ...params.signal ? [params.signal] : []]),
         init: { ...params.init, signal: AbortSignal.any([controller.signal, ...params.init.signal ? [params.init.signal] : []]) } });
@@ -237,6 +415,7 @@ export class OpenClawAccounting {
     remote.once('close', closed); remote.once('error', closed);
     try {
       this.check();
+      this.captureContext(row, prepared.bytes);
       row.dispatched = true; row.dispatched_monotonic = this.now(); this.save(this.calls.map(({ cleanup, ...row }) => row));
       remote.send(prepared.bytes, options, error => { if (error) closed(error); callback(error); });
     } catch (error) { closed(error); throw error; }
@@ -251,7 +430,8 @@ export class OpenClawAccounting {
     }
   }
 
-  async settled() { return this.calls.every(row => !['pending','settling'].includes(row.status)) && this.active.size === 0; }
+  async settled() { return this.toolCoverage && this.calls.every(row => !['pending','settling'].includes(row.status)) && this.active.size === 0
+    && [...this.tools.values()].every(row => !['reserved','running'].includes(row.status)); }
 }
 
 function replaceOnce(source, before, after) {
@@ -259,24 +439,73 @@ function replaceOnce(source, before, after) {
   return source.replace(before, after);
 }
 /** Exact evaluator overlay on installed native code; installed bytes remain untouched. */
-export function installOpenClawAccounting(accounting, pluginRoot, pins) {
+export function installOpenClawAccounting(accounting, pluginRoot, pins, { hostRoot = null } = {}) {
+  if (accounting.observeTools && !hostRoot) throw new Error('installed ordinary host required for tool observation');
   if (globalThis[KEY]) throw new Error('one native accounting owner required');
   globalThis[KEY] = accounting;
-  const root = fileURLToPath(new URL('./dist/.setup/', pluginRoot.endsWith('/') ? `file://${pluginRoot}` : `file://${pluginRoot}/`));
+  const packageRoot = realpathSync(pluginRoot);
+  const root = join(packageRoot, 'dist/.setup') + '/';
+  const captureRoot = process.env.OPENCLAW_STATE_DIR ? join(resolve(process.env.OPENCLAW_STATE_DIR), 'tmp/plugin-captures') : null;
+  const verifiedPackages = new Set();
+  const verifyPackage = candidate => {
+    if (verifiedPackages.has(candidate)) return;
+    if (createHash('sha256').update(readFileSync(join(candidate, 'package.json'))).digest('hex') !== NATIVE_MANIFEST_PIN) throw new Error('official native package manifest differs');
+    verifiedPackages.add(candidate);
+  };
+  verifyPackage(packageRoot);
   const loaded = new Set();
   const hooks = registerHooks({ load(url, context, nextLoad) {
     const result = nextLoad(url, context);
     if (!url.startsWith('file:')) return result;
-    const path = fileURLToPath(url); const name = path.slice(root.length);
-    if (!['client-Cs08OXVQ.mjs','inference-proxy-b-aJMSxm.mjs'].includes(name)) return result;
+    const path = fileURLToPath(url);
+    let name = path.startsWith(root) ? path.slice(root.length) : null;
+    let actualPackage = name ? packageRoot : null;
+    if (!name && captureRoot && path.startsWith(captureRoot + '/')) {
+      const suffix = '/node_modules/@openclaw/codex/dist/.setup/';
+      const marker = path.lastIndexOf(suffix);
+      if (marker >= captureRoot.length) {
+        name = path.slice(marker + suffix.length);
+        actualPackage = path.slice(0, marker) + '/node_modules/@openclaw/codex';
+        if (realpathSync(captureRoot) !== captureRoot || realpathSync(actualPackage) !== actualPackage || !realpathSync(path).startsWith(captureRoot + '/')) throw new Error('native capture escapes fresh state');
+      }
+    }
+    const scenarioModule = accounting.clockFile && name === 'thread-lifecycle-B3mfz1TG.mjs';
+    const dynamicModule = accounting.observeTools && name === 'run-attempt-BHu11r7h.mjs';
+    const nativeHookModule = accounting.observeTools && path === join(hostRoot,'dist/native-hook-relay-Bfyv8cuh.mjs');
+    const queueModule = accounting.observeTools && name === 'shared-client-DA4VR4Eb.mjs';
+    if (!scenarioModule && !dynamicModule && !nativeHookModule && !queueModule && !['client-Cs08OXVQ.mjs','inference-proxy-b-aJMSxm.mjs'].includes(name)) return result;
+    if (actualPackage) verifyPackage(actualPackage);
     const original = Buffer.from(result.source).toString('utf8');
-    if (createHash('sha256').update(original).digest('hex') !== pins[name]) throw new Error('installed native source pin differs');
-    loaded.add(name);
+    const sourceHash = createHash('sha256').update(original).digest('hex');
+    if (sourceHash !== (queueModule ? NATIVE_QUEUE_PIN : scenarioModule ? NATIVE_SCENARIO_PIN : nativeHookModule ? NATIVE_LOOP_PINS['native-hook-relay-Bfyv8cuh.mjs'] : dynamicModule ? NATIVE_LOOP_PINS[name] : pins[name])) throw new Error('installed native source pin differs');
+    loaded.add(nativeHookModule ? 'native-hook-relay-Bfyv8cuh.mjs' : name);
+    accounting.nativeModuleBindings.set(url, { module_url: url, package_root: actualPackage, captured: actualPackage !== null && actualPackage !== packageRoot, source_sha256: sourceHash });
     let source = `const __evaAccounting = globalThis[Symbol.for('eva.cp001.openclaw.accounting')];\n` + original;
-    if (name.startsWith('client')) {
-      source = replaceOnce(source, 'request(method, params, optionsInput) {', "request(method, params, optionsInput) {\n\t\tparams = __evaAccounting.turnParams(method, params);");
+    if (queueModule) {
+      source += `\n__evaAccounting.nativeQueues.set(import.meta.url, {packageRoot:${JSON.stringify(actualPackage)},queue:nativeHookRelayUnregisterQueue});\n`;
+    } else if (scenarioModule) {
+      source = replaceOnce(source, 'let additionalContext = buildCodexTemporalAdditionalContext(params, { sessionStatusAvailable: options.sessionStatusAvailable === true });',
+        'let additionalContext = __evaAccounting.temporalContext(() => buildCodexTemporalAdditionalContext(params, { sessionStatusAvailable: options.sessionStatusAvailable === true }));');
+    } else if (dynamicModule) {
+      source = replaceOnce(source, 'const response = await handleDynamicToolCallWithTimeout({',
+        'const response = await __evaAccounting.dynamicTool(call, () => handleDynamicToolCallWithTimeout({');
+      source = replaceOnce(source, '\t\t\t\t\t});\n\t\t\t\t\trecordCodexDynamicToolResult(projector, call, response, toCodexDynamicToolProtocolResponse(response));',
+        '\t\t\t\t\t}));\n\t\t\t\t\trecordCodexDynamicToolResult(projector, call, response, toCodexDynamicToolProtocolResponse(response));');
+    } else if (nativeHookModule) {
+      source = replaceOnce(source, 'async function runNativeHookRelayPreToolUse(params) {',
+        'async function runNativeHookRelayPreToolUse(params) { try { return await __evaNativePreToolUse(params); } catch(error) { __evaAccounting.cancelNativeTool(params.invocation); throw error; } }\nasync function __evaNativePreToolUse(params) {');
+      source = replaceOnce(source, '\ttry {\n\t\tif (params.executionAdmission?.toolNames.includes(toolName)) {',
+        '\t__evaAccounting.nativeToolBefore({ ...params.invocation, toolName });\n\ttry {\n\t\tif (params.executionAdmission?.toolNames.includes(toolName)) {');
+      source = replaceOnce(source, 'async function runNativeHookRelayPostToolUse(params) {',
+        'async function runNativeHookRelayPostToolUse(params) {\n\t__evaAccounting.nativeToolAfter(params.invocation);');
+    } else if (name.startsWith('client')) {
+      source = replaceOnce(source, 'request(method, params, optionsInput) {', "request(method, params, optionsInput) {\n\t\tparams = __evaAccounting.turnParams(method, params, this);");
+      if (accounting.observeTools) {
+        source = replaceOnce(source, 'handleNotification(notification) {', 'handleNotification(notification) {\n\t\t__evaAccounting.nativeNotification(this, notification);');
+        source = replaceOnce(source, 'async closeAndWait(options) {', 'async closeAndWait(options) {\n\t\tlet readbackError; try { await __evaAccounting.beforeNativeClose(this); } catch(error) { readbackError = error; }\n\t\tconst result = await this.__evaCloseAndWait(options); __evaAccounting.nativeClosed.set(this, result); if (readbackError) throw readbackError; return result;\n\t}\n\tasync __evaCloseAndWait(options) {');
+      }
     } else {
-      source = replaceOnce(source, 'const rewritten = Buffer.from(JSON.stringify(prepared.body));', 'const normalized = __evaAccounting.prepareBody(prepared.body);\n\t\tconst rewritten = Buffer.from(JSON.stringify(normalized.body));');
+      source = replaceOnce(source, 'const rewritten = Buffer.from(JSON.stringify(prepared.body));', 'const normalized = __evaAccounting.prepareBody(prepared.body);\n\t\tconst rewritten = Buffer.from(JSON.stringify(normalized.body));\n\t\tnormalized.accounting.nativeBodyBytes = rewritten;');
       source = replaceOnce(source, 'bytes: rewritten,', 'bytes: rewritten,\n\t\t\taccounting: normalized.accounting,');
       source = replaceOnce(source, '...createUploadBody(body, requestSignal, release),', '...createUploadBody(body, requestSignal, release),\n\t\t\taccounting: prepared.accounting,');
       source = replaceOnce(source, 'guarded = await fetchWithSsrFGuard({', 'guarded = await __evaAccounting.fetch(fetchWithSsrFGuard, {');

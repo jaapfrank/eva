@@ -1,0 +1,255 @@
+{
+  "schema": "P2OpenClawBoundedNativeCompositionEvidence/v1",
+  "date": "2026-10-07",
+  "task": "P2.1",
+  "integrationCheckpointProvidedByCoordinator": "45896f3f",
+  "status": "source_checkpoint_ready_original_cm01_not_admitted",
+  "decisions": {
+    "sourceCheckpoint": "GO_WITH_RECORDED_LIMITATIONS",
+    "runtimeRelease": "NO_GO",
+    "originalCM01Epoch1": "NO_GO",
+    "quality": "UNKNOWN"
+  },
+  "originalPlan": {
+    "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "criteriaChanged": false,
+    "caseChanged": false,
+    "participantModelChanged": false,
+    "originalClockRequirement": "controlled application-visible calendar; execution deadline and auth clock remain separate",
+    "originalInputReleased": false,
+    "originalSampleStarted": false,
+    "originalAuthorityRead": false,
+    "originalAuthorityWritten": false,
+    "newReservationOrLedgerSeed": false,
+    "closedCaseReplay": false
+  },
+  "frozenSource": {
+    "path": "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+    "sha256": "d894b39f516c21f875e691d0ceee39ef2e37980380b9282b6a62a4cbef2377ca"
+  },
+  "focusedTest": {
+    "path": "eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+    "sha256": "2608b6d69dfe8216d8c22ef6a37dd786540e3ab21354e213990ae80062633116"
+  },
+  "independentSourceReview": {
+    "path": "eva2/reviews/p2-openclaw-native-binding-final-review-20261007.json",
+    "sha256": "41612c1f5feee987cb5bf0a6a9945b30733384fe50bb84a9c2a2ef6c750e4161",
+    "decision": "GO_SOURCE_CHECKPOINT_WITH_RECORDED_LIMITATIONS",
+    "originalSampleAdmitted": false,
+    "postFreezeTransportRegressionAtReview": "pending; exact author proof is retained below"
+  },
+  "priorReceiptsPreserved": [
+    {
+      "path": "eva2/evidence/product/p2-openclaw-native-access-20261006.json",
+      "sha256": "e82706f33277989a5da4279f26f1060156d03d309992366824fbcf2ffc83de99"
+    },
+    {
+      "path": "eva2/evidence/product/p2-openclaw-native-loop-binding-20261007.json",
+      "sha256": "33f6a1cb6e2d40d6aeea4185a45b36e6b343a46fd3606b1a4b3b57e929e131e5"
+    }
+  ],
+  "ordinaryNativeRoute": {
+    "frameworkAndPluginVersion": "2026.9.6",
+    "managedCodexVersion": "0.155.1",
+    "nodeVersion": "24.16.0",
+    "entry": "installed ordinary agentCliCommand local one-shot CLI branch",
+    "oneShotScope": "ordinary local CLI; no gateway/daemon post-return maintenance parity claim",
+    "ownLoginPreviouslyConfirmed": true,
+    "ownAuthSha256": "b099dbc54c0a77b6bf492afaf23cc27ef610b9f86f77cf4b12d7909f5201c611",
+    "ownAuthCopiedOrChanged": false,
+    "pluginRegistration": "genuine existing operator install roots preserved with installed withPluginInstallRoots/resolvePluginInstallRoots",
+    "installRootApiSha256": "183efb7c56b83c63c9662954bb047df680c457a5a64efb52fdb82ddc9b166ee5",
+    "metadataOwnershipProof": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-composition-20261007/initial-owner-failure/owner-roots-native-inspect-handler.public.txt",
+      "sha256": "82fefc8227701dc8b8c5c47a523e54b7707b78ad5fd6e06c5e82add73a621890"
+    },
+    "newInstallationOrTrustRecord": false,
+    "frameworkFilesPatched": false,
+    "catalogInjected": false,
+    "discoveryEnabled": true,
+    "homeScope": "user",
+    "appServerArgs": [
+      "app-server"
+    ],
+    "customAppServerArgs": false,
+    "explicitCLIThinkingOverride": false,
+    "configuredThinkingOffPreserved": true,
+    "sourceBoundary": "existing parent-local native inference proxy HTTP/WS; parent permit precedes each physical dispatch; raw terminal usage or UNKNOWN is retained",
+    "aliasBoundary": "only actual fresh OPENCLAW_STATE_DIR/tmp/plugin-captures aliases with exact official package manifest and native module hashes",
+    "actualAliasUnregisterQueuesObserved": 2,
+    "supportedApi": {
+      "constructor": "new OpenClawAccounting(ledger, originalMonotonicDeadline, {clockFile, privateModelContextDir, observeTools:true})",
+      "install": "installOpenClawAccounting(observer, PLUGIN, NATIVE_PINS, {hostRoot:HOST})",
+      "settlement": "await observer.nativeSettlement()",
+      "nativeClose": "await observer.closeNative(PLUGIN)",
+      "parentClose": "await ledger.close({activeTasks, pendingLocal, cancelErrors, nativeSettled}) -> boolean ACK",
+      "closeFields": [
+        "native_closed",
+        "pending_sdk",
+        "pending_tools",
+        "tool_coverage",
+        "native_dispatched_tools",
+        "cancel_errors",
+        "native_unregister_queues",
+        "native_module_bindings"
+      ]
+    }
+  },
+  "finalPublicComposition": {
+    "inputScope": "public development fixture only; no original questions, answers, oracle or scoring",
+    "sourceSha256": "d894b39f516c21f875e691d0ceee39ef2e37980380b9282b6a62a4cbef2377ca",
+    "testSha256": "2608b6d69dfe8216d8c22ef6a37dd786540e3ab21354e213990ae80062633116",
+    "config": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-composition-20261007/final-public-composition/openclaw.json",
+      "sha256": "9badd33438bc19aa35742c24cb475416180e6017a41e62fa5440efb306af339d"
+    },
+    "output": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-composition-20261007/final-public-composition/composition-output.public.txt",
+      "sha256": "208520aede8348e4263dbed04cae733dcaba43f3832c7e0ee16ca7cab065ad6f"
+    },
+    "technical": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-composition-20261007/final-public-composition/composition-technical.public.json",
+      "sha256": "0e1369bef988e99a9bf54ede2af7e358e24ff7f3f319fb1d318cf033ea5db6de"
+    },
+    "execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-composition-20261007/final-public-composition/execution-metadata.public.json",
+      "sha256": "70bede66cb15d27c32de54c3bdc94263bfbd0cfe25484c6b4e0d24f3b50b0f0a"
+    },
+    "exitCode": 1,
+    "elapsedSeconds": 112.65968336899823,
+    "cumulativeFixtureDeadlineSeconds": 120,
+    "discoveryTimeoutMs": 120000,
+    "deadlineReset": false,
+    "nativeThreadReached": true,
+    "actualNativeBodyCaptured": true,
+    "nativeRequestBody": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-composition-20261007/final-public-composition/1-attempt-1-http.body.private.json",
+      "sha256": "65be9f8ebb58ccc0f293508ee31542812844d6248d39210f0330925dd21a8fe5",
+      "bytes": 99743,
+      "mode": "0600",
+      "requestHeadersOrAuthIncluded": false,
+      "publishedBody": false
+    },
+    "actualRequestedContactModel": "gpt-6-sol",
+    "actualRequestedContactEffort": "none",
+    "actualRequestedHelpers": "UNKNOWN; no helper dispatch reached",
+    "sourceConfiguredHelperRole": "gpt-6-astra/medium; existing role regression passed",
+    "calendar": {
+      "canonicalStateSha256": "c0756262b2ca55b52ab5edf854c3fc2510c7aafaa9943c5b8d2c7b4d52987b4c",
+      "nativeTemporalContextSha256": "df64d67b310e50e527719c568b630365a80fe799bbacb7be2e5ca6928a0cbe08",
+      "sameBodyHasControlledAndContradictoryNativeCurrentDate": true,
+      "originalRequirementSatisfied": false,
+      "decision": "NO_GO",
+      "scope": "observable serialized native model input; no claim about hidden provider-internal context"
+    },
+    "developmentMeasurement": {
+      "localPermitRows": 1,
+      "localPermitRole": "contact",
+      "localPermitStatus": "usage_unknown",
+      "rawUsage": null,
+      "physicalFakeDelegateCalls": 0,
+      "fakeDelegateFailureCause": "UNKNOWN",
+      "externalInferenceCalls": 0,
+      "originalInputs": 0,
+      "originalAuthorityReads": 0,
+      "originalAuthorityWrites": 0,
+      "providerCost": "UNKNOWN; no external inference performed",
+      "productLossProven": false
+    },
+    "notEstablished": {
+      "completedOriginalThreeTurnTwoSessionLoop": "UNKNOWN",
+      "nativeMemoryReadbacks": "UNKNOWN",
+      "fullNativeBackgroundSettlement": "UNKNOWN",
+      "original16ToolCapRuntimeCoverage": "UNKNOWN",
+      "seventeenthNativePreExecutionRefusal": "not reached",
+      "fullNativeClose": "UNKNOWN"
+    },
+    "observedCleanup": {
+      "completedNativeTurns": 0,
+      "nativeToolRows": 0,
+      "nativeDispatchedTools": 0,
+      "observerCoverageFlag": true,
+      "coverageFlagProvesRuntimeToolCap": false,
+      "nativeClosedReceipt": false,
+      "pendingSdkAtObserverClose": 0,
+      "pendingToolsAtObserverClose": 0,
+      "actualAliasUnregisterQueuesFlushed": true,
+      "remainingNetworkNamespacePids": [],
+      "isolatedLoopbackOnly": true,
+      "processAbsenceProvesNativeSettlement": false
+    },
+    "operatorArtifactEquality": {
+      "enumeratedConfigProjectAuthAndCacheFilesUnchanged": true,
+      "actualNativeRegistryPath": "state/openclaw.sqlite",
+      "actualNativeRegistryBeforeAfterBound": false,
+      "fullNativeRegistryByteEquality": "UNKNOWN",
+      "reason": "latest snapshot enumerates absent machine-state.db instead of the actual native registry; no full-registry equality claim"
+    }
+  },
+  "existingTransportAndIpcRegression": {
+    "compositionEnabled": false,
+    "OPENCLAW_PUBLIC_COMPOSITION": "unset",
+    "sourceSha256": "d894b39f516c21f875e691d0ceee39ef2e37980380b9282b6a62a4cbef2377ca",
+    "testSha256": "2608b6d69dfe8216d8c22ef6a37dd786540e3ab21354e213990ae80062633116",
+    "passed": 10,
+    "skipped": 1,
+    "failed": 0,
+    "total": 11,
+    "skippedTest": "ordinary public actor composition",
+    "exitCode": 0,
+    "elapsedSeconds": 3.126122681002016,
+    "scope": "existing HTTP/WS retry admission, split-SSE/raw usage, refusal/deadline, unknown usage, raw usage after failed parent settlement, real parent IPC close ACK, safe exception projection and exact installed proxy/client overlay",
+    "externalInference": 0,
+    "originalInputs": 0,
+    "originalAuthorityAccess": 0,
+    "isolatedLoopbackOnly": true,
+    "remainingNetworkNamespacePids": [],
+    "output": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-composition-20261007/transport-regressions/transport-output.public.txt",
+      "sha256": "ed08af4c704344fa2301f82b60a18cf431c9ce3a41926cb488b0bb0f9404e67a"
+    },
+    "execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-composition-20261007/transport-regressions/execution-metadata.public.json",
+      "sha256": "98536bae96f5ec95c86e344258c3dcdd50b8f68c826970a94d91a4231a8b18a1"
+    }
+  },
+  "retainedEvidence": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-composition-20261007/retained-artifact-index.private.json",
+      "sha256": "99b9cdafae63b284c798bd6d72cc66d53e91e6af8a651f057a6df00eff9558c2"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-composition-20261007/native-catalog-observation/index.private.json",
+      "sha256": "8892dea13e53b0a8d67fda115764a410a0d6f18631753dc76ad528b4a5540845"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-composition-20261007/explicit-cli-thinking-failure/index.private.json",
+      "sha256": "adcde55c4a4cd79a3fe986413248a73d22da2584b4d3de4903acc24e2f006675"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-composition-20261007/final-retained-artifact-index.private.json",
+      "sha256": "2e2e5ab4259f9591debd90e0b0f937b42dc7deead16f43e80e277b3f0ca606e3"
+    }
+  ],
+  "historyInterpretation": {
+    "earlierOwnerRootHomeArgAliasCatalogAndExplicitThinkingFailures": "retained, not erased or reported as original sample outcomes",
+    "earlierWorkspaceMdBootstrapExplanation": "retracted; retained source/access evidence identified native HOME as the cause",
+    "nativeCatalogObservation": "initialize and model/list reached; observed 5005 ms exceeded default 2500 ms; ordinary discovery retained with supported timeout within the cumulative fixture deadline",
+    "catalogMembershipSeparateOriginalCriterion": false,
+    "catalogSourceAndEntitlement": "UNKNOWN; isolated catalog absence is not proof of unsupported model",
+    "sourceOnlyChecksDoNotEstablishOriginalToolReadbackOrCalendarSuccess": true
+  },
+  "publicationLimits": {
+    "privateBodiesOrAuthPublished": false,
+    "protectedOriginalDataRead": false,
+    "humanRatingsRecorded": 0,
+    "requiredOriginalHumanRatings": 2,
+    "semanticQuality": "UNKNOWN",
+    "productWin": "UNKNOWN",
+    "originalP2TaskCompleted": false,
+    "additionalCompositionAuthorizedByThisReceipt": false,
+    "runtimeReleaseAuthorizedByThisReceipt": false,
+    "developmentCreditCost": "UNKNOWN"
+  },
+  "conclusion": "Publish the frozen source candidate and existing focused regression proof with limitations. The ordinary native serialized Sol/none request has contradictory calendar carriers, so original CM01 remains NO_GO. Tool/readback/full native closure proof is incomplete. Preserve all prior evidence and stop this preparation branch without original input or further calendar/framework work."
+}

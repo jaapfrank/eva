@@ -1,0 +1,147 @@
+{
+  "contract": "P2OpenClawIndependentNativeBindingReview/v1",
+  "date": "2026-10-07",
+  "status": "NO_GO_ORIGINAL_SAMPLE",
+  "publicationScope": "Reviewed benchmark-source preparation and retained public synthetic failure only; no runtime release or quality result.",
+  "originalEntry": "openclaw:EV003-CM-01:epoch1",
+  "originalInputReleased": false,
+  "originalAttemptStarted": false,
+  "quality": "UNKNOWN",
+  "semanticScores": null,
+  "humanRatings": [
+    null,
+    null
+  ],
+  "previousReview": {
+    "path": "eva2/reviews/p2-openclaw-native-binding-review-20261007.json",
+    "sha256": "a0709c6e59afca862cf8f6848ab74f1b61b7999fe8fc7563852f6c2e057db6fc",
+    "unchanged": true
+  },
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "sourceSha256": {
+    "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs": "d894b39f516c21f875e691d0ceee39ef2e37980380b9282b6a62a4cbef2377ca",
+    "eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs": "2608b6d69dfe8216d8c22ef6a37dd786540e3ab21354e213990ae80062633116"
+  },
+  "dormantDriverSha256": {
+    "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/launch-parent-accounted-cm01.private.py": "424c57b0702c967462bd5a03745dd8e58e5f125ca9f930d0f95d97aebe4310e7",
+    "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/native-openclaw-cm.private.mjs": "824bbba82dd3b1c25fc21f61a3f5f7d5617303f837c35ba0c6ad3ebf3d7ae791",
+    "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/inspect-run-parent-accounted-cm01.private.py": "b09b2d09ea7deed7b1ba9443fe7e9358881739f07aeaa4379c8fb0d24e786089"
+  },
+  "preparationDraft": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/parent-cm01-preparation-draft.private.json",
+    "sha256": "f493b2d806d10e27d52844bd525580979cf48ab544b8c3fa1419f2c3649061b1",
+    "admitted": false,
+    "resourcePreparationAdmitted": false
+  },
+  "sourceReview": [
+    "The genuine native install-root context resolves the existing official package registration; no fabricated trust record or origin. Session state and workspace remain separately configured.",
+    "Native one-shot local CLI is the reviewed entry. This does not establish gateway/daemon maintenance equivalence.",
+    "The observer now follows only the fresh native capture root, verifies the official manifest and exact module hashes, records actual clients, and flushes their actual unregister queues. Zero clients cannot establish native closure.",
+    "The default native app-server argv is retained. Discovery stays enabled; its timeout uses the existing cumulative deadline. Removing the redundant explicit CLI thinking argument preserves configured off and the declared exact native Sol/none binding.",
+    "The frozen plan requires exact actual model/effort and complete accounting, not separate catalog membership. The isolated fallback catalog is not evidence of missing entitlement."
+  ],
+  "latestPublicFixture": {
+    "execution": {
+      "path": "/tmp/eva-p2-openclaw-public-native-ordinary-20261007-9cwh8w3m/execution-metadata.public.json",
+      "sha256": "70bede66cb15d27c32de54c3bdc94263bfbd0cfe25484c6b4e0d24f3b50b0f0a"
+    },
+    "technical": {
+      "path": "/tmp/eva-p2-openclaw-public-native-ordinary-20261007-9cwh8w3m/composition-technical.public.json",
+      "sha256": "0e1369bef988e99a9bf54ede2af7e358e24ff7f3f319fb1d318cf033ea5db6de"
+    },
+    "log": {
+      "path": "/tmp/eva-p2-openclaw-public-native-ordinary-20261007-9cwh8w3m/composition-output.public.txt",
+      "sha256": "208520aede8348e4263dbed04cae733dcaba43f3832c7e0ee16ca7cab065ad6f"
+    },
+    "privatePublicFixtureBody": {
+      "path": "/tmp/eva-p2-openclaw-public-native-ordinary-20261007-9cwh8w3m/contexts/1-attempt-1-http.json",
+      "sha256": "65be9f8ebb58ccc0f293508ee31542812844d6248d39210f0330925dd21a8fe5",
+      "bytes": 99743,
+      "mode": "0600",
+      "originalHeldoutContent": false
+    },
+    "exitCode": 1,
+    "elapsedSeconds": 112.65968336899823,
+    "terminalErrorClass": "Error",
+    "terminalErrorCategory": "stopped",
+    "completedNativeTurns": 0,
+    "observedRequestModel": "gpt-6-sol",
+    "observedRequestEffort": "none",
+    "applicationCalendarCarriers": 1,
+    "nativeCalendarCarriers": 1,
+    "calendarCarriersConsistent": false,
+    "developmentPermits": 1,
+    "developmentPermitUsage": null,
+    "developmentPermitStatus": "unknown",
+    "physicalMockCalls": 0,
+    "externalInference": 0,
+    "originalInputs": 0,
+    "originalAuthorityReads": 0,
+    "originalAuthorityWrites": 0,
+    "nativeToolDispatches": 0,
+    "seventeenthToolRefusalObserved": false,
+    "completedNativeReadbacks": 0,
+    "actualUnregisterQueuesFlushed": 2,
+    "nativeClosed": false,
+    "remainingNamespacePids": [],
+    "operatorPreservationScope": "The enumerated config/project/auth/cache files match. The latest receipt checks absent machine-state.db paths, not the actual state/openclaw.sqlite registry; full registry byte preservation is not established by this receipt."
+  },
+  "decisiveAdmissionFindings": [
+    "The retained actual model body contains conflicting application and native calendar dates. The existing temporal formatter hook does not satisfy the unchanged controlled-clock condition for the original case.",
+    "Three-turn/two-session completion, memory readback, the native tool-cap path and complete native shutdown are not demonstrated by this failed composition. A true initial toolCoverage flag with zero dispatches is not positive coverage evidence.",
+    "One development SDK reservation remains usage-unknown. Zero physical mock calls and isolated-network evidence must not turn unknown accounting into known zero usage or success."
+  ],
+  "retainedHistory": [
+    {
+      "stage": "config-origin loader rejection",
+      "sha256": "7ce3b2e77956305a750c7ad3e4c707f80d2cd422cc3aedeb57c1cfcd877e8801"
+    },
+    {
+      "stage": "genuine owner-root native inspection passed",
+      "sha256": "82fefc8227701dc8b8c5c47a523e54b7707b78ad5fd6e06c5e82add73a621890"
+    },
+    {
+      "stage": "legacy-workspace startup refusal",
+      "sha256": "e9f3cb8d650a89fa9e7af88890af4e99d39f569a499cc4961e8e2a54aab02fe6",
+      "causeCorrection": "UID1000 inherited HOME=/root; EACCES conservatively means may-exist. Public Markdown-before-init was not the decisive cause."
+    },
+    {
+      "stage": "HOME predicate diagnosis",
+      "sha256": "fa2e6cb6918f9c66648ca52c551364ee364212dec18fdaad798e8536b9ad7740"
+    },
+    {
+      "stage": "custom argv omitted native app-server subcommand",
+      "sha256": "965ecb65ee7459af6e8c9e0c9e1c4b894ec12633c7d982bb50779da63c350fc3"
+    },
+    {
+      "stage": "native model-list default timeout",
+      "sha256": "b1d6f5210038efbe29ba8effc51ba000af09b68453a9bcc79ccac4c4e0d0fcd7"
+    },
+    {
+      "stage": "native metadata-only catalog returned",
+      "sha256": "6d8ba2ceaf757cd1a2e80045b7a9b764d488c639f37607e8c0475e9f482c1b33",
+      "initializeMilliseconds": 42.541759,
+      "modelListMilliseconds": 5005.444824
+    },
+    {
+      "stage": "redundant explicit CLI thinking override rejected before turn",
+      "retained": true,
+      "claim": "Removing only that override is a separate preserved preparation correction, not a scored-case retry."
+    }
+  ],
+  "reviewerActivity": {
+    "newTests": 0,
+    "nativeRuns": 0,
+    "modelCalls": 0,
+    "credentialReads": 0,
+    "heldoutContentReads": 0,
+    "modifiedFiles": [
+      "eva2/reviews/p2-openclaw-native-binding-final-review-20261007.json"
+    ]
+  },
+  "limits": "No original sample admission, inferred product loss, quality/winner claim, altered criterion, new budget or hidden-case retry. Human ratings remain unknown. Prior preparation failures and the earlier NO_GO remain immutable.",
+  "publicationDecision": "GO_SOURCE_CHECKPOINT_WITH_RECORDED_LIMITATIONS",
+  "runtimeReleaseAdmitted": false,
+  "originalSampleAdmitted": false,
+  "postFreezeTransportRegression": "Pending author evidence; no new regression result claimed by this review."
+}
