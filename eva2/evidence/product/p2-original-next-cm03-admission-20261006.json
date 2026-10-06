@@ -1,0 +1,1042 @@
+{
+  "contract": "P2OriginalCM03TechnicalAdmissionPreparation/v1",
+  "status": "admitted_one_successor_original_cm_pair",
+  "task": "P2.1",
+  "caseId": "EV003-CM-03",
+  "epoch": 1,
+  "caseSha256": "6fe1d9826e4ce8482f4aea7935012af42c8feab107ed40087a339c28622182d7",
+  "runHandle": "ev003-successor-native-cm03-20261006-17ce05e0",
+  "basis": "470c6a9ba942d4042a068b036bbaf9183f7a8e40",
+  "datasetCommitmentSha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+  "datasetTotalSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "unusedStatus": {
+    "nextUnexecutedCaseWithinEva1Eva2SuccessorPairSequence": true,
+    "closedCM01AndCM02NotReplayed": true,
+    "noRemainingFiveParticipantOrMatrixCoverageClaim": true,
+    "noRetainedCM03ExecutionArtifactOrProviderAttempt": true,
+    "aggregateOnlyPrecommandReservationsForCM03": 2
+  },
+  "participantOrder": [
+    "eva1-bottie",
+    "eva2"
+  ],
+  "originalPlan": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+    "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "unchanged": true
+  },
+  "models": {
+    "contact": [
+      "gpt-6-sol",
+      "none"
+    ],
+    "helper": [
+      "gpt-6-astra",
+      "medium"
+    ]
+  },
+  "originalSampleEnvelope": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "wallSeconds": 480,
+    "toolDispatches": 16,
+    "speechRequests": 0
+  },
+  "retainedUsageLedger": {
+    "scope": "Same successor committed dataset prior retained CM01 and CM02; prior separate comparison unknowns preserved separately",
+    "sources": [
+      {
+        "path": "eva2/evidence/product/p2-original-next-cm-result-20261006.json",
+        "sha256": "b6ea420834119c06f6b2593baaf99d93e183e0bee9a0ba7888bda228b33619f0",
+        "registeredAttempts": 1,
+        "knownInputTokens": 2829,
+        "knownOutputTokens": 123,
+        "completePairAccounting": false,
+        "baselineAccounting": "UNKNOWN"
+      },
+      {
+        "path": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json",
+        "sha256": "1a053eba446056bf5f024fc8dcd9d9a6f2cfa28b471083dab4002227ddbfc144",
+        "registeredAttempts": 16,
+        "knownInputTokens": 70323,
+        "knownOutputTokens": 3509,
+        "helperAttempts": 6,
+        "completePairAccounting": true
+      }
+    ],
+    "registeredAttempts": 17,
+    "knownInputTokens": 73152,
+    "knownOutputTokens": 3632,
+    "knownTotalTokens": 76784,
+    "historicalUnknownUsageNotZero": true,
+    "newPreparationCalls": 0,
+    "creditCost": "UNKNOWN"
+  },
+  "causeAndCorrection": {
+    "existingPrivateProcessorSha256": "97abce26c9a128a9777c2d24cfbc5a6c4d997a23eb6ff0695f378172c7fb2aa0",
+    "existingPrivateSourceLocation": "one-pair-processor.private.py:40-45",
+    "class": "original_event_projection_unsupported",
+    "cause": "Original registered calendar transition has no branch in the prior case-limited evaluator projection. Participant native calendar/conversation APIs are already available.",
+    "change": "One private generic relative-calendar parsing branch into the same existing calendar advance/new-conversation APIs; no stimulus hint, corpus, oracle, scorer or product changes.",
+    "controlSourcePath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/original-event-projector.private.py",
+    "controlSourceSha256": "414736c6ad13bf84b439f1584eab5e4359bdfee1355b30b9909cd94bb50553a8",
+    "processorPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/one-pair-processor.private.py",
+    "processorSha256": "a2ab85135bd2172873803090eea4767a4737e5251d45263377a7ec327a49bf64",
+    "orchestratorPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/prepare-and-run.private.py",
+    "orchestratorSha256": "acf9b667a941fe97d67e8b04f90372adb9222a8c4ab736633cffa3ee9552e093",
+    "protectedSemanticsReviewerPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/original-control-semantics-reviewer.private.json",
+    "protectedSemanticsReviewerSha256": "9e4b1410bb0ee2268ec28d9b1b863d09253e58de06c11e23caa9eb0c6833a443",
+    "previousReviewedProcessorSha256": "c75b29814816a5e77d2230587b6f1a8bac56e0df816f162207616e1c23c06b68",
+    "previousReviewedOrchestratorSha256": "39dd509e0f0fad1ad51f0d18546f26da4cb92b6bbd457949cb0c2a31cc7837ea"
+  },
+  "offlineContract": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/zero-provider-offline-contract-technical.private.json",
+    "sha256": "492d11944dccbf4bc6632e1e082e7bd8b5b62960046f142afbc8f90248ae6f36",
+    "previousNoClockBranchPreserved": true,
+    "relativeAndAbsoluteCalendarTransitionsEquivalent": true,
+    "newConversationSessionOnOriginalExistingRoute": true,
+    "textsReturnedByteUnchanged": true,
+    "unsupportedTransitionsStillRejected": true,
+    "existingCalendarAdvanceGenerationAndOffsetContract": true,
+    "allThreePreparedSourcesCompile": true,
+    "modelCalls": 0,
+    "nativeStarts": 0,
+    "reproducibleCheckPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/check-original-projector-offline.private.py",
+    "reproducibleCheckSha256": "76159493c714f09525b021cdc8167a5a2775cb6088a7bb53ad476cd381ae7885",
+    "reproducibleCheckExitCode": 0
+  },
+  "candidateFreeze": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/candidate-freeze.private.json",
+    "sha256": "99f871d25e49c712496510a155357bc630976a8b838752cccac352e0c643c08b",
+    "actualCurrentCandidateMatchesCM02": true
+  },
+  "resourceBinding": {
+    "runHandle": "ev003-successor-native-cm03-20261006-17ce05e0",
+    "resourceRoot": "/tmp/eva2-ev003-provider-history-successor-cm03-20261006-17ce05e0",
+    "network": "eva2-p2succ-cm03-17ce05e0",
+    "subnet": "198.18.226.0/24",
+    "gateway": "198.18.226.1",
+    "containers": {
+      "database": "eva2-p2succ-cm03-db-17ce05e0",
+      "memory": "eva2-p2succ-cm03-memory-17ce05e0",
+      "core": "eva2-p2succ-cm03-core-17ce05e0"
+    },
+    "images": {
+      "database": "sha256:c8483555ce48101872f888c1df8a895ff689d6c7c7a5f7ac266475f9dfe89e0b",
+      "core": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+      "memory": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710"
+    },
+    "uids": {
+      "core": "65532:65532",
+      "memory": "1000:65532",
+      "baseline": "1000:1000"
+    },
+    "baselineClockExternalPath": "/tmp/eva2-p2-baseline-clock-cm03-17ce05e0/clock.json",
+    "sharedCoreMemoryClockPath": "/tmp/eva2-ev003-provider-history-successor-cm03-20261006-17ce05e0/clock.json",
+    "baselineEmptyDataRoot": "/tmp/cp001-bottie-p2-successor-cm03-20261006-17ce05e0",
+    "freshScopeRequired": true,
+    "newContainersStarted": true,
+    "execSession": 74218,
+    "liveSamplePid": null,
+    "sampleDeadlineFilesCreated": false,
+    "releaseFileExists": false,
+    "nativeResourceReady": true,
+    "baselineLeaseGroupGid": 65532,
+    "plannedTechnicalBindingPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/planned-resource-binding-technical.private.json",
+    "plannedTechnicalBindingSha256": "5ed9b210ca8a6787a0df754bac427fce81842d1b6196f734eacc673c4cb5be9b",
+    "actualContainers": {
+      "database": {
+        "containerId": "8cc06a8c0f75cc0485b42ecbf0f29852d0394119e17de02987972f701553c802",
+        "imageSha256": "sha256:c8483555ce48101872f888c1df8a895ff689d6c7c7a5f7ac266475f9dfe89e0b",
+        "uid": "",
+        "running": true,
+        "health": null,
+        "sourceConfigBinding": "5b64516d5f45aaf51c6da4948183baf1717af7429a85d2c618ca650cefbb8c19"
+      },
+      "memory": {
+        "containerId": "3b56a93b5e77eedf722c404e0d946a29976cf6dda19706df7830ebab91588bb8",
+        "imageSha256": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+        "uid": "1000:65532",
+        "running": true,
+        "health": null,
+        "sourceConfigBinding": "254dd43d4396ad752f4794cd55694159682c42b7fa14786d33433f4250908fc1",
+        "helperModelRoles": {
+          "HINDSIGHT_API_LLM_MODEL": "gpt-6-astra",
+          "HINDSIGHT_API_LLM_REASONING_EFFORT": "medium"
+        }
+      },
+      "core": {
+        "containerId": "199468a7ce5e8a2f2ffcdd1d7099d2ad61751a2a811249f4d8e3708a5bb4697a",
+        "imageSha256": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+        "uid": "65532:65532",
+        "running": true,
+        "health": "healthy",
+        "sourceConfigBinding": "239745c76f2137f93e29e5792edaf576bd598e13274887ba0630a0d41b5dc712",
+        "retentionAndModels": {
+          "EVA_BACKGROUND_WORK_ENABLED": "true",
+          "EVA_DELEGATED_WORK_ENABLED": "false",
+          "EVA_PROCEDURE_REFERENCES_ENABLED": "false",
+          "EVA_CONVERSATION_CONTACT_MODEL": "gpt-6-sol",
+          "EVA_CONVERSATION_CONTACT_REASONING_EFFORT": "none",
+          "EVA_CONVERSATION_MODEL": "gpt-6-astra",
+          "EVA_CONVERSATION_REASONING_EFFORT": "medium"
+        }
+      }
+    },
+    "allCreatedContainersStopped": false,
+    "preinputStartupFailure": false
+  },
+  "preparationCommand": {
+    "argv": [
+      "wsl",
+      "-d",
+      "Ubuntu",
+      "-u",
+      "root",
+      "--",
+      "python3",
+      "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/resume-preinput.private.py"
+    ],
+    "cwd": "/home/administrator/project/Eva2",
+    "authorizedNow": false,
+    "gate": "Same reviewed resume is running and waiting; no new command. Only separately reviewed exact execute-once release may admit this one pair.",
+    "alreadyStartedOnceByRoot": true,
+    "liveHandle": 74218,
+    "originalAlreadyExecutedArgv": [
+      "wsl",
+      "-d",
+      "Ubuntu",
+      "-u",
+      "root",
+      "--",
+      "python3",
+      "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/prepare-and-run.private.py"
+    ]
+  },
+  "retentionAndGuards": {
+    "backgroundRetention": true,
+    "delegatedWork": false,
+    "procedureWork": false,
+    "denyAction": true,
+    "allowedActions": [
+      "protocol:structured_response"
+    ],
+    "sharedCumulativeAccountingIncludesHelpersAndFailedCalls": true,
+    "oneDurableAbsolute480DeadlinePerParticipantBeforeBaselineLaunchOrEva2FirstInput": true,
+    "deadlineRenewalAllowed": false,
+    "clockGenerationPreservedAcrossTurns": true,
+    "memoryWaitsConsumeSameDeadline": true,
+    "freshIsolatedScopeRequired": true
+  },
+  "stopBinding": {
+    "preinputStopFile": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/stop-before-input.private.json",
+    "sameParentProcessStopAndTunnelClose": "Copied unchanged CM02 finally clause; reverse-order container stops, parent stop/close, tunnel close, retained closure receipt",
+    "allPriorCM02ContainersRemainStopped": true
+  },
+  "newProviderCalls": 0,
+  "newModelCalls": 0,
+  "newSampleCalls": 0,
+  "newExecutorCalls": 0,
+  "scorerInvocations": 0,
+  "quality": "UNKNOWN",
+  "recordedHumanRaters": 0,
+  "creditCost": "UNKNOWN",
+  "noAutomaticFullMatrix": true,
+  "completionLimit": "Same retained native scope is actually ready on exec74218 with zero provider/sample input. Current inputgate remains closed pending independent actual-ready review; prepared release fields bind exact resume command. Original deadlines will be persisted once before participant launch/input; human quality UNKNOWN.",
+  "independentTechnicalReview": {
+    "reviewer": "/root/p2_eva1_lease_review_20261006",
+    "reviewedAdmissionSha256": "4a7d21df33bb82bbc2c1a0fe5c4df882225ad5f9c8ab663289594cf2724a247a",
+    "overall": "NO_GO_native_preparation_command",
+    "controlProjection": "GO",
+    "sourceBindingsEventClockDeliveryActorInputBytes": "GO",
+    "existingDeadlineAndStopGuards": "GO",
+    "missingRequirement": "Executable original cumulative aggregate admission/counter binding; retained usage metadata alone does not enforce aggregate headroom.",
+    "sourceSeam": "p2_provider_history_native_glue.ledger_for returns ProviderSampleLedger(perSampleLimits); no aggregate counter/admission debit or retained-ledger seed binding in frozen orchestration.",
+    "newProviderCalls": 0,
+    "newModelCalls": 0,
+    "newSampleInputs": 0,
+    "newNativeStarts": 0,
+    "preparedCodeAndCorpusUnchanged": true,
+    "criteriaLimitsAndSourceBindingsUnchanged": true,
+    "historicalReviewBeforeAggregateCorrection": true,
+    "currentCorrectionReview": "GO_exact_no_input_resource_preparation_only",
+    "historicalReviewedAdmissionPreservedPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/reviewed-NO_GO-admission-before-aggregate-binding-technical.private.json",
+    "aggregateCorrectionReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-cm03-aggregate-binding-review-20261006.json",
+      "sha256": "b858f4e7cc7cbcac5fac9f123fdb5b85ec4d7b821f7ee29da0d8eec1c4635d09",
+      "reviewer": "/root/p2_eva1_lease_review_20261006",
+      "scope": "GO exact no-input resource preparation only; not input release",
+      "reviewedAdmissionSha256": "9e292f162203a70690aa1d866065e040632e2185a3814605b2ce47495f6c0500",
+      "reviewedAdmissionPreservedPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/reviewed-aggregate-GO-admission-before-resource-start-technical.private.json"
+    }
+  },
+  "aggregateBindingCorrection": {
+    "status": "OFFLINE_PASS_PENDING_INDEPENDENT_COMMAND_REVIEW",
+    "priorNO_GOAdmissionSha256": "34bf9aaf34f97a866c3241168f504da5bb701e67d311e38fabfe4b5f724152ed",
+    "priorNO_GOAdmissionPreservedPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/reviewed-NO_GO-admission-before-aggregate-binding-technical.private.json",
+    "reviewScope": "Original executable cumulative counter and aggregate headroom; no participant source, case/corpus, scorer, models, criteria or caps changed.",
+    "bindingSourcePath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate-binding.private.py",
+    "bindingSourceSha256": "6d0e217dea616cdd44b41542803708b217189dedc3534895f269e15fb0bb20fd",
+    "bootstrapSeedsPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate-bootstrap-seeds-technical.private.json",
+    "bootstrapSeedsSha256": "509d268e08b9cc37c45873113b098161c8ea2376eb38cbde25074049653b2f9e",
+    "bootstrapTechnicalEvidencePath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/historical-cm01-cm02-aggregate-bootstrap-metadata-technical.private.json",
+    "bootstrapTechnicalEvidenceSha256": "cb473cd6fbead64cdcec39a7588046bb2f5df8ce9a5b63a1fc81b29a3ac68043",
+    "persistentDbPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "preparationDbSha256": "95a47b5febc923b06cb3d04069f0a112fd616476b0aa44027a792e5c17e61363",
+    "dbHashMeaning": "Prepared zero-attempt registry snapshot; subsequent observed usage changes database bytes while immutable plan/dataset binding remains.",
+    "dbSynchronous": "SQLite synchronous=FULL; database and directory fsync before any native resource command.",
+    "sourcePins": {
+      "cp001_accounting.py": "842dfe34c862d7f36a2a7b1d70c7d8a21f24c94f1566304222b669fbabdd044b",
+      "p2_provider_history_native_glue.py": "2087ffaf4854a91908e780d5f6ad72092ff277669696dd688f93335c03df6b0a",
+      "cp001_process_accounting.py": "e2d1d3d63e64f84da2ddeef2bf032fe9e5b5153a50abddf0db9fe75dc607a774"
+    },
+    "frozenComparisonBinding": {
+      "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+      "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca"
+    },
+    "historicalSeeds": [
+      {
+        "participant": "eva1-bottie",
+        "sample_id": "eva1-successor-cm01-epoch1-d171470a",
+        "family": "conversation_memory",
+        "case_id": "EV003-CM-01",
+        "case_sha256": "8a0dfda44e84e2e4d80fc8aad7856eebad5d96e2b67dc490bedbff06e69b81bd",
+        "epoch": 1,
+        "observed": {
+          "provider_attempts": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "provider_usage_complete": false,
+          "raw_usage_measurement": "UNKNOWN",
+          "provider_dispatch_not_reached": true,
+          "wall_seconds_measured": 0.05075091600156156,
+          "tool_dispatches": null,
+          "tool_usage_complete": false,
+          "speech_requests": 0,
+          "helper_attempts": 0,
+          "raw_historical_ledger_unchanged": true
+        },
+        "evidence_sha256": "cb473cd6fbead64cdcec39a7588046bb2f5df8ce9a5b63a1fc81b29a3ac68043",
+        "source_evidence": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/eva1-bottie-native-evidence.private.json",
+          "sha256": "4c04774273b54d31fa8f76b6805569d789cacccd9550e6e60a4e81253e0f0ea7"
+        },
+        "closure_evidence": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/process-close-accounting-access.private.json",
+          "sha256": "4439eea7f8acdc94ea6a13ba71dd66af77cf763c79aeaac5585889c6f8ee33ac"
+        }
+      },
+      {
+        "participant": "eva2",
+        "sample_id": "eva2-successor-cm01-epoch1-d171470a",
+        "family": "conversation_memory",
+        "case_id": "EV003-CM-01",
+        "case_sha256": "8a0dfda44e84e2e4d80fc8aad7856eebad5d96e2b67dc490bedbff06e69b81bd",
+        "epoch": 1,
+        "observed": {
+          "provider_attempts": 1,
+          "input_tokens": 2829,
+          "output_tokens": 123,
+          "provider_usage_complete": true,
+          "raw_usage_measurement": "COMPLETE",
+          "provider_dispatch_not_reached": false,
+          "wall_seconds_measured": 480.0001405469957,
+          "tool_dispatches": 0,
+          "tool_usage_complete": true,
+          "speech_requests": 0,
+          "helper_attempts": 0,
+          "raw_historical_ledger_unchanged": true
+        },
+        "evidence_sha256": "cb473cd6fbead64cdcec39a7588046bb2f5df8ce9a5b63a1fc81b29a3ac68043",
+        "source_evidence": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/eva2-native-evidence.private.json",
+          "sha256": "0735848b5b7e169a063e9f80f4c99a16da2dbb1f3b05d7ac74d96f889ef98cc4"
+        },
+        "closure_evidence": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/process-close-accounting-access.private.json",
+          "sha256": "4439eea7f8acdc94ea6a13ba71dd66af77cf763c79aeaac5585889c6f8ee33ac"
+        }
+      },
+      {
+        "participant": "eva1-bottie",
+        "sample_id": "eva1-successor-cm02-epoch1-0734716d",
+        "family": "conversation_memory",
+        "case_id": "EV003-CM-02",
+        "case_sha256": "f882c57fd68b8a4222c6a2bcdcb4caf7ad0bc1f5adf9b660bd8ae6d249c60393",
+        "epoch": 1,
+        "observed": {
+          "provider_attempts": 7,
+          "input_tokens": 44420,
+          "output_tokens": 2317,
+          "provider_usage_complete": true,
+          "raw_usage_measurement": "COMPLETE",
+          "provider_dispatch_not_reached": false,
+          "wall_seconds_measured": 51.671866760996636,
+          "tool_dispatches": 7,
+          "tool_usage_complete": true,
+          "speech_requests": 0,
+          "helper_attempts": 0,
+          "raw_historical_ledger_unchanged": true
+        },
+        "evidence_sha256": "cb473cd6fbead64cdcec39a7588046bb2f5df8ce9a5b63a1fc81b29a3ac68043",
+        "source_evidence": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm02-20261006-0734716d/eva1-bottie-native-evidence.private.json",
+          "sha256": "b82d685f5a6f3527373fe19375d2f3b46bf18c3cb813382db8d4b192bc9019a0"
+        },
+        "closure_evidence": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm02-20261006-0734716d/process-close-accounting-access.private.json",
+          "sha256": "c59a8425158125cb9eb7e45b4c43e4144bda5f556b71f69f989c877c1969a532"
+        }
+      },
+      {
+        "participant": "eva2",
+        "sample_id": "eva2-successor-cm02-epoch1-0734716d",
+        "family": "conversation_memory",
+        "case_id": "EV003-CM-02",
+        "case_sha256": "f882c57fd68b8a4222c6a2bcdcb4caf7ad0bc1f5adf9b660bd8ae6d249c60393",
+        "epoch": 1,
+        "observed": {
+          "provider_attempts": 9,
+          "input_tokens": 25903,
+          "output_tokens": 1192,
+          "provider_usage_complete": true,
+          "raw_usage_measurement": "COMPLETE",
+          "provider_dispatch_not_reached": false,
+          "wall_seconds_measured": 79.83911028099828,
+          "tool_dispatches": 0,
+          "tool_usage_complete": true,
+          "speech_requests": 0,
+          "helper_attempts": 6,
+          "raw_historical_ledger_unchanged": true
+        },
+        "evidence_sha256": "cb473cd6fbead64cdcec39a7588046bb2f5df8ce9a5b63a1fc81b29a3ac68043",
+        "source_evidence": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm02-20261006-0734716d/eva2-native-evidence.private.json",
+          "sha256": "892621f662a81ed33ba5f292d8021a40a81d0c78a0dc6642a87d044376fc67ee"
+        },
+        "closure_evidence": {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm02-20261006-0734716d/process-close-accounting-access.private.json",
+          "sha256": "c59a8425158125cb9eb7e45b4c43e4144bda5f556b71f69f989c877c1969a532"
+        }
+      }
+    ],
+    "cm01BaselineAggregateAttestation": {
+      "provider_dispatch_not_reached": true,
+      "provider_attempts": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "provider_usage_complete": false,
+      "raw_usage_measurement": "UNKNOWN",
+      "originalRawAccountingAndScoreUnchanged": true,
+      "fullOriginalEnvelopeReserved": true,
+      "proof": "Independently reviewed observed startup guard at frozen worker line75 before native transport/boot; no participant input. This is not a raw SDK usage-completeness claim."
+    },
+    "registryReports": {
+      "eva1-bottie": {
+        "participant": "eva1-bottie",
+        "admitted_samples": 3,
+        "reserved_original_envelopes": {
+          "providerAttempts": 48,
+          "providerInputTokens": 3145728,
+          "providerOutputTokens": 57600,
+          "wallSeconds": 1440,
+          "toolDispatches": 48,
+          "speechRequests": 0
+        },
+        "known_observed": {
+          "provider_attempts": 7,
+          "input_tokens": 44420,
+          "output_tokens": 2317
+        },
+        "historical_pre_dispatch_zero_samples": 1,
+        "usage_unknown": false,
+        "envelope_exceeded": false,
+        "meaning": "Original ceiling reservations; observations and attested pre-dispatch zero are separate from ceilings. Historical raw SDK UNKNOWN remains retained."
+      },
+      "eva2": {
+        "participant": "eva2",
+        "admitted_samples": 3,
+        "reserved_original_envelopes": {
+          "providerAttempts": 48,
+          "providerInputTokens": 3145728,
+          "providerOutputTokens": 57600,
+          "wallSeconds": 1440,
+          "toolDispatches": 48,
+          "speechRequests": 0
+        },
+        "known_observed": {
+          "provider_attempts": 10,
+          "input_tokens": 28732,
+          "output_tokens": 1315
+        },
+        "historical_pre_dispatch_zero_samples": 0,
+        "usage_unknown": false,
+        "envelope_exceeded": false,
+        "meaning": "Original ceiling reservations; observations and attested pre-dispatch zero are separate from ceilings. Historical raw SDK UNKNOWN remains retained."
+      }
+    },
+    "newSampleIds": {
+      "eva1-bottie": "eva1-successor-cm03-epoch1-17ce05e0",
+      "eva2": "eva2-successor-cm03-epoch1-17ce05e0"
+    },
+    "newCaseLedgersBeforeAnyResourceCommand": true,
+    "sameRegistryAndLedgerInstancesUsedForActualExecution": true,
+    "offlineContract": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/zero-provider-aggregate-binding-contract-technical.private.json",
+      "sha256": "fbbb6ec3ab493822d72bf15e44e66f714ee1e7c99ba7c3e6e6bb6c7347f4207d",
+      "checkPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/check-aggregate-binding-offline.private.py",
+      "checkSha256": "500db3fa24783c785b23e4239b233d029d94e81bd004c8a7e41e13a107aaef68",
+      "exitCode": 0,
+      "sameDbReopenIdenticalNoReset": true,
+      "historicalFailedBaselineFullyReserved": true,
+      "rawCm01SdkUnknownPreserved": true,
+      "httpSocketSubprocessDispatchForbidden": true,
+      "providerCalls": 0,
+      "nativeStarts": 0,
+      "sampleInputs": 0
+    },
+    "sourceAndPreparationDelta": "Only external aggregate bootstrap/wiring and baseline UID/GID metadata corrected to actual runuser UID1000:GID1000; lease owner/group and participant command unchanged.",
+    "rootAccountingFocusedChecks": {
+      "passed": 83,
+      "providerCalls": 0,
+      "sourceSha256": "842dfe34c862d7f36a2a7b1d70c7d8a21f24c94f1566304222b669fbabdd044b",
+      "reportedBy": "/root"
+    },
+    "originalAggregateCapsUnchanged": true,
+    "historicalOtherDatasetUnknownsPreservedNotRelabelled": true,
+    "noResourcesStarted": true,
+    "familyHeadroomPerParticipant": {
+      "eva1-bottie": {
+        "originalSampleCount": 36,
+        "reservedSamples": 3,
+        "remainingSamples": 33,
+        "originalCaps": {
+          "providerAttempts": 576,
+          "providerInputTokens": 37748736,
+          "providerOutputTokens": 691200,
+          "wallSeconds": 17280,
+          "toolDispatches": 576,
+          "speechRequests": 0
+        },
+        "remainingReservedCeilings": {
+          "providerAttempts": 528,
+          "providerInputTokens": 34603008,
+          "providerOutputTokens": 633600,
+          "wallSeconds": 15840,
+          "toolDispatches": 528,
+          "speechRequests": 0
+        }
+      },
+      "eva2": {
+        "originalSampleCount": 36,
+        "reservedSamples": 3,
+        "remainingSamples": 33,
+        "originalCaps": {
+          "providerAttempts": 576,
+          "providerInputTokens": 37748736,
+          "providerOutputTokens": 691200,
+          "wallSeconds": 17280,
+          "toolDispatches": 576,
+          "speechRequests": 0
+        },
+        "remainingReservedCeilings": {
+          "providerAttempts": 528,
+          "providerInputTokens": 34603008,
+          "providerOutputTokens": 633600,
+          "wallSeconds": 15840,
+          "toolDispatches": 528,
+          "speechRequests": 0
+        }
+      }
+    },
+    "historicalBindingBeforeNativeImportCorrection": true,
+    "currentResumeBindingField": "preinputResumePreparation"
+  },
+  "actualReadiness": {
+    "status": "ACTUAL_READY_INPUT_GATE_CLOSED",
+    "technicalEvidencePath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/actual-resources-ready-technical.private.json",
+    "technicalEvidenceSha256": "75649e5adfbd2fe30dad60ccc7ba8334c333e0dd04a47d8c2ce0d52da1ae9c66",
+    "resourcesReadyPath": "/tmp/eva2-ev003-provider-history-successor-cm03-20261006-17ce05e0/resources-ready.json",
+    "resourcesReadySha256": "07a7be8bbe9cf67f1280262b5c229a6fd4a11a2375bec4a046f69f669855c8b6",
+    "resumeStartedPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/resume-started.private.json",
+    "resumeStartedSha256": "83329f711c4ab63504863980a8ddf5261e36038aeb83d9de9f4e199f41623f03",
+    "runHandle": "ev003-successor-native-cm03-20261006-17ce05e0",
+    "execSession": 74218,
+    "containers": {
+      "database": {
+        "containerId": "8cc06a8c0f75cc0485b42ecbf0f29852d0394119e17de02987972f701553c802",
+        "imageSha256": "sha256:c8483555ce48101872f888c1df8a895ff689d6c7c7a5f7ac266475f9dfe89e0b",
+        "uid": "",
+        "running": true,
+        "health": null,
+        "sourceConfigBinding": "5b64516d5f45aaf51c6da4948183baf1717af7429a85d2c618ca650cefbb8c19"
+      },
+      "memory": {
+        "containerId": "3b56a93b5e77eedf722c404e0d946a29976cf6dda19706df7830ebab91588bb8",
+        "imageSha256": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+        "uid": "1000:65532",
+        "running": true,
+        "health": null,
+        "sourceConfigBinding": "254dd43d4396ad752f4794cd55694159682c42b7fa14786d33433f4250908fc1",
+        "helperModelRoles": {
+          "HINDSIGHT_API_LLM_MODEL": "gpt-6-astra",
+          "HINDSIGHT_API_LLM_REASONING_EFFORT": "medium"
+        }
+      },
+      "core": {
+        "containerId": "199468a7ce5e8a2f2ffcdd1d7099d2ad61751a2a811249f4d8e3708a5bb4697a",
+        "imageSha256": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+        "uid": "65532:65532",
+        "running": true,
+        "health": "healthy",
+        "sourceConfigBinding": "239745c76f2137f93e29e5792edaf576bd598e13274887ba0630a0d41b5dc712",
+        "retentionAndModels": {
+          "EVA_BACKGROUND_WORK_ENABLED": "true",
+          "EVA_DELEGATED_WORK_ENABLED": "false",
+          "EVA_PROCEDURE_REFERENCES_ENABLED": "false",
+          "EVA_CONVERSATION_CONTACT_MODEL": "gpt-6-sol",
+          "EVA_CONVERSATION_CONTACT_REASONING_EFFORT": "none",
+          "EVA_CONVERSATION_MODEL": "gpt-6-astra",
+          "EVA_CONVERSATION_REASONING_EFFORT": "medium"
+        }
+      }
+    },
+    "currentParentErrors": [],
+    "nativeControllers": {
+      "core": {
+        "seen": true,
+        "connected": true,
+        "unsettled_events": 0
+      },
+      "memory": {
+        "seen": true,
+        "connected": true,
+        "unsettled_events": 0
+      }
+    },
+    "actionCounters": {
+      "config_sha256": "d0e1fb6133f17ca1a7d16b9ea8394916f7bb78d66981718c246f25538b0fec1b",
+      "reserved_dispatches": 0,
+      "native_action_reservations": 0,
+      "protocol_reservations": 0,
+      "pending": 0,
+      "complete": true
+    },
+    "newSampleRegisteredAttempts": {
+      "eva1-bottie": 0,
+      "eva2": 0
+    },
+    "rawNewSampleUsageMeasurement": "UNKNOWN",
+    "rawNewSampleUsageComplete": false,
+    "clockBindings": {
+      "sharedPath": "/tmp/eva2-ev003-provider-history-successor-cm03-20261006-17ce05e0/clock.json",
+      "sharedSha256": "9e15c4bb66e1042c33d1bc43b121c99578b74738a5e53d865ef3a4b5ef44679c",
+      "externalBaselinePath": "/tmp/eva2-p2-baseline-clock-cm03-17ce05e0/clock.json",
+      "externalBaselineSha256": "9e15c4bb66e1042c33d1bc43b121c99578b74738a5e53d865ef3a4b5ef44679c",
+      "generation": 0,
+      "sameOriginalBytes": true,
+      "coreReceiptPath": "/tmp/eva2-ev003-provider-history-successor-cm03-20261006-17ce05e0/core-output/clock-receipt.json",
+      "coreReceiptSha256": "41a95bf0cd11fcec287abb0f8093d684c2ffcf252d7bb2cc73ec09628545a248",
+      "memoryReceiptPath": "/tmp/eva2-ev003-provider-history-successor-cm03-20261006-17ce05e0/memory-output/clock-receipt.json",
+      "memoryReceiptSha256": "41a95bf0cd11fcec287abb0f8093d684c2ffcf252d7bb2cc73ec09628545a248",
+      "nativeReceiptsMatchSharedState": true
+    },
+    "baselineLease": {
+      "sha256": "d688349a5689c2872b0f19b7f06ff1ec8da08719241d43855de39c5445b3c6ad",
+      "validitySecondsRemaining": 402239.0681936741,
+      "exceeds960Seconds": true,
+      "providerCalls": 0,
+      "path": "/tmp/eva2-p2-bottie-lease-20261006-fo79ie9s/auth.json",
+      "readUid": 1000,
+      "readPrimaryGid": 1000,
+      "leaseOwnerUid": 1000,
+      "leaseGroupGid": 65532,
+      "leaseMode": "0o640",
+      "routeRefreshed": false
+    },
+    "aggregate": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+      "sha256": "b27201d3b811ca4bcaa8bd6eaa6b222b2b4b6cfb2f18967931dc4e55b0fff650",
+      "registryReports": {
+        "eva1-bottie": {
+          "participant": "eva1-bottie",
+          "admitted_samples": 3,
+          "reserved_original_envelopes": {
+            "providerAttempts": 48,
+            "providerInputTokens": 3145728,
+            "providerOutputTokens": 57600,
+            "wallSeconds": 1440,
+            "toolDispatches": 48,
+            "speechRequests": 0
+          },
+          "known_observed": {
+            "provider_attempts": 7,
+            "input_tokens": 44420,
+            "output_tokens": 2317
+          },
+          "historical_pre_dispatch_zero_samples": 1,
+          "usage_unknown": false,
+          "envelope_exceeded": false,
+          "meaning": "Original ceiling reservations; observations and attested pre-dispatch zero are separate from ceilings. Historical raw SDK UNKNOWN remains retained."
+        },
+        "eva2": {
+          "participant": "eva2",
+          "admitted_samples": 3,
+          "reserved_original_envelopes": {
+            "providerAttempts": 48,
+            "providerInputTokens": 3145728,
+            "providerOutputTokens": 57600,
+            "wallSeconds": 1440,
+            "toolDispatches": 48,
+            "speechRequests": 0
+          },
+          "known_observed": {
+            "provider_attempts": 10,
+            "input_tokens": 28732,
+            "output_tokens": 1315
+          },
+          "historical_pre_dispatch_zero_samples": 0,
+          "usage_unknown": false,
+          "envelope_exceeded": false,
+          "meaning": "Original ceiling reservations; observations and attested pre-dispatch zero are separate from ceilings. Historical raw SDK UNKNOWN remains retained."
+        }
+      },
+      "sampleStates": [
+        {
+          "participant": "eva1-bottie",
+          "sampleId": "eva1-successor-cm01-epoch1-d171470a",
+          "revision": 0,
+          "kind": "historical",
+          "providerAttempts": 0
+        },
+        {
+          "participant": "eva1-bottie",
+          "sampleId": "eva1-successor-cm02-epoch1-0734716d",
+          "revision": 0,
+          "kind": "historical",
+          "providerAttempts": 7
+        },
+        {
+          "participant": "eva1-bottie",
+          "sampleId": "eva1-successor-cm03-epoch1-17ce05e0",
+          "revision": 0,
+          "kind": "active",
+          "providerAttempts": 0
+        },
+        {
+          "participant": "eva2",
+          "sampleId": "eva2-successor-cm01-epoch1-d171470a",
+          "revision": 0,
+          "kind": "historical",
+          "providerAttempts": 1
+        },
+        {
+          "participant": "eva2",
+          "sampleId": "eva2-successor-cm02-epoch1-0734716d",
+          "revision": 0,
+          "kind": "historical",
+          "providerAttempts": 9
+        },
+        {
+          "participant": "eva2",
+          "sampleId": "eva2-successor-cm03-epoch1-17ce05e0",
+          "revision": 3,
+          "kind": "active",
+          "providerAttempts": 0
+        }
+      ],
+      "cleanupRearm": {
+        "sampleId": "eva2-successor-cm03-epoch1-17ce05e0",
+        "fromRevision": 2,
+        "toRevision": 3,
+        "attempts": 0,
+        "cleanupStopOnly": true,
+        "countsAndReservationsUnchanged": true,
+        "rawSdkUnknownUnchanged": true
+      },
+      "allOriginalReservationsAndHistoricalUnknownsPreserved": true
+    },
+    "scopeProof": {
+      "path": "/tmp/eva2-ev003-provider-history-successor-cm03-20261006-17ce05e0/scope-ready.json",
+      "sha256": "7a5fc67845aa471aff1edb999809b485aec5ad33c1e4b17a058568a8dbbb6fc2",
+      "roleSchemaScopeAlreadyInitialized": true,
+      "noReinitializationDuringResume": true
+    },
+    "readbackBinding": {
+      "coreAndMemoryNativeIngressReadyReceipts": true,
+      "originalBottieIOAndNativeReadbackAdaptersUnchanged": true,
+      "originalDisposableScopeReadbackDsnRetained": true,
+      "retainedDsnFileSha256": "3a898d8adec3c92cdcb6f59cc28252600d2364bd58d4393646c62a98e1c81fec",
+      "noParticipantReplyOrSemanticReadbackYet": true
+    },
+    "deadlineAndInputGate": {
+      "originalOrder": [
+        "eva1-bottie",
+        "eva2"
+      ],
+      "sampleDeadlinesExist": false,
+      "executeOnceExists": false,
+      "ownerStopFileExists": false,
+      "baselineDataRootExists": false,
+      "oneAbsolute480DeadlineBeforeEachParticipantLaunchOrFirstInput": "Unchanged processor and fd942 original helper; same deadline all turns/memory waits",
+      "deadlineRenewalAllowed": false,
+      "releaseRequiresSeparateIndependentActualReadyGo": true,
+      "releaseMustBindResumeSourceAndFinalAdmittedPublicReceipt": true,
+      "executeOnceTarget": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/execute-once.private.json"
+    },
+    "stopGate": {
+      "preinputStopFile": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/stop-before-input.private.json",
+      "closurePath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/resume-process-close-accounting-access.private.json",
+      "originalParentStopTunnelCloseReverseContainerStop": true
+    },
+    "independentActualInputReviewStatus": "GO_ONE_CM03_EPOCH1_PAIR_ONLY",
+    "providerCalls": 0,
+    "modelCalls": 0,
+    "sampleInputs": 0,
+    "scorerInvocations": 0,
+    "independentActualInputReview": {
+      "reviewer": "/root/p2_eva1_lease_review_20261006",
+      "reviewedAdmissionSha256": "b8fdb1cf1f4c530944e5072b8c8ac7a2e6a22e720ad712a31ea98850a1168ba1",
+      "actualReadyTechnicalSha256": "75649e5adfbd2fe30dad60ccc7ba8334c333e0dd04a47d8c2ce0d52da1ae9c66",
+      "preparedReleaseSha256": "18f45f2ce1fdd7631bfb7a293955bc0af1417bbf34e00c0197124bc790442af5",
+      "scope": "One original CM03 epoch1 Eva1 then Eva2 pair on actual session74218; fixed criteria/profiles/deadlines/aggregate/stop. No automatic matrix, replay or quality winner.",
+      "recordedAtUtc": "2026-10-06T18:54:39.307061+00:00"
+    }
+  },
+  "preinputResumePreparation": {
+    "status": "OFFLINE_PASS_PENDING_INDEPENDENT_NO_INPUT_COMMAND_REVIEW",
+    "sameRunHandle": "ev003-successor-native-cm03-20261006-17ce05e0",
+    "previousExecSession": 24842,
+    "previousActualInputGate": "NO_GO",
+    "previousNotReadyAdmissionSha256": "b1de60a2b136159a69202339dd98119f74000120f01e2753974e8e55f2bb97b4",
+    "previousNotReadyAdmissionPreservedPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/reviewed-NOT_READY-admission-before-targeted-resume-technical.private.json",
+    "correctedPublicAccountingSha256": "5507ff2c379f955319161c8da2015b8459d6c9610cfa529842904d5706d22e5f",
+    "correction": "sqlite3 imported only inside PersistentAggregateLedger._connection; no native image/provider/model/product change.",
+    "rootFocusedChecks": {
+      "passed": 84,
+      "providerCalls": 0,
+      "correctActualMemoryImagePureImportExitCode": 0,
+      "correctActualMemoryImagePureImportStderrEmpty": true,
+      "uid": "1000:65532",
+      "network": "none",
+      "reportedBy": "/root",
+      "initialProbeGeometryFailurePreserved": "First pure-import probe mount was too shallow and yielded IndexError; corrected existing module-layout probe passed."
+    },
+    "commandPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/resume-preinput.private.py",
+    "commandSha256": "ca390e476f1e9f4de025654b64076449a62e254061e4b83acb99222814bef369",
+    "aggregateResumeHelperPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate-resume-binding.private.py",
+    "aggregateResumeHelperSha256": "76083905ead64d5f3982258c7bcd0eec749714d04c5ab94f59e8a3bf51eee5a2",
+    "retainedBindingPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/preinput-resume-binding-technical.private.json",
+    "retainedBindingSha256": "2d430089e1015c551b26d5b3c3706fc23b1e37d5502888fa441cdb8e0752ff44",
+    "currentPersistentDbSha256": "da23d69dac223f40db351ab3256e740f8e0b76fbac42dda92394dd7acbcf9dae",
+    "actualDbStillStoppedCleanupState": true,
+    "offlineContract": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/zero-provider-preinput-resume-contract-technical.private.json",
+      "sha256": "4b710d88f3afb0a15ff38d721f11033aa3b292d76e21ebb281858096bb5279f1",
+      "checkPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/check-preinput-resume-offline.private.py",
+      "checkSha256": "592d6e07aee1b08af2ef2cb9e0d9be1a384d0d293ec1d376bcd0837cd64e7d1a",
+      "exitCode": 0,
+      "actualDbUnchanged": true,
+      "allHistoricalRowsCountsReservationsUnchanged": true,
+      "onlyCopyDelta": [
+        "CM03 Eva2 cleanup stop cleared",
+        "CM03 Eva2 stop_requested false",
+        "CM03 Eva2 revision2→3"
+      ],
+      "noProviderHttpSocketSubprocessDispatch": true,
+      "providerCalls": 0,
+      "nativeStarts": 0,
+      "sampleInputs": 0
+    },
+    "reuse": {
+      "publicNativeResumeSourcePath": "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_resume.py",
+      "publicNativeResumeSourceSha256": "fccb4bfc867e4f847e8f0df156930ff4ac197c444d14439d751b9c975b919f12",
+      "sameDatabaseAndVolume": true,
+      "sameScopeAndBudget": true,
+      "sameMemoryContainerConfiguration": true,
+      "sameAccountingCredentialsSocketAndNamespaces": true,
+      "sameProviderTunnelPort": true,
+      "sameSharedAndExternalClockBytesGeneration": true,
+      "coreNeverCreatedFirstStartOnlyAfterMemoryReady": true,
+      "noRoleSchemaSeedOrFixtureReinitialization": true
+    },
+    "guards": {
+      "exactTechnicalFailureAndClosureRequired": true,
+      "currentDbSha256MustMatchBeforeRearm": true,
+      "newSampleProviderAttemptsMustBeZero": true,
+      "noParticipantInputOrResult": true,
+      "noSampleDeadlineOrExecuteOnce": true,
+      "noOwnerStopFile": true,
+      "onlyCm03Eva2CleanupStopMayRearm": true,
+      "noReservationOrCounterRemoval": true,
+      "noClosedCm01Cm02Resume": true,
+      "resumeStartMarkerCreatedOnceBeforeCommands": true,
+      "inputRequiresSeparateActualReadyAdmissionAndExecuteOnceShaBinding": true,
+      "releaseMustBindResumeCommandSha256": true,
+      "originalDeadlinePersistedByUnchangedProcessorBeforeParticipantLaunchOrInput": true
+    },
+    "noNewResourcesStarted": true,
+    "providerCalls": 0,
+    "modelCalls": 0,
+    "sampleInputs": 0,
+    "scorerInvocations": 0,
+    "independentReviewStatus": "GO_exact_no_input_resume_only",
+    "independentReview": {
+      "reviewer": "/root/p2_eva1_lease_review_20261006",
+      "status": "GO_exact_no_input_resume_only",
+      "reviewedAdmissionSha256": "965d8fa0b476a821ae48c7239c0340343797625aedc1f874278127d45c493166",
+      "reviewedAdmissionPreservedPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/reviewed-preinput-resume-GO-admission-technical.private.json",
+      "commandSha256": "ca390e476f1e9f4de025654b64076449a62e254061e4b83acb99222814bef369",
+      "checks": "Frozen code5507, exact resume/helper/binding/contract/checker; 20 retained hashes, equal clocks/gen0, actualDB cleanupstop revision2 preserved, offlinecopy only cleanupstop/requested/revision delta, no input/execute/deadline/ownerstop.",
+      "scope": "Same retained resource preparation only; separate actual-ready and pair-inputgate remain closed. Historical NOT_READY/NO_GO preserved.",
+      "providerCalls": 0,
+      "nativeStarts": 0,
+      "newReviewerTests": 0
+    },
+    "startedByRootAfterExactGo": true,
+    "actualExecSession": 74218
+  },
+  "historicalPreinputReadinessFailure": {
+    "status": "NOT_READY",
+    "technicalEvidencePath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/preinput-resource-startup-closure-technical.private.json",
+    "technicalEvidenceSha256": "cfc5f88db72e7579bbce263dc71362f527331a6ea3e40f0189fa94bd628e22fc",
+    "reviewedPreparationAdmissionSha256": "9e292f162203a70690aa1d866065e040632e2185a3814605b2ce47495f6c0500",
+    "runHandle": "ev003-successor-native-cm03-20261006-17ce05e0",
+    "execSession": 24842,
+    "failure": {
+      "driverClass": "ValueError",
+      "driverPhase": "prepare_or_execute",
+      "driverFixedError": "Native worker exited before readiness",
+      "nativeClass": "ImportError",
+      "nativeFixedError": "libsqlite3.so.0: cannot open shared object file: No such file or directory",
+      "sourceChain": [
+        {
+          "path": "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py",
+          "line": 23
+        },
+        {
+          "path": "eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py",
+          "line": 14
+        },
+        {
+          "path": "eva2/benchmark/inspect_ai_v1/cp001_accounting.py",
+          "line": 14
+        }
+      ],
+      "accountingSourceSha256": "842dfe34c862d7f36a2a7b1d70c7d8a21f24c94f1566304222b669fbabdd044b",
+      "seam": "Host-only persistent aggregate sqlite3 imported eagerly by native memory worker before ready; memory image lacks libsqlite3.so.0."
+    },
+    "evidence": {
+      "driver-failure-accounting-access.private.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/driver-failure-accounting-access.private.json",
+        "sha256": "d3f7b0e46201c6a6caa79b6fd88253ad3c022c7fb16d36aba7863e2612607c4c"
+      },
+      "process-close-accounting-access.private.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/process-close-accounting-access.private.json",
+        "sha256": "43874aa0a1870e5f751dc03773c3816633cecdcd163770d812812814dcc1497b"
+      },
+      "aggregate-before-native-commands-technical.private.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate-before-native-commands-technical.private.json",
+        "sha256": "8b4bcd316e0614f20be12ab15f00558bc658459a748d5c66728b33a76a076027"
+      },
+      "memory-preinput-startup-stderr.private.log": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/memory-preinput-startup-stderr.private.log",
+        "sha256": "d60c88c30c52404e3e48faef5e901685e07718b4a05f68d0e1484cd1fc61b339"
+      }
+    },
+    "readinessReceiptExists": false,
+    "clockReceiptsExist": {
+      "core": false,
+      "memory": false
+    },
+    "sampleDeadlineFilesExist": false,
+    "executeOnceExists": false,
+    "newSampleRegisteredAttempts": {
+      "eva1-bottie": 0,
+      "eva2": 0
+    },
+    "providerCalls": 0,
+    "sampleInputs": 0,
+    "rawNewSampleUsageMeasurement": "UNKNOWN",
+    "rawNewSampleUsageComplete": false,
+    "aggregateReservationsPreserved": true,
+    "scopeAndDatabaseVolumeRetained": true,
+    "localClosure": {
+      "allCreatedContainersStopped": true,
+      "parentErrors": [],
+      "nativeWorkerSeen": {
+        "core": false,
+        "memory": false
+      },
+      "tunnelClosed": true,
+      "tunnelEvents": 0,
+      "aggregateReports": {
+        "eva1-bottie": {
+          "participant": "eva1-bottie",
+          "admitted_samples": 3,
+          "reserved_original_envelopes": {
+            "providerAttempts": 48,
+            "providerInputTokens": 3145728,
+            "providerOutputTokens": 57600,
+            "wallSeconds": 1440,
+            "toolDispatches": 48,
+            "speechRequests": 0
+          },
+          "known_observed": {
+            "provider_attempts": 7,
+            "input_tokens": 44420,
+            "output_tokens": 2317
+          },
+          "historical_pre_dispatch_zero_samples": 1,
+          "usage_unknown": false,
+          "envelope_exceeded": false,
+          "meaning": "Original ceiling reservations; observations and attested pre-dispatch zero are separate from ceilings. Historical raw SDK UNKNOWN remains retained."
+        },
+        "eva2": {
+          "participant": "eva2",
+          "admitted_samples": 3,
+          "reserved_original_envelopes": {
+            "providerAttempts": 48,
+            "providerInputTokens": 3145728,
+            "providerOutputTokens": 57600,
+            "wallSeconds": 1440,
+            "toolDispatches": 48,
+            "speechRequests": 0
+          },
+          "known_observed": {
+            "provider_attempts": 10,
+            "input_tokens": 28732,
+            "output_tokens": 1315
+          },
+          "historical_pre_dispatch_zero_samples": 0,
+          "usage_unknown": false,
+          "envelope_exceeded": false,
+          "meaning": "Original ceiling reservations; observations and attested pre-dispatch zero are separate from ceilings. Historical raw SDK UNKNOWN remains retained."
+        }
+      }
+    },
+    "inputGate": "NO_GO",
+    "independentActualInputReviewStatus": "NO_GO_NATIVE_MEMORY_IMPORT_NOT_READY",
+    "independentReview": {
+      "reviewer": "/root/p2_eva1_lease_review_20261006",
+      "status": "NO_GO_input_gate",
+      "reviewedAdmissionSha256": "b1de60a2b136159a69202339dd98119f74000120f01e2753974e8e55f2bb97b4",
+      "technicalClosureSha256": "cfc5f88db72e7579bbce263dc71362f527331a6ea3e40f0189fa94bd628e22fc",
+      "scope": "Exact missing libsqlite3 startup import; zero-input/attempts, no deadline/release, stopped resources, preserved aggregate. Historical no-input prepGO remains; no new command/input release."
+    }
+  },
+  "inputReleasePreparation": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/prepared-one-time-input-release-technical.private.json",
+    "sha256": "18f45f2ce1fdd7631bfb7a293955bc0af1417bbf34e00c0197124bc790442af5",
+    "frozenReleaseFields": {
+      "processorSha256": "a2ab85135bd2172873803090eea4767a4737e5251d45263377a7ec327a49bf64",
+      "projectorSha256": "414736c6ad13bf84b439f1584eab5e4359bdfee1355b30b9909cd94bb50553a8",
+      "resumeCommandSha256": "ca390e476f1e9f4de025654b64076449a62e254061e4b83acb99222814bef369"
+    },
+    "admissionSha256Rule": "Root computes SHA256 of the exact public receipt after recording independent input GO and status admitted_one_successor_original_cm_pair; fill admissionSha256 once. Do not use any preparation hash.",
+    "executeOnceTarget": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/execute-once.private.json",
+    "created": false,
+    "onlyRootMayMaterializeAfterSeparateInputGo": true
+  }
+}

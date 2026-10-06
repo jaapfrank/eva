@@ -12,10 +12,11 @@ from cp001_accounting import ProviderSampleLedger
 from cp001_native import NativeHTTPResponse, NativeIngressError, NativeProviderControl, exchange, read_eva2_committed_reply, read_eva2_memory_settlement
 from cp001_process_accounting import ParentProcessAccounting
 
-def ledger_for(sample_id, plan):
+def ledger_for(sample_id, plan, *, aggregate=None):
     family = next(x for x in plan["families"] if x["family"] == "conversation_memory")
     return ProviderSampleLedger(sample_id, family["perSampleLimits"],
-        {"contact": ("gpt-6-sol", "none"), "helper": ("gpt-6-astra", "medium")})
+        {"contact": ("gpt-6-sol", "none"), "helper": ("gpt-6-astra", "medium")},
+        aggregate=aggregate, family=family["family"])
 
 def private_json(path, value):
     descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)

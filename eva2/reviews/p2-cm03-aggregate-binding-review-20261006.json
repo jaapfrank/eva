@@ -1,0 +1,213 @@
+{
+  "contract": "P2CM03AggregateBindingIndependentReview/v1",
+  "recordedAt": "2026-10-06T18:37:19.635956+00:00",
+  "reviewer": "/root/p2_eva1_lease_review_20261006",
+  "task": "P2.1",
+  "caseId": "EV003-CM-03",
+  "epoch": 1,
+  "runHandle": "ev003-successor-native-cm03-20261006-17ce05e0",
+  "scope": "Bound evaluator aggregate correction and exact no-input native resource preparation; no participant input release, replay, new criteria or quality judgment.",
+  "decisions": {
+    "code": "GO",
+    "historicalBootstrapAndConcreteBinding": "GO",
+    "exactNoInputResourcePreparation": "GO",
+    "inputReady": "NOT_YET_DEMONSTRATED",
+    "quality": "UNKNOWN"
+  },
+  "reviewedBindings": {
+    "admission": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-original-next-cm03-admission-20261006.json",
+      "sha256": "9e292f162203a70690aa1d866065e040632e2185a3814605b2ce47495f6c0500"
+    },
+    "accounting": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/cp001_accounting.py",
+      "sha256": "842dfe34c862d7f36a2a7b1d70c7d8a21f24c94f1566304222b669fbabdd044b"
+    },
+    "glue": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py",
+      "sha256": "2087ffaf4854a91908e780d5f6ad72092ff277669696dd688f93335c03df6b0a"
+    },
+    "ipc": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py",
+      "sha256": "e2d1d3d63e64f84da2ddeef2bf032fe9e5b5153a50abddf0db9fe75dc607a774"
+    },
+    "aggregateBinding": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate-binding.private.py",
+      "sha256": "6d0e217dea616cdd44b41542803708b217189dedc3534895f269e15fb0bb20fd"
+    },
+    "processor": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/one-pair-processor.private.py",
+      "sha256": "a2ab85135bd2172873803090eea4767a4737e5251d45263377a7ec327a49bf64"
+    },
+    "orchestrator": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/prepare-and-run.private.py",
+      "sha256": "acf9b667a941fe97d67e8b04f90372adb9222a8c4ab736633cffa3ee9552e093"
+    },
+    "seeds": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate-bootstrap-seeds-technical.private.json",
+      "sha256": "509d268e08b9cc37c45873113b098161c8ea2376eb38cbde25074049653b2f9e"
+    },
+    "historyTechnical": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/historical-cm01-cm02-aggregate-bootstrap-metadata-technical.private.json",
+      "sha256": "cb473cd6fbead64cdcec39a7588046bb2f5df8ce9a5b63a1fc81b29a3ac68043"
+    },
+    "aggregateDb": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+      "sha256": "95a47b5febc923b06cb3d04069f0a112fd616476b0aa44027a792e5c17e61363"
+    },
+    "aggregateOfflineContract": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/zero-provider-aggregate-binding-contract-technical.private.json",
+      "sha256": "fbbb6ec3ab493822d72bf15e44e66f714ee1e7c99ba7c3e6e6bb6c7347f4207d"
+    },
+    "aggregateOfflineChecker": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/check-aggregate-binding-offline.private.py",
+      "sha256": "500db3fa24783c785b23e4239b233d029d94e81bd004c8a7e41e13a107aaef68"
+    },
+    "plannedResources": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/planned-resource-binding-technical.private.json",
+      "sha256": "5ed9b210ca8a6787a0df754bac427fce81842d1b6196f734eacc673c4cb5be9b"
+    },
+    "originalProjector": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/original-event-projector.private.py",
+      "sha256": "414736c6ad13bf84b439f1584eab5e4359bdfee1355b30b9909cd94bb50553a8"
+    },
+    "originalControlTechnical": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/original-control-semantics-reviewer.private.json",
+      "sha256": "9e4b1410bb0ee2268ec28d9b1b863d09253e58de06c11e23caa9eb0c6833a443"
+    },
+    "priorNoGoAdmission": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/reviewed-NO_GO-admission-before-aggregate-binding-technical.private.json",
+      "sha256": "34bf9aaf34f97a866c3241168f504da5bb701e67d311e38fabfe4b5f724152ed"
+    },
+    "rootAccountingProof": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-cm03-aggregate-accounting-correction-20261006.json",
+      "sha256": "3e0e6268beb4731b08576abb7edf6b0a72c50a023862d4c511bdf067b32cd18f"
+    }
+  },
+  "frozenComparisonBinding": {
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca"
+  },
+  "datasetCommitmentSha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+  "caseSha256": "6fe1d9826e4ce8482f4aea7935012af42c8feab107ed40087a339c28622182d7",
+  "originalCriteriaModelsOrderCapsUnchanged": true,
+  "originalEventProjection": {
+    "status": "GO",
+    "scope": "Previously reviewed necessary control semantics only; original calendar/conversation API, actor/scope, input-byte and time projection bindings unchanged by aggregate wiring. No protected text disclosed."
+  },
+  "aggregateAssessment": {
+    "durableOriginalSampleReservations": true,
+    "sampleIdsRestoredWithoutReset": true,
+    "pendingUnattestedExceededAdmissionBlocked": true,
+    "staleWriterRejected": true,
+    "observedProviderUsagePersistedBeforeNextDispatch": true,
+    "sameLedgersUsedBeforeResourcesAndDuringExecution": true,
+    "sqliteReadOnlySnapshotIndependentlyChecked": true,
+    "samePlanDatasetAndHistoricalEvidenceHashesVerified": true,
+    "perParticipantReservedSamples": 3,
+    "perParticipantReservedCeilings": {
+      "providerAttempts": 48,
+      "providerInputTokens": 3145728,
+      "providerOutputTokens": 57600,
+      "wallSeconds": 1440,
+      "toolDispatches": 48,
+      "speechRequests": 0
+    },
+    "familyHeadroomPerParticipant": {
+      "eva1-bottie": {
+        "originalSampleCount": 36,
+        "reservedSamples": 3,
+        "remainingSamples": 33,
+        "originalCaps": {
+          "providerAttempts": 576,
+          "providerInputTokens": 37748736,
+          "providerOutputTokens": 691200,
+          "wallSeconds": 17280,
+          "toolDispatches": 576,
+          "speechRequests": 0
+        },
+        "remainingReservedCeilings": {
+          "providerAttempts": 528,
+          "providerInputTokens": 34603008,
+          "providerOutputTokens": 633600,
+          "wallSeconds": 15840,
+          "toolDispatches": 528,
+          "speechRequests": 0
+        }
+      },
+      "eva2": {
+        "originalSampleCount": 36,
+        "reservedSamples": 3,
+        "remainingSamples": 33,
+        "originalCaps": {
+          "providerAttempts": 576,
+          "providerInputTokens": 37748736,
+          "providerOutputTokens": 691200,
+          "wallSeconds": 17280,
+          "toolDispatches": 576,
+          "speechRequests": 0
+        },
+        "remainingReservedCeilings": {
+          "providerAttempts": 528,
+          "providerInputTokens": 34603008,
+          "providerOutputTokens": 633600,
+          "wallSeconds": 15840,
+          "toolDispatches": 528,
+          "speechRequests": 0
+        }
+      }
+    },
+    "knownHistoricalObservedTotals": {
+      "providerAttempts": 17,
+      "inputTokens": 73152,
+      "outputTokens": 3632,
+      "totalTokens": 76784,
+      "helperAttemptsIncluded": 6
+    },
+    "cm01BaselineZeroBasis": "Source-bound native provider_dispatch_not_reached attestation; full failed sample envelope still reserved. Raw SDK measurement remains UNKNOWN and provider_usage_complete remains false.",
+    "otherHistoricalUnknowns": "Retained separately under different dataset commitments; not reset or inferred zero.",
+    "reservationMeaning": "Original finite sample ceiling reservations are separate from observed usage; no hard provider token-limit guarantee. Existing native tool, action, clock/deadline and stop guards remain required."
+  },
+  "existingRouteBindings": {
+    "externalBaselineClockAndEmptyDataRoot": "GO",
+    "durableOriginal480SecondDeadlineBeforeBaselineLaunchAndEva2FirstInput": "GO_source_binding",
+    "sharedCoreMemoryClockAndLedger": "GO",
+    "retentionTrueDelegatedFalseProcedureFalseDispatchDeny": "GO",
+    "originalProviderLeaseAndProfiles": "GO_prepared_binding",
+    "reverseContainerStopParentStopCloseTunnelClose": "GO_source_binding"
+  },
+  "command": {
+    "argv": [
+      "wsl",
+      "-d",
+      "Ubuntu",
+      "-u",
+      "root",
+      "--",
+      "python3",
+      "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/prepare-and-run.private.py"
+    ],
+    "cwd": "/home/administrator/project/Eva2",
+    "authorizedScope": "Resource preparation only, without execute-once input release"
+  },
+  "readinessLimit": {
+    "nativeResourcesCurrentlyStarted": false,
+    "executeOnceReleasePresent": false,
+    "originalSampleDeadlinesCurrentlyCreated": false,
+    "requiredNextGate": "Actual bound native resources-ready/readback with zero pre-input provider attempts, current source/image/lease/accounting bindings and separate exact execute-once admission before participant input."
+  },
+  "evidenceReuse": {
+    "rootReportedFocusedAccountingIpcChecks": 83,
+    "reviewerNewTests": 0,
+    "offlineContractReused": true,
+    "previousOriginalControlAndNoInputProofReused": true
+  },
+  "newReviewerProviderCalls": 0,
+  "newReviewerModelCalls": 0,
+  "newReviewerSampleInputs": 0,
+  "newReviewerNativeStarts": 0,
+  "newReviewerScorerInvocations": 0,
+  "privacy": "Only generic sources, permitted technical control semantics and sanitized metadata reviewed; no stimuli, answers, oracles or identity mapping published.",
+  "publicationLimit": "Technical preparation GO only; no quality win, product completion, full-matrix admission, additional budget or closed-case reuse claim.",
+  "creditCost": "UNKNOWN"
+}

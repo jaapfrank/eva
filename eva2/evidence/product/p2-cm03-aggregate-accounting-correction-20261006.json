@@ -1,0 +1,85 @@
+{
+  "contract": "P2Cm03AggregateAccountingCorrection/v1",
+  "task": "P2.1",
+  "status": "reviewed_bound_native_execution_and_report_completed",
+  "recordedAtUtc": "2026-10-06T18:32:48.622997+00:00",
+  "basisCommit": "470c6a9ba942d4042a068b036bbaf9183f7a8e40",
+  "existing": "Native sample accounting, IPC provider/helper controls, immutable original plan/corpus and unused CM03 preparation.",
+  "gap": "Original cumulative aggregate admission was metadata only; opening a fresh ledger did not enforce retained usage.",
+  "change": "Optional durable aggregate binding in existing sample ledger and existing native glue. Whole original sample envelopes reserved before execution; provider attempts and usage durably recorded before further dispatch. Restart retains counters; stale writers and unresolved historical usage cannot admit new calls.",
+  "preserved": {
+    "participantCodeAndImages": true,
+    "originalCasesEpochsAndCriteria": true,
+    "providerRouteAndModelRoles": true,
+    "originalLimits": true,
+    "rawUnknownEvidence": true,
+    "noNewProductTask": true
+  },
+  "comparisonPriority": "Eva1 is a reference, not a correctness oracle. Answer quality has priority; calls, tokens, elapsed time and successful execution do not establish a better answer.",
+  "verification": {
+    "providerCalls": 0,
+    "executorCalls": 0,
+    "nativeSampleInputs": 0,
+    "focusedTests": {
+      "passed": 84,
+      "seconds": 4.2,
+      "suites": [
+        "test_cp001_aggregate_accounting.py",
+        "test_cp001_accounting.py",
+        "test_cp001_process_accounting.py"
+      ]
+    },
+    "initialFixtureIssue": "Existing shared pytest temporary root had a different owner. Fresh private test directory resolved setup without dependency or product changes.",
+    "reviewCorrection": "Independent review found pending-usage bypass for new/preopened sample. Corrected before native execution; new focused cases pass.",
+    "scope": "Focused offline correction and pure existing-image import verification only; subsequent original model execution is reported separately.",
+    "testPhaseResourceStarts": 0
+  },
+  "historicalAccounting": {
+    "knownProviderAttempts": 17,
+    "knownInputTokens": 73152,
+    "knownOutputTokens": 3632,
+    "cm01BaselineRawSdkUsage": "UNKNOWN",
+    "cm01BaselineAccountingBasis": "Independently inspected exact retained startup failure and source/control path prove declared native provider dispatch was never reached. Derived aggregate zero is separate from unchanged raw SDK UNKNOWN; the whole original failed-sample envelope remains reserved.",
+    "oldSeparateDatasetUnknowns": "Remain retained separately; no accounting donation or replay."
+  },
+  "sourceSha256": {
+    "eva2/benchmark/inspect_ai_v1/cp001_accounting.py": "5507ff2c379f955319161c8da2015b8459d6c9610cfa529842904d5706d22e5f",
+    "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py": "2087ffaf4854a91908e780d5f6ad72092ff277669696dd688f93335c03df6b0a",
+    "eva2/tests/benchmark/test_cp001_aggregate_accounting.py": "d1ce13d21df01d8e099ab629e4caef3da47cbb77998f3b44503026a1d47b4766"
+  },
+  "limitations": [
+    "One CM03 pair executed and technically reviewed; semantic quality UNKNOWN with no winner.",
+    "Original case/order/caps/deadlines and retained aggregate preserved; no replay or new comparison set.",
+    "No provider-side hard output-token cap claim; original controls retain observational usage and stop semantics.",
+    "Credit costs and development-account credits are unknown."
+  ],
+  "nativePreparationDisposition": {
+    "actualSession": 24842,
+    "state": "terminal_exit0_before_participant_input",
+    "failure": "Memory worker could not import the new eager sqlite3 dependency; libsqlite3.so.0 absent from unchanged memory image.",
+    "correction": "Move sqlite3 import exclusively into host-only persistent aggregate connection.",
+    "preserved": "Original source images, database/scope, scenario clock, aggregate rows and full reservations.",
+    "postCorrectionActualImageImport": {
+      "image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+      "user": "1000:65532",
+      "network": "none",
+      "exitCode": 0,
+      "stderrEmpty": true,
+      "providerCalls": 0
+    },
+    "probeGeometryIssue": "First pure import probe used a shallow mount, violating existing module root geometry; corrected mount preserves existing directory depth. No image/source change for probe geometry.",
+    "inputGate": "Old24842 closed before inputs. Reviewed retained resume74218 and one-time original input release completed; no deadline/counter reset."
+  },
+  "independentCodeAndBindingReview": {
+    "path": "eva2/reviews/p2-cm03-aggregate-binding-review-20261006.json",
+    "sha256": "b858f4e7cc7cbcac5fac9f123fdb5b85ec4d7b821f7ee29da0d8eec1c4635d09",
+    "scope": "Original aggregate binding and no-input preparation; not inputReady or quality GO. Subsequent lazy-import-only source correction independently checked."
+  },
+  "independentFinalReview": {
+    "path": "eva2/reviews/p2-cm03-final-technical-review-20261006.json",
+    "sha256": "e3b299460d46546c060c443ce3a536ee5d4882e3792cf5c0e2d159cff2b9ac27",
+    "resultPath": "eva2/evidence/product/p2-original-next-cm03-result-20261006.json",
+    "resultSha256": "dd0b14b39758a39b7653994accaac62afb786d606673eadb6a1afac2a27f742c",
+    "meaning": "Technical reporting/publication GO only; quality UNKNOWN, no product completion."
+  }
+}

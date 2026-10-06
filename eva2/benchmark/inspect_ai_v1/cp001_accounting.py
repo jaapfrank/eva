@@ -12,6 +12,7 @@ import hashlib
 import inspect
 import json
 import threading
+from contextlib import contextmanager
 from pathlib import Path
 
 PARTICIPANTS = ("eva2", "eva1-bottie")
@@ -155,6 +156,180 @@ class SampleStopped(BaseException):
     """Leave a native retry/repair loop when sample control rejects further work."""
 
 
+class PersistentAggregateLedger:
+    """Comparison-owned durable admission over the original frozen envelopes.
+
+    Reserve each complete sample envelope before dispatch. Reservations remain
+    across failure/restart; unused sample allowance never funds another sample.
+    Observed usage is separate from these ceilings. This does not impose a
+    provider-side output limit or turn missing usage into zero.
+    """
+    DIMENSIONS = ("providerAttempts", "providerInputTokens", "providerOutputTokens",
+                  "wallSeconds", "toolDispatches", "speechRequests")
+
+    def __init__(self, path, plan, binding, participant):
+        self.path, self.participant = Path(path), participant
+        self.families = {x["family"]: x for x in plan["families"]}
+        self.total = plan["aggregateLimits"]
+        self.binding = {"binding": binding, "families": plan["families"],
+                        "aggregateLimits": self.total}
+        self.lock = threading.RLock()
+        if participant not in PARTICIPANTS or not binding or not self.path.is_absolute():
+            raise ValueError("explicit participant and frozen comparison binding required")
+        self.path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+        with self._connection() as db:
+            db.execute("CREATE TABLE IF NOT EXISTS metadata (id INTEGER PRIMARY KEY, value TEXT NOT NULL)")
+            db.execute("CREATE TABLE IF NOT EXISTS samples (participant TEXT, sample_id TEXT, family TEXT, "
+                       "value TEXT NOT NULL, revision INTEGER NOT NULL, PRIMARY KEY(participant,sample_id))")
+            encoded = self._json(self.binding)
+            db.execute("INSERT OR IGNORE INTO metadata VALUES (1,?)", (encoded,))
+            if db.execute("SELECT value FROM metadata WHERE id=1").fetchone()[0] != encoded:
+                raise ValueError("aggregate comparison binding changed")
+
+    @staticmethod
+    def _json(value):
+        return json.dumps(value, sort_keys=True, separators=(",", ":"))
+
+    @contextmanager
+    def _connection(self):
+        # Only the host authority uses SQLite. Native IPC workers also import
+        # SampleStopped, including images without the SQLite shared library.
+        import sqlite3
+        db = sqlite3.connect(self.path, timeout=30)
+        try:
+            db.execute("PRAGMA synchronous=FULL")
+            db.execute("BEGIN IMMEDIATE")
+            with db:
+                yield db
+        finally:
+            db.close()
+
+    def _rows(self, db):
+        return [(family, json.loads(value)) for family, value in db.execute(
+            "SELECT family,value FROM samples WHERE participant=?", (self.participant,))]
+
+    @staticmethod
+    def _unresolved(row):
+        return (row.get("usage_unknown") or row.get("envelope_exceeded") or
+                (row["kind"] == "active" and any(x["status"] != "completed"
+                    for x in row["report"]["attempts"])))
+
+    def _admit(self, db, family, limits):
+        expected = self.families[family]["perSampleLimits"]
+        if any(limits.get(k) != expected[k] for k in self.DIMENSIONS):
+            raise ValueError("sample limits differ from frozen original plan")
+        rows = self._rows(db)
+        if any(self._unresolved(row) for _, row in rows):
+            raise SampleStopped("historical aggregate usage is unknown or exceeded")
+        same = [row for name, row in rows if name == family]
+        f = self.families[family]
+        if (len(same) >= f["cases"] * f["epochs"]
+                or len(rows) >= self.total["samplesPerParticipant"]):
+            raise SampleStopped("original aggregate sample count reached")
+        for selected, cap in ((same, f["aggregateLimitsPerParticipant"]),
+                              ([row for _, row in rows], self.total["perParticipant"])):
+            if any(sum(row["reservation"][k] for row in selected) + expected[k] > cap[k]
+                   for k in self.DIMENSIONS):
+                raise SampleStopped("original aggregate envelope reached")
+
+    def seed_history(self, sample_id, family, observed, evidence_sha256):
+        """Import independently attested accounting, never answer/oracle content."""
+        required = ("provider_attempts", "input_tokens", "output_tokens")
+        pre_dispatch_zero = (observed.get("provider_dispatch_not_reached") is True
+                             and all(type(observed.get(k)) is int and observed[k] == 0 for k in required)
+                             and observed.get("raw_usage_measurement") == "UNKNOWN")
+        if (any(count(observed.get(k)) is None for k in required)
+                or not (observed.get("provider_usage_complete") is True or pre_dispatch_zero)
+                or len(evidence_sha256) != 64):
+            raise SampleStopped("historical provider usage needs complete attestation")
+        limits = self.families[family]["perSampleLimits"]
+        value = {"kind": "historical", "reservation": limits, "observed": observed,
+                 "evidence_sha256": evidence_sha256, "usage_unknown": False,
+                 "envelope_exceeded": any(observed[k] > limits[cap] for k, cap in
+                    zip(required, self.DIMENSIONS[:3]))}
+        with self.lock, self._connection() as db:
+            prior = db.execute("SELECT family,value FROM samples WHERE participant=? AND sample_id=?",
+                               (self.participant, sample_id)).fetchone()
+            if prior:
+                if prior != (family, self._json(value)):
+                    raise ValueError("historical aggregate seed changed")
+                return
+            self._admit(db, family, limits)
+            db.execute("INSERT INTO samples VALUES (?,?,?,?,0)",
+                       (self.participant, sample_id, family, self._json(value)))
+
+    def open_sample(self, sample_id, family, limits, profiles):
+        identity = {"limits": limits, "profiles": {k: list(v) for k, v in profiles.items()}}
+        with self.lock, self._connection() as db:
+            prior = db.execute("SELECT family,value,revision FROM samples WHERE participant=? AND sample_id=?",
+                               (self.participant, sample_id)).fetchone()
+            if prior:
+                row = json.loads(prior[1])
+                if prior[0] != family or row.get("kind") != "active" or row["identity"] != identity:
+                    raise ValueError("aggregate sample identity changed or historical sample reused")
+                report = row["report"]
+                if any(x["status"] != "completed" for x in report["attempts"]):
+                    raise SampleStopped("resumed sample has unresolved provider usage")
+                return report, prior[2]
+            self._admit(db, family, limits)
+            row = {"kind": "active", "reservation": limits, "identity": identity,
+                   "report": {"attempts": [], "stop": None, "stop_requested": False},
+                   "usage_unknown": False, "envelope_exceeded": False}
+            db.execute("INSERT INTO samples VALUES (?,?,?,?,0)",
+                       (self.participant, sample_id, family, self._json(row)))
+            return row["report"], 0
+
+    def save(self, sample_id, revision, report):
+        with self.lock, self._connection() as db:
+            prior = db.execute("SELECT value,revision FROM samples WHERE participant=? AND sample_id=?",
+                               (self.participant, sample_id)).fetchone()
+            if not prior or prior[1] != revision:
+                raise SampleStopped("stale aggregate sample writer rejected")
+            row = json.loads(prior[0])
+            if len(report["attempts"]) > len(row["report"]["attempts"]):
+                others = db.execute("SELECT value FROM samples WHERE participant=? AND sample_id<>?",
+                                    (self.participant, sample_id))
+                if (row["usage_unknown"] or row["envelope_exceeded"]
+                        or any(self._unresolved(json.loads(value)) for (value,) in others)):
+                    raise SampleStopped("aggregate has unresolved or exceeded historical usage")
+            known = [x["usage"] for x in report["attempts"] if x["usage"] is not None]
+            row.update(report=report,
+                usage_unknown=any(x["status"] not in ("pending", "completed") for x in report["attempts"]),
+                envelope_exceeded=(len(report["attempts"]) > row["reservation"]["providerAttempts"]
+                    or sum(x["input_tokens"] for x in known) > row["reservation"]["providerInputTokens"]
+                    or sum(x["output_tokens"] for x in known) > row["reservation"]["providerOutputTokens"]))
+            db.execute("UPDATE samples SET value=?,revision=revision+1 WHERE participant=? AND sample_id=?",
+                       (self._json(row), self.participant, sample_id))
+            return revision + 1
+
+    def report(self):
+        with self.lock, self._connection() as db:
+            rows = self._rows(db)
+            attempts = inputs = outputs = 0
+            for _, row in rows:
+                if row["kind"] == "historical":
+                    value = row["observed"]
+                    attempts += value["provider_attempts"]
+                    inputs += value["input_tokens"]; outputs += value["output_tokens"]
+                else:
+                    values = row["report"]["attempts"]
+                    attempts += len(values)
+                    inputs += sum(x["usage"]["input_tokens"] for x in values if x["usage"] is not None)
+                    outputs += sum(x["usage"]["output_tokens"] for x in values if x["usage"] is not None)
+            return {"participant": self.participant, "admitted_samples": len(rows),
+                    "reserved_original_envelopes": {k: sum(row["reservation"][k] for _, row in rows)
+                                                    for k in self.DIMENSIONS},
+                    "known_observed": {"provider_attempts": attempts, "input_tokens": inputs,
+                                       "output_tokens": outputs},
+                    "historical_pre_dispatch_zero_samples": sum(row["kind"] == "historical" and
+                        row["observed"].get("provider_dispatch_not_reached") is True for _, row in rows),
+                    "usage_unknown": any(row["usage_unknown"] or (row["kind"] == "active" and
+                        any(x["status"] == "pending" for x in row["report"]["attempts"])) for _, row in rows),
+                    "envelope_exceeded": any(row["envelope_exceeded"] for _, row in rows),
+                    "meaning": "Original ceiling reservations; observations and attested pre-dispatch zero "
+                               "are separate from ceilings. Historical raw SDK UNKNOWN remains retained."}
+
+
 class ProviderSampleLedger:
     """Observe every bound SDK attempt, including helpers and incomplete calls.
 
@@ -163,7 +338,7 @@ class ProviderSampleLedger:
     output cap. Callers must bind all native provider entrypoints before inference.
     """
 
-    def __init__(self, sample_id, limits, profiles):
+    def __init__(self, sample_id, limits, profiles, *, aggregate=None, family=None):
         self.sample_id = sample_id
         self.limits = dict(limits)
         self.profiles = dict(profiles)
@@ -173,6 +348,18 @@ class ProviderSampleLedger:
         self.stop_requested = False
         self.cancel_errors = []
         self.lock = threading.RLock()
+        self.aggregate, self.aggregate_revision = aggregate, None
+        if aggregate is not None:
+            retained, self.aggregate_revision = aggregate.open_sample(sample_id, family, self.limits, self.profiles)
+            self.attempts = retained["attempts"]
+            self.stopped = retained["stop"]
+            self.stop_requested = retained["stop_requested"]
+
+    def _persist(self):
+        if self.aggregate is not None:
+            self.aggregate_revision = self.aggregate.save(self.sample_id, self.aggregate_revision,
+                {"attempts": [dict(x) for x in self.attempts], "stop": self.stopped,
+                 "stop_requested": self.stop_requested})
 
     def begin(self, role, model, effort):
         with self.lock:
@@ -180,13 +367,21 @@ class ProviderSampleLedger:
                 raise SampleStopped(self.stopped)
             if (model, effort) != self.profiles.get(role):
                 self.stopped = "wrong native model/effort or unbound role"
+                self._persist()
                 raise SampleStopped(self.stopped)
             if len(self.attempts) >= self.limits["providerAttempts"]:
                 self.stopped = "declared sample attempts reached"
+                self._persist()
                 raise SampleStopped(self.stopped)
             self.attempts.append({"id": len(self.attempts), "sample_id": self.sample_id,
                 "role": role, "model": model, "reasoning_effort": effort,
                 "status": "pending", "usage": None})
+            try:
+                self._persist()
+            except SampleStopped:
+                self.attempts.pop()
+                self.stopped = "aggregate provider admission refused"
+                raise
             return len(self.attempts) - 1
 
     def track_async_attempt(self, attempt):
@@ -227,6 +422,7 @@ class ProviderSampleLedger:
         with self.lock:
             self.stop_requested = True
             self.stopped = self.stopped or reason
+            self._persist()
             active = list(self.async_attempts.items())
         for attempt, (loop, task) in active:
             self._cancel_task(attempt, loop, task)
@@ -242,11 +438,14 @@ class ProviderSampleLedger:
             if None in fields.values() or fields["total_tokens"] != fields["input_tokens"] + fields["output_tokens"]:
                 row["status"] = "unattested"
                 self.stopped = "incomplete or incoherent SDK usage"
+                self._persist()
                 raise SampleStopped(self.stopped)
             row.update(status="completed", usage=fields)
             known = [x["usage"] for x in self.attempts if x["usage"] is not None]
+            self._persist()
             if sum(x["input_tokens"] for x in known) > self.limits["providerInputTokens"] or sum(x["output_tokens"] for x in known) > self.limits["providerOutputTokens"]:
                 self.stopped = "observed sample token envelope exceeded"
+                self._persist()
                 raise SampleStopped(self.stopped)
 
     def incomplete(self, attempt, status):
@@ -256,6 +455,7 @@ class ProviderSampleLedger:
                 row["status"] = status
                 self.async_attempts.pop(attempt, None)
                 self.stopped = self.stopped or "SDK attempt did not yield complete usage"
+                self._persist()
 
     def report(self):
         with self.lock:

@@ -1,4 +1,14 @@
+## 6 oktober — Oorspronkelijk CM03-paar uitgevoerd
+
+P2.1: CM03/epoch1 is éénmaal uitgevoerd op de onafhankelijk toegelaten bestaande session74218. Beide Eva’s hebben drie oorspronkelijke beurten afgehandeld; Eva1 zes en Eva2 acht modelpogingen. De terminale meetroute meldt volledige accounting en alle proefservices gestopt. Het [openbare meetrapport](evidence/product/p2-original-next-cm03-result-20261006.json) is afgesloten met [onafhankelijke technische GO](reviews/p2-cm03-final-technical-review-20261006.json). Geen actieve proef/werker of vervolgcase. Werkelijk proefverbruik:14pogingen,58.044invoer/2.178uitvoer; creditkosten onbekend. Antwoordkwaliteit blijft UNKNOWN; dit is geen nieuwe Eva-productfunctie of hogere afrondingsteller. 34/44 blijft behouden.
+
+Deze uitvoering hergebruikt dezelfde oorspronkelijke inputs, criteria, providerroute, modelrollen, native omgeving en klok. De noodzakelijke meetcorrectie bindt het bestaande sample-accounting duurzaam aan de oorspronkelijke cumulatieve tellers. 84 gerichte checks slagen; de host-only SQLite-import is ook gecontroleerd op de bestaande geheugenimage. Geen productimageherbouw, nieuwe proefset, gesloten-caseherhaling of spraakwerk. [Gebonden toelating](evidence/product/p2-original-next-cm03-admission-20261006.json) en [meetcorrectie](evidence/product/p2-cm03-aggregate-accounting-correction-20261006.json).
+
+Eva1 is een referentie, geen juistheidsnorm. Antwoordkwaliteit bepaalt het voordeel; meer calls kunnen gerechtvaardigd zijn door beter werk. Twee echte blinde CM02-beoordelingen staan apart open. Root beheert gedeelde bronnen/werkbord/Git, de curator uitsluitend private proefuitvoering en gesaniteerde resultaten; de reviewer controleert onafhankelijk dezelfde concrete uitkomst.
+
 ## 6 oktober — Antwoordkwaliteit beoordelen; R1-gereedheid afgesloten
+
+De daadwerkelijk gestarte no-inputvoorbereiding24842 is afgesloten vóór enig model- of gebruikersverzoek. De geheugenwerker kon de nieuwe eager SQLite-import niet laden. Alleen die import is naar de host-only tellerfunctie verplaatst;84 gerichte accounting-/IPC-tests slagen en imports zijn op de echte bestaande geheugenimage gecontroleerd met netwerk uit. Geen imageherbouw. Database/scope, klok, oorspronkelijke case en alle cumulatieve reserveringen blijven behouden; de gerichte hervatting van de falende voor-inputovergang is vervolgens onafhankelijk toegelaten en als CM03-paar afgesloten; zie de actuele uitkomst hierboven. Geen deadline-/counterreset of nieuwe proefset. Ruwe SDK-UNKNOWN blijft zichtbaar; deze opstart is geen verlies van een Eva en geen extra afgeronde productfunctie.
 
 Vorige goalturn: daadwerkelijke voortgang op ad570046 — één ongebruikt oorspronkelijk CM02-paar uitgevoerd, native/readbackcontroles en volledige accounting afgerond, onafhankelijk GO gepubliceerd. Geen inhoudelijke kwaliteitswinnaar of nieuwe productfunctie; 34/44 behouden.
 

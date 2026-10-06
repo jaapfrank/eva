@@ -1,0 +1,123 @@
+{
+  "contract": "P2CM03FinalTechnicalIndependentReview/v1",
+  "recordedAtUtc": "2026-10-06T19:06:32.834355+00:00",
+  "reviewer": "/root/p2_eva1_lease_review_20261006",
+  "task": "P2.1",
+  "caseId": "EV003-CM-03",
+  "epoch": 1,
+  "runHandle": "ev003-successor-native-cm03-20261006-17ce05e0",
+  "execSession": 74218,
+  "status": "GO_TECHNICAL_REPORT_AND_PUBLICATION",
+  "reviewedPublicResultBeforeAttestation": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-original-next-cm03-result-20261006.json",
+    "sha256": "df57a4ab8f7a84e0f6e539dd875aebb8599b19a199a4ac7688a67420d995c5d4"
+  },
+  "safeTechnicalProjection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/final-accounting-closure-technical.private.json",
+    "sha256": "09086a1d341e86e25bcc8ea08ff6f78679df9006546ecea752a05386872b1bd9"
+  },
+  "admittedReceiptSha256": "27fe6709c2000c92847902b106a5810a27f55e5fc2bd08b3fd6c9ecf59bbdde7",
+  "oneTimeReleaseSha256": "3ef1de9a995547188e2aa8f3f2abdb782f229871e5de9c434e924404695bc464",
+  "sourceBindings": {
+    "eva2/benchmark/inspect_ai_v1/cp001_accounting.py": "5507ff2c379f955319161c8da2015b8459d6c9610cfa529842904d5706d22e5f",
+    "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py": "2087ffaf4854a91908e780d5f6ad72092ff277669696dd688f93335c03df6b0a",
+    "eva2/tests/benchmark/test_cp001_aggregate_accounting.py": "d1ce13d21df01d8e099ab629e4caef3da47cbb77998f3b44503026a1d47b4766",
+    "originalPlan": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "originalScorer": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "processor": "a2ab85135bd2172873803090eea4767a4737e5251d45263377a7ec327a49bf64",
+    "projector": "414736c6ad13bf84b439f1584eab5e4359bdfee1355b30b9909cd94bb50553a8",
+    "resumeCommand": "ca390e476f1e9f4de025654b64076449a62e254061e4b83acb99222814bef369"
+  },
+  "scope": "Final review of the same completed native pair and bounded evaluator correction; technical completeness and public numerical reporting only. No protected answers, oracle or human-quality judgment.",
+  "decisions": {
+    "boundedCodeCorrection": "GO",
+    "originalAdmissionAndSourceProvenance": "GO",
+    "executedPairAccounting": "GO",
+    "originalDeadlinesAndOrder": "GO",
+    "nativeCommittedReadbacksAndMemorySettlements": "GO_TECHNICAL_ONLY",
+    "nativeStopAndClosure": "GO",
+    "sanitizedResultPublication": "GO",
+    "humanQuality": "UNKNOWN"
+  },
+  "reviewFindings": {
+    "concreteDefects": [],
+    "publicParticipantsAndUsageEqualSafeTechnicalProjection": true,
+    "offeredEvidenceDeadlineReleaseScorerAndClosureHashesMatch": true,
+    "perCallUsageSumsRolesProfilesAndActualPersistentLedgerMatch": true,
+    "originalCasesCriteriaModelsCapsAndScorerUnchanged": true,
+    "sampleClockTransitionUsesPreviouslyReviewedOriginalControlProjection": true,
+    "originalParticipantOrder": [
+      "eva1-bottie",
+      "eva2"
+    ],
+    "oneDurableAbsolute480SecondDeadlinePerParticipantBeforeLaunchOrFirstInput": true,
+    "allTurnsAndMemoryWaitsUseSameParticipantDeadlineWithoutRenewal": true,
+    "bothParticipantsWithinOriginalSampleEnvelope": true,
+    "nativeCommittedTurnsAndReadbacksPerParticipant": 3,
+    "eva2NativeMemorySettlements": 3,
+    "nativeBaselineProcessAbsentAndControlsQuiescent": true,
+    "eva2NativeControlsSettledThreadsStoppedActiveResponsesZero": true,
+    "parentErrorsAndCancelErrorsEmpty": true,
+    "allThreeContainersStoppedWithExitCodeZero": true,
+    "providerTunnelClosed": true,
+    "noForbiddenEffectObservedUnderOriginalControls": true
+  },
+  "executedPairUsage": {
+    "providerAttempts": 14,
+    "eva1Attempts": 6,
+    "eva2Attempts": 8,
+    "helperAttemptsIncluded": 5,
+    "inputTokens": 58044,
+    "outputTokens": 2178,
+    "totalTokens": 60222,
+    "sdkUsageCompleteForThisPair": true,
+    "speechRequests": 0
+  },
+  "aggregateAccounting": {
+    "knownProviderAttempts": 31,
+    "knownInputTokens": 131196,
+    "knownOutputTokens": 5810,
+    "knownTotalTokens": 137006,
+    "knownHelperAttempts": 11,
+    "fullOriginalSampleEnvelopesReservedPerParticipant": 3,
+    "noCountersOrReservationsResetOrDonated": true,
+    "cm01BaselineRawSdkUsage": "UNKNOWN",
+    "cm01DerivedZeroBasis": "Separate source-bound provider_dispatch_not_reached attestation; failed sample retains full reservation and original raw ledger/score.",
+    "otherHistoricalDatasetUnknownsPreservedSeparately": true,
+    "completeRawSdkUsageAcrossAllHistoricalSamples": false,
+    "finalDbSha256": "bc7840a8866100c33a42e3fde7664112a2d461706bc53f7c90d375ade5ae612e"
+  },
+  "qualityAndPublicationLimits": {
+    "originalRawScores": [
+      "unknown",
+      "unknown"
+    ],
+    "qualityDisposition": "UNKNOWN",
+    "recordedHumanRaters": 0,
+    "requiredRecordedIndependentBlindedHumanRaters": 2,
+    "qualityWinner": null,
+    "eva1IsCorrectnessOracle": false,
+    "nativeIntegrityIsAnswerQualityScore": false,
+    "aiJudgeUsedByReviewer": false,
+    "normalizedOriginalMemoryHelperComparisonVariant": true,
+    "installedLunaPerformanceClaim": false,
+    "generalSuperiorityOrProductCompletionClaim": false,
+    "matrixOrClosedCaseReplayAuthorized": false,
+    "p2StillOpenForOriginalCoverageAndActualHumanRatings": true,
+    "latencyMeaning": "Existing native ingress first-content and verified-readback timings; not provider first-token measurements.",
+    "credits": "UNKNOWN",
+    "money": "UNKNOWN"
+  },
+  "evidenceReuse": {
+    "rootReportedFocusedOfflineAccountingIpcChecks": 84,
+    "rootReportedActualMemoryImagePureImportPassed": true,
+    "reviewerReranTests": false,
+    "originalScorerExecutedByProcessorOnlyNoReviewerRescore": true
+  },
+  "newReviewerProviderCalls": 0,
+  "newReviewerModelCalls": 0,
+  "newReviewerNativeStarts": 0,
+  "newReviewerSampleInputs": 0,
+  "newReviewerScorerInvocations": 0,
+  "attestationIntegration": "Curator may add this independent technical GO to the same public result independentEndReview field; preserve reviewed result SHA and all original result, usage, raw-score and closure fields."
+}
