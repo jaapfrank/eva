@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-06T07:27:19.198935+00:00",
+  "lastUpdated": "2026-10-06T07:33:07.108574+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1007,8 +1007,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-06T07:27:19.198935+00:00",
+        "checkedAt": "2026-10-06T07:33:07.108574+00:00",
         "deliveries": [
+          {
+            "title": "P2 · Aparte vergelijking afgesloten, beperkte conclusie",
+            "date": "6 oktober",
+            "state": "tested",
+            "result": "Eva2 herinnert correcties in twee verse gevallen; één valide objectief contrast met Eva1. Andere Eva1-geheugenproef had onze meetfout. Combinatiewerk geen bevestigd resultaat met discovery-admissiononzekerheid; laatste proef ongebruikt UNKNOWN. Native concurrententoegang en menselijke scores ontbreken.",
+            "remaining": "P2.1 blijft open. 36 providerpogingen,172.220 input en6.605 output; creditkosten onbekend. Geen algemene winnaar, extra hoofdtaak of automatische vervolgmatrix.",
+            "source": "eva2/evidence/product/p2-independent-selected-final-20261006.md"
+          },
           {
             "title": "F1.2 afgerond · Herstart en gezamenlijke digitale werking",
             "date": "6 oktober",
@@ -3837,30 +3845,30 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Laatste proefbinding controleren",
-          "state": "in_progress",
-          "owner": "Onafhankelijke beoordelaar /root/p2_independent_final_20261006",
-          "detail": "F1.2 afgerond. Geheugenproeven opgeslagen. XD01 leverde geen resultaat; mogelijke ontbrekende bronmetadata in proefopstelling. De onafhankelijke beoordelaar toetst alleen de oorspronkelijke binding vóór ongebruikte XD02; geen herhaling."
+          "title": "Aparte meetronde gesloten · P2.1 nog onvolledig",
+          "state": "blocked",
+          "owner": "Codex · geen actieve modelproef",
+          "detail": "F1.2 afgerond. Eén objectief geheugenverschil ten gunste van Eva2; geen bevestigd combinatie-eindresultaat. Onze meetbinding, ongelijke modelrollen, ontbrekende native deelnemers en echte beoordelingen beperken de vergelijking. Geen algemene voorsprong bewezen."
         },
         "next": {
-          "title": "Uitkomst van deze aparte vergelijking",
-          "detail": "Gemeten resultaten, verbruik, verliezen en ontbrekende dekking vastleggen. Geen winnaar of volledige P2.1-afronding zonder oorspronkelijke voorwaarden."
+          "title": "Oorspronkelijke vergelijkingsbinding verduidelijken",
+          "detail": "Codex heeft de meetafhankelijkheid: bronontdekking/gelijkwaardige native uitvoering. Geen productherbouw, herhaling van gebruikte eindgevallen, automatisch nieuwe matrix of spraakwerk. Volledige P2.1-eindvoorwaarden blijven staan."
         },
         "ownerAction": {
-          "title": "Je herstart en toestemmingen zijn ontvangen",
+          "title": "Deze ronde vraagt nu geen nieuwe handeling",
           "steps": [
-            "Nu geen handeling van jou nodig voor deze nacontrole en proeven.",
-            "Spraak blijft geparkeerd. Persoonlijkheid M3.3 blijft geaccepteerd.",
-            "Nut van initiatief en zeven dagen gezinsgebruik blijven afzonderlijke menselijke beoordelingen."
+            "Je herstart en beide toestemmingen zijn gebruikt.",
+            "F1.2 is afgerond; persoonlijkheid en eerdere acceptaties blijven behouden.",
+            "Spraak blijft geparkeerd. Gezinsoordeel en volledige vergelijking blijven afzonderlijk."
           ],
-          "expected": "33/44 oorspronkelijke kleine taken technisch klaar; F1.2 nu afgerond. Dit is geen extra afgeronde huisgenootuitkomst.",
-          "detail": "R1 akkoord en aparte eindvergelijking toegestaan. Geen automatische volledige vergelijkingsmatrix."
+          "expected": "33/44 oorspronkelijke kleine taken klaar. P2.1 en R1.1 zijn niet fictief voltooid.",
+          "detail": "De app-goalstatus blijft blocked; de tool kan die niet hervatten. Hervatten voor automatisch vervolg gebeurt in de app. Dit was geen nieuwe toestemmingsvraag of automatische vervolgproef."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-06T07:25:14.153140+00:00"
+        "reviewedAt": "2026-10-06T07:33:07.108574+00:00"
       },
-      "reviewedAt": "2026-10-06T07:25:14.153140+00:00",
-      "checkedAt": "2026-10-06T07:27:19.198935+00:00",
+      "reviewedAt": "2026-10-06T07:33:07.108574+00:00",
+      "checkedAt": "2026-10-06T07:33:07.108574+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -13405,7 +13413,7 @@
           ]
         }
       ],
-      "nextAction": "Vooraf gekozen aparte P2 CM/XD-eindvergelijking afronden; F1.2 voltooid, R1 UNKNOWN. Geen automatische bredere proef of spraakbouw.",
+      "nextAction": "Deze aparte P2-ronde is gesloten. Eerst oorspronkelijke meetbinding en beschikbare gelijkwaardige deelnemers/toegang verduidelijken vóór meer vergelijkingsinference. F1.2 afgerond; R1 UNKNOWN; spraak geparkeerd.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -16716,7 +16724,7 @@
           ],
           "outcome": "Volledige vergelijking uitvoeren",
           "effort": "L; runtime unknown",
-          "status": "in_progress",
+          "status": "blocked",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Historical wins/losses/unavailable cases and concrete task receipts exist.",
@@ -16729,31 +16737,29 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": "/root",
+          "activeWorker": null,
           "dashboardComponent": "project-wide",
           "remainingTasks": [
             {
               "id": "P2.1",
               "title": "Vergelijking op eindkandidaat uitvoeren",
-              "status": "in_progress",
+              "status": "blocked",
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Actuele kandidaat onafhankelijk binden, verse ongeziene eindset vastleggen en vooraf gekozen originele CM/XD-taken op beschikbare deelnemers uitvoeren.",
+              "nextAction": "Geen automatische herhaling of volledige matrix. Eerst concrete oorspronkelijke native discovery-/tijd-/rolbinding verduidelijken vóór een nieuwe afzonderlijke meetronde; geen productherbouw of gewijzigde criteria.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
                 "steps": [],
-                "expected": "Toestemming en herstart ontvangen; nu geen handeling van Jaap nodig.",
+                "expected": "Deze toegestane ronde is afgesloten; nu geen nieuwe handeling van Jaap nodig. Ontbrekende native toegang/beoordelingen blijven bij de volledige P2.1 zichtbaar.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-06T07:27:19.198935+00:00",
+              "checkedAt": "2026-10-06T07:33:07.108574+00:00",
               "assignment": {
                 "baseCommit": "d76c7fb09149156838aab392cdce5bd067241c77",
                 "owner": "/root/p2_independent_final_20261006",
-                "activeWorkers": [
-                  "/root/p2_independent_final_20261006"
-                ],
+                "activeWorkers": [],
                 "files": [
                   "/root: bewaart geïnstalleerde binding, bewijs, werkbord en Git."
                 ],
@@ -16761,12 +16767,12 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "XD01 oorspronkelijk eenmaal uitgevoerd; gemeten gebruik hieronder. Volgende oorspronkelijke proef alleen binnen de reeds vastgelegde familie-envelop. Creditkosten en Codex-ontwikkelverbruik onbekend.",
-                "currentAction": "XD01 eenmaal uitgevoerd: geen eindresultaat,0schrijfacties,8modelcalls. Onafhankelijke beoordelaar controleert alleen oorspronkelijke discoverybinding vóór ongebruikte XD02; fixture-onzekerheid is geen bewezen productverlies.",
+                "currentAction": "Aparte ronde beëindigd, alle native model-/toolprocessen gestopt; bewijs behouden. Openbaar rapport vastgelegd. Geen nieuwe productfunctie, kandidaat-/criteriumwijziging of algemene winnaar.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "e02192e7: verliesvrije gedeelde catalogusguidance, bronreview GO,134 gerichte tests plus oude assertie vastgelegd. Beide images geïnstalleerd/gezond; gewone browseropdracht en verse24-toolcatalogus+schema-uitleg geslaagd. Geen extra producttaak, spraak of algemene winstclaim."
                 },
-                "stage": "xd01_settled_admission_uncertain_xd02_unused",
+                "stage": "selected_independent_round_closed_partial",
                 "finding": "Beide gesloten vergelijkingen ontvingen result.isError na gateway-RPC. De bestaande adapter verwijderde de detailtekst; de innerlijke foutoorzaak is niet meer vast te stellen.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
@@ -16850,7 +16856,7 @@
                 "sourcePreparationEvidence": "eva2/evidence/product/p2-xd01-native-binding-20261005.json",
                 "resourcePreparationEvidence": "eva2/evidence/product/p2-xd01-browser-resources-20261005.json",
                 "preparationStateEvidence": "eva2/evidence/product/p2-xd01-independent-state-20261005.json",
-                "independentResultEvidence": "eva2/evidence/product/p2-xd02-independent-state-20261005.json",
+                "independentResultEvidence": "eva2/evidence/product/p2-independent-partial-results-20261006.json",
                 "currentPreparationUsage": {
                   "caseId": "EV003-XD-02",
                   "recordedPhase": "pre_inference_preparation",
@@ -17025,13 +17031,19 @@
                   "providerAttempts": 36,
                   "inputTokens": 172220,
                   "outputTokens": 6605,
-                  "failedAdapterAttemptIncluded": true,
+                  "allFailedAdapterAndInconclusiveNativeAttemptsIncluded": true,
+                  "actualNativeAttempts": 5,
+                  "nativeToolDispatches": 14,
                   "creditCost": null,
-                  "measurementScope": "four fresh CM samples and one settled XD01 attempt; XD02 unused"
+                  "codexDevelopmentCredits": null,
+                  "providerRoleCounts": {
+                    "contactSolNone": 19,
+                    "helperAstraMedium": 17
+                  }
                 }
               },
-              "remaining": "CM01 beide mislukt; CM02 objectief Eva1 1/3/Eva2 3/3; CM03 onvolledige readbacks; CM04 Eva1 onvoldoende/Eva2 onbekend; CM05 Eva2 geslaagd/Eva1 onbekend; CM06 Eva2 geslaagd/Eva1 onvoldoende; CM07 beide onvoldoende en Eva1 groepsaflevering onvolledig; CM08 Eva2 geslaagd/Eva1 onvoldoende; CM09 en CM10 Eva2 geslaagd (elk 3/3+2/2), Eva1 onbekend door onvolledige uitvoering. CM11 Eva1 onvoldoende; Eva2 juiste antwoorden, verplichte geheugenvoorwaarde onbekend. CM12 beide onvoldoende; Eva2 mist opgeslagen context in het latere antwoord. XD01 Eva2 niet afgerond, Eva1 niet uitvoerbaar via de vastgelegde route (geen verliesclaim). Overige oorspronkelijke gevallen, concurrenttoegang en menselijke beoordeling blijven open. Geen algemene voorsprong of extra productfunctie. XD02: Eva2 niet afgerond; beide diensten ongewijzigd. Algemene voorsprong niet aangetoond.",
-              "latestEvidence": "eva2/evidence/product/p2-xd02-independent-state-20261005.json",
+              "remaining": "Geselecteerde ronde gesloten; volledige oorspronkelijke vergelijking blijft onvolledig. Vijf native pogingen, één objectief recallverschil; CM01-meetfout, XD01-admissiononzekerheid en XD02 ongebruikt UNKNOWN. Ontbrekende deelnemers, volledige12×3-dekking en twee echte beoordelingen blijven zichtbaar.",
+              "latestEvidence": "eva2/evidence/product/p2-independent-partial-results-20261006.json",
               "executionBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_after_same_command_review_with_new_provenance_evidence",
@@ -17042,7 +17054,7 @@
                 "resolvedAt": "2026-10-04T15:04:47.848198+00:00",
                 "scope": "Historical refusal before process creation; resolved through the same automatic review path after new synthetic-input provenance evidence. Counts here describe the rejected attempt only; current execution is in latestEvidence."
               },
-              "blocker": null,
+              "blocker": "Codex: oorspronkelijke meetbinding biedt fixture-bronontdekking niet aantoonbaar aan; geen geldige complete XD-vergelijking. Daarnaast native concurrententoegang/actieadapter en echte beoordelingen ontbreken. Geen bewijs dat Eva1 die vaardigheid mist.",
               "assessmentBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_with_authorized_independent_processing",
@@ -17164,7 +17176,8 @@
               "P2.2"
             ],
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
-          }
+          },
+          "reviewer": "/root/p2_independent_final_20261006"
         },
         {
           "id": "F1",

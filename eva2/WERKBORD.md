@@ -1,3 +1,18 @@
+## 6 oktober — aparte vergelijking gesloten; F1.2 afgerond
+
+| Uitkomst | Werkelijk resultaat |
+| --- | --- |
+| F1.2 | **Afgerond, geïnstalleerd, onafhankelijk GO.** Na echte Windowsboot data/resultaten behouden; eigen browser start weer via Eva. |
+| P2 geheugen | Eén objectief contrast: Eva2 haalde een correctie later terug, Eva1 niet. Tweede Eva1-proef had onze meetfout. Volledige officiële beoordeling ontbreekt. |
+| P2 combinatiewerk | Geen bevestigd resultaat. XD01 had discovery-/tijd-admissiononzekerheid; XD02 ongebruikt UNKNOWN. Geen replay. |
+| R1.1 | UNKNOWN; één voortijdige configuration-fout, geen kandidaat toegepast. |
+
+**33/44 oorspronkelijke kleine taken klaar. P2.1 blijft onvolledig.** De vaste overige dekking, native concurrententoegang/actieadapter en twee echte beoordelingen blijven open; geen algemene voorsprong bewezen. Deze ronde heeft 36 providerpogingen en 172.220 invoer-/6.605 uitvoertokens verbruikt, inclusief mislukte/onbesliste pogingen. Creditkosten onbekend. Alle eigen model-/toolprocessen uit; bewijs behouden.
+
+**Vervolgafhankelijkheid van Codex:** oorspronkelijke native discovery-/tijd-/rolbinding verduidelijken voordat meer vergelijking wordt uitgevoerd. Geen herhaling, nieuwe criteria, productherbouw of automatische matrix. Spraak blijft geparkeerd. Nu geen nieuwe handeling van Jaap nodig voor deze afgesloten ronde. Het bestaande app-goal blijft blocked en kan alleen via de app worden hervat; dat heeft deze expliciet toegestane uitvoering niet tegengehouden.
+
+[Visuele vergelijking](evidence/product/p2-independent-selected-final-20261006.md) · [Meetrapport](evidence/product/p2-independent-partial-results-20261006.json) · [F1.2 onafhankelijke GO](reviews/f1-post-reboot-independent-review-20261006.md).
+
 ## 6 oktober — F1.2 afgerond; aparte eindvergelijking loopt
 
 **F1.2 is technisch klaar en onafhankelijk GO.** Werkelijke Windows-herstart, dezelfde bewaarde gegevens, gewone herinnering/resultaatopvraag en normale browserautostart geslaagd. Geïnstalleerde hostmodule en lokaal pakket exact geverifieerd. Geen originele taak herhaald, geen nieuwe spraakbouw. **33/44 oorspronkelijke kleine taken klaar**; dit voltooit geen extra huisgenootuitkomst.

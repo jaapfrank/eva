@@ -1,0 +1,515 @@
+{
+  "contract": "EvaIndependentComparisonEvidence/v1",
+  "taskId": "P2.1",
+  "checkedAt": "2026-10-06T07:30:56.969834+00:00",
+  "status": "selected_round_closed_full_comparison_incomplete",
+  "wholeTaskCompleted": false,
+  "ownerAuthorization": "eva2/evidence/product/owner-resume-20261006.json",
+  "candidateBinding": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_postrestart_20261006.json",
+    "sha256": "1ea836919ba4c245f3d5d85e94332c39edfdd84e6fba214abb5f44ab89cbcae3"
+  },
+  "datasetCommitment": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_dataset_commitment_20261006.json",
+    "sha256": "75cdde9af210db92a73999e4a9b393737cf67cf9fc9481f2998cb43ae3d5c31c"
+  },
+  "originalScorer": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+    "sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "changed": false,
+    "resultsOwner": "Immutable native Inspect logs; objective readback facts below do not replace missing human semantics."
+  },
+  "selectedScope": "Two fresh CM and two fresh XD cases, epoch1 only; eight Eva1/Eva2 slots, five actual native attempts. No other participant admission, additional cases, epochs, replay or automatic full matrix.",
+  "entries": [
+    {
+      "entry": "eva1-bottie:EV003-CM-01:epoch1",
+      "nativeOutcome": "execution_unknown",
+      "classification": "unknown_adapter_mapping_failure_not_product_loss",
+      "explanation": "Evaluator omitted existing web: conversation prefix. Native returned a completed response under its canonical conversation, then independent readback binding refused. No case retry.",
+      "providerAttempts": 5,
+      "accountingComplete": true,
+      "inputTokens": 26808,
+      "outputTokens": 1041,
+      "firstContentSeconds": null,
+      "verifiedEndSeconds": null,
+      "observedTransportIntervalSeconds": 27.340865861999877,
+      "observedTransportNotFirstContentOrFullTask": true,
+      "toolDispatches": 3,
+      "externalActions": 0,
+      "nativeTailComplete": true,
+      "unplannedHumanHelp": 0,
+      "humanMinutes": 0,
+      "semanticScore": null,
+      "humanRatings": [
+        null,
+        null
+      ],
+      "nativeReceipt": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/execution/eva1-cm01-epoch1/result.private.json",
+        "sha256": "47846f7f04013d80d765641962a3cc8c1c8d01d8130c1a975da511174fad92a9"
+      },
+      "privateInspectLog": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/execution/eva1-cm01-epoch1/inspect-private/execution-logs/2026-10-06T07-03-10-00-00_ev003-cm01-epoch1-eva1-native_8M6x3YkTLhd8MPJ3pKNYYB.eval",
+          "sha256": "95063967cf0ae6f2a53eec4d24c8b01dc28e15e6ca5d8a2748e01d403cbbc791"
+        }
+      ]
+    },
+    {
+      "entry": "eva2:EV003-CM-01:epoch1",
+      "nativeOutcome": "native_sample_completed",
+      "classification": "native_complete_objective_recall_observed_semantic_human_unknown",
+      "providerAttempts": 8,
+      "accountingComplete": true,
+      "inputTokens": 21782,
+      "outputTokens": 757,
+      "sampleSecondsIncludingMemory": 62.12340578599992,
+      "turns": [
+        {
+          "ordinal": 0,
+          "firstContentSeconds": 8.363070505999985,
+          "foregroundSeconds": 10.226775061999888,
+          "settledSeconds": 20.22538907299986,
+          "committedReplyVerified": true,
+          "memorySettled": true
+        },
+        {
+          "ordinal": 1,
+          "firstContentSeconds": 3.025931627999853,
+          "foregroundSeconds": 3.812653662999992,
+          "settledSeconds": 22.153782610000007,
+          "committedReplyVerified": true,
+          "memorySettled": true
+        },
+        {
+          "ordinal": 2,
+          "firstContentSeconds": 2.8998671399999694,
+          "foregroundSeconds": 3.894429976999845,
+          "settledSeconds": 11.52639416299985,
+          "committedReplyVerified": true,
+          "memorySettled": true
+        }
+      ],
+      "toolDispatches": 0,
+      "externalActions": 0,
+      "cleanupBlockers": [],
+      "unplannedHumanHelp": 0,
+      "humanMinutes": 0,
+      "independentObjectiveReadback": {
+        "correctedPreferenceRecalledInLaterSession": true,
+        "allThreeScopedRepliesCommitted": true,
+        "allThreeNativeMemoryConsolidationsSettled": true,
+        "caseSemanticAndHumanCriteriaNotReplaced": true
+      },
+      "semanticScore": null,
+      "humanRatings": [
+        null,
+        null
+      ],
+      "nativeReceipt": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/execution/eva2-cm01-epoch1/execution/result.json",
+        "sha256": "3e9ec00276b896c7fc38b2ec57767db48fee8a4fe96819fa652bdad8c6dece41"
+      },
+      "privateInspectLog": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/execution/eva2-cm01-epoch1/inspect-private/execution-logs/2026-10-06T07-06-07-00-00_ev003-cm01-epoch1-eva2-native_b5XP6wyKXecFf84BYGPGpn.eval",
+          "sha256": "0a1450b05a134ce50f69d9d10105c88d9cfc5332863ad8f8616e13a1944db426"
+        }
+      ]
+    },
+    {
+      "entry": "eva1-bottie:EV003-CM-02:epoch1",
+      "nativeOutcome": "native_route_complete",
+      "classification": "native_complete_objective_recall_missing_semantic_human_unknown",
+      "providerAttempts": 7,
+      "accountingComplete": true,
+      "inputTokens": 44337,
+      "outputTokens": 1964,
+      "sampleSecondsIncludingMemory": 59.37356144600017,
+      "turns": [
+        {
+          "ordinal": 0,
+          "firstContentSeconds": 24.736509065000064,
+          "foregroundSeconds": 24.739790300000095,
+          "committedReplyVerified": true,
+          "retainedNativeMemories": 0
+        },
+        {
+          "ordinal": 1,
+          "firstContentSeconds": 24.959160505,
+          "foregroundSeconds": 24.963521448999927,
+          "committedReplyVerified": true,
+          "retainedNativeMemories": 0
+        },
+        {
+          "ordinal": 2,
+          "firstContentSeconds": 7.862971746999847,
+          "foregroundSeconds": 7.865849747999846,
+          "committedReplyVerified": true,
+          "retainedNativeMemories": 0
+        }
+      ],
+      "externalActions": 0,
+      "cleanupBlockers": [],
+      "unplannedHumanHelp": 0,
+      "humanMinutes": 0,
+      "semanticScore": null,
+      "humanRatings": [
+        null,
+        null
+      ],
+      "nativeReceipt": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/execution/eva1-cm02-epoch1/result.private.json",
+        "sha256": "c480bcd37b86336d04eb5381a206f8d825310a454c205f99dff0a9698cfc61d3"
+      },
+      "privateInspectLog": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/execution/eva1-cm02-epoch1/inspect-private/execution-logs/2026-10-06T07-08-54-00-00_ev003-cm02-epoch1-eva1-native_npyMBEL6sfDBSMQjqSBvub.eval",
+          "sha256": "ba7ba9c12698c6bf2ad6fb552a7b204fa690ace5880ddb4da71ba0e51f958439"
+        }
+      ],
+      "toolDispatches": 6,
+      "nativeModelLane": "Existing equal-model native source variant; all observed turn-understanding/contact calls Sol none. No helper-Astra parity claim.",
+      "independentObjectiveReadback": {
+        "correctedPreferenceRecalledInLaterSession": false,
+        "allThreeScopedRepliesCommitted": true,
+        "noActionOutsideScope": true,
+        "caseSemanticAndHumanCriteriaNotReplaced": true
+      }
+    },
+    {
+      "entry": "eva2:EV003-CM-02:epoch1",
+      "nativeOutcome": "native_sample_completed",
+      "classification": "native_complete_objective_recall_observed_semantic_human_unknown",
+      "providerAttempts": 8,
+      "accountingComplete": true,
+      "inputTokens": 22724,
+      "outputTokens": 1246,
+      "sampleSecondsIncludingMemory": 74.55029387600007,
+      "turns": [
+        {
+          "ordinal": 0,
+          "firstContentSeconds": 6.660289418000048,
+          "foregroundSeconds": 7.894564765000041,
+          "settledSeconds": 26.12462084899994,
+          "committedReplyVerified": true,
+          "memorySettled": true
+        },
+        {
+          "ordinal": 1,
+          "firstContentSeconds": 4.89761254300015,
+          "foregroundSeconds": 5.637139552999997,
+          "settledSeconds": 26.433174747000066,
+          "committedReplyVerified": true,
+          "memorySettled": true
+        },
+        {
+          "ordinal": 2,
+          "firstContentSeconds": 2.9736689509998087,
+          "foregroundSeconds": 5.022557489999826,
+          "settledSeconds": 13.221093808999967,
+          "committedReplyVerified": true,
+          "memorySettled": true
+        }
+      ],
+      "externalActions": 0,
+      "cleanupBlockers": [],
+      "unplannedHumanHelp": 0,
+      "humanMinutes": 0,
+      "semanticScore": null,
+      "humanRatings": [
+        null,
+        null
+      ],
+      "nativeReceipt": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/execution/eva2-cm02-epoch1/execution/result.json",
+        "sha256": "accc18b263a96fd32f3b8eebfe41baf32e32f8a70b1fa38d93498f1b4a735fb5"
+      },
+      "privateInspectLog": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/execution/eva2-cm02-epoch1/inspect-private/execution-logs/2026-10-06T07-10-28-00-00_ev003-cm02-epoch1-eva2-native_k9sKHh8AZCQFGHA9vUG6HL.eval",
+          "sha256": "db73dbb044a8c587125112d53b29d522012160c7a6a0e3b02149cd86d2d8285e"
+        }
+      ],
+      "toolDispatches": 0,
+      "independentObjectiveReadback": {
+        "correctedPreferenceRecalledInLaterSession": true,
+        "allThreeScopedRepliesCommitted": true,
+        "allThreeNativeMemoryConsolidationsSettled": true,
+        "noActionOutsideScope": true,
+        "caseSemanticAndHumanCriteriaNotReplaced": true
+      }
+    },
+    {
+      "entry": "eva2:EV003-XD-01:epoch1",
+      "executionAttempted": true,
+      "nativeOutcome": "native_sample_completed",
+      "delegatedWorkOutcome": "failed",
+      "classification": "no_completed_result_fixture_admission_uncertain_not_definitive_product_loss",
+      "providerAttempts": 8,
+      "accountingComplete": true,
+      "inputTokens": 56569,
+      "outputTokens": 1597,
+      "sampleSecondsIncludingMemory": 53.327068718999726,
+      "firstContentSeconds": null,
+      "foregroundSeconds": 13.12630894899985,
+      "settledSeconds": 51.31297331399992,
+      "toolDispatches": 5,
+      "externalFixtureRequests": 2,
+      "externalMutations": 0,
+      "unplannedHumanHelp": 0,
+      "humanMinutes": 0,
+      "semanticScore": null,
+      "humanRatings": [
+        null,
+        null
+      ],
+      "cleanupBlockers": [],
+      "captureCompleteness": {
+        "capturedAttemptIds": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "completedAttemptIds": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "complete": true
+      },
+      "nativeReceipt": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/execution/eva2-xd01-epoch1/execution/result.json",
+        "sha256": "6ebe9295ef5bca003656d8265042f6dc3dd9783f8890968c6c152aea135caa14"
+      },
+      "nativeAdmission": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/execution/eva2-xd01-epoch1/admission.json",
+        "sha256": "fe9635b7411f13c07459b02bf84bc99a21f38a3258db983195202b389488e59f"
+      },
+      "privateInspectLog": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/execution/eva2-xd01-epoch1/inspect-private/execution-logs/2026-10-06T07-22-41-00-00_ev003-xd01-epoch1-eva2-native_jidao44z4AxNREvkL8mdcb.eval",
+          "sha256": "b1ba339347b786e13cc9509d112ba6b8984505056c4b7b39ea98ba66c76aec4c"
+        }
+      ],
+      "independentObjectiveReadback": {
+        "targetRecordsCreated": 0,
+        "sourceUnchanged": true,
+        "unexpectedSuccessfulMutations": 0,
+        "exactRequestedEffectsObserved": false,
+        "taskReportedIncomplete": true,
+        "noInventedSuccessfulWrites": true,
+        "noAutomaticOriginDeliveryAttested": true
+      },
+      "admissionUncertainty": {
+        "bareOriginsReturn404": true,
+        "schemaDiscoveryExistsOnlyInPrivateFixtureDescriptors": true,
+        "existingNativeBrowserCatalogDoesNotProjectFixtureDiscovery": true,
+        "equalExistingDiscoveryBindingNotDemonstrated": true,
+        "httpDateUsesHostClockNotControlledNativeScenarioOffset": true
+      },
+      "replayed": false,
+      "criteriaChanged": false
+    },
+    {
+      "entry": "eva2:EV003-XD-02:epoch1",
+      "executionAttempted": false,
+      "nativeOutcome": "unknown_unexecuted_native_discovery_admission_not_established",
+      "classification": "unknown_not_a_product_loss",
+      "providerAttempts": 0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "zeroUsageBasis": "No provider setup or original execution started; no new resources/auth/fixtures.",
+      "firstContentSeconds": null,
+      "verifiedEndSeconds": null,
+      "toolDispatches": 0,
+      "semanticScore": null,
+      "humanRatings": [
+        null,
+        null
+      ],
+      "privateClosure": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/execution/eva2-xd02-epoch1/unused-entry-closure.private.json",
+        "sha256": "97d2ebaab92823a6c70f5a36b52b21b738129c8b4650514157f9c2b3ec239b84"
+      }
+    },
+    {
+      "entry": "eva1-bottie:EV003-XD-01:epoch1",
+      "executionAttempted": false,
+      "nativeOutcome": "unknown_unexecuted_no_admitted_general_action_adapter",
+      "classification": "unknown_not_a_product_loss",
+      "providerAttempts": 0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "zeroUsageBasis": "No provider setup or original execution started.",
+      "firstContentSeconds": null,
+      "verifiedEndSeconds": null,
+      "semanticScore": null,
+      "humanRatings": [
+        null,
+        null
+      ],
+      "productCapabilityConclusion": null
+    },
+    {
+      "entry": "eva1-bottie:EV003-XD-02:epoch1",
+      "executionAttempted": false,
+      "nativeOutcome": "unknown_unexecuted_no_admitted_general_action_adapter",
+      "classification": "unknown_not_a_product_loss",
+      "providerAttempts": 0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "zeroUsageBasis": "No provider setup or original execution started.",
+      "firstContentSeconds": null,
+      "verifiedEndSeconds": null,
+      "semanticScore": null,
+      "humanRatings": [
+        null,
+        null
+      ],
+      "productCapabilityConclusion": null
+    }
+  ],
+  "measuredRuntimeTotals": {
+    "providerAttempts": 36,
+    "inputTokens": 172220,
+    "outputTokens": 6605,
+    "allFailedAdapterAndInconclusiveNativeAttemptsIncluded": true,
+    "actualNativeAttempts": 5,
+    "nativeToolDispatches": 14,
+    "creditCost": null,
+    "codexDevelopmentCredits": null,
+    "providerRoleCounts": {
+      "contactSolNone": 19,
+      "helperAstraMedium": 17
+    }
+  },
+  "unavailableParticipants": {
+    "openclaw": "native authenticated modelcatalog/lifecycle not verified",
+    "hermes": "native login not confirmed and lifecycle not admitted",
+    "agent_zero": "owned accessJWT expired; no refresh/login started"
+  },
+  "claims": {
+    "generalSuperiority": false,
+    "completeFinalComparison": false,
+    "relativeSpeedOrTokenWin": null,
+    "humanPreference": null,
+    "newProductFunction": false,
+    "candidateModifiedByEvaluator": false,
+    "scorerOrCriteriaModified": false
+  },
+  "historicalEvidence": "Original Oct4cases/results/freeze unchanged, not replayed or rescored as thiscandidate.",
+  "remaining": [
+    "Original six-family12cases\u00d73epochs per participant are incomplete. The four-case epoch1 subset does not meet coverage.",
+    "Two genuine semantic/human raters remain absent. Inspect success denotes wrapper execution, not product success.",
+    "OpenClaw/Hermes authenticated native lifecycle not verified; Agent Zero owned accessJWT expired. No login/refresh/new provider route.",
+    "Eva1 general action benchmark adapter unadmitted; not proof Eva1 lacks general work capability.",
+    "XD01 remains incomplete with fixture discovery/time admission uncertainty. XD02 unused UNKNOWN; no hints, discovery layer or dataset repair.",
+    "Seven-day family practice/owner final acceptance separate. Previous acceptances preserved. Voice family parked."
+  ],
+  "comparabilityLimits": [
+    "Eva1 is the pre-existing equal-model native source variant, not an untouched production Eva1 baseline. Its observed contact/understanding model calls are Sol none; Eva2 memory helpers use Astra medium. Preserve distinction, no full role-equivalent architecture claim.",
+    "CM01 Eva1 readback fault belongs to evaluator, not product; no pairwise product score.",
+    "CM02 later corrected preference objectively recovered only by Eva2 in this epoch; absent genuine semantic ratings and joint success prevent official relative efficiency/speed awards.",
+    "Private same-person cases do not assess cross-person confidentiality or speaker behaviour. No such claim."
+  ],
+  "selectedEntryCounts": {
+    "nativeAttempted": 5,
+    "nativeResponseAndAccountingCompleted": 3,
+    "evaluatorReadbackMappingUnknown": 1,
+    "nativeWorkIncompleteWithAdmissionUncertainty": 1,
+    "unexecutedUnknown": 3,
+    "officialSemanticallyAccepted": null,
+    "humanRated": 0
+  },
+  "originalFamilyCoverage": [
+    {
+      "family": "conversation_memory",
+      "originalCases": 12,
+      "epochs": 3,
+      "selectedNewCases": 2,
+      "nativeAttempts": {
+        "eva2": 2,
+        "eva1-bottie": 2
+      },
+      "verifiedNativeReadbackEntries": {
+        "eva2": 2,
+        "eva1-bottie": 1
+      },
+      "notExecutedPerSelectedParticipant": 34,
+      "remainingBasis": "Additional cases/epochs need independent curation/admission; already admitted private contact/memory route needs no new auth. Human ratings absent; CM01 readback unknown."
+    },
+    {
+      "family": "cross_domain_actions",
+      "originalCases": 12,
+      "epochs": 3,
+      "selectedNewCases": 2,
+      "nativeAttempts": {
+        "eva2": 1,
+        "eva1-bottie": 0
+      },
+      "officialSuccessfulComparisonPairs": null,
+      "remainingBasis": "Equal native resource discovery not established; Eva1 benchmark action adapter unadmitted. Not proven missing product capability."
+    },
+    {
+      "family": "initiative",
+      "originalCases": 12,
+      "epochs": 3,
+      "nativeAttempts": 0,
+      "remainingBasis": "Native opportunity/event/distractor binding and usefulness ratings not admitted in selected round; no demonstrated external-access blocker."
+    },
+    {
+      "family": "browser_computer",
+      "originalCases": 12,
+      "epochs": 3,
+      "nativeAttempts": 0,
+      "remainingBasis": "XD isolated browser transport exists, but original takeover/revocation/event cases not admitted/executed. No production browser/reboot claim."
+    },
+    {
+      "family": "learning_projects",
+      "originalCases": 12,
+      "epochs": 3,
+      "nativeAttempts": 0,
+      "remainingBasis": "Original documentation/skill reuse/project-resume bindings unadmitted here. Separate R1 evidence is not P2 coverage."
+    },
+    {
+      "family": "voice_presence",
+      "originalCases": 12,
+      "epochs": 3,
+      "nativeAttempts": 0,
+      "status": "parked_by_owner",
+      "remainingBasis": "No voice build/install/test; unknown unchanged."
+    }
+  ],
+  "preparationAndIntegrity": {
+    "historicalHostConfigEquality": null,
+    "currentPostrestartConfigurationIndependentlyBound": true,
+    "oldFreezeAndOct4ResultsPreserved": true,
+    "sealedDatasetUnchangedAfterFirstInference": true,
+    "firstEva1MappingErrorPreservedWithoutReplay": true,
+    "onlyUnusedMappingsCorrectedBeforeInference": true,
+    "publicSchemaPermissionFailurePreservedAndSameEmptyStoresResumed": true,
+    "noProductCodeChanges": true,
+    "noFurtherInferenceResourcesAuthFixturesAfterClosure": true,
+    "privateInputsOraclesRawOutputsRemainEvaluatorOwned": true
+  },
+  "scorerInterpretation": "Original scorer unchanged; no fabricated recorded_human decisions, paid AI jury, new AI scorer or rescore-to-pass. Objective facts do not replace absent semantic/human acceptance.",
+  "resourceQuiescence": {
+    "nativeAndExternalProducerProcessesStopped": true,
+    "processCount": 8,
+    "activeProviderAttempts": 0,
+    "pendingActions": 0,
+    "privateClosureSha256": "549157aa9202162de1ad3652aed58421e3a39993cf6836876f4514a0e3ac7568",
+    "syntheticDatabaseAndRawEvidenceRetained": true
+  }
+}
