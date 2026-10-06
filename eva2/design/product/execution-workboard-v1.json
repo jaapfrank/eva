@@ -1016,7 +1016,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-06T23:17:57.944196+00:00",
+        "checkedAt": "2026-10-06T23:19:05.676197+00:00",
         "deliveries": [
           {
             "title": "P2.1 · OpenClaw-aanmelding bevestigd; proefbeperking vastgesteld",
@@ -4045,8 +4045,8 @@
           "title": "P2.1 · OpenClaw-meetbeperking vastgelegd",
           "state": "in_progress",
           "owner": "Codex",
-          "detail": "OpenClaw en Hermes zijn aangemeld. Hermes heeft de oorspronkelijke gespreksproef uitgevoerd en de correctie later gebruikt. OpenClaw bouwt een native Sol/none-aanvraag, maar daarin spreken proefdatum en systeemdatum elkaar tegen. Die beperking is onafhankelijk bevestigd; geen oorspronkelijke OpenClaw-proef gestart. Broncheckpoint en dashboard worden gepubliceerd.",
-          "remaining": "Bevinding en broncheckpoint publiceren. P2.1 blijft open: oorspronkelijke dekking en echte menselijke antwoordbeoordelingen ontbreken.",
+          "detail": "OpenClaw en Hermes zijn aangemeld. Hermes heeft de oorspronkelijke gespreksproef uitgevoerd en de correctie later gebruikt. OpenClaw bouwt een native Sol/none-aanvraag, maar daarin spreken proefdatum en systeemdatum elkaar tegen. Die beperking is onafhankelijk bevestigd; geen oorspronkelijke OpenClaw-proef gestart. Broncheckpoint staat op GitHub; het dashboard is bijgewerkt.",
+          "remaining": "P2.1 blijft open: oorspronkelijke vergelijkingsdekking en echte menselijke antwoordbeoordelingen ontbreken. Geen nieuwe aanmelding of OpenClaw-modelproef nodig voor deze afgesloten bevinding.",
           "source": "eva2/evidence/product/p2-openclaw-native-composition-20261007.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
           "reviewedAt": "2026-10-06T23:17:57.944196+00:00"
@@ -19645,7 +19645,7 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-06T23:17:57.944196+00:00",
+              "checkedAt": "2026-10-06T23:19:05.676197+00:00",
               "assignment": {
                 "baseCommit": "45896f3f9500a4505330e37e4cb26881eabe94e6",
                 "owner": "/root",
@@ -19659,7 +19659,7 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte voorbereiding0provider-/samplecalls. Eerst originele ongebruiktheid en werkelijk bruikbare oorspronkelijke toelating vaststellen; uitvoeringsraming pas uit het bestaande plan en de concrete binding. Geen nieuwe quota, gratis teller, set of brede matrix; credits onbekend.",
-                "currentAction": "Afgesloten OpenClaw-voorbereiding en onafhankelijke Hermes-beoordeling gebundeld publiceren; geen native proef actief.",
+                "currentAction": "Broncheckpoint en resultaat gepubliceerd; geen native proef actief. Bestaande kwaliteitsbeoordelingen en oorspronkelijke nog toegelaten dekking blijven apart open.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "eva2/evidence/product/p2-http-failure-diagnostics-20261006.json",
@@ -20331,6 +20331,14 @@
                     "sourceSha256": "d894b39f516c21f875e691d0ceee39ef2e37980380b9282b6a62a4cbef2377ca",
                     "testSha256": "2608b6d69dfe8216d8c22ef6a37dd786540e3ab21354e213990ae80062633116",
                     "realProviderCalls": 0
+                  },
+                  "sourceCheckpoint": {
+                    "commit": "17dd0a58b0099bff60782c17c373f999e4799427",
+                    "remote": "origin/main",
+                    "published": true,
+                    "runtimeInstalled": false,
+                    "originalSampleAdmitted": false,
+                    "sourceSha256": "d894b39f516c21f875e691d0ceee39ef2e37980380b9282b6a62a4cbef2377ca"
                   }
                 },
                 "hermesRetainedAssessment": {
