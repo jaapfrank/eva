@@ -78,9 +78,8 @@ def main():
     production_memory=inspect("eva2-managed-b-slot3-hindsight-1")
     ce,me=env_of(production_core),env_of(production_memory)
     scope=json.loads(Path("/tmp/eva-p2-scope-initialized-20261006.json").read_text())
-    # Original CM scope excludes real house/network actions and autonomous work.
-    # Preserve contact/personality/memory settings; all excluded effects remain
-    # guarded by the original native worker's dispatch denial.
+    # CM needs the native background thread for conversation memory retention.
+    # Delegated work stays disabled; the native worker denies real action dispatch.
     keys=("EVA_IDENTITY_NAME","EVA_IDENTITY_DESCRIPTION","EVA_IDENTITY_PACK_FILE",
         "EVA_IDENTITY_PACK_TRUST_FILE","EVA_HINDSIGHT_RECALL_BUDGET",
         "EVA_HINDSIGHT_RECALL_MAX_TOKENS","EVA_HINDSIGHT_RECALL_NODE_BUDGET",
@@ -95,7 +94,7 @@ def main():
         "EVA_RUNTIME_PRINCIPAL_ID":scope["principal_id"],
         "EVA_RUNTIME_RESOURCE_BUDGET_FILE":str(RESOURCE/"runtime-budget.json"),
         "EVA_CONVERSATION_AUTH_FILE":"/run/eva/model-lease/auth.json",
-        "EVA_BACKGROUND_WORK_ENABLED":"false","EVA_DELEGATED_WORK_ENABLED":"false",
+        "EVA_BACKGROUND_WORK_ENABLED":"true","EVA_DELEGATED_WORK_ENABLED":"false",
         "EVA_PROCEDURE_REFERENCES_ENABLED":"false",
         "PYTHONPATH":"/eval/native/benchmark/inspect_ai_v1:/opt/eva/src:/calendar-deps"})
     memory_env={key:value for key,value in me.items() if key.startswith("HINDSIGHT_")}

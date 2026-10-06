@@ -1019,6 +1019,22 @@
         "checkedAt": "2026-10-06T16:15:03.110550+00:00",
         "deliveries": [
           {
+            "title": "Dashboardcrash hersteld",
+            "state": "installed",
+            "date": "2026-10-06",
+            "result": "De ontbrekende stappenlijst liet de hele pagina crashen. Brondata en weergave zijn gecorrigeerd; bestaande dashboarddienst serveert het nieuwe bundle. Actuele Chromiumweergave, Werk-tab en ontbrekende/aanwezige instructies geven nul pageerrors.",
+            "remaining": "Open http://127.0.0.1:44712/ en vernieuw de pagina. Geen extra Eva-functie afgerond; 34/44 blijft gelijk.",
+            "source": "eva2/evidence/product/project-dashboard-client-crash-20261006.json"
+          },
+          {
+            "title": "P2.1 · Proeffouten vastgesteld; uitslagen onbekend",
+            "state": "investigated",
+            "date": "6 oktober",
+            "result": "Eva1 startte niet door onze klokplaatsing. Eva2 gaf één teruggelezen antwoord, maar onze configuratie schakelde geheugenverwerking uit. Alle proefprocessen gestopt; één modelpoging met 2829 invoer- en 123 uitvoertokens.",
+            "remaining": "Geen geldige winnaar of nieuwe functie. Twee bewezen evaluatoraansluitingen herstellen; de gesloten poging niet herhalen of herscoren. P2.1 en 34/44 onveranderd.",
+            "source": "eva2/evidence/product/p2-original-next-cm-result-20261006.json"
+          },
+          {
             "title": "P2.1 · Modeltoegang proefuitvoerder hersteld",
             "state": "investigated",
             "date": "6 oktober",
@@ -3961,30 +3977,32 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Proefomgeving gereedmaken",
-          "state": "in_progress",
+          "title": "Dashboard werkt weer; P2.1-vervolg nog niet gestart",
+          "state": "prepared",
           "owner": "Codex",
-          "detail": "Nieuwe onafhankelijke invoer en de verse proefdatabase zijn gereed, met hetzelfde oorspronkelijke budget. De gerichte SQL-clientcorrectie heeft onafhankelijke GO; zeven bestaande controles en initializer-imports slagen. De evaluator sluit nu de bestaande uitvoerders aan; nog geen nieuwe modelproef of winnaar.",
-          "remaining": "Geen nieuwe eindproefresultaten of winnaar. Originele criteria, dekking en open menselijke beoordelingen blijven behouden.",
-          "source": "eva2/evidence/product/p2-eva1-access-correction-available-20261006.json",
+          "detail": "De dashboardcrash is opgelost en daadwerkelijk in Chromium gecontroleerd; broncode, werkbord en resultaat zijn bijgewerkt. De twee P2.1-proefcorrecties zijn gereviewd. Gestopte uitslagen en 2952 tokens blijven bewaard. Volgende vergelijking nog niet gestart; geen nieuwe modelrun of winnaar.",
+          "remaining": "Vergelijking nog niet afgerond; 34/44 blijft gelijk. Geen herhaling/herscore van de gestopte poging. Originele criteria en menselijke beoordelingen blijven behouden.",
+          "source": "eva2/evidence/product/p2-original-next-cm-result-20261006.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "reviewedAt": "2026-10-06T16:34:22Z"
+          "reviewedAt": "2026-10-06T17:04:03Z"
         },
         "next": {
           "title": "Eén nieuw eindgeval uitvoeren",
           "state": "planned",
           "owner": "Codex",
-          "detail": "Na actuele bronbinding en onafhankelijke invoercommitment één echte Eva1/Eva2-route uitvoeren en beoordelen. Geen vervangende demonstratie of automatische volledige matrix.",
+          "detail": "Na correctie en review van de daadwerkelijke opstart één nog ongebruikt geval uit de reeds toegestane eindset uitvoeren. De gesloten poging blijft onbekend; geen vervangende demonstratie of automatische volledige matrix.",
           "remaining": "Vergelijkingsdekking en menselijke beoordelingen blijven zichtbaar."
         },
         "ownerAction": {
           "title": "Geen extra handeling voor P2.1",
           "detail": "Bestaande toestemming en providerroute blijven geldig; geen nieuwe aanmelding gevraagd.",
+          "steps": [],
+          "expected": "Geen extra handeling nodig; Codex verzorgt de technische voorbereiding.",
           "state": "none",
           "taskId": "P2.1"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-06T16:34:22Z"
+        "reviewedAt": "2026-10-06T17:04:03Z"
       },
       "reviewedAt": "2026-10-06T09:49:07.102699+00:00",
       "checkedAt": "2026-10-06T09:49:07.102699+00:00",
@@ -19337,7 +19355,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Eén geval uit de reeds toegestane nieuwe eindset toelaten en uitvoeren, met oorspronkelijke criteria/modelroute/verbruiksgrenzen en gecorrigeerde aansluiting. Geen automatische volledige matrix.",
+              "nextAction": "Twee bewezen evaluatorfouten corrigeren en exacte definitieve opstart zonder invoer controleren/reviewen. Daarna één nog ongebruikt geval uit de toegestane eindset; geen replay, herscore of automatische volledige matrix.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -19349,9 +19367,7 @@
               "assignment": {
                 "baseCommit": "ff4c30cc4a5c24680e03897265a710dd931f9b83",
                 "owner": "/root",
-                "activeWorkers": [
-                  "/root/p2_eva1_accounting_diagnosis_20261006"
-                ],
+                "activeWorkers": [],
                 "files": [
                   "/root: existing workboard/WERKBORD and integration only.",
                   "/root/p2_eva1_accounting_diagnosis_20261006: p2-original-next-cm-admission-20261006.json, p2-original-next-cm-result-20261006.json and private evaluator artifacts only."
@@ -19360,12 +19376,36 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Eén oorspronkelijk Eva1/Eva2-paar binnen vaste CM-per-samplegrenzen; volledige accounting. Geen automatische brede matrix. Creditkosten onbekend.",
-        "currentAction": "De bestaande native uitvoerders aansluiten op de gereed gemelde behouden verse proefdatabase. Noor-scope, beperkte login en oorspronkelijke budget zijn gecontroleerd; dataset/deelnemers/criteria blijven gelijk.",
+        "currentAction": "Correcties, dashboardclientherstel en gestopt resultaat zijn onafhankelijk GO en vastgelegd. Vervolgtoelating nog niet gestart; geen nieuwe sample vrijgegeven, replay of herscore. Beide eerdere productuitslagen UNKNOWN.",
                 "previousGoalTurn": {
                   "classification": "progress",
           "evidence": "d00debd9: dashboard via IPv4 gecontroleerd en bestaande dienst via verborgen Windows-opstartkoppeling aangesloten; GitHub en werkbord bijgewerkt. Geen productafronding; Windows IPv6 blijft open."
                 },
-        "stage": "successor_native_startup",
+        "stage": "successor_correction_reviewed_next_admission_not_started",
+        "evaluatorCorrection": {
+          "source": "eva2/evidence/product/p2-original-next-cm-result-20261006.json",
+          "reviewer": "/root/p2_eva1_lease_review_20261006",
+          "review": "GO voor resultaatpublicatie, canonical éénvlagcorrectie en generieke helper/no-inputpreflight; geen nieuwe sampletoelating.",
+          "checks": "Canonieke driver AST/instellingen bevestigd; daadwerkelijke baseline-opstart/stop met definitieve parameters en nul invoer/modelcalls geslaagd.",
+          "unconfirmedChecks": "Twee bestaande lifecycle-tests niet gecollecteerd: httpx2 ontbreekt in administrator-testomgeving; geen dependencyinstallatie.",
+          "coreImageChanged": false,
+          "nativeRunActive": false,
+          "closedCaseReplayAllowed": false
+        },
+        "baselineStartupIssue": {
+          "cause": "Klokbestand foutief binnen de door bestaande worker vereiste lege private dataRoot geplaatst.",
+          "participantInputs": 0,
+          "providerAttempts": 0,
+          "baselineDeadlineRetained": false,
+          "review": "Onafhankelijke NO_GO hervatten: deadline ontbreekt en oorspronkelijke volgorde zou wijzigen.",
+          "classification": "evaluator_preparation_failure_not_eva1_loss"
+        },
+        "nativePreparationHandle": {
+          "sessionId": 25354,
+          "runHandle": "ev003-successor-native-cm-20261006-d171470a",
+          "verifiedResources": "Terminal: database, geheugenservice en kern gestopt met exit0; behouden readback verklaart uitgeschakelde geheugenwerker.",
+          "participantInputsReleased": true
+        },
         "preparationIssue": {
           "failureClass": "ProgrammingError",
           "cause": "Psycopg interpreteert lege parameters bij SQL-procentliterals vóór serversend.",
@@ -19709,8 +19749,8 @@
                 "accessCorrection": "eva2/evidence/product/p2-eva1-access-correction-available-20261006.json",
                 "accessReview": "eva2/reviews/p2-eva1-lease-preflight-review-20261006.json"
               },
-              "remaining": "P2.1 blijft open: volledige oorspronkelijke dekking, betrouwbare Eva1-modelaccounting en menselijke beoordeling ontbreken; succesvolle native geheugenverwerking nog niet aangetoond.",
-              "latestEvidence": "eva2/evidence/product/p2-next-native-comparison-partial-result-20261006.json",
+              "remaining": "P2.1 blijft open: laatste paar ongeldig door twee bewezen evaluatorvoorbereidingsfouten; volledige oorspronkelijke dekking en menselijke beoordeling ontbreken. Geen productverlies of voordeel bewezen door deze poging.",
+              "latestEvidence": "eva2/evidence/product/p2-original-next-cm-result-20261006.json",
               "executionBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_after_same_command_review_with_new_provenance_evidence",
@@ -19721,7 +19761,7 @@
                 "resolvedAt": "2026-10-04T15:04:47.848198+00:00",
                 "scope": "Historical refusal before process creation; resolved through the same automatic review path after new synthetic-input provenance evidence. Counts here describe the rejected attempt only; current execution is in latestEvidence."
               },
-              "blocker": "Vergelijking technisch onvolledig: ontbrekende bevestigde geheugenregistratie en onvolledige Eva1-modelaccounting. Codex lokaliseert de overgang; geen extra eigenaarhandeling.",
+              "blocker": "Codex herstelt twee bewezen evaluatoraansluitingen: klok buiten lege baseline-datamap en bestaande geheugenwerker inschakelen. Geen extra eigenaarhandeling; geen productverliesclaim uit de gesloten poging.",
               "assessmentBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_with_authorized_independent_processing",
@@ -19831,7 +19871,7 @@
                 "reason": "Vergelijking technisch onvolledig: ontbrekende bevestigde geheugenregistratie en onvolledige Eva1-modelaccounting. Codex lokaliseert de overgang; geen extra eigenaarhandeling.",
                 "evidence": "eva2/evidence/product/p2-next-native-comparison-partial-result-20261006.json"
               },
-              "activeExecution": true
+              "activeExecution": false
             },
             {
               "id": "P2.2",

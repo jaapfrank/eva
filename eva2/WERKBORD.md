@@ -1,3 +1,25 @@
+## 6 oktober — Dashboardclientfout hersteld
+
+Open http://127.0.0.1:44712/ en vernieuw de pagina. De gemelde JavaScript-crash kwam van de ontbrekende stappenlijst onder ‘Van jou nodig’. De brongegevens bevatten nu een lege lijst; de pagina kan ook ontbrekende stappen verwerken en toont alleen instructies als er iets te doen is. Het nieuwe projectbundle wordt door de bestaande dashboarddienst geserveerd.
+
+De echte Chromiumweergave en Werk-tab werken zonder pageerrors; ook ontbrekende stappen en aanwezige instructies zijn in de browser gecontroleerd. Windows IPv4 geeft HTTP200. Windows localhost via Invoke-WebRequest blijft een afzonderlijk IPv6-probleem; daarom de expliciete IPv4-link. Geen Eva-kernimages, modelcalls of hogere afrondingsteller: 34/44 blijft gelijk. [Clientcorrectie en controle](evidence/product/project-dashboard-client-crash-20261006.json).
+
+## 6 oktober — P2.1 proef gestopt; twee voorbereidingsfouten herstellen
+
+De vergelijking is gestopt en bewaard. Eva1 kreeg geen invoer: onze klok stond in de vereiste lege datamap. Bij Eva2 schakelde onze proefconfiguratie de bestaande geheugenverwerking uit. Eén antwoord is teruggelezen, maar het geheugen bleef queued tot de oorspronkelijke proefgrens. Dit zijn fouten in de proefomgeving, geen geldige productverliezen of winnaar. De ruwe score blijft bewaard; de vergelijkingsuitkomst is UNKNOWN. Alle drie proefcontainers zijn gestopt.
+
+Gemeten Eva2-gebruik: één modelpoging, 2829 invoer- en 123 uitvoertokens; eerste inhoud na 8,322 seconden. Geen geheugenhelperaanroep. Creditkosten onbekend. P2.1 blijft open en 34/44 blijft gelijk. Nu alleen de bewezen aansluitingen corrigeren: klok buiten de lege baseline-datamap, oorspronkelijke deadlines direct bewaren en bestaande geheugenwerker laten starten. Exacte opstartparameters zonder invoer controleren en gebundeld reviewen vóór een volgende toegelaten proef. Geen herhaling of herscore van deze poging, geen spraakwerk. [Bewaarde uitslag en oorzaken](evidence/product/p2-original-next-cm-result-20261006.json).
+
+De correcties zijn nu gereviewd: onafhankelijke GO voor publicatie, één canonieke instellingenwijziging en de kleine bestaande proefaansturing. Baseline start met dezelfde bron/model/toegang en definitieve parameters, klok buiten de lege datamap en vooraf duurzaam bewaarde deadline; schone stop, nul invoer/modelcalls. Canonieke driver parse/instellingen gecontroleerd. Twee bestaande lifecycle-tests konden niet collecteren door ontbrekend httpx2; deze worden niet als geslaagd geclaimd en er is geen dependencyinstallatie gestart. Geen kernimage gewijzigd. Een volgende sample vereist nog haar eigen bron-/resourcebinding en toelating.
+
+## 6 oktober — P2.1 één nieuwe vergelijking vrijgegeven
+
+Onafhankelijke technische GO voor precies CM01/epoch1, op de actuele bron-/imagebinding en nieuwe ongeziene eindset. De evaluator mag nu dit ene paar via de bestaande native routes uitvoeren. Modellen, oorspronkelijke limieten, gezamenlijke klok, cumulatieve accounting, readbacks en stoppen blijven gelijk. De geheugenhelper gebruikt de oorspronkelijke genormaliseerde vergelijkingsvariant; geen prestatieclaim over het geïnstalleerde Luna-profiel. Kwaliteit blijft UNKNOWN waar de twee vereiste echte beoordelingen ontbreken. Geen volledige matrix of nieuwe productafronding.
+
+## 6 oktober — P2.1 echte proefuitvoerders vóór invoer controleren
+
+De geïsoleerde proefdatabase, geheugenservice en bestaande kern draaien daadwerkelijk; Docker bevestigt de kern als gezond. Live voorbereiding: sessie 25354, runHandle ev003-successor-native-cm-20261006-d171470a. Nog geen proefinvoer vrijgegeven of vergelijkingsresultaat. De evaluator legt de technische toelating vast; daarna onafhankelijke metadatareview en één oorspronkelijk taaktype op de nieuwe eindset. Geen volledige matrix, nieuwe productafronding of spraakwerk.
+
 ## 6 oktober — P2.1 lege proefdatabase gericht voorbereiden
 
 De nieuwe onafhankelijke eindset is vastgelegd met dezelfde oorspronkelijke taaksoorten/criteria. Nog geen nieuwe modelrun. De bestaande lege-DB-voorbereiding strandde vóór serversend doordat psycopg SQL-procentliterals als parameters zag. Alleen die overgang krijgt no_parameters=True; exacte SQL, rol-/leegtecontroles en deelnemers blijven gelijk. Zeven bestaande gerichte operationchecks en alle initializer-imports slagen. Onafhankelijke GO; de helper en schema-/Noor-initialisatie zijn op dezelfde behouden proefdatabase daadwerkelijk geslaagd. Beperkte login en oorspronkelijke budget gecontroleerd. De evaluator sluit nu de bestaande native uitvoerders aan. Geen nieuwe productafronding of spraakwerk.

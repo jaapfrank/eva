@@ -1,0 +1,159 @@
+{
+  "contract": "EvaOriginalNextConversationMemoryAdmission/v1",
+  "status": "admitted_one_successor_original_cm_pair",
+  "task": "P2.1",
+  "runHandle": "ev003-successor-native-cm-20261006-d171470a",
+  "caseId": "EV003-CM-01",
+  "epoch": 1,
+  "caseSha256": "8a0dfda44e84e2e4d80fc8aad7856eebad5d96e2b67dc490bedbff06e69b81bd",
+  "datasetCommitmentSha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+  "datasetTotalSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "datasetStructure": {
+    "families": {
+      "conversation_memory": 12,
+      "cross_domain_actions": 12,
+      "initiative": 12,
+      "browser_computer": 12,
+      "learning_projects": 12,
+      "voice_presence": 12
+    },
+    "differentScenarios": 72,
+    "epochs": 3,
+    "sameCasesEachEpoch": true,
+    "freshStateEachEpoch": true,
+    "originalScenarioStructures": true,
+    "independentlyFreshOpaqueParameters": true,
+    "allInitialInputsFresh": true,
+    "committedBeforeSelectionAndParticipantInput": true,
+    "newGeneratorOrPlatform": false
+  },
+  "originalPlan": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+    "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "limits": {
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "wallSeconds": 480,
+      "toolDispatches": 16,
+      "speechRequests": 0
+    },
+    "participantOrder": [
+      "eva1-bottie",
+      "eva2"
+    ],
+    "criteriaChanged": false,
+    "perParticipantDeadlineAcrossTurnsAndMemoryWaits": true,
+    "wholeCumulativeAccountingIncludesFailuresAndHelpers": true,
+    "ledgerToolVocabularyAlias": {
+      "toolCalls": 16,
+      "toolDispatches": 16
+    }
+  },
+  "candidate": {
+    "currentInstalledBindingSha256": "10d8621b2000cd0380254f6e1274620bebaafe0aa420f577fee6731987322d7e",
+    "preCurationFreezeSha256": "3343ecba82ebc4fbbd31916ae64663231472bfb483ff7a392c4fdfe78dcb0219",
+    "coreImage": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+    "memoryImage": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+    "helperModelComparisonVariant": {
+      "installedMemoryProfile": "gpt-5.6-luna/low",
+      "originalComparisonProfile": "gpt-6-astra/medium"
+    },
+    "actualInstalledCandidateUsed": true
+  },
+  "models": {
+    "contact": "gpt-6-sol/none",
+    "allResearchWorkAndMemoryHelpers": "gpt-6-astra/medium",
+    "providerRouteUnchanged": true,
+    "refreshOrFallback": false
+  },
+  "bindings": {
+    "nativeWorkerSha256": "4ee595e33a6de19825d1b71da475c7efeb0ea285782b0c9a7cb3fa0ca1409dd7",
+    "memoryObserverSha256": "0a3366f227bbb6299459ac3de6217cea0d0c9457014453c45096f216e7f68279",
+    "processorSha256": "f3b4f5fb7605476ebafb65e8ccecd3a70f4b996057c1490fadf62460165df103",
+    "orchestrationSha256": "885a976f3f94501076828f987cd3d9c167bb5db5376d49c9c88fa28068191eb6",
+    "nativeResourceBindingPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/native-resource-binding.private.json",
+    "nativeResourceBindingSha256": "5ea4eff8067a8b2cf5f12a26333b906190f5ccce4f423abe590283d945d4fe39",
+    "originalScorerSha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "originalProtocolSha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+    "scopedLeaseMetadataPath": "eva2/evidence/product/p2-eva1-scoped-lease-prepared-20261006.json",
+    "scopedLeaseSha256": "d688349a5689c2872b0f19b7f06ff1ec8da08719241d43855de39c5445b3c6ad",
+    "leaseReadAsUid1000": true,
+    "leaseExpiryCoversBothOriginalSamples": true,
+    "leaseOwnerModeUnchanged": true,
+    "singleCoreMemoryClockFile": true,
+    "clockGenerationsAcknowledged": [
+      0,
+      0
+    ]
+  },
+  "ddlPreparationCorrection": {
+    "path": "eva2/src/eva/operations/install_schema.py",
+    "sha256": "bf87e945e36e8e627d29fd9db414e69670779a1e355858591f36129db916f41c",
+    "originalSqlAndGuardsUnchanged": true,
+    "executionOptions": {
+      "no_parameters": true
+    },
+    "existingChecksPassed": 7,
+    "independentReviewerGO": true,
+    "participantImageSourceInputScorerConditionsChanged": false,
+    "retainedDatabaseAndPreparedScopeReused": true
+  },
+  "preinputChecks": {
+    "newNativeCoreReady": true,
+    "newNativeMemoryReady": true,
+    "freshMemoryTablesEmpty": true,
+    "restrictedRuntimeLoginVerified": true,
+    "originalBudgetValuesUnchanged": true,
+    "nativeProviderAttempts": 0,
+    "participantInputs": 0,
+    "sameNoorScopeAndMemoryNamespace": true,
+    "baselinePreparedSourceAndHookUnchanged": true,
+    "baselineStartupGuardProofReused": true,
+    "actualUid1000LeaseReadPassed": true
+  },
+  "resourceHandles": {
+    "terminalSession": 25354,
+    "databaseContainer": "eva2-p2succ-cm-db-d171470a",
+    "memoryContainer": "eva2-p2succ-cm-memory-d171470a",
+    "coreContainer": "eva2-p2succ-cm-core-d171470a",
+    "allCurrentlyRunning": true,
+    "evaluatorPrivateRoot": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a",
+    "runtimeRoot": "/tmp/eva2-ev003-provider-history-successor-cm-20261006-d171470a"
+  },
+  "noReplay": {
+    "priorInputsReplayed": false,
+    "closedCaseRescored": false,
+    "historicalResultsChanged": false,
+    "oldSupplementRelabelledOriginalCoverage": false,
+    "automaticFullMatrix": false,
+    "speechRun": false
+  },
+  "scoring": {
+    "originalScorerRequired": true,
+    "twoActualIndependentBlindedSemanticAndHumanRatersRequired": true,
+    "actualRecordedRaters": 0,
+    "missingJudgmentsStayUnknown": true,
+    "literalOrTransportEvidenceCannotPassQuality": true
+  },
+  "retention": "Evaluator-owned protected artifacts retained through comparison and actual owner review; controlled rater read only; cleanup after owner-reviewed closure.",
+  "estimates": {
+    "plannedProviderCalls": "Only original registered per-sample envelope; not a cost prediction",
+    "creditCost": null
+  },
+  "executionRelease": {
+    "allowed": true,
+    "requiresIndependentTechnicalAdmissionGO": true,
+    "independentTechnicalAdmissionGOReceived": true,
+    "participantInputSent": false
+  },
+  "independentTechnicalReview": {
+    "decision": "GO exactly EV003-CM-01 epoch1 Eva1+Eva2",
+    "authority": "Coordinator relay of independent reviewer GO; current root message",
+    "receivedAt": "2026-10-06T16:43:02.144421+00:00",
+    "bindingsAndLiveResourcesVerified": true,
+    "helperComparisonVariantAcknowledged": true,
+    "criteriaLimitsInputCorpusScorerUnchanged": true,
+    "reviewFiles": []
+  }
+}

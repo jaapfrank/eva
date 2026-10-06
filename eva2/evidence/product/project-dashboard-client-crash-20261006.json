@@ -1,0 +1,33 @@
+{
+  "contract": "EvaProjectDashboardClientCorrection/v1",
+  "checkedAt": "2026-10-06T17:04:03Z",
+  "route": "http://127.0.0.1:44712/",
+  "ownerReportedRoute": "http://localhost:44712/",
+  "status": "built_and_rendered_on_existing_preview",
+  "cause": "The current ownerAction had no steps array; DeliveryOverview unconditionally read steps[0] and steps.map, causing the reported client crash.",
+  "reportedBundle": "/assets/index-CBgJhfFf.js",
+  "reportedLocation": "175:256654",
+  "correction": "Restore the empty steps array in the workboard. Render optional owner steps defensively, use the action detail as summary and show instructions only for a nonempty list.",
+  "source": "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx",
+  "servedBundle": "/assets/index-DziBZP0T.js",
+  "verification": {
+    "projectBuild": "passed",
+    "actualChromiumOverview": "passed",
+    "actualChromiumWorkTab": "passed",
+    "missingStepsBrowserResponse": "passed",
+    "nonemptyInstructionsBrowserResponse": "passed",
+    "uncaughtJavaScriptErrors": [],
+    "windowsIPv4HttpStatus": 200,
+    "windowsLocalhostInvokeWebRequest": "10-second timeout; localhost IPv6 issue remains separate",
+    "originalSmallTasks": 44,
+    "completedSmallTasks": 34,
+    "providerCalls": 0
+  },
+  "screenshot": "/home/administrator/project/.eva2-artifacts/dashboard-client-fix-20261006/overview.png",
+  "browserContext": "Isolated headless Chromium using the existing installed Playwright and browser; no personal browser profile or account access.",
+  "review": "GO by /root/p2_eva1_lease_review_20261006: missing steps no longer crash, actual instruction lists remain visible, task counts and participant/provider/criteria unchanged.",
+  "newEvaFunctionCompleted": false,
+  "coreImagesChanged": false,
+  "existingPreviewRestarted": false,
+  "remaining": "Use the reliable explicit IPv4 link. Previous HTTP-only checks did not prove successful client rendering."
+}

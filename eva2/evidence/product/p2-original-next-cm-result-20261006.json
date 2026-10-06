@@ -1,0 +1,570 @@
+{
+  "contract": "P2OriginalSuccessorNativeCMResult/v1",
+  "status": "closed_evaluator_obstructed_pair_product_unknown",
+  "task": "P2.1",
+  "recordedAtUtc": "2026-10-06T16:55:29.855612+00:00",
+  "runHandle": "ev003-successor-native-cm-20261006-d171470a",
+  "caseId": "EV003-CM-01",
+  "epoch": 1,
+  "caseSha256": "8a0dfda44e84e2e4d80fc8aad7856eebad5d96e2b67dc490bedbff06e69b81bd",
+  "admission": {
+    "path": "eva2/evidence/product/p2-original-next-cm-admission-20261006.json",
+    "sha256": "5c652761ff9985e68790c76b28bcdb1afcf704c8f52b025d11edb547228fd521",
+    "preinputTechnicalGOReceived": true,
+    "readinessClaimsNotSufficientForActualNativeRetention": true,
+    "admissionReceiptPreserved": true
+  },
+  "dataset": {
+    "commitmentSha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "totalSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "structure": {
+      "families": {
+        "conversation_memory": 12,
+        "cross_domain_actions": 12,
+        "initiative": 12,
+        "browser_computer": 12,
+        "learning_projects": 12,
+        "voice_presence": 12
+      },
+      "differentScenarios": 72,
+      "epochs": 3,
+      "sameCasesEachEpoch": true,
+      "freshStateEachEpoch": true,
+      "originalScenarioStructures": true,
+      "independentlyFreshOpaqueParameters": true,
+      "allInitialInputsFresh": true,
+      "committedBeforeSelectionAndParticipantInput": true,
+      "newGeneratorOrPlatform": false
+    },
+    "freshSuccessorInputsCommittedBeforeSelection": true,
+    "unchangedOriginalScenarioMethod": true,
+    "historicalScoresOrCasesReplayed": false,
+    "fullMatrixExecuted": false,
+    "selectedCaseNowClosedAndNotReplayable": true
+  },
+  "candidate": {
+    "currentInstalledBindingSha256": "10d8621b2000cd0380254f6e1274620bebaafe0aa420f577fee6731987322d7e",
+    "preCurationFreezeSha256": "3343ecba82ebc4fbbd31916ae64663231472bfb483ff7a392c4fdfe78dcb0219",
+    "coreImage": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+    "memoryImage": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+    "helperModelComparisonVariant": {
+      "installedMemoryProfile": "gpt-5.6-luna/low",
+      "originalComparisonProfile": "gpt-6-astra/medium"
+    },
+    "actualInstalledCandidateUsed": true
+  },
+  "models": {
+    "contact": "gpt-6-sol/none",
+    "allResearchWorkAndMemoryHelpers": "gpt-6-astra/medium",
+    "providerRouteUnchanged": true,
+    "refreshOrFallback": false
+  },
+  "frozenBindings": {
+    "nativeWorkerSha256": "4ee595e33a6de19825d1b71da475c7efeb0ea285782b0c9a7cb3fa0ca1409dd7",
+    "memoryObserverSha256": "0a3366f227bbb6299459ac3de6217cea0d0c9457014453c45096f216e7f68279",
+    "processorSha256": "f3b4f5fb7605476ebafb65e8ccecd3a70f4b996057c1490fadf62460165df103",
+    "orchestrationSha256": "885a976f3f94501076828f987cd3d9c167bb5db5376d49c9c88fa28068191eb6",
+    "nativeResourceBindingPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/native-resource-binding.private.json",
+    "nativeResourceBindingSha256": "5ea4eff8067a8b2cf5f12a26333b906190f5ccce4f423abe590283d945d4fe39",
+    "originalScorerSha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "originalProtocolSha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+    "scopedLeaseMetadataPath": "eva2/evidence/product/p2-eva1-scoped-lease-prepared-20261006.json",
+    "scopedLeaseSha256": "d688349a5689c2872b0f19b7f06ff1ec8da08719241d43855de39c5445b3c6ad",
+    "leaseReadAsUid1000": true,
+    "leaseExpiryCoversBothOriginalSamples": true,
+    "leaseOwnerModeUnchanged": true,
+    "singleCoreMemoryClockFile": true,
+    "clockGenerationsAcknowledged": [
+      0,
+      0
+    ]
+  },
+  "originalPlan": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+    "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "limits": {
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "wallSeconds": 480,
+      "toolDispatches": 16,
+      "speechRequests": 0
+    },
+    "participantOrder": [
+      "eva1-bottie",
+      "eva2"
+    ],
+    "criteriaChanged": false,
+    "perParticipantDeadlineAcrossTurnsAndMemoryWaits": true,
+    "wholeCumulativeAccountingIncludesFailuresAndHelpers": true,
+    "ledgerToolVocabularyAlias": {
+      "toolCalls": 16,
+      "toolDispatches": 16
+    }
+  },
+  "participants": [
+    {
+      "participant": "eva1-bottie",
+      "sampleRunId": "eva1-successor-cm01-epoch1-d171470a",
+      "productDisposition": "UNKNOWN",
+      "rawOriginalScorer": {
+        "value": "unknown",
+        "explanation": "Native completion/stop is missing or not attributable to the product.",
+        "metadata": {
+          "case_id": "EV003-CM-01",
+          "family": "conversation_memory",
+          "epoch": 1,
+          "case_sha256": "8a0dfda44e84e2e4d80fc8aad7856eebad5d96e2b67dc490bedbff06e69b81bd",
+          "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+          "independent_readbacks_observed": 0,
+          "task_success": null,
+          "human_preference": [],
+          "human_preference_status": "unknown",
+          "accounting_status": "unknown",
+          "individual_human_judgments": [],
+          "human_judgments_status": "unknown",
+          "initiative_useful": null,
+          "semantic_judgments": [],
+          "physical_judgments": [],
+          "safety_failure": null,
+          "quality_or_superiority_claim": null,
+          "execution_admission": false
+        },
+        "original_scorer_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+        "original_scorer_executed": true
+      },
+      "rawScorePreservedUnmodified": true,
+      "validProductLoss": false,
+      "dispositionReason": "evaluator_baseline_nonempty_data_directory_before_input",
+      "nativeCompletion": false,
+      "durableReplyTurnsObserved": 0,
+      "completedMemorySettlementsObserved": 0,
+      "elapsedSampleSeconds": 0.05075091600156156,
+      "firstContentMilliseconds": [],
+      "nativeStopReceiptVerified": false,
+      "processClosureIndependentlyVerified": true,
+      "accountingComplete": false,
+      "registeredProviderAttempts": 0,
+      "totalUsage": {
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null
+      },
+      "knownPartialUsage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "attempts": [],
+      "registeredHelperAttempts": 0,
+      "activeAsyncAttemptsAfterClose": 0,
+      "cancelErrors": [],
+      "toolDispatchesObserved": null,
+      "speechRequests": 0,
+      "actualRecordedRaters": 0,
+      "semanticQuality": "UNKNOWN",
+      "humanPreference": "UNKNOWN",
+      "providedHumanHelp": 0,
+      "requiredHumanHelp": "UNKNOWN",
+      "creditCost": "UNKNOWN",
+      "unplannedPostAttemptInterventions": 0
+    },
+    {
+      "participant": "eva2",
+      "sampleRunId": "eva2-successor-cm01-epoch1-d171470a",
+      "productDisposition": "UNKNOWN",
+      "rawOriginalScorer": {
+        "value": "I",
+        "explanation": "Verified admitted-product noncompletion or stop violation.",
+        "metadata": {
+          "case_id": "EV003-CM-01",
+          "family": "conversation_memory",
+          "epoch": 1,
+          "case_sha256": "8a0dfda44e84e2e4d80fc8aad7856eebad5d96e2b67dc490bedbff06e69b81bd",
+          "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+          "independent_readbacks_observed": 0,
+          "task_success": false,
+          "human_preference": [],
+          "human_preference_status": "unknown",
+          "accounting_status": "complete",
+          "individual_human_judgments": [],
+          "human_judgments_status": "unknown",
+          "initiative_useful": null,
+          "semantic_judgments": [],
+          "physical_judgments": [],
+          "safety_failure": null,
+          "quality_or_superiority_claim": null,
+          "execution_admission": false
+        },
+        "original_scorer_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+        "original_scorer_executed": true
+      },
+      "rawScorePreservedUnmodified": true,
+      "validProductLoss": false,
+      "dispositionReason": "evaluator_disabled_native_background_retention",
+      "nativeCompletion": false,
+      "durableReplyTurnsObserved": 1,
+      "completedMemorySettlementsObserved": 0,
+      "elapsedSampleSeconds": 480.0001405469957,
+      "firstContentMilliseconds": [
+        8321.822589998192
+      ],
+      "nativeStopReceiptVerified": true,
+      "processClosureIndependentlyVerified": true,
+      "accountingComplete": true,
+      "registeredProviderAttempts": 1,
+      "totalUsage": {
+        "input_tokens": 2829,
+        "output_tokens": 123,
+        "total_tokens": 2952
+      },
+      "knownPartialUsage": {
+        "input_tokens": 2829,
+        "output_tokens": 123,
+        "total_tokens": 2952
+      },
+      "attempts": [
+        {
+          "id": 0,
+          "sample_id": "eva2-successor-cm01-epoch1-d171470a",
+          "role": "contact",
+          "model": "gpt-6-sol",
+          "reasoning_effort": "none",
+          "status": "completed",
+          "usage": {
+            "input_tokens": 2829,
+            "output_tokens": 123,
+            "total_tokens": 2952
+          }
+        }
+      ],
+      "registeredHelperAttempts": 0,
+      "activeAsyncAttemptsAfterClose": 0,
+      "cancelErrors": [],
+      "toolDispatchesObserved": 0,
+      "speechRequests": 0,
+      "actualRecordedRaters": 0,
+      "semanticQuality": "UNKNOWN",
+      "humanPreference": "UNKNOWN",
+      "providedHumanHelp": 0,
+      "requiredHumanHelp": "UNKNOWN",
+      "creditCost": "UNKNOWN",
+      "unplannedPostAttemptInterventions": 0
+    }
+  ],
+  "causalPreparationFailures": [
+    {
+      "code": "BASELINE_NONEMPTY_DATAROOT",
+      "origin": "evaluator_orchestration",
+      "confidence": "verified",
+      "executedProcessorSha256": "f3b4f5fb7605476ebafb65e8ccecd3a70f4b996057c1490fadf62460165df103",
+      "processorLines": [
+        38,
+        39,
+        41,
+        42,
+        44
+      ],
+      "workerPublicPath": "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+      "workerLines": [
+        71,
+        74,
+        75
+      ],
+      "workerSha256": "4ee595e33a6de19825d1b71da475c7efeb0ea285782b0c9a7cb3fa0ca1409dd7",
+      "clockCreatedInsideRequiredEmptyDataRoot": true,
+      "failureClass": "ValueError",
+      "nativeErrorClass": "Error",
+      "nativeErrorCode": "new private CP001 temporary directory required",
+      "startupProviderDispatchReached": false,
+      "participantInputsSent": 0,
+      "nativeReadyReceived": false,
+      "absoluteMonotonicDeadlineDurablyRetained": false,
+      "baselineResumePerformed": false,
+      "baselineClockUnchangedAndSeparatedFromCoreMemory": true,
+      "baselineClockGeneration": 0,
+      "baselineClockSha256": "f76b74f32e71251962b84ebaabd81dbd2ca86c8964f7191ae34606ec1ed81003"
+    },
+    {
+      "code": "NATIVE_BACKGROUND_RETENTION_DISABLED",
+      "origin": "evaluator_orchestration",
+      "confidence": "verified",
+      "executedOrchestrationSha256": "885a976f3f94501076828f987cd3d9c167bb5db5376d49c9c88fa28068191eb6",
+      "orchestrationLine": 72,
+      "configurationKey": "EVA_BACKGROUND_WORK_ENABLED",
+      "configurationValue": false,
+      "coreEnvSha256": "f063fd2c6f3c7a61303ae16d3bb645dee0281f08daae102689cf057bbb116301",
+      "evaluatedRuntimeInstalledPath": "/opt/eva/src/eva/bootstrap/runtime.py",
+      "evaluatedRuntimeSha256": "1ec444b7e676b45cd48987dd54cbbabae97420c93768ab098733e7baa9ebd66b",
+      "evaluatedRuntimeGuardLines": [
+        774,
+        777,
+        778,
+        779
+      ],
+      "publicCounterpartPath": "eva2/src/eva/bootstrap/runtime.py",
+      "publicCounterpartGuardLines": [
+        776,
+        779,
+        780,
+        781
+      ],
+      "coldPathStartSkippedByGuard": true,
+      "readbackPath": "eva2/benchmark/inspect_ai_v1/cp001_native.py",
+      "readbackPendingBranchLines": [
+        269,
+        271,
+        272
+      ],
+      "readbackReason": "native retention pending",
+      "activeQueuedNativeRetainDocuments": 1,
+      "completedSourceOnlyQueuedDocuments": 1,
+      "memoryStorageReservedActive": 1,
+      "memoryRetainStartedEvents": 0,
+      "memoryRetainSucceededEvents": 0,
+      "memoryCountsAfterClose": {
+        "banks": 1,
+        "documents": 0,
+        "memory_units": 0,
+        "async_operations": 0
+      },
+      "coreAndMemorySharedClockGenerationAfterClose": 0,
+      "memoryHelperProviderCalls": 0,
+      "originalSampleWallSecondsConsumed": 480.0001405469957,
+      "candidateProductDefectEstablished": false
+    },
+    {
+      "code": "RAW_SCORE_FAILURE_ORIGIN_MISATTRIBUTION",
+      "origin": "evaluator_orchestration",
+      "confidence": "verified",
+      "processorPathPrivate": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/one-pair-processor.private.py",
+      "processorLine": 97,
+      "automaticAdmittedProductClassificationOnWallExpired": true,
+      "rawEva2Score": "I",
+      "rawScoreNotChangedOrRecomputed": true,
+      "effectiveProductDisposition": "UNKNOWN",
+      "reason": "The native retention worker was disabled by evaluator configuration; timeout does not establish candidate failure."
+    }
+  ],
+  "usageSummary": {
+    "registeredAttemptsAllParticipants": 1,
+    "completedContactAttempts": 1,
+    "registeredHelperAttempts": 0,
+    "knownInputTokens": 2829,
+    "knownOutputTokens": 123,
+    "knownTotalTokens": 2952,
+    "pairCompleteAccounting": false,
+    "eva2BoundNativeAccountingComplete": true,
+    "baselineTotalUsage": "UNKNOWN",
+    "zeroBaselineProviderDispatchSupportedByExactPreProviderStartupBranch": true,
+    "zeroRegisteredAttemptsDoesNotGenerallyProveZeroUpstreamCalls": true,
+    "developmentAndReadOnlyPreparationProviderCalls": 0,
+    "creditCost": "UNKNOWN"
+  },
+  "taskResult": {
+    "validCompletedPairedCases": 0,
+    "comparativeAdvantage": "UNKNOWN",
+    "eva1TaskSuccess": "UNKNOWN",
+    "eva2TaskSuccess": "UNKNOWN",
+    "rawEva2TaskFailureScoreRetainedButNotValidProductEvidence": true,
+    "semanticOrHumanRatingsObtained": false,
+    "privateStimuliOracleRepliesDisclosed": false,
+    "scorerOrCriteriaChanged": false,
+    "noReplayOrRescore": true
+  },
+  "processClosure": {
+    "terminalSession": 25354,
+    "terminalExitCode": 0,
+    "allClosed": true,
+    "containers": [
+      {
+        "name": "eva2-p2succ-cm-core-d171470a",
+        "running": false,
+        "exitCode": 0
+      },
+      {
+        "name": "eva2-p2succ-cm-memory-d171470a",
+        "running": false,
+        "exitCode": 0
+      },
+      {
+        "name": "eva2-p2succ-cm-db-d171470a",
+        "running": false,
+        "exitCode": 0
+      }
+    ],
+    "baselineBoundProcessAbsent": true,
+    "parentWorkersTerminalAndDisconnected": true,
+    "parentErrors": [],
+    "pendingActions": 0,
+    "activeAsyncAttempts": 0,
+    "modelTunnelClosed": true,
+    "retainedDatabaseReadbackOnlyAfterClose": true,
+    "retainedDatabaseStoppedAfterReadback": true,
+    "retainedNetworkAndVolumeForEvidence": true,
+    "noAsyncWorkLeftWithoutHandle": true
+  },
+  "technicalEvidence": [
+    {
+      "name": "pair-private-result.json",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/pair-private-result.json",
+      "sha256": "53fe101bc0a1650740de74c9219b5412996413c2e0e37f3a6157aebe19612d2c",
+      "contentsPrivate": true
+    },
+    {
+      "name": "eva1-bottie-native-evidence.private.json",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/eva1-bottie-native-evidence.private.json",
+      "sha256": "4c04774273b54d31fa8f76b6805569d789cacccd9550e6e60a4e81253e0f0ea7",
+      "contentsPrivate": true
+    },
+    {
+      "name": "eva1-bottie-native-inspect-score.private.json",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/eva1-bottie-native-inspect-score.private.json",
+      "sha256": "265575663660be89ba3d6b055f01aa2436cf5ec22afb18f75a56e330f4d0db34",
+      "contentsPrivate": true
+    },
+    {
+      "name": "eva1-stderr.private.log",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/eva1-stderr.private.log",
+      "sha256": "d81ffdf00ab29cc26a93e6a290705c525cf070e2f85b1d93dae23910c0301baa",
+      "contentsPrivate": true
+    },
+    {
+      "name": "eva2-native-evidence.private.json",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/eva2-native-evidence.private.json",
+      "sha256": "0735848b5b7e169a063e9f80f4c99a16da2dbb1f3b05d7ac74d96f889ef98cc4",
+      "contentsPrivate": true
+    },
+    {
+      "name": "eva2-native-inspect-score.private.json",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/eva2-native-inspect-score.private.json",
+      "sha256": "6fd67af1944f6bc40610ba85166ba196f6598920b3c9e1d604c6bca121154594",
+      "contentsPrivate": true
+    },
+    {
+      "name": "eva2-native-terminal.private.json",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/eva2-native-terminal.private.json",
+      "sha256": "07998d3f434f0ea8f00916567ba63feded854bef84d13e1a64b9cb310bf7baee",
+      "contentsPrivate": true
+    },
+    {
+      "name": "eva2-parent-report.private.json",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/eva2-parent-report.private.json",
+      "sha256": "0c47aedf673cb3fece132279be0c2f18fca9875539e80186af897ba47d39643a",
+      "contentsPrivate": true
+    },
+    {
+      "name": "process-close-accounting-access.private.json",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/process-close-accounting-access.private.json",
+      "sha256": "4439eea7f8acdc94ea6a13ba71dd66af77cf763c79aeaac5585889c6f8ee33ac",
+      "contentsPrivate": true
+    },
+    {
+      "name": "baseline-startup-closure-technical.private.json",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/baseline-startup-closure-technical.private.json",
+      "sha256": "2824c0b9c8c6a7cf7202b91388bfdc3172942bd06e10848e49542513c3ee859a",
+      "contentsPrivate": true
+    },
+    {
+      "name": "retained-settlement-readback-technical.private.json",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/retained-settlement-readback-technical.private.json",
+      "sha256": "17e2ed8ed59ff2f020b87611a180a509d6cf758e0c5af4e3c965b496a34dfa1f",
+      "contentsPrivate": true
+    },
+    {
+      "name": "retained-settlement-readback-technical-continuation.private.json",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/retained-settlement-readback-technical-continuation.private.json",
+      "sha256": "634fd3048cd391cfcab3b2bc0a0e7aa454e92f646cd39365a87b4f849533c92b",
+      "contentsPrivate": true
+    },
+    {
+      "name": "background-worker-configuration-cause-technical.private.json",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/background-worker-configuration-cause-technical.private.json",
+      "sha256": "cb659d380871e109a2bb01a92fd5c7ab71b4bd42e60eb082ef6e7d1d59840938",
+      "contentsPrivate": true
+    },
+    {
+      "name": "orchestration-preparation-correction.private.py",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/orchestration-preparation-correction.private.py",
+      "sha256": "fd942c3d15df5559099460eb2277fb5f241d4fa9c5f5c932a4146c5b438f0519",
+      "contentsPrivate": true
+    },
+    {
+      "name": "zero-input-launch-preflight-technical.private.json",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/zero-input-launch-preflight-technical.private.json",
+      "sha256": "6d9dd5d8686df6f91c49a52176edf65ba0a7398f4331a66e9e5159e9b13a8243",
+      "contentsPrivate": true
+    },
+    {
+      "name": "zero-input-baseline-stop.private.json",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/zero-input-baseline-stop.private.json",
+      "sha256": "8f20f40168ed2d7892899f8b09228730a521f5fa7ef6c44ed882b63c93d16ac9",
+      "contentsPrivate": true
+    }
+  ],
+  "nextStep": {
+    "scope": "small generic evaluator orchestration correction only",
+    "changes": [
+      "baseline calendar file outside required empty dataRoot",
+      "persist absolute participant monotonic start and deadline before native launch/input",
+      "enable actual native retention worker in isolated scope while action/delegation routes remain denied"
+    ],
+    "sameBaselineParametersNoInputCheckRequired": true,
+    "freshCaseOrModelRunReleased": false,
+    "closedCaseReplayAllowed": false,
+    "preparationOnlyCompleted": true,
+    "genericPrivateHelper": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/orchestration-preparation-correction.private.py",
+      "sha256": "fd942c3d15df5559099460eb2277fb5f241d4fa9c5f5c932a4146c5b438f0519",
+      "caseDataOrReleaseIncluded": false,
+      "deadlinePersistence": "O_EXCL, fsync file and directory before launch/input; no reset or renewal",
+      "wallSeconds": 480,
+      "deadlinePlacementScope": "before baseline launch; before first private input for prestarted Eva2 resources"
+    },
+    "canonicalRetentionCorrection": {
+      "canonical_driver_sha256": "f67575a8dba41ef978512224f22c5014b1bd4cbaf0ce247ba2e3f7f909439c87",
+      "background_retention_enabled": true,
+      "delegated_work_enabled": false,
+      "procedure_references_enabled": false,
+      "original_action_deny_unchanged": true,
+      "path": "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_driver.py",
+      "changedPrivateEnvironmentKeys": [
+        "EVA_BACKGROUND_WORK_ENABLED"
+      ],
+      "candidateSourceChanged": false,
+      "coreMemoryNotLaunchedForThisCheck": true
+    },
+    "sameBaselineParametersNoInputCheck": {
+      "passed": true,
+      "runHandle": "ev003-zero-input-preparation-d171470a",
+      "pid": 307002,
+      "executionExitCode": 0,
+      "inputsSent": 0,
+      "registeredProviderAttempts": 0,
+      "sourceHookLeaseModelsAndToolLimitUnchanged": true,
+      "externalClockBytesAndGenerationPreserved": true,
+      "absoluteDeadlineDurablyStoredBeforeLaunch": true,
+      "deadlineReceiptUnchangedAfterLaunch": true,
+      "nativeReadyReceived": true,
+      "terminalQuiescent": true,
+      "stopExitCode": 0,
+      "readerStopped": true,
+      "providerCloseFailures": 0,
+      "processAbsent": true,
+      "technicalReceiptPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/zero-input-launch-preflight-technical.private.json",
+      "technicalReceiptSha256": "6d9dd5d8686df6f91c49a52176edf65ba0a7398f4331a66e9e5159e9b13a8243",
+      "deadlineReceiptSha256": "e45fb026205d32888b77acb08f6574b9ac08453cde76493da79281b88926110e",
+      "sampleComparisonOrReplayPerformed": false
+    },
+    "preparationReviewStatus": "GO",
+    "independentPreparationReview": {
+      "reviewer": "/root/p2_eva1_lease_review_20261006",
+      "decision": "GO",
+      "scope": "closed result publication, canonical background-retention flag, generic deadline/external-clock helper and zero-input baseline preflight; no new sample release",
+      "lifecycleTests": "unconfirmed_httpx2",
+      "reviewFiles": [],
+      "ownerCoordinatorGOReceived": true,
+      "candidateOrScoringChanged": false
+    }
+  }
+}
