@@ -3961,14 +3961,14 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Nieuwe eindvergelijking voorbereiden",
+          "title": "P2.1 · Proefomgeving gereedmaken",
           "state": "in_progress",
           "owner": "Codex",
-          "detail": "De oude corpus gebruikt in alle epochs dezelfde invoer en wordt niet herhaald op de gewijzigde versie. De onafhankelijke evaluator bereidt de reeds toegestane nieuwe eindset voor met dezelfde oorspronkelijke taken, criteria en verbruiksgrenzen.",
+          "detail": "Nieuwe onafhankelijke invoer en de verse proefdatabase zijn gereed, met hetzelfde oorspronkelijke budget. De gerichte SQL-clientcorrectie heeft onafhankelijke GO; zeven bestaande controles en initializer-imports slagen. De evaluator sluit nu de bestaande uitvoerders aan; nog geen nieuwe modelproef of winnaar.",
           "remaining": "Geen nieuwe eindproefresultaten of winnaar. Originele criteria, dekking en open menselijke beoordelingen blijven behouden.",
           "source": "eva2/evidence/product/p2-eva1-access-correction-available-20261006.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "reviewedAt": "2026-10-06T16:15:03.110550+00:00"
+          "reviewedAt": "2026-10-06T16:34:22Z"
         },
         "next": {
           "title": "Eén nieuw eindgeval uitvoeren",
@@ -3984,7 +3984,7 @@
           "taskId": "P2.1"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-06T16:15:03.110550+00:00"
+        "reviewedAt": "2026-10-06T16:34:22Z"
       },
       "reviewedAt": "2026-10-06T09:49:07.102699+00:00",
       "checkedAt": "2026-10-06T09:49:07.102699+00:00",
@@ -19360,12 +19360,26 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Eén oorspronkelijk Eva1/Eva2-paar binnen vaste CM-per-samplegrenzen; volledige accounting. Geen automatische brede matrix. Creditkosten onbekend.",
-                "currentAction": "De toegestane nieuwe eindvergelijking voorbereiden: dezelfde oorspronkelijke taken/criteria, nieuwe onafhankelijke ongeziene invoer na actuele bronbinding. Oude corpus niet herhalen.",
+        "currentAction": "De bestaande native uitvoerders aansluiten op de gereed gemelde behouden verse proefdatabase. Noor-scope, beperkte login en oorspronkelijke budget zijn gecontroleerd; dataset/deelnemers/criteria blijven gelijk.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "evidence": "Dashboarddienst en actuele project-state/JS/CSS bereikbaar vanuit Windows via127.0.0.1; IPv6-localhost timeout aangetoond en werkende eigenaarlink geleverd. Geen nieuwe productafronding."
+          "evidence": "d00debd9: dashboard via IPv4 gecontroleerd en bestaande dienst via verborgen Windows-opstartkoppeling aangesloten; GitHub en werkbord bijgewerkt. Geen productafronding; Windows IPv6 blijft open."
                 },
-                "stage": "approved_successor_case_admission",
+        "stage": "successor_native_startup",
+        "preparationIssue": {
+          "failureClass": "ProgrammingError",
+          "cause": "Psycopg interpreteert lege parameters bij SQL-procentliterals vóór serversend.",
+          "correction": "Bestaande exacte DDL uitvoeren met no_parameters=True; geen SQL/guards/schemawijziging.",
+          "focusedChecks": "7 bestaande operationchecks geslaagd",
+          "review": "Onafhankelijke GO door /root/p2_eva1_lease_review_20261006; SQL/guard/rollen/transactie ongewijzigd.",
+          "actualTransition": "De eerder falende helper is op dezelfde behouden lege proefdatabase geslaagd.",
+          "dependencyPreflight": "Alle bestaande scope-initializerimports geslaagd via /usr/bin/python3.12 en administrator-site-packages; geen installatie/DB/modelaanroep.",
+          "schemaPrepared": true,
+          "originalBudgetUnchanged": true,
+          "nativeSampleStarted": false,
+          "newProviderCalls": 0,
+          "retainedPreparation": true
+        },
                 "finding": "Nieuwe openbare native proef: HTTP500 vóór modelaanroep. Account eva_dbos kan SET LOCAL ROLE eva_runtime niet uitvoeren. Oude gesloten eindproef: exacte oorzaak blijft onbekend.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",

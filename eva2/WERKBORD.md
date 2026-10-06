@@ -1,3 +1,7 @@
+## 6 oktober — P2.1 lege proefdatabase gericht voorbereiden
+
+De nieuwe onafhankelijke eindset is vastgelegd met dezelfde oorspronkelijke taaksoorten/criteria. Nog geen nieuwe modelrun. De bestaande lege-DB-voorbereiding strandde vóór serversend doordat psycopg SQL-procentliterals als parameters zag. Alleen die overgang krijgt no_parameters=True; exacte SQL, rol-/leegtecontroles en deelnemers blijven gelijk. Zeven bestaande gerichte operationchecks en alle initializer-imports slagen. Onafhankelijke GO; de helper en schema-/Noor-initialisatie zijn op dezelfde behouden proefdatabase daadwerkelijk geslaagd. Beperkte login en oorspronkelijke budget gecontroleerd. De evaluator sluit nu de bestaande native uitvoerders aan. Geen nieuwe productafronding of spraakwerk.
+
 ## 6 oktober — Dashboard bereikbaar via de vaste IPv4-link
 
 Open http://127.0.0.1:44712/. Windows HTML, JavaScript-asset en actuele projectstatus geven HTTP 200. Het dashboard toont P2.1: nieuwe eindvergelijking voorbereiden; nog geen nieuwe modelrun. Een verborgen Windows-opstartkoppeling start WSL en de bestaande dashboarddienst na aanmelden. De opstartopdracht is rechtstreeks uitgevoerd; een nieuwe Windows-aanmelding is niet beproefd.

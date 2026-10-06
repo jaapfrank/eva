@@ -203,7 +203,11 @@ def prepare_logical_restore_roles(database_dsn: str) -> LogicalRestoreRoleReceip
     engine = sa.create_engine(sqlalchemy_dsn)
     try:
         with engine.begin() as connection:
-            connection.exec_driver_sql(logical_restore_preparation_sql())
+            # These percent signs belong to PostgreSQL, not driver parameters.
+            connection.exec_driver_sql(
+                logical_restore_preparation_sql(),
+                execution_options={"no_parameters": True},
+            )
             roles = tuple(
                 connection.execute(
                     sa.text(
