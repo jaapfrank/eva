@@ -1,0 +1,71 @@
+{
+  "schema": "Eva2IndependentOperationalProvenanceReceipt/v1",
+  "taskId": "P2.1",
+  "status": "REFUSED_AUTOMATIC_APPROVAL_PRIVATE_OPERATIONAL_POINTER_EXTRACTION",
+  "recordedAt": "2026-10-06T11:11:08.103956+00:00",
+  "scope": "Existing independent comparison operational source/hook/profile/lease-pointer metadata only; no comparison execution.",
+  "authorityBindings": [
+    {
+      "path": "eva2/evidence/product/p2-owner-authorization-20261005.json",
+      "sha256": "7470627a9ef09ae8f625e420251a19b36bf950bb17689ee369359e3e2f4df8b5",
+      "humanAuthorization": "Existing independent private processing for the original P2.1 comparison; no new approval claimed."
+    },
+    {
+      "path": "eva2/evidence/product/owner-resume-20261006.json",
+      "sha256": "b14991713d8ab0c2455380cfadc2ad29763f3979c9cfa7c805637f70ccb8d5bf",
+      "humanAuthorization": "Ja, voer de aparte eindvergelijking uit"
+    }
+  ],
+  "publicCommitmentBinding": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_provider_history_dataset_commitment_20261006.json",
+    "sha256": "52da8464812d5a6f052d3429615d60f64f6e05b42e22e385a4f52ec007917077",
+    "publicReferencedAdmissionPath": "/home/administrator/project/.eva2-artifacts/ev003-provider-history-final-20261006/admission.json",
+    "publicReferencedAdmissionSha256": "e6765d96aa8f851b66bb592513d63d2fcfd97965f834f734c62398a6c6a68005",
+    "referencedFileRead": false
+  },
+  "automaticApprovalReview": [
+    {
+      "scope": "Previous public-source-only task, closed",
+      "decision": "REJECTED_BEFORE_EXECUTION",
+      "reason": "Reading the protected final admission itself, even with pointer-only output, was outside the then-authorized public-source-only scope.",
+      "protectedBytesRead": false
+    },
+    {
+      "scope": "Current explicitly bounded independent curator metadata task",
+      "decision": "REJECTED_BEFORE_EXECUTION",
+      "reason": "This repeats the previously rejected read of the protected admission file; public metadata and assistant-authored claims do not authorize extracting private source, lease, or readiness pointers.",
+      "instruction": "Do not bypass this rejection through a workaround or indirect execution.",
+      "protectedBytesRead": false
+    }
+  ],
+  "operationalProvenance": {
+    "sourceRoot": "UNKNOWN",
+    "hookManifestPointer": "UNKNOWN",
+    "fourSourceHashes": "UNKNOWN",
+    "completeModelRoleProfile": "UNKNOWN",
+    "leasePointer": "UNKNOWN",
+    "readinessTimestamp": "UNKNOWN"
+  },
+  "unaffectedPublicWork": {
+    "path": "eva2/evidence/product/p2-eva1-native-source-profile-binding-20261006.json",
+    "sha256": "fe6f739791064c6583537957a50a696d67dcfef2ae1efd273d159ebe13821ed8",
+    "status": "PUBLIC_EQUAL_MODEL_VARIANT_BOUND_SUBSCRIPTION_READINESS_UNKNOWN"
+  },
+  "nextStep": "Parent may request explicit human authorization for this precise protected operational-pointer extraction before a new automatic review. No retry, proxy, alternative protected file, or inference was performed.",
+  "claims": {
+    "newHumanApproval": false,
+    "providerAccessFailureEstablished": false,
+    "variantPhysicallyAbsentEstablished": false,
+    "P2_1Complete": false,
+    "superiorityEstablished": false
+  },
+  "usage": {
+    "protectedReadCount": 0,
+    "authContentsRead": false,
+    "modelCalls": 0,
+    "runtimeStarts": 0,
+    "newCaseGenerated": false,
+    "developmentCredits": "UNKNOWN"
+  },
+  "dependentWorkStopped": true
+}

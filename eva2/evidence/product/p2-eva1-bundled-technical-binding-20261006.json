@@ -1,0 +1,199 @@
+{
+  "contract": "EvaP2Eva1BundledTechnicalBinding/v1",
+  "taskId": "P2.1",
+  "recordedAt": "2026-10-06T11:26:57.012016+00:00",
+  "status": "EXISTING_SUBSCRIPTION_NATIVE_VARIANT_BOUND_STATIC_REUSE_GO",
+  "directHumanAuthorization": {
+    "path": "eva2/evidence/product/p2-technical-preparation-owner-authorization-20261006.json",
+    "sha256": "04ec452cafd606809a5413f3a68f19530cb92037acf128b08440b9a489ecb320",
+    "ownerStatement": "Ja, alle benodigde technische proefbestanden",
+    "scope": "Existing trial technical source/startup/manifest/model-profile/lease metadata only; independent extraction, no final content/keys to builder."
+  },
+  "automaticReview": {
+    "freshBundledAuthorizationAccepted": true,
+    "earlierRefusalsPreserved": [
+      {
+        "path": "eva2/evidence/product/p2-eva1-operational-provenance-20261006.json",
+        "sha256": "2eee3b3d4f63f4b640cd6a78c07f1f3c3128c6cedfb1734b3830fa286d7816f5"
+      },
+      {
+        "path": "eva2/evidence/product/p2-eva1-ready-provenance-20261006.json",
+        "sha256": "ee0990938541fd22fb2026894a57e10c9a74607678ba5ead2515dacd61aa8349"
+      }
+    ]
+  },
+  "publicReferenceBindings": {
+    "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs": "d9135079c1e2ce8b91cb57b4d1d39b376cb031f0fb9bedda2aa1f8958b58c73b",
+    "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_resume.py": "fccb4bfc867e4f847e8f0df156930ff4ac197c444d14439d751b9c975b919f12",
+    "eva2/reviews/p2-provider-history-native-driver-review-20261006.json": "e4da92b50ec406ffd41f443104cba9ad7904074a95341c31a3f7cb2c6f8fe7bb"
+  },
+  "preparationRecord": {
+    "path": "/tmp/eva2-ev003-provider-history-cm01-e1-20261006/resources-ready-b5.json",
+    "sha256": "7ae56d9e1c73ad3f19fc86bab00c7cce15aba862c1272f8fd22fa77d1e16f8f9",
+    "scope": "Eva2 core/memory readiness, not Eva1 source readiness."
+  },
+  "nativeStartupProvenance": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-provider-history-final-20261006/one_pair_processor.py",
+    "sha256": "46b3f7830bcd2e434efdcf822b0b2262f8e72ab2a3b45a9fe99eaa2afe01666f",
+    "processing": "Static technical CLI/env extraction only; not executed, no private source text forwarded.",
+    "worker": "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+    "providerMode": "subscription",
+    "sourceRoot": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/source",
+    "hookManifestPath": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/hook-manifest.json",
+    "authLeasePointer": "/var/lib/eva2/managed-b-slot3/model-access-lease/auth.json",
+    "explicitCliFlagsBound": [
+      "--source-root",
+      "--provider-mode",
+      "--auth-lease",
+      "--hook-manifest"
+    ]
+  },
+  "hookManifest": {
+    "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/hook-manifest.json",
+    "sha256": "d2f99e4b61126c9b325415e6b1fb923cf52df04842b14da3b02b3f9aece0a291",
+    "contract": "Cp001BottieNativeHooks/v1",
+    "sourceRootMatches": true,
+    "fourNativeSourceHashes": {
+      "src/brain/oauth.js": {
+        "sha256": "3a769d430a8f346d1b38b1e5cd5b46e2696fe161d58334a76bc4035f50b714b9",
+        "manifestMatch": true,
+        "nativeHookMarkerPresent": true
+      },
+      "src/brain/llm.js": {
+        "sha256": "96864aaf070a18b0282b9fda2c5203419077f1cca33c3fb49c19b41732f07f22",
+        "manifestMatch": true,
+        "nativeHookMarkerPresent": true
+      },
+      "src/mind/tools.js": {
+        "sha256": "07ac64205444236801a9d20108f157142ddf1bf30df0d8530f6a92539e42ee51",
+        "manifestMatch": true,
+        "nativeHookMarkerPresent": true
+      },
+      "src/mind/understanding.js": {
+        "sha256": "b6d9f062da50ddae2fb7a9493807ae52b68307ea9549d9747d1da920f5e80d6d",
+        "manifestMatch": true,
+        "nativeHookMarkerPresent": true
+      }
+    }
+  },
+  "modelRoleProfile": {
+    "configurationVariant": "Previously prepared disposable equal-contact model/native-hook variant; not unmodified Eva1 defaults.",
+    "configSourceSha256": "7bfbb2c8c145071d72eba1b2411aefbad417b2319c9f21b4f195c1f572ac07be",
+    "agentSourceSha256": "1129f4a5143adffccee0b2d56dd268e57581ad771a6ec9c226671ae104c6bb4d",
+    "actualStartupEnvironment": {
+      "EVA_MODEL": "gpt-6-sol",
+      "EVA_MODEL_VOICE": "gpt-6-sol",
+      "EVA_REASONING_CHAT": "none",
+      "EVA_REASONING_REPLY": "none"
+    },
+    "ordinaryCmPurposes": [
+      {
+        "purpose": "Ordinary chat turn interpretation",
+        "sourceFile": "src/mind/agent.js",
+        "modelLine": 4367,
+        "effortLines": [
+          4368,
+          4369,
+          4370
+        ],
+        "modelBinding": "config.modelVoice",
+        "ordinaryNonVoiceNonAutonomyEffortBinding": "config.reasoningChat",
+        "effectiveModel": "gpt-6-sol",
+        "effectiveEffort": "none"
+      },
+      {
+        "purpose": "Grounded ordinary chat reply",
+        "sourceFile": "src/mind/agent.js",
+        "modelLine": 5389,
+        "effortLine": 5390,
+        "modelBinding": "config.modelVoice",
+        "effortBinding": "config.reasoningReply",
+        "effectiveModel": "gpt-6-sol",
+        "effectiveEffort": "none"
+      }
+    ],
+    "workerRoleGuard": {
+      "publicSource": "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+      "lines": [
+        143,
+        144,
+        145,
+        146
+      ],
+      "contact": {
+        "model": "gpt-6-sol",
+        "effort": "none"
+      },
+      "allowedHelper": {
+        "model": "gpt-6-astra",
+        "effort": "medium"
+      },
+      "otherModelEffortRejected": true
+    },
+    "memoryImplementation": "Native Eva1 SQLite; no extra memory helper model is added by this binding.",
+    "scopeLimit": "Binds the selected original ordinary CM route only; voice/autonomy/learning paths are not admitted or evaluated by this receipt."
+  },
+  "historicalNativeReady": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-provider-history-final-20261006/eva1-native-ready.json",
+    "sha256": "a43ff4e6ba2258f6290fdd5d79d0f00c3842fa9418fa175494687971d212a76c",
+    "ready": true,
+    "explicitSourceRoot": true,
+    "providerMode": "subscription",
+    "resumed": false,
+    "sourceRootMatches": true,
+    "fourSourceHashesMatch": true,
+    "readyEventTimestamp": "UNKNOWN_NOT_RETAINED_IN_RECORD",
+    "recordMtimeUtc": "2026-10-06T09:30:04.780240+00:00",
+    "mtimeIsNotReadyEventTimestamp": true,
+    "notCurrentLiveReadiness": true
+  },
+  "currentLeaseMetadata": {
+    "path": "/var/lib/eva2/managed-b-slot3/model-access-lease/auth.json",
+    "regularFile": true,
+    "symlink": false,
+    "uid": 1000,
+    "gid": 65532,
+    "mode": "0o640",
+    "sizeWithinNativeGuard": true,
+    "metadataGuardPassed": true,
+    "mtimeUtc": "2026-10-01T10:34:05.455325+00:00",
+    "contentsRead": false,
+    "credentialShapeValidity": "UNKNOWN_NOT_READ",
+    "expiryValidity": "UNKNOWN",
+    "upstreamAuthorization": "UNKNOWN"
+  },
+  "admission": {
+    "staticSourceHookProfileReuse": "GO",
+    "actualExistingProviderModeEstablished": "subscription",
+    "newInferenceAuthorizedOrPerformed": false,
+    "nextTransition": "Reuse this exact existing source/manifest/role profile; establish fresh native-ready/lease validity with the original public worker and isolated accounting before any new final input. No source copy/new hook implementation is needed.",
+    "comparisonExecutionGO": "NOT_GRANTED_BY_THIS_SOURCE_ONLY_SUBTASK"
+  },
+  "preservation": {
+    "oldTrialsReplayed": false,
+    "oldResultsRescored": false,
+    "oldAdmissionReread": false,
+    "oldCauseChanged": false,
+    "sourceOrManifestMutated": false,
+    "sourceCopied": false,
+    "privateFinalQuestionsRepliesScorerRead": false,
+    "privateSourceOrKeysForwardedToBuilder": false,
+    "credentialFileContentsRead": false
+  },
+  "preparationErrors": [
+    {
+      "class": "SyntaxError",
+      "phase": "Inline metadata extractor before execution",
+      "effects": "No files read, calls or starts; corrected quoting before actual metadata processing."
+    }
+  ],
+  "usage": {
+    "realModelCalls": 0,
+    "controlledModelCalls": 0,
+    "runtimeStarts": 0,
+    "newCaseGenerated": false,
+    "developmentCredits": "UNKNOWN"
+  },
+  "P2_1Complete": false,
+  "qualityOrSuperiorityClaim": false
+}

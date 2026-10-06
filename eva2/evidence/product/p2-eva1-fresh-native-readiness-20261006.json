@@ -1,0 +1,120 @@
+{
+  "contract": "EvaP2Eva1FreshNativeReadiness/v1",
+  "taskId": "P2.1",
+  "status": "GO_ZERO_INPUT_NATIVE_READY_AND_QUIESCENT",
+  "recordedAt": "2026-10-06T11:33:09.818812+00:00",
+  "startedAt": "2026-10-06T11:33:08.723766+00:00",
+  "binding": {
+    "staticProvenancePath": "eva2/evidence/product/p2-eva1-bundled-technical-binding-20261006.json",
+    "staticProvenanceSha256": "c2f878338fbf21221db330e8cf4c53a64b7807c4f46c7a2cbe7936542131561b",
+    "providerMode": "subscription",
+    "workerSha256": "d9135079c1e2ce8b91cb57b4d1d39b376cb031f0fb9bedda2aa1f8958b58c73b",
+    "sourceRoot": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/source",
+    "hookManifestPath": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/hook-manifest.json",
+    "hookManifestSha256": "d2f99e4b61126c9b325415e6b1fb923cf52df04842b14da3b02b3f9aece0a291",
+    "modelRoleProfiles": {
+      "contact": {
+        "model": "gpt-6-sol",
+        "effort": "none"
+      },
+      "helper": {
+        "model": "gpt-6-astra",
+        "effort": "medium"
+      }
+    },
+    "effectiveStartupEnvironment": {
+      "EVA_MODEL": "gpt-6-sol",
+      "EVA_MODEL_VOICE": "gpt-6-sol",
+      "EVA_REASONING_CHAT": "none",
+      "EVA_REASONING_REPLY": "none",
+      "EVA_TESTING": "1"
+    },
+    "originalCmEnvelope": {
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "wallSeconds": 480,
+      "toolDispatches": 16,
+      "speechRequests": 0
+    },
+    "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "extraStartupFlagObservation": {
+      "flag": "EVA_TESTING",
+      "value": "1",
+      "preparedProductSrcReferences": [],
+      "unusedInPreparedProductSrc": true,
+      "noRuntimeOrSourceChangeForThisMetadataCorrection": true
+    },
+    "workerOwnedEnvironmentPolicy": {
+      "DOTENV_CONFIG_PATH": "/dev/null",
+      "NODE_ENV": "test",
+      "WEB_HOST": "127.0.0.1",
+      "WEB_PORT": "0",
+      "EVA_RUNTIME_MODE": "normal",
+      "OPENAI_API_KEY": "deleted_in_subscription_mode",
+      "source": "cp001_bottie_worker.mjs:81"
+    },
+    "sourceHashesAtReady": true
+  },
+  "nativeReadiness": {
+    "ready": true,
+    "freshEmptyData": true,
+    "dataRoot": "/tmp/cp001-bottie-readiness-20261006-dk5f7s87",
+    "actorPid": 2230531,
+    "sourceRootMatches": true,
+    "fourNativeHashesMatch": true,
+    "readySha256": "61f818a6e222eea02546727c7c8496f19511f6a8725fbeb8185d5c3a53299a32",
+    "leaseNativeGuardEquivalentSchemaValid": true,
+    "leaseExpiryObservation": {
+      "known": true,
+      "expired": false,
+      "signatureVerified": false,
+      "upstreamAuthorization": "UNKNOWN_NO_REQUEST"
+    },
+    "upstreamAuthorization": "UNKNOWN_NO_PROVIDER_REQUEST",
+    "noNewInput": true
+  },
+  "stop": {
+    "processExited": true,
+    "exitCode": 0,
+    "nativeTerminalReceived": true,
+    "quiescent": true,
+    "pendingProviderControls": 0,
+    "activeProviderAttempts": 0,
+    "terminalSha256": "a76b96ce6fdd98f34b06256d1a08df5f863d5a9612fb25d9d436c8a81fc96989"
+  },
+  "runArtifactRoot": "/tmp/eva2-p2-eva1-readiness-20261006-0nva3h1v",
+  "ledgerSummary": {
+    "providerAttempts": 0,
+    "activeAsyncAttempts": 0,
+    "unexpectedProviderEvents": 0,
+    "zeroUpstreamCallsAttested": true,
+    "realModelCalls": 0,
+    "rawUsageComplete": false,
+    "knownPartialUsage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0
+    }
+  },
+  "error": null,
+  "usage": {
+    "workerStarts": 1,
+    "requestInputs": 0,
+    "realModelCalls": 0,
+    "durationSeconds": 1.0948015140020289,
+    "developmentCredits": "UNKNOWN"
+  },
+  "preservation": {
+    "oldCasesReplayed": false,
+    "oldResultsChanged": false,
+    "sourceCopiedOrMutated": false,
+    "privateFinalInputsRead": false,
+    "credentialsDisclosed": false,
+    "gitOrBoardMutation": false
+  },
+  "nextStep": "Report current readiness to coordinator; no paid pair or new final case has started.",
+  "P2_1Complete": false,
+  "qualityOrSuperiorityClaim": false,
+  "previousReceiptSha256": "07285584c01e2a7f8dfdf0fffde9f6d5680f1727322ff2873887c37d8534dcff"
+}

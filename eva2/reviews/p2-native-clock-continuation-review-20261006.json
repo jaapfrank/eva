@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-06",
+  "reviewer": "/root/r1_final_followup_20261006",
+  "decision": "GO",
+  "scope": "Technical duplicate-clock correction and continuation interface for the same unused native conversation-memory pair",
+  "publicSourceBindings": [
+    {
+      "path": "/tmp/eva2-p2-next-cm-clock-continuation-20261006.py",
+      "sha256": "a684663228c134cdbda0ee14a72a42973037446e777adc57e41abb365707a9ea"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_driver.py",
+      "sha256": "347c1047df78ed30cf17853524cd8647140d7241dff425d5d416a61fc2c048ce"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py",
+      "sha256": "620c6f5b0cf83078e3a71dacd8be320edb2debea74c35d6421c939e0835fb93f"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py",
+      "sha256": "e2d1d3d63e64f84da2ddeef2bf032fe9e5b5153a50abddf0db9fe75dc607a774"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/p1_model_tunnel.py",
+      "sha256": "12bd58796a92eb09096dab3a484ed3aeb6d5c8f1724fccdc2827ffa3f269bb08"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    }
+  ],
+  "curatorMetadataBindings": {
+    "datasetCommitmentSha256": "6aad8410021a9580618479390553d314e09f0d93882c873af2a4c2aa8df8a1ff",
+    "unchangedProcessorSha256": "9ee9e0be857be1a10f012441d2b9ffc843de241205105aa9483c69a675c2d5a6",
+    "unchangedEntryWrapperSha256": "0d6391659436d0c091d293ce8491d99b97803944eeca314a25a1b34d2ec76d34",
+    "privateFilesReadByReviewer": false,
+    "clockFragment": "Processor run:69 chooses bottie-clock.json; run:70 calls the original exclusive private_json writer with calendar contract, generation 0, offset 0; run:71 sets mode 0644.",
+    "cause": "The pre-trigger setup had already materialized the same generation-zero clock. O_EXCL correctly rejected the second creation before the first participant start/input.",
+    "preParticipantEvidence": "Curator reports no Eva1 ready/child, no participant inputs, no Eva2 requests or registered model attempts; native workers stopped with exit 0. The public helper binds and rechecks absence of ready/result and zero ledger/native-terminal calls before restart."
+  },
+  "findings": [
+    {
+      "status": "PASS",
+      "claim": "The helper archives the duplicate clock only after exact unused calendar-state checks. It preserves the original bytes and archives the already-created directory only after proving it empty, nonsymlink, UID 1000 and mode 0700. The unchanged processor remains the only clock writer and its O_EXCL behavior is retained."
+    },
+    {
+      "status": "PASS",
+      "claim": "Before continuation it checks unchanged dataset, processor, entry wrapper, public source bindings, exact stopped container IDs and canonical Config/HostConfig/Mounts snapshots. It restarts those same containers without schema reset, reseeding, new curation or participant replay."
+    },
+    {
+      "status": "PASS",
+      "claim": "New accounting control files reconnect the same worker namespaces and request/sample identity through the existing parent API. The socket starts in private mode and is then limited to the actual worker group; core and memory controls retain their separate runtime ownership."
+    },
+    {
+      "status": "PASS",
+      "claim": "The ledger can be recreated only when historical registered attempts, attempt list and active asynchronous attempts are all zero. Historical parent hash, total usage and partial usage are retained in the pre-input binding, including unknown/null values; a nonzero historical attempt count refuses continuation."
+    },
+    {
+      "status": "PASS",
+      "claim": "The original conversation-memory numeric limits and contact/helper model roles are reused. toolCalls aliases the same original toolDispatches value. The unchanged action allowlist permits only protocol:structured_response; a fixed original wall deadline begins before the same unused entry executes."
+    },
+    {
+      "status": "PASS",
+      "claim": "Proxy endpoint and container argv remain identical; the existing tunnel restricts clients to the same isolated subnet and chatgpt.com:443. The helper starts no case itself and uses the unchanged independently owned entry function."
+    }
+  ],
+  "originalLimits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "wallSeconds": 480,
+    "toolDispatches": 16,
+    "speechRequests": 0
+  },
+  "approvalBoundary": {
+    "approved": "Archive the proven unused duplicate preparation artifacts, reconnect the existing accounting controls, and resume at the first unexecuted participant step under the helper hash above.",
+    "notApproved": [
+      "New or changed case, oracle or scoring rules",
+      "Replay of participant inputs",
+      "Discarding any historical usage or attempts",
+      "Product/source/provider changes",
+      "Automatic retry after a different failure",
+      "Any comparative win or product completion claim from setup readiness"
+    ],
+    "runtimeGuards": "All guards must pass before the unchanged entry receives inputs. A guard failure is a preserved setup failure, not permission to reset or silently re-curate."
+  },
+  "limitations": [
+    "Review covers the public technical helper and curator-provided content-free clock/interface metadata. Private processor, launcher, stimuli, replies, oracles and scoring internals were not read.",
+    "Execution success and final assessment remain for the independent evaluator. Historical closed comparison results and unknown failure attribution remain unchanged.",
+    "Zero registered attempts before input do not establish zero development credits or complete provider usage."
+  ],
+  "reviewerActivity": {
+    "publicStaticReview": true,
+    "privateInputsRead": false,
+    "modelCalls": 0,
+    "runtimeStarts": 0,
+    "dataOrControlMutations": 0,
+    "testsRepeated": 0,
+    "developmentCreditCost": "UNKNOWN"
+  }
+}

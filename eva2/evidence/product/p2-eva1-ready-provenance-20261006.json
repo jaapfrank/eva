@@ -1,0 +1,83 @@
+{
+  "contract": "EvaP2Eva1ReadyOperationalProvenance/v1",
+  "taskId": "P2.1",
+  "recordedAt": "2026-10-06T11:15:05.690146+00:00",
+  "status": "REFERENCED_READY_METADATA_READ_REFUSED_BEFORE_EXECUTION",
+  "directHumanAuthorization": {
+    "path": "eva2/evidence/product/p2-operational-metadata-owner-authorization-20261006.json",
+    "sha256": "3b0aaecb917bfcf149a5b55171d1c6d7492f27495ba17b5d18bcc03a701f4ca3",
+    "ownerStatement": "je mag alles ophalen en gebruiken.",
+    "presentedToAutomaticReview": true,
+    "noNewApprovalClaimed": true
+  },
+  "publicReferenceBindings": [
+    {
+      "path": "eva2/reviews/p2-provider-history-native-driver-review-20261006.json",
+      "sha256": "e4da92b50ec406ffd41f443104cba9ad7904074a95341c31a3f7cb2c6f8fe7bb",
+      "field": "preparationResolution.b5Readiness.receiptPath",
+      "referencedPath": "/tmp/eva2-ev003-provider-history-cm01-e1-20261006/resources-ready-b5.json"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_provider_history_dataset_commitment_20261006.json",
+      "sha256": "52da8464812d5a6f052d3429615d60f64f6e05b42e22e385a4f52ec007917077"
+    },
+    {
+      "path": "eva2/evidence/product/p2-provider-history-independent-result-20261006.json",
+      "sha256": "fa5b77de9837dcf8f42d5ffd49ffa67ae0c5ca3433660ae4656794f54ae1c871"
+    }
+  ],
+  "previousAuthorizedAdmission": {
+    "path": "eva2/evidence/product/p2-eva1-authorized-provenance-20261006.json",
+    "sha256": "90b2fc415e49775e5a37bce576caec80b02cfa3801c90cdbb3585d880e7324c3",
+    "reread": false,
+    "finding": "The sole admission lacked exact reusable Eva1 source/hook/lease/readiness pointers."
+  },
+  "rejectedAction": {
+    "action": "Filtered independent operational extraction from the public-review-referenced resources-ready-b5.json only.",
+    "decision": "REJECTED_BEFORE_EXECUTION",
+    "reason": "This reads a separate private readiness file, not the specifically authorized admission.json; a public pointer and assistant claims do not authorize accessing that additional private source, even with filtered output.",
+    "instruction": "Do not bypass this rejection through a workaround or indirect execution.",
+    "referencedFileRead": false,
+    "retry": false,
+    "proxy": false,
+    "alternativePrivateFileRead": false
+  },
+  "operationalBinding": {
+    "actualInvokedWorkerCli": "UNKNOWN",
+    "providerMode": "UNKNOWN",
+    "sourceRoot": "UNKNOWN",
+    "hookManifestPath": "UNKNOWN",
+    "fourSourceHashes": "UNKNOWN",
+    "completeModelRoleProfile": "UNKNOWN",
+    "leasePointer": "UNKNOWN",
+    "readySourceBinding": "UNKNOWN",
+    "currentLeaseReadiness": "UNKNOWN"
+  },
+  "exactMissingEvidence": "An authorized read of already retained operational command/ready metadata, followed by a public whitelisted receipt binding the actual invoked Eva1 worker/provider mode, exact sourceRoot and hookmanifest/four hashes, full role profile and lease pointer/readiness.",
+  "metadataCaptureLimit": "The available public records bind comparison adapter/review and terminal hashes, but do not expose the actual source/hook/lease/provider-mode command provenance. The referenced private readiness record remains unprocessed, so its contents and sufficiency are unknown.",
+  "smallestSufficientCorrection": "Obtain authorization accepted by automatic review for the exact existing operational ready/preparation record and publish only its necessary whitelist binding; reuse the retained source and existing public native worker. No new hook platform, source copy, model call or old-case replay is proposed.",
+  "unaffectedPublicBinding": {
+    "path": "eva2/evidence/product/p2-eva1-native-source-profile-binding-20261006.json",
+    "sha256": "fe6f739791064c6583537957a50a696d67dcfef2ae1efd273d159ebe13821ed8",
+    "finding": "The separately public P1 equal-contact model source is bound, but lacks the four subscription native-hook markers; it is not evidence of the actual previously invoked prepared worker."
+  },
+  "notEstablished": [
+    "That the historical run used fixture mode",
+    "That a hooked variant exists or is absent",
+    "Provider authorization failure",
+    "Cause of historical zero registered attempts",
+    "General quality or superiority"
+  ],
+  "usage": {
+    "protectedFilesReadThisSubtask": 0,
+    "modelCalls": 0,
+    "runtimeStarts": 0,
+    "authContentsRead": false,
+    "oldCaseReplayed": false,
+    "newCaseGenerated": false,
+    "developmentCredits": "UNKNOWN"
+  },
+  "executionAdmission": "NO_GO_REQUIRED_ACTUAL_SOURCE_COMMAND_READINESS_BINDING_UNKNOWN",
+  "P2_1Complete": false,
+  "dependentWorkStopped": true
+}

@@ -1,0 +1,89 @@
+{
+  "P2_1Complete": false,
+  "actualModelCalls": 0,
+  "authFilesReadOrChanged": false,
+  "automaticApprovalReview": {
+    "action": "Read old protected final admission.json solely to extract operational source/manifest/lease/ready pointers",
+    "outcome": "REJECTED_ACTION_NOT_EXECUTED",
+    "protectedBytesReadOrReturned": false,
+    "reason": "Old protected final admission is outside authorized public-source scope and explicitly excluded; filtered pointer output does not authorize reading the file.",
+    "retryProxyAlternateProtectedPathOrSourceExtraction": false
+  },
+  "completedUnaffectedChecks": {
+    "fourMarkersAbsentOnOnlyThePublicP1EqualModelSource": true,
+    "publicOct6PartialResultsAndNativeDriverReviewPointerChecksCompleted": true,
+    "publicOriginalReferenceSourceRetained": true,
+    "publicP1PointerAndFourFilesChecked": true,
+    "stock5_6DefaultsNotConfusedWithDeclared6EqualModelVariant": true
+  },
+  "contract": "EvaP2Eva1NativeSourceProfileBinding/v1",
+  "decision": "NO_FINAL_INPUT_OR_MODEL_CALL_ADMITTED_IN_THIS_BINDING_STEP",
+  "declaredPublicProfile": {
+    "EVA_MODEL": "gpt-6-sol",
+    "EVA_MODEL_VOICE": "gpt-6-sol",
+    "EVA_REASONING_CHAT": "none",
+    "EVA_REASONING_REPLY": "none",
+    "equivalentFullHelperProfile": "UNKNOWN_NOT_ATTESTED_BY_THIS_P1_RECEIPT",
+    "source": "public P1 equalModelVariant.models"
+  },
+  "developmentCredits": "UNKNOWN",
+  "exactMissingPublicOperationalProvenance": {
+    "existingAlreadyHookedDisposableEva1SourceRoot": "UNKNOWN_NO_AUTHORITATIVE_PUBLIC_POINTER_FOUND",
+    "existingAuthorizedLeasePointerAndReadinessMetadataForThatVariant": "UNKNOWN_NOT_READ",
+    "existingDeclaredFullRoleProfileForThatHookedVariant": "UNKNOWN",
+    "existingExactHookManifestPathAndFourHashes": "UNKNOWN_NO_AUTHORITATIVE_PUBLIC_POINTER_FOUND",
+    "notAClaimThatVariantPhysicallyMissingOrProviderAccessFailed": true
+  },
+  "existingSubscriptionContract": {
+    "leaseMetadataGuardLines": "148-161",
+    "requiredManifestContract": "Cp001BottieNativeHooks/v1",
+    "roleGuardLines": "143-185,217-245",
+    "rolePolicy": {
+      "contact": "gpt-6-sol / none",
+      "helper": "gpt-6-astra / medium"
+    },
+    "sha256": "d9135079c1e2ce8b91cb57b4d1d39b376cb031f0fb9bedda2aa1f8958b58c73b",
+    "sourceGuardLines": "53-66",
+    "worker": "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs"
+  },
+  "fourRequiredSourceChecks": {
+    "src/brain/llm.js": {
+      "nativeControlMarkerPresent": false,
+      "sha256": "9390dbc97d282a406a8d1a631c3b29f7aadfe7628419a1ed785ad4dcccc65ed6"
+    },
+    "src/brain/oauth.js": {
+      "nativeControlMarkerPresent": false,
+      "sha256": "245c09674ab63d7f53ad1c0b4a8b561776514a330d1a9d8349d4342214c58ef4"
+    },
+    "src/mind/tools.js": {
+      "nativeControlMarkerPresent": false,
+      "sha256": "4dd4474278836e4a7b2883c9271a6e140b3db7ced738359de2b34bf3b392c212"
+    },
+    "src/mind/understanding.js": {
+      "nativeControlMarkerPresent": false,
+      "sha256": "c49f38ebd78b48fada86df1f6017212dea2b3c514b8ba08b955e9ca7016c6c71"
+    }
+  },
+  "humanRatings": 0,
+  "newCaseGenerated": false,
+  "nextSafeAction": "Coordinator chooses smallest safe public source reuse or supplies an already-public authoritative operational source/hook/profile/lease-readiness receipt; no new copy/hook platform or protected-record read performed here.",
+  "oldZeroRegisteredProviderCallCause": "UNKNOWN_UNCHANGED",
+  "originalProviderRouteCriteriaLimitsChanged": false,
+  "publicAdditionalMetadataBindings": {
+    "eva2/benchmark/inspect_ai_v1/ev003_provider_history_dataset_commitment_20261006.json": "52da8464812d5a6f052d3429615d60f64f6e05b42e22e385a4f52ec007917077",
+    "eva2/evidence/product/p2-independent-partial-results-20261006.json": "541018d2900403c5e000b3b1aa386fb22e38292fbdf537fa2bd2c0a62a6da601",
+    "eva2/reviews/p2-provider-history-native-driver-review-20261006.json": "e4da92b50ec406ffd41f443104cba9ad7904074a95341c31a3f7cb2c6f8fe7bb"
+  },
+  "publicAuthoritativePointer": {
+    "exists": true,
+    "path": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-source-20261003-v1/equal-model-source",
+    "source": "eva2/evidence/product/p1-native-source-binding-20261003.json",
+    "sourceSHA": "c645465ac4c0f901e1db13db71bcf32e72a6945ff4e36393647200931cb33abf",
+    "variantKind": "existing disposable equal-model preparation; not unchanged native product"
+  },
+  "rootWorkboardOrGitChanged": false,
+  "runtimeResourcesStarted": false,
+  "sourceCopiedOrChanged": false,
+  "status": "PUBLIC_EQUAL_MODEL_VARIANT_BOUND_SUBSCRIPTION_READINESS_UNKNOWN",
+  "task": "P2.1"
+}

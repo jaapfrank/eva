@@ -1,0 +1,13 @@
+{
+  "contract": "EvaP2OperationalProvenanceOwnerAuthorization/v1",
+  "recordedAt": "2026-10-06T11:10:38.060409+00:00",
+  "taskId": "P2.1",
+  "source": "Direct human answer in this chat to the precise async metadata-access question",
+  "ownerStatement": "je mag alles ophalen en gebruiken.",
+  "questionScope": "Independent evaluator retrieves technical sourceRoot,sourcehashes,hookmanifest,modelprofile and lease readiness from existing old Eva1 admission.json to reuse already prepared native variant.",
+  "interpretation": "Owner explicitly authorizes retrieval/use; execute only necessary independent operational metadata extraction for this existing comparison. No builder access to protected final prompts/replies/scorer, no need to read credentials just to bind paths/readiness.",
+  "existingSourceRules": "Original criteria/provider/envelopes, no oldcase replay or scorer change; independently curated final data remain separate.",
+  "realModelCalls": 0,
+  "actionOccurredBeforeAuthorization": false,
+  "previousAutomaticReviewRefusals": "Both metadata reads were refused before execution; no protected bytes read."
+}

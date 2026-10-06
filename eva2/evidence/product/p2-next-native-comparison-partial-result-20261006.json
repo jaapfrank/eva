@@ -1,0 +1,377 @@
+{
+  "schema": "eva2.p2.partial-native-comparison.v1",
+  "recordedAtUtc": "2026-10-06T13:47:22.428202+00:00",
+  "taskId": "P2.1",
+  "status": "closed_partial_pair_original_scores_unknown",
+  "executionScope": {
+    "caseId": "EV003-NEXT-CM01",
+    "family": "CM",
+    "epochsExecuted": 1,
+    "participantCount": 2,
+    "independentSupplement": true,
+    "originalMatrixCoverageAdded": 0,
+    "samePreservedCaseContinuedAfterPreInputSetupFix": true,
+    "oldCasesReplayed": false,
+    "newCaseAfterCurrentExecution": false,
+    "originalCriteriaChanged": false,
+    "originalScorerChanged": false,
+    "fullP21Done": false,
+    "superiorityProven": false,
+    "humanJudgmentStatus": "unknown",
+    "humanPreferenceStatus": "unknown"
+  },
+  "decision": {
+    "validCompletePairedQualityResult": false,
+    "winner": "unknown",
+    "reason": "Eva1 accounting incomplete; Eva2 stopped before second input because first native memory settlement was pending.",
+    "failureOrigin": "unknown",
+    "observedPrimaryStopCode": "NativeMemoryReadbackPending",
+    "observedPrimaryReadbackCode": "no_exact_native_retain_document",
+    "observedSecondaryEvidenceErrorClass": "FileNotFoundError",
+    "secondaryEvidenceErrorProductLoss": false,
+    "newInputsOrReplayPermittedByReview": false,
+    "requiredNextWork": "Localize ordinary native memory-retain/readback and Eva1 dispatch/accounting outside this closed case before any separately admitted future comparison."
+  },
+  "participants": [
+    {
+      "participant": "eva1-bottie",
+      "nativeRequestsSubmitted": 3,
+      "expectedNativeRequests": 3,
+      "nativeCompletion": true,
+      "nativeDurableReplyReadbacksVerified": true,
+      "semanticCompletionProven": false,
+      "originalScore": "unknown",
+      "registeredProviderAttempts": 0,
+      "actualUpstreamCalls": "unknown",
+      "zeroModelCallClaimAllowed": false,
+      "providerFallbackOrAuthorizationCause": "unknown",
+      "accountingComplete": false,
+      "usage": {
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null
+      },
+      "knownPartialUsage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "timing": {
+        "responseObservationsMs": [
+          488.60579900065204,
+          362.0079969987273,
+          653.4867869995651
+        ],
+        "verifiedNativeEndSeconds": 2.7777426409993495,
+        "boundary": "Three native reply receipts; not verified semantic task success or an equivalent quality-latency victory."
+      },
+      "help": {
+        "providedHumanHelp": 0,
+        "requiredHumanHelp": "unknown",
+        "humanRaters": 0
+      },
+      "stopVerified": true,
+      "activeAsyncAttempts": 0,
+      "cancelErrorCount": 0,
+      "positiveObjectiveLiteralRecallFlagsObserved": false,
+      "memoryQuality": "unknown"
+    },
+    {
+      "participant": "eva2",
+      "nativeRequestsSubmitted": 1,
+      "expectedNativeRequests": 3,
+      "nativeCompletion": false,
+      "nativeFirstReplyReadbackVerified": true,
+      "completeScenarioReadbacksVerified": false,
+      "semanticCompletionProven": false,
+      "originalScore": "unknown",
+      "firstHttpStatus": 200,
+      "firstExchangeStatus": "readback_verified",
+      "firstMemorySettlementStatus": "pending",
+      "firstMemorySettlementVerified": false,
+      "secondAndThirdRequestsSubmitted": false,
+      "registeredProviderAttempts": 1,
+      "attestedCoreUpstreamModelCalls": 1,
+      "attestedMemoryUpstreamModelCalls": 0,
+      "accountingComplete": true,
+      "usage": {
+        "input_tokens": 2235,
+        "output_tokens": 80,
+        "total_tokens": 2315
+      },
+      "timing": {
+        "firstContentMs": 7891.316724999342,
+        "firstReplyVerifiedEndMs": 7923.988525999448,
+        "completeScenarioVerifiedEndSeconds": null,
+        "boundary": "Only first response and durable reply readback; not memory settlement or full task completion."
+      },
+      "help": {
+        "providedHumanHelp": 0,
+        "requiredHumanHelp": "unknown",
+        "humanRaters": 0
+      },
+      "stopVerified": true,
+      "activeAsyncAttempts": 0,
+      "cancelErrorCount": 0,
+      "observedNativeExternalActionReservations": 0,
+      "actionAccountingComplete": true,
+      "memoryQuality": "unknown"
+    }
+  ],
+  "modelAndVariantBinding": {
+    "providerMode": "existing_subscription_native",
+    "contact": {
+      "model": "gpt-6-sol",
+      "reasoning": "none"
+    },
+    "eva2MemoryHelpers": {
+      "model": "gpt-6-astra",
+      "reasoning": "medium"
+    },
+    "eva2ProcedureReferences": false,
+    "eva2DelegatedBackgroundWork": false,
+    "eva2IsUnchangedInstalledConfiguration": false,
+    "evaluatesProcedureLearningOrAutonomy": false,
+    "eva1SourceRoot": "/home/administrator/project/.eva2-artifacts/p1-bottie-native-subscription-20261003-v1/source",
+    "eva1HookManifestSha256": "d2f99e4b61126c9b325415e6b1fb923cf52df04842b14da3b02b3f9aece0a291",
+    "separateRestrictedApplicationLoginVerifiedBeforeInputs": true,
+    "runtimeGroupRolesRetainedNoLogin": true
+  },
+  "originalEnvelopePerParticipant": {
+    "providerAttempts": 16,
+    "inputTokens": 1048576,
+    "outputTokens": 19200,
+    "wallSeconds": 480,
+    "toolDispatches": 16,
+    "speechRequests": 0,
+    "limitsChanged": false,
+    "cumulativeAccountingReset": false,
+    "originalAbsoluteMonotonicDeadlineRetained": false,
+    "remainingWallTime": "unknown",
+    "phaseResumeProven": false
+  },
+  "technicalEvidenceReadback": {
+    "processorChangedAfterInputs": false,
+    "runtimePathChangedAfterInputs": false,
+    "offlinePhysicalTargetsUsed": true,
+    "pathMappings": [
+      {
+        "worker": "core",
+        "logicalNative": "core-output-b5/native.json",
+        "physicalNative": "core-output/native.json",
+        "logicalClock": "core-output-b5/clock-receipt.json",
+        "physicalClock": "core-output/clock-receipt.json"
+      },
+      {
+        "worker": "memory",
+        "logicalNative": "memory-output-b5/native.json",
+        "physicalNative": "memory-output/native.json",
+        "logicalClock": "memory-output-b5/clock-receipt.json",
+        "physicalClock": "memory-output/clock-receipt.json"
+      }
+    ],
+    "aliasesCopiesOrSymlinksCreated": false,
+    "memoryPendingPreserved": true,
+    "artificialCompletionWritten": false,
+    "clockReset": false,
+    "clockPositions": {
+      "clock.json": {
+        "generation": 0,
+        "offsetMilliseconds": 0
+      },
+      "bottie-clock.json": {
+        "generation": 1,
+        "offsetMilliseconds": 86400000
+      }
+    },
+    "reviewAllowsOnlyOfflineRetainedEvidenceReading": true
+  },
+  "closure": {
+    "services": [
+      {
+        "name": "eva2-p2-next-cm-db-20261006",
+        "id": "cac6d3eb42094cca6c4da898d3906fd1756b595bd840def759fb79229e3f0300",
+        "running": false,
+        "exitCode": 0
+      },
+      {
+        "name": "eva2-p2-next-cm-memory-20261006",
+        "id": "0916b4321cdbd49f395fd667c870989d3009dc15a78ef58a9d60a0f0aef4d943",
+        "running": false,
+        "exitCode": 0
+      },
+      {
+        "name": "eva2-p2-next-cm-core-20261006",
+        "id": "725554c131eb8094a37148e863f98d4bd9538d65b4046da0611a023b22b89b45",
+        "running": false,
+        "exitCode": 0
+      }
+    ],
+    "allOwnedServicesStopped": true,
+    "eva1NativeChildExitCode": 0,
+    "eva1ReaderStopped": true,
+    "nativeTerminalSettled": {
+      "core": true,
+      "memory": true
+    },
+    "nativeControlCloseAcknowledged": {
+      "core": true,
+      "memory": true
+    },
+    "parentErrors": [],
+    "tunnelClosed": true,
+    "databasesSchemaAndNativeDataRetained": true,
+    "resourceRestartAfterClosure": false
+  },
+  "costAndCoverage": {
+    "currentRegisteredProviderAttempts": 1,
+    "currentKnownInputTokens": 2235,
+    "currentKnownOutputTokens": 80,
+    "fullPairTokens": "unknown",
+    "money": "unknown",
+    "developmentCredits": "unknown",
+    "zeroCreditClaim": false,
+    "historicalClosedResultsChanged": false,
+    "historicalUnknownUsagePreserved": true,
+    "noAdditionalModelCallsForClosure": true,
+    "namedCompetitorsExecutedInThisPair": false,
+    "otherOriginalFamiliesAndHumanRatingsStillOpen": true,
+    "speechParked": true
+  },
+  "originalIndependentAssessment": [
+    {
+      "participant": "eva1-bottie",
+      "nativeCompletion": true,
+      "accountingComplete": false,
+      "scoreValue": "unknown",
+      "originalScorerExecuted": true,
+      "originalScorerSha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+      "humanJudgmentStatus": "unknown",
+      "humanPreferenceStatus": "unknown"
+    },
+    {
+      "participant": "eva2",
+      "nativeCompletion": false,
+      "accountingComplete": true,
+      "scoreValue": "unknown",
+      "originalScorerExecuted": true,
+      "originalScorerSha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+      "humanJudgmentStatus": "unknown",
+      "humanPreferenceStatus": "unknown"
+    }
+  ],
+  "bindings": {
+    "datasetCommitment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/dataset-commitment.json",
+      "sha256": "6aad8410021a9580618479390553d314e09f0d93882c873af2a4c2aa8df8a1ff"
+    },
+    "admissionBeforeInput": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/admission-before-input.json",
+      "sha256": "db0697aed8397055b6affb8aa18b91b355846c89c1d84e8ffe3438e01ec99c8a"
+    },
+    "continuationBeforeInput": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/continuation-before-input.json",
+      "sha256": "6ee31ad36ef1a7ab9f6e113fbbd72ca3013a1f0b7958867d3df2e8a868506b34"
+    },
+    "processor": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/one_pair_processor.py",
+      "sha256": "9ee9e0be857be1a10f012441d2b9ffc843de241205105aa9483c69a675c2d5a6"
+    },
+    "candidateFreeze": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_provider_history_20261006.json",
+      "sha256": "10d8621b2000cd0380254f6e1274620bebaafe0aa420f577fee6731987322d7e"
+    },
+    "originalScorer": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+      "sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b"
+    },
+    "continuationSource": {
+      "path": "/tmp/eva2-p2-next-cm-clock-continuation-20261006.py",
+      "sha256": "a684663228c134cdbda0ee14a72a42973037446e777adc57e41abb365707a9ea"
+    },
+    "continuationReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-native-clock-continuation-review-20261006.json",
+      "sha256": "8c81d1240e534ea2274ec9259e05918660d02f5d5a043cbb2c0ed9004d6519f7"
+    },
+    "readerFollowupReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-native-clock-continuation-followup-review-20261006.json",
+      "sha256": "b539e3d8cced48b1015beef5ca6f85b7a3daa87c7d2faa7fb92ba252ca030c9c"
+    }
+  },
+  "retainedEvidence": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/eva1-turn-0.json",
+      "sha256": "889faf6c5292430e08ccdc1a222392c5db120f7d5082317d24c04ccf42771d1a",
+      "contentsDisclosed": false
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/eva1-turn-1.json",
+      "sha256": "d7f1b5d901b8e68e26ce8e89f9fce36f297b3150a78da5869a09f2bc846db9f3",
+      "contentsDisclosed": false
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/eva1-turn-2.json",
+      "sha256": "94ade56315e368ecb7432709097c65e2a67a56b49c5651f106aef8a1f57e80a3",
+      "contentsDisclosed": false
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/eva1-bottie-native-evidence.json",
+      "sha256": "57fd71888359ab85797cb5aa31f0c68f77a14c9063abff8116b86e7f8799be1f",
+      "contentsDisclosed": false
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/eva1-stop.json",
+      "sha256": "a50e5bb90ad7aa62227fee6612654f283fda41955c485bebf17f6f849c62be33",
+      "contentsDisclosed": false
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/eva2-turn-0.json",
+      "sha256": "89318defdc7405257622b587a0700841d9abd1b04c9470d67bb245b043a8f8a6",
+      "contentsDisclosed": false
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/eva2-memory-settlement-0.json",
+      "sha256": "c2ffd2af2d380bd97e55ce286ba38e1beed9752dff66b0c71d4dde2ae428322d",
+      "contentsDisclosed": false
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/continuation-final-parent.json",
+      "sha256": "5dab1314cd29e459bdc3f75fac64607e27c076986a75eddaff046cfaca4daf82",
+      "contentsDisclosed": false
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/continuation-service-close.json",
+      "sha256": "9863619a2313c8bbe33f64806b3f1399bc94fbb3a954b961d5ec9d18ef83b7f7",
+      "contentsDisclosed": false
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/continuation-tunnel-close.json",
+      "sha256": "ddee838ff0d3bec6db79aef3dbd7c5eba36f11ea785f168dae0ce02367c5a93d",
+      "contentsDisclosed": false
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/continuation-error.json",
+      "sha256": "f4dba4bd2664b340499e7bb4f2f47cd9af984ce5cb5aca84e14ed6c9af26a41b",
+      "contentsDisclosed": false
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-next-native-cm-20261006/partial-end-assessment/content-free-assessment.json",
+      "sha256": "64848b92cc776c05eef01a70c293f8498427e15207a7148396b4e7eae5d3ccd6",
+      "contentsDisclosed": false
+    }
+  ],
+  "priorPreInputSetupReceipt": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-next-native-comparison-result-20261006.json",
+    "sha256": "5c081f89bea6ffc8c2327bfdcdb4b2876d1d5585ec8a00ba8334808b8c320132",
+    "overwritten": false
+  },
+  "disclosure": {
+    "promptsRepliesOraclesAndExpectedFactsDisclosed": false,
+    "privateSourceOrCredentialContentsDisclosed": false,
+    "productSourceChangedByThisClosure": false,
+    "workboardChanged": false,
+    "gitOperationsPerformed": false,
+    "publicationPerformed": false,
+    "previousApprovalRefusalsPreserved": true
+  }
+}

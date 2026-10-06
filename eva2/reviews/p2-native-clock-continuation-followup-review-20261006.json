@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-06",
+  "reviewer": "/root/r1_final_followup_20261006",
+  "decision": "NO_GO_FOR_EXECUTION_RESUME",
+  "evidenceReadbackDecision": "GO_FOR_OFFLINE_EXISTING_TARGET_READS",
+  "scope": "Content-free follow-up on the observed output-reader mismatch and exact first unexecuted phase; no participant replay",
+  "priorReview": {
+    "path": "eva2/reviews/p2-native-clock-continuation-review-20261006.json",
+    "sha256": "8c81d1240e534ea2274ec9259e05918660d02f5d5a043cbb2c0ed9004d6519f7",
+    "scope": "The prior GO applied only before the first participant input with zero registered attempts; those preconditions no longer hold."
+  },
+  "publicSourceBinding": {
+    "path": "eva2/benchmark/inspect_ai_v1/cp001_native.py",
+    "sha256": "57a1996e868887b53af445870616538d51c0b92bdf2ce20dacdbfb5d3db7fc78",
+    "function": "read_eva2_memory_settlement"
+  },
+  "curatorTechnicalMetadata": {
+    "processorSha256": "9ee9e0be857be1a10f012441d2b9ffc843de241205105aa9483c69a675c2d5a6",
+    "datasetCommitmentSha256": "6aad8410021a9580618479390553d314e09f0d93882c873af2a4c2aa8df8a1ff",
+    "processorChanged": false,
+    "cleanupReader": "run:177 uses RESOURCE/(kind + \"-output-b5/native.json\") for core and memory",
+    "laterClockReader": "run:148 uses RESOURCE/(worker + \"-output-b5/clock-receipt.json\")",
+    "actualPaths": [
+      "RESOURCE/core-output/native.json",
+      "RESOURCE/memory-output/native.json",
+      "RESOURCE/core-output/clock-receipt.json",
+      "RESOURCE/memory-output/clock-receipt.json"
+    ],
+    "allFourActualTargetsExist": true,
+    "earlierWork": "Eva1 has three turn receipts; Eva2 has one durable native turn before memory-settlement admission stops the processor.",
+    "observedMemorySettlement": {
+      "status": "pending",
+      "reason": "no exact native retain document",
+      "settled": false
+    },
+    "firstUnexecutedParticipantStep": "Second Eva2 input; never reached because the first turn native memory settlement did not complete.",
+    "clockState": {
+      "core": {
+        "generation": 0,
+        "offsetMilliseconds": 0
+      },
+      "bottie": {
+        "generation": 1,
+        "offsetMilliseconds": 86400000
+      }
+    },
+    "wallLimitSeconds": 480,
+    "originalAbsoluteMonotonicDeadlineRetained": false,
+    "registeredEva2Usage": {
+      "providerAttempts": 1,
+      "inputTokens": 2235,
+      "outputTokens": 80,
+      "complete": true,
+      "activeAsyncAttempts": 0
+    },
+    "eva1Accounting": {
+      "registeredAttempts": 0,
+      "fullProviderUsage": "UNKNOWN",
+      "nativeClosed": true
+    },
+    "eva2TimingMilliseconds": {
+      "firstContent": 7891.316725,
+      "verifiedEnd": 7923.988526
+    },
+    "metadataSource": "Independent curator messages; reviewer did not read private processor, participant inputs/replies, databases or raw artifacts."
+  },
+  "findings": [
+    {
+      "severity": "execution_stop",
+      "claim": "The substantive stop preceded cleanup: the unchanged processor rejected pending native retention before the second Eva2 input. The public observer returns this state when no exact scoped queued-retain event matches the current turn. This observation alone does not identify the underlying product or adapter cause."
+    },
+    {
+      "severity": "readback_setup_defect",
+      "claim": "The cleanup and later clock readers retain an obsolete -output-b5 prefix. Existing workers wrote all four actual targets under -output. Reading those existing files directly repairs evidence access; alias, copy, worker restart or participant replay is unnecessary."
+    },
+    {
+      "severity": "resume_not_admissible",
+      "claim": "No existing phase-resume has been demonstrated, and the original absolute monotonic deadline was not retained. Re-entering the old processor or zero-attempt helper would replay executed inputs, discard existing usage or reset time. It is not approved."
+    },
+    {
+      "severity": "preservation",
+      "claim": "Retain the existing three Eva1 turn receipts, one Eva2 durable turn, pending settlement, source/clock states, original ledger and timing. Unknown Eva1 full usage remains unknown. The partial run provides no valid complete paired result or comparative win."
+    }
+  ],
+  "approvedNextAction": [
+    "Read the existing core-output and memory-output terminal and clock receipts offline using the four exact physical paths; preserve their hash/path metadata and original suffix error.",
+    "Close and preserve the partial assessment according to the unchanged evaluator criteria, with missing phases and unknown scores visible.",
+    "Publish the exact setup/readback limitation without inferring a private scoring result or changing pending to completed."
+  ],
+  "notApproved": [
+    "Re-running any of the three completed Eva1 inputs or the first Eva2 input",
+    "Sending the second Eva2 input with a newly created deadline",
+    "Database or SQLite reset, schema reseed, clock rollback or usagecounter reset",
+    "Altering stimuli, oracles, score rules or memory-completion conditions",
+    "A new general resume platform or automatic replacement experiment"
+  ],
+  "limitations": [
+    "Underlying cause of the pending native retain document remains UNKNOWN in this review.",
+    "Actual participant quality and formal final scoring remain solely the independent evaluator role.",
+    "This review preserves the earlier pre-input GO as historical and rejects reusing it after real participant execution."
+  ],
+  "reviewerActivity": {
+    "privatePromptsRepliesOraclesRead": false,
+    "runtimeActions": 0,
+    "modelCalls": 0,
+    "testsRepeated": 0,
+    "sourceChanges": 0,
+    "developmentCreditCost": "UNKNOWN"
+  }
+}

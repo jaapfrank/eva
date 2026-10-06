@@ -1,0 +1,102 @@
+{
+  "P2_1Complete": false,
+  "accountingLifecycle": {
+    "Eva1": "Worker subscription provider begin/settle precedes upstream dispatch; raw SSE usage and source hooks bind model+role; independent SQLite readback + awaited signed delivery ACK + explicit stop/quiescence are required by existing wrappers. None started here.",
+    "Eva2": "Parent ledger binds core/contact/helper and native memory helper clients/stages; original independent reply and memory settlement readbacks plus no pending work/provider stream required. Synthetic foreground200 is not full memory-sample completion.",
+    "allAttemptsAndHelpersMustDebitSameEnvelope": true,
+    "providerFallbackCostOrOutcomeNotAssumed": true
+  },
+  "authFilesReadOrChanged": false,
+  "candidate": {
+    "coreImage": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+    "freeze": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_provider_history_20261006.json",
+    "freezeSHA": "10d8621b2000cd0380254f6e1274620bebaafe0aa420f577fee6731987322d7e",
+    "productCommit": "bd20df8e904c1a6aa6cf9081acb3cad1831beefc",
+    "providerSourceSHA": "27400f795e7491c8f1031ab0a44d912a6f82ece165c25def4e9122820fbd4fbd",
+    "workerImage": "sha256:fee8313778ab2a619d90e356a81a5c03f8789edaa9da181515923973f6814f14"
+  },
+  "checkedAt": "2026-10-06",
+  "closedFinalSourceOrScorerRead": false,
+  "contract": "EvaP2NextNativeComparisonAdmission/v1",
+  "currentEvidence": {
+    "Eva1PreviousZeroRegisteredCalls": "provider/fallback cause UNKNOWN; completed native reply alone does not establish model use",
+    "Eva2OrdinaryEvidence": "eva2/evidence/product/p2-native-runtime-ingress-corrected-20261006.json",
+    "Eva2OrdinaryEvidenceSHA": "8009ad3c3e3957a2048c727739f644887834e66cd6ba48dadfe0946dc60dbd05",
+    "Eva2OrdinarySyntheticIngress": "HTTP200 + exact reply identity/contract/durable readback verified after isolated restricted login correction",
+    "closedProviderHistoryPair": "preserved UNKNOWN; no replay/rescore or old-cause reconstruction",
+    "subscriptionQualityOrMemoryLifecycleProvenBySyntheticIngress": false
+  },
+  "decision": "NO_GO_FINAL_INFERENCE_UNTIL_EVA1_DISPOSABLE_NATIVE_SOURCE_PROFILE_BINDING",
+  "decisiveEva1SourceBinding": {
+    "actualPublicSourceRoot": "/home/administrator/project/Bottie",
+    "authorizedLeaseReadiness": "UNKNOWN_NOT_CHECKED_IN_SOURCE_ONLY_STEP; do not call missing login or actual access failure",
+    "configSHA": "d80810b1ba973ebd5ab37f21f99c8ac953af13e12a47d6e3544e976064035f90",
+    "equalModelPatchSHA": "e7473bd4f5ea80477b6ae8462cf3b390491d85266ebbb301f5a77bffefbb8646",
+    "existingEqualModelPatch": "p1_bottie_equal_model.patch",
+    "freshDisposableHookProfileReceipt": "UNKNOWN; direct unhooked actual source is not subscription-admissible",
+    "helperRoleGuard": "worker configuredRole:143-146; roleContext/body checked:217-245; do not change native role purpose just to satisfy names",
+    "llmSHA": "9390dbc97d282a406a8d1a631c3b29f7aadfe7628419a1ed785ad4dcccc65ed6",
+    "nativeDefaults": "config.js:511-518 uses 5.6 models and low/default efforts; these are native product baseline settings, not the separately declared 6sol/none + 6astra/medium variant",
+    "requiredSubscriptionHookMarkersOnActualSource": {
+      "src/brain/llm.js": false,
+      "src/brain/oauth.js": false,
+      "src/mind/tools.js": false,
+      "src/mind/understanding.js": false
+    },
+    "workerContract": "cp001_bottie_worker.mjs:53-66 rejects subscription source unless explicit disposable root, exact Cp001BottieNativeHooks/v1 manifest hashes and native-control markers match all four files"
+  },
+  "developmentCredits": "UNKNOWN",
+  "humanRatings": 0,
+  "meaning": "Source-only operational admission; no quality score, access failure or product loss inferred.",
+  "modelCalls": 0,
+  "newCaseGenerated": false,
+  "nextUntouchedAuthorizedExecutionAfterBinding": {
+    "configVariantsExplicit": "Eva1 disposable equal-model/native-hook variant; Eva2 isolated CM profile with procedure references disabled must remain labelled, not unchanged installed products",
+    "epochs": 1,
+    "family": "conversation_memory",
+    "fullP2_1Finish": "original six families,12cases each,3epochs and actual human ratings remain open; selected pair is partial",
+    "measurementBindings": "Preserve original freeze; bind current observer/native adapter and corrected setup hashes separately before independent dataset commitment, with unchanged criteria and envelope",
+    "participants": [
+      "eva1-bottie",
+      "eva2"
+    ],
+    "rolePolicy": {
+      "allHelpersIncludingMemory": "gpt-6-astra / medium",
+      "contact": "gpt-6-sol / none"
+    },
+    "selection": "one new unseen original-family case chosen and committed independently only after actual native setup/config/source/clock/accounting GO; no case generated in this step"
+  },
+  "originalEnvelope": {
+    "criteriaChanged": false,
+    "family": "conversation_memory",
+    "limits": {
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "speechRequests": 0,
+      "toolDispatches": 16,
+      "wallSeconds": 480
+    },
+    "maximalMatrixAutomaticallyStarted": false,
+    "planSHA": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+  },
+  "publicSourceSHA": {
+    "cp001_bottie_worker.mjs": "d9135079c1e2ce8b91cb57b4d1d39b376cb031f0fb9bedda2aa1f8958b58c73b",
+    "cp001_native.py": "57a1996e868887b53af445870616538d51c0b92bdf2ce20dacdbfb5d3db7fc78",
+    "cp001_process_accounting.py": "e2d1d3d63e64f84da2ddeef2bf032fe9e5b5153a50abddf0db9fe75dc607a774",
+    "p1_eva2_native_worker.py": "c4f08df0d4fcaae19ee09326300faf2e5a6af4019ba86c9629e50c4232a8a978",
+    "p2_native_scope_initializer.py": "b0f2baed6805a3aacfe963df4b60230aa221084a37169147ee260497678862cb",
+    "p2_provider_history_native_glue.py": "620c6f5b0cf83078e3a71dacd8be320edb2debea74c35d6421c939e0835fb93f"
+  },
+  "repositoryCheckpoint": "f5479df9c0b75ae224d12769b1f7fbc217889971",
+  "runtimeResourcesStarted": false,
+  "smallestNextAction": {
+    "action": "Bind/re-use the existing disposable Eva1 equal-model/hooked source and explicit source-root/hook-manifest/provider-mode=subscription/sample-control/authorized-lease to its existing native worker; obtain fresh source/profile/lease readiness binding before any final input. Do not use the unhooked actual service root directly.",
+    "noNewAuthRouteOrInstallRequiredByThisFinding": true,
+    "notNewPlatformOrProductFeature": true,
+    "ordinaryOfflineIngressIfActualBindingFails": "Use existing wrapper/source and one separate public development fixture with synthetic provider to localize the failing pre-dispatch transition; never a closed final case.",
+    "sourceLines": "cp001_bottie_worker.mjs:53-66,143-185,217-245,377-379; existing native source config.js:511-518 and p1_bottie_equal_model.patch"
+  },
+  "sourceOrWorkboardChanged": false,
+  "task": "P2.1"
+}

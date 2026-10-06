@@ -1,3 +1,27 @@
+## 6 oktober — P2.1 gedeeltelijk uitgevoerd, geen winnaar bewezen
+
+De toegestane afzonderlijke vergelijking is gedeeltelijk uitgevoerd. Eva1 heeft drie duurzame reacties maar onvolledige modelaccounting; Eva2 heeft één bevestigde reactie na 7,924 s en één echte modelpoging (2235 in / 80 uit). De exacte geheugenregistratie bleef onbevestigd, waardoor de tweede en derde Eva2-beurt niet zijn ingediend. De daaropvolgende cleanupfout gebruikte een verouderd resultaatpad. Beide oorspronkelijke eindscores blijven onbekend. Alle proefprocessen zijn gestopt; er zijn geen vragen herhaald. Geen algemene voorsprong, productverlies of nieuwe afgeronde functie geclaimd; creditkosten onbekend.
+
+De onafhankelijke review staat alleen offline uitlezen van de behouden echte resultaatbestanden toe; herstart/replay heeft geen GO. Codex lokaliseert de ontbrekende geheugenovergang met bestaande bron/bewijs. De 44 taak-ID's, statussen, oorspronkelijke eindvoorwaarden en eerdere acceptaties blijven gelijk; 34/44 blijft staan. Geen extra eigenaarhandeling voor P2.1. De nieuwe toegangstoestemming is verwerkt; de app-sandbox geeft bij niet eerder toegestane commands nog een setup-refreshfout.
+
+[Behouden meetverslag](evidence/product/p2-next-native-comparison-partial-result-20261006.json) · [Onafhankelijke vervolgreview](reviews/p2-native-clock-continuation-followup-review-20261006.json).
+
+## 6 oktober — P2.1: native routes gereed, meetadapter gericht hervatten
+
+Alle benodigde technische proefbestanden zijn rechtstreeks toegestaan; daarna gaf Jaap 'full access now'. De bestaande Eva1 subscription-variant is teruggevonden en vers opgestart: bron/manifest/modelbinding klopt, expliciete stop en quiescent bevestigd. Ook de geïsoleerde Eva2-route is gereed. De eerste paarvoorbereiding stopte doordat de launcher en de processor hetzelfde klokbestand aanmaakten. Er zijn geen vragen aan deelnemers gestuurd en geen modelpogingen geregistreerd; volledige tokenusage is niet vastgesteld. Dit bewijst geen productverlies.
+
+Codex corrigeert uitsluitend de dubbele klokmaterialisatie en hervat dezelfde nog ongeziene casus bij de eerste niet-uitgevoerde deelnemerstap, met de oorspronkelijke criteria en cumulatieve accounting. Geen nieuwe curatie, reset, gesloten proefreplay of volledige matrix. P2.1 blijft open; 34/44 en bestaande acceptaties blijven gelijk. Geen extra eigenaarhandeling voor deze proef. De oorspronkelijke R1/P2/F2-eindvoorwaarden en geparkeerde spraak blijven behouden.
+
+[Technische binding](evidence/product/p2-eva1-bundled-technical-binding-20261006.json) · [Verse native gereedheid](evidence/product/p2-eva1-fresh-native-readiness-20261006.json) · [Behouden voorbereidingsfout](evidence/product/p2-next-native-comparison-result-20261006.json).
+
+## 6 oktober — P2.1 toegestane admission gelezen; gereedmeldingsbestand geweigerd
+
+Jaap gaf rechtstreeks toestemming: 'je mag alles ophalen en gebruiken'. Daarmee heeft de onafhankelijke curator één oude admission inhoudsvrij verwerkt. Zij bevat de variantbeschrijving en adapterhashes, maar geen daadwerkelijke sourceRoot/hookmanifest/leasepointer. De openbare review verwijst exact naar resources-ready-b5.json. Automatische controle wees ook die afzonderlijke metadata-uitlezing vóór uitvoering af: de specifieke toestemming geldt volgens de controle alleen voor admission.json. Er is nu één gebundelde eigenaarvraag voor alle benodigde technische bron-/opstart-/manifest-/profiel-/lease-metadata. Geen afgeschermde vragen/antwoorden of geheimen naar de bouwer; geen modelcalls, nieuwe cases, bronkopie of omweg. De werkende native-routecorrectie blijft klaar; P2.1 is niet afgerond. Geen providerfalen of fysiek verdwenen variant geclaimd. App-goal blijft actief; deze nieuwe condition is pas één doelturn waargenomen, niet drie.
+
+## 6 oktober — P2.1 Eva1-proefbinding hergebruiken
+
+De openbare equal-modelvariant en vier bronhashes zijn gecontroleerd. Voor subscription-gebruik ontbreekt in die variant de bestaande native-controlinstrumentatie. Openbare readinessrapporten geven de gebruikte hookvariant/manifestpointer niet. De eerste uitsluitend openbare opdracht is afgerond; een pointerlezing uit de afgeschermde oude admission is automatisch afgewezen wegens die beperkte opdracht en niet uitgevoerd. De onafhankelijke curator legt nu het reeds bestaande expliciete eigenaarsmandaat voor de aparte eindvergelijking/private verwerking voor voor uitsluitend technische provenance-extractie. Geen nieuwe eigenaarstoestemming geclaimd, geen gegevens aan de bouwer, geen nieuwe modelrun/case of bronkopie. P2.1 blijft dezelfde open opdracht.
+
 ## 6 oktober — P2.1 native ontwikkelroute werkelijk hersteld
 
 De verkeerde proeflogin is gericht vervangen door een aparte beperkte applicatielogin in dezelfde geïsoleerde database. Beide rolwissels werken; de bestaande kern geeft op dezelfde openbare synthetische ontwikkelvraag HTTP200 met exact onafhankelijk teruggelezen antwoord. Schema, gegevens, cache, actiegrenzen en oorspronkelijke HTTP500-bewijs blijven behouden. Onafhankelijke review: GO. Verbruik: 0 echte modelcalls, 1 synthetische contactpoging (17/7 testtokens); ontwikkelcreditkosten onbekend. Proefresources zijn gestopt met gegevensbehoud. Dit herstelt een meetvoorwaarde, geen nieuwe huisgenootfunctie; 34/44 blijft gelijk. P2.1, R1 en de beoordeling van zelfstandig werk blijven open. Vervolg is geldige onafhankelijke vergelijking onder bestaande voorwaarden, geen replay of automatische volledige matrix.

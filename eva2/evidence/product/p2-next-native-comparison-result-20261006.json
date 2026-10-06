@@ -1,0 +1,159 @@
+{
+  "contract": "P2IndependentNativePairClosure/v1",
+  "taskId": "P2.1",
+  "date": "2026-10-06",
+  "status": "closed_before_participant_input_adapter_error",
+  "scope": {
+    "family": "conversation_memory",
+    "selectedCases": 1,
+    "epochsAuthorized": 1,
+    "participants": [
+      "eva1",
+      "eva2"
+    ],
+    "originalMatrixCoverageAdded": 0,
+    "newIndependentSupplement": true,
+    "automaticRetryPerformed": false,
+    "oldCaseReplayed": false
+  },
+  "bindings": {
+    "candidateFreeze": "10d8621b2000cd0380254f6e1274620bebaafe0aa420f577fee6731987322d7e",
+    "nativeSetupScriptSha256": "f89a3dff1de046f785e8f350aa138f85a73379c2ec6ed01b37c1c25aadf67d3a",
+    "processorAdapterSha256": "9ee9e0be857be1a10f012441d2b9ffc843de241205105aa9483c69a675c2d5a6",
+    "entryWrapperSha256": "0d6391659436d0c091d293ce8491d99b97803944eeca314a25a1b34d2ec76d34",
+    "sealedDatasetCommitmentSha256": "6aad8410021a9580618479390553d314e09f0d93882c873af2a4c2aa8df8a1ff",
+    "preinputAdmissionSha256": "db0697aed8397055b6affb8aa18b91b355846c89c1d84e8ffe3438e01ec99c8a",
+    "nativePreinputBindingSha256": "6ae26c75109ee14e9d7f225893367c67daca97c644e0812be072e47588b015eb",
+    "eva1SourceProfileBindingSha256": "c2f878338fbf21221db330e8cf4c53a64b7807c4f46c7a2cbe7936542131561b",
+    "eva1FreshReadinessSha256": "d92ab79fd6253a2049c30fa82a6536c839018ce311995fd63aa63b9d3e7bd8e3",
+    "originalPlanSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "originalScorerSha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b"
+  },
+  "nativeAdmission": {
+    "eva2ActualFactoriesHealthyBeforeCuration": true,
+    "clockAcknowledgementsObserved": true,
+    "restrictedApplicationLoginBothSetRolesVerified": true,
+    "eva1FreshZeroInputReadinessObserved": true,
+    "comparisonConfigurationVariant": {
+      "procedureReferencesEnabled": false,
+      "delegatedBackgroundWorkEnabled": false,
+      "contact": "gpt-6-sol/none",
+      "helper": "gpt-6-astra/medium",
+      "notUnchangedInstalledConfiguration": true
+    }
+  },
+  "failure": {
+    "origin": "measurement_adapter",
+    "class": "FileExistsError",
+    "canonicalCode": "duplicate_native_clock_materialization",
+    "publicCallsite": {
+      "module": "p2_provider_history_native_glue.py",
+      "function": "private_json",
+      "line": 21
+    },
+    "technicalTarget": "own bottie-clock.json",
+    "verifiedReason": "Launcher precreated the same own clock file that existing processor creates using O_EXCL before native Eva1 start.",
+    "participantInputReached": false,
+    "productFaultEstablished": false,
+    "closedHistoricalCausesChanged": false
+  },
+  "participants": [
+    {
+      "participant": "eva1",
+      "providerAttemptsRegistered": 0,
+      "nativeInputsSubmitted": 0,
+      "newCaseReadByParticipant": false,
+      "nativeSampleExecuted": false,
+      "taskSuccess": null,
+      "score": "unknown",
+      "humanRaters": 0,
+      "helpDuringParticipantExecution": 0,
+      "firstContentSeconds": null,
+      "verifiedResultSeconds": null,
+      "fullProviderUsage": null
+    },
+    {
+      "participant": "eva2",
+      "providerAttemptsRegistered": 0,
+      "nativeInputsSubmitted": 0,
+      "newCaseReadByParticipant": false,
+      "nativeSampleExecuted": false,
+      "taskSuccess": null,
+      "score": "unknown",
+      "humanRaters": 0,
+      "helpDuringParticipantExecution": 0,
+      "firstContentSeconds": null,
+      "verifiedResultSeconds": null,
+      "fullProviderUsage": null
+    }
+  ],
+  "accounting": {
+    "eva2RegisteredAttempts": 0,
+    "eva2ActiveAsyncAttempts": 0,
+    "eva2AttemptRecords": 0,
+    "eva2KnownPartialUsage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0
+    },
+    "eva2TotalUsage": {
+      "input_tokens": null,
+      "output_tokens": null,
+      "total_tokens": null
+    },
+    "complete": false,
+    "parentErrors": 0,
+    "cancelErrors": 0,
+    "noZeroTokenOrCreditClaimFromMissingUsage": true,
+    "upstreamCallsPreciselyMeasured": null,
+    "developmentCreditCost": null,
+    "newCaseProviderCost": null,
+    "actionReservedDispatches": 0,
+    "actionPending": 0
+  },
+  "closure": {
+    "services": [
+      {
+        "name": "eva2-p2-next-cm-db-20261006",
+        "id": "cac6d3eb42094cca6c4da898d3906fd1756b595bd840def759fb79229e3f0300",
+        "running": false,
+        "exitCode": 0
+      },
+      {
+        "name": "eva2-p2-next-cm-memory-20261006",
+        "id": "0916b4321cdbd49f395fd667c870989d3009dc15a78ef58a9d60a0f0aef4d943",
+        "running": false,
+        "exitCode": 0
+      },
+      {
+        "name": "eva2-p2-next-cm-core-20261006",
+        "id": "725554c131eb8094a37148e863f98d4bd9538d65b4046da0611a023b22b89b45",
+        "running": false,
+        "exitCode": 0
+      }
+    ],
+    "allServicesStopped": true,
+    "tunnelClosed": true,
+    "tunnelEventCount": 0,
+    "eva1NativeChildCreated": false,
+    "privateOutputsDisclosed": false,
+    "noProductChanges": true,
+    "noGitOrWorkboardChanges": true
+  },
+  "limits": [
+    "No valid comparative quality/speed/cost pair exists from this selected attempt.",
+    "No general or CM superiority claim; original P2.1 coverage and human ratings remain open.",
+    "Participant input never started; the sealed additional scenario remains unseen by participants.",
+    "Historical UNKNOWN causes and previously rejected actions remain unchanged."
+  ],
+  "retainedEvidence": {
+    "setup-failure.json": "c121ffef79854ed038e2b675e65a21b578617902ec04ada314007536424d2fd5",
+    "setup-resume-failure.json": "eee9e02f589a335f256ce9ae055e5d0f2a34508b2c06a45a68fb03c9f683e31a",
+    "setup-materialization-failure.json": "6c6ddb098a01a04b7b0531022ae6e86a4c1605ab1cfeb76b10e8f890b0fcbb58",
+    "setup-accounting-failure.json": "97276d24e56f767ae44427f84f36e5b18e73dfb19c0f97e207524d164a9010c1",
+    "execution-entry-binding.json": "1df66dfef5b8b002f50abd59908f39472c2319882ef2dbd192e5c1b9144eb133",
+    "final-parent.json": "14ad8115c475ac4bfc24e276c0bef2bb76a3b828f3b9e093d56f17214448df79",
+    "service-close-accounting.json": "fdf95e258d2dffda37fd675308baeb2707920669a058495e7f0ea6459f0292ff",
+    "tunnel-close.json": "ef5047099485ca1a9743f4fda1e8ada2d8707c7664d0572ecd08559ed481a777"
+  }
+}

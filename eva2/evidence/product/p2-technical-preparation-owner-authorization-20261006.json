@@ -1,0 +1,13 @@
+{
+  "contract": "EvaP2TechnicalPreparationOwnerAuthorization/v1",
+  "recordedAt": "2026-10-06T11:20:25.310936+00:00",
+  "taskId": "P2.1",
+  "source": "Actual direct human answer to bundled async question in this rootchat",
+  "ownerStatement": "Ja, alle benodigde technische proefbestanden",
+  "questionScope": "Independent evaluator may read all technical preparation files of the existing Eva1 trial: resources-ready-b5.json and related source/startup/manifest/model-profile/lease metadata, to reuse existing variant. Final questions,answers and secretkeys are not forwarded to builder.",
+  "existingPublicReadinessPointer": "/tmp/eva2-ev003-provider-history-cm01-e1-20261006/resources-ready-b5.json",
+  "purpose": "Existing approved separate final comparison with original conditions/providerroute; exact technical native preparation binding before finalinput.",
+  "builderBoundary": "Only operational whitelist source/hash/profile/readiness data; no protected final content/scorer or credential values.",
+  "earlierRefusalsPreserved": true,
+  "realModelCallsBeforeThisApproval": 0
+}

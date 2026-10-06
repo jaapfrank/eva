@@ -1,0 +1,123 @@
+{
+  "contract": "EvaP2AuthorizedOperationalProvenance/v1",
+  "taskId": "P2.1",
+  "recordedAt": "2026-10-06T11:12:55.844141+00:00",
+  "status": "AUTHORIZED_ADMISSION_PROCESSED_OPERATIONAL_BINDING_FIELDS_ABSENT",
+  "directHumanAuthority": {
+    "path": "eva2/evidence/product/p2-operational-metadata-owner-authorization-20261006.json",
+    "sha256": "3b0aaecb917bfcf149a5b55171d1c6d7492f27495ba17b5d18bcc03a701f4ca3",
+    "ownerStatement": "je mag alles ophalen en gebruiken.",
+    "scope": "Only necessary independent operational metadata from the one old admission. No protected task contents disclosed."
+  },
+  "previousRefusalPreserved": {
+    "path": "eva2/evidence/product/p2-eva1-operational-provenance-20261006.json",
+    "sha256": "2eee3b3d4f63f4b640cd6a78c07f1f3c3128c6cedfb1734b3830fa286d7816f5"
+  },
+  "source": {
+    "publicCommitmentSha256": "52da8464812d5a6f052d3429615d60f64f6e05b42e22e385a4f52ec007917077",
+    "admissionPath": "/home/administrator/project/.eva2-artifacts/ev003-provider-history-final-20261006/admission.json",
+    "admissionSha256": "e6765d96aa8f851b66bb592513d63d2fcfd97965f834f734c62398a6c6a68005",
+    "immutableFileChanged": false
+  },
+  "whitelistedOperationalFields": [
+    {
+      "field": "sourceBindings.eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_provider_history_20261006.json",
+      "category": "source_hash",
+      "value": "10d8621b2000cd0380254f6e1274620bebaafe0aa420f577fee6731987322d7e"
+    },
+    {
+      "field": "sourceBindings.eva2/reviews/p2-provider-history-native-driver-review-20261006.json",
+      "category": "source_hash",
+      "value": "e4da92b50ec406ffd41f443104cba9ad7904074a95341c31a3f7cb2c6f8fe7bb"
+    },
+    {
+      "field": "sourceBindings.eva2/benchmark/inspect_ai_v1/p2_provider_history_native_driver.py",
+      "category": "source_hash",
+      "value": "347c1047df78ed30cf17853524cd8647140d7241dff425d5d416a61fc2c048ce"
+    },
+    {
+      "field": "sourceBindings.eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py",
+      "category": "source_hash",
+      "value": "f6288c6f2364efbe7a8aa635e30baf6af64031debe91d47da6ecddfa807eab1c"
+    },
+    {
+      "field": "sourceBindings.eva2/benchmark/inspect_ai_v1/p2_native_scope_initializer.py",
+      "category": "source_hash",
+      "value": "f331e4838e65091adccfe906ac532719a1a916ef15e191351e6deb90aecab8ae"
+    },
+    {
+      "field": "sourceBindings.eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "category": "source_hash",
+      "value": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    },
+    {
+      "field": "sourceBindings.eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+      "category": "source_hash",
+      "value": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b"
+    },
+    {
+      "field": "actualResourcesReady",
+      "category": "readiness_boolean",
+      "value": true
+    }
+  ],
+  "restrictions": {
+    "protectedTaskContentsDisclosed": false,
+    "oldPromptReplyScorerRead": false,
+    "privateProcessorLauncherCodeRead": false,
+    "authContentsRead": false,
+    "oldCaseReplayed": false,
+    "newCaseGenerated": false,
+    "otherProtectedFileRead": false,
+    "existingAdmissionChanged": false
+  },
+  "usage": {
+    "protectedAdmissionFilesProcessed": 1,
+    "modelCalls": 0,
+    "runtimeStarts": 0,
+    "developmentCredits": "UNKNOWN"
+  },
+  "executionAdmission": "NO_GO_EXACT_REUSABLE_SOURCE_HOOK_PROFILE_LEASE_PROVENANCE_NOT_RETAINED_IN_THIS_ADMISSION",
+  "P2_1Complete": false,
+  "priorExtractionReceiptSha256": "4f2ae6c525ab33d2d4dd8a3c5663e35f067d30aa865655f46365dd3f45bac1ba",
+  "eva1DeclaredVariant": "Original pinned equal-contact Sol/none disposable hook variant; native memory remains SQLite without extra helpermodel",
+  "operationalPointerAvailability": {
+    "sourceRoot": {
+      "present": false,
+      "binding": "UNKNOWN"
+    },
+    "hookManifestPath": {
+      "present": false,
+      "binding": "UNKNOWN"
+    },
+    "fourNativeSourceHashes": {
+      "present": false,
+      "binding": "UNKNOWN"
+    },
+    "completeModelRoleProfile": {
+      "present": false,
+      "binding": "UNKNOWN"
+    },
+    "leasePointer": {
+      "present": false,
+      "binding": "UNKNOWN"
+    },
+    "readinessTimestamp": {
+      "present": false,
+      "binding": "UNKNOWN"
+    },
+    "historicalResourcesReadyFlag": {
+      "present": true,
+      "value": true,
+      "scope": "Historical admission flag alone; no current native ready/lease attestation."
+    }
+  },
+  "finding": "The sole permitted immutable admission retains adapter/review hashes, a descriptive Eva1 variant and a historical ready boolean. It does not retain the exact already-hooked Eva1 sourceRoot, hookmanifest pointer/four native hashes, complete purpose-to-model mapping, lease pointer or readiness timestamp required by the public subscription worker.",
+  "notEstablished": [
+    "Physical absence of the prepared variant",
+    "Provider/account access failure",
+    "Cause of the historical zero-registered-call result"
+  ],
+  "smallestMissingInput": "An authoritative existing ready/preparation metadata pointer for the already-hooked disposable Eva1 variant, containing exact sourceRoot, native hook manifest/four hashes, complete role profile and lease path/readiness. No new hook platform or code is requested by this receipt.",
+  "scopeCompleted": true
+}
