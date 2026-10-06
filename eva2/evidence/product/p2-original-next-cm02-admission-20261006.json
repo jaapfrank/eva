@@ -1,0 +1,224 @@
+{
+  "contract": "P2OriginalSuccessorNativeCM02Admission/v1",
+  "status": "admitted_one_successor_original_cm_pair",
+  "task": "P2.1",
+  "runHandle": "ev003-successor-native-cm02-20261006-0734716d",
+  "caseId": "EV003-CM-02",
+  "epoch": 1,
+  "caseSha256": "f882c57fd68b8a4222c6a2bcdcb4caf7ad0bc1f5adf9b660bd8ae6d249c60393",
+  "datasetCommitmentSha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+  "datasetTotalSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "datasetStructure": {
+    "families": {
+      "conversation_memory": 12,
+      "cross_domain_actions": 12,
+      "initiative": 12,
+      "browser_computer": 12,
+      "learning_projects": 12,
+      "voice_presence": 12
+    },
+    "differentScenarios": 72,
+    "epochs": 3,
+    "sameCasesEachEpoch": true,
+    "freshStateEachEpoch": true,
+    "originalScenarioStructures": true,
+    "independentlyFreshOpaqueParameters": true,
+    "allInitialInputsFresh": true,
+    "committedBeforeSelectionAndParticipantInput": true,
+    "newGeneratorOrPlatform": false
+  },
+  "originalPlan": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+    "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "limits": {
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "wallSeconds": 480,
+      "toolDispatches": 16,
+      "speechRequests": 0
+    },
+    "participantOrder": [
+      "eva1-bottie",
+      "eva2"
+    ],
+    "criteriaChanged": false,
+    "perParticipantDeadlineAcrossTurnsAndMemoryWaits": true,
+    "wholeCumulativeAccountingIncludesFailuresAndHelpers": true,
+    "ledgerToolVocabularyAlias": {
+      "toolCalls": 16,
+      "toolDispatches": 16
+    }
+  },
+  "candidate": {
+    "currentInstalledBindingSha256": "10d8621b2000cd0380254f6e1274620bebaafe0aa420f577fee6731987322d7e",
+    "preCurationFreezeSha256": "3343ecba82ebc4fbbd31916ae64663231472bfb483ff7a392c4fdfe78dcb0219",
+    "coreImage": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+    "memoryImage": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+    "helperModelComparisonVariant": {
+      "installedMemoryProfile": "gpt-5.6-luna/low",
+      "originalComparisonProfile": "gpt-6-astra/medium"
+    },
+    "actualInstalledCandidateUsed": true,
+    "currentCaseSourceFreezeSha256": "34e00ea8fcb090918cb26f2903d0dfe5c73a8f6cf06373c96cd19803b6d330e1",
+    "publishedBasis": "c8eb179d62f9ff892395d896468c9ab0c2b4eba2",
+    "sameCommittedSuccessorCorpusReused": true
+  },
+  "models": {
+    "contact": "gpt-6-sol/none",
+    "allResearchWorkAndMemoryHelpers": "gpt-6-astra/medium",
+    "providerRouteUnchanged": true,
+    "refreshOrFallback": false
+  },
+  "bindings": {
+    "nativeWorkerSha256": "4ee595e33a6de19825d1b71da475c7efeb0ea285782b0c9a7cb3fa0ca1409dd7",
+    "memoryObserverSha256": "0a3366f227bbb6299459ac3de6217cea0d0c9457014453c45096f216e7f68279",
+    "processorSha256": "97abce26c9a128a9777c2d24cfbc5a6c4d997a23eb6ff0695f378172c7fb2aa0",
+    "orchestrationSha256": "07b0532e20518ec0f2a1f50f25585eeff4595b54584c7b15752dda6252cb7a8b",
+    "nativeResourceBindingPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm02-20261006-0734716d/native-resource-binding.private.json",
+    "nativeResourceBindingSha256": "55858f09465cb032f6e84481c048ce5cc274a1cf38813e394cfebe5de2ff9ad2",
+    "originalScorerSha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "originalProtocolSha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+    "scopedLeaseMetadataPath": "eva2/evidence/product/p2-eva1-scoped-lease-prepared-20261006.json",
+    "scopedLeaseSha256": "d688349a5689c2872b0f19b7f06ff1ec8da08719241d43855de39c5445b3c6ad",
+    "leaseReadAsUid1000": true,
+    "leaseExpiryCoversBothOriginalSamples": true,
+    "leaseOwnerModeUnchanged": true,
+    "singleCoreMemoryClockFile": true,
+    "clockGenerationsAcknowledged": [
+      0,
+      0
+    ],
+    "canonicalDriverSha256": "f67575a8dba41ef978512224f22c5014b1bd4cbaf0ce247ba2e3f7f909439c87",
+    "genericCorrectionSha256": "fd942c3d15df5559099460eb2277fb5f241d4fa9c5f5c932a4146c5b438f0519",
+    "baselineClockOutsideEmptyDataRoot": true,
+    "baselineClockSha256": "95dfa1231fbd56e6b35e7f57e43ccfb564bd99ef59ce4bbd6270527be5a1ab60",
+    "baselineClockReadableByUid1000": true,
+    "sharedCoreMemoryClockGenerations": [
+      0,
+      0
+    ],
+    "durableAbsoluteDeadlineBeforeLaunchOrInput": true,
+    "deadlineReceiptsAllocatedOnlyOnSeparateBoundGO": true
+  },
+  "ddlPreparationCorrection": {
+    "path": "eva2/src/eva/operations/install_schema.py",
+    "sha256": "bf87e945e36e8e627d29fd9db414e69670779a1e355858591f36129db916f41c",
+    "originalSqlAndGuardsUnchanged": true,
+    "executionOptions": {
+      "no_parameters": true
+    },
+    "existingChecksPassed": 7,
+    "independentReviewerGO": true,
+    "participantImageSourceInputScorerConditionsChanged": false,
+    "retainedDatabaseAndPreparedScopeReused": true
+  },
+  "preinputChecks": {
+    "originalFinalDatasetBindingPassed": true,
+    "caseIsFreshCommittedSuccessor": true,
+    "selectedCM01ClosedAndNotReplayed": true,
+    "actualCoreMemoryHealthAndClockReady": true,
+    "freshNativeCoreOperationalEvents": 0,
+    "freshNativeMemoryTableCounts": {
+      "banks": 0,
+      "documents": 0,
+      "memory_units": 0,
+      "async_operations": 0
+    },
+    "backgroundRetentionEnabled": true,
+    "delegatedAndProcedureDisabled": true,
+    "originalActionDispatchDenyUnchanged": true,
+    "noRealHomeCredentialKeys": true,
+    "modelsBoundBeforeInput": true,
+    "leaseActualUid1000ReadableAndCurrent": true,
+    "runtimeRoleProof": {
+      "eva_runtime": true,
+      "eva_dbos": true
+    },
+    "providerAttemptsBeforeInput": 0,
+    "participantInputsSent": 0,
+    "baselineNoInputProofReused": true,
+    "noExtraPreflightModelCall": true
+  },
+  "resourceHandles": {
+    "terminalSession": 62472,
+    "databaseContainer": "eva2-p2succ-cm02-db-0734716d",
+    "memoryContainer": "eva2-p2succ-cm02-memory-0734716d",
+    "coreContainer": "eva2-p2succ-cm02-core-0734716d",
+    "allCurrentlyRunning": true,
+    "evaluatorPrivateRoot": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm02-20261006-0734716d",
+    "runtimeRoot": "/tmp/eva2-ev003-provider-history-successor-cm02-20261006-0734716d"
+  },
+  "noReplay": {
+    "historicalCM01ResultPreserved": true,
+    "closedPayloadRepeated": false,
+    "originalScenarioMethodAndConditionsUnchanged": true,
+    "currentCaseUnusedInCommittedSuccessorSet": true,
+    "noSupplementRelabelledAsOriginalCoverage": true
+  },
+  "scoring": {
+    "originalScorerRequired": true,
+    "twoActualIndependentBlindedSemanticAndHumanRatersRequired": true,
+    "actualRecordedRaters": 0,
+    "missingJudgmentsStayUnknown": true,
+    "literalOrTransportEvidenceCannotPassQuality": true
+  },
+  "retention": "Evaluator-owned protected artifacts retained through comparison and actual owner review; controlled rater read only; cleanup after owner-reviewed closure.",
+  "estimates": {
+    "plannedProviderCalls": "Only original registered per-sample envelope; not a cost prediction",
+    "creditCost": null
+  },
+  "executionRelease": {
+    "allowed": true,
+    "requiresSeparateBoundTechnicalAdmissionGO": true,
+    "independentTechnicalAdmissionGOReceived": true,
+    "coordinatorExplicitExecutionGOReceived": true,
+    "scope": "only EV003-CM-02/epoch1 Eva1 then Eva2 on existing62472/0734716d; no matrix/replay",
+    "reviewedAdmissionSha256": "7675b7a83e37a6affdd9803b9d48cb757d52f924e8ebb7aae5b2ef62e6eeba9e",
+    "resourceBindingSha256": "55858f09465cb032f6e84481c048ce5cc274a1cf38813e394cfebe5de2ff9ad2",
+    "preReleaseReadOnlyCounts": {
+      "core": 0,
+      "memory": 0
+    },
+    "participantInputsSentAtRelease": false,
+    "matrixReleased": false
+  },
+  "independentTechnicalReview": {
+    "status": "GO",
+    "reviewer": "/root/p2_eva1_lease_review_20261006",
+    "scope": "this CM02/epoch1 pair only; technical binding; no private stimuli/oracle/replies",
+    "reviewedAdmissionSha256": "7675b7a83e37a6affdd9803b9d48cb757d52f924e8ebb7aae5b2ef62e6eeba9e",
+    "noNewQualityClaim": true
+  },
+  "reviewedAdmissionSha256": "7675b7a83e37a6affdd9803b9d48cb757d52f924e8ebb7aae5b2ef62e6eeba9e",
+  "executionClosure": {
+    "status": "terminal_one_pair_closed",
+    "releasedAdmissionSha256": "30de456b930544bd608b6622a7a8f407d550ae5adec4b9aaeae7cf716937638f",
+    "reviewedAdmissionSha256": "7675b7a83e37a6affdd9803b9d48cb757d52f924e8ebb7aae5b2ef62e6eeba9e",
+    "execSession": 62472,
+    "execExitCode": 0,
+    "participantOrderObserved": [
+      "eva1-bottie",
+      "eva2"
+    ],
+    "nativeTurnsEach": 3,
+    "accountingCompleteBoth": true,
+    "allNativeSampleProcessesTerminal": true,
+    "allThreeContainersStopped": true,
+    "containerExitCodes": [
+      0,
+      0,
+      0
+    ],
+    "postclosureReadbackOnly": true,
+    "postclosureNewProviderCalls": 0,
+    "postclosureNewSampleCalls": 0,
+    "postclosureScorerInvocations": 0,
+    "closedCaseReplay": false,
+    "additionalCaseReleased": false,
+    "resultPath": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json",
+    "semanticHumanRaterCount": 0,
+    "requiredSemanticHumanRaterCount": 2,
+    "qualityStatus": "UNKNOWN"
+  }
+}

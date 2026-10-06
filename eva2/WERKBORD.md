@@ -1,3 +1,17 @@
+## 6 oktober — P2.1 proefpaar afgerond; inhoudelijke beoordeling apart
+
+De vorige goalturn leverde daadwerkelijke voortgang: dashboardclientcrash hersteld en gerenderd; twee bewezen evaluatorfouten gecorrigeerd, gereviewd en gepubliceerd op c8eb179d. Gesloten CM01 blijft onbekend; geen herhaling of herscore.
+
+CM02/epoch1 is eenmaal daadwerkelijk uitgevoerd: beide Eva’s drie beurten teruggelezen, volledige modelaccounting en bevestigde stop; Eva2 ook drie geheugenverwerkingen. De oorspronkelijke volgorde, deadlines, modellen, providerroute, criteria en grenzen bleven gelijk. Onafhankelijke technische eindreview GO. [Meetrapport](evidence/product/p2-original-next-cm02-result-20261006.json). Geen extra proef, spraakbouw of nieuwe productafronding; P2.1 blijft open en 34/44 blijft gelijk.
+
+Eva1: 7 modelpogingen, 44.420 invoer/2.317 uitvoer, 51,672s totale observatie. Eva2: 9 pogingen inclusief 6 geheugenhelpers, 25.903 invoer/1.192 uitvoer, 79,839s inclusief geheugen. Eerste inhoud per beurt: Eva1 21,446/21,593/7,365s; Eva2 6,134/21,249/4,182s. Minder tokens is hier gemeten, goedkoper of slimmer niet; creditkosten onbekend. De oorspronkelijke genormaliseerde geheugenvariant gebruikt Astra/medium, niet het geïnstalleerde Luna/low-profiel.
+
+Antwoordkwaliteit bepaalt het voordeel. Eva1 is geen juistheidsnorm. Beide oorspronkelijke onafhankelijke controles slagen bij beide Eva’s: gedateerde geheugenstatus/laatste native opgehaalde context en native trace. Dit bewijst geen exacte verzonden promptbytes of beter antwoord. De drie semantische antwoordvoorwaarden blijven UNKNOWN: nul van de twee vereiste echte onafhankelijke blinde beoordelingen. De aanvullende readback gebruikte alleen bewaarde gegevens; nul nieuwe model-/proefaanvragen en geen herscoring.
+
+Proefhandle 62472 / ev003-successor-native-cm02-20261006-0734716d is terminal exit0; alle containers, workers en modeltunnel gesloten. Beoordeelde admission 7675b7a8 en vrijgegeven admission 30de456b blijven onveranderde provenance; afsluitmetadata geeft admission 4e252f0c. Eén fout in vier sample-ID-bindingen van de aanvullende beoordeling gericht gecorrigeerd. Gebundelde onafhankelijke GO; definitieve resultreceipt 1a053eba. Ruwe UNKNOWN-scores, verbruik, bronbindingen en criteria behouden.
+
+Dashboard toont dit resultaat met afzonderlijke kwaliteit, uitvoering, tijd en verbruik. Overzicht en Concurrenten & keuzes zijn in Chromium geopend zonder pageerrors; live API toont de nieuwe cijfers. Geen nieuwe kerninstallatie nodig voor deze gegevensupdate. Volgende bestaande technische opdracht: R1.1 voorbereiden op de gecorrigeerde providerroute, binnen oorspronkelijke vergelijking/leerbudget; geen automatische replay of AIDE²-winstclaim. Volledige P2-dekking, twee menselijke antwoordbeoordelingen en gezinsacceptatie blijven open.
+
 ## 6 oktober — Dashboardclientfout hersteld
 
 Open http://127.0.0.1:44712/ en vernieuw de pagina. De gemelde JavaScript-crash kwam van de ontbrekende stappenlijst onder ‘Van jou nodig’. De brongegevens bevatten nu een lege lijst; de pagina kan ook ontbrekende stappen verwerken en toont alleen instructies als er iets te doen is. Het nieuwe projectbundle wordt door de bestaande dashboarddienst geserveerd.

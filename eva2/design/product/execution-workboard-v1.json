@@ -3977,21 +3977,22 @@
           }
         ],
         "now": {
-          "title": "Dashboard werkt weer; P2.1-vervolg nog niet gestart",
-          "state": "prepared",
+          "title": "P2.1 · Proef en geheugencontrole afgerond; antwoordkwaliteit open",
+          "state": "in_progress",
           "owner": "Codex",
-          "detail": "De dashboardcrash is opgelost en daadwerkelijk in Chromium gecontroleerd; broncode, werkbord en resultaat zijn bijgewerkt. De twee P2.1-proefcorrecties zijn gereviewd. Gestopte uitslagen en 2952 tokens blijven bewaard. Volgende vergelijking nog niet gestart; geen nieuwe modelrun of winnaar.",
+          "detail": "Geheugen opgeslagen en later opgehaald: beide slagen. Welke Eva inhoudelijk beter antwoordt, is nog niet vastgesteld. Eva1 46.737 tokens / 51,672s; Eva2 27.095 tokens / 79,839s inclusief geheugen. Twee echte semantische beoordelingen ontbreken; geen winnaar.",
           "remaining": "Vergelijking nog niet afgerond; 34/44 blijft gelijk. Geen herhaling/herscore van de gestopte poging. Originele criteria en menselijke beoordelingen blijven behouden.",
-          "source": "eva2/evidence/product/p2-original-next-cm-result-20261006.json",
+          "source": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "reviewedAt": "2026-10-06T17:04:03Z"
+          "reviewedAt": "2026-10-06T17:41:34.682732+00:00"
         },
         "next": {
-          "title": "Eén nieuw eindgeval uitvoeren",
+          "title": "R1.1 · Bestaande innovatieproef voorbereiden",
           "state": "planned",
           "owner": "Codex",
-          "detail": "Na correctie en review van de daadwerkelijke opstart één nog ongebruikt geval uit de reeds toegestane eindset uitvoeren. De gesloten poging blijft onbekend; geen vervangende demonstratie of automatische volledige matrix.",
-          "remaining": "Vergelijkingsdekking en menselijke beoordelingen blijven zichtbaar."
+          "detail": "Oorspronkelijke begrensde vergelijking en leerverbruik op de aantoonbaar gecorrigeerde providerroute voorbereiden. Historische onbekende R1-uitkomst bewaren; geen automatische replay of AIDE²-winstclaim.",
+          "remaining": "Vergelijkingsdekking en menselijke beoordelingen blijven zichtbaar.",
+          "source": "eva2/evidence/product/provider-assistant-continuation-20261006.json"
         },
         "ownerAction": {
           "title": "Geen extra handeling voor P2.1",
@@ -4002,7 +4003,7 @@
           "taskId": "P2.1"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-06T17:04:03Z"
+        "reviewedAt": "2026-10-06T17:41:34.682732+00:00"
       },
       "reviewedAt": "2026-10-06T09:49:07.102699+00:00",
       "checkedAt": "2026-10-06T09:49:07.102699+00:00",
@@ -6414,10 +6415,10 @@
         "codexDevelopmentCredits": null,
         "followup": {
           "contract": "EvaPublishedComparisonFollowup/v1",
-          "publishedAt": "2026-10-06T09:43:27.482877+00:00",
-          "status": "selected_round_closed_unknown_no_valid_quality_pair",
-          "headline": "Nieuwe vergelijking: geen geldig kwaliteitspaar; beide uitslagen onbekend.",
-          "scope": "Eén nieuw afgeschermd contact-/geheugengeval, één uitvoering per systeem, epoch 1. Geen herhaling of volledige matrix.",
+          "publishedAt": "2026-10-06T17:41:34.682732+00:00",
+          "status": "native_pair_complete_original_readbacks_pass_quality_unknown",
+          "headline": "Geheugen opgeslagen en later opgehaald: beide slagen. Welke Eva inhoudelijk beter antwoordt, is nog niet vastgesteld.",
+          "scope": "CM02/epoch1 uit de bestaande vastgelegde eindset, één uitvoering per systeem. De oorspronkelijke inhoudelijke voorwaarden zijn leidend; Eva1 is geen juistheidsnorm.",
           "generalSuperiorityProven": false,
           "validQualityComparisonPairs": 0,
           "rows": [
@@ -6425,60 +6426,56 @@
               "name": "Eva1",
               "quality": {
                 "state": "unknown",
-                "label": "Onbekend"
+                "label": "Nog niet vastgesteld"
               },
               "nativeReplies": "3/3 teruggelezen",
-              "execution": "Native route meldde voltooiing; inhoudelijk succes niet beoordeeld.",
-              "transportMs": [
-                431.504,
-                385.919,
-                553.005
-              ],
-              "providerAttemptsRegistered": 0,
-              "observedToolDispatches": 0,
-              "completeInputTokens": null,
-              "completeOutputTokens": null
+              "execution": "Oorspronkelijke geheugenopslag-/opvraagcontrole en native trace geslaagd. Antwoordcorrectheid nog niet beoordeeld.",
+              "transportMs": [],
+              "providerAttemptsRegistered": 7,
+              "observedToolDispatches": 7,
+              "completeInputTokens": 44420,
+              "completeOutputTokens": 2317
             },
             {
               "name": "Eva2",
               "quality": {
                 "state": "unknown",
-                "label": "Onbekend"
+                "label": "Nog niet vastgesteld"
               },
-              "nativeReplies": "0/1 teruggelezen",
-              "execution": "Geen bevestigd antwoord; meetprocessor meldde ValueError. Exacte foutbron onbekend.",
-              "transportMs": [
-                25.474
-              ],
-              "providerAttemptsRegistered": 0,
+              "nativeReplies": "3/3 teruggelezen",
+              "execution": "Oorspronkelijke geheugenopslag-/opvraagcontrole en native trace geslaagd. Antwoordcorrectheid nog niet beoordeeld.",
+              "transportMs": [],
+              "providerAttemptsRegistered": 9,
               "observedToolDispatches": 0,
-              "completeInputTokens": null,
-              "completeOutputTokens": null
+              "completeInputTokens": 25903,
+              "completeOutputTokens": 1192
             }
           ],
-          "usage": "0 modelpogingen en 0 upstreamaanroepen geregistreerd binnen de gebruikte meetpunten. Volledig SDK-tokenverbruik en creditkosten onbekend; dit bewijst geen nulverbruik.",
-          "timingNote": "De tijden meten transport en teruglezen of een fout. Ze meten geen eerste modeltoken, gesproken antwoord of bewezen snelheid van Eva.",
+          "usage": "Eva1: 7 modelpogingen, 46.737 tokens totaal. Eva2: 9 modelpogingen, 27.095 tokens totaal, inclusief 6 geheugenhelpers. Creditkosten en Codex-ontwikkelverbruik onbekend; tokens en aantallen alleen bewijzen geen kwaliteits- of kostenvoordeel.",
+          "timingNote": "Eerste inhoud per beurt: Eva1 21,446 / 21,593 / 7,365 s; Eva2 6,134 / 21,249 / 4,182 s. Totale native observatie inclusief geheugen: Eva1 51,672 s; Eva2 79,839 s. Dit zijn verschillende meetgrenzen, één geval en geen algemene snelheidsscore. Geen afzonderlijke transportmeting gepubliceerd.",
           "configurationNotes": [
-            "Eva1: bestaande vergelijkingsvariant met hetzelfde snelle model; geen meting van de ongewijzigde Eva1-installatie.",
-            "Eva2: dezelfde vastgelegde kernbron, maar geïsoleerde configuratie: geheugenhulpmiddel Astra/medium, achtergrondwerk en optionele opgeslagen procedures uit. De geïnstalleerde geheugenroute gebruikt Luna/low.",
-            "Zelfstandig werk, procedureleren, fysieke persoonsherkenning en de andere concurrenten zijn in deze ronde niet beoordeeld."
+            "Contact gpt-6-sol/none; onderzoeks-/geheugenhelpers gpt-6-astra/medium op dezelfde providerroute.",
+            "Eva2 gebruikt de oorspronkelijke genormaliseerde vergelijkingsvariant voor geheugen (Astra/medium); de geïnstalleerde geheugenroute gebruikt Luna/low. Geen prestatieclaim over dat geïnstalleerde profiel.",
+            "Beide oorspronkelijke onafhankelijke controles slagen: gedateerde geheugenstatus/laatste native opgehaalde context en native trace. Dit bewijst geen exacte verzonden promptbytes, antwoordcorrectheid of kwaliteitswinnaar.",
+            "De twee vereiste echte onafhankelijke semantische/menselijke beoordelingen ontbreken. Geen AI-review als vervanging, geen winnaar of algemene voorsprong.",
+            "Zelfstandig combinatie-/programmeerwerk en de andere concurrenten zijn door dit ene contact-/geheugengeval niet afgerond."
           ],
-          "humanHelpNote": "Tijdens het geval is geen hulp gegeven. Benodigde hulp voor een geslaagde opdracht en de menselijke kwaliteitsbeoordeling blijven onbekend.",
-          "remaining": "Volledige P2.1 en R1.1 blijven open. Eerdere geheugenvoordelen, verliezen, acceptaties en 34/44 oorspronkelijke kleine taken blijven behouden.",
-          "nextAction": "Codex moet eerst de exacte native invoer-/antwoordroute en de herkomst van de meetfout aantonen met openbare diagnostiek. Geen nieuwe modelproef zolang een geldige vergelijking niet vaststaat.",
+          "humanHelpNote": "Tijdens de proef geen ongeplande evaluatorinterventie of gebruikershulp. Benodigde hulp voor een inhoudelijk geslaagde opdracht blijft onbekend.",
+          "remaining": "P2.1 blijft open: oorspronkelijke volledige dekking en kwaliteitsbeoordelingen ontbreken. R1/AIDE² en gezinsacceptatie blijven afzonderlijk open; 34/44 oorspronkelijke kleine taken blijft gelijk.",
+          "nextAction": "Geen herhaling van dit geval. De oorspronkelijke overige dekking en twee onafhankelijke antwoordbeoordelingen blijven open; de volgende bestaande technische opdracht is R1.1 op de gecorrigeerde providerroute voorbereiden.",
           "ownerActionRequired": false,
-          "resources": "Eigen proefprocessen gestopt; bewijs en gegevens bewaard. De bestaande installatie is niet gewijzigd door deze proef.",
+          "resources": "Proefpaar en aanvullende read-only beoordeling afgesloten. Alle drie containers, native processen, workers en modeltunnel gestopt; geen nieuwe model-/proefaanvragen tijdens de inhoudelijke readback. Bewijs en oude ruwe uitslagen behouden.",
           "evidenceBindings": [
             {
-              "path": "eva2/evidence/product/p2-provider-history-independent-result-20261006.json",
-              "sha256": "fa5b77de9837dcf8f42d5ffd49ffa67ae0c5ca3433660ae4656794f54ae1c871"
+              "path": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json",
+              "sha256": "1a053eba446056bf5f024fc8dcd9d9a6f2cfa28b471083dab4002227ddbfc144"
             },
             {
-              "path": "eva2/evidence/product/p2-published-results-20261006.json",
-              "sha256": "7d4164584fc0cc9ebcfd8644f2d5939b3414d65770572e90aa725c1800b2bbad"
+              "path": "eva2/evidence/product/p2-original-next-cm02-admission-20261006.json",
+              "sha256": "4e252f0cc692443b035c478f3659ac51cd32ebcd67c2f8e8205418c14cd62d8d"
             }
           ],
-          "automaticReviewNote": "De automatische goedkeuringscontrole wees het tonen van beschermde beoordelaarsbron en ruwe resultaatdetails af. Alleen inhoudsvrije, toegestane status en metingen zijn gepubliceerd."
+          "automaticReviewNote": "Gebundelde onafhankelijke GO voor native rapport én oorspronkelijke inhoudsvrije readbackbeoordeling. Eén metadatafout in vier sample-ID-bindingen gericht gecorrigeerd; geen nieuwe uitvoering, herscoring of gewijzigde criteria."
         }
       },
       "housemateSummary": {
@@ -19355,7 +19352,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Twee bewezen evaluatorfouten corrigeren en exacte definitieve opstart zonder invoer controleren/reviewen. Daarna één nog ongebruikt geval uit de toegestane eindset; geen replay, herscore of automatische volledige matrix.",
+              "nextAction": "Dit CM02-paar is afgesloten. Bewaar beide geslaagde oorspronkelijke readbacks, drie onbekende semantische voorwaarden en volledige gebruiks-/tijdmeting. Oorspronkelijke overige dekking en twee echte onafhankelijke blinde antwoordbeoordelingen blijven open; geen replay.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -19363,63 +19360,74 @@
                 "expected": "Geen extra eigenaarhandeling voor deze proef; technische toegang en uitvoering zijn toegestaan.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-06T16:15:03.110550+00:00",
+              "checkedAt": "2026-10-06T17:41:34.682732+00:00",
               "assignment": {
-                "baseCommit": "ff4c30cc4a5c24680e03897265a710dd931f9b83",
+                "baseCommit": "c8eb179d62f9ff892395d896468c9ab0c2b4eba2",
                 "owner": "/root",
                 "activeWorkers": [],
                 "files": [
                   "/root: existing workboard/WERKBORD and integration only.",
-                  "/root/p2_eva1_accounting_diagnosis_20261006: p2-original-next-cm-admission-20261006.json, p2-original-next-cm-result-20261006.json and private evaluator artifacts only."
+                  "/root/p2_eva1_accounting_diagnosis_20261006: p2-original-next-cm02-admission-20261006.json, p2-original-next-cm02-result-20261006.json and private evaluator artifacts only."
                 ],
                 "existing": "CM01–CM12 epoch1 voor Eva1/Eva2 zijn eenmaal uitgevoerd en onafhankelijk beoordeeld waar het bewijs dat toelaat. Verliezen en onbekende uitkomsten blijven behouden; dit voltooit niet de overige deelnemers/epochs/families.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Eén oorspronkelijk Eva1/Eva2-paar binnen vaste CM-per-samplegrenzen; volledige accounting. Geen automatische brede matrix. Creditkosten onbekend.",
-        "currentAction": "Correcties, dashboardclientherstel en gestopt resultaat zijn onafhankelijk GO en vastgelegd. Vervolgtoelating nog niet gestart; geen nieuwe sample vrijgegeven, replay of herscore. Beide eerdere productuitslagen UNKNOWN.",
+                "currentAction": "CM02/epoch1 afgesloten, volledig geschoond gepubliceerd na gebundelde GO. Beide oorspronkelijke readbacks True; drie semantische voorwaarden UNKNOWN bij0/2 menselijke beoordelaars. Geen kwaliteitswinnaar, herscore, replay of nieuw productresultaat.",
                 "previousGoalTurn": {
                   "classification": "progress",
-          "evidence": "d00debd9: dashboard via IPv4 gecontroleerd en bestaande dienst via verborgen Windows-opstartkoppeling aangesloten; GitHub en werkbord bijgewerkt. Geen productafronding; Windows IPv6 blijft open."
+                  "evidence": "Eén onafhankelijk toegelaten ongebruikt CM02-paar werkelijk uitgevoerd en afgesloten; volledige accounting incl6helpers, oorspronkelijke readbacks geslaagd bijbeide, eindrapport GO en dashboard actueel. Kwaliteit UNKNOWN en34/44 behouden; geen nieuwe Eva-functie."
                 },
-        "stage": "successor_correction_reviewed_next_admission_not_started",
-        "evaluatorCorrection": {
-          "source": "eva2/evidence/product/p2-original-next-cm-result-20261006.json",
-          "reviewer": "/root/p2_eva1_lease_review_20261006",
-          "review": "GO voor resultaatpublicatie, canonical éénvlagcorrectie en generieke helper/no-inputpreflight; geen nieuwe sampletoelating.",
-          "checks": "Canonieke driver AST/instellingen bevestigd; daadwerkelijke baseline-opstart/stop met definitieve parameters en nul invoer/modelcalls geslaagd.",
-          "unconfirmedChecks": "Twee bestaande lifecycle-tests niet gecollecteerd: httpx2 ontbreekt in administrator-testomgeving; geen dependencyinstallatie.",
-          "coreImageChanged": false,
-          "nativeRunActive": false,
-          "closedCaseReplayAllowed": false
-        },
-        "baselineStartupIssue": {
-          "cause": "Klokbestand foutief binnen de door bestaande worker vereiste lege private dataRoot geplaatst.",
-          "participantInputs": 0,
-          "providerAttempts": 0,
-          "baselineDeadlineRetained": false,
-          "review": "Onafhankelijke NO_GO hervatten: deadline ontbreekt en oorspronkelijke volgorde zou wijzigen.",
-          "classification": "evaluator_preparation_failure_not_eva1_loss"
-        },
-        "nativePreparationHandle": {
-          "sessionId": 25354,
-          "runHandle": "ev003-successor-native-cm-20261006-d171470a",
-          "verifiedResources": "Terminal: database, geheugenservice en kern gestopt met exit0; behouden readback verklaart uitgeschakelde geheugenwerker.",
-          "participantInputsReleased": true
-        },
-        "preparationIssue": {
-          "failureClass": "ProgrammingError",
-          "cause": "Psycopg interpreteert lege parameters bij SQL-procentliterals vóór serversend.",
-          "correction": "Bestaande exacte DDL uitvoeren met no_parameters=True; geen SQL/guards/schemawijziging.",
-          "focusedChecks": "7 bestaande operationchecks geslaagd",
-          "review": "Onafhankelijke GO door /root/p2_eva1_lease_review_20261006; SQL/guard/rollen/transactie ongewijzigd.",
-          "actualTransition": "De eerder falende helper is op dezelfde behouden lege proefdatabase geslaagd.",
-          "dependencyPreflight": "Alle bestaande scope-initializerimports geslaagd via /usr/bin/python3.12 en administrator-site-packages; geen installatie/DB/modelaanroep.",
-          "schemaPrepared": true,
-          "originalBudgetUnchanged": true,
-          "nativeSampleStarted": false,
-          "newProviderCalls": 0,
-          "retainedPreparation": true
-        },
+                "stage": "successor_cm02_closed_original_readbacks_pass_quality_unknown",
+                "currentNativePreparation": {
+                  "runHandle": "ev003-successor-native-cm02-20261006-0734716d",
+                  "sessionId": 62472,
+                  "actualTransition": "Terminal62472/exit0; beide drie beurten, volledige accounting, readbacks en stop. Aanvullende read-only predicatebeoordeling GO; alle containers/processen uit.",
+                  "participantInputReleased": true,
+                  "budgetChanged": false,
+                  "preparationProviderCalls": 0,
+                  "registeredSampleProviderAttempts": 16,
+                  "nativeExecutionActive": false,
+                  "noActiveProcesses": true
+                },
+                "evaluatorCorrection": {
+                  "source": "eva2/evidence/product/p2-original-next-cm-result-20261006.json",
+                  "reviewer": "/root/p2_eva1_lease_review_20261006",
+                  "review": "GO voor resultaatpublicatie, canonical éénvlagcorrectie en generieke helper/no-inputpreflight; geen nieuwe sampletoelating.",
+                  "checks": "Canonieke driver AST/instellingen bevestigd; daadwerkelijke baseline-opstart/stop met definitieve parameters en nul invoer/modelcalls geslaagd.",
+                  "unconfirmedChecks": "Twee bestaande lifecycle-tests niet gecollecteerd: httpx2 ontbreekt in administrator-testomgeving; geen dependencyinstallatie.",
+                  "coreImageChanged": false,
+                  "nativeRunActive": false,
+                  "closedCaseReplayAllowed": false
+                },
+                "baselineStartupIssue": {
+                  "cause": "Klokbestand foutief binnen de door bestaande worker vereiste lege private dataRoot geplaatst.",
+                  "participantInputs": 0,
+                  "providerAttempts": 0,
+                  "baselineDeadlineRetained": false,
+                  "review": "Onafhankelijke NO_GO hervatten: deadline ontbreekt en oorspronkelijke volgorde zou wijzigen.",
+                  "classification": "evaluator_preparation_failure_not_eva1_loss"
+                },
+                "nativePreparationHandle": {
+                  "sessionId": 25354,
+                  "runHandle": "ev003-successor-native-cm-20261006-d171470a",
+                  "verifiedResources": "Terminal: database, geheugenservice en kern gestopt met exit0; behouden readback verklaart uitgeschakelde geheugenwerker.",
+                  "participantInputsReleased": true
+                },
+                "preparationIssue": {
+                  "failureClass": "ProgrammingError",
+                  "cause": "Psycopg interpreteert lege parameters bij SQL-procentliterals vóór serversend.",
+                  "correction": "Bestaande exacte DDL uitvoeren met no_parameters=True; geen SQL/guards/schemawijziging.",
+                  "focusedChecks": "7 bestaande operationchecks geslaagd",
+                  "review": "Onafhankelijke GO door /root/p2_eva1_lease_review_20261006; SQL/guard/rollen/transactie ongewijzigd.",
+                  "actualTransition": "De eerder falende helper is op dezelfde behouden lege proefdatabase geslaagd.",
+                  "dependencyPreflight": "Alle bestaande scope-initializerimports geslaagd via /usr/bin/python3.12 en administrator-site-packages; geen installatie/DB/modelaanroep.",
+                  "schemaPrepared": true,
+                  "originalBudgetUnchanged": true,
+                  "nativeSampleStarted": false,
+                  "newProviderCalls": 0,
+                  "retainedPreparation": true
+                },
                 "finding": "Nieuwe openbare native proef: HTTP500 vóór modelaanroep. Account eva_dbos kan SET LOCAL ROLE eva_runtime niet uitvoeren. Oude gesloten eindproef: exacte oorzaak blijft onbekend.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
@@ -19749,8 +19757,8 @@
                 "accessCorrection": "eva2/evidence/product/p2-eva1-access-correction-available-20261006.json",
                 "accessReview": "eva2/reviews/p2-eva1-lease-preflight-review-20261006.json"
               },
-              "remaining": "P2.1 blijft open: laatste paar ongeldig door twee bewezen evaluatorvoorbereidingsfouten; volledige oorspronkelijke dekking en menselijke beoordeling ontbreken. Geen productverlies of voordeel bewezen door deze poging.",
-              "latestEvidence": "eva2/evidence/product/p2-original-next-cm-result-20261006.json",
+              "remaining": "Eén CM02/epoch1-paar technisch en oorspronkelijk readbackmatig afgerond; volledige oorspronkelijke dekking en menselijke antwoordbeoordeling ontbreken. Geen algemene voorsprong of nieuwe productafronding.",
+              "latestEvidence": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json",
               "executionBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_after_same_command_review_with_new_provenance_evidence",
@@ -19761,7 +19769,7 @@
                 "resolvedAt": "2026-10-04T15:04:47.848198+00:00",
                 "scope": "Historical refusal before process creation; resolved through the same automatic review path after new synthetic-input provenance evidence. Counts here describe the rejected attempt only; current execution is in latestEvidence."
               },
-              "blocker": "Codex herstelt twee bewezen evaluatoraansluitingen: klok buiten lege baseline-datamap en bestaande geheugenwerker inschakelen. Geen extra eigenaarhandeling; geen productverliesclaim uit de gesloten poging.",
+              "blocker": null,
               "assessmentBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_with_authorized_independent_processing",
@@ -19817,7 +19825,7 @@
                 "productChange": false
               },
               "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-              "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
+              "admissionEvidence": "eva2/evidence/product/p2-original-next-cm02-admission-20261006.json",
               "previousExecutionIssue": {
                 "case": "EV003-CM-04",
                 "state": "observer_stop_boundary_corrected_upstream_cause_unknown",
@@ -19838,7 +19846,7 @@
                 "productChange": false,
                 "reviewEvidence": "eva2/evidence/product/p2-xd01-runtime-source-20261005.json"
               },
-              "latestPreparationIssue": "Eva2 eerste antwoord duurzaam, maar exacte geheugenregistratie niet bevestigd; daarna cleanup-readback op verouderd outputpad. Eva1 modelaccounting onvolledig. Geen winnaar bewezen.",
+              "latestPreparationIssue": "Native routes, accounting en oorspronkelijke geheugenreadbacks bevestigd. Antwoordkwaliteit UNKNOWN: nul van twee vereiste echte beoordelaars.",
               "independentFinding": {
                 "case": "EV003-XD-01",
                 "eva2Objective": false,
@@ -19854,7 +19862,7 @@
               },
               "latestPreparationEvidence": "eva2/evidence/product/p2-native-memory-wait-available-20261006.json",
               "ownerAuthorizationEvidence": "eva2/evidence/product/p2-owner-final-authorization-20261006.json",
-              "currentEvaluationEvidence": "eva2/evidence/product/p2-next-native-comparison-partial-result-20261006.json",
+              "currentEvaluationEvidence": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json",
               "nativeAdmissionBlocker": {
                 "kind": "comparison_admission_and_original_coverage",
                 "reason": "Full original equal native admission, remaining coverage and two human ratings not established. Source review finished; private metadata omission/root404 is not a demonstrated product bug.",
@@ -19868,10 +19876,11 @@
               "blockerDetails": {
                 "type": "original_comparison_incomplete",
                 "owner": "Codex",
-                "reason": "Vergelijking technisch onvolledig: ontbrekende bevestigde geheugenregistratie en onvolledige Eva1-modelaccounting. Codex lokaliseert de overgang; geen extra eigenaarhandeling.",
-                "evidence": "eva2/evidence/product/p2-next-native-comparison-partial-result-20261006.json"
+                "reason": "Dit paar heeft volledige native uitvoering/accounting en geslaagde oorspronkelijke readbacks. Overige oorspronkelijke dekking en twee echte onafhankelijke semantische beoordelingen blijven open.",
+                "evidence": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json"
               },
-              "activeExecution": false
+              "activeExecution": false,
+              "currentReadbackAssessmentEvidence": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json"
             },
             {
               "id": "P2.2",
