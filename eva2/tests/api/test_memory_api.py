@@ -1138,10 +1138,28 @@ def test_reused_conversation_message_identity_is_reported_as_conflict() -> None:
     assert response.json()["detail"] == "conversation replay differs"
 
 
-def test_unavailable_conversation_model_is_not_exposed_as_http_500() -> None:
+@pytest.mark.parametrize("status,code,expected_status,expected_code", [
+    (400, "unsupported_parameter", 400, "unsupported_parameter"),
+    (429, "rate_limit_exceeded", 429, "rate_limit_exceeded"),
+    ("private-status", "secret-provider-code", None, "other"),
+    (True, {"private": "code"}, None, None),
+])
+def test_unavailable_conversation_model_is_not_exposed_as_http_500(
+    caplog, status, code, expected_status, expected_code,
+) -> None:
+    class BadRequestError(RuntimeError):
+        status_code = status
+
+    upstream = BadRequestError("secret provider detail")
+    upstream.code = code
+
     class UnavailableRuntime(_Runtime):
         def respond(self, turn, recent_messages=()):  # type: ignore[no-untyped-def]
-            raise RuntimeError("secret provider detail")
+            # The native SDK error is wrapped before the ordinary HTTP boundary.
+            wrapper = RuntimeError("secret provider detail")
+            wrapper.status_code = 503
+            wrapper.code = "secret-wrapper-code"
+            raise wrapper from upstream
 
     client = TestClient(create_app(UnavailableRuntime()))
     response = client.post(
@@ -1167,6 +1185,42 @@ def test_unavailable_conversation_model_is_not_exposed_as_http_500() -> None:
         "Eva's conversation model is tijdelijk unavailable"
     )
     assert "secret provider detail" not in response.text
+    records = [r.getMessage() for r in caplog.records if "conversation_http_failure" in r.getMessage()]
+    assert len(records) == 1
+    diagnostic = json.loads(records[0])
+    assert diagnostic["upstream_http_status"] == expected_status
+    assert diagnostic["upstream_error_code"] == expected_code
+    assert diagnostic["upstream_exception_class"] == "BadRequestError"
+    assert diagnostic["eva_frames"]
+    assert all(secret not in records[0] for secret in (
+        "secret provider detail", "secret-provider-code", "secret-wrapper-code", "private-status", "Ben je daar?",
+        "telegram:model-unavailable", PRINCIPAL,
+    ))
+
+
+def test_ordinary_failure_response_survives_broken_diagnostic_sink(monkeypatch) -> None:
+    from eva.adapters.api import app as api
+
+    def fail(*args, **kwargs):
+        raise OSError("private logging failure")
+
+    monkeypatch.setattr(api, "record_conversation_failure", fail)
+
+    class UnavailableRuntime(_Runtime):
+        def respond(self, turn, recent_messages=()):
+            raise RuntimeError("private provider failure")
+
+    client = TestClient(create_app(UnavailableRuntime()))
+    response = client.post("/internal/v1/turns/respond", json={
+        "audience": {"audience_id": f"person:{PRINCIPAL}", "kind": "private_person",
+                     "principal_id": PRINCIPAL},
+        "conversation_id": "private-conversation", "installation_id": INSTALLATION,
+        "message_id": "private-message", "occurred_at": NOW, "principal_id": PRINCIPAL,
+        "tenant_id": TENANT, "text": "private-text",
+    })
+    assert response.status_code == 503
+    assert response.json() == {"detail": "Eva's conversation model is tijdelijk unavailable"}
+    assert "private" not in response.text
 
 
 def test_durable_goal_api_admits_reads_and_cancels_distinctly() -> None:

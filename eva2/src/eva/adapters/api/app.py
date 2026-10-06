@@ -19,6 +19,7 @@ from eva.adapters.api.dashboard_conversation import (
     conversation_stream_response,
     dashboard_stream_response,
     grounded_reply_wire,
+    record_conversation_failure,
 )
 from eva.adapters.api.dashboard_initiatives import install_dashboard_initiatives
 from eva.adapters.api.dashboard_work import install_dashboard_work
@@ -1190,6 +1191,10 @@ def create_app(
         except ValueError as error:
             raise HTTPException(status_code=422, detail=str(error)) from error
         except RuntimeError as error:
+            try:
+                record_conversation_failure(error, turn, "respond", transport="http")
+            except Exception:
+                pass  # A diagnostic sink must not change the existing failure response.
             raise HTTPException(
                 status_code=503,
                 detail="Eva's conversation model is tijdelijk unavailable",

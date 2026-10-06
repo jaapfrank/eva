@@ -1,3 +1,11 @@
+## 6 oktober — foutregistratie geïnstalleerd; echte concurrentlogin nodig
+
+De gewone HTTP-gespreksroute gebruikt nu de bestaande veilige diagnose: SDK-class/code/status van één causale SDK-fout, hashes en relatieve Eva-bronlocaties, zonder gesprekstekst, foutbody of geheimen. Een concrete reviewbevinding over maskerende wrappervelden is gecorrigeerd. Acht gerichte controles en de daadwerkelijke kandidaatimage met echte SDK-exceptie/no-network slagen. Tweebestands-overlay op de bestaande installatie is geïnstalleerd; bronhashes matchen, kern gezond en HTTP200. [Technisch verslag](evidence/product/p2-http-failure-diagnostics-20261006.json) en [onafhankelijke GO](reviews/p2-http-failure-diagnostics-review-20261006.json).
+
+Dit reconstrueert geen oorspronkelijke CM04-oorzaak of SDKusage, heft geen oorspronkelijke guard op en bewijst geen betere Eva. Geen nieuwe proef, voicewerk of productafronding;34/44 blijft gelijk. De vorige goalturn was concrete voortgang: Agent Zero-token native vernieuwd en live catalogus gelezen. Deze goalturn leverde de gerichte geïnstalleerde diagnosecorrectie.
+
+OpenClaw en Hermes zijn nu beide terminal/exit1 zonder voltooide login; de verse codes zijn verlopen. Geen automatische herstart van deviceflows. **Jaap:** meld wanneer je klaar bent om aan te melden; dan zet Codex verse codes klaar. Agent Zero is aangemeld; gewone modeluitvoering en vergelijking nog niet bevestigd. Bestaande modellen/provider, eerdere uitslagen, acceptaties en de twee echte CM02-beoordelingen blijven behouden. [Toegangsregistratie](evidence/product/p2-competitor-access-restoration-20261006.json).
+
 ## 6 oktober — bestaande concurrenttoegang herstellen
 
 P2.1 volgt nu Jaaps concrete verzoek: de eigen aanmelding en gewone uitvoerroute van OpenClaw, Hermes en Agent Zero herstellen/controleren. Agent Zero heeft zijn eigen toegangstoken native vernieuwd en de live catalogus gelezen; nul modelinferentie. OpenClaw en Hermes hebben geen voltooide eigen device-aanmelding; verse native aanmelding wordt voorbereid. Bestaande installaties, profielen, modelkeuzes en providerroute blijven behouden. Aanmelding is geen kwaliteitsuitslag of extra Eva-functie.

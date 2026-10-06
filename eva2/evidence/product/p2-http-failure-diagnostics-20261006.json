@@ -1,0 +1,91 @@
+{
+  "contract": "EvaConversationHTTPFailureDiagnostics/v1",
+  "task": "P2.1",
+  "checkedAt": "2026-10-06T20:14:22.532847+00:00",
+  "status": "installed_verified",
+  "existing": "Streaming responses already retained sanitized source locations. Ordinary /turns/respond returned generic HTTP503 without that diagnostic.",
+  "concreteGap": "Safe SDK class, code and HTTP status were not retained on the ordinary failure boundary; a stopped comparison could not establish the upstream cause.",
+  "change": "Reuse the existing conversation diagnostic on ordinary HTTP failure. Retain fields only from the same recognized SDK cause, finite code/category allowlists, type hash, turn hash and relative Eva source locations.",
+  "unchanged": [
+    "HTTP503 response body/status and stream terminal contracts",
+    "Model/provider route, retry policy, input data and authority",
+    "Cumulative accounting and closed CM04 UNKNOWN result",
+    "Voice configuration and accepted product tasks"
+  ],
+  "baseImage": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+  "installedImage": "sha256:0260a298de91d34efa5c220af3ea935937860cef08c8ffeb3207c4742da817b9",
+  "sourceHashes": {
+    "eva2/src/eva/adapters/api/app.py": "4b3bf1992cd4b12d0a6c983413697735bd4bc4f09728e8d1a5831aa8a05d4448",
+    "eva2/src/eva/adapters/api/dashboard_conversation.py": "60d5c1d1589121c7c21109ae5456282ab89873a959329bda6dbb322b177cca2f"
+  },
+  "installation": {
+    "startedAt": "2026-10-06T20:12:58.321511+00:00",
+    "composeUpdateExitCode": 0,
+    "automaticRollbackPerformed": false,
+    "checkedAt": "2026-10-06T20:13:26.214692+00:00",
+    "installedImage": "sha256:0260a298de91d34efa5c220af3ea935937860cef08c8ffeb3207c4742da817b9",
+    "sourceHashesMatched": true,
+    "actualSourceHashes": {
+      "adapters/api/app.py": "4b3bf1992cd4b12d0a6c983413697735bd4bc4f09728e8d1a5831aa8a05d4448",
+      "adapters/api/dashboard_conversation.py": "60d5c1d1589121c7c21109ae5456282ab89873a959329bda6dbb322b177cca2f"
+    },
+    "containerState": "running",
+    "dockerHealth": "healthy",
+    "healthHTTPStatus": 200,
+    "unmodifiedWorker": "sha256:fee8313778ab2a619d90e356a81a5c03f8789edaa9da181515923973f6814f14"
+  },
+  "focusedChecks": {
+    "selected": 8,
+    "passed": 8,
+    "deselected": 24,
+    "elapsedSeconds": 1.54,
+    "selection": [
+      "unavailable_conversation_model",
+      "ordinary_failure",
+      "owner_stream_failure",
+      "channel_neutral_turn_returns"
+    ],
+    "runner": "Existing administrator Python/test environment; no dependency installation."
+  },
+  "actualImageHTTPCheck": {
+    "httpStatus": 503,
+    "diagnostic": {
+      "event": "conversation_http_failure",
+      "stage": "respond",
+      "turn_sha256": "288fa786b2bf001a9151609cfa28a718fcce104391e7c88b910e697d849454b2",
+      "category": "unexpected",
+      "exception_type_sha256": "162ccf34ae8505deab955f33e9c2c82734fddb0b470864b7c4a0ea1d9904c69e",
+      "eva_frames": [
+        {
+          "source": "adapters/api/app.py",
+          "line": 1188
+        }
+      ],
+      "upstream_http_status": 400,
+      "upstream_error_code": "unsupported_parameter",
+      "upstream_exception_class": "BadRequestError",
+      "provider_category": null
+    },
+    "nativeSDKClass": "BadRequestError",
+    "providerInferenceRequests": 0,
+    "network": "none"
+  },
+  "reviewPath": "eva2/reviews/p2-http-failure-diagnostics-review-20261006.json",
+  "rollback": {
+    "previousImageRetained": true,
+    "previousComposeRetained": true,
+    "automaticRollbackPerformed": false
+  },
+  "controlledProviderInferenceRequests": 0,
+  "creditCost": null,
+  "developmentCreditCost": null,
+  "limits": [
+    "Does not reconstruct the missing original CM04 cause or SDK usage.",
+    "Does not remove the original unknown-usage accounting guard or admit a new sample.",
+    "Does not prove quality, general superiority or another completed product outcome.",
+    "No failure intentionally injected into the live household runtime; actual image handler checked offline with real SDK exception, then exact installed source hashes and health checked."
+  ],
+  "privateInstallationReceiptSha256": "f9d17c22abbcc05fb3a3c75eb3fd202a4762a67b0b9c89e043bc451d07d38e24",
+  "reviewSha256": "6e189b7f4e7d094820d36a178c0c6834edd5fbb464f13b7cf25e582f2e91ba1b",
+  "independentReview": "GO safe technical diagnostics and installation only"
+}

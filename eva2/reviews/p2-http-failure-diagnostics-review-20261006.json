@@ -1,0 +1,109 @@
+{
+  "contract": "EvaP2HTTPFailureDiagnosticsIndependentReview/v1",
+  "task": "P2.1",
+  "recordedAt": "2026-10-06T20:14:49.544552+00:00",
+  "reviewer": "/root/p2_eva1_lease_review_20261006",
+  "decision": "GO_bundled_code_and_installed_safe_failure_diagnostics",
+  "scope": "Existing streaming diagnostic reused at ordinary /internal/v1/turns/respond RuntimeError-to-HTTP503 boundary; three public source/test diffs and exact two-file installed overlay only",
+  "sourceHashes": {
+    "eva2/src/eva/adapters/api/app.py": "4b3bf1992cd4b12d0a6c983413697735bd4bc4f09728e8d1a5831aa8a05d4448",
+    "eva2/src/eva/adapters/api/dashboard_conversation.py": "60d5c1d1589121c7c21109ae5456282ab89873a959329bda6dbb322b177cca2f",
+    "eva2/tests/api/test_memory_api.py": "a0f56fac83ffc511ed27677720bf08dbac89d384ee02313dccc2504d6443e1ec"
+  },
+  "preparationAndInstallationEvidence": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-http-diagnostics-20261006/preparation.json",
+    "reviewedBeforeInstallationSha256": "409163d8f6f1f7b21133f212f687b7116ca6445d0ac97590299fa33a33d4cbe3",
+    "installedMetadataSha256": "f9d17c22abbcc05fb3a3c75eb3fd202a4762a67b0b9c89e043bc451d07d38e24",
+    "contentFreeMetadataOnly": true
+  },
+  "resolvedConcreteFinding": {
+    "initialFinding": "Independent outer-wrapper status/code could mask or mix with a deeper recognized SDK exception class",
+    "finalBehavior": "Class, validated status and allowlisted code are taken together from one recognized SDK/provider exception; deeper available recognized-cause metadata takes precedence; ordinary RuntimeError-wrapper status/private code is ignored",
+    "focusedRegressionIncludesMaskingWrapper": true,
+    "resolved": true
+  },
+  "privacy": {
+    "exceptionMessagesReprsLocalsProviderBodiesURLsHeadersCredentialsPromptReplyOrRawActorIdentifiersPublished": false,
+    "upstreamExceptionClass": "finite allowlist only",
+    "upstreamErrorCode": "finite allowlist; other for unrecognized string; null for non-string",
+    "upstreamHTTPStatus": "only exact int 100..599; bool and strings excluded",
+    "providerCategory": "finite allowlist only",
+    "turnCorrelation": "existing hash of identifiers only; text and principal not read for hash",
+    "exceptionType": "existing SHA256 only",
+    "sourceFrames": "existing relative own-source locations only; external absolute paths omitted",
+    "causeTraversal": "at most eight distinct exceptions; cycle bounded",
+    "stageAndTransport": "existing controlled call-site stages and fixed event names"
+  },
+  "existingBehaviorPreserved": {
+    "ordinaryHTTP503StatusAndBodyUnchanged": true,
+    "HTTPDiagnosticFailureCaught": true,
+    "existingStreamTerminalFailureSurvivesDiagnosticFailure": true,
+    "modelAndProviderRouteUnchanged": true,
+    "retriesAndAccountingUnchanged": true,
+    "closedCaseOrDatasetOrScorerOrCriteriaChanged": false,
+    "noNewAuthRouteOrLogin": true
+  },
+  "verification": {
+    "performedBy": "root",
+    "focusedTests": {
+      "passed": 8,
+      "deselected": 24,
+      "seconds": 1.54,
+      "selectors": [
+        "unavailable_conversation_model",
+        "ordinary_failure",
+        "owner_stream_failure",
+        "channel_neutral_turn_returns"
+      ],
+      "wholeSuitePassClaim": false
+    },
+    "actualCandidateImageHTTPCheck": {
+      "sameCandidateImageAsInstalled": true,
+      "actualInstalledOpenAISDKBadRequestErrorWrappedInRuntimeError": true,
+      "HTTPStatus": 503,
+      "safeDiagnosticExceptionClass": "BadRequestError",
+      "safeDiagnosticUpstreamStatus": 400,
+      "safeDiagnosticCode": "unsupported_parameter",
+      "network": "none",
+      "providerInferenceRequests": 0,
+      "provesClosedCM04Cause": false
+    },
+    "reviewerRanAdditionalTestsCallsOrProbes": false
+  },
+  "installation": {
+    "baseActualCoreImage": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+    "candidateAndInstalledImage": "sha256:0260a298de91d34efa5c220af3ea935937860cef08c8ffeb3207c4742da817b9",
+    "method": "Two-file source overlay on actual installed core; same existing compose/core service",
+    "installedSourceHashesMatchedReviewedSource": true,
+    "fullSourceDependencyOrWorkerReplacement": false,
+    "composeUpdateExitCode": 0,
+    "containerState": "running",
+    "dockerHealth": "healthy",
+    "healthHTTPStatus": 200,
+    "unmodifiedWorkerImage": "sha256:fee8313778ab2a619d90e356a81a5c03f8789edaa9da181515923973f6814f14",
+    "previousImageAndComposeRetained": true,
+    "automaticRollbackPerformed": false
+  },
+  "publicationLimits": {
+    "safeFailureMetadataAvailableOnReviewedOrdinaryHTTPAndStreamRoute": true,
+    "closedCM04RecoveredOrReplayed": false,
+    "closedCM04ExactUpstreamCause": "UNKNOWN",
+    "closedCM04SDKUsage": "UNKNOWN",
+    "existingUnresolvedAggregateAdmissionBlockBypassedOrReset": false,
+    "newOriginalCaseOrProviderInputAuthorized": false,
+    "providerInferenceRequestsForThisCorrectionVerification": 0,
+    "protectedAnswersOrOraclesReadByReviewer": false,
+    "productTaskCountIncreased": false,
+    "P2_1Complete": false,
+    "generalOrHumanQualityWinClaim": false,
+    "quality": "UNKNOWN",
+    "creditCost": "UNKNOWN"
+  },
+  "concreteRemainingDefects": [],
+  "ownership": {
+    "root": "source/test changes, installation, technical evidence, workboard and Git",
+    "reviewer": "this review file only",
+    "otherFilesChangedByReviewer": false,
+    "otherAgentsSpawnedByReviewer": false
+  }
+}

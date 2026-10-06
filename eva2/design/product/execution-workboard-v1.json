@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-06T19:59:10.483542+00:00",
+  "lastUpdated": "2026-10-06T20:17:11.137755+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1016,8 +1016,17 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-06T20:02:25.617311+00:00",
+        "checkedAt": "2026-10-06T20:17:11.137755+00:00",
         "deliveries": [
+          {
+            "title": "P2.1 · Veilige foutregistratie op de gewone route geïnstalleerd",
+            "state": "installed",
+            "date": "2026-10-06",
+            "result": "Bestaande diagnose hergebruikt; veilige SDK-class/code/status uit één oorzaak. Acht gerichte controles en echte SDK-exceptie op kandidaatimage zonder netwerk slagen. Exacte bronhashes geïnstalleerd; kern gezond. Onafhankelijke GO.",
+            "remaining": "Geen reconstructie van CM04 of SDKusage, nieuwe sampletoelating, kwaliteitswinst of extra productfunctie.",
+            "source": "eva2/evidence/product/p2-http-failure-diagnostics-20261006.json",
+            "review": "eva2/reviews/p2-http-failure-diagnostics-review-20261006.json"
+          },
           {
             "title": "P2.1 · CM04 afgesloten zonder bevestigd resultaat",
             "state": "Onbeslist",
@@ -3994,32 +4003,32 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Concurrenttoegang herstellen",
-          "state": "active",
-          "owner": "Codex",
-          "detail": "Agent Zero: eigen token vernieuwd en live catalogus bereikbaar. OpenClaw/Hermes: verse native aanmeldingen lopen en wachten op Jaaps login.",
-          "remaining": "Aanmelden via de verse codes in deze chat; daarna opgeslagen profielen en native routes controleren. Vergelijkingskwaliteit blijft onbekend.",
+          "title": "P2.1 · Agent Zero aangemeld; OpenClaw/Hermes hebben login nodig",
+          "state": "blocked",
+          "owner": "Codex / Jaap",
+          "detail": "Agent Zero-toegang vernieuwd en live catalogus gelezen. De gewone HTTP-route bewaart nu veilige SDK-foutinformatie; correctie geïnstalleerd en onafhankelijk goedgekeurd. OpenClaw/Hermes-aanmeldingen zijn zonder login geëindigd.",
+          "remaining": "Jaap: meld wanneer je kunt aanmelden; Codex zet verse codes klaar en controleert profielen/routes. CM04 blijft onbeslist; onbekend SDKgebruik en oorspronkelijke guard blijven behouden.",
           "source": "eva2/evidence/product/p2-competitor-access-restoration-20261006.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "reviewedAt": "2026-10-06T20:02:25.617311+00:00"
+          "reviewedAt": "2026-10-06T20:17:11.137755+00:00"
         },
         "next": {
-          "title": "P2.1 · Uitvoerbaarheid per concurrent controleren",
+          "title": "P2.1 · Aangemelde native routes controleren",
           "state": "planned",
           "owner": "Codex",
-          "detail": "Bevestig eigen toegang en native route met dezelfde vastgelegde modelkeuzes. Bewaar ontbrekende metingen apart van toegang; geen brede matrix of replay.",
-          "remaining": "De gesloten CM04-meetfout en onbekend gebruik blijven een afzonderlijke Codex-afhankelijkheid.",
+          "detail": "Na de echte aanmeldingen de eigen profielen/catalogus en gewone uitvoering controleren onder bestaande voorwaarden. Geen nieuwe matrix, modelvervanging of gesloten-caseherhaling.",
+          "remaining": "De nieuwe foutregistratie herstelt geen verloren meting en geeft geen nieuwe Eva2-sampletoelating.",
           "source": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json"
         },
         "ownerAction": {
           "title": "OpenClaw/Hermes aanmelden · antwoordbeoordeling apart",
           "state": "requested",
           "taskId": "P2.1",
-          "detail": "Alleen de echte login moet jij doen; Codex heeft beide verse native aanmeldingen gestart. De eerdere twee blinde antwoordbeoordelingen blijven daarnaast open.",
+          "detail": "De twee aanmeldprocessen zijn geëindigd zonder login; de codes zijn verlopen. Alleen de echte aanmelding vraagt jouw handeling. De eerdere twee blinde antwoordbeoordelingen blijven afzonderlijk open.",
           "steps": [
-            "Open https://auth.openai.com/codex/device en meld je aan met je bestaande account.",
-            "Voer de twee verse codes uit deze chat na elkaar in: eerst OpenClaw, daarna Hermes.",
-            "Meld hier dat beide aanmeldingen klaar zijn; Codex controleert de opgeslagen native profielen.",
+            "Meld hier wanneer je klaar bent om OpenClaw en Hermes aan te melden; de eerdere codes zijn verlopen.",
+            "Codex start dan verse native aanmeldingen. Open https://auth.openai.com/codex/device en voer de verse codes na elkaar in.",
+            "Meld dat beide klaar zijn; Codex controleert de opgeslagen eigen profielen en gewone routes.",
             "Laat twee verschillende mensen ieder hun eigen anonieme beoordelingspakket bekijken; bespreek antwoorden niet vooraf.",
             "Beoordelaar1: open C:/Users/jaapf/.codex/attachments/eec51102-8375-4ece-882e-47ed8aaf90d3/p2-cm02-rater-1/review.html.",
             "Beoordelaar2: open C:/Users/jaapf/.codex/attachments/c05e90fe-c091-4577-9955-9ff3970270c0/p2-cm02-rater-2/review.html.",
@@ -4030,15 +4039,15 @@
             "taskId": "P2.1",
             "title": "OpenClaw en Hermes aanmelden",
             "steps": [
-              "Open https://auth.openai.com/codex/device en meld je aan met je bestaande account.",
-              "Voer de twee verse codes uit deze chat na elkaar in: eerst OpenClaw, daarna Hermes.",
-              "Meld hier dat beide aanmeldingen klaar zijn; Codex controleert de opgeslagen native profielen."
+              "Meld hier wanneer je klaar bent om OpenClaw en Hermes aan te melden; de eerdere codes zijn verlopen.",
+              "Codex start dan verse native aanmeldingen. Open https://auth.openai.com/codex/device en voer de verse codes na elkaar in.",
+              "Meld dat beide klaar zijn; Codex controleert de opgeslagen eigen profielen en gewone routes."
             ],
             "codeStorage": "Codes remain in the active chat only; no tokens or login codes in repository."
           }
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-06T20:02:25.617311+00:00"
+        "reviewedAt": "2026-10-06T20:17:11.137755+00:00"
       },
       "reviewedAt": "2026-10-06T09:49:07.102699+00:00",
       "checkedAt": "2026-10-06T09:49:07.102699+00:00",
@@ -4346,22 +4355,22 @@
           {
             "name": "OpenClaw",
             "state": "incomplete",
-            "reason": "Eerdere eigen aanmelding niet voltooid. Codex zet een verse native aanmelding klaar; daarna catalogus en gewone route controleren.",
+            "reason": "Verse native aanmelding is geëindigd zonder login: device_code_timeout. Beide codes zijn verlopen; meld wanneer je klaar bent om aan te melden, dan zet Codex verse codes klaar.",
             "accessState": "login_required",
             "executionState": "not_checked",
-            "checkedAt": "2026-10-06T19:59:10.483542+00:00",
+            "checkedAt": "2026-10-06T20:17:11.137755+00:00",
             "source": "eva2/evidence/product/p2-competitor-access-restoration-20261006.json",
-            "label": "Aanmelden bezig"
+            "label": "Login nodig"
           },
           {
             "name": "Hermes",
             "state": "incomplete",
-            "reason": "Eerdere eigen aanmelding niet voltooid. Codex zet een verse native aanmelding klaar; daarna catalogus en gewone route controleren.",
+            "reason": "Verse native aanmelding is geëindigd zonder login: device_code_timeout. Beide codes zijn verlopen; meld wanneer je klaar bent om aan te melden, dan zet Codex verse codes klaar.",
             "accessState": "login_required",
             "executionState": "not_checked",
-            "checkedAt": "2026-10-06T19:59:10.483542+00:00",
+            "checkedAt": "2026-10-06T20:17:11.137755+00:00",
             "source": "eva2/evidence/product/p2-competitor-access-restoration-20261006.json",
-            "label": "Aanmelden bezig"
+            "label": "Login nodig"
           },
           {
             "name": "Agent Zero",
@@ -6619,8 +6628,8 @@
         },
         "competitorAccessRestoration": {
           "source": "eva2/evidence/product/p2-competitor-access-restoration-20261006.json",
-          "checkedAt": "2026-10-06T20:02:25.617311+00:00",
-          "status": "agentzero_access_restored_openclaw_hermes_native_login_waiting",
+          "checkedAt": "2026-10-06T20:17:11.137755+00:00",
+          "status": "agentzero_access_restored_openclaw_hermes_login_required",
           "providerInferenceRequests": 0,
           "qualityVerdict": "unknown"
         }
@@ -10010,9 +10019,9 @@
       "scope": "Technische installatie en remote browserroute; geen fysieke telefoonacceptatie."
     },
     "currentRuntime": {
-      "recordedAt": "2026-10-03T16:07:18.537186+00:00",
-      "image": "sha256:fd1c7cd3413405fd6b1b5ce408f2028cffed8de735a301550663e4c891ee5902",
-      "workerImage": "sha256:30d65117cc0f526bc3ed8859a0eee867ff8fe0943c0bf42c8c09d787c2ca3089",
+      "recordedAt": "2026-10-06T20:17:11.137755+00:00",
+      "image": "sha256:0260a298de91d34efa5c220af3ea935937860cef08c8ffeb3207c4742da817b9",
+      "workerImage": "sha256:fee8313778ab2a619d90e356a81a5c03f8789edaa9da181515923973f6814f14",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
       "sourceBase": "8ab4701a5d89c25a55ecf5d153f68e6a33179f79",
@@ -10020,8 +10029,13 @@
       "repositoryHeadFullyInstalled": false,
       "retainedRepositoryVariants": 26,
       "sameRuntimeSourceItems": 350,
-      "evidence": "eva2/evidence/product/f1-integrated-installed-20261003.json",
-      "meaning": "F1.1 combined installation; F1.2 and real owner/comparison acceptance remain open."
+      "evidence": "eva2/evidence/product/p2-http-failure-diagnostics-20261006.json",
+      "meaning": "Two-file HTTP diagnostic overlay on actual installed959b80e8; worker unchanged. Original F1 source composition and earlier acceptances retained; not a full repository refresh.",
+      "diagnosticOverlayBaseCommit": "f0f322840c9269f603b79c48893346a2e2218376",
+      "diagnosticOverlaySourceHashes": {
+        "eva2/src/eva/adapters/api/app.py": "4b3bf1992cd4b12d0a6c983413697735bd4bc4f09728e8d1a5831aa8a05d4448",
+        "eva2/src/eva/adapters/api/dashboard_conversation.py": "60d5c1d1589121c7c21109ae5456282ab89873a959329bda6dbb322b177cca2f"
+      }
     },
     "chromeTransportRecovery20260912": {
       "status": "technically_tested_and_live",
@@ -19505,11 +19519,11 @@
             {
               "id": "P2.1",
               "title": "Vergelijking op eindkandidaat uitvoeren",
-              "status": "active",
+              "status": "blocked",
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Herstel de eigen bestaande aanmelding van OpenClaw, Hermes en Agent Zero. Controleer native toegang/catalogus en de werkelijk aangesloten uitvoerroute; geen providerwissel of brede vergelijkingsmatrix. Gesloten CM04 en onbekend gebruik blijven behouden.",
+              "nextAction": "Lees de eigen native profielen na echte OpenClaw/Hermes-aanmelding en controleer route/catalogus. De veilige foutregistratie is geïnstalleerd; verloren CM04-oorzaak/SDKusage blijft onbekend. Geen replay, guardbypass, nieuwe matrix of modelwissel.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -19522,7 +19536,7 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-06T19:59:10.483542+00:00",
+              "checkedAt": "2026-10-06T20:17:11.137755+00:00",
               "assignment": {
                 "baseCommit": "e432fa0347df9e5d946809e33e52a76948aa07f9",
                 "owner": "/root",
@@ -19534,12 +19548,12 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte voorbereiding0provider-/samplecalls. Eerst originele ongebruiktheid en werkelijk bruikbare oorspronkelijke toelating vaststellen; uitvoeringsraming pas uit het bestaande plan en de concrete binding. Geen nieuwe quota, gratis teller, set of brede matrix; credits onbekend.",
-                "currentAction": "Agent Zero: eigen token native vernieuwd en live catalogus gelezen, nul inferentie. OpenClaw/Hermes: eerdere eigen device-aanmelding is niet voltooid; verse native aanmelding voorbereiden.",
+                "currentAction": "Technische diagnosecorrectie gereviewd, geïnstalleerd en geverifieerd; geen actieve proef. Beide native loginprocessen terminal/exit1 zonder login; geen automatisch nieuwe flow gestart.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "evidence": "e432fa03: één oorspronkelijk CM03-paar eenmaal uitgevoerd; volledige native accounting/readbacks/stop, onafhankelijke technische GO, duurzame oorspronkelijke aggregate-accounting gekoppeld en dashboard/Git gepubliceerd. Kwaliteit UNKNOWN en34/44 behouden; geen nieuwe Eva-functie."
+                  "evidence": "f0f32284: Agent Zero eigen native refresh en live catalogus geslaagd; OpenClaw/Hermes verse eigen deviceflows daadwerkelijk gestart, dashboard/Git gepubliceerd. Geen inferentie of productafronding."
                 },
-                "stage": "competitor_owned_auth_restoration",
+                "stage": "owned_login_required_diagnostics_installed",
                 "currentNativePreparation": {
                   "runHandle": "ev003-successor-native-cm04-20261006-e87d5a92",
                   "sessionId": 54196,
@@ -19647,7 +19661,7 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "Herstel de eigen bestaande aanmelding van OpenClaw, Hermes en Agent Zero. Controleer native toegang/catalogus en de werkelijk aangesloten uitvoerroute; geen providerwissel of brede vergelijkingsmatrix. Gesloten CM04 en onbekend gebruik blijven behouden.",
+                "nextAction": "Lees de eigen native profielen na echte OpenClaw/Hermes-aanmelding en controleer route/catalogus. De veilige foutregistratie is geïnstalleerd; verloren CM04-oorzaak/SDKusage blijft onbekend. Geen replay, guardbypass, nieuwe matrix of modelwissel.",
                 "actualUsage": {
                   "newProviderAttemptsRegistered": 1,
                   "newInputTokens": null,
@@ -19938,9 +19952,31 @@
                 "accessRestoration": {
                   "source": "eva2/evidence/product/p2-competitor-access-restoration-20261006.json",
                   "agentzero": "owned_native_refresh_and_live_catalog_confirmed",
-                  "openclaw": "native_login_waiting",
-                  "hermes": "native_login_waiting",
-                  "providerInferenceRequests": 0
+                  "openclaw": "native_login_terminal_without_signin",
+                  "hermes": "native_login_terminal_without_signin",
+                  "providerInferenceRequests": 0,
+                  "activeSessions": []
+                },
+                "diagnosticCorrection": {
+                  "existing": "Streaming responses already record sanitized failure locations; provider preserves exception causality. Ordinary /turns/respond emits generic HTTP503 without using that logger.",
+                  "gap": "Ordinary native comparison loses safe source location, SDK HTTP status and allowed error code before stopping.",
+                  "change": "Reuse existing stream diagnostic at the ordinary HTTP failure boundary; extend only safe technical fields. Response body/status, model routing, accounting and closed results remain unchanged.",
+                  "files": [
+                    "eva2/src/eva/adapters/api/app.py",
+                    "eva2/src/eva/adapters/api/dashboard_conversation.py",
+                    "eva2/tests/api/test_memory_api.py"
+                  ],
+                  "finish": "Check actual normal HTTP route under controlled failure, bundle independent review, install same corrected source and confirm installed hashes. No closed-case replay or new inference.",
+                  "status": "installed_verified",
+                  "source": "eva2/evidence/product/p2-http-failure-diagnostics-20261006.json",
+                  "review": "eva2/reviews/p2-http-failure-diagnostics-review-20261006.json",
+                  "reviewSha256": "6e189b7f4e7d094820d36a178c0c6834edd5fbb464f13b7cf25e582f2e91ba1b",
+                  "controlledProviderInferenceRequests": 0
+                },
+                "currentGoalTurn": {
+                  "classification": "progress",
+                  "evidence": "eva2/evidence/product/p2-http-failure-diagnostics-20261006.json",
+                  "meaning": "Gerichte oorspronkelijke diagnostische afhankelijkheid uitgevoerd, onafhankelijk GO, exact geïnstalleerd en gezonde kern bevestigd. Geen nieuwe productfunctie; login vereist."
                 }
               },
               "remaining": "CM02/CM03 technisch uitgevoerd; antwoordkwaliteit UNKNOWN. CM04 na één poging onbeslist en gesloten; geen algemene voorsprong. Oorspronkelijke dekking, twee CM02-beoordelingen en oorzaak/accounting blijven open.",

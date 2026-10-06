@@ -28,7 +28,9 @@ _LOGGER = logging.getLogger(__name__)
 _SOURCE_ROOT = Path(__file__).resolve().parents[2]
 
 
-def _record_stream_failure(error: Exception, turn: ConversationTurn | None, stage: str) -> None:
+def record_conversation_failure(
+    error: Exception, turn: ConversationTurn | None, stage: str, *, transport: str = "stream",
+) -> None:
     """Log code locations, never exception messages, locals or provider bodies."""
     frames: list[dict[str, Any]] = []
     trace = error.__traceback__
@@ -52,11 +54,53 @@ def _record_stream_failure(error: Exception, turn: ConversationTurn | None, stag
     type_hash = hashlib.sha256(
         f"{error_type.__module__}.{error_type.__qualname__}".encode()
     ).hexdigest()
+    http_status = None
+    upstream_code = None
+    provider_category = None
+    upstream_class = None
+    seen: set[int] = set()
+    current: BaseException | None = error
+    while current is not None and id(current) not in seen and len(seen) < 8:
+        seen.add(id(current))
+        name = type(current).__name__
+        if name in {
+            "APIStatusError", "BadRequestError", "AuthenticationError", "PermissionDeniedError",
+            "NotFoundError", "ConflictError", "UnprocessableEntityError", "RateLimitError",
+            "InternalServerError", "APIConnectionError", "APITimeoutError", "HTTPStatusError",
+            "ModelHTTPError", "UnexpectedModelBehavior", "UsageLimitExceeded",
+        }:
+            status = getattr(current, "status_code", None)
+            native_status = status if type(status) is int and 100 <= status <= 599 else None
+            code = getattr(current, "code", None)
+            native_code = code if isinstance(code, str) and code in {
+                "invalid_api_key", "rate_limit_exceeded", "insufficient_quota",
+                "model_not_found", "unsupported_parameter", "invalid_request_error",
+                "context_length_exceeded", "server_error", "invalid_grant",
+                "refresh_token_expired", "refresh_token_reused",
+            } else "other" if isinstance(code, str) else None
+            if upstream_class is None or native_status is not None or native_code is not None:
+                # Keep the fields of one cause together; outer wrappers must not
+                # mask or lend their status/code to a deeper native SDK failure.
+                upstream_class, http_status, upstream_code = name, native_status, native_code
+        category_value = getattr(current, "category", None)
+        if provider_category is None and isinstance(category_value, str) and category_value in {
+            "unavailable", "rate_limited", "deadline", "credentials_rejected", "configuration",
+            "protocol", "response_too_large", "request_too_large",
+        }:
+            provider_category = category_value
+        current = current.__cause__ or current.__context__
     _LOGGER.error("%s", json.dumps({
-        "event": "conversation_stream_failure", "stage": stage,
+        "event": "conversation_http_failure" if transport == "http" else "conversation_stream_failure",
+        "stage": stage,
         "turn_sha256": turn_hash, "category": category,
         "exception_type_sha256": type_hash, "eva_frames": frames[-8:],
+        "upstream_http_status": http_status, "upstream_error_code": upstream_code,
+        "upstream_exception_class": upstream_class, "provider_category": provider_category,
     }, separators=(",", ":")))
+
+
+def _record_stream_failure(error: Exception, turn: ConversationTurn | None, stage: str) -> None:
+    record_conversation_failure(error, turn, stage)
 
 
 DASHBOARD_CONVERSATION_HTML = """<!doctype html><html lang="nl"><head>
